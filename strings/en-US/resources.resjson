@@ -1,4 +1,4 @@
-{
+﻿{
     "general.event"         : "Event",
     "general.today"         : "Today",
     "general.yesterday"     : "Yesterday",
@@ -81,7 +81,6 @@
     "contact.comment"       : "On this page, use the Back button to go back!",
     "contact.questionDelete": "Do you want to delete the current contact?",
     "contact.name"          : "Last name",
-	"contact.editer"		: "Author",
     "contact.firstName"     : "First name",
 	"contact.middleName"	: "Middle name",
 	"contact.position"		: "Position",
@@ -174,7 +173,7 @@
 	"contactList.mobile"    : "Mobil",
 	"contactList.email"     : "Email",
 	"contactList.ID"		: "ID",
-	"contactList.captureType"	    : "Capturetype",
+	"contactList.barcode"	: "Barcode",
 	"contactList.editer"    : "Author",
 
     "camera.title"          : "Camera",
@@ -237,7 +236,7 @@
     "register.event"        : "Event",
     "register.phone"        : "Phone",
     "register.agreement"    : "Agreement",
-    "register.agreementText": "Herewith I agree that convey Information Systems GmbH may use my data f�r marketing purpose. I'm interested in further product informations.",
+    "register.agreementText": "Herewith I agree that convey Information Systems GmbH may use my data für marketing purpose. I'm interested in further product informations.",
     "register.password"     : "Password",
     "register.confirmation" : "Confirmation",
     "register.complete"     : "Thank you very much for your registration! You will receive an email for confirmation soon. It will be send to the address written above.",
@@ -377,9 +376,6 @@
 	"reporting.changedate"  : "Change date",
 	"reporting.country"		: "Country",
 	"reporting.employee"	: "Employee",
-    "reporting.employeechart"	: "Employee statistics (entries per employee)",
-	"reporting.countrychart"	: "Country statistics (entries per country)",
-
 
     "employee.title"        : "User accounts",
     "employee.firstname"    : "First name",

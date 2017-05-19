@@ -81,7 +81,6 @@
     "contact.comment"       : "Utilisez le bouton Retour sur cette page pour y retourner!",
     "contact.questionDelete": "êtes -vous s\u00FBr de vouloir supprimer le contact?",
     "contact.name"          : "Nom",
-	"contact.editer"		: "Auteur",
     "contact.firstName"     : "Prénom",
 	"contact.middleName"	: "Deuxième Prénom",
 	"contact.position"		: "Position",
@@ -174,8 +173,8 @@
 	"contactList.mobile"    : "Mobile",
 	"contactList.email"     : "Adresse e-mail",
 	"contactList.ID"		: "ID",
-	"contactList.captureType"	    : "Saisirmode",
-	"contactList.editer"    : "Auteur",
+	"contactList.barcode"	: "Code barre",
+	"contactList.editer"    : "Créateur",
 
     "camera.title"          : "Camera",
     "camera.comment"        : "Utilisez le bouton Retour sur cette page pour y retourner!",
@@ -377,9 +376,6 @@
 	"reporting.changedate"  : "Date de modification",
 	"reporting.country"		: "Pays",
 	"reporting.employee"	: "Personnel",
-	"reporting.employeechart"	: "Statistiques Employés (entrées par employé)",
-	"reporting.countrychart"	: "Statistiques nationales (entrées par pays)",
-
 
     "employee.title"        : "Comptes utilisateurs",
     "employee.firstname"    : "Prénom",

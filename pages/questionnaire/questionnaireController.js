@@ -922,7 +922,6 @@
                             if (json.d.wFormat === 1) {
                                 docContent = json.d.PrevContentDOCCNT2;
                                 if (!docContent) {
-                                    format = "image/bmp";
                                     docContent = json.d.DocContentDOCCNT1;
                                 }
                             } else {

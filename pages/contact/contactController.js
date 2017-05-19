@@ -499,7 +499,7 @@
                 },
                 clickZoomOut: function (event) {
                     Log.call(Log.l.trace, "Contact.Controller.");
-                    if (that.hasDoc() &&
+                    if (that.hasDoc() && 
                         ((imgRotation === 0 || imgRotation ===180) && imgWidth * imgScale * scaleOut > 100 ||
                          (imgRotation === 90 || imgRotation ===270) && imgHeight * imgScale * scaleOut > 100)) {
                         that.calcImagePosition({
@@ -740,11 +740,11 @@
                                 Log.print(Log.l.trace, "cardScanData: success!");
                                 if (json && json.d) {
                                     var docContent;
-                                    //if (json.d.wFormat === 1) {
-                                    //    docContent = json.d.PrevContentDOCCNT2;
-                                    //} else {
+                                    if (json.d.wFormat === 1) {
+                                        docContent = json.d.PrevContentDOCCNT2;
+                                    } else {
                                         docContent = json.d.DocContentDOCCNT1;
-                                    //}
+                                    }
                                     if (docContent) {
                                         var sub = docContent.search("\r\n\r\n");
                                         AppData._photoData = docContent.substr(sub + 4);
@@ -868,7 +868,7 @@
                 AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Data loaded");
             });
-
+            
             Log.ret(Log.l.trace);
         })
     });

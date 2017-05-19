@@ -27,7 +27,6 @@
             var that = this;
 
             var erfasserID = pageElement.querySelector("#ErfasserIDSearch");
-            var erfasserIDname = document.getElementById("ErfasserIDSearch");
             var erfassungsDatum = pageElement.querySelector("#Erfassungsdatum.win-datepicker");
             var modifiedTs = pageElement.querySelector("#modifiedTS.win-datepicker");
             var initLand = pageElement.querySelector("#InitLandSearch");
@@ -41,7 +40,7 @@
                     erfasserID.winControl.data = null;
                 }
                 if (that.employees) {
-                    that.employees = {};
+                    that.employees = null;
                 }
             }
 
@@ -66,14 +65,12 @@
             }
             this.showDateRestrictions = showDateRestrictions;
 
-            var resultConverter = function (item, index) {
+             var resultConverter = function (item, index) {
                 item.index = index;
                 item.fullName = (item.Vorname ? (item.Vorname + " ") : "") + (item.Nachname ? item.Nachname : "");
                 if (that.employees) {
                     that.employees.push(item);
                 }
-
-
             }
             this.resultConverter = resultConverter;
 
@@ -201,56 +198,6 @@
             }
             this.saveRestriction = saveRestriction;
 
-            var getNextData = function () {
-                if (that.nextUrl !== null) {
-                    that.loading = true;
-
-                    AppData.setErrorMsg(that.binding);
-                    Log.print(Log.l.trace, "calling select Search.employeeView...");
-                    Search.employeeView.selectNext(function(json) {
-                        // this callback will be called asynchronously
-                        // when the response is available
-                        Log.print(Log.l.trace, "EmpList.employeeView: success!");
-                        var savediD = erfasserID.value;
-                        var saveIndex = erfasserID.selectedIndex;
-                            // employeeView returns object already parsed from json file in response
-                            if (json && json.d) {
-                                that.nextUrl = Search.employeeView.getNextUrl(json);
-                                var results = json.d.results;
-                                results.forEach(function(item, index) {
-                                    that.resultConverter(item, index);
-                                    // that.binding.count = that.employees.push(item);
-                                });
-                                if (erfasserID && erfasserID.winControl) {
-                                    erfasserID.winControl.data = that.employees;
-                                }
-                            } else {
-                                that.nextUrl = null;
-                            }
-
-                            for (var i = 0; i < erfasserID.length; i++) {
-                                if (erfasserID[i].value === that.binding.restriction.MitarbeiterID) {
-                                    saveIndex = i;
-                                }
-                            }
-                                erfasserIDname.selectedIndex = saveIndex; 
-                        },
-                        function(errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                            if (progress && progress.style) {
-                                progress.style.display = "none";
-                            }
-                            that.loading = false;
-                        },
-                        null,
-                        that.nextUrl);
-
-                    that.loading = false;
-                }
-            }
-            this.getNextData = getNextData;
 
             var loadData = function (complete, error) {
                 that.binding.messageText = null;
@@ -282,7 +229,6 @@
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
-                    
                     if (!that.employees || !that.employees.length) {
                         that.employees = new WinJS.Binding.List([Search.employeeView.defaultValue]);
                         return Search.employeeView.select(function (json) {
@@ -300,12 +246,10 @@
                                     erfasserID.winControl.data = that.employees;
                                 }
                                 that.binding.mitarbeiterId = Search.employeeView.defaultValue.MitarbeiterVIEWID;
-                                
                             } else {
                                 that.nextUrl = null;
                                 that.employees = null;
                             }
-                            
                         }, function (errorResponse) {
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
@@ -319,10 +263,6 @@
                         }
                         that.binding.mitarbeiterId = Search.employeeView.defaultValue.MitarbeiterVIEWID;
                         return WinJS.Promise.as();
-                    }
-                }).then(function () {
-                    if (that.nextUrl !== null) {
-                        that.getNextData();
                     }
                 }).then(function () {
                     var savedRestriction = AppData.getRestriction("Kontakt");
@@ -343,7 +283,6 @@
                         } else {
                             radios[5].checked = true;
                         }
-                        that.binding.restriction.MitarbeiterID = savedRestriction.MitarbeiterID;
 
                     }
                     var defaultRestriction = Search.contactView.defaultValue;
@@ -364,7 +303,7 @@
                     if (typeof that.binding.restriction.ModifiedTS === "undefined") {
                         that.binding.restriction.ModifiedTS = new Date();
                     }
-                   // erfasserIDname.selectedIndex = 0;
+
                 });
                 return ret;
             }

@@ -81,7 +81,6 @@
     "contact.comment"       : "Verwende die Zurück-Schaltfläche auf dieser Seite um zurück zu gehen!",
     "contact.questionDelete": "Wollen Sie den aktuellen Kontakt löschen?",
     "contact.name"          : "Name",
-	"contact.editer"		: "Erfasser",
     "contact.firstName"     : "Vorname",
 	"contact.middleName"	: "Zweitname",
 	"contact.position"		: "Position",
@@ -175,7 +174,7 @@
 	"contactList.mobile"    : "Mobil",
 	"contactList.email"     : "Email",
 	"contactList.ID"		: "ID",
-	"contactList.captureType"	    : "Erfassungsart",
+	"contactList.barcode"	: "Barcode",
 	"contactList.editer"    : "Erfasser",
 
     "camera.title"          : "Kamera",
@@ -306,7 +305,6 @@
 
 	"infodeskEmpList.title"	: "Benutzerkonten",
 	"infodeskEmpList.count"	: "Anzahl",
-	"infodeskEmpList.login"	: "Benutzer",
 
     "userinfo.title"        : "Benutzerinfo",
     "userinfo.present"      : "Ich bin jetzt auf dem Gelände",
@@ -379,8 +377,6 @@
 	"reporting.changedate"  : "Änderungsdatum",
 	"reporting.country"		: "Land",
 	"reporting.employee"	: "Mitarbeiter",
-    "reporting.employeechart"	: "Mitarbeiterstatistik (Einträge pro Mitarbeiter)",
-	"reporting.countrychart"	: "Landstatistik (Einträge pro Land)",
 
     "employee.title"        : "Benutzerkonten",
     "employee.firstname"    : "Vorname",
