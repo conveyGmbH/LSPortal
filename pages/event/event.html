@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="event.css" rel="stylesheet" />
+    <script type="text/javascript" src="eventService.js"></script>
+    <script type="text/javascript" src="eventController.js"></script>
+    <script type="text/javascript" src="event.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="settings fragment">
+        <div id="eventController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="contentarea win-type-body">
+                    <div class="header-separator"></div>
+                    <div class="content-header">
+                        <div class="half-circle half-circle-textcolor">&nbsp;</div>
+                        <div class="content-header-line win-type-caption">
+                            <span class="id-field"></span>
+                            <span class="caption-field" data-win-res="{textContent: 'event.title'}"></span>
+                            <span class="date-field"></span>
+                        </div>
+                    </div>
+                    <div class="content-record"
+                         data-win-bind="style.display: dataEvent.VeranstaltungVIEWID Binding.Converter.toDisplay">
+                        <div class="line-separator"></div>
+                        <div class="field_line">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'event.name'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'event.name'}"></span>
+                            <input class="input_field win-textbox" type="text" data-win-bind="value: dataEvent.Name Binding.Mode.twoway" />
+                        </div>
+                        <div class="line-separator"></div>
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'event.begin'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'event.begin'}"></span>
+                            <div data-win-control="WinJS.UI.DatePicker" id="startDatum" class="input_field"
+                                 data-win-bind="winControl.current: dataEvent.dateBegin Binding.Mode.twoway">
+                            </div>
+                        </div>
+                        <div class="field_line field_line_even">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'event.end'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'event.end'}"></span>
+                            <div data-win-control="WinJS.UI.DatePicker" id="endDatum" class="input_field"
+                                 data-win-bind="winControl.current: dataEvent.dateEnd Binding.Mode.twoway">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

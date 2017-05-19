@@ -1,0 +1,319 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="skillentry.css" rel="stylesheet" />
+    <script type="text/javascript" src="skillentryService.js"></script>
+    <script type="text/javascript" src="skillentryController.js"></script>
+    <script type="text/javascript" src="skillentry.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="settings fragment">
+        <div id="skillentryController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="contentarea win-type-body">
+                    <div class="header-separator"></div>
+                    <div class="content-header">
+                        <div class="half-circle half-circle-textcolor">&nbsp;</div>
+                        <div class="content-header-line win-type-caption">
+                            <span class="id-field"></span>
+                            <span class="caption-field" data-win-res="{textContent: 'skillentry.title'}"></span>
+                            <span class="date-field"></span>
+                        </div>
+                    </div>
+                    <div class="skillentryList-template"
+                         data-win-control="WinJS.Binding.Template" style="display: none">
+                        <div class="questionnaire-row">
+                            <div class="row-bkg"></div>
+                            <div class="row-separator"></div>
+                            <span class="list-question-field label-color" data-win-bind="textContent: SkillTypeTitle"></span>
+                            <div class="field_line_questionnaire win-type-subtitle">
+                                <div class="field_row_odd">
+                                    <div class="field_line_left">
+                                        <label class="checkbox list-selection-field" data-win-bind="style.display: Skills01Name Binding.Converter.toDisplay">
+                                            <input type="checkbox" class="win-checkbox checkbox" value="X"
+                                                   data-win-bind="checked: Skill01" />
+                                            <span class="checkbox" data-win-bind="textContent: Skills01Name"></span>
+                                        </label>
+                                    </div>
+                                    <div class="field_line_right">
+                                        <label class="checkbox list-selection-field" data-win-bind="style.display: Skills02Name Binding.Converter.toDisplay">
+                                            <input type="checkbox" class="win-checkbox" value="X"
+                                                   data-win-bind="checked: Skill02" />
+                                            <span class="checkbox" data-win-bind="textContent: Skills02Name"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="field-separator"></div>
+                                <div class="field_row_even">
+                                    <div class="field_line_left">
+                                        <label class="checkbox list-selection-field" data-win-bind="style.display: Skills03Name Binding.Converter.toDisplay">
+                                            <input type="checkbox" class="win-checkbox" value="X"
+                                                   data-win-bind="checked: Skill03" />
+                                            <span class="checkbox" data-win-bind="textContent: Skills03Name"></span>
+                                        </label>
+                                    </div>
+                                    <div class="field_line_right">
+                                        <label class="checkbox list-selection-field" data-win-bind="style.display: Skills04Name Binding.Converter.toDisplay">
+                                            <input type="checkbox" class="win-checkbox" value="X"
+                                                   data-win-bind="checked: Skill04" />
+                                            <span class="checkbox" data-win-bind="textContent: Skills04Name"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="field-separator"></div>
+                            </div>
+                            <div class="line-separator"></div>
+                            <div class="field_line_questionnaire win-type-subtitle">
+                                <div class="field_row_odd">
+                                    <div class="field_line_left">
+                                        <label class="checkbox list-selection-field" data-win-bind="style.display: Skills05Name Binding.Converter.toDisplay">
+                                            <input type="checkbox" class="win-checkbox" value="X"
+                                                   data-win-bind="checked: Skill05" />
+                                            <span class="checkbox" data-win-bind="textContent: Skills05Name"></span>
+                                        </label>
+                                    </div>
+                                    <div class="field_line_right">
+                                        <label class="checkbox list-selection-field" data-win-bind="style.display: Skills06Name Binding.Converter.toDisplay">
+                                            <input type="checkbox" class="win-checkbox" value="X"
+                                                   data-win-bind="checked: Skill06" />
+                                            <span class="checkbox" data-win-bind="textContent: Skills06Name"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="field-separator"></div>
+                                <div class="field_row_even">
+                                    <div class="field_line_left">
+                                        <label class="checkbox list-selection-field" data-win-bind="style.display: Skills07Name Binding.Converter.toDisplay">
+                                            <input type="checkbox" class="win-checkbox" value="X"
+                                                   data-win-bind="checked: Skill07" />
+                                            <span class="checkbox" data-win-bind="textContent: Skills07Name"></span>
+                                        </label>
+                                    </div>
+                                    <div class="field_line_right">
+                                        <label class="checkbox list-selection-field" data-win-bind="style.display: Skills08Name Binding.Converter.toDisplay">
+                                            <input type="checkbox" class="win-checkbox" value="X"
+                                                   data-win-bind="checked: Skill08" />
+                                            <span class="checkbox" data-win-bind="textContent: Skills08Name"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="field-separator"></div>
+                            </div>
+                            <div class="line-separator"></div>
+                            <div class="field_line_questionnaire win-type-subtitle">
+                                <div class="field_row_odd">
+                                    <div class="field_line_left">
+                                        <label class="checkbox list-selection-field" data-win-bind="style.display: Skills09Name Binding.Converter.toDisplay">
+                                            <input type="checkbox" class="win-checkbox" value="X"
+                                                   data-win-bind="checked: Skill09" />
+                                            <span class="checkbox" data-win-bind="textContent: Skills09Name"></span>
+                                        </label>
+                                    </div>
+                                    <div class="field_line_right">
+                                        <label class="checkbox list-selection-field" data-win-bind="style.display: Skills10Name Binding.Converter.toDisplay">
+                                            <input type="checkbox" class="win-checkbox" value="X"
+                                                   data-win-bind="checked: Skill10" />
+                                            <span class="checkbox" data-win-bind="textContent: Skills10Name"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="field-separator"></div>
+                                <div class="field_row_even">
+                                    <div class="field_line_left">
+                                        <label class="checkbox list-selection-field" data-win-bind="style.display: Skills11Name Binding.Converter.toDisplay">
+                                            <input type="checkbox" class="win-checkbox" value="X"
+                                                   data-win-bind="checked: Skill11" />
+                                            <span class="checkbox" data-win-bind="textContent: Skills11Name"></span>
+                                        </label>
+                                    </div>
+                                    <div class="field_line_right">
+                                        <label class="checkbox list-selection-field" data-win-bind="style.display: Skills12Name Binding.Converter.toDisplay">
+                                            <input type="checkbox" class="win-checkbox" value="X"
+                                                   data-win-bind="checked: Skill12" />
+                                            <span class="checkbox" data-win-bind="textContent: Skills12Name"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="field-separator"></div>
+                            </div>
+                            <div class="line-separator"></div>
+                            <div class="field_line_questionnaire win-type-subtitle">
+                                <div class="field_row_odd">
+                                    <div class="field_line_left">
+                                        <label class="checkbox list-selection-field" data-win-bind="style.display: Skills13Name Binding.Converter.toDisplay">
+                                            <input type="checkbox" class="win-checkbox" value="X"
+                                                   data-win-bind="checked: Skill13" />
+                                            <span class="checkbox" data-win-bind="textContent: Skills13Name"></span>
+                                        </label>
+                                    </div>
+                                    <div class="field_line_right">
+                                        <label class="checkbox list-selection-field" data-win-bind="style.display: Skills14Name Binding.Converter.toDisplay">
+                                            <input type="checkbox" class="win-checkbox" value="X"
+                                                   data-win-bind="checked: Skill14" />
+                                            <span class="checkbox" data-win-bind="textContent: Skills14Name"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="field-separator"></div>
+                                <div class="field_row_even">
+                                    <div class="field_line_left">
+                                        <label class="checkbox list-selection-field" data-win-bind="style.display: Skills15Name Binding.Converter.toDisplay">
+                                            <input type="checkbox" class="win-checkbox" value="X"
+                                                   data-win-bind="checked: Skill15" />
+                                            <span class="checkbox" data-win-bind="textContent: Skills15Name"></span>
+                                        </label>
+                                    </div>
+                                    <div class="field_line_right">
+                                        <label class="checkbox list-selection-field" data-win-bind="style.display: Skills16Name Binding.Converter.toDisplay">
+                                            <input type="checkbox" class="win-checkbox" value="X"
+                                                   data-win-bind="checked: Skill16" />
+                                            <span class="checkbox" data-win-bind="textContent: Skills16Name"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="field-separator"></div>
+                            </div>
+                            <div class="line-separator"></div>
+                            <div class="field_line_questionnaire win-type-subtitle">
+                                <div class="field_row_odd">
+                                    <div class="field_line_left">
+                                        <label class="checkbox list-selection-field" data-win-bind="style.display: Skills17Name Binding.Converter.toDisplay">
+                                            <input type="checkbox" class="win-checkbox" value="X"
+                                                   data-win-bind="checked: Skill17" />
+                                            <span class="checkbox" data-win-bind="textContent: Skills17Name"></span>
+                                        </label>
+                                    </div>
+                                    <div class="field_line_right">
+                                        <label class="checkbox list-selection-field" data-win-bind="style.display: Skills18Name Binding.Converter.toDisplay">
+                                            <input type="checkbox" class="win-checkbox" value="X"
+                                                   data-win-bind="checked: Skill18" />
+                                            <span class="checkbox" data-win-bind="textContent: Skills18Name"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="field-separator"></div>
+                                <div class="field_row_even">
+                                    <div class="field_line_left">
+                                        <label class="checkbox list-selection-field" data-win-bind="style.display: Skills19Name Binding.Converter.toDisplay">
+                                            <input type="checkbox" class="win-checkbox" value="X"
+                                                   data-win-bind="checked: Skill19" />
+                                            <span class="checkbox" data-win-bind="textContent: Skills19Name"></span>
+                                        </label>
+                                    </div>
+                                    <div class="field_line_right">
+                                        <label class="checkbox list-selection-field" data-win-bind="style.display: Skills20Name Binding.Converter.toDisplay">
+                                            <input type="checkbox" class="win-checkbox" value="X"
+                                                   data-win-bind="checked: Skill20" />
+                                            <span class="checkbox" data-win-bind="textContent: Skills20Name"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="field-separator"></div>
+                            </div>
+                            <div class="line-separator"></div>
+                            <div class="field_line_questionnaire win-type-subtitle">
+                                <div class="field_row_odd">
+                                    <div class="field_line_left">
+                                        <label class="checkbox list-selection-field" data-win-bind="style.display: Skills21Name Binding.Converter.toDisplay">
+                                            <input type="checkbox" class="win-checkbox" value="X"
+                                                   data-win-bind="checked: Skill21" />
+                                            <span class="checkbox" data-win-bind="textContent: Skills21Name"></span>
+                                        </label>
+                                    </div>
+                                    <div class="field_line_right">
+                                        <label class="checkbox list-selection-field" data-win-bind="style.display: Skills22Name Binding.Converter.toDisplay">
+                                            <input type="checkbox" class="win-checkbox" value="X"
+                                                   data-win-bind="checked: Skill22" />
+                                            <span class="checkbox" data-win-bind="textContent: Skills22Name"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="field-separator"></div>
+                                <div class="field_row_even">
+                                    <div class="field_line_left">
+                                        <label class="checkbox list-selection-field" data-win-bind="style.display: Skills23Name Binding.Converter.toDisplay">
+                                            <input type="checkbox" class="win-checkbox" value="X"
+                                                   data-win-bind="checked: Skill23" />
+                                            <span class="checkbox" data-win-bind="textContent: Skills23Name"></span>
+                                        </label>
+                                    </div>
+                                    <div class="field_line_right">
+                                        <label class="checkbox list-selection-field" data-win-bind="style.display: Skills24Name Binding.Converter.toDisplay">
+                                            <input type="checkbox" class="win-checkbox" value="X"
+                                                   data-win-bind="checked: Skill24" />
+                                            <span class="checkbox" data-win-bind="textContent: Skills24Name"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="field-separator"></div>
+                            </div>
+                            <div class="line-separator"></div>
+                            <div class="field_line_questionnaire win-type-subtitle">
+                                <div class="field_row_odd">
+                                    <div class="field_line_left">
+                                        <label class="checkbox list-selection-field" data-win-bind="style.display: Skills25Name Binding.Converter.toDisplay">
+                                            <input type="checkbox" class="win-checkbox" value="X"
+                                                   data-win-bind="checked: Skill25" />
+                                            <span class="checkbox" data-win-bind="textContent: Skills25Name"></span>
+                                        </label>
+                                    </div>
+                                    <div class="field_line_right">
+                                        <label class="checkbox list-selection-field" data-win-bind="style.display: Skills26Name Binding.Converter.toDisplay">
+                                            <input type="checkbox" class="win-checkbox" value="X"
+                                                   data-win-bind="checked: Skill26" />
+                                            <span class="checkbox" data-win-bind="textContent: Skills26Name"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="field-separator"></div>
+                                <div class="field_row_even">
+                                    <div class="field_line_left">
+                                        <label class="checkbox list-selection-field" data-win-bind="style.display: Skills27Name Binding.Converter.toDisplay">
+                                            <input type="checkbox" class="win-checkbox" value="X"
+                                                   data-win-bind="checked: Skill27" />
+                                            <span class="checkbox" data-win-bind="textContent: Skills27Name"></span>
+                                        </label>
+                                    </div>
+                                    <div class="field_line_right">
+                                        <label class="checkbox list-selection-field" data-win-bind="style.display: Skills28Name Binding.Converter.toDisplay">
+                                            <input type="checkbox" class="win-checkbox" value="X"
+                                                   data-win-bind="checked: Skill28" />
+                                            <span class="checkbox" data-win-bind="textContent: Skills28Name"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="field-separator"></div>
+                            </div>
+                            <div class="line-separator"></div>
+                        </div>
+                    </div>
+                    <div class="headerFooterPlaceholder">
+                        <div class="list-footer">
+                            <div class="status">
+                                <progress class="win-progress-bar progress"></progress>
+                                <div class="counter">
+                                    <span data-win-res="{textContent: 'skillentry.count'}"></span><span>: </span><span data-win-bind="textContent: count"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="skillentryList"
+                         class="listview win-selectionstylefilled"
+                         data-win-control="WinJS.UI.ListView"
+                         data-win-options="{
+                                 itemTemplate: select('.skillentryList-template'),
+                                 header: select('.list-header'),
+                                 footer: select('.list-footer')
+                             }">
+                    </div>
+                    <div class="error-message"
+                         data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg">
+
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

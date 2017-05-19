@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="userMessages.css" rel="stylesheet" />
+    <script type="text/javascript" src="userMessages.js"></script>
+    <script type="text/javascript" src="userMessagesController.js"></script>
+    <script type="text/javascript" src="userMessagesService.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="userMessages fragment">
+        <div id="userMessagesController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="contentarea win-type-body">
+
+                    <!--Problem mit dem userMessageList-template-->
+                    <div class="userMessageList-template"
+                         data-win-control="WinJS.Binding.Template" style="display: none">
+                        <div class="list-role-item">
+                            <label class="list-role-field">
+                                <span data-win-bind="textContent: Name"></span>
+                                <!--input type="text" data-win-bind="textContent: TITLE" />-->
+                            </label>
+                        </div>
+                        <div class="list-role-item">
+                            <label class="list-role-field">
+                                <span data-win-bind="textContent: Info1"></span>
+                                <span data-win-bind="textContent: Info1TS"></span>
+                                <!--input type="text" data-win-bind="textContent: TITLE" />-->
+                            </label>
+                        </div>
+                    </div>
+                    <div id="userMessageList"
+                         class="listview win-selectionstylefilled"
+                         data-win-control="WinJS.UI.ListView"
+                         data-win-options="{
+                            itemTemplate: select('.userMessageList-template')
+                         }">
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

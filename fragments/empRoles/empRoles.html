@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="empRoles.css" rel="stylesheet" />
+    <script type="text/javascript" src="empRolesService.js"></script>
+    <script type="text/javascript" src="empRolesController.js"></script>
+    <script type="text/javascript" src="empRoles.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="empRoles fragment">
+        <div id="empRolesController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="contentarea win-type-body">
+                    <div class="empRoleList-template"
+                         data-win-control="WinJS.Binding.Template" style="display: none">
+                        <div class="list-role-item">
+                            <label class="list-role-field">
+                                <input type="checkbox" class="win-checkbox" value="1"
+                                       data-win-bind="checked: Active" />
+                                <span data-win-bind="textContent: TITLE"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div id="empRoleList"
+                         class="listview win-selectionstylefilled"
+                         data-win-control="WinJS.UI.ListView"
+                         data-win-options="{
+                            itemTemplate: select('.empRoleList-template')
+                         }">
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

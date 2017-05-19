@@ -1,0 +1,25 @@
+﻿/**
+    empRoles fragment styles
+*/
+#empRoleList {
+    height: 60px;
+}
+
+.view-size-medium #empRoleList {
+    height: 120px;
+}
+
+.view-size-small #empRoleList {
+    height: 180px;
+}
+
+
+.list-role-item {
+    width: 33%;
+    min-width: 160px;
+    height: 48px;
+    overflow: hidden;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}

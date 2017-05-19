@@ -1,0 +1,23 @@
+﻿/**
+    reporting page styles
+*/
+.progress-container-centered {
+    margin-top: 64px;
+    margin-left: calc(50% - 32px);
+    display: inline;
+}
+.progress-centered {
+}
+#employeeChart {
+    width: 60%;
+    height: 200px;
+    float: left;
+    margin-left: 2%;
+}
+#countryChart {
+    width: 60%;
+    height: 200px;
+    float: left;
+    margin-top: 5%;
+    margin-left: 2%;
+}

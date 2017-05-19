@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="publish.css" rel="stylesheet" />
+    <script type="text/javascript" src="publishService.js"></script>
+    <script type="text/javascript" src="publishController.js"></script>
+    <script type="text/javascript" src="publish.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="settings fragment">
+        <div id="eventController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="contentarea win-type-body">
+                    <div class="header-separator"></div>
+                    <div class="content-header">
+                        <div class="half-circle half-circle-textcolor">&nbsp;</div>
+                        <div class="content-header-line win-type-caption">
+                            <span class="id-field"></span>
+                            <span class="caption-field" data-win-res="{textContent: 'publish.title'}"></span>
+                            <span class="date-field"></span>
+                        </div>
+                    </div>
+                    <div class="content-record">
+                        <div class="field_line">
+                            <span class="input_field win-type-subtitle" 
+                                  data-win-res="{textContent: 'publish.comment'}"
+                                  data-win-bind="style.display: generalData.publishFlag Binding.Converter.toDisplay"></span>
+                            <span class="input_field win-type-subtitle" 
+                                  data-win-res="{textContent: 'publish.published'}"
+                                  data-win-bind="style.display: generalData.publishFlag Binding.Converter.toDisplayNone"></span>
+                        </div>
+                    </div>
+                    <div class="error-message"
+                         data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg">
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

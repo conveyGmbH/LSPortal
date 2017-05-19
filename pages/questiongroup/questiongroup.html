@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="questiongroup.css" rel="stylesheet" />
+    <script type="text/javascript" src="questiongroupService.js"></script>
+    <script type="text/javascript" src="questiongroupController.js"></script>
+    <script type="text/javascript" src="questiongroup.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="settings fragment">
+        <div id="questiongroupController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="contentarea win-type-body">
+                    <div class="content-header">
+                        <div class="header-separator"></div>
+                        <div class="half-circle half-circle-textcolor">&nbsp;</div>
+                        <div class="content-header-line win-type-caption">
+                            <span class="id-field"></span>
+                            <span class="caption-field" data-win-res="{textContent: 'questiongroup.title'}"></span>
+                            <span class="date-field"></span>
+                        </div>
+                    </div>
+                    <div class="questiongroup-template"
+                         data-win-control="WinJS.Binding.Template" style="display: none">
+                        <div class="list-question-content">
+                            <input class="field_line_full win-textbox" type="text" 
+                                   data-win-bind="value: TITLE" />
+                        </div>
+                    </div>
+                    <div class="headerFooterPlaceholder">
+                        <div class="list-footer">
+                            <div class="status">
+                                <progress class="win-progress-bar progress"></progress>
+                                <div class="counter">
+                                    <span data-win-res="{textContent: 'questiongroup.count'}"></span><span>: </span><span data-win-bind="textContent: count"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="questiongroup"
+                         class="listview win-selectionstylefilled"
+                         data-win-control="WinJS.UI.ListView"
+                         data-win-options="{
+                                itemTemplate: select('.questiongroup-template'),
+                                footer: select('.list-footer')
+                         }">
+                    </div>
+                    <div class="error-message"
+                         data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,112 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="infodesk.css" rel="stylesheet" />
+    <script type="text/javascript" src="infodeskService.js"></script>
+    <script type="text/javascript" src="infodeskController.js"></script>
+    <script type="text/javascript" src="infodesk.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="infodesk fragment">
+        <div id="mailingController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="contentarea win-type-body">
+                    <div class="header-separator"></div>
+                    <div class="content-header">
+                        <div class="half-circle half-circle-textcolor">&nbsp;</div>
+                        <div class="content-header-line win-type-caption">
+                            <span class="id-field"></span>
+                            <span class="caption-field" data-win-res="{textContent: 'infodesk.title'}"></span>
+                            <span class="date-field"></span>
+                        </div>
+                    </div>
+                    <div class="content-record">
+                        <div class="line-separator"></div>
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'search.firstName'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'search.firstName'}"></span>
+                            <input class="input_field win-textbox" type="text" data-win-bind="value: restriction.Vorname Binding.Mode.twoway" />
+                        </div>
+                        <div class="field_line field_line_even">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'search.name'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'search.name'}"></span>
+                            <input class="input_field win-textbox" type="text" data-win-bind="value: restriction.Nachname Binding.Mode.twoway" />
+                        </div>
+                        <!--byhung Anzeige Vorname und Nachname + Fähigkeiten( Position + Sprache)-->
+                       
+                        <div class="line-separator"></div>
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'reporting.employee'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'reporting.employee'}"></span>
+                            <input class="input_field win-textbox" type="text" data-win-bind="value: restriction.Login Binding.Mode.twoway" />
+                        </div>
+                        <div class="field_line field_line_even"
+                             data-win-bind="style.display: messestandData.SkillType1ID Binding.Converter.toDisplay">
+                            <span class="label win-type-caption portrait_only" data-win-bind="textContent: messestandData.SkillType1"></span>
+                            <span class="label landscape_only" data-win-bind="textContent: messestandData.SkillType1"></span>
+                            <select id="skills1"
+                                    class="input_field win-dropdown"
+                                    data-win-control="WinJS.UI.Repeater"
+                                    data-win-bind="value: restriction.SkillType1Sortierung Binding.Mode.twoway">
+                                <!--SkillType1Sortierung-->
+                                <option data-win-bind="value: value; textContent: title"></option>
+                            </select>
+                        </div>
+                        <div class="line-separator"></div>
+
+                        <div class="field_line field_line_even"
+                             data-win-bind="style.display: messestandData.SkillType2ID Binding.Converter.toDisplay">
+                            <span class="label win-type-caption portrait_only" data-win-bind="textContent: messestandData.SkillType2"></span>
+                            <span class="label landscape_only" data-win-bind="textContent: messestandData.SkillType2"></span>
+                            <select id="skills2"
+                                    class="input_field win-dropdown"
+                                    data-win-control="WinJS.UI.Repeater"
+                                    data-win-bind="value: restriction.SkillType2Sortierung Binding.Mode.twoway">
+                                <option data-win-bind="value: value; textContent: title"></option>
+                            </select>
+                        </div>
+                        <div class="line-separator"></div>
+
+                        <!--TODO zwei Fragmente - einmal für Anzeigen der konkreten Skills der Mitarbeiter - Infotext -->
+                        <div class="line-separator"></div>
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-bind="textContent: messestandData.SkillType1"></span>
+                            <span class="label landscape_only" data-win-bind="textContent: messestandData.SkillType1"></span>
+                            <!--<span class="label win-type-caption portrait_only" data-win-res="{textContent: 'dataEmployee.Vorname'}"></span>-->
+                            <div class="list-field-small-relative" data-win-bind="textContent: dataEmployee.Positionen" ></div><!--dataEmployee.Vorname-->
+                        </div>
+                        <div class="field_line field_line_even">
+                            <span class="label win-type-caption portrait_only" data-win-bind="textContent: messestandData.SkillType2"></span>
+                            <span class="label landscape_only" data-win-bind="textContent: messestandData.SkillType2"></span>
+                            <div class="list-field-small-relative" data-win-bind="textContent: dataEmployee.Sprachen"></div>
+                        </div>
+                        <div class="line-separator"></div>
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'infodesk.firstName'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'infodesk.firstName'}"></span>
+                            <!--<span class="label win-type-caption portrait_only" data-win-res="{textContent: 'dataEmployee.Vorname'}"></span>-->
+                            <!-- <input class="input_field win-textbox" type="text" data-win-bind="value: dataEmployee.Vorname" /><!--dataEmployee.Vorname-->
+                            <div class="list-field-small-relative" data-win-bind="textContent: dataEmployee.Vorname"></div>
+                        </div>
+                        <div class="field_line field_line_even">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'infodesk.name'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'infodesk.name'}"></span>
+                            <!--<input class="input_field win-textbox" type="text" data-win-bind="value: dataEmployee.Nachname" />-->
+                            <div class="list-field-small-relative" data-win-bind="textContent: dataEmployee.Nachname"></div>
+                        </div>
+                        <div class="line-separator"></div>
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'infodesk.messages'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'infodesk.messages'}"></span>
+                            <div id="userMessageshost" class="input_field fragmenthost"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="error-message"
+                     data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

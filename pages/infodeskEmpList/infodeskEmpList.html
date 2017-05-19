@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="infodeskEmpList.css" rel="stylesheet" />
+    <script type="text/javascript" src="infodeskEmpListService.js"></script>
+    <script type="text/javascript" src="infodeskEmpListController.js"></script>
+    <script type="text/javascript" src="infodeskEmpList.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="settings fragment">
+        <div id="infodeskEmplistController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="contentarea win-type-body">
+                    <div class="content-header">
+                        <div class="win-type-subtitle master-list-header">
+                            <span data-win-res="{textContent: 'infodeskEmpList.title'}"></span>
+                        </div>
+                    </div>
+                    <div class="infodeskEmployeeList-template"
+                         data-win-control="WinJS.Binding.Template" style="display: none">
+                        <div class="list-portrait-only">
+                            <div class="row-separator"></div>
+                            <div class="list-div-left">
+                                <div class="list-symbol-ID">
+                                    <div id="user" class="action-image"></div>
+
+                                </div>
+
+                                <div data-win-bind="className: presentClass">
+                                    <!--list-empList-->
+                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
+                                          data-win-bind="textContent: fullName"></span>
+                                    <span class="list-compressed-title win-type-ellipsis"
+                                          data-win-bind="textContent: Login"></span>
+                                    <span class="list-compressed-title win-type-ellipsis"
+                                          data-win-bind="textContent: title; style.display: title Binding.Converter.toDisplay"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="headerFooterPlaceholder">
+                        <div class="list-footer">
+                            <div class="status">
+                                <progress class="win-progress-bar progress"></progress>
+                                <div class="counter">
+                                    <span data-win-res="{textContent: 'infodeskEmpList.count'}"></span><span>: </span><span data-win-bind="textContent: count"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="infodeskEmployeeList"
+                         class="listview win-selectionstylefilled"
+                         data-win-control="WinJS.UI.ListView"
+                         data-win-options="{
+                                itemTemplate: select('.infodeskEmployeeList-template'),
+                                footer: select('.list-footer')
+                         }">
+                    </div>
+                    <div class="error-message"
+                         data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,110 @@
+﻿/*
+#questiongroup .listview .win-selectionstylefilled {
+    position: relative;
+    left: 0px;
+    top: 0px;
+    width: 200px;
+    height: 200px;
+}
+*/
+#questiongroup .win-itemcontainer .win-itembox,
+#questiongroup .win-listview .win-itembox {
+    background-color: transparent;
+}
+
+#questiongroup .listview {
+    position: relative;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: calc(100% - 56px);
+}
+
+/* Styles used for the custom layout */
+.listView .contactListLayout {
+    position: static;
+}
+.listView .contactListLayout .win-surface {
+    margin-left: 0;
+}
+#questiongroup .win-container {
+    margin: 0;
+}
+/*
+#questiongroup .win-item {
+    padding: 4px 8px;
+    width: calc(100% - 20px);
+    border-style: solid;
+    border-width: 2px;
+    border-color: transparent;
+}
+*/
+#questiongroup .win-item {
+    width: calc(100% - 52px);
+    padding-left: 26px;
+    padding-right: 26px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+ 
+
+/*
+    margins/paddings for bigger size screens 
+
+    @media (max-width:1099px) {
+    }
+
+    is now signalled by additional class: view-size-bigger
+*/
+
+/*
+.view-size-bigger #questiongroup .win-container {
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 16px;
+}
+*/
+.view-size-bigger #questiongroup .win-item {
+    width: calc(100% - 52px);
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+/*
+    margins/paddings for middle sized screens 
+
+
+    is now signalled by additional class: view-size-medium
+
+    @media (max-width:899px) {
+    }
+*/
+
+
+.view-size-medium #questiongroup .win-item {
+    width: calc(100% - 36px);
+    padding-left: 18px;
+    padding-right: 18px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+/*
+    margins/paddings for small sized screens 
+
+
+    is now signalled by additional class: view-size-small
+
+    @media (max-width:499px) {
+    }
+*/
+
+
+.view-size-small #questiongroup .win-item {
+    width: calc(100% - 20px);
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}

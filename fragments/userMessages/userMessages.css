@@ -1,0 +1,20 @@
+﻿/**
+    userMessages fragment styles
+*/
+#userMessageList {
+
+}
+
+.view-size-medium #empRoleList {
+
+}
+
+.view-size-small #empRoleList {
+
+}
+
+
+.list-role-item {
+    width: 100%;
+    min-height: 48px;
+}
