@@ -150,6 +150,8 @@
                     (item.EMail ? item.EMail : ""))) +
                     (item.Freitext1 ? "\r\n" + item.Freitext1 : "");
                 item.globalContactId = item.CreatorSiteID + "/" + item.CreatorRecID;
+                item.mitarbeiterFullName = (item.Mitarbeiter_Vorname ? (item.Mitarbeiter_Vorname + " ") : "") + (item.Mitarbeiter_Nachname ? item.Mitarbeiter_Nachname : "");
+                //console.log("ITEM " + item.mitarbeiterFullName);
             }
             this.resultConverter = resultConverter;
 
@@ -449,6 +451,7 @@
                 Log.print(Log.l.trace, "Data loaded");
                 return that.selectRecordId(that.binding.contactId);
             }).then(function () {
+                AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Record selected");
             });
             Log.ret(Log.l.trace);
