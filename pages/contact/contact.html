@@ -19,6 +19,7 @@
                             <span class="id-field"
                                   data-win-bind="style.display: dataContact.CreatorRecID  Binding.Converter.toDisplay">
                                 <span data-win-bind="textContent: dataContact.CreatorSiteID"></span>/<span data-win-bind="textContent: dataContact.CreatorRecID"></span>
+                                <span data-win-bind="textContent: dataContact.Mitarbeiter_Vorname"></span> <span data-win-bind="textContent: dataContact.Mitarbeiter_Nachname"></span>
                             </span>
                             <span class="id-field"
                                   data-win-bind="style.display: dataContact.CreatorRecID  Binding.Converter.toDisplayNone">
@@ -26,13 +27,13 @@
                             </span>
                             <span class="caption-field" data-win-res="{textContent: 'contact.title'}"></span>
                             <span class="date-field" data-win-bind="textContent: dataContact.Erfassungsdatum Binding.Converter.toDateString"></span>
-                            <span data-win-bind="style.display: dataContact.Mitarbeiter_Vorname  Binding.Converter.toDisplay">
+                          <!--  <span data-win-bind="style.display: dataContact.Mitarbeiter_Vorname  Binding.Converter.toDisplay">
                                 <span data-win-bind="textContent: dataContact.Mitarbeiter_Vorname"></span> <span data-win-bind="textContent: dataContact.Mitarbeiter_Nachname"></span>
                             </span>
                             <span data-win-bind="style.display: dataContact.Mitarbeiter_Nachname  Binding.Converter.toDisplayNone">
                                 &nbsp;
                             </span>
-
+                              -->
                         </div>
                     </div>
                     <div class="content-record"
@@ -80,7 +81,7 @@
                                 </div>-->
                             </div>
                             <div class="line-separator"></div>
-                            <div class="field_line field_line_odd" style="overflow-y: hidden" >
+                            <div class="field_line field_line_odd" style="overflow-y: hidden">
                                 <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'contact.formOf'}"></span>
                                 <span class="label win-type-caption portrait_only_right" data-win-res="{textContent: 'contact.name'}"></span>
                                 <div class="label landscape_only">
@@ -124,12 +125,12 @@
                                 <span class="input_field win-type-subtitle" data-win-bind="textContent: dataContact.Name; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>-->
                             </div>
                             <div class="line-separator"></div>
-                        <!--<div class="field_line field_line_odd">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'contact.position'}"></span>
-                            <span class="label landscape_only" data-win-res="{textContent: 'contact.position'}"></span>
-                            <input class="input_field win-textbox" type="text" data-win-bind="value: dataContact.Position Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" />
-                            <span class="input_field win-type-subtitle" data-win-bind="textContent: dataContact.Position; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
-                        </div>-->
+                            <!--<div class="field_line field_line_odd">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'contact.position'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'contact.position'}"></span>
+                                <input class="input_field win-textbox" type="text" data-win-bind="value: dataContact.Position Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" />
+                                <span class="input_field win-type-subtitle" data-win-bind="textContent: dataContact.Position; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                            </div>-->
 
                             <div class="line-separator"></div>
                             <div class="field_line field_line_odd">
@@ -219,6 +220,11 @@
                                 </label>
                             </div>
                             <div class="line-separator"></div>
+                            <div class="field_line field_line_odd" data-win-bind="style.display: dataContact.Freitext3 Binding.Converter.toDisplay">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'contact.barcodeState'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'contact.barcodeState'}"></span>
+                                <span class="input_field win-type-subtitle" data-win-bind="textContent: dataContact.Freitext3 "></span>
+                            </div>
                         </div>
                         <div class="doc-container">
                             <div id="contactPhoto" class="photoview">
