@@ -26,6 +26,13 @@
                             </span>
                             <span class="caption-field" data-win-res="{textContent: 'contact.title'}"></span>
                             <span class="date-field" data-win-bind="textContent: dataContact.Erfassungsdatum Binding.Converter.toDateString"></span>
+                            <span data-win-bind="style.display: dataContact.Mitarbeiter_Vorname  Binding.Converter.toDisplay">
+                                <span data-win-bind="textContent: dataContact.Mitarbeiter_Vorname"></span> <span data-win-bind="textContent: dataContact.Mitarbeiter_Nachname"></span>
+                            </span>
+                            <span data-win-bind="style.display: dataContact.Mitarbeiter_Nachname  Binding.Converter.toDisplayNone">
+                                &nbsp;
+                            </span>
+
                         </div>
                     </div>
                     <div class="content-record"
