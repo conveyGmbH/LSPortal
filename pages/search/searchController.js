@@ -26,8 +26,7 @@
 
             var that = this;
 
-            var erfasserID = pageElement.querySelector("#ErfasserIDSearch");
-            var erfasserIDname = document.getElementById("ErfasserIDSearch");
+            var erfasserId = pageElement.querySelector("#ErfasserIDSearch");
             var erfassungsDatum = pageElement.querySelector("#Erfassungsdatum.win-datepicker");
             var modifiedTs = pageElement.querySelector("#modifiedTS.win-datepicker");
             var initLand = pageElement.querySelector("#InitLandSearch");
@@ -37,11 +36,11 @@
                 if (initLand && initLand.winControl) {
                     initLand.winControl.data = null;
                 }
-                if (erfasserID && erfasserID.winControl) {
-                    erfasserID.winControl.data = null;
+                if (erfasserId && erfasserId.winControl) {
+                    erfasserId.winControl.data = null;
                 }
                 if (that.employees) {
-                    that.employees = {};
+                    that.employees = null;
                 }
             }
 
@@ -72,8 +71,6 @@
                 if (that.employees) {
                     that.employees.push(item);
                 }
-
-
             }
             this.resultConverter = resultConverter;
 
@@ -211,29 +208,28 @@
                         // this callback will be called asynchronously
                         // when the response is available
                         Log.print(Log.l.trace, "EmpList.employeeView: success!");
-                        var savediD = erfasserID.value;
-                        var saveIndex = erfasserID.selectedIndex;
+                        var savediD = erfasserId.value;
+                        var saveIndex = erfasserId.selectedIndex;
                             // employeeView returns object already parsed from json file in response
                             if (json && json.d) {
                                 that.nextUrl = Search.employeeView.getNextUrl(json);
                                 var results = json.d.results;
                                 results.forEach(function(item, index) {
                                     that.resultConverter(item, index);
-                                    // that.binding.count = that.employees.push(item);
                                 });
-                                if (erfasserID && erfasserID.winControl) {
-                                    erfasserID.winControl.data = that.employees;
+                                if (erfasserId && erfasserId.winControl) {
+                                    erfasserId.winControl.data = that.employees;
                                 }
                             } else {
                                 that.nextUrl = null;
                             }
 
-                            for (var i = 0; i < erfasserID.length; i++) {
-                                if (erfasserID[i].value === that.binding.restriction.MitarbeiterID) {
+                            for (var i = 0; i < erfasserId.length; i++) {
+                                if (erfasserId[i].value === that.binding.restriction.MitarbeiterID) {
                                     saveIndex = i;
                                 }
                             }
-                                erfasserIDname.selectedIndex = saveIndex; 
+                            erfasserId.selectedIndex = saveIndex;
                         },
                         function(errorResponse) {
                             // called asynchronously if an error occurs
@@ -296,8 +292,8 @@
                                 results.forEach(function (item, index) {
                                     that.resultConverter(item, index);
                                 });
-                                if (erfasserID && erfasserID.winControl) {
-                                    erfasserID.winControl.data = that.employees;
+                                if (erfasserId && erfasserId.winControl) {
+                                    erfasserId.winControl.data = that.employees;
                                 }
                                 that.binding.mitarbeiterId = Search.employeeView.defaultValue.MitarbeiterVIEWID;
                                 
@@ -314,8 +310,8 @@
                             VeranstaltungID: AppData.getRecordId("Veranstaltung")
                         });
                     } else {
-                        if (erfasserID && erfasserID.winControl) {
-                            erfasserID.winControl.data = that.erfasserID;
+                        if (erfasserId && erfasserId.winControl) {
+                            erfasserId.winControl.data = that.employees;
                         }
                         that.binding.mitarbeiterId = Search.employeeView.defaultValue.MitarbeiterVIEWID;
                         return WinJS.Promise.as();
@@ -364,7 +360,6 @@
                     if (typeof that.binding.restriction.ModifiedTS === "undefined") {
                         that.binding.restriction.ModifiedTS = new Date();
                     }
-                   // erfasserIDname.selectedIndex = 0;
                 });
                 return ret;
             }

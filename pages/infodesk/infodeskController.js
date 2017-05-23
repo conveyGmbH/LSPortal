@@ -13,6 +13,7 @@
 
 (function () {
     "use strict";
+    // TEST-COMMIT by hung
     // WinJS.Namespace.define("Infodesk", {
     //    controller: null
     // });
@@ -63,7 +64,7 @@
             var loadInitSelection = function (item) {
                 Log.call(Log.l.trace, "Infodesk.Controller.");
                 var keyValue;
-               
+
                 if (item.SkillTypeSkillsVIEWID === 20) {
                     if (that.binding.restriction.SkillType1Sortierung) {
                         if (that.binding.restriction.SkillType1Sortierung < 10)
@@ -127,7 +128,7 @@
                 var ret = WinJS.Promise.as().then(function () {
                     complete({});
                     AppData.setRestriction("SkillEntry", that.binding.restriction); //SkillEntryView_20472
-                    // Abfrage wenn beide comboboxen nicht ausgewählt 
+                    // Abfrage wenn beide comboboxen nicht ausgewählt
                     // spannende Stelle // letzen Wert der Comboboxen
                     that.binding.restriction.countCombobox = 0;
                     if (that.binding.restriction.SkillType1Sortierung === "0") {
@@ -300,7 +301,7 @@
                             Log.print(Log.l.trace, "skillEntryView: success!");
                             if (json && json.d) {
                                 for (var i = 0; i < json.d.results.length; i++) {
-                                    //SkillTypeID und Sortierung 
+                                    //SkillTypeID und Sortierung
                                     if (json.d.results[i].MitarbeiterID === recordId) {
                                         that.binding.dataEmployee.Vorname = json.d.results[i].Vorname;
                                         that.binding.dataEmployee.Nachname = json.d.results[i].Nachname;
