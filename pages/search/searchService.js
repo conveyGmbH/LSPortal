@@ -31,7 +31,7 @@
                 Strasse: "",
                 PLZ: "",
                 Stadt: "",
-                INITLandID: "0",
+                INITLandID: null,
                 useErfassungsdatum: false,
                 usemodifiedTS: false,
                 Erfassungsart: 0,
@@ -126,7 +126,7 @@
                 Log.call(Log.l.trace, "Search.");
                 var ret = Search._employeeView.select(complete, error, restriction, {
                     ordered: true,
-                    orderAttribute: "Nachname"
+                    orderAttribute: "Login"
                 });
                 Log.ret(Log.l.trace);
                 return ret;

@@ -29,7 +29,7 @@
                         text: "",
                         show: null
                     },
-                    showErfassungsdatum: false,
+                    //showErfassungsdatum: false,
                     showModifiedTS: false
                 }
             ]);
@@ -59,13 +59,10 @@
             this.title = title;
 
             var setInitialDate = function () {
-                if (!AppData.entrydate) {
+                if (typeof that.binding.restriction.Erfassungsdatum === "undefined") {
                     that.binding.restriction.Erfassungsdatum = new Date();
-                    AppData.entrydate = new Date();
-                } else {
-                    that.binding.showErfassungsdatum = true;
-                    that.binding.restriction.Erfassungsdatum = AppData.entrydate;
                 }
+
                 Log.call(Log.l.trace, "Initialdate set");
             }
             this.setInitialDate = setInitialDate;
@@ -83,8 +80,40 @@
                 if (modifiedTs && modifiedTs.winControl) {
                     modifiedTs.winControl.disabled = !that.binding.showModifiedTS;
                 }
+              //  if (that.binding.restriction.Erfassungsdatum === "undefined") {
+                //    that.binding.restriction.Erfassungsdatum = new Date();
+                //}
             }
             this.showDateRestrictions = showDateRestrictions;
+
+            var saveRestriction = function (complete, error) {
+                var ret = WinJS.Promise.as().then(function() {
+                    if (!that.binding.showErfassungsdatum &&
+                        typeof that.binding.showErfassungsdatum !== "undefined") {
+                        delete that.binding.showErfassungsdatum;
+                    }
+                    //@nedra:10.11.2015: Erfassungsdatum is undefined if it is not updated -> Erfassungsdatum = current date
+                    if (that.binding.showErfassungsdatum &&
+                        typeof that.binding.restriction.Erfassungsdatum === "undefined") {
+                        that.binding.restriction.Erfassungsdatum = new Date();
+                    }
+                    if (!that.binding.restriction.usemodifiedTS &&
+                        typeof that.binding.restriction.ModifiedTS !== "undefined") {
+                        delete that.binding.restriction.ModifiedTS;
+                    }
+                    //@nedra:10.11.2015: modifiedTS is undefined if it is not updated -> modifiedTS = current date
+                    if (that.binding.restriction.usemodifiedTS &&
+                        typeof that.binding.restriction.ModifiedTS === "undefined") {
+                        that.binding.restriction.ModifiedTS = new Date();
+                    }
+                    AppData.setRestriction("Kontakt", that.binding.restriction);
+                    //that.setRestriction(that.binding.restriction);
+                    complete({});
+                    return WinJS.Promise.as();
+                });
+                return ret;
+            }
+            this.saveRestriction = saveRestriction;
 
             var getRestriction = function(complete, error) {
                 var myrestriction = {};
@@ -630,8 +659,25 @@
                         that.binding.mitarbeiterId = Reporting.employeeView.defaultValue.MitarbeiterVIEWID;
                         return WinJS.Promise.as();
                     }
-                }).then(function() {
-
+                }).then(function () {
+                    var savedRestriction = AppData.getRestriction("Kontakt");
+                    if (!savedRestriction) {
+                        savedRestriction = {};
+                    } 
+                    var defaultRestriction = Reporting.defaultrestriction;
+                    var prop;
+                    for (prop in defaultRestriction) {
+                        if (defaultRestriction.hasOwnProperty(prop)) {
+                            if (typeof savedRestriction[prop] === "undefined") {
+                                savedRestriction[prop] = defaultRestriction[prop];
+                            }
+                        }
+                    }
+                    that.binding.restriction = savedRestriction;
+                    // always define date types
+                    if (typeof that.binding.restriction.Erfassungsdatum === "undefined") {
+                        that.binding.restriction.Erfassungsdatum = new Date();
+                    }
                     // always define date types
                     if (typeof that.binding.modifiedTS === "undefined") {
                         that.binding.modifiedTS = new Date();
@@ -646,7 +692,7 @@
                 return ret;
             };
             this.loadData = loadData;
-            that.setInitialDate();
+            //that.setInitialDate();
             that.showDateRestrictions();
             that.processAll().then(function() {
                 Log.print(Log.l.trace, "Binding wireup page complete");

@@ -34,7 +34,25 @@
             }
             Log.ret(Log.l.trace);
         },
-
+        // save Restriction when navigate away from this page
+        canUnload: function (complete, error) {
+            Log.call(Log.l.trace, pageName + ".");
+            var ret;
+            if (this.controller) {
+                ret = this.controller.saveRestriction(function (response) {
+                    complete(response);
+                }, function (errorResponse) {
+                    error(errorResponse);
+                });
+            } else {
+                ret = WinJS.Promise.as().then(function () {
+                    var err = { status: 500, statusText: "fatal: page already deleted!" };
+                    error(err);
+                });
+            }
+            Log.ret(Log.l.trace);
+            return ret;
+        },
         unload: function () {
             Log.call(Log.l.trace, pageName + ".");
             // TODO: Respond to navigations away from this page.
