@@ -11,6 +11,7 @@
 (function () {
     "use strict";
     WinJS.Namespace.define("Application.QuestionListLayout", {
+        //list: (typeof Skillentry !== "undefined") && Skillentry.controller && Skillentry.controller.questions,
         QuestionsLayout: WinJS.Class.define(function (options) {
             this._site = null;
             this._surface = null;
@@ -35,8 +36,10 @@
             }
         })
     });
-
     var pageName = Application.getPagePath("skillentry");
+    //var inResize = 0;
+    //var prevListQuestionnaireWidth = 0;
+    //var prevListQuestionnaireHeight = 0;
 
     WinJS.UI.Pages.define(pageName, {
         // This function is called whenever a user navigates to this page. It
@@ -47,17 +50,17 @@
             this.inResize = 0;
             this.prevWidth = 0;
             this.prevHeight = 0;
-
+            
             // add page specific commands to AppBar
             AppBar.commandList = [
                 { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" },
                 { id: "clickOk", label: getResourceText("command.ok"), tooltip: getResourceText("tooltip.ok"), section: "primary", svg: "navigate_check", key: WinJS.Utilities.Key.enter }
-            ];
+                ];
 
             this.controller = new Skillentry.Controller(element);
             if (this.controller.eventHandlers) {
                 // general event listener for hardware back button, too!
-                this.controller.addRemovableEventListener(document, "backbutton", this.controller.eventHandlers.clickBack.bind(this.controller));
+                this.controller.addRemovableEventListener(document, "backbutton", this.controller.eventHandlers.clickBack.bind(controller));
             }
             Log.ret(Log.l.trace);
         },
@@ -65,11 +68,16 @@
         unload: function () {
             Log.call(Log.l.trace, pageName + ".");
             // TODO: Respond to navigations away from this page.
+            //var controller = Skillentry.controller;
+           // if (controller && WinJS.Navigation.location !== pageName) {
+             //   Skillentry.controller = null;
+            //}
             Log.ret(Log.l.trace);
         },
         canUnload: function (complete, error) {
             Log.call(Log.l.trace, pageName + ".");
             var ret;
+            //this.controller = Skillentry.controller;
             if (this.controller) {
                 ret = this.controller.saveData(function (response) {
                     // called asynchronously if ok

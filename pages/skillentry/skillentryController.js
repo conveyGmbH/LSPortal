@@ -15,7 +15,7 @@
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement) {
             Log.call(Log.l.trace, "Skillentry.Controller.");
             Application.Controller.apply(this, [pageElement, {
-                count: 0
+                countSkills: 0
             }]);
             this.nextUrl = null;
             this.recordId = null;
@@ -223,7 +223,7 @@
                     if (that.curRecId && !that.prevRecId) {
                         var curScope = that.scopeFromRecordId(that.curRecId);
                         if (curScope && curScope.item &&
-                            curScope.item.Sortierung < that.binding.count) {
+                            curScope.item.Sortierung < that.binding.countSkills) {
                             curScope.item.Sortierung += 2;
                             that.questions.setAt(curScope.index, curScope.item);
                             // set modified!
@@ -275,7 +275,7 @@
                     if (listView && listView.winControl) {
                         var listControl = listView.winControl;
                         if (listControl.selection) {
-                            var selectionCount = listControl.selection.count();
+                            var selectionCount = listControl.selection.count;
                             if (selectionCount === 1) {
                                 // Only one item is selected, show the page
                                 listControl.selection.getItems().done(function (items) {
@@ -496,7 +496,7 @@
                     if (that.curRecId && !that.prevRecId) {
                         var curScope = that.scopeFromRecordId(that.curRecId);
                         if (curScope && curScope.item &&
-                            curScope.item.Sortierung < that.binding.count) {
+                            curScope.item.Sortierung < that.binding.countSkills) {
                             ret = false;
                         }
                     }
@@ -523,7 +523,7 @@
                         Log.print(Log.l.trace, "Skillentry._skillentryline_L: success!");
                         // select returns object already parsed from json file in response
                         if (json && json.d) {
-                            that.binding.count = json.d.results.length;
+                            that.binding.countSkills = json.d.results.length;
                             that.nextUrl = Skillentry._skillentryline_L.getNextUrl(json);
                             var results = json.d.results;
                             var skilltypeid = results.SkillTypeID;
@@ -629,10 +629,15 @@
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData(getRecordId());
             }).then(function () {
+                AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Record selected");
             });
             Log.ret(Log.l.trace);
         }, {
+            nextUrl: null,
+            recordId: null,
+            loading: false,
+            questions: null,
             prevRecId: 0,
             curRecId: 0,
             cursorPos: { x: 0, y: 0 }
