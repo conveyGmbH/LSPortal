@@ -544,7 +544,7 @@ input.input_small_right {
     float: left;
     width: 49%;
    
-    margin-top: 0; /**/
+    margin-top: 0;
 }
 .input_quarter_right {
     min-height: 32px;

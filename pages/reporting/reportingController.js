@@ -62,7 +62,6 @@
                 if (typeof that.binding.restriction.Erfassungsdatum === "undefined") {
                     that.binding.restriction.Erfassungsdatum = new Date();
                 }
-
                 Log.call(Log.l.trace, "Initialdate set");
             }
             this.setInitialDate = setInitialDate;
@@ -80,9 +79,6 @@
                 if (modifiedTs && modifiedTs.winControl) {
                     modifiedTs.winControl.disabled = !that.binding.showModifiedTS;
                 }
-              //  if (that.binding.restriction.Erfassungsdatum === "undefined") {
-                //    that.binding.restriction.Erfassungsdatum = new Date();
-                //}
             }
             this.showDateRestrictions = showDateRestrictions;
 
