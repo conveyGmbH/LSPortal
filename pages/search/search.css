@@ -2,6 +2,7 @@
 }
 .seperator-slash {
     float: left;
+    text-align: center;
     width: 22px;
     font-size: x-large;
 }

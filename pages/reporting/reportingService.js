@@ -442,7 +442,8 @@
         defaultrestriction: {
             ErfasserID: null,
             InitLandID: null,
-            Erfassungsdatum: null,
+            //Erfassungsdatum: "",
+            showErfassungsdatum: false,
             ModifiedTs: null
         }
     });

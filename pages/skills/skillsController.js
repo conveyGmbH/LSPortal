@@ -17,23 +17,14 @@
                 count: 0,
                 questionId: AppData.generalData.getRecordId("SkillTypeSkills")
             }]);
-            this.nextUrl = null;
-            this.loading = false;
-            this.questions = null;
 
             var that = this;
+
+            var input = pageElement.querySelectorAll('.win-range');
 
             // ListView control
             var listView = pageElement.querySelector("#skillsList.listview");
 
-            this.dispose = function () {
-                if (listView && listView.winControl) {
-                    listView.winControl.itemDataSource = null;
-                }
-                if (that.questions) {
-                    that.questions = null;
-                }
-            }
 
             var progress = null;
             var counter = null;
@@ -766,10 +757,14 @@
                 Log.print(Log.l.trace, "Data loaded");
                 return that.selectRecordId(that.binding.questionId);
             }).then(function () {
+                AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Record selected");
             });
             Log.ret(Log.l.trace);
         }, {
+            nextUrl: null,
+            loading: false,
+            questions: null,
             prevRecId: 0,
             curRecId: 0,
             cursorPos: { x: 0, y: 0 }

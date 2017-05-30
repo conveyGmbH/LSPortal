@@ -95,6 +95,13 @@
 
             // define handlers
             this.eventHandlers = {
+                clickBack: function (event) {
+                    Log.call(Log.l.trace, "Infodesk.Controller.");
+                    if (WinJS.Navigation.canGoBack === true) {
+                        WinJS.Navigation.back(1).done();
+                    }
+                    Log.ret(Log.l.trace);
+                },
                 onSelectionChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "InfodeskEmpList.Controller.");
                     if (listView && listView.winControl) {
@@ -112,7 +119,7 @@
                                                 // called asynchronously if ok
                                                 that.binding.employeeId = item.data.MitarbeiterID;
                                                 var curPageId = Application.getPageId(nav.location);
-                                                if ((curPageId === "infodesk") &&
+                                                if ((curPageId === "infodesk" || curPageId ==="infodeskEmpList") &&
                                                     typeof AppBar.scope.loadData === "function") {
                                                     AppBar.scope.loadData(that.binding.employeeId);
                                                 } else {

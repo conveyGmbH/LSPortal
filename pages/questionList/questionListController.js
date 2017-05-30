@@ -509,6 +509,39 @@
                         if (that.inAnswerCountFromRange) {
                             Log.print(Log.l.trace, "extra ignored");
                         } else {
+                            if (listView && listView.winControl) {
+                                var listControl = listView.winControl;
+                                if (listControl.selection) {
+                                    var selectionCount = listControl.selection.count();
+                                    if (selectionCount === 1) {
+                                        // Only one item is selected, show the page
+                                        listControl.selection.getItems().done(function (items) {
+                                            var item = items[0];
+                                            if (item.data && item.data.FragenAntwortenVIEWID) {
+                                                var newRecId = item.data.FragenAntwortenVIEWID;
+                                                Log.print(Log.l.trace, "newRecId:" + newRecId + " curRecId:" + that.curRecId);
+                                                //if (newRecId !== 0 && newRecId !== that.curRecId) {
+                                                AppData.setRecordId('FragenAntworten', newRecId);
+                                                if (that.curRecId) {
+                                                    that.prevRecId = that.curRecId;
+                                                }
+                                                that.curRecId = newRecId;
+                                                if (that.prevRecId !== 0) { //
+                                                    that.saveData(function (response) {
+                                                        Log.print(Log.l.trace, "question saved");
+                                                         AppBar.triggerDisableHandlers();
+                                                    }, function (errorResponse) {
+                                                        Log.print(Log.l.error, "error saving question");
+                                                    });
+                                                } else {
+                                                    AppBar.triggerDisableHandlers();
+                                                }
+                                                //  }
+                                            }
+                                        });
+                                    }
+                                }
+                            }
                             that.inAnswerCountFromRange = true;
                             that.answerCountFromRange(event.currentTarget);
                         }
@@ -537,7 +570,40 @@
                             default:
                                 type = 0;
                         }
-                        that.setQuestionType(type);
+                        if (listView && listView.winControl) {
+                            var listControl = listView.winControl;
+                            if (listControl.selection) {
+                                var selectionCount = listControl.selection.count();
+                                if (selectionCount === 1) {
+                                    // Only one item is selected, show the page
+                                    listControl.selection.getItems().done(function (items) {
+                                        var item = items[0];
+                                        if (item.data && item.data.FragenAntwortenVIEWID) {
+                                            var newRecId = item.data.FragenAntwortenVIEWID;
+                                            Log.print(Log.l.trace, "newRecId:" + newRecId + " curRecId:" + that.curRecId);
+                                            //if (newRecId !== 0 && newRecId !== that.curRecId) {
+                                                AppData.setRecordId('FragenAntworten', newRecId);
+                                                if (that.curRecId) {
+                                                    that.prevRecId = that.curRecId;
+                                                }
+                                                that.curRecId = newRecId;
+                                                if (that.prevRecId !== 0) { //
+                                                    that.saveData(function (response) {
+                                                        Log.print(Log.l.trace, "question saved");
+                                                         AppBar.triggerDisableHandlers();
+                                                    }, function (errorResponse) {
+                                                        Log.print(Log.l.error, "error saving question");
+                                                    });
+                                                } else {
+                                                    AppBar.triggerDisableHandlers();
+                                                }
+                                          //  }
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                       that.setQuestionType(type);
                     }
                     Log.ret(Log.l.trace);
                 },

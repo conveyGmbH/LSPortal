@@ -59,6 +59,7 @@
                 Bemerkungen: "",
                 WebAdresse: "",
                 Freitext1: "",
+                Freitext3: "",
                 HostName: (window.device && window.device.uuid),
                 INITAnredeID: 0,
                 INITLandID: 0,
