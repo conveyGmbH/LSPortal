@@ -904,6 +904,7 @@
                         // when the response is available
                         Log.print(Log.l.trace, "questionnaireDocView: success!");
                         if (json.d) {
+                            // no format handling for now until bugfixed binaries are relased
                             var format = "image/jpeg";
                             if (!that.images) {
                                 // Now, we call WinJS.Binding.List to get the bindable list
