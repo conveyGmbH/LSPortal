@@ -189,17 +189,19 @@
 
             var scrollToRecordId = function (recordId) {
                 Log.call(Log.l.trace, "QuestionList.Controller.", "recordId=" + recordId);
-                if (recordId && listView && listView.winControl) {
-                    for (var i = 0; i < that.questions.length; i++) {
-                        var question = that.questions.getAt(i);
-                        var htmlElement = listView.winControl.elementFromIndex(i);
-                        if (htmlElement) {
-                            var offsetTop = htmlElement.offsetTop;
-                            listView.winControl.scrollPosition(offsetTop);
-                        }
-                        if (question && typeof question === "object" &&
-                            question.FragenAntwortenVIEWID === recordId) {
-                            break;
+                if (that.loading) {
+                    WinJS.Promise.timeout(50).then(function () {
+                        that.scrollToRecordId(recordId);
+                    });
+                } else {
+                    if (recordId && listView && listView.winControl) {
+                        for (var i = 0; i < that.questions.length; i++) {
+                            var question = that.questions.getAt(i);
+                            if (question && typeof question === "object" &&
+                                question.FragenAntwortenVIEWID === recordId) {
+                                listView.winControl.indexOfFirstVisible = i;
+                                break;
+                            }
                         }
                     }
                 }
@@ -215,7 +217,9 @@
                         if (question && typeof question === "object" &&
                             question.FragenAntwortenVIEWID === recordId) {
                             listView.winControl.selection.set(i).done(function () {
-                                that.scrollToRecordId(recordId);
+                                WinJS.Promise.timeout(50).then(function() {
+                                    that.scrollToRecordId(recordId);
+                                });
                             });
                             break;
                         }
@@ -340,7 +344,9 @@
                     QuestionList.questionListView.deleteRecord(function (response) {
                         AppBar.busy = false;
                         // called asynchronously if ok
-                        that.loadData();
+                        that.loadData().then(function () {
+                            that.selectRecordId(that.binding.questionId);
+                        });
                     }, function (errorResponse) {
                         AppBar.busy = false;
                         AppData.setErrorMsg(that.binding, errorResponse);
@@ -414,10 +420,9 @@
                             // called asynchronously if ok
                             var recordId = (json && json.d && json.d.FragenVIEWID);
                             Log.print(Log.l.info, "questionListView insert: success! recordId=" + recordId);
+                            that.binding.questionId = recordId;
                             that.loadData().then(function () {
-                                if (recordId) {
-                                    that.selectRecordId(recordId);
-                                }
+                                that.selectRecordId(that.binding.questionId);
                             });
                         },
                         function(errorResponse) {
@@ -432,10 +437,9 @@
                     var recordId = that.curRecId;
                     that.saveData(function (response) {
                         Log.print(Log.l.trace, "question saved");
+                        that.binding.questionId = recordId;
                         that.loadData().then(function () {
-                            if (recordId) {
-                                that.selectRecordId(recordId);
-                            }
+                            that.selectRecordId(that.binding.questionId);
                         });
                     }, function (errorResponse) {
                         Log.print(Log.l.error, "error saving question");
@@ -452,9 +456,12 @@
                             that.questions.setAt(curScope.index, curScope.item);
                             // set modified!
                             AppBar.modified = true;
+                            that.binding.questionId = curScope.item.FragenAntwortenVIEWID;
                             that.saveData(function (response) {
                                 Log.print(Log.l.trace, "question saved");
-                                that.loadData();
+                                that.loadData().then(function () {
+                                    that.selectRecordId(that.binding.questionId);
+                                });
                             }, function (errorResponse) {
                                 Log.print(Log.l.error, "error saving question");
                             });
@@ -472,9 +479,12 @@
                             that.questions.setAt(curScope.index, curScope.item);
                             // set modified!
                             AppBar.modified = true;
+                            that.binding.questionId = curScope.item.FragenAntwortenVIEWID;
                             that.saveData(function (response) {
                                 Log.print(Log.l.trace, "question saved");
-                                that.loadData();
+                                that.loadData().then(function () {
+                                    that.selectRecordId(that.binding.questionId);
+                                });
                             }, function (errorResponse) {
                                 Log.print(Log.l.error, "error saving question");
                             });
@@ -658,25 +668,16 @@
                             confirm(confirmTitle, function (result) {
                                 if (result) {
                                     Log.print(Log.l.trace, "clickDelete: user choice OK");
-                                    that.deleteData(function (response) {
-                                        // delete OK 
-                                        that.loadData();
-                                    }, function (errorResponse) {
-                                        // delete ERROR
-                                        var message = null;
-                                        Log.print(Log.l.error, "error status=" + errorResponse.status + " statusText=" + errorResponse.statusText);
-                                        if (errorResponse.data && errorResponse.data.error) {
-                                            Log.print(Log.l.error, "error code=" + errorResponse.data.error.code);
-                                            if (errorResponse.data.error.message) {
-                                                Log.print(Log.l.error, "error message=" + errorResponse.data.error.message.value);
-                                                message = errorResponse.data.error.message.value;
-                                            }
-                                        }
-                                        if (!message) {
-                                            message = getResourceText("error.delete");
-                                        }
-                                        alert(message);
-                                    });
+                                    var question;
+                                    if (curScope.index > 0) {
+                                        question = that.questions.getAt(curScope.index - 1);
+                                    } else {
+                                        question = that.questions.getAt(1);
+                                    }
+                                    if (question) {
+                                        that.binding.questionId = question.FragenAntwortenVIEWID;
+                                    }
+                                    that.deleteData();
                                 } else {
                                     Log.print(Log.l.trace, "clickDelete: user choice CANCEL");
                                 }
@@ -1020,6 +1021,7 @@
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
+                    that.loading = true;
                     return QuestionList.questionListView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
