@@ -22,7 +22,6 @@
 
                 // Add a CSS class to control the surface level layout
                 WinJS.Utilities.addClass(this._surface, "questionListLayout");
-
                 return WinJS.UI.Orientation.vertical;
             },
 
@@ -100,7 +99,7 @@
             // TODO: Respond to changes in viewState.
             if (element && !that.inResize) {
                 that.inResize = 1;
-                ret = WinJS.Promise.timeout(0).then(function () {
+                ret = WinJS.Promise.timeout(100).then(function () {
                     var listQuestionnaire = element.querySelector("#listQuestionList.listview");
                     if (listQuestionnaire && listQuestionnaire.style) {
                         var contentarea = element.querySelector(".contentarea");
@@ -119,8 +118,14 @@
                         }
                     }
                     that.inResize = 0;
+
+                }).then(function() {
+                   // var counter = element.querySelector(".counter");
+                   // counter.scrollIntoView(false);
                 });
+                
             }
+            
             Log.ret(Log.l.u1);
             return ret;
         }
