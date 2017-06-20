@@ -20,14 +20,16 @@
                             <span class="caption-field" data-win-res="{textContent: 'skillentry.title'}"></span>
                             <span class="date-field"></span>
                         </div>
+                        <div class="line-separator"></div>
                     </div>
                     <div class="skillentryList-template"
                          data-win-control="WinJS.Binding.Template" style="display: none">
                         <div class="questionnaire-row">
                             <div class="row-bkg"></div>
-                            <div class="row-separator"></div>
+                            <div class="list-fragengruppe-container" data-win-bind="style.display: FLAG_Trennlinie Binding.Converter.toDisplay"></div>
+                            <div class="row-separator" data-win-bind="style.display: FLAG_Trennlinie Binding.Converter.toDisplayNone"></div>
                             <span class="list-question-field label-color" data-win-bind="textContent: SkillTypeTitle"></span>
-                            <div class="field_line_questionnaire win-type-subtitle">
+                            <div class="field_line_skillentry win-type-subtitle">
                                 <div class="field_row_odd">
                                     <div class="field_line_left">
                                         <label class="checkbox list-selection-field" data-win-bind="style.display: Skills01Name Binding.Converter.toDisplay">
@@ -64,7 +66,7 @@
                                 <div class="field-separator"></div>
                             </div>
                             <div class="line-separator"></div>
-                            <div class="field_line_questionnaire win-type-subtitle">
+                            <div class="field_line_skillentry win-type-subtitle">
                                 <div class="field_row_odd">
                                     <div class="field_line_left">
                                         <label class="checkbox list-selection-field" data-win-bind="style.display: Skills05Name Binding.Converter.toDisplay">
@@ -101,7 +103,7 @@
                                 <div class="field-separator"></div>
                             </div>
                             <div class="line-separator"></div>
-                            <div class="field_line_questionnaire win-type-subtitle">
+                            <div class="field_line_skillentry win-type-subtitle">
                                 <div class="field_row_odd">
                                     <div class="field_line_left">
                                         <label class="checkbox list-selection-field" data-win-bind="style.display: Skills09Name Binding.Converter.toDisplay">
@@ -138,7 +140,7 @@
                                 <div class="field-separator"></div>
                             </div>
                             <div class="line-separator"></div>
-                            <div class="field_line_questionnaire win-type-subtitle">
+                            <div class="field_line_skillentry win-type-subtitle">
                                 <div class="field_row_odd">
                                     <div class="field_line_left">
                                         <label class="checkbox list-selection-field" data-win-bind="style.display: Skills13Name Binding.Converter.toDisplay">
@@ -175,7 +177,7 @@
                                 <div class="field-separator"></div>
                             </div>
                             <div class="line-separator"></div>
-                            <div class="field_line_questionnaire win-type-subtitle">
+                            <div class="field_line_skillentry win-type-subtitle">
                                 <div class="field_row_odd">
                                     <div class="field_line_left">
                                         <label class="checkbox list-selection-field" data-win-bind="style.display: Skills17Name Binding.Converter.toDisplay">
@@ -212,7 +214,7 @@
                                 <div class="field-separator"></div>
                             </div>
                             <div class="line-separator"></div>
-                            <div class="field_line_questionnaire win-type-subtitle">
+                            <div class="field_line_skillentry win-type-subtitle">
                                 <div class="field_row_odd">
                                     <div class="field_line_left">
                                         <label class="checkbox list-selection-field" data-win-bind="style.display: Skills21Name Binding.Converter.toDisplay">
@@ -249,7 +251,7 @@
                                 <div class="field-separator"></div>
                             </div>
                             <div class="line-separator"></div>
-                            <div class="field_line_questionnaire win-type-subtitle">
+                            <div class="field_line_skillentry win-type-subtitle">
                                 <div class="field_row_odd">
                                     <div class="field_line_left">
                                         <label class="checkbox list-selection-field" data-win-bind="style.display: Skills25Name Binding.Converter.toDisplay">
@@ -285,21 +287,21 @@
                                 </div>
                                 <div class="field-separator"></div>
                             </div>
-                            <div class="line-separator"></div>
                         </div>
+                        <div class="line-separator row-end"></div>
                     </div>
                     <div class="headerFooterPlaceholder">
                         <div class="list-footer">
                             <div class="status">
                                 <progress class="win-progress-bar progress"></progress>
                                 <div class="counter">
-                                    <span data-win-res="{textContent: 'skillentry.count'}"></span><span>: </span><span data-win-bind="textContent: count"></span>
+                                    <span data-win-res="{textContent: 'skillentry.count'}"></span><span>: </span><span data-win-bind="textContent: countSkills"></span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div id="skillentryList"
-                         class="listview win-selectionstylefilled"
+                         class="listview"
                          data-win-control="WinJS.UI.ListView"
                          data-win-options="{
                                  itemTemplate: select('.skillentryList-template'),

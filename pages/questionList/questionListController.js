@@ -33,7 +33,7 @@
 
             // ListView control
             var listView = pageElement.querySelector("#listQuestionList.listview");
-
+           
             this.dispose = function () {
                 if (listView && listView.winControl) {
                     listView.winControl.itemDataSource = null;
@@ -187,6 +187,28 @@
             }
             this.mergeRecord = mergeRecord;
 
+            var scrollToRecordId = function (recordId) {
+                Log.call(Log.l.trace, "QuestionList.Controller.", "recordId=" + recordId);
+                if (that.loading) {
+                    WinJS.Promise.timeout(50).then(function () {
+                        that.scrollToRecordId(recordId);
+                    });
+                } else {
+                    if (recordId && listView && listView.winControl) {
+                        for (var i = 0; i < that.questions.length; i++) {
+                            var question = that.questions.getAt(i);
+                            if (question && typeof question === "object" &&
+                                question.FragenAntwortenVIEWID === recordId) {
+                                listView.winControl.indexOfFirstVisible = i;
+                                break;
+                            }
+                        }
+                    }
+                }
+                Log.ret(Log.l.trace);
+            }
+            this.scrollToRecordId = scrollToRecordId;
+
             var selectRecordId = function (recordId) {
                 Log.call(Log.l.trace, "QuestionList.Controller.", "recordId=" + recordId);
                 if (recordId && listView && listView.winControl && listView.winControl.selection) {
@@ -194,7 +216,11 @@
                         var question = that.questions.getAt(i);
                         if (question && typeof question === "object" &&
                             question.FragenAntwortenVIEWID === recordId) {
-                            listView.winControl.selection.set(i);
+                            listView.winControl.selection.set(i).done(function () {
+                                WinJS.Promise.timeout(50).then(function() {
+                                    that.scrollToRecordId(recordId);
+                                });
+                            });
                             break;
                         }
                     }
@@ -318,7 +344,9 @@
                     QuestionList.questionListView.deleteRecord(function (response) {
                         AppBar.busy = false;
                         // called asynchronously if ok
-                        that.loadData();
+                        that.loadData().then(function () {
+                            that.selectRecordId(that.binding.questionId);
+                        });
                     }, function (errorResponse) {
                         AppBar.busy = false;
                         AppData.setErrorMsg(that.binding, errorResponse);
@@ -387,22 +415,32 @@
                 clickNew: function (event) {
                     Log.call(Log.l.trace, "QuestionList.Controller.");
                     AppBar.busy = true;
-                    QuestionList.questionListView.insert(function (json) {
-                        AppBar.busy = false;
-                        // called asynchronously if ok
-                        Log.print(Log.l.info, "questionListView insert: success!");
-                        that.loadData();
-                    }, function (errorResponse) {
-                        AppBar.busy = false;
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                    });
+                    QuestionList.questionListView.insert(function(json) {
+                            AppBar.busy = false;
+                            // called asynchronously if ok
+                            var recordId = (json && json.d && json.d.FragenVIEWID);
+                            Log.print(Log.l.info, "questionListView insert: success! recordId=" + recordId);
+                            that.binding.questionId = recordId;
+                            that.loadData().then(function () {
+                                that.selectRecordId(that.binding.questionId);
+                            });
+                        },
+                        function(errorResponse) {
+                            AppBar.busy = false;
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        });
+
                     Log.ret(Log.l.trace);
                 },
                 clickForward: function (event) {
                     Log.call(Log.l.trace, "QuestionList.Controller.");
+                    var recordId = that.curRecId;
                     that.saveData(function (response) {
                         Log.print(Log.l.trace, "question saved");
-                        that.loadData();
+                        that.binding.questionId = recordId;
+                        that.loadData().then(function () {
+                            that.selectRecordId(that.binding.questionId);
+                        });
                     }, function (errorResponse) {
                         Log.print(Log.l.error, "error saving question");
                     });
@@ -418,9 +456,12 @@
                             that.questions.setAt(curScope.index, curScope.item);
                             // set modified!
                             AppBar.modified = true;
+                            that.binding.questionId = curScope.item.FragenAntwortenVIEWID;
                             that.saveData(function (response) {
                                 Log.print(Log.l.trace, "question saved");
-                                that.loadData();
+                                that.loadData().then(function () {
+                                    that.selectRecordId(that.binding.questionId);
+                                });
                             }, function (errorResponse) {
                                 Log.print(Log.l.error, "error saving question");
                             });
@@ -438,9 +479,12 @@
                             that.questions.setAt(curScope.index, curScope.item);
                             // set modified!
                             AppBar.modified = true;
+                            that.binding.questionId = curScope.item.FragenAntwortenVIEWID;
                             that.saveData(function (response) {
                                 Log.print(Log.l.trace, "question saved");
-                                that.loadData();
+                                that.loadData().then(function () {
+                                    that.selectRecordId(that.binding.questionId);
+                                });
                             }, function (errorResponse) {
                                 Log.print(Log.l.error, "error saving question");
                             });
@@ -503,12 +547,50 @@
                     }
                     Log.ret(Log.l.trace);
                 },
+                checkRequiredField: function(event) {
+                    Log.call(Log.l.trace, "QuestionList.Controller.");
+
+
+                },
                 changedAnswerCount: function (event) {
                     Log.call(Log.l.trace, "QuestionList.Controller.");
                     if (event.currentTarget && AppBar.notifyModified) {
                         if (that.inAnswerCountFromRange) {
                             Log.print(Log.l.trace, "extra ignored");
                         } else {
+                            if (listView && listView.winControl) {
+                                var listControl = listView.winControl;
+                                if (listControl.selection) {
+                                    var selectionCount = listControl.selection.count();
+                                    if (selectionCount === 1) {
+                                        // Only one item is selected, show the page
+                                        listControl.selection.getItems().done(function (items) {
+                                            var item = items[0];
+                                            if (item.data && item.data.FragenAntwortenVIEWID) {
+                                                var newRecId = item.data.FragenAntwortenVIEWID;
+                                                Log.print(Log.l.trace, "newRecId:" + newRecId + " curRecId:" + that.curRecId);
+                                                //if (newRecId !== 0 && newRecId !== that.curRecId) {
+                                                AppData.setRecordId('FragenAntworten', newRecId);
+                                                if (that.curRecId) {
+                                                    that.prevRecId = that.curRecId;
+                                                }
+                                                that.curRecId = newRecId;
+                                                if (that.prevRecId !== 0) { //
+                                                    that.saveData(function (response) {
+                                                        Log.print(Log.l.trace, "question saved");
+                                                         AppBar.triggerDisableHandlers();
+                                                    }, function (errorResponse) {
+                                                        Log.print(Log.l.error, "error saving question");
+                                                    });
+                                                } else {
+                                                    AppBar.triggerDisableHandlers();
+                                                }
+                                                //  }
+                                            }
+                                        });
+                                    }
+                                }
+                            }
                             that.inAnswerCountFromRange = true;
                             that.answerCountFromRange(event.currentTarget);
                         }
@@ -537,7 +619,40 @@
                             default:
                                 type = 0;
                         }
-                        that.setQuestionType(type);
+                        if (listView && listView.winControl) {
+                            var listControl = listView.winControl;
+                            if (listControl.selection) {
+                                var selectionCount = listControl.selection.count();
+                                if (selectionCount === 1) {
+                                    // Only one item is selected, show the page
+                                    listControl.selection.getItems().done(function (items) {
+                                        var item = items[0];
+                                        if (item.data && item.data.FragenAntwortenVIEWID) {
+                                            var newRecId = item.data.FragenAntwortenVIEWID;
+                                            Log.print(Log.l.trace, "newRecId:" + newRecId + " curRecId:" + that.curRecId);
+                                            //if (newRecId !== 0 && newRecId !== that.curRecId) {
+                                                AppData.setRecordId('FragenAntworten', newRecId);
+                                                if (that.curRecId) {
+                                                    that.prevRecId = that.curRecId;
+                                                }
+                                                that.curRecId = newRecId;
+                                                if (that.prevRecId !== 0) { //
+                                                    that.saveData(function (response) {
+                                                        Log.print(Log.l.trace, "question saved");
+                                                         AppBar.triggerDisableHandlers();
+                                                    }, function (errorResponse) {
+                                                        Log.print(Log.l.error, "error saving question");
+                                                    });
+                                                } else {
+                                                    AppBar.triggerDisableHandlers();
+                                                }
+                                          //  }
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                       that.setQuestionType(type);
                     }
                     Log.ret(Log.l.trace);
                 },
@@ -553,25 +668,16 @@
                             confirm(confirmTitle, function (result) {
                                 if (result) {
                                     Log.print(Log.l.trace, "clickDelete: user choice OK");
-                                    that.deleteData(function (response) {
-                                        // delete OK 
-                                        that.loadData();
-                                    }, function (errorResponse) {
-                                        // delete ERROR
-                                        var message = null;
-                                        Log.print(Log.l.error, "error status=" + errorResponse.status + " statusText=" + errorResponse.statusText);
-                                        if (errorResponse.data && errorResponse.data.error) {
-                                            Log.print(Log.l.error, "error code=" + errorResponse.data.error.code);
-                                            if (errorResponse.data.error.message) {
-                                                Log.print(Log.l.error, "error message=" + errorResponse.data.error.message.value);
-                                                message = errorResponse.data.error.message.value;
-                                            }
-                                        }
-                                        if (!message) {
-                                            message = getResourceText("error.delete");
-                                        }
-                                        alert(message);
-                                    });
+                                    var question;
+                                    if (curScope.index > 0) {
+                                        question = that.questions.getAt(curScope.index - 1);
+                                    } else {
+                                        question = that.questions.getAt(1);
+                                    }
+                                    if (question) {
+                                        that.binding.questionId = question.FragenAntwortenVIEWID;
+                                    }
+                                    that.deleteData();
                                 } else {
                                     Log.print(Log.l.trace, "clickDelete: user choice CANCEL");
                                 }
@@ -915,6 +1021,7 @@
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
+                    that.loading = true;
                     return QuestionList.questionListView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
@@ -986,11 +1093,12 @@
                                             // just to catch the exception and ignore it.
                                             that._itemFocused = true;
                                             trySetActive(item);
+                                           
                                         }
                                     };
 
                                     if (entity.type === WinJS.UI.ObjectType.item) {
-                                        this._focusRequest = this._view.items.requestItem(entity.index);
+                                        this._focusRequest = this._view.items.requestItem(entity.index); 
                                     } else if (entity.type === WinJS.UI.ObjectType.groupHeader) {
                                         this._focusRequest = this._groups.requestHeader(entity.index);
                                     } else {
@@ -1000,7 +1108,8 @@
                                 };
 
 
-                                listView.winControl._supressScrollIntoView = true;
+                                listView.winControl._supressScrollIntoView = false;
+
                                 // add ListView itemTemplate
                                 listView.winControl.itemTemplate = that.listQuestionListRenderer.bind(that);
                                 // add ListView dataSource
@@ -1030,7 +1139,8 @@
             }).then(function() {
                 Log.print(Log.l.trace, "Data loaded");
                 return that.selectRecordId(that.binding.questionId);
-            }).then(function() {
+            }).then(function () {
+               
                 Log.print(Log.l.trace, "Record selected");
             });
             Log.ret(Log.l.trace);

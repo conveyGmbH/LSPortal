@@ -640,6 +640,7 @@
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
             }).then(function () {
+                AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Data loaded");
             });
             Log.ret(Log.l.trace);

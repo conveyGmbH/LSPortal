@@ -17,7 +17,7 @@
                 Log.call(Log.l.trace, "EmpList.");
                 var ret = EmpList._employeeView.select(complete, error, restriction, {
                     ordered: true,
-                    orderAttribute: "Nachname"
+                    orderAttribute: "Login"
                 });
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);

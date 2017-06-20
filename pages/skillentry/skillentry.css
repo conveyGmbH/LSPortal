@@ -1,21 +1,23 @@
-﻿#skillentryList .win-itemcontainer .win-itembox,
-#skillentryList .win-listview .win-itembox {
+﻿#skillsList .win-itemcontainer .win-itembox,
+#skillsList .win-listview .win-itembox {
     background-color: transparent;
 }
-
+/*div.row-bkg:hover, div.row-bkg:active {
+    color: red;
+}*/
 #skillentryList .listview {
     position: relative;
     left: 0;
     top: 0;
     width: 100%;
-    height: calc(100% - 8px);
+    height: calc(100% - 8px); 
 }
 
 /* Styles used for the custom layout */
-.listView {
+.listView .skillentryListLayout {
     position: static;
 }
-.listView .win-surface {
+.listView .skillentryListLayout .win-surface {
     margin-left: 0;
 }
 #skillentryList .win-container {
@@ -28,37 +30,33 @@
     padding-top: 2px;
     padding-bottom: 16px;
 }
-
-#skillentryList .question-type {
-    width: 68px;
-    float: left;
+#skillentryList .row-bkg{
+    display:inline-block;
 }
-#skillentryList .answer-block {
+/*#skillentryList .answer-block {
     width: calc(100% - 68px);
     float: right;
+}*/
+
+/*#skillentryList .line-separator .row-end {
+    height: 48px;
+}*/
+#skillentryList .input_field .win-range {
+    margin-top: -12px;
 }
-#skillentryList .type-selected {
-    width: 48px;
-    height: 28px;
-    min-height: 28px;
-    text-align: center;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    border: none;
+.range_output {
+    font-weight: bold;
 }
 
-#skillentryList .line-separator .row-end {
-    height: 48px;
-}
-/*.listView .questionnaireLayout */
+/*.listView .skillsListLayout */
 #skillentryList .win-selectionbackground {
   opacity: 0;
 }
 
-.label .checkbox {
+.skillentryListLayout label.radio, .skillsListLayout label.checkbox {
     padding: 4px 4px 4px 0;
 }
-.input .checkbox {
+.skillentryListLayout input.radio, .skillsListLayout input.checkbox {
     float: left;
     vertical-align: top;
     /*
@@ -68,9 +66,10 @@
     padding-top: 0;
     height: 40px;
 }
-.checkbox .win-textbox {
+/*.checkbox .win-textbox,
+.radio .win-textbox {
     width: calc(100% - 60px) !important;
-}
+}*/
 
 
 #skillentryList .win-pressed .win-itembox {
@@ -83,30 +82,14 @@
     width: 60%;
     float: left;
 }
-.list-fragengruppe-container {
-    display: block;
-    position: relative;
-    margin-left: -26px;
-    margin-right: -26px;
-    margin-top: -2px;
-}
-.list-fragengruppe-field {
-    width: 100%;
-    display: inline-block;
-    height: 12px;
-    vertical-align: top;
-    text-align: center;
-    text-transform: uppercase;
-    font-weight: 600;
-}
-.list-question-content {
+/*.list-question-content {
     padding-left: 28px;
-}
+}*/
 .questionnaire-row {
     /*margin-top: 10px;*/
     height: auto;
 }
-.field_line_questionnaire {
+.field_line_skillentry {
     height: auto;
 }
 .field_row_odd {
@@ -127,24 +110,6 @@
     width: 50%;
     padding: 0;
 }
-.freitextInput {
-    width: 100%;
-    height:26px;
-}
-.freitextInput:focus{
-    height: 96px;
-    width: 100%;
-}
-.multi-rating-checkbox{
-    width:100%;
-}
-.multi-rating-span{
-    width:100%;
-    padding-left:3px;
-}
-textarea::-webkit-input-placeholder {font-style:italic; }
-textarea::-moz-placeholder { font-style:italic; } /* firefox 19+ */
-textarea:-ms-input-placeholder { font-style:italic; } /* ie */
 
 
 /*
@@ -158,17 +123,12 @@ textarea:-ms-input-placeholder { font-style:italic; } /* ie */
 */
 
 
-.view-size-medium #skillentryList .win-item {
+.view-size-medium #listQuestionList .win-item {
     width: calc(100% - 36px);
     padding-left: 18px;
     padding-right: 18px;
     padding-top: 8px;
     padding-bottom: 8px;
-}
-.view-size-medium .list-fragengruppe-container {
-    margin-left: -18px;
-    margin-right: -18px;
-    margin-top: -8px;
 }
 .view-size-medium .field_row_odd {
     float: left;
@@ -209,12 +169,7 @@ textarea:-ms-input-placeholder { font-style:italic; } /* ie */
     hyphens: auto; 
 }
 
-.view-size-medium-small .rating-field {
-    float: left;
-    width: 60%;
-}
-
-  
+ 
 /*
     margins/paddings for small sized screens 
 
@@ -230,11 +185,6 @@ textarea:-ms-input-placeholder { font-style:italic; } /* ie */
     padding-right: 10px;
     padding-top: 4px;
     padding-bottom: 4px;
-}
-.view-size-small .list-fragengruppe-container {
-    margin-left: -10px;
-    margin-right: -10px;
-    margin-top: -4px;
 }
 .view-size-small .field_line_left {
     float: left;

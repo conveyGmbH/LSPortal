@@ -29,7 +29,7 @@
                         text: "",
                         show: null
                     },
-                    showErfassungsdatum: false,
+                    //showErfassungsdatum: false,
                     showModifiedTS: false
                 }
             ]);
@@ -40,7 +40,7 @@
             var exportList = pageElement.querySelector("#ExportList");
             var initLand = pageElement.querySelector("#InitLandReporting");
             var erfasserID = pageElement.querySelector("#ErfasserIDReporting");
-            var erfassungsdatum = pageElement.querySelector("#Erfassungsdatum.win-datepicker");
+            var erfassungsdatum = pageElement.querySelector("#ReportingErfassungsdatum.win-datepicker");
             var modifiedTs = pageElement.querySelector("#ModifiedTs.win-datepicker");
 
             var resultConverter = function(item, index) {
@@ -59,12 +59,8 @@
             this.title = title;
 
             var setInitialDate = function () {
-                if (!AppData.entrydate) {
-                    that.binding.restriction.Erfassungsdatum = new Date();
-                    AppData.entrydate = new Date();
-                } else {
-                    that.binding.showErfassungsdatum = true;
-                    that.binding.restriction.Erfassungsdatum = AppData.entrydate;
+                if (typeof that.binding.restriction.ReportingErfassungsdatum === "undefined") {
+                    that.binding.restriction.ReportingErfassungsdatum = new Date();
                 }
                 Log.call(Log.l.trace, "Initialdate set");
             }
@@ -86,16 +82,44 @@
             }
             this.showDateRestrictions = showDateRestrictions;
 
+            var saveRestriction = function (complete, error) {
+                var ret = WinJS.Promise.as().then(function() {
+                    if (!that.binding.showErfassungsdatum &&
+                        typeof that.binding.showErfassungsdatum !== "undefined") {
+                        delete that.binding.showErfassungsdatum;
+                    }
+                    //@nedra:10.11.2015: Erfassungsdatum is undefined if it is not updated -> Erfassungsdatum = current date
+                    if (that.binding.showErfassungsdatum &&
+                        typeof that.binding.restriction.ReportingErfassungsdatum === "undefined") {
+                        that.binding.restriction.ReportingErfassungsdatum = new Date();
+                    }
+                    if (!that.binding.restriction.usemodifiedTS &&
+                        typeof that.binding.restriction.ModifiedTS !== "undefined") {
+                        delete that.binding.restriction.ModifiedTS;
+                    }
+                    //@nedra:10.11.2015: modifiedTS is undefined if it is not updated -> modifiedTS = current date
+                    if (that.binding.restriction.usemodifiedTS &&
+                        typeof that.binding.restriction.ModifiedTS === "undefined") {
+                        that.binding.restriction.ModifiedTS = new Date();
+                    }
+                    AppData.setRestriction("Kontakt", that.binding.restriction);
+                    complete({});
+                    return WinJS.Promise.as();
+                });
+                return ret;
+            }
+            this.saveRestriction = saveRestriction;
+
             var getRestriction = function(complete, error) {
                 var myrestriction = {};
                 if (that.binding.showErfassungsdatum &&
-                    typeof that.binding.restriction.Erfassungsdatum !== "undefined") {
+                    typeof that.binding.restriction.ReportingErfassungsdatum !== "undefined") {
                     if (AppData.getLanguageId() === 1031) {
-                        myrestriction.Erfassungsdatum = that.binding.restriction.Erfassungsdatum;
+                        myrestriction.Erfassungsdatum = that.binding.restriction.ReportingErfassungsdatum;
                     } else {
-                        myrestriction.RecordDate = that.binding.restriction.Erfassungsdatum;
+                        myrestriction.RecordDate = that.binding.restriction.ReportingErfassungsdatum;
                     }
-                    AppData.entrydate = that.binding.restriction.Erfassungsdatum;
+                    AppData.entrydate = that.binding.restriction.ReportingErfassungsdatum;
                 } else {
                     delete AppData.entrydate;
                 }
@@ -183,14 +207,14 @@
                         dbView = Reporting.xLAuswertungViewNoQuest;
                         fileName = "KontakteKeineFragen";
                         ExportXlsx.restriction.KontaktID = [-2,-1];
-						        if (!that.binding.showErfassungsdatum) {
-							          ExportXlsx.restriction.Erfassungsdatum = "NOT NULL";
+                        if (!that.binding.showErfassungsdatum) {
+                            ExportXlsx.restriction.ReportingErfassungsdatum = "NOT NULL";
 						        }
                     } else {
                         dbView = Reporting.xLReportViewNoQuest;
                         fileName = "ContactsNoQuestion";
                         ExportXlsx.restriction.ContactID = [-2,-1];
-						            if (!that.binding.showErfassungsdatum) {
+                        if (!that.binding.showErfassungsdatum) {
 							              ExportXlsx.restriction.RecordDate = "NOT NULL";
 						            }
                     }
@@ -503,7 +527,7 @@
                 clickErfassungsdatum: function(event) {
                     if (event.currentTarget) {
                         that.binding.showErfassungsdatum = event.currentTarget.checked;
-                        that.binding.restriction.Erfassungsdatum = new Date();
+                        that.binding.restriction.ReportingErfassungsdatum = new Date();
                     }
                     that.showDateRestrictions();
                    
@@ -630,8 +654,25 @@
                         that.binding.mitarbeiterId = Reporting.employeeView.defaultValue.MitarbeiterVIEWID;
                         return WinJS.Promise.as();
                     }
-                }).then(function() {
-
+                }).then(function () {
+                    var savedRestriction = AppData.getRestriction("Kontakt");
+                    if (!savedRestriction) {
+                        savedRestriction = {};
+                    } 
+                    var defaultRestriction = Reporting.defaultrestriction;
+                    var prop;
+                    for (prop in defaultRestriction) {
+                        if (defaultRestriction.hasOwnProperty(prop)) {
+                            if (typeof savedRestriction[prop] === "undefined") {
+                                savedRestriction[prop] = defaultRestriction[prop];
+                            }
+                        }
+                    }
+                    that.binding.restriction = savedRestriction;
+                    // always define date types
+                    if (typeof that.binding.restriction.ReportingErfassungsdatum === "undefined") {
+                        that.binding.restriction.ReportingErfassungsdatum = new Date();
+                    }
                     // always define date types
                     if (typeof that.binding.modifiedTS === "undefined") {
                         that.binding.modifiedTS = new Date();
@@ -646,7 +687,7 @@
                 return ret;
             };
             this.loadData = loadData;
-            that.setInitialDate();
+            //that.setInitialDate();
             that.showDateRestrictions();
             that.processAll().then(function() {
                 Log.print(Log.l.trace, "Binding wireup page complete");

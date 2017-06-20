@@ -308,17 +308,24 @@
                                         if (json.d.results[i].Aktiv === "X") {
                                             if (json.d.results[i].SkillTypeID === 20) {
                                                 for (var j = 0; j < positionen.length; j++) {
-                                                    if (json.d.results[i].Sortierung === positionen[j].value)
-                                                        that.binding.dataEmployee
-                                                            .Positionen =
-                                                            that.binding.dataEmployee.Positionen +
-                                                            positionen[j].title + " ";
+                                                    if (json.d.results[i].Sortierung === positionen[j].value) {
+                                                            that.binding.dataEmployee
+                                                                .Positionen =
+                                                                that.binding.dataEmployee.Positionen +
+                                                                positionen[j].title +
+                                                                "\n";
+                                                    }
                                                 }
                                             }
                                             if (json.d.results[i].SkillTypeID === 21) {
                                                 for (var k = 0; k < sprachen.length; k++) {
-                                                    if (json.d.results[i].Sortierung === sprachen[k].value)
-                                                        that.binding.dataEmployee.Sprachen = that.binding.dataEmployee.Sprachen + sprachen[k].title + " ";
+                                                    if (json.d.results[i].Sortierung === sprachen[k].value) {
+                                                        that.binding.dataEmployee
+                                                            .Sprachen =
+                                                            that.binding.dataEmployee.Sprachen +
+                                                            sprachen[k].title +
+                                                            "\t";
+                                                    }
                                                 }
                                             }
                                         }

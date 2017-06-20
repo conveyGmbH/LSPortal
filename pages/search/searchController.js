@@ -26,7 +26,8 @@
 
             var that = this;
 
-            var erfasserId = pageElement.querySelector("#ErfasserIDSearch");
+            var erfasserID = pageElement.querySelector("#ErfasserIDSearch");
+            //var erfasserIDname = document.getElementById("ErfasserIDSearch");
             var erfassungsDatum = pageElement.querySelector("#Erfassungsdatum.win-datepicker");
             var modifiedTs = pageElement.querySelector("#modifiedTS.win-datepicker");
             var initLand = pageElement.querySelector("#InitLandSearch");
@@ -36,11 +37,11 @@
                 if (initLand && initLand.winControl) {
                     initLand.winControl.data = null;
                 }
-                if (erfasserId && erfasserId.winControl) {
-                    erfasserId.winControl.data = null;
+                if (erfasserID && erfasserID.winControl) {
+                    erfasserID.winControl.data = null;
                 }
                 if (that.employees) {
-                    that.employees = null;
+                    that.employees = {};
                 }
             }
 
@@ -139,7 +140,6 @@
 
             var saveRestriction = function (complete, error) {
                 var ret = WinJS.Promise.as().then(function () {
-
                     for (var i = 0; i < radios.length; i++) {
                         if (radios[i].name === "Erfassungsart" && radios[i].checked) {
                             Search.Erfassungsart = radios[i].value;
@@ -189,6 +189,10 @@
                         typeof that.binding.restriction.ModifiedTS === "undefined") {
                         that.binding.restriction.ModifiedTS = new Date();
                     }
+
+                    if (that.binding.restriction.INITLandID === "0") {
+                        that.binding.restriction.INITLandID = "";
+                    }
                     AppData.setRestriction('Kontakt', that.binding.restriction);
                     AppData.setRecordId("Kontakt", null);
                     complete({});
@@ -198,6 +202,7 @@
             }
             this.saveRestriction = saveRestriction;
 
+            // if there is still employees to load 
             var getNextData = function () {
                 if (that.nextUrl !== null) {
                     that.loading = true;
@@ -207,29 +212,31 @@
                     Search.employeeView.selectNext(function(json) {
                         // this callback will be called asynchronously
                         // when the response is available
-                        Log.print(Log.l.trace, "EmpList.employeeView: success!");
-                        var savediD = erfasserId.value;
-                        var saveIndex = erfasserId.selectedIndex;
+                        Log.print(Log.l.trace, "Search.employeeView: success!");
+                        var savediD = erfasserID.value;
+                        var saveIndex = erfasserID.selectedIndex;
                             // employeeView returns object already parsed from json file in response
                             if (json && json.d) {
                                 that.nextUrl = Search.employeeView.getNextUrl(json);
                                 var results = json.d.results;
                                 results.forEach(function(item, index) {
                                     that.resultConverter(item, index);
+                                    // that.binding.count = that.employees.push(item);
                                 });
-                                if (erfasserId && erfasserId.winControl) {
-                                    erfasserId.winControl.data = that.employees;
+                                if (erfasserID && erfasserID.winControl) {
+                                    erfasserID.winControl.data = that.employees;
                                 }
                             } else {
                                 that.nextUrl = null;
                             }
 
-                            for (var i = 0; i < erfasserId.length; i++) {
-                                if (erfasserId[i].value === that.binding.restriction.MitarbeiterID) {
+                            for (var i = 0; i < erfasserID.length; i++) {
+                                if (erfasserID[i].value === that.binding.restriction.MitarbeiterID) {
                                     saveIndex = i;
                                 }
                             }
-                            erfasserId.selectedIndex = saveIndex;
+                        //erfasserIDname.selectedIndex = saveIndex; 
+                            erfasserID.selectedIndex = saveIndex;
                         },
                         function(errorResponse) {
                             // called asynchronously if an error occurs
@@ -292,8 +299,8 @@
                                 results.forEach(function (item, index) {
                                     that.resultConverter(item, index);
                                 });
-                                if (erfasserId && erfasserId.winControl) {
-                                    erfasserId.winControl.data = that.employees;
+                                if (erfasserID && erfasserID.winControl) {
+                                    erfasserID.winControl.data = that.employees;
                                 }
                                 that.binding.mitarbeiterId = Search.employeeView.defaultValue.MitarbeiterVIEWID;
                                 
@@ -309,13 +316,14 @@
                         }, {
                             VeranstaltungID: AppData.getRecordId("Veranstaltung")
                         });
-                    } else {
-                        if (erfasserId && erfasserId.winControl) {
-                            erfasserId.winControl.data = that.employees;
+                    } /*else {
+                        if (erfasserID && erfasserID.winControl) {
+                            erfasserID.winControl.data = that.erfasserID;
                         }
                         that.binding.mitarbeiterId = Search.employeeView.defaultValue.MitarbeiterVIEWID;
-                        return WinJS.Promise.as();
-                    }
+                        
+                    }*/
+                    return WinJS.Promise.as();
                 }).then(function () {
                     if (that.nextUrl !== null) {
                         that.getNextData();
@@ -360,6 +368,7 @@
                     if (typeof that.binding.restriction.ModifiedTS === "undefined") {
                         that.binding.restriction.ModifiedTS = new Date();
                     }
+                   // erfasserIDname.selectedIndex = 0;
                 });
                 return ret;
             }

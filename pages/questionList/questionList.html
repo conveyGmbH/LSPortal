@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8" />
     <link href="QuestionList.css" rel="stylesheet" />
-    <script type="text/javascript" src="QuestionListService.js"></script>
-    <script type="text/javascript" src="QuestionListController.js"></script>
-    <script type="text/javascript" src="QuestionList.js"></script>
+    <script type="text/javascript" src="questionListService.js"></script>
+    <script type="text/javascript" src="questionListController.js"></script>
+    <script type="text/javascript" src="questionList.js"></script>
 </head>
 <body class="win-type-body">
     <div class="questionnaire fragment">
@@ -135,6 +135,12 @@
                                 <option data-win-bind="value: TextDatumID; textContent: TITLE"></option>
                             </select>
                         </div>
+                        <div class="field_line field_line_even">
+                            <input type="checkbox" class="win-checkbox checkbox"
+                                   data-win-bind="checked: useRequiredField"
+                                   onchange="AppBar.handleEvent('change', 'checkRequiredField', event)"/>
+                            <span data-win-res="{textContent: 'questionList.requiredField'}"></span>
+                        </div>
                     </div>
                     <div class="questionList-rating-template"
                          data-win-control="WinJS.Binding.Template" style="display: none">
@@ -221,6 +227,12 @@
                                     onchange="AppBar.handleEvent('change', 'changedTextDate', event)">
                                 <option data-win-bind="value: TextDatumID; textContent: TITLE"></option>
                             </select>
+                        </div>
+                        <div class="field_line field_line_even">
+                            <input type="checkbox" class="win-checkbox checkbox"
+                                   data-win-bind="checked: useRequiredField"
+                                   onchange="AppBar.handleEvent('change', 'checkRequiredField', event)" />
+                            <span data-win-res="{textContent: 'questionList.requiredField'}"></span>
                         </div>
                     </div>
                     <div class="questionList-single-template"
@@ -553,15 +565,21 @@
                             </div>
                         </div>
                         <div class="line-separator row-end"></div>
-                        <div class="field_line field_line_odd">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'questionList.textdate'}"></span>
-                            <span class="label landscape_only" data-win-res="{textContent: 'questionList.textdate'}"></span>
-                            <select id="TextDatum"
-                                    class="input_field win-dropdown"
-                                    data-win-control="WinJS.UI.Repeater"
-                                    onchange="AppBar.handleEvent('change', 'changedTextDate', event)">
-                                <option data-win-bind="value: TextDatumID; textContent: TITLE"></option>
-                            </select>
+                    <div class="field_line field_line_odd">
+                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'questionList.textdate'}"></span>
+                        <span class="label landscape_only" data-win-res="{textContent: 'questionList.textdate'}"></span>
+                        <select id="TextDatum"
+                                class="input_field win-dropdown"
+                                data-win-control="WinJS.UI.Repeater"
+                                onchange="AppBar.handleEvent('change', 'changedTextDate', event)">
+                            <option data-win-bind="value: TextDatumID; textContent: TITLE"></option>
+                        </select>
+                    </div>
+                        <div class="field_line field_line_even">
+                            <input type="checkbox" class="win-checkbox checkbox"
+                                   data-win-bind="checked: useRequiredField"
+                                   onchange="AppBar.handleEvent('change', 'checkRequiredField', event)" />
+                            <span data-win-res="{textContent: 'questionList.requiredField'}"></span>
                         </div>
                     </div>
                     <div class="questionList-multi-template"
@@ -894,15 +912,21 @@
                             </div>
                         </div>
                         <div class="line-separator row-end"></div>
-                        <div class="field_line field_line_odd">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'questionList.textdate'}"></span>
-                            <span class="label landscape_only" data-win-res="{textContent: 'questionList.textdate'}"></span>
-                            <select id="TextDatum"
-                                    class="input_field win-dropdown"
-                                    data-win-control="WinJS.UI.Repeater"
-                                    onchange="AppBar.handleEvent('change', 'changedTextDate', event)">
-                                <option data-win-bind="value: TextDatumID; textContent: TITLE"></option>
-                            </select>
+                    <div class="field_line field_line_odd">
+                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'questionList.textdate'}"></span>
+                        <span class="label landscape_only" data-win-res="{textContent: 'questionList.textdate'}"></span>
+                        <select id="TextDatum"
+                                class="input_field win-dropdown"
+                                data-win-control="WinJS.UI.Repeater"
+                                onchange="AppBar.handleEvent('change', 'changedTextDate', event)">
+                            <option data-win-bind="value: TextDatumID; textContent: TITLE"></option>
+                        </select>
+                    </div>
+                        <div class="field_line field_line_even">
+                            <input type="checkbox" class="win-checkbox checkbox"
+                                   data-win-bind="checked: useRequiredField"
+                                   onchange="AppBar.handleEvent('change', 'checkRequiredField', event)" />
+                            <span data-win-res="{textContent: 'questionList.requiredField'}"></span>
                         </div>
                     </div>
                     <div class="questionList-combo-template"
@@ -1072,6 +1096,12 @@
                                     onchange="AppBar.handleEvent('change', 'changedTextDate', event)">
                                 <option data-win-bind="value: TextDatumID; textContent: TITLE"></option>
                             </select>
+                        </div>
+                        <div class="field_line field_line_even">
+                            <input type="checkbox" class="win-checkbox checkbox"
+                                   data-win-bind="checked: useRequiredField"
+                                   onchange="AppBar.handleEvent('change', 'checkRequiredField', event)" />
+                            <span data-win-res="{textContent: 'questionList.requiredField'}"></span>
                         </div>
                     </div>
                     <div class="headerFooterPlaceholder">

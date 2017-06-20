@@ -54,7 +54,8 @@
             };
 
             // Finally, wire up binding
-            that.processAll().then(function() {
+            that.processAll().then(function () {
+                AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Binding wireup page complete");
             });
             Log.ret(Log.l.trace);

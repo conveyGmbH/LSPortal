@@ -22,7 +22,6 @@
 
                 // Add a CSS class to control the surface level layout
                 WinJS.Utilities.addClass(this._surface, "questionListLayout");
-
                 return WinJS.UI.Orientation.vertical;
             },
 
@@ -50,11 +49,11 @@
             // add page specific commands to AppBar
             AppBar.commandList = [
                 { id: 'clickBack', label: getResourceText('command.backward'), tooltip: getResourceText('tooltip.backward'), section: 'primary', svg: 'navigate_left' },
-                { id: "clickNew", label: getResourceText("command.new"), tooltip: getResourceText("tooltip.new"), section: "primary", svg: "plus" },
+                { id: "clickNew", label: getResourceText("command.new"), tooltip: getResourceText("tooltip.newQuestions/Answers"), section: "primary", svg: "plus" },
                 { id: 'clickForward', label: getResourceText('command.ok'), tooltip: getResourceText('tooltip.ok'), section: 'primary', svg: 'navigate_check', key: WinJS.Utilities.Key.enter },
                 { id: "clickLineUp", label: getResourceText("command.lineUp"), tooltip: getResourceText("tooltip.lineUp"), section: "primary", svg: "navigate_up" },
                 { id: "clickLineDown", label: getResourceText("command.lineDown"), tooltip: getResourceText("tooltip.lineDown"), section: "primary", svg: "navigate_down" },
-                { id: "clickDelete", label: getResourceText("command.delete"), tooltip: getResourceText("tooltip.delete"), section: "primary", svg: "garbage_can" }
+                { id: "clickDelete", label: getResourceText("command.delete"), tooltip: getResourceText("tooltip.deleteQuestions/Answers"), section: "primary", svg: "garbage_can" }
             ];
             
             this.controller = new QuestionList.Controller(element);
@@ -100,7 +99,7 @@
             // TODO: Respond to changes in viewState.
             if (element && !that.inResize) {
                 that.inResize = 1;
-                ret = WinJS.Promise.timeout(0).then(function () {
+                ret = WinJS.Promise.timeout(100).then(function () {
                     var listQuestionnaire = element.querySelector("#listQuestionList.listview");
                     if (listQuestionnaire && listQuestionnaire.style) {
                         var contentarea = element.querySelector(".contentarea");
@@ -119,8 +118,14 @@
                         }
                     }
                     that.inResize = 0;
+
+                }).then(function() {
+                   // var counter = element.querySelector(".counter");
+                   // counter.scrollIntoView(false);
                 });
+                
             }
+            
             Log.ret(Log.l.u1);
             return ret;
         }

@@ -26,7 +26,7 @@
             // add page specific commands to AppBar
             AppBar.commandList = [
                 { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" },
-                //{ id: "clickNew", label: getResourceText("command.new"), tooltip: getResourceText("tooltip.new"), section: "primary", svg: "user_plus" },
+                //{ id: "clickNew", label: getResourceText("command.new"), tooltip: getResourceText("tooltip.createNewContact"), section: "primary", svg: "user_plus" },
                 { id: "clickRotateLeft", label: getResourceText("command.rotate"), tooltip: getResourceText("tooltip.rotateLeft"), section: "primary", svg: "rotate_left" },
                 { id: "clickRotateRight", label: getResourceText("command.rotate"), tooltip: getResourceText("tooltip.rotateRight"), section: "primary", svg: "rotate_right" },
                 { id: "clickZoomIn", label: getResourceText("command.zoomin"), tooltip: getResourceText("tooltip.zoomin"), section: "primary", svg: "zoom_in" },
