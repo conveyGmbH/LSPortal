@@ -1,0 +1,25 @@
+﻿/**
+    mailSpec fragment styles
+*/
+#mailSpecList {
+    height: 60px;
+}
+
+.view-size-medium #mailSpecList {
+    height: 120px;
+}
+
+.view-size-small #mailSpecList {
+    height: 180px;
+}
+
+
+.list-role-item {
+    width: 33%;
+    min-width: 160px;
+    height: 48px;
+    overflow: hidden;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}

@@ -81,7 +81,6 @@
     "contact.comment"       : "Verwende die Zurück-Schaltfläche auf dieser Seite um zurück zu gehen!",
     "contact.questionDelete": "Wollen Sie den aktuellen Kontakt löschen?",
     "contact.name"          : "Name",
-	"contact.editer"		: "Erfasser",
     "contact.firstName"     : "Vorname",
 	"contact.middleName"	: "Zweitname",
 	"contact.position"		: "Position",
@@ -175,7 +174,7 @@
 	"contactList.mobile"    : "Mobil",
 	"contactList.email"     : "Email",
 	"contactList.ID"		: "ID",
-	"contactList.captureType"	    : "Erfassungsart",
+	"contactList.barcode"	: "Barcode",
 	"contactList.editer"    : "Erfasser",
 
     "camera.title"          : "Kamera",
@@ -306,7 +305,6 @@
 
 	"infodeskEmpList.title"	: "Benutzerkonten",
 	"infodeskEmpList.count"	: "Anzahl",
-	"infodeskEmpList.login"	: "Benutzer",
 
     "userinfo.title"        : "Benutzerinfo",
     "userinfo.present"      : "Ich bin jetzt auf dem Gelände",
@@ -379,7 +377,7 @@
 	"reporting.changedate"  : "Änderungsdatum",
 	"reporting.country"		: "Land",
 	"reporting.employee"	: "Mitarbeiter",
-    "reporting.employeechart"	: "Mitarbeiterstatistik (Einträge pro Mitarbeiter)",
+	"reporting.employeechart"	: "Mitarbeiterstatistik (Einträge pro Mitarbeiter)",
 	"reporting.countrychart"	: "Landstatistik (Einträge pro Land)",
 
     "employee.title"        : "Benutzerkonten",
@@ -412,6 +410,16 @@
 
 	"mailing.title"			: "Mailing",
 	"mailing.contactinfo"	: "Wenn Sie ein Mailing wünschen, rufen Sie bitte die +49(0) 8954 34 49 30 an oder schreiben Sie uns einfach eine ",
+	"mailing.info"			: "Beschreibung",
+	"mailing.event"			: "Veranstaltung",
+	"mailing.language"		: "Sprache",
+	"mailing.sender"		: "Absender",
+	"mailing.reply"			: "Antwort",
+	"mailing.subject"		: "Betreff",
+	"mailing.cc"			: "CC",
+	"mailing.bcc"			: "BCC",
+	"mailing.mailtext"		: "Mailtext",
+	"mailing.standart"		: "Standart",
 
     "productlist.title"     : "Produktauswahl",
     "productlist.comment"   : "Verwende die Zurück-Schaltfläche auf dieser Seite um zurück zu gehen!",

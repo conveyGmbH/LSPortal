@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="mailSpec.css" rel="stylesheet" />
+    <script type="text/javascript" src="mailSpecService.js"></script>
+    <script type="text/javascript" src="mailSpecController.js"></script>
+    <script type="text/javascript" src="mailSpec.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="mailSpec fragment">
+        <div id="mailSpecController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="contentarea win-type-body">
+                    <div class="mailSpecList-template"
+                         data-win-control="WinJS.Binding.Template" style="display: none">
+                        <div class="list-role-item">
+                            <label class="list-role-field">
+                                <input type="checkbox" class="win-checkbox" value="1"
+                                       data-win-bind="checked: Active" />
+                                <span data-win-bind="textContent: TITLE"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div id="mailSpecList"
+                         class="listview win-selectionstylefilled"
+                         data-win-control="WinJS.UI.ListView"
+                         data-win-options="{
+                            itemTemplate: select('.mailSpecList-template')
+                         }">
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>
