@@ -94,14 +94,15 @@
     "contact.title"         : "Kontakt",
     "contact.comment"       : "Verwende die Zurück-Schaltfläche auf dieser Seite um zurück zu gehen!",
     "contact.questionDelete": "Wollen Sie den aktuellen Kontakt löschen?",
-    "contact.name"          : "Name",
+    "contact.name"          : "Name * ",
+	"contact.editer"		: "Erfasser",
     "contact.firstName"     : "Vorname",
 	"contact.middleName"	: "Zweitname",
 	"contact.position"		: "Position",
     "contact.formOf"        : "Anrede",
     "contact.academicTitle" : "Titel",
-    "contact.company"       : "Firma",
-    "contact.email"         : "Email",
+    "contact.company"       : "Firma * ",
+    "contact.email"         : "Email * ",
     "contact.fax"           : "Fax",
     "contact.phone"         : "Tel",
     "contact.mobile"        : "Mobil",
@@ -116,7 +117,7 @@
 	"contact.notice"		: "Bemerkung",
 	"contact.url"			: "Webseite",
 	"contact.barcodeState"	: "Barcode Status",
-
+	"contact.requiredField"	: "* Pflichtfeld",
     "contact.closeImage"    : "Schliessen",
 
     "contact.ID"            : "ID",
@@ -188,7 +189,7 @@
 	"contactList.mobile"    : "Mobil",
 	"contactList.email"     : "Email",
 	"contactList.ID"		: "ID",
-	"contactList.barcode"	: "Barcode",
+	"contactList.captureType"	    : "Erfassungsart",
 	"contactList.editer"    : "Erfasser",
 
     "camera.title"          : "Kamera",
@@ -319,6 +320,7 @@
 
 	"infodeskEmpList.title"	: "Benutzerkonten",
 	"infodeskEmpList.count"	: "Anzahl",
+	"infodeskEmpList.login"	: "Benutzer",
 
     "userinfo.title"        : "Benutzerinfo",
     "userinfo.present"      : "Ich bin jetzt auf dem Gelände",
@@ -375,6 +377,7 @@
     "questionList.questionDelete": "Wollen Sie diese Frage löschen?",
     "questionList.questiongroup": "Fragengruppe",
     "questionList.textdate" : "Freitext",
+	"questionList.requiredField" : "Pflichtfeld",
     "questionList.text"     : "Textfeld anzeigen",
     "questionList.date"     : "Textfeld mit Datum anzeigen",
 
