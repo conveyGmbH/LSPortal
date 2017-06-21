@@ -453,6 +453,8 @@
                         if (curScope && curScope.item &&
                             curScope.item.Sortierung > 1) {
                             curScope.item.Sortierung--;
+                            var newRecord = that.getFieldEntries(curScope.index, curScope.item.Fragentyp);
+                            that.mergeRecord(curScope.item, newRecord);
                             that.questions.setAt(curScope.index, curScope.item);
                             // set modified!
                             AppBar.modified = true;
@@ -476,6 +478,8 @@
                         if (curScope && curScope.item &&
                             curScope.item.Sortierung < that.binding.count) {
                             curScope.item.Sortierung += 2;
+                            var newRecord = that.getFieldEntries(curScope.index, curScope.item.Fragentyp);
+                            that.mergeRecord(curScope.item, newRecord);
                             that.questions.setAt(curScope.index, curScope.item);
                             // set modified!
                             AppBar.modified = true;
@@ -509,6 +513,8 @@
                                         curScope.item.FragengruppeTITLE = results[curIndex].TITLE;
                                     }
                                 }
+                                var newRecord = that.getFieldEntries(curScope.index, curScope.item.Fragentyp);
+                                that.mergeRecord(curScope.item, newRecord);
                                 that.questions.setAt(curScope.index, curScope.item);
                                 // set modified!
                                 AppBar.modified = true;
@@ -539,6 +545,8 @@
                                         curScope.item.Freitext = null;
                                         curScope.item.DateCombobox = null;
                                 }
+                                var newRecord = that.getFieldEntries(curScope.index, curScope.item.Fragentyp);
+                                that.mergeRecord(curScope.item, newRecord);
                                 that.questions.setAt(curScope.index, curScope.item);
                                 // set modified!
                                 AppBar.modified = true;
