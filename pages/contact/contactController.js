@@ -467,20 +467,36 @@
                     });
                     Log.ret(Log.l.trace);
                 },
+                blockEnterKey: function (event) {
+                    for (var i = 0; i < AppBar.commandList.length; i++) {
+                        if (AppBar.commandList[i].id === "clickForward")
+                            AppBar.commandList[i].key = undefined;
+                    }
+                   
+                },
+                releaseEnterKey: function (event) {
+                    for (var i = 0; i < AppBar.commandList.length; i++) {
+                        if (AppBar.commandList[i].id === "clickForward")
+                            AppBar.commandList[i].key = WinJS.Utilities.Key.enter;
+                    }
+                },
                 clickForward: function (event) {
                     Log.call(Log.l.trace, "Contact.Controller.");
-                    that.saveData(function (response) {
-                        Log.print(Log.l.trace, "contact saved");
-                        var master = Application.navigator.masterControl;
-                        if (master && master.controller && master.controller.binding) {
-                            master.controller.binding.contactId = that.binding.dataContact.KontaktVIEWID;
-                            master.controller.loadData().then(function () {
-                                master.controller.selectRecordId(that.binding.dataContact.KontaktVIEWID);
+                        that.saveData(function(response) {
+                                Log.print(Log.l.trace, "contact saved");
+                                var master = Application.navigator.masterControl;
+                                if (master && master.controller && master.controller.binding) {
+                                    master.controller.binding.contactId = that.binding.dataContact.KontaktVIEWID;
+                                    master.controller.loadData().then(function() {
+                                        master.controller.selectRecordId(that.binding.dataContact.KontaktVIEWID);
+                                    });
+                                }
+                            },
+                            function(errorResponse) {
+                                Log.print(Log.l.error, "error saving employee");
                             });
-                        }
-                    }, function (errorResponse) {
-                        Log.print(Log.l.error, "error saving employee");
-                    });
+                    
+                    AppBar.triggerDisableHandlers();
                     Log.ret(Log.l.trace);
                 },
                 clickZoomIn: function(event) {
