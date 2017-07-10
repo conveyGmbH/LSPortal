@@ -162,6 +162,7 @@
                                 return Sketch.sketchView.update(function (response) {
                                     // called asynchronously if ok
                                     Log.print(Log.l.trace, "sketchData update: success!");
+                                    that.svgEditor.modified = false;
                                     complete(response);
                                 }, function (errorResponse) {
                                     // called asynchronously if an error occurs
@@ -189,8 +190,15 @@
                                         Log.print(Log.l.trace, "sketchData insert: success!");
                                         // contactData returns object already parsed from json file in response
                                         if (json && json.d) {
-                                            that.binding.sketchData = json.d;
-                                            setRecordId(that.binding.sketchData.KontaktNotizVIEWID);
+                                            that.binding.dataSketch = json.d;
+                                            setRecordId(that.binding.dataSketch.KontaktNotizVIEWID);
+                                            if (typeof that.binding.dataSketch.Quelltext !== "undefined" &&
+                                                that.binding.dataSketch.Quelltext) {
+                                                Log.print(Log.l.trace, "SVG Element: " + that.binding.dataSketch.Quelltext.substr(0, 100) + "...");
+                                            }
+                                            WinJS.Promise.timeout(0).then(function () {
+                                                that.svgEditor.fnLoadSVG(that.binding.dataSketch.Quelltext);
+                                            });
                                         }
                                         complete(json);
                                     }, function (errorResponse) {
