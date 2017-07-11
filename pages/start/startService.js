@@ -39,21 +39,6 @@
                 Log.ret(Log.l.trace);
                 return ret;
             }
-        },
-        _appListSpecView: {
-            get: function () {
-                return AppData.getFormatView("AppListSpec", 20457);
-            }
-        },
-        appListSpecView: {
-            select: function (complete, error) {
-                Log.call(Log.l.trace, "appListSpecView.");
-                var ret = Start._appListSpecView.select(complete, error);
-
-                // this will return a promise to controller
-                Log.ret(Log.l.trace);
-                return ret;
-            }
         }
     
     });

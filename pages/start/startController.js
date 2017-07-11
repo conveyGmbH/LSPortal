@@ -289,101 +289,16 @@
             }
             this.showBarChart = showBarChart;
 
-            var showGroupsMenu = function () {
-                var i, updateMenu = false;
-                Log.call(Log.l.trace, "Start.Controller.");
-                if (that.applist && that.applist.length > 0) {
-                    for (i = 1; i < Application.navigationBarGroups.length; i++) {
-                        if (that.applist.indexOf(Application.navigationBarGroups[i].id) >= 0) {
-                            if (Application.navigationBarGroups[i].disabled) {
-                                Log.print(Log.l.trace, "enable id=" + Application.navigationBarGroups[i].id);
-                                Application.navigationBarGroups[i].disabled = false;
-                                updateMenu = true;
-                            };
-                        } else {
-                            if (!Application.navigationBarGroups[i].disabled) {
-                                Log.print(Log.l.trace, "disable id=" + Application.navigationBarGroups[i].id);
-                                Application.navigationBarGroups[i].disabled = true;
-                                updateMenu = true;
-                            };
-                        }
-                    }
-                } else {
-                    for (i = 1; i < Application.navigationBarGroups.length; i++) {
-                        if (!Application.navigationBarGroups[i].disabled) {
-                            Log.print(Log.l.trace, "disable id=" + Application.navigationBarGroups[i].id);
-                            Application.navigationBarGroups[i].disabled = true;
-                            updateMenu = true;
-                        }
-                    }
-                }
-                if (updateMenu) {
-                    NavigationBar.groups = Application.navigationBarGroups;
-                }
-                for (i = 1; i < Application.navigationBarGroups.length; i++) {
-                    if (Application.navigationBarGroups[i].disabled) {
-                        NavigationBar.disablePage(Application.navigationBarGroups[i].id);
-                    } else {
-                        NavigationBar.enablePage(Application.navigationBarGroups[i].id);
-                    }
-                    if (NavigationBar.pages && NavigationBar.pages.length > 0) {
-                        for (var j = 0; j < NavigationBar.pages.length; j++) {
-                            if (NavigationBar.pages[j]) {
-                                if (NavigationBar.pages[j].group === Application.navigationBarGroups[i].group) {
-                                    NavigationBar.pages[j].disabled = Application.navigationBarGroups[i].disabled;
-                                }
-                                if (NavigationBar.pages[j].id === "event") {
-                                    that.binding.disableEditEvent = NavigationBar.pages[j].disabled;
-                                }
-                            }
-                        }
-                    }
-                }
-                Log.ret(Log.l.trace);
-            }
-            this.showGroupsMenu = showGroupsMenu;
-
-
             // define data handling standard methods
             var getRecordId = function () {
                 return AppData.getRecordId("Mitarbeiter");
             };
             this.getRecordId = getRecordId;
 
-
             var loadData = function() {
                 Log.call(Log.l.trace, "Start.Controller.");
                 AppData.setErrorMsg(that.binding);
-                var ret = new WinJS.Promise.as().then(function() {
-                    return Start.appListSpecView.select(function (json) {
-                        // this callback will be called asynchronously
-                        // when the response is available
-                        Log.print(Log.l.trace, "appListSpecView: success!");
-                        // kontaktanzahlView returns object already parsed from json file in response
-                        if (json && json.d && json.d.results) {
-                            that.applist = [];
-                            for (var i = 0; i < json.d.results.length; i++) {
-                                var row = json.d.results[i];
-                                if (row && row.Title) {
-                                    if (that.applist.indexOf(row.Title) >= 0) {
-                                        Log.print(Log.l.trace, "extra ignored " + row.Title);
-                                    } else {
-                                        Log.print(Log.l.trace, "add applist[" + i + "]=" + row.Title);
-                                        that.applist.push(row.Title);
-                                    }
-                                }
-                            }
-                        }
-                        that.showGroupsMenu();
-                        return WinJS.Promise.as();
-                    }, function (errorResponse) {
-                        that.applist = null;
-                        // called asynchronously if an error occurs
-                        // or server returns response with an error status.
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                        return WinJS.Promise.as();
-                    });
-                }).then(function () {
+                var ret = new WinJS.Promise.as().then(function () {
                     var recordId = getRecordId();
                     if (!recordId) {
                         that.binding.dataStart = {};
