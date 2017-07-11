@@ -50,14 +50,15 @@
 
     // static array of menu groups for the split view pane
     Application.navigationBarGroups = [
-        { id: "start", group: 1, svg: "home", disabled: false },
+        { id: "start", group: 1, svg: "home", disabled: true },
         { id: "events", group: 2, svg: "question_and_answer", disabled: true },
         { id: "mailing", group: 3, svg: "mail", disabled: true },
         { id: "employee", group: 4, svg: "keys", disabled: true },
         { id: "contacts", group: 5, svg: "businesspeople2", disabled: true },
-        { id: "search", group: 8, svg: "magnifying_glass", disabled: true },
+        { id: "search", group: 9, svg: "magnifying_glass", disabled: true },
         { id: "reporting", group: 6, svg: "chart_column", disabled: true },
-        { id: "info", group: 7, svg: "gearwheel", disabled: true }
+        { id: "infodesk", group: 7, svg: "desk", disabled: true },
+        { id: "info", group: 8, svg: "gearwheel", disabled: true }
     ];
 
     // static array of pages for the navigation bar
@@ -74,10 +75,11 @@
         { id: "questionnaire", group: 5, disabled: false },
         { id: "sketch", group: 5, disabled: false },
         { id: "reporting", group: -6, disabled: false },
-        { id: "info", group: 7, disabled: false },
-        { id: "settings", group: 7, disabled: false },
-        { id: "account", group: 7, disabled: false },
-        { id: "search", group: -8, disabled: false}
+        { id: "infodesk", group: -7, disabled: false },
+        { id: "info", group: 8, disabled: false },
+        { id: "settings", group: 8, disabled: false },
+        { id: "account", group: 8, disabled: false },
+        { id: "search", group: -9, disabled: false}
     ];
 
 
@@ -88,7 +90,8 @@
         { id: "sketch", master: "contactList" },
         { id: "photo", master: "contactList" },
         { id: "employee", master: "empList" },
-        { id: "skillentry", master: "empList" }
+        { id: "skillentry", master: "empList" },
+        { id: "infodesk", master: "infodeskEmpList" }
     ];
 
     // init page for app startup
