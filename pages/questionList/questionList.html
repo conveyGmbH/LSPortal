@@ -46,7 +46,7 @@
                                 </select>
                             </div>
                             <div class="list-question-content">
-                                <input class="field_line_full win-textbox" type="text" data-win-bind="value: Fragestellung" />
+                                <input class="field_line_full win-textbox" type="text" data-win-bind="value: Fragestellung" onchange="AppBar.handleEvent('change','changedQuestionAnswerText', event)"/>
                                 <div class="question-type">
                                     <button id="single"
                                             class="win-button question-button"

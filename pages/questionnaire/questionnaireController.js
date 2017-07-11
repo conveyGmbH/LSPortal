@@ -7,14 +7,14 @@
 /// <reference path="~/www/lib/convey/scripts/pageController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/pages/questionnaire/questionnaireService.js" />
-/// <reference path="~/plugins/cordova-plugin-camera/www/CameraConstants.js" />
-/// <reference path="~/plugins/cordova-plugin-camera/www/Camera.js" />
+/*/// <reference path="~/plugins/cordova-plugin-camera/www/CameraConstants.js" />
+/// <reference path="~/plugins/cordova-plugin-camera/www/Camera.js" />*/
 
 (function () {
     "use strict";
 
     WinJS.Namespace.define("Questionnaire", {
-        Controller: WinJS.Class.derive(Application.Controller ,function Controller(pageElement) {
+        Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement) {
             Log.call(Log.l.trace, "Questionnaire.Controller.");
             Application.Controller.apply(this, [pageElement, {
                 count: 0
@@ -30,7 +30,7 @@
             var contentarea = pageElement.querySelector(".contentarea");
             var docContainer = pageElement.querySelector(".doc-container");
 
-            var onContentareaScroll = function(event) {
+            var onContentareaScroll = function (event) {
                 if (contentarea && docContainer && docContainer.style) {
                     docContainer.style.paddingTop = contentarea.scrollTop.toString() + "px";
                 }
@@ -68,7 +68,7 @@
 
             var singleRatingTemplate = null, multiRatingTemplate = null, comboTemplate = null, singleTemplate8 = null, multiTemplate8 = null, singleTemplate28 = null, multiTemplate28 = null;
             // Conditional renderer that chooses between templates
-            var listQuestionnaireRenderer = function(itemPromise) {
+            var listQuestionnaireRenderer = function (itemPromise) {
                 return itemPromise.then(function (item) {
                     if (item.data.type === "combo") {
                         if (!comboTemplate) {
@@ -117,7 +117,7 @@
             var maxLeadingPages = 0;
             var maxTrailingPages = 0;
 
-            var resultConverter = function (item) {
+            var resultConverter = function (item, index) {
                 if (item.SRMax) {
                     item.type = "single-rating";
                 } else if (item.MRShow01) {
@@ -177,6 +177,7 @@
                 if (item.Freitext === null) {
                     item.Freitext = "";
                 }
+                    
                 if (item.DOC1ZeilenantwortID !== "undefined") {
                     that.docIds.push({
                         ZeilenantwortVIEWID: item.ZeilenantwortVIEWID,
@@ -184,7 +185,7 @@
                     });
                     if (item.DOC1ZeilenantwortID) {
                         that.docCount++;
-                        WinJS.Promise.timeout(50).then(function() {
+                        WinJS.Promise.timeout(50).then(function () {
                             that.loadPicture(item.DOC1ZeilenantwortID, item.Sortierung);
                         });
                     }
@@ -192,15 +193,22 @@
                 if (item.DateCombobox) {
                     item["DateComboboxButtonShow"] = true;
                     item["DateComboboxButtonOk"] = false;
+                    //item["FreitextAktiv"] = null;
                 } else {
                     item["DateComboboxButtonShow"] = false;
                     item["DateComboboxButtonOk"] = false;
                 }
+
+                // Für Pflichtfeld analog zu DateCombobox
+                if (item.RequiredFiled) {
+                    item["RequiredFieldShow"] = true;
+                }else
+                    item["RequiredFieldShow"] = false;
             }
             this.resultConverter = resultConverter;
 
             // get field entries
-            var getFieldEntries = function(index, type) {
+            var getFieldEntries = function (index, type) {
                 var ret = {};
                 if (listView && listView.winControl) {
                     var element = listView.winControl.elementFromIndex(index);
@@ -275,7 +283,7 @@
             };
             this.getFieldEntries = getFieldEntries;
 
-            var mergeRecord = function(prevRecord, newRecord) {
+            var mergeRecord = function (prevRecord, newRecord) {
                 Log.call(Log.l.u1, "questionnaireController.");
                 var ret = false;
                 for (var prop in newRecord) {
@@ -291,7 +299,7 @@
             }
             this.mergeRecord = mergeRecord;
 
-            var saveData = function(complete, error) {
+            var saveData = function (complete, error) {
                 var ret = null;
                 Log.call(Log.l.trace, "Questionnaire.Controller.");
                 AppData.setErrorMsg(that.binding);
@@ -321,7 +329,7 @@
                             ret = Questionnaire.questionnaireView.update(function (response) {
                                 // called asynchronously if ok
                                 complete(response);
-                            }, function(errorResponse) {
+                            }, function (errorResponse) {
                                 AppData.setErrorMsg(that.binding, errorResponse);
                                 error(errorResponse);
                             }, recordId, curScope);
@@ -331,7 +339,7 @@
                     }
                 }
                 if (!ret) {
-                    ret = new WinJS.Promise.as().then(function() {
+                    ret = new WinJS.Promise.as().then(function () {
                         complete({});
                     });
                 }
@@ -477,7 +485,7 @@
                         that.resultConverter(curScope);
                         switch (id) {
                             case "showDateCombobox":
-                                curScope.DateComboboxButtonShow = false;
+                                curScope.DateComboboxButtonShow = false; //false
                                 curScope.DateComboboxButtonOk = true;
                                 break;
                             case "useDateCombobox":
@@ -536,28 +544,28 @@
                 clickBack: function(event) {
                     Log.call(Log.l.trace, "Questionnaire.Controller.");
                     if (WinJS.Navigation.canGoBack === true) {
-                        WinJS.Navigation.back(1).done( /* Your success and error handlers */);
+                        WinJS.Navigation.back(1).done(/* Your success and error handlers */);
                     }
                     Log.ret(Log.l.trace);
                 },
-                clickNew: function (event) {
+                clickNew: function(event) {
                     Log.call(Log.l.trace, "Questionnaire.Controller.");
                     Application.navigateById(Application.navigateNewId, event);
                     Log.ret(Log.l.trace);
                 },
-                clickPhoto: function (event) {
+                clickPhoto: function(event) {
                     Log.call(Log.l.trace, "Questionnaire.Controller.");
                     that.takePhoto();
                     Log.ret(Log.l.trace);
                 },
-                clickForward: function (event) {
+                clickForward: function(event) {
                     Log.call(Log.l.trace, "Questionnaire.Controller.");
                     Application.navigateById('sketch', event);
                     Log.ret(Log.l.trace);
                 },
                 clickRating: function(event) {
                     Log.call(Log.l.trace, "Questionnaire.Controller.");
-                    WinJS.Promise.timeout(0).then(function () {
+                    WinJS.Promise.timeout(0).then(function() {
                         var recordId = that.curRecId;
                         if (recordId) {
                             // handle setDirty
@@ -570,7 +578,7 @@
                     Application.navigateById("userinfo", event);
                     Log.ret(Log.l.trace);
                 },
-                clickButton: function (event) {
+                clickButton: function(event) {
                     Log.call(Log.l.trace, "Questionnaire.Controller.");
                     if (event.currentTarget) {
                         var id = event.currentTarget.id;
@@ -580,6 +588,50 @@
                         });
                     }
                     Log.ret(Log.l.trace);
+                },
+                pressEnterKey: function(event) {
+                    Log.call(Log.l.trace, "Questionnaire.Controller.");
+                    var textareas = pageElement.getElementsByTagName("textarea");
+                    if (textareas) {
+                        for (var i = 0; i < textareas.length; i++) {
+                            if (textareas[i] === document.activeElement) {
+                                if (event.keyCode === WinJS.Utilities.Key.enter) {
+                                    textareas[i].value += "\n";
+                                }
+
+                            }
+                        }
+
+                    }
+                   /* if (event && event.target) {
+                        var comboInputFocus = event.target.querySelector(".win-dropdown:focus");
+                        if (comboInputFocus) {
+                            event.preventDefault();
+                        } else {
+                            // set focus into textarea if current mouse cursor is inside of element position
+                            var freitextInput = event.target.querySelector(".field-text-comment");
+                            if (freitextInput) {
+                                console.log(freitextInput.value);
+                            }
+
+                        }
+*/
+                       
+                        
+                    //}
+                },
+                activateEnterKey: function (event) {
+                    Log.call(Log.l.trace, "Questionnaire.Controller.");
+                    for (var i = 0; i < AppBar.commandList.length; i++) {
+                        if (AppBar.commandList[i].id === "clickForward")
+                            AppBar.commandList[i].key = WinJS.Utilities.Key.enter;
+                    }
+                },
+                deactivateEnterKey: function (event) {
+                    for (var i = 0; i < AppBar.commandList.length; i++) {
+                        if (AppBar.commandList[i].id === "clickForward")
+                            AppBar.commandList[i].key = "undefined";
+                    }
                 },
                 onPointerDown: function (e) {
                     Log.call(Log.l.trace, "Questionnaire.Controller.");
@@ -599,7 +651,7 @@
                             var selectionCount = listControl.selection.count();
                             if (selectionCount === 1) {
                                 // Only one item is selected, show the page
-                                listControl.selection.getItems().done(function(items) {
+                                listControl.selection.getItems().done(function (items) {
                                     var item = items[0];
                                     if (item.data && item.data.ZeilenantwortVIEWID) {
                                         var newRecId = item.data.ZeilenantwortVIEWID;
@@ -611,9 +663,9 @@
                                             }
                                             that.curRecId = newRecId;
                                             if (that.prevRecId !== 0) {
-                                                saveData(function(response) {
+                                                saveData(function (response) {
                                                     Log.print(Log.l.trace, "question saved");
-                                                }, function(errorResponse) {
+                                                }, function (errorResponse) {
                                                     Log.print(Log.l.error, "error saving question");
                                                 });
                                             }
@@ -625,7 +677,7 @@
                     }
                     Log.ret(Log.l.trace);
                 },
-                onLoadingStateChanged: function(eventInfo) {
+                onLoadingStateChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "Questionnaire.Controller.");
                     if (listView && listView.winControl) {
                         Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
@@ -707,7 +759,7 @@
                     }
                     Log.ret(Log.l.trace);
                 },
-                onHeaderVisibilityChanged: function(eventInfo) {
+                onHeaderVisibilityChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "Questionnaire.Controller.");
                     if (eventInfo && eventInfo.detail) {
                         var visible = eventInfo.detail.visible;
@@ -726,7 +778,7 @@
                     }
                     Log.ret(Log.l.trace);
                 },
-                onFooterVisibilityChanged: function(eventInfo) {
+                onFooterVisibilityChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "Questionnaire.Controller.");
                     if (eventInfo && eventInfo.detail) {
                         progress = listView.querySelector(".list-footer .progress");
@@ -743,7 +795,7 @@
                                 }
                                 AppData.setErrorMsg(that.binding);
                                 Log.print(Log.l.trace, "calling select ListLocal.contactView...");
-                                Questionnaire.questionnaireView.selectNext(function(json) {
+                                Questionnaire.questionnaireView.selectNext(function (json) {
                                     // this callback will be called asynchronously
                                     // when the response is available
                                     Log.print(Log.l.trace, "ListLocal.contactView: success!");
@@ -751,7 +803,7 @@
                                     if (json && json.d) {
                                         that.nextUrl = Questionnaire.questionnaireView.getNextUrl(json);
                                         var results = json.d.results;
-                                        results.forEach(function(item) {
+                                        results.forEach(function (item) {
                                             that.resultConverter(item);
                                             that.binding.count = that.questions.push(item);
                                         });
@@ -765,7 +817,7 @@
                                         that.loading = false;
                                         that.nextUrl = null;
                                     }
-                                }, function(errorResponse) {
+                                }, function (errorResponse) {
                                     // called asynchronously if an error occurs
                                     // or server returns response with an error status.
                                     AppData.setErrorMsg(that.binding, errorResponse);
@@ -786,11 +838,11 @@
                                 }
                                 that.loading = false;
                             }
-                        } 
+                        }
                     }
                     Log.ret(Log.l.trace);
                 },
-                onItemInvoked: function(eventInfo) {
+                onItemInvoked: function (eventInfo) {
                     Log.call(Log.l.trace, "Questionnaire.Controller.");
                     if (eventInfo && eventInfo.target) {
                         var comboInputFocus = eventInfo.target.querySelector(".win-dropdown:focus");
@@ -806,13 +858,32 @@
                                     var top = position.top;
                                     var width = position.width;
                                     var height = position.height;
-                                    if (that.cursorPos.x >= left && that.cursorPos.x <= left + width &&
-                                        that.cursorPos.y >= top && that.cursorPos.y <= top + height) {
-                                        WinJS.Promise.timeout(0).then(function () {
+                                    if (that.cursorPos.x >= left &&
+                                        that.cursorPos.x <= left + width &&
+                                        that.cursorPos.y >= top &&
+                                        that.cursorPos.y <= top + height) {
+                                        WinJS.Promise.timeout(0).then(function() {
                                             // set focus async!
                                             freitextInput.focus();
                                         });
-                                    }
+                                       /* Log.call(Log.l.trace, "Questionnaire.Controller.");
+                                        for (var i = 0; i < AppBar.commandList.length; i++) {
+                                            if (AppBar.commandList[i].id === "clickForward")
+                                                AppBar.commandList[i].key = undefined;
+                                        }*/
+                                    }/* else {
+                                        Log.call(Log.l.trace, "Questionnaire.Controller.");
+                                        for (var j = 0; j < AppBar.commandList.length; j++) {
+                                            if (AppBar.commandList[j].id === "clickForward")
+                                                AppBar.commandList[j].key = WinJS.Utilities.Key.enter;
+                                        }
+                                    }*/
+
+                                }
+                                if (freitextInput.value) {
+                                    WinJS.Utilities.addClass(freitextInput, "field-text-comment-big");
+                                } else {
+                                    WinJS.Utilities.removeClass(freitextInput, "field-text-comment-big");
                                 }
                             }
                         }
@@ -840,7 +911,7 @@
                     // never disabled!
                     return false;
                 },
-                clickPhoto : function() {
+                clickPhoto: function () {
                     if (AppBar.busy || !that.getNextDocId()) {
                         return true;
                     } else {
@@ -909,7 +980,7 @@
                             if (!that.images) {
                                 // Now, we call WinJS.Binding.List to get the bindable list
                                 that.images = new WinJS.Binding.List([]);
-                                that.images = that.images.createSorted(function(first, second) {
+                                that.images = that.images.createSorted(function (first, second) {
                                     if (first.orderId === second.orderId) {
                                         return 0;
                                     } else if (first.orderId < second.orderId) {
@@ -948,7 +1019,7 @@
                                 flipview.winControl.itemDataSource = that.images.dataSource;
                             }
                         }
-                        WinJS.Promise.timeout(50).then(function() {
+                        WinJS.Promise.timeout(50).then(function () {
                             if (pageControl && pageControl.updateLayout) {
                                 pageControl.prevWidth = 0;
                                 pageControl.prevHeight = 0;
@@ -966,7 +1037,7 @@
             }
             that.loadPicture = loadPicture;
 
-            var loadData = function() {
+            var loadData = function () {
                 Log.call(Log.l.trace, "Questionnaire.Controller.");
                 AppData.setErrorMsg(that.binding);
                 that.docIds = [];
@@ -989,8 +1060,8 @@
                                 that.binding.count = json.d.results.length;
                                 that.nextUrl = Questionnaire.questionnaireView.getNextUrl(json);
                                 var results = json.d.results;
-                                results.forEach(function (item) {
-                                    that.resultConverter(item);
+                                results.forEach(function (item, index) {
+                                    that.resultConverter(item, index);
                                 });
                                 // Now, we call WinJS.Binding.List to get the bindable list
                                 that.questions = new WinJS.Binding.List(results);
@@ -1080,7 +1151,7 @@
                             KontaktID: contactId
                         });
                     }
-                }).then(function() {
+                }).then(function () {
                     AppBar.triggerDisableHandlers();
                     return WinJS.Promise.as();
                 });
@@ -1089,10 +1160,10 @@
             };
             this.loadData = loadData;
 
-            that.processAll().then(function() {
+            that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
-            }).then(function() {
+            }).then(function () {
                 AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Data loaded");
             });
@@ -1103,10 +1174,10 @@
             curRecId: 0,
             cursorPos: { x: 0, y: 0 },
             docCount: {
-                get: function() {
+                get: function () {
                     return this._docCount;
                 },
-                set: function(value) {
+                set: function (value) {
                     if (this._docCount !== value) {
                         this._docCount = value;
                         if (this.images) {
