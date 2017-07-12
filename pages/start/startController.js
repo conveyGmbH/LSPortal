@@ -22,7 +22,7 @@
             Log.call(Log.l.trace, "Start.Controller.");
             Application.Controller.apply(this, [pageElement, {
                 dataStart: {},
-                disableEditEvent: true,
+                disableEditEvent: NavigationBar.isPageDisabled("event"),
                 comment: getResourceText("info.comment")
             }]);
             this.kontaktanzahldata = null;

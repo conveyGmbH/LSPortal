@@ -210,6 +210,27 @@
                     } else {
                         return WinJS.Promise.as();
                     }
+                }).then(function () {
+                    if (!err) {
+                        return Login.appListSpecView.select(function (json) {
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            Log.print(Log.l.trace, "appListSpecView: success!");
+                            // kontaktanzahlView returns object already parsed from json file in response
+                            if (json && json.d && json.d.results) {
+                                NavigationBar.showGroupsMenu(json.d.results);
+                            }
+                            return WinJS.Promise.as();
+                        },
+                            function (errorResponse) {
+                                // called asynchronously if an error occurs
+                                // or server returns response with an error status.
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                                return WinJS.Promise.as();
+                            });
+                    } else {
+                        return WinJS.Promise.as();
+                    }
                 });
                 Log.ret(Log.l.trace);
                 return ret;
