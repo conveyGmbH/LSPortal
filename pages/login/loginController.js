@@ -287,13 +287,15 @@
                             // when the response is available
                             Log.print(Log.l.trace, "Login: success!");
                             // CR_VERANSTOPTION_ODataView returns object already parsed from json file in response
-
-                            if (json && json.d) {
+                            if (json && json.d && json.d.results && json.d.results.length > 0) {
                                 var results = json.d.results;
                                 results.forEach(function (item, index) {
                                     that.resultConverter(item, index);
                                 });
-
+                            } else {
+                                AppData._persistentStates.individualColors = false;
+                                AppData._persistentStates.colorSettings = copyByValue(AppData.persistentStatesDefaults.colorSettings);
+                                var colors = new Colors.ColorsClass(AppData._persistentStates.colorSettings);
                             }
                         }, function (errorResponse) {
                             // called asynchronously if an error occurs
