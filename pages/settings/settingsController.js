@@ -57,7 +57,7 @@
             var changeColorSetting = function (colorProperty, color) {
                 Log.call(Log.l.trace, "Settings.Controller.", "colorProperty=" + colorProperty + " color=" + color);
                 var pValue = color.replace("#", "");
-                var pOptionTypeId = "undefined";
+                var pOptionTypeId = null;
                 switch (colorProperty) { //event.currentTarget.id
                 case "accentColor":
                     pOptionTypeId = 11;
@@ -83,20 +83,22 @@
                 default:
                     // defaultvalues
                 }
-                AppData.call("PRC_SETVERANSTOPTION",
-                    {
-                        pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
-                        pOptionTypeID: pOptionTypeId,
-                        pValue: pValue
-                    },
-                    function(json) {
-                        Log.print(Log.l.info, "call success! ");
-                    },
-                    function(error) {
-                        Log.print(Log.l.error, "call error");
-                    });
-                that.applyColorSetting(colorProperty, color);
-                Colors.updateColors();
+                if (pOptionTypeId) {
+                    AppData.call("PRC_SETVERANSTOPTION",
+                        {
+                            pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                            pOptionTypeID: pOptionTypeId,
+                            pValue: pValue
+                        },
+                        function (json) {
+                            Log.print(Log.l.info, "call success! ");
+                        },
+                        function (error) {
+                            Log.print(Log.l.error, "call error");
+                        });
+                    that.applyColorSetting(colorProperty, color);
+                    //Colors.updateColors();
+                }
             }
             this.changeColorSetting = changeColorSetting;
 
@@ -198,9 +200,9 @@
                         AppData._persistentStates.individualColors = that.binding.generalData.individualColors;
                         if (restoreDefault) {
                             WinJS.Promise.timeout(0).then(function() {
-                                var colors = new Colors.ColorsClass({
-                                    accentColor: AppData.persistentStatesDefaults.colorSettings.accentColor
-                                });
+                                AppData._persistentStates.individualColors = false;
+                                AppData._persistentStates.colorSettings = copyByValue(AppData.persistentStatesDefaults.colorSettings);
+                                var colors = new Colors.ColorsClass(AppData._persistentStates.colorSettings);
                                 that.createColorPicker("accentColor", true);
                                 that.createColorPicker("backgroundColor");
                                 that.createColorPicker("textColor");
@@ -208,6 +210,8 @@
                                 that.createColorPicker("tileTextColor");
                                 that.createColorPicker("tileBackgroundColor");
                                 that.createColorPicker("navigationColor");
+                                AppBar.loadIcons();
+                                NavigationBar.groups = Application.navigationBarGroups;
                             });
                         }
 
@@ -302,21 +306,25 @@
                         default:
                             // defaultvalues
                     }
-                    var childElement = pageElement.querySelector("#" + item.colorPickerId);
-                    item.colorValue = "#" + item.LocalValue;
-                    childElement.value = item.colorValue;
-                    var pickerParent = pageElement.querySelector("#" + item.colorPickerId + "_picker");
-                    if (pickerParent) {
-                        var colorcontainer = pickerParent.querySelector(".color_container");
-                        if (colorcontainer) {
-                            var colorPicker = colorcontainer.colorPicker;
-                            if (colorPicker) {
-                                colorPicker.color = childElement.value;
-                               
+                    if (item.colorPickerId) {
+                        item.colorValue = "#" + item.LocalValue;
+                        var childElement = pageElement.querySelector("#" + item.colorPickerId);
+                        if (childElement) {
+                            childElement.value = item.colorValue;
+                        }
+                        var pickerParent = pageElement.querySelector("#" + item.colorPickerId + "_picker");
+                        if (pickerParent) {
+                            var colorcontainer = pickerParent.querySelector(".color_container");
+                            if (colorcontainer) {
+                                var colorPicker = colorcontainer.colorPicker;
+                                if (colorPicker) {
+                                    colorPicker.color = item.colorValue;
+
+                                }
                             }
                         }
+                        that.applyColorSetting(item.colorPickerId, item.colorValue);
                     }
-                    that.applyColorSetting(item.colorPickerId, item.colorValue);
                 }
             }
             this.resultConverter = resultConverter;
@@ -351,7 +359,6 @@
             that.processAll().then(function () {
                 AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Binding wireup page complete");
-
             }).then(function () {
                 return that.loadData();
             });

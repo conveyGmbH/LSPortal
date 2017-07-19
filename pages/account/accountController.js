@@ -219,21 +219,10 @@
                         default:
                             // defaultvalues
                     }
-                   // var childElement = pageElement.querySelector("#" + item.colorPickerId);
-                    item.colorValue = "#" + item.LocalValue;
-                    //childElement.value = item.colorValue;
-                    //var pickerParent = pageElement.querySelector("#" + item.colorPickerId + "_picker");
-                    //if (pickerParent) {
-                      //  var colorcontainer = pickerParent.querySelector(".color_container");
-                       // if (colorcontainer) {
-                            //var colorPicker = colorcontainer.colorPicker;
-                            //if (colorPicker) {
-                              //  colorPicker.color = childElement.value;
-
-                          //  }
-                        //}
-                    //}
-                    that.applyColorSetting(item.colorPickerId, item.colorValue);
+                    if (item.colorPickerId) {
+                        item.colorValue = "#" + item.LocalValue;
+                        that.applyColorSetting(item.colorPickerId, item.colorValue);
+                    }
                 }
             }
             this.resultConverter = resultConverter;
@@ -506,7 +495,6 @@
                                 Colors.updateColors();
                                 return WinJS.Promise.as();
                             });
-                            return WinJS.Promise.as();
                         } else {
                             return WinJS.Promise.as();
                         }
