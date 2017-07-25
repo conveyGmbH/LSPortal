@@ -7,6 +7,7 @@
 /// <reference path="~/www/lib/convey/scripts/colors.js" />
 /// <reference path="~/www/lib/convey/scripts/colorPicker.js" />
 /// <reference path="~/www/lib/convey/scripts/pageController.js" />
+/// <reference path="~/www/lib/convey/scripts/strings.js"/>
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/pages/settings/settingsService.js" />
 
@@ -104,9 +105,9 @@
 
             var applyColorSetting = function (colorProperty, color) {
                 Log.call(Log.l.trace, "Settings.Controller.", "colorProperty=" + colorProperty + " color=" + color);
-
                 Colors[colorProperty] = color;
                 that.binding.generalData[colorProperty] = color;
+                
                 switch (colorProperty) {
                     case "accentColor":
                         that.createColorPicker("backgroundColor");
@@ -201,22 +202,54 @@
                         if (restoreDefault) {
                             WinJS.Promise.timeout(0).then(function() {
                                 AppData._persistentStates.individualColors = false;
-                                AppData._persistentStates.colorSettings = copyByValue(AppData.persistentStatesDefaults.colorSettings);
-                                var colors = new Colors.ColorsClass(AppData._persistentStates.colorSettings);
-                                that.createColorPicker("accentColor", true);
-                                that.createColorPicker("backgroundColor");
-                                that.createColorPicker("textColor");
-                                that.createColorPicker("labelColor");
-                                that.createColorPicker("tileTextColor");
-                                that.createColorPicker("tileBackgroundColor");
-                                that.createColorPicker("navigationColor");
+                                /*if (!(AppData._persistentStates.individualColors)) {
+                                    //delete AppData.persistentStatesDefaults.colorSettings;
+                                    var colors = new Colors.ColorsClass(AppData._persistentStates.colorSettings);
+                                    that.createColorPicker("accentColor", true);
+                                    that.createColorPicker("backgroundColor");
+                                    that.createColorPicker("textColor");
+                                    that.createColorPicker("labelColor");
+                                    that.createColorPicker("tileTextColor");
+                                    that.createColorPicker("tileBackgroundColor");
+                                    that.createColorPicker("navigationColor");
+                                } else {*/
+                                    AppData._persistentStates.colorSettings = copyByValue(AppData.persistentStatesDefaults.colorSettings);
+                                    var colors = new Colors.ColorsClass(AppData._persistentStates.colorSettings);
+                                    that.createColorPicker("accentColor", true);
+                                    that.createColorPicker("backgroundColor");
+                                    that.createColorPicker("textColor");
+                                    that.createColorPicker("labelColor");
+                                    that.createColorPicker("tileTextColor");
+                                    that.createColorPicker("tileBackgroundColor");
+                                    that.createColorPicker("navigationColor");
+                                //} 
+                                
                                 AppBar.loadIcons();
                                 NavigationBar.groups = Application.navigationBarGroups;
                             });
                         }
 
                         Application.pageframe.savePersistentStates();
-                    }
+                        var pValue = "0";
+                        if (toggle.checked) {
+                            pValue = "1";
+                        }
+                        AppData.call("PRC_SETVERANSTOPTION",
+                                {
+                                    pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                                    pOptionTypeID: 10,
+                                    pValue: pValue
+                                },
+                                function (json) {
+                                    Log.print(Log.l.info, "call success! ");
+                                },
+                                function (error) {
+                                    Log.print(Log.l.error, "call error");
+                                });
+                         //   that.applyColorSetting(colorProperty, color);
+                            //Colors.updateColors();
+                        }
+                    
                     Log.ret(Log.l.trace);
                 },
                 clickShowAppBkg: function (event) {
@@ -259,16 +292,27 @@
                     var pickerParent = pageElement.querySelector("#" + colorProperty + "_picker");
                     var childElement = pageElement.querySelector("#" + colorProperty);
                     var color = childElement.value;
+                    // HIER -> überprüfe ob Farbzahl gültig ist 
+                    // hier raus und in den resultconverter
+                    function isHexaColor(sNum) {
+                        return (typeof sNum === "string") && (sNum.length === 6 || sNum.length === 3)
+                               && !isNaN(parseInt(sNum, 16));
+                    };
+                    var colorcontainer = pickerParent.querySelector(".color_container");
+                    var colorPicker = colorcontainer.colorPicker;
                     if (pickerParent) {
-                        var colorcontainer = pickerParent.querySelector(".color_container");
                         if (colorcontainer) {
-                            var colorPicker = colorcontainer.colorPicker;
-                            if (colorPicker) {
+                            if (colorPicker && isHexaColor(color.replace("#", ""))) {
                                 colorPicker.color = color;
                             }
                         }
                     }
-                    that.changeColorSetting(colorProperty, color);
+                    if (isHexaColor(color.replace("#", ""))) {
+                        that.changeColorSetting(colorProperty, color);
+                    } else {
+                        that.changeColorSetting(colorProperty, colorPicker.color);
+                        childElement.value = colorPicker.color;
+                    }
                     Log.ret(Log.l.trace);
                 }
             };
@@ -303,12 +347,25 @@
                         case 17:
                             item.colorPickerId = "tileBackgroundColor";
                             break;
+                        case 20:
+                            item.pageProperty = "questionnaire";
+                            if (item.LocalValue === "0") {
+                                AppData._persistentStates.hideQuestionnaire = true;
+                            }
+                            break;
+                        case 21:
+                            item.pageProperty = "sketch";
+                            if (item.LocalValue === "0") {
+                                AppData._persistentStates.hideSketch = true;
+                            }
+                            break;
                         default:
                             // defaultvalues
                     }
+                   
                     if (item.colorPickerId) {
-                        item.colorValue = "#" + item.LocalValue;
                         var childElement = pageElement.querySelector("#" + item.colorPickerId);
+                        item.colorValue = "#" + item.LocalValue;
                         if (childElement) {
                             childElement.value = item.colorValue;
                         }
@@ -325,11 +382,19 @@
                         }
                         that.applyColorSetting(item.colorPickerId, item.colorValue);
                     }
+                } else if (item.INITOptionTypeID === 10) {
+                    item.colorPickerId = "individualColors";
+                   // var childElement = pageElement.querySelector("#" + item.colorPickerId);
+                    if(item.LocalValue === "1")
+                        that.binding.generalData.individualColors = true;
+                  
                 }
             }
             this.resultConverter = resultConverter;
 
             var loadData = function (complete, error) {
+                AppData._persistentStates.hideQuestionnaire = false;
+                AppData._persistentStates.hideSketch = false;
                 return Settings.CR_VERANSTOPTION_ODataView.select(function(json) {
                     // this callback will be called asynchronously
                     // when the response is available

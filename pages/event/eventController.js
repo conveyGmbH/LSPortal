@@ -69,6 +69,45 @@
             };
             this.getRecordId = getRecordId;
 
+            var changeColorSetting = function(pageProperty, status) {
+                Log.call(Log.l.trace, "Settings.Controller.", "pageProperty=" + pageProperty + " color=" + status);
+                var pOptionTypeId = null;
+                var pValue = null;
+
+                switch (pageProperty) {
+                    case "showHideQuestionnaire":
+                        pOptionTypeId = 20;
+                        break;
+                    case "showHideSketch":
+                        pOptionTypeId = 21;
+                        break;
+                }
+                if (typeof status === "boolean" && status) {
+                    pValue = "1";
+                } else {
+                    pValue = "0";
+                }
+
+                if (pOptionTypeId) {
+                    AppData.call("PRC_SETVERANSTOPTION",
+                        {
+                            pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                            pOptionTypeID: pOptionTypeId,
+                            pValue: pValue
+                        },
+                        function (json) {
+                            Log.print(Log.l.info, "call success! ");
+                        },
+                        function (error) {
+                            Log.print(Log.l.error, "call error");
+                        });
+                   // that.applyColorSetting(colorProperty, color);
+                    //Colors.updateColors();
+                }
+
+            };
+            this.changeColorSetting = changeColorSetting;
+
             this.eventHandlers = {
                 clickBack: function (event) {
                     Log.call(Log.l.trace, "Contact.Controller.");
@@ -95,6 +134,24 @@
                 clickGotoPublish: function (event) {
                     Log.call(Log.l.trace, "Event.Controller.");
                     Application.navigateById("publish", event);
+                    Log.ret(Log.l.trace);
+                },
+                clickShowHideQuestionnaire: function(event) {
+                    Log.call(Log.l.trace, "Event.Controller.");
+                    var toggle = event.currentTarget.winControl;
+                    if (toggle) {
+                        that.binding.isQuestionnaireVisible = toggle.checked;
+                    }
+                    that.changeColorSetting(event.target.id, toggle.checked);
+                    Log.ret(Log.l.trace);
+                },
+                clickShowHideSketch: function(event) {
+                    Log.call(Log.l.trace, "Event.Controller.");
+                    var toggle = event.currentTarget.winControl;
+                    if (toggle) {
+                        that.binding.isSketchVisible = toggle.checked;
+                    }
+                    that.changeColorSetting(event.target.id, toggle.checked);
                     Log.ret(Log.l.trace);
                 }
             };

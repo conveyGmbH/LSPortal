@@ -100,6 +100,9 @@
             var resultConverter = function (item, index) {
                 if (item.INITOptionTypeID > 10) {
                     switch (item.INITOptionTypeID) {
+                        case 10:
+                            item.colorPickerId = "individualColors";
+                            break;
                         case 11:
                             item.colorPickerId = "accentColor";
                             break;
@@ -121,12 +124,39 @@
                         case 17:
                             item.colorPickerId = "tileBackgroundColor";
                             break;
+                        case 20:
+                            item.pageProperty = "questionnaire";
+                            if (item.LocalValue === "0") {
+                                AppData._persistentStates.hideQuestionnaire = true;
+                            } 
+                            break;
+                        case 21:
+                            item.pageProperty = "sketch";
+                            if (item.LocalValue === "0") {
+                                AppData._persistentStates.hideSketch = true;
+                            }
+                            break;
                         default:
                             // defaultvalues
                     }
-                    if (item.colorPickerId) {
+                    if (item.colorPickerId !== "individualColors" && (!item.pageProperty)) {
                         item.colorValue = "#" + item.LocalValue;
                         that.applyColorSetting(item.colorPickerId, item.colorValue);
+                    } else {
+                        // item.colorValue = "#" + item.LocalValue;
+                        if (item.LocalValue === "1") {
+                            that.binding.generalData.individualColors = true;
+                        } else {
+                            that.binding.generalData.individualColors = false;
+                        }
+                        //that.applyColorSetting(item.colorPickerId, item.LocalValue);
+                    }
+                    if (item.pageProperty) {
+                        if (item.LocalValue === "1") {
+                            NavigationBar.enablePage(item.pageProperty);
+                        } else if (item.LocalValue === "0") {
+                            NavigationBar.disablePage(item.pageProperty);
+                        }
                     }
                 }
             }
@@ -270,12 +300,14 @@
                 }).then(function () {
                     if (!err) {
                         // load color settings
+                        AppData._persistentStates.hideQuestionnaire = false;
+                        AppData._persistentStates.hideSketch = false;
                         return Login.CR_VERANSTOPTION_ODataView.select(function (json) {
                             // this callback will be called asynchronously
                             // when the response is available
                             Log.print(Log.l.trace, "Login: success!");
                             // CR_VERANSTOPTION_ODataView returns object already parsed from json file in response
-                            if (json && json.d && json.d.results && json.d.results.length > 0) {
+                            if (json && json.d && json.d.results && json.d.results.length > 1) {
                                 var results = json.d.results;
                                 results.forEach(function (item, index) {
                                     that.resultConverter(item, index);

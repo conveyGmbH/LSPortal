@@ -53,12 +53,17 @@
 
                 var handlePageEnable = function (contact) {
                     Log.call(Log.l.trace, "ContactList.Controller.", "recordId=" + (contact && contact.KontaktVIEWID));
-                    if (contact && contact.SHOW_Zeilenantwort) {
+                    if (AppData._persistentStates.hideQuestionnaire) {
+                        NavigationBar.disablePage("questionnaire");
+                    } else if (contact && contact.SHOW_Zeilenantwort) {
                         NavigationBar.enablePage("questionnaire");
                     } else {
                         NavigationBar.disablePage("questionnaire");
                     }
-                    if (contact && contact.SHOW_KontaktNotiz) {
+
+                    if (AppData._persistentStates.hideSketch) {
+                        NavigationBar.disablePage("sketch");
+                    } else if (contact && contact.SHOW_KontaktNotiz) {
                         NavigationBar.enablePage("sketch");
                     } else {
                         NavigationBar.disablePage("sketch");
@@ -198,6 +203,15 @@
                         }
                         if (recordIdNotFound) {
                             that.loadNextUrl(recordId);
+                        }
+                    } else {
+                        var contact = that.contacts.getAt(0);
+                        if (contact && typeof contact === "object") {
+                            listView.winControl.selection.set(0).done(function () {
+                                WinJS.Promise.timeout(50).then(function () {
+                                    that.scrollToRecordId(contact.KontaktVIEWID);
+                                });
+                            });
                         }
                     }
                     Log.ret(Log.l.trace);
