@@ -39,15 +39,33 @@
                 return ret;
             }
         },
-        _cardScanView: {
+        _contactDocView: {
             get: function () {
-                return AppData.getFormatView("DOC1IMPORT_CARDSCAN", 0);
+                return AppData.getFormatView("Kontakt", 20498, false);
             }
         },
-        cardScanView: {
-            select: function (complete, error, recordId) {
-                Log.call(Log.l.trace, "cardScanView.");
-                var ret = ContactList._cardScanView.selectById(complete, error, recordId);
+        contactDocView: {
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, "ContactList.");
+                var ret = ContactList._contactDocView.select(complete, error, restriction, {
+                    ordered: true,
+                    orderAttribute: "Erfassungsdatum",
+                    desc: true
+                });
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getNextUrl: function (response) {
+                Log.call(Log.l.trace, "ContactList.");
+                var ret = ContactList._contactDocView.getNextUrl(response);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            selectNext: function (complete, error, response, nextUrl) {
+                Log.call(Log.l.trace, "ContactList.");
+                var ret = ContactList._contactDocView.selectNext(complete, error, response, nextUrl);
+                // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
             }
