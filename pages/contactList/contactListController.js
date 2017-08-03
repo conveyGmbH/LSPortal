@@ -33,6 +33,9 @@
                 this.contacts = null;
                 this.docs = null;
 
+                this.firstDocsIndex = 0;
+                this.firstContactsIndex = 0;
+
                 var that = this;
 
                 // ListView control
@@ -319,7 +322,7 @@
                         (item.Mitarbeiter_Nachname ? item.Mitarbeiter_Nachname : "");
                     item.OvwContentDOCCNT3 = null;
                     if (that.docs) {
-                        for (var i = 0; i < that.docs.length; i++) {
+                        for (var i = that.firstDocsIndex; i < that.docs.length; i++) {
                             var doc = that.docs[i];
                             if (doc.KontaktVIEWID === item.KontaktVIEWID) {
                                 var docContent = doc.OvwContentDOCCNT3;
@@ -327,6 +330,7 @@
                                     var sub = docContent.search("\r\n\r\n");
                                     item.OvwContentDOCCNT3 = "data:image/jpeg;base64," + docContent.substr(sub + 4);
                                 }
+                                that.firstDocsIndex = i + 1;
                                 break;
                             }
                         }
@@ -337,7 +341,7 @@
 
                 var resultDocConverter = function(item, index) {
                     if (that.contacts) {
-                        for (var i = 0; i < that.contacts.length; i++) {
+                        for (var i = that.firstDocsIndex; i < that.contacts.length; i++) {
                             var contact = that.contacts.getAt(i);
                             if (contact.KontaktVIEWID === item.KontaktVIEWID) {
                                 var docContent = item.OvwContentDOCCNT3;
@@ -348,6 +352,7 @@
                                     contact.OvwContentDOCCNT3 = null;
                                 }
                                 that.contacts.setAt(i, contact);
+                                that.firstContactsIndex = i + 1;
                                 break;
                             }
                         }
@@ -528,6 +533,8 @@
                 Log.print(Log.l.trace, "calling select ContactList.contactView...");
                 var loadData = function () {
                     Log.call(Log.l.trace, "ContactList.Controller.");
+                    that.firstDocsIndex = 0;
+                    that.firstContactsIndex = 0;
                     that.loading = true;
                     progress = listView.querySelector(".list-footer .progress");
                     counter = listView.querySelector(".list-footer .counter");
