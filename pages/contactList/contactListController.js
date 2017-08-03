@@ -114,6 +114,34 @@
                 };
                 this.background = background;
 
+                var getRestriction = function() {
+                    var restriction = AppData.getRestriction("Kontakt");
+                    if (!restriction) {
+                        restriction = {};
+                    } else {
+                        if (!restriction.useErfassungsdatum &&
+                            typeof restriction.Erfassungsdatum !== "undefined") {
+                            delete restriction.Erfassungsdatum;
+                        }
+                        //@nedra:10.11.2015: Erfassungsdatum is undefined if it is not updated -> Erfassungsdatum = current date
+                        if (restriction.useErfassungsdatum &&
+                            typeof restriction.Erfassungsdatum === "undefined") {
+                            restriction.Erfassungsdatum = new Date();
+                        }
+                        if (!restriction.usemodifiedTS &&
+                            typeof restriction.ModifiedTS !== "undefined") {
+                            delete restriction.ModifiedTS;
+                        }
+                        //@nedra:10.11.2015: modifiedTS is undefined if it is not updated -> modifiedTS = current date
+                        if (restriction.usemodifiedTS &&
+                            typeof restriction.ModifiedTS === "undefined") {
+                            restriction.ModifiedTS = new Date();
+                        }
+                    }
+                    return restriction;
+                }
+                this.getRestriction = getRestriction;
+
                 var loadNextUrl = function (recordId) {
                     Log.call(Log.l.trace, "QuestionList.Controller.", "recordId=" + recordId);
                     if (that.contacts && that.nextUrl) {
@@ -498,11 +526,6 @@
                 }
 
                 Log.print(Log.l.trace, "calling select ContactList.contactView...");
-                var restriction = AppData.getRestriction("Kontakt");
-                if (!restriction) {
-                    restriction = {};
-                }
-
                 var loadData = function () {
                     Log.call(Log.l.trace, "ContactList.Controller.");
                     that.loading = true;
@@ -583,29 +606,33 @@
                                 }
                                 that.loading = false;
                             },
-                            restriction);
+                            getRestriction());
                     }).then(function () {
-                        return ContactList.contactDocView.select(function (json) {
-                            // this callback will be called asynchronously
-                            // when the response is available
-                            Log.print(Log.l.trace, "contactDocView: success!");
-                            // startContact returns object already parsed from json file in response
-                            if (json && json.d) {
-                                that.binding.doccount = json.d.results.length;
-                                that.nextDocUrl = ContactList.contactDocView.getNextUrl(json);
-                                var results = json.d.results;
-                                results.forEach(function (item, index) {
-                                    that.resultDocConverter(item, index);
-                                });
-                                that.docs = results;
-                            }
-                        }, function (errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            Log.print(Log.l.error, "ContactList.contactDocView: error!");
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        },
-                        restriction);
+                        WinJS.Promise.timeout(250).then(function () {
+                            ContactList.contactDocView.select(function (json) {
+                                // this callback will be called asynchronously
+                                // when the response is available
+                                Log.print(Log.l.trace, "contactDocView: success!");
+                                // startContact returns object already parsed from json file in response
+                                if (json && json.d && json.d.results && json.d.results.length) {
+                                    that.binding.doccount = json.d.results.length;
+                                    that.nextDocUrl = ContactList.contactDocView.getNextUrl(json);
+                                    var results = json.d.results;
+                                    results.forEach(function(item, index) {
+                                        that.resultDocConverter(item, index);
+                                    });
+                                    that.docs = results;
+                                } else {
+                                    Log.print(Log.l.trace, "contactDocView: no data found!");
+                                }
+                            }, function (errorResponse) {
+                                // called asynchronously if an error occurs
+                                // or server returns response with an error status.
+                                Log.print(Log.l.error, "ContactList.contactDocView: error!");
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                            },
+                            getRestriction());
+                        });
                     });
                     Log.ret(Log.l.trace);
 
