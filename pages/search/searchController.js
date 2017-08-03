@@ -101,7 +101,7 @@
                 },
                 clickForward: function (event) {
                     Log.call(Log.l.trace, "Search.Controller.");
-                    Application.navigateById("contactList", event); //byhung contactlist
+                    Application.navigateById("contact", event); //byhung contactlist
                     Log.ret(Log.l.trace);
                 },
                 clickErfassungsdatum: function (event) {
