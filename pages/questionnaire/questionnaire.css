@@ -74,6 +74,13 @@
     width: 60%;
     float: left;
 }
+.require-field {
+    padding-bottom: 8px;
+    padding-top: 10px;
+    width: 5%;
+    float: left;
+}
+
 .list-fragengruppe-container {
     display: block;
     position: relative;

@@ -50,6 +50,9 @@
                         }
                     }
                     AppBar.triggerDisableHandlers();
+                } else {
+                    var userimg = pageElement.querySelector("#userImg");
+                    userimg.remove();
                 }
             }
 
@@ -76,12 +79,24 @@
                                             showPhoto();
                                         }
                                     }
+                                } else {
+                                    that.binding.photoData = "";
+                                    showPhoto();
                                 }
+                            } else {
+                                that.binding.photoData = "";
+                                showPhoto();
                             }
                         }, function (errorResponse) {
+                            that.binding.photoData = "";
+                            showPhoto();
                             // ignore that
                         }, employeeId);
                     } else {
+                        //userPhotoContainer.remove();
+                        AppHeader.controller.binding.generalData.userName = undefined;
+                        AppHeader.controller.binding.generalData.publishFlag = undefined;
+                        AppHeader.controller.binding.generalData.eventName = undefined;
                         return WinJS.Promise.as();
                     }
                 });

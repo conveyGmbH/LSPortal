@@ -28,6 +28,11 @@
                 { TextDatumID: 1, TITLE: getResourceText("questionList.text") },
                 { TextDatumID: 2, TITLE: getResourceText("questionList.date") }
             ]);
+            this.requiredField = new WinJS.Binding.List([
+               { RequiredFieldID: 0, TITLE: null },
+               { RequiredFieldID: 1, TITLE: getResourceText("questionList.required") },
+               { RequiredFieldID: 2, TITLE: getResourceText("questionList.checkRequired") }
+            ]);
 
             var that = this;
 
@@ -141,6 +146,15 @@
                         item["TextDatumID"] = 2;
                     } else {
                         item["TextDatumID"] = 1;
+                    }
+                }
+                // requiredFiled -> analog zu oben auch if(item.requiredfield === 1) 
+                item["RequiredFieldID"] = 0;
+                if (item.PflichtFlag) {
+                    if (item.PflichtFlag === 1) { //Anstatt DateCombobox -< RequiredCombobox
+                        item["RequiredFieldID"] = 1;
+                    } else {
+                        item["RequiredFieldID"] = 2;
                     }
                 }
             }
@@ -279,9 +293,9 @@
                             case 4:
                                 curScope.item.Multiselection = "0";
                                 curScope.item.Combobox = "1";
-                                if (curScope.item.Anzahl < 2) {
+                                /*if (curScope.item.Anzahl < 2) {
                                     curScope.item.Anzahl = 2;
-                                }
+                                }*/
                                 break;
                             default:
                                 curScope.item.Multiselection = "0";
@@ -555,9 +569,36 @@
                     }
                     Log.ret(Log.l.trace);
                 },
-                checkRequiredField: function(event) {
+                changedcheckRequiredField: function (event) {
                     Log.call(Log.l.trace, "QuestionList.Controller.");
-
+                    //analog zu changedTextDate
+                    Log.call(Log.l.trace, "QuestionList.Controller.");
+                    if (event.currentTarget && AppBar.notifyModified) {
+                        var value = event.currentTarget.value;
+                        if (that.curRecId && !that.prevRecId) {
+                            var curScope = that.scopeFromRecordId(that.curRecId);
+                            if (curScope && curScope.item &&
+                                curScope.item.RequiredFieldID !== value) {
+                                curScope.item.RequiredFieldID = value;
+                                switch (curScope.item.RequiredFieldID) {
+                                    case "1":
+                                        curScope.item.PflichtFlag = "1";
+                                        break;
+                                    case "2":
+                                        curScope.item.PflichtFlag = "2";
+                                        break;
+                                    default:
+                                        curScope.item.PflichtFlag = null;
+                                }
+                                var newRecord = that.getFieldEntries(curScope.index, curScope.item.Fragentyp);
+                                that.mergeRecord(curScope.item, newRecord);
+                                that.questions.setAt(curScope.index, curScope.item);
+                                // set modified!
+                                AppBar.modified = true;
+                            }
+                        }
+                    }
+                    Log.ret(Log.l.trace);
 
                 },
                 changedAnswerCount: function (event) {

@@ -34,7 +34,7 @@
             var maxTrailingPages = 0;
 
             var mouseDown = false;
-            
+
             var resultConverter = function (item) {
                 var key = "Line";
                 for (var j = 1; j <= 28; j++) {
@@ -243,15 +243,19 @@
                 },
                 clickNew: function (event) {
                     Log.call(Log.l.trace, "Skills.Controller.");
-                    AppBar.busy = true;
-                    Skills.skilltypeView.insert(function (json) {
-                        AppBar.busy = false;
-                        // called asynchronously if ok
-                        Log.print(Log.l.info, "skilltypeskillsView insert: success!");
-                        that.loadData();
+                    that.saveData(function (response) {
+                        AppBar.busy = true;
+                        Skills.skilltypeskillsView.insert(function (json) {
+                            AppBar.busy = false;
+                            // called asynchronously if ok
+                            Log.print(Log.l.info, "skilltypeskillsView insert: success!");
+                            that.loadData();
+                        }, function (errorResponse) {
+                            AppBar.busy = false;
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        });
                     }, function (errorResponse) {
-                        AppBar.busy = false;
-                        AppData.setErrorMsg(that.binding, errorResponse);
+                        Log.print(Log.l.error, "error saving question");
                     });
                     Log.ret(Log.l.trace);
                 },

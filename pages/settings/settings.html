@@ -200,8 +200,9 @@
                                data-win-bind="value: generalData.inputBorder"
                                onchange="AppBar.handleEvent('change', 'changedInputBorder', event)" />
                     </div>
+                    <div class="line-separator"></div>
                     <!--<div class="field_line field_line_even">
-                        
+
                     </div>
                     <div class="line-separator"
                          data-win-bind="style.display: generalData.individualColors Binding.Converter.toDisplay"></div>
@@ -213,6 +214,22 @@
                     </div>
                     <div class="line-separator"
                          data-win-bind="style.display: generalData.individualColors Binding.Converter.toDisplay"></div>-->
+                    <div class="header-separator float-left"></div>
+                    <div class="content-header float-left">
+                        <div class="half-circle half-circle-textcolor">&nbsp;</div>
+                        <div class="idAndDate win-type-caption">
+                            <span class="id-field"></span>
+                            <span class="caption-field" data-win-res="{textContent: 'event.note'}"></span>
+                            <span class="date-field"></span>
+                        </div>
+                    </div>
+                    <div class="field_line field_line_full">
+                        <span class="large_field"
+                              data-win-res="{textContent: 'event.appInfo'}"></span>
+                        <span class="large_field"
+                              id="portalLink"></span>
+                    </div>
+                    <div class="line-separator"></div>
                 </div>
             </section>
         </div>

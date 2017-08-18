@@ -55,6 +55,7 @@
                             break;
                         }
                     }
+                    listView.winControl.selection.set(0);
                 }
                 Log.ret(Log.l.trace);
             }
@@ -119,9 +120,10 @@
                                                 // called asynchronously if ok
                                                 that.binding.employeeId = item.data.MitarbeiterID;
                                                 var curPageId = Application.getPageId(nav.location);
-                                                if ((curPageId === "infodesk" || curPageId ==="infodeskEmpList") &&
+                                                if ((curPageId === "infodesk" || curPageId === "infodeskEmpList") &&
                                                     typeof AppBar.scope.loadData === "function") {
                                                     AppBar.scope.loadData(that.binding.employeeId);
+                                                    Application.navigateById("infodesk");
                                                 } else {
                                                     Application.navigateById("infodesk");
                                                 }
@@ -131,6 +133,7 @@
                                         }
                                     }
                                 });
+                                Application.navigateById("infodesk");
                             }
                         }
                     }
@@ -272,6 +275,8 @@
                                         that.resultConverter(item, index);
                                         that.binding.count = that.employees.push(item);
                                     });
+                                    that.binding.count = that.employees.length;
+                                    
                                 } else {
                                     that.nextUrl = null;
                                 }
@@ -297,6 +302,7 @@
                             that.loading = false;
                         }
                     }
+                    that.binding.count = that.employees.length;
                     Log.ret(Log.l.trace);
                 }
 
@@ -400,7 +406,7 @@
                                     listView.winControl.itemDataSource = that.employees.dataSource;
                                 }
                             } else {
-                                that.binding.count = 0;
+                                // that.binding.count = 0;
                                 that.nextUrl = null;
                                 that.employees = null;
                                 if (listView.winControl) {
@@ -433,8 +439,8 @@
                         }, restriction);
                     }
                     );
-
                 });
+                that.binding.count = that.employees.length;
                 Log.ret(Log.l.trace);
                 return ret;
             };

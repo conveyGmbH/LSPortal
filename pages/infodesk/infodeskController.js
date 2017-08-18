@@ -35,18 +35,6 @@
             var that = this;
             var prevLogin = null;
 
-            /*var setDataEmployee = function (newDataEmployee) {
-                var prevNotifyModified = AppBar.notifyModified;
-                AppBar.notifyModified = false;
-                prevLogin = newDataEmployee.Login;
-                that.binding.dataEmployee = newDataEmployee;
-                that.binding.dataEmployee.Vorname = newDataEmployee.Vorname;
-                AppBar.modified = false;
-                AppBar.notifyModified = prevNotifyModified;
-                AppBar.triggerDisableHandlers();
-            }
-            this.setDataEmployee = setDataEmployee;
-            */
             var getRecordId = function () {
                 Log.call(Log.l.trace, "Infodesk.Controller.");
                 var recordId = that.binding.dataEmployee && that.binding.dataEmployee.MitarbeiterID;
@@ -106,8 +94,35 @@
                 },
                 clickSearch: function (event) {
                     Log.call(Log.l.trace, "Infodesk.Controller.");
-                    Application.navigateById("infodeskEmpList", event); //byhung infodeskEmpList
+                    //loaddata guter weg -> fehlt aber die restriction
+                    that.loadData(that.binding.employeeId).then(function () {
+                          Log.print(Log.l.trace, "contact saved");
+                          var master = Application.navigator.masterControl;
+                          if (master && master.controller && master.controller.binding) {
+                              //master.controller.binding.contactId = that.binding.dataContact.KontaktVIEWID;
+                              master.controller.loadData().then(function () {
+                                  master.controller.selectRecordId(that.binding.employeeId);
+                              });
+                          }
+                      });
+
+                    //byhung infodeskEmpList
                     //Application.navigateById("infodesk", event);
+                  /* // that.saveData(function (response) {
+                        Log.print(Log.l.trace, "contact saved");
+                        var master = Application.navigator.masterControl;
+                        if (master && master.controller && master.controller.binding) {
+                            //master.controller.binding.contactId = that.binding.dataContact.KontaktVIEWID;
+                            master.controller.loadData().then(function () {
+                                master.controller.selectRecordId(that.binding.employeeId);
+                            });
+                        }
+                    //}, function (errorResponse) {
+                      //  Log.print(Log.l.error, "error saving employee");
+                    //});
+
+                    AppBar.triggerDisableHandlers();
+                    Log.ret(Log.l.trace);*/
                     Log.ret(Log.l.trace);
                 }
             };
@@ -309,11 +324,11 @@
                                             if (json.d.results[i].SkillTypeID === 20) {
                                                 for (var j = 0; j < positionen.length; j++) {
                                                     if (json.d.results[i].Sortierung === positionen[j].value) {
-                                                            that.binding.dataEmployee
-                                                                .Positionen =
-                                                                that.binding.dataEmployee.Positionen +
-                                                                positionen[j].title +
-                                                                "\n";
+                                                        that.binding.dataEmployee
+                                                            .Positionen =
+                                                            that.binding.dataEmployee.Positionen +
+                                                            positionen[j].title +
+                                                            "\n";
                                                     }
                                                 }
                                             }
@@ -380,50 +395,6 @@
                 var ret;
                 var dataEmployee = that.binding.dataEmployee;
                 if (dataEmployee && AppBar.modified && !AppBar.busy) {
-                   /* if (dataEmployee.Password2 === dataEmployee.Password) {
-                        var recordId = getRecordId();
-                        if (recordId) {
-                            AppBar.busy = true;
-                            ret = Infodesk.employeeView.update(function (response) {
-                                AppBar.busy = false;
-                                // called asynchronously if ok
-                                Log.print(Log.l.info, "employeeData update: success!");
-                                AppBar.modified = false;
-                                var empRolesFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("userMessages"));
-                                if (empRolesFragmentControl && empRolesFragmentControl.controller) {
-                                    empRolesFragmentControl.controller.saveData(function () {
-                                        Log.print(Log.l.trace, "saveData completed...");
-                                        if (AppData.getRecordId("Mitarbeiter") === recordId) {
-                                            AppData.getUserData();
-                                        }
-                                        loadData(recordId).then(function () {
-                                            complete(response);
-                                        });
-                                    }, function (errorResponse) {
-                                        Log.print(Log.l.error, "saveData error...");
-                                        AppData.setErrorMsg(that.binding, errorResponse);
-                                    });
-                                } else {
-                                    loadData(recordId).then(function () {
-                                        complete(response);
-                                    });
-                                }
-                            }, function (errorResponse) {
-                                AppBar.busy = false;
-                                // called asynchronously if an error occurs
-                                // or server returns response with an error status.
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                                error(errorResponse);
-                            }, recordId, dataEmployee);
-                        } else {
-                            Log.print(Log.l.info, "not supported");
-                            ret = WinJS.Promise.as();
-                        }
-                    } else {
-                        Log.print(Log.l.error, "incorrect password confirmation");
-                        alert(getResourceText("employee.alertPassword"));
-                        ret = WinJS.Promise.as();
-                    }*/
                     ret = WinJS.Promise.as();
                 } else if (AppBar.busy) {
                     ret = WinJS.Promise.timeout(100).then(function () {
@@ -444,6 +415,8 @@
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData(getRecordId());// parameter übergeben ? getRecordId()
             }).then(function () {
+                var master = Application.navigator.masterControl;
+                master.controller.selectRecordId(getRecordId());
                 Log.print(Log.l.trace, "Data loaded");
             }).then(function () {
                 AppBar.notifyModified = true;
