@@ -200,7 +200,7 @@
                 }
 
                 // Für Pflichtfeld analog zu DateCombobox
-                if (item.RequiredFiled) {
+                if (item.PflichtFeld) {
                     item["RequiredFieldShow"] = true;
                 }else
                     item["RequiredFieldShow"] = false;

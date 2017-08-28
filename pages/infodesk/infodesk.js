@@ -72,7 +72,7 @@
             /// <param name="element" domElement="true" />
             // TODO: Respond to changes in viewState.
             var ret = null;
-            /*var that = this;
+            var that = this;
             /// <param name="element" domElement="true" />
             Log.call(Log.l.u1, pageName + ".");
             // TODO: Respond to changes in viewState.
@@ -103,7 +103,7 @@
                 });
             }
             Log.ret(Log.l.u1);
-            return ret;*/
+            return ret;
         }
     });
 })();

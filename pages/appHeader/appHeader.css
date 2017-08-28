@@ -78,7 +78,7 @@
     padding-right: 4px;
     padding-bottom: 2px;
     padding-left: 2px;
-    max-width: 196px;
+    max-width: 230px;
     visibility: hidden;
     display: block;
     position: absolute;
@@ -91,7 +91,7 @@
     text-align: right;
     white-space: nowrap;
     color: gray;
-    max-width: 120px;
+    max-width: 200px;
 }
 
 .user-image-container {

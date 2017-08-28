@@ -65,6 +65,7 @@
                         if (newRecord[prop] !== prevRecord[prop]) {
                             prevRecord[prop] = newRecord[prop];
                             ret = true;
+                            AppBar.modified = true;
                         }
                     }
                 }
@@ -90,7 +91,7 @@
             this.selectRecordId = selectRecordId;
 
             // get field entries
-            var getFieldEntries = function(index, type) {
+            var getFieldEntries = function (index, type) {
                 var ret = {};
                 if (listView && listView.winControl) {
                     var element = listView.winControl.elementFromIndex(index);
@@ -142,7 +143,7 @@
                 Log.call(Log.l.trace, "Skillentry.Controller.");
                 AppData.setErrorMsg(that.binding);
                 // standard call via modify
-                var recordId = that.prevRecId;
+                var recordId = that.curRecId; // that.curRecId that.prevRecId that.prevRecIdthat.binding.employeeId
                 if (!recordId) {
                     // called via canUnload
                     recordId = that.curRecId;
@@ -153,7 +154,7 @@
                     var curScope = that.scopeFromRecordId(recordId);
                     if (curScope && curScope.item) {
                         var newRecord = that.getFieldEntries(curScope.index);
-                        if (that.mergeRecord(curScope.item, newRecord) || AppBar.modified) {
+                        if (that.mergeRecord(curScope.item, newRecord) || AppBar.modified) { //|| AppBar.modified
                             Log.print(Log.l.trace, "save changes of recordId:" + recordId);
                             ret = Skillentry._skillentryline_E.update(function (response) {
                                 Log.print(Log.l.info, "SkillEntryLine update: success!");
@@ -195,7 +196,19 @@
                 },
                 clickForward: function (event) {
                     Log.call(Log.l.trace, "Skillentry.Controller.");
-                    Application.navigateById("skillentryList", event);
+                    that.saveData(function (response) {
+                        Log.print(Log.l.trace, "question saved");
+                        AppBar.triggerDisableHandlers();
+                    },
+                        function (errorResponse) {
+                            Log.print(Log.l.error, "error saving question");
+                        })/*.then(that.loadData(getRecordId())
+                        ).then(function () {
+
+                            
+
+                        })*/;
+                    Application.navigateById("skillentry", event); //skillentry
                     Log.ret(Log.l.trace);
                 },
                 clickLineUp: function (event) {
@@ -276,34 +289,47 @@
                         var listControl = listView.winControl;
                         if (listControl.selection) {
                             var selectionCount = listControl.selection.count;
-                            if (selectionCount === 1) {
-                                // Only one item is selected, show the page
-                                listControl.selection.getItems().done(function (items) {
-                                    var item = items[0];
-                                    if (item.data && item.data.SkillEntryLineVIEWID) {
-                                        var newRecId = item.data.SkillEntryLineVIEWID;
-                                        Log.print(Log.l.trace, "newRecId:" + newRecId + " curRecId:" + that.curRecId);
-                                        if (newRecId !== 0 && newRecId !== that.curRecId) {
-                                            AppData.generalData.setRecordId('SkillEntryLine', newRecId);
-                                            if (that.curRecId) {
-                                                that.prevRecId = that.curRecId;
-                                            }
-                                            that.curRecId = newRecId;
-                                            if (that.prevRecId !== 0) {
-                                                that.saveData(function (response) {
-                                                    Log.print(Log.l.trace, "question saved");
-                                                    AppBar.triggerDisableHandlers();
-                                                }, function (errorResponse) {
+                            Log.print(Log.l.trace, "listControl:" + listControl + " selectionCount:" + selectionCount);
+                            //  if (selectionCount === 1) {
+                            // Only one item is selected, show the page
+                            listControl.selection.getItems().done(function (items) {
+                                var item = items[0];
+                                if (item.data && item.data.SkillEntryLineVIEWID) {
+                                    var newRecId = item.data.SkillEntryLineVIEWID;
+                                    Log.print(Log.l.trace, "newRecId:" + newRecId + " curRecId:" + that.curRecId);
+                                    if (newRecId !== 0 && newRecId !== that.curRecId) {
+                                        AppData.generalData.setRecordId('SkillEntryLine', newRecId);
+                                        if (that.curRecId) {
+                                            that.prevRecId = that.curRecId;
+                                        }
+                                        if (that.curRecId !== 0) {
+                                            that.saveData(function (response) {
+                                                Log.print(Log.l.trace, "question saved");
+                                                AppBar.triggerDisableHandlers();
+                                            },
+                                                function (errorResponse) {
                                                     Log.print(Log.l.error, "error saving question");
                                                 });
-                                            } else {
+                                        } else {
+                                            AppBar.triggerDisableHandlers();
+                                        }
+                                        that.curRecId = newRecId;
+                                        if (that.curRecId !== 0) {
+                                            that.saveData(function (response) {
+                                                Log.print(Log.l.trace, "question saved");
                                                 AppBar.triggerDisableHandlers();
-                                            }
+                                            },
+                                                function (errorResponse) {
+                                                    Log.print(Log.l.error, "error saving question");
+                                                });
+                                        } else {
+                                            AppBar.triggerDisableHandlers();
                                         }
                                     }
-                                });
-                            }
+                                }
+                            });
                         }
+                        //}
                     }
                     Log.ret(Log.l.trace);
                 },
@@ -513,8 +539,8 @@
                 listView.addEventListener("iteminvoked", this.eventHandlers.onItemInvoked.bind(this));
             }
 
-            var loadData = function (recordId) {
-                Log.call(Log.l.trace, "Skillentry.Controller.", "recordId=" + recordId);
+            var loadData = function (mitarbeiterId) {
+                Log.call(Log.l.trace, "Skillentry.Controller.", "mitarbeiterId=" + mitarbeiterId);
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                     return Skillentry._skillentryline_L.select(function (json) {
@@ -613,7 +639,7 @@
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, {
-                        MitarbeiterID: recordId
+                        MitarbeiterID: mitarbeiterId
                     });
                 }).then(function () {
                     AppBar.notifyModified = true;

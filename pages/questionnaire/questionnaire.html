@@ -33,6 +33,9 @@
                             </div>
                             <div class="row-separator" data-win-bind="style.display: FLAG_Trennlinie Binding.Converter.toDisplayNone"></div>
                             <span class="list-question-field label-color" data-win-bind="textContent: FRAGESTELLUNG"></span>
+                            <div data-win-bind="style.display: PflichtFeld Binding.Converter.toDisplay">
+                                <span class="require-field label-color" data-win-res="{textContent:'questionnaire.requiredmarker'}"></span>
+                            </div>
                             <div class="rating-question-field">
                                 <div data-win-control="WinJS.UI.Rating"
                                      data-win-bind="winControl.maxRating: SRMax; winControl.userRating: RRANTWORT Binding.Converter.toInteger"></div>
@@ -71,6 +74,9 @@
                             </div>
                             <div class="row-separator" data-win-bind="style.display: FLAG_Trennlinie Binding.Converter.toDisplayNone"></div>
                             <span class="list-question-multi-rating label-color" data-win-bind="textContent: FRAGESTELLUNG"></span>
+                            <div data-win-bind="style.display: PflichtFeld Binding.Converter.toDisplay">
+                                <span class="require-field label-color" data-win-res="{textContent:'questionnaire.requiredmarker'}"></span>
+                            </div>
                             <div class="multi-rating-div">
                                 <div class="multi-rating">
                                     <span id="MR01" class="multi-rating-span"
@@ -143,8 +149,16 @@
                             </div>
                             <div class="row-separator" data-win-bind="style.display: FLAG_Trennlinie Binding.Converter.toDisplayNone"></div>
                             <span class="list-question-field label-color" data-win-bind="textContent: FRAGESTELLUNG"></span>
+<<<<<<< HEAD
                             <div class="field_line_questionnaire win-type-subtitle">
                                 <select class="input_field win-dropdown"
+=======
+                            <div data-win-bind="style.display: PflichtFeld Binding.Converter.toDisplay">
+                                <span class="require-field label-color" data-win-res="{textContent:'questionnaire.requiredmarker'}"></span>
+                            </div>
+ <!-- <div class="field_line_questionnaire win-type-subtitle">-->
+                                <select class="field_line_questionnaire win-dropup"
+>>>>>>> origin/master
                                         data-win-control="WinJS.UI.Repeater">
                                     <option data-win-bind="value: value; textContent: title"></option>
                                 </select>
@@ -181,6 +195,9 @@
                             </div>
                             <div class="row-separator" data-win-bind="style.display: FLAG_Trennlinie Binding.Converter.toDisplayNone"></div>
                             <span class="list-question-field label-color" data-win-bind="textContent: FRAGESTELLUNG"></span>
+                            <div data-win-bind="style.display: PflichtFeld Binding.Converter.toDisplay">
+                                <span class="require-field label-color" data-win-res="{textContent:'questionnaire.requiredmarker'}"></span>
+                            </div>
                             <div class="field_line_questionnaire win-type-subtitle">
                                 <div class="field_row_odd">
                                     <div class="field_line_left">
@@ -287,7 +304,10 @@
                                 <span class="list-fragengruppe-field win-type-caption window-text-color" data-win-bind="textContent: FRAGENGRUPPE"></span>
                             </div>
                             <div class="row-separator" data-win-bind="style.display: FLAG_Trennlinie Binding.Converter.toDisplayNone"></div>
-                            <span class="list-question-field label-color" data-win-bind="textContent: FRAGESTELLUNG"></span>
+                        <span class="list-question-field label-color" data-win-bind="textContent: FRAGESTELLUNG"></span>
+                            <div data-win-bind="style.display: PflichtFeld Binding.Converter.toDisplay">
+                                <span class="require-field label-color" data-win-res="{textContent:'questionnaire.requiredmarker'}"></span>
+                            </div>
                             <div class="field_line_questionnaire win-type-subtitle">
                                 <div class="field_row_odd">
                                     <div class="field_line_left">
@@ -579,6 +599,9 @@
                             </div>
                             <div class="row-separator" data-win-bind="style.display: FLAG_Trennlinie Binding.Converter.toDisplayNone"></div>
                             <span class="list-question-field label-color" data-win-bind="textContent: FRAGESTELLUNG"></span>
+                            <div data-win-bind="style.display: PflichtFeld Binding.Converter.toDisplay">
+                                <span class="require-field label-color" data-win-res="{textContent:'questionnaire.requiredmarker'}"></span>
+                            </div>
                             <div class="field_line_questionnaire win-type-subtitle">
                                 <div class="field_row_odd">
                                     <div class="field_line_left">
@@ -685,7 +708,10 @@
                                 <span class="list-fragengruppe-field win-type-caption window-text-color" data-win-bind="textContent: FRAGENGRUPPE"></span>
                             </div>
                             <div class="row-separator" data-win-bind="style.display: FLAG_Trennlinie Binding.Converter.toDisplayNone"></div>
-                            <span class="list-question-field label-color" data-win-bind="textContent: FRAGESTELLUNG"></span>
+                        <span class="list-question-field label-color" data-win-bind="textContent: FRAGESTELLUNG"></span>
+                            <div data-win-bind="style.display: PflichtFeld Binding.Converter.toDisplay">
+                                <span class="require-field label-color" data-win-res="{textContent:'questionnaire.requiredmarker'}"></span>
+                            </div>
                             <div class="field_line_questionnaire win-type-subtitle">
                                 <div class="field_row_odd">
                                     <div class="field_line_left">

@@ -158,7 +158,7 @@
                             if (json && json.d) {
                                 that.binding.dataPhoto = json.d;
                                 Log.print(Log.l.info, "DOC1MitarbeiterVIEWID=" + json.d.DOC1MitarbeiterVIEWID);
-                                var docContent = that.binding.dataPhoto.DocContentDOCCNT1;
+                                var docContent = json.d.DocContentDOCCNT1;
                                 if (docContent) {
                                     var sub = docContent.search("\r\n\r\n");
                                     if (sub >= 0) {

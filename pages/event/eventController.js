@@ -18,6 +18,8 @@
             }]);
 
             var that = this;
+            var showHideQuestionnaire = pageElement.querySelector("#showHideQuestionnaire");
+            var showHideSketchToggle = pageElement.querySelector("#showHideSketch");
 
             //27.12.2016 generate the string date
             var getDateObject = function(dateData) {
@@ -141,6 +143,7 @@
                     var toggle = event.currentTarget.winControl;
                     if (toggle) {
                         that.binding.isQuestionnaireVisible = toggle.checked;
+                        AppData._persistentStates.hideQuestionnaire = !toggle.checked;
                     }
                     that.changeColorSetting(event.target.id, toggle.checked);
                     Log.ret(Log.l.trace);
@@ -150,6 +153,7 @@
                     var toggle = event.currentTarget.winControl;
                     if (toggle) {
                         that.binding.isSketchVisible = toggle.checked;
+                        AppData._persistentStates.hideSketch = !toggle.checked;
                     }
                     that.changeColorSetting(event.target.id, toggle.checked);
                     Log.ret(Log.l.trace);
@@ -183,7 +187,10 @@
                     } else {
                         return WinJS.Promise.as();
                     }
-                }).then(function() {
+                }).then(function () {
+                    showHideQuestionnaire.winControl.checked = !AppData._persistentStates.hideQuestionnaire;
+                    showHideSketchToggle.winControl.checked = !AppData._persistentStates.hideSketch;
+                }).then(function () {
                     AppBar.notifyModified = true;
                     return WinJS.Promise.as();
                 });
