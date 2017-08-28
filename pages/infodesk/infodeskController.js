@@ -188,7 +188,7 @@
                             that.binding.restriction.Sortierung = that.binding.restriction.SkillType2Sortierung;
                         }
                         if (comboboxSkills1.value === "0" && comboboxSkills2.value === "0") {
-                            that.binding.restriction.Aktiv = undefined;
+                            that.binding.restriction.Aktiv = null;
                         } else {
                             that.binding.restriction.Aktiv = "X";
                         }

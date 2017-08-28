@@ -177,7 +177,7 @@
                 if (item.Freitext === null) {
                     item.Freitext = "";
                 }
-                    
+
                 if (item.DOC1ZeilenantwortID !== "undefined") {
                     that.docIds.push({
                         ZeilenantwortVIEWID: item.ZeilenantwortVIEWID,
@@ -616,8 +616,8 @@
 
                         }
 */
-                       
-                        
+
+
                     //}
                 },
                 activateEnterKey: function (event) {
@@ -630,7 +630,7 @@
                 deactivateEnterKey: function (event) {
                     for (var i = 0; i < AppBar.commandList.length; i++) {
                         if (AppBar.commandList[i].id === "clickForward")
-                            AppBar.commandList[i].key = "undefined";
+                            AppBar.commandList[i].key = null;
                     }
                 },
                 onPointerDown: function (e) {
@@ -869,7 +869,7 @@
                                        /* Log.call(Log.l.trace, "Questionnaire.Controller.");
                                         for (var i = 0; i < AppBar.commandList.length; i++) {
                                             if (AppBar.commandList[i].id === "clickForward")
-                                                AppBar.commandList[i].key = undefined;
+                                                AppBar.commandList[i].key = null;
                                         }*/
                                     }/* else {
                                         Log.call(Log.l.trace, "Questionnaire.Controller.");

@@ -227,13 +227,13 @@
                                     that.nextUrl = InfodeskEmpList.employeeView.getNextUrl(json);
                                     var results = json.d.results;
                                     var resultsUnique = [];
-                                    var actualItem;
+                                    var actualItem = null;
 
                                     if (restriction.countCombobox > 1) {
 
                                         var zähler = 0;
                                         results.forEach(function (item) {
-                                            if (actualItem === undefined)
+                                            if (!actualItem)
                                                 actualItem = item;
                                             if (actualItem.Login === item.Login)
                                                 zähler++;
@@ -245,14 +245,14 @@
                                             if (zähler === restriction.countCombobox) {
                                                 resultsUnique.push(actualItem);
                                                 zähler = 0;
-                                                actualItem = undefined;
+                                                actualItem = null;
                                             }
                                         });
                                     }
 
                                     //Die Mitarbeiterliste muss zu Beginn unique Mitarbeiter sein
                                     results.forEach(function (item, index) {
-                                        if (actualItem === undefined) {
+                                        if (actualItem === null) {
                                             actualItem = item;
                                             if (lastPrevLogin[0].Login !== item.Login)
                                                 resultsUnique.push(actualItem);
@@ -276,7 +276,7 @@
                                         that.binding.count = that.employees.push(item);
                                     });
                                     that.binding.count = that.employees.length;
-                                    
+
                                 } else {
                                     that.nextUrl = null;
                                 }
@@ -356,12 +356,12 @@
 
                                 //hole anhand der recordid die Fähigkeiten des jeweiligen Mitarbeiters mit der recordid
 
-                                var actualItem;
+                                var actualItem = null;
                                 var resultsUnique = [];
                                 if (restriction.countCombobox > 1) {
                                     var zähler = 0;
                                     results.forEach(function (item) {
-                                        if (actualItem === undefined)
+                                        if (!actualItem)
                                             actualItem = item;
                                         if (actualItem.Login === item.Login)
                                             zähler++;
@@ -372,14 +372,14 @@
                                         if (zähler === restriction.countCombobox) {
                                             resultsUnique.push(actualItem);
                                             zähler = 0;
-                                            actualItem = undefined;
+                                            actualItem = null;
                                         }
                                     });
                                 }
                                 else {
                                     //Die Mitarbeiterliste muss zu Beginn unique Mitarbeiter sein
                                     results.forEach(function (item, index) {
-                                        if (actualItem === undefined) {
+                                        if (!actualItem) {
                                             actualItem = item;
                                             resultsUnique.push(actualItem);
                                         }

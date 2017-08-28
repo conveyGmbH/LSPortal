@@ -470,9 +470,9 @@
                 blockEnterKey: function (event) {
                     for (var i = 0; i < AppBar.commandList.length; i++) {
                         if (AppBar.commandList[i].id === "clickForward")
-                            AppBar.commandList[i].key = undefined;
+                            AppBar.commandList[i].key = null;
                     }
-                   
+
                 },
                 releaseEnterKey: function (event) {
                     for (var i = 0; i < AppBar.commandList.length; i++) {
@@ -495,7 +495,7 @@
                             function(errorResponse) {
                                 Log.print(Log.l.error, "error saving employee");
                             });
-                    
+
                     AppBar.triggerDisableHandlers();
                     Log.ret(Log.l.trace);
                 },
