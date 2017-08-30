@@ -220,10 +220,14 @@
                     var series = [];
                     var ticks = [];
                     if (that.kontaktanzahldata && that.kontaktanzahldata.length > 0) {
-                        for (var i = 0; i < that.kontaktanzahldata.length; i++) {
+                        var offset = 0;
+                        if (that.kontaktanzahldata.length > 10) {
+                            offset = that.kontaktanzahldata.length - 10;
+                        }
+                        for (var i = offset; i < that.kontaktanzahldata.length; i++) {
                             var row = that.kontaktanzahldata[i];
-                            series[i] = [AppData.toDateString(row.Datum, true),row.AnzahlProTag];
-                            ticks[i] = i;
+                            series[i - offset] = [AppData.toDateString(row.Datum, true), row.AnzahlProTag];
+                            ticks[i - offset] = i;
                         }    
                     }
                     var seriesColors = [
