@@ -1,4 +1,4 @@
-﻿// controller for page: info
+// controller for page: info
 /// <reference path="~/www/lib/WinJS/scripts/base.js" />
 /// <reference path="~/www/lib/WinJS/scripts/ui.js" />
 /// <reference path="~/www/lib/convey/scripts/appSettings.js" />
@@ -38,6 +38,7 @@
 
             // look for ComboBox element
             var exportList = pageElement.querySelector("#ExportList");
+            //var datePicker = pageElement.querySelector("#caBo");
             var initLand = pageElement.querySelector("#InitLandReporting");
             var erfasserID = pageElement.querySelector("#ErfasserIDReporting");
             var erfassungsdatum = pageElement.querySelector("#ReportingErfassungsdatum.win-datepicker");
@@ -57,6 +58,9 @@
                 return t;
             }
             this.title = title;
+
+           // var calendar = datePicker.calendar;
+           // datePicker.calendar = calendar;
 
             var setInitialDate = function () {
                 if (typeof that.binding.restriction.ReportingErfassungsdatum === "undefined") {
@@ -124,7 +128,7 @@
                     delete AppData.entrydate;
                 }
 
-                /*if (!that.binding.showModifiedTS &&
+                if (!that.binding.showModifiedTS &&
                     typeof that.binding.restriction.ModifiedTs !== "undefined") {
                     delete that.binding.restriction.ModifiedTs;
                 }
@@ -135,7 +139,7 @@
                 if ((!that.binding.restriction.ErfasserID || that.binding.restriction.ErfasserID === "0") &&
                     typeof that.binding.restriction.ErfasserID !== "undefined") {
                     delete that.binding.restriction.ErfasserID;
-                }*/
+                }
                 return myrestriction;
             }
             this.getRestriction = getRestriction;
@@ -259,13 +263,13 @@
             }
             that.exportData = exportData;
 
-            /*
+            
             this.countryChart = null;
             this.countrytitle = that.title("reporting.countrychart");
             this.countryChartArray = [];
             this.countrydata = [];
             this.countryticks = [];
-            var countryresult = null, ci = 0, cl = 0;
+            var countryresult = null, ci = 9, cl = 0;
             var showcountryChart = function(countryChartId, bAnimated) {
                 Log.call(Log.l.trace, "Reporting.Controller.");
                 var ret = new WinJS.Promise.as().then(function() {
@@ -275,9 +279,20 @@
                             // store result for next use
                             countryresult = json.d.results;
                             cl = json.d.results.length;
-                            for (ci; ci < cl; ci++) {
+                            for (ci; ci < cl; ci--) {
                                 if (countryresult[ci].Land === null) {
-                                    countryresult[ci].Land = " ";
+                                    if (AppData.getLanguageId() === 1031) {
+                                        countryresult[ci].Land = "Kein Land";
+                                    }
+                                    if (AppData.getLanguageId() === 1033) {
+                                        countryresult[ci].Land = "No country";
+                                    }
+                                    if (AppData.getLanguageId() === 1036) {
+                                        countryresult[ci].Land = "Aucun pays";
+                                    }
+                                    if (AppData.getLanguageId() === 1040) {
+                                        countryresult[ci].Land = "Nessuna Nazione";
+                                    }
                                 }
                                 that.countrydata[ci] = [countryresult[ci].Land, countryresult[ci].Anzahl];
                             }
@@ -308,6 +323,10 @@
                                 shadow: false,
                                 pointLabels: {
                                     show: true
+                                },
+                                tickRenderer: $.jqplot.CanvasAxisTickRenderer,
+                                tickOptions: {
+                                    angle: -30
                                 }
                             },
                             axes: {
@@ -315,7 +334,11 @@
                                     renderer: $.jqplot.CategoryAxisRenderer
                                 },
                                 yaxis: {
-                                    renderer: $.jqplot.AxisThickRenderer
+                                    autoscale: true,
+                                    tickRenderer: $.jqplot.CanvasAxisTickRenderer,
+                                    tickOptions: {
+                                        labelPosition: 'start'
+                                    }
                                 }
                             },
                             legend: {
@@ -422,7 +445,7 @@
                 return ret;
             };
             this.showemployeeChart = showemployeeChart;
-            */
+            
 
             this.country = "";
             this.res = [];
@@ -694,10 +717,10 @@
                 return that.loadData();
             }).then(function() {
                 Log.print(Log.l.trace, "Data loaded");
-                /*return that.showcountryChart("countryChart", true);*/
+                return that.showcountryChart("countryChart", true);
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
-                /*return that.showemployeeChart("employeeChart", true);*/
+                return that.showemployeeChart("employeeChart", true);
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
             });

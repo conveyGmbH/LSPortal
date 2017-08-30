@@ -1,4 +1,4 @@
-﻿/**
+/**
     reporting page styles
 */
 .progress-container-centered {
@@ -9,13 +9,13 @@
 .progress-centered {
 }
 #employeeChart {
-    width: 60%;
+    width: 90%;
     height: 200px;
     float: left;
     margin-left: 2%;
 }
 #countryChart {
-    width: 60%;
+    width: 90%;
     height: 200px;
     float: left;
     margin-top: 5%;
