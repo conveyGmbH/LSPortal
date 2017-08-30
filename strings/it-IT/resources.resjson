@@ -391,6 +391,7 @@
 	"reporting.employee"	: "Employee",
     "reporting.employeechart"	: "Statistiche personale (numer contatti per persona)",
 	"reporting.countrychart"	: "Statistiche paesi di provenienza (contatti per nazione)",
+    "reporting.nocountry"   : "Nessuna Nazione",
 
     "employee.title"        : "Utenti",
     "employee.firstname"    : "Nome",

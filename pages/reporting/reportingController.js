@@ -210,17 +210,17 @@
                     if (AppData.getLanguageId() === 1031) {
                         dbView = Reporting.xLAuswertungViewNoQuest;
                         fileName = "KontakteKeineFragen";
-                        ExportXlsx.restriction.KontaktID = [-2,-1];
+                        //ExportXlsx.restriction.KontaktID = [-2,-1];
                         if (!that.binding.showErfassungsdatum) {
                             ExportXlsx.restriction.ReportingErfassungsdatum = "NOT NULL";
-						        }
+						}
                     } else {
                         dbView = Reporting.xLReportViewNoQuest;
                         fileName = "ContactsNoQuestion";
-                        ExportXlsx.restriction.ContactID = [-2,-1];
+                        //ExportXlsx.restriction.ContactID = [-2,-1];
                         if (!that.binding.showErfassungsdatum) {
-							              ExportXlsx.restriction.RecordDate = "NOT NULL";
-						            }
+						     ExportXlsx.restriction.RecordDate = "NOT NULL";
+						}
                     }
                     ExportXlsx.restriction.bUseOr = true;
                     break;
@@ -275,24 +275,16 @@
                 var ret = new WinJS.Promise.as().then(function() {
                     return Reporting.reportLand.select(function(json) {
                         Log.print(Log.l.trace, "reportLand: success!");
-                        if (json && json.d && json.d.results) {
+                        if (json && json.d && json.d.results && json.d.results.length > 0) {
                             // store result for next use
                             countryresult = json.d.results;
+                            if (countryresult.length - 1 < ci) {
+                                ci = countryresult.length - 1;
+                            }
                             cl = json.d.results.length;
-                            for (ci; ci < cl; ci--) {
+                            for (ci; ci >= 0; ci--) {
                                 if (countryresult[ci].Land === null) {
-                                    if (AppData.getLanguageId() === 1031) {
-                                        countryresult[ci].Land = "Kein Land";
-                                    }
-                                    if (AppData.getLanguageId() === 1033) {
-                                        countryresult[ci].Land = "No country";
-                                    }
-                                    if (AppData.getLanguageId() === 1036) {
-                                        countryresult[ci].Land = "Aucun pays";
-                                    }
-                                    if (AppData.getLanguageId() === 1040) {
-                                        countryresult[ci].Land = "Nessuna Nazione";
-                                    }
+                                    countryresult[ci].Land = getResourceText("reporting.nocountry");
                                 }
                                 that.countrydata[ci] = [countryresult[ci].Land, countryresult[ci].Anzahl];
                             }

@@ -395,7 +395,7 @@
 	"reporting.employee"	: "Personnel",
 	"reporting.employeechart"	: "Statistiques Employés (entrées par employé)",
 	"reporting.countrychart"	: "Statistiques nationales (entrées par pays)",
-
+    "reporting.nocountry"   : "Aucun pays",
 
     "employee.title"        : "Comptes utilisateurs",
     "employee.firstname"    : "Prénom",

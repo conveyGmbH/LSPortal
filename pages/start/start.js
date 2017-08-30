@@ -63,7 +63,7 @@
                                     typeof that.controller.showPieChart === "function") {
                                     that.controller.showPieChart("visitorsEditedChart", false);
                                 }
-                                if ((width >= 900 || that.prevWidth >= 900) &&
+                                if ((width >= 240 || that.prevWidth >= 240) &&
                                     typeof that.controller.showBarChart === "function") {
                                     that.controller.showBarChart("visitorsPerDayChart", false);
                                 }

@@ -396,6 +396,7 @@
 	"reporting.employee"	: "Mitarbeiter",
 	"reporting.employeechart"	: "Mitarbeiterstatistik (Einträge pro Mitarbeiter)",
 	"reporting.countrychart"	: "Landstatistik (Einträge pro Land)",
+	"reporting.nocountry"   : "Kein Land",
 
     "employee.title"        : "Benutzerkonten",
     "employee.firstname"    : "Vorname",

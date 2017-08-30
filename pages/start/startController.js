@@ -223,7 +223,7 @@
                         for (var i = 0; i < that.kontaktanzahldata.length; i++) {
                             var row = that.kontaktanzahldata[i];
                             series[i] = [AppData.toDateString(row.Datum, true),row.AnzahlProTag];
-                            ticks[i] = i;//;
+                            ticks[i] = i;
                         }    
                     }
                     var seriesColors = [
