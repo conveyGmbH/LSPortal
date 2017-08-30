@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8"/>
+    <meta charset="utf-8" />
     <link href="start.css" rel="stylesheet" />
     <script type="text/javascript" src="startService.js"></script>
     <script type="text/javascript" src="startController.js"></script>
@@ -29,6 +29,10 @@
                             <span class="win-type-subtitle text-textcolor"
                                   data-win-bind="textContent: dataStart.VeranstaltungName"></span>
                         </button>
+                        <div class="visitorsEditedChartBox">
+                            <div id="visitorsEditedChart" class="plot pie-chart">
+                            </div>
+                        </div>
                     </div>
                     <div name="list" class="tile tile-backgroundcolor tile-middle">
                         <div class="tile-button-color">
@@ -42,8 +46,6 @@
                         </div>
                         <div class="tile-content-inner">
                             <div class="field_line field_line_full no-border">
-                                <div id="visitorsEditedChart" class="plot pie-chart">
-                                </div>
                                 <div id="visitorsPerDayChart" class="plot bar-chart">
                                 </div>
                             </div>

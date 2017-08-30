@@ -1,4 +1,4 @@
-﻿/*
+/*
     margins/paddings for all screens
 */
 .tile-button-color,
@@ -183,15 +183,16 @@
  .pie-chart {
      min-height: 96px;
      width: 452px;
-     float: left;
-     left: 0;
+     position: absolute;
+     top: 33%;
+     left: 50%;
+     margin-right: -50%;
+     transform: translate(-50%, -50%);
  }
  .bar-chart {
      min-height: 96px;
-     width: calc(100% - 452px);
+     width: 100%;
      height: 250px;
-     float: right;
-     right: 0;
  }
 
  .jqplot-xaxis-tick,
@@ -203,8 +204,9 @@
  .jqplot-grid-canvas {
      visibility: hidden;
  }
-
- 
+ .visitorsEditedChartBox {
+     width: 100%;
+ }
  /*
     margins/paddings for medium size screens or orientation landscape
     contentarea is less than 699px (in landscape add 140px for navigation bar)
@@ -224,7 +226,9 @@
     .pie-chart {
          float: none;
          width: 452px;
-         left: calc(50% - 226px);
+         left: 50%;
+         margin-right: -50%;
+         transform: translate(-50%, -50%);
     }
     .bar-chart {
          display: none;
@@ -249,7 +253,8 @@
          padding-top: 0;
          min-width: 96px;
          width: calc(100% - 48px);
-         left: 24px;
+         margin-right: -50%;
+         transform: translate(-50%, -50%);
     }
 }
 
@@ -270,4 +275,9 @@
     .tile-bottom {
          position: inherit;
     }    
+}
+@media (max-height:900px) {
+    .pie-chart {
+        display: none;
+    }
 }
