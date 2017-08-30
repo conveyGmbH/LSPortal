@@ -197,10 +197,12 @@
                             );
                             that.setLabelColor(visitorsEditedChart, "jqplot-data-label", Colors.textColor);
                             if (bAnimated) {
-                                if (visitorsEditedChart.style) {
-                                    visitorsEditedChart.style.visibility = "";
-                                }
-                                WinJS.UI.Animation.turnstileForwardIn(visitorsEditedChart).done();
+                                WinJS.Promise.timeout(50).then(function() {
+                                    if (visitorsEditedChart.style) {
+                                        visitorsEditedChart.style.visibility = "";
+                                    }
+                                    WinJS.UI.Animation.fadeIn(visitorsEditedChart);
+                                });
                             }
                         } catch (ex) {
                             Log.print(Log.l.error, "exception occurred: " + ex.message);
