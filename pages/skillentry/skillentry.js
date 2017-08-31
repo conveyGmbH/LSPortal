@@ -60,7 +60,7 @@
             this.controller = new Skillentry.Controller(element);
             if (this.controller.eventHandlers) {
                 // general event listener for hardware back button, too!
-                this.controller.addRemovableEventListener(document, "backbutton", this.controller.eventHandlers.clickBack.bind(controller));
+                this.controller.addRemovableEventListener(document, "backbutton", this.controller.eventHandlers.clickBack.bind(this.controller));
             }
             Log.ret(Log.l.trace);
         },
