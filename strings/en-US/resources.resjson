@@ -353,6 +353,7 @@
     "label.skillentry"      : "Skill entries",
 	"label.mailing"			: "Mail",
 	"label.infodesk"		: "Infodesk",
+	"label.mandatory"		: "Mandatory",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Cancel",
@@ -426,5 +427,8 @@
     "appheader.portal"      : "Portal",
 
 	"mailing.title"			: "Mailing",
-	"mailing.contactinfo"	: "If you would like a mailing, please call +49 (0) 8954 34 49 30 or write us an "
+	"mailing.contactinfo"	: "If you would like a mailing, please call +49 (0) 8954 34 49 30 or write us an ",
+
+    "mandatory.title"		: "Mandatory Fields",
+    "mandatory.contact"		: "Mandatory Fields in Contact"
 }

@@ -354,6 +354,7 @@
     "label.skillentry"      : "Fähigkeit eintragen",
 	"label.mailing"			: "Mail",
 	"label.infodesk"		: "Infodesk",
+	"label.mandatory"		: "Pflichtfelder",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Abbrechen",
@@ -441,6 +442,9 @@
 
     "productlist.title"     : "Produktauswahl",
     "productlist.comment"   : "Verwende die Zurück-Schaltfläche auf dieser Seite um zurück zu gehen!",
-    "productlist.count"     : "Anzahl"
+    "productlist.count"     : "Anzahl",
+
+	"mandatory.title"		: "Pflichtfelder",
+	"mandatory.contact"		: "Pflichtfelder Kontakt"
 
 }
