@@ -125,7 +125,21 @@
                     that.binding.dataStart &&
                     typeof that.binding.dataStart.AnzNichtEditierteKontakte !== "undefined" &&
                     typeof that.binding.dataStart.AnzEditierteKontakte !== "undefined") {
+
                     var width = visitorsEditedChart.clientWidth;
+                    var diameter = width / 2;
+                    var tileMiddle = that.element.querySelector(".tile-middle");
+                    if (tileMiddle) {
+                        var offsetPieChart = visitorsEditedChart.offsetTop;
+                        var offsetMiddle = tileMiddle.offsetTop;
+                        Log.print(Log.l.trace, "offsetPieChart=" + offsetPieChart + " offsetMiddle=" + offsetMiddle);
+                        if (diameter > offsetMiddle - offsetPieChart - 48) {
+                            diameter = offsetMiddle - offsetPieChart - 48;
+                        }
+                    }
+                    Log.print(Log.l.trace, "diameter=" + diameter);
+
+
                     var series = [
                         [buttonEdited, that.binding.dataStart.AnzEditierteKontakte],
                         [buttonNotEdited, that.binding.dataStart.AnzNichtEditierteKontakte]
@@ -140,17 +154,20 @@
                         "#f0f0f0",
                         Colors.navigationColor
                     ];
-                    var diameter = width / 2;
-                    Log.print(Log.l.trace, "diameter=" + diameter);
                     if (visitorsEditedChart.style) {
                         visitorsEditedChart.style.height = (diameter + 48).toString() + "px";
                         visitorsEditedChart.innerHTML = "";
                         if (bAnimated) {
                             visitorsEditedChart.style.visibility = "hidden";
                         }
+                        if (width < 452) {
+                            visitorsEditedChart.style.left = (pageElement.clientWidth / 2 - width / 2).toString() + "px";
+                        } else {
+                            visitorsEditedChart.style.left = "calc(50% - 226px)";
+                        }
                     }
                     WinJS.Promise.timeout(0).then(function () {
-                        if (!series.length) {
+                        if (!series.length || diameter < 96) {
                             Log.ret(Log.l.trace, "extra ignored");
                             return;
                         } 

@@ -184,10 +184,9 @@
      min-height: 96px;
      width: 452px;
      position: absolute;
-     top: 33%;
-     left: 50%;
-     margin-right: -50%;
-     transform: translate(-50%, -50%);
+     display: block;
+     top: 150px;
+     left: calc(50% - 226px);
  }
  .bar-chart {
      min-height: 96px;
@@ -226,13 +225,6 @@
     }
 
     */
-    .pie-chart {
-         float: none;
-         width: 452px;
-         left: 50%;
-         margin-right: -50%;
-         transform: translate(-50%, -50%);
-    }
 }
 
 /*
@@ -253,8 +245,6 @@
          padding-top: 0;
          min-width: 96px;
          width: calc(100% - 48px);
-         margin-right: -50%;
-         transform: translate(-50%, -50%);
     }
 }
 
@@ -276,8 +266,10 @@
          position: inherit;
     }    
 }
+/*
 @media (max-height:900px) {
     .pie-chart {
         display: none;
     }
 }
+*/

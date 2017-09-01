@@ -59,7 +59,8 @@
                             var width = contentarea.clientWidth;
                             var height = contentarea.clientHeight - 8;
                             if (width !== that.prevWidth || height !== that.prevHeight) {
-                                if ((width < 500 || that.prevWidth < 500) &&
+                                if ((width < 500 || that.prevWidth < 500 ||
+                                     height < 900 || that.prevHeight < 900) &&
                                     typeof that.controller.showPieChart === "function") {
                                     that.controller.showPieChart("visitorsEditedChart", false);
                                 }
