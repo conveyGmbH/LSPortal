@@ -120,6 +120,10 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
     left: 16px;
 }
 
+#navigationbar_horizontal .win-viewport.win-horizontal {
+    overflow-x: hidden !important;
+}
+
 .navigationbar-horizontal-template,
 .navigationbar-vertical-template {
     margin: 0;
