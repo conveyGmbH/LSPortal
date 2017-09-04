@@ -20,7 +20,9 @@
             Application.Controller.apply(this, [pageElement, {
                 dataContact: getEmptyDefaultValue(Contact.contactView.defaultValue),
                 InitAnredeItem: { InitAnredeID: 0, TITLE: "" },
-                InitLandItem: { InitLandID: 0, TITLE: "" }
+                InitLandItem: { InitLandID: 0, TITLE: "" },
+                showPhoto: false,
+                showModified: false
             }]);
             this.img = null;
             var that = this;
@@ -331,6 +333,11 @@
                 that.binding.dataContact = newDataContact;
                 if (!that.binding.dataContact.KontaktVIEWID) {
                     that.binding.dataContact.Nachbearbeitet = 1;
+                }
+                if (that.binding.dataContact.Erfassungsdatum === that.binding.dataContact.ModifiedTS) {
+                    that.binding.showModified = false;
+                } else {
+                    that.binding.showModified = true;
                 }
                 if (textComment) {
                     if (that.binding.dataContact.Bemerkungen) {
