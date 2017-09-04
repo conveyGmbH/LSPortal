@@ -1,2 +1,7 @@
-﻿body {
+﻿.list-mandcon-item {
+    width: 33%;
+    min-width: 160px;
+    height: 48px;
+    overflow: hidden;
+    display: flex;
 }

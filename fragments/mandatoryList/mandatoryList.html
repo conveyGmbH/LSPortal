@@ -14,22 +14,21 @@
             <div class="contentarea win-type-body">
                 <div class="mandatoryList-template"
                      data-win-control="WinJS.Binding.Template" style="display: none">
-                    <div class="list-role-item">
-                        <label class="list-role-field">
+
+                    <div class="list-mandcon-item">
+                        <label class="list-mandcon-field">
                             <input type="checkbox" class="win-checkbox" value="1"
-                                   data-win-bind="checked: Active" />
+                                   data-win-bind="checked: Active"/>
                             <span data-win-bind="textContent: PflichtFeldTITLE"></span>
                         </label>
-                        <div class="list-field-small-fixed win-type-ellipsis"
-                             data-win-bind="textContent: PflichtFeldTITLE"></div>
                     </div>
                 </div>
                 <div id="mandatoryList"
                      class="listview win-selectionstylefilled"
                      data-win-control="WinJS.UI.ListView"
                      data-win-options="{
-                            itemTemplate: select('.mandatoryList-template')
-                         }">
+                        itemTemplate: select('.mandatoryList-template')
+                     }">
                 </div>
             </div>
         </section>

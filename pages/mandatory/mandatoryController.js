@@ -24,18 +24,9 @@
             this.questions = null;
 
             var that = this;
-
+            /*
             // ListView control
             var listView = pageElement.querySelector("#mandatoryquestion.listview");
-
-            this.dispose = function () {
-                if (listView && listView.winControl) {
-                    listView.winControl.itemDataSource = null;
-                }
-                if (that.questions) {
-                    that.questions = null;
-                }
-            }
 
             // prevent some keyboard actions from listview to navigate within controls!
             listView.addEventListener("keydown", function (e) {
@@ -49,7 +40,7 @@
                     }
                 }
             }.bind(this), true);
-
+            */
             var progress = null;
             var counter = null;
             var layout = null;
@@ -128,54 +119,7 @@
                     return null;
                 }
             };
-            this.scopeFromRecordId = scopeFromRecordId;
-
-            var saveData = function (complete, error) {
-                var ret = null;
-                Log.call(Log.l.trace, "Questiongroup.Controller.");
-                AppData.setErrorMsg(that.binding);
-                // standard call via modify
-                var recordId = that.prevRecId;
-                if (!recordId) {
-                    // called via canUnload
-                    recordId = that.curRecId;
-                    that.curRecId = 0;
-                }
-                that.prevRecId = 0;
-                if (recordId) {
-                    var curScope = that.scopeFromRecordId(recordId);
-                    if (curScope && curScope.item) {
-                        var newRecord = that.getFieldEntries(curScope.index);
-                        if (that.mergeRecord(curScope.item, newRecord) || AppBar.modified) {
-                            Log.print(Log.l.trace, "save changes of recordId:" + recordId);
-                            ret = Mandatory.CR_V_FragengruppeView.update(function (response) {
-                                Log.print(Log.l.info, "Questiongroup.Controller. update: success!");
-                                // called asynchronously if ok
-                                AppBar.modified = false;
-                                if (typeof complete === "function") {
-                                    complete(response);
-                                }
-                            }, function (errorResponse) {
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                                if (typeof error === "function") {
-                                    error(errorResponse);
-                                }
-                            }, recordId, curScope.item);
-                        } else {
-                            Log.print(Log.l.trace, "no changes in recordId:" + recordId);
-                        }
-                    }
-                }
-                if (!ret) {
-                    ret = new WinJS.Promise.as().then(function () {
-                        complete({});
-                    });
-                }
-                Log.ret(Log.l.trace, ret);
-                return ret;
-            };
-            this.saveData = saveData;
-            */
+            this.scopeFromRecordId = scopeFromRecordId;*/
 
             // define handlers
             this.eventHandlers = {
@@ -188,7 +132,7 @@
                 },
                 clickOk: function (event) {
                     Log.call(Log.l.trace, "Mandatory.Controller.");
-                    Application.navigateById('mandatory', event);
+                    Application.navigateById("mandatory", event);
                     Log.ret(Log.l.trace);
                 },
                 
@@ -423,11 +367,11 @@
                 }).then(function() {*/
                         var mandatoryListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("mandatoryList"));
                         if (mandatoryListFragmentControl && mandatoryListFragmentControl.controller) {
-                            return mandatoryListFragmentControl.controller.loadData(recordId);
+                            return mandatoryListFragmentControl.controller.loadData();
                     } else {
                         var parentElement = pageElement.querySelector("#mandatorylisthost");
                         if (parentElement) {
-                            return Application.loadFragmentById(parentElement, "mandatoryList"/*, { recordId: recordId }*/);
+                            return Application.loadFragmentById(parentElement, "mandatoryList");
                         } else {
                             return WinJS.Promise.as();
                         }
@@ -441,6 +385,74 @@
                 return ret;
             };
             this.loadData = loadData;
+
+            var saveData = function (complete, error) {
+                var ret = null;
+                Log.call(Log.l.trace, "Mandatory.Controller.");
+                AppData.setErrorMsg(that.binding);
+                // standard call via modify
+                /*var recordId = that.prevRecId;
+                if (!recordId) {
+                    // called via canUnload
+                    recordId = that.curRecId;
+                    that.curRecId = 0;
+                }
+                that.prevRecId = 0;
+                if (recordId) {
+                    var curScope = that.scopeFromRecordId(recordId);
+                    if (curScope && curScope.item) {
+                        var newRecord = that.getFieldEntries(curScope.index);
+                        if (that.mergeRecord(curScope.item, newRecord) || AppBar.modified) {
+                            Log.print(Log.l.trace, "save changes of recordId:" + recordId);
+                            ret = Mandatory.CR_V_FragengruppeView.update(function (response) {
+                                Log.print(Log.l.info, "Questiongroup.Controller. update: success!");
+                                // called asynchronously if ok
+                                AppBar.modified = false;
+                                if (typeof complete === "function") {
+                                    complete(response);
+                                }
+                            }, function (errorResponse) {
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                                if (typeof error === "function") {
+                                    error(errorResponse);
+                                }
+                            }, recordId, curScope.item);
+                        } else {
+                            Log.print(Log.l.trace, "no changes in recordId:" + recordId);
+                        }
+                    }
+                }*/
+
+                var mandatoryListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("mandatoryList"));
+                ret = function (response) {
+                    if (mandatoryListFragmentControl && mandatoryListFragmentControl.controller) {
+                        mandatoryListFragmentControl.controller.saveData(function() {
+                                Log.print(Log.l.trace, "saveData completed...");
+
+                                loadData().then(function() {
+                                    complete(response);
+                                });
+                            },
+                            function(errorResponse) {
+                                Log.print(Log.l.error, "saveData error...");
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                            });
+                    } else {
+                        loadData().then(function() {
+                            complete(response);
+                        });
+                    }
+                };
+
+                if (!ret) {
+                    ret = new WinJS.Promise.as().then(function () {
+                        complete({});
+                    });
+                }
+                Log.ret(Log.l.trace, ret);
+                return ret;
+            };
+            this.saveData = saveData;
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");

@@ -264,8 +264,9 @@
             var loadData = function (curRecordId) {
                 Log.call(Log.l.trace, "MandatoryList.");
                 AppData.setErrorMsg(that.binding);
+
                 var ret = new WinJS.Promise.as().then(function () {
-                    return MandatoryList.mandatoryView.select(function (json) {
+                    return MandatoryList.mandatoryView.select(function(json) {
                         // this callback will be called asynchronously
                         // when the response is available
                         Log.print(Log.l.trace, "MandatoryList.mandatoryView: success!");
@@ -281,11 +282,14 @@
                                 listView.winControl.itemDataSource = that.questions.dataSource;
                             }
                         }
-                    }, function (errorResponse) {
+                    }, function(errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
-                    }, null);
+                    }, {
+                        LanguageSpecID: AppData.getLanguageId()
+                    });
+
                 }).then(function () {
                     AppBar.notifyModified = true;
                     AppBar.triggerDisableHandlers();

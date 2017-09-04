@@ -24,12 +24,14 @@
 
                     
                     <div class="line-separator"></div>
-                    <div class="field_line" data-win-bind="style.display: dataEmployee.UserSpecID Binding.Converter.toDisplay">
+                    <div class="field_line">
                         <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mandatory.contact'}"></span>
                         <span class="label landscape_only" data-win-res="{textContent: 'mandatory.contact'}"></span>
                         <div id="mandatorylisthost" class="input_field fragmenthost"></div>
                     </div>
+                    <div class="line-separator"></div>
 
+                    <!-->
                     <div class="mandatoryquestion-template"
                          data-win-control="WinJS.Binding.Template" style="display: none">
                         <div class="list-role-item">
@@ -47,7 +49,7 @@
                                 itemTemplate: select('.mandatoryquestion-template'),
                                 footer: select('.list-footer')
                          }">
-                    </div>
+                    </div<-->
 
                     <div class="error-message"
                          data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
