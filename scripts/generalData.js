@@ -49,7 +49,12 @@
         _curGetUserDataId: 0,
         _curGetContactDataId: 0,
         _contactData: {},
-        _userData: {},
+        _userData: {
+            VeranstaltungName: "",
+            Login: "",
+            Present: 0,
+            PublishFlag: 1
+        },
         _photoData: null,
         _barcodeType: null,
         _barcodeRequest: null,
@@ -165,32 +170,23 @@
                             }
                             if (typeof AppHeader === "object" &&
                                 AppHeader.controller && AppHeader.controller.binding) {
-                                var generalData = AppHeader.controller.binding.generalData;
-                                if (generalData) {
-                                    generalData.publishFlag = AppData._userData.PublishFlag;
-                                    Log.print(Log.l.trace, "publishFlag=" + generalData.publishFlag);
-                                    generalData.eventName = AppData._userData.VeranstaltungName;
-                                    Log.print(Log.l.trace, "eventName=" + generalData.eventName);
-                                    generalData.userName = AppData._userData.Login;
-                                    Log.print(Log.l.trace, "userName=" + generalData.userName);
-                                    generalData.userPresent = AppData._userData.Present;
-                                    Log.print(Log.l.trace, "userPresent=" + generalData.userPresent);
-                                    AppData.appSettings.odata.timeZoneAdjustment = AppData._userData.TimeZoneAdjustment;
-                                    Log.print(Log.l.info, "timeZoneAdjustment=" + AppData.appSettings.odata.timeZoneAdjustment);
+                                AppHeader.controller.binding.userData = AppData._userData;
+                                AppHeader.controller.loadData();
+                            }
+                            if (typeof AppBar === "object" && AppBar.scope) {
+                                if (typeof AppBar.scope.updateActions === "function" &&
+                                (!prevUserData ||
+                                    prevUserData.VeranstaltungName !== AppData._userData.VeranstaltungName ||
+                                    prevUserData.userName !== AppData._userData.userName ||
+                                    prevUserData.AnzLokaleKontakte !== AppData._userData.AnzLokaleKontakte)) {
+                                    AppBar.scope.updateActions();
                                 }
-                                if (typeof AppBar === "object" && AppBar.scope) {
-                                    if (typeof AppBar.scope.updateActions === "function" &&
-                                        (!prevUserData ||
-                                         prevUserData.VeranstaltungName !== AppData._userData.VeranstaltungName ||
-                                         prevUserData.userName !== AppData._userData.userName ||
-                                         prevUserData.AnzLokaleKontakte !== AppData._userData.AnzLokaleKontakte)) {
-                                        AppBar.scope.updateActions();
-                                    }
-                                    if (AppBar.scope.binding && AppBar.scope.binding.generalData) {
-                                        AppBar.scope.binding.generalData.publishFlag = generalData.publishFlag;
-                                    }
+                                if (AppBar.scope.binding && AppBar.scope.binding.generalData) {
+                                    AppBar.scope.binding.generalData.publishFlag = AppData._userData.PublishFlag;
                                 }
                             }
+                            AppData.appSettings.odata.timeZoneAdjustment = AppData._userData.TimeZoneAdjustment;
+                            Log.print(Log.l.info, "timeZoneAdjustment=" + AppData.appSettings.odata.timeZoneAdjustment);
                         }
                         AppData._curGetUserDataId = 0;
                     }, function (errorResponse) {
@@ -232,7 +228,7 @@
                             if (AppData._contactData) {
                                 if (typeof AppBar === "object" &&
                                     AppBar.scope && AppBar.scope.binding && AppBar.scope.binding.generalData) {
-                                    AppBar.scope.binding.generalData.contactDate = AppData._contactData.ModifiedTS;
+                                    AppBar.scope.binding.generalData.contactDate = AppData._contactData.Erfassungsdatum;
                                     AppBar.scope.binding.generalData.contactId = AppData._contactData.KontaktVIEWID;
                                     if (typeof AppBar.scope.updateActions === "function" &&
                                         (!prevContactData ||
@@ -260,8 +256,8 @@
             Log.call(Log.l.u1, "AppData.");
             var ret;
             if (AppData._contactData &&
-                AppData._contactData.ModifiedTS) {
-                ret = AppData._contactData.ModifiedTS;
+                AppData._contactData.Erfassungsdatum) {
+                ret = AppData._contactData.Erfassungsdatum;
             } else {
                 ret = "";
             }
@@ -272,9 +268,9 @@
             Log.call(Log.l.u1, "AppData.");
             var ret;
             if (AppData._contactData &&
-                AppData._contactData.ModifiedTS) {
+                AppData._contactData.Erfassungsdatum) {
                 // value now in UTC ms!
-                var msString = AppData._contactData.ModifiedTS.replace("\/Date(", "").replace(")\/", "");
+                var msString = AppData._contactData.Erfassungsdatum.replace("\/Date(", "").replace(")\/", "");
                 var milliseconds = parseInt(msString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
                 var date = new Date(milliseconds);
                 ret = date.toLocaleDateString();
@@ -288,9 +284,9 @@
             Log.call(Log.l.u1, "AppData.");
             var ret;
             if (AppData._contactData &&
-                AppData._contactData.ModifiedTS) {
+                AppData._contactData.Erfassungsdatum) {
                 // value now in UTC ms!
-                var msString = AppData._contactData.ModifiedTS.replace("\/Date(", "").replace(")\/", "");
+                var msString = AppData._contactData.Erfassungsdatum.replace("\/Date(", "").replace(")\/", "");
                 var milliseconds = parseInt(msString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
                 var date = new Date(milliseconds);
                 var hours = date.getHours();
@@ -299,55 +295,6 @@
                       ((minutes < 10) ? "0" : "") + minutes.toString();
             } else {
                 ret = "";
-            }
-            Log.ret(Log.l.u1, ret);
-            return ret;
-        },
-        getEventName: function () {
-            Log.call(Log.l.u1, "AppData.");
-            var ret;
-            if (AppData._userData &&
-                AppData._userData.VeranstaltungName) {
-                ret = AppData._userData.VeranstaltungName;
-            } else {
-                ret = "";
-            }
-            Log.ret(Log.l.u1, ret);
-            return ret;
-        },
-        getUserPresent: function () {
-            Log.call(Log.l.u1, "AppData.");
-            var ret;
-            if (AppData._userData &&
-                (AppData._userData.Present === 0 ||
-                 AppData._userData.Present === 1)) {
-                ret = AppData._userData.Present;
-            } else {
-                ret = null;
-            }
-            Log.ret(Log.l.u1, ret);
-            return ret;
-        },
-        getUserName: function () {
-            Log.call(Log.l.u1, "AppData.");
-            var ret;
-            if (AppData._userData &&
-                AppData._userData.Login) {
-                ret = AppData._userData.Login;
-            } else {
-                ret = "";
-            }
-            Log.ret(Log.l.u1, ret);
-            return ret;
-        },
-        getPublishFlag: function() {
-            Log.call(Log.l.u1, "AppData.");
-            var ret;
-            if (AppData._userData &&
-                AppData._userData.PublishFlag) {
-                ret = AppData._userData.PublishFlag;
-            } else {
-                ret = 0;
             }
             Log.ret(Log.l.u1, ret);
             return ret;
@@ -381,14 +328,14 @@
                     logTarget: Log.targets.console,
                     cameraQuality: AppData._persistentStates.cameraQuality,
                     cameraUseGrayscale: AppData._persistentStates.cameraUseGrayscale,
-                    eventName: AppData.getEventName(),
-                    userName: AppData.getUserName(),
-                    userPresent: AppData.getUserPresent(),
-                    contactDate: (AppData._contactData && AppData._contactData.ModifiedTS),
+                    eventName: AppData._userData.VeranstaltungName,
+                    userName: AppData._userData.Login,
+                    userPresent: AppData._userData.Present,
+                    publishFlag: AppData._userData.PublishFlag,
+                    contactDate: (AppData._contactData && AppData._contactData.Erfassungsdatum),
                     contactId: (AppData._contactData && AppData._contactData.KontaktVIEWID),
                     globalContactID: ((AppData._contactData && AppData._contactData.CreatorRecID) ?
                         (AppData._contactData.CreatorSiteID + "/" + AppData._contactData.CreatorRecID) : ""),
-                    publishFlag: 1,
                     on: getResourceText("settings.on"),
                     off: getResourceText("settings.off"),
                     dark: getResourceText("settings.dark"),
