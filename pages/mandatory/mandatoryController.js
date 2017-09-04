@@ -1,4 +1,4 @@
-﻿// controller for page: info
+﻿// controller for page: mandatory
 /// <reference path="~/www/lib/WinJS/scripts/base.js" />
 /// <reference path="~/www/lib/WinJS/scripts/ui.js" />
 /// <reference path="~/www/lib/convey/scripts/appSettings.js" />
@@ -9,7 +9,7 @@
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/pages/employee/employeeService.js" />
 /// <reference path="~/www/pages/empList/empListController.js" />
-/// <reference path="~/www/fragments/empRoles/empRolesController.js" />
+/// <reference path="~/www/fragments/mandatoryList/mandatoryListController.js" />
 
 (function () {
     "use strict";
@@ -17,7 +17,7 @@
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement) {
             Log.call(Log.l.trace, "Mandatory.Controller.");
             Application.Controller.apply(this, [pageElement, {
-                count: 0
+                
             }]);
             this.nextUrl = null;
             this.loading = false;
@@ -402,109 +402,36 @@
                 Log.call(Log.l.trace, "Mandatory.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
-                    
+                    /*if (recordId) {
+                        //load of format relation record data
+                        Log.print(Log.l.trace, "calling select mandatoryView...");
+                        return Employee.employeeView.select(function(json) {
+                                AppData.setErrorMsg(that.binding);
+                                Log.print(Log.l.trace, "employeeView: success!");
+                                if (json && json.d) {
+                                    // now always edit!
+                                    that.setDataEmployee(json.d);
+                                }
+                            },
+                            function(errorResponse) {
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                            },
+                            recordId);
+                    } else {
+                        return WinJS.Promise.as();
+                    }
+                }).then(function() {*/
                         var mandatoryListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("mandatoryList"));
                         if (mandatoryListFragmentControl && mandatoryListFragmentControl.controller) {
                             return mandatoryListFragmentControl.controller.loadData(recordId);
                     } else {
                         var parentElement = pageElement.querySelector("#mandatorylisthost");
                         if (parentElement) {
-                            return Application.loadFragmentById(parentElement, "mandatoryList", { recordId: recordId });
+                            return Application.loadFragmentById(parentElement, "mandatoryList"/*, { recordId: recordId }*/);
                         } else {
                             return WinJS.Promise.as();
                         }
                     }
-                    /*return Mandatory.CR_V_FragengruppeView.select(function (json) {
-                        // this callback will be called asynchronously
-                        // when the response is available
-                        Log.print(Log.l.trace, "Mandatory.CR_V_FragengruppeView: success!");
-                        // select returns object already parsed from json file in response
-                        if (json && json.d) {
-                            that.binding.count = json.d.results.length;
-                            that.nextUrl = Mandatory.CR_V_FragengruppeView.getNextUrl(json);
-                            var results = json.d.results;
-                            // Now, we call WinJS.Binding.List to get the bindable list
-                            that.questions = new WinJS.Binding.List(results);
-
-                            if (listView.winControl) {
-                                var trySetActive = function (element, scroller) {
-                                    var success = true;
-                                    // don't call setActive() if a dropdown control has focus!
-                                    var comboInputFocus = element.querySelector(".win-dropdown:focus");
-                                    if (!comboInputFocus) {
-                                        try {
-                                            if (typeof element.setActive === "function") {
-                                                element.setActive();
-                                            }
-                                        } catch (e) {
-                                            // setActive() raises an exception when trying to focus an invisible item. Checking visibility is non-trivial, so it's best
-                                            // just to catch the exception and ignore it. focus() on the other hand, does not raise exceptions.
-                                            success = false;
-                                        }
-                                    }
-                                    return success;
-                                };
-                                // overwrite _setFocusOnItem for this ListView to supress automatic
-                                // scroll-into-view when calling item.focus() in base.ls implementation
-                                // by prevent the call of _ElementUtilities._setActive(item);
-                                listView.winControl._setFocusOnItem = function ListView_setFocusOnItem(entity) {
-                                    this._writeProfilerMark("_setFocusOnItem,info");
-                                    if (this._focusRequest) {
-                                        this._focusRequest.cancel();
-                                    }
-                                    if (this._isZombie()) {
-                                        return;
-                                    }
-                                    var that = this;
-                                    var setFocusOnItemImpl = function (item) {
-                                        if (that._isZombie()) {
-                                            return;
-                                        }
-
-                                        if (that._tabManager.childFocus !== item) {
-                                            that._tabManager.childFocus = item;
-                                        }
-                                        that._focusRequest = null;
-                                        if (that._hasKeyboardFocus && !that._itemFocused) {
-                                            if (that._selection._keyboardFocused()) {
-                                                that._drawFocusRectangle(item);
-                                            }
-                                            // The requestItem promise just completed so _cachedCount will
-                                            // be initialized.
-                                            if (entity.type === WinJS.UI.ObjectType.groupHeader || entity.type === WinJS.UI.ObjectType.item) {
-                                                that._view.updateAriaForAnnouncement(item, (entity.type === WinJS.UI.ObjectType.groupHeader ? that._groups.length() : that._cachedCount));
-                                            }
-
-                                            // Some consumers of ListView listen for item invoked events and hide the listview when an item is clicked.
-                                            // Since keyboard interactions rely on async operations, sometimes an invoke event can be received before we get
-                                            // to WinJS.Utilities._setActive(item), and the listview will be made invisible. If that happens and we call item.setActive(), an exception
-                                            // is raised for trying to focus on an invisible item. Checking visibility is non-trivial, so it's best
-                                            // just to catch the exception and ignore it.
-                                            that._itemFocused = true;
-                                            trySetActive(item);
-                                        }
-                                    };
-
-                                    if (entity.type === WinJS.UI.ObjectType.item) {
-                                        this._focusRequest = this._view.items.requestItem(entity.index);
-                                    } else if (entity.type === WinJS.UI.ObjectType.groupHeader) {
-                                        this._focusRequest = this._groups.requestHeader(entity.index);
-                                    } else {
-                                        this._focusRequest = WinJS.Promise.wrap(entity.type === WinJS.UI.ObjectType.header ? this._header : this._footer);
-                                    }
-                                    this._focusRequest.then(setFocusOnItemImpl);
-                                };
-
-                                listView.winControl._supressScrollIntoView = true;
-                                // add ListView dataSource
-                                listView.winControl.itemDataSource = that.questions.dataSource;
-                            }
-                        }
-                    }, function (errorResponse) {
-                        // called asynchronously if an error occurs
-                        // or server returns response with an error status.
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                    }, null);*/
                 }).then(function () {
                     AppBar.notifyModified = true;
                     AppBar.triggerDisableHandlers();
@@ -523,10 +450,6 @@
                 Log.print(Log.l.trace, "Data loaded");
             });
             Log.ret(Log.l.trace);
-        }, {
-            prevRecId: 0,
-            curRecId: 0,
-            cursorPos: { x: 0, y: 0 }
         })
     });
 })();

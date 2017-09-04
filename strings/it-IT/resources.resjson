@@ -349,6 +349,7 @@
     "label.skillentry"      : "Immetti ruolo",
 	"label.mailing"			: "Email",
 	"label.infodesk"		: "Infodesk",
+	"label.mandatory"		: "Campo obbligatorio",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annulla",
@@ -426,5 +427,8 @@
 
     "productlist.title"     : "Selezione del prodotto",
     "productlist.comment"   : "Utilizzate il pulsante \"indietro\" su questa pagina per tornare alla pagina precedente!",
-    "productlist.count"     : "Totale"
+    "productlist.count"     : "Totale",
+
+	"mandatory.title"		: "Campo obbligatorio",
+	"mandatory.contact"		: "Campo obbligatorio di contatto"
 }

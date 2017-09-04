@@ -353,6 +353,7 @@
     "label.skillentry"      : "entrer une capacité",
     "label.mailing" 	    : "Mail",
     "label.infodesk"	    : "Infodesk",
+	"label.mandatory"		: "Champs obligatoires",
     
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annuler",
@@ -430,5 +431,8 @@
 
     "productlist.title"     : "Sélection de produits",
     "productlist.comment"   : "Utilisez le bouton Retour sur cette page pour y retourner!",
-    "productlist.count"     : "Nombre"
+    "productlist.count"     : "Nombre",
+
+    "mandatory.title"		: "Champs obligatoires",
+    "mandatory.contact"		: "Champs obligatoires de Contact"
 }

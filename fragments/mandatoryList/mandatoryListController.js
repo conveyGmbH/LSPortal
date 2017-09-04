@@ -14,10 +14,11 @@
         Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options) {
             Log.call(Log.l.trace, "MandatoryList.Controller.");
             Fragments.Controller.apply(this, [fragmentElement, {
-                recordId: options ? options.recordId : null
+                
             }]);
             var that = this;
 
+            this.questions = null;
             var layout = null;
             var maxLeadingPages = 0;
             var maxTrailingPages = 0;
@@ -57,15 +58,31 @@
             }
             this.mergeRecord = mergeRecord;
 
+            var selectRecordId = function (recordId) {
+                Log.call(Log.l.trace, "MandatoryList.Controller.", "recordId=" + recordId);
+                if (recordId && listView && listView.winControl && listView.winControl.selection) {
+                    for (var i = 0; i < that.questions.length; i++) {
+                        var question = that.questions.getAt(i);
+                        if (question && typeof question === "object" &&
+                            question.PflichtFelderVIEWID === recordId) {
+                            listView.winControl.selection.set(i);
+                            break;
+                        }
+                    }
+                }
+                Log.ret(Log.l.trace);
+            }
+            this.selectRecordId = selectRecordId;
+
             var scopeFromRecordId = function (recordId) {
                 var i;
-                Log.call(Log.l.trace, "EmpRoles.Controller.", "recordId=" + recordId);
+                Log.call(Log.l.trace, "MandatoryList.Controller.", "recordId=" + recordId);
                 var item = null;
-                for (i = 0; i < that.apuserRole.length; i++) {
-                    var role = that.apuserRole.getAt(i);
-                    if (role && typeof role === "object" &&
-                        role.CR_MA_APUSERRoleVIEWID === recordId) {
-                        item = role;
+                for (i = 0; i < that.questions.length; i++) {
+                    var question = that.questions.getAt(i);
+                    if (question && typeof question === "object" &&
+                        question.PflichtFelderVIEWID === recordId) {
+                        item = question;
                         break;
                     }
                 }
@@ -97,7 +114,7 @@
                         var newRecord = that.getFieldEntries(curScope.index);
                         if (that.mergeRecord(curScope.item, newRecord) || AppBar.modified) {
                             Log.print(Log.l.trace, "save changes of recordId:" + recordId);
-                            ret = MandatoryList.CR_MA_APUSERRoleView.update(function (response) {
+                            ret = MandatoryList.mandatoryUpdate.update(function (response) {
                                 Log.print(Log.l.info, "MandatoryList.Controller. update: success!");
                                 // called asynchronously if ok
                                 AppBar.modified = false;
@@ -127,7 +144,25 @@
             };
             this.saveData = saveData;
 
+
             var eventHandlers = {
+                clickBack: function (event) {
+                    Log.call(Log.l.trace, "MandatoryList.Controller.");
+                    if (WinJS.Navigation.canGoBack === true) {
+                        WinJS.Navigation.back(1).done( /* Your success and error handlers */);
+                    }
+                    Log.ret(Log.l.trace);
+                },
+                clickOk: function (event) {
+                    Log.call(Log.l.trace, "MandatoryList.Controller.");
+                    Application.navigateById('mandatory', event);
+                    Log.ret(Log.l.trace);
+                },
+                clickGotoPublish: function (event) {
+                    Log.call(Log.l.trace, "MandatoryList.Controller.");
+                    Application.navigateById("publish", event);
+                    Log.ret(Log.l.trace);
+                },
                 onSelectionChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "MandatoryList.Controller.");
                     if (listView && listView.winControl) {
@@ -138,21 +173,21 @@
                                 // Only one item is selected, show the page
                                 listControl.selection.getItems().done(function (items) {
                                     var item = items[0];
-                                    if (item.data && item.data.CR_MA_APUSERRoleVIEWID) {
-                                        var newRecId = item.data.CR_MA_APUSERRoleVIEWID;
+                                    if (item.data && item.data.PflichtFelderVIEWID) {
+                                        var newRecId = item.data.PflichtFelderVIEWID;
                                         Log.print(Log.l.trace, "newRecId:" + newRecId + " curRecId:" + that.curRecId);
                                         if (newRecId !== 0 && newRecId !== that.curRecId) {
-                                            AppData.setRecordId('CR_MA_APUSERRole', newRecId);
+                                            AppData.setRecordId('PflichtFelder', newRecId);
                                             if (that.curRecId) {
                                                 that.prevRecId = that.curRecId;
                                             }
                                             that.curRecId = newRecId;
                                             if (that.prevRecId !== 0) {
                                                 that.saveData(function (response) {
-                                                    Log.print(Log.l.trace, "question saved");
+                                                    Log.print(Log.l.trace, "mandatory question saved");
                                                     AppBar.triggerDisableHandlers();
                                                 }, function (errorResponse) {
-                                                    Log.print(Log.l.error, "error saving question");
+                                                    Log.print(Log.l.error, "error saving mandatory question");
                                                 });
                                             } else {
                                                 AppBar.triggerDisableHandlers();
@@ -203,86 +238,58 @@
             }
             this.eventHandlers = eventHandlers;
 
+            this.disableHandlers = {
+                clickBack: function () {
+                    if (WinJS.Navigation.canGoBack === true) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                },
+                clickOk: function () {
+                    var ret = true;
+                    if (that.curRecId && !that.prevRecId) {
+                        ret = false;
+                    }
+                    return ret;
+                }
+            }
+
             // register ListView event handler
             if (listView) {
                 listView.addEventListener("selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
                 listView.addEventListener("loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
             }
 
-            var resultConverter = function (item, index) {
-                var map = MandatoryList.initAPUserRoleView.getMap();
-                var results = MandatoryList.initAPUserRoleView.getResults();
-                if (map && results) {
-                    var curIndex = map[item.INITAPUserRoleID];
-                    if (typeof curIndex !== "undefined") {
-                        var curAPUserRole = results[curIndex];
-                        if (curAPUserRole) {
-                            item["TITLE"] = curAPUserRole.TITLE;
-                        }
-                    }
-                }
-                item.index = index;
-            }
-            this.resultConverter = resultConverter;
-
             var loadData = function (curRecordId) {
                 Log.call(Log.l.trace, "MandatoryList.");
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
-                    if (!MandatoryList.initAPUserRoleView.getResults().length) {
-                        Log.print(Log.l.trace, "calling select LGNTINITAPUserRoleData...");
-                        //@nedra:25.09.2015: load the list of INITLand for Combobox
-                        return MandatoryList.initAPUserRoleView.select(function (json) {
-                            // this callback will be called asynchronously
-                            // when the response is available
-                            Log.print(Log.l.trace, "initAPUserRoleView: success!");
-                        }, function (errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        });
-                    } else {
-                        return WinJS.Promise.as();
-                    }
-                }).then(function () {
-                    return that.saveData(function () {
-                        Log.print(Log.l.trace, "saveData completed...");
-                    }, function (errorResponse) {
-                        Log.print(Log.l.error, "saveData error...");
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                    });
-                }).then(function () {
-                    return MandatoryList.CR_MA_APUSERRoleView.select(function (json) {
-                        that.binding.recordId = curRecordId;
+                    return MandatoryList.mandatoryView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
-                        Log.print(Log.l.trace, "CR_MA_APUSERRoleView: success!");
-                        // startContact returns object already parsed from json file in response
+                        Log.print(Log.l.trace, "MandatoryList.mandatoryView: success!");
+                        // select returns object already parsed from json file in response
                         if (json && json.d) {
+                            that.binding.count = json.d.results.length;
+                            //that.nextUrl = MandatoryList.mandatoryView.getNextUrl(json);
                             var results = json.d.results;
-                            results.forEach(function (item, index) {
-                                that.resultConverter(item, index);
-                            });
-                            that.apuserRole = new WinJS.Binding.List(results);
-
-                            if (listView && listView.winControl) {
+                            // Now, we call WinJS.Binding.List to get the bindable list
+                            that.questions = new WinJS.Binding.List(results);
+                            if (listView.winControl) {
                                 // add ListView dataSource
-                                listView.winControl.itemDataSource = that.apuserRole.dataSource;
-                            }
-                        } else {
-                            that.apuserRole = null;
-                            if (listView && listView.winControl) {
-                                // add ListView dataSource
-                                listView.winControl.itemDataSource = null;
+                                listView.winControl.itemDataSource = that.questions.dataSource;
                             }
                         }
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
-                    }, {
-                        MitarbeiterID: curRecordId
-                    });
+                    }, null);
+                }).then(function () {
+                    AppBar.notifyModified = true;
+                    AppBar.triggerDisableHandlers();
+                    return WinJS.Promise.as();
                 });
                 Log.ret(Log.l.trace);
                 return ret;
@@ -296,8 +303,6 @@
                 Log.print(Log.l.trace, "Data loaded");
             });
             Log.ret(Log.l.trace);
-        }, {
-            apuserRole: null
         })
     });
 })();
