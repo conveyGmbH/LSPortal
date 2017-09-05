@@ -174,7 +174,7 @@
                             } else {
                                 that.nextUrl = null;
                             }
-                            if (recordId) {
+                            if (recordId && that.nextUrl !== null) {
                                 that.selectRecordId(recordId);
                             }
                         }, function (errorResponse) {
@@ -249,33 +249,35 @@
                     var contact;
                     Log.call(Log.l.trace, "ContactList.Controller.", "recordId=" + recordId);
                     var recordIdNotFound = true;
-                    if (recordId && listView && listView.winControl && listView.winControl.selection) {
-                        for (var i = 0; i < that.contacts.length; i++) {
-                            contact = that.contacts.getAt(i);
-                            if (contact &&
-                                typeof contact === "object" &&
-                                contact.KontaktVIEWID === recordId) {
-                                listView.winControl.selection.set(i).done(function () {
-                                    WinJS.Promise.timeout(50).then(function () {
-                                        that.scrollToRecordId(recordId);
+                    if (listView && listView.winControl && listView.winControl.selection) {
+                        if (recordId) {
+                            for (var i = 0; i < that.contacts.length; i++) {
+                                contact = that.contacts.getAt(i);
+                                if (contact &&
+                                    typeof contact === "object" &&
+                                    contact.KontaktVIEWID === recordId) {
+                                    listView.winControl.selection.set(i).done(function() {
+                                        WinJS.Promise.timeout(50).then(function() {
+                                            that.scrollToRecordId(recordId);
+                                        });
+                                    });
+                                    recordIdNotFound = false;
+                                    handlePageEnable(contact);
+                                    break;
+                                }
+                            }
+                            if (recordIdNotFound) {
+                                that.loadNextUrl(recordId);
+                            }
+                        } else {
+                            contact = that.contacts.getAt(0);
+                            if (contact && typeof contact === "object") {
+                                listView.winControl.selection.set(0).done(function() {
+                                    WinJS.Promise.timeout(50).then(function() {
+                                        that.scrollToRecordId(contact.KontaktVIEWID);
                                     });
                                 });
-                                recordIdNotFound = false;
-                                handlePageEnable(contact);
-                                break;
                             }
-                        }
-                        if (recordIdNotFound) {
-                            that.loadNextUrl(recordId);
-                        }
-                    } else {
-                        contact = that.contacts.getAt(0);
-                        if (contact && typeof contact === "object") {
-                            listView.winControl.selection.set(0).done(function () {
-                                WinJS.Promise.timeout(50).then(function () {
-                                    that.scrollToRecordId(contact.KontaktVIEWID);
-                                });
-                            });
                         }
                     }
                     Log.ret(Log.l.trace);
@@ -653,7 +655,7 @@
                     return that.loadData();
                 }).then(function () {
                     Log.print(Log.l.trace, "Data loaded");
-                    return that.selectRecordId(that.binding.contactId);
+                    return that.selectRecordId(AppData.getRecordId("Kontakt")); //that.binding.contactId
                 }).then(function () {
                     AppBar.notifyModified = true;
                     Log.print(Log.l.trace, "Record selected");

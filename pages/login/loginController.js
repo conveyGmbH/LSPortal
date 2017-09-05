@@ -265,7 +265,7 @@
                                         return that.openDb(complete, error);
                                     } else {
                                         AppBar.busy = false;
-                                        AppData.setRecordId("Kontakt", dataLogin.KontaktID);
+                                        //AppData.setRecordId("Kontakt", dataLogin.KontaktID);
                                         AppData._curGetUserDataId = 0;
                                         AppData.getUserData();
                                         complete(json);

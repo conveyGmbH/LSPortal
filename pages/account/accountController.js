@@ -455,7 +455,7 @@
                                             }
                                         } else {
                                             AppBar.busy = false;
-                                            AppData.setRecordId("Kontakt", dataLogin.KontaktID);
+                                            //AppData.setRecordId("Kontakt", dataLogin.KontaktID);
                                             Application.pageframe.savePersistentStates();
                                             AppData._curGetUserDataId = 0;
                                             AppData.getUserData();
