@@ -140,29 +140,7 @@
                     Log.call(Log.l.trace, "Mandatory.Controller.");
                     Application.navigateById("publish", event);
                     Log.ret(Log.l.trace);
-                },
-                onPointerDown: function (e) {
-                    Log.call(Log.l.trace, "Mandatory.Controller.");
-                    that.cursorPos = { x: e.pageX, y: e.pageY };
-                    mouseDown = true;
-                    Log.ret(Log.l.trace);
-                },
-                onMouseDown: function (e) {
-                    Log.call(Log.l.trace, "Mandatory.Controller.");
-                    that.cursorPos = { x: e.pageX, y: e.pageY };
-                    mouseDown = true;
-                    Log.ret(Log.l.trace);
-                },
-                onPointerUp: function (e) {
-                    Log.call(Log.l.trace, "Mandatory.Controller.");
-                    mouseDown = false;
-                    Log.ret(Log.l.trace);
-                },
-                onMouseUp: function (e) {
-                    Log.call(Log.l.trace, "Mandatory.Controller.");
-                    mouseDown = false;
-                    Log.ret(Log.l.trace);
-                },
+                }
                 /*onSelectionChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "Mandatory.Controller.");
                     if (listView && listView.winControl) {
@@ -326,11 +304,7 @@
                     }
                 },
                 clickOk: function () {
-                    var ret = true;
-                    if (that.curRecId && !that.prevRecId) {
-                        ret = false;
-                    }
-                    return ret;
+                    return AppBar.busy;
                 }
             }
 
@@ -424,30 +398,13 @@
                 }*/
 
                 var mandatoryListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("mandatoryList"));
-                ret = function (response) {
-                    if (mandatoryListFragmentControl && mandatoryListFragmentControl.controller) {
-                        mandatoryListFragmentControl.controller.saveData(function() {
-                                Log.print(Log.l.trace, "saveData completed...");
-
-                                loadData().then(function() {
-                                    complete(response);
-                                });
-                            },
-                            function(errorResponse) {
-                                Log.print(Log.l.error, "saveData error...");
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                            });
-                    } else {
-                        loadData().then(function() {
-                            complete(response);
-                        });
-                    }
-                };
-
-                if (!ret) {
-                    ret = new WinJS.Promise.as().then(function () {
+                if (mandatoryListFragmentControl && mandatoryListFragmentControl.controller) {
+                    ret = mandatoryListFragmentControl.controller.saveData(complete, error);
+                } else {
+                    if (typeof complete === "function") {
                         complete({});
-                    });
+                    }
+                    ret = WinJS.Promise.as();
                 }
                 Log.ret(Log.l.trace, ret);
                 return ret;

@@ -17,8 +17,9 @@
                 
             }]);
             var that = this;
-
-            this.questions = null;
+            this.curRecId = 0;
+            this.prevRecId = 0;
+            this.fields = null;
             var layout = null;
             var maxLeadingPages = 0;
             var maxTrailingPages = 0;
@@ -34,7 +35,7 @@
                     var element = listView.winControl.elementFromIndex(index);
                     if (element) {
                         var fields = element.querySelectorAll('input[type="checkbox"]');
-                        ret["Active"] = (fields[0] && fields[0].checked) ? 1 : null;
+                        ret["FieldFlag"] = (fields[0] && fields[0].checked) ? 1 : null;
                     }
                 }
                 Log.ret(Log.l.trace, ret);
@@ -61,12 +62,15 @@
             var selectRecordId = function (recordId) {
                 Log.call(Log.l.trace, "MandatoryList.Controller.", "recordId=" + recordId);
                 if (recordId && listView && listView.winControl && listView.winControl.selection) {
-                    for (var i = 0; i < that.questions.length; i++) {
-                        var question = that.questions.getAt(i);
-                        if (question && typeof question === "object" &&
-                            question.PflichtFelderVIEWID === recordId) {
-                            listView.winControl.selection.set(i);
-                            break;
+                    if (fields) {
+                        for (var i = 0; i < that.fields.length; i++) {
+                            var field = that.fields.getAt(i);
+                            if (field &&
+                                typeof field === "object" &&
+                                field.PflichtFelderVIEWID === recordId) {
+                                listView.winControl.selection.set(i);
+                                break;
+                            }
                         }
                     }
                 }
@@ -78,11 +82,11 @@
                 var i;
                 Log.call(Log.l.trace, "MandatoryList.Controller.", "recordId=" + recordId);
                 var item = null;
-                for (i = 0; i < that.questions.length; i++) {
-                    var question = that.questions.getAt(i);
-                    if (question && typeof question === "object" &&
-                        question.PflichtFelderVIEWID === recordId) {
-                        item = question;
+                for (i = 0; i < that.fields.length; i++) {
+                    var field = that.fields.getAt(i);
+                    if (field && typeof field === "object" &&
+                        field.PflichtFelderVIEWID === recordId) {
+                        item = field;
                         break;
                     }
                 }
@@ -144,25 +148,7 @@
             };
             this.saveData = saveData;
 
-
             var eventHandlers = {
-                clickBack: function (event) {
-                    Log.call(Log.l.trace, "MandatoryList.Controller.");
-                    if (WinJS.Navigation.canGoBack === true) {
-                        WinJS.Navigation.back(1).done( /* Your success and error handlers */);
-                    }
-                    Log.ret(Log.l.trace);
-                },
-                clickOk: function (event) {
-                    Log.call(Log.l.trace, "MandatoryList.Controller.");
-                    Application.navigateById('mandatory', event);
-                    Log.ret(Log.l.trace);
-                },
-                clickGotoPublish: function (event) {
-                    Log.call(Log.l.trace, "MandatoryList.Controller.");
-                    Application.navigateById("publish", event);
-                    Log.ret(Log.l.trace);
-                },
                 onSelectionChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "MandatoryList.Controller.");
                     if (listView && listView.winControl) {
@@ -184,10 +170,10 @@
                                             that.curRecId = newRecId;
                                             if (that.prevRecId !== 0) {
                                                 that.saveData(function (response) {
-                                                    Log.print(Log.l.trace, "mandatory question saved");
+                                                    Log.print(Log.l.trace, "mandatory field saved");
                                                     AppBar.triggerDisableHandlers();
                                                 }, function (errorResponse) {
-                                                    Log.print(Log.l.error, "error saving mandatory question");
+                                                    Log.print(Log.l.error, "error saving mandatory field");
                                                 });
                                             } else {
                                                 AppBar.triggerDisableHandlers();
@@ -238,23 +224,6 @@
             }
             this.eventHandlers = eventHandlers;
 
-            this.disableHandlers = {
-                clickBack: function () {
-                    if (WinJS.Navigation.canGoBack === true) {
-                        return false;
-                    } else {
-                        return true;
-                    }
-                },
-                clickOk: function () {
-                    var ret = true;
-                    if (that.curRecId && !that.prevRecId) {
-                        ret = false;
-                    }
-                    return ret;
-                }
-            }
-
             // register ListView event handler
             if (listView) {
                 listView.addEventListener("selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
@@ -276,10 +245,10 @@
                             //that.nextUrl = MandatoryList.mandatoryView.getNextUrl(json);
                             var results = json.d.results;
                             // Now, we call WinJS.Binding.List to get the bindable list
-                            that.questions = new WinJS.Binding.List(results);
+                            that.fields = new WinJS.Binding.List(results);
                             if (listView.winControl) {
                                 // add ListView dataSource
-                                listView.winControl.itemDataSource = that.questions.dataSource;
+                                listView.winControl.itemDataSource = that.fields.dataSource;
                             }
                         }
                     }, function(errorResponse) {

@@ -17,7 +17,8 @@
                 
             }]);
             var that = this;
-
+            this.curRecId = 0;
+            this.prevRecId = 0;
             var layout = null;
             var maxLeadingPages = 0;
             var maxTrailingPages = 0;
