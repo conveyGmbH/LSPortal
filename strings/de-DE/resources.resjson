@@ -365,6 +365,8 @@
     "event.name"            : "Name",
     "event.begin"           : "Beginn",
     "event.end"             : "Ende",
+    "event.showHideQuestionnaire"	: "Zeige Fragebogen",
+    "event.showHideSketch"	: "Zeige Skizze",
 
     "questiongroup.title"   : "Fragengruppen",
     "questiongroup.count"   : "Anzahl",

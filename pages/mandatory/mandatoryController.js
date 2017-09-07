@@ -132,6 +132,7 @@
                 },
                 clickOk: function (event) {
                     Log.call(Log.l.trace, "Mandatory.Controller.");
+                    that.saveData();
                     Application.navigateById("mandatory", event);
                     Log.ret(Log.l.trace);
                 },

@@ -360,6 +360,8 @@
     "event.name"            : "Nome",
     "event.begin"           : "Inizio",
     "event.end"             : "Fine",
+    "event.showHideQuestionnaire"	: "Mostra questionario",
+    "event.showHideSketch"	: "Mostra schizzo",
 
     "questiongroup.title"   : "Gruppo domande",
     "questiongroup.count"   : "Numero",

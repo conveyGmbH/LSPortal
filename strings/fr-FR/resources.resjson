@@ -364,6 +364,8 @@
     "event.name"            : "Nom",
     "event.begin"           : "Début",
     "event.end"             : "Fin",
+    "event.showHideQuestionnaire"	: "Présent la questionnaire",
+    "event.showHideSketch"	: "Présent l'esquisse",
 
     "questiongroup.title"   : "Groupe de questions",
     "questiongroup.count"   : "Nombre",
@@ -434,5 +436,5 @@
     "productlist.count"     : "Nombre",
 
     "mandatory.title"		: "Champs obligatoires",
-    "mandatory.contact"		: "Champs obligatoires de Contact"
+    "mandatory.contact"		: "Champs obligatoires de contact"
 }
