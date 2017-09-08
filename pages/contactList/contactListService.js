@@ -14,13 +14,19 @@
             }
         },
         contactView: {
-            select: function (complete, error, restriction) {
+            select: function (complete, error, restriction, recordId) {
                 Log.call(Log.l.trace, "ContactList.");
-                var ret = ContactList._contactView.select(complete, error, restriction, {
-                    ordered: true,
-                    orderAttribute: "Erfassungsdatum",
-                    desc: true
-                });
+                var ret;
+                if (recordId) {
+                    ret = ContactList._contactView.selectById(complete, error, recordId);
+                } else {
+                    ret = ContactList._contactView.select(complete, error, restriction, {
+                        ordered: true,
+                        orderAttribute: "Erfassungsdatum",
+                        desc: true
+                    });
+                }
+
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
