@@ -364,8 +364,10 @@
     "event.name"            : "Nom",
     "event.begin"           : "Début",
     "event.end"             : "Fin",
-    "event.showHideQuestionnaire"	: "Présent la questionnaire",
-    "event.showHideSketch"	: "Présent l'esquisse",
+	"event.showHideQuestionnaire" : "afficher le champ de Questionnaire",
+	"event.showHideSketch"	:	 "afficher le champ de Esquisse",
+	"event.note"			: "allusion",
+	"event.appInfo"			: "Pour que ces modifications prennent effet, vous devez redémarrer votre APP",
 
     "questiongroup.title"   : "Groupe de questions",
     "questiongroup.count"   : "Nombre",

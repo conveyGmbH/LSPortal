@@ -13,12 +13,18 @@
             }
         },
         employeeView: {
-            select: function (complete, error, restriction) {
+            select: function (complete, error, restriction, recordId) {
                 Log.call(Log.l.trace, "EmpList.");
-                var ret = EmpList._employeeView.select(complete, error, restriction, {
-                    ordered: true,
-                    orderAttribute: "Nachname"
-                });
+                var ret;
+                if (recordId) {
+                    ret = EmpList._employeeView.selectById(complete, error, recordId);
+                } else {
+                    ret = EmpList._employeeView.select(complete, error, restriction, {
+                        ordered: true,
+                        orderAttribute: "Nachname"
+                    });
+                }
+
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;

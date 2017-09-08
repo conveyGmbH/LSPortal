@@ -360,8 +360,10 @@
     "event.name"            : "Nome",
     "event.begin"           : "Inizio",
     "event.end"             : "Fine",
-    "event.showHideQuestionnaire"	: "Mostra questionario",
-    "event.showHideSketch"	: "Mostra schizzo",
+	"event.showHideQuestionnaire" : "Mostra casella questionario",
+	"event.showHideSketch"	:	 "Mostra casella schizzo",
+	"event.note"			: "suggerimento",
+	"event.appInfo"			: "Affinché le modifiche abbiano effetto, si prega di riavviare l´APP",
 
     "questiongroup.title"   : "Gruppo domande",
     "questiongroup.count"   : "Numero",

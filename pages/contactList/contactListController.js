@@ -69,13 +69,16 @@
                     } else {
                         NavigationBar.disablePage("questionnaire");
                     }
-
-                    if (AppData._persistentStates.hideSketch) {
-                        NavigationBar.disablePage("sketch");
-                    } else if (contact && contact.SHOW_KontaktNotiz) {
+                    // if toggle sketch is on then show sketch even if there is sketch -> Show_KontaktNotiz === null
+                    if (contact && contact.SHOW_KontaktNotiz) {
                         NavigationBar.enablePage("sketch");
                     } else {
                         NavigationBar.disablePage("sketch");
+                    }
+                    if (AppData._persistentStates.hideSketch) {
+                        NavigationBar.disablePage("sketch");
+                    } else {
+                        NavigationBar.enablePage("sketch");
                     }
                     Log.ret(Log.l.trace);
                 };
@@ -222,6 +225,28 @@
                     Log.ret(Log.l.trace);
                 }
                 this.loadNextUrl = loadNextUrl;
+
+                var scopeFromRecordId = function (recordId) {
+                    var i;
+                    Log.call(Log.l.trace, "Questiongroup.Controller.", "recordId=" + recordId);
+                    var item = null;
+                    for (i = 0; i < that.contacts.length; i++) {
+                        var contact = that.contacts.getAt(i);
+                        if (contact && typeof contact === "object" &&
+                            contact.KontaktVIEWID === recordId) {
+                            item = contact;
+                            break;
+                        }
+                    }
+                    if (item) {
+                        Log.ret(Log.l.trace, "i=" + i);
+                        return { index: i, item: item };
+                    } else {
+                        Log.ret(Log.l.trace, "not found");
+                        return null;
+                    }
+                };
+                this.scopeFromRecordId = scopeFromRecordId;
 
                 var scrollToRecordId = function (recordId) {
                     Log.call(Log.l.trace, "QuestionList.Controller.", "recordId=" + recordId);
@@ -533,7 +558,7 @@
                 }
 
                 Log.print(Log.l.trace, "calling select ContactList.contactView...");
-                var loadData = function () {
+                var loadData = function (recordId) {
                     Log.call(Log.l.trace, "ContactList.Controller.");
                     that.firstDocsIndex = 0;
                     that.firstContactsIndex = 0;
@@ -570,38 +595,54 @@
                             // when the response is available
                             Log.print(Log.l.trace, "contactView: success!");
                             // startContact returns object already parsed from json file in response
-                            if (json && json.d) {
-                                that.binding.count = json.d.results.length;
-                                that.nextUrl = ContactList.contactView.getNextUrl(json);
-                                var results = json.d.results;
-                                results.forEach(function (item, index) {
-                                    that.resultConverter(item, index);
-                                });
-                                that.contacts = new WinJS.Binding.List(results);
+                            if (!recordId) {
+                                if (json && json.d) {
+                                    that.binding.count = json.d.results.length;
+                                    that.nextUrl = ContactList.contactView.getNextUrl(json);
+                                    var results = json.d.results;
+                                    results.forEach(function (item, index) {
+                                        that.resultConverter(item, index);
+                                    });
+                                    that.contacts = new WinJS.Binding.List(results);
 
-                                if (listView.winControl) {
-                                    // add ListView dataSource
-                                    listView.winControl.itemDataSource = that.contacts.dataSource;
+                                    if (listView.winControl) {
+                                        // add ListView dataSource
+                                        listView.winControl.itemDataSource = that.contacts.dataSource;
+                                    }
+                                } else {
+                                    that.binding.count = 0;
+                                    that.nextUrl = null;
+                                    that.contacts = null;
+                                    if (listView.winControl) {
+                                        // add ListView dataSource
+                                        listView.winControl.itemDataSource = null;
+                                    }
+                                    progress = listView.querySelector(".list-footer .progress");
+                                    counter = listView.querySelector(".list-footer .counter");
+                                    if (progress && progress.style) {
+                                        progress.style.display = "none";
+                                    }
+                                    if (counter && counter.style) {
+                                        counter.style.display = "inline";
+                                    }
+                                    that.loading = false;
                                 }
                             } else {
-                                that.binding.count = 0;
-                                that.nextUrl = null;
-                                that.contacts = null;
-                                if (listView.winControl) {
-                                    // add ListView dataSource
-                                    listView.winControl.itemDataSource = null;
+                                if (json && json.d) {
+                                    var contact = json.d;
+
+                                    that.resultConverter(contact);
+
+                                    console.log("recordId" + recordId);
+                                    var objectrec = scopeFromRecordId(recordId);
+                                    console.log("objectrec" + objectrec);
+                                    console.log("contacts " + that.contacts);
+                                    that.contacts.setAt(objectrec.index, contact);
                                 }
-                                progress = listView.querySelector(".list-footer .progress");
-                                counter = listView.querySelector(".list-footer .counter");
-                                if (progress && progress.style) {
-                                    progress.style.display = "none";
-                                }
-                                if (counter && counter.style) {
-                                    counter.style.display = "inline";
-                                }
-                                that.loading = false;
+
                             }
-                        },  function (errorResponse) {
+                        },
+                            function (errorResponse) {
                                 // called asynchronously if an error occurs
                                 // or server returns response with an error status.
                                 AppData.setErrorMsg(that.binding, errorResponse);
@@ -615,7 +656,8 @@
                                 }
                                 that.loading = false;
                             },
-                            getRestriction());
+                            getRestriction(),
+                            recordId);
                     }).then(function () {
                         WinJS.Promise.timeout(250).then(function () {
                             ContactList.contactDocView.select(function (json) {

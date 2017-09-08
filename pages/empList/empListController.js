@@ -70,6 +70,28 @@
             }
             this.selectRecordId = selectRecordId;
 
+            var scopeFromRecordId = function (recordId) {
+                var i;
+                Log.call(Log.l.trace, "Questiongroup.Controller.", "recordId=" + recordId);
+                var item = null;
+                for (i = 0; i < that.employees.length; i++) {
+                    var employee = that.employees.getAt(i);
+                    if (employee && typeof employee === "object" &&
+                        employee.MitarbeiterVIEWID === recordId) {
+                        item = employee;
+                        break;
+                    }
+                }
+                if (item) {
+                    Log.ret(Log.l.trace, "i=" + i);
+                    return { index: i, item: item };
+                } else {
+                    Log.ret(Log.l.trace, "not found");
+                    return null;
+                }
+            };
+            this.scopeFromRecordId = scopeFromRecordId;
+
             var resultConverter = function (item, index) {
                 item.index = index;
                 item.fullName =
@@ -245,7 +267,7 @@
                 this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
             }
 
-            var loadData = function () {
+            var loadData = function (recordId) {
                 Log.call(Log.l.trace, "EmpList.Controller.");
                 that.loading = true;
                 progress = listView.querySelector(".list-footer .progress");
@@ -263,36 +285,45 @@
                         // when the response is available
                         Log.print(Log.l.trace, "EmpList: success!");
                         // employeeView returns object already parsed from json file in response
-                        if (json && json.d) {
-                            that.binding.count = json.d.results.length;
-                            that.nextUrl = EmpList.employeeView.getNextUrl(json);
-                            var results = json.d.results;
-                            results.forEach(function (item, index) {
-                                that.resultConverter(item, index);
-                            });
-                            that.employees = new WinJS.Binding.List(results);
+                        if (!recordId) {
+                            if (json && json.d) {
+                                that.binding.count = json.d.results.length;
+                                that.nextUrl = EmpList.employeeView.getNextUrl(json);
+                                var results = json.d.results;
+                                results.forEach(function (item, index) {
+                                    that.resultConverter(item, index);
+                                });
+                                that.employees = new WinJS.Binding.List(results);
 
-                            if (listView.winControl) {
-                                // add ListView dataSource
-                                listView.winControl.itemDataSource = that.employees.dataSource;
+                                if (listView.winControl) {
+                                    // add ListView dataSource
+                                    listView.winControl.itemDataSource = that.employees.dataSource;
+                                }
+                            } else {
+                                that.binding.count = 0;
+                                that.nextUrl = null;
+                                that.employees = null;
+                                if (listView.winControl) {
+                                    // add ListView dataSource
+                                    listView.winControl.itemDataSource = null;
+                                }
+                                progress = listView.querySelector(".list-footer .progress");
+                                counter = listView.querySelector(".list-footer .counter");
+                                if (progress && progress.style) {
+                                    progress.style.display = "none";
+                                }
+                                if (counter && counter.style) {
+                                    counter.style.display = "inline";
+                                }
+                                that.loading = false;
                             }
                         } else {
-                            that.binding.count = 0;
-                            that.nextUrl = null;
-                            that.employees = null;
-                            if (listView.winControl) {
-                                // add ListView dataSource
-                                listView.winControl.itemDataSource = null;
+                            if (json && json.d) {
+                                var employee = json.d;
+                                that.resultConverter(employee);
+                                var objectrec = scopeFromRecordId(recordId);
+                                that.employees.setAt(objectrec.index, employee);
                             }
-                            progress = listView.querySelector(".list-footer .progress");
-                            counter = listView.querySelector(".list-footer .counter");
-                            if (progress && progress.style) {
-                                progress.style.display = "none";
-                            }
-                            if (counter && counter.style) {
-                                counter.style.display = "inline";
-                            }
-                            that.loading = false;
                         }
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
@@ -307,7 +338,7 @@
                             counter.style.display = "inline";
                         }
                         that.loading = false;
-                    }, null);
+                    }, null, recordId);
                 });
                 Log.ret(Log.l.trace);
                 return ret;

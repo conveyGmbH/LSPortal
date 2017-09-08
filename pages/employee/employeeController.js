@@ -168,7 +168,7 @@
                         var master = Application.navigator.masterControl;
                         if (master && master.controller && master.controller.binding) {
                             master.controller.binding.employeeId = that.binding.dataEmployee.MitarbeiterVIEWID;
-                            master.controller.loadData().then(function () {
+                            master.controller.loadData(that.binding.dataEmployee.MitarbeiterVIEWID).then(function () {
                                 master.controller.selectRecordId(that.binding.dataEmployee.MitarbeiterVIEWID);
                             });
                         }

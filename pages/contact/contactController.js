@@ -428,6 +428,17 @@
             };
             this.deleteData = deleteData;
 
+            var resultMandatoryConverter = function (item, index) {
+                var inputfield = pageElement.querySelector("#" + item.AttributeName);
+                if (item.AttributeName === "AnredeID")
+                    inputfield = pageElement.querySelector("#InitAnrede");
+                if (item.AttributeName === "LandID")
+                    inputfield = pageElement.querySelector("#InitLand");
+                if (item.FieldFlag) {
+                    inputfield.style.backgroundColor = "lightyellow";
+                }
+            };
+            this.resultMandatoryConverter = resultMandatoryConverter;
 
             // define handlers
             this.eventHandlers = {
@@ -489,19 +500,19 @@
                 },
                 clickForward: function (event) {
                     Log.call(Log.l.trace, "Contact.Controller.");
-                        that.saveData(function(response) {
-                                Log.print(Log.l.trace, "contact saved");
-                                var master = Application.navigator.masterControl;
-                                if (master && master.controller && master.controller.binding) {
-                                    master.controller.binding.contactId = that.binding.dataContact.KontaktVIEWID;
-                                    master.controller.loadData().then(function() {
-                                        master.controller.selectRecordId(that.binding.dataContact.KontaktVIEWID);
-                                    });
-                                }
-                            },
-                            function(errorResponse) {
-                                Log.print(Log.l.error, "error saving employee");
+                    that.saveData(function (response) {
+                        Log.print(Log.l.trace, "contact saved");
+                        var master = Application.navigator.masterControl;
+                        if (master && master.controller && master.controller.binding) {
+                            master.controller.binding.contactId = that.binding.dataContact.KontaktVIEWID;
+                            master.controller.loadData(master.controller.binding.contactId).then(function () {
+                                master.controller.selectRecordId(that.binding.dataContact.KontaktVIEWID);
                             });
+                        }
+                    },
+                        function (errorResponse) {
+                            Log.print(Log.l.error, "error saving employee");
+                        });
 
                     AppBar.triggerDisableHandlers();
                     Log.ret(Log.l.trace);
@@ -523,8 +534,8 @@
                 clickZoomOut: function (event) {
                     Log.call(Log.l.trace, "Contact.Controller.");
                     if (that.hasDoc() &&
-                        ((imgRotation === 0 || imgRotation ===180) && imgWidth * imgScale * scaleOut > 100 ||
-                         (imgRotation === 90 || imgRotation ===270) && imgHeight * imgScale * scaleOut > 100)) {
+                        ((imgRotation === 0 || imgRotation === 180) && imgWidth * imgScale * scaleOut > 100 ||
+                         (imgRotation === 90 || imgRotation === 270) && imgHeight * imgScale * scaleOut > 100)) {
                         that.calcImagePosition({
                             scale: imgScale * scaleOut
                         });
@@ -609,8 +620,8 @@
                 },
                 clickZoomOut: function () {
                     if (that.hasDoc() &&
-                        ((imgRotation === 0 || imgRotation ===180) && imgWidth * imgScale > 100 ||
-                         (imgRotation === 90 || imgRotation ===270) && imgHeight * imgScale > 100)) {
+                        ((imgRotation === 0 || imgRotation === 180) && imgWidth * imgScale > 100 ||
+                         (imgRotation === 90 || imgRotation === 270) && imgHeight * imgScale > 100)) {
                         return false;
                     } else {
                         return true;
@@ -720,6 +731,34 @@
                         }
                         return WinJS.Promise.as();
                     }
+                }).then(function () {
+                    return Contact.mandatoryView.select(function (json) {
+                        // this callback will be called asynchronously
+                        // when the response is available
+                        Log.print(Log.l.trace, "MandatoryList.mandatoryView: success!");
+                        // select returns object already parsed from json file in response
+                        if (json && json.d) {
+                            that.binding.count = json.d.results.length;
+                            //that.nextUrl = MandatoryList.mandatoryView.getNextUrl(json);
+                            var results = json.d.results;
+                            results.forEach(function (item, index) {
+                                that.resultMandatoryConverter(item, index);
+                            });
+                            // Now, we call WinJS.Binding.List to get the bindable list
+                            //that.fields = new WinJS.Binding.List(results);
+                            /*if (listView.winControl) {
+                                // add ListView dataSource
+                                listView.winControl.itemDataSource = that.fields.dataSource;
+                            }*/
+                        }
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    }, {
+                        LanguageSpecID: AppData.getLanguageId()
+                    });
+
                 }).then(function () {
                     var recordId = getRecordId();
                     if (recordId) {

@@ -364,8 +364,10 @@
     "event.name"            : "Name",
     "event.begin"           : "Begin",
     "event.end"             : "End",
-    "event.showHideQuestionnaire"	: "Show questionnaire",
-    "event.showHideSketch"	: "Show sketch",
+	"event.showHideQuestionnaire" : "Show Questionnaire",
+	"event.showHideSketch"	:	 "Show Sketch",
+	"event.note"			: "Note",
+	"event.appInfo"			: "Please restart the APP for the changes to take effect",
 
     "questiongroup.title"   : "Question groups",
     "questiongroup.count"   : "Count",
