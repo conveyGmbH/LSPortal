@@ -433,6 +433,8 @@
 	"mailing.title"			: "Mailing",
 	"mailing.contactinfo"	: "If you would like a mailing, please call +49 (0) 8954 34 49 30 or write us an ",
 
-    "mandatory.title"		: "Mandatory Fields",
-    "mandatory.contact"		: "Mandatory Fields in Contact"
+    "mandatory.title"		: "Mandatory fields",
+    "mandatory.contact"		: "Mandatory fields in Contact",
+    "mandatory.doMandatory"	: "Show mandatory fields in questionnaire"
+
 }

@@ -19,7 +19,7 @@
             var that = this;
             this.curRecId = 0;
             this.prevRecId = 0;
-            this.fields = null;
+            this.panels = null;
             var layout = null;
             var maxLeadingPages = 0;
             var maxTrailingPages = 0;
@@ -62,12 +62,12 @@
             var selectRecordId = function (recordId) {
                 Log.call(Log.l.trace, "MandatoryList.Controller.", "recordId=" + recordId);
                 if (recordId && listView && listView.winControl && listView.winControl.selection) {
-                    if (fields) {
-                        for (var i = 0; i < that.fields.length; i++) {
-                            var field = that.fields.getAt(i);
-                            if (field &&
-                                typeof field === "object" &&
-                                field.PflichtFelderVIEWID === recordId) {
+                    if (panels) {
+                        for (var i = 0; i < that.panels.length; i++) {
+                            var panel = that.panels.getAt(i);
+                            if (panel &&
+                                typeof panel === "object" &&
+                                panel.PflichtFelderVIEWID === recordId) {
                                 listView.winControl.selection.set(i);
                                 break;
                             }
@@ -82,11 +82,11 @@
                 var i;
                 Log.call(Log.l.trace, "MandatoryList.Controller.", "recordId=" + recordId);
                 var item = null;
-                for (i = 0; i < that.fields.length; i++) {
-                    var field = that.fields.getAt(i);
-                    if (field && typeof field === "object" &&
-                        field.PflichtFelderVIEWID === recordId) {
-                        item = field;
+                for (i = 0; i < that.panels.length; i++) {
+                    var panel = that.panels.getAt(i);
+                    if (panel && typeof panel === "object" &&
+                        panel.PflichtFelderVIEWID === recordId) {
+                        item = panel;
                         break;
                     }
                 }
@@ -245,10 +245,10 @@
                             //that.nextUrl = MandatoryList.mandatoryView.getNextUrl(json);
                             var results = json.d.results;
                             // Now, we call WinJS.Binding.List to get the bindable list
-                            that.fields = new WinJS.Binding.List(results);
+                            that.panels = new WinJS.Binding.List(results);
                             if (listView.winControl) {
                                 // add ListView dataSource
-                                listView.winControl.itemDataSource = that.fields.dataSource;
+                                listView.winControl.itemDataSource = that.panels.dataSource;
                             }
                         }
                     }, function(errorResponse) {

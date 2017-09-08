@@ -7,8 +7,7 @@
 /// <reference path="~/www/lib/convey/scripts/pageController.js" />
 /// <reference path="~/www/lib/convey/scripts/fragmentController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
-/// <reference path="~/www/pages/employee/employeeService.js" />
-/// <reference path="~/www/pages/empList/empListController.js" />
+/// <reference path="~/www/pages/mandatory/mandatoryService.js" />
 /// <reference path="~/www/fragments/mandatoryList/mandatoryListController.js" />
 
 (function () {
@@ -24,10 +23,10 @@
             this.questions = null;
 
             var that = this;
-            /*
+            
             // ListView control
             var listView = pageElement.querySelector("#mandatoryquestion.listview");
-
+            /*
             // prevent some keyboard actions from listview to navigate within controls!
             listView.addEventListener("keydown", function (e) {
                 if (!e.ctrlKey && !e.altKey) {
@@ -50,23 +49,23 @@
 
             var mouseDown = false;
 
-            /*
+            
             // get field entries
             var getFieldEntries = function (index) {
-                Log.call(Log.l.trace, "Questiongroup.Controller.");
+                Log.call(Log.l.trace, "Mandatory.Controller.");
                 var ret = {};
                 if (listView && listView.winControl) {
                     var element = listView.winControl.elementFromIndex(index);
                     if (element) {
                         var fields = element.querySelectorAll('input[type="checkbox"]');
-                        ret["Active"] = (fields[0] && fields[0].checked) ? 1 : null;
+                        ret["PflichtFlag"] = (fields[0] && fields[0].checked) ? 1 : null;
                     }
                 }
                 Log.ret(Log.l.trace, ret);
                 return ret;
             };
             this.getFieldEntries = getFieldEntries;
-
+            
             var mergeRecord = function (prevRecord, newRecord) {
                 Log.call(Log.l.trace, "Mandatory.Controller.");
                 var ret = false;
@@ -82,33 +81,38 @@
                 return ret;
             }
             this.mergeRecord = mergeRecord;
-
+            
             var selectRecordId = function (recordId) {
                 Log.call(Log.l.trace, "Mandatory.Controller.", "recordId=" + recordId);
                 if (recordId && listView && listView.winControl && listView.winControl.selection) {
-                    for (var i = 0; i < that.questions.length; i++) {
-                        var question = that.questions.getAt(i);
-                        if (question && typeof question === "object" &&
-                            question.CR_V_FragengruppeVIEWID === recordId) {
-                            listView.winControl.selection.set(i);
-                            break;
+                    if (questions) {
+                        for (var i = 0; i < that.questions.length; i++) {
+                            var question = that.questions.getAt(i);
+                            if (question && typeof question === "object" &&
+                                question.FragenAntwortenVIEWID === recordId) {
+                               listView.winControl.selection.set(i);
+                                 break;
+                            }
                         }
                     }
                 }
                 Log.ret(Log.l.trace);
             }
             this.selectRecordId = selectRecordId;
-
+            
             var scopeFromRecordId = function (recordId) {
                 var i;
                 Log.call(Log.l.trace, "Mandatory.Controller.", "recordId=" + recordId);
                 var item = null;
-                for (i = 0; i < that.questions.length; i++) {
-                    var question = that.questions.getAt(i);
-                    if (question && typeof question === "object" &&
-                        question.CR_V_FragengruppeVIEWID === recordId) {
-                        item = question;
-                        break;
+                if (questions) {
+                    for (i = 0; i < that.questions.length; i++) {
+                        var question = that.questions.getAt(i);
+                        if (question &&
+                            typeof question === "object" &&
+                            question.FragenAntwortenVIEWID === recordId) {
+                            item = question;
+                            break;
+                        }
                     }
                 }
                 if (item) {
@@ -119,7 +123,7 @@
                     return null;
                 }
             };
-            this.scopeFromRecordId = scopeFromRecordId;*/
+            this.scopeFromRecordId = scopeFromRecordId;
 
             // define handlers
             this.eventHandlers = {
@@ -136,13 +140,17 @@
                     Application.navigateById("mandatory", event);
                     Log.ret(Log.l.trace);
                 },
-                
+                /*clickDoMandatory: function (event) {
+                    Log.call(Log.l.trace, "Mandatory.Controller.");
+                    
+                    Log.ret(Log.l.trace);
+                },*/
                 clickGotoPublish: function (event) {
                     Log.call(Log.l.trace, "Mandatory.Controller.");
                     Application.navigateById("publish", event);
                     Log.ret(Log.l.trace);
-                }
-                /*onSelectionChanged: function (eventInfo) {
+                },
+                onSelectionChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "Mandatory.Controller.");
                     if (listView && listView.winControl) {
                         var listControl = listView.winControl;
@@ -152,11 +160,11 @@
                                 // Only one item is selected, show the page
                                 listControl.selection.getItems().done(function (items) {
                                     var item = items[0];
-                                    if (item.data && item.data.CR_V_FragengruppeVIEWID) {
-                                        var newRecId = item.data.CR_V_FragengruppeVIEWID;
+                                    if (item.data && item.data.FragenAntwortenVIEWID) {
+                                        var newRecId = item.data.FragenAntwortenVIEWID;
                                         Log.print(Log.l.trace, "newRecId:" + newRecId + " curRecId:" + that.curRecId);
                                         if (newRecId !== 0 && newRecId !== that.curRecId) {
-                                            AppData.setRecordId('CR_V_Fragengruppe', newRecId);
+                                            AppData.setRecordId('FragenAntworten', newRecId);
                                             if (that.curRecId) {
                                                 that.prevRecId = that.curRecId;
                                             }
@@ -220,8 +228,8 @@
                         }
                     }
                     Log.ret(Log.l.trace);
-                },
-                onHeaderVisibilityChanged: function (eventInfo) {
+                }
+                /*onHeaderVisibilityChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "Mandatory.Controller.");
                     if (eventInfo && eventInfo.detail) {
                         var visible = eventInfo.detail.visible;
@@ -310,36 +318,41 @@
             }
 
             // register ListView event handler
-            /*if (listView) {
+            if (listView) {
                 this.addRemovableEventListener(listView, "selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
                 this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
-                this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
-                this.addRemovableEventListener(listView, "headervisibilitychanged", this.eventHandlers.onHeaderVisibilityChanged.bind(this));
-            }*/
+                //this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
+                //this.addRemovableEventListener(listView, "headervisibilitychanged", this.eventHandlers.onHeaderVisibilityChanged.bind(this));
+            }
 
             var loadData = function () {
                 Log.call(Log.l.trace, "Mandatory.Controller.");
                 AppData.setErrorMsg(that.binding);
+
                 var ret = new WinJS.Promise.as().then(function () {
-                    /*if (recordId) {
-                        //load of format relation record data
-                        Log.print(Log.l.trace, "calling select mandatoryView...");
-                        return Employee.employeeView.select(function(json) {
-                                AppData.setErrorMsg(that.binding);
-                                Log.print(Log.l.trace, "employeeView: success!");
-                                if (json && json.d) {
-                                    // now always edit!
-                                    that.setDataEmployee(json.d);
-                                }
-                            },
-                            function(errorResponse) {
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                            },
-                            recordId);
-                    } else {
-                        return WinJS.Promise.as();
-                    }
-                }).then(function() {*/
+                    return Mandatory.manquestView.select(function(json) {
+                        // this callback will be called asynchronously
+                        // when the response is available
+                        Log.print(Log.l.trace, "Mandatory.manquestView: success!");
+                        // select returns object already parsed from json file in response
+                        if (json && json.d) {
+                            that.binding.count = json.d.results.length;
+                            //that.nextUrl = MandatoryList.mandatoryView.getNextUrl(json);
+                            var results = json.d.results;
+                            // Now, we call WinJS.Binding.List to get the bindable list
+                            that.questions = new WinJS.Binding.List(results);
+                            if (listView.winControl) {
+                                // add ListView dataSource
+                                listView.winControl.itemDataSource = that.questions.dataSource;
+                            }
+                        }
+                    }, function(errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    }, null);
+
+                }).then(function() {
                         var mandatoryListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("mandatoryList"));
                         if (mandatoryListFragmentControl && mandatoryListFragmentControl.controller) {
                             return mandatoryListFragmentControl.controller.loadData();
@@ -366,7 +379,7 @@
                 Log.call(Log.l.trace, "Mandatory.Controller.");
                 AppData.setErrorMsg(that.binding);
                 // standard call via modify
-                /*var recordId = that.prevRecId;
+                var recordId = that.prevRecId;
                 if (!recordId) {
                     // called via canUnload
                     recordId = that.curRecId;
@@ -379,12 +392,18 @@
                         var newRecord = that.getFieldEntries(curScope.index);
                         if (that.mergeRecord(curScope.item, newRecord) || AppBar.modified) {
                             Log.print(Log.l.trace, "save changes of recordId:" + recordId);
-                            ret = Mandatory.CR_V_FragengruppeView.update(function (response) {
-                                Log.print(Log.l.info, "Questiongroup.Controller. update: success!");
+                            ret = Mandatory.manquestView.update(function (response) {
+                                Log.print(Log.l.info, "Mandatory.Controller. update: success!");
                                 // called asynchronously if ok
                                 AppBar.modified = false;
-                                if (typeof complete === "function") {
-                                    complete(response);
+                                var mandatoryListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("mandatoryList"));
+                                if (mandatoryListFragmentControl && mandatoryListFragmentControl.controller) {
+                                    mandatoryListFragmentControl.controller.saveData(complete, error);
+                                } else {
+                                    if (typeof complete === "function") {
+                                        complete({});
+                                    }
+                                    ret = WinJS.Promise.as();
                                 }
                             }, function (errorResponse) {
                                 AppData.setErrorMsg(that.binding, errorResponse);
@@ -396,17 +415,8 @@
                             Log.print(Log.l.trace, "no changes in recordId:" + recordId);
                         }
                     }
-                }*/
-
-                var mandatoryListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("mandatoryList"));
-                if (mandatoryListFragmentControl && mandatoryListFragmentControl.controller) {
-                    ret = mandatoryListFragmentControl.controller.saveData(complete, error);
-                } else {
-                    if (typeof complete === "function") {
-                        complete({});
-                    }
-                    ret = WinJS.Promise.as();
                 }
+
                 Log.ret(Log.l.trace, ret);
                 return ret;
             };

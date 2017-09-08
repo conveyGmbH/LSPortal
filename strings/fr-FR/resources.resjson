@@ -438,5 +438,7 @@
     "productlist.count"     : "Nombre",
 
     "mandatory.title"		: "Champs obligatoires",
-    "mandatory.contact"		: "Champs obligatoires de contact"
+    "mandatory.contact"		: "Champs obligatoires du contact",
+    "mandatory.doMandatory"	: "Présente les champs obligatoires de la questionnaire"
+
 }

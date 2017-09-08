@@ -434,5 +434,7 @@
     "productlist.count"     : "Totale",
 
 	"mandatory.title"		: "Campo obbligatorio",
-	"mandatory.contact"		: "Campo obbligatorio di contatto"
+	"mandatory.contact"		: "Campo obbligatorio di contatto",
+    "mandatory.doMandatory"	: "Mostra campo obbligatorio di questionario"
+
 }

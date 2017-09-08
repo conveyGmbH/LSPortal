@@ -7,3 +7,10 @@
     height: 350px;
 }
 
+.list-manquest-item {
+    width: 100%;
+    min-width: 160px;
+    height: 48px;
+    overflow: hidden;
+    display: flex;
+}

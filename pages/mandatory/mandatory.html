@@ -21,7 +21,6 @@
                             <span class="date-field"></span>
                         </div>
                     </div>
-
                     
                     <div class="line-separator"></div>
                     <div class="field_line">
@@ -30,27 +29,42 @@
                         <div id="mandatorylisthost" class="input_field fragmenthost"></div>
                     </div>
                     <div class="line-separator"></div>
-
-                    <!-->
-                    <div class="mandatoryquestion-template"
-                         data-win-control="WinJS.Binding.Template" style="display: none">
-                        <div class="list-role-item">
-                            <label class="list-role-field">
-                                <input type="checkbox" class="win-checkbox" value="1"
-                                       data-win-bind="checked: Active"/>
-                                <span data-win-bind="textContent: TITLE"></span>
-                            </label>
+                    <!--
+                    <div class="field_line field_line_odd">
+                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mandatory.doMandatory'}"></span>
+                        <span class="label landscape_only" data-win-res="{textContent: 'mandatory.doMandatory'}"></span>
+                        <div class="input_field toggle-switch-parent">
+                            <div id="doMandatory" class="input_field"
+                                 data-win-control="WinJS.UI.ToggleSwitch"
+                                 data-win-bind="winControl.checked: doMandatory; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                                 onchange="AppBar.handleEvent('change', 'clickDoMandatory', event)">
+                            </div>
                         </div>
                     </div>
-                    <div id="mandatoryquestion"
-                         class="listview win-selectionstylefilled"
-                         data-win-control="WinJS.UI.ListView"
-                         data-win-options="{
+                    -->
+                    <div class="line-separator"></div>
+                    <div class="field_line">
+                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mandatory.contact'}"></span>
+                        <span class="label landscape_only" data-win-res="{textContent: 'mandatory.contact'}"></span>
+                        <div class="mandatoryquestion-template"
+                             data-win-control="WinJS.Binding.Template" style="display: none">
+                            <div class="list-manquest-item">
+                                <label class="list-manquest-field">
+                                    <input type="checkbox" class="win-checkbox" value="1"
+                                           data-win-bind="checked: PflichtFlag"/>
+                                    <span data-win-bind="textContent: Fragestellung"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div id="mandatoryquestion"
+                             class="listview win-selectionstylefilled"
+                             data-win-control="WinJS.UI.ListView"
+                             data-win-options="{
                                 itemTemplate: select('.mandatoryquestion-template'),
                                 footer: select('.list-footer')
                          }">
-                    </div<-->
-
+                        </div>
+                    </div>
                     <div class="error-message"
                          data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
                    </div>
