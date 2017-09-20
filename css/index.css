@@ -109,19 +109,15 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
 
 #navigationbar_horizontal .win-selectionbackground {
     height: 4px;
-    top: 36px;
-    left: 20%;
-    right: 20%;
+    top: 44px;
+    left: 16px;
+    right: 16px;
 }
 #navigationbar_vertical .win-selectionbackground {
     width: 4px;
     top: 4px;
     bottom: 4px;
-    left: 16px;
-}
-
-#navigationbar_horizontal .win-viewport.win-horizontal {
-    overflow-x: hidden !important;
+    left: 0;
 }
 
 .navigationbar-horizontal-template,
@@ -212,21 +208,16 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
 
 /*
     margins/paddings for small screens and orientation vertical
+@media (max-width:499px) {
+}
 */
-@media (max-width:899px) {
-    .navigationbar-text {
-        padding-top: 14px;
-    }
-    .navigationbar-horizontal-text {
-        font-size: 15px;
-    }
-    .win-splitviewcommand-label {
-        font-size: 15px;
-        margin-top: 16px;
-    }
-    #navigationbar_horizontal .win-selectionbackground {
-        top: 32px;
-    }
-}    
-
-/* Test Comment */
+.view-size-small .navigationbar-text {
+    padding-top: 14px;
+}
+.view-size-small .navigationbar-horizontal-text {
+    font-size: 15px;
+}
+.view-size-small .win-splitviewcommand-label {
+    font-size: 15px;
+    margin-top: 16px;
+}
