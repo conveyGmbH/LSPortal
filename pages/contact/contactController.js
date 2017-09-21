@@ -430,12 +430,14 @@
 
             var resultMandatoryConverter = function (item, index) {
                 var inputfield = pageElement.querySelector("#" + item.AttributeName);
-                if (item.AttributeName === "AnredeID")
-                    inputfield = pageElement.querySelector("#InitAnrede");
-                if (item.AttributeName === "LandID")
-                    inputfield = pageElement.querySelector("#InitLand");
-                if (item.FieldFlag) {
-                    inputfield.style.backgroundColor = "lightyellow";
+                if (inputfield) {
+                    if (item.AttributeName === "AnredeID")
+                        inputfield = pageElement.querySelector("#InitAnrede");
+                    if (item.AttributeName === "LandID")
+                        inputfield = pageElement.querySelector("#InitLand");
+                    if (item.FieldFlag) {
+                        inputfield.style.backgroundColor = "lightyellow";
+                    }
                 }
             };
             this.resultMandatoryConverter = resultMandatoryConverter;

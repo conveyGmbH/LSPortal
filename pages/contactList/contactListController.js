@@ -51,6 +51,7 @@
                     if (that.docs) {
                         that.docs = null;
                     }
+                    listView = null;
                 }
 
                 var progress = null;
@@ -150,7 +151,7 @@
 
                 var loadNextUrl = function (recordId) {
                     Log.call(Log.l.trace, "QuestionList.Controller.", "recordId=" + recordId);
-                    if (that.contacts && that.nextUrl) {
+                    if (that.contacts && that.nextUrl && listView) {
                         progress = listView.querySelector(".list-footer .progress");
                         counter = listView.querySelector(".list-footer .counter");
                         that.loading = true;
@@ -410,10 +411,7 @@
                                         if (item.data &&
                                             item.data.KontaktVIEWID &&
                                             item.data.KontaktVIEWID !== that.binding.contactId) {
-                                            if (AppBar.scope &&
-                                                typeof AppBar.scope
-                                                .saveData ===
-                                                "function") {
+                                            if (AppBar.scope && typeof AppBar.scope.saveData === "function") {
                                                 //=== "function" save wird nicht aufgerufen wenn selectionchange
                                                 // current detail view has saveData() function
                                                 AppBar.scope.saveData(function (response) {
@@ -495,7 +493,7 @@
                     },
                     onHeaderVisibilityChanged: function (eventInfo) {
                         Log.call(Log.l.trace, "ContactList.Controller.");
-                        if (eventInfo && eventInfo.detail) {
+                        if (eventInfo && eventInfo.detail && listView) {
                             var visible = eventInfo.detail.visible;
                             if (visible) {
                                 var contentHeader = listView.querySelector(".content-header");
@@ -514,20 +512,22 @@
                     },
                     onFooterVisibilityChanged: function (eventInfo) {
                         Log.call(Log.l.trace, "ContactList.Controller.");
-                        progress = listView.querySelector(".list-footer .progress");
-                        counter = listView.querySelector(".list-footer .counter");
-                        var visible = eventInfo.detail.visible;
+                        if (listView) {
+                            progress = listView.querySelector(".list-footer .progress");
+                            counter = listView.querySelector(".list-footer .counter");
+                            var visible = eventInfo.detail.visible;
 
-                        if (visible && that.contacts && that.nextUrl) {
-                            that.loadNextUrl();
-                        } else {
-                            if (progress && progress.style) {
-                                progress.style.display = "none";
+                            if (visible && that.contacts && that.nextUrl) {
+                                that.loadNextUrl();
+                            } else {
+                                if (progress && progress.style) {
+                                    progress.style.display = "none";
+                                }
+                                if (counter && counter.style) {
+                                    counter.style.display = "inline";
+                                }
+                                that.loading = false;
                             }
-                            if (counter && counter.style) {
-                                counter.style.display = "inline";
-                            }
-                            that.loading = false;
                         }
                         Log.ret(Log.l.trace);
                     }
@@ -563,13 +563,15 @@
                     that.firstDocsIndex = 0;
                     that.firstContactsIndex = 0;
                     that.loading = true;
-                    progress = listView.querySelector(".list-footer .progress");
-                    counter = listView.querySelector(".list-footer .counter");
-                    if (progress && progress.style) {
-                        progress.style.display = "inline";
-                    }
-                    if (counter && counter.style) {
-                        counter.style.display = "none";
+                    if (listView) {
+                        progress = listView.querySelector(".list-footer .progress");
+                        counter = listView.querySelector(".list-footer .counter");
+                        if (progress && progress.style) {
+                            progress.style.display = "inline";
+                        }
+                        if (counter && counter.style) {
+                            counter.style.display = "none";
+                        }
                     }
                     AppData.setErrorMsg(that.binding);
                     var ret = new WinJS.Promise.as().then(function () {
@@ -605,7 +607,7 @@
                                     });
                                     that.contacts = new WinJS.Binding.List(results);
 
-                                    if (listView.winControl) {
+                                    if (listView && listView.winControl) {
                                         // add ListView dataSource
                                         listView.winControl.itemDataSource = that.contacts.dataSource;
                                     }
@@ -613,17 +615,19 @@
                                     that.binding.count = 0;
                                     that.nextUrl = null;
                                     that.contacts = null;
-                                    if (listView.winControl) {
-                                        // add ListView dataSource
-                                        listView.winControl.itemDataSource = null;
-                                    }
-                                    progress = listView.querySelector(".list-footer .progress");
-                                    counter = listView.querySelector(".list-footer .counter");
-                                    if (progress && progress.style) {
-                                        progress.style.display = "none";
-                                    }
-                                    if (counter && counter.style) {
-                                        counter.style.display = "inline";
+                                    if (listView) {
+                                        if (listView.winControl) {
+                                            // add ListView dataSource
+                                            listView.winControl.itemDataSource = null;
+                                        }
+                                        progress = listView.querySelector(".list-footer .progress");
+                                        counter = listView.querySelector(".list-footer .counter");
+                                        if (progress && progress.style) {
+                                            progress.style.display = "none";
+                                        }
+                                        if (counter && counter.style) {
+                                            counter.style.display = "inline";
+                                        }
                                     }
                                     that.loading = false;
                                 }
@@ -646,13 +650,15 @@
                                 // called asynchronously if an error occurs
                                 // or server returns response with an error status.
                                 AppData.setErrorMsg(that.binding, errorResponse);
-                                progress = listView.querySelector(".list-footer .progress");
-                                counter = listView.querySelector(".list-footer .counter");
-                                if (progress && progress.style) {
-                                    progress.style.display = "none";
-                                }
-                                if (counter && counter.style) {
-                                    counter.style.display = "inline";
+                                if (listView) {
+                                    progress = listView.querySelector(".list-footer .progress");
+                                    counter = listView.querySelector(".list-footer .counter");
+                                    if (progress && progress.style) {
+                                        progress.style.display = "none";
+                                    }
+                                    if (counter && counter.style) {
+                                        counter.style.display = "inline";
+                                    }
                                 }
                                 that.loading = false;
                             },

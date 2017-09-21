@@ -120,7 +120,7 @@
             var buttonNotEdited = getResourceText("start.buttonNotEdited");
             var showPieChart = function (pieChartId, bAnimated) {
                 Log.call(Log.l.trace, "Start.Controller.");
-                var visitorsEditedChart = that.element.querySelector("#" + pieChartId);
+                var visitorsEditedChart = pageElement.querySelector("#" + pieChartId);
                 if (visitorsEditedChart &&
                     that.binding.dataStart &&
                     typeof that.binding.dataStart.AnzNichtEditierteKontakte !== "undefined" &&
@@ -128,7 +128,7 @@
 
                     var width = visitorsEditedChart.clientWidth;
                     var diameter = width / 2;
-                    var tileMiddle = that.element.querySelector(".tile-middle");
+                    var tileMiddle = pageElement.querySelector(".tile-middle");
                     if (tileMiddle) {
                         var offsetPieChart = visitorsEditedChart.offsetTop;
                         var offsetMiddle = tileMiddle.offsetTop;
@@ -233,7 +233,7 @@
             this.barChart = null;
             var showBarChart = function(barChartId, bAnimated) {
                 Log.call(Log.l.trace, "Start.Controller.");
-                var visitorsPerDayChart = that.element.querySelector("#" + barChartId);
+                var visitorsPerDayChart = pageElement.querySelector("#" + barChartId);
                 if (visitorsPerDayChart) {
                     var width = visitorsPerDayChart.clientWidth;
                     var series = [];
