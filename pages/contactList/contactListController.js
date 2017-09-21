@@ -168,7 +168,7 @@
                             // when the response is available
                             Log.print(Log.l.trace, "ContactList.contactView: success!");
                             // startContact returns object already parsed from json file in response
-                            if (json && json.d) {
+                            if (json && json.d && that.contacts) {
                                 that.nextUrl = ContactList.contactView.getNextUrl(json);
                                 var results = json.d.results;
                                 results.forEach(function (item, index) {
@@ -231,12 +231,14 @@
                     var i;
                     Log.call(Log.l.trace, "Questiongroup.Controller.", "recordId=" + recordId);
                     var item = null;
-                    for (i = 0; i < that.contacts.length; i++) {
-                        var contact = that.contacts.getAt(i);
-                        if (contact && typeof contact === "object" &&
-                            contact.KontaktVIEWID === recordId) {
-                            item = contact;
-                            break;
+                    if (that.contacts) {
+                        for (i = 0; i < that.contacts.length; i++) {
+                            var contact = that.contacts.getAt(i);
+                            if (contact && typeof contact === "object" &&
+                                contact.KontaktVIEWID === recordId) {
+                                item = contact;
+                                break;
+                            }
                         }
                     }
                     if (item) {
@@ -256,7 +258,7 @@
                             that.scrollToRecordId(recordId);
                         });
                     } else {
-                        if (recordId && listView && listView.winControl) {
+                        if (recordId && listView && listView.winControl && that.contacts) {
                             for (var i = 0; i < that.contacts.length; i++) {
                                 var contact = that.contacts.getAt(i);
                                 if (contact && typeof contact === "object" &&
@@ -275,7 +277,7 @@
                     var contact;
                     Log.call(Log.l.trace, "ContactList.Controller.", "recordId=" + recordId);
                     var recordIdNotFound = true;
-                    if (listView && listView.winControl && listView.winControl.selection) {
+                    if (listView && listView.winControl && listView.winControl.selection && that.contacts) {
                         if (recordId) {
                             for (var i = 0; i < that.contacts.length; i++) {
                                 contact = that.contacts.getAt(i);
@@ -632,15 +634,10 @@
                                     that.loading = false;
                                 }
                             } else {
-                                if (json && json.d) {
+                                if (json && json.d && that.contacts) {
                                     var contact = json.d;
-
                                     that.resultConverter(contact);
-
-                                    console.log("recordId" + recordId);
                                     var objectrec = scopeFromRecordId(recordId);
-                                    console.log("objectrec" + objectrec);
-                                    console.log("contacts " + that.contacts);
                                     that.contacts.setAt(objectrec.index, contact);
                                 }
 
