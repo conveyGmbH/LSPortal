@@ -740,7 +740,6 @@
                         Log.print(Log.l.trace, "MandatoryList.mandatoryView: success!");
                         // select returns object already parsed from json file in response
                         if (json && json.d) {
-                            that.binding.count = json.d.results.length;
                             //that.nextUrl = MandatoryList.mandatoryView.getNextUrl(json);
                             var results = json.d.results;
                             results.forEach(function (item, index) {

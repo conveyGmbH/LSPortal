@@ -16,16 +16,17 @@
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement) {
             Log.call(Log.l.trace, "Mandatory.Controller.");
             Application.Controller.apply(this, [pageElement, {
-                
+                count: 0
             }]);
             this.nextUrl = null;
             this.loading = false;
             this.questions = null;
 
             var that = this;
-            
+
             // ListView control
             var listView = pageElement.querySelector("#mandatoryquestion.listview");
+            var confirmMandatoryQuestionnaire = pageElement.querySelector("#confirmMandatoryQuestionnaire");
             /*
             // prevent some keyboard actions from listview to navigate within controls!
             listView.addEventListener("keydown", function (e) {
@@ -49,7 +50,7 @@
 
             var mouseDown = false;
 
-            
+
             // get field entries
             var getFieldEntries = function (index) {
                 Log.call(Log.l.trace, "Mandatory.Controller.");
@@ -65,7 +66,7 @@
                 return ret;
             };
             this.getFieldEntries = getFieldEntries;
-            
+
             var mergeRecord = function (prevRecord, newRecord) {
                 Log.call(Log.l.trace, "Mandatory.Controller.");
                 var ret = false;
@@ -81,17 +82,17 @@
                 return ret;
             }
             this.mergeRecord = mergeRecord;
-            
+
             var selectRecordId = function (recordId) {
                 Log.call(Log.l.trace, "Mandatory.Controller.", "recordId=" + recordId);
                 if (recordId && listView && listView.winControl && listView.winControl.selection) {
-                    if (questions) {
+                    if (that.questions) {
                         for (var i = 0; i < that.questions.length; i++) {
                             var question = that.questions.getAt(i);
                             if (question && typeof question === "object" &&
                                 question.FragenAntwortenVIEWID === recordId) {
-                               listView.winControl.selection.set(i);
-                                 break;
+                                listView.winControl.selection.set(i);
+                                break;
                             }
                         }
                     }
@@ -99,12 +100,12 @@
                 Log.ret(Log.l.trace);
             }
             this.selectRecordId = selectRecordId;
-            
+
             var scopeFromRecordId = function (recordId) {
-                var i;
+                var i = null;
                 Log.call(Log.l.trace, "Mandatory.Controller.", "recordId=" + recordId);
                 var item = null;
-                if (questions) {
+                if (that.questions) {
                     for (i = 0; i < that.questions.length; i++) {
                         var question = that.questions.getAt(i);
                         if (question &&
@@ -125,6 +126,42 @@
             };
             this.scopeFromRecordId = scopeFromRecordId;
 
+            var changeMandatorySetting = function (pageProperty, status) {
+                Log.call(Log.l.trace, "Settings.Controller.", "pageProperty=" + pageProperty + " color=" + status);
+                var pOptionTypeId = null;
+                var pValue = null;
+
+                switch (pageProperty) {
+                    case "showHideQuestionnaire":
+                        pOptionTypeId = 20;
+                        break;
+                    case "confirmMandatoryQuestionnaire":
+                        pOptionTypeId = 22;
+                        break;
+                }
+                if (typeof status === "boolean" && status) {
+                    pValue = "1";
+                } else {
+                    pValue = "0";
+                }
+
+                if (pOptionTypeId) {
+                    AppData.call("PRC_SETVERANSTOPTION",
+                        {
+                            pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                            pOptionTypeID: pOptionTypeId,
+                            pValue: pValue
+                        },
+                        function (json) {
+                            Log.print(Log.l.info, "call success! ");
+                        },
+                        function (error) {
+                            Log.print(Log.l.error, "call error");
+                        });
+                }
+            };
+            this.changeMandatorySetting = changeMandatorySetting;
+
             // define handlers
             this.eventHandlers = {
                 clickBack: function (event) {
@@ -135,19 +172,71 @@
                     Log.ret(Log.l.trace);
                 },
                 clickOk: function (event) {
-                    Log.call(Log.l.trace, "Mandatory.Controller.");
-                    that.saveData();
-                    Application.navigateById("mandatory", event);
+                    Log.call(Log.l.trace, "Contact.Controller.");
+                    that.saveData(function (response) {
+                        that.loadData();
+                        },
+                        function (errorResponse) {
+                            Log.print(Log.l.error, "error saving employee" + errorResponse);
+                        });
                     Log.ret(Log.l.trace);
                 },
-                /*clickDoMandatory: function (event) {
+                clickDoMandatory: function (event) {
                     Log.call(Log.l.trace, "Mandatory.Controller.");
-                    
+                    console.log(event.currentTarget.winControl.checked);
+                    Log.call(Log.l.trace, "Event.Controller.");
+                    var toggle = event.currentTarget.winControl;
+                    if (toggle) {
+                        // that.binding.isQuestionnaireVisible = toggle.checked;
+                        AppData._persistentStates.showConfirmQuestion = toggle.checked;
+                    }
+                    that.changeMandatorySetting(event.target.id, toggle.checked);
                     Log.ret(Log.l.trace);
-                },*/
+                },
                 clickGotoPublish: function (event) {
                     Log.call(Log.l.trace, "Mandatory.Controller.");
                     Application.navigateById("publish", event);
+                    Log.ret(Log.l.trace);
+                },
+                changedMandatoryField: function (event) {
+                    Log.call(Log.l.trace, "QuestionList.Controller.");
+                    //analog zu changedTextDate
+                    Log.call(Log.l.trace, "QuestionList.Controller.");
+                    if (event.currentTarget && AppBar.notifyModified) {
+                        var value = event.currentTarget.value;
+                        if (that.curRecId && !that.prevRecId) {
+                            var curScope = that.scopeFromRecordId(that.curRecId);
+                            if (curScope &&
+                                curScope.item &&
+                                curScope.item.PflichtFlag !== value) {
+                                curScope.item.PflichtFlag = value;
+
+                                var newRecId = curScope.item.FragenAntwortenVIEWID;
+                                //var newRecord = that.getFieldEntries(curScope.index, curScope.item.Fragentyp);
+                                //that.mergeRecord(curScope.item, newRecord);
+                                //that.questions.setAt(curScope.index, curScope.item);
+                                //if (newRecId !== 0 && newRecId !== that.curRecId) {
+                                AppData.setRecordId('FragenAntworten', newRecId);
+                                if (that.curRecId) {
+                                    that.prevRecId = that.curRecId;
+                                }
+                                that.curRecId = newRecId;
+                                if (that.prevRecId !== 0) {
+                                    that.saveData(function (response) {
+                                        Log.print(Log.l.trace, "question saved");
+                                        AppBar.triggerDisableHandlers();
+                                    }, function (errorResponse) {
+                                        Log.print(Log.l.error, "error saving question");
+                                    });
+                                } else {
+                                    AppBar.triggerDisableHandlers();
+                                }
+                                //}
+                                // set modified!
+                               // AppBar.modified = true;
+                            }
+                        }
+                    }
                     Log.ret(Log.l.trace);
                 },
                 onSelectionChanged: function (eventInfo) {
@@ -325,12 +414,25 @@
                 //this.addRemovableEventListener(listView, "headervisibilitychanged", this.eventHandlers.onHeaderVisibilityChanged.bind(this));
             }
 
+            var resultConverter = function (item, index) {
+                switch (item.INITOptionTypeID) {
+                    case 22:
+                        if (item.LocalValue === "0") {
+                            AppData._persistentStates.showConfirmQuestion = false;
+                        }
+                        break;
+                    default:
+                        // defaultvalues
+                }
+            }
+            this.resultConverter = resultConverter;
+
             var loadData = function () {
                 Log.call(Log.l.trace, "Mandatory.Controller.");
                 AppData.setErrorMsg(that.binding);
 
                 var ret = new WinJS.Promise.as().then(function () {
-                    return Mandatory.manquestView.select(function(json) {
+                    return Mandatory.manquestView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
                         Log.print(Log.l.trace, "Mandatory.manquestView: success!");
@@ -346,16 +448,37 @@
                                 listView.winControl.itemDataSource = that.questions.dataSource;
                             }
                         }
-                    }, function(errorResponse) {
+                    }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, null);
 
-                }).then(function() {
-                        var mandatoryListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("mandatoryList"));
-                        if (mandatoryListFragmentControl && mandatoryListFragmentControl.controller) {
-                            return mandatoryListFragmentControl.controller.loadData();
+                }).then(function () {
+                    AppData._persistentStates.showConfirmQuestion = true;
+                    return Mandatory.CR_VERANSTOPTION_ODataView.select(function (json) {
+                        // this callback will be called asynchronously
+                        // when the response is available
+                        Log.print(Log.l.trace, "Reporting: success!");
+                        // CR_VERANSTOPTION_ODataView returns object already parsed from json file in response
+
+                        if (json && json.d) {
+                            var results = json.d.results;
+                            results.forEach(function (item, index) {
+                                that.resultConverter(item, index);
+                            });
+                        }
+                        confirmMandatoryQuestionnaire.winControl.checked = AppData._persistentStates.showConfirmQuestion;
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    });
+
+                }).then(function () {
+                    var mandatoryListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("mandatoryList"));
+                    if (mandatoryListFragmentControl && mandatoryListFragmentControl.controller) {
+                        return mandatoryListFragmentControl.controller.loadData();
                     } else {
                         var parentElement = pageElement.querySelector("#mandatorylisthost");
                         if (parentElement) {
@@ -416,7 +539,13 @@
                         }
                     }
                 }
-
+                if (!ret) {
+                    ret = new WinJS.Promise.as().then(function () {
+                        if (typeof complete === "function") {
+                            complete({});
+                        }
+                    });
+                }
                 Log.ret(Log.l.trace, ret);
                 return ret;
             };

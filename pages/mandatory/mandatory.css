@@ -14,3 +14,7 @@
     overflow: hidden;
     display: flex;
 }
+
+.toggle-switch-parent {
+    height: 50px;
+}

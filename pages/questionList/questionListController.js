@@ -28,11 +28,11 @@
                 { TextDatumID: 1, TITLE: getResourceText("questionList.text") },
                 { TextDatumID: 2, TITLE: getResourceText("questionList.date") }
             ]);
-            this.requiredField = new WinJS.Binding.List([
+            /*this.requiredField = new WinJS.Binding.List([
                { RequiredFieldID: 0, TITLE: null },
                { RequiredFieldID: 1, TITLE: getResourceText("questionList.required") },
                { RequiredFieldID: 2, TITLE: getResourceText("questionList.checkRequired") }
-            ]);
+            ]);*/
 
             var that = this;
 
@@ -149,14 +149,15 @@
                     }
                 }
                 // requiredFiled -> analog zu oben auch if(item.requiredfield === 1) 
-                item["RequiredFieldID"] = 0;
+               /* item["RequiredFieldID"] = 0;
                 if (item.PflichtFlag) {
                     if (item.PflichtFlag === 1) { //Anstatt DateCombobox -< RequiredCombobox
                         item["RequiredFieldID"] = 1;
                     } else {
                         item["RequiredFieldID"] = 2;
                     }
-                }
+                }*/
+                item.questionNumber = item.Sortierung.toString() + ".";
             }
             this.resultConverter = resultConverter;
 
@@ -569,7 +570,7 @@
                     }
                     Log.ret(Log.l.trace);
                 },
-                changedcheckRequiredField: function (event) {
+                /*changedcheckRequiredField: function (event) {
                     Log.call(Log.l.trace, "QuestionList.Controller.");
                     //analog zu changedTextDate
                     Log.call(Log.l.trace, "QuestionList.Controller.");
@@ -600,7 +601,7 @@
                     }
                     Log.ret(Log.l.trace);
 
-                },
+                },*/
                 changedAnswerCount: function (event) {
                     Log.call(Log.l.trace, "QuestionList.Controller.");
                     if (event.currentTarget && AppBar.notifyModified) {
@@ -867,6 +868,14 @@
                                                     comboTextDatum.value = item.TextDatumID;
                                                 }
                                             }
+                                           /* var comboRequiredField = element.querySelector("#RequiredField.win-dropdown");
+                                            if (comboRequiredField && comboRequiredField.winControl) {
+                                                if (!comboRequiredField.winControl.data ||
+                                                    comboRequiredField.winControl.data && !comboRequiredField.winControl.data.length) {
+                                                    comboRequiredField.winControl.data = that.requiredField;
+                                                    comboRequiredField.value = item.RequiredFieldID;
+                                                }
+                                            }*/
                                         }
                                     }
                                 }
