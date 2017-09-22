@@ -137,6 +137,7 @@
     "questionnaire.textarea": "Bitte geben Sie hier Ihren Kommentar ein ",
     "questionnaire.count"   : "Anzahl",
     "questionnaire.attachments" : "Anhänge",
+	"questionnaire.requiredmarker" : "*",
 
     "sketch.title"          : "Skizze",
     "sketch.comment"        : "Verwende die Zurück-Schaltfläche auf dieser Seite um zurück zu gehen!",
@@ -386,6 +387,8 @@
 	"questionList.requiredField" : "Pflichtfeld",
     "questionList.text"     : "Textfeld anzeigen",
     "questionList.date"     : "Textfeld mit Datum anzeigen",
+	"questionList.required" : "Pflichtfeld",
+	"questionList.checkRequired" : "Pflichtfeld mit Überprüfung",
 
     "reporting.title"       : "Auswertungen",
     "reporting.with"        : "Excelexport mit Überschriften",
@@ -451,6 +454,8 @@
 
 	"mandatory.title"		: "Pflichtfelder",
 	"mandatory.contact"		: "Pflichtfelder im Kontakt",
-    "mandatory.doMandatory"	: "Pflichtfelder im Fragebogen anzeigen"
+	"mandatory.questionnaire" : "Pflichtfelder im Fragebogen",
+    "mandatory.doQuestionnaireMandatory"	: "Pflichtfelder im Fragebogen mit Hinweis",
+	"mandatory.doContactMandatory"	: "Pflichtfelder im Kontakt mit Hinweis"
 
 }
