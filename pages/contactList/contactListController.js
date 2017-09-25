@@ -365,7 +365,6 @@
                             }
                         }
                     }
-                    //console.log("ITEM " + item.mitarbeiterFullName);
                 }
                 this.resultConverter = resultConverter;
 

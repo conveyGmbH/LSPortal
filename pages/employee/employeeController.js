@@ -186,6 +186,21 @@
                     Log.call(Log.l.trace, "Employee.Controller.");
                     Application.navigateById("publish", event);
                     Log.ret(Log.l.trace);
+                },
+                changeLogin: function (event) {
+                    Log.call(Log.l.trace, "Employee.Controller.");
+                    if (event.currentTarget && AppBar.notifyModified) {
+                        pageElement.querySelector("#password").value = "";
+                        pageElement.querySelector("#password2").value = "";
+                    }
+                    Log.ret(Log.l.trace);
+                },
+                changePassword: function (event) {
+                    Log.call(Log.l.trace, "Employee.Controller.");
+                    if (event.currentTarget && AppBar.notifyModified) {
+                        pageElement.querySelector("#password2").value = "";
+                    }
+                    Log.ret(Log.l.trace);
                 }
             };
 

@@ -18,8 +18,8 @@
             }]);
 
             var that = this;
-            var showHideQuestionnaire = pageElement.querySelector("#showHideQuestionnaire");
-            var showHideSketchToggle = pageElement.querySelector("#showHideSketch");
+            var showHideQuestionnaire = showHideQuestionnaire = pageElement.querySelector("#showHideQuestionnaire");;
+            var showHideSketchToggle = showHideSketchToggle = pageElement.querySelector("#showHideSketch");;
 
             //27.12.2016 generate the string date
             var getDateObject = function(dateData) {
