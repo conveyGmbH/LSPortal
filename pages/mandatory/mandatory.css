@@ -18,3 +18,7 @@
 .toggle-switch-parent {
     height: 50px;
 }
+
+#mandatoryquestion .line-separator .row-end {
+    height: 48px;
+}

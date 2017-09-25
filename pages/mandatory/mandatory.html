@@ -23,10 +23,12 @@
                     </div>
                     
                     <div class="line-separator"></div>
-                    <div class="field_line field_line_odd">
-                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mandatory.contact'}"></span>
-                        <span class="label landscape_only" data-win-res="{textContent: 'mandatory.contact'}"></span>
-                        <div id="mandatorylisthost" class="input_field fragmenthost"></div>
+                    <div>
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mandatory.contact'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'mandatory.contact'}"></span>
+                            <div id="mandatorylisthost" class="input_field fragmenthost"></div>
+                        </div>
                     </div>
                     <div class="mandatoryquestion-template"
                          data-win-control="WinJS.Binding.Template" style="display: none">
@@ -37,13 +39,14 @@
                                 <span data-win-bind="textContent: Fragestellung"></span>
                             </label>
                         </div>
+                        <div class="line-separator row-end"></div>
                     </div>
                     <div class="headerFooterPlaceholder">
                         <div class="list-footer">
                             <div class="status">
                                 <progress class="win-progress-bar progress"></progress>
                                 <div class="counter">
-                                    <span data-win-res="{textContent: 'contactPanel.count'}"></span><span>: </span><span data-win-bind="textContent: count"></span>
+                                    <span data-win-res="{textContent: 'mandatoryCount.count'}"></span><span>: </span><span data-win-bind="textContent: count"></span>
                                 </div>
                             </div>
                         </div>
@@ -51,8 +54,8 @@
                     <div class="field_line field_line_even">
                         <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mandatory.questionnaire'}"></span>
                         <span class="label landscape_only" data-win-res="{textContent: 'mandatory.questionnaire'}"></span>
-                        <div id="mandatoryquestion"
-                             class="listview win-selectionstylefilled"
+                        <div id="mandatoryquestion" 
+                             class="input_field listview win-selectionstylefilled"
                              data-win-control="WinJS.UI.ListView"
                              data-win-options="{
                                 itemTemplate: select('.mandatoryquestion-template'),
