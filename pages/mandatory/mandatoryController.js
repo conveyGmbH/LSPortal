@@ -174,10 +174,12 @@
                 clickOk: function (event) {
                     Log.call(Log.l.trace, "Contact.Controller.");
                     that.saveData(function (response) {
-                        that.loadData();
+                            Log.print(Log.l.error, "success" + response);
                         },
                         function (errorResponse) {
                             Log.print(Log.l.error, "error saving employee" + errorResponse);
+                        }).then(function () {
+                            that.loadData();
                         });
                     Log.ret(Log.l.trace);
                 },
@@ -233,7 +235,7 @@
                                 }
                                 //}
                                 // set modified!
-                               // AppBar.modified = true;
+                                // AppBar.modified = true;
                             }
                         }
                     }
