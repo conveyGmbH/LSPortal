@@ -335,6 +335,7 @@
     "label.skillentry"      : "entrer une capacité",
     "label.mailing"         : "Mail",
     "label.infodesk"        : "Infodesk",
+    "label.mandatory"       : "Mandatory fields",
     
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annuler",
@@ -408,5 +409,12 @@
 
     "productlist.title"     : "Sélection de produits",
     "productlist.comment"   : "Utilisez le bouton Retour sur cette page pour y retourner!",
-    "productlist.count"     : "Nombre"
+    "productlist.count"     : "Nombre",
+
+    "mandatory.title"       : "Mandatory fields",
+    "mandatory.contact"     : "Mandatory fields in Contact",
+    "mandatory.questionnaire" : "Pflichtfelder im Fragebogen",
+    "mandatory.doQuestionnaireMandatory"  : "Show message for mandatory fields in questionnaire",
+    "mandatory.doContactMandatory"  : "Show message for mandatory fields in contact",
+    "mandatory.count"  : "Count"
 }

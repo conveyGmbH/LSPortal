@@ -11,6 +11,32 @@
 (function () {
     "use strict";
 
+    WinJS.Namespace.define("Application.MandatoryQuestionLayout", {
+        MandatoryLayout: WinJS.Class.define(function (options) {
+                this._site = null;
+                this._surface = null;
+            },
+            {
+                // This sets up any state and CSS layout on the surface of the custom layout
+                initialize: function (site) {
+                    this._site = site;
+                    this._surface = this._site.surface;
+
+                    // Add a CSS class to control the surface level layout
+                    WinJS.Utilities.addClass(this._surface, "mandatoryquestionLayout");
+
+                    return WinJS.UI.Orientation.vertical;
+                },
+
+                // Reset the layout to its initial state
+                uninitialize: function () {
+                    WinJS.Utilities.removeClass(this._surface, "mandatoryquestionLayout");
+                    this._site = null;
+                    this._surface = null;
+                }
+            })
+    });
+
     var pageName = Application.getPagePath("mandatory");
 
     WinJS.UI.Pages.define(pageName, {
@@ -20,6 +46,8 @@
             Log.call(Log.l.trace, pageName + ".");
             // TODO: Initialize the page here.
             this.inResize = 0;
+            this.prevWidth = 0;
+            this.prevHeight = 0;
 
             // add page specific commands to AppBar
             AppBar.commandList = [
@@ -62,8 +90,35 @@
         },
 
         updateLayout: function (element, viewState, lastViewState) {
+            var ret = null;
+            var that = this;
             /// <param name="element" domElement="true" />
+            Log.call(Log.l.u1, pageName + ".");
             // TODO: Respond to changes in viewState.
+            if (element && !that.inResize) {
+                that.inResize = 1;
+                ret = WinJS.Promise.timeout(0).then(function () {
+                    var empList = element.querySelector("#mandatoryquestion.listview");
+                    if (empList && empList.style) {
+                        var contentarea = element.querySelector(".contentarea");
+                        if (contentarea) {
+                            var width = contentarea.clientWidth;
+                            var height = contentarea.clientHeight;
+                            if (width !== that.prevWidth) {
+                                that.prevWidth = width;
+                                empList.style.width = width.toString() + "px";
+                            }
+                            if (height !== that.prevHeight) {
+                                that.prevHeight = height;
+                                empList.style.height = height.toString() + "px";
+                            }
+                        }
+                    }
+                    that.inResize = 0;
+                });
+            }
+            Log.ret(Log.l.u1);
+            return ret;
         }
     });
 })();

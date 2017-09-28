@@ -1,4 +1,13 @@
-﻿.list-mandcon-item {
+﻿#mandatoryList .win-headercontainer {
+    height: 0;
+}
+
+#mandatoryList.listview {
+    width: 100%;
+    height: 100%;
+}
+
+.list-mandcon-item {
     width: 33%;
     min-width: 160px;
     height: 48px;

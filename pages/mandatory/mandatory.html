@@ -12,22 +12,29 @@
         <div id="mandatoryController" class="data-container">
             <section aria-label="Main content" role="main" class="animationElement">
                 <div class="contentarea win-type-body">
-                    <div class="header-separator"></div>
-                    <div class="content-header">
-                        <div class="half-circle half-circle-textcolor">&nbsp;</div>
-                        <div class="content-header-line win-type-caption">
-                            <span class="id-field"></span>
-                            <span class="caption-field" data-win-res="{textContent: 'mandatory.title'}"></span>
-                            <span class="date-field"></span>
-                        </div>
-                    </div>
-                    
-                    <div class="line-separator"></div>
-                    <div>
-                        <div class="field_line field_line_odd">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mandatory.contact'}"></span>
-                            <span class="label landscape_only" data-win-res="{textContent: 'mandatory.contact'}"></span>
-                            <div id="mandatorylisthost" class="input_field fragmenthost"></div>
+                    <div class="headerFooterPlaceholder">
+                        <div class="list-header">
+                            <div class="header-separator"></div>
+                            <div class="content-header">
+                                <div class="half-circle half-circle-textcolor">&nbsp;</div>
+                                <div class="content-header-line win-type-caption">
+                                    <span class="id-field"></span>
+                                    <span class="caption-field" data-win-res="{textContent: 'mandatory.contact'}"></span>
+                                    <span class="date-field"></span>
+                                </div>
+                            </div>
+
+                            <div id="mandatorylisthost" class="fragmenthost"></div>
+
+                            <div class="header-separator"></div>
+                            <div class="content-header">
+                                <div class="half-circle half-circle-textcolor">&nbsp;</div>
+                                <div class="content-header-line win-type-caption">
+                                    <span class="id-field"></span>
+                                    <span class="caption-field" data-win-res="{textContent: 'mandatory.questionnaire'}"></span>
+                                    <span class="date-field"></span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="mandatoryquestion-template"
@@ -35,7 +42,7 @@
                         <div class="list-manquest-item">
                             <label class="list-manquest-field">
                                 <input type="checkbox" class="win-checkbox" value="1"
-                                       data-win-bind="checked: PflichtFlag" onchange="AppBar.handleEvent('change', 'changedMandatoryField', event)" />
+                                       data-win-bind="checked: PflichtFlag" onchange="AppBar.handleEvent('change', 'changedMandatoryField', event)"/>
                                 <span data-win-bind="textContent: Fragestellung"></span>
                             </label>
                         </div>
@@ -46,39 +53,36 @@
                             <div class="status">
                                 <progress class="win-progress-bar progress"></progress>
                                 <div class="counter">
-                                    <span data-win-res="{textContent: 'mandatoryCount.count'}"></span><span>: </span><span data-win-bind="textContent: count"></span>
+                                    <span data-win-res="{textContent: 'mandatory.count'}"></span><span>: </span><span data-win-bind="textContent: count"></span>
+                                </div>
+                            </div>
+                            <div class="line-separator"></div>
+                            <div class="field_line field_line_odd">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mandatory.doQuestionnaireMandatory'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'mandatory.doQuestionnaireMandatory'}"></span>
+                                <div class="input_field toggle-switch-parent">
+                                    <div id="confirmMandatoryQuestionnaire" class="input_field"
+                                         data-win-control="WinJS.UI.ToggleSwitch"
+                                         data-win-bind="winControl.checked: doMandatory; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                                         onchange="AppBar.handleEvent('change', 'clickDoMandatory', event)">
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="field_line field_line_even">
-                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mandatory.questionnaire'}"></span>
-                        <span class="label landscape_only" data-win-res="{textContent: 'mandatory.questionnaire'}"></span>
-                        <div id="mandatoryquestion" 
-                             class="input_field listview win-selectionstylefilled"
-                             data-win-control="WinJS.UI.ListView"
-                             data-win-options="{
+                    <div id="mandatoryquestion"
+                         class="listview win-selectionstylefilled"
+                         data-win-control="WinJS.UI.ListView"
+                         data-win-options="{
                                 itemTemplate: select('.mandatoryquestion-template'),
+                                header: select('.list-header'),
                                 footer: select('.list-footer')
                          }">
-                        </div>
                     </div>
-                    
-                    <div class="line-separator"></div>
-                    <div class="field_line field_line_even">
-                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mandatory.doQuestionnaireMandatory'}"></span>
-                        <span class="label landscape_only" data-win-res="{textContent: 'mandatory.doQuestionnaireMandatory'}"></span>
-                        <div class="input_field toggle-switch-parent">
-                            <div id="confirmMandatoryQuestionnaire" class="input_field"
-                                 data-win-control="WinJS.UI.ToggleSwitch"
-                                 data-win-bind="winControl.checked: doMandatory; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                 onchange="AppBar.handleEvent('change', 'clickDoMandatory', event)">
-                            </div>
-                        </div>
-                    </div>
+
                     <div class="error-message"
                          data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
-                   </div>
+                </div>
             </section>
         </div>
     </div>

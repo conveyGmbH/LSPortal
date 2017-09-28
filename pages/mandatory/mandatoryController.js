@@ -21,6 +21,7 @@
             this.nextUrl = null;
             this.loading = false;
             this.questions = null;
+            this.fragmentVisible = false;
 
             var that = this;
 
@@ -301,7 +302,7 @@
                         }
                         if (listView.winControl.loadingState === "itemsLoading") {
                             if (!layout) {
-                                layout = Application.QuestiongroupLayout.QuestionsLayout;
+                                layout = Application.MandatoryQuestionLayout.MandatoryLayout;
                                 listView.winControl.layout = { type: layout };
                             }
                         } else if (listView.winControl.loadingState === "complete") {
@@ -319,22 +320,28 @@
                         }
                     }
                     Log.ret(Log.l.trace);
-                }
-                /*onHeaderVisibilityChanged: function (eventInfo) {
+                },
+                onHeaderVisibilityChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "Mandatory.Controller.");
                     if (eventInfo && eventInfo.detail) {
                         var visible = eventInfo.detail.visible;
-                        if (visible) {
-                            var contentHeader = listView.querySelector(".content-header");
-                            if (contentHeader) {
-                                var halfCircle = contentHeader.querySelector(".half-circle");
-                                if (halfCircle && halfCircle.style) {
-                                    if (halfCircle.style.visibility === "hidden") {
-                                        halfCircle.style.visibility = "";
-                                        WinJS.UI.Animation.enterPage(halfCircle);
+                        if (visible && listView) {
+                            if (!that.fragmentVisible) {
+                                var mandatoryListFragmentControl =
+                                    Application.navigator.getFragmentControlFromLocation(
+                                        Application.getFragmentPath("mandatoryList"));
+                                if (mandatoryListFragmentControl && mandatoryListFragmentControl.controller) {
+                                    mandatoryListFragmentControl.controller.loadData();
+                                } else {
+                                    var parentElement = listView.querySelector("#mandatorylisthost");
+                                    if (parentElement) {
+                                        Application.loadFragmentById(parentElement, "mandatoryList");
                                     }
                                 }
+                                that.fragmentVisible = true;
                             }
+                        } else {
+                            that.fragmentVisible = false;
                         }
                     }
                     Log.ret(Log.l.trace);
@@ -355,13 +362,13 @@
                             }
                             AppData.setErrorMsg(that.binding);
                             Log.print(Log.l.trace, "calling select Mandatory.CR_V_FragengruppeView...");
-                            Mandatory.CR_V_FragengruppeView.selectNext(function (json) {
+                            Mandatory.manquestView.selectNext(function (json) {
                                 // this callback will be called asynchronously
                                 // when the response is available
                                 Log.print(Log.l.trace, "Mandatory.CR_V_FragengruppeView: success!");
                                 // selectNext returns object already parsed from json file in response
                                 if (json && json.d) {
-                                    that.nextUrl = Mandatory.CR_V_FragengruppeView.getNextUrl(json);
+                                    that.nextUrl = Mandatory.manquestView.getNextUrl(json);
                                     var results = json.d.results;
                                     results.forEach(function (item) {
                                         that.binding.count = that.questions.push(item);
@@ -392,7 +399,7 @@
                         }
                     }
                     Log.ret(Log.l.trace);
-                }*/
+                }
             };
 
             this.disableHandlers = {
@@ -412,8 +419,8 @@
             if (listView) {
                 this.addRemovableEventListener(listView, "selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
                 this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
-                //this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
-                //this.addRemovableEventListener(listView, "headervisibilitychanged", this.eventHandlers.onHeaderVisibilityChanged.bind(this));
+                this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
+                this.addRemovableEventListener(listView, "headervisibilitychanged", this.eventHandlers.onHeaderVisibilityChanged.bind(this));
             }
 
             var resultConverter = function (item, index) {
@@ -441,7 +448,7 @@
                         // select returns object already parsed from json file in response
                         if (json && json.d) {
                             that.binding.count = json.d.results.length;
-                            //that.nextUrl = MandatoryList.mandatoryView.getNextUrl(json);
+                            that.nextUrl = Mandatory.manquestView.getNextUrl(json);
                             var results = json.d.results;
                             // Now, we call WinJS.Binding.List to get the bindable list
                             that.questions = new WinJS.Binding.List(results);
@@ -476,19 +483,6 @@
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
                     });
-
-                }).then(function () {
-                    var mandatoryListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("mandatoryList"));
-                    if (mandatoryListFragmentControl && mandatoryListFragmentControl.controller) {
-                        return mandatoryListFragmentControl.controller.loadData();
-                    } else {
-                        var parentElement = pageElement.querySelector("#mandatorylisthost");
-                        if (parentElement) {
-                            return Application.loadFragmentById(parentElement, "mandatoryList");
-                        } else {
-                            return WinJS.Promise.as();
-                        }
-                    }
                 }).then(function () {
                     AppBar.notifyModified = true;
                     AppBar.triggerDisableHandlers();

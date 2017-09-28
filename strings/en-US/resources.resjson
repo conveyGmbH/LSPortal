@@ -335,6 +335,7 @@
     "label.skillentry"      : "Skill entries",
     "label.mailing"         : "Mail",
     "label.infodesk"        : "Infodesk",
+    "label.mandatory"       : "Mandatory Fields",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Cancel",
@@ -408,5 +409,12 @@
 
     "productlist.title"     : "Product selection",
     "productlist.comment"   : "On this page, use the Back button to go back!",
-    "productlist.count"     : "Count"
+    "productlist.count"     : "Count",
+
+    "mandatory.title"       : "Mandatory fields",
+    "mandatory.contact"     : "Mandatory fields in Contact",
+    "mandatory.questionnaire" : "Pflichtfelder im Fragebogen",
+    "mandatory.doQuestionnaireMandatory"  : "Show message for mandatory fields in questionnaire",
+    "mandatory.doContactMandatory"  : "Show message for mandatory fields in contact",
+    "mandatory.count"  : "Count"
 }

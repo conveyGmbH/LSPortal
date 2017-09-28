@@ -28,6 +28,19 @@
                 var ret = Mandatory._manquestView.update(complete, error, recordId, viewResponse);
                 Log.ret(Log.l.trace);
                 return ret;
+            },
+            getNextUrl: function (response) {
+                Log.call(Log.l.trace, "manquestView.");
+                var ret = Mandatory._manquestView.getNextUrl(response);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            selectNext: function (complete, error, response, nextUrl) {
+                Log.call(Log.l.trace, "manquestView.");
+                var ret = Mandatory._manquestView.selectNext(complete, error, response, nextUrl);
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
             }
         },
         _CR_VERANSTOPTION_View: {
