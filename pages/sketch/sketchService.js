@@ -21,20 +21,29 @@
                 return ret;
             }
         },
+        _sketchDocView: {
+            get: function () {
+                return AppData.getFormatView("KontaktNotiz", 20505);
+            }
+        },
+        sketchDocView: {
+            select: function (complete, error, recordId) {
+                Log.call(Log.l.trace, "sketchView.");
+                var ret = Sketch._sketchDocView.selectById(complete, error, recordId);
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+        },
         _sketchView: {
             get: function () {
                 return AppData.getFormatView("KontaktNotiz", 0);
             }
         },
         sketchView: {
-            select: function (complete, error, recordId, restriction) {
+            select: function (complete, error, recordId) {
                 Log.call(Log.l.trace, "sketchView.");
-                var ret;
-                if (restriction) {
-                    ret = Sketch._sketchView.select(complete, error, restriction);
-                } else {
-                    ret = Sketch._sketchView.selectById(complete, error, recordId);
-                }
+                var ret = Sketch._sketchView.selectById(complete, error, recordId);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
