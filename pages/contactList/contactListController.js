@@ -19,9 +19,7 @@
         Controller: WinJS.Class.derive(Application.Controller,
             function Controller(pageElement) {
                 Log.call(Log.l.trace, "ContactList.Controller.");
-                Application.Controller.apply(this,
-                [
-                    pageElement, {
+                Application.Controller.apply(this,[pageElement, {
                         count: 0,
                         doccount: 0,
                         contactId: AppData.getRecordId("Kontakt")
@@ -368,13 +366,6 @@
                 }
                 this.resultConverter = resultConverter;
 
-                var setInContactsDelayed = function (i, contact) {
-                    WinJS.Promise.timeout(0).then(function() {
-                        that.contacts.setAt(i, contact);
-                    });
-                }
-                this.setInContactsDelayed = setInContactsDelayed;
-
                 var resultDocConverter = function(item, index) {
                     if (that.contacts) {
                         for (var i = that.firstDocsIndex; i < that.contacts.length; i++) {
@@ -387,7 +378,7 @@
                                 } else {
                                     contact.OvwContentDOCCNT3 = null;
                                 }
-                                that.setInContactsDelayed(i, contact);
+                                that.contacts.setAt(i, contact);
                                 that.firstContactsIndex = i + 1;
                                 break;
                             }
@@ -668,8 +659,8 @@
                             getRestriction(),
                             recordId);
                     }).then(function () {
-                        WinJS.Promise.timeout(250).then(function () {
-                            ContactList.contactDocView.select(function (json) {
+                        return WinJS.Promise.timeout(250).then(function () {
+                            return ContactList.contactDocView.select(function (json) {
                                 // this callback will be called asynchronously
                                 // when the response is available
                                 Log.print(Log.l.trace, "contactDocView: success!");
@@ -706,7 +697,7 @@
                     return that.loadData();
                 }).then(function () {
                     Log.print(Log.l.trace, "Data loaded");
-                    return that.selectRecordId(AppData.getRecordId("Kontakt")); //that.binding.contactId
+                    that.selectRecordId(AppData.getRecordId("Kontakt")); //that.binding.contactId
                 }).then(function () {
                     AppBar.notifyModified = true;
                     Log.print(Log.l.trace, "Record selected");
