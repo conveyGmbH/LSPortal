@@ -51,6 +51,9 @@
 
             var mouseDown = false;
 
+            if (AppData._persistentStates.showConfirmQuestion) {
+                confirmMandatoryQuestionnaire.winControl.checked = AppData._persistentStates.showConfirmQuestion;
+            }
 
             // get field entries
             var getFieldEntries = function (index) {
@@ -179,8 +182,6 @@
                         },
                         function (errorResponse) {
                             Log.print(Log.l.error, "error saving employee" + errorResponse);
-                        }).then(function () {
-                            that.loadData();
                         });
                     Log.ret(Log.l.trace);
                 },
@@ -514,6 +515,7 @@
                             ret = Mandatory.manquestView.update(function (response) {
                                 Log.print(Log.l.info, "Mandatory.Controller. update: success!");
                                 // called asynchronously if ok
+                                AppData.getUserData();
                                 AppBar.modified = false;
                                 var mandatoryListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("mandatoryList"));
                                 if (mandatoryListFragmentControl && mandatoryListFragmentControl.controller) {
