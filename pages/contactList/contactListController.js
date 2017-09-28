@@ -368,6 +368,13 @@
                 }
                 this.resultConverter = resultConverter;
 
+                var setInContactsDelayed = function (i, contact) {
+                    WinJS.Promise.timeout(0).then(function() {
+                        that.contacts.setAt(i, contact);
+                    });
+                }
+                this.setInContactsDelayed = setInContactsDelayed;
+
                 var resultDocConverter = function(item, index) {
                     if (that.contacts) {
                         for (var i = that.firstDocsIndex; i < that.contacts.length; i++) {
@@ -380,7 +387,7 @@
                                 } else {
                                     contact.OvwContentDOCCNT3 = null;
                                 }
-                                that.contacts.setAt(i, contact);
+                                that.setInContactsDelayed(i, contact);
                                 that.firstContactsIndex = i + 1;
                                 break;
                             }
