@@ -1,0 +1,30 @@
+﻿.list-container {
+    width: 100%;
+}
+
+.list-img {
+    width: 150px;
+    height: 150px;
+    display: block;
+}
+
+.list-svg {
+    width: 150px;
+    height: 150px;
+    display: block;
+}
+
+
+.list-img-item {
+    width: 100%;
+    height: auto;
+    display: inline;
+}
+
+.list-svg-item {
+    width: 100%;
+    height: auto;
+    max-height: 150px;
+    display: inline;
+    /*viewBox in Controller.onLoadingStateChanged*/
+}
