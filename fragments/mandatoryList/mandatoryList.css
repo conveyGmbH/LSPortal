@@ -7,10 +7,18 @@
     height: 100%;
 }
 
+#mandatoryList .win-surface {
+    margin: 0
+}
+
+
 .list-mandcon-item {
-    width: 33%;
-    min-width: 160px;
+    width: 180px;
     height: 48px;
     overflow: hidden;
     display: flex;
+    padding-left: 20px;
+    padding-right: 0;
+    padding-top: 2px;
+    padding-bottom: 2px;
 }

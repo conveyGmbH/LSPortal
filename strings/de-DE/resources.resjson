@@ -419,7 +419,7 @@
     "mandatory.title"       : "Pflichtfelder",
     "mandatory.contact"     : "Pflichtfelder im Kontakt",
     "mandatory.questionnaire" : "Pflichtfelder im Fragebogen",
-    "mandatory.doQuestionnaireMandatory"  : "Pflichtfelder im Fragebogen mit Hinweis",
-    "mandatory.doContactMandatory"  : "Pflichtfelder im Kontakt mit Hinweis",
+    "mandatory.doQuestionnaireMandatory"  : "Hinweis anzeigen",
+    "mandatory.doContactMandatory"  : "Hinweis anzeigen",
     "mandatory.count"  : "Anzahl"
 }

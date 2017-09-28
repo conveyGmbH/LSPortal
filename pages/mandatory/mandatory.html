@@ -42,18 +42,17 @@
                         <div class="list-manquest-item">
                             <label class="list-manquest-field">
                                 <input type="checkbox" class="win-checkbox" value="1"
-                                       data-win-bind="checked: PflichtFlag" onchange="AppBar.handleEvent('change', 'changedMandatoryField', event)"/>
+                                       data-win-bind="checked: PflichtFlag"/>
                                 <span data-win-bind="textContent: Fragestellung"></span>
                             </label>
                         </div>
-                        <div class="line-separator row-end"></div>
                     </div>
                     <div class="headerFooterPlaceholder">
                         <div class="list-footer">
                             <div class="status">
                                 <progress class="win-progress-bar progress"></progress>
                                 <div class="counter">
-                                    <span data-win-res="{textContent: 'mandatory.count'}"></span><span>: </span><span data-win-bind="textContent: count"></span>
+                                    <!--<span data-win-res="{textContent: 'mandatory.count'}"></span><span>: </span><span data-win-bind="textContent: count"></span>-->
                                 </div>
                             </div>
                             <div class="line-separator"></div>
