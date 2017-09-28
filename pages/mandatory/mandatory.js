@@ -105,6 +105,16 @@
                             var width = contentarea.clientWidth;
                             var height = contentarea.clientHeight;
                             if (width !== that.prevWidth) {
+                                var mandatoryListHost = empList.querySelector("#mandatorylisthost.fragmenthost");
+                                if (mandatoryListHost) {
+                                    if (width > 1299) {
+                                        // remove class: view-size-bigger
+                                        WinJS.Utilities.removeClass(mandatoryListHost.parentElement, "view-size-bigger");
+                                    } else {
+                                        // add class: view-size-bigger
+                                        WinJS.Utilities.addClass(mandatoryListHost.parentElement, "view-size-bigger");
+                                    }
+                                }
                                 that.prevWidth = width;
                                 empList.style.width = width.toString() + "px";
                             }

@@ -3,30 +3,42 @@
 */
 
 #mandatorylisthost.fragmenthost {
-    height: 120px;
+    height: 124px;
+}
+
+.view-size-bigger #mandatorylisthost.fragmenthost {
+    height: 186px;
 }
 
 .view-size-medium #mandatorylisthost.fragmenthost {
-    height: 180px;
+    height: 372px;
 }
 
 .view-size-small #mandatorylisthost.fragmenthost {
-    height: 360px;
+    height: 744px;
 }
 
 
 .list-manquest-item {
     width: 100%;
-    min-width: 160px;
     height: 48px;
     overflow: hidden;
     display: flex;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 2px;
+    padding-bottom: 2px;
 }
 
-.toggle-switch-parent {
-    height: 50px;
+
+#mandatoryquestion .win-container {
+    margin-left: 5px;
 }
 
 #mandatoryquestion .line-separator .row-end {
     height: 48px;
+}
+
+.toggle-switch-parent {
+    height: 50px;
 }

@@ -24,6 +24,8 @@
             this.fragmentVisible = false;
 
             var that = this;
+            this.curRecId = 0;
+            this.prevRecId = 0;
 
             // ListView control
             var listView = pageElement.querySelector("#mandatoryquestion.listview");
@@ -178,11 +180,10 @@
                 clickOk: function (event) {
                     Log.call(Log.l.trace, "Contact.Controller.");
                     that.saveData(function (response) {
-                            Log.print(Log.l.error, "success" + response);
-                        },
-                        function (errorResponse) {
-                            Log.print(Log.l.error, "error saving employee" + errorResponse);
-                        });
+                        Log.print(Log.l.error, "success" + response);
+                    }, function (errorResponse) {
+                        Log.print(Log.l.error, "error saving employee" + errorResponse);
+                    });
                     Log.ret(Log.l.trace);
                 },
                 clickDoMandatory: function (event) {
@@ -200,47 +201,6 @@
                 clickGotoPublish: function (event) {
                     Log.call(Log.l.trace, "Mandatory.Controller.");
                     Application.navigateById("publish", event);
-                    Log.ret(Log.l.trace);
-                },
-                changedMandatoryField: function (event) {
-                    Log.call(Log.l.trace, "QuestionList.Controller.");
-                    //analog zu changedTextDate
-                    Log.call(Log.l.trace, "QuestionList.Controller.");
-                    if (event.currentTarget && AppBar.notifyModified) {
-                        var value = event.currentTarget.value;
-                        if (that.curRecId && !that.prevRecId) {
-                            var curScope = that.scopeFromRecordId(that.curRecId);
-                            if (curScope &&
-                                curScope.item &&
-                                curScope.item.PflichtFlag !== value) {
-                                curScope.item.PflichtFlag = value;
-
-                                var newRecId = curScope.item.FragenAntwortenVIEWID;
-                                //var newRecord = that.getFieldEntries(curScope.index, curScope.item.Fragentyp);
-                                //that.mergeRecord(curScope.item, newRecord);
-                                //that.questions.setAt(curScope.index, curScope.item);
-                                //if (newRecId !== 0 && newRecId !== that.curRecId) {
-                                AppData.setRecordId('FragenAntworten', newRecId);
-                                if (that.curRecId) {
-                                    that.prevRecId = that.curRecId;
-                                }
-                                that.curRecId = newRecId;
-                                if (that.prevRecId !== 0) {
-                                    that.saveData(function (response) {
-                                        Log.print(Log.l.trace, "question saved");
-                                        AppBar.triggerDisableHandlers();
-                                    }, function (errorResponse) {
-                                        Log.print(Log.l.error, "error saving question");
-                                    });
-                                } else {
-                                    AppBar.triggerDisableHandlers();
-                                }
-                                //}
-                                // set modified!
-                                // AppBar.modified = true;
-                            }
-                        }
-                    }
                     Log.ret(Log.l.trace);
                 },
                 onSelectionChanged: function (eventInfo) {
@@ -325,15 +285,13 @@
                 onHeaderVisibilityChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "Mandatory.Controller.");
                     if (eventInfo && eventInfo.detail) {
+                        var mandatoryListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("mandatoryList"));
                         var visible = eventInfo.detail.visible;
-                        if (visible && listView) {
+                        if (visible) {
                             if (!that.fragmentVisible) {
-                                var mandatoryListFragmentControl =
-                                    Application.navigator.getFragmentControlFromLocation(
-                                        Application.getFragmentPath("mandatoryList"));
                                 if (mandatoryListFragmentControl && mandatoryListFragmentControl.controller) {
                                     mandatoryListFragmentControl.controller.loadData();
-                                } else {
+                                } else if (listView) {
                                     var parentElement = listView.querySelector("#mandatorylisthost");
                                     if (parentElement) {
                                         Application.loadFragmentById(parentElement, "mandatoryList");
@@ -341,7 +299,14 @@
                                 }
                                 that.fragmentVisible = true;
                             }
-                        } else {
+                        } else if (that.fragmentVisible) {
+                            if (mandatoryListFragmentControl && mandatoryListFragmentControl.controller) {
+                                mandatoryListFragmentControl.controller.saveData(function (response) {
+                                    Log.print(Log.l.info, "mandatoryList.Controller. update: success!");
+                                }, function (errorResponse) {
+                                    AppData.setErrorMsg(that.binding, errorResponse);
+                                });
+                            }
                             that.fragmentVisible = false;
                         }
                     }
@@ -514,17 +479,12 @@
                             Log.print(Log.l.trace, "save changes of recordId:" + recordId);
                             ret = Mandatory.manquestView.update(function (response) {
                                 Log.print(Log.l.info, "Mandatory.Controller. update: success!");
+                                AppData.getUserData();
                                 // called asynchronously if ok
                                 AppData.getUserData();
                                 AppBar.modified = false;
-                                var mandatoryListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("mandatoryList"));
-                                if (mandatoryListFragmentControl && mandatoryListFragmentControl.controller) {
-                                    mandatoryListFragmentControl.controller.saveData(complete, error);
-                                } else {
-                                    if (typeof complete === "function") {
-                                        complete({});
-                                    }
-                                    ret = WinJS.Promise.as();
+                                if (typeof complete === "function") {
+                                    complete({});
                                 }
                             }, function (errorResponse) {
                                 AppData.setErrorMsg(that.binding, errorResponse);

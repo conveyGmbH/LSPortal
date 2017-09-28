@@ -414,7 +414,7 @@
     "mandatory.title"       : "Mandatory fields",
     "mandatory.contact"     : "Mandatory fields in Contact",
     "mandatory.questionnaire" : "Pflichtfelder im Fragebogen",
-    "mandatory.doQuestionnaireMandatory"  : "Show message for mandatory fields in questionnaire",
-    "mandatory.doContactMandatory"  : "Show message for mandatory fields in contact",
+    "mandatory.doQuestionnaireMandatory"  : "Show message",
+    "mandatory.doContactMandatory"  : "Show message",
     "mandatory.count"  : "Count"
 }
