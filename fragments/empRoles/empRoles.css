@@ -1,18 +1,10 @@
 ﻿/**
     empRoles fragment styles
 */
-#empRoleList {
-    height: 60px;
+#empRoleList.listview {
+    width: 100%;
+    height: 100%;
 }
-
-.view-size-medium #empRoleList {
-    height: 120px;
-}
-
-.view-size-small #empRoleList {
-    height: 180px;
-}
-
 
 .list-role-item {
     width: 33%;

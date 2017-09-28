@@ -2,8 +2,14 @@
     employee page styles
 */
 
-.fragmenthost {
-    width: 100%;
-    height: 200px;
+#emproleshost.fragmenthost {
+    height: 120px;
 }
 
+.view-size-medium #emproleshost.fragmenthost {
+    height: 180px;
+}
+
+.view-size-small #emproleshost.fragmenthost {
+    height: 360px;
+}

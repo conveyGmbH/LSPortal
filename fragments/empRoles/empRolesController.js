@@ -13,9 +13,7 @@
     WinJS.Namespace.define("EmpRoles", {
         Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options) {
             Log.call(Log.l.trace, "EmpRoles.Controller.");
-            Fragments.Controller.apply(this, [fragmentElement, {
-                
-            }]);
+            Fragments.Controller.apply(this, [fragmentElement, options]);
             var that = this;
             this.curRecId = 0;
             this.prevRecId = 0;
@@ -254,7 +252,7 @@
                     });
                 }).then(function () {
                     return EmpRoles.CR_MA_APUSERRoleView.select(function (json) {
-                        that.binding.recordId = curRecordId;
+                        that.binding.employeeId = curRecordId;
                         // this callback will be called asynchronously
                         // when the response is available
                         Log.print(Log.l.trace, "CR_MA_APUSERRoleView: success!");
@@ -292,7 +290,7 @@
 
             that.processAll().then(function() {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.loadData(that.binding.recordId);
+                return that.loadData(that.binding.employeeId);
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
             });

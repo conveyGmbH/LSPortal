@@ -275,7 +275,7 @@
                     } else {
                         var parentElement = pageElement.querySelector("#emproleshost");
                         if (parentElement) {
-                            return Application.loadFragmentById(parentElement, "empRoles", { recordId: recordId });
+                            return Application.loadFragmentById(parentElement, "empRoles", { employeeId: recordId });
                         } else {
                             return WinJS.Promise.as();
                         }
