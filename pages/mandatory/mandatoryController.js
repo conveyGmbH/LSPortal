@@ -399,6 +399,9 @@
                     default:
                         // defaultvalues
                 }
+                if (item.Sortierung && item.Fragestellung) {
+                    item.QuestionWithNumber = item.Sortierung + ". " + item.Fragestellung;
+                }
             }
             this.resultConverter = resultConverter;
 
@@ -416,6 +419,9 @@
                             that.binding.count = json.d.results.length;
                             that.nextUrl = Mandatory.manquestView.getNextUrl(json);
                             var results = json.d.results;
+                            results.forEach(function (item, index) {
+                                that.resultConverter(item, index);
+                            });
                             // Now, we call WinJS.Binding.List to get the bindable list
                             that.questions = new WinJS.Binding.List(results);
                             if (listView.winControl) {
