@@ -464,9 +464,7 @@
                                             }
                                         }
                                     }
-                                    that.setRestriction({
-                                        INITLandID: that.countryID
-                                    });
+                                    that.binding.restriction.INITLandID = that.countryID;
                                     Application.navigateById("contact");
                                 }
                             }, function(errorResponse) {
@@ -495,9 +493,7 @@
                             // when the response is available
                             Log.print(Log.l.trace, "initLandView: success!");
                             if (json && json.d && json.d.results) {
-                                that.setRestriction({
-                                    MitarbeiterID: that.employee
-                                });
+                                that.binding.restriction.MitarbeiterID = that.employee;
                                 Application.navigateById("contact");
                             }
                         }, function (errorResponse) {
