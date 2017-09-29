@@ -19,9 +19,7 @@
         Controller: WinJS.Class.derive(Application.Controller,
             function Controller(pageElement) {
                 Log.call(Log.l.trace, "ContactList.Controller.");
-                Application.Controller.apply(this,
-                [
-                    pageElement, {
+                Application.Controller.apply(this,[pageElement, {
                         count: 0,
                         doccount: 0,
                         contactId: AppData.getRecordId("Kontakt")
@@ -661,8 +659,8 @@
                             getRestriction(),
                             recordId);
                     }).then(function () {
-                        WinJS.Promise.timeout(250).then(function () {
-                            ContactList.contactDocView.select(function (json) {
+                        return WinJS.Promise.timeout(250).then(function () {
+                            return ContactList.contactDocView.select(function (json) {
                                 // this callback will be called asynchronously
                                 // when the response is available
                                 Log.print(Log.l.trace, "contactDocView: success!");
@@ -699,7 +697,7 @@
                     return that.loadData();
                 }).then(function () {
                     Log.print(Log.l.trace, "Data loaded");
-                    return that.selectRecordId(AppData.getRecordId("Kontakt")); //that.binding.contactId
+                    that.selectRecordId(AppData.getRecordId("Kontakt")); //that.binding.contactId
                 }).then(function () {
                     AppBar.notifyModified = true;
                     Log.print(Log.l.trace, "Record selected");

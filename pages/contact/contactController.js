@@ -438,8 +438,12 @@
                     
                 }
                 if (item.FieldFlag) {
-                    if(inputfield !== null && inputfield !== undefined)
-                        inputfield.style.backgroundColor = "lightyellow";
+                    if (inputfield !== null && inputfield !== undefined)
+                        if (Colors.isDarkTheme) {
+                            inputfield.style.backgroundColor = "#8b4513"; 
+                        } else {
+                            inputfield.style.backgroundColor = "lightyellow";
+                        }
                 }
             };
             this.resultMandatoryConverter = resultMandatoryConverter;
