@@ -439,11 +439,9 @@
 
     "mandatory.title"       : "Champs obligatoires",
     "mandatory.contact"     : "Champs obligatoires du contact",
-    "mandatory.doMandatory" : "Présente les champs obligatoires de la questionnaire"
+    "mandatory.doMandatory" : "Présente les champs obligatoires de la questionnaire",
     "mandatory.questionnaire" : "Champs obligatoires du Questionnaire",
     "mandatory.doQuestionnaireMandatory"  : "afficher message",
     "mandatory.doContactMandatory"  : "afficher message",
     "mandatory.count"  : "Nombre"
-}
-
 }

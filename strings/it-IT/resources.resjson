@@ -435,7 +435,7 @@
 
     "mandatory.title"       : "Campo obbligatorio",
     "mandatory.contact"     : "Campo obbligatorio di contatto",
-    "mandatory.doMandatory" : "Mostra campo obbligatorio di questionario"
+    "mandatory.doMandatory" : "Mostra campo obbligatorio di questionario",
     "mandatory.doQuestionnaireMandatory"  : "Show message for mandatory fields in questionnaire",
     "mandatory.doContactMandatory"  : "Show message for mandatory fields in contact",
     "mandatory.count"  : "Count"
