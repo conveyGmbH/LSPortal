@@ -141,7 +141,7 @@
                             }
                             if (height !== that.prevHeight) {
                                 that.prevHeight = height;
-                                mySketch.style.height = height.toString() + "px";
+                                mySketch.style.height = (height - 200).toString() + "px";
                             }
                         }
                     }

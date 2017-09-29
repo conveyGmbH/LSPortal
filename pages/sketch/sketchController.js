@@ -141,6 +141,18 @@
                     } else {
                         return WinJS.Promise.as();
                     }
+                }).then(function () {
+                    var sketchListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("sketchList"));
+                    if (sketchListFragmentControl && sketchListFragmentControl.controller) {
+                        return sketchListFragmentControl.controller.loadData(contactId);
+                    } else {
+                        var parentElement = pageElement.querySelector("#sketchlisthost");
+                        if (parentElement) {
+                            return Application.loadFragmentById(parentElement, "sketchList", { contactId: contactId });
+                        } else {
+                            return WinJS.Promise.as();
+                        }
+                    }
                 });
                 Log.ret(Log.l.trace);
                 return ret;
