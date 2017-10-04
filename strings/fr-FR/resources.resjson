@@ -143,6 +143,7 @@
     "sketch.shape"          : "Forme",
     "sketch.color"          : "Couleur",
     "sketch.width"          : "Largeur du crayon",
+    "sketch.showList"		: "Plus de notes",
 
     "search.title"          : "Rechercher",
     "search.comment"        : "Utilisez le bouton Retour sur cette page pour y retourner!",

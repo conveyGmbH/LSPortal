@@ -14,6 +14,18 @@
     display: block;
 }
 
+#sketchList .win-container {
+    width: 150px;
+    height: 150px;
+}
+
+.contentarea .win-type-body {
+    height: 150px;
+}
+.contentarea .win-type-body .win-listview{
+    height: 150px;
+}
+
 
 .list-img-item {
     width: 100%;

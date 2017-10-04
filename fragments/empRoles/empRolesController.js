@@ -204,8 +204,12 @@
 
             // register ListView event handler
             if (listView) {
-                listView.addEventListener("selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
-                listView.addEventListener("loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
+                this.addRemovableEventListener(listView,
+                    "selectionchanged",
+                    this.eventHandlers.onSelectionChanged.bind(this));
+                this.addRemovableEventListener(listView,
+                    "loadingstatechanged",
+                    this.eventHandlers.onLoadingStateChanged.bind(this));
             }
 
             var resultConverter = function (item, index) {

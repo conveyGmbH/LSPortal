@@ -21,7 +21,6 @@
 
             this.sketches = null;
             this.contactId = 0;
-            this.curNoteId = 0;
 
             // now do anything...
             var listView = fragmentElement.querySelector("#sketchList.listview");
@@ -52,23 +51,29 @@
             var eventHandlers = {
                 onSelectionChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "SketchList.Controller.");
-                    AppBar.scope.saveData()
-                    if (listView && listView.winControl) {
-                        var listControl = listView.winControl;
-                        if (listControl.selection) {
-                            var selectionCount = listControl.selection.count();
-                            if (selectionCount === 1) {
-                                // Only one item is selected, show the page
-                                listControl.selection.getItems().done(function (items) {
-                                    var item = items[0];
+                    //if current sketch is saved successfully, change selection
+                    AppBar.scope.saveData(function (response) {
+                        // called asynchronously if ok
+                        if (listView && listView.winControl) {
+                            var listControl = listView.winControl;
+                            if (listControl.selection) {
+                                var selectionCount = listControl.selection.count();
+                                if (selectionCount === 1) {
+                                    // Only one item is selected, show the page
+                                    listControl.selection.getItems().done(function(items) {
+                                        var item = items[0];
 
-                                    //TODO load sketch with new recordId
-                                    that.curNoteID = item.KontaktNotizVIEWID;
-                                    
-                                });
+                                        //load sketch with new recordId
+                                        var curId = item.data.KontaktNotizVIEWID;
+                                        AppBar.scope.setRecordId(curId);
+                                        AppBar.scope.loadSketch();
+                                    });
+                                }
                             }
                         }
-                    }
+                    }, function (errorResponse) {
+                        AppBar.scope.loadSketch();
+                    });
                     Log.ret(Log.l.trace);
                 },
                 onLoadingStateChanged: function (eventInfo) {
@@ -103,6 +108,7 @@
                                     svg.viewBox.baseVal.width = svg.width.baseVal.value;
                                 }
                             }
+                            AppBar.scope.loadSketch();
                         }
                     }
                     Log.ret(Log.l.trace);
@@ -112,7 +118,12 @@
 
             // register ListView event handler
             if (listView) {
-                listView.addEventListener("loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
+                this.addRemovableEventListener(listView,
+                    "selectionchanged",
+                    this.eventHandlers.onSelectionChanged.bind(this));
+                this.addRemovableEventListener(listView,
+                    "loadingstatechanged",
+                    this.eventHandlers.onLoadingStateChanged.bind(this));
             }
 
 
@@ -193,13 +204,14 @@
                             });
                             // Now, we call WinJS.Binding.List to get the bindable list
                             that.sketches = new WinJS.Binding.List(results);
+                            //as default, show first sketchnote in sketch page
+                            if (that.sketches !== null) {
+                                var curId = that.sketches._keyMap[0].data.KontaktNotizVIEWID;
+                                AppBar.scope.setRecordId(curId);
+                            }
                             if (listView.winControl) {
                                 // add ListView dataSource
                                 listView.winControl.itemDataSource = that.sketches.dataSource;
-                            }
-                            //as default, show first sketchnote in sketchDoc fragment
-                            if (sketches) {
-                                that.curNoteId = sketches[0].KontaktNotizVIEWID;
                             }
                         }
                     }, function (errorResponse) {

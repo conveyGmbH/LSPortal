@@ -143,6 +143,7 @@
     "sketch.shape"          : "Drawing shape",
     "sketch.color"          : "Color",
     "sketch.width"          : "Pen width",
+    "sketch.showList"		: "More notes",
 
     "search.title"          : "Search",
     "search.comment"        : "On this page, use the Back button to go back!",
