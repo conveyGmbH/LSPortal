@@ -20,7 +20,9 @@
             Log.call(Log.l.trace, pageName + ".");
             // TODO: Initialize the page here.
             // add page specific commands to AppBar
-            AppBar.commandList = [];
+            AppBar.commandList = [
+                { id: 'clickLogoff', label: getResourceText('account.logoff'), tooltip: getResourceText('account.logoff'), section: 'primary', svg: "keys" }
+            ];
 
             this.controller = new DBInit.Controller(element);
             Log.ret(Log.l.trace);

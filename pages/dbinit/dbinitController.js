@@ -126,6 +126,11 @@
             this.resultConverter = resultConverter;
             // define handlers
             this.eventHandlers = {
+                clickLogoff: function (event) {
+                    Log.call(Log.l.trace, "DBInit.Controller.");
+                    Application.navigateById("login", event);
+                    Log.ret(Log.l.trace);
+                }
             };
 
             this.disableHandlers = {
