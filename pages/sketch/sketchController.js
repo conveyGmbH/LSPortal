@@ -30,12 +30,12 @@
                 color: svgEditor.drawcolor && svgEditor.drawcolor[0],
                 width: 0,
                 curSvg: false,
-                curImg: false
+                curImg: false,
+                showList: false
             }]);
             this.svgEditor = svgEditor;
 
             var that = this;
-            this.showList = false;
 
             this.dispose = function () {
                 if (this.svgEditor) {
@@ -85,11 +85,11 @@
                             item.DocContentDOCCNT1 = "data:image/jpeg;base64," + docContent.substr(sub + 4);
                         }
                         item.showImg = true;
-                        that.curImg = true;
+                        that.binding.curImg = true;
                     }
                     if (isSvg) {
                         item.showSvg = true;
-                        that.curSvg = true;
+                        that.binding.curSvg = true;
                     }
                 }
                 Log.ret(Log.l.trace);
@@ -232,26 +232,29 @@
                 Log.call(Log.l.trace, "Sketch.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var dataSketch = that.binding.dataSketch;
-                if (dataSketch && AppBar.modified) {
+                if (dataSketch.DocContentDOCCNT1 && AppBar.modified) {
                     ret = new WinJS.Promise.as().then(function() {
                         that.svgEditor.fnSaveSVG(function (quelltext) {
                             dataSketch.Quelltext = quelltext;
                             var recordId = getRecordId();
-                            var ret = null;
+                            var doret = null;
                             if (recordId) {
-                                ret = Sketch.sketchView.update(function (response) {
-                                    // called asynchronously if ok
-                                    Log.print(Log.l.trace, "sketchData update: success!");
-                                    that.svgEditor.modified = false;
-                                    complete(response);
-                                }, function (errorResponse) {
-                                    // called asynchronously if an error occurs
-                                    // or server returns response with an error status.
-                                    AppData.setErrorMsg(that.binding, errorResponse);
-                                    error(errorResponse);
-                                }, recordId, dataSketch);
+                                doret = Sketch.sketchView.update(function(response) {
+                                        // called asynchronously if ok
+                                        Log.print(Log.l.trace, "sketchData update: success!");
+                                        that.svgEditor.modified = false;
+                                        complete(response);
+                                    },
+                                    function(errorResponse) {
+                                        // called asynchronously if an error occurs
+                                        // or server returns response with an error status.
+                                        AppData.setErrorMsg(that.binding, errorResponse);
+                                        error(errorResponse);
+                                    },
+                                    recordId,
+                                    dataSketch);
                             }
-                            return ret;
+                            return doret;
                             /*else {
                                 //insert if a primary key is not available (getRecordId() == null)
                                 dataSketch.KontaktID = AppData.getRecordId("Kontakt");
@@ -327,21 +330,21 @@
                     Application.navigateById(Application.navigateNewId, event);
                     Log.ret(Log.l.trace);
                 },
-                clickRedo: function (event) {
+                /*clickRedo: function (event) {
                     Log.call(Log.l.trace, "Sketch.Controller.");
                     that.svgEditor.fnRedoSVG(event);
                     Log.ret(Log.l.trace);
                 },
-                /*clickDelete: function (event) {
+                clickDelete: function (event) {
                     Log.call(Log.l.trace, "Sketch.Controller.");
                     that.svgEditor.fnNewSVG(event);
                     Log.ret(Log.l.trace);
-                },*/
+                },
                 clickUndo: function (event) {
                     Log.call(Log.l.trace, "Sketch.Controller.");
                     that.svgEditor.fnUndoSVG(event);
                     Log.ret(Log.l.trace);
-                },
+                },*/
                 clickForward: function (event) {
                     Log.call(Log.l.trace, "Sketch.Controller.");
                     Application.navigateById("start", event);
@@ -404,7 +407,17 @@
                 },
                 clickShowList: function (event) {
                     Log.call(Log.l.trace, "Sketch.Controller.");
-                    that.showList = (that.showList === false) ? true : false;
+                    that.binding.showList = (that.binding.showList === false) ? true : false;
+                    //resize sketch to show list
+                    var mySketch = pageElement.querySelector("#svgsketch");
+                    var prevheight = mySketch.style.height;
+                    if (mySketch && mySketch.style) {
+                        if (that.binding.showList) {
+                            mySketch.style.height = (parseInt(prevheight) - 150) + "px";
+                        } else {
+                            mySketch.style.height = (parseInt(prevheight) + 150) + "px";
+                        }
+                    }
                     Log.ret(Log.l.trace);
                 }
             };
@@ -424,7 +437,7 @@
                         return true;
                     }
                 },
-                clickUndo: function () {
+                /*clickUndo: function () {
                     if (that.svgEditor && that.svgEditor.fnCanUndo()) {
                         return false;
                     } else {
@@ -438,7 +451,7 @@
                         return true;
                     }
                 },
-                /*clickDelete: function () {
+                clickDelete: function () {
                     if (that.svgEditor && that.svgEditor.fnCanNew()) {
                         return false;
                     } else {

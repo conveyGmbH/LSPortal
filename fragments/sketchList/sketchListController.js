@@ -14,13 +14,12 @@
         Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options) {
             Log.call(Log.l.trace, "SketchList.Controller.");
             Fragments.Controller.apply(this, [fragmentElement, {
-                contactId: options
+                contactId: options.contactId
         }]);
             var that = this;
             var layout = null;
 
             this.sketches = null;
-            this.contactId = 0;
 
             // now do anything...
             var listView = fragmentElement.querySelector("#sketchList.listview");
@@ -182,8 +181,9 @@
 
 
             var loadData = function (contactId) {
+                var conId = 0;
                 if (contactId) {
-                    that.contactId = contactId;
+                    conId = contactId;
                 }
                 
                 Log.call(Log.l.trace, "SketchList.");
@@ -219,7 +219,7 @@
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, {
-                        KontaktID: that.contactId
+                        KontaktID: conId
                     });
 
                 }).then(function () {
@@ -234,7 +234,7 @@
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.loadData(that.binding.contactId.contactId);
+                return that.loadData(that.binding.contactId);
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
             });
