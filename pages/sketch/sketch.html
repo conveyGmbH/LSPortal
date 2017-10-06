@@ -88,7 +88,9 @@
                             </div>
                             <div class="line-separator"></div>
                             <button id="clickWidth" class="win-button tool-ok"
-                                    onclick="AppBar.handleEvent('click', 'clickWidth', event)">OK</button>
+                                    onclick="AppBar.handleEvent('click', 'clickWidth', event)">
+                                OK
+                            </button>
                         </div>
                         <div>
                             <input id="fill" type="hidden" value="none" />
@@ -96,12 +98,24 @@
                             <input id="shape" type="hidden" value="polyline" />
                         </div>
                     </div>
-                    <div id="image" class="imagenote" data-win-bind="style.display: curImg Binding.Converter.toDisplay">
-                        <img id="img-item">
+                    <div class="doc-container">
+                        <div id="notePhoto" class="photoview" data-win-bind="style.display: showPhoto Binding.Converter.toDisplay">
+                            <div tabindex="0" aria-hidden="true"></div>
+                            <div tabindex="-1" class="win-viewport win-horizontal pinch" role="group" aria-label="Scrolling Container">
+                                <div class="win-surface">
+                                    <div class="_win-proxy"></div>
+                                    <div class="win-itemscontainer">
+                                        <div class="win-container">
+                                            <div class="win-itembox"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="error-message"
                          data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
-                    
+
                     <div id="sketchlisthost" class="fragmenthost" data-win-bind="style.display: showList Binding.Converter.toDisplay"></div>
                 </div>
             </section>

@@ -53,8 +53,12 @@
 
             var photoview = pageElement.querySelector("#contactPhoto.photoview");
 
+            var getPhotoData = function() {
+                return AppData._photoData;
+            }
+
             var hasDoc = function() {
-                return (typeof AppData._photoData === "string" && AppData._photoData !== null);
+                return (typeof getPhotoData() === "string" && getPhotoData() !== null);
             }
             this.hasDoc = hasDoc;
 
@@ -205,11 +209,11 @@
                         if (photoItemBox.style) {
                             photoItemBox.style.visibility = "hidden";
                         }
-                        if (AppData._photoData) {
+                        if (getPhotoData()) {
                             that.img = new Image();
                             photoItemBox.appendChild(that.img);
                             WinJS.Utilities.addClass(that.img, "active");
-                            that.img.src = "data:image/jpeg;base64," + AppData._photoData;
+                            that.img.src = "data:image/jpeg;base64," + getPhotoData();
                             if (photoItemBox.childElementCount > 1) {
                                 var oldElement = photoItemBox.firstElementChild || photoItemBox.firstChild;
                                 if (oldElement) {
@@ -636,14 +640,14 @@
                     }
                 },
                 clickRotateLeft: function () {
-                    if (AppData._photoData) {
+                    if (getPhotoData()) {
                         return false;
                     } else {
                         return true;
                     }
                 },
                 clickRotateRight: function () {
-                    if (AppData._photoData) {
+                    if (getPhotoData()) {
                         return false;
                     } else {
                         return true;
@@ -796,7 +800,7 @@
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
-                    if (AppData._photoData) {
+                    if (getPhotoData()) {
                         showPhoto();
                         return WinJS.Promise.as();
                     } else {

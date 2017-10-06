@@ -123,26 +123,29 @@
             if (element && !that.inResize) {
                 that.inResize = 1;
                 ret = WinJS.Promise.timeout(0).then(function () {
-                    var mySketch = element.querySelector("#svgsketch");
-                    if (mySketch && mySketch.style) {
-                        var contentarea = element.querySelector(".contentarea");
-                        if (contentarea) {
-                            var contentHeader = element.querySelector(".content-header");
-                            var width = contentarea.clientWidth;
-                            var height = contentarea.clientHeight - (contentHeader ? contentHeader.clientHeight : 0);
+                    var myDocViewers = element.querySelector("#svgsketch, .doc-container");
+                    if (myDocViewers) for (var i = 0; i < myDocViewers.length; i++) {
+                        var mySketch = myDocViewers[i];
+                        if (mySketch && mySketch.style) {
+                            var contentarea = element.querySelector(".contentarea");
+                            if (contentarea) {
+                                var contentHeader = element.querySelector(".content-header");
+                                var width = contentarea.clientWidth;
+                                var height = contentarea.clientHeight - (contentHeader ? contentHeader.clientHeight : 0);
 
-                            if (width !== that.prevWidth || height !== that.prevHeight) {
-                                if (that.controller && that.controller.svgEditor) {
-                                    that.controller.svgEditor.resize(width, height);
+                                if (width !== that.prevWidth || height !== that.prevHeight) {
+                                    if (that.controller && that.controller.svgEditor) {
+                                        that.controller.svgEditor.resize(width, height);
+                                    }
                                 }
-                            }
-                            if (width !== that.prevWidth) {
-                                that.prevWidth = width;
-                                mySketch.style.width = width.toString() + "px";
-                            }
-                            if (height !== that.prevHeight) {
-                                that.prevHeight = height;
-                                mySketch.style.height = (height).toString() + "px";
+                                if (width !== that.prevWidth) {
+                                    that.prevWidth = width;
+                                    mySketch.style.width = width.toString() + "px";
+                                }
+                                if (height !== that.prevHeight) {
+                                    that.prevHeight = height;
+                                    mySketch.style.height = height.toString() + "px";
+                                }
                             }
                         }
                     }
