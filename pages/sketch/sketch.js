@@ -71,13 +71,13 @@
                 { id: 'clickBack', label: getResourceText('command.backward'), tooltip: getResourceText('tooltip.backward'), section: 'primary', svg: 'navigate_left' },
                 //{ id: "clickNew", label: getResourceText("command.new"), tooltip: getResourceText("tooltip.new"), section: "primary", svg: "user_plus" },
                 { id: 'clickForward', label: getResourceText('command.ok'), tooltip: getResourceText('tooltip.ok'), section: 'primary', svg: 'navigate_check', key: WinJS.Utilities.Key.enter },
-                //{ id: 'clickUndo', label: getResourceText('command.undo'), tooltip: getResourceText('tooltip.undo'), section: 'primary', svg: 'undo' },
-                //{ id: 'clickRedo', label: getResourceText('command.redo'), tooltip: getResourceText('tooltip.redo'), section: 'primary', svg: 'redo' },
-                //{ id: 'clickDelete', label: getResourceText('command.delete'), tooltip: getResourceText('tooltip.delete'), section: 'primary', svg: 'delete' },
+                { id: 'clickUndo', label: getResourceText('command.undo'), tooltip: getResourceText('tooltip.undo'), section: 'primary', svg: 'undo' },
+                { id: 'clickRedo', label: getResourceText('command.redo'), tooltip: getResourceText('tooltip.redo'), section: 'primary', svg: 'redo' },
+                { id: 'clickDelete', label: getResourceText('command.delete'), tooltip: getResourceText('tooltip.delete'), section: 'primary', svg: 'delete' },
                 { id: 'clickShapes', label: getResourceText('sketch.shape'), tooltip: getResourceText('sketch.shape'), section: 'secondary' },
                 { id: 'clickColors', label: getResourceText('sketch.color'), tooltip: getResourceText('sketch.color'), section: 'secondary' },
                 { id: 'clickWidths', label: getResourceText('sketch.width'), tooltip: getResourceText('sketch.width'), section: 'secondary' },
-                { id: 'clickShowList', label: getResourceText('sketch.showList'), tooltip: getResourceText('sketch.showList'), section: 'primary' }
+                { id: 'clickShowList', label: getResourceText('sketch.showList'), tooltip: getResourceText('sketch.showList'), section: 'primary', svg: 'elements3' }
             ];
 
             this.controller = new Sketch.Controller(element);
@@ -123,9 +123,10 @@
             if (element && !that.inResize) {
                 that.inResize = 1;
                 ret = WinJS.Promise.timeout(0).then(function () {
-                    var myDocViewers = element.querySelector("#svgsketch, .doc-container");
-                    if (myDocViewers) for (var i = 0; i < myDocViewers.length; i++) {
-                        var mySketch = myDocViewers[i];
+                    var mySketchViewers = element.querySelectorAll("#svgsketch, .doc-container");
+                    //var myImgViewers = element.querySelector(".doc-container");
+                    if (mySketchViewers) for (var i = 0; i < mySketchViewers.length; i++) {
+                        var mySketch = mySketchViewers[i];
                         if (mySketch && mySketch.style) {
                             var contentarea = element.querySelector(".contentarea");
                             if (contentarea) {
@@ -133,17 +134,22 @@
                                 var width = contentarea.clientWidth;
                                 var height = contentarea.clientHeight - (contentHeader ? contentHeader.clientHeight : 0);
 
+                                that.prevWidth = parseInt(mySketch.style.width);
+                                that.prevHeight = parseInt(mySketch.style.height);
+
+                                var fragment = element.querySelector("#sketchlisthost.fragmenthost");
+                                if (fragment && fragment.style.display !== "none") {
+                                    height -= 150;
+                                }
                                 if (width !== that.prevWidth || height !== that.prevHeight) {
                                     if (that.controller && that.controller.svgEditor) {
                                         that.controller.svgEditor.resize(width, height);
                                     }
                                 }
                                 if (width !== that.prevWidth) {
-                                    that.prevWidth = width;
                                     mySketch.style.width = width.toString() + "px";
                                 }
                                 if (height !== that.prevHeight) {
-                                    that.prevHeight = height;
                                     mySketch.style.height = height.toString() + "px";
                                 }
                             }

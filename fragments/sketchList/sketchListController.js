@@ -14,7 +14,8 @@
         Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options) {
             Log.call(Log.l.trace, "SketchList.Controller.");
             Fragments.Controller.apply(this, [fragmentElement, {
-                contactId: options.contactId
+                contactId: options.contactId,
+                curId: 0
         }]);
             var that = this;
             var layout = null;
@@ -63,13 +64,14 @@
                                         var item = items[0];
 
                                         //load sketch with new recordId
-                                        var curId = item.data.KontaktNotizVIEWID;
-                                        AppBar.scope.setRecordId(curId);
+                                        that.binding.curId = item.data.KontaktNotizVIEWID;
+                                        AppBar.scope.setRecordId(that.binding.curId);
                                         AppBar.scope.loadSketch();
                                     });
                                 }
                             }
                         }
+                        that.loadData(that.binding.contactId);
                     }, function (errorResponse) {
                         AppBar.scope.loadSketch();
                     });
@@ -102,9 +104,11 @@
                                 var i;
                                 for (i = 0; i < svglist.length; i++) {
                                     var svg = svglist[i].firstElementChild;
-                                    WinJS.Utilities.addClass(svg, "list-svg-item");
-                                    svg.viewBox.baseVal.height = svg.height.baseVal.value;
-                                    svg.viewBox.baseVal.width = svg.width.baseVal.value;
+                                    if (svg) {
+                                        WinJS.Utilities.addClass(svg, "list-svg-item");
+                                        svg.viewBox.baseVal.height = svg.height.baseVal.value;
+                                        svg.viewBox.baseVal.width = svg.width.baseVal.value;
+                                    }
                                 }
                             }
                             AppBar.scope.loadSketch();
@@ -180,10 +184,9 @@
             this.saveData = saveData;
 
 
-            var loadData = function (contactId) {
-                var conId = 0;
-                if (contactId) {
-                    conId = contactId;
+            var loadData = function (conId) {
+                if (conId) {
+                    that.binding.contactId = conId;
                 }
                 
                 Log.call(Log.l.trace, "SketchList.");
@@ -198,6 +201,9 @@
                         if (json && json.d) {
                             that.binding.count = json.d.results.length;
                             //that.nextUrl = MandatoryList.mandatoryView.getNextUrl(json);
+                            if (that.binding.count > 1) {
+                                AppBar.scope.binding.moreNotes = true;
+                            }
                             var results = json.d.results;
                             results.forEach(function (item, index) {
                                 that.resultConverter(item, index);
@@ -206,8 +212,10 @@
                             that.sketches = new WinJS.Binding.List(results);
                             //as default, show first sketchnote in sketch page
                             if (that.sketches !== null) {
-                                var curId = that.sketches._keyMap[0].data.KontaktNotizVIEWID;
-                                AppBar.scope.setRecordId(curId);
+                                if (that.binding.curId === 0) {
+                                    that.binding.curId = that.sketches._keyMap[0].data.KontaktNotizVIEWID;
+                                    AppBar.scope.setRecordId(that.binding.curId);
+                                }
                             }
                             if (listView.winControl) {
                                 // add ListView dataSource
@@ -219,7 +227,7 @@
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, {
-                        KontaktID: conId
+                        KontaktID: that.binding.contactId
                     });
 
                 }).then(function () {

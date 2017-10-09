@@ -24,7 +24,7 @@
             var that = this;
 
             var getPhotoData = function () {
-                return that.binding.sketchData && that.binding.sketchData.DocContentDOCCNT1;
+                return that.binding.dataSketch && that.binding.dataSketch.DocContentDOCCNT1;
             }
 
             var hasDoc = function () {
@@ -63,9 +63,10 @@
                 dataSketch: {},
                 color: svgEditor.drawcolor && svgEditor.drawcolor[0],
                 width: 0,
-                curSvg: false,
+                showSvg: false,
                 showPhoto: false,
-                showList: false
+                showList: false,
+                moreNotes: false
             }]);
             this.svgEditor = svgEditor;
 
@@ -107,11 +108,10 @@
             var resultConverter = function (item) {
                 Log.call(Log.l.trace, "Sketch.Controller.");
                 if (item) {
-                    var doc = item;
-                    var isSvg = (doc.DocGroup === 3 && doc.DocFormat === 75) ? true : false;
-                    var isImg = (doc.DocGroup === 1) ? true : false;
+                    var isSvg = (item.DocGroup === 3 && item.DocFormat === 75) ? true : false;
+                    var isImg = (item.DocGroup === 1) ? true : false;
                     if (isImg) {
-                        var docContent = doc.DocContentDOCCNT1;
+                        var docContent = item.DocContentDOCCNT1;
                         if (docContent) {
                             var sub = docContent.search("\r\n\r\n");
                             item.DocContentDOCCNT1 = "data:image/jpeg;base64," + docContent.substr(sub + 4);
@@ -124,7 +124,7 @@
                         item.Quelltext = item.DocContentDOCCNT1;
                         item.DocContentDOCCNT1 = null;
                         item.showSvg = true;
-                        that.binding.curSvg = true;
+                        that.binding.showSvg = true;
                     }
                 }
                 Log.ret(Log.l.trace);
@@ -133,7 +133,7 @@
 
             var removePhoto = function () {
                 if (photoview) {
-                    var photoItemBox = photoview.querySelector("#contactPhoto .win-itembox");
+                    var photoItemBox = photoview.querySelector("#notePhoto .win-itembox");
                     if (photoItemBox) {
                         var oldElement = photoItemBox.firstElementChild || photoItemBox.firstChild;
                         if (oldElement) {
@@ -186,7 +186,7 @@
                                 imgHeight = that.img.naturalHeight * imgScale;
                         }
                     }
-                    var photoItemBox = photoview.querySelector("#contactPhoto .win-itembox");
+                    var photoItemBox = photoview.querySelector("#notePhoto .win-itembox");
                     if (photoItemBox && photoItemBox.style) {
                         switch (imgRotation) {
                             case 90:
@@ -259,7 +259,7 @@
 
             var showPhoto = function () {
                 if (photoview) {
-                    var photoItemBox = photoview.querySelector("#contactPhoto .win-itembox");
+                    var photoItemBox = photoview.querySelector("#notePhoto .win-itembox");
                     if (photoItemBox) {
                         if (photoItemBox.style) {
                             photoItemBox.style.visibility = "hidden";
@@ -268,7 +268,7 @@
                             that.img = new Image();
                             photoItemBox.appendChild(that.img);
                             WinJS.Utilities.addClass(that.img, "active");
-                            that.img.src = "data:image/jpeg;base64," + getPhotoData();
+                            that.img.src = getPhotoData();
                             if (photoItemBox.childElementCount > 1) {
                                 var oldElement = photoItemBox.firstElementChild || photoItemBox.firstChild;
                                 if (oldElement) {
@@ -313,7 +313,7 @@
                             var prevScrollLeft = 0;
                             var prevScrollTop = 0;
 
-                            var photoViewport = photoview.querySelector("#contactPhoto .win-viewport");
+                            var photoViewport = photoview.querySelector("#notePhoto .win-viewport");
                             var contentarea = pageElement.querySelector(".contentarea");
 
                             $(".pinch").on("panstart", function (e) {
@@ -385,7 +385,9 @@
 
 
             var loadSketch = function () {
+                Log.call(Log.l.trace, "Sketch.Controller.");
                 var recordId = that.getRecordId();
+                var ret = null;
                 /*var restriction;
                 if (!recordId) {
                     restriction = { KontaktID: contactId };
@@ -424,7 +426,7 @@
                     return WinJS.Promise.as();
                 }*/
                 if (recordId !== null) {
-                    return Sketch.sketchDocView.select(function(json) {
+                    ret = Sketch.sketchDocView.select(function(json) {
                         // this callback will be called asynchronously
                         // when the response is available
                         Log.print(Log.l.trace, "Sketch.sketchDocView: success!");
@@ -433,6 +435,8 @@
                             that.resultConverter(json.d);
                             that.binding.dataSketch = json.d;
                             if (that.binding.dataSketch.showSvg) {
+                                that.binding.showSvg = true;
+                                that.binding.showPhoto = false;
                                 if (typeof that.binding.dataSketch.Quelltext !== "undefined" &&
                                     that.binding.dataSketch.Quelltext) {
                                     Log.print(Log.l.trace,
@@ -444,6 +448,8 @@
                                     that.svgEditor.fnLoadSVG(that.binding.dataSketch.Quelltext);
                                 });
                             } else if (that.binding.dataSketch.showImg) {
+                                that.binding.showSvg = false;
+                                that.binding.showPhoto = true;
                                 showPhoto();
                             }
                         }
@@ -455,7 +461,8 @@
                     },
                     recordId);
                 }
-                
+                Log.ret(Log.l.trace);
+                return ret;
             }
             this.loadSketch = loadSketch;
 
@@ -518,7 +525,7 @@
                 Log.call(Log.l.trace, "Sketch.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var dataSketch = that.binding.dataSketch;
-                if (dataSketch.DocContentDOCCNT1 && AppBar.modified) {
+                if (dataSketch.Quelltext && AppBar.modified) {
                     ret = new WinJS.Promise.as().then(function() {
                         that.svgEditor.fnSaveSVG(function (quelltext) {
                             dataSketch.Quelltext = quelltext;
@@ -616,7 +623,7 @@
                     Application.navigateById(Application.navigateNewId, event);
                     Log.ret(Log.l.trace);
                 },
-                /*clickRedo: function (event) {
+                clickRedo: function (event) {
                     Log.call(Log.l.trace, "Sketch.Controller.");
                     that.svgEditor.fnRedoSVG(event);
                     Log.ret(Log.l.trace);
@@ -630,7 +637,7 @@
                     Log.call(Log.l.trace, "Sketch.Controller.");
                     that.svgEditor.fnUndoSVG(event);
                     Log.ret(Log.l.trace);
-                },*/
+                },
                 clickForward: function (event) {
                     Log.call(Log.l.trace, "Sketch.Controller.");
                     Application.navigateById("start", event);
@@ -638,16 +645,22 @@
                 },
                 clickShapes: function (event) {
                     Log.call(Log.l.trace, "Sketch.Controller.");
+                    that.binding.showList = false;
+                    pageElement.winControl.updateLayout(pageElement);
                     that.svgEditor.toggleToolbox("shapesToolbar");
                     Log.ret(Log.l.trace);
                 },
                 clickColors: function (event) {
                     Log.call(Log.l.trace, "Sketch.Controller.");
+                    that.binding.showList = false;
+                    pageElement.winControl.updateLayout(pageElement);
                     that.svgEditor.toggleToolbox("colorsToolbar");
                     Log.ret(Log.l.trace);
                 },
                 clickWidths: function (event) {
                     Log.call(Log.l.trace, "Sketch.Controller.");
+                    that.binding.showList = false;
+                    pageElement.winControl.updateLayout(pageElement);
                     that.svgEditor.toggleToolbox("widthsToolbar");
                     Log.ret(Log.l.trace);
                 },
@@ -694,16 +707,7 @@
                 clickShowList: function (event) {
                     Log.call(Log.l.trace, "Sketch.Controller.");
                     that.binding.showList = (that.binding.showList === false) ? true : false;
-                    //resize sketch to show list
-                    var mySketch = pageElement.querySelector("#svgsketch");
-                    var prevheight = mySketch.style.height;
-                    if (mySketch && mySketch.style) {
-                        if (that.binding.showList) {
-                            mySketch.style.height = (parseInt(prevheight) - 150) + "px";
-                        } else {
-                            mySketch.style.height = (parseInt(prevheight) + 150) + "px";
-                        }
-                    }
+                    pageElement.winControl.updateLayout(pageElement);
                     Log.ret(Log.l.trace);
                 }
             };
@@ -723,7 +727,7 @@
                         return true;
                     }
                 },
-                /*clickUndo: function () {
+                clickUndo: function () {
                     if (that.svgEditor && that.svgEditor.fnCanUndo()) {
                         return false;
                     } else {
@@ -743,10 +747,17 @@
                     } else {
                         return true;
                     }
-                },*/
+                },
                 clickForward: function () {
                     // never disable!
                     return false;
+                },
+                clickShowList: function () {
+                    if (that.binding.moreNotes) {
+                        return false;
+                    } else {
+                        return true;
+                    }
                 }
             }
 

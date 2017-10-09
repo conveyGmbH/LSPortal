@@ -23,7 +23,7 @@
                             <span class="date-field" data-win-bind="textContent: generalData.contactDate Binding.Converter.toDateString"></span>
                         </div>
                     </div>
-                    <div id="sketch" class="feature" data-win-bind="style.display: curSvg Binding.Converter.toDisplay">
+                    <div id="sketch" class="feature" data-win-bind="style.display: showSvg Binding.Converter.toDisplay">
                         <div id="svgsketch" class="svgdiv">
                         </div>
                         <div id="shapesToolbar" class="tool-box">
@@ -98,8 +98,8 @@
                             <input id="shape" type="hidden" value="polyline" />
                         </div>
                     </div>
-                    <div class="doc-container">
-                        <div id="notePhoto" class="photoview" data-win-bind="style.display: showPhoto Binding.Converter.toDisplay">
+                    <div class="doc-container" data-win-bind="style.display: showPhoto Binding.Converter.toDisplay">
+                        <div id="notePhoto" class="photoview">
                             <div tabindex="0" aria-hidden="true"></div>
                             <div tabindex="-1" class="win-viewport win-horizontal pinch" role="group" aria-label="Scrolling Container">
                                 <div class="win-surface">
