@@ -94,35 +94,24 @@
                 },
                 clickSearch: function (event) {
                     Log.call(Log.l.trace, "Infodesk.Controller.");
-                    //loaddata guter weg -> fehlt aber die restriction
-                    that.loadData(that.binding.employeeId).then(function () {
-                          Log.print(Log.l.trace, "contact saved");
-                          var master = Application.navigator.masterControl;
-                          if (master && master.controller && master.controller.binding) {
-                              //master.controller.binding.contactId = that.binding.dataContact.KontaktVIEWID;
-                              master.controller.loadData().then(function () {
-                                  master.controller.selectRecordId(that.binding.employeeId);
-                              });
-                          }
-                      });
-
-                    //byhung infodeskEmpList
-                    //Application.navigateById("infodesk", event);
-                  /* // that.saveData(function (response) {
-                        Log.print(Log.l.trace, "contact saved");
-                        var master = Application.navigator.masterControl;
-                        if (master && master.controller && master.controller.binding) {
-                            //master.controller.binding.contactId = that.binding.dataContact.KontaktVIEWID;
-                            master.controller.loadData().then(function () {
-                                master.controller.selectRecordId(that.binding.employeeId);
-                            });
-                        }
-                    //}, function (errorResponse) {
-                      //  Log.print(Log.l.error, "error saving employee");
-                    //});
-
-                    AppBar.triggerDisableHandlers();
-                    Log.ret(Log.l.trace);*/
+                    that.saveRestriction(function () {
+                        // called asynchronously if ok
+                        complete({});
+                    });
+                    var master = Application.navigator.masterControl;
+                    if (master && master.controller && master.controller.binding) {
+                        //master.controller.binding.contactId = that.binding.dataContact.KontaktVIEWID;
+                        master.controller.loadData().then(function () {
+                            master.controller.selectRecordId(that.binding.employeeId);
+                        });
+                    }
+                    //that.loadData(getRecordId());
+                    Log.ret(Log.l.trace);
+                
+            },
+                clickGotoPublish: function (event) {
+                    Log.call(Log.l.trace, "QuestionList.Controller.");
+                    Application.navigateById("publish", event);
                     Log.ret(Log.l.trace);
                 }
             };
@@ -141,7 +130,6 @@
 
             var saveRestriction = function (complete, error) {
                 var ret = WinJS.Promise.as().then(function () {
-                    complete({});
                     AppData.setRestriction("SkillEntry", that.binding.restriction); //SkillEntryView_20472
                     // Abfrage wenn beide comboboxen nicht ausgewählt
                     // spannende Stelle // letzen Wert der Comboboxen
@@ -195,7 +183,8 @@
 
                         that.binding.restriction.bAndInEachRow = false;
                     }
-
+                    AppData.setRestriction("SkillEntry", that.binding.restriction);
+                    complete({});
                     return WinJS.Promise.as();
                 });
                 return ret;

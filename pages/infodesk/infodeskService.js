@@ -58,7 +58,7 @@
             }
         },
         defaultRestriction: {
-            Aktiv: "X",
+            Aktiv: "",
             Vorname: "",
             Nachname: "",
             Login: "",
