@@ -54,7 +54,7 @@
             };
             this.background = background;
 
-            var loadNextUrl = function () {
+            var loadNextUrl = function (recordId) {
                 Log.call(Log.l.trace, "QuestionList.Controller.");
                 if (that.employees && that.nextUrl && listView) {
                     progress = listView.querySelector(".list-footer .progress");
@@ -119,32 +119,15 @@
                             results = resultsUnique;
 
                             results.forEach(function (item, index) {
-                                that.resultConverter(item, index);
+                                that.resultConverter(item, that.binding.count);
                                 that.binding.count = that.employees.push(item);
                             });
-
-                            
-                                // add ListView dataSource
-                                listView.winControl.itemDataSource = that.employees.dataSource;
-                                if (lastPrevLogin && lastPrevLogin.MitarbeiterID) {
-                                    that.selectRecordId(lastPrevLogin.MitarbeiterID);
-                                }
                         } else {
                             // that.binding.count = 0;
                             that.nextUrl = null;
-                            /*    that.employees = null;
-                                progress = listView.querySelector(".list-footer .progress");
-                                counter = listView.querySelector(".list-footer .counter");
-                                if (progress && progress.style) {
-                                    progress.style.display = "none";
-                                }
-                                if (counter && counter.style) {
-                                    counter.style.display = "inline";
-                                }
-                                that.loading = false;
-                            }
-                            if (that.binding.employeeId) {
-                                that.selectRecordId(that.binding.employeeId);*/
+                        }
+                        if (recordId) {
+                            that.selectRecordId(recordId);
                         }
                     }, function (errorResponse) {
                             // called asynchronously if an error occurs
@@ -185,7 +168,6 @@
                             break;
                         }
                     }
-                    listView.winControl.selection.set(0);
                 }
                 Log.ret(Log.l.trace);
             }
@@ -303,15 +285,19 @@
                             // load SVG images
                             Colors.loadSVGImageElements(listView, "action-image", 40, Colors.textColor);
                             if (that.loading) {
-                                progress = listView.querySelector(".list-footer .progress");
-                                counter = listView.querySelector(".list-footer .counter");
-                                if (progress && progress.style) {
-                                    progress.style.display = "none";
+                                if (that.nextUrl) {
+                                    that.loadNextUrl();
+                                } else {
+                                    progress = listView.querySelector(".list-footer .progress");
+                                    counter = listView.querySelector(".list-footer .counter");
+                                    if (progress && progress.style) {
+                                        progress.style.display = "none";
+                                    }
+                                    if (counter && counter.style) {
+                                        counter.style.display = "inline";
+                                    }
+                                    that.loading = false;
                                 }
-                                if (counter && counter.style) {
-                                    counter.style.display = "inline";
-                                }
-                                that.loading = false;
                             }
                         }
                     }
@@ -453,6 +439,12 @@
                                 if (listView.winControl) {
                                     // add ListView dataSource
                                     listView.winControl.itemDataSource = that.employees.dataSource;
+                                }
+                                Log.print(Log.l.trace, "Data loaded");
+                                if (results[0] && results[0].MitarbeiterVIEWID) {
+                                    WinJS.Promise.timeout(0).then(function () {
+                                        that.selectRecordId(results[0].MitarbeiterVIEWID);
+                                    });
                                 }
                             } else {
                                 that.binding.count = 0;
