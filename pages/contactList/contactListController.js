@@ -22,7 +22,7 @@
                 Application.Controller.apply(this,[pageElement, {
                         count: 0,
                         doccount: 0,
-                        contactId: AppData.getRecordId("Kontakt")
+                        contactId: null
                     }, true
                 ]);
                 this.nextUrl = null;
@@ -170,14 +170,40 @@
                                 that.nextUrl = ContactList.contactView.getNextUrl(json);
                                 var results = json.d.results;
                                 results.forEach(function (item, index) {
-                                    that.resultConverter(item, index);
+                                    that.resultConverter(item, that.binding.count);
                                     that.binding.count = that.contacts.push(item);
                                 });
                             } else {
                                 that.nextUrl = null;
                             }
-                            if (recordId && that.nextUrl !== null) {
+                            if (recordId) {
                                 that.selectRecordId(recordId);
+                            }
+                            if (that.nextDocUrl) {
+                                WinJS.Promise.timeout(250).then(function() {
+                                    Log.print(Log.l.trace, "calling select ContactList.contactDocView...");
+                                    ContactList.contactDocView.selectNext(function (json) { //json is undefined
+                                        // this callback will be called asynchronously
+                                        // when the response is available
+                                        Log.print(Log.l.trace, "ContactList.contactDocView: success!");
+                                        // startContact returns object already parsed from json file in response
+                                        if (json && json.d) {
+                                            that.nextDocUrl = ContactList.contactDocView.getNextUrl(json);
+                                            var results = json.d.results;
+                                            results.forEach(function (item, index) {
+                                                that.resultDocConverter(item, that.binding.doccount);
+                                                that.binding.doccount = that.docs.push(item);
+                                            });
+                                        } else {
+                                            that.nextDocUrl = null;
+                                        }
+                                    }, function (errorResponse) {
+                                        // called asynchronously if an error occurs
+                                        // or server returns response with an error status.
+                                        Log.print(Log.l.error, "ContactList.contactDocView: error!");
+                                        AppData.setErrorMsg(that.binding, errorResponse);
+                                    }, null, that.nextDocUrl);
+                                });
                             }
                         }, function (errorResponse) {
                             // called asynchronously if an error occurs
@@ -191,35 +217,7 @@
                                 counter.style.display = "inline";
                             }
                             that.loading = false;
-                        },
-                        null,
-                        that.nextUrl).then(function() {
-                            Log.print(Log.l.trace, "calling select ContactList.contactDocView...");
-                            ContactList.contactDocView.selectNext(function (json) { //json is undefined
-                                    // this callback will be called asynchronously
-                                    // when the response is available
-                                Log.print(Log.l.trace, "ContactList.contactDocView: success!");
-                                    // startContact returns object already parsed from json file in response
-                                    if (json && json.d) {
-                                        that.nextDocUrl = ContactList.contactDocView.getNextUrl(json);
-                                        var results = json.d.results;
-                                        results.forEach(function(item, index) {
-                                            that.resultDocConverter(item, index);
-                                            that.binding.doccount = that.docs.push(item);
-                                        });
-                                    } else {
-                                        that.nextDocUrl = null;
-                                    }
-                                },
-                                function(errorResponse) {
-                                    // called asynchronously if an error occurs
-                                    // or server returns response with an error status.
-                                    Log.print(Log.l.error, "ContactList.contactDocView: error!");
-                                    AppData.setErrorMsg(that.binding, errorResponse);
-                                },
-                                null,
-                                that.nextDocUrl);
-                        });
+                        }, null, that.nextUrl);
                     }
                     Log.ret(Log.l.trace);
                 }
@@ -275,35 +273,24 @@
                     var contact;
                     Log.call(Log.l.trace, "ContactList.Controller.", "recordId=" + recordId);
                     var recordIdNotFound = true;
-                    if (listView && listView.winControl && listView.winControl.selection && that.contacts) {
-                        if (recordId) {
-                            for (var i = 0; i < that.contacts.length; i++) {
-                                contact = that.contacts.getAt(i);
-                                if (contact &&
-                                    typeof contact === "object" &&
-                                    contact.KontaktVIEWID === recordId) {
-                                    listView.winControl.selection.set(i).done(function() {
-                                        WinJS.Promise.timeout(50).then(function() {
-                                            that.scrollToRecordId(recordId);
-                                        });
-                                    });
-                                    recordIdNotFound = false;
-                                    handlePageEnable(contact);
-                                    break;
-                                }
-                            }
-                            if (recordIdNotFound) {
-                                that.loadNextUrl(recordId);
-                            }
-                        } else {
-                            contact = that.contacts.getAt(0);
-                            if (contact && typeof contact === "object") {
-                                listView.winControl.selection.set(0).done(function() {
+                    if (recordId && listView && listView.winControl && listView.winControl.selection && that.contacts) {
+                        for (var i = 0; i < that.contacts.length; i++) {
+                            contact = that.contacts.getAt(i);
+                            if (contact &&
+                                typeof contact === "object" &&
+                                contact.KontaktVIEWID === recordId) {
+                                listView.winControl.selection.set(i).done(function() {
                                     WinJS.Promise.timeout(50).then(function() {
-                                        that.scrollToRecordId(contact.KontaktVIEWID);
+                                        that.scrollToRecordId(recordId);
                                     });
                                 });
+                                recordIdNotFound = false;
+                                handlePageEnable(contact);
+                                break;
                             }
+                        }
+                        if (recordIdNotFound) {
+                            that.loadNextUrl(recordId);
                         }
                     }
                     Log.ret(Log.l.trace);
@@ -349,7 +336,7 @@
                     item.mitarbeiterFullName = (item.Mitarbeiter_Vorname ? (item.Mitarbeiter_Vorname + " ") : "") +
                         (item.Mitarbeiter_Nachname ? item.Mitarbeiter_Nachname : "");
                     item.OvwContentDOCCNT3 = "";
-                    if (that.docs) {
+                    if (that.docs && index >= that.firstContactsIndex) {
                         for (var i = that.firstDocsIndex; i < that.docs.length; i++) {
                             var doc = that.docs[i];
                             if (doc.KontaktVIEWID === item.KontaktVIEWID) {
@@ -359,6 +346,7 @@
                                     item.OvwContentDOCCNT3 = "data:image/jpeg;base64," + docContent.substr(sub + 4);
                                 }
                                 that.firstDocsIndex = i + 1;
+                                that.firstContactsIndex = index + 1;
                                 break;
                             }
                         }
@@ -367,8 +355,8 @@
                 this.resultConverter = resultConverter;
 
                 var resultDocConverter = function(item, index) {
-                    if (that.contacts) {
-                        for (var i = that.firstDocsIndex; i < that.contacts.length; i++) {
+                    if (that.contacts && index >= that.firstDocsIndex) {
+                        for (var i = that.firstContactsIndex; i < that.contacts.length; i++) {
                             var contact = that.contacts.getAt(i);
                             if (contact.KontaktVIEWID === item.KontaktVIEWID) {
                                 var docContent = item.OvwContentDOCCNT3;
@@ -378,8 +366,17 @@
                                 } else {
                                     contact.OvwContentDOCCNT3 = "";
                                 }
+                                // preserve scroll position on change of row data!
+                                var indexOfFirstVisible = -1;
+                                if (listView && listView.winControl) {
+                                    indexOfFirstVisible = listView.winControl.indexOfFirstVisible;
+                                }
                                 that.contacts.setAt(i, contact);
+                                if (indexOfFirstVisible >= 0 && listView && listView.winControl) {
+                                    listView.winControl.indexOfFirstVisible = indexOfFirstVisible;
+                                }
                                 that.firstContactsIndex = i + 1;
+                                that.firstDocsIndex = index + 1;
                                 break;
                             }
                         }
@@ -610,6 +607,12 @@
                                         // add ListView dataSource
                                         listView.winControl.itemDataSource = that.contacts.dataSource;
                                     }
+                                    Log.print(Log.l.trace, "Data loaded");
+                                    if (results[0] && results[0].KontaktVIEWID) {
+                                        WinJS.Promise.timeout(0).then(function() {
+                                            that.selectRecordId(results[0].KontaktVIEWID);
+                                        });
+                                    }
                                 } else {
                                     that.binding.count = 0;
                                     that.nextUrl = null;
@@ -637,27 +640,25 @@
                                     var objectrec = scopeFromRecordId(recordId);
                                     that.contacts.setAt(objectrec.index, contact);
                                 }
-
                             }
-                        },
-                            function (errorResponse) {
-                                // called asynchronously if an error occurs
-                                // or server returns response with an error status.
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                                if (listView) {
-                                    progress = listView.querySelector(".list-footer .progress");
-                                    counter = listView.querySelector(".list-footer .counter");
-                                    if (progress && progress.style) {
-                                        progress.style.display = "none";
-                                    }
-                                    if (counter && counter.style) {
-                                        counter.style.display = "inline";
-                                    }
+                        },  function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                            if (listView) {
+                                progress = listView.querySelector(".list-footer .progress");
+                                counter = listView.querySelector(".list-footer .counter");
+                                if (progress && progress.style) {
+                                    progress.style.display = "none";
                                 }
-                                that.loading = false;
-                            },
-                            getRestriction(),
-                            recordId);
+                                if (counter && counter.style) {
+                                    counter.style.display = "inline";
+                                }
+                            }
+                            that.loading = false;
+                        },
+                        getRestriction(),
+                        recordId);
                     }).then(function () {
                         return WinJS.Promise.timeout(250).then(function () {
                             return ContactList.contactDocView.select(function (json) {
@@ -695,9 +696,6 @@
                 that.processAll().then(function () {
                     Log.print(Log.l.trace, "Binding wireup page complete");
                     return that.loadData();
-                }).then(function () {
-                    Log.print(Log.l.trace, "Data loaded");
-                    that.selectRecordId(AppData.getRecordId("Kontakt")); //that.binding.contactId
                 }).then(function () {
                     AppBar.notifyModified = true;
                     Log.print(Log.l.trace, "Record selected");
