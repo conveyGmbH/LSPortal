@@ -56,9 +56,9 @@
 
             var loadNextUrl = function (recordId) {
                 Log.call(Log.l.trace, "QuestionList.Controller.");
+                progress = listView.querySelector(".list-footer .progress");
+                counter = listView.querySelector(".list-footer .counter");
                 if (that.employees && that.nextUrl && listView) {
-                    progress = listView.querySelector(".list-footer .progress");
-                    counter = listView.querySelector(".list-footer .counter");
                     that.loading = true;
                     if (progress && progress.style) {
                         progress.style.display = "inline";
@@ -68,6 +68,8 @@
                     }
                     AppData.setErrorMsg(that.binding);
                     Log.print(Log.l.trace, "calling select InfodeskEmpList.employeeView...");
+                    var nextUrl = that.nextUrl;
+                    that.nextUrl = null;
                     InfodeskEmpList.employeeView.selectNext(function (json) { //json is undefined
                         // this callback will be called asynchronously
                         // when the response is available
@@ -130,20 +132,20 @@
                             that.selectRecordId(recordId);
                         }
                     }, function (errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            //Log.print(Log.l.error, "ContactList.contactView: error!");
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                            if (progress && progress.style) {
-                                progress.style.display = "none";
-                            }
-                            if (counter && counter.style) {
-                                counter.style.display = "inline";
-                            }
-                            that.loading = false;
-                        },
-                        null,
-                        that.nextUrl);
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        //Log.print(Log.l.error, "ContactList.contactView: error!");
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                        if (progress && progress.style) {
+                            progress.style.display = "none";
+                        }
+                        if (counter && counter.style) {
+                            counter.style.display = "inline";
+                        }
+                        that.loading = false;
+                    },
+                    null,
+                    nextUrl);
                 } else {
                     if (progress && progress.style) {
                         progress.style.display = "none";
@@ -284,21 +286,8 @@
                         } else if (listView.winControl.loadingState === "complete") {
                             // load SVG images
                             Colors.loadSVGImageElements(listView, "action-image", 40, Colors.textColor);
-                            if (that.loading) {
-                                if (that.nextUrl) {
-                                    that.loadNextUrl();
-                                } else {
-                                    progress = listView.querySelector(".list-footer .progress");
-                                    counter = listView.querySelector(".list-footer .counter");
-                                    if (progress && progress.style) {
-                                        progress.style.display = "none";
-                                    }
-                                    if (counter && counter.style) {
-                                        counter.style.display = "inline";
-                                    }
-                                    that.loading = false;
-                                }
-                            }
+
+                            that.loadNextUrl();
                         }
                     }
                     Log.ret(Log.l.trace);
