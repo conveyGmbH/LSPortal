@@ -594,8 +594,12 @@
                     }
                 },
                 clickNew: function () {
-                    // never disabled!
-                    return false;
+                    // allow only up to 5 skill types!
+                    if (that.binding.count >= 5) {
+                        return true;
+                    } else {
+                        return false;
+                    }
                 },
                 clickForward: function () {
                     // never disabled!
