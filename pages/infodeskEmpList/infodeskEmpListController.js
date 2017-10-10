@@ -257,6 +257,11 @@
                     }
                     Log.ret(Log.l.trace);
                 },
+                onItemInvoked: function (eventInfo) {
+                    Log.call(Log.l.trace, "InfodeskEmpList.Controller.");
+                    Application.showDetail();
+                    Log.ret(Log.l.trace);
+                },
                 onLoadingStateChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "InfodeskEmpList.Controller.");
                     if (listView && listView.winControl) {
@@ -338,6 +343,7 @@
 
             // register ListView event handler
             if (listView) {
+                this.addRemovableEventListener(listView, "iteminvoked", this.eventHandlers.onItemInvoked.bind(this));
                 this.addRemovableEventListener(listView, "selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
                 this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
                 this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
