@@ -35,6 +35,16 @@
             var maxLeadingPages = 0;
             var maxTrailingPages = 0;
 
+            this.dispose = function () {
+                if (listView && listView.winControl) {
+                    listView.winControl.itemDataSource = null;
+                }
+                if (that.employees) {
+                    that.employees = null;
+                }
+                listView = null;
+            }
+
             var background = function (index) {
                 if (index % 2 === 0) {
                     return 1;
@@ -43,6 +53,126 @@
                 }
             };
             this.background = background;
+
+            var loadNextUrl = function () {
+                Log.call(Log.l.trace, "QuestionList.Controller.");
+                if (that.employees && that.nextUrl && listView) {
+                    progress = listView.querySelector(".list-footer .progress");
+                    counter = listView.querySelector(".list-footer .counter");
+                    that.loading = true;
+                    if (progress && progress.style) {
+                        progress.style.display = "inline";
+                    }
+                    if (counter && counter.style) {
+                        counter.style.display = "none";
+                    }
+                    AppData.setErrorMsg(that.binding);
+                    Log.print(Log.l.trace, "calling select InfodeskEmpList.employeeView...");
+                    InfodeskEmpList.employeeView.selectNext(function (json) { //json is undefined
+                        // this callback will be called asynchronously
+                        // when the response is available
+                        Log.print(Log.l.trace, "InfodeskEmpList.employeeView: success!");
+                        // startContact returns object already parsed from json file in response
+                        if (json && json.d && that.employees) {
+                            that.nextUrl = InfodeskEmpList.employeeView.getNextUrl(json);
+                            var results = json.d.results;
+
+                            //hole anhand der recordid die Fähigkeiten des jeweiligen Mitarbeiters mit der recordid
+
+                            var actualItem = null;
+                            var resultsUnique = [];
+                            if (that.binding.restriction.countCombobox > 1) {
+                                var zähler = 0;
+                                results.forEach(function (item) {
+                                    if (!actualItem)
+                                        actualItem = item;
+                                    if (actualItem.Login === item.Login)
+                                        zähler++;
+                                    else {
+                                        actualItem = item;
+                                        zähler = 1;
+                                    }
+                                    if (zähler === that.binding.restriction.countCombobox) {
+                                        resultsUnique.push(actualItem);
+                                        zähler = 0;
+                                        actualItem = null;
+                                    }
+                                });
+                            } else {
+                                //Die Mitarbeiterliste muss zu Beginn unique Mitarbeiter sein
+                                results.forEach(function (item, index) {
+                                    if (!actualItem) {
+                                        actualItem = item;
+                                        if (lastPrevLogin.MitarbeiterID !== actualItem.MitarbeiterID)
+                                            resultsUnique.push(actualItem);
+                                    }
+
+                                    if (actualItem.Login !== item.Login) {
+                                        actualItem = item;
+                                        resultsUnique.push(actualItem);
+                                    }
+                                    if (index === results.length - 1)
+                                        lastPrevLogin = actualItem;
+                                });
+                            }
+                            Log.print(lastPrevLogin);
+                            results = resultsUnique;
+
+                            results.forEach(function (item, index) {
+                                that.resultConverter(item, index);
+                                that.binding.count = that.employees.push(item);
+                            });
+
+                            
+                                // add ListView dataSource
+                                listView.winControl.itemDataSource = that.employees.dataSource;
+                                if (lastPrevLogin && lastPrevLogin.MitarbeiterID) {
+                                    that.selectRecordId(lastPrevLogin.MitarbeiterID);
+                                }
+                        } else {
+                            // that.binding.count = 0;
+                            that.nextUrl = null;
+                            /*    that.employees = null;
+                                progress = listView.querySelector(".list-footer .progress");
+                                counter = listView.querySelector(".list-footer .counter");
+                                if (progress && progress.style) {
+                                    progress.style.display = "none";
+                                }
+                                if (counter && counter.style) {
+                                    counter.style.display = "inline";
+                                }
+                                that.loading = false;
+                            }
+                            if (that.binding.employeeId) {
+                                that.selectRecordId(that.binding.employeeId);*/
+                        }
+                    }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            //Log.print(Log.l.error, "ContactList.contactView: error!");
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                            if (progress && progress.style) {
+                                progress.style.display = "none";
+                            }
+                            if (counter && counter.style) {
+                                counter.style.display = "inline";
+                            }
+                            that.loading = false;
+                        },
+                        null,
+                        that.nextUrl);
+                } else {
+                    if (progress && progress.style) {
+                        progress.style.display = "none";
+                    }
+                    if (counter && counter.style) {
+                        counter.style.display = "inline";
+                    }
+                    that.loading = false;
+                }
+                Log.ret(Log.l.trace);
+            }
+            this.loadNextUrl = loadNextUrl;
 
             var selectRecordId = function (recordId) {
                 Log.call(Log.l.trace, "InfodeskEmpList.Controller.", "recordId=" + recordId);
@@ -67,6 +197,16 @@
             if (!restriction) {
                 restriction = {};
             }
+            that.binding.restriction = restriction;
+
+            var getRestriction = function () {
+                var restriction = AppData.getRestriction("SkillEntry");
+                if (!restriction) {
+                    restriction = {};
+                }
+                return restriction;
+            }
+            this.getRestriction = getRestriction;
 
             var resultConverter = function (item, index) {
                 //if (restriction.Aktiv.length === 2) {
@@ -84,7 +224,7 @@
 
                     }
                 }
-                if (item.Present === 1 && item.Aktiv === "X") {
+                if (item.Present === 1) { // && item.Aktiv === "X"
                     //document.getElementById("list-empList").className = "list-compressed";
                     item.presentClass = "list-compressed-green";
                 } else {
@@ -115,21 +255,15 @@
                                     var item = items[0];
                                     if (item.data && item.data.MitarbeiterID &&
                                         item.data.MitarbeiterID !== that.binding.employeeId) {
-                                        if (AppBar.scope && typeof AppBar.scope.saveData === "function") {
-                                            AppBar.scope.saveData(function (response) {
-                                                // called asynchronously if ok
-                                                that.binding.employeeId = item.data.MitarbeiterID;
-                                                var curPageId = Application.getPageId(nav.location);
-                                                if ((curPageId === "infodesk" || curPageId === "infodeskEmpList") &&
-                                                    typeof AppBar.scope.loadData === "function") {
-                                                    AppBar.scope.loadData(that.binding.employeeId);
-                                                    Application.navigateById("infodesk");
-                                                } else {
-                                                    Application.navigateById("infodesk");
-                                                }
-                                            }, function (errorResponse) {
-                                                that.selectRecordId(that.binding.employeeId);
-                                            });
+                                        // called asynchronously if ok
+                                        that.binding.employeeId = item.data.MitarbeiterID;
+                                        var curPageId = Application.getPageId(nav.location);
+                                        if ((curPageId === "infodesk" || curPageId === "infodeskEmpList") &&
+                                            typeof AppBar.scope.loadData === "function") {
+                                            AppBar.scope.loadData(that.binding.employeeId);
+                                            Application.navigateById("infodesk");
+                                        } else {
+                                            Application.navigateById("infodesk");
                                         }
                                     }
                                 });
@@ -210,88 +344,7 @@
                         var visible = eventInfo.detail.visible;
                         if (visible && that.employees && that.nextUrl) {
                             that.loading = true;
-                            if (progress && progress.style) {
-                                progress.style.display = "inline";
-                            }
-                            if (counter && counter.style) {
-                                counter.style.display = "none";
-                            }
-                            AppData.setErrorMsg(that.binding);
-                            Log.print(Log.l.trace, "calling select InfodeskEmpList.employeeView...");
-                            InfodeskEmpList.employeeView.selectNext(function (json) {
-                                // this callback will be called asynchronously
-                                // when the response is available
-                                Log.print(Log.l.trace, "InfodeskEmpList.employeeView: success!");
-                                // employeeView returns object already parsed from json file in response
-                                if (json && json.d) {
-                                    that.nextUrl = InfodeskEmpList.employeeView.getNextUrl(json);
-                                    var results = json.d.results;
-                                    var resultsUnique = [];
-                                    var actualItem = null;
-
-                                    if (restriction.countCombobox > 1) {
-
-                                        var zähler = 0;
-                                        results.forEach(function (item) {
-                                            if (!actualItem)
-                                                actualItem = item;
-                                            if (actualItem.Login === item.Login)
-                                                zähler++;
-                                            else {
-                                                actualItem = item;
-                                                zähler = 1;
-                                            }
-
-                                            if (zähler === restriction.countCombobox) {
-                                                resultsUnique.push(actualItem);
-                                                zähler = 0;
-                                                actualItem = null;
-                                            }
-                                        });
-                                    }
-
-                                    //Die Mitarbeiterliste muss zu Beginn unique Mitarbeiter sein
-                                    results.forEach(function (item, index) {
-                                        if (actualItem === null) {
-                                            actualItem = item;
-                                            if (lastPrevLogin[0].Login !== item.Login)
-                                                resultsUnique.push(actualItem);
-                                        }
-
-                                        if (actualItem.Login !== item.Login) {
-                                            actualItem = item;
-                                            resultsUnique.push(actualItem);
-                                        }
-                                        if (index === 99)
-                                            lastPrevLogin[0] = actualItem;
-                                    });
-
-
-
-                                    results = resultsUnique;
-                                    that.binding.count = results.length;
-
-                                    results.forEach(function (item, index) { //<!--
-                                        that.resultConverter(item, index);
-                                        that.binding.count = that.employees.push(item);
-                                    });
-                                    that.binding.count = that.employees.length;
-
-                                } else {
-                                    that.nextUrl = null;
-                                }
-                            }, function (errorResponse) {
-                                // called asynchronously if an error occurs
-                                // or server returns response with an error status.
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                                if (progress && progress.style) {
-                                    progress.style.display = "none";
-                                }
-                                if (counter && counter.style) {
-                                    counter.style.display = "inline";
-                                }
-                                that.loading = false;
-                            }, null, that.nextUrl);
+                            that.loadNextUrl();
                         } else {
                             if (progress && progress.style) {
                                 progress.style.display = "none";
@@ -302,19 +355,17 @@
                             that.loading = false;
                         }
                     }
-                    that.binding.count = that.employees.length;
                     Log.ret(Log.l.trace);
                 }
-
             };
 
             this.disableHandlers = null;
 
             // register ListView event handler
             if (listView) {
-                listView.addEventListener("selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
-                listView.addEventListener("loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
-                listView.addEventListener("footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
+                this.addRemovableEventListener(listView, "selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
+                this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
+                this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
             }
 
             var loadData = function (recordid) {
@@ -346,7 +397,7 @@
                         return InfodeskEmpList.employeeView.select(function (json) {
                             // this callback will be called asynchronously
                             // when the response is available
-                            AppData.setErrorMsg(that.binding);
+                            //AppData.setErrorMsg(that.binding);
                             Log.print(Log.l.trace, "InfodeskEmpList: success!");
                             // employeeView returns object already parsed from json file in response
                             if (json && json.d) {
@@ -358,7 +409,7 @@
 
                                 var actualItem = null;
                                 var resultsUnique = [];
-                                if (restriction.countCombobox > 1) {
+                                if (that.binding.restriction.countCombobox > 1) {
                                     var zähler = 0;
                                     results.forEach(function (item) {
                                         if (!actualItem)
@@ -369,14 +420,13 @@
                                             actualItem = item;
                                             zähler = 1;
                                         }
-                                        if (zähler === restriction.countCombobox) {
+                                        if (zähler === that.binding.restriction.countCombobox) {
                                             resultsUnique.push(actualItem);
                                             zähler = 0;
                                             actualItem = null;
                                         }
                                     });
-                                }
-                                else {
+                                } else {
                                     //Die Mitarbeiterliste muss zu Beginn unique Mitarbeiter sein
                                     results.forEach(function (item, index) {
                                         if (!actualItem) {
@@ -388,13 +438,12 @@
                                             actualItem = item;
                                             resultsUnique.push(actualItem);
                                         }
-                                        if (index === 99)
-                                            lastPrevLogin.push(actualItem);
+                                        if (results.length - 1 === 99)
+                                            lastPrevLogin = actualItem;
                                     });
                                 }
-
                                 results = resultsUnique;
-                                that.binding.count = results.length;
+                                //that.binding.count = results.length;
 
                                 results.forEach(function (item, index) {
                                     that.resultConverter(item, index);
@@ -406,7 +455,7 @@
                                     listView.winControl.itemDataSource = that.employees.dataSource;
                                 }
                             } else {
-                                // that.binding.count = 0;
+                                that.binding.count = 0;
                                 that.nextUrl = null;
                                 that.employees = null;
                                 if (listView.winControl) {
@@ -436,11 +485,11 @@
                                 counter.style.display = "inline";
                             }
                             that.loading = false;
-                        }, restriction);
-                    }
-                    );
+                        }, that.binding.restriction); //that.binding.restriction beim neuladen ist die leer
+                    });
                 });
-                that.binding.count = that.employees.length;
+                /* if (!that.nextUrl)
+                     that.binding.count = that.employees.length; */
                 Log.ret(Log.l.trace);
                 return ret;
             };
@@ -455,6 +504,8 @@
             }).then(function () {
                 AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Record selected");
+            }).then(function () {
+                Application.navigateById("infodesk");
             });
             Log.ret(Log.l.trace);
         }, {
