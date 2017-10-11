@@ -67,6 +67,19 @@
                             </select>
                         </div>
                         <div class="line-separator"></div>
+                        
+                        <div class="field_line field_line_even"
+                             data-win-bind="style.display: messestandData.SkillType3ID Binding.Converter.toDisplay">
+                            <span class="label win-type-caption portrait_only" data-win-bind="textContent: messestandData.SkillType3"></span>
+                            <span class="label landscape_only" data-win-bind="textContent: messestandData.SkillType3"></span>
+                            <select id="skills3"
+                                    class="input_field win-dropdown"
+                                    data-win-control="WinJS.UI.Repeater"
+                                    data-win-bind="value: restriction.SkillType3Sortierung Binding.Mode.twoway">
+                                <option data-win-bind="value: value; textContent: title"></option>
+                            </select>
+                        </div>
+                        <div class="line-separator"></div>
 
                         <!--TODO zwei Fragmente - einmal für Anzeigen der konkreten Skills der Mitarbeiter - Infotext -->
                         <div class="line-separator"></div>
@@ -80,6 +93,18 @@
                             <span class="label win-type-caption portrait_only" data-win-bind="textContent: messestandData.SkillType2"></span>
                             <span class="label landscape_only" data-win-bind="textContent: messestandData.SkillType2"></span>
                             <div data-win-bind="textContent: dataEmployee.Sprachen"></div>
+                        </div>
+                        <div class="line-separator"></div>
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-bind="textContent: messestandData.SkillType3"></span>
+                            <span class="label landscape_only" data-win-bind="textContent: messestandData.SkillType3"></span>
+                            <!--<span class="label win-type-caption portrait_only" data-win-res="{textContent: 'dataEmployee.Vorname'}"></span>-->
+                            <div data-win-bind="textContent: dataEmployee.thirdskill"></div><!--dataEmployee.Vorname-->
+                        </div>
+                        <div class="field_line field_line_even">
+                            <!--<span class="label win-type-caption portrait_only" data-win-bind="textContent: messestandData.SkillType2"></span>
+                            <span class="label landscape_only" data-win-bind="textContent: messestandData.SkillType2"></span>
+                            <div data-win-bind="textContent: dataEmployee.Sprachen"></div>-->
                         </div>
                         <div class="line-separator"></div>
                         <div class="field_line field_line_odd">

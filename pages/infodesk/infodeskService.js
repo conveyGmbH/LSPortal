@@ -86,7 +86,8 @@
                 Vorname: "",
                 Nachname: "",
                 Positionen: "",
-                Sprachen: ""
+                Sprachen: "",
+                thirdskill: ""
             }
         }
     });

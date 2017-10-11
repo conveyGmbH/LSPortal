@@ -378,7 +378,7 @@
                         return InfodeskEmpList.employeeView.select(function (json) {
                             // this callback will be called asynchronously
                             // when the response is available
-                            //AppData.setErrorMsg(that.binding);
+                            AppData.setErrorMsg(that.binding);
                             Log.print(Log.l.trace, "InfodeskEmpList: success!");
                             // employeeView returns object already parsed from json file in response
                             if (json && json.d) {
@@ -424,7 +424,7 @@
                                     });
                                 }
                                 results = resultsUnique;
-                                //that.binding.count = results.length;
+                                that.binding.count = results.length;
 
                                 results.forEach(function (item, index) {
                                     that.resultConverter(item, index);
@@ -475,8 +475,7 @@
                         }, that.binding.restriction); //that.binding.restriction beim neuladen ist die leer
                     });
                 });
-                /* if (!that.nextUrl)
-                     that.binding.count = that.employees.length; */
+                that.binding.count = that.employees.length;
                 Log.ret(Log.l.trace);
                 return ret;
             };

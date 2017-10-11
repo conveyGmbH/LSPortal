@@ -22,18 +22,36 @@
             Log.call(Log.l.trace, "Infodesk.Controller.");
             Application.Controller.apply(this, [pageElement, {
                 messestandData: getEmptyDefaultValue(Infodesk.Messestand.defaultValue),
-                restriction: getEmptyDefaultValue(Infodesk.defaultRestriction),
+                //restriction: getEmptyDefaultValue(Infodesk.defaultRestriction),
                 dataEmployee: getEmptyDefaultValue(Infodesk.SkillEntry.defaultValue)
             }]);
             //Infodesk.controller = this;
             var comboboxSkills1 = pageElement.querySelector("#skills1");
             var comboboxSkills2 = pageElement.querySelector("#skills2");
+            var comboboxSkills3 = pageElement.querySelector("#skills3");
 
             var positionen = [];
             var sprachen = [];
+            var thirdskill = [];
 
             var that = this;
             var prevLogin = null;
+
+            var restriction = AppData.getRestriction("SkillEntry"); //
+            if (!restriction) {
+                restriction = {};
+            }
+            that.binding.restriction = restriction;
+            var defaultRestriction = Infodesk.defaultRestriction;
+            var prop;
+            for (prop in defaultRestriction) {
+                if (defaultRestriction.hasOwnProperty(prop)) {
+                    if (typeof restriction[prop] === "undefined") {
+                        restriction[prop] = defaultRestriction[prop];
+                    }
+                }
+            }
+            that.binding.restriction = restriction;
 
             var getRecordId = function () {
                 Log.call(Log.l.trace, "Infodesk.Controller.");
@@ -79,6 +97,18 @@
                         comboboxSkills2.value = 0;
                 }
 
+                if (item.SkillTypeSkillsVIEWID === 109) {
+                    if (that.binding.restriction.SkillType3Sortierung) {
+                        if (that.binding.restriction.SkillType3Sortierung < 10)
+                            keyValue = "Skills0" + that.binding.restriction.SkillType3Sortierung;
+                        else
+                            keyValue = "Skills" + that.binding.restriction.SkillType3Sortierung;
+                        comboboxSkills3.value = that.binding.restriction.SkillType3Sortierung;
+                        comboboxSkills3.title = item[keyValue];
+                    }
+                    else
+                        comboboxSkills3.value = 0;
+                }
                 Log.ret(Log.l.trace);
                 return WinJS.Promise.as();
             }
@@ -183,7 +213,6 @@
 
                         that.binding.restriction.bAndInEachRow = false;
                     }
-                    //AppData.setRestriction("SkillEntry", that.binding.restriction);
                     complete({});
                     return WinJS.Promise.as();
                 });
@@ -234,6 +263,9 @@
                     if (item.SkillTypeSkillsVIEWID === 21) {
                         sprachen = skills;
                     }
+                    if (item.SkillTypeSkillsVIEWID === 109) {
+                        thirdskill = skills;
+                    }
                 }
                 Log.ret(Log.l.trace, "");
             }
@@ -276,26 +308,10 @@
                         AppData.setErrorMsg(that.binding, errorResponse);
                     });
                 }).then(function () {
-                    //restriction speichern
-                    var savedRestriction = AppData.getRestriction("SkillEntry"); //
-                    if (!savedRestriction) {
-                        savedRestriction = {};
-                    }
-                    that.binding.restriction = savedRestriction;
-                    var defaultRestriction = Infodesk.defaultRestriction;
-                    var prop;
-                    for (prop in defaultRestriction) {
-                        if (defaultRestriction.hasOwnProperty(prop)) {
-                            if (typeof savedRestriction[prop] === "undefined") {
-                                savedRestriction[prop] = defaultRestriction[prop];
-                            }
-                        }
-                    }
-                    that.binding.restriction = savedRestriction;
-                }).then(function () {
-                    if (that.binding.dataEmployee.Positionen !== "" || that.binding.dataEmployee.Sprachen !== "") {
+                    if (that.binding.dataEmployee.Positionen !== "" || that.binding.dataEmployee.Sprachen !== "" || that.binding.dataEmployee.thirdskill !== "") {
                         that.binding.dataEmployee.Positionen = "";
                         that.binding.dataEmployee.Sprachen = "";
+                        that.binding.dataEmployee.thirdskill = "";
                     }
                     if (recordId) {
                         //load of format relation record data
@@ -328,6 +344,17 @@
                                                             .Sprachen =
                                                             that.binding.dataEmployee.Sprachen +
                                                             sprachen[k].title +
+                                                            "\t";
+                                                    }
+                                                }
+                                            }
+                                            if (json.d.results[i].SkillTypeID === 109) {
+                                                for (var l = 0; l < thirdskill.length; l++) {
+                                                    if (json.d.results[i].Sortierung === thirdskill[l].value) {
+                                                        that.binding.dataEmployee
+                                                            .thirdskill =
+                                                            that.binding.dataEmployee.thirdskill +
+                                                            thirdskill[l].title +
                                                             "\t";
                                                     }
                                                 }
