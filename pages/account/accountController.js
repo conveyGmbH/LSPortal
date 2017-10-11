@@ -40,15 +40,7 @@
                 // use language from globalization in app context!
                 Log.print(Log.l.info, "no language selection in app!");
             } else {
-                // check for existence of native WinRT resources
-                // don't use language specific paths in this case
-                // look: https://msdn.microsoft.com/library/windows/apps/xaml/hh965324
-                var resources = Resources.get();
-                if (!resources) {
-                    this.binding.showLanguages = true;
-                } else {
-                    Log.print(Log.l.info, "no language selection when native WinRT resources are in use!");
-                }
+                this.binding.showLanguages = true;
             }
 
             // select combo
