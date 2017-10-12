@@ -172,7 +172,7 @@
                 var recordId = that.curRecId;
                 if (recordId) {
                     AppBar.busy = true;
-                    Skills.skilltypeView.deleteRecord(function (response) {
+                    Skills.skilltypeskillsView.deleteRecord(function (response) {
                         AppBar.busy = false;
                         // called asynchronously if ok
                         that.loadData();
