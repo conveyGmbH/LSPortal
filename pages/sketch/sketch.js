@@ -6,7 +6,6 @@
 /// <reference path="~/www/lib/convey/scripts/logging.js" />
 /// <reference path="~/www/lib/convey/scripts/navigator.js" />
 /// <reference path="~/www/lib/convey/scripts/appbar.js" />
-/// <reference path="~/www/pages/sketch/svg.js" />
 /// <reference path="~/www/pages/sketch/sketchController.js" />
 
 (function () {
@@ -24,47 +23,6 @@
             this.inResize = 0;
             this.prevWidth = 0;
             this.prevHeight = 0;
-
-            if (element) {
-                var shapeElements = element.querySelectorAll(".tool-image");
-                if (shapeElements && shapeElements.length > 0) {
-                    for (var i = 0; i < shapeElements.length; i++) {
-                        if (shapeElements[i].id && shapeElements[i].id.length > 0) {
-                            var svgObject = shapeElements[i];
-                            // insert svg object before span element 
-                            if (svgObject && !svgObject.firstChild) {
-                                var size = 28;
-                                if (svgObject.parentNode &&
-                                    svgObject.parentNode.clientWidth) {
-                                    size = svgObject.parentNode.clientWidth;
-                                }
-                                svgObject.setAttribute("width", size.toString());
-                                svgObject.setAttribute("height", size.toString());
-                                svgObject.style.display = "inline";
-
-                                // overlay span element over svg object to enable user input
-                                //winCommandimage.setAttribute("style", "position: relative; top: -28px; width: 24px; height: 24px;");
-
-                                // load the image file
-                                Colors.loadSVGImage({
-                                    fileName: shapeElements[i].id, 
-                                    color: Colors.textColor, 
-                                    size: size, 
-                                    useFillColor: false, 
-                                    useStrokeColor: true
-                                });
-                            }
-                        }
-                    }
-                }
-            }
-            var toolBackgroundColor;
-            if (Colors.isDarkTheme) {
-                toolBackgroundColor = "#2b2b2b";
-            } else {
-                toolBackgroundColor = "#f2f2f2";
-            }
-            Colors.changeCSS(".tool-box", "background-color", toolBackgroundColor);
 
             // add page specific commands to AppBar
             AppBar.commandList = [
@@ -123,8 +81,7 @@
             if (element && !that.inResize) {
                 that.inResize = 1;
                 ret = WinJS.Promise.timeout(0).then(function () {
-                    var mySketchViewers = element.querySelectorAll("#svgsketch, .doc-container");
-                    //var myImgViewers = element.querySelector(".doc-container");
+                    var mySketchViewers = element.querySelectorAll(".sketchfragmenthost");
                     if (mySketchViewers) for (var i = 0; i < mySketchViewers.length; i++) {
                         var mySketch = mySketchViewers[i];
                         if (mySketch && mySketch.style) {
@@ -137,15 +94,11 @@
                                 that.prevWidth = parseInt(mySketch.style.width);
                                 that.prevHeight = parseInt(mySketch.style.height);
 
-                                var fragment = element.querySelector("#sketchlisthost.fragmenthost");
+                                var fragment = element.querySelector("#listhost.listfragmenthost");
                                 if (fragment && fragment.style.display !== "none") {
                                     height -= 150;
                                 }
-                                if (width !== that.prevWidth || height !== that.prevHeight) {
-                                    if (that.controller && that.controller.svgEditor) {
-                                        that.controller.svgEditor.resize(width, height);
-                                    }
-                                }
+                                
                                 if (width !== that.prevWidth) {
                                     mySketch.style.width = width.toString() + "px";
                                 }

@@ -20,46 +20,6 @@
                 Log.ret(Log.l.trace);
                 return ret;
             }
-        },
-        _sketchDocView: {
-            get: function () {
-                return AppData.getFormatView("KontaktNotiz", 20505);
-            }
-        },
-        sketchDocView: {
-            select: function (complete, error, recordId) {
-                Log.call(Log.l.trace, "sketchView.");
-                var ret = Sketch._sketchDocView.selectById(complete, error, recordId);
-                // this will return a promise to controller
-                Log.ret(Log.l.trace);
-                return ret;
-            }
-        },
-        _sketchView: {
-            get: function () {
-                return AppData.getFormatView("KontaktNotiz", 0);
-            }
-        },
-        sketchView: {
-            select: function (complete, error, recordId) {
-                Log.call(Log.l.trace, "sketchView.");
-                var ret = Sketch._sketchView.selectById(complete, error, recordId);
-                // this will return a promise to controller
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            insert: function (complete, error, viewResponse) {
-                Log.call(Log.l.trace, "sketchView.");
-                var ret = Sketch._sketchView.insert(complete, error, viewResponse);
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            update: function (complete, error, recordId, viewResponse) {
-                Log.call(Log.l.trace, "sketchView.");
-                var ret = Sketch._sketchView.update(complete, error, recordId, viewResponse);
-                Log.ret(Log.l.trace);
-                return ret;
-            }
         }
     });
 })();

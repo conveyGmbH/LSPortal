@@ -19,7 +19,7 @@
     height: 150px;
 }
 
-.contentarea .win-type-body {
+#sketchListController .contentarea .win-type-body {
     height: 150px;
 }
 .contentarea .win-type-body .win-listview{

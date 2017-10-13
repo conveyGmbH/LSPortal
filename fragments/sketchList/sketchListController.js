@@ -16,7 +16,7 @@
             Fragments.Controller.apply(this, [fragmentElement, {
                 contactId: options.contactId,
                 curId: 0
-        }]);
+            }]);
             var that = this;
             var layout = null;
 
@@ -39,9 +39,11 @@
                             item.OvwContentDOCCNT3 = "data:image/jpeg;base64," + docContent.substr(sub + 4);
                         }
                         item.showImg = true;
+                        item.showSvg = false;
                     }
                     if (isSvg) {
                         item.showSvg = true;
+                        item.showImg = false;
                     }
                 }
                 Log.ret(Log.l.trace);
@@ -65,15 +67,16 @@
 
                                         //load sketch with new recordId
                                         that.binding.curId = item.data.KontaktNotizVIEWID;
-                                        AppBar.scope.setRecordId(that.binding.curId);
-                                        AppBar.scope.loadSketch();
+                                        AppBar.scope.noteId = that.binding.curId;
+                                        AppBar.scope.binding.showSvg = item.data.showSvg;
+                                        AppBar.scope.binding.showPhoto = item.data.showImg;
+                                        AppBar.scope.loadData();
                                     });
                                 }
                             }
                         }
-                        that.loadData(that.binding.contactId);
                     }, function (errorResponse) {
-                        AppBar.scope.loadSketch();
+
                     });
                     Log.ret(Log.l.trace);
                 },
@@ -111,7 +114,7 @@
                                     }
                                 }
                             }
-                            AppBar.scope.loadSketch();
+
                         }
                     }
                     Log.ret(Log.l.trace);
@@ -214,7 +217,9 @@
                             if (that.sketches !== null) {
                                 if (that.binding.curId === 0) {
                                     that.binding.curId = that.sketches._keyMap[0].data.KontaktNotizVIEWID;
-                                    AppBar.scope.setRecordId(that.binding.curId);
+                                    AppBar.scope.noteId = that.binding.curId;
+                                    AppBar.scope.binding.showSvg = that.sketches._keyMap[0].data.showSvg;
+                                    AppBar.scope.binding.showPhoto = that.sketches._keyMap[0].data.showImg;
                                 }
                             }
                             if (listView.winControl) {
