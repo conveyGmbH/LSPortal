@@ -13,11 +13,11 @@
 (function () {
     "use strict";
     WinJS.Namespace.define("Mandatory", {
-        Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement) {
+        Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "Mandatory.Controller.");
             Application.Controller.apply(this, [pageElement, {
                 count: 0
-            }]);
+            }, commandList]);
             this.nextUrl = null;
             this.loading = false;
             this.questions = null;

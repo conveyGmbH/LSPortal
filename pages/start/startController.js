@@ -18,13 +18,13 @@
     "use strict";
 
     WinJS.Namespace.define("Start", {
-        Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement) {
+        Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "Start.Controller.");
             Application.Controller.apply(this, [pageElement, {
                 dataStart: {},
                 disableEditEvent: NavigationBar.isPageDisabled("event"),
                 comment: getResourceText("info.comment")
-            }]);
+            }, commandList]);
             this.kontaktanzahldata = null;
             this.applist = null;
 

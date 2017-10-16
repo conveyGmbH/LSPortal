@@ -17,14 +17,13 @@
     WinJS.Namespace.define("ContactList",
     {
         Controller: WinJS.Class.derive(Application.Controller,
-            function Controller(pageElement) {
+            function Controller(pageElement, commandList, isMaster) {
                 Log.call(Log.l.trace, "ContactList.Controller.");
                 Application.Controller.apply(this,[pageElement, {
                         count: 0,
                         doccount: 0,
                         contactId: null
-                    }, true
-                ]);
+                }, commandList, isMaster]);
                 this.nextUrl = null;
                 this.nextDocUrl = null;
                 this.loading = false;

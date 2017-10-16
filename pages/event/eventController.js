@@ -11,11 +11,11 @@
 (function () {
     "use strict";
     WinJS.Namespace.define("Event", {
-        Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement) {
+        Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "Event.Controller.");
             Application.Controller.apply(this, [pageElement, {
                 dataEvent: getEmptyDefaultValue(Event.eventView.defaultValue)
-            }]);
+            }, commandList]);
 
             var that = this;
             var showHideQuestionnaire = showHideQuestionnaire = pageElement.querySelector("#showHideQuestionnaire");;

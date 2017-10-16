@@ -12,11 +12,11 @@
     "use strict";
 
     WinJS.Namespace.define("Mailing", {
-        Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement) {
+        Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "Mailing.Controller.");
             Application.Controller.apply(this, [pageElement, {
                 
-            }]);
+            }, commandList]);
 
             var that = this;
 

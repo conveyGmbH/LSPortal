@@ -14,11 +14,11 @@
 (function () {
     "use strict";
     WinJS.Namespace.define("Employee", {
-        Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement) {
+        Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "Employee.Controller.");
             Application.Controller.apply(this, [pageElement, {
                dataEmployee: getEmptyDefaultValue(Employee.employeeView.defaultValue)
-            }]);
+            }, commandList]);
 
             var that = this;
             var prevLogin = null;

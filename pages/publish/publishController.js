@@ -11,11 +11,11 @@
 (function () {
     "use strict";
     WinJS.Namespace.define("Publish", {
-        Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement) {
+        Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "Publish.Controller.");
             Application.Controller.apply(this, [pageElement, {
                 dataPublish: getEmptyDefaultValue(Publish.questionView.defaultValue)
-            }]);
+            }, commandList]);
 
             var that = this;
 

@@ -14,7 +14,7 @@
     "use strict";
 
     WinJS.Namespace.define("DBInit", {
-        Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement) {
+        Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "DBInit.Controller.");
             Application.Controller.apply(this, [pageElement, {
                 progress: {
@@ -22,7 +22,7 @@
                     text: "",
                     show: null
                 }
-            }]);
+            }, commandList]);
 
             var that = this;
 

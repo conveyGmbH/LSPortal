@@ -12,11 +12,11 @@
 (function () {
     "use strict";
     WinJS.Namespace.define("Skillentry", {
-        Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement) {
+        Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "Skillentry.Controller.");
             Application.Controller.apply(this, [pageElement, {
                 countSkills: 0
-            }]);
+            }, commandList]);
             this.nextUrl = null;
             this.recordId = null;
             this.loading = false;

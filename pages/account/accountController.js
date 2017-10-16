@@ -17,7 +17,7 @@
         getClassNameOffline: function (useOffline) {
             return useOffline ? "field_line field_line_even" : "hide-element";
         },
-        Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement) {
+        Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "Account.Controller.");
             Application.Controller.apply(this, [pageElement, {
                 dataLogin: {
@@ -34,7 +34,7 @@
                     show: null
                 },
                 showLanguages: false
-            }]);
+            }, commandList]);
 
             if (typeof navigator.globalization === "object") {
                 // use language from globalization in app context!

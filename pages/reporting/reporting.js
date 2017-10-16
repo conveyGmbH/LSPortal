@@ -23,11 +23,11 @@
             inResize = 0;
 
             // add page specific commands to AppBar
-            AppBar.commandList = [
+            var commandList = [
                 { id: "clickExport", label: getResourceText("command.export"), tooltip: getResourceText("tooltip.export"), section: "primary", svg: "download" }
             ];
 
-            this.controller = new Reporting.Controller(element);
+            this.controller = new Reporting.Controller(element, commandList);
             if (this.controller.eventHandlers) {
                 // general event listener for hardware back button, too!
                 this.controller.addRemovableEventListener(document, "backbutton", this.controller.eventHandlers.clickBack.bind(this.controller));

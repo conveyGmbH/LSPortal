@@ -14,11 +14,11 @@
 (function () {
     "use strict";
     WinJS.Namespace.define("Settings", {
-        Controller: WinJS.Class.derive(Application.Controller, function controller(pageElement) {
+        Controller: WinJS.Class.derive(Application.Controller, function controller(pageElement, commandList) {
             Log.call(Log.l.trace, "Settings.Controller.");
             Application.Controller.apply(this, [pageElement, {
                 //  InitColor: { colorhx: 0, colorTitle: ""}
-            }]);
+            }, commandList]);
             this.colorSet = null;
             var that = this;
             var individualColorToggle = pageElement.querySelector(".individualColor");

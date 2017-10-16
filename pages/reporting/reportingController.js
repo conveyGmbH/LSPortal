@@ -15,24 +15,22 @@
         controller: null
     });
     WinJS.Namespace.define("Reporting", {
-        Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement) {
+        Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "Reporting.Controller.");
-            Application.Controller.apply(this, [
-                pageElement, {
-                    restriction: getEmptyDefaultValue(Reporting.defaultrestriction),
-                    curOLELetterID: null,
-                    exportTemplateRestriction: {
-                        DOC3OLELetterVIEWID: 0
-                    },
-                    progress: {
-                        percent: 0,
-                        text: "",
-                        show: null
-                    },
-                    //showErfassungsdatum: false,
-                    showModifiedTS: false
-                }
-            ]);
+            Application.Controller.apply(this, [pageElement, {
+                restriction: getEmptyDefaultValue(Reporting.defaultrestriction),
+                curOLELetterID: null,
+                exportTemplateRestriction: {
+                    DOC3OLELetterVIEWID: 0
+                },
+                progress: {
+                    percent: 0,
+                    text: "",
+                    show: null
+                },
+                //showErfassungsdatum: false,
+                showModifiedTS: false
+            }, commandList]);
             
             var that = this;
 

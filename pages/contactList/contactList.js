@@ -50,13 +50,12 @@
             NavigationBar.disablePage("questionnaire");
             NavigationBar.disablePage("sketch");
 
-            if (Application.navigator && Application.navigator._nextMaster !== pageName) {
-                // add page specific commands to AppBar
-                AppBar.commandList = [
-                    { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" }
-                ];
-            }
-            this.controller = new ContactList.Controller(element);
+            // add page specific commands to AppBar
+            var commandList = [
+                { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" }
+            ];
+            var isMaster = Application.navigator && Application.navigator._nextMaster === pageName;
+            this.controller = new ContactList.Controller(element, commandList, isMaster);
             Log.ret(Log.l.trace);
         },
 

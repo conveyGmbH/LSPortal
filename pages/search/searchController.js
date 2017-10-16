@@ -11,7 +11,7 @@
 (function () {
     "use strict";
     WinJS.Namespace.define("Search", {
-        Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement) {
+        Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "Search.Controller.");
             Application.Controller.apply(this, [pageElement, {
                 restriction: Search.contactView.defaultValue,
@@ -21,7 +21,7 @@
                 Bearbeitet0: Search.Bearbeitet0,
                 Bearbeitet1: Search.Bearbeitet1,
                 Bearbeitet2: Search.Bearbeitet2
-            }]);
+            }, commandList]);
             this.employees = null;
 
             var that = this;
