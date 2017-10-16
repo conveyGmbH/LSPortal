@@ -55,7 +55,7 @@
                         </div>
                         <div class="line-separator"></div>
 
-                        <div class="field_line field_line_even"
+                        <div class="field_line field_line_odd"
                              data-win-bind="style.display: messestandData.SkillType2ID Binding.Converter.toDisplay">
                             <span class="label win-type-caption portrait_only" data-win-bind="textContent: messestandData.SkillType2"></span>
                             <span class="label landscape_only" data-win-bind="textContent: messestandData.SkillType2"></span>
@@ -66,8 +66,6 @@
                                 <option data-win-bind="value: value; textContent: title"></option>
                             </select>
                         </div>
-                        <div class="line-separator"></div>
-                        
                         <div class="field_line field_line_even"
                              data-win-bind="style.display: messestandData.SkillType3ID Binding.Converter.toDisplay">
                             <span class="label win-type-caption portrait_only" data-win-bind="textContent: messestandData.SkillType3"></span>
@@ -80,8 +78,8 @@
                             </select>
                         </div>
                         <div class="line-separator"></div>
-                        
-                        <div class="field_line field_line_even"
+          
+                        <div class="field_line field_line_odd"
                              data-win-bind="style.display: messestandData.SkillType4ID Binding.Converter.toDisplay">
                             <span class="label win-type-caption portrait_only" data-win-bind="textContent: messestandData.SkillType4"></span>
                             <span class="label landscape_only" data-win-bind="textContent: messestandData.SkillType4"></span>
@@ -92,7 +90,6 @@
                                 <option data-win-bind="value: value; textContent: title"></option>
                             </select>
                         </div>
-                        <div class="line-separator"></div>
                         <div class="field_line field_line_even"
                              data-win-bind="style.display: messestandData.SkillType5ID Binding.Converter.toDisplay">
                             <span class="label win-type-caption portrait_only" data-win-bind="textContent: messestandData.SkillType5"></span>
@@ -111,12 +108,12 @@
                             <span class="label win-type-caption portrait_only" data-win-bind="textContent: messestandData.SkillType1"></span>
                             <span class="label landscape_only" data-win-bind="textContent: messestandData.SkillType1"></span>
                             <!--<span class="label win-type-caption portrait_only" data-win-res="{textContent: 'dataEmployee.Vorname'}"></span>-->
-                            <div data-win-bind="textContent: dataEmployee.Positionen" ></div><!--dataEmployee.Vorname-->
+                            <div data-win-bind="textContent: dataEmployee.firstskill" ></div><!--dataEmployee.Vorname-->
                         </div>
                         <div class="field_line field_line_even">
                             <span class="label win-type-caption portrait_only" data-win-bind="textContent: messestandData.SkillType2"></span>
                             <span class="label landscape_only" data-win-bind="textContent: messestandData.SkillType2"></span>
-                            <div data-win-bind="textContent: dataEmployee.Sprachen"></div>
+                            <div data-win-bind="textContent: dataEmployee.secondskill"></div>
                         </div>
                         <div class="line-separator"></div>
                         <div class="field_line field_line_odd">

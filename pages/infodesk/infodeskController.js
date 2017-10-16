@@ -32,8 +32,8 @@
             var comboboxSkills4 = pageElement.querySelector("#skills4");
             var comboboxSkills5 = pageElement.querySelector("#skills5");
 
-            var positionen = [];
-            var sprachen = [];
+            var firstskill = [];
+            var secondskill = [];
             var thirdskill = [];
             var fourthskill = [];
             var fifthskill = [];
@@ -355,10 +355,10 @@
                         initskills.winControl.data = new WinJS.Binding.List(skills);
                     }
                     if (item.SkillTypeSkillsVIEWID === 20) {
-                        positionen = skills;
+                        firstskill = skills;
                     }
                     if (item.SkillTypeSkillsVIEWID === 21) {
-                        sprachen = skills;
+                        secondskill = skills;
                     }
                     if (item.SkillTypeSkillsVIEWID === 113) {
                         thirdskill = skills;
@@ -428,9 +428,9 @@
                     }
                     that.binding.restriction = savedRestriction;
                 }).then(function () {
-                    if (that.binding.dataEmployee.Positionen !== "" || that.binding.dataEmployee.Sprachen !== "" || that.binding.dataEmployee.thirdskill !== "" || that.binding.dataEmployee.fourthskill !== "" || that.binding.dataEmployee.fifthskill !== "") {
-                        that.binding.dataEmployee.Positionen = "";
-                        that.binding.dataEmployee.Sprachen = "";
+                    if (that.binding.dataEmployee.firstskill !== "" || that.binding.dataEmployee.secondskill !== "" || that.binding.dataEmployee.thirdskill !== "" || that.binding.dataEmployee.fourthskill !== "" || that.binding.dataEmployee.fifthskill !== "") {
+                        that.binding.dataEmployee.firstskill= "";
+                        that.binding.dataEmployee.secondskill = "";
                         that.binding.dataEmployee.thirdskill = "";
                         that.binding.dataEmployee.fourthskill = "";
                         that.binding.dataEmployee.fifthskill = "";
@@ -449,23 +449,23 @@
                                         that.binding.dataEmployee.Nachname = json.d.results[i].Nachname;
                                         if (json.d.results[i].Aktiv === "X") {
                                             if (json.d.results[i].SkillTypeID === 20) {
-                                                for (var j = 0; j < positionen.length; j++) {
-                                                    if (json.d.results[i].Sortierung === positionen[j].value) {
+                                                for (var j = 0; j < firstskill.length; j++) {
+                                                    if (json.d.results[i].Sortierung === firstskill[j].value) {
                                                         that.binding.dataEmployee
-                                                            .Positionen =
-                                                            that.binding.dataEmployee.Positionen +
-                                                            positionen[j].title +
+                                                            .firstskill =
+                                                            that.binding.dataEmployee.firstskill +
+                                                            firstskill[j].title +
                                                             "\n";
                                                     }
                                                 }
                                             }
                                             if (json.d.results[i].SkillTypeID === 21) {
-                                                for (var k = 0; k < sprachen.length; k++) {
-                                                    if (json.d.results[i].Sortierung === sprachen[k].value) {
+                                                for (var k = 0; k < secondskill.length; k++) {
+                                                    if (json.d.results[i].Sortierung === secondskill[k].value) {
                                                         that.binding.dataEmployee
-                                                            .Sprachen =
-                                                            that.binding.dataEmployee.Sprachen +
-                                                            sprachen[k].title +
+                                                            .secondskill =
+                                                            that.binding.dataEmployee.secondskill +
+                                                            secondskill[k].title +
                                                             "\t";
                                                     }
                                                 }
