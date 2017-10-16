@@ -49,17 +49,21 @@
         canUnload: function (complete, error) {
             Log.call(Log.l.trace, pageName + ".");
             var ret;
-            if (this.controller) {
-                ret = this.controller.saveData(function (response) {
+            var that = this;
+            if (that.controller) {
+                ret = WinJS.Promise.as().then(function (response) {
                     // called asynchronously if ok
-                    complete(response);
-                }, function (errorResponse) {
-                    error(errorResponse);
+                    // call fragment canUnload
+                    var doc = that.controller.getDocViewer();
+                    if (doc && doc.canUnload) {
+                        doc.canUnload(complete, error);
+                    } else {
+                        complete(response);
+                    }
                 });
             } else {
                 ret = WinJS.Promise.as().then(function () {
-                    var err = { status: 500, statusText: "fatal: page already deleted!" };
-                    error(err);
+                    complete(response);
                 });
             }
             Log.ret(Log.l.trace);

@@ -31,6 +31,7 @@
 
             this.contactId = 0;
             this.noteId = 0;
+            this.pageElement = pageElement;
 
             var getSvgFragmentController = function () {
                 var ret;
@@ -42,6 +43,19 @@
                 Log.ret(Log.l.trace);
                 return ret;
             }
+
+            var getDocViewer = function () {
+                Log.call(Log.l.trace, "Sketch.Controller.");
+                var ret = null;
+                if (that.binding.showSvg) {
+                    ret = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("svgSketch"));
+                } else if (that.binding.showPhoto) {
+                    ret = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("imgSketch"));
+                }
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+            this.getDocViewer = getDocViewer;
 
             // check modify state
             // modified==true when startDrag() in svg.js is called!
@@ -140,30 +154,9 @@
             this.loadData = loadData;
             
             // save data
-            var saveData = function (complete, error) {
-                Log.call(Log.l.trace, "Sketch.Controller.");
-                var ret = null;
-                AppData.setErrorMsg(that.binding);
-                if (that.noteId !== 0) {
-                    ret = new WinJS.Promise.as().then(function() {
-                        var svgFragmentController = getSvgFragmentController();
-                        var doret;
-                        if (svgFragmentController) {
-                            svgFragmentController.saveData(function() {
-                                    Log.print(Log.l.trace, "saveData completed...");
-                                    doret = complete();
-                                },
-                                function(errorResponse) {
-                                    Log.print(Log.l.error, "saveData error...");
-                                    AppData.setErrorMsg(that.binding, errorResponse);
-                                    doret = error();
-                                });
-                        } else {
-                            doret = complete();
-                        }
-                        return doret;
-                    });
-                } /*else {
+            //var saveData = function (complete, error) {
+            //if (that.noteId !== 0) {
+                    /*else {
                                 //insert if a primary key is not available (getRecordId() == null)
                                 dataSketch.KontaktID = AppData.getRecordId("Kontakt");
                                 dataSketch.ExecAppTypeID = 15; // SVG note
@@ -202,10 +195,6 @@
                                     }, dataSketch);
                                 }
                             }*/
-                Log.ret(Log.l.trace);
-                return ret;
-            }
-            this.saveData = saveData;
 
             // define handlers
             this.eventHandlers = {
@@ -279,7 +268,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickWidth: function (event) {
-                    Log.call(Log.l.trace, "Sketch.Controller.", "selected width=" + that.binding.width);
+                    Log.call(Log.l.trace, "Sketch.Controller.");
                     if (getSvgFragmentController()) getSvgFragmentController().eventHandlers.clickWidth(event);
                     Log.ret(Log.l.trace);
                 },

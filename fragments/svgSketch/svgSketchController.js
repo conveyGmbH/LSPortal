@@ -49,7 +49,7 @@
             }
             this.isModified = isModified;
 
-            var resultConverter = function (item, index) {
+            var resultConverter = function (item) {
                 Log.call(Log.l.trace, "SvgSketch.Controller.");
                 if (item) {
                     item.ExecAppTypeID = 15;

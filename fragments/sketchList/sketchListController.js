@@ -54,7 +54,7 @@
                 onSelectionChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "SketchList.Controller.");
                     //if current sketch is saved successfully, change selection
-                    AppBar.scope.saveData(function (response) {
+                    AppBar.scope.pageElement.winControl.canUnload(function (response) {
                         // called asynchronously if ok
                         if (listView && listView.winControl) {
                             var listControl = listView.winControl;

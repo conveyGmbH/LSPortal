@@ -107,11 +107,11 @@
                     var fragment = element.querySelector(".svgSketchFragment");
                     var svg = element.querySelector("#svgsketch.svgdiv");
 
-                    var width = fragment.clientWidth;
-                    var height = fragment.clientHeight;
-                    
                     if (svg && svg.style) {
                         if (fragment) {
+                            var width = fragment.clientWidth;
+                            var height = fragment.clientHeight;
+
                             if (width !== that.prevWidth) {
                                 that.prevWidth = width;
                                 svg.style.width = width.toString() + "px";
