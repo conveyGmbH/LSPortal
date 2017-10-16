@@ -85,8 +85,8 @@
                 MitarbeiterID: 0,
                 Vorname: "",
                 Nachname: "",
-                Positionen: "",
-                Sprachen: "",
+                firstskill: "",
+                secondskill: "",
                 thirdskill: "",
                 fourthskill: "",
                 fifthskill: ""

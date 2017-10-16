@@ -223,9 +223,9 @@
                         that.binding.restriction.SkillTypeID.push(116);
                         that.binding.restriction.Sortierung.push(that.binding.restriction.SkillType5Sortierung);
                         //}
-                        Log.print("restriction number:" + countCombobox + ", restriction: " + that.binding.restriction);
                         that.binding.restriction.countCombobox = 5;
                         that.binding.restriction.bAndInEachRow = true;
+                        Log.print("restriction number:" + that.binding.restriction.countCombobox + ", restriction: " + that.binding.restriction);
                     } else
                         if (comboboxSkills1.value === "0" &&
                             comboboxSkills2.value === "0" &&
