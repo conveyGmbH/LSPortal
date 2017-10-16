@@ -104,7 +104,7 @@
             if (element && !that.inResize) {
                 that.inResize = 1;
                 ret = WinJS.Promise.timeout(0).then(function () {
-                    var fragment = element.querySelector(".svgSketchfragment");
+                    var fragment = element.querySelector(".svgSketchFragment");
                     var svg = element.querySelector("#svgsketch.svgdiv");
 
                     var width = fragment.clientWidth;

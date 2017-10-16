@@ -294,7 +294,6 @@
                                 imageOffsetX = photoview.offsetLeft + fragmentElement.offsetLeft;
                                 imageOffsetY = photoview.offsetTop + fragmentElement.offsetTop;
                                 Log.print(Log.l.trace, "imageOffsetX=" + imageOffsetX + " imageOffsetY=" + imageOffsetY);
-
                                 if (fragmentControl && fragmentControl.updateLayout) {
                                     fragmentControl.prevWidth = 0;
                                     fragmentControl.prevHeight = 0;
@@ -305,25 +304,19 @@
                                         var animationDistanceX = imgWidth / 10;
                                         var animationOptions = { top: "0px", left: animationDistanceX.toString() + "px" };
                                         return WinJS.UI.Animation.enterContent(photoItemBox, animationOptions);
-                                    }).then(function () {
-                                        AppBar.triggerDisableHandlers();
                                     });
                                 }
                             });
                         } else {
                             that.removePhoto();
-
                             if (fragmentControl && fragmentControl.updateLayout) {
                                 fragmentControl.prevWidth = 0;
                                 fragmentControl.prevHeight = 0;
-                                fragmentControl.updateLayout.call(fragmentControl, fragmentElement).then(function () {
-                                    AppBar.triggerDisableHandlers();
-                                });
+                                fragmentControl.updateLayout.call(fragmentControl, fragmentElement);
                             }
                         }
                     }
                 }
-                AppBar.triggerDisableHandlers();
             }
             
             var loadData = function (noteId) {

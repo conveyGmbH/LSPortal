@@ -93,11 +93,6 @@
 
                                 that.prevWidth = parseInt(mySketch.style.width);
                                 that.prevHeight = parseInt(mySketch.style.height);
-
-                                var fragment = element.querySelector("#listhost.listfragmenthost");
-                                if (fragment && fragment.style.display !== "none") {
-                                    height -= 150;
-                                }
                                 
                                 if (width !== that.prevWidth) {
                                     mySketch.style.width = width.toString() + "px";

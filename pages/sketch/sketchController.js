@@ -43,24 +43,6 @@
                 return ret;
             }
 
-            // define data handling standard methods
-            //@Nedra:16.10.2015 recordID is the primary key of relation Kontaktnotiz, in the update and select case
-            var getRecordId = function () {
-                Log.call(Log.l.trace, "Sketch.Controller.");
-                var recordId = AppData.getRecordId("KontaktNotiz");
-                Log.ret(Log.l.trace, recordId);
-                return recordId;
-            }
-            this.getRecordId = getRecordId;
-
-            //@Nedra:16.10.2015 in the insert case the recordId will be set
-            var setRecordId = function (aRecordId) {
-                Log.call(Log.l.trace, "Sketch.Controller.", "aRecordId=" + aRecordId);
-                AppData.setRecordId("KontaktNotiz", aRecordId);
-                Log.ret(Log.l.trace);
-            }
-            this.setRecordId = setRecordId;
-
             // check modify state
             // modified==true when startDrag() in svg.js is called!
             var isModified = function () {

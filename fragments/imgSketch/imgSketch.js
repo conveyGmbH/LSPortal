@@ -64,10 +64,10 @@
                 ret = WinJS.Promise.timeout(0).then(function () {
                     var doccontainer = element.querySelector(".doc-container");
                     if (doccontainer && doccontainer.style) {
-                        var contentarea = element.querySelector(".contentarea");
-                        if (contentarea) {
-                            var width = contentarea.clientWidth;
-                            var height = contentarea.clientHeight;
+                        var fragment = element.querySelector(".imgSketchFragment");
+                        if (fragment) {
+                            var width = fragment.clientWidth;
+                            var height = fragment.clientHeight;
 
                             if (width !== that.prevWidth) {
                                 that.prevWidth = width;
