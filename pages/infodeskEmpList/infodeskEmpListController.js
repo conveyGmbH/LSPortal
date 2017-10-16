@@ -14,12 +14,12 @@
     var nav = WinJS.Navigation;
 
     WinJS.Namespace.define("InfodeskEmpList", {
-        Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement) {
+        Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "InfodeskEmpList.Controller.");
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
                 employeeId: AppData.getRecordId("Mitarbeiter")
-            }, true]);
+            }, commandList, true]);
             this.nextUrl = null;
 
             var that = this;

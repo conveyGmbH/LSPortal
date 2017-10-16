@@ -18,13 +18,13 @@
     //    controller: null
     // });
     WinJS.Namespace.define("Infodesk", {
-        Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement) {
+        Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "Infodesk.Controller.");
             Application.Controller.apply(this, [pageElement, {
                 messestandData: getEmptyDefaultValue(Infodesk.Messestand.defaultValue),
                 //restriction: getEmptyDefaultValue(Infodesk.defaultRestriction),
                 dataEmployee: getEmptyDefaultValue(Infodesk.SkillEntry.defaultValue)
-            }]);
+            }, commandList]);
             //Infodesk.controller = this;
             var comboboxSkills1 = pageElement.querySelector("#skills1");
             var comboboxSkills2 = pageElement.querySelector("#skills2");
