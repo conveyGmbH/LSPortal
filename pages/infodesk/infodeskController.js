@@ -167,8 +167,8 @@
                     }
                     //that.loadData(getRecordId());
                     Log.ret(Log.l.trace);
-                
-            },
+
+                },
                 clickGotoPublish: function (event) {
                     Log.call(Log.l.trace, "QuestionList.Controller.");
                     Application.navigateById("publish", event);
@@ -193,78 +193,123 @@
                     AppData.setRestriction("SkillEntry", that.binding.restriction); //SkillEntryView_20472
                     // Abfrage wenn beide comboboxen nicht ausgewählt
                     // spannende Stelle // letzen Wert der Comboboxen
-                    that.binding.restriction.countCombobox = 0;
-                    if (that.binding.restriction.SkillType1Sortierung === "0") {
-                        that.binding.restriction.SkillType1Sortierung = 0;
-                        delete that.binding.restriction.Sortierung;
-                        delete that.binding.restriction.SkillTypeID;
-                    }
-                    if (that.binding.restriction.SkillType2Sortierung === "0") {
-                        that.binding.restriction.SkillType2Sortierung = 0;
-                        delete that.binding.restriction.Sortierung;
-                        delete that.binding.restriction.SkillTypeID;
-                    }
-                    if (that.binding.restriction.SkillType3Sortierung === "0") {
-                        that.binding.restriction.SkillType3Sortierung = 0;
-                        delete that.binding.restriction.Sortierung;
-                        delete that.binding.restriction.SkillTypeID;
-                    }
+
                     // Abfrage wenn beide comboboxen ausgewählt
                     // spannende Stelle // letzen Wert der Comboboxen
-                    if (comboboxSkills1.value !== "0" && comboboxSkills2.value !== "0" && comboboxSkills3.value !== "0") {
+                    if (comboboxSkills1.value !== "0" &&
+                        comboboxSkills2.value !== "0" &&
+                        comboboxSkills3.value !== "0" &&
+                        comboboxSkills4.value !== "0" &&
+                        comboboxSkills5.value !== "0") {
                         //TODO wenn z.B von drei Comboboxen nur zwei ausgewählt wurde muss nach der SkilltypeID sowie für SkillTypeXSortierung einzeln abgefragt werden welcher gesetzt
                         that.binding.restriction.Aktiv = [];
                         that.binding.restriction.SkillTypeID = [];
                         that.binding.restriction.Sortierung = [];
-                        for (var i = 0; i < 3; i++) {
-                            that.binding.restriction.Aktiv = "X"; //"X"
-                            that.binding.restriction.SkillTypeID.push(20 + i);
-                            if (that.binding.restriction.SkillTypeID[i] === 20)
-                                that.binding.restriction.Sortierung.push(that.binding.restriction.SkillType1Sortierung);
-                            if (that.binding.restriction.SkillTypeID[i] === 21)
-                                that.binding.restriction.Sortierung.push(that.binding.restriction.SkillType2Sortierung);
-                            if (that.binding.restriction.SkillTypeID[i] === 113)
-                                that.binding.restriction.Sortierung.push(that.binding.restriction.SkillType3Sortierung);
-                        }
-                        that.binding.restriction.countCombobox = 2;
+                        //  for (var i = 0; i < 5; i++) {
+                        that.binding.restriction.Aktiv = "X"; //"X"
+                        that.binding.restriction.SkillTypeID.push(20);
+                        //   if (that.binding.restriction.SkillTypeID[i] === 20)
+                        that.binding.restriction.Sortierung.push(that.binding.restriction.SkillType1Sortierung);
+                        // if (that.binding.restriction.SkillTypeID[i] === 21)
+                        that.binding.restriction.SkillTypeID.push(21);
+                        that.binding.restriction.Sortierung.push(that.binding.restriction.SkillType2Sortierung);
+                        // if (that.binding.restriction.SkillTypeID[i] === 113)
+                        that.binding.restriction.SkillTypeID.push(113);
+                        that.binding.restriction.Sortierung.push(that.binding.restriction.SkillType3Sortierung);
+                        // if (that.binding.restriction.SkillTypeID[i] === 115)
+                        that.binding.restriction.SkillTypeID.push(115);
+                        that.binding.restriction.Sortierung.push(that.binding.restriction.SkillType4Sortierung);
+                        // if (that.binding.restriction.SkillTypeID[i] === 116)
+                        that.binding.restriction.SkillTypeID.push(116);
+                        that.binding.restriction.Sortierung.push(that.binding.restriction.SkillType5Sortierung);
+                        //}
+                        Log.print("restriction number:" + countCombobox + ", restriction: " + that.binding.restriction);
+                        that.binding.restriction.countCombobox = 5;
                         that.binding.restriction.bAndInEachRow = true;
-
-                    }
-                    // Abfrage wenn eine oder keine Combobox ausgewählt
-                    if (comboboxSkills1.value === "0" || comboboxSkills2.value === "0") {
-                        if (that.binding.restriction.SkillType1Sortierung) { // !== 0
-                            //Postion
-                            that.binding.restriction.SkillTypeID = 20;
-                            that.binding.restriction.Sortierung = that.binding.restriction.SkillType1Sortierung;
-                        }
-                        if (that.binding.restriction.SkillType2Sortierung) { //  !== 0
-                            //Sprache
-                            that.binding.restriction.SkillTypeID = 21;
-                            that.binding.restriction.Sortierung = that.binding.restriction.SkillType2Sortierung;
-                        }
-                        if (that.binding.restriction.SkillType3Sortierung) { //  !== 0
-                            //Sprache
-                            that.binding.restriction.SkillTypeID = 113;
-                            that.binding.restriction.Sortierung = that.binding.restriction.SkillType3Sortierung;
-                        }
-                        if (that.binding.restriction.SkillType4Sortierung) { //  !== 0
-                            //Sprache
-                            that.binding.restriction.SkillTypeID = 115;
-                            that.binding.restriction.Sortierung = that.binding.restriction.SkillType4Sortierung;
-                        }
-                        if (that.binding.restriction.SkillType5Sortierung) { //  !== 0
-                            //Sprache
-                            that.binding.restriction.SkillTypeID = 116;
-                            that.binding.restriction.Sortierung = that.binding.restriction.SkillType5Sortierung;
-                        }
-                        if (comboboxSkills1.value === "0" && comboboxSkills2.value === "0" && comboboxSkills3.value === "0" && comboboxSkills4.value === "0" && comboboxSkills5.value === "0") {
-                            that.binding.restriction.Aktiv = null; 
+                    } else
+                        if (comboboxSkills1.value === "0" &&
+                            comboboxSkills2.value === "0" &&
+                            comboboxSkills3.value === "0" &&
+                            comboboxSkills4.value === "0" &&
+                            comboboxSkills5.value === "0") {
+                            that.binding.restriction.countCombobox = 0;
+                            if (that.binding.restriction.SkillType1Sortierung === "0" || that.binding.restriction.SkillType1Sortierung === 0) {
+                                that.binding.restriction.SkillType1Sortierung = 0;
+                                delete that.binding.restriction.Sortierung;
+                                delete that.binding.restriction.SkillTypeID;
+                            }
+                            if (that.binding.restriction.SkillType2Sortierung === "0" || that.binding.restriction.SkillType2Sortierung === 0) {
+                                that.binding.restriction.SkillType2Sortierung = 0;
+                                delete that.binding.restriction.Sortierung;
+                                delete that.binding.restriction.SkillTypeID;
+                            }
+                            if (that.binding.restriction.SkillType3Sortierung === "0" || that.binding.restriction.SkillType2Sortierung === 0) {
+                                that.binding.restriction.SkillType3Sortierung = 0;
+                                delete that.binding.restriction.Sortierung;
+                                delete that.binding.restriction.SkillTypeID;
+                            }
+                            if (that.binding.restriction.SkillType4Sortierung === "0" || that.binding.restriction.SkillType2Sortierung === 0) {
+                                that.binding.restriction.SkillType4Sortierung = 0;
+                                delete that.binding.restriction.Sortierung;
+                                delete that.binding.restriction.SkillTypeID;
+                            }
+                            if (that.binding.restriction.SkillType5Sortierung === "0" || that.binding.restriction.SkillType2Sortierung === 0) {
+                                that.binding.restriction.SkillType5Sortierung = 0;
+                                delete that.binding.restriction.Sortierung;
+                                delete that.binding.restriction.SkillTypeID;
+                            }
+                            that.binding.restriction.Aktiv = "";
                         } else {
-                            that.binding.restriction.Aktiv = "X";
-                        }
+                            that.binding.restriction.Aktiv = "";
+                            that.binding.restriction.SkillTypeID = [];
+                            that.binding.restriction.Sortierung = [];
+                            that.binding.restriction.countCombobox = 0;
 
-                        that.binding.restriction.bAndInEachRow = false;
-                    }
+                            that.binding.restriction.Aktiv = "X"; //"X"
+                            if (that.binding.restriction.SkillType1Sortierung === "0") {
+                                that.binding.restriction.SkillType1Sortierung = 0;
+                            }
+                            if (that.binding.restriction.SkillType2Sortierung === "0") {
+                                that.binding.restriction.SkillType2Sortierung = 0;
+                            }
+                            if (that.binding.restriction.SkillType3Sortierung === "0") {
+                                that.binding.restriction.SkillType3Sortierung = 0;
+                            }
+                            if (that.binding.restriction.SkillType4Sortierung === "0") {
+                                that.binding.restriction.SkillType4Sortierung = 0;
+                            }
+                            if (that.binding.restriction.SkillType5Sortierung === "0") {
+                                that.binding.restriction.SkillType5Sortierung = 0;
+                            }
+                            that.binding.restriction.SkillTypeID.push(20);
+                            that.binding.restriction.Sortierung.push(that.binding.restriction.SkillType1Sortierung);
+                            if (that.binding.restriction.SkillType1Sortierung !== 0) {
+                                that.binding.restriction.countCombobox++;
+                            }
+                            that.binding.restriction.SkillTypeID.push(21);
+                            that.binding.restriction.Sortierung.push(that.binding.restriction.SkillType2Sortierung);
+                            if (that.binding.restriction.SkillType2Sortierung !== 0) {
+                                that.binding.restriction.countCombobox++;
+                            }
+                            that.binding.restriction.SkillTypeID.push(113);
+                            that.binding.restriction.Sortierung.push(that.binding.restriction.SkillType3Sortierung);
+                            if (that.binding.restriction.SkillType3Sortierung !== 0) {
+                                that.binding.restriction.countCombobox++;
+                            }
+                            that.binding.restriction.SkillTypeID.push(115);
+                            that.binding.restriction.Sortierung.push(that.binding.restriction.SkillType4Sortierung);
+                            if (that.binding.restriction.SkillType4Sortierung !== 0) {
+                                that.binding.restriction.countCombobox++;
+                            }
+                            that.binding.restriction.SkillTypeID.push(116);
+                            that.binding.restriction.Sortierung.push(that.binding.restriction.SkillType5Sortierung);
+                            if (that.binding.restriction.SkillType5Sortierung !== 0) {
+                                that.binding.restriction.countCombobox++;
+                            }
+                            that.binding.restriction.bAndInEachRow = true;
+
+                            Log.print("restriction number:" + that.binding.restriction.countCombobox + ", restriction: " + that.binding.restriction);
+                        }
                     complete({});
                     return WinJS.Promise.as();
                 });

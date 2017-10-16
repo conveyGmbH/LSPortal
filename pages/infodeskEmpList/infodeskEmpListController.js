@@ -83,7 +83,7 @@
 
                             var actualItem = null;
                             var resultsUnique = [];
-                            if (that.binding.restriction.countCombobox > 1) {
+                            if (that.binding.restriction.countCombobox >= 1) {
                                 var zähler = 0;
                                 results.forEach(function (item) {
                                     if (!actualItem)
@@ -389,7 +389,7 @@
 
                                 var actualItem = null;
                                 var resultsUnique = [];
-                                if (that.binding.restriction.countCombobox > 1) {
+                                if (that.binding.restriction.countCombobox >= 1) {
                                     var zähler = 0;
                                     results.forEach(function (item) {
                                         if (!actualItem)
