@@ -382,7 +382,6 @@
                             Log.print(Log.l.trace, "InfodeskEmpList: success!");
                             // employeeView returns object already parsed from json file in response
                             if (json && json.d) {
-                                that.binding.count = json.d.results.length;
                                 that.nextUrl = InfodeskEmpList.employeeView.getNextUrl(json);
                                 var results = json.d.results;
 
@@ -475,7 +474,6 @@
                         }, that.binding.restriction); //that.binding.restriction beim neuladen ist die leer
                     });
                 });
-                that.binding.count = that.employees.length;
                 Log.ret(Log.l.trace);
                 return ret;
             };
