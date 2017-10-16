@@ -22,7 +22,7 @@
             // add page specific commands to AppBar
             var commandList = [
                 { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" },
-                { id: "clickPublish", label: getResourceText("command.publish"), tooltip: getResourceText("tooltip.publish"), section: "primary", svg: "navigate_check" }
+                { id: "clickPublish", label: getResourceText("command.publish"), tooltip: getResourceText("tooltip.publish"), section: "primary", svg: "navigate_check", key: WinJS.Utilities.Key.enter }
             ];
 
             this.controller = new Publish.Controller(element, commandList);

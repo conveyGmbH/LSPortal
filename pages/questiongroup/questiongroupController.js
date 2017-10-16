@@ -156,7 +156,6 @@
                 if (!recordId) {
                     // called via canUnload
                     recordId = that.curRecId;
-                    that.curRecId = 0;
                 }
                 that.prevRecId = 0;
                 if (recordId) {
@@ -205,7 +204,6 @@
                 clickNew: function (event) {
                     Log.call(Log.l.trace, "Questiongroup.Controller.");
                     AppBar.busy = true;
-                    AppData.setErrorMsg(that.binding);
                     that.saveData(function (response) {
                         Log.print(Log.l.trace, "question saved");
                         Questiongroup.CR_V_FragengruppeView.insert(function (json) {
@@ -217,6 +215,7 @@
                                 that.curRecId = json.d.CR_V_FragengruppeVIEWID;
                                 AppData.setRecordId('CR_V_Fragengruppe', that.curRecId);
                             }
+                            AppBar.busy = false;
                             that.loadData().then(function () {
                                 that.selectRecordId(that.curRecId);
                             });
@@ -231,7 +230,14 @@
                 },
                 clickOk: function (event) {
                     Log.call(Log.l.trace, "Questiongroup.Controller.");
-                    Application.navigateById('questiongroup', event);
+                    AppBar.busy = true;
+                    that.saveData(function (response) {
+                        AppBar.busy = false;
+                        Log.print(Log.l.trace, "question saved");
+                    }, function (errorResponse) {
+                        AppBar.busy = false;
+                        Log.print(Log.l.error, "error saving question");
+                    });
                     Log.ret(Log.l.trace);
                 },
                 clickDelete: function (event) {
@@ -244,13 +250,16 @@
                                 "\r\n" + getResourceText("questiongroup.questionDelete");
                             confirm(confirmTitle, function (result) {
                                 if (result) {
+                                    AppBar.busy = true;
                                     Log.print(Log.l.trace, "clickDelete: user choice OK");
                                     that.deleteData(function (response) {
                                         // delete OK 
+                                        AppBar.busy = false;
                                         that.loadData();
                                     }, function (errorResponse) {
                                         // delete ERROR
                                         var message = null;
+                                        AppBar.busy = false;
                                         Log.print(Log.l.error, "error status=" + errorResponse.status + " statusText=" + errorResponse.statusText);
                                         if (errorResponse.data && errorResponse.data.error) {
                                             Log.print(Log.l.error, "error code=" + errorResponse.data.error.code);
@@ -504,21 +513,13 @@
                 },
                 clickNew: function () {
                     // never disabled!
-                    return false;
+                    return AppBar.busy;
                 },
                 clickOk: function () {
-                    var ret = true;
-                    if (that.curRecId && !that.prevRecId) {
-                        ret = false;
-                    }
-                    return ret;
+                    return !that.curRecId || AppBar.busy;
                 },
                 clickDelete: function () {
-                    var ret = true;
-                    if (that.curRecId && !that.prevRecId) {
-                        ret = false;
-                    }
-                    return ret;
+                    return !that.curRecId || AppBar.busy;
                 }
             }
 

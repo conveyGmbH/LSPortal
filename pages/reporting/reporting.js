@@ -24,7 +24,7 @@
 
             // add page specific commands to AppBar
             var commandList = [
-                { id: "clickExport", label: getResourceText("command.export"), tooltip: getResourceText("tooltip.export"), section: "primary", svg: "download" }
+                { id: "clickExport", label: getResourceText("command.export"), tooltip: getResourceText("tooltip.export"), section: "primary", svg: "download", key: WinJS.Utilities.Key.enter }
             ];
 
             this.controller = new Reporting.Controller(element, commandList);

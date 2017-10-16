@@ -21,7 +21,7 @@
             // TODO: Initialize the page here.
             // add page specific commands to AppBar
             var commandList = [
-                { id: "clickOk", label: getResourceText("command.ok"), tooltip: getResourceText("tooltip.ok"), section: "primary", svg: "navigate_check" }
+                { id: "clickOk", label: getResourceText("command.ok"), tooltip: getResourceText("tooltip.ok"), section: "primary", svg: "navigate_check", key: WinJS.Utilities.Key.enter }
             ];
 
             this.controller = new Mailing.Controller(element, commandList);

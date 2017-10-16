@@ -194,7 +194,6 @@
                 if (!recordId) {
                     // called via canUnload
                     recordId = that.curRecId;
-                    that.curRecId = 0;
                 }
                 that.prevRecId = 0;
                 if (recordId) {
