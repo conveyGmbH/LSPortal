@@ -10,7 +10,9 @@
     WinJS.Namespace.define("ContactList", {
         _contactView: {
             get: function () {
-                return AppData.getFormatView("Kontakt", 20454, false);
+                var ret = AppData.getFormatView("Kontakt", 20454, false);
+                ret.maxPageSize = 20;
+                return ret;
             }
         },
         contactView: {
@@ -47,7 +49,9 @@
         },
         _contactDocView: {
             get: function () {
-                return AppData.getFormatView("Kontakt", 20498, false);
+                var ret = AppData.getFormatView("Kontakt", 20498, false);
+                ret.maxPageSize = 20;
+                return ret;
             }
         },
         contactDocView: {

@@ -221,6 +221,8 @@
                             }
                             AppData.setErrorMsg(that.binding);
                             Log.print(Log.l.trace, "calling select EmpList.employeeView...");
+                            var nextUrl = that.nextUrl;
+                            that.nextUrl = null;
                             EmpList.employeeView.selectNext(function (json) {
                                 // this callback will be called asynchronously
                                 // when the response is available
@@ -233,8 +235,6 @@
                                         that.resultConverter(item, index);
                                         that.binding.count = that.employees.push(item);
                                     });
-                                } else {
-                                    that.nextUrl = null;
                                 }
                             }, function (errorResponse) {
                                 // called asynchronously if an error occurs
@@ -247,7 +247,7 @@
                                     counter.style.display = "inline";
                                 }
                                 that.loading = false;
-                            }, null, that.nextUrl);
+                            }, null, nextUrl);
                         } else {
                             if (progress && progress.style) {
                                 progress.style.display = "none";

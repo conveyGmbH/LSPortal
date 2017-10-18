@@ -160,6 +160,8 @@
                         }
                         AppData.setErrorMsg(that.binding);
                         Log.print(Log.l.trace, "calling select ContactList.contactView...");
+                        var nextUrl = that.nextUrl;
+                        that.nextUrl = null;
                         ContactList.contactView.selectNext(function (json) { //json is undefined
                             // this callback will be called asynchronously
                             // when the response is available
@@ -172,8 +174,6 @@
                                     that.resultConverter(item, that.binding.count);
                                     that.binding.count = that.contacts.push(item);
                                 });
-                            } else {
-                                that.nextUrl = null;
                             }
                             if (recordId) {
                                 that.selectRecordId(recordId);
@@ -181,27 +181,27 @@
                             if (that.nextDocUrl) {
                                 WinJS.Promise.timeout(250).then(function() {
                                     Log.print(Log.l.trace, "calling select ContactList.contactDocView...");
-                                    ContactList.contactDocView.selectNext(function (json) { //json is undefined
+                                    var nextDocUrl = that.nextDocUrl;
+                                    that.nextDocUrl = null;
+                                    ContactList.contactDocView.selectNext(function (jsonDoc) { 
                                         // this callback will be called asynchronously
                                         // when the response is available
                                         Log.print(Log.l.trace, "ContactList.contactDocView: success!");
                                         // startContact returns object already parsed from json file in response
-                                        if (json && json.d) {
-                                            that.nextDocUrl = ContactList.contactDocView.getNextUrl(json);
-                                            var results = json.d.results;
-                                            results.forEach(function (item, index) {
+                                        if (jsonDoc && jsonDoc.d) {
+                                            that.nextDocUrl = ContactList.contactDocView.getNextUrl(jsonDoc);
+                                            var resultsDoc = jsonDoc.d.results;
+                                            resultsDoc.forEach(function (item, index) {
                                                 that.resultDocConverter(item, that.binding.doccount);
                                                 that.binding.doccount = that.docs.push(item);
                                             });
-                                        } else {
-                                            that.nextDocUrl = null;
                                         }
                                     }, function (errorResponse) {
                                         // called asynchronously if an error occurs
                                         // or server returns response with an error status.
                                         Log.print(Log.l.error, "ContactList.contactDocView: error!");
                                         AppData.setErrorMsg(that.binding, errorResponse);
-                                    }, null, that.nextDocUrl);
+                                    }, null, nextDocUrl);
                                 });
                             }
                         }, function (errorResponse) {
@@ -216,7 +216,7 @@
                                 counter.style.display = "inline";
                             }
                             that.loading = false;
-                        }, null, that.nextUrl);
+                        }, null, nextUrl);
                     }
                     Log.ret(Log.l.trace);
                 }

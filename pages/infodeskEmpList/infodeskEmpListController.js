@@ -124,9 +124,6 @@
                                 that.resultConverter(item, that.binding.count);
                                 that.binding.count = that.employees.push(item);
                             });
-                        } else {
-                            // that.binding.count = 0;
-                            that.nextUrl = null;
                         }
                         if (recordId) {
                             that.selectRecordId(recordId);
