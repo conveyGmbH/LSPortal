@@ -145,7 +145,7 @@
                     AppRepl.replicator.state === "running") {
                     Log.print(Log.l.info, "replicator still running - try later!");
                     ret = WinJS.Promise.timeout(500).then(function () {
-                        that.openDb();
+                        return that.openDb();
                     });
                 } else {
                     ret = AppData.openDB(function () {
@@ -219,7 +219,7 @@
                         } else {
                             return WinJS.Promise.as();
                         }
-                    }).then(function() {
+                    }).then(function () {
                         WinJS.Promise.timeout(0).then(function () {
                             // navigate async here to ensure load of navigation menu!
                             Application.navigateById(getStartPage());

@@ -17,8 +17,8 @@
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "Login.Controller.");
             // delete login data first
-            AppData.appSettings.odata.login = null;
-            AppData.appSettings.odata.password = null;
+            AppData._persistentStates.odata.login = null;
+            AppData._persistentStates.odata.password = null;
             AppData._persistentStates.odata.dbSiteId = null;
             AppData._persistentStates.allRestrictions = {};
             AppData._persistentStates.allRecIds = {};
@@ -254,19 +254,26 @@
                             if (json && json.d) {
                                 dataLogin = json.d;
                                 if (dataLogin.OK_Flag === "X" && dataLogin.MitarbeiterID) {
-                                    that.binding.appSettings.odata.login = that.binding.dataLogin.Login;
-                                    that.binding.appSettings.odata.password = that.binding.dataLogin.Password;
+                                    AppData._persistentStates.odata.login = that.binding.dataLogin.Login;
+                                    AppData._persistentStates.odata.password = that.binding.dataLogin.Password;
+                                    AppData._persistentStates.allRestrictions = {};
+                                    AppData._persistentStates.allRecIds = {};
+                                    AppData._userData = {};
+                                    AppData._userRemoteData = {};
+                                    AppData._contactData = {};
+                                    AppData._photoData = null;
+                                    AppData._barcodeType = null;
+                                    AppData._barcodeRequest = null;
                                     AppData.setRecordId("Mitarbeiter", dataLogin.MitarbeiterID);
                                     NavigationBar.enablePage("settings");
                                     NavigationBar.enablePage("info");
-                                    NavigationBar.enablePage("search");
                                     if (that.binding.appSettings.odata.useOffline) {
                                         AppData._persistentStates.odata.dbSiteId = dataLogin.Mitarbeiter_AnmeldungVIEWID;
                                         Application.pageframe.savePersistentStates();
                                         return that.openDb(complete, error);
                                     } else {
+                                        Application.pageframe.savePersistentStates();
                                         AppBar.busy = false;
-                                        //AppData.setRecordId("Kontakt", dataLogin.KontaktID);
                                         AppData._curGetUserDataId = 0;
                                         AppData.getUserData();
                                         complete(json);
