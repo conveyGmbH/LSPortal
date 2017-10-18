@@ -17,8 +17,22 @@
                 Log.call(Log.l.trace, "SketchList.");
                 var ret = SketchList._sketchlistView.select(complete, error, restriction, {
                     ordered: true,
-                    orderAttribute: "KontaktNotizVIEWID"
+                    orderAttribute: "KontaktNotizVIEWID",
+                    desc: true
                 });
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getNextUrl: function (response) {
+                Log.call(Log.l.trace, "SketchList.");
+                var ret = SketchList._sketchlistView.getNextUrl(response);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            selectNext: function (complete, error, response, nextUrl) {
+                Log.call(Log.l.trace, "SketchList.");
+                var ret = SketchList._sketchlistView.selectNext(complete, error, response, nextUrl);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;

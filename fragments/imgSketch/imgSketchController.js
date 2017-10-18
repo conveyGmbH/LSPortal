@@ -201,13 +201,15 @@
             this.calcImagePosition = calcImagePosition;
 
             var showPhoto = function () {
+                Log.call(Log.l.trace, "ImgSketch.Controller.");
                 if (photoview) {
                     var photoItemBox = photoview.querySelector("#notePhoto .win-itembox");
                     if (photoItemBox) {
+                        var pageElement = Application.navigator && Application.navigator.pageElement;
+                        var pageControl = pageElement && pageElement.winControl;
                         if (photoItemBox.style) {
                             photoItemBox.style.visibility = "hidden";
                         }
-                        var fragmentControl = fragmentElement.winControl;
                         if (getPhotoData()) {
                             that.img = new Image();
                             photoItemBox.appendChild(that.img);
@@ -220,12 +222,25 @@
                                     oldElement.innerHTML = "";
                                 }
                             }
-                            imgScale = 1;
-                            imgWidth = that.img.naturalWidth * imgScale;
-                            imgHeight = that.img.naturalHeight * imgScale;
                             imgRotation = 0;
+                            var containerWidth = photoview.clientWidth;
+                            if (containerWidth < that.img.naturalWidth) {
+                                imgScale = containerWidth / that.img.naturalWidth;
+                                imgWidth = containerWidth;
+                            } else {
+                                imgScale = 1;
+                                imgWidth = that.img.naturalWidth;
+                            }
+                            imgHeight = that.img.naturalHeight * imgScale;
                             imgLeft = imgNaturalLeft * imgScale;
                             imgTop = imgNaturalTop * imgScale;
+                            if (that.img.style) {
+                                that.img.style.transform = "";
+                                that.img.style.marginLeft = 0;
+                                that.img.style.marginTop = 0;
+                                that.img.style.width = imgWidth + "px";
+                                that.img.style.height = imgHeight + "px";
+                            }
                             var ham = new Hammer($(".pinch")[0], {
                                 domEvents: true
                             });
@@ -294,10 +309,12 @@
                                 imageOffsetX = photoview.offsetLeft + fragmentElement.offsetLeft;
                                 imageOffsetY = photoview.offsetTop + fragmentElement.offsetTop;
                                 Log.print(Log.l.trace, "imageOffsetX=" + imageOffsetX + " imageOffsetY=" + imageOffsetY);
-                                if (fragmentControl && fragmentControl.updateLayout) {
-                                    fragmentControl.prevWidth = 0;
-                                    fragmentControl.prevHeight = 0;
-                                    fragmentControl.updateLayout.call(fragmentControl, fragmentElement).then(function () {
+                                // recalc page layout if needed
+                                if (pageControl && pageControl.updateLayout) {
+                                    pageControl.prevWidth = 0;
+                                    pageControl.prevHeight = 0;
+                                    var promise = pageControl.updateLayout.call(pageControl, pageElement) || WinJS.Promise.as();
+                                    promise.then(function () {
                                         if (photoItemBox.style) {
                                             photoItemBox.style.visibility = "";
                                         }
@@ -309,47 +326,60 @@
                             });
                         } else {
                             that.removePhoto();
-                            if (fragmentControl && fragmentControl.updateLayout) {
-                                fragmentControl.prevWidth = 0;
-                                fragmentControl.prevHeight = 0;
-                                fragmentControl.updateLayout.call(fragmentControl, fragmentElement);
+                            // recalc page layout if needed
+                            if (pageControl && pageControl.updateLayout) {
+                                pageControl.prevWidth = 0;
+                                pageControl.prevHeight = 0;
+                                pageControl.updateLayout.call(pageControl, pageElement);
                             }
                         }
                     }
                 }
+                Log.ret(Log.l.trace);
             }
-            
+
+            var showPhotoAfterResize = function () {
+                Log.call(Log.l.trace, "ImgSketch.Controller.");
+                var fragmentControl = fragmentElement.winControl;
+                if (fragmentControl && fragmentControl.updateLayout) {
+                    fragmentControl.prevWidth = 0;
+                    fragmentControl.prevHeight = 0;
+                    var promise = fragmentControl.updateLayout.call(fragmentControl, fragmentElement) || WinJS.Promise.as();
+                    promise.then(function () {
+                        showPhoto();
+                    });
+                }
+                Log.ret(Log.l.trace);
+            }
+
             var loadData = function (noteId) {
                 Log.call(Log.l.trace, "ImgSketch.Controller.");
                 if (noteId) {
                     that.binding.noteId = noteId;
                 }
-                AppData.setErrorMsg(that.binding);
-                var ret = new WinJS.Promise.as().then(function () {
-                    Log.call(Log.l.trace, "ImgSketch.Controller.");
-                    var doret = null;
-                    if (that.binding.noteId !== null) {
-                        doret = ImgSketch.sketchDocView.select(function (json) {
-                                // this callback will be called asynchronously
-                                // when the response is available
-                                Log.print(Log.l.trace, "ImgSketch.sketchDocView: success!");
-                                // select returns object already parsed from json file in response
-                                if (json && json.d) {
-                                    that.resultConverter(json.d);
-                                    that.binding.dataSketch = json.d;
-                                    showPhoto();
-                                }
-                            },
-                            function (errorResponse) {
-                                // called asynchronously if an error occurs
-                                // or server returns response with an error status.
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                            },
-                            that.binding.noteId);
-                    }
-                    Log.ret(Log.l.trace);
-                    return doret;
-                });
+                var ret = null;
+                if (that.binding.noteId !== null) {
+                    AppData.setErrorMsg(that.binding);
+                    ret = ImgSketch.sketchDocView.select(function (json) {
+                        // this callback will be called asynchronously
+                        // when the response is available
+                        Log.print(Log.l.trace, "ImgSketch.sketchDocView: success!");
+                        // select returns object already parsed from json file in response
+                        if (json && json.d) {
+                            that.resultConverter(json.d);
+                            that.binding.dataSketch = json.d;
+                            showPhotoAfterResize();
+                        }
+                    },
+                    function(errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    },
+                    that.binding.noteId);
+                } else {
+                    ret = WinJS.Promise.as();
+                }
                 Log.ret(Log.l.trace);
                 return ret;
             };

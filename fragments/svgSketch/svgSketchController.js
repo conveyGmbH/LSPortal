@@ -60,6 +60,22 @@
             }
             this.resultConverter = resultConverter;
 
+            var showSvgAfterResize = function () {
+                Log.call(Log.l.trace, "SvgSketch.Controller.");
+                var fragmentControl = fragmentElement.winControl;
+                if (fragmentControl && fragmentControl.updateLayout) {
+                    fragmentControl.prevWidth = 0;
+                    fragmentControl.prevHeight = 0;
+                    var promise = fragmentControl.updateLayout.call(fragmentControl, fragmentElement) || WinJS.Promise.as();
+                    promise.then(function () {
+                        that.svgEditor.fnLoadSVG(that.binding.dataSketch.Quelltext);
+                    });
+                }
+                Log.ret(Log.l.trace);
+            }
+
+
+
             var loadSketch = function () {
                 Log.call(Log.l.trace, "SvgSketch.Controller.");
                 var ret = null;
@@ -117,9 +133,7 @@
                                     that.binding.dataSketch.Quelltext.substr(0, 100) +
                                     "...");
                             }
-                            WinJS.Promise.timeout(0).then(function () {
-                                that.svgEditor.fnLoadSVG(that.binding.dataSketch.Quelltext);
-                            });
+                            showSvgAfterResize();
                         }
                     },
                     function (errorResponse) {

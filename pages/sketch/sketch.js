@@ -25,7 +25,7 @@
             this.prevHeight = 0;
 
             // add page specific commands to AppBar
-            AppBar.commandList = [
+            var commandList = [
                 { id: 'clickBack', label: getResourceText('command.backward'), tooltip: getResourceText('tooltip.backward'), section: 'primary', svg: 'navigate_left' },
                 //{ id: "clickNew", label: getResourceText("command.new"), tooltip: getResourceText("tooltip.new"), section: "primary", svg: "user_plus" },
                 { id: 'clickForward', label: getResourceText('command.ok'), tooltip: getResourceText('tooltip.ok'), section: 'primary', svg: 'navigate_check', key: WinJS.Utilities.Key.enter },
@@ -38,7 +38,7 @@
                 { id: 'clickShowList', label: getResourceText('sketch.showList'), tooltip: getResourceText('sketch.showList'), section: 'primary', svg: 'elements3' }
             ];
 
-            this.controller = new Sketch.Controller(element);
+            this.controller = new Sketch.Controller(element, commandList);
             if (this.controller.eventHandlers) {
                 // general event listener for hardware back button, too!
                 this.controller.addRemovableEventListener(document, "backbutton", this.controller.eventHandlers.clickBack.bind(this.controller));
@@ -86,24 +86,35 @@
                 that.inResize = 1;
                 ret = WinJS.Promise.timeout(0).then(function () {
                     var mySketchViewers = element.querySelectorAll(".sketchfragmenthost");
-                    if (mySketchViewers) for (var i = 0; i < mySketchViewers.length; i++) {
-                        var mySketch = mySketchViewers[i];
-                        if (mySketch && mySketch.style) {
-                            var contentarea = element.querySelector(".contentarea");
-                            if (contentarea) {
-                                var contentHeader = element.querySelector(".content-header");
-                                var width = contentarea.clientWidth;
-                                var height = contentarea.clientHeight - (contentHeader ? contentHeader.clientHeight : 0);
+                    var mySketchList = element.querySelector(".listfragmenthost");
+                    if (mySketchViewers) {
+                        var contentarea = element.querySelector(".contentarea");
+                        if (contentarea) {
+                            var mySketch, i;
+                            var contentHeader = element.querySelector(".content-header");
+                            var width = contentarea.clientWidth;
+                            var height = contentarea.clientHeight - (contentHeader ? contentHeader.clientHeight : 0);
 
-                                that.prevWidth = parseInt(mySketch.style.width);
-                                that.prevHeight = parseInt(mySketch.style.height);
-                                
-                                if (width !== that.prevWidth) {
-                                    mySketch.style.width = width.toString() + "px";
+                            if (that.controller && that.controller.binding && that.controller.binding.showList) {
+                                height -= mySketchList.clientHeight;
+                            }
+                            if (width !== that.prevWidth) {
+                                for (i = 0; i < mySketchViewers.length; i++) {
+                                    mySketch = mySketchViewers[i];
+                                    if (mySketch && mySketch.style) {
+                                        mySketch.style.width = width.toString() + "px";
+                                    }
                                 }
-                                if (height !== that.prevHeight) {
-                                    mySketch.style.height = height.toString() + "px";
+                                that.prevWidth = width;
+                            }
+                            if (height !== that.prevHeight) {
+                                for (i = 0; i < mySketchViewers.length; i++) {
+                                    mySketch = mySketchViewers[i];
+                                    if (mySketch && mySketch.style) {
+                                        mySketch.style.height = height.toString() + "px";
+                                    }
                                 }
+                                that.prevHeight = height;
                             }
                         }
                     }
@@ -111,7 +122,7 @@
                 });
             }
             Log.ret(Log.l.trace);
-            return ret;
+            return ret || WinJS.Promise.as();
         }
     });
 

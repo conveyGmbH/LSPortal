@@ -20,10 +20,54 @@
             var that = this;
             var layout = null;
 
+            this.nextUrl = null;
             this.sketches = null;
 
             // now do anything...
             var listView = fragmentElement.querySelector("#sketchList.listview");
+
+            var scaleItemsAfterResize = function() {
+                Log.call(Log.l.trace, "SketchList.Controller.");
+                if (fragmentElement &&
+                    fragmentElement.winControl &&
+                    fragmentElement.winControl.prevWidth &&
+                    fragmentElement.winControl.prevHeight) {
+                    var i;
+                    // scale SVG images
+                    var svglist = listView.querySelectorAll(".list-svg");
+                    if (svglist) {
+                        for (i = 0; i < svglist.length; i++) {
+                            var svg = svglist[i].firstElementChild;
+                            if(svg) {
+                                WinJS.Utilities.addClass(svg, "list-svg-item");
+                                svg.viewBox.baseVal.height = svg.height.baseVal.value;
+                                svg.viewBox.baseVal.width = svg.width.baseVal.value;
+                                var surface = svg.querySelector("#surface");
+                                if (surface) {
+                                    surface.setAttribute("fill", "#ffffff");
+                                }
+                            }
+                        }
+                    }
+                    // scale photo images
+                    var imglist = listView.querySelectorAll(".list-img");
+                    if (imglist) {
+                        for (i = 0; i < imglist.length; i++) {
+                            var img = imglist[i].querySelector(".list-img-item");
+                            if (img && img.src && img.naturalWidth && img.naturalHeight && img.style) {
+                                var offset = (imglist[i].clientHeight -
+                                    (imglist[i].clientWidth * img.naturalHeight) / img.naturalWidth) / 2;
+                                img.style.marginTop = offset.toString() + "px";
+                            }
+                        }
+                    }
+                } else {
+                    WinJS.Promise.timeout(50).then(function () {
+                        scaleItemsAfterResize();
+                    });
+                }
+                Log.ret(Log.l.trace);
+            }
 
 
             var resultConverter = function (item, index) {
@@ -36,12 +80,17 @@
                         var docContent = doc.OvwContentDOCCNT3;
                         if (docContent) {
                             var sub = docContent.search("\r\n\r\n");
-                            item.OvwContentDOCCNT3 = "data:image/jpeg;base64," + docContent.substr(sub + 4);
+                            item.srcImg = "data:image/jpeg;base64," + docContent.substr(sub + 4);
+                        } else {
+                            item.srcImg = "";
                         }
+                        item.srcSvg = "";
                         item.showImg = true;
                         item.showSvg = false;
                     }
                     if (isSvg) {
+                        item.srcImg = "";
+                        item.srcSvg = doc.OvwContentDOCCNT3;
                         item.showSvg = true;
                         item.showImg = false;
                     }
@@ -54,30 +103,34 @@
                 onSelectionChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "SketchList.Controller.");
                     //if current sketch is saved successfully, change selection
-                    AppBar.scope.pageElement.winControl.canUnload(function (response) {
-                        // called asynchronously if ok
-                        if (listView && listView.winControl) {
-                            var listControl = listView.winControl;
-                            if (listControl.selection) {
-                                var selectionCount = listControl.selection.count();
-                                if (selectionCount === 1) {
-                                    // Only one item is selected, show the page
-                                    listControl.selection.getItems().done(function(items) {
-                                        var item = items[0];
+                    if (AppBar.scope &&
+                        AppBar.scope.pageElement &&
+                        AppBar.scope.pageElement.winControl &&
+                        typeof AppBar.scope.pageElement.winControl.canUnload === "function") {
+                        AppBar.scope.pageElement.winControl.canUnload(function (response) {
+                            // called asynchronously if ok
+                            if (listView && listView.winControl) {
+                                var listControl = listView.winControl;
+                                if (listControl.selection) {
+                                    var selectionCount = listControl.selection.count();
+                                    if (selectionCount === 1) {
+                                        // Only one item is selected, show the page
+                                        listControl.selection.getItems().done(function (items) {
+                                            var item = items[0];
 
-                                        //load sketch with new recordId
-                                        that.binding.curId = item.data.KontaktNotizVIEWID;
-                                        AppBar.scope.noteId = that.binding.curId;
-                                        AppBar.scope.binding.showSvg = item.data.showSvg;
-                                        AppBar.scope.binding.showPhoto = item.data.showImg;
-                                        AppBar.scope.loadData();
-                                    });
+                                            //load sketch with new recordId
+                                            that.binding.curId = item.data.KontaktNotizVIEWID;
+                                            AppBar.scope.binding.showSvg = item.data.showSvg;
+                                            AppBar.scope.binding.showPhoto = item.data.showImg;
+                                            AppBar.scope.loadData(that.binding.curId);
+                                        });
+                                    }
                                 }
                             }
-                        }
-                    }, function (errorResponse) {
-
-                    });
+                        }, function (errorResponse) {
+                            // error handled in saveData!
+                        });
+                    }
                     Log.ret(Log.l.trace);
                 },
                 onLoadingStateChanged: function (eventInfo) {
@@ -101,20 +154,7 @@
                                 listView.winControl.layout = { type: layout };
                             }
                         } else if (listView.winControl.loadingState === "complete") {
-                            // scale SVG images
-                            var svglist = listView.querySelectorAll(".list-svg");
-                            if (svglist) {
-                                var i;
-                                for (i = 0; i < svglist.length; i++) {
-                                    var svg = svglist[i].firstElementChild;
-                                    if (svg) {
-                                        WinJS.Utilities.addClass(svg, "list-svg-item");
-                                        svg.viewBox.baseVal.height = svg.height.baseVal.value;
-                                        svg.viewBox.baseVal.width = svg.width.baseVal.value;
-                                    }
-                                }
-                            }
-
+                            scaleItemsAfterResize();
                         }
                     }
                     Log.ret(Log.l.trace);
@@ -203,10 +243,7 @@
                         // select returns object already parsed from json file in response
                         if (json && json.d) {
                             that.binding.count = json.d.results.length;
-                            //that.nextUrl = MandatoryList.mandatoryView.getNextUrl(json);
-                            if (that.binding.count > 1) {
-                                AppBar.scope.binding.moreNotes = true;
-                            }
+                            that.nextUrl = SketchList.sketchlistView.getNextUrl(json);
                             var results = json.d.results;
                             results.forEach(function (item, index) {
                                 that.resultConverter(item, index);
@@ -214,17 +251,27 @@
                             // Now, we call WinJS.Binding.List to get the bindable list
                             that.sketches = new WinJS.Binding.List(results);
                             //as default, show first sketchnote in sketch page
-                            if (that.sketches !== null) {
-                                if (that.binding.curId === 0) {
-                                    that.binding.curId = that.sketches._keyMap[0].data.KontaktNotizVIEWID;
-                                    AppBar.scope.noteId = that.binding.curId;
-                                    AppBar.scope.binding.showSvg = that.sketches._keyMap[0].data.showSvg;
-                                    AppBar.scope.binding.showPhoto = that.sketches._keyMap[0].data.showImg;
-                                }
+                            if (that.binding.curId === 0 &&
+                                results && results[0] &&
+                                AppBar.scope && AppBar.scope.binding) {
+                                that.binding.curId = results[0].KontaktNotizVIEWID;
+                                AppBar.scope.binding.showSvg = results[0].showSvg;
+                                AppBar.scope.binding.showPhoto = results[0].showImg;
+                                AppBar.scope.loadData(that.binding.curId);
                             }
                             if (listView.winControl) {
                                 // add ListView dataSource
                                 listView.winControl.itemDataSource = that.sketches.dataSource;
+                            }
+                        }
+                        if (AppBar.scope && AppBar.scope.binding) {
+                            if (that.binding.count > 1) {
+                                AppBar.scope.binding.moreNotes = true;
+                            } else {
+                                AppBar.scope.binding.moreNotes = false;
+                            }
+                            if (!AppBar.scope.binding.userHidesList) {
+                                AppBar.scope.binding.showList = AppBar.scope.binding.moreNotes;
                             }
                         }
                     }, function (errorResponse) {
@@ -234,7 +281,6 @@
                     }, {
                         KontaktID: that.binding.contactId
                     });
-
                 }).then(function () {
                     AppBar.notifyModified = true;
                     AppBar.triggerDisableHandlers();

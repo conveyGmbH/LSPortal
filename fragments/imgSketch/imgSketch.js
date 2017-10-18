@@ -69,11 +69,11 @@
                             var width = fragment.clientWidth;
                             var height = fragment.clientHeight;
 
-                            if (width !== that.prevWidth) {
+                            if (width > 0 && width !== that.prevWidth) {
                                 that.prevWidth = width;
                                 doccontainer.style.width = width.toString() + "px";
                             }
-                            if (height !== that.prevHeight) {
+                            if (height > 0 && height !== that.prevHeight) {
                                 that.prevHeight = height;
                                 doccontainer.style.height = height.toString() + "px";
                             }

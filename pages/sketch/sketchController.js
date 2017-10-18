@@ -17,7 +17,7 @@
             return (useOffline ? "field_line field_line_even" : "hide-element");
         },
         
-        Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement) {
+        Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "Sketch.Controller.");
 
             var that = this;
@@ -26,11 +26,11 @@
                 showSvg: false,
                 showPhoto: false,
                 showList: false,
-                moreNotes: false
-            }]);
+                moreNotes: false,
+                userHidesList: false
+            }, commandList]);
 
-            this.contactId = 0;
-            this.noteId = 0;
+            this.contactId = AppData.getRecordId("Kontakt");
             this.pageElement = pageElement;
 
             var getSvgFragmentController = function () {
@@ -72,7 +72,7 @@
             this.isModified = isModified;
 
 
-            var loadData = function () {
+            var loadData = function (noteId) {
                 Log.call(Log.l.trace, "Sketch.Controller.");
                 AppData.setErrorMsg(that.binding);
                 that.contactId = AppData.getRecordId("Kontakt");
@@ -106,50 +106,44 @@
                     } else {
                         Log.print(Log.l.trace, "use existing that.contactID=" + that.contactId);
                         return WinJS.Promise.as();
-                    }*/
-                }).then(function () {
+                    }
+                }).then(function () {*/
                     //load list first -> noteId, showSvg, showPhoto, moreNotes set
-                    var sketchListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("sketchList"));
-                    if (sketchListFragmentControl && sketchListFragmentControl.controller) {
-                        return sketchListFragmentControl.controller.loadData(that.contactId);
-                    } else {
-                        var parentElement = pageElement.querySelector("#listhost");
+                    var parentElement;
+                    if (!noteId) {
+                        var sketchListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("sketchList"));
+                        if (sketchListFragmentControl && sketchListFragmentControl.controller) {
+                            return sketchListFragmentControl.controller.loadData(that.contactId);
+                        } else {
+                            parentElement = pageElement.querySelector("#listhost");
+                            if (parentElement) {
+                                return Application.loadFragmentById(parentElement, "sketchList", { contactId: that.contactId });
+                            } else {
+                                return WinJS.Promise.as();
+                            }
+                        }
+                    } else if (getDocViewer() && getDocViewer().controller) {
+                        return getDocViewer().controller.loadData(noteId);
+                    } else if (that.binding.showSvg) {
+                        parentElement = pageElement.querySelector("#svghost");
                         if (parentElement) {
-                            return Application.loadFragmentById(parentElement, "sketchList", { contactId: that.contactId });
+                            return Application.loadFragmentById(parentElement, "svgSketch", { noteId: noteId });
                         } else {
                             return WinJS.Promise.as();
                         }
+                    } if (that.binding.showPhoto) {
+                        parentElement = pageElement.querySelector("#imghost");
+                        if (parentElement) {
+                            return Application.loadFragmentById(parentElement, "imgSketch", { noteId: noteId });
+                        } else {
+                            return WinJS.Promise.as();
+                        }
+                    } else {
+                        return WinJS.Promise.as();
                     }
-                }).then(function () {
-                    if (that.binding.showSvg) {
-                        var svgFragmentController = getSvgFragmentController();
-                        if (svgFragmentController) {
-                            return svgFragmentController.loadData(that.noteId);
-                        } else {
-                            var parentElement = pageElement.querySelector("#svghost");
-                            if (parentElement) {
-                                return Application.loadFragmentById(parentElement, "svgSketch", { noteId: that.noteId });
-                            } else {
-                                return WinJS.Promise.as();
-                            }
-                        }
-                    } else return WinJS.Promise.as();
-                }).then(function () {
-                    if (that.binding.showPhoto) {
-                        var imgFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("imgSketch"));
-                        if (imgFragmentControl && imgFragmentControl.controller) {
-                            return imgFragmentControl.controller.loadData(that.noteId);
-                        } else {
-                            var parentElement = pageElement.querySelector("#imghost");
-                            if (parentElement) {
-                                return Application.loadFragmentById(parentElement, "imgSketch", { noteId: that.noteId });
-                            } else {
-                                return WinJS.Promise.as();
-                            }
-                        }
-                    } else return WinJS.Promise.as();
                 });
                 Log.ret(Log.l.trace);
+                return ret;
             }
             this.loadData = loadData;
             
@@ -274,8 +268,9 @@
                 },
                 clickShowList: function (event) {
                     Log.call(Log.l.trace, "Sketch.Controller.");
-                    that.binding.showList = (that.binding.showList === false) ? true : false;
-                    pageElement.winControl.updateLayout(pageElement);
+                    that.binding.showList = !that.binding.showList;
+                    that.binding.userHidesList = !that.binding.showList;
+                    Application.navigator._resized();
                     Log.ret(Log.l.trace);
                 }
             };

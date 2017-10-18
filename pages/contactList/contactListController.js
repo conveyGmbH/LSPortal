@@ -278,6 +278,7 @@
                             if (contact &&
                                 typeof contact === "object" &&
                                 contact.KontaktVIEWID === recordId) {
+                                AppData.setRecordId("Kontakt", recordId);
                                 listView.winControl.selection.set(i).done(function() {
                                     WinJS.Promise.timeout(50).then(function() {
                                         that.scrollToRecordId(recordId);

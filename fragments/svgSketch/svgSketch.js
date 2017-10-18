@@ -104,21 +104,20 @@
             if (element && !that.inResize) {
                 that.inResize = 1;
                 ret = WinJS.Promise.timeout(0).then(function () {
-                    var fragment = element.querySelector(".svgSketchFragment");
                     var svg = element.querySelector("#svgsketch.svgdiv");
-
                     if (svg && svg.style) {
+                        var fragment = element.querySelector(".svgSketchFragment");
                         if (fragment) {
                             var width = fragment.clientWidth;
                             var height = fragment.clientHeight;
 
-                            if (width !== that.prevWidth) {
+                            if (width > 0 && width !== that.prevWidth) {
                                 that.prevWidth = width;
                                 svg.style.width = width.toString() + "px";
                             }
-                            if (height !== that.prevHeight) {
+                            if (height > 0 && height !== that.prevHeight) {
                                 that.prevHeight = height;
-                                svg.style.height = (height - 10).toString() + "px";
+                                svg.style.height = height.toString() + "px";
                             }
                         }
                     }

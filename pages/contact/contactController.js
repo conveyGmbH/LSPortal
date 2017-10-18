@@ -221,12 +221,25 @@
                                     oldElement.innerHTML = "";
                                 }
                             }
-                            imgScale = 1;
-                            imgWidth = that.img.naturalWidth * imgScale;
-                            imgHeight = that.img.naturalHeight * imgScale;
                             imgRotation = 0;
+                            var containerWidth = photoview.clientWidth;
+                            if (containerWidth < that.img.naturalWidth) {
+                                imgScale = containerWidth / that.img.naturalWidth;
+                                imgWidth = containerWidth;
+                            } else {
+                                imgScale = 1;
+                                imgWidth = that.img.naturalWidth;
+                            }
+                            imgHeight = that.img.naturalHeight * imgScale;
                             imgLeft = imgNaturalLeft * imgScale;
                             imgTop = imgNaturalTop * imgScale;
+                            if (that.img.style) {
+                                that.img.style.transform = "";
+                                that.img.style.marginLeft = 0;
+                                that.img.style.marginTop = 0;
+                                that.img.style.width = imgWidth + "px";
+                                that.img.style.height = imgHeight + "px";
+                            }
                             var ham = new Hammer($(".pinch")[0], {
                                 domEvents: true
                             });
@@ -299,7 +312,8 @@
                                 if (pageControl && pageControl.updateLayout) {
                                     pageControl.prevWidth = 0;
                                     pageControl.prevHeight = 0;
-                                    pageControl.updateLayout.call(pageControl, pageElement).then(function () {
+                                    var promise = pageControl.updateLayout.call(pageControl, pageElement) || WinJS.Promise.as();
+                                    promise.then(function () {
                                         if (photoItemBox.style) {
                                             photoItemBox.style.visibility = "";
                                         }
