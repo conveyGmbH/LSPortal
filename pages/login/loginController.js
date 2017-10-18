@@ -256,14 +256,6 @@
                                 if (dataLogin.OK_Flag === "X" && dataLogin.MitarbeiterID) {
                                     AppData._persistentStates.odata.login = that.binding.dataLogin.Login;
                                     AppData._persistentStates.odata.password = that.binding.dataLogin.Password;
-                                    AppData._persistentStates.allRestrictions = {};
-                                    AppData._persistentStates.allRecIds = {};
-                                    AppData._userData = {};
-                                    AppData._userRemoteData = {};
-                                    AppData._contactData = {};
-                                    AppData._photoData = null;
-                                    AppData._barcodeType = null;
-                                    AppData._barcodeRequest = null;
                                     AppData.setRecordId("Mitarbeiter", dataLogin.MitarbeiterID);
                                     NavigationBar.enablePage("settings");
                                     NavigationBar.enablePage("info");
