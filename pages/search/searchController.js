@@ -14,7 +14,7 @@
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "Search.Controller.");
             Application.Controller.apply(this, [pageElement, {
-                restriction: Search.contactView.defaultValue,
+                restriction: getEmptyDefaultValue(Search.contactView.defaultValue),
                 Erfassungsart0: Search.Erfassungsart0,
                 Erfassungsart1: Search.Erfassungsart1,
                 Erfassungsart2: Search.Erfassungsart2,
@@ -378,6 +378,11 @@
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
             }).then(function () {
+                var savedRestriction = AppData.getRestriction("Kontakt");
+                if (typeof savedRestriction === "object") {
+                    that.binding.restriction = savedRestriction;
+                    copyMissingMembersByValue(that.binding.restriction, Search.contactView.defaultValue);
+                }
                 Log.print(Log.l.trace, "Data loaded");
                 return that.showDateRestrictions();
             }).then(function () {

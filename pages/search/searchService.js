@@ -20,7 +20,7 @@
                 return ret;
             },
             defaultValue: {
-                MitarbeiterID: "",
+                MitarbeiterID: 0,
                 KontaktVIEWID: "",
                 CreatorSiteID: "",
                 CreatorRecID: "",
@@ -31,7 +31,7 @@
                 Strasse: "",
                 PLZ: "",
                 Stadt: "",
-                INITLandID: null,
+                INITLandID: 0,
                 useErfassungsdatum: false,
                 usemodifiedTS: false,
                 Erfassungsart: 0,
