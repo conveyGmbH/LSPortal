@@ -25,6 +25,20 @@
             // ListView control
             var listView = pageElement.querySelector("#skillsList.listview");
 
+            // prevent some keyboard actions from listview to navigate within controls!
+            listView.addEventListener("keydown", function (e) {
+                if (!e.ctrlKey && !e.altKey) {
+                    switch (e.keyCode) {
+                        case WinJS.Utilities.Key.end:
+                        case WinJS.Utilities.Key.home:
+                        case WinJS.Utilities.Key.leftArrow:
+                        case WinJS.Utilities.Key.rightArrow:
+                        case WinJS.Utilities.Key.space:
+                            e.stopImmediatePropagation();
+                            break;
+                    }
+                }
+            }.bind(this), true);
 
             var progress = null;
             var counter = null;

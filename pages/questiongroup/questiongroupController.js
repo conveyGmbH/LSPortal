@@ -38,6 +38,8 @@
             listView.addEventListener("keydown", function (e) {
                 if (!e.ctrlKey && !e.altKey) {
                     switch (e.keyCode) {
+                        case WinJS.Utilities.Key.end:
+                        case WinJS.Utilities.Key.home:
                         case WinJS.Utilities.Key.leftArrow:
                         case WinJS.Utilities.Key.rightArrow:
                         case WinJS.Utilities.Key.space:
