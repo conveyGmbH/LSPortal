@@ -74,8 +74,8 @@
                 Log.call(Log.l.trace, "SketchList.Controller.");
                 if (item) {
                     var doc = item;
-                    var isSvg = (doc.DocGroup === 3 && doc.DocFormat === 75) ? true : false;
-                    var isImg = (doc.DocGroup === 1) ? true : false;
+                    var isSvg = AppData.isSvg(doc.DocGroup, doc.DocFormat);
+                    var isImg = AppData.isImg(doc.DocGroup, doc.DocFormat);
                     if (isImg) {
                         var docContent = doc.OvwContentDOCCNT3;
                         if (docContent) {
@@ -117,12 +117,11 @@
                                         // Only one item is selected, show the page
                                         listControl.selection.getItems().done(function (items) {
                                             var item = items[0];
-
-                                            //load sketch with new recordId
-                                            that.binding.curId = item.data.KontaktNotizVIEWID;
-                                            AppBar.scope.binding.showSvg = item.data.showSvg;
-                                            AppBar.scope.binding.showPhoto = item.data.showImg;
-                                            AppBar.scope.loadData(that.binding.curId);
+                                            if (item.data) {
+                                                //load sketch with new recordId
+                                                that.binding.curId = item.data.KontaktNotizVIEWID;
+                                                AppBar.scope.loadData(that.binding.curId, item.data.DocGroup, item.data.DocFormat);
+                                            }
                                         });
                                     }
                                 }
@@ -251,17 +250,16 @@
                             // Now, we call WinJS.Binding.List to get the bindable list
                             that.sketches = new WinJS.Binding.List(results);
                             //as default, show first sketchnote in sketch page
-                            if (that.binding.curId === 0 &&
-                                results && results[0] &&
-                                AppBar.scope && AppBar.scope.binding) {
-                                that.binding.curId = results[0].KontaktNotizVIEWID;
-                                AppBar.scope.binding.showSvg = results[0].showSvg;
-                                AppBar.scope.binding.showPhoto = results[0].showImg;
-                                AppBar.scope.loadData(that.binding.curId);
-                            }
                             if (listView.winControl) {
                                 // add ListView dataSource
                                 listView.winControl.itemDataSource = that.sketches.dataSource;
+                                if (listView.winControl.selection && results[0]) {
+                                    listView.winControl.selection.set(0).then(function() {
+                                        //load sketch with new recordId
+                                        that.binding.curId = results[0].KontaktNotizVIEWID;
+                                        AppBar.scope.loadData(that.binding.curId, results[0].DocGroup, results[0].DocFormat);
+                                    });
+                                }
                             }
                         }
                         if (AppBar.scope && AppBar.scope.binding) {
