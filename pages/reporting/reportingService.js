@@ -55,6 +55,18 @@
                 var ret = Reporting._analysisListView.getNextUrl(response);
                 Log.ret(Log.l.trace);
                 return ret;
+            },
+            getResults: function () {
+                Log.call(Log.l.trace, "EmpRoles.LGNTINITAPUserRole.");
+                var ret = Reporting._analysisListView.results;
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getMap: function () {
+                Log.call(Log.l.trace, "EmpRoles.LGNTINITAPUserRole.");
+                var ret = Reporting._analysisListView.map;
+                Log.ret(Log.l.trace);
+                return ret;
             }
         },
         _xLAuswertungView: {
@@ -66,8 +78,7 @@
             select: function(complete, error, restriction) {
                 Log.call(Log.l.trace, "Reporting.");
                 var ret = Reporting._xLAuswertungView.select(complete, error, restriction, {
-                    ordered: true,
-                    orderAttribute: "KontaktID"
+                   
                 });
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);

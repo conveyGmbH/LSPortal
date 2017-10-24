@@ -81,7 +81,6 @@
                 var that = this;
                 var rowCount = results.length;
                 Log.call(Log.l.trace, "ExportXlsx.", "rowCount=" + rowCount);
-
                 that.progressFirst = that.progressNext;
                 that.progressNext += that.progressStep;
                 that.progressStep /= 2;
@@ -89,55 +88,57 @@
                 for (var r = 0; r < rowCount; r++) {
                     var newRow = new XElement(S.row);
                     var row = results[r];
-                    for (var c = 0; c < colCount; c++) {
-                        var key = attribSpecs[c].ODataAttributeName;
-                        value = row[key];
-                        var attribTypeId = attribSpecs[c].AttribTypeID;
-                        type = null;
-                        style = null;
-                        valueName = S.v;
-                        if (typeof value === "undefined" ||
-                            value === null) {
-                            value = "";
-                        } else if (attribTypeId === 8 || attribTypeId === 6) { // timestamp or date
-                            var dateString = value.replace("\/Date(", "").replace(")\/", "");
-                            var milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
-                            var date = new Date(milliseconds);
-                            var year = date.getFullYear();
-                            var month = date.getMonth() + 1;
-                            var day = date.getDate();
-                            if (attribTypeId === 8) {
-                                var hour = date.getHours();
-                                var minute = date.getMinutes();
-                                value = year.toString() +
-                                ((month < 10) ? "-0" : "-") + month.toString() +
-                                ((day < 10) ? "-0" : "-") + day.toString() +
-                                ((hour < 10) ? "T0" : "T") + hour.toString() +
-                                ((minute < 10) ? ":0" : ":") + minute.toString() +
-                                    "Z";
+                    for (var c = 1; c < colCount; c++) {
+                        if (!attribSpecs[c].hidden) {
+                            var key = attribSpecs[c].ODataAttributeName;
+                            value = row[key];
+                            var attribTypeId = attribSpecs[c].AttribTypeID;
+                            type = null;
+                            style = null;
+                            valueName = S.v;
+                            if (typeof value === "undefined" ||
+                                value === null) {
+                                value = "";
+                            } else if (attribTypeId === 8 || attribTypeId === 6) { // timestamp or date
+                                var dateString = value.replace("\/Date(", "").replace(")\/", "");
+                                var milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
+                                var date = new Date(milliseconds);
+                                var year = date.getFullYear();
+                                var month = date.getMonth() + 1;
+                                var day = date.getDate();
+                                if (attribTypeId === 8) {
+                                    var hour = date.getHours();
+                                    var minute = date.getMinutes();
+                                    value = year.toString() +
+                                    ((month < 10) ? "-0" : "-") + month.toString() +
+                                    ((day < 10) ? "-0" : "-") + day.toString() +
+                                    ((hour < 10) ? "T0" : "T") + hour.toString() +
+                                    ((minute < 10) ? ":0" : ":") + minute.toString() +
+                                        "Z";
+                                } else {
+                                    value = year.toString() +
+                                    ((month < 10) ? "-0" : "-") + month.toString() +
+                                    ((day < 10) ? "-0" : "-") + day.toString() +
+                                        "T";
+                                }
+                                type = "d";
+                                style = 1;
+                            } else if (attribTypeId === 3 || !attribTypeId) { // text
+                                valueName = S._is;
+                                type = "inlineStr";
+                                value = new XElement(S.t, value);
                             } else {
-                                value = year.toString() +
-                                ((month < 10) ? "-0" : "-") + month.toString() +
-                                ((day < 10) ? "-0" : "-") + day.toString() +
-                                    "T";
+                                type = "n";
                             }
-                            type = "d";
-                            style = 1;
-                        } else if (attribTypeId === 3 || !attribTypeId) { // text
-                            valueName = S._is;
-                            type = "inlineStr";
-                            value = new XElement(S.t, value);
-                        } else {
-                            type = "n";
+                            newCell = new XElement(S.c, new XElement(valueName, value));
+                            if (type) {
+                                newCell.setAttributeValue("t", type);
+                            }
+                            if (style) {
+                                newCell.setAttributeValue("s", style);
+                            }
+                            newRow.add(newCell);
                         }
-                        newCell = new XElement(S.c, new XElement(valueName, value));
-                        if (type) {
-                            newCell.setAttributeValue("t", type);
-                        }
-                        if (style) {
-                            newCell.setAttributeValue("s", style);
-                        }
-                        newRow.add(newCell);
                     }
                     sheetData.add(newRow);
                 }
@@ -191,23 +192,36 @@
                         var colCount = attribSpecs.length;
                         Log.print(Log.l.trace, colCount + " cloumns to export. Write column header...");
                         var newRow = new XElement(S.row);
-                        for (var c = 0; c < colCount; c++) {
-                            var value = attribSpecs[c].Name;
-                            var type = null;
-                            var valueName = S.v;
-                            if (typeof value === "undefined" ||
-                                value === null) {
-                                value = "";
-                            } else {
-                                valueName = S._is;
-                                type = "inlineStr";
-                                value = new XElement(S.t, value);
+                        if (baseDbView.relationName === "KontaktReport") {
+                            for (var c = 0; c < colCount; c++) {
+                                var row = json.d.results[0];
+                                var key = attribSpecs[c].ODataAttributeName;
+                                var value = row && row[key];
+                                if (value) {
+                                    attribSpecs[c].hidden = false;
+                                } else {
+                                    attribSpecs[c].hidden = true;
+                                }
                             }
-                            var newCell = new XElement(S.c, new XElement(valueName, value));
-                            if (type) {
-                                newCell.setAttributeValue("t", type);
+                        } else {
+                            for (var c = 1; c < colCount; c++) {
+                                var value = attribSpecs[c].Name;
+                                var type = null;
+                                var valueName = S.v;
+                                if (typeof value === "undefined" ||
+                                    value === null) {
+                                    value = "";
+                                } else {
+                                    valueName = S._is;
+                                    type = "inlineStr";
+                                    value = new XElement(S.t, value);
+                                }
+                                var newCell = new XElement(S.c, new XElement(valueName, value));
+                                if (type) {
+                                    newCell.setAttributeValue("t", type);
+                                }
+                                newRow.add(newCell);
                             }
-                            newRow.add(newCell);
                         }
                         sheetData.replaceAll(newRow);
 

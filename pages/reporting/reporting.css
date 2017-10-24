@@ -21,3 +21,8 @@
     margin-top: 5%;
     margin-left: 2%;
 }
+@media (max-width:940px) and (min-width: 550px) {
+   .win-datepicker {
+    padding-left: 50px;
+}
+}
