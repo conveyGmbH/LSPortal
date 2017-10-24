@@ -212,12 +212,16 @@
                             item.pageProperty = "questionnaire";
                             if (item.LocalValue === "0") {
                                 AppData._persistentStates.hideQuestionnaire = true;
+                            } else {
+                                AppData._persistentStates.hideQuestionnaire = false;
                             }
                             break;
                         case 21:
                             item.pageProperty = "sketch";
                             if (item.LocalValue === "0") {
                                 AppData._persistentStates.hideSketch = true;
+                            } else {
+                                AppData._persistentStates.hideSketch = false;
                             }
                             break;
                         default:
