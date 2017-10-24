@@ -39,7 +39,6 @@
             var fifthskill = [];
 
             var that = this;
-            var prevLogin = null;
 
             var restriction = AppData.getRestriction("SkillEntry"); //
             if (!restriction) {
@@ -75,7 +74,7 @@
                 Log.call(Log.l.trace, "Infodesk.Controller.");
                 var keyValue;
 
-                if (item.SkillTypeSkillsVIEWID === 20) {
+                if (item.Sortierung === 1) {
                     if (that.binding.restriction.SkillType1Sortierung) {
                         if (that.binding.restriction.SkillType1Sortierung < 10)
                             keyValue = "Skills0" + that.binding.restriction.SkillType1Sortierung;
@@ -88,7 +87,7 @@
                         comboboxSkills1.value = 0;
                 }
 
-                if (item.SkillTypeSkillsVIEWID === 21) {
+                if (item.Sortierung === 2) {
                     if (that.binding.restriction.SkillType2Sortierung) {
                         if (that.binding.restriction.SkillType2Sortierung < 10)
                             keyValue = "Skills0" + that.binding.restriction.SkillType2Sortierung;
@@ -101,7 +100,7 @@
                         comboboxSkills2.value = 0;
                 }
 
-                if (item.SkillTypeSkillsVIEWID === 113) {
+                if (item.Sortierung === 3) {
                     if (that.binding.restriction.SkillType3Sortierung) {
                         if (that.binding.restriction.SkillType3Sortierung < 10)
                             keyValue = "Skills0" + that.binding.restriction.SkillType3Sortierung;
@@ -114,7 +113,7 @@
                         comboboxSkills3.value = 0;
                 }
 
-                if (item.SkillTypeSkillsVIEWID === 115) {
+                if (item.Sortierung === 4) {
                     if (that.binding.restriction.SkillType4Sortierung) {
                         if (that.binding.restriction.SkillType4Sortierung < 10)
                             keyValue = "Skills0" + that.binding.restriction.SkillType4Sortierung;
@@ -124,10 +123,10 @@
                         comboboxSkills4.title = item[keyValue];
                     }
                     else
-                        comboboxSkills4.value = 0;
+                        comboboxSkills4.value = 0; // wenn eins wegelöscht wird, dann 
                 }
 
-                if (item.SkillTypeSkillsVIEWID === 116) {
+                if (item.Sortierung === 5) {
                     if (that.binding.restriction.SkillType5Sortierung) {
                         if (that.binding.restriction.SkillType5Sortierung < 10)
                             keyValue = "Skills0" + that.binding.restriction.SkillType5Sortierung;
@@ -193,7 +192,21 @@
                     AppData.setRestriction("SkillEntry", that.binding.restriction); //SkillEntryView_20472
                     // Abfrage wenn beide comboboxen nicht ausgewählt
                     // spannende Stelle // letzen Wert der Comboboxen
-
+                    if (comboboxSkills1.value === "") {
+                        comboboxSkills1.value = "0";
+                    }
+                    if (comboboxSkills2.value === "") {
+                        comboboxSkills2.value = "0";
+                    }
+                    if (comboboxSkills3.value === "") {
+                        comboboxSkills3.value = "0";
+                    }
+                    if (comboboxSkills4.value === "") {
+                        comboboxSkills4.value = "0";
+                    }
+                    if (comboboxSkills5.value === "") {
+                        comboboxSkills5.value = "0";
+                    }
                     // Abfrage wenn beide comboboxen ausgewählt
                     // spannende Stelle // letzen Wert der Comboboxen
                     if (comboboxSkills1.value !== "0" &&
@@ -205,24 +218,23 @@
                         that.binding.restriction.Aktiv = [];
                         that.binding.restriction.SkillTypeID = [];
                         that.binding.restriction.Sortierung = [];
-                        //  for (var i = 0; i < 5; i++) {
-                        that.binding.restriction.Aktiv = "X"; //"X"
-                        that.binding.restriction.SkillTypeID.push(20);
-                        //   if (that.binding.restriction.SkillTypeID[i] === 20)
+
+                        that.binding.restriction.Aktiv = "X";
+                        that.binding.restriction.SkillTypeID.push(firstskill.skilltypesortierung);
                         that.binding.restriction.Sortierung.push(that.binding.restriction.SkillType1Sortierung);
-                        // if (that.binding.restriction.SkillTypeID[i] === 21)
-                        that.binding.restriction.SkillTypeID.push(21);
+
+                        that.binding.restriction.SkillTypeID.push(secondskill.skilltypesortierung);
                         that.binding.restriction.Sortierung.push(that.binding.restriction.SkillType2Sortierung);
-                        // if (that.binding.restriction.SkillTypeID[i] === 113)
-                        that.binding.restriction.SkillTypeID.push(113);
+
+                        that.binding.restriction.SkillTypeID.push(thirdskill.skilltypesortierung);
                         that.binding.restriction.Sortierung.push(that.binding.restriction.SkillType3Sortierung);
-                        // if (that.binding.restriction.SkillTypeID[i] === 115)
-                        that.binding.restriction.SkillTypeID.push(115);
+
+                        that.binding.restriction.SkillTypeID.push(fourthskill.skilltypesortierung);
                         that.binding.restriction.Sortierung.push(that.binding.restriction.SkillType4Sortierung);
-                        // if (that.binding.restriction.SkillTypeID[i] === 116)
-                        that.binding.restriction.SkillTypeID.push(116);
+
+                        that.binding.restriction.SkillTypeID.push(fifthskill.skilltypesortierung);
                         that.binding.restriction.Sortierung.push(that.binding.restriction.SkillType5Sortierung);
-                        //}
+
                         that.binding.restriction.countCombobox = 5;
                         that.binding.restriction.bAndInEachRow = true;
                         Log.print("restriction number:" + that.binding.restriction.countCombobox + ", restriction: " + that.binding.restriction);
@@ -281,27 +293,27 @@
                             if (that.binding.restriction.SkillType5Sortierung === "0") {
                                 that.binding.restriction.SkillType5Sortierung = 0;
                             }
-                            that.binding.restriction.SkillTypeID.push(20);
+                            that.binding.restriction.SkillTypeID.push(firstskill.skilltypesortierung);
                             that.binding.restriction.Sortierung.push(that.binding.restriction.SkillType1Sortierung);
                             if (that.binding.restriction.SkillType1Sortierung !== 0) {
                                 that.binding.restriction.countCombobox++;
                             }
-                            that.binding.restriction.SkillTypeID.push(21);
+                            that.binding.restriction.SkillTypeID.push(secondskill.skilltypesortierung);
                             that.binding.restriction.Sortierung.push(that.binding.restriction.SkillType2Sortierung);
                             if (that.binding.restriction.SkillType2Sortierung !== 0) {
                                 that.binding.restriction.countCombobox++;
                             }
-                            that.binding.restriction.SkillTypeID.push(113);
+                            that.binding.restriction.SkillTypeID.push(thirdskill.skilltypesortierung);
                             that.binding.restriction.Sortierung.push(that.binding.restriction.SkillType3Sortierung);
                             if (that.binding.restriction.SkillType3Sortierung !== 0) {
                                 that.binding.restriction.countCombobox++;
                             }
-                            that.binding.restriction.SkillTypeID.push(115);
+                            that.binding.restriction.SkillTypeID.push(fourthskill.skilltypesortierung);
                             that.binding.restriction.Sortierung.push(that.binding.restriction.SkillType4Sortierung);
                             if (that.binding.restriction.SkillType4Sortierung !== 0) {
                                 that.binding.restriction.countCombobox++;
                             }
-                            that.binding.restriction.SkillTypeID.push(116);
+                            that.binding.restriction.SkillTypeID.push(fifthskill.skilltypesortierung);
                             that.binding.restriction.Sortierung.push(that.binding.restriction.SkillType5Sortierung);
                             if (that.binding.restriction.SkillType5Sortierung !== 0) {
                                 that.binding.restriction.countCombobox++;
@@ -327,6 +339,7 @@
                             title: " "
                         }
                     ];
+                    // skills.Sortierung = item.Sortierung;
                     for (var i = 1; i <= 28; i++) {
                         var keyValue;
                         var keyTitle = item.TITLE;
@@ -354,20 +367,25 @@
                     if (initskills && initskills.winControl) {
                         initskills.winControl.data = new WinJS.Binding.List(skills);
                     }
-                    if (item.SkillTypeSkillsVIEWID === 20) {
+                    if (item.Sortierung === 1) {
                         firstskill = skills;
+                        firstskill.skilltypesortierung = item.SkillTypeSkillsVIEWID;
                     }
-                    if (item.SkillTypeSkillsVIEWID === 21) {
+                    if (item.Sortierung === 2) {
                         secondskill = skills;
+                        secondskill.skilltypesortierung = item.SkillTypeSkillsVIEWID;
                     }
-                    if (item.SkillTypeSkillsVIEWID === 113) {
+                    if (item.Sortierung === 3) {
                         thirdskill = skills;
+                        thirdskill.skilltypesortierung = item.SkillTypeSkillsVIEWID;
                     }
-                    if (item.SkillTypeSkillsVIEWID === 115) {
+                    if (item.Sortierung === 4) {
                         fourthskill = skills;
+                        fourthskill.skilltypesortierung = item.SkillTypeSkillsVIEWID;
                     }
-                    if (item.SkillTypeSkillsVIEWID === 116) {
+                    if (item.Sortierung === 5) {
                         fifthskill = skills;
+                        fifthskill.skilltypesortierung = item.SkillTypeSkillsVIEWID;
                     }
                 }
                 Log.ret(Log.l.trace, "");
@@ -429,7 +447,7 @@
                     that.binding.restriction = savedRestriction;
                 }).then(function () {
                     if (that.binding.dataEmployee.firstskill !== "" || that.binding.dataEmployee.secondskill !== "" || that.binding.dataEmployee.thirdskill !== "" || that.binding.dataEmployee.fourthskill !== "" || that.binding.dataEmployee.fifthskill !== "") {
-                        that.binding.dataEmployee.firstskill= "";
+                        that.binding.dataEmployee.firstskill = "";
                         that.binding.dataEmployee.secondskill = "";
                         that.binding.dataEmployee.thirdskill = "";
                         that.binding.dataEmployee.fourthskill = "";
@@ -448,7 +466,7 @@
                                         that.binding.dataEmployee.Vorname = json.d.results[i].Vorname;
                                         that.binding.dataEmployee.Nachname = json.d.results[i].Nachname;
                                         if (json.d.results[i].Aktiv === "X") {
-                                            if (json.d.results[i].SkillTypeID === 20) {
+                                            if (json.d.results[i].SkillTypeID === firstskill.skilltypesortierung) {
                                                 for (var j = 0; j < firstskill.length; j++) {
                                                     if (json.d.results[i].Sortierung === firstskill[j].value) {
                                                         that.binding.dataEmployee
@@ -458,8 +476,7 @@
                                                             "\n";
                                                     }
                                                 }
-                                            }
-                                            if (json.d.results[i].SkillTypeID === 21) {
+                                            } else if (json.d.results[i].SkillTypeID === secondskill.skilltypesortierung) {
                                                 for (var k = 0; k < secondskill.length; k++) {
                                                     if (json.d.results[i].Sortierung === secondskill[k].value) {
                                                         that.binding.dataEmployee
@@ -469,8 +486,7 @@
                                                             "\t";
                                                     }
                                                 }
-                                            }
-                                            if (json.d.results[i].SkillTypeID === 113) {
+                                            } else if (json.d.results[i].SkillTypeID === thirdskill.skilltypesortierung) {
                                                 for (var l = 0; l < thirdskill.length; l++) {
                                                     if (json.d.results[i].Sortierung === thirdskill[l].value) {
                                                         that.binding.dataEmployee
@@ -480,25 +496,23 @@
                                                             "\t";
                                                     }
                                                 }
-                                            }
-                                            if (json.d.results[i].SkillTypeID === 115) {
-                                                for (var l = 0; l < fourthskill.length; l++) {
-                                                    if (json.d.results[i].Sortierung === fourthskill[l].value) {
+                                            } else if (json.d.results[i].SkillTypeID === fourthskill.skilltypesortierung) {
+                                                for (var m = 0; m < fourthskill.length; m++) {
+                                                    if (json.d.results[i].Sortierung === fourthskill[m].value) {
                                                         that.binding.dataEmployee
                                                             .fourthskill =
                                                             that.binding.dataEmployee.fourthskill +
-                                                            fourthskill[l].title +
+                                                            fourthskill[m].title +
                                                             "\t";
                                                     }
                                                 }
-                                            }
-                                            if (json.d.results[i].SkillTypeID === 116) {
-                                                for (var l = 0; l < fifthskill.length; l++) {
-                                                    if (json.d.results[i].Sortierung === fifthskill[l].value) {
+                                            } else if (json.d.results[i].SkillTypeID === fifthskill.skilltypesortierung) {
+                                                for (var n = 0; n < fifthskill.length; n++) {
+                                                    if (json.d.results[i].Sortierung === fifthskill[n].value) {
                                                         that.binding.dataEmployee
                                                             .fifthskill =
                                                             that.binding.dataEmployee.fifthskill +
-                                                            fifthskill[l].title +
+                                                            fifthskill[n].title +
                                                             "\t";
                                                     }
                                                 }
@@ -506,7 +520,6 @@
                                         }
                                     }
                                 };
-
                             }
                         }, function (errorResponse) {
                             AppData.setErrorMsg(that.binding, errorResponse);

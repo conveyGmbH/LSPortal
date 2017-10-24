@@ -180,6 +180,21 @@
                             that.createColorPicker("tileBackgroundColor");
                             that.createColorPicker("navigationColor");
                         });
+                        var pValue = "0";
+                        if (toggle.checked) {
+                            pValue = "1";
+                        }
+
+                        AppData.call("PRC_SETVERANSTOPTION", {
+                            pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                            pOptionTypeID: 18,
+                            pValue: pValue
+                        }, function (json) {
+                            Log.print(Log.l.info, "call success! ");
+                        }, function (error) {
+                            Log.print(Log.l.error, "call error");
+                        });
+
                     }
                     Log.ret(Log.l.trace);
                 },
@@ -359,12 +374,16 @@
                             item.pageProperty = "questionnaire";
                             if (item.LocalValue === "0") {
                                 AppData._persistentStates.hideQuestionnaire = true;
+                            } else {
+                                AppData._persistentStates.hideQuestionnaire = false;
                             }
                             break;
                         case 21:
                             item.pageProperty = "sketch";
                             if (item.LocalValue === "0") {
                                 AppData._persistentStates.hideSketch = true;
+                            } else {
+                                AppData._persistentStates.hideSketch = false;
                             }
                             break;
                         default:
@@ -424,6 +443,13 @@
                             });
                         }
                         Application.pageframe.savePersistentStates();
+                    }
+                }
+                if (item.pageProperty) {
+                    if (item.LocalValue === "1") {
+                        NavigationBar.enablePage(item.pageProperty);
+                    } else if (item.LocalValue === "0") {
+                        NavigationBar.disablePage(item.pageProperty);
                     }
                 }
             }
