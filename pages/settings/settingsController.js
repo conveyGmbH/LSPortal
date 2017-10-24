@@ -60,29 +60,29 @@
                 var pValue = color.replace("#", "");
                 var pOptionTypeId = null;
                 switch (colorProperty) { //event.currentTarget.id
-                case "accentColor":
-                    pOptionTypeId = 11;
-                    break;
-                case "backgroundColor":
-                    pOptionTypeId = 12;
-                    break;
-                case "navigationColor":
-                    pOptionTypeId = 13;
-                    break;
-                case "textColor":
-                    pOptionTypeId = 14;
-                    break;
-                case "labelColor":
-                    pOptionTypeId = 15;
-                    break;
-                case "tileTextColor":
-                    pOptionTypeId = 16;
-                    break;
-                case "tileBackgroundColor":
-                    pOptionTypeId = 17;
-                    break;
-                default:
-                    // defaultvalues
+                    case "accentColor":
+                        pOptionTypeId = 11;
+                        break;
+                    case "backgroundColor":
+                        pOptionTypeId = 12;
+                        break;
+                    case "navigationColor":
+                        pOptionTypeId = 13;
+                        break;
+                    case "textColor":
+                        pOptionTypeId = 14;
+                        break;
+                    case "labelColor":
+                        pOptionTypeId = 15;
+                        break;
+                    case "tileTextColor":
+                        pOptionTypeId = 16;
+                        break;
+                    case "tileBackgroundColor":
+                        pOptionTypeId = 17;
+                        break;
+                    default:
+                        // defaultvalues
                 }
                 if (pOptionTypeId) {
                     AppData.call("PRC_SETVERANSTOPTION",
@@ -107,7 +107,7 @@
                 Log.call(Log.l.trace, "Settings.Controller.", "colorProperty=" + colorProperty + " color=" + color);
                 Colors[colorProperty] = color;
                 that.binding.generalData[colorProperty] = color;
-                
+
                 switch (colorProperty) {
                     case "accentColor":
                         that.createColorPicker("backgroundColor");
@@ -200,7 +200,7 @@
                 },
                 clickIndividualColors: function (event) {
                     var restoreDefault = false;
-                   // var pValue = "0";
+                    // var pValue = "0";
                     Log.call(Log.l.trace, "Settings.Controller.");
                     if (event.currentTarget && AppBar.notifyModified) {
                         var toggle = event.currentTarget.winControl;
@@ -215,7 +215,7 @@
                         }
                         AppData._persistentStates.individualColors = that.binding.generalData.individualColors;
                         if (restoreDefault) {
-                            WinJS.Promise.timeout(0).then(function() {
+                            WinJS.Promise.timeout(0).then(function () {
                                 AppData._persistentStates.individualColors = false;
                                 /*if (!(AppData._persistentStates.individualColors)) {
                                     //delete AppData.persistentStatesDefaults.colorSettings;
@@ -238,7 +238,7 @@
                                     that.createColorPicker("tileBackgroundColor");
                                     that.createColorPicker("navigationColor");
                                 //} 
-                                
+
                                 AppBar.loadIcons();
                                 NavigationBar.groups = Application.navigationBarGroups;
                             });
@@ -261,10 +261,10 @@
                                 function (error) {
                                     Log.print(Log.l.error, "call error");
                                 });
-                         //   that.applyColorSetting(colorProperty, color);
-                            //Colors.updateColors();
-                        }
-                    
+                        //   that.applyColorSetting(colorProperty, color);
+                        //Colors.updateColors();
+                    }
+
                     Log.ret(Log.l.trace);
                 },
                 clickShowAppBkg: function (event) {
@@ -389,7 +389,7 @@
                         default:
                             // defaultvalues
                     }
-                   
+
                     if (item.colorPickerId) {
                         var childElement = pageElement.querySelector("#" + item.colorPickerId);
                         item.colorValue = "#" + item.LocalValue;
@@ -411,7 +411,7 @@
                     }
                 } else if (item.INITOptionTypeID === 10) {
                     item.colorPickerId = "individualColors";
-                   // var childElement = pageElement.querySelector("#" + item.colorPickerId);
+                    // var childElement = pageElement.querySelector("#" + item.colorPickerId);
                     if (item.LocalValue === "1")
                         that.binding.generalData.individualColors = true;
                     else {
@@ -458,7 +458,7 @@
             var loadData = function (complete, error) {
                 AppData._persistentStates.hideQuestionnaire = false;
                 AppData._persistentStates.hideSketch = false;
-                return Settings.CR_VERANSTOPTION_ODataView.select(function(json) {
+                return Settings.CR_VERANSTOPTION_ODataView.select(function (json) {
                     // this callback will be called asynchronously
                     // when the response is available
                     Log.print(Log.l.trace, "Reporting: success!");
@@ -466,16 +466,16 @@
 
                     if (json && json.d) {
                         var results = json.d.results;
-                        results.forEach(function(item, index) {
+                        results.forEach(function (item, index) {
                             that.resultConverter(item, index);
                         });
 
                     }
-                }, function(errorResponse) {
+                }, function (errorResponse) {
                     // called asynchronously if an error occurs
                     // or server returns response with an error status.
                     AppData.setErrorMsg(that.binding, errorResponse);
-                }).then(function() {
+                }).then(function () {
                     Colors.updateColors();
                     return WinJS.Promise.as();
                 });
