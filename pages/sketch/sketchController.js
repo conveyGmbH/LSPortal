@@ -33,17 +33,6 @@
             this.contactId = AppData.getRecordId("Kontakt");
             this.pageElement = pageElement;
 
-            var getSvgFragmentController = function () {
-                var ret;
-                Log.call(Log.l.trace, "Sketch.Controller.");
-                ret = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("svgSketch"));
-                if (ret) {
-                    ret = ret.controller;
-                }
-                Log.ret(Log.l.trace);
-                return ret;
-            }
-
             var getDocViewer = function (docGroup, docFormat) {
                 Log.call(Log.l.trace, "Sketch.Controller.", "docGroup=" + docGroup + " docFormat=" + docFormat);
                 docViewer = null;
@@ -102,9 +91,9 @@
             var isModified = function () {
                 Log.call(Log.l.trace, "svgSketchController.");
                 var ret;
-                var svgFragmentController = getSvgFragmentController();
-                if (svgFragmentController) {
-                    ret = svgFragmentController.isModified();
+                var svgFragment = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("svgSketch"));
+                if (svgFragment && svgFragment.controller) {
+                    ret = svgFragment.controller.isModified();
                 } else ret = false;
                 Log.ret(Log.l.trace);
                 return ret;
@@ -117,37 +106,6 @@
                 AppData.setErrorMsg(that.binding);
                 that.contactId = AppData.getRecordId("Kontakt");
                 var ret = new WinJS.Promise.as().then(function () {
-                    /*if (!that.contactId) {
-                        var newContact = {
-                            HostName: (window.device && window.device.uuid),
-                            MitarbeiterID: AppData.getRecordId("Mitarbeiter"),
-                            VeranstaltungID: AppData.getRecordId("Veranstaltung"),
-                            Nachbearbeitet: 1
-                        };
-                        Log.print(Log.l.trace, "insert new contactView for MitarbeiterID=" + newContact.MitarbeiterID);
-                        AppData.setErrorMsg(that.binding);
-                        return Sketch.contactView.insert(function (json) {
-                            // this callback will be called asynchronously
-                            // when the response is available
-                            Log.print(Log.l.trace, "contactView: success!");
-                            // contactData returns object already parsed from json file in response
-                            if (json && json.d) {
-                                that.contactId = json.d.KontaktVIEWID;
-                                AppData.setRecordId("Kontakt", that.contactId);
-                                AppData.getUserData();
-                            } else {
-                                AppData.setErrorMsg(that.binding, { status: 404, statusText: "no data found" });
-                            }
-                        }, function (errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        }, newContact);
-                    } else {
-                        Log.print(Log.l.trace, "use existing that.contactID=" + that.contactId);
-                        return WinJS.Promise.as();
-                    }
-                }).then(function () {*/
                     //load list first -> noteId, showSvg, showPhoto, moreNotes set
                     if (!noteId) {
                         var sketchListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("sketchList"));
@@ -170,49 +128,6 @@
             }
             this.loadData = loadData;
             
-            // save data
-            //var saveData = function (complete, error) {
-            //if (that.noteId !== 0) {
-                    /*else {
-                                //insert if a primary key is not available (getRecordId() == null)
-                                dataSketch.KontaktID = AppData.getRecordId("Kontakt");
-                                dataSketch.ExecAppTypeID = 15; // SVG note
-                                if (!dataSketch.KontaktID) {
-                                    return new WinJS.Promise.as().then(function () {
-                                        var errorResponse = {
-                                            status: -1,
-                                            statusText: "missing recordId for table Kontakt"
-                                        }
-                                        AppData.setErrorMsg(that.binding, errorResponse);
-                                        error(errorResponse);
-                                    });
-                                } else {
-                                    return Sketch.sketchView.insert(function (json) {
-                                        // this callback will be called asynchronously
-                                        // when the response is available
-                                        Log.print(Log.l.trace, "sketchData insert: success!");
-                                        // contactData returns object already parsed from json file in response
-                                        if (json && json.d) {
-                                            that.binding.dataSketch = json.d;
-                                            setRecordId(that.binding.dataSketch.KontaktNotizVIEWID);
-                                            if (typeof that.binding.dataSketch.Quelltext !== "undefined" &&
-                                                that.binding.dataSketch.Quelltext) {
-                                                Log.print(Log.l.trace, "SVG Element: " + that.binding.dataSketch.Quelltext.substr(0, 100) + "...");
-                                            }
-                                            WinJS.Promise.timeout(0).then(function () {
-                                                that.svgEditor.fnLoadSVG(that.binding.dataSketch.Quelltext);
-                                            });
-                                        }
-                                        complete(json);
-                                    }, function (errorResponse) {
-                                        // called asynchronously if an error occurs
-                                        // or server returns response with an error status.
-                                        AppData.setErrorMsg(that.binding, errorResponse);
-                                        error(errorResponse);
-                                    }, dataSketch);
-                                }
-                            }*/
-
             // define handlers
             this.eventHandlers = {
                 clickBack: function (event) {

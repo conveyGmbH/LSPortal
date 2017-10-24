@@ -34,12 +34,6 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            insert: function (complete, error, viewResponse) {
-                Log.call(Log.l.trace, "sketchView.");
-                var ret = SvgSketch._sketchView.insert(complete, error, viewResponse);
-                Log.ret(Log.l.trace);
-                return ret;
-            },
             update: function (complete, error, recordId, viewResponse) {
                 Log.call(Log.l.trace, "sketchView.");
                 var ret = SvgSketch._sketchView.update(complete, error, recordId, viewResponse);
