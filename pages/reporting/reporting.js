@@ -23,11 +23,11 @@
             inResize = 0;
 
             // add page specific commands to AppBar
-            var commandList = [
-                { id: "clickExport", label: getResourceText("command.export"), tooltip: getResourceText("tooltip.export"), section: "primary", svg: "download", key: WinJS.Utilities.Key.enter }
+            AppBar.commandList = [
+                { id: "clickExport", label: getResourceText("command.export"), tooltip: getResourceText("tooltip.export"), section: "primary", svg: "download" }
             ];
 
-            this.controller = new Reporting.Controller(element, commandList);
+            this.controller = new Reporting.Controller(element);
             if (this.controller.eventHandlers) {
                 // general event listener for hardware back button, too!
                 this.controller.addRemovableEventListener(document, "backbutton", this.controller.eventHandlers.clickBack.bind(this.controller));
@@ -60,8 +60,23 @@
         },
 
         updateLayout: function (element, viewState, lastViewState) {
+            var ret = null;
+            var that = this;
             /// <param name="element" domElement="true" />
+            Log.call(Log.l.u1, pageName + ".");
             // TODO: Respond to changes in viewState.
+            if (element && !this.inResize) {
+                that.inResize = 1;
+                ret =  WinJS.Promise.timeout(0).then(function () {
+                    var countryChart = element.querySelector("#countryChart");
+                    if (countryChart && countryChart.style) {
+                       
+                    }
+                    that.inResize = 0;
+                });
+            }
+            Log.ret(Log.l.u1);
+            return ret;
         }
     });
 })();

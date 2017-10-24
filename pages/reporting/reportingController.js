@@ -8,6 +8,7 @@
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/pages/reporting/reportingService.js" />
 /// <reference path="~/www/pages/reporting/exportXlsx.js" />
+/// <reference path="~/www/fragments/reportingList/reportingListController.js" />
 
 (function () {
     "use strict";
@@ -15,27 +16,31 @@
         controller: null
     });
     WinJS.Namespace.define("Reporting", {
-        Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
+        Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement) {
             Log.call(Log.l.trace, "Reporting.Controller.");
-            Application.Controller.apply(this, [pageElement, {
-                restriction: getEmptyDefaultValue(Reporting.defaultrestriction),
-                curOLELetterID: null,
-                exportTemplateRestriction: {
-                    DOC3OLELetterVIEWID: 0
-                },
-                progress: {
-                    percent: 0,
-                    text: "",
-                    show: null
-                },
-                //showErfassungsdatum: false,
-                showModifiedTS: false
-            }, commandList]);
+            Application.Controller.apply(this, [
+                pageElement, {
+                    restriction: getEmptyDefaultValue(Reporting.defaultrestriction),
+                    curOLELetterID: null,
+                    exportTemplateRestriction: {
+                        DOC3OLELetterVIEWID: 0
+                    },
+                    progress: {
+                        percent: 0,
+                        text: "",
+                        show: null
+                    },
+                    //showErfassungsdatum: false,
+                    showModifiedTS: false
+                }
+            ]);
             
             var that = this;
 
             // look for ComboBox element
             var exportList = pageElement.querySelector("#ExportList");
+            // now do anything...
+            var reportingList = pageElement.querySelector("#reportingList.listview");
             //var datePicker = pageElement.querySelector("#caBo");
             var initLand = pageElement.querySelector("#InitLandReporting");
             var erfasserID = pageElement.querySelector("#ErfasserIDReporting");
@@ -48,6 +53,7 @@
                 if (that.employees) {
                     that.employees.push(item);
                 }
+                item.fullNameValue = (item.Nachname ? (item.Nachname + ", ") : "") + (item.Vorname ? item.Vorname : "");
             }
             this.resultConverter = resultConverter;
 
@@ -60,9 +66,19 @@
            // var calendar = datePicker.calendar;
            // datePicker.calendar = calendar;
 
+            var resize = function () {
+                var employeeChart = pageElement.querySelector("#employeeChart");
+                employeeChart.className.replot();
+                Log.call(Log.l.trace, "Charts resizeed!");
+            }
+            this.resize = resize;
+
             var setInitialDate = function () {
                 if (typeof that.binding.restriction.ReportingErfassungsdatum === "undefined") {
                     that.binding.restriction.ReportingErfassungsdatum = new Date();
+                }
+                if (typeof that.binding.restriction.ModifiedTS === "undefined") {
+                    that.binding.restriction.ModifiedTS = new Date();
                 }
                 Log.call(Log.l.trace, "Initialdate set");
             }
@@ -125,7 +141,6 @@
                 } else {
                     delete AppData.entrydate;
                 }
-
                 if (!that.binding.showModifiedTS &&
                     typeof that.binding.restriction.ModifiedTs !== "undefined") {
                     delete that.binding.restriction.ModifiedTs;
@@ -142,8 +157,65 @@
             }
             this.getRestriction = getRestriction;
 
-            var setRestriction = function (restriction) {
-                AppData.setRestriction("Kontakt", restriction);
+            var setRestriction = function () {
+                var reportingRestriction = {};
+                if (that.binding.restriction.InitLandID === "null") {
+                    if (AppData.getLanguageId() === 1031) {
+                        delete reportingRestriction.Land;
+                    } else {
+                        delete reportingRestriction.Country;
+                    }
+                }
+                if (that.binding.restriction.InitLandID && that.binding.restriction.InitLandID !== "null") {
+                    if (AppData.getLanguageId() === 1031) {
+                        reportingRestriction.Land = that.binding.restriction.InitLandID;
+                    } else {
+                        reportingRestriction.Country = that.binding.restriction.InitLandID;
+                    }
+                }
+                if (that.binding.restriction.ErfasserID === "undefined") {
+                    if (AppData.getLanguageId() === 1031) {
+                        delete reportingRestriction.Mitarbeiter;
+                    } else {
+                        delete reportingRestriction.RecordedBy;
+                    }
+                }
+                if (that.binding.restriction.ErfasserID && that.binding.restriction.ErfasserID !== "undefined") {
+                    if (AppData.getLanguageId() === 1031) {
+                        reportingRestriction.Mitarbeiter = that.binding.restriction.ErfasserID;
+                    } else {
+                        reportingRestriction.RecordedBy = that.binding.restriction.ErfasserID;
+                    }
+                }
+                if (!that.binding.showErfassungsdatum && that.binding.restriction.ReportingErfassungsdatum !== "undefined") {
+                    if (AppData.getLanguageId() === 1031) {
+                        delete reportingRestriction.Erfassungsdatum;
+                    } else {
+                        delete reportingRestriction.RecordDate;
+                    }
+                }
+                if (that.binding.showErfassungsdatum && that.binding.restriction.ReportingErfassungsdatum) {
+                    if (AppData.getLanguageId() === 1031) {
+                        reportingRestriction.Erfassungsdatum = that.binding.restriction.ReportingErfassungsdatum;
+                    } else {
+                        reportingRestriction.RecordDate = that.binding.restriction.ReportingErfassungsdatum;
+                    }
+                }
+                if (!that.binding.showModifiedTS && that.binding.restriction.ModifiedTS !== "undefined") {
+                    if (AppData.getLanguageId() === 1031) {
+                        delete reportingRestriction.AenderungsDatum;
+                    } else {
+                        delete reportingRestriction.ModificationDate;
+                    }
+                }
+                if (that.binding.showModifiedTS && that.binding.restriction.ModifiedTS) {
+                    if (AppData.getLanguageId() === 1031) {
+                        reportingRestriction.AenderungsDatum = that.binding.restriction.ModifiedTS;
+                    } else {
+                        reportingRestriction.ModificationDate = that.binding.restriction.ModifiedTS;
+                    }
+                }
+                return reportingRestriction;
             }
             this.setRestriction = setRestriction;
 
@@ -180,12 +252,12 @@
             };
             this.templatecall = templatecall;
 
-            var exportData = function() {
+            var exportData = function(exportselection) {
                 Log.call(Log.l.trace, "Reporting.Controller.");
                 var dbView = null;
                 var fileName = null;
                 ExportXlsx.restriction = that.getRestriction();
-                switch (parseInt(that.binding.curOLELetterID)) {
+                switch (parseInt(exportselection)) {
                 case 1:
                     if (AppData.getLanguageId() === 1031) {
                         dbView = Reporting.xLAuswertungView;
@@ -251,7 +323,7 @@
                                 AppBar.busy = false;
                                 AppBar.triggerDisableHandlers();
                             },
-                            ExportXlsx.restriction);
+                            that.setRestriction());
                     });
                 } else {
                     AppBar.busy = false;
@@ -516,12 +588,25 @@
                 },
                 clickExport: function(event) {
                     Log.call(Log.l.trace, "Reporting.Controller.");
+                    var exportselection = event.currentTarget.value;
                     AppBar.busy = true;
                     AppBar.triggerDisableHandlers();
                     WinJS.Promise.timeout(0).then(function() {
-                        that.templatecall();
+                        //that.templatecall();
+                        that.exportData(exportselection);
                     });
                     Log.ret(Log.l.trace);
+                },
+                resizeExport: function (event) {
+                    Log.call(Log.l.trace, "Reporting.Controller.");
+                    WinJS.Promise.timeout(0).then(function () {
+                        var employeeChart = pageElement.querySelector("#employeeChart");
+                        var height = employeeChart.parentElement.clientHeight;
+                        var width = employeeChart.parentElement.clientWidth;
+                        if (width > "300") {
+                            employeeChart.getElementsByClassName("jqplot-base-canvas").width = "400px";
+                        }
+                    });
                 },
                 clickChangeUserState: function(event) {
                     Log.call(Log.l.trace, "Reporting.Controller.");
@@ -539,11 +624,11 @@
                         that.binding.restriction.ReportingErfassungsdatum = new Date();
                     }
                     that.showDateRestrictions();
-                   
                 },
                 clickModifiedTs: function(event) {
                     if (event.currentTarget) {
                         that.binding.showModifiedTS = event.currentTarget.checked;
+                        that.binding.restriction.ModifiedTs = new Date();
                     }
                     that.showDateRestrictions();
                 },
@@ -575,31 +660,16 @@
                 Log.call(Log.l.trace, "Reporting.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function() {
-                    if (!that.analysis || !that.analysis.length) {
-                        Log.print(Log.l.trace, "calling select analysisListView...");
-                        //load the list of analysisListView for Combobox (assume less than 100 hits)
-                        return Reporting.analysisListView.select(function(json) {
-                            Log.print(Log.l.trace, "analysisListView: success!");
-                            if (json && json.d && json.d.results) {
-                                // store result for next use
-                                that.analysis = json.d.results;
-                                // Now, we call WinJS.Binding.List to get the bindable list
-                                if (exportList && exportList.winControl) {
-                                    exportList.winControl.data = new WinJS.Binding.List(json.d.results);
-                                }
-                                that.binding.curOLELetterID = that.analysis[0].OLELetterID;
-                            }
-                        }, function(errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        });
+                    var reportingListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("ReportingList"));
+                    if (reportingListFragmentControl && reportingListFragmentControl.controller) {
+                        return reportingListFragmentControl.controller.loadData();
                     } else {
-                        if (exportList && exportList.winControl) {
-                            exportList.winControl.data = new WinJS.Binding.List(that.analysis);
+                        var parentElement = pageElement.querySelector("#reportingListhost");
+                        if (parentElement) {
+                            return Application.loadFragmentById(parentElement, "ReportingList", { });
+                        } else {
+                            return WinJS.Promise.as();
                         }
-                        that.binding.curOLELetterID = that.analysis[0].OLELetterID;
-                        return WinJS.Promise.as();
                     }
                 }).then(function() {
                     if (!AppData.initLandView.getResults().length) {
@@ -687,7 +757,10 @@
                         that.binding.modifiedTS = new Date();
                     }
 
-                }).then(function() {
+                }).then(function () {
+                    Log.print(Log.l.trace, "Data loaded");
+                    return that.showcountryChart("countryChart", true);
+                }).then(function () {
                     AppBar.notifyModified = true;
                     AppBar.triggerDisableHandlers();
                     return WinJS.Promise.as();
@@ -703,7 +776,7 @@
                 return that.loadData();
             }).then(function() {
                 Log.print(Log.l.trace, "Data loaded");
-                return that.showcountryChart("countryChart", true);
+                //return that.showcountryChart("countryChart", true);
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 return that.showemployeeChart("employeeChart", true);
