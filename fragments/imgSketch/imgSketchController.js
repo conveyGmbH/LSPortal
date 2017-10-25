@@ -11,7 +11,7 @@
     "use strict";
 
     WinJS.Namespace.define("ImgSketch", {
-        Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options) {
+        Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options, commandList) {
             Log.call(Log.l.trace, "ImgSketch.Controller.");
 
             var that = this;
@@ -49,7 +49,7 @@
             Fragments.Controller.apply(this, [fragmentElement, {
                 noteId: options.noteId,
                 dataSketch: {}
-            }]);
+            }, commandList]);
             this.img = null;
 
             this.dispose = function () {
@@ -384,19 +384,6 @@
                 return ret;
             };
             this.loadData = loadData;
-
-            var saveData = function (complete, error) {
-                //img can't be changed
-                Log.call(Log.l.trace, "ImgSketch.Controller.");
-                var ret = new WinJS.Promise.as().then(function () {
-                    if (typeof complete === "function") {
-                        complete({});
-                    }
-                });
-                Log.ret(Log.l.trace, ret);
-                return ret;
-            };
-            this.saveData = saveData;
 
             var eventHandlers = {
                 //TODO zoom, ...
