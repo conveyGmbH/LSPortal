@@ -33,6 +33,23 @@
             this.contactId = AppData.getRecordId("Kontakt");
             this.pageElement = pageElement;
 
+            var setNotesCount = function(count) {
+                Log.call(Log.l.trace, "Sketch.Controller.", "count=" + count);
+                if (count > 1) {
+                    that.binding.moreNotes = true;
+                } else {
+                    that.binding.moreNotes = false;
+                }
+                if (!that.binding.userHidesList) {
+                    that.binding.showList = that.binding.moreNotes;
+                }
+                AppBar.replaceCommands([
+                    { id: 'clickShowList', label: getResourceText('sketch.showList'), tooltip: getResourceText('sketch.showList'), section: 'primary', svg: that.binding.showList ? 'document_height' : 'elements3' }
+                ]);
+                Log.ret(Log.l.trace);
+            }
+            that.setNotesCount = setNotesCount;
+
             var getDocViewer = function (docGroup, docFormat) {
                 Log.call(Log.l.trace, "Sketch.Controller.", "docGroup=" + docGroup + " docFormat=" + docFormat);
                 docViewer = null;
@@ -86,21 +103,6 @@
                 return ret;
             }
 
-            // check modify state
-            // modified==true when startDrag() in svg.js is called!
-            var isModified = function () {
-                Log.call(Log.l.trace, "svgSketchController.");
-                var ret;
-                var svgFragment = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("svgSketch"));
-                if (svgFragment && svgFragment.controller) {
-                    ret = svgFragment.controller.isModified();
-                } else ret = false;
-                Log.ret(Log.l.trace);
-                return ret;
-            }
-            this.isModified = isModified;
-
-
             var loadData = function (noteId, docGroup, docFormat) {
                 Log.call(Log.l.trace, "Sketch.Controller.", "noteId=" + noteId + " docGroup=" + docGroup + " docFormat=" + docFormat);
                 AppData.setErrorMsg(that.binding);
@@ -147,21 +149,22 @@
                     Application.navigateById("publish", event);
                     Log.ret(Log.l.trace);
                 },
-                clickNew: function (event) {
-                    Log.call(Log.l.trace, "Sketch.Controller.");
-                    Application.navigateById(Application.navigateNewId, event);
-                    Log.ret(Log.l.trace);
-                },
                 clickForward: function (event) {
                     Log.call(Log.l.trace, "Sketch.Controller.");
-                    Application.navigateById("start", event);
+                    Application.navigateById("contact", event);
                     Log.ret(Log.l.trace);
                 },
                 clickShowList: function (event) {
                     Log.call(Log.l.trace, "Sketch.Controller.");
                     that.binding.showList = !that.binding.showList;
                     that.binding.userHidesList = !that.binding.showList;
-                    Application.navigator._resized();
+                    if (pageElement.winControl) {
+                        pageElement.winControl.prevHeight = 0;
+                        pageElement.winControl.prevWidth = 0;
+                    }
+                    AppBar.replaceCommands([
+                        { id: 'clickShowList', label: getResourceText('sketch.showList'), tooltip: getResourceText('sketch.showList'), section: 'primary', svg: that.binding.showList ? 'document_height' : 'elements3' }
+                    ]);
                     Log.ret(Log.l.trace);
                 }
             };
@@ -199,7 +202,6 @@
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
             }).then(function () {
-                AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Data loaded");
             });
             Log.ret(Log.l.trace);

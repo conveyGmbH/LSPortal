@@ -102,33 +102,23 @@
             var eventHandlers = {
                 onSelectionChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "SketchList.Controller.");
-                    //if current sketch is saved successfully, change selection
-                    if (AppBar.scope &&
-                        AppBar.scope.pageElement &&
-                        AppBar.scope.pageElement.winControl &&
-                        typeof AppBar.scope.pageElement.winControl.canUnload === "function") {
-                        AppBar.scope.pageElement.winControl.canUnload(function (response) {
-                            // called asynchronously if ok
-                            if (listView && listView.winControl) {
-                                var listControl = listView.winControl;
-                                if (listControl.selection) {
-                                    var selectionCount = listControl.selection.count();
-                                    if (selectionCount === 1) {
-                                        // Only one item is selected, show the page
-                                        listControl.selection.getItems().done(function (items) {
-                                            var item = items[0];
-                                            if (item.data) {
-                                                //load sketch with new recordId
-                                                that.binding.curId = item.data.KontaktNotizVIEWID;
-                                                AppBar.scope.loadData(that.binding.curId, item.data.DocGroup, item.data.DocFormat);
-                                            }
-                                        });
+                    //only change selection
+                    if (listView && listView.winControl && AppBar.scope) {
+                        var listControl = listView.winControl;
+                        if (listControl.selection) {
+                            var selectionCount = listControl.selection.count();
+                            if (selectionCount === 1) {
+                                // Only one item is selected, show the page
+                                listControl.selection.getItems().done(function (items) {
+                                    var item = items[0];
+                                    if (item.data) {
+                                        //load sketch with new recordId
+                                        that.binding.curId = item.data.KontaktNotizVIEWID;
+                                        AppBar.scope.loadData(that.binding.curId, item.data.DocGroup, item.data.DocFormat);
                                     }
-                                }
+                                });
                             }
-                        }, function (errorResponse) {
-                            // error handled in saveData!
-                        });
+                        }
                     }
                     Log.ret(Log.l.trace);
                 },
@@ -213,19 +203,6 @@
             };
             this.scopeFromRecordId = scopeFromRecordId;*/
 
-            var saveData = function (complete, error) {
-                Log.call(Log.l.trace, "SketchList.Controller.");
-                var ret = new WinJS.Promise.as().then(function () {
-                    if (typeof complete === "function") {
-                        complete({});
-                    }
-                });
-                Log.ret(Log.l.trace, ret);
-                return ret;
-            };
-            this.saveData = saveData;
-
-
             var loadData = function (conId) {
                 if (conId) {
                     that.binding.contactId = conId;
@@ -262,15 +239,8 @@
                                 }
                             }
                         }
-                        if (AppBar.scope && AppBar.scope.binding) {
-                            if (that.binding.count > 1) {
-                                AppBar.scope.binding.moreNotes = true;
-                            } else {
-                                AppBar.scope.binding.moreNotes = false;
-                            }
-                            if (!AppBar.scope.binding.userHidesList) {
-                                AppBar.scope.binding.showList = AppBar.scope.binding.moreNotes;
-                            }
+                        if (AppBar.scope && typeof AppBar.scope.setNotesCount === "function") {
+                            AppBar.scope.setNotesCount(that.binding.count);
                         }
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs

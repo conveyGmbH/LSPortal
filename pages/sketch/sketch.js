@@ -27,7 +27,6 @@
             // add page specific commands to AppBar
             var commandList = [
                 { id: 'clickBack', label: getResourceText('command.backward'), tooltip: getResourceText('tooltip.backward'), section: 'primary', svg: 'navigate_left' },
-                //{ id: "clickNew", label: getResourceText("command.new"), tooltip: getResourceText("tooltip.new"), section: "primary", svg: "user_plus" },
                 { id: 'clickForward', label: getResourceText('command.ok'), tooltip: getResourceText('tooltip.ok'), section: 'primary', svg: 'navigate_check', key: WinJS.Utilities.Key.enter },
                 { id: 'clickShowList', label: getResourceText('sketch.showList'), tooltip: getResourceText('sketch.showList'), section: 'primary', svg: 'elements3' }
             ];
@@ -38,30 +37,6 @@
                 this.controller.addRemovableEventListener(document, "backbutton", this.controller.eventHandlers.clickBack.bind(this.controller));
             }
             Log.ret(Log.l.trace);
-        },
-
-        canUnload: function (complete, error) {
-            Log.call(Log.l.trace, pageName + ".");
-            var ret;
-            var that = this;
-            if (that.controller) {
-                ret = WinJS.Promise.as().then(function (response) {
-                    // called asynchronously if ok
-                    // call fragment canUnload
-                    var doc = that.controller.docViewer;
-                    if (doc && doc.canUnload) {
-                        doc.canUnload(complete, error);
-                    } else {
-                        complete(response);
-                    }
-                });
-            } else {
-                ret = WinJS.Promise.as().then(function () {
-                    complete(response);
-                });
-            }
-            Log.ret(Log.l.trace);
-            return ret;
         },
 
         unload: function () {
