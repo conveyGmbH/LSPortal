@@ -471,6 +471,18 @@
                         });
 
                     }
+                    for (var i = 0; i < Application.navigationBarGroups.length; i++) {
+                        if (Application.navigationBarGroups[i].id === "events") {
+                            if (individualColorToggle) {
+                                if (Application.navigationBarGroups[i].disabled === true) {
+                                    individualColorToggle.style.display = "none";
+                                } else {
+                                    individualColorToggle.style.display = "";
+                                }
+                            }
+                            break;
+                        }
+                    }
                 }, function (errorResponse) {
                     // called asynchronously if an error occurs
                     // or server returns response with an error status.

@@ -1130,4 +1130,23 @@ input.input_small_right {
     font-size: 15px;
     line-height: 1.333;
 }
+.darkthemeMandatory {
+    background-color: saddlebrown;
+}
+.darkthemeMandatory:hover {
+    background-color: saddlebrown;
+}
+.darkthemeMandatory:focus {
+    background-color: lightyellow;
+}
+.lightthemeMandatory {
+    background-color: lightyellow;
+}
+.lightthemeMandatory:hover {
+    background-color: lightyellow;
+}
+.lightthemeMandatory:focus {
+    background-color: lightyellow;
+}
+
 

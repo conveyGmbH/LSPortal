@@ -364,6 +364,16 @@
                         WinJS.Utilities.removeClass(textComment, "input_text_comment_big");
                     }
                 }
+                that.binding.dataContact.Mitarbeiter_Fullname = that.binding.dataContact.Mitarbeiter_Vorname + " " + that.binding.dataContact.Mitarbeiter_Nachname;
+
+                if (that.binding.dataContact.Bearbeiter_Vorname && that.binding.dataContact.Bearbeiter_Nachname) {
+                    that.binding.dataContact
+                        .Bearbeiter_Fullname = that.binding.dataContact.Bearbeiter_Vorname +
+                        " " +
+                        that.binding.dataContact.Bearbeiter_Nachname;
+                } else {
+                    that.binding.dataContact.Bearbeiter_Fullname = "";
+                }
                 AppBar.modified = false;
                 AppBar.notifyModified = prevNotifyModified;
                 AppBar.triggerDisableHandlers();
@@ -458,9 +468,11 @@
                 if (item.FieldFlag) {
                     if (inputfield !== null && inputfield !== undefined)
                         if (Colors.isDarkTheme) {
-                            inputfield.style.backgroundColor = "#8b4513"; 
+                            WinJS.Utilities.addClass(inputfield, "darkthemeMandatory");
+                            //WinJS.Utilities.removeClass(inputfield, "lightthemeMandatory");
                         } else {
-                            inputfield.style.backgroundColor = "lightyellow";
+                            WinJS.Utilities.addClass(inputfield, "lightthemeMandatory");
+                            //WinJS.Utilities.removeClass(inputfield, "darkthemeMandatory");
                         }
                 }
             };
