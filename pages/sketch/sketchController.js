@@ -50,9 +50,9 @@
             }
             that.setNotesCount = setNotesCount;
 
-            var getDocViewer = function (docGroup, docFormat) {
+            var setDocViewer = function (docGroup, docFormat) {
+                var prevDocViewer = docViewer;
                 Log.call(Log.l.trace, "Sketch.Controller.", "docGroup=" + docGroup + " docFormat=" + docFormat);
-                docViewer = null;
                 if (AppData.isSvg(docGroup, docFormat)) {
                     that.binding.showSvg = true;
                     that.binding.showPhoto = false;
@@ -61,43 +61,67 @@
                     that.binding.showSvg = false;
                     that.binding.showPhoto = true;
                     docViewer = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("imgSketch"));
+                } else {
+                    docViewer = null;
                 }
                 Log.ret(Log.l.trace);
-                return docViewer;
+                return prevDocViewer;
             }
             that.docViewer = {
-                get: function() {
+                get: function () {
                     return docViewer;
                 }
             }
 
+            var prevNoteId;
+            var inLoadDoc = false;
             var loadDoc = function (noteId, docGroup, docFormat) {
                 var ret;
                 var parentElement;
                 Log.call(Log.l.trace, "Sketch.Controller.", "noteId=" + noteId + " docGroup=" + docGroup + " docFormat=" + docFormat);
-                getDocViewer(docGroup, docFormat);
-                if (docViewer && docViewer.controller) {
-                    ret = docViewer.controller.loadData(noteId);
-                } else if (AppData.isSvg(docGroup, docFormat)) {
-                    that.binding.showSvg = true;
-                    that.binding.showPhoto = false;
-                    parentElement = pageElement.querySelector("#svghost");
-                    if (parentElement) {
-                        ret = Application.loadFragmentById(parentElement, "svgSketch", { noteId: noteId });
-                    } else {
+                // prevent recursive calls here!
+                if (inLoadDoc) {
+                    if (noteId === prevNoteId) {
+                        Log.print(Log.l.trace, "extra ignored");
                         ret = WinJS.Promise.as();
-                    }
-                } else if (AppData.isImg(docGroup, docFormat)) {
-                    that.binding.showSvg = false;
-                    that.binding.showPhoto = true;
-                    parentElement = pageElement.querySelector("#imghost");
-                    if (parentElement) {
-                        ret = Application.loadFragmentById(parentElement, "imgSketch", { noteId: noteId });
                     } else {
-                        ret = WinJS.Promise.as();
+                        Log.print(Log.l.trace, "busy - try later again");
+                        ret = WinJS.Promise.timeout(50).then(function () {
+                            return loadDoc(noteId, docGroup, docFormat);
+                        });
                     }
                 } else {
-                    ret = WinJS.Promise.as();
+                    // set semaphore
+                    inLoadDoc = true;
+                    prevNoteId = noteId;
+                    setDocViewer(docGroup, docFormat);
+                    if (docViewer && docViewer.controller) {
+                        ret = docViewer.controller.loadData(noteId);
+                    } else if (AppData.isSvg(docGroup, docFormat)) {
+                        that.binding.showSvg = true;
+                        that.binding.showPhoto = false;
+                        parentElement = pageElement.querySelector("#svghost");
+                        if (parentElement) {
+                            ret = Application.loadFragmentById(parentElement, "svgSketch", { noteId: noteId });
+                        } else {
+                            ret = WinJS.Promise.as();
+                        }
+                    } else if (AppData.isImg(docGroup, docFormat)) {
+                        that.binding.showSvg = false;
+                        that.binding.showPhoto = true;
+                        parentElement = pageElement.querySelector("#imghost");
+                        if (parentElement) {
+                            ret = Application.loadFragmentById(parentElement, "imgSketch", { noteId: noteId });
+                        } else {
+                            ret = WinJS.Promise.as();
+                        }
+                    } else {
+                        ret = WinJS.Promise.as();
+                    }
+                    ret = ret.then(function () {
+                        // reset semaphore
+                        inLoadDoc = false;
+                    });
                 }
                 Log.ret(Log.l.trace);
                 return ret;
