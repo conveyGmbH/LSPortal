@@ -23,13 +23,26 @@
             var that = this;
             var individualColorToggle = pageElement.querySelector(".individualColor");
 
+            this.dispose = function () {
+                var colorContainers = pageElement.querySelectorAll(".color_container");
+                if (colorContainers) {
+                    for (var i = 0; i < colorContainers.length; i++) {
+                        var colorContainer = colorContainers[i];
+                        if (colorContainer && colorContainer.colorPicker &&
+                            typeof colorContainer.colorPicker._dispose === "function") {
+                            colorContainer.colorPicker._dispose();
+                            colorContainer.colorPicker = null;
+                        }
+                    }
+                }
+            }
+
             var createColorPicker = function (colorProperty, doRecreate) {
                 Log.call(Log.l.trace, "Settings.Controller.");
                 that.binding.generalData[colorProperty] = Colors[colorProperty];
                 var id = "#" + colorProperty + "_picker";
                 var element = pageElement.querySelector(id);
                 if (element) {
-                    element.innerHTML = "";
                     var colorPicker = new ColorPicker.ColorPickerClass(
                         element, 10, 28,
                         Colors[colorProperty],
