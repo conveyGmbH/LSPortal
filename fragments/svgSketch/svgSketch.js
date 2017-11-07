@@ -23,7 +23,8 @@
             this.prevWidth = 0;
             this.prevHeight = 0;
 
-            this.controller = new SvgSketch.Controller(element, options);
+            var commandList = [];
+            this.controller = new SvgSketch.Controller(element, options, commandList);
 
             Log.ret(Log.l.trace);
         },

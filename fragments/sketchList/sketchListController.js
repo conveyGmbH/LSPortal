@@ -161,80 +161,85 @@
                     this.eventHandlers.onLoadingStateChanged.bind(this));
             }
 
+            var loadData = function (contactId, noteId) {
+                var i, selIdx = -1, ret;
 
-            /*var selectRecordId = function (recordId) {
-                Log.call(Log.l.trace, "SketchList.Controller.", "recordId=" + recordId);
-                if (recordId && listView && listView.winControl && listView.winControl.selection) {
-                    if (sketches) {
-                        for (var i = 0; i < that.sketches.length; i++) {
-                            var sketch = that.sketches.getAt(i);
-                            if (sketch &&
-                                typeof sketch === "object" &&
-                                sketch.KontaktNotizVIEWID === recordId) {
-                                listView.winControl.selection.set(i);
-                                break;
-                            }
+                Log.call(Log.l.trace, "SketchList.", "contactId=" + contactId + " noteId=" + noteId);
+                if (contactId) {
+                    that.binding.contactId = contactId;
+                }
+                AppData.setErrorMsg(that.binding);
+                // find index of noteId
+                if (noteId && that.sketches) {
+                    for (i = 0; i < that.sketches.length; i++) {
+                        var item = that.sketches.getAt(i);
+                        if (item && item.KontaktNotizVIEWID === noteId) {
+                            selIdx = i;
+                            break;
                         }
                     }
                 }
-                Log.ret(Log.l.trace);
-            }
-            this.selectRecordId = selectRecordId;
-
-            var scopeFromRecordId = function (recordId) {
-                var i;
-                Log.call(Log.l.trace, "SketchList.Controller.", "recordId=" + recordId);
-                var item = null;
-                for (i = 0; i < that.sketches.length; i++) {
-                    var sketch = that.sketches.getAt(i);
-                    if (sketch && typeof sketch === "object" &&
-                        sketch.KontaktNotizVIEWID === recordId) {
-                        item = sketch;
-                        break;
-                    }
-                }
-                if (item) {
-                    Log.ret(Log.l.trace, "i=" + i);
-                    return { index: i, item: item };
-                } else {
-                    Log.ret(Log.l.trace, "not found");
-                    return null;
-                }
-            };
-            this.scopeFromRecordId = scopeFromRecordId;*/
-
-            var loadData = function (conId) {
-                if (conId) {
-                    that.binding.contactId = conId;
-                }
-                
-                Log.call(Log.l.trace, "SketchList.");
-                AppData.setErrorMsg(that.binding);
-
-                var ret = new WinJS.Promise.as().then(function () {
-                    return SketchList.sketchlistView.select(function (json) {
+                if (selIdx >= 0) {
+                    ret = SketchList.sketchlistView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
                         Log.print(Log.l.trace, "SketchList.sketchlistView: success!");
                         // select returns object already parsed from json file in response
                         if (json && json.d) {
-                            that.binding.count = json.d.results.length;
-                            that.nextUrl = SketchList.sketchlistView.getNextUrl(json);
+                            that.resultConverter(json.d, selIdx);
+                            that.sketches.setAt(selIdx, json.d);
+                        }
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    }, noteId, that.binding.isLocal);
+                } else {
+                    ret = SketchList.sketchlistView.select(function (json) {
+                        // this callback will be called asynchronously
+                        // when the response is available
+                        Log.print(Log.l.trace, "SketchList.sketchlistView: success!");
+                        // select returns object already parsed from json file in response
+                        if (json && json.d) {
+                            that.nextUrl = SketchList.sketchlistView.getNextUrl(json, that.binding.isLocal);
                             var results = json.d.results;
-                            results.forEach(function (item, index) {
-                                that.resultConverter(item, index);
-                            });
-                            // Now, we call WinJS.Binding.List to get the bindable list
-                            that.sketches = new WinJS.Binding.List(results);
+                            if (that.sketches) {
+                                // reload the bindable list
+                                that.sketches.length = 0;
+                                results.forEach(function (item, index) {
+                                    that.resultConverter(item, index);
+                                    that.sketches.push(item);
+                                });
+                            } else {
+                                results.forEach(function (item, index) {
+                                    that.resultConverter(item, index);
+                                });
+                                // Now, we call WinJS.Binding.List to get the bindable list
+                                that.sketches = new WinJS.Binding.List(results);
+                            }
+                            that.binding.count = that.sketches.length;
                             //as default, show first sketchnote in sketch page
                             if (listView.winControl) {
                                 // add ListView dataSource
                                 listView.winControl.itemDataSource = that.sketches.dataSource;
-                                if (listView.winControl.selection && results[0]) {
-                                    listView.winControl.selection.set(0).then(function() {
+                                // find selection index
+                                selIdx = 0;
+                                if (noteId) {
+                                    for (i = 0; i < results.length; i++) {
+                                        if (results[i].KontaktNotizVIEWID === noteId) {
+                                            selIdx = i;
+                                            break;
+                                        }
+                                    }
+                                }
+                                Log.print(Log.l.trace, "SketchList.sketchlistView: selIdx=" + selIdx);
+                                if (listView.winControl.selection && results[selIdx]) {
+                                    listView.winControl.selection.set(selIdx).then(function () {
                                         //load sketch with new recordId
-                                        that.binding.curId = results[0].KontaktNotizVIEWID;
-                                        AppBar.scope.loadData(that.binding.curId, results[0].DocGroup, results[0].DocFormat);
+                                        that.binding.noteId = results[selIdx].KontaktNotizVIEWID;
+                                        if (AppBar.scope && typeof AppBar.scope.loadDoc === "function") {
+                                            AppBar.scope.loadDoc(that.binding.noteId, results[selIdx].DocGroup, results[selIdx].DocFormat);
+                                        }
                                     });
                                 }
                             }
@@ -248,8 +253,9 @@
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, {
                         KontaktID: that.binding.contactId
-                    });
-                }).then(function () {
+                    }, that.binding.isLocal);
+                }
+                ret = ret.then(function() {
                     AppBar.notifyModified = true;
                     AppBar.triggerDisableHandlers();
                     return WinJS.Promise.as();
