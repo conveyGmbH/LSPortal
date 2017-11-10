@@ -6,6 +6,9 @@
 /// <reference path="~/www/lib/convey/scripts/pageController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/pages/start/startService.js" />
+/// <reference path="~/www/lib/datamaps/dist/datamaps.world.js" />
+/// <reference path="~/www/lib/datamaps/src/js/components/d3/d3.min.js" />
+/// <reference path="~/www/lib/datamaps/src/js/components/topojson/topojson.js" />
 
 /*
  Structure of states to be set from external modules:
@@ -31,8 +34,6 @@
 
             var that = this;
 
-            
-
             this.dispose = function () {
                 if (that.kontaktanzahldata) {
                     that.kontaktanzahldata = null;
@@ -42,31 +43,38 @@
                 }
             }
 
-           this.charty = pageElement.querySelector("#countryChart");
-            var ccunset = function () {
-                that.charty.innerHTML = "";
-            }
-            this.ccunset = ccunset;
-            
-           /* var map = new Datamap(
-                {
-                    element: document.querySelector('#worldcontainer'),
-                    height: 350,
-                    width: 600,
-                    fills: {
-                        'HIGH': '#afafaf',
-                        'LOW': '#123456',
-                        'MEDIUM': 'blue',
-                        'UNKNOWN': 'rgb(0,0,0)',
-                        defaultFill: "#d3d3d3"
-                    },
-                    // Array --> 'Countrykey' : { fillKey : 'Rate of importance'}
-                    data: {
-
-                    },
-                    responsive: true
+            this.worldChartData = [];
+            var worldChart = function () {
+                Log.call(Log.l.trace, "Start.Controller.");
+                var ret = new WinJS.Promise.as().then(function () {
+                    var worldCD = pageElement.querySelector('#worldcontainer');
+                    if (worldCD) {
+                        try {
+                            worldCD.innerHTML = "";
+                            var map = new Datamap(
+                                {
+                                    element: worldCD,
+                                    height: 350,
+                                    width: 600,
+                                    fills: {
+                                        'HIGH': '#afafaf',
+                                        'LOW': '#123456',
+                                        'MEDIUM': 'blue',
+                                        'UNKNOWN': 'rgb(0,0,0)',
+                                        defaultFill: "#d3d3d3"
+                                    }
+                                    // Array --> 'Countrykey' : { fillKey : 'Rate of importance'}
+                                }
+                            );
+                        } catch (ex) {
+                            Log.print(Log.l.error, "exception occurred: " + ex.message);
+                        }
+                    }
                 });
-            */
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+            this.worldChart = worldChart;
 
             var setRestriction = function (restriction) {
                 AppData.setRestriction("Kontakt", restriction);
@@ -532,10 +540,13 @@
             that.processAll().then(function() {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
+            }).then(function() {
+                Log.print(Log.l.trace, "Splash time over");
+                return that.worldChart();
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 return WinJS.Promise.timeout(Application.pageframe.splashScreenDone ? 0 : 1000);
-            }).then(function() {
+            }).then(function () {
                 Log.print(Log.l.trace, "Splash time over");
                 return Application.pageframe.hideSplashScreen();
             }).then(function() {
