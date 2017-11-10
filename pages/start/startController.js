@@ -6,9 +6,9 @@
 /// <reference path="~/www/lib/convey/scripts/pageController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/pages/start/startService.js" />
-/// <reference path="~/www/lib/datamaps/dist/datamaps.world.js" />
-/// <reference path="~/www/lib/datamaps/src/js/components/d3/d3.min.js" />
-/// <reference path="~/www/lib/datamaps/src/js/components/topojson/topojson.js" />
+/// <reference path="~/www/lib/datamaps/scripts/datamaps.world.js" />
+/// <reference path="~/www/lib/d3/scripts/d3.min.js" />
+/// <reference path="~/www/lib/topojson/scripts/topojson.js" />
 
 /*
  Structure of states to be set from external modules:
