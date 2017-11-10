@@ -172,6 +172,11 @@
                         if (diameter > offsetMiddle - offsetDonutChart - 98) {
                             diameter = offsetMiddle - offsetDonutChart - 98;
                         }
+                        if (diameter < 128) {
+                            diameter = 128;
+                        } else if (diameter > 256) {
+                            diameter = 256;
+                        }
                     }
                     Log.print(Log.l.trace, "diameter=" + diameter);
                     WinJS.Promise.timeout(0).then(function () {
@@ -189,7 +194,8 @@
                                         padding: '5',
                                         ringMargin: '5',
                                         dataLabelThreshold: '1',
-                                        highlightMouseOver: true
+                                        highlightMouseOver: true,
+                                        shadowAlpha: 0
                                     }
                                 },
                                 legend: { show: true, rendererOptions: { numberRows: 10 }, location: 'w', marginLeft: '30px' }
