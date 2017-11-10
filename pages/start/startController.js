@@ -26,9 +26,12 @@
                 comment: getResourceText("info.comment")
             }, commandList]);
             this.kontaktanzahldata = null;
+            this.countrydata = null;
             this.applist = null;
 
             var that = this;
+
+            
 
             this.dispose = function () {
                 if (that.kontaktanzahldata) {
@@ -38,6 +41,32 @@
                     that.applist = null;
                 }
             }
+
+           this.charty = pageElement.querySelector("#countryChart");
+            var ccunset = function () {
+                that.charty.innerHTML = "";
+            }
+            this.ccunset = ccunset;
+            
+           /* var map = new Datamap(
+                {
+                    element: document.querySelector('#worldcontainer'),
+                    height: 350,
+                    width: 600,
+                    fills: {
+                        'HIGH': '#afafaf',
+                        'LOW': '#123456',
+                        'MEDIUM': 'blue',
+                        'UNKNOWN': 'rgb(0,0,0)',
+                        defaultFill: "#d3d3d3"
+                    },
+                    // Array --> 'Countrykey' : { fillKey : 'Rate of importance'}
+                    data: {
+
+                    },
+                    responsive: true
+                });
+            */
 
             var setRestriction = function (restriction) {
                 AppData.setRestriction("Kontakt", restriction);
@@ -115,6 +144,65 @@
             }
             this.setLabelColor = setLabelColor;
 
+            this.countryChart = null;
+            //this.countrytitle = that.title("reporting.countrychart");
+            this.countryChartArray = [];
+            this.countrydata = [];
+            this.countryticks = [];
+            var countryresult = null, ci = 9, cl = 0;
+            var showcountryChart = function (countryChartId, bAnimated) {
+                Log.call(Log.l.trace, "Start.Controller.");
+                var countryChart = pageElement.querySelector("#" + countryChartId);
+                if (countryChart) {
+                    var width = countryChart.clientWidth;
+                    var diameter = width / 2 - 48;
+                    var tileMiddle = pageElement.querySelector(".tile-middle");
+                    if (tileMiddle) {
+                        var offsetDonutChart = countryChart.offsetTop;
+                        var offsetMiddle = tileMiddle.offsetTop;
+                        Log.print(Log.l.trace, "offsetDonutChart=" + offsetDonutChart + " offsetMiddle=" + offsetMiddle);
+                        if (diameter > offsetMiddle - offsetDonutChart - 98) {
+                            diameter = offsetMiddle - offsetDonutChart - 98;
+                        }
+                    }
+                    Log.print(Log.l.trace, "diameter=" + diameter);
+                    WinJS.Promise.timeout(0).then(function () {
+                        try {
+                            countryChart.innerHTML = "";
+                            that.countryChart = $.jqplot(countryChartId, [that.countrydata], {
+                                seriesDefaults: {
+                                    renderer: $.jqplot.DonutRenderer,
+                                    rendererOptions: {
+                                        diameter: diameter,
+                                        sliceMargin: 1,
+                                        startAngle: -145,
+                                        showDataLabels: true,
+                                        dataLabels: 'percent',
+                                        padding: '5',
+                                        ringMargin: '5',
+                                        dataLabelThreshold: '1',
+                                        highlightMouseOver: true
+                                    }
+                                },
+                                legend: { show: true, rendererOptions: { numberRows: 10 }, location: 'w', marginLeft: '30px' }
+                            });
+                            $("#" + countryChartId).unbind("jqplotDataClick");
+                            $("#" + countryChartId).bind("jqplotDataClick",
+                                function (ev, seriesIndex, pointIndex, data) {
+                                    that.clickCountrySlice(that.countrydata, pointIndex);
+                                }
+                            );
+                            /*that.setLabelColor(showcountryChart, "jqplot-xaxis-tick", "#f0f0f0");
+                            that.setLabelColor(showcountryChart, "jqplot-point-label", "#f0f0f0");*/
+                        } catch (ex) {
+                            Log.print(Log.l.error, "exception occurred: " + ex.message);
+                        }
+                    });
+                }
+                Log.ret(Log.l.trace);
+            };
+            this.showcountryChart = showcountryChart;
+
             this.pieChart = null;
             var buttonEdited = getResourceText("start.buttonEdited");
             var buttonNotEdited = getResourceText("start.buttonNotEdited");
@@ -128,17 +216,19 @@
 
                     var width = visitorsEditedChart.clientWidth;
                     var diameter = width / 2;
-                    var tileMiddle = pageElement.querySelector(".tile-middle");
-                    if (tileMiddle) {
+                    /*
+                    var tileBottom = pageElement.querySelector(".tile-bottom");
+                    if (tileBottom) {
                         var offsetPieChart = visitorsEditedChart.offsetTop;
-                        var offsetMiddle = tileMiddle.offsetTop;
-                        Log.print(Log.l.trace, "offsetPieChart=" + offsetPieChart + " offsetMiddle=" + offsetMiddle);
-                        if (diameter > offsetMiddle - offsetPieChart - 48) {
-                            diameter = offsetMiddle - offsetPieChart - 48;
+                        var offsetBottom = tileBottom.offsetTop;
+                        Log.print(Log.l.trace, "offsetPieChart=" + offsetPieChart + " offsetMiddle=" + offsetBottom);
+                        if (diameter > offsetBottom - offsetPieChart - 48) {
+                            diameter = offsetBottom - offsetPieChart - 48;
                         }
                     }
+                     * 
+                     */
                     Log.print(Log.l.trace, "diameter=" + diameter);
-
 
                     var series = [
                         [buttonEdited, that.binding.dataStart.AnzEditierteKontakte],
@@ -172,6 +262,7 @@
                             return;
                         } 
                         try {
+                            visitorsEditedChart.innerHTML = "";
                             that.pieChart = $.jqplot(pieChartId, [series], {
                                 title: "",
                                 grid: {
@@ -259,6 +350,7 @@
                             return;
                         } 
                         try {
+                            visitorsPerDayChart.innerHTML = "";
                             that.barChart = $.jqplot(barChartId, [series], {
                                 grid: {
                                     drawBorder: false,
@@ -347,7 +439,7 @@
                         }, recordId);
                     }
                     return ret;
-                }).then(function () {
+                }).then(function() {
                     return Start.kontaktanzahlView.select(function(json) {
                         // this callback will be called asynchronously
                         // when the response is available
@@ -358,16 +450,38 @@
                             that.showBarChart("visitorsPerDayChart", true);
                         }
                         return WinJS.Promise.as();
-                    }, function (errorResponse) {
+                    }, function(errorResponse) {
                         that.kontaktanzahldata = null;
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
                         return WinJS.Promise.as();
-                    });
+                    })
+                }).then(function () {
+                    return Start.reportLand.select(function(json) {
+                        Log.print(Log.l.trace, "reportLand: success!");
+                            if (json && json.d && json.d.results && json.d.results.length > 0) {
+                                // store result for next use
+                                countryresult = json.d.results;
+                                if (countryresult.length - 1 < ci) {
+                                    ci = countryresult.length - 1;
+                                }
+                                cl = json.d.results.length;
+                                for (ci; ci >= 0; ci--) {
+                                    if (countryresult[ci].Land === null) {
+                                        countryresult[ci].Land = getResourceText("reporting.nocountry");
+                                    }
+                                    that.countrydata[ci] = [countryresult[ci].Land, countryresult[ci].Anzahl];
+                                }
+                            }
+                            that.showcountryChart("countryChart", true);
+                        },
+                        function(errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        });
                 });
-                Log.ret(Log.l.trace);
-                return ret;
             };
             this.loadData = loadData;
 

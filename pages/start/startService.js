@@ -39,6 +39,40 @@
                 Log.ret(Log.l.trace);
                 return ret;
             }
+        },
+        _reportLand: {
+            get: function () {
+                return AppData.getFormatView("Kontakt", 20473);
+            }
+        },
+        reportLand: {
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, "Start.");
+                var ret = Start._reportLand.select(complete, error, restriction, {
+                    ordered: true,
+                    orderAttribute: "Anzahl",
+                    desc: true
+                });
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            selectNext: function (complete, error, response, nextUrl) {
+                Log.call(Log.l.trace, "Start.");
+                var ret = Start._reportLand.selectNext(complete, error, response, nextUrl);
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getNextUrl: function (response) {
+                Log.call(Log.l.trace, "Start._reportLand.");
+                var ret = Start._reportLand.getNextUrl(response);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getDbView: function () {
+                return Start._reportLand;
+            }
         }
     
     });

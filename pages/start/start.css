@@ -62,10 +62,15 @@
     font-weight: 600;
  }
 
+ .start .field_line {
+     border: none;
+ }
  
  .tile-middle {
      position: absolute;
      bottom: 142px;
+     
+     
  }
 
  .tile-bottom {
@@ -106,6 +111,7 @@
     */
     border: none;
     display: table-cell;
+    
 }
 
 .tile-content-flat {
@@ -130,9 +136,9 @@
     border-style: solid;
     border-width: 1px;
     border-color: gray;
+    height: 100%;
     */
     width: 100%;
-    height: 100%;
     border: none;
 }
 
@@ -183,10 +189,6 @@
  .pie-chart {
      min-height: 96px;
      width: 452px;
-     position: absolute;
-     display: block;
-     top: 150px;
-     left: calc(50% - 226px);
  }
  .bar-chart {
      min-height: 96px;
@@ -206,70 +208,68 @@
  .visitorsEditedChartBox {
      width: 100%;
  }
- /*
-    margins/paddings for medium size screens or orientation landscape
-    contentarea is less than 699px (in landscape add 140px for navigation bar)
-    @media (max-width:699px), (max-width:839px) and (orientation: landscape) {
-*/
-@media (max-width:899px) {
-    /*
-    .pagetitle {
-        display: inline-block;
-    }
-    .start-photo-container {
-        width: 60%;
-        left: 20%;
-    }
-    .bar-chart {
-         display: none;
-    }
-
-    */
-}
 
 /*
-    margins/paddings for small screens and orientation vertical
-*/
-@media (max-width:499px) {
-    /*
-    .pagetitle {
-         display: none;
-    }
-    .start-photo-container {
-        width: 80%;
-        left: 10%;
-    }
-
-    */
-    .pie-chart {
-         padding-top: 0;
-         min-width: 96px;
-         width: calc(100% - 48px);
-    }
-}
-
-@media (max-height:699px) {
-    /*
-    .tile-middle {
-         bottom: calc(100% - 488px);
-    }
-
-    .tile-bottom {
-         bottom: calc(100% - 628px);
-    }    
-    */
-    .tile-middle {
-         position: inherit;
-    }
-
-    .tile-bottom {
-         position: inherit;
-    }    
-}
-/*
-@media (max-height:900px) {
+@media (max-height:1099px) {
     .pie-chart {
         display: none;
     }
 }
 */
+
+.view-size-bigger .tile-middle {
+    top: calc(100% - 500px);
+    overflow: hidden;
+}
+
+ /*
+    margins/paddings for medium size screens or orientation landscape
+    contentarea is less than 699px (in landscape add 140px for navigation bar)
+    @media (max-width:699px), (max-width:839px) and (orientation: landscape) {
+@media (max-width:899px) {
+    
+}
+*/
+
+.view-size-medium .hide_if_size_medium {
+    display: none;
+}
+
+.view-size-medium .pagetitle {
+    display: inline-block;
+}
+.view-size-medium .start-photo-container {
+    width: 60%;
+    left: 20%;
+}
+
+/*
+    margins/paddings for small screens and orientation vertical
+@media (max-height:699px) {
+   
+}
+*/
+
+
+/*
+    margins/paddings for small screens and orientation vertical
+@media (max-width:499px) {
+    
+}
+*/
+
+.view-size-small .pagetitle {
+    display: none;
+}
+.view-size-small .start-photo-container {
+    width: 80%;
+    left: 10%;
+}
+
+    
+.view-size-small .pie-chart {
+    min-width: 96px;
+}
+
+
+

@@ -6,6 +6,8 @@
     <script type="text/javascript" src="startService.js"></script>
     <script type="text/javascript" src="startController.js"></script>
     <script type="text/javascript" src="start.js"></script>
+    <script type="text/javascript" src="../../lib/jqPlot/scripts/plugins/jqplot.donutRenderer.min.js"></script>
+    
 </head>
 <body class="win-type-body">
     <div class="start fragment">
@@ -21,17 +23,12 @@
                             <span class="date-field"></span>
                         </div>
                     </div>
-                    <div class="field_line no-border">
-                        <button id="event"
-                                class="win-button tile-button tile-button-color"
-                                onclick="AppBar.handleEvent('click', 'clickEditEvent', event)"
-                                data-win-bind="disabled: disableEditEvent">
-                            <span class="win-type-subtitle text-textcolor"
-                                  data-win-bind="textContent: dataStart.VeranstaltungName"></span>
-                        </button>
-                        <div class="visitorsEditedChartBox">
-                            <div id="visitorsEditedChart" class="plot pie-chart">
-                            </div>
+                    <div class="tile-content-inner">
+                        <div class="field_line field_line_odd hide_if_size_medium">
+                            <!---<div id="worldcontainer"></div>-->
+                        </div>
+                        <div class="field_line field_line_even">
+                            <div id="countryChart"></div>
                         </div>
                     </div>
                     <div name="list" class="tile tile-backgroundcolor tile-middle">
@@ -45,7 +42,11 @@
                             </div>
                         </div>
                         <div class="tile-content-inner">
-                            <div class="field_line field_line_full no-border">
+                            <div class="field_line field_line_odd">
+                                <div id="visitorsEditedChart" class="plot pie-chart">
+                                </div>
+                            </div>
+                            <div class="field_line field_line_even hide_if_size_medium">
                                 <div id="visitorsPerDayChart" class="plot bar-chart">
                                 </div>
                             </div>
@@ -61,11 +62,9 @@
                                 <span class="date-field"></span>
                             </div>
                         </div>
-                        <div class="tile-content-inner">
-                            <div class="field_line field_line_full no-border">
-                                <span class="win-type-body text-lightcolor"
-                                      data-win-bind="innerHTML: comment"></span>
-                            </div>
+                        <div class="field_line field_line_full no-border">
+                            <span class="win-type-body text-lightcolor"
+                                  data-win-bind="innerHTML: comment"></span>
                         </div>
                     </div>
                     <div class="error-message"
