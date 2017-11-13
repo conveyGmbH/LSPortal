@@ -12,14 +12,16 @@
                 return AppData.getLgntInit("LGNTINITFragengruppe");
             }
         },
-        initFragengruppeView: {
-            clear: function() {
-                Questiongroup._initFragengruppeView.clear();
-            }
-        },
         _CR_V_FragengruppeView: {
             get: function () {
                 return AppData.getFormatView("CR_V_Fragengruppe", 0);
+            }
+        }
+    });
+    WinJS.Namespace.define("Questiongroup", {
+        initFragengruppeView: {
+            clear: function() {
+                Questiongroup._initFragengruppeView.clear();
             }
         },
         CR_V_FragengruppeView: {
@@ -78,6 +80,19 @@
                 var ret = Questiongroup._CR_V_FragengruppeView.selectNext(complete, error, response, nextUrl);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
+                return ret;
+            },
+            relationName: Questiongroup._CR_V_FragengruppeView.relationName,
+            getRecordId: function (record) {
+                var ret = null;
+                if (record) {
+                    if (Questiongroup._CR_V_FragengruppeView.oDataPkName) {
+                        ret = record[Questiongroup._CR_V_FragengruppeView.oDataPkName];
+                    }
+                    if (!ret && Questiongroup._CR_V_FragengruppeView.pkName) {
+                        ret = record[Questiongroup._CR_V_FragengruppeView.pkName];
+                    }
+                }
                 return ret;
             }
         }

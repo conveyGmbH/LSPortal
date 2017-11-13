@@ -11,26 +11,20 @@
 (function () {
     "use strict";
     WinJS.Namespace.define("Questiongroup", {
-        Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
+        Controller: WinJS.Class.derive(Application.RecordsetController, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "Questiongroup.Controller.");
-            Application.Controller.apply(this, [pageElement, {
-                count: 0
-            }, commandList]);
-            this.nextUrl = null;
-            this.loading = false;
-            this.questions = null;
-
-            var that = this;
-
             // ListView control
             var listView = pageElement.querySelector("#questiongroup.listview");
+
+            Application.RecordsetController.apply(this, [pageElement, {
+                count: 0
+            }, commandList, false, Questiongroup.CR_V_FragengruppeView, null, listView]);
+
+            var that = this;
 
             this.dispose = function () {
                 if (listView && listView.winControl) {
                     listView.winControl.itemDataSource = null;
-                }
-                if (that.questions) {
-                    that.questions = null;
                 }
             }
 
@@ -74,126 +68,6 @@
             };
             this.getFieldEntries = getFieldEntries;
 
-            var mergeRecord = function (prevRecord, newRecord) {
-                Log.call(Log.l.trace, "Questiongroup.Controller.");
-                var ret = false;
-                for (var prop in newRecord) {
-                    if (newRecord.hasOwnProperty(prop)) {
-                        if (newRecord[prop] !== prevRecord[prop]) {
-                            prevRecord[prop] = newRecord[prop];
-                            ret = true;
-                        }
-                    }
-                }
-                Log.ret(Log.l.trace, ret);
-                return ret;
-            }
-            this.mergeRecord = mergeRecord;
-
-            var selectRecordId = function (recordId) {
-                Log.call(Log.l.trace, "Questiongroup.Controller.", "recordId=" + recordId);
-                if (recordId && listView && listView.winControl && listView.winControl.selection) {
-                    for (var i = 0; i < that.questions.length; i++) {
-                        var question = that.questions.getAt(i);
-                        if (question && typeof question === "object" &&
-                            question.CR_V_FragengruppeVIEWID === recordId) {
-                            listView.winControl.selection.set(i);
-                            break;
-                        }
-                    }
-                }
-                Log.ret(Log.l.trace);
-            }
-            this.selectRecordId = selectRecordId;
-
-            var scopeFromRecordId = function (recordId) {
-                var i;
-                Log.call(Log.l.trace, "Questiongroup.Controller.", "recordId=" + recordId);
-                var item = null;
-                for (i = 0; i < that.questions.length; i++) {
-                    var question = that.questions.getAt(i);
-                    if (question && typeof question === "object" &&
-                        question.CR_V_FragengruppeVIEWID === recordId) {
-                        item = question;
-                        break;
-                    }
-                }
-                if (item) {
-                    Log.ret(Log.l.trace, "i=" + i);
-                    return { index: i, item: item };
-                } else {
-                    Log.ret(Log.l.trace, "not found");
-                    return null;
-                }
-            };
-            this.scopeFromRecordId = scopeFromRecordId;
-
-            var deleteData = function () {
-                Log.call(Log.l.trace, "Questiongroup.Controller.");
-                AppData.setErrorMsg(that.binding);
-                var recordId = that.curRecId;
-                if (recordId) {
-                    AppBar.busy = true;
-                    Questiongroup.CR_V_FragengruppeView.deleteRecord(function (response) {
-                        that.curRecId = 0;
-                        AppData.setRecordId('CR_V_Fragengruppe', that.curRecId);
-                        AppBar.busy = false;
-                        // called asynchronously if ok
-                        that.loadData();
-                    }, function (errorResponse) {
-                        AppBar.busy = false;
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                    }, recordId);
-                }
-                Log.ret(Log.l.trace);
-            };
-            this.deleteData = deleteData;
-
-            var saveData = function (complete, error) {
-                var ret = null;
-                Log.call(Log.l.trace, "Questiongroup.Controller.");
-                AppData.setErrorMsg(that.binding);
-                // standard call via modify
-                var recordId = that.prevRecId;
-                if (!recordId) {
-                    // called via canUnload
-                    recordId = that.curRecId;
-                }
-                that.prevRecId = 0;
-                if (recordId) {
-                    var curScope = that.scopeFromRecordId(recordId);
-                    if (curScope && curScope.item) {
-                        var newRecord = that.getFieldEntries(curScope.index);
-                        if (that.mergeRecord(curScope.item, newRecord) || AppBar.modified) {
-                            Log.print(Log.l.trace, "save changes of recordId:" + recordId);
-                            ret = Questiongroup.CR_V_FragengruppeView.update(function (response) {
-                                Log.print(Log.l.info, "Questiongroup.Controller. update: success!");
-                                // called asynchronously if ok
-                                AppBar.modified = false;
-                                if (typeof complete === "function") {
-                                    complete(response);
-                                }
-                            }, function (errorResponse) {
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                                if (typeof error === "function") {
-                                    error(errorResponse);
-                                }
-                            }, recordId, curScope.item);
-                        } else {
-                            Log.print(Log.l.trace, "no changes in recordId:" + recordId);
-                        }
-                    }
-                }
-                if (!ret) {
-                    ret = new WinJS.Promise.as().then(function () {
-                        complete({});
-                    });
-                }
-                Log.ret(Log.l.trace, ret);
-                return ret;
-            };
-            this.saveData = saveData;
-
             // define handlers
             this.eventHandlers = {
                 clickBack: function (event) {
@@ -205,29 +79,7 @@
                 },
                 clickNew: function (event) {
                     Log.call(Log.l.trace, "Questiongroup.Controller.");
-                    AppBar.busy = true;
-                    that.saveData(function (response) {
-                        Log.print(Log.l.trace, "question saved");
-                        Questiongroup.CR_V_FragengruppeView.insert(function (json) {
-                            // this callback will be called asynchronously
-                            // when the response is available
-                            Log.print(Log.l.info, "questionListView insert: success!");
-                            // contactData returns object already parsed from json file in response
-                            if (json && json.d) {
-                                that.curRecId = json.d.CR_V_FragengruppeVIEWID;
-                                AppData.setRecordId('CR_V_Fragengruppe', that.curRecId);
-                            }
-                            AppBar.busy = false;
-                            that.loadData().then(function () {
-                                that.selectRecordId(that.curRecId);
-                            });
-                        }, function (errorResponse) {
-                            AppBar.busy = false;
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        });
-                    }, function (errorResponse) {
-                        Log.print(Log.l.error, "error saving question");
-                    });
+                    that.insertData();
                     Log.ret(Log.l.trace);
                 },
                 clickOk: function (event) {
@@ -254,27 +106,7 @@
                                 if (result) {
                                     AppBar.busy = true;
                                     Log.print(Log.l.trace, "clickDelete: user choice OK");
-                                    that.deleteData(function (response) {
-                                        // delete OK 
-                                        AppBar.busy = false;
-                                        that.loadData();
-                                    }, function (errorResponse) {
-                                        // delete ERROR
-                                        var message = null;
-                                        AppBar.busy = false;
-                                        Log.print(Log.l.error, "error status=" + errorResponse.status + " statusText=" + errorResponse.statusText);
-                                        if (errorResponse.data && errorResponse.data.error) {
-                                            Log.print(Log.l.error, "error code=" + errorResponse.data.error.code);
-                                            if (errorResponse.data.error.message) {
-                                                Log.print(Log.l.error, "error message=" + errorResponse.data.error.message.value);
-                                                message = errorResponse.data.error.message.value;
-                                            }
-                                        }
-                                        if (!message) {
-                                            message = getResourceText("error.delete");
-                                        }
-                                        alert(message);
-                                    });
+                                    that.deleteData();
                                 } else {
                                     Log.print(Log.l.trace, "clickDelete: user choice CANCEL");
                                 }
@@ -317,39 +149,9 @@
                 },
                 onSelectionChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "Questiongroup.Controller.");
-                    if (listView && listView.winControl) {
-                        var listControl = listView.winControl;
-                        if (listControl.selection) {
-                            var selectionCount = listControl.selection.count();
-                            if (selectionCount === 1) {
-                                // Only one item is selected, show the page
-                                listControl.selection.getItems().done(function (items) {
-                                    var item = items[0];
-                                    if (item.data && item.data.CR_V_FragengruppeVIEWID) {
-                                        var newRecId = item.data.CR_V_FragengruppeVIEWID;
-                                        Log.print(Log.l.trace, "newRecId:" + newRecId + " curRecId:" + that.curRecId);
-                                        if (newRecId !== 0 && newRecId !== that.curRecId) {
-                                            AppData.setRecordId('CR_V_Fragengruppe', newRecId);
-                                            if (that.curRecId) {
-                                                that.prevRecId = that.curRecId;
-                                            }
-                                            that.curRecId = newRecId;
-                                            if (that.prevRecId !== 0) {
-                                                that.saveData(function (response) {
-                                                    Log.print(Log.l.trace, "question saved");
-                                                    AppBar.triggerDisableHandlers();
-                                                }, function (errorResponse) {
-                                                    Log.print(Log.l.error, "error saving question");
-                                                });
-                                            } else {
-                                                AppBar.triggerDisableHandlers();
-                                            }
-                                        }
-                                    }
-                                });
-                            }
-                        }
-                    }
+                    that.selectionChanged().then(function() {
+                        AppBar.triggerDisableHandlers();
+                    });
                     Log.ret(Log.l.trace);
                 },
                 onLoadingStateChanged: function (eventInfo) {
@@ -419,7 +221,7 @@
                         progress = listView.querySelector(".list-footer .progress");
                         counter = listView.querySelector(".list-footer .counter");
                         var visible = eventInfo.detail.visible;
-                        if (visible && that.questions && that.nextUrl) {
+                        if (visible && that.nextUrl) {
                             that.loading = true;
                             if (progress && progress.style) {
                                 progress.style.display = "inline";
@@ -427,22 +229,10 @@
                             if (counter && counter.style) {
                                 counter.style.display = "none";
                             }
-                            AppData.setErrorMsg(that.binding);
-                            Log.print(Log.l.trace, "calling select Questiongroup.CR_V_FragengruppeView...");
-                            var nextUrl = that.nextUrl;
-                            that.nextUrl = null;
-                            Questiongroup.CR_V_FragengruppeView.selectNext(function (json) {
+                            that.loadNext(function (json) {
                                 // this callback will be called asynchronously
                                 // when the response is available
                                 Log.print(Log.l.trace, "Questiongroup.CR_V_FragengruppeView: success!");
-                                // selectNext returns object already parsed from json file in response
-                                if (json && json.d) {
-                                    that.nextUrl = Questiongroup.CR_V_FragengruppeView.getNextUrl(json);
-                                    var results = json.d.results;
-                                    results.forEach(function (item) {
-                                        that.binding.count = that.questions.push(item);
-                                    });
-                                }
                             }, function (errorResponse) {
                                 // called asynchronously if an error occurs
                                 // or server returns response with an error status.
@@ -453,8 +243,7 @@
                                 if (counter && counter.style) {
                                     counter.style.display = "inline";
                                 }
-                                that.loading = false;
-                            }, null, nextUrl);
+                            });
                         } else {
                             if (progress && progress.style) {
                                 progress.style.display = "none";
@@ -533,111 +322,6 @@
                 this.addRemovableEventListener(listView, "headervisibilitychanged", this.eventHandlers.onHeaderVisibilityChanged.bind(this));
                 this.addRemovableEventListener(listView, "iteminvoked", this.eventHandlers.onItemInvoked.bind(this));
             }
-
-            var loadData = function () {
-                Log.call(Log.l.trace, "Questiongroup.Controller.");
-                AppData.setErrorMsg(that.binding);
-                var ret = new WinJS.Promise.as().then(function () {
-                    return Questiongroup.CR_V_FragengruppeView.select(function (json) {
-                        // this callback will be called asynchronously
-                        // when the response is available
-                        Log.print(Log.l.trace, "Questiongroup.CR_V_FragengruppeView: success!");
-                        // select returns object already parsed from json file in response
-                        if (json && json.d) {
-                            that.binding.count = json.d.results.length;
-                            that.nextUrl = Questiongroup.CR_V_FragengruppeView.getNextUrl(json);
-                            var results = json.d.results;
-                            // Now, we call WinJS.Binding.List to get the bindable list
-                            that.questions = new WinJS.Binding.List(results);
-
-                            if (listView.winControl) {
-                                var trySetActive = function (element, scroller) {
-                                    var success = true;
-                                    // don't call setActive() if a dropdown control has focus!
-                                    var comboInputFocus = element.querySelector(".win-dropdown:focus");
-                                    if (!comboInputFocus) {
-                                        try {
-                                            if (typeof element.setActive === "function") {
-                                                element.setActive();
-                                            }
-                                        } catch (e) {
-                                            // setActive() raises an exception when trying to focus an invisible item. Checking visibility is non-trivial, so it's best
-                                            // just to catch the exception and ignore it. focus() on the other hand, does not raise exceptions.
-                                            success = false;
-                                        }
-                                    }
-                                    return success;
-                                };
-                                // overwrite _setFocusOnItem for this ListView to supress automatic
-                                // scroll-into-view when calling item.focus() in base.ls implementation
-                                // by prevent the call of _ElementUtilities._setActive(item);
-                                listView.winControl._setFocusOnItem = function ListView_setFocusOnItem(entity) {
-                                    this._writeProfilerMark("_setFocusOnItem,info");
-                                    if (this._focusRequest) {
-                                        this._focusRequest.cancel();
-                                    }
-                                    if (this._isZombie()) {
-                                        return;
-                                    }
-                                    var that = this;
-                                    var setFocusOnItemImpl = function (item) {
-                                        if (that._isZombie()) {
-                                            return;
-                                        }
-
-                                        if (that._tabManager.childFocus !== item) {
-                                            that._tabManager.childFocus = item;
-                                        }
-                                        that._focusRequest = null;
-                                        if (that._hasKeyboardFocus && !that._itemFocused) {
-                                            if (that._selection._keyboardFocused()) {
-                                                that._drawFocusRectangle(item);
-                                            }
-                                            // The requestItem promise just completed so _cachedCount will
-                                            // be initialized.
-                                            if (entity.type === WinJS.UI.ObjectType.groupHeader || entity.type === WinJS.UI.ObjectType.item) {
-                                                that._view.updateAriaForAnnouncement(item, (entity.type === WinJS.UI.ObjectType.groupHeader ? that._groups.length() : that._cachedCount));
-                                            }
-
-                                            // Some consumers of ListView listen for item invoked events and hide the listview when an item is clicked.
-                                            // Since keyboard interactions rely on async operations, sometimes an invoke event can be received before we get
-                                            // to WinJS.Utilities._setActive(item), and the listview will be made invisible. If that happens and we call item.setActive(), an exception
-                                            // is raised for trying to focus on an invisible item. Checking visibility is non-trivial, so it's best
-                                            // just to catch the exception and ignore it.
-                                            that._itemFocused = true;
-                                            trySetActive(item);
-                                        }
-                                    };
-
-                                    if (entity.type === WinJS.UI.ObjectType.item) {
-                                        this._focusRequest = this._view.items.requestItem(entity.index);
-                                    } else if (entity.type === WinJS.UI.ObjectType.groupHeader) {
-                                        this._focusRequest = this._groups.requestHeader(entity.index);
-                                    } else {
-                                        this._focusRequest = WinJS.Promise.wrap(entity.type === WinJS.UI.ObjectType.header ? this._header : this._footer);
-                                    }
-                                    this._focusRequest.then(setFocusOnItemImpl);
-                                };
-
-                                listView.winControl._supressScrollIntoView = true;
-                                // add ListView dataSource
-                                listView.winControl.itemDataSource = that.questions.dataSource;
-                            }
-                        }
-                    }, function (errorResponse) {
-                        // called asynchronously if an error occurs
-                        // or server returns response with an error status.
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                    }, null);
-                }).then(function () {
-                    AppBar.notifyModified = true;
-                    AppBar.triggerDisableHandlers();
-                    return WinJS.Promise.as();
-                });
-                Log.ret(Log.l.trace);
-                return ret;
-            };
-            this.loadData = loadData;
 
             that.processAll().then(function() {
                 Log.print(Log.l.trace, "Binding wireup page complete");

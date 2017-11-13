@@ -634,9 +634,9 @@
                                 }
                             } else {
                                 if (json && json.d && that.contacts) {
-                                    var contact = json.d;
-                                    that.resultConverter(contact);
                                     var objectrec = scopeFromRecordId(recordId);
+                                    var contact = json.d;
+                                    that.resultConverter(contact, objectrec.index);
                                     that.contacts.setAt(objectrec.index, contact);
                                 }
                             }
