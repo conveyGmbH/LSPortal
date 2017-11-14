@@ -23,10 +23,15 @@
     WinJS.Namespace.define("Start", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "Start.Controller.");
+
+            var srcDatamaps = "lib/datamaps/scripts/datamaps.world.js";
+
             Application.Controller.apply(this, [pageElement, {
                 dataStart: {},
                 disableEditEvent: NavigationBar.isPageDisabled("event"),
-                comment: getResourceText("info.comment")
+                comment: getResourceText("info.comment"),
+                // add dynamic scripts to page element, src is either a file or inline text:
+                scripts: [{ src: srcDatamaps, type: "text/javascript" }]
             }, commandList]);
             this.kontaktanzahldata = null;
             this.countrydata = null;
