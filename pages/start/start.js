@@ -75,7 +75,7 @@
                                 if ((width < 500 || that.prevWidth < 500 ||
                                      height < 900 || that.prevHeight < 900) &&
                                     typeof that.controller.showcountryChart === "function") {
-                                    that.controller.showcountryChart("countryChart", false);
+                                    that.controller.showcountryChart("countryPie", false);
                                 }
                                 if (width !== that.prevWidth && (width >= 900 || that.prevWidth >= 900) &&
                                            typeof that.controller.showBarChart === "function") {

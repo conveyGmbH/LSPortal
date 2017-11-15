@@ -514,7 +514,7 @@
                                         }
                                     }
                                 }
-                                that.showcountryChart("countryChart", true);
+                                that.showcountryChart("countryPie", true);
                                 that.worldChart(that.countryKeyData);
                             }
                             
