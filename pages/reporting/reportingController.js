@@ -65,14 +65,7 @@
 
            // var calendar = datePicker.calendar;
            // datePicker.calendar = calendar;
-
-            var resize = function () {
-                var employeeChart = pageElement.querySelector("#employeeChart");
-                employeeChart.className.replot();
-                Log.call(Log.l.trace, "Charts resizeed!");
-            }
-            this.resize = resize;
-
+            
             var setInitialDate = function () {
                 if (typeof that.binding.restriction.ReportingErfassungsdatum === "undefined") {
                     that.binding.restriction.ReportingErfassungsdatum = new Date();
