@@ -23,8 +23,21 @@
     WinJS.Namespace.define("Start", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "Start.Controller.");
-
-            var srcDatamaps = "lib/datamaps/scripts/datamaps.world.js";
+            var lang = AppData.getLanguageId();
+            switch (lang) {
+            case 1033:
+                var srcDatamaps = "lib/datamaps/scripts/datamaps.world.en.js";
+                break;
+            case 1036:
+                var srcDatamaps = "lib/datamaps/scripts/datamaps.world.en.js";
+                break;
+            case 1040:
+                var srcDatamaps = "lib/datamaps/scripts/datamaps.world.en.js";
+                break;
+            default:
+                var srcDatamaps = "lib/datamaps/scripts/datamaps.world.de.js";
+            }
+            //var srcDatamaps = "lib/datamaps/scripts/datamaps.world.js";
 
             Application.Controller.apply(this, [pageElement, {
                 dataStart: {},
@@ -48,8 +61,9 @@
                 }
             }
 
+            this.countryKeyData = {};
             this.worldChartData = [];
-            var worldChart = function () {
+            var worldChart = function (countryKeyData) {
                 Log.call(Log.l.trace, "Start.Controller.");
                 var ret = new WinJS.Promise.as().then(function () {
                     var worldCD = pageElement.querySelector('#worldcontainer');
@@ -62,13 +76,14 @@
                                     height: 350,
                                     width: 600,
                                     fills: {
-                                        'HIGH': '#afafaf',
-                                        'LOW': '#123456',
-                                        'MEDIUM': 'blue',
-                                        'UNKNOWN': 'rgb(0,0,0)',
+                                        HIGH: '#d8613e',
+                                        LOW: '#123456',
+                                        MEDIUM: 'blue',
+                                        UNKNOWN: 'rgb(0,0,0)',
                                         defaultFill: "#d3d3d3"
-                                    }
+                                    },
                                     // Array --> 'Countrykey' : { fillKey : 'Rate of importance'}
+                                    data: countryKeyData
                                 }
                             );
                         } catch (ex) {
@@ -479,21 +494,30 @@
                 }).then(function () {
                     return Start.reportLand.select(function(json) {
                         Log.print(Log.l.trace, "reportLand: success!");
+                            that.countryKeyData = {};
                             if (json && json.d && json.d.results && json.d.results.length > 0) {
                                 // store result for next use
                                 countryresult = json.d.results;
-                                if (countryresult.length - 1 < ci) {
-                                    ci = countryresult.length - 1;
-                                }
-                                cl = json.d.results.length;
                                 for (ci; ci >= 0; ci--) {
                                     if (countryresult[ci].Land === null) {
                                         countryresult[ci].Land = getResourceText("reporting.nocountry");
                                     }
-                                    that.countrydata[ci] = [countryresult[ci].Land, countryresult[ci].Anzahl];
+                                    if (countryresult[ci].Land) {
+                                        that.countrydata[ci] = [countryresult[ci].Land, countryresult[ci].Anzahl];
+                                    }
+                                    var isoCode = countryresult[ci].Alpha3_ISOCode;
+                                    if (!isoCode) {
+                                       
+                                    } else {
+                                        that.countryKeyData[isoCode] = {
+                                            fillKey: "HIGH"
+                                        }
+                                    }
                                 }
+                                that.showcountryChart("countryChart", true);
+                                that.worldChart(that.countryKeyData);
                             }
-                            that.showcountryChart("countryChart", true);
+                            
                         },
                         function(errorResponse) {
                             // called asynchronously if an error occurs
