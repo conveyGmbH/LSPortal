@@ -31,8 +31,8 @@
                 Log.call(Log.l.trace, "kontaktanzahlView.");
                 var ret = Start._kontaktanzahlView.select(complete, error, null, {
                     ordered: true,
-                    orderAttribute: "KontaktVIEWID",
-                    desc: false
+                    orderAttribute: "Datum",
+                    desc: true
                 });
                     
                 // this will return a promise to controller
