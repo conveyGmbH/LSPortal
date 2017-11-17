@@ -6,7 +6,8 @@
 /// <reference path="~/www/lib/convey/scripts/pageController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/pages/start/startService.js" />
-/// <reference path="~/www/lib/datamaps/scripts/datamaps.world.js" />
+/// <reference path="~/www/lib/datamaps/scripts/datamaps.world.de.js" />
+/// <reference path="~/www/lib/datamaps/scripts/datamaps.world.en.js" />
 /// <reference path="~/www/lib/d3/scripts/d3.min.js" />
 /// <reference path="~/www/lib/topojson/scripts/topojson.js" />
 
@@ -364,14 +365,10 @@
                     var series = [];
                     var ticks = [];
                     if (that.kontaktanzahldata && that.kontaktanzahldata.length > 0) {
-                        var offset = 0;
-                        if (that.kontaktanzahldata.length > 10) {
-                            offset = that.kontaktanzahldata.length - 10;
-                        }
-                        for (var i = offset; i < that.kontaktanzahldata.length; i++) {
+                        for (var i = 0; i < 10; i++) {
                             var row = that.kontaktanzahldata[i];
-                            series[i - offset] = [AppData.toDateString(row.Datum, true), row.AnzahlProTag];
-                            ticks[i - offset] = i;
+                            series[i] = [AppData.toDateString(row.Datum, true), row.AnzahlProTag];
+                            ticks[i] = i;
                         }    
                     }
                     var seriesColors = [
