@@ -7,11 +7,17 @@
 /// <reference path="~/www/lib/convey/scripts/pageController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/pages/info/infoService.js" />
+/// <reference path="~/www/lib/jstz/scripts/jstz.js" />
 
 (function () {
     "use strict";
     WinJS.Namespace.define("Info", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
+            var timezone = jstz && jstz.determine();
+            if (timezone) {
+                timezone.name(); 
+            }
+
             Log.call(Log.l.trace, "Info.Controller.");
             Application.Controller.apply(this, [pageElement, {
                 uploadTS: (AppData.appSettings.odata.replPrevPostMs ?
@@ -19,7 +25,8 @@
                 downloadTS: (AppData.appSettings.odata.replPrevSelectMs ?
                 "\/Date(" + AppData.appSettings.odata.replPrevSelectMs + ")\/" : null),
                 version: Application.version,
-                environment: "Platform: " + navigator.appVersion
+                environment: "Platform: " + navigator.appVersion,
+                timezone: timezone && ("Timezone: " + timezone.name())
             }, commandList]);
 
             var that = this;
