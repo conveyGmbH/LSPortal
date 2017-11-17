@@ -18,8 +18,10 @@
             }, commandList]);
 
             var that = this;
-            var showHideQuestionnaire = showHideQuestionnaire = pageElement.querySelector("#showHideQuestionnaire");;
-            var showHideSketchToggle = showHideSketchToggle = pageElement.querySelector("#showHideSketch");;
+            var showHideQuestionnaire = pageElement.querySelector("#showHideQuestionnaire");;
+            var showHideSketchToggle = pageElement.querySelector("#showHideSketch");
+            var showHideCamera = pageElement.querySelector("#showHideCamera");
+            var showHideBarcodeScan = pageElement.querySelector("#showHideBarcodeScan");
 
             //27.12.2016 generate the string date
             var getDateObject = function(dateData) {
@@ -110,6 +112,42 @@
             };
             this.changeColorSetting = changeColorSetting;
 
+            var changeAppSetting = function (pageProperty, status) {
+                Log.call(Log.l.trace, "Settings.Controller.", "pageProperty=" + pageProperty + " color=" + status);
+                var pOptionTypeId = null;
+                var pValue = null;
+
+                switch (pageProperty) {
+                    case "showHideCamera":
+                        pOptionTypeId = 23;
+                        break;
+                    case "showHideBarcodeScan":
+                        pOptionTypeId = 24;
+                        break;
+                }
+                if (typeof status === "boolean" && status) {
+                    pValue = "1";
+                } else {
+                    pValue = "0";
+                }
+
+                if (pOptionTypeId) {
+                    AppData.call("PRC_SETVERANSTOPTION",
+                        {
+                            pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                            pOptionTypeID: pOptionTypeId,
+                            pValue: pValue
+                        },
+                        function (json) {
+                            Log.print(Log.l.info, "call success! ");
+                        },
+                        function (error) {
+                            Log.print(Log.l.error, "call error");
+                        });
+                }
+            };
+            this.changeAppSetting = changeAppSetting;
+
             this.eventHandlers = {
                 clickBack: function (event) {
                     Log.call(Log.l.trace, "Contact.Controller.");
@@ -156,6 +194,28 @@
                         AppData._persistentStates.hideSketch = !toggle.checked;
                     }
                     that.changeColorSetting(event.target.id, toggle.checked);
+                    Log.ret(Log.l.trace);
+                },
+                clickShowHidebarcodeScan: function (event) {
+                    Log.call(Log.l.trace, "Event.Controller.");
+                    var toggle = event.currentTarget.winControl;
+                    if (toggle) {
+                        that.binding.isBarcodeScanVisible = toggle.checked;
+                        AppData._persistentStates.barcodeScanVisible = !toggle.checked;
+                    }
+                    // that.changeColorSetting(event.target.id, toggle.checked);
+                    that.changeAppSetting(event.target.id, toggle.checked);
+                    Log.ret(Log.l.trace);
+                },
+                clickShowHideCamera: function (event) {
+                    Log.call(Log.l.trace, "Event.Controller.");
+                    var toggle = event.currentTarget.winControl;
+                    if (toggle) {
+                        that.binding.isCameraVisible = toggle.checked;
+                        AppData._persistentStates.cameraVisible = !toggle.checked;
+                    }
+                    //that.changeColorSetting(event.target.id, toggle.checked);
+                    that.changeAppSetting(event.target.id, toggle.checked);
                     Log.ret(Log.l.trace);
                 }
             };

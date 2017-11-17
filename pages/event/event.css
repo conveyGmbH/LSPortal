@@ -14,6 +14,8 @@
 .toggle-switch-parent {
     height: 50px;
 }
+#showHideBarcodeScan .win-toggleswitch-header,
+#showHideCamera .win-toggleswitch-header,
 #showHideQuestionnaire .win-toggleswitch-header,
 #showHideSketch .win-toggleswitch-header,
 #shopAppBkg .win-toggleswitch-header {

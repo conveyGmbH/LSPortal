@@ -257,12 +257,12 @@
                             });
                         }
 
-                        Application.pageframe.savePersistentStates();
-                        var pValue = "0";
-                        if (toggle.checked) {
-                            pValue = "1";
-                        }
-                        AppData.call("PRC_SETVERANSTOPTION",
+                            Application.pageframe.savePersistentStates();
+                            var pValue = "0";
+                            if (toggle.checked) {
+                                pValue = "1";
+                            }
+                            AppData.call("PRC_SETVERANSTOPTION",
                                 {
                                     pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
                                     pOptionTypeID: 10,
@@ -274,8 +274,12 @@
                                 function (error) {
                                     Log.print(Log.l.error, "call error");
                                 });
-                        //   that.applyColorSetting(colorProperty, color);
-                        //Colors.updateColors();
+                            //   that.applyColorSetting(colorProperty, color);
+                            //Colors.updateColors();
+                            // });
+
+                            //});
+                        }
                     }
 
                     Log.ret(Log.l.trace);
@@ -425,9 +429,10 @@
                 } else if (item.INITOptionTypeID === 10) {
                     item.colorPickerId = "individualColors";
                     // var childElement = pageElement.querySelector("#" + item.colorPickerId);
-                    if (item.LocalValue === "1")
+                    if (item.LocalValue === "1") {
                         that.binding.generalData.individualColors = true;
-                    else {
+                        individualColorToggle.checked = that.binding.generalData.individualColors;
+                    } else {
                         var restoreDefault = false;
                         Log.call(Log.l.trace, "Settings.Controller.");
                         //  if (event.currentTarget && AppBar.notifyModified) {

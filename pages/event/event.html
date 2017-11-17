@@ -61,7 +61,6 @@
                                 </div>
                             </div>
                         </div>
-                        
                         <div class="field_line field_line_even">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'event.showHideSketch'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'event.showHideSketch'}"></span>
@@ -73,7 +72,29 @@
                                 </div>
                             </div>
                         </div>
-
+                        <div class="line-separator"></div>
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'event.showHideCamera'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'event.showHideCamera'}"></span>
+                            <div class="input_field toggle-switch-parent">
+                                <div id="showHideCamera" class="input_field"
+                                     data-win-control="WinJS.UI.ToggleSwitch"
+                                     data-win-bind="winControl.checked: isCameraVisible; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                                     onchange="AppBar.handleEvent('change', 'clickShowHideCamera', event)">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field_line field_line_even">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'event.showHideBarcodeScan'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'event.showHideBarcodeScan'}"></span>
+                            <div class="input_field toggle-switch-parent">
+                                <div id="showHideBarcodeScan" class="input_field"
+                                     data-win-control="WinJS.UI.ToggleSwitch"
+                                     data-win-bind="winControl.checked: isBarcodeScanVisible; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                                     onchange="AppBar.handleEvent('change', 'clickShowHidebarcodeScan', event)">
+                                </div>
+                            </div>
+                        </div>
                         <div class="header-separator float-left"></div>
                         <div class="content-header float-left">
                             <div class="half-circle half-circle-textcolor">&nbsp;</div>
