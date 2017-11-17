@@ -16,7 +16,10 @@
             select: function(complete, error, recordId) {
                 Log.call(Log.l.trace, "UserMessages.Benutzer.");
                 var ret = UserMessages._BenutzerView.select(complete, error, recordId, {
-                    ordered: true
+                    orderAttribute: "Info1TS",
+                    ordered: true,
+                    desc: true
+
                 });
                 Log.ret(Log.l.trace);
                 return ret;
