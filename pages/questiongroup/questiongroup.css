@@ -21,10 +21,10 @@
 }
 
 /* Styles used for the custom layout */
-.listView .contactListLayout {
+.listView .questiongroupLayout {
     position: static;
 }
-.listView .contactListLayout .win-surface {
+.listView .questiongroupLayout .win-surface {
     margin-left: 0;
 }
 #questiongroup .win-container {
