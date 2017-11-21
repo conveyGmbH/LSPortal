@@ -82,7 +82,6 @@
     "start.buttonAll"       : "Alle",
     "start.buttonEdited"    : "Bearbeitet",
     "start.buttonNotEdited" : "Unbearbeitet",
-
     "start.recent"          : "Zuletzt erfasster Kontakt",
     "start.list"            : "Kontakte auflisten",
     "start.new"             : "Neuen Kontakt anlegen",
@@ -119,14 +118,11 @@
     "contact.barcodeState"  : "Barcode Status",
     "contact.requiredField" : "* Pflichtfeld",
     "contact.closeImage"    : "Schliessen",
-
     "contact.ID"            : "ID",
     "contact.editedOn"      : "Erfasst",
     "contact.modifiedOn"    : "Bearbeitet",
-
     "contact.mr"            : "Herr",
     "contact.mrs"           : "Frau",
-
     "contact.useRestriction": "verwenden",
 
     "photo.title"           : "Visitenkarte",
@@ -137,7 +133,6 @@
     "questionnaire.textarea": "Bitte geben Sie hier Ihren Kommentar ein ",
     "questionnaire.count"   : "Anzahl",
     "questionnaire.attachments" : "Anhänge",
-    "questionnaire.requiredmarker" : "*",
 
     "sketch.title"          : "Erfasste Notizen",
     "sketch.comment"        : "Verwende die Zurück-Schaltfläche auf dieser Seite um zurück zu gehen!",
@@ -318,7 +313,9 @@
     "infodesk.documentView" : "Dokumentansicht",
     "infodesk.firstName"    : "Vorname",
     "infodesk.name"         : "Name",
-    "infodesk.messages"     : "Info1Text",
+    "infodesk.messages"     : "InfoText",
+	"infodesk.receiver"		: "Empfänger",
+	"infodesk.message"		: "Info2Text",
 
     "infodeskEmpList.title" : "Benutzerkonten",
     "infodeskEmpList.count" : "Anzahl",
@@ -370,6 +367,8 @@
 	"event.showHideQuestionnaire" : "Fragebogen",
 	"event.showHideSketch"	:	 "Skizze",
 	"event.showHideNavigationPages" : "Navigationsseiten",
+	"event.showHideBarcodeScan" : "Barcode",
+	"event.showHideCamera"  : "Kamera",
 	"event.note"			: "Hinweis",
 	"event.appInfo"			: "Änderungen werden in Mobile App erst beim nächsten Start der App wirksam",
 

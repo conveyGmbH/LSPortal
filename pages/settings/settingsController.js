@@ -222,7 +222,7 @@
                                 restoreDefault = true;
                                 //    pValue = "1";
                             } else {
-                                that.loadData();
+                               //  that.loadData();
                             }
                             that.binding.generalData.individualColors = toggle.checked;
                         }
@@ -257,31 +257,30 @@
                             });
                         }
 
-                            Application.pageframe.savePersistentStates();
-                            var pValue = "0";
-                            if (toggle.checked) {
-                                pValue = "1";
-                            }
-                            AppData.call("PRC_SETVERANSTOPTION",
-                                {
-                                    pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
-                                    pOptionTypeID: 10,
-                                    pValue: pValue
-                                },
-                                function (json) {
-                                    Log.print(Log.l.info, "call success! ");
-                                },
-                                function (error) {
-                                    Log.print(Log.l.error, "call error");
-                                });
-                            //   that.applyColorSetting(colorProperty, color);
-                            //Colors.updateColors();
-                            // });
-
-                            //});
+                        Application.pageframe.savePersistentStates();
+                        var pValue = "0";
+                        if (toggle.checked) {
+                            pValue = "1";
                         }
-                    }
+                        AppData.call("PRC_SETVERANSTOPTION",
+                            {
+                                pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                                pOptionTypeID: 10,
+                                pValue: pValue
+                            },
+                            function (json) {
+                                Log.print(Log.l.info, "call success! ");
+                            },
+                            function (error) {
+                                Log.print(Log.l.error, "call error");
+                            });
+                        //   that.applyColorSetting(colorProperty, color);
+                        //Colors.updateColors();
+                        // });
 
+                        //});
+
+                    }
                     Log.ret(Log.l.trace);
                 },
                 clickShowAppBkg: function (event) {
@@ -434,6 +433,8 @@
                         individualColorToggle.checked = that.binding.generalData.individualColors;
                     } else {
                         var restoreDefault = false;
+                        that.binding.generalData.individualColors = false;
+                        individualColorToggle.checked = that.binding.generalData.individualColors;
                         Log.call(Log.l.trace, "Settings.Controller.");
                         //  if (event.currentTarget && AppBar.notifyModified) {
                         //var toggle = event.currentTarget.winControl;
@@ -441,9 +442,9 @@
                             if (!individualColorToggle.checked) {
                                 restoreDefault = true;
                             }
-                            that.binding.generalData.individualColors = individualColorToggle.checked;
+                            //that.binding.generalData.individualColors = individualColorToggle.checked;
                         }
-                        AppData._persistentStates.individualColors = that.binding.generalData.individualColors;
+                        //AppData._persistentStates.individualColors = that.binding.generalData.individualColors;
                         if (restoreDefault) {
                             WinJS.Promise.timeout(0).then(function () {
                                 AppData._persistentStates.individualColors = false;

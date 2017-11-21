@@ -257,3 +257,6 @@ textarea:-ms-input-placeholder { font-style:italic; } /* ie */
 .view-size-small .list-question-content {
     padding-left: 9px;
 }
+.input_text_message {
+    height: 196px;
+}

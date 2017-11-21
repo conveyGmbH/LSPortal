@@ -34,7 +34,7 @@
                             <input class="input_field win-textbox" type="text" data-win-bind="value: restriction.Nachname Binding.Mode.twoway" />
                         </div>
                         <!--byhung Anzeige Vorname und Nachname + Fähigkeiten( Position + Sprache)-->
-                       
+
                         <div class="line-separator"></div>
                         <div class="field_line field_line_odd">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'reporting.employee'}"></span>
@@ -78,7 +78,7 @@
                             </select>
                         </div>
                         <div class="line-separator"></div>
-          
+
                         <div class="field_line field_line_odd"
                              data-win-bind="style.display: messestandData.SkillType4ID Binding.Converter.toDisplay">
                             <span class="label win-type-caption portrait_only" data-win-bind="textContent: messestandData.SkillType4"></span>
@@ -108,7 +108,7 @@
                             <span class="label win-type-caption portrait_only" data-win-bind="textContent: messestandData.SkillType1"></span>
                             <span class="label landscape_only" data-win-bind="textContent: messestandData.SkillType1"></span>
                             <!--<span class="label win-type-caption portrait_only" data-win-res="{textContent: 'dataEmployee.Vorname'}"></span>-->
-                            <div data-win-bind="textContent: dataEmployee.firstskill" ></div><!--dataEmployee.Vorname-->
+                            <div data-win-bind="textContent: dataEmployee.firstskill"></div><!--dataEmployee.Vorname-->
                         </div>
                         <div class="field_line field_line_even">
                             <span class="label win-type-caption portrait_only" data-win-bind="textContent: messestandData.SkillType2"></span>
@@ -135,7 +135,7 @@
                             <div data-win-bind="textContent: dataEmployee.fifthskill"></div><!--dataEmployee.Vorname-->
                         </div>
                         <div class="field_line field_line_even">
-                           
+
                         </div>
                         <div class="line-separator"></div>
                         <div class="field_line field_line_odd">
@@ -156,6 +156,18 @@
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'infodesk.messages'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'infodesk.messages'}"></span>
                             <div id="userMessageshost" class="input_field fragmenthost"></div>
+                        </div>
+                        <div class="field_line field_line_even">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'infodesk.receiver'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'infodesk.receiver'}"></span>
+                            <!--<input class="input_field win-textbox" type="text" data-win-bind="value: dataEmployee.Nachname" />-->
+                            <input id="receiver" class="input_field win-textbox" data-win-bind="value: dataEmployee.Login Binding.Mode.twoway"/>
+                        </div>
+                        <div class="field_line field_line_even">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'infodesk.message'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'infodesk.message'}"></span>
+                            <!--<input class="input_field win-textbox" type="text" data-win-bind="value: dataEmployee.Nachname"/>-->
+                            <textarea class="input_field win-textbox input_text_message" data-win-bind="value: dataBenutzer.Info2 Binding.Mode.twoway"></textarea>
                         </div>
                     </div>
                 </div>

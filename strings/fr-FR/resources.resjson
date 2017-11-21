@@ -317,10 +317,13 @@
     "infodesk.documentView" : "Voir document",
     "infodesk.firstName"    : "Prénom",
     "infodesk.name"         : "Nom",
-    "infodesk.messages"     : "Message",
+    "infodesk.messages"     : "Nouvelles",
+    "infodesk.receiver"     : "Récepteur",
+    "infodesk.message"     :  "Message",
 
     "infodeskEmpList.title" : "Comptes utilisateurs",
     "infodeskEmpList.count" : "Nombre",
+    "infodeskEmpList.login" : "Utilisateur",
 
     "userinfo.title"        : "Données d'utilisateur",
     "userinfo.present"      : "En site",
@@ -367,6 +370,9 @@
     "event.end"             : "Fin",
     "event.showHideQuestionnaire" : "afficher le champ de Questionnaire",
     "event.showHideSketch"  :   "afficher le champ de Esquisse",
+    "event.showHideNavigationPages": "page de navigation",
+	"event.showHideBarcodeScan" : "Code barre",
+	"event.showHideCamera"  : "Caméra",
     "event.note"            : "allusion",
     "event.appInfo"         : "Pour que ces modifications prennent effet, vous devez redémarrer votre APP",
 
@@ -385,6 +391,8 @@
     "questionList.requiredField" : "élément requis",
     "questionList.text"     : "afficher le champ de texte",
     "questionList.date"     : "afficher le champ de texte avec date",
+    "questionList.required" : "champ obligatoire",
+    "questionList.checkRequired" : "Champ obligatoire avec vérification",
 
     "reporting.title"       : "Évaluations",
     "reporting.with"        : "Excel export with title",
@@ -440,7 +448,6 @@
 
     "mandatory.title"       : "Champs obligatoires",
     "mandatory.contact"     : "Champs obligatoires du contact",
-    "mandatory.doMandatory" : "Présente les champs obligatoires de la questionnaire",
     "mandatory.questionnaire" : "Champs obligatoires du Questionnaire",
     "mandatory.doQuestionnaireMandatory"  : "afficher message",
     "mandatory.doContactMandatory"  : "afficher message",

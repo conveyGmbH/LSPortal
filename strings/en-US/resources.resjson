@@ -317,10 +317,13 @@
     "infodesk.documentView" : "Document view",
     "infodesk.firstName"    : "First name",
     "infodesk.name"         : "Last name",
-    "infodesk.messages"     : "Message",
+    "infodesk.messages"     : "Messages",
+    "infodesk.receiver"     : "Receiver",
+    "infodesk.message"      : "Message",
 
     "infodeskEmpList.title" : "User accounts",
     "infodeskEmpList.count" : "Count",
+    "infodeskEmpList.login" : "User",
 
     "userinfo.title"        : "User Info",
     "userinfo.present"      : "I'm on site now!",
@@ -367,6 +370,9 @@
     "event.end"             : "End",
     "event.showHideQuestionnaire" : "Show Questionnaire",
     "event.showHideSketch"  :  "Show Sketch",
+    "event.showHideNavigationPages": "Navigationpages",
+	"event.showHideBarcodeScan" : "Barcode",
+	"event.showHideCamera"  : "Camera",
     "event.note"            : "Note",
     "event.appInfo"         : "Please restart the APP for the changes to take effect",
 
@@ -385,6 +391,8 @@
     "questionList.requiredField" : "Mandatory item",
     "questionList.text"     : "Show text field",
     "questionList.date"     : "Show text and date field",
+    "questionList.required" ; "Requirefield",
+    "questionList.checkRequired" : "Requirefield with check",
 
     "reporting.title"       : "Reports",
     "reporting.with"        : "Excel export with title",

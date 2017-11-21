@@ -27,7 +27,8 @@
             // add page specific commands to AppBar
             var commandList = [
                 { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" },
-                { id: "clickSearch", label: getResourceText("command.search"), tooltip: getResourceText("tooltip.searchEmployee"), section: "primary", svg: "magnifying_glass", key: WinJS.Utilities.Key.enter }
+                { id: "clickSearch", label: getResourceText("command.search"), tooltip: getResourceText("tooltip.searchEmployee"), section: "primary", svg: "magnifying_glass", key: WinJS.Utilities.Key.enter },
+                { id: "clickForward", label: getResourceText("command.ok"), tooltip: getResourceText("tooltip.ok"), section: "primary", svg: "navigate_check", key: WinJS.Utilities.Key.enter }
             ];
 
             this.controller = new Infodesk.Controller(element, commandList);

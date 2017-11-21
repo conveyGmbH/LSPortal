@@ -313,10 +313,13 @@
     "infodesk.documentView" : "Visualizza documento",
     "infodesk.firstName"    : "Primo nome",
     "infodesk.name"         : "Cognome",
-    "infodesk.messages"     : "Message",
+    "infodesk.messages"     : "notizie",
+    "infodesk.receiver"     : "Ricevitore",
+    "infodesk.message"      : "Messaggio",
 
     "infodeskEmpList.title" : "Utenti",
     "infodeskEmpList.count" : "Numero",
+    "infodeskEmpList.login" : "Utente",
 
     "userinfo.title"        : "Informazioni utente",
     "userinfo.present"      : "Io sono ora presente",
@@ -354,7 +357,7 @@
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annulla",
-
+	
     "error.delete"          : "Errore: impossibile cancellare",
   
     "event.title"           : "Evento",
@@ -363,6 +366,9 @@
     "event.end"             : "Fine",
     "event.showHideQuestionnaire" : "Mostra casella questionario",
     "event.showHideSketch"  :  "Mostra casella schizzo",
+    "event.showHideNavigationPages" : "pagina di navigazione",
+	"event.showHideBarcodeScan" : "Barcode",
+	"event.showHideCamera"  : "Camera",
     "event.note"            : "suggerimento",
     "event.appInfo"         : "Affinché le modifiche abbiano effetto, si prega di riavviare l´APP",
 
@@ -381,6 +387,8 @@
     "questionList.requiredField" : "Elemento richiesto",
     "questionList.text"     : "Mostra casella di testo libero",
     "questionList.date"     : "Mostra casella calendario",
+    "questionList.required" : "Campi obbligatori",
+    "questionlist.checkRequired" :"Campo obbligatorio con verifica",
 
     "reporting.title"       : "Exports",
     "reporting.with"        : "Excel export con titolo",

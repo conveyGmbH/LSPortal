@@ -201,7 +201,7 @@
                     var toggle = event.currentTarget.winControl;
                     if (toggle) {
                         that.binding.isBarcodeScanVisible = toggle.checked;
-                        AppData._persistentStates.barcodeScanVisible = !toggle.checked;
+                        AppData._persistentStates.barcodeScanVisible = that.binding.isBarcodeScanVisible; //!toggle.checked
                     }
                     // that.changeColorSetting(event.target.id, toggle.checked);
                     that.changeAppSetting(event.target.id, toggle.checked);
@@ -212,7 +212,7 @@
                     var toggle = event.currentTarget.winControl;
                     if (toggle) {
                         that.binding.isCameraVisible = toggle.checked;
-                        AppData._persistentStates.cameraVisible = !toggle.checked;
+                        AppData._persistentStates.cameraVisible = that.binding.isCameraVisible; //!toggle.checked
                     }
                     //that.changeColorSetting(event.target.id, toggle.checked);
                     that.changeAppSetting(event.target.id, toggle.checked);
@@ -250,6 +250,8 @@
                 }).then(function () {
                     showHideQuestionnaire.winControl.checked = !AppData._persistentStates.hideQuestionnaire;
                     showHideSketchToggle.winControl.checked = !AppData._persistentStates.hideSketch;
+                    showHideCamera.winControl.checked = !AppData._persistentStates.cameraVisible;
+                    showHideBarcodeScan.winControl.checked = !AppData._persistentStates.barcodeScanVisible;
                 }).then(function () {
                     AppBar.notifyModified = true;
                     return WinJS.Promise.as();

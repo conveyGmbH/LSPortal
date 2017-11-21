@@ -85,11 +85,43 @@
                 MitarbeiterID: 0,
                 Vorname: "",
                 Nachname: "",
+                Login:"",
                 firstskill: "",
                 secondskill: "",
                 thirdskill: "",
                 fourthskill: "",
-                fifthskill: ""
+                fifthskill: "",
+                Info2: "",
+                receiver: ""
+            }
+        },
+        _benutzerView: {
+            get: function () {
+                return AppData.getFormatView("Benutzer", 0);
+            }
+        },
+        benutzerView: {
+            select: function (complete, error, recordId) {
+                Log.call(Log.l.trace, "benutzerView.");
+                var ret = Infodesk._benutzerView.selectById(complete, error, recordId);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            update: function (complete, error, recordId, viewResponse) {
+                Log.call(Log.l.trace, "benutzerView.");
+                var ret = Infodesk._benutzerView.update(complete, error, recordId, viewResponse);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            insert: function (complete, error, viewResponse) {
+                Log.call(Log.l.trace, "benutzerView.");
+                var ret = Infodesk._benutzerView.insertWithId(complete, error, viewResponse);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            defaultValue: {
+                Info1: "",
+                Info2: ""
             }
         }
     });
