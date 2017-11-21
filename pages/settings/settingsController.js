@@ -277,7 +277,6 @@
 
                         //});
                     }
-                    }
                     Log.ret(Log.l.trace);
                 },
                 clickShowAppBkg: function (event) {
@@ -430,8 +429,6 @@
                         individualColorToggle.checked = that.binding.generalData.individualColors;
                     } else {
                         var restoreDefault = false;
-                        that.binding.generalData.individualColors = false;
-                        individualColorToggle.checked = that.binding.generalData.individualColors;
                         Log.call(Log.l.trace, "Settings.Controller.");
                         //  if (event.currentTarget && AppBar.notifyModified) {
                         //var toggle = event.currentTarget.winControl;
@@ -439,9 +436,9 @@
                             if (!individualColorToggle.checked) {
                                 restoreDefault = true;
                             }
-                            //that.binding.generalData.individualColors = individualColorToggle.checked;
+                            that.binding.generalData.individualColors = individualColorToggle.checked;
                         }
-                        //AppData._persistentStates.individualColors = that.binding.generalData.individualColors;
+                        AppData._persistentStates.individualColors = that.binding.generalData.individualColors;
                         if (restoreDefault) {
                             WinJS.Promise.timeout(0).then(function () {
                                 AppData._persistentStates.individualColors = false;
