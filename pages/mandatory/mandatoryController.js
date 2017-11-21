@@ -383,6 +383,18 @@
 
             // register ListView event handler
             if (listView) {
+                // prevent some keyboard actions from listview to navigate within controls!
+                this.addRemovableEventListener(listView, "keydown", function (e) {
+                    if (!e.ctrlKey && !e.altKey) {
+                        switch (e.keyCode) {
+                            case WinJS.Utilities.Key.leftArrow:
+                            case WinJS.Utilities.Key.rightArrow:
+                            case WinJS.Utilities.Key.space:
+                                e.stopImmediatePropagation();
+                                break;
+                        }
+                    }
+                }.bind(this), true);
                 this.addRemovableEventListener(listView, "selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
                 this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
                 this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));

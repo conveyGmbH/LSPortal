@@ -143,7 +143,7 @@
                         default:
                             // defaultvalues
                     }
-                    if (item.colorPickerId !== "individualColors" && (!item.pageProperty)) {
+                    if (item.colorPickerId !== "individualColors" && (!item.pageProperty) && item.LocalValue) {
                         item.colorValue = "#" + item.LocalValue;
                         that.applyColorSetting(item.colorPickerId, item.colorValue);
                     } else {

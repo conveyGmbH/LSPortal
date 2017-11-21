@@ -227,7 +227,7 @@
                         default:
                             // defaultvalues
                     }
-                    if (item.colorPickerId) {
+                    if (item.colorPickerId && item.LocalValue) {
                         item.colorValue = "#" + item.LocalValue;
                         that.applyColorSetting(item.colorPickerId, item.colorValue);
                     }
