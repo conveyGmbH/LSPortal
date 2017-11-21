@@ -402,7 +402,7 @@
                             // defaultvalues
                     }
 
-                    if (item.colorPickerId) {
+                    if (item.colorPickerId && item.localValue) {
                         var childElement = pageElement.querySelector("#" + item.colorPickerId);
                         item.colorValue = "#" + item.LocalValue;
                         if (childElement) {
