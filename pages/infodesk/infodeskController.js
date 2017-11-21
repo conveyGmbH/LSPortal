@@ -85,6 +85,9 @@
                 if (newDataBenutzer.Info1 === null) {
                     newDataBenutzer.Info1 = "";
                 }
+                if (newDataBenutzer.Info2 === null) {
+                    newDataBenutzer.Info2 = "";
+                }
                 that.binding.dataBenutzer = newDataBenutzer;
                 AppBar.modified = false;
                 AppBar.notifyModified = prevNotifyModified;
