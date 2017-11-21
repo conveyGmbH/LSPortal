@@ -262,24 +262,21 @@
                         if (toggle.checked) {
                             pValue = "1";
                         }
-                        AppData.call("PRC_SETVERANSTOPTION",
-                            {
-                                pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
-                                pOptionTypeID: 10,
-                                pValue: pValue
-                            },
-                            function (json) {
-                                Log.print(Log.l.info, "call success! ");
-                            },
-                            function (error) {
-                                Log.print(Log.l.error, "call error");
-                            });
+                        AppData.call("PRC_SETVERANSTOPTION", {
+                            pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                            pOptionTypeID: 10,
+                            pValue: pValue
+                        }, function (json) {
+                            Log.print(Log.l.info, "call success! ");
+                        }, function (error) {
+                            Log.print(Log.l.error, "call error");
+                        });
                         //   that.applyColorSetting(colorProperty, color);
                         //Colors.updateColors();
                         // });
 
                         //});
-
+                    }
                     }
                     Log.ret(Log.l.trace);
                 },
