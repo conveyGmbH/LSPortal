@@ -440,9 +440,19 @@
     "appheader.portal"      : "Portal",
 
     "mailing.title"         : "Mailing",
-    "mailing.contactinfo"   : "If you would like a mailing, please call +49 (0) 8954 34 49 30 or write us an ",
-
-    "mandatory.title"       : "Mandatory fields",
+    "mailing.contactinfo"   : "If you want a mailing, please call +49 (0) 8954 34 49 30 or write us an email ",
+	"mailing.info"			: "Description",
+	"mailing.event"         : "Event",
+    "mailing.language"      : "Language",
+    "mailing.sender"        : "Sender",
+    "mailing.reply"         : "Reply",
+    "mailing.subject"       : "Subject",
+    "mailing.cc"            : "CC",
+    "mailing.bcc"           : "BCC",
+    "mailing.mailtext"      : "Mail text",
+    "mailing.standart"      : "Standart",
+    
+	"mandatory.title"       : "Mandatory fields",
     "mandatory.contact"     : "Mandatory fields in Contact",
     "mandatory.questionnaire" : "Mandatory fields in Questionnaire",
     "mandatory.doQuestionnaireMandatory"  : "Show message",

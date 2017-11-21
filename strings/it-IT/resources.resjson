@@ -437,6 +437,16 @@
 
     "mailing.title"         : "Mailing",
     "mailing.contactinfo"   : "If you would like a mailing, please call +49 (0) 8954 34 49 30 or write us an ",
+	"mailing.info"          : "Descrizione",
+    "mailing.event"         : "Evento",
+    "mailing.language"      : "Lingua",
+    "mailing.sender"        : "Mittente",
+    "mailing.reply"         : "Risposta",
+    "mailing.subject"       : "Riguardo",
+    "mailing.cc"            : "CC",
+    "mailing.bcc"           : "BCC",
+    "mailing.mailtext"      : "Testo della mail",
+    "mailing.standart"      : "Standart",
 
     "productlist.title"     : "Selezione del prodotto",
     "productlist.comment"   : "Utilizzate il pulsante \"indietro\" su questa pagina per tornare alla pagina precedente!",

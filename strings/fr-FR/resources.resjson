@@ -82,7 +82,6 @@
     "start.buttonAll"       : "Tous",
     "start.buttonEdited"    : "Modifié",
     "start.buttonNotEdited" : "non traité",
-
     "start.recent"          : "Dernier contact ajoute",
     "start.list"            : "Liste de contacts",
     "start.new"             : "Ajouter nouveau contact",
@@ -119,14 +118,11 @@
     "contact.barcodeState"  : "Barcode état",
     "contact.requiredField" : "élément requis",
     "contact.closeImage"    : "Fermer",
-
     "contact.ID"            : "ID",
     "contact.editedOn"      : "Créer en",
     "contact.modifiedOn"    : "Modifier en",
-
     "contact.mr"            : "Monsieur",
     "contact.mrs"           : "Madame",
-
     "contact.useRestriction": "utiliser",
 
     "photo.title"           : "Carte de visite",
@@ -441,6 +437,16 @@
 
     "mailing.title"         : "Messagerie",
     "mailing.contactinfo"   : "Si vous désirez un envoi postal, veuillez composer le + 49 (0) 8954 34 49 30 ou écrivez-nous un ",
+	"mailing.info"          : "Description",
+    "mailing.event"         : "événement",
+    "mailing.language"      : "Langue",
+    "mailing.sender"        : "Expéditeur",
+    "mailing.reply"         : "Réponse",
+    "mailing.subject"       : "Respect",
+    "mailing.cc"            : "CC",
+    "mailing.bcc"           : "BCC",
+    "mailing.mailtext"      : "Texte mail",
+    "mailing.standart"      : "Standart",
 
     "productlist.title"     : "Sélection de produits",
     "productlist.comment"   : "Utilisez le bouton Retour sur cette page pour y retourner!",
