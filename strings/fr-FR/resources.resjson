@@ -408,6 +408,8 @@
     "reporting.countrychart": "Statistiques nationales (entrées par pays)",
     "reporting.nocountry"   : "Aucun pays",
 
+    "reportingColumnList.title"       : "Coutume Export",
+
     "employee.title"        : "Comptes utilisateurs",
     "employee.firstname"    : "Prénom",
     "employee.lastname"     : "Nom",

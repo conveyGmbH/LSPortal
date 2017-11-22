@@ -408,6 +408,8 @@
     "reporting.countrychart": "Statistiche paesi di provenienza (contatti per nazione)",
     "reporting.nocountry"   : "Nessuna Nazione",
 
+    "reportingColumnList.title"       : "Costume Export",
+
     "employee.title"        : "Utenti",
     "employee.firstname"    : "Nome",
     "employee.lastname"     : "Cognome",

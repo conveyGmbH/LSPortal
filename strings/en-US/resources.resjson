@@ -392,7 +392,7 @@
     "questionList.requiredField" : "Mandatory item",
     "questionList.text"     : "Show text field",
     "questionList.date"     : "Show text and date field",
-    "questionList.required" ; "Requirefield",
+    "questionList.required" : "Requirefield",
     "questionList.checkRequired" : "Requirefield with check",
 
     "reporting.title"       : "Reports",
@@ -411,6 +411,8 @@
     "reporting.employeechart"  : "Employee statistics (entries per employee)",
     "reporting.countrychart": "Country statistics (entries per country)",
     "reporting.nocountry"   : "No country",
+
+	"reportingColumnList.title"       : "Custom Export",
 
     "employee.title"        : "User accounts",
     "employee.firstname"    : "First name",
