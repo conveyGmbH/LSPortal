@@ -196,7 +196,7 @@
      height: 250px;
  }
  #worldcontainer {
-     margin-left: 5%;
+     margin-left: -26px;
  }
 
  .jqplot-xaxis-tick,

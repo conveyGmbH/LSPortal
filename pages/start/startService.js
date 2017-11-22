@@ -23,7 +23,9 @@
         },
         _kontaktanzahlView: {
             get: function() {
-                return AppData.getFormatView("Kontakt", 20455);
+                var ret = AppData.getFormatView("Kontakt", 20455);
+                ret.maxPageSize = 10;
+                return ret;
             }
         },
         kontaktanzahlView: {
@@ -42,12 +44,18 @@
         },
         _reportLand: {
             get: function () {
-                return AppData.getFormatView("Kontakt", 20473);
+                var ret = AppData.getFormatView("Kontakt", 20473);
+                ret.maxPageSize = 10;
+                return ret;
             }
         },
         reportLand: {
             select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, "Start.");
+                if (!restriction) {
+                    restriction = {};
+                }
+                restriction.LanguageSpecID = AppData.getLanguageId();
                 var ret = Start._reportLand.select(complete, error, restriction, {
                     ordered: true,
                     orderAttribute: "Anzahl",
