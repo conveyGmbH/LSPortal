@@ -133,7 +133,9 @@
                     }
                 }
                 AppData.setRecordId("Kontakt", null);
-                Application.navigateById("contact", event);
+                WinJS.Promise.timeout(0).then(function() {
+                    Application.navigateById("contact", event);
+                });
                 Log.ret(Log.l.trace);
             }
             this.clickPieSlice = clickPieSlice;
@@ -153,7 +155,9 @@
                 });
                
                 AppData.setRecordId("Kontakt", null);
-                Application.navigateById("contact", event);
+                WinJS.Promise.timeout(0).then(function () {
+                    Application.navigateById("contact", event);
+                });
                 Log.ret(Log.l.trace);
             }
             this.clickDonutSlice = clickDonutSlice;
@@ -176,7 +180,9 @@
                         Erfassungsdatum: date
                     });
                     AppData.setRecordId("Kontakt", null);
-                    Application.navigateById("contact", event);
+                    WinJS.Promise.timeout(0).then(function () {
+                        Application.navigateById("contact", event);
+                    });
                 }
                 Log.ret(Log.l.trace);
             }
