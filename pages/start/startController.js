@@ -138,6 +138,26 @@
             }
             this.clickPieSlice = clickPieSlice;
 
+            this.dunotData = [];
+            var clickDonutSlice = function (event, index) {
+                Log.call(Log.l.trace, "Start.Controller.", "index=" + index);
+                var data = event[2];
+                if (that.isClicked) {
+                    Log.ret(Log.l.trace, "extra ignored");
+                    return;
+                }
+                that.isClicked = true;
+                
+                that.setRestriction({
+                      INITLandID : data
+                });
+               
+                AppData.setRecordId("Kontakt", null);
+                Application.navigateById("contact", event);
+                Log.ret(Log.l.trace);
+            }
+            this.clickDonutSlice = clickDonutSlice;
+
             var clickBarSlice = function (event, index) {
                 Log.call(Log.l.trace, "Start.Controller.", "index=" + index);
                 if (that.isClicked) {
@@ -224,7 +244,7 @@
                             $("#" + countryChartId).unbind("jqplotDataClick");
                             $("#" + countryChartId).bind("jqplotDataClick",
                                 function (ev, seriesIndex, pointIndex, data) {
-                                    that.clickCountrySlice(that.countrydata, pointIndex);
+                                    that.clickDonutSlice(data, pointIndex);
                                 }
                             );
                             /*that.setLabelColor(showcountryChart, "jqplot-xaxis-tick", "#f0f0f0");
@@ -501,7 +521,8 @@
                                         countryresult[ci].Land = getResourceText("reporting.nocountry");
                                     }
                                     if (countryresult[ci].Land) {
-                                        that.countrydata[ci] = [countryresult[ci].Land, countryresult[ci].Anzahl];
+                                        that.countrydata[ci] = [countryresult[ci].Land, countryresult[ci].Anzahl, countryresult[ci].LandID];
+                                        that.dunotData[countryresult[ci].LandID] = countryresult[ci].Land;
                                     }
                                     var isoCode = countryresult[ci].Alpha3_ISOCode;
                                     if (!isoCode) {
