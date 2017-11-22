@@ -365,7 +365,7 @@
                     var series = [];
                     var ticks = [];
                     if (that.kontaktanzahldata && that.kontaktanzahldata.length > 0) {
-                        for (var i = 0; i < 10; i++) {
+                        for (var i = 0; i < that.kontaktanzahldata.length; i++) {
                             var row = that.kontaktanzahldata[i];
                             series[i] = [AppData.toDateString(row.Datum, true), row.AnzahlProTag];
                             ticks[i] = i;
@@ -472,22 +472,23 @@
                     return ret;
                 }).then(function() {
                     return Start.kontaktanzahlView.select(function(json) {
-                        // this callback will be called asynchronously
-                        // when the response is available
-                        Log.print(Log.l.trace, "kontaktanzahlView: success!");
-                        // kontaktanzahlView returns object already parsed from json file in response
-                        if (json && json.d) {
-                            that.kontaktanzahldata = json.d.results;
-                            that.showBarChart("visitorsPerDayChart", true);
-                        }
-                        return WinJS.Promise.as();
-                    }, function(errorResponse) {
-                        that.kontaktanzahldata = null;
-                        // called asynchronously if an error occurs
-                        // or server returns response with an error status.
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                        return WinJS.Promise.as();
-                    })
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            Log.print(Log.l.trace, "kontaktanzahlView: success!");
+                            // kontaktanzahlView returns object already parsed from json file in response
+                            if (json && json.d) {
+                                that.kontaktanzahldata = json.d.results;
+                                that.showBarChart("visitorsPerDayChart", true);
+                            }
+                            return WinJS.Promise.as();
+                        },
+                        function(errorResponse) {
+                            that.kontaktanzahldata = null;
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                            return WinJS.Promise.as();
+                        });
                 }).then(function () {
                     return Start.reportLand.select(function(json) {
                         Log.print(Log.l.trace, "reportLand: success!");
@@ -495,7 +496,7 @@
                             if (json && json.d && json.d.results && json.d.results.length > 0) {
                                 // store result for next use
                                 countryresult = json.d.results;
-                                for (ci; ci >= 0; ci--) {
+                                for (ci = json.d.results.length-1; ci >= 0; ci--) {
                                     if (countryresult[ci].Land === null) {
                                         countryresult[ci].Land = getResourceText("reporting.nocountry");
                                     }
