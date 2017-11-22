@@ -349,6 +349,7 @@
     "label.questiongroup"   : "Fragengruppen",
     "label.employee"        : "Benutzerkonten",
     "label.reporting"       : "Auswertungen",
+    "label.reportingColumnList"       : "Benutzerdefiniert",
     "label.skills"          : "Fähigkeiten",
     "label.skillentry"      : "Fähigkeit eintragen",
     "label.mailing"         : "Mail",
@@ -406,6 +407,8 @@
 	"reporting.employeechart"	: "Mitarbeiterstatistik (Einträge pro Mitarbeiter)",
 	"reporting.countrychart"	: "Landstatistik (Einträge pro Land)",
 	"reporting.nocountry"   : "Kein Land",
+
+    "reportingColumnList.title"       : "Benutzerdefinierter Export",
 
     "employee.title"        : "Benutzerkonten",
     "employee.firstname"    : "Vorname",

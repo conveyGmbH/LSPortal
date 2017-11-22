@@ -297,6 +297,15 @@
                         fileName = "Employeestatistics";
                     }
                     break;
+                case 26:
+                    if (AppData.getLanguageId() === 1031) {
+                        dbView = Reporting.KontaktReport;
+                        fileName = "BenutzerdefinierterReport";
+                    } else {
+                        dbView = Reporting.KontaktReport;
+                        fileName = "BenutzerdefinierterReport";
+                    }
+                    break;
                 default:
                     Log.print(Log.l.error, "curOLELetterID=" + that.binding.curOLELetterID + "not supported");
                 }

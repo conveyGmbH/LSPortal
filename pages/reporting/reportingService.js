@@ -135,6 +135,40 @@
                 return Reporting._xLReportView;
             }
         },
+        _KontaktReport: {
+            get: function () {
+                return AppData.getFormatView("KontaktReport");
+            }
+        },
+        KontaktReport: {
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, "Reporting.");
+                var ret = Reporting._KontaktReport.select(complete, error, restriction, {
+                    ordered: true,
+                    orderAttribute: "KontaktID",
+                    asc: true
+                });
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            selectNext: function (complete, error, response, nextUrl) {
+                Log.call(Log.l.trace, "Reporting.");
+                var ret = Reporting._KontaktReport.selectNext(complete, error, response, nextUrl);
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getNextUrl: function (response) {
+                Log.call(Log.l.trace, "Reporting.xLReportView.");
+                var ret = Reporting._KontaktReport.getNextUrl(response);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getDbView: function () {
+                return Reporting._KontaktReport;
+            }
+        },
         _xLAuswertungViewNoQuest: {
             get: function() {
                 return AppData.getFormatView("Kontakt", 20461);

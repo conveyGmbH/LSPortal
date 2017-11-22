@@ -349,6 +349,7 @@
     "label.questiongroup"   : "Groupe de questions",
     "label.employee"        : "Comptes utilisateurs",
     "label.reporting"       : "Évaluations",
+    "label.reportingColumnList"       : "Coutume",	
     "label.skills"          : "Capacités",
     "label.skillentry"      : "entrer une capacité",
     "label.mailing"         : "Mail",

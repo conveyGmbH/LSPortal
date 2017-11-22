@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="reportingColumnList.css" rel="stylesheet" />
+    <script type="text/javascript" src="reportingColumnListService.js"></script>
+    <script type="text/javascript" src="reportingColumnListController.js"></script>
+    <script type="text/javascript" src="reportingColumnList.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="reportingColumnList fragment">
+        <div id="reportingColumnListController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="contentarea win-type-body">
+                        <div class="reportingColumnList-template"
+                             data-win-control="WinJS.Binding.Template" style="display: none">
+                            <div class="list-role-item">
+                                <label class="list-role-field">
+                                    <input type="checkbox" class="win-checkbox" value="1"
+                                           data-win-bind="checked: FieldFlag" />
+                                    <span data-win-bind="textContent: ExcelFeldTITLE"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="field_line">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'reporting.exportlist'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'reporting.exportlist'}"></span>
+                            <div id="reportingColumnList"
+                             class="listview win-selectionstylefilled"
+                             data-win-control="WinJS.UI.ListView"
+                             data-win-options="{
+                            itemTemplate: select('.reportingColumnList-template')
+                         }">
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

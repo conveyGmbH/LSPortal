@@ -349,6 +349,7 @@
     "label.questiongroup"   : "Gruppo domande",
     "label.employee"        : "Utenti",
     "label.reporting"       : "Export",
+    "label.reportingColumnList"       : "Costume",	
     "label.skills"          : "Ruolo",
     "label.skillentry"      : "Immetti ruolo",
     "label.mailing"         : "Email",
