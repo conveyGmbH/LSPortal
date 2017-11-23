@@ -222,7 +222,7 @@
                                 restoreDefault = true;
                                 //    pValue = "1";
                             } else {
-                               //  that.loadData();
+                                //  that.loadData();
                             }
                             that.binding.generalData.individualColors = toggle.checked;
                         }
@@ -241,15 +241,15 @@
                                     that.createColorPicker("tileBackgroundColor");
                                     that.createColorPicker("navigationColor");
                                 } else {*/
-                                    AppData._persistentStates.colorSettings = copyByValue(AppData.persistentStatesDefaults.colorSettings);
-                                    var colors = new Colors.ColorsClass(AppData._persistentStates.colorSettings);
-                                    that.createColorPicker("accentColor", true);
-                                    that.createColorPicker("backgroundColor");
-                                    that.createColorPicker("textColor");
-                                    that.createColorPicker("labelColor");
-                                    that.createColorPicker("tileTextColor");
-                                    that.createColorPicker("tileBackgroundColor");
-                                    that.createColorPicker("navigationColor");
+                                AppData._persistentStates.colorSettings = copyByValue(AppData.persistentStatesDefaults.colorSettings);
+                                var colors = new Colors.ColorsClass(AppData._persistentStates.colorSettings);
+                                that.createColorPicker("accentColor", true);
+                                that.createColorPicker("backgroundColor");
+                                that.createColorPicker("textColor");
+                                that.createColorPicker("labelColor");
+                                that.createColorPicker("tileTextColor");
+                                that.createColorPicker("tileBackgroundColor");
+                                that.createColorPicker("navigationColor");
                                 //} 
 
                                 AppBar.loadIcons();
@@ -351,79 +351,28 @@
                 }
             }
             var resultConverter = function (item, index) {
-                if (item.INITOptionTypeID > 10) {
-                    switch (item.INITOptionTypeID) {
-                        case 11:
-                            item.colorPickerId = "accentColor";
-                            break;
-                        case 12:
-                            item.colorPickerId = "backgroundColor";
-                            break;
-                        case 13:
-                            item.colorPickerId = "navigationColor";
-                            break;
-                        case 14:
-                            item.colorPickerId = "textColor";
-                            break;
-                        case 15:
-                            item.colorPickerId = "labelColor";
-                            break;
-                        case 16:
-                            item.colorPickerId = "tileTextColor";
-                            break;
-                        case 17:
-                            item.colorPickerId = "tileBackgroundColor";
-                            break;
-                        case 18:
-                            if (item.LocalValue === "1") {
-                                that.binding.generalData.isDarkTheme = true;
-                            } else {
-                                that.binding.generalData.isDarkTheme = false;
-                            }
-                            Colors.isDarkTheme = that.binding.generalData.isDarkTheme;
-                            break;
-                        case 20:
-                            item.pageProperty = "questionnaire";
-                            if (item.LocalValue === "0") {
-                                AppData._persistentStates.hideQuestionnaire = true;
-                            } else {
-                                AppData._persistentStates.hideQuestionnaire = false;
-                            }
-                            break;
-                        case 21:
-                            item.pageProperty = "sketch";
-                            if (item.LocalValue === "0") {
-                                AppData._persistentStates.hideSketch = true;
-                            } else {
-                                AppData._persistentStates.hideSketch = false;
-                            }
-                            break;
-                        default:
-                            // defaultvalues
+                var property = AppData.getPropertyFromInitoptionTypeID(item);
+                
+                if (property && property !=="individualColors" && item.LocalValue) {
+                    var childElement = pageElement.querySelector("#" + property);
+                    item.colorValue = "#" + item.LocalValue;
+                    if (childElement) {
+                        childElement.value = item.colorValue;
                     }
+                    var pickerParent = pageElement.querySelector("#" + property + "_picker");
+                    if (pickerParent) {
+                        var colorcontainer = pickerParent.querySelector(".color_container");
+                        if (colorcontainer) {
+                            var colorPicker = colorcontainer.colorPicker;
+                            if (colorPicker) {
+                                colorPicker.color = item.colorValue;
 
-                    if (item.colorPickerId && item.LocalValue) {
-                        var childElement = pageElement.querySelector("#" + item.colorPickerId);
-                        item.colorValue = "#" + item.LocalValue;
-                        if (childElement) {
-                            childElement.value = item.colorValue;
-                        }
-                        var pickerParent = pageElement.querySelector("#" + item.colorPickerId + "_picker");
-                        if (pickerParent) {
-                            var colorcontainer = pickerParent.querySelector(".color_container");
-                            if (colorcontainer) {
-                                var colorPicker = colorcontainer.colorPicker;
-                                if (colorPicker) {
-                                    colorPicker.color = item.colorValue;
-
-                                }
                             }
                         }
-                        that.applyColorSetting(item.colorPickerId, item.colorValue);
                     }
-                } else if (item.INITOptionTypeID === 10) {
-                    item.colorPickerId = "individualColors";
-                    // var childElement = pageElement.querySelector("#" + item.colorPickerId);
+                    that.applyColorSetting(property, item.colorValue);
+                } else if (property === "individualColors") {
+                    individualColorToggle.checked = that.binding.generalData.individualColors;
                     if (item.LocalValue === "1") {
                         that.binding.generalData.individualColors = true;
                         individualColorToggle.checked = that.binding.generalData.individualColors;
@@ -458,13 +407,8 @@
                         Application.pageframe.savePersistentStates();
                     }
                 }
-                if (item.pageProperty) {
-                    if (item.LocalValue === "1") {
-                        NavigationBar.enablePage(item.pageProperty);
-                    } else if (item.LocalValue === "0") {
-                        NavigationBar.disablePage(item.pageProperty);
-                    }
-                }
+                // Wenn es sich um eine Seite handelt, dann enable/disablePage
+                AppData.enableDisablePage(item);
             }
             this.resultConverter = resultConverter;
 
