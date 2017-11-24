@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="mailingProduct.css" rel="stylesheet" />
+    <script type="text/javascript" src="mailingProduct.js"></script>
+    <script type="text/javascript" src="mailingProductController.js"></script>
+    <script type="text/javascript" src="mailingProduct.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="settings fragment">
+        <div id="mailingProductController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="contentarea win-type-body">
+                    <div class="header-separator"></div>
+                    <div class="content-header">
+                        <div class="half-circle half-circle-textcolor">&nbsp;</div>
+                        <div class="content-header-line win-type-caption">
+                            <span class="id-field"></span>
+                            <span class="caption-field" data-win-res="{textContent: 'mailingProduct.title'}"></span>
+                            <span class="date-field"></span>
+                        </div>
+                    </div>
+                    <div class="mailingProduct-content">
+                        <div class="row-separator"></div>
+                        <div class="fields-container">
+                            <div class="line-separator"></div>
+                            <div class="field_line">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingProduct.info'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'mailingProduct.info'}"></span>
+                                <input class="input_field win-textbox" type="text"
+                                       data-win-bind="value: info"/>
+                            </div>
+                            <div class="line-separator"></div>
+                            <div class="field_line field_line_odd">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingProduct.sender'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'mailingProduct.sender'}"></span>
+                                <input class="input_field win-textbox" type="text"
+                                       data-win-bind="value: sender"/>
+                            </div>
+                            <div class="field_line field_line_even">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingProduct.reply'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'mailingProduct.reply'}"></span>
+                                <input class="input_field win-textbox" type="text"
+                                       data-win-bind="value: reply"/>
+                            </div>
+                            <div class="line-separator"></div>
+                            <div class="field_line">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingProduct.subject'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'mailingProduct.subject'}"></span>
+                                <input class="input_field win-textbox" type="text"
+                                       data-win-bind="value: subject"/>
+                            </div>
+                            <div class="line-separator"></div>
+                            <div class="field_line field_line_odd">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingProduct.cc'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'mailingProduct.cc'}"></span>
+                                <input class="input_field win-textbox" type="text"
+                                       data-win-bind="value: cc"/>
+                            </div>
+                            <div class="field_line field_line_even">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingProduct.bcc'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'mailingProduct.bcc'}"></span>
+                                <input class="input_field win-textbox" type="text"
+                                       data-win-bind="value: bcc"/>
+                            </div>
+                            <div class="line-separator"></div>
+                            <div class="field_line">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingProduct.mailtext'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'mailingProduct.mailtext'}"></span>
+                                <textarea class="input_field win-textbox input_text_comment"
+                                          data-win-bind="value: mailtext"></textarea>
+                            </div>
+                            <div class="line-separator"></div>
+                            <div class="field_line">
+                                <!--TO DO : Produktmailzeile als Liste einfügen-->
+                                <div class="mailingProductList-template"
+                                     data-win-control="WinJS.Binding.Template" style="display: none">
+                                    <div class="mailingProductList-content">
+                                        <input class="field_line_full win-textbox" type="text" 
+                                               data-win-bind="value: Name" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="mailingProductList"
+                         class="listview win-selectionstylefilled"
+                         data-win-control="WinJS.UI.ListView"
+                         data-win-options="{
+                                itemTemplate: select('.mailingProduct-template'),
+                                footer: select('.list-footer')
+                         }">
+                    </div>
+                    <div class="error-message"
+                         data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

@@ -352,7 +352,8 @@
     "label.reportingColumnList"       : "Benutzerdefiniert",
     "label.skills"          : "Fähigkeiten",
     "label.skillentry"      : "Fähigkeit eintragen",
-    "label.mailing"         : "Mail",
+    "label.mailing"         : "Dankes E-Mail",
+    "label.mailingProduct"  : "Produkt E-Mail",
     "label.infodesk"        : "Infodesk",
     "label.mandatory"       : "Pflichtfelder",
 
@@ -450,6 +451,17 @@
     "mailing.bcc"           : "BCC",
     "mailing.mailtext"      : "Mailtext",
     "mailing.standart"      : "Standart",
+
+    "mailingProduct.title"         : "Mailing Produkte",
+    "mailingProduct.event"         : "Veranstaltung",
+    "mailingProduct.language"      : "Sprache",
+    "mailingProduct.sender"        : "Absender",
+    "mailingProduct.reply"         : "Antwort",
+    "mailingProduct.subject"       : "Betreff",
+    "mailingProduct.cc"            : "CC",
+    "mailingProduct.bcc"           : "BCC",
+    "mailingProduct.mailtext"      : "Mailtext",
+    
 
     "productlist.title"     : "Produktauswahl",
     "productlist.comment"   : "Verwende die Zurück-Schaltfläche auf dieser Seite um zurück zu gehen!",
