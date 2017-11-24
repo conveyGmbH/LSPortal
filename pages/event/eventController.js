@@ -250,8 +250,8 @@
                 }).then(function () {
                     showHideQuestionnaire.winControl.checked = !AppData._persistentStates.hideQuestionnaire;
                     showHideSketchToggle.winControl.checked = !AppData._persistentStates.hideSketch;
-                    showHideCamera.winControl.checked = !AppData._persistentStates.cameraVisible;
-                    showHideBarcodeScan.winControl.checked = !AppData._persistentStates.barcodeScanVisible;
+                    showHideCamera.winControl.checked = AppData._persistentStates.cameraVisible;
+                    showHideBarcodeScan.winControl.checked = AppData._persistentStates.barcodeScanVisible;
                 }).then(function () {
                     AppBar.notifyModified = true;
                     return WinJS.Promise.as();

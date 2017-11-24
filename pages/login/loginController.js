@@ -98,71 +98,19 @@
             this.applyColorSetting = applyColorSetting;
 
             var resultConverter = function (item, index) {
-                if (item.INITOptionTypeID > 10) {
-                    switch (item.INITOptionTypeID) {
-                        case 10:
-                            item.colorPickerId = "individualColors";
-                            break;
-                        case 11:
-                            item.colorPickerId = "accentColor";
-                            break;
-                        case 12:
-                            item.colorPickerId = "backgroundColor";
-                            break;
-                        case 13:
-                            item.colorPickerId = "navigationColor";
-                            break;
-                        case 14:
-                            item.colorPickerId = "textColor";
-                            break;
-                        case 15:
-                            item.colorPickerId = "labelColor";
-                            break;
-                        case 16:
-                            item.colorPickerId = "tileTextColor";
-                            break;
-                        case 17:
-                            item.colorPickerId = "tileBackgroundColor";
-                            break;
-                        case 20:
-                            item.pageProperty = "questionnaire";
-                            if (item.LocalValue === "0") {
-                                AppData._persistentStates.hideQuestionnaire = true;
-                            } else {
-                                AppData._persistentStates.hideQuestionnaire = false;
-                            }
-                            break;
-                        case 21:
-                            item.pageProperty = "sketch";
-                            if (item.LocalValue === "0") {
-                                AppData._persistentStates.hideSketch = true;
-                            } else {
-                                AppData._persistentStates.hideSketch = false;
-                            }
-                            break;
-                        default:
-                            // defaultvalues
-                    }
-                    if (item.colorPickerId !== "individualColors" && (!item.pageProperty) && item.LocalValue) {
+                var property = AppData.getPropertyFromInitoptionTypeID(item);
+                if (property !== "individualColors" && (!item.pageProperty) && item.LocalValue) {
                         item.colorValue = "#" + item.LocalValue;
-                        that.applyColorSetting(item.colorPickerId, item.colorValue);
+                        that.applyColorSetting(property, item.colorValue);
                     } else {
-                        // item.colorValue = "#" + item.LocalValue;
                         if (item.LocalValue === "1") {
                             that.binding.generalData.individualColors = true;
                         } else {
                             that.binding.generalData.individualColors = false;
                         }
-                        //that.applyColorSetting(item.colorPickerId, item.LocalValue);
                     }
-                    if (item.pageProperty) {
-                        if (item.LocalValue === "1") {
-                            NavigationBar.enablePage(item.pageProperty);
-                        } else if (item.LocalValue === "0") {
-                            NavigationBar.disablePage(item.pageProperty);
-                        }
-                    }
-                }
+                AppData.enableDisablePage(item);
+               // }
             }
             this.resultConverter = resultConverter;
 

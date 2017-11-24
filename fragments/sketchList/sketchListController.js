@@ -14,8 +14,7 @@
         Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options) {
             Log.call(Log.l.trace, "SketchList.Controller.");
             Fragments.Controller.apply(this, [fragmentElement, {
-                contactId: options.contactId,
-                curId: 0
+                contactId: options.contactId
             }]);
             var that = this;
             var layout = null;
@@ -27,7 +26,7 @@
             var listView = fragmentElement.querySelector("#sketchList.listview");
 
             var scaleItemsAfterResize = function() {
-                Log.call(Log.l.trace, "SketchList.Controller.");
+                Log.call(Log.l.u1, "SketchList.Controller.");
                 if (fragmentElement &&
                     fragmentElement.winControl &&
                     fragmentElement.winControl.prevWidth &&
@@ -66,7 +65,7 @@
                         scaleItemsAfterResize();
                     });
                 }
-                Log.ret(Log.l.trace);
+                Log.ret(Log.l.u1);
             }
 
 
@@ -112,9 +111,9 @@
                                 listControl.selection.getItems().done(function (items) {
                                     var item = items[0];
                                     if (item.data) {
+                                        Log.print(Log.l.trace, "KontaktNotizVIEWID=" + item.data.KontaktNotizVIEWID + " DocGroup=" + item.data.DocGroup + " DocFormat=" + item.data.DocFormat);
                                         //load sketch with new recordId
-                                        that.binding.curId = item.data.KontaktNotizVIEWID;
-                                        AppBar.scope.loadData(that.binding.curId, item.data.DocGroup, item.data.DocFormat);
+                                        AppBar.scope.loadData(item.data.KontaktNotizVIEWID, item.data.DocGroup, item.data.DocFormat);
                                     }
                                 });
                             }

@@ -82,7 +82,6 @@
     "start.buttonAll"       : "All",
     "start.buttonEdited"    : "Edited",
     "start.buttonNotEdited" : "Not edited",
-
     "start.recent"          : "Recently edited contact",
     "start.list"            : "List contacts",
     "start.new"             : "Add new contact",
@@ -119,14 +118,11 @@
     "contact.barcodeState"  : "Barcode State",
     "contact.requiredField" : "Mandatory item",
     "contact.closeImage"    : "Close",
-
     "contact.ID"            : "ID",
     "contact.editedOn"      : "Edited on",
     "contact.modifiedOn"    : "Modified on",
-
     "contact.mr"            : "Mr",
     "contact.mrs"           : "Mrs",
-
     "contact.useRestriction": "use",
 
     "photo.title"           : "Business card",
@@ -455,7 +451,11 @@
     "mailing.mailtext"      : "Mail text",
     "mailing.standart"      : "Standart",
     
-	"mandatory.title"       : "Mandatory fields",
+    "productlist.title"     : "Product selection",
+    "productlist.comment"   : "On this page, use the buttons to go to additional pages!",
+    "productlist.count"     : "Count",
+
+	 "mandatory.title"       : "Mandatory fields",
     "mandatory.contact"     : "Mandatory fields in Contact",
     "mandatory.questionnaire" : "Mandatory fields in Questionnaire",
     "mandatory.doQuestionnaireMandatory"  : "Show message",

@@ -46,7 +46,7 @@
                 ret = WinJS.Promise.timeout(0).then(function () {
                     var empList = element.querySelector("#empRoleList.listview");
                     if (empList && empList.style) {
-                        var contentarea = element.querySelector(".empRoles");
+                        var contentarea = element.querySelector(".contentarea");
                         if (contentarea) {
                             var width = contentarea.clientWidth;
                             var height = contentarea.clientHeight;

@@ -299,6 +299,118 @@
             Log.ret(Log.l.u1, ret);
             return ret;
         },
+        getPropertyFromInitoptionTypeID: function (item) {
+            var property = "";
+            switch (item.INITOptionTypeID) {
+                case 10:
+                    item.colorPickerId = "individualColors";
+                    property = item.colorPickerId;
+                    if (item.LocalValue === "0") {
+                        WinJS.Promise.timeout(0).then(function () {
+                            AppData._persistentStates.individualColors = false;
+                            AppData._persistentStates.colorSettings = copyByValue(AppData.persistentStatesDefaults.colorSettings);
+                            var colors = new Colors.ColorsClass(AppData._persistentStates.colorSettings);
+                            /*   that.createColorPicker("accentColor", true);
+                               that.createColorPicker("backgroundColor");
+                               that.createColorPicker("textColor");
+                               that.createColorPicker("labelColor");
+                               that.createColorPicker("tileTextColor");
+                               that.createColorPicker("tileBackgroundColor");
+                               that.createColorPicker("navigationColor");*/
+                            AppBar.loadIcons();
+                            NavigationBar.groups = Application.navigationBarGroups;
+                        });
+                    }
+                    // var childElement = pageElement.querySelector("#" + item.colorPickerId);
+                    break;
+                case 11:
+                    item.colorPickerId = "accentColor";
+                    property = "accentColor";
+                    break;
+                case 12:
+                    item.colorPickerId = "backgroundColor";
+                    property = "backgroundColor";
+                    break;
+                case 13:
+                    item.colorPickerId = "navigationColor";
+                    property = "navigationColor";
+                    break;
+                case 14:
+                    item.colorPickerId = "textColor";
+                    property = "textColor";
+                    break;
+                case 15:
+                    item.colorPickerId = "labelColor";
+                    property = "labelColor";
+                    break;
+                case 16:
+                    item.colorPickerId = "tileTextColor";
+                    property = "tileTextColor";
+                    break;
+                case 17:
+                    item.colorPickerId = "tileBackgroundColor";
+                    property = "tileBackgroundColor";
+                    break;
+                case 18:
+                    if (item.LocalValue === "1") {
+                        //that.binding.generalData.isDarkTheme = true;
+                        AppData.generalData.isDarkTheme = true;
+                    } else {
+                        AppData.generalData.isDarkTheme = false;
+                    }
+                    Colors.isDarkTheme = AppData.generalData.isDarkTheme;
+                    break;
+                case 20:
+                    item.pageProperty = "questionnaire";
+                    if (item.LocalValue === "1") {
+                        AppData._persistentStates.hideQuestionnaire = false;
+                    } else {
+                        AppData._persistentStates.hideQuestionnaire = true;
+                    }
+                    break;
+                case 21:
+                    item.pageProperty = "sketch";
+                    if (item.LocalValue === "1") {
+                        AppData._persistentStates.hideSketch = false;
+                    } else {
+                        AppData._persistentStates.hideSketch = true;
+                    }
+                    break;
+                case 23:
+                    if (item.LocalValue === "1") {
+                        AppData._persistentStates.barcodeScanVisible = false;
+                    } else {
+                        AppData._persistentStates.barcodeScanVisible = true;
+                    }
+                    break;
+                case 24:
+                    if (item.LocalValue === "1") {
+                        AppData._persistentStates.cameraVisible = false;
+                    } else {
+                        AppData._persistentStates.cameraVisible = true;
+                    }
+                    break;
+                default:
+                    // defaultvalues
+            }
+            /*if (item.pageProperty) {
+                if (item.LocalValue === "1") {
+                    NavigationBar.enablePage(item.pageProperty);
+                } else if (item.LocalValue === "0") {
+                    NavigationBar.disablePage(item.pageProperty);
+                }
+            }*/
+            return property;
+        },
+        enableDisablePage: function (item) {
+            if (item.pageProperty) {
+                if (item.LocalValue === "1") {
+                    NavigationBar.enablePage(item.pageProperty);
+                } else if (item.LocalValue === "0") {
+                    NavigationBar.disablePage(item.pageProperty);
+                }
+            }
+        },
         generalData: {
             get: function () {
                 return {
