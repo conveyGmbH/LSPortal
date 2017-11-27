@@ -29,7 +29,7 @@
             var scaleOut = 0.8;
 
             Fragments.Controller.apply(this, [fragmentElement, {
-                noteId: options.noteId,
+                noteId: 0,
                 dataSketch: {}
             }, commandList]);
             this.img = null;
@@ -271,7 +271,7 @@
                                     contentarea.scrollTop = deltaTop;
                                 }
                             });
-                            WinJS.Promise.timeout(0).then(function () {
+                            WinJS.Promise.timeout(0).then(function() {
                                 imgRotation = 0;
                                 var containerWidth = fragmentElement.clientWidth;
                                 if (containerWidth < that.img.naturalWidth) {
@@ -282,36 +282,40 @@
                                     imgWidth = that.img.naturalWidth;
                                 }
                                 imgHeight = that.img.naturalHeight * imgScale;
-                                if (that.img.style) {
-                                    that.img.style.transform = "";
-                                    that.img.style.visibility = "hidden";
-                                    that.img.style.display = "block";
-                                    that.img.style.position = "absolute";
-                                    that.img.style.top = fragmentElement.offsetTop.toString() + "px";
-                                    that.img.style.marginLeft = 0;
-                                    that.img.style.marginTop = 0;
-                                    that.img.style.width = imgWidth + "px";
-                                    that.img.style.height = imgHeight + "px";
-                                }
-                                photoItemBox.appendChild(that.img);
-                                if (that.img.style) {
-                                    that.img.style.visibility = "";
-                                }
-                                var animationDistanceX = imgWidth / 4;
-                                var animationOptions = { top: "0px", left: animationDistanceX.toString() + "px" };
-                                WinJS.UI.Animation.enterContent(that.img, animationOptions).then(function () {
+                                if (photoItemBox.childElementCount > 0) {
                                     if (that.img.style) {
-                                        that.img.style.display = "";
-                                        that.img.style.position = "";
+                                        that.img.style.transform = "";
+                                        that.img.style.visibility = "hidden";
+                                        that.img.style.display = "block";
+                                        that.img.style.position = "absolute";
+                                        that.img.style.top = fragmentElement.offsetTop.toString() + "px";
+                                        that.img.style.marginLeft = 0;
+                                        that.img.style.marginTop = 0;
+                                        that.img.style.width = imgWidth + "px";
+                                        that.img.style.height = imgHeight + "px";
                                     }
-                                    if (photoItemBox.childElementCount > 1) {
-                                        var oldElement = photoItemBox.firstElementChild || photoItemBox.firstChild;
-                                        if (oldElement) {
-                                            oldElement.parentNode.removeChild(oldElement);
-                                            oldElement.innerHTML = "";
+                                    photoItemBox.appendChild(that.img);
+                                    if (that.img.style) {
+                                        that.img.style.visibility = "";
+                                    }
+                                    var animationDistanceX = imgWidth / 4;
+                                    var animationOptions = { top: "0px", left: animationDistanceX.toString() + "px" };
+                                    WinJS.UI.Animation.enterContent(that.img, animationOptions).then(function() {
+                                        if (that.img.style) {
+                                            that.img.style.display = "";
+                                            that.img.style.position = "";
                                         }
-                                    }
-                                });
+                                        if (photoItemBox.childElementCount > 1) {
+                                            var oldElement = photoItemBox.firstElementChild || photoItemBox.firstChild;
+                                            if (oldElement) {
+                                                oldElement.parentNode.removeChild(oldElement);
+                                                oldElement.innerHTML = "";
+                                            }
+                                        }
+                                    });
+                                } else {
+                                    photoItemBox.appendChild(that.img);
+                                }
                             });
                         } else {
                             that.removePhoto();
@@ -521,7 +525,7 @@
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.loadData(that.binding.noteId);
+                return that.loadData(options && options.noteId);
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
             });

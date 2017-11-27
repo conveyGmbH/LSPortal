@@ -23,7 +23,7 @@
             this.svgEditor = svgEditor;
 
             Fragments.Controller.apply(this, [fragmentElement, {
-                noteId: options.noteId,
+                noteId: 0,
                 dataSketch: {},
                 color: svgEditor.drawcolor && svgEditor.drawcolor[0],
                 width: 0
@@ -123,7 +123,7 @@
             // finally, load the data
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.loadData(that.binding.noteId);
+                return that.loadData(options && options.noteId);
             }).then(function () {
                 AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Data loaded");
