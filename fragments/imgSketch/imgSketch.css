@@ -6,3 +6,12 @@
     width: 100%;
     height: 100%
 }
+
+.photoview > .win-viewport {
+    width: 100%;
+    height: 100%;
+    overflow-x: auto;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch; 
+    -webkit-transform: translateZ(0);
+}
