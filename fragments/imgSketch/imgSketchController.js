@@ -4,6 +4,8 @@
 /// <reference path="~/www/lib/convey/scripts/appSettings.js" />
 /// <reference path="~/www/lib/convey/scripts/dataService.js" />
 /// <reference path="~/www/lib/convey/scripts/fragmentController.js" />
+/// <reference path="~/www/lib/jQuery/scripts/jquery-2.1.4.min.js" />
+/// <reference path="~/www/lib/hammer/scripts/hammer.js" />
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/fragments/imgSketch/imgSketchService.js" />
 
@@ -378,10 +380,144 @@
             }
             this.removeDoc = removeDoc;
 
-            var eventHandlers = {
-                //TODO zoom, ...
+            // define handlers
+            this.eventHandlers = {
+                clickZoomIn: function (event) {
+                    Log.call(Log.l.trace, "ImgSketch.Controller.");
+                    if (that.hasDoc() && imgScale * scaleIn < 1) {
+                        that.calcImagePosition({
+                            scale: imgScale * scaleIn
+                        });
+                    } else {
+                        that.calcImagePosition({
+                            scale: 1
+                        });
+                    }
+                    AppBar.triggerDisableHandlers();
+                    Log.ret(Log.l.trace);
+                },
+                clickZoomOut: function (event) {
+                    Log.call(Log.l.trace, "ImgSketch.Controller.");
+                    if (that.hasDoc() &&
+                        ((imgRotation === 0 || imgRotation === 180) && imgWidth * imgScale * scaleOut > 100 ||
+                         (imgRotation === 90 || imgRotation === 270) && imgHeight * imgScale * scaleOut > 100)) {
+                        that.calcImagePosition({
+                            scale: imgScale * scaleOut
+                        });
+                    } else {
+                        if (imgRotation === 0 || imgRotation === 180) {
+                            that.calcImagePosition({
+                                scale: 100 / imgWidth
+                            });
+                        } else {
+                            that.calcImagePosition({
+                                scale: 100 / imgHeight
+                            });
+                        }
+                    }
+                    AppBar.triggerDisableHandlers();
+                    Log.ret(Log.l.trace);
+                },
+                clickRotateLeft: function (event) {
+                    Log.call(Log.l.trace, "ImgSketch.Controller.");
+                    var rotate = imgRotation - 90;
+                    if (rotate < 0) {
+                        rotate = 270;
+                    }
+                    that.calcImagePosition({
+                        rotate: rotate
+                    });
+                    AppBar.triggerDisableHandlers();
+                    Log.ret(Log.l.trace);
+                },
+                clickRotateRight: function (event) {
+                    Log.call(Log.l.trace, "ImgSketch.Controller.");
+                    var rotate = imgRotation + 90;
+                    if (rotate >= 360) {
+                        rotate = 0;
+                    }
+                    that.calcImagePosition({
+                        rotate: rotate
+                    });
+                    AppBar.triggerDisableHandlers();
+                    Log.ret(Log.l.trace);
+                },
+                clickDelete: function (event) {
+                    Log.call(Log.l.trace, "ImgSketch.Controller.");
+                    var confirmTitle = getResourceText("sketch.questionDelete");
+                    confirm(confirmTitle, function (result) {
+                        if (result) {
+                            WinJS.Promise.as().then(function () {
+                                return ImgSketch.sketchView.deleteRecord(function (response) {
+                                    // called asynchronously if ok
+                                    Log.print(Log.l.trace, "ImgSketchData delete: success!");
+                                    //reload sketchlist
+                                    if (AppBar.scope && typeof AppBar.scope.loadList === "function") {
+                                        AppBar.scope.loadList(null);
+                                    }
+                                },
+                                    function (errorResponse) {
+                                        // called asynchronously if an error occurs
+                                        // or server returns response with an error status.
+                                        AppData.setErrorMsg(that.binding, errorResponse);
+
+                                        var message = null;
+                                        Log.print(Log.l.error, "error status=" + errorResponse.status + " statusText=" + errorResponse.statusText);
+                                        if (errorResponse.data && errorResponse.data.error) {
+                                            Log.print(Log.l.error, "error code=" + errorResponse.data.error.code);
+                                            if (errorResponse.data.error.message) {
+                                                Log.print(Log.l.error, "error message=" + errorResponse.data.error.message.value);
+                                                message = errorResponse.data.error.message.value;
+                                            }
+                                        }
+                                        if (!message) {
+                                            message = getResourceText("error.delete");
+                                        }
+                                        alert(message);
+                                    },
+                                    that.binding.noteId,
+                                    that.binding.isLocal);
+                            });
+                        } else {
+                            Log.print(Log.l.trace, "clickDelete: user choice CANCEL");
+                        }
+                    });
+                    Log.ret(Log.l.trace);
+                }
+            };
+
+            this.disableHandlers = {
+                clickZoomIn: function () {
+                    if (that.hasDoc() && imgScale < 1) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                },
+                clickZoomOut: function () {
+                    if (that.hasDoc() &&
+                        ((imgRotation === 0 || imgRotation === 180) && imgWidth * imgScale > 100 ||
+                         (imgRotation === 90 || imgRotation === 270) && imgHeight * imgScale > 100)) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                },
+                clickRotateLeft: function () {
+                    if (getDocData()) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                },
+                clickRotateRight: function () {
+                    if (getDocData()) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                }
             }
-            this.eventHandlers = eventHandlers;
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
