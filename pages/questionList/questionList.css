@@ -60,7 +60,9 @@
     height: 48px;
 }
 #listQuestionList .input_field.win-range {
-    margin-top: -12px;
+    min-height: 16px;
+    margin-top: 12px;
+    margin-bottom: 12px;
 }
 .range_output {
     font-weight: bold;

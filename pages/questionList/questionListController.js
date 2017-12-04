@@ -605,45 +605,66 @@
                 },*/
                 changedAnswerCount: function (event) {
                     Log.call(Log.l.trace, "QuestionList.Controller.");
-                    if (event.currentTarget && AppBar.notifyModified) {
+                    if (event.target && AppBar.notifyModified) {
                         if (that.inAnswerCountFromRange) {
                             Log.print(Log.l.trace, "extra ignored");
                         } else {
-                            if (listView && listView.winControl) {
-                                var listControl = listView.winControl;
-                                if (listControl.selection) {
-                                    var selectionCount = listControl.selection.count();
-                                    if (selectionCount === 1) {
-                                        // Only one item is selected, show the page
-                                        listControl.selection.getItems().done(function (items) {
-                                            var item = items[0];
-                                            if (item.data && item.data.FragenAntwortenVIEWID) {
-                                                var newRecId = item.data.FragenAntwortenVIEWID;
-                                                Log.print(Log.l.trace, "newRecId:" + newRecId + " curRecId:" + that.curRecId);
-                                                //if (newRecId !== 0 && newRecId !== that.curRecId) {
-                                                AppData.setRecordId('FragenAntworten', newRecId);
-                                                if (that.curRecId) {
-                                                    that.prevRecId = that.curRecId;
-                                                }
-                                                that.curRecId = newRecId;
-                                                if (that.prevRecId !== 0) { //
-                                                    that.saveData(function (response) {
-                                                        Log.print(Log.l.trace, "question saved");
+                            WinJS.Promise.timeout(0).then(function() {
+                                if (listView && listView.winControl) {
+                                    var isSelected = false;
+                                    var target = event.target;
+                                    while (target && target !== listView) {
+                                        if (target.className && target.className.indexOf("win-selected") >= 0) {
+                                            isSelected = true;
+                                            break;
+                                        }
+                                        if (target.className === "win-itembox") {
+                                            break;
+                                        }
+                                        target = target.parentElement;
+                                    }
+                                    if (!isSelected) {
+                                        if (target.className === "win-itembox") {
+                                            AppBar.handleEvent('change', 'changedAnswerCount', event);
+                                            Log.ret(Log.l.trace);
+                                            return;
+                                        }
+                                    }
+                                    var listControl = listView.winControl;
+                                    if (listControl.selection) {
+                                        var selectionCount = listControl.selection.count();
+                                        if (selectionCount === 1) {
+                                            // Only one item is selected, show the page
+                                            listControl.selection.getItems().done(function (items) {
+                                                var item = items[0];
+                                                if (item.data && item.data.FragenAntwortenVIEWID) {
+                                                    var newRecId = item.data.FragenAntwortenVIEWID;
+                                                    Log.print(Log.l.trace, "newRecId:" + newRecId + " curRecId:" + that.curRecId);
+                                                    //if (newRecId !== 0 && newRecId !== that.curRecId) {
+                                                    AppData.setRecordId('FragenAntworten', newRecId);
+                                                    if (that.curRecId) {
+                                                        that.prevRecId = that.curRecId;
+                                                    }
+                                                    that.curRecId = newRecId;
+                                                    if (that.prevRecId !== 0) { //
+                                                        that.saveData(function (response) {
+                                                            Log.print(Log.l.trace, "question saved");
+                                                            AppBar.triggerDisableHandlers();
+                                                        }, function (errorResponse) {
+                                                            Log.print(Log.l.error, "error saving question");
+                                                        });
+                                                    } else {
                                                         AppBar.triggerDisableHandlers();
-                                                    }, function (errorResponse) {
-                                                        Log.print(Log.l.error, "error saving question");
-                                                    });
-                                                } else {
-                                                    AppBar.triggerDisableHandlers();
+                                                    }
+                                                    //  }
                                                 }
-                                                //  }
-                                            }
-                                        });
+                                            });
+                                        }
                                     }
                                 }
-                            }
-                            that.inAnswerCountFromRange = true;
-                            that.answerCountFromRange(event.currentTarget);
+                                that.inAnswerCountFromRange = true;
+                                that.answerCountFromRange(event.target);
+                            });
                         }
                     }
                     Log.ret(Log.l.trace);
@@ -1114,8 +1135,8 @@
                                 var trySetActive = function (element, scroller) {
                                     var success = true;
                                     // don't call setActive() if a dropdown control has focus!
-                                    var comboInputFocus = element.querySelector(".win-dropdown:focus");
-                                    if (!comboInputFocus) {
+                                    var inputFocus = element.querySelector(".win-dropdown:focus");
+                                    if (!inputFocus) {
                                         try {
                                             if (typeof element.setActive === "function") {
                                                 element.setActive();
@@ -1166,7 +1187,6 @@
                                             // just to catch the exception and ignore it.
                                             that._itemFocused = true;
                                             trySetActive(item);
-                                           
                                         }
                                     };
 
