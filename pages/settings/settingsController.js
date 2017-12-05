@@ -303,7 +303,8 @@
                 },
                 changedInputBorder: function (event) {
                     Log.call(Log.l.trace, "Settings.Controller.");
-                    if (event.currentTarget && AppBar.notifyModified) {
+                    if (event.currentTarget && AppBar.notifyModified &&
+                        that.binding && that.binding.generalData) {
                         var range = event.currentTarget;
                         if (range) {
                             that.binding.generalData.inputBorder = range.value;
