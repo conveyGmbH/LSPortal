@@ -50,12 +50,6 @@
                 Colors[colorProperty] = color;
                 switch (colorProperty) {
                     case "accentColor":
-                        /* that.createColorPicker("backgroundColor");
-                         that.createColorPicker("textColor");
-                         that.createColorPicker("labelColor");
-                         that.createColorPicker("tileTextColor");
-                         that.createColorPicker("tileBackgroundColor");
-                         that.createColorPicker("navigationColor");*/
                         // fall through...
                     case "navigationColor":
                         AppBar.loadIcons();

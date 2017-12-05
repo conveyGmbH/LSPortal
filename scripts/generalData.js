@@ -393,13 +393,13 @@
                 default:
                     // defaultvalues
             }
-            /*if (item.pageProperty) {
+            if (item.pageProperty) {
                 if (item.LocalValue === "1") {
-                    NavigationBar.enablePage(item.pageProperty);
-                } else if (item.LocalValue === "0") {
                     NavigationBar.disablePage(item.pageProperty);
+                } else {
+                    NavigationBar.enablePage(item.pageProperty);
                 }
-            }*/
+            }
             return property;
         },
         enableDisablePage: function (item) {
