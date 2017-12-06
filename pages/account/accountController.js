@@ -445,7 +445,7 @@
                                     results.forEach(function(item, index) {
                                         that.resultConverter(item, index);
                                     });
-                                } else {
+                                } else if (AppData._persistentStates.individualColors) {
                                     AppData._persistentStates.individualColors = false;
                                     AppData._persistentStates.colorSettings = copyByValue(AppData.persistentStatesDefaults.colorSettings);
                                     var colors = new Colors.ColorsClass(AppData._persistentStates.colorSettings);

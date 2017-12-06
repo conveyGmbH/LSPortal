@@ -305,23 +305,15 @@
                 case 10:
                     item.colorPickerId = "individualColors";
                     property = item.colorPickerId;
-                    if (item.LocalValue === "0") {
+                    if (item.LocalValue === "0" && AppData._persistentStates.individualColors) {
                         WinJS.Promise.timeout(0).then(function () {
                             AppData._persistentStates.individualColors = false;
                             AppData._persistentStates.colorSettings = copyByValue(AppData.persistentStatesDefaults.colorSettings);
                             var colors = new Colors.ColorsClass(AppData._persistentStates.colorSettings);
-                            /*   that.createColorPicker("accentColor", true);
-                               that.createColorPicker("backgroundColor");
-                               that.createColorPicker("textColor");
-                               that.createColorPicker("labelColor");
-                               that.createColorPicker("tileTextColor");
-                               that.createColorPicker("tileBackgroundColor");
-                               that.createColorPicker("navigationColor");*/
                             AppBar.loadIcons();
                             NavigationBar.groups = Application.navigationBarGroups;
                         });
                     }
-                    // var childElement = pageElement.querySelector("#" + item.colorPickerId);
                     break;
                 case 11:
                     item.colorPickerId = "accentColor";
@@ -353,7 +345,6 @@
                     break;
                 case 18:
                     if (item.LocalValue === "1") {
-                        //that.binding.generalData.isDarkTheme = true;
                         AppData.generalData.isDarkTheme = true;
                     } else {
                         AppData.generalData.isDarkTheme = false;
