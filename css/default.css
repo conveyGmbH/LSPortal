@@ -533,18 +533,7 @@ select.input_field, select.input_small_left{
 .progress_field, .input_field, .large_field {
     margin-top: 0;
 }
-select.input_field,
-select.large_field,
-select.input_small_left,
-select.input_small_right,
-select.input_half_left,
-select.input_half_right,
-input.input_field,
-input.large_field,
-input.input_half_left,
-input.input_half_right,
-input.input_small_left,
-input.input_small_right {
+input.win-textbox, input.win-checkbox, input.win-radio, textarea.win-textarea, select.win-dropdown {
     border-width: 2px;
 }
 .input_text_comment {

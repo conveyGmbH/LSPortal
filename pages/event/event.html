@@ -54,10 +54,10 @@
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'event.showHideQuestionnaire'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'event.showHideQuestionnaire'}"></span>
                             <div class="input_field toggle-switch-parent">
-                                <div id="showHideQuestionnaire" class="input_field"
+                                <div id="showQuestionnaire" class="input_field"
                                      data-win-control="WinJS.UI.ToggleSwitch"
                                      data-win-bind="winControl.checked: isQuestionnaireVisible; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                     onchange="AppBar.handleEvent('change', 'clickShowHideQuestionnaire', event)">
+                                     onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
                                 </div>
                             </div>
                         </div>
@@ -65,10 +65,10 @@
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'event.showHideSketch'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'event.showHideSketch'}"></span>
                             <div class="input_field toggle-switch-parent">
-                                <div id="showHideSketch" class="input_field"
+                                <div id="showSketch" class="input_field"
                                      data-win-control="WinJS.UI.ToggleSwitch"
                                      data-win-bind="winControl.checked: isSketchVisible; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                     onchange="AppBar.handleEvent('change', 'clickShowHideSketch', event)">
+                                     onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
                                 </div>
                             </div>
                         </div>
@@ -77,10 +77,10 @@
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'event.showHideCamera'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'event.showHideCamera'}"></span>
                             <div class="input_field toggle-switch-parent">
-                                <div id="showHideCamera" class="input_field"
+                                <div id="showCamera" class="input_field"
                                      data-win-control="WinJS.UI.ToggleSwitch"
                                      data-win-bind="winControl.checked: isCameraVisible; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                     onchange="AppBar.handleEvent('change', 'clickShowHideCamera', event)">
+                                     onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
                                 </div>
                             </div>
                         </div>
@@ -88,10 +88,10 @@
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'event.showHideBarcodeScan'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'event.showHideBarcodeScan'}"></span>
                             <div class="input_field toggle-switch-parent">
-                                <div id="showHideBarcodeScan" class="input_field"
+                                <div id="showBarcodeScan" class="input_field"
                                      data-win-control="WinJS.UI.ToggleSwitch"
                                      data-win-bind="winControl.checked: isBarcodeScanVisible; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                     onchange="AppBar.handleEvent('change', 'clickShowHidebarcodeScan', event)">
+                                     onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
                                 </div>
                             </div>
                         </div>

@@ -14,14 +14,14 @@
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "Event.Controller.");
             Application.Controller.apply(this, [pageElement, {
-                dataEvent: getEmptyDefaultValue(Event.eventView.defaultValue)
+                dataEvent: getEmptyDefaultValue(Event.eventView.defaultValue),
+                isQuestionnaireVisible: !AppData._persistentStates.hideQuestionnaire,
+                isSketchVisible: !AppData._persistentStates.hideSketch,
+                isCameraVisible: !AppData._persistentStates.hideCameraScan,
+                isBarcodeScanVisible: !AppData._persistentStates.hideBarcodeScan
             }, commandList]);
 
             var that = this;
-            var showHideQuestionnaire = pageElement.querySelector("#showHideQuestionnaire");;
-            var showHideSketchToggle = pageElement.querySelector("#showHideSketch");
-            var showHideCamera = pageElement.querySelector("#showHideCamera");
-            var showHideBarcodeScan = pageElement.querySelector("#showHideBarcodeScan");
 
             //27.12.2016 generate the string date
             var getDateObject = function(dateData) {
@@ -73,77 +73,60 @@
             };
             this.getRecordId = getRecordId;
 
-            var changeColorSetting = function(pageProperty, status) {
-                Log.call(Log.l.trace, "Settings.Controller.", "pageProperty=" + pageProperty + " color=" + status);
-                var pOptionTypeId = null;
-                var pValue = null;
-
-                switch (pageProperty) {
-                    case "showHideQuestionnaire":
+            var changeAppSetting = function (toggleId, checked) {
+                Log.call(Log.l.trace, "Settings.Controller.", "toggleId=" + toggleId + " checked=" + checked);
+                if (that.binding) {
+                    var pOptionTypeId = null;
+                    var pageProperty = null;
+                    switch (toggleId) {
+                    case "showQuestionnaire":
                         pOptionTypeId = 20;
+                        pageProperty = "questionnaire";
+                        that.binding.isQuestionnaireVisible = checked;
+                        AppData._persistentStates.hideQuestionnaire = !checked;
                         break;
-                    case "showHideSketch":
+                    case "showSketch":
                         pOptionTypeId = 21;
+                        pageProperty = "sketch";
+                        that.binding.isSketchVisible = checked;
+                        AppData._persistentStates.hideSketch = !checked;
                         break;
-                }
-                if (typeof status === "boolean" && status) {
-                    pValue = "1";
-                } else {
-                    pValue = "0";
-                }
-
-                if (pOptionTypeId) {
-                    AppData.call("PRC_SETVERANSTOPTION",
-                        {
-                            pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
-                            pOptionTypeID: pOptionTypeId,
-                            pValue: pValue
-                        },
-                        function (json) {
-                            Log.print(Log.l.info, "call success! ");
-                        },
-                        function (error) {
-                            Log.print(Log.l.error, "call error");
-                        });
-                   // that.applyColorSetting(colorProperty, color);
-                    //Colors.updateColors();
-                }
-
-            };
-            this.changeColorSetting = changeColorSetting;
-
-            var changeAppSetting = function (pageProperty, status) {
-                Log.call(Log.l.trace, "Settings.Controller.", "pageProperty=" + pageProperty + " color=" + status);
-                var pOptionTypeId = null;
-                var pValue = null;
-
-                switch (pageProperty) {
-                    case "showHideCamera":
+                    case "showBarcodeScan":
                         pOptionTypeId = 23;
+                        that.binding.isBarcodeScanVisible = checked;
+                        AppData._persistentStates.hideBarcodeScan = !checked;
                         break;
-                    case "showHideBarcodeScan":
+                    case "showCamera":
                         pOptionTypeId = 24;
+                        that.binding.isCameraVisible = checked;
+                        AppData._persistentStates.hideCameraScan = !checked;
                         break;
-                }
-                if (typeof status === "boolean" && status) {
-                    pValue = "1";
-                } else {
-                    pValue = "0";
-                }
-
-                if (pOptionTypeId) {
-                    AppData.call("PRC_SETVERANSTOPTION",
-                        {
+                    }
+                    if (pOptionTypeId) {
+                        var pValue;
+                        // value: show => pValue: hide!
+                        if (!checked) {
+                            pValue = "1";
+                        } else {
+                            pValue = "0";
+                        }
+                        AppData.call("PRC_SETVERANSTOPTION", {
                             pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
                             pOptionTypeID: pOptionTypeId,
                             pValue: pValue
-                        },
-                        function (json) {
+                        }, function (json) {
                             Log.print(Log.l.info, "call success! ");
-                        },
-                        function (error) {
+                        }, function (error) {
                             Log.print(Log.l.error, "call error");
                         });
+                        if (pageProperty) {
+                            if (pValue === "1") {
+                                NavigationBar.disablePage(pageProperty);
+                            } else {
+                                NavigationBar.enablePage(pageProperty);
+                            }
+                        }
+                    }
                 }
             };
             this.changeAppSetting = changeAppSetting;
@@ -176,46 +159,14 @@
                     Application.navigateById("publish", event);
                     Log.ret(Log.l.trace);
                 },
-                clickShowHideQuestionnaire: function(event) {
+                clickChangeAppSetting: function(event) {
                     Log.call(Log.l.trace, "Event.Controller.");
-                    var toggle = event.currentTarget.winControl;
-                    if (toggle) {
-                        that.binding.isQuestionnaireVisible = toggle.checked;
-                        AppData._persistentStates.hideQuestionnaire = !toggle.checked;
+                    if (event.currentTarget) {
+                        var toggle = event.currentTarget.winControl;
+                        if (toggle) {
+                            that.changeAppSetting(event.currentTarget.id, toggle.checked);
+                        }
                     }
-                    that.changeColorSetting(event.target.id, toggle.checked);
-                    Log.ret(Log.l.trace);
-                },
-                clickShowHideSketch: function(event) {
-                    Log.call(Log.l.trace, "Event.Controller.");
-                    var toggle = event.currentTarget.winControl;
-                    if (toggle) {
-                        that.binding.isSketchVisible = toggle.checked;
-                        AppData._persistentStates.hideSketch = !toggle.checked;
-                    }
-                    that.changeColorSetting(event.target.id, toggle.checked);
-                    Log.ret(Log.l.trace);
-                },
-                clickShowHidebarcodeScan: function (event) {
-                    Log.call(Log.l.trace, "Event.Controller.");
-                    var toggle = event.currentTarget.winControl;
-                    if (toggle) {
-                        that.binding.isBarcodeScanVisible = toggle.checked;
-                        AppData._persistentStates.hideBarcodeScan = that.binding.isBarcodeScanVisible; //!toggle.checked
-                    }
-                    // that.changeColorSetting(event.target.id, toggle.checked);
-                    that.changeAppSetting(event.target.id, toggle.checked);
-                    Log.ret(Log.l.trace);
-                },
-                clickShowHideCamera: function (event) {
-                    Log.call(Log.l.trace, "Event.Controller.");
-                    var toggle = event.currentTarget.winControl;
-                    if (toggle) {
-                        that.binding.isCameraVisible = toggle.checked;
-                        AppData._persistentStates.hideCameraScan = that.binding.isCameraVisible; //!toggle.checked
-                    }
-                    //that.changeColorSetting(event.target.id, toggle.checked);
-                    that.changeAppSetting(event.target.id, toggle.checked);
                     Log.ret(Log.l.trace);
                 }
             };
@@ -247,15 +198,6 @@
                     } else {
                         return WinJS.Promise.as();
                     }
-                }).then(function () {
-                    Log.print(Log.l.trace, "Hide Questionnaire: " + AppData._persistentStates.hideQuestionnaire);
-                    showHideQuestionnaire.winControl.checked = AppData._persistentStates.hideQuestionnaire;
-                    Log.print(Log.l.trace, "Hide Sketch: " + AppData._persistentStates.hideSketch);
-                    showHideSketchToggle.winControl.checked = AppData._persistentStates.hideSketch;
-                    Log.print(Log.l.trace, "Hide Camera: " + AppData._persistentStates.hideCameraScan);
-                    showHideCamera.winControl.checked = AppData._persistentStates.hideCameraScan;
-                    Log.print(Log.l.trace, "Hide Barcode: " + AppData._persistentStates.hideBarcodeScan);
-                    showHideBarcodeScan.winControl.checked = AppData._persistentStates.hideBarcodeScan;
                 }).then(function () {
                     AppBar.notifyModified = true;
                     return WinJS.Promise.as();
