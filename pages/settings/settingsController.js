@@ -19,7 +19,6 @@
             Application.Controller.apply(this, [pageElement, {
                 showSettingsFlag: false
             }, commandList]);
-            this.colorSet = null;
             var that = this;
 
             this.dispose = function () {

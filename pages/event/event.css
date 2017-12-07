@@ -14,10 +14,10 @@
 .toggle-switch-parent {
     height: 50px;
 }
-#showHideBarcodeScan .win-toggleswitch-header,
-#showHideCamera .win-toggleswitch-header,
-#showHideQuestionnaire .win-toggleswitch-header,
-#showHideSketch .win-toggleswitch-header,
+#showBarcodeScan .win-toggleswitch-header,
+#showCamera .win-toggleswitch-header,
+#showQuestionnaire .win-toggleswitch-header,
+#showSketch .win-toggleswitch-header,
 #shopAppBkg .win-toggleswitch-header {
     display: none;
 }
