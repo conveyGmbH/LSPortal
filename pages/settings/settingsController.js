@@ -36,7 +36,7 @@
                 }
             }
 
-            var createColorPicker = function (colorProperty, doRecreate) {
+            var createColorPicker = function (colorProperty) {
                 Log.call(Log.l.trace, "Settings.Controller.");
                 if (that.binding && that.binding.generalData) {
                     that.binding.generalData[colorProperty] = Colors[colorProperty];
@@ -134,7 +134,7 @@
             this.changeColorSetting = changeColorSetting;
 
             // create all color pickers!
-            this.createColorPicker("accentColor", true);
+            this.createColorPicker("accentColor");
             this.createColorPicker("backgroundColor");
             this.createColorPicker("textColor");
             this.createColorPicker("labelColor");
@@ -219,7 +219,7 @@
                                 WinJS.Promise.timeout(0).then(function () {
                                     AppData._persistentStates.colorSettings = copyByValue(AppData.persistentStatesDefaults.colorSettings);
                                     var colors = new Colors.ColorsClass(AppData._persistentStates.colorSettings);
-                                    that.createColorPicker("accentColor", true);
+                                    that.createColorPicker("accentColor");
                                     that.createColorPicker("backgroundColor");
                                     that.createColorPicker("textColor");
                                     that.createColorPicker("labelColor");
