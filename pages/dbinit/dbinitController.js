@@ -44,29 +44,12 @@
                 }
                 return startPage;
             }
-            var applyColorSetting = function (colorProperty, color) {
-                Log.call(Log.l.trace, "Settings.Controller.", "colorProperty=" + colorProperty + " color=" + color);
-
-                Colors[colorProperty] = color;
-                switch (colorProperty) {
-                    case "accentColor":
-                        // fall through...
-                    case "navigationColor":
-                        AppBar.loadIcons();
-                        NavigationBar.groups = Application.navigationBarGroups;
-                        break;
-                }
-                Log.ret(Log.l.trace);
-            }
-            this.applyColorSetting = applyColorSetting;
-
             var resultConverter = function (item, index) {
                 var property = AppData.getPropertyFromInitoptionTypeID(item);
-                if (property !== "individualColors" && item.LocalValue) {
+                if (property && property !== "individualColors" && (!item.pageProperty) && item.LocalValue) {
                     item.colorValue = "#" + item.LocalValue;
-                    that.applyColorSetting(property, item.colorValue);
+                    AppData.applyColorSetting(property, item.colorValue);
                 }
-                AppData.enableDisablePage(item);
             }
             this.resultConverter = resultConverter;
             // define handlers

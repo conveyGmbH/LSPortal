@@ -46,7 +46,7 @@
         },
         _MAILERZEILENView: {
             get: function () {
-                return AppData.getFormatView("MailerZeilen", 20514);
+                return AppData.getFormatView("MAILERZEILEN", 20514);
             }
         },
         MAILERZEILENView: {

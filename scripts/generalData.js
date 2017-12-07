@@ -300,12 +300,15 @@
             return ret;
         },
         getPropertyFromInitoptionTypeID: function (item) {
+            Log.call(Log.l.u1, "AppData.");
             var property = "";
             switch (item.INITOptionTypeID) {
                 case 10:
                     item.colorPickerId = "individualColors";
                     property = item.colorPickerId;
-                    if (item.LocalValue === "0" && AppData._persistentStates.individualColors) {
+                    if (item.LocalValue === "1") {
+                        AppData._persistentStates.individualColors = true;
+                    } else if (AppData._persistentStates.individualColors) {
                         WinJS.Promise.timeout(0).then(function () {
                             AppData._persistentStates.individualColors = false;
                             AppData._persistentStates.colorSettings = copyByValue(AppData.persistentStatesDefaults.colorSettings);
@@ -391,16 +394,21 @@
                     NavigationBar.enablePage(item.pageProperty);
                 }
             }
+            Log.ret(Log.l.u1, property);
             return property;
         },
-        enableDisablePage: function (item) {
-            if (item.pageProperty) {
-                if (item.LocalValue === "1") {
-                    NavigationBar.enablePage(item.pageProperty);
-                } else if (item.LocalValue === "0") {
-                    NavigationBar.disablePage(item.pageProperty);
-                }
+        applyColorSetting: function (colorProperty, color) {
+            Log.call(Log.l.u1, "AppData.", "colorProperty=" + colorProperty + " color=" + color);
+            Colors[colorProperty] = color;
+            switch (colorProperty) {
+            case "accentColor":
+            // fall through...
+            case "navigationColor":
+                AppBar.loadIcons();
+                NavigationBar.groups = Application.navigationBarGroups;
+                break;
             }
+            Log.ret(Log.l.u1);
         },
         generalData: {
             get: function () {

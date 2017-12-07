@@ -25,21 +25,20 @@
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "Start.Controller.");
             var lang = AppData.getLanguageId();
+            var srcDatamaps;
             switch (lang) {
             case 1033:
-                var srcDatamaps = "lib/datamaps/scripts/datamaps.world.en.js";
+                srcDatamaps = "lib/datamaps/scripts/datamaps.world.en.js";
                 break;
             case 1036:
-                var srcDatamaps = "lib/datamaps/scripts/datamaps.world.en.js";
+                srcDatamaps = "lib/datamaps/scripts/datamaps.world.en.js";
                 break;
             case 1040:
-                var srcDatamaps = "lib/datamaps/scripts/datamaps.world.en.js";
+                srcDatamaps = "lib/datamaps/scripts/datamaps.world.en.js";
                 break;
             default:
-                var srcDatamaps = "lib/datamaps/scripts/datamaps.world.de.js";
+                srcDatamaps = "lib/datamaps/scripts/datamaps.world.de.js";
             }
-            //var srcDatamaps = "lib/datamaps/scripts/datamaps.world.js";
-
             Application.Controller.apply(this, [pageElement, {
                 dataStart: {},
                 disableEditEvent: NavigationBar.isPageDisabled("event"),
@@ -62,31 +61,33 @@
                 }
             }
 
-            this.countryKeyData = {};
+            this.worldMap = null;
             this.worldChartData = [];
             var worldChart = function (countryKeyData) {
                 Log.call(Log.l.trace, "Start.Controller.");
                 var ret = new WinJS.Promise.as().then(function () {
-                    var worldCD = pageElement.querySelector('#worldcontainer');
-                    if (worldCD) {
+                    var worldContainer = pageElement.querySelector('#worldcontainer');
+                    if (worldContainer) {
+                        if (!countryKeyData) {
+                            Log.print(Log.l.trace, "load empty map");
+                            countryKeyData = {};
+                        }
                         try {
-                            worldCD.innerHTML = "";
-                            var map = new Datamap(
-                                {
-                                    element: worldCD,
-                                    height: 350,
-                                    width: 600,
-                                    fills: {
-                                        HIGH: '#d8613e',
-                                        LOW: '#123456',
-                                        MEDIUM: 'blue',
-                                        UNKNOWN: 'rgb(0,0,0)',
-                                        defaultFill: "#d3d3d3"
-                                    },
-                                    // Array --> 'Countrykey' : { fillKey : 'Rate of importance'}
-                                    data: countryKeyData
-                                }
-                            );
+                            worldContainer.innerHTML = "";
+                            that.worldMap = new Datamap({
+                                element: worldContainer,
+                                height: 350,
+                                width: 600,
+                                fills: {
+                                    HIGH: '#d8613e',
+                                    LOW: '#123456',
+                                    MEDIUM: 'blue',
+                                    UNKNOWN: 'rgb(0,0,0)',
+                                    defaultFill: "#d3d3d3"
+                                },
+                                // Array --> 'Countrykey' : { fillKey : 'Rate of importance'}
+                                data: countryKeyData
+                            });
                         } catch (ex) {
                             Log.print(Log.l.error, "exception occurred: " + ex.message);
                         }
@@ -200,7 +201,6 @@
             this.setLabelColor = setLabelColor;
 
             this.countryChart = null;
-            //this.countrytitle = that.title("reporting.countrychart");
             this.countryChartArray = [];
             this.countrydata = [];
             this.countryticks = [];
@@ -227,36 +227,40 @@
                     }
                     Log.print(Log.l.trace, "diameter=" + diameter);
                     WinJS.Promise.timeout(0).then(function () {
-                        try {
-                            countryChart.innerHTML = "";
-                            that.countryChart = $.jqplot(countryChartId, [that.countrydata], {
-                                seriesDefaults: {
-                                    renderer: $.jqplot.DonutRenderer,
-                                    rendererOptions: {
-                                        diameter: diameter,
-                                        sliceMargin: 1,
-                                        startAngle: -145,
-                                        showDataLabels: true,
-                                        dataLabels: 'percent',
-                                        padding: '5',
-                                        ringMargin: '5',
-                                        dataLabelThreshold: '1',
-                                        highlightMouseOver: true,
-                                        shadowAlpha: 0
+                        if (!that.countrydata || !that.countrydata.length) {
+                            Log.print(Log.l.trace, "extra ignored");
+                        } else {
+                            try {
+                                countryChart.innerHTML = "";
+                                that.countryChart = $.jqplot(countryChartId, [that.countrydata], {
+                                    seriesDefaults: {
+                                        renderer: $.jqplot.DonutRenderer,
+                                        rendererOptions: {
+                                            diameter: diameter,
+                                            sliceMargin: 1,
+                                            startAngle: -145,
+                                            showDataLabels: true,
+                                            dataLabels: 'percent',
+                                            padding: '5',
+                                            ringMargin: '5',
+                                            dataLabelThreshold: '1',
+                                            highlightMouseOver: true,
+                                            shadowAlpha: 0
+                                        }
+                                    },
+                                    legend: { show: true, rendererOptions: { numberRows: 10 }, location: 'w', marginLeft: '30px' }
+                                });
+                                $("#" + countryChartId).unbind("jqplotDataClick");
+                                $("#" + countryChartId).bind("jqplotDataClick",
+                                    function (ev, seriesIndex, pointIndex, data) {
+                                        that.clickDonutSlice(data, pointIndex);
                                     }
-                                },
-                                legend: { show: true, rendererOptions: { numberRows: 10 }, location: 'w', marginLeft: '30px' }
-                            });
-                            $("#" + countryChartId).unbind("jqplotDataClick");
-                            $("#" + countryChartId).bind("jqplotDataClick",
-                                function (ev, seriesIndex, pointIndex, data) {
-                                    that.clickDonutSlice(data, pointIndex);
-                                }
-                            );
-                            /*that.setLabelColor(showcountryChart, "jqplot-xaxis-tick", "#f0f0f0");
-                            that.setLabelColor(showcountryChart, "jqplot-point-label", "#f0f0f0");*/
-                        } catch (ex) {
-                            Log.print(Log.l.error, "exception occurred: " + ex.message);
+                                );
+                                /*that.setLabelColor(showcountryChart, "jqplot-xaxis-tick", "#f0f0f0");
+                                that.setLabelColor(showcountryChart, "jqplot-point-label", "#f0f0f0");*/
+                            } catch (ex) {
+                                Log.print(Log.l.error, "exception occurred: " + ex.message);
+                            }
                         }
                     });
                 }
@@ -318,63 +322,63 @@
                         }
                     }
                     WinJS.Promise.timeout(0).then(function () {
-                        if (!series.length || diameter < 96) {
-                            Log.ret(Log.l.trace, "extra ignored");
-                            return;
-                        } 
-                        try {
-                            visitorsEditedChart.innerHTML = "";
-                            that.pieChart = $.jqplot(pieChartId, [series], {
-                                title: "",
-                                grid: {
-                                    drawBorder: false,
-                                    drawGridlines: false,
-                                    background: "transparent",
-                                    shadow: false
-                                },
-                                axesDefaults: {},
-                                seriesDefaults: {
-                                    shadow: false,
-                                    renderer: $.jqplot.PieRenderer,
-                                    rendererOptions: {
-                                        diameter: diameter,
-                                        dataLabels: dataLabels,
-                                        showDataLabels: true,
-                                        startAngle: -90,
-                                        sliceMargin: 2
-                                    }
-                                },
-                                seriesColors: seriesColors,
-                                legend: {
-                                    show: false
-                                }
-                                /*
-                                legend: {
-                                    show: true,
-                                    rendererOptions: {
-                                        numberColumns: 1
+                        if (!series || !series.length || diameter < 96) {
+                            Log.print(Log.l.trace, "extra ignored");
+                        } else {
+                            try {
+                                visitorsEditedChart.innerHTML = "";
+                                that.pieChart = $.jqplot(pieChartId, [series], {
+                                    title: "",
+                                    grid: {
+                                        drawBorder: false,
+                                        drawGridlines: false,
+                                        background: "transparent",
+                                        shadow: false
                                     },
-                                    location: 'e'
-                                }
-                                 */
-                            });
-                            $("#" + pieChartId).unbind("jqplotDataClick");
-                            $("#" + pieChartId).bind("jqplotDataClick",
-                              function (ev, seriesIndex, pointIndex, data) {
-                                  that.clickPieSlice(ev, pointIndex);
-                              }
-                            );
-                            that.setLabelColor(visitorsEditedChart, "jqplot-data-label", Colors.textColor);
-                            if (bAnimated) {
-                                WinJS.Promise.timeout(50).then(function() {
-                                    if (visitorsEditedChart.style) {
-                                        visitorsEditedChart.style.visibility = "";
+                                    axesDefaults: {},
+                                    seriesDefaults: {
+                                        shadow: false,
+                                        renderer: $.jqplot.PieRenderer,
+                                        rendererOptions: {
+                                            diameter: diameter,
+                                            dataLabels: dataLabels,
+                                            showDataLabels: true,
+                                            startAngle: -90,
+                                            sliceMargin: 2
+                                        }
+                                    },
+                                    seriesColors: seriesColors,
+                                    legend: {
+                                        show: false
                                     }
-                                    WinJS.UI.Animation.fadeIn(visitorsEditedChart);
+                                    /*
+                                    legend: {
+                                        show: true,
+                                        rendererOptions: {
+                                            numberColumns: 1
+                                        },
+                                        location: 'e'
+                                    }
+                                     */
                                 });
+                                $("#" + pieChartId).unbind("jqplotDataClick");
+                                $("#" + pieChartId).bind("jqplotDataClick",
+                                  function (ev, seriesIndex, pointIndex, data) {
+                                      that.clickPieSlice(ev, pointIndex);
+                                  }
+                                );
+                                that.setLabelColor(visitorsEditedChart, "jqplot-data-label", Colors.textColor);
+                                if (bAnimated) {
+                                    WinJS.Promise.timeout(50).then(function () {
+                                        if (visitorsEditedChart.style) {
+                                            visitorsEditedChart.style.visibility = "";
+                                        }
+                                        WinJS.UI.Animation.fadeIn(visitorsEditedChart);
+                                    });
+                                }
+                            } catch (ex) {
+                                Log.print(Log.l.error, "exception occurred: " + ex.message);
                             }
-                        } catch (ex) {
-                            Log.print(Log.l.error, "exception occurred: " + ex.message);
                         }
                     });
                 }
@@ -402,58 +406,58 @@
                     ];
                     visitorsPerDayChart.innerHTML = "";
                     WinJS.Promise.timeout(0).then(function () {
-                        if (!series.length) {
-                            Log.ret(Log.l.trace, "extra ignored");
-                            return;
-                        } 
-                        try {
-                            visitorsPerDayChart.innerHTML = "";
-                            that.barChart = $.jqplot(barChartId, [series], {
-                                grid: {
-                                    drawBorder: false,
-                                    drawGridlines: false,
-                                    background: "transparent",
-                                    shadow: false
-                                },
-                                animate: bAnimated,
-                                seriesDefaults: {
-                                    renderer: $.jqplot.BarRenderer,
-                                    rendererOptions: {
-                                        animation: {
-                                            speed: 500
+                        if (!series || !series.length) {
+                            Log.print(Log.l.trace, "extra ignored");
+                        } else {
+                            try {
+                                visitorsPerDayChart.innerHTML = "";
+                                that.barChart = $.jqplot(barChartId, [series], {
+                                    grid: {
+                                        drawBorder: false,
+                                        drawGridlines: false,
+                                        background: "transparent",
+                                        shadow: false
+                                    },
+                                    animate: bAnimated,
+                                    seriesDefaults: {
+                                        renderer: $.jqplot.BarRenderer,
+                                        rendererOptions: {
+                                            animation: {
+                                                speed: 500
+                                            }
+                                        },
+                                        shadow: false,
+                                        pointLabels: {
+                                            show: true
                                         }
                                     },
-                                    shadow: false,
-                                    pointLabels: {
-                                        show: true
-                                    }
-                                },
-                                axes: {
-                                    xaxis: {
-                                        renderer: $.jqplot.CategoryAxisRenderer
+                                    axes: {
+                                        xaxis: {
+                                            renderer: $.jqplot.CategoryAxisRenderer
+                                        },
+                                        yaxis: {
+                                            renderer: $.jqplot.AxisThickRenderer,
+                                            show: false,
+                                            showTicks: false,
+                                            showTickMarks: false
+                                        }
                                     },
-                                    yaxis: {
-                                        renderer: $.jqplot.AxisThickRenderer,
-                                        show: false,
-                                        showTicks: false,
-                                        showTickMarks: false
+                                    seriesColors: seriesColors,
+                                    legend: {
+                                        show: false
                                     }
-                                },
-                                seriesColors: seriesColors,
-                                legend: {
-                                    show: false
-                                }
-                            });
-                            $("#" + barChartId).unbind("jqplotDataClick");
-                            $("#" + barChartId).bind("jqplotDataClick",
-                                function(ev, seriesIndex, pointIndex, data) {
-                                    that.clickBarSlice(ev, pointIndex);
-                                }
-                            );
-                            that.setLabelColor(visitorsPerDayChart, "jqplot-xaxis-tick", "#f0f0f0");
-                            that.setLabelColor(visitorsPerDayChart, "jqplot-point-label", "#f0f0f0");
-                        } catch (ex) {
-                            Log.print(Log.l.error, "exception occurred: " + ex.message);
+                                });
+                                $("#" + barChartId).unbind("jqplotDataClick");
+                                $("#" + barChartId).bind("jqplotDataClick",
+                                    function (ev, seriesIndex, pointIndex, data) {
+                                        that.clickBarSlice(ev, pointIndex);
+                                    }
+                                );
+                                that.setLabelColor(visitorsPerDayChart, "jqplot-xaxis-tick", "#f0f0f0");
+                                that.setLabelColor(visitorsPerDayChart, "jqplot-point-label", "#f0f0f0");
+                            } catch (ex) {
+                                Log.print(Log.l.error, "exception occurred: " + ex.message);
+                            }
                         }
                     });
                 }
@@ -518,8 +522,8 @@
                 }).then(function () {
                     return Start.reportLand.select(function(json) {
                         Log.print(Log.l.trace, "reportLand: success!");
-                            that.countryKeyData = {};
                             if (json && json.d && json.d.results && json.d.results.length > 0) {
+                                var countryKeyData = {};
                                 // store result for next use
                                 countryresult = json.d.results;
                                 for (ci = json.d.results.length-1; ci >= 0; ci--) {
@@ -534,13 +538,13 @@
                                     if (!isoCode) {
                                        
                                     } else {
-                                        that.countryKeyData[isoCode] = {
+                                        countryKeyData[isoCode] = {
                                             fillKey: "HIGH"
                                         }
                                     }
                                 }
                                 that.showcountryChart("countryPie", true);
-                                that.worldChart(that.countryKeyData);
+                                that.worldChart(countryKeyData);
                             }
                             
                         },
@@ -601,9 +605,6 @@
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
             }).then(function() {
-                Log.print(Log.l.trace, "Splash time over");
-                return that.worldChart();
-            }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 return WinJS.Promise.timeout(Application.pageframe.splashScreenDone ? 0 : 1000);
             }).then(function () {
