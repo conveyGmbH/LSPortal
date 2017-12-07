@@ -309,8 +309,8 @@
                     if (item.LocalValue === "1") {
                         AppData._persistentStates.individualColors = true;
                     } else if (AppData._persistentStates.individualColors) {
+                        AppData._persistentStates.individualColors = false;
                         WinJS.Promise.timeout(0).then(function () {
-                            AppData._persistentStates.individualColors = false;
                             AppData._persistentStates.colorSettings = copyByValue(AppData.persistentStatesDefaults.colorSettings);
                             var colors = new Colors.ColorsClass(AppData._persistentStates.colorSettings);
                             AppBar.loadIcons();
@@ -387,14 +387,13 @@
                 default:
                     // defaultvalues
             }
-            /*if (item.pageProperty) {
+            if (item.pageProperty) {
                 if (item.LocalValue === "1") {
                     NavigationBar.disablePage(item.pageProperty);
                 } else {
                     NavigationBar.enablePage(item.pageProperty);
                 }
-            }*/
-            AppData.enableDisablePage(item);
+            }
             return property;
         },
         applyColorSetting: function (colorProperty, color) {
@@ -409,15 +408,6 @@
                 break;
             }
             Log.ret(Log.l.u1);
-        },
-        enableDisablePage: function (item) {
-            if (item.pageProperty) {
-                if (item.LocalValue === "1") {
-                    NavigationBar.disablePage(item.pageProperty);
-                } else {
-                    NavigationBar.enablePage(item.pageProperty);
-                }
-            }
         },
         generalData: {
             get: function () {

@@ -181,18 +181,12 @@
                                     AppData.setRecordId("Mitarbeiter", dataLogin.MitarbeiterID);
                                     NavigationBar.enablePage("settings");
                                     NavigationBar.enablePage("info");
-                                    if (that.binding.appSettings.odata.useOffline) {
-                                        AppData._persistentStates.odata.dbSiteId = dataLogin.Mitarbeiter_AnmeldungVIEWID;
-                                        Application.pageframe.savePersistentStates();
-                                        return that.openDb(complete, error);
-                                    } else {
-                                        Application.pageframe.savePersistentStates();
-                                        AppBar.busy = false;
-                                        AppData._curGetUserDataId = 0;
-                                        AppData.getUserData();
-                                        complete(json);
-                                        return WinJS.Promise.as();
-                                    }
+                                    Application.pageframe.savePersistentStates();
+                                    AppBar.busy = false;
+                                    AppData._curGetUserDataId = 0;
+                                    AppData.getUserData();
+                                    complete(json);
+                                    return WinJS.Promise.as();
                                 } else {
                                     AppBar.busy = false;
                                     that.binding.messageText = dataLogin.MessageText;
@@ -234,10 +228,7 @@
                                 results.forEach(function (item, index) {
                                     that.resultConverter(item, index);
                                 });
-                            } else if (AppData._persistentStates.individualColors) {
-                                AppData._persistentStates.individualColors = false;
-                                AppData._persistentStates.colorSettings = copyByValue(AppData.persistentStatesDefaults.colorSettings);
-                                var colors = new Colors.ColorsClass(AppData._persistentStates.colorSettings);
+                                Application.pageframe.savePersistentStates();
                             }
                         }, function (errorResponse) {
                             // called asynchronously if an error occurs

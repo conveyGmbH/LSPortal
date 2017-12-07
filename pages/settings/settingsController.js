@@ -100,6 +100,7 @@
                         // defaultvalues
                 }
                 if (pOptionTypeId) {
+                    Application.pageframe.savePersistentStates();
                     AppData.call("PRC_SETVERANSTOPTION", {
                         pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
                         pOptionTypeID: pOptionTypeId,
@@ -178,6 +179,7 @@
                                 that.createColorPicker("tileBackgroundColor");
                                 that.createColorPicker("navigationColor");
                             });
+                            Application.pageframe.savePersistentStates();
                             var pValue = "0";
                             if (toggle.checked) {
                                 pValue = "1";
@@ -380,6 +382,7 @@
                         results.forEach(function (item, index) {
                             that.resultConverter(item, index);
                         });
+                        Application.pageframe.savePersistentStates();
                     }
                     for (var i = 0; i < Application.navigationBarGroups.length; i++) {
                         if (Application.navigationBarGroups[i].id === "events") {
