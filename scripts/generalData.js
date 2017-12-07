@@ -319,40 +319,56 @@
                     }
                     break;
                 case 11:
-                    item.colorPickerId = "accentColor";
-                    property = "accentColor";
+                    if (AppData._persistentStates.individualColors) {
+                        item.colorPickerId = "accentColor";
+                        property = "accentColor";
+                    }
                     break;
                 case 12:
-                    item.colorPickerId = "backgroundColor";
-                    property = "backgroundColor";
+                    if (AppData._persistentStates.individualColors) {
+                        item.colorPickerId = "backgroundColor";
+                        property = "backgroundColor";
+                    }
                     break;
                 case 13:
-                    item.colorPickerId = "navigationColor";
-                    property = "navigationColor";
+                    if (AppData._persistentStates.individualColors) {
+                        item.colorPickerId = "navigationColor";
+                        property = "navigationColor";
+                    }
                     break;
                 case 14:
-                    item.colorPickerId = "textColor";
-                    property = "textColor";
+                    if (AppData._persistentStates.individualColors) {
+                        item.colorPickerId = "textColor";
+                        property = "textColor";
+                    }
                     break;
                 case 15:
-                    item.colorPickerId = "labelColor";
-                    property = "labelColor";
+                    if (AppData._persistentStates.individualColors) {
+                        item.colorPickerId = "labelColor";
+                        property = "labelColor";
+                    }
                     break;
                 case 16:
-                    item.colorPickerId = "tileTextColor";
-                    property = "tileTextColor";
+                    if (AppData._persistentStates.individualColors) {
+                        item.colorPickerId = "tileTextColor";
+                        property = "tileTextColor";
+                    }
                     break;
                 case 17:
-                    item.colorPickerId = "tileBackgroundColor";
-                    property = "tileBackgroundColor";
+                    if (AppData._persistentStates.individualColors) {
+                        item.colorPickerId = "tileBackgroundColor";
+                        property = "tileBackgroundColor";
+                    }
                     break;
                 case 18:
-                    if (item.LocalValue === "1") {
-                        AppData.generalData.isDarkTheme = true;
-                    } else {
-                        AppData.generalData.isDarkTheme = false;
+                    if (AppData._persistentStates.individualColors) {
+                        if (item.LocalValue === "1") {
+                            AppData.generalData.isDarkTheme = true;
+                        } else {
+                            AppData.generalData.isDarkTheme = false;
+                        }
+                        Colors.isDarkTheme = AppData.generalData.isDarkTheme;
                     }
-                    Colors.isDarkTheme = AppData.generalData.isDarkTheme;
                     break;
                 case 20:
                     item.pageProperty = "questionnaire";
