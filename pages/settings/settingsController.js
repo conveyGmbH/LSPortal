@@ -375,12 +375,11 @@
                     Log.print(Log.l.trace, "Reporting: success!");
                     // CR_VERANSTOPTION_ODataView returns object already parsed from json file in response
 
-                    if (json && json.d) {
+                    if (json && json.d && json.d.results && json.d.results.length > 0) {
                         var results = json.d.results;
                         results.forEach(function (item, index) {
                             that.resultConverter(item, index);
                         });
-                        Application.pageframe.savePersistentStates();
                     }
                     for (var i = 0; i < Application.navigationBarGroups.length; i++) {
                         if (Application.navigationBarGroups[i].id === "events") {
