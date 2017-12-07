@@ -357,44 +357,44 @@
                 case 20:
                     item.pageProperty = "questionnaire";
                     if (item.LocalValue === "1") {
-                        AppData._persistentStates.hideQuestionnaire = false;
-                    } else {
                         AppData._persistentStates.hideQuestionnaire = true;
+                    } else {
+                        AppData._persistentStates.hideQuestionnaire = false;
                     }
                     break;
                 case 21:
                     item.pageProperty = "sketch";
                     if (item.LocalValue === "1") {
-                        AppData._persistentStates.hideSketch = false;
-                    } else {
                         AppData._persistentStates.hideSketch = true;
+                    } else {
+                        AppData._persistentStates.hideSketch = false;
                     }
                     break;
                 case 23:
                     if (item.LocalValue === "1") {
-                        AppData._persistentStates.barcodeScanVisible = false;
+                        AppData._persistentStates.hideBarcodeScan = true;
                     } else {
-                        AppData._persistentStates.barcodeScanVisible = true;
+                        AppData._persistentStates.hideBarcodeScan = false;
                     }
                     break;
                 case 24:
                     if (item.LocalValue === "1") {
-                        AppData._persistentStates.cameraVisible = false;
+                        AppData._persistentStates.hideCameraScan = true;
                     } else {
-                        AppData._persistentStates.cameraVisible = true;
+                        AppData._persistentStates.hideCameraScan = false;
                     }
                     break;
                 default:
                     // defaultvalues
             }
-            if (item.pageProperty) {
+            /*if (item.pageProperty) {
                 if (item.LocalValue === "1") {
                     NavigationBar.disablePage(item.pageProperty);
                 } else {
                     NavigationBar.enablePage(item.pageProperty);
                 }
-            }
-            Log.ret(Log.l.u1, property);
+            }*/
+            AppData.enableDisablePage(item);
             return property;
         },
         applyColorSetting: function (colorProperty, color) {
@@ -409,6 +409,15 @@
                 break;
             }
             Log.ret(Log.l.u1);
+        },
+        enableDisablePage: function (item) {
+            if (item.pageProperty) {
+                if (item.LocalValue === "1") {
+                    NavigationBar.disablePage(item.pageProperty);
+                } else {
+                    NavigationBar.enablePage(item.pageProperty);
+                }
+            }
         },
         generalData: {
             get: function () {

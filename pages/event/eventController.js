@@ -201,7 +201,7 @@
                     var toggle = event.currentTarget.winControl;
                     if (toggle) {
                         that.binding.isBarcodeScanVisible = toggle.checked;
-                        AppData._persistentStates.barcodeScanVisible = that.binding.isBarcodeScanVisible; //!toggle.checked
+                        AppData._persistentStates.hideBarcodeScan = that.binding.isBarcodeScanVisible; //!toggle.checked
                     }
                     // that.changeColorSetting(event.target.id, toggle.checked);
                     that.changeAppSetting(event.target.id, toggle.checked);
@@ -212,7 +212,7 @@
                     var toggle = event.currentTarget.winControl;
                     if (toggle) {
                         that.binding.isCameraVisible = toggle.checked;
-                        AppData._persistentStates.cameraVisible = that.binding.isCameraVisible; //!toggle.checked
+                        AppData._persistentStates.hideCameraScan = that.binding.isCameraVisible; //!toggle.checked
                     }
                     //that.changeColorSetting(event.target.id, toggle.checked);
                     that.changeAppSetting(event.target.id, toggle.checked);
@@ -248,10 +248,14 @@
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
-                    showHideQuestionnaire.winControl.checked = !AppData._persistentStates.hideQuestionnaire;
-                    showHideSketchToggle.winControl.checked = !AppData._persistentStates.hideSketch;
-                    showHideCamera.winControl.checked = AppData._persistentStates.cameraVisible;
-                    showHideBarcodeScan.winControl.checked = AppData._persistentStates.barcodeScanVisible;
+                    Log.print(Log.l.trace, "Hide Questionnaire: " + AppData._persistentStates.hideQuestionnaire);
+                    showHideQuestionnaire.winControl.checked = AppData._persistentStates.hideQuestionnaire;
+                    Log.print(Log.l.trace, "Hide Sketch: " + AppData._persistentStates.hideSketch);
+                    showHideSketchToggle.winControl.checked = AppData._persistentStates.hideSketch;
+                    Log.print(Log.l.trace, "Hide Camera: " + AppData._persistentStates.hideCameraScan);
+                    showHideCamera.winControl.checked = AppData._persistentStates.hideCameraScan;
+                    Log.print(Log.l.trace, "Hide Barcode: " + AppData._persistentStates.hideBarcodeScan);
+                    showHideBarcodeScan.winControl.checked = AppData._persistentStates.hideBarcodeScan;
                 }).then(function () {
                     AppBar.notifyModified = true;
                     return WinJS.Promise.as();
