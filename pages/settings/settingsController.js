@@ -17,11 +17,10 @@
         Controller: WinJS.Class.derive(Application.Controller, function controller(pageElement, commandList) {
             Log.call(Log.l.trace, "Settings.Controller.");
             Application.Controller.apply(this, [pageElement, {
-                //  InitColor: { colorhx: 0, colorTitle: ""}
+                showSettingsFlag: false
             }, commandList]);
             this.colorSet = null;
             var that = this;
-            var individualColorToggle = pageElement.querySelector(".individualColor");
 
             this.dispose = function () {
                 var colorContainers = pageElement.querySelectorAll(".color_container");
@@ -72,56 +71,65 @@
 
             var changeColorSetting = function (colorProperty, color) {
                 Log.call(Log.l.trace, "Settings.Controller.", "colorProperty=" + colorProperty + " color=" + color);
-                var pValue = color.replace("#", "");
-                var pOptionTypeId = null;
-                switch (colorProperty) { //event.currentTarget.id
-                    case "accentColor":
-                        pOptionTypeId = 11;
-                        break;
-                    case "backgroundColor":
-                        pOptionTypeId = 12;
-                        break;
-                    case "navigationColor":
-                        pOptionTypeId = 13;
-                        break;
-                    case "textColor":
-                        pOptionTypeId = 14;
-                        break;
-                    case "labelColor":
-                        pOptionTypeId = 15;
-                        break;
-                    case "tileTextColor":
-                        pOptionTypeId = 16;
-                        break;
-                    case "tileBackgroundColor":
-                        pOptionTypeId = 17;
-                        break;
-                    default:
-                        // defaultvalues
-                }
-                if (pOptionTypeId) {
-                    Application.pageframe.savePersistentStates();
-                    AppData.call("PRC_SETVERANSTOPTION", {
-                        pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
-                        pOptionTypeID: pOptionTypeId,
-                        pValue: pValue
-                    }, function (json) {
-                        Log.print(Log.l.info, "call success! ");
-                    }, function (error) {
-                        Log.print(Log.l.error, "call error");
-                    });
-                    AppData.applyColorSetting(colorProperty, color);
-                    if (colorProperty === "accentColor" && color) {
-                        WinJS.Promise.timeout(0).then(function() {
-                            that.createColorPicker("backgroundColor");
-                            that.createColorPicker("textColor");
-                            that.createColorPicker("labelColor");
-                            that.createColorPicker("tileTextColor");
-                            that.createColorPicker("tileBackgroundColor");
-                            that.createColorPicker("navigationColor");
+                if (color) {
+                    var pValue = color.replace("#", "");
+                    var pOptionTypeId = null;
+                    switch (colorProperty) { //event.currentTarget.id
+                        case "accentColor":
+                            pOptionTypeId = 11;
+                            break;
+                        case "backgroundColor":
+                            pOptionTypeId = 12;
+                            break;
+                        case "navigationColor":
+                            pOptionTypeId = 13;
+                            break;
+                        case "textColor":
+                            pOptionTypeId = 14;
+                            break;
+                        case "labelColor":
+                            pOptionTypeId = 15;
+                            break;
+                        case "tileTextColor":
+                            pOptionTypeId = 16;
+                            break;
+                        case "tileBackgroundColor":
+                            pOptionTypeId = 17;
+                            break;
+                        default:
+                            // defaultvalues
+                    }
+                    if (pOptionTypeId) {
+                        Application.pageframe.savePersistentStates();
+                        AppData.call("PRC_SETVERANSTOPTION", {
+                            pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                            pOptionTypeID: pOptionTypeId,
+                            pValue: pValue
+                        }, function (json) {
+                            Log.print(Log.l.info, "call success! ");
+                        }, function (error) {
+                            Log.print(Log.l.error, "call error");
+                        });
+                        AppData.applyColorSetting(colorProperty, color);
+                        WinJS.Promise.timeout(0).then(function () {
+                            switch (colorProperty) {
+                                case "accentColor":
+                                    that.createColorPicker("backgroundColor");
+                                    that.createColorPicker("textColor");
+                                    that.createColorPicker("labelColor");
+                                    that.createColorPicker("tileTextColor");
+                                    that.createColorPicker("tileBackgroundColor");
+                                    that.createColorPicker("navigationColor");
+                                    // fall through...
+                                case "navigationColor":
+                                    AppBar.loadIcons();
+                                    NavigationBar.groups = Application.navigationBarGroups;
+                                    break;
+                            }
                         });
                     }
                 }
+                Log.ret(Log.l.trace);
             }
             this.changeColorSetting = changeColorSetting;
 
@@ -178,11 +186,15 @@
                                 that.createColorPicker("tileTextColor");
                                 that.createColorPicker("tileBackgroundColor");
                                 that.createColorPicker("navigationColor");
+                                AppBar.loadIcons();
+                                NavigationBar.groups = Application.navigationBarGroups;
                             });
                             Application.pageframe.savePersistentStates();
-                            var pValue = "0";
+                            var pValue;
                             if (toggle.checked) {
                                 pValue = "1";
+                            } else {
+                                pValue = "0";
                             }
                             AppData.call("PRC_SETVERANSTOPTION", {
                                 pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
@@ -198,20 +210,12 @@
                     Log.ret(Log.l.trace);
                 },
                 clickIndividualColors: function (event) {
-                    var restoreDefault = false;
-                    // var pValue = "0";
                     Log.call(Log.l.trace, "Settings.Controller.");
                     if (event.currentTarget && AppBar.notifyModified &&
                         that.binding && that.binding.generalData) {
                         var toggle = event.currentTarget.winControl;
                         if (toggle) {
-                            if (!toggle.checked) {
-                                restoreDefault = true;
-                                //    pValue = "1";
-                            } else {
-                                //  that.loadData();
-                            }
-                            if (restoreDefault && AppData._persistentStates.individualColors) {
+                            if (!toggle.checked && AppData._persistentStates.individualColors) {
                                 WinJS.Promise.timeout(0).then(function () {
                                     AppData._persistentStates.colorSettings = copyByValue(AppData.persistentStatesDefaults.colorSettings);
                                     var colors = new Colors.ColorsClass(AppData._persistentStates.colorSettings);
@@ -229,9 +233,11 @@
                             that.binding.generalData.individualColors = toggle.checked;
                             AppData._persistentStates.individualColors = toggle.checked;
                             Application.pageframe.savePersistentStates();
-                            var pValue = "0";
+                            var pValue;
                             if (toggle.checked) {
                                 pValue = "1";
+                            } else {
+                                pValue = "0";
                             }
                             AppData.call("PRC_SETVERANSTOPTION", {
                                 pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
@@ -334,34 +340,27 @@
                             var colorPicker = colorcontainer.colorPicker;
                             if (colorPicker) {
                                 colorPicker.color = item.colorValue;
-
                             }
                         }
                     }
                     AppData.applyColorSetting(property, item.colorValue);
                 } else if (property === "individualColors") {
-                    if (that.binding && that.binding.generalData && individualColorToggle) {
-                        individualColorToggle.checked = that.binding.generalData.individualColors;
+                    if (that.binding && that.binding.generalData) {
                         if (item.LocalValue === "1") {
                             that.binding.generalData.individualColors = true;
-                            individualColorToggle.checked = that.binding.generalData.individualColors;
-                        } else {
-                            var restoreDefault = false;
-                            if (!individualColorToggle.checked) {
-                                restoreDefault = true;
-                            }
-                            that.binding.generalData.individualColors = individualColorToggle.checked;
-                            if (restoreDefault) {
-                                WinJS.Promise.timeout(0).then(function () {
-                                    that.createColorPicker("accentColor", true);
-                                    that.createColorPicker("backgroundColor");
-                                    that.createColorPicker("textColor");
-                                    that.createColorPicker("labelColor");
-                                    that.createColorPicker("tileTextColor");
-                                    that.createColorPicker("tileBackgroundColor");
-                                    that.createColorPicker("navigationColor");
-                                });
-                            }
+                        } else if (that.binding.generalData.individualColors) {
+                            that.binding.generalData.individualColors = false;
+                            WinJS.Promise.timeout(0).then(function () {
+                                that.createColorPicker("accentColor", true);
+                                that.createColorPicker("backgroundColor");
+                                that.createColorPicker("textColor");
+                                that.createColorPicker("labelColor");
+                                that.createColorPicker("tileTextColor");
+                                that.createColorPicker("tileBackgroundColor");
+                                that.createColorPicker("navigationColor");
+                                AppBar.loadIcons();
+                                NavigationBar.groups = Application.navigationBarGroups;
+                            });
                         }
                     }
                 }
@@ -384,23 +383,21 @@
                         });
                         Application.pageframe.savePersistentStates();
                     }
-                    for (var i = 0; i < Application.navigationBarGroups.length; i++) {
-                        if (Application.navigationBarGroups[i].id === "events") {
-                            if (individualColorToggle) {
-                                if (Application.navigationBarGroups[i].disabled === true) {
-                                    individualColorToggle.style.display = "none";
-                                } else {
-                                    individualColorToggle.style.display = "";
-                                }
-                            }
-                            break;
-                        }
-                    }
                 }, function (errorResponse) {
                     // called asynchronously if an error occurs
                     // or server returns response with an error status.
                     AppData.setErrorMsg(that.binding, errorResponse);
                 }).then(function () {
+                    for (var i = 0; i < Application.navigationBarGroups.length; i++) {
+                        if (Application.navigationBarGroups[i].id === "events") {
+                            if (!Application.navigationBarGroups[i].disabled) {
+                                if (that.binding) {
+                                    that.binding.showSettingsFlag = true;
+                                }
+                            }
+                            break;
+                        }
+                    }
                     Colors.updateColors();
                     return WinJS.Promise.as();
                 });
