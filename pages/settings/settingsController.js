@@ -37,8 +37,9 @@
 
             var createColorPicker = function (colorProperty) {
                 Log.call(Log.l.trace, "Settings.Controller.");
-                if (that.binding && that.binding.generalData) {
-                    that.binding.generalData[colorProperty] = Colors[colorProperty];
+                if (that.binding && that.binding.generalData &&
+                    that.binding.generalData.colorSettings) {
+                    that.binding.generalData.colorSettings[colorProperty] = Colors[colorProperty];
                 }
                 var id = "#" + colorProperty + "_picker";
                 var element = pageElement.querySelector(id);
