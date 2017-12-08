@@ -85,7 +85,6 @@
                         var toggle = event.currentTarget.winControl;
                         if (toggle) {
                             that.binding.generalData.logEnabled = toggle.checked;
-                            AppData._persistentStates.logEnabled = that.binding.generalData.logEnabled;
                         }
                     }
                     Log.ret(Log.l.trace);
@@ -96,7 +95,6 @@
                         var toggle = event.currentTarget.winControl;
                         if (toggle) {
                             that.binding.appSettings.odata.replActive = toggle.checked;
-                            AppData._persistentStates.odata.replActive = that.binding.appSettings.odata.replActive;
                             if (AppRepl.replicator) {
                                 if (AppData._persistentStates.odata.replActive) {
                                     if (AppRepl.replicator.state === "stopped") {
@@ -118,7 +116,6 @@
                         var toggle = event.currentTarget.winControl;
                         if (toggle) {
                             that.binding.generalData.cameraUseGrayscale = toggle.checked;
-                            AppData._persistentStates.cameraUseGrayscale = that.binding.generalData.cameraUseGrayscale;
                         }
                     }
                     Log.ret(Log.l.trace);
@@ -129,7 +126,6 @@
                         var range = event.currentTarget;
                         if (range) {
                             that.binding.generalData.cameraQuality = range.value;
-                            AppData._persistentStates.cameraQuality = that.binding.generalData.cameraQuality;
                         }
                     }
                     Log.ret(Log.l.trace);
@@ -140,7 +136,6 @@
                         var range = event.currentTarget;
                         if (range) {
                             that.binding.appSettings.odata.replInterval = range.value;
-                            AppData._persistentStates.odata.replInterval = that.binding.appSettings.odata.replInterval;
                         }
                     }
                     Log.ret(Log.l.trace);
@@ -151,7 +146,6 @@
                         var range = event.currentTarget;
                         if (range) {
                             that.binding.generalData.logLevel = range.value;
-                            AppData._persistentStates.logLevel = that.binding.generalData.logLevel;
                         }
                     }
                     Log.ret(Log.l.trace);
@@ -162,7 +156,6 @@
                         var toggle = event.currentTarget.winControl;
                         if (toggle) {
                             that.binding.generalData.logGroup = toggle.checked;
-                            AppData._persistentStates.logGroup = that.binding.generalData.logGroup;
                         }
                     }
                     Log.ret(Log.l.trace);
@@ -173,7 +166,6 @@
                         var toggle = event.currentTarget.winControl;
                         if (toggle) {
                             that.binding.generalData.logNoStack = toggle.checked;
-                            AppData._persistentStates.logNoStack = that.binding.generalData.logNoStack;
                         }
                     }
                     Log.ret(Log.l.trace);

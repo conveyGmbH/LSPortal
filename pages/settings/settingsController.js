@@ -230,7 +230,6 @@
                                 });
                             }
                             that.binding.generalData.individualColors = toggle.checked;
-                            AppData._persistentStates.individualColors = toggle.checked;
                             Application.pageframe.savePersistentStates();
                             var pValue;
                             if (toggle.checked) {
@@ -258,12 +257,11 @@
                         var toggle = event.currentTarget.winControl;
                         if (toggle) {
                             that.binding.generalData.showAppBkg = toggle.checked;
-                            AppData._persistentStates.showAppBkg = toggle.checked;
-                            Log.print(Log.l.trace, "showAppBkg=" + AppData._persistentStates.showAppBkg);
+                            Log.print(Log.l.trace, "showAppBkg=" + toggle.checked);
                             WinJS.Promise.timeout(0).then(function () {
                                 var appBkg = document.querySelector(".app-bkg");
                                 if (appBkg && appBkg.style) {
-                                    appBkg.style.visibility = AppData._persistentStates.showAppBkg ? "visible" : "hidden";
+                                    appBkg.style.visibility = that.binding.generalData.showAppBkg ? "visible" : "hidden";
                                 }
                             });
                         }
@@ -277,10 +275,9 @@
                         var range = event.currentTarget;
                         if (range) {
                             that.binding.generalData.inputBorder = range.value;
-                            AppData._persistentStates.inputBorder = range.value;
-                            Log.print(Log.l.trace, "inputBorder=" + AppData._persistentStates.inputBorder);
+                            Log.print(Log.l.trace, "inputBorder=" + toggle.checked);
                             WinJS.Promise.timeout(0).then(function () {
-                                Colors.inputBorder = AppData._persistentStates.inputBorder;
+                                Colors.inputBorder = that.binding.generalData.inputBorder;
                             });
                         }
                     }

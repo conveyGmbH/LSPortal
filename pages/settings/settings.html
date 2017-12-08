@@ -67,7 +67,7 @@
                             <div class="label landscape_only"><span data-win-res="{textContent: 'settings.accentcolor'}"></span></div>
                             <div class="input_group">
                                 <div id="accentColor_picker" class="input_small_right color-picker-parent"></div>
-                                <input id="accentColor" class="input_small_left win-textbox" type="text" data-win-bind="value: generalData.accentColor; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" onchange="AppBar.handleEvent('change', 'ChangeColorPicker', event)" />
+                                <input id="accentColor" class="input_small_left win-textbox" type="text" data-win-bind="value: generalData.colorSettings.accentColor; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" onchange="AppBar.handleEvent('change', 'ChangeColorPicker', event)" />
                                 <span class="input_small_left win-type-subtitle" data-win-bind="textContent: dataContact.Position; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
 
 
@@ -86,7 +86,7 @@
                             <div class="label landscape_only"><span data-win-res="{textContent: 'settings.backgroundcol'}"></span></div>
                             <div class="input_group">
                                 <div id="backgroundColor_picker" class="input_small_right color-picker-parent"></div>
-                                <input id="backgroundColor" class="input_small_left win-textbox" type="text" data-win-bind="value: generalData.backgroundColor; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" onchange="AppBar.handleEvent('change', 'ChangeColorPicker', event)" />
+                                <input id="backgroundColor" class="input_small_left win-textbox" type="text" data-win-bind="value: generalData.colorSettings.backgroundColor; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" onchange="AppBar.handleEvent('change', 'ChangeColorPicker', event)" />
                                 <span class="input_small_left win-type-subtitle" data-win-bind="textContent: dataContact.Position; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
 
 
@@ -118,7 +118,7 @@
                             <div class="label landscape_only"><span data-win-res="{textContent: 'settings.navigationcol'}"></span></div>
                             <div class="input_group">
                                 <div id="navigationColor_picker" class="input_small_right color-picker-parent"></div>
-                                <input id="navigationColor" class="input_small_left win-textbox" type="text" data-win-bind="value: generalData.navigationColor; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" onchange="AppBar.handleEvent('change', 'ChangeColorPicker', event)" />
+                                <input id="navigationColor" class="input_small_left win-textbox" type="text" data-win-bind="value: generalData.colorSettings.navigationColor; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" onchange="AppBar.handleEvent('change', 'ChangeColorPicker', event)" />
                                 <span class="input_small_left win-type-subtitle" data-win-bind="textContent: dataContact.Position; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
 
 
@@ -137,7 +137,7 @@
                             <div class="label landscape_only"><span data-win-res="{textContent: 'settings.textcolor'}"></span></div>
                             <div class="input_group">
                                 <div id="textColor_picker" class="input_small_right color-picker-parent"></div>
-                                <input id="textColor" class="input_small_left win-textbox" type="text" data-win-bind="value: generalData.textColor; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" onchange="AppBar.handleEvent('change', 'ChangeColorPicker', event)" />
+                                <input id="textColor" class="input_small_left win-textbox" type="text" data-win-bind="value: generalData.colorSettings.textColor; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" onchange="AppBar.handleEvent('change', 'ChangeColorPicker', event)" />
                                 <span class="input_small_left win-type-subtitle" data-win-bind="textContent: dataContact.Position; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
 
 
@@ -154,7 +154,7 @@
                             <div class="label landscape_only"><span data-win-res="{textContent: 'settings.labelcolor'}"></span></div>
                             <div class="input_group">
                                 <div id="labelColor_picker" class="input_small_right color-picker-parent"></div>
-                                <input id="labelColor" class="input_small_left win-textbox" type="text" data-win-bind="value: generalData.labelColor; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" onchange="AppBar.handleEvent('change', 'ChangeColorPicker', event)" />
+                                <input id="labelColor" class="input_small_left win-textbox" type="text" data-win-bind="value: generalData.colorSettings.labelColor; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" onchange="AppBar.handleEvent('change', 'ChangeColorPicker', event)" />
                                 <span class="input_small_left win-type-subtitle" data-win-bind="textContent: dataContact.Position; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
                             </div>
                         </div>
@@ -171,7 +171,7 @@
                             <div class="label landscape_only"><span data-win-res="{textContent: 'settings.tiletextcolor'}"></span></div>
                             <div class="input_group">
                                 <div id="tileTextColor_picker" class="input_small_right color-picker-parent"></div>
-                                <input id="tileTextColor" class="input_small_left win-textbox" type="text" data-win-bind="value: generalData.tileTextColor; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" onchange="AppBar.handleEvent('change', 'ChangeColorPicker', event)" />
+                                <input id="tileTextColor" class="input_small_left win-textbox" type="text" data-win-bind="value: generalData.colorSettings.tileTextColor; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" onchange="AppBar.handleEvent('change', 'ChangeColorPicker', event)" />
                                 <span class="input_small_left win-type-subtitle" data-win-bind="textContent: dataContact.Position; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
                             </div>
                         </div>
@@ -186,7 +186,7 @@
                             <div class="label landscape_only"><span data-win-res="{textContent: 'settings.tilebkgcolor'}"></span></div>
                             <div class="input_group">
                                 <div id="tileBackgroundColor_picker" class="input_small_right color-picker-parent"></div>
-                                <input id="tileBackgroundColor" class="input_small_left win-textbox" type="text" data-win-bind="value: generalData.tileBackgroundColor; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" onchange="AppBar.handleEvent('change', 'ChangeColorPicker', event)" />
+                                <input id="tileBackgroundColor" class="input_small_left win-textbox" type="text" data-win-bind="value: generalData.colorSettings.tileBackgroundColor; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" onchange="AppBar.handleEvent('change', 'ChangeColorPicker', event)" />
                                 <span class="input_small_left win-type-subtitle" data-win-bind="textContent: dataContact.Position; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
                             </div>
                         </div>
