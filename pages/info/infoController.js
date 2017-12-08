@@ -20,10 +20,6 @@
 
             Log.call(Log.l.trace, "Info.Controller.");
             Application.Controller.apply(this, [pageElement, {
-                uploadTS: (AppData.appSettings.odata.replPrevPostMs ?
-                "\/Date(" + AppData.appSettings.odata.replPrevPostMs + ")\/" : null),
-                downloadTS: (AppData.appSettings.odata.replPrevSelectMs ?
-                "\/Date(" + AppData.appSettings.odata.replPrevSelectMs + ")\/" : null),
                 version: Application.version,
                 environment: "Platform: " + navigator.appVersion,
                 timezone: timezone && ("Timezone: " + timezone.name())
@@ -105,16 +101,6 @@
                         var range = event.currentTarget;
                         if (range) {
                             that.binding.generalData.cameraQuality = range.value;
-                        }
-                    }
-                    Log.ret(Log.l.trace);
-                },
-                changedReplInterval: function (event) {
-                    Log.call(Log.l.trace, "info.Controller.");
-                    if (event.currentTarget && AppBar.notifyModified) {
-                        var range = event.currentTarget;
-                        if (range) {
-                            that.binding.appSettings.odata.replInterval = range.value;
                         }
                     }
                     Log.ret(Log.l.trace);
