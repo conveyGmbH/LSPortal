@@ -89,27 +89,6 @@
                     }
                     Log.ret(Log.l.trace);
                 },
-                clickReplActive: function (event) {
-                    Log.call(Log.l.trace, "info.Controller.");
-                    if (event.currentTarget && AppBar.notifyModified) {
-                        var toggle = event.currentTarget.winControl;
-                        if (toggle) {
-                            that.binding.appSettings.odata.replActive = toggle.checked;
-                            if (AppRepl.replicator) {
-                                if (AppData._persistentStates.odata.replActive) {
-                                    if (AppRepl.replicator.state === "stopped") {
-                                        AppRepl.replicator.run();
-                                    }
-                                } else {
-                                    if (AppRepl.replicator.state !== "stopped") {
-                                        AppRepl.replicator.stop();
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    Log.ret(Log.l.trace);
-                },
                 clickCameraUseGrayscale: function (event) {
                     Log.call(Log.l.trace, "info.Controller.");
                     if (event.currentTarget && AppBar.notifyModified) {
