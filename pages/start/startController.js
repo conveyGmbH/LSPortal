@@ -62,15 +62,23 @@
             }
 
             this.worldMap = null;
-            this.worldChartData = [];
-            var worldChart = function (countryKeyData) {
+            this.countryKeyData = {};
+            var worldChart = function () {
                 Log.call(Log.l.trace, "Start.Controller.");
                 var ret = new WinJS.Promise.as().then(function () {
                     var worldContainer = pageElement.querySelector('#worldcontainer');
                     if (worldContainer) {
-                        if (!countryKeyData) {
+                        if (!that.countryKeyData) {
                             Log.print(Log.l.trace, "load empty map");
-                            countryKeyData = {};
+                            that.countryKeyData = {};
+                        }
+                        var fills = {
+                            defaultFill: "#d3d3d3"
+                        };
+                        if (that.countryColors) {
+                            for (var i = 0; i < that.countryColors.length; i++) {
+                                fills["HIGH" + i] = that.countryColors[i];
+                            }
                         }
                         try {
                             worldContainer.innerHTML = "";
@@ -78,15 +86,12 @@
                                 element: worldContainer,
                                 height: 350,
                                 width: 600,
-                                fills: {
-                                    HIGH: '#d8613e',
-                                    LOW: '#123456',
-                                    MEDIUM: 'blue',
-                                    UNKNOWN: 'rgb(0,0,0)',
-                                    defaultFill: "#d3d3d3"
-                                },
+                                fills: fills,
                                 // Array --> 'Countrykey' : { fillKey : 'Rate of importance'}
-                                data: countryKeyData
+                                data: that.countryKeyData,
+                                geographyConfig: {
+                                    popupOnHover: false
+                                }
                             });
                         } catch (ex) {
                             Log.print(Log.l.error, "exception occurred: " + ex.message);
@@ -203,6 +208,7 @@
             this.countryChart = null;
             this.countryChartArray = [];
             this.countrydata = [];
+            this.countryColors = [];
             this.countryticks = [];
             var countryresult = null, ci = 9, cl = 0;
             var showcountryChart = function (countryChartId, bAnimated) {
@@ -230,7 +236,7 @@
                         if (!that.countrydata || !that.countrydata.length) {
                             Log.print(Log.l.trace, "extra ignored");
                         } else {
-                            try {
+                            //try {
                                 countryChart.innerHTML = "";
                                 that.countryChart = $.jqplot(countryChartId, [that.countrydata], {
                                     seriesDefaults: {
@@ -246,7 +252,8 @@
                                             dataLabelThreshold: '1',
                                             highlightMouseOver: true,
                                             shadowAlpha: 0
-                                        }
+                                        },
+                                        seriesColors: that.countryColors
                                     },
                                     legend: { show: true, rendererOptions: { numberRows: 10 }, location: 'w', marginLeft: '30px' }
                                 });
@@ -258,9 +265,9 @@
                                 );
                                 /*that.setLabelColor(showcountryChart, "jqplot-xaxis-tick", "#f0f0f0");
                                 that.setLabelColor(showcountryChart, "jqplot-point-label", "#f0f0f0");*/
-                            } catch (ex) {
-                                Log.print(Log.l.error, "exception occurred: " + ex.message);
-                            }
+                            //} catch (ex) {
+                            //    Log.print(Log.l.error, "exception occurred: " + ex.message);
+                            //}
                         }
                     });
                 }
@@ -522,37 +529,43 @@
                 }).then(function () {
                     return Start.reportLand.select(function(json) {
                         Log.print(Log.l.trace, "reportLand: success!");
-                            if (json && json.d && json.d.results && json.d.results.length > 0) {
-                                var countryKeyData = {};
-                                // store result for next use
-                                countryresult = json.d.results;
-                                for (ci = json.d.results.length-1; ci >= 0; ci--) {
-                                    if (countryresult[ci].Land === null) {
-                                        countryresult[ci].Land = getResourceText("reporting.nocountry");
-                                    }
-                                    if (countryresult[ci].Land) {
-                                        that.countrydata[ci] = [countryresult[ci].Land, countryresult[ci].Anzahl, countryresult[ci].LandID];
-                                        that.dunotData[countryresult[ci].LandID] = countryresult[ci].Land;
-                                    }
-                                    var isoCode = countryresult[ci].Alpha3_ISOCode;
-                                    if (!isoCode) {
-                                       
-                                    } else {
-                                        countryKeyData[isoCode] = {
-                                            fillKey: "HIGH"
-                                        }
+                        if (json && json.d && json.d.results && json.d.results.length > 0) {
+                            var color = Colors.navigationColor;
+                            that.countryKeyData = {};
+                            // store result for next use
+                            countryresult = json.d.results;
+                            for (ci = 0; ci < json.d.results.length; ci++) {
+                                if (countryresult[ci].Land === null) {
+                                    countryresult[ci].Land = getResourceText("reporting.nocountry");
+                                }
+                                if (countryresult[ci].Land) {
+                                    that.countrydata[ci] = [countryresult[ci].Land, countryresult[ci].Anzahl, countryresult[ci].LandID];
+                                    that.dunotData[countryresult[ci].LandID] = countryresult[ci].Land;
+                                    that.countryColors[ci] = color;
+                                    var rgbColor = Colors.hex2rgb(color);
+                                    var hsvColor = Colors.rgb2hsv(rgbColor);
+                                    hsvColor.s *= 0.8;
+                                    hsvColor.v /= 0.8;
+                                    rgbColor = Colors.hsv2rgb(hsvColor);
+                                    color = Colors.rgb2hex(rgbColor);
+                                }
+                                var isoCode = countryresult[ci].Alpha3_ISOCode;
+                                if (isoCode) {
+                                    that.countryKeyData[isoCode] = {
+                                        fillKey: "HIGH" + ci
                                     }
                                 }
-                                that.showcountryChart("countryPie", true);
-                                that.worldChart(countryKeyData);
                             }
+                            that.showcountryChart("countryPie", true);
+                            that.worldChart();
+                        }
                             
-                        },
-                        function(errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        });
+                    },
+                    function(errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    });
                 });
             };
             this.loadData = loadData;

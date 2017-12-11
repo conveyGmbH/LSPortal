@@ -196,13 +196,11 @@
      height: 250px;
  }
  #worldcontainer {
-     margin-left: 0px;
+    margin-left: calc(50% - 310px);
  }
-
  .view-size-bigger #worldcontainer {
      margin-left: -100px;
  }
-
 
  .jqplot-xaxis-tick,
  .jqplot-yaxis-tick,
