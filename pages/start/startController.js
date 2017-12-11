@@ -61,6 +61,18 @@
                 }
             }
 
+            var isotoInitlandId = function(isoCode) {
+                var results = AppData.initLandView.getResults();
+                if (results && results.length > 0) {
+                    for (var i = 0; i < results.length; i++) {
+                        if (results[i].Alpha3_ISOCode === isoCode) {
+                            return results[i].INITLandID;
+                        }
+                    }
+                }
+            }
+            this.isotoInitlandId = isotoInitlandId;
+
             this.worldMap = null;
             this.countryKeyData = {};
             var worldChart = function () {
@@ -91,6 +103,19 @@
                                 data: that.countryKeyData,
                                 geographyConfig: {
                                     popupOnHover: false
+                                },
+                                done: function(datamap) {
+                                    datamap.svg.selectAll('.datamaps-subunit').on('click',
+                                        function (geography) {
+                                            var landId = that.isotoInitlandId(geography.id);
+                                            that.setRestriction({
+                                                INITLandID: landId
+                                            });
+                                            AppData.setRecordId("Kontakt", null);
+                                            WinJS.Promise.timeout(0).then(function () {
+                                                Application.navigateById("contact", event);
+                                            });
+                                        })
                                 }
                             });
                         } catch (ex) {
@@ -482,6 +507,22 @@
                 Log.call(Log.l.trace, "Start.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
+                    if (!AppData.initLandView.getResults().length) {
+                        Log.print(Log.l.trace, "calling select initLandData...");
+                        //@nedra:25.09.2015: load the list of INITLand for Combobox
+                        return AppData.initLandView.select(function (json) {
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            Log.print(Log.l.trace, "initLandView: success!");
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        });
+                    } else {
+                        return WinJS.Promise.as();
+                    }
+                }).then(function () {
                     var recordId = getRecordId();
                     if (!recordId) {
                         that.binding.dataStart = {};
