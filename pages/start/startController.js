@@ -220,17 +220,6 @@
             }
             this.clickBarSlice = clickBarSlice;
 
-            var setLabelColor = function(element, labelClass, color) {
-                var labels = element.querySelectorAll("." + labelClass);
-                for (var i = 0; i < labels.length; i++) {
-                    var label = labels[i];
-                    if (label && label.style) {
-                        label.style.color = color;
-                    }
-                }
-            }
-            this.setLabelColor = setLabelColor;
-
             this.countryChart = null;
             this.countryChartArray = [];
             this.countrydata = [];
@@ -289,11 +278,6 @@
                                         that.clickDonutSlice(data, pointIndex);
                                     }
                                 );
-                                /*that.setLabelColor(showcountryChart, "jqplot-xaxis-tick", "#f0f0f0");
-                                that.setLabelColor(showcountryChart, "jqplot-point-label", "#f0f0f0");*/
-                            //} catch (ex) {
-                            //    Log.print(Log.l.error, "exception occurred: " + ex.message);
-                            //}
                         }
                     });
                 }
@@ -400,7 +384,6 @@
                                       that.clickPieSlice(ev, pointIndex);
                                   }
                                 );
-                                that.setLabelColor(visitorsEditedChart, "jqplot-data-label", Colors.textColor);
                                 if (bAnimated) {
                                     WinJS.Promise.timeout(50).then(function () {
                                         if (visitorsEditedChart.style) {
@@ -486,8 +469,6 @@
                                         that.clickBarSlice(ev, pointIndex);
                                     }
                                 );
-                                that.setLabelColor(visitorsPerDayChart, "jqplot-xaxis-tick", "#f0f0f0");
-                                that.setLabelColor(visitorsPerDayChart, "jqplot-point-label", "#f0f0f0");
                             } catch (ex) {
                                 Log.print(Log.l.error, "exception occurred: " + ex.message);
                             }

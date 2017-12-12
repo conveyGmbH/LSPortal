@@ -175,45 +175,46 @@
     text-align: left;
 }
 
- .action-label {
-     /*float: left;*/
-     /*
-     position: relative;
-     top: 4px;
-     */
-     margin-top: 4px;
-     width: 100%;
-     text-align: center;
- }
+.action-label {
+    /*float: left;*/
+    /*
+    position: relative;
+    top: 4px;
+    */
+    margin-top: 4px;
+    width: 100%;
+    text-align: center;
+}
 
- .pie-chart {
-     min-height: 96px;
-     width: 452px;
- }
- .bar-chart {
-     min-height: 96px;
-     width: 100%;
-     height: 250px;
- }
- #worldcontainer {
+.start-map-chart {
     margin-left: calc(50% - 310px);
- }
- .view-size-bigger #worldcontainer {
-     margin-left: -100px;
- }
-
- .jqplot-xaxis-tick,
- .jqplot-yaxis-tick,
- .jqplot-data-label {
-     color: #666666;
-     font-size: 12px;
- }
- .jqplot-grid-canvas {
-     visibility: hidden;
- }
- .visitorsEditedChartBox {
-     width: 100%;
- }
+}
+.view-size-bigger .start-map-chart {
+    margin-left: -100px;
+}
+.start-donut-chart {
+}
+.start-pie-chart {
+    min-height: 96px;
+    width: 452px;
+}
+.start-bar-chart {
+    min-height: 96px;
+    width: 100%;
+    height: 250px;
+    color: #f0f0f0 !important
+}
+.jqplot-xaxis-tick,
+.jqplot-yaxis-tick,
+.jqplot-data-label {
+    font-size: 12px;
+}
+.jqplot-grid-canvas {
+    visibility: hidden;
+}
+.visitorsEditedChartBox {
+    width: 100%;
+}
 
 /*
 @media (max-height:1099px) {
