@@ -24,6 +24,7 @@
     WinJS.Namespace.define("Start", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "Start.Controller.");
+            /*
             var lang = AppData.getLanguageId();
             var srcDatamaps;
             switch (lang) {
@@ -39,12 +40,15 @@
             default:
                 srcDatamaps = "lib/datamaps/scripts/datamaps.world.de.js";
             }
+             */
             Application.Controller.apply(this, [pageElement, {
                 dataStart: {},
                 disableEditEvent: NavigationBar.isPageDisabled("event"),
-                comment: getResourceText("info.comment"),
+                comment: getResourceText("info.comment")/*,
                 // add dynamic scripts to page element, src is either a file or inline text:
                 scripts: [{ src: srcDatamaps, type: "text/javascript" }]
+                 * 
+                 */
             }, commandList]);
             this.kontaktanzahldata = null;
             this.countrydata = null;
@@ -80,6 +84,8 @@
                 var ret = new WinJS.Promise.as().then(function () {
                     var worldContainer = pageElement.querySelector('#worldcontainer');
                     if (worldContainer) {
+                        var hiliRgb = Colors.hex2rgb(Colors.textColor);
+                        var hiliBorderColor = "rgba(" + hiliRgb.r + "," + hiliRgb.g + "," + hiliRgb.b + ",0.2)";
                         if (!that.countryKeyData) {
                             Log.print(Log.l.trace, "load empty map");
                             that.countryKeyData = {};
@@ -103,20 +109,23 @@
                                 // Array --> 'Countrykey' : { fillKey : 'Rate of importance'}
                                 data: that.countryKeyData,
                                 geographyConfig: {
-                                    popupOnHover: false
+                                    popupOnHover: false,
+                                    highlightOnHover: true,
+                                    highlightFillColor: Colors.navigationColor,
+                                    highlightBorderColor: hiliBorderColor
                                 },
                                 done: function(datamap) {
                                     datamap.svg.selectAll('.datamaps-subunit').on('click',
-                                        function (geography) {
+                                        function(geography) {
                                             var landId = that.isotoInitlandId(geography.id);
                                             that.setRestriction({
                                                 INITLandID: landId
                                             });
                                             AppData.setRecordId("Kontakt", null);
-                                            WinJS.Promise.timeout(0).then(function () {
+                                            WinJS.Promise.timeout(0).then(function() {
                                                 Application.navigateById("contact", event);
                                             });
-                                        })
+                                        });
                                 }
                             });
                         } catch (ex) {
