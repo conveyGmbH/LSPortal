@@ -96,7 +96,8 @@
                             worldContainer.innerHTML = "";
                             that.worldMap = new Datamap({
                                 element: worldContainer,
-                                height: 350,
+                                projection: 'mercator',
+                                height: 320,
                                 width: 600,
                                 fills: fills,
                                 // Array --> 'Countrykey' : { fillKey : 'Rate of importance'}
