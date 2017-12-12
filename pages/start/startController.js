@@ -111,8 +111,9 @@
                                     highlightFillColor: Colors.navigationColor,
                                     highlightBorderColor: hiliBorderColor
                                 },
-                                done: function(datamap) {
-                                    datamap.svg.selectAll('.datamaps-subunit').on('click',
+                                done: function (datamap) {
+                                    var allSubunits = datamap.svg.selectAll('.datamaps-subunit');
+                                    allSubunits.on('click',
                                         function(geography) {
                                             var landId = that.isotoInitlandId(geography.id);
                                             that.setRestriction({
@@ -120,7 +121,7 @@
                                             });
                                             AppData.setRecordId("Kontakt", null);
                                             WinJS.Promise.timeout(0).then(function() {
-                                                Application.navigateById("contact", event);
+                                                Application.navigateById("contact");
                                             });
                                         });
                                 }
