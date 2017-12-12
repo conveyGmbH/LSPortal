@@ -24,7 +24,7 @@
     WinJS.Namespace.define("Start", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "Start.Controller.");
-            /*
+
             var lang = AppData.getLanguageId();
             var srcDatamaps;
             switch (lang) {
@@ -40,15 +40,12 @@
             default:
                 srcDatamaps = "lib/datamaps/scripts/datamaps.world.de.js";
             }
-             */
             Application.Controller.apply(this, [pageElement, {
                 dataStart: {},
                 disableEditEvent: NavigationBar.isPageDisabled("event"),
-                comment: getResourceText("info.comment")/*,
+                comment: getResourceText("info.comment"),
                 // add dynamic scripts to page element, src is either a file or inline text:
                 scripts: [{ src: srcDatamaps, type: "text/javascript" }]
-                 * 
-                 */
             }, commandList]);
             this.kontaktanzahldata = null;
             this.countrydata = null;
@@ -235,7 +232,7 @@
             this.countryColors = [];
             this.countryticks = [];
             var countryresult = null, ci = 9, cl = 0;
-            var showcountryChart = function (countryChartId, bAnimated) {
+            var showDonutChart = function (countryChartId, bAnimated) {
                 Log.call(Log.l.trace, "Start.Controller.");
                 var countryChart = pageElement.querySelector("#" + countryChartId);
                 if (countryChart) {
@@ -246,13 +243,13 @@
                         var offsetDonutChart = countryChart.offsetTop;
                         var offsetMiddle = tileMiddle.offsetTop;
                         Log.print(Log.l.trace, "offsetDonutChart=" + offsetDonutChart + " offsetMiddle=" + offsetMiddle);
-                        if (diameter > offsetMiddle - offsetDonutChart - 98) {
-                            diameter = offsetMiddle - offsetDonutChart - 98;
+                        if (diameter > offsetMiddle - offsetDonutChart - 96) {
+                            diameter = offsetMiddle - offsetDonutChart - 96;
                         }
                         if (diameter < 128) {
                             diameter = 128;
-                        } else if (diameter > 256) {
-                            diameter = 256;
+                        } else if (diameter > 250) {
+                            diameter = 250;
                         }
                     }
                     Log.print(Log.l.trace, "diameter=" + diameter);
@@ -292,7 +289,7 @@
                 }
                 Log.ret(Log.l.trace);
             };
-            this.showcountryChart = showcountryChart;
+            this.showDonutChart = showDonutChart;
 
             this.pieChart = null;
             var buttonEdited = getResourceText("start.buttonEdited");
@@ -307,18 +304,19 @@
 
                     var width = visitorsEditedChart.clientWidth;
                     var diameter = width / 2;
-                    /*
                     var tileBottom = pageElement.querySelector(".tile-bottom");
                     if (tileBottom) {
-                        var offsetPieChart = visitorsEditedChart.offsetTop;
                         var offsetBottom = tileBottom.offsetTop;
-                        Log.print(Log.l.trace, "offsetPieChart=" + offsetPieChart + " offsetMiddle=" + offsetBottom);
-                        if (diameter > offsetBottom - offsetPieChart - 48) {
-                            diameter = offsetBottom - offsetPieChart - 48;
+                        Log.print(Log.l.trace, "offsetMiddle=" + offsetBottom);
+                        if (diameter > offsetBottom / 2 - 96) {
+                            diameter = offsetBottom / 2 - 96;
+                        }
+                        if (diameter < 128) {
+                            diameter = 128;
+                        } else if (diameter > 250) {
+                            diameter = 250;
                         }
                     }
-                     * 
-                     */
                     Log.print(Log.l.trace, "diameter=" + diameter);
 
                     var series = [
@@ -340,11 +338,6 @@
                         visitorsEditedChart.innerHTML = "";
                         if (bAnimated) {
                             visitorsEditedChart.style.visibility = "hidden";
-                        }
-                        if (width < 452) {
-                            visitorsEditedChart.style.left = (pageElement.clientWidth / 2 - width / 2).toString() + "px";
-                        } else {
-                            visitorsEditedChart.style.left = "calc(50% - 226px)";
                         }
                     }
                     WinJS.Promise.timeout(0).then(function () {
@@ -416,7 +409,24 @@
                 Log.call(Log.l.trace, "Start.Controller.");
                 var visitorsPerDayChart = pageElement.querySelector("#" + barChartId);
                 if (visitorsPerDayChart) {
-                    var width = visitorsPerDayChart.clientWidth;
+                    if (visitorsPerDayChart.style) {
+                        var height = 250;
+                        var tileBottom = pageElement.querySelector(".tile-bottom");
+                        if (tileBottom) {
+                            var offsetBottom = tileBottom.offsetTop;
+                            Log.print(Log.l.trace, "offsetMiddle=" + offsetBottom);
+                            if (height > offsetBottom / 2 - 96) {
+                                height = offsetBottom / 2 - 96;
+                            }
+                            if (height < 96) {
+                                height = 96;
+                            } else if (height > 250) {
+                                height = 250;
+                            }
+                        }
+                        Log.print(Log.l.trace, "height=" + height);
+                        visitorsPerDayChart.style.height = height.toString() + "px";
+                    }
                     var series = [];
                     var ticks = [];
                     if (that.kontaktanzahldata && that.kontaktanzahldata.length > 0) {
@@ -588,7 +598,7 @@
                                     }
                                 }
                             }
-                            that.showcountryChart("countryPie", true);
+                            that.showDonutChart("countryPie", true);
                             that.worldChart();
                         }
                             
