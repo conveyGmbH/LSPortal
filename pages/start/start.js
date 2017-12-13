@@ -59,20 +59,34 @@
                         if (contentarea) {
                             var width = contentarea.clientWidth;
                             var height = contentarea.clientHeight - 8;
+                            var contentHeader = element.querySelector(".content-header");
+                            if (contentHeader) {
+                                height -= contentHeader.clientHeight;
+                            }
                             if (width !== that.prevWidth || height !== that.prevHeight) {
-                                if ((width !== that.prevWidth && (width < 500 || that.prevWidth < 500) ||
-                                     height !== that.prevHeight && (height < 900 || that.prevHeight < 900)) &&
-                                    typeof that.controller.showcountryChart === "function") {
-                                    that.controller.showcountryChart("countryPie", false);
+                                var tileTop = element.querySelector(".tile-top");
+                                var tileMiddle = element.querySelector(".tile-middle");
+                                var tileBottom = element.querySelector(".tile-bottom");
+                                if (tileTop && tileMiddle && tileBottom && tileTop.style) {
+                                    if (tileBottom.clientHeight + 2 * tileMiddle.clientHeight < height) {
+                                        tileTop.style.height =
+                                            (height - tileBottom.clientHeight - tileMiddle.clientHeight).toString() +
+                                            "px";
+                                    } else {
+                                        tileTop.style.height = "";
+                                    }
                                 }
-                                if ((width !== that.prevWidth ||
-                                     height !== that.prevHeight && (height < 900 || that.prevHeight < 900)) &&
-                                    typeof that.controller.showBarChart === "function" &&
-                                    typeof that.controller.showPieChart === "function" &&
-                                    typeof that.controller.showDonutChart === "function") {
-                                    that.controller.showDonutChart("countryPie", false);
-                                    that.controller.showPieChart("visitorsEditedChart", false);
-                                    if (width >= 900 || that.prevWidth >= 900) {
+                                if (width !== that.prevWidth) {
+                                    if (typeof that.controller.showcountryChart === "function") {
+                                        that.controller.showcountryChart("countryPie", false);    
+                                    }
+                                    if (typeof that.controller.showDonutChart === "function") {
+                                        that.controller.showDonutChart("countryPie", false);
+                                    }
+                                    if (typeof that.controller.showPieChart === "function") {
+                                        that.controller.showPieChart("visitorsEditedChart", false);
+                                    }
+                                    if (typeof that.controller.showBarChart === "function") {
                                         that.controller.showBarChart("visitorsPerDayChart", false);
                                     }
                                 }

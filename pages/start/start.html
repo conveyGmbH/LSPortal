@@ -25,48 +25,52 @@
                             <span class="date-field"></span>
                         </div>
                     </div>
-                    <div class="tile-content-inner">
-                        <div class="field_line field_line_odd hide_if_size_medium">
-                            <div id="worldcontainer" class="start-map-chart text-textcolor"></div>
-                        </div>
-                        <div class="field_line field_line_even">
-                            <div id="countryPie" class="start-donut-chart text-textcolor"></div>
-                        </div>
-                    </div>
-                    <div name="list" class="tile tile-backgroundcolor tile-middle">
-                        <div class="tile-button-color">
-                            <div class="half-circle half-circle-navigationcolor">&nbsp;</div>
-                            <div class="content-header-line win-type-caption">
-                                <span class="id-field"></span>
-                                <span class="caption-field text-lightcolor"
-                                      data-win-res="{textContent: 'start.list'}"></span>
-                                <span class="date-field"></span>
-                            </div>
-                        </div>
-                        <div class="tile-content-inner">
-                            <div class="field_line field_line_odd">
-                                <div id="visitorsEditedChart" class="start-pie-chart text-textcolor">
+                    <div class="tiles-container">
+                        <div name="countries" class="tile tile-top">
+                            <div class="tile-content-inner">
+                                <div class="field_line field_line_odd">
+                                    <div id="worldcontainer" class="start-map-chart text-textcolor"></div>
                                 </div>
-                            </div>
-                            <div class="field_line field_line_even hide_if_size_medium">
-                                <div id="visitorsPerDayChart" class="start-bar-chart">
+                                <div class="field_line field_line_even">
+                                    <div id="countryPie" class="start-donut-chart text-textcolor"></div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div name="info" class="tile tile-navigationcolor tile-bottom">
-                        <div class="tile-button-color">
-                            <div class="half-circle half-circle-lightcolor">&nbsp;</div>
-                            <div class="idAndDate win-type-caption">
-                                <span class="id-field"></span>
-                                <span class="caption-field text-lightcolor"
-                                      data-win-res="{textContent: 'start.info'}"></span>
-                                <span class="date-field"></span>
+                        <div name="list" class="tile tile-backgroundcolor tile-middle">
+                            <div class="tile-button-color">
+                                <div class="half-circle half-circle-navigationcolor">&nbsp;</div>
+                                <div class="content-header-line win-type-caption">
+                                    <span class="id-field"></span>
+                                    <span class="caption-field text-lightcolor"
+                                          data-win-res="{textContent: 'start.list'}"></span>
+                                    <span class="date-field"></span>
+                                </div>
+                            </div>
+                            <div class="tile-content-inner">
+                                <div class="field_line field_line_odd">
+                                    <div id="visitorsEditedChart" class="start-pie-chart text-textcolor">
+                                    </div>
+                                </div>
+                                <div class="field_line field_line_even">
+                                    <div id="visitorsPerDayChart" class="start-bar-chart">
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="field_line field_line_full no-border">
-                            <span class="win-type-body text-lightcolor"
-                                  data-win-bind="innerHTML: comment"></span>
+                        <div name="info" class="tile tile-navigationcolor tile-bottom">
+                            <div class="tile-button-color">
+                                <div class="half-circle half-circle-lightcolor">&nbsp;</div>
+                                <div class="idAndDate win-type-caption">
+                                    <span class="id-field"></span>
+                                    <span class="caption-field text-lightcolor"
+                                          data-win-res="{textContent: 'start.info'}"></span>
+                                    <span class="date-field"></span>
+                                </div>
+                            </div>
+                            <div class="field_line field_line_full no-border">
+                                <span class="win-type-body text-lightcolor"
+                                      data-win-bind="innerHTML: comment"></span>
+                            </div>
                         </div>
                     </div>
                     <div class="error-message"

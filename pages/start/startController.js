@@ -239,19 +239,10 @@
                 if (countryChart) {
                     var width = countryChart.clientWidth;
                     var diameter = width / 2 - 48;
-                    var tileMiddle = pageElement.querySelector(".tile-middle");
-                    if (tileMiddle) {
-                        var offsetDonutChart = countryChart.offsetTop;
-                        var offsetMiddle = tileMiddle.offsetTop;
-                        Log.print(Log.l.trace, "offsetDonutChart=" + offsetDonutChart + " offsetMiddle=" + offsetMiddle);
-                        if (diameter > offsetMiddle - offsetDonutChart - 96) {
-                            diameter = offsetMiddle - offsetDonutChart - 96;
-                        }
-                        if (diameter < 128) {
-                            diameter = 128;
-                        } else if (diameter > 250) {
-                            diameter = 250;
-                        }
+                    if (diameter < 128) {
+                        diameter = 128;
+                    } else if (diameter > 250) {
+                        diameter = 250;
                     }
                     Log.print(Log.l.trace, "diameter=" + diameter);
                     WinJS.Promise.timeout(0).then(function () {
@@ -302,24 +293,14 @@
                     that.binding.dataStart &&
                     typeof that.binding.dataStart.AnzNichtEditierteKontakte !== "undefined" &&
                     typeof that.binding.dataStart.AnzEditierteKontakte !== "undefined") {
-
                     var width = visitorsEditedChart.clientWidth;
                     var diameter = width / 2;
-                    var tileBottom = pageElement.querySelector(".tile-bottom");
-                    if (tileBottom) {
-                        var offsetBottom = tileBottom.offsetTop;
-                        Log.print(Log.l.trace, "offsetMiddle=" + offsetBottom);
-                        if (diameter > offsetBottom / 2 - 96) {
-                            diameter = offsetBottom / 2 - 96;
-                        }
-                        if (diameter < 128) {
-                            diameter = 128;
-                        } else if (diameter > 250) {
-                            diameter = 250;
-                        }
+                    if (diameter < 128) {
+                        diameter = 128;
+                    } else if (diameter > 250) {
+                        diameter = 250;
                     }
                     Log.print(Log.l.trace, "diameter=" + diameter);
-
                     var series = [
                         [buttonEdited, that.binding.dataStart.AnzEditierteKontakte],
                         [buttonNotEdited, that.binding.dataStart.AnzNichtEditierteKontakte]
@@ -410,24 +391,6 @@
                 Log.call(Log.l.trace, "Start.Controller.");
                 var visitorsPerDayChart = pageElement.querySelector("#" + barChartId);
                 if (visitorsPerDayChart) {
-                    if (visitorsPerDayChart.style) {
-                        var height = 250;
-                        var tileBottom = pageElement.querySelector(".tile-bottom");
-                        if (tileBottom) {
-                            var offsetBottom = tileBottom.offsetTop;
-                            Log.print(Log.l.trace, "offsetMiddle=" + offsetBottom);
-                            if (height > offsetBottom / 2 - 96) {
-                                height = offsetBottom / 2 - 96;
-                            }
-                            if (height < 96) {
-                                height = 96;
-                            } else if (height > 250) {
-                                height = 250;
-                            }
-                        }
-                        Log.print(Log.l.trace, "height=" + height);
-                        visitorsPerDayChart.style.height = height.toString() + "px";
-                    }
                     var series = [];
                     var ticks = [];
                     if (that.kontaktanzahldata && that.kontaktanzahldata.length > 0) {

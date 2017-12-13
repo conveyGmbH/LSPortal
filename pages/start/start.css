@@ -2,24 +2,23 @@
     margins/paddings for all screens
 */
 .tile-button-color,
-.tile-header ,
+.tile-header,
 .tile-content-wide,
 .tile-content,
 .tile-content-flat
 .tile-content-inner {
-    background-color: transparent;           
-    border-color: transparent;           
+    background-color: transparent;
+    border-color: transparent;
 }
 
-.tile-template {
-    display: none;
-}
+.tile-template { display: none; }
 
 .tile-separator-left {
     border-left-style: solid !important;
     border-left-width: 2px !important;
     border-left-color: #f0f0f0 !important;
 }
+
 .tile-separator-right {
     border-right-style: solid !important;
     border-right-width: 2px !important;
@@ -35,6 +34,7 @@
     */
     width: 100%;
 }
+
 .tile-header {
     text-align: center;
     height: 42px;
@@ -53,28 +53,32 @@
     display: table-caption;
 }
 
- .start-header-field {
+.start-header-field {
     height: 20px;
     padding-top: 10px;
     width: 100%;
     height: 100%;
     text-transform: uppercase;
     font-weight: 600;
- }
+}
 
- .start .field_line {
-     border: none;
- }
- 
- .tile-middle {
-     position: absolute;
-     bottom: 142px;
- }
+.start .field_line { border: none; }
 
- .tile-bottom {
-     position: absolute;
-     bottom: 0;
- }
+.tiles-container {
+    
+}
+
+.tile-top {
+    
+}
+
+.tile-middle {
+    
+}
+
+.tile-bottom {
+    
+}
 
 .tile-row {
     display: table-row;
@@ -95,6 +99,7 @@
     border: none;
     display: table-cell;
 }
+
 .tile-content {
     min-height: 96px;
     width: 33.333333%;
@@ -108,8 +113,7 @@
     border-color: transparent;
     */
     border: none;
-    display: table-cell;
-    
+    display: table-cell;    
 }
 
 .tile-content-flat {
@@ -140,9 +144,7 @@
     border: none;
 }
 
-.action-image-recent {
-    padding-left: 6px;
-}
+.action-image-recent { padding-left: 6px; }
 
 .tile-button {
     width: 100%;
@@ -156,9 +158,7 @@
     margin: 0;
 }
 
-:disabled.win-button-primary.win-button.tile-button, :disabled.win-button.tile-button {
-    background-color: transparent;
-}
+:disabled.win-button-primary.win-button.tile-button, :disabled.win-button.tile-button { background-color: transparent; }
 
 .tile-button-wide {
     width: 100%;
@@ -166,6 +166,7 @@
     margin: 0;
     text-align: left;
 }
+
 .tile-button-wide-flat {
     width: 100%;
     min-height: 46px;
@@ -184,43 +185,38 @@
     text-align: center;
 }
 
-.start-map-chart {
-    margin-left: calc(50% - 310px);
-}
-.view-size-bigger .start-map-chart {
-    margin-left: -100px;
-}
-.start-donut-chart {
-    width: 100%;
-}
+.start-map-chart { margin-left: calc(50% - 310px); }
+/*
+.view-size-bigger .start-map-chart { margin-left: -100px; }
+*/
+
+.start-donut-chart { width: 100%; }
+
 .view-size-medium .start-donut-chart {
     left: 15%;
     width: 70%;
 }
+
 .view-size-small .start-donut-chart {
     left: 0;
     width: 100%;
 }
 
-.start-pie-chart {
-    width: 100%;
-}
+.start-pie-chart { width: 100%; }
+
 .start-bar-chart {
-    min-height: 96px;
+    height: 250px;
     width: 100%;
     color: #f0f0f0 !important
 }
+
 .jqplot-xaxis-tick,
 .jqplot-yaxis-tick,
-.jqplot-data-label {
-    font-size: 12px;
-}
-.jqplot-grid-canvas {
-    visibility: hidden;
-}
-.visitorsEditedChartBox {
-    width: 100%;
-}
+.jqplot-data-label { font-size: 12px; }
+
+.jqplot-grid-canvas { visibility: hidden; }
+
+.visitorsEditedChartBox { width: 100%; }
 
 /*
 @media (max-height:1099px) {
@@ -230,7 +226,7 @@
 }
 */
 
- /*
+/*
     margins/paddings for medium size screens or orientation landscape
     contentarea is less than 699px (in landscape add 140px for navigation bar)
     @media (max-width:699px), (max-width:839px) and (orientation: landscape) {
@@ -239,13 +235,10 @@
 }
 */
 
-.view-size-medium .hide_if_size_medium {
-    display: none;
-}
+.view-size-medium .hide_if_size_medium { display: none; }
 
-.view-size-medium .pagetitle {
-    display: inline-block;
-}
+.view-size-medium .pagetitle { display: inline-block; }
+
 .view-size-medium .start-photo-container {
     width: 60%;
     left: 20%;
@@ -266,18 +259,12 @@
 }
 */
 
-.view-size-small .pagetitle {
-    display: none;
-}
+.view-size-small .pagetitle { display: none; }
+
 .view-size-small .start-photo-container {
     width: 80%;
     left: 10%;
 }
 
     
-.view-size-small .pie-chart {
-    min-width: 96px;
-}
-
-
-
+.view-size-small .pie-chart { min-width: 96px; }
