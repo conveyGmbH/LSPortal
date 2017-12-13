@@ -74,60 +74,100 @@
             }
             this.isotoInitlandId = isotoInitlandId;
 
+            this.worldMapMaxWidth = 600;
             this.worldMap = null;
-            this.countryKeyData = {};
-            var worldChart = function () {
+            this.worldMapHeight = 0;
+            this.countryKeyData = null;
+            var worldChart = function (bAnimated) {
                 Log.call(Log.l.trace, "Start.Controller.");
                 var ret = new WinJS.Promise.as().then(function () {
-                    var worldContainer = pageElement.querySelector('#worldcontainer');
-                    if (worldContainer) {
-                        var hiliRgb = Colors.hex2rgb(Colors.textColor);
-                        var hiliBorderColor = "rgba(" + hiliRgb.r + "," + hiliRgb.g + "," + hiliRgb.b + ",0.2)";
-                        if (!that.countryKeyData) {
-                            Log.print(Log.l.trace, "load empty map");
-                            that.countryKeyData = {};
-                        }
-                        var fills = {
-                            defaultFill: "#d3d3d3"
-                        };
-                        if (that.countryColors) {
-                            for (var i = 0; i < that.countryColors.length; i++) {
-                                fills["HIGH" + i] = that.countryColors[i];
+                    if (!that.countryKeyData) {
+                        Log.print(Log.l.trace, "extra ignored");
+                    } else {
+                        var worldContainer = pageElement.querySelector('#worldcontainer');
+                        if (worldContainer) {
+                            var height = worldContainer.clientWidth / 2;
+                            if (height > that.worldMapMaxWidth / 2) {
+                                height = that.worldMapMaxWidth / 2;
                             }
-                        }
-                        try {
-                            worldContainer.innerHTML = "";
-                            that.worldMap = new Datamap({
-                                element: worldContainer,
-                                projection: 'mercator',
-                                height: 320,
-                                width: 600,
-                                fills: fills,
-                                // Array --> 'Countrykey' : { fillKey : 'Rate of importance'}
-                                data: that.countryKeyData,
-                                geographyConfig: {
-                                    popupOnHover: false,
-                                    highlightOnHover: true,
-                                    highlightFillColor: Colors.navigationColor,
-                                    highlightBorderColor: hiliBorderColor
-                                },
-                                done: function (datamap) {
-                                    var allSubunits = datamap.svg.selectAll('.datamaps-subunit');
-                                    allSubunits.on('click',
-                                        function(geography) {
-                                            var landId = that.isotoInitlandId(geography.id);
-                                            that.setRestriction({
-                                                INITLandID: landId
-                                            });
-                                            AppData.setRecordId("Kontakt", null);
-                                            WinJS.Promise.timeout(0).then(function() {
-                                                Application.navigateById("contact");
-                                            });
-                                        });
+                            var width = 2 * height;
+                            if (that.worldMapHeight !== height) {
+                                that.worldMapHeight = height;
+                                var hiliRgb = Colors.hex2rgb(Colors.textColor);
+                                var hiliBorderColor = "rgba(" + hiliRgb.r + "," + hiliRgb.g + "," + hiliRgb.b + ",0.2)";
+                                if (!that.countryKeyData) {
+                                    Log.print(Log.l.trace, "load empty map");
+                                    that.countryKeyData = {};
                                 }
-                            });
-                        } catch (ex) {
-                            Log.print(Log.l.error, "exception occurred: " + ex.message);
+                                var fills = {
+                                    defaultFill: "#d3d3d3"
+                                };
+                                if (that.countryColors) {
+                                    for (var i = 0; i < that.countryColors.length; i++) {
+                                        fills["HIGH" + i] = that.countryColors[i];
+                                    }
+                                }
+                                try {
+                                    worldContainer.innerHTML = "";
+                                    if (worldContainer.style) {
+                                        if (bAnimated) {
+                                            worldContainer.style.visibility = "hidden";
+                                        }
+                                    }
+                                    that.worldMap = new Datamap({
+                                        element: worldContainer,
+                                        projection: 'mercator',
+                                        height: height,
+                                        width: width,
+                                        fills: fills,
+                                        // Array --> 'Countrykey' : { fillKey : 'Rate of importance'}
+                                        data: that.countryKeyData,
+                                        geographyConfig: {
+                                            popupOnHover: false,
+                                            highlightOnHover: true,
+                                            highlightFillColor: Colors.navigationColor,
+                                            highlightBorderColor: hiliBorderColor
+                                        },
+                                        done: function (datamap) {
+                                            var allSubunits = datamap.svg.selectAll('.datamaps-subunit');
+                                            allSubunits.on('click', function (geography) {
+                                                var landId = that.isotoInitlandId(geography.id);
+                                                that.setRestriction({
+                                                    INITLandID: landId
+                                                });
+                                                AppData.setRecordId("Kontakt", null);
+                                                WinJS.Promise.timeout(0).then(function () {
+                                                    Application.navigateById("contact");
+                                                });
+                                            });
+                                            if (bAnimated) {
+                                                WinJS.Promise.timeout(50).then(function () {
+                                                    if (worldContainer.style) {
+                                                        worldContainer.style.visibility = "";
+                                                    }
+                                                    WinJS.UI.Animation.enterContent(worldContainer).done(function () {
+                                                        var pageControl = pageElement.winControl;
+                                                        if (pageControl && pageControl.updateLayout) {
+                                                            pageControl.prevWidth = 0;
+                                                            pageControl.prevHeight = 0;
+                                                            pageControl.updateLayout.call(pageControl, pageElement);
+                                                        }
+                                                    });
+                                                });
+                                            } else {
+                                                var pageControl = pageElement.winControl;
+                                                if (pageControl && pageControl.updateLayout) {
+                                                    pageControl.prevWidth = 0;
+                                                    pageControl.prevHeight = 0;
+                                                    pageControl.updateLayout.call(pageControl, pageElement);
+                                                }
+                                            }
+                                        }
+                                    });
+                                } catch (ex) {
+                                    Log.print(Log.l.error, "exception occurred: " + ex.message);
+                                }
+                            }
                         }
                     }
                 });
@@ -179,7 +219,6 @@
             }
             this.clickPieSlice = clickPieSlice;
 
-            this.dunotData = [];
             var clickDonutSlice = function (event, index) {
                 Log.call(Log.l.trace, "Start.Controller.", "index=" + index);
                 var data = event[2];
@@ -228,236 +267,293 @@
             this.clickBarSlice = clickBarSlice;
 
             this.countryChart = null;
+            this.countryChartWidth = 0;
             this.countryChartArray = [];
+            this.countryPercent = [];
             this.countrydata = [];
             this.countryColors = [];
-            this.countryticks = [];
-            var countryresult = null, ci = 9, cl = 0;
             var showDonutChart = function (countryChartId, bAnimated) {
                 Log.call(Log.l.trace, "Start.Controller.");
-                var countryChart = pageElement.querySelector("#" + countryChartId);
-                if (countryChart) {
-                    var width = countryChart.clientWidth;
-                    var diameter = width / 2 - 48;
-                    if (diameter < 128) {
-                        diameter = 128;
-                    } else if (diameter > 250) {
-                        diameter = 250;
-                    }
-                    Log.print(Log.l.trace, "diameter=" + diameter);
-                    WinJS.Promise.timeout(0).then(function () {
-                        if (!that.countrydata || !that.countrydata.length) {
-                            Log.print(Log.l.trace, "extra ignored");
-                        } else {
-                            //try {
+                WinJS.Promise.timeout(0).then(function () {
+                    if (!that.countrydata || !that.countrydata.length) {
+                        Log.print(Log.l.trace, "extra ignored");
+                    } else {
+                        var countryChart = pageElement.querySelector("#" + countryChartId);
+                        if (countryChart) {
+                            var width = countryChart.clientWidth;
+                            if (that.countryChartWidth !== width) {
+                                that.countryChartWidth = width;
+                                var diameter = width / 2 - 48;
+                                if (diameter < 128) {
+                                    diameter = 128;
+                                } else if (diameter > 250) {
+                                    diameter = 250;
+                                }
+                                Log.print(Log.l.trace, "diameter=" + diameter);
                                 countryChart.innerHTML = "";
-                                that.countryChart = $.jqplot(countryChartId, [that.countrydata], {
-                                    seriesDefaults: {
-                                        renderer: $.jqplot.DonutRenderer,
-                                        rendererOptions: {
-                                            diameter: diameter,
-                                            sliceMargin: 1,
-                                            startAngle: -145,
-                                            showDataLabels: true,
-                                            dataLabels: 'percent',
-                                            padding: '5',
-                                            ringMargin: '5',
-                                            dataLabelThreshold: '1',
-                                            highlightMouseOver: true,
-                                            shadowAlpha: 0
-                                        },
-                                        seriesColors: that.countryColors
-                                    },
-                                    legend: { show: true, rendererOptions: { numberRows: 10 }, location: 'w', marginLeft: '30px' }
-                                });
-                                $("#" + countryChartId).unbind("jqplotDataClick");
-                                $("#" + countryChartId).bind("jqplotDataClick",
-                                    function (ev, seriesIndex, pointIndex, data) {
-                                        that.clickDonutSlice(data, pointIndex);
+                                if (countryChart.style) {
+                                    if (bAnimated) {
+                                        countryChart.style.visibility = "hidden";
                                     }
-                                );
+                                }
+                                try {
+                                    that.countryChart = $.jqplot(countryChartId, [that.countrydata], {
+                                        seriesDefaults: {
+                                            renderer: $.jqplot.DonutRenderer,
+                                            rendererOptions: {
+                                                diameter: diameter,
+                                                sliceMargin: 1,
+                                                startAngle: -145,
+                                                showDataLabels: true,
+                                                dataLabels: that.countryPercent,
+                                                padding: '5',
+                                                ringMargin: '5',
+                                                dataLabelThreshold: '1',
+                                                highlightMouseOver: true,
+                                                shadowAlpha: 0
+                                            },
+                                            seriesColors: that.countryColors
+                                        },
+                                        legend: {
+                                            show: true, rendererOptions: {
+                                                numberRows: 10
+                                            }, location: 'w', marginLeft: '30px'
+                                        }
+                                    });
+                                    $("#" + countryChartId).unbind("jqplotDataClick");
+                                    $("#" + countryChartId).bind("jqplotDataClick",
+                                        function (ev, seriesIndex, pointIndex, data) {
+                                            that.clickDonutSlice(data, pointIndex);
+                                        }
+                                    );
+                                    if (bAnimated) {
+                                        WinJS.Promise.timeout(50).then(function () {
+                                            if (countryChart.style) {
+                                                countryChart.style.visibility = "";
+                                            }
+                                            WinJS.UI.Animation.fadeIn(countryChart).done(function () {
+                                                var pageControl = pageElement.winControl;
+                                                if (pageControl && pageControl.updateLayout) {
+                                                    pageControl.prevWidth = 0;
+                                                    pageControl.prevHeight = 0;
+                                                    pageControl.updateLayout.call(pageControl, pageElement);
+                                                }
+                                            });
+                                        });
+                                    } else {
+                                        var pageControl = pageElement.winControl;
+                                        if (pageControl && pageControl.updateLayout) {
+                                            pageControl.prevWidth = 0;
+                                            pageControl.prevHeight = 0;
+                                            pageControl.updateLayout.call(pageControl, pageElement);
+                                        }
+                                    }
+                                } catch (ex) {
+                                    Log.print(Log.l.error, "exception occurred: " + ex.message);
+                                }
+                            }
                         }
-                    });
-                }
+                    }
+                });
                 Log.ret(Log.l.trace);
             };
             this.showDonutChart = showDonutChart;
 
             this.pieChart = null;
+            this.pieChartWidth = 0;
             var buttonEdited = getResourceText("start.buttonEdited");
             var buttonNotEdited = getResourceText("start.buttonNotEdited");
             var showPieChart = function (pieChartId, bAnimated) {
                 Log.call(Log.l.trace, "Start.Controller.");
-                var visitorsEditedChart = pageElement.querySelector("#" + pieChartId);
-                if (visitorsEditedChart &&
-                    that.binding.dataStart &&
-                    typeof that.binding.dataStart.AnzNichtEditierteKontakte !== "undefined" &&
-                    typeof that.binding.dataStart.AnzEditierteKontakte !== "undefined") {
-                    var width = visitorsEditedChart.clientWidth;
-                    var diameter = width / 2;
-                    if (diameter < 128) {
-                        diameter = 128;
-                    } else if (diameter > 250) {
-                        diameter = 250;
-                    }
-                    Log.print(Log.l.trace, "diameter=" + diameter);
-                    var series = [
-                        [buttonEdited, that.binding.dataStart.AnzEditierteKontakte],
-                        [buttonNotEdited, that.binding.dataStart.AnzNichtEditierteKontakte]
-                    ];
-                    var dataLabels = [
-                        buttonEdited + ": " + that.binding.dataStart.AnzEditierteKontakte,
-                        buttonNotEdited + ": " + that.binding.dataStart.AnzNichtEditierteKontakte
-                    ];
-                    Log.print(Log.l.trace, dataLabels[0]);
-                    Log.print(Log.l.trace, dataLabels[1]);
-                    var seriesColors = [
-                        "#f0f0f0",
-                        Colors.navigationColor
-                    ];
-                    if (visitorsEditedChart.style) {
-                        visitorsEditedChart.style.height = (diameter + 48).toString() + "px";
-                        visitorsEditedChart.innerHTML = "";
-                        if (bAnimated) {
-                            visitorsEditedChart.style.visibility = "hidden";
-                        }
-                    }
-                    WinJS.Promise.timeout(0).then(function () {
-                        if (!series || !series.length || diameter < 96) {
-                            Log.print(Log.l.trace, "extra ignored");
-                        } else {
-                            try {
-                                visitorsEditedChart.innerHTML = "";
-                                that.pieChart = $.jqplot(pieChartId, [series], {
-                                    title: "",
-                                    grid: {
-                                        drawBorder: false,
-                                        drawGridlines: false,
-                                        background: "transparent",
-                                        shadow: false
-                                    },
-                                    axesDefaults: {},
-                                    seriesDefaults: {
-                                        shadow: false,
-                                        renderer: $.jqplot.PieRenderer,
-                                        rendererOptions: {
-                                            diameter: diameter,
-                                            dataLabels: dataLabels,
-                                            showDataLabels: true,
-                                            startAngle: -90,
-                                            sliceMargin: 2
-                                        }
-                                    },
-                                    seriesColors: seriesColors,
-                                    legend: {
-                                        show: false
-                                    }
-                                    /*
-                                    legend: {
-                                        show: true,
-                                        rendererOptions: {
-                                            numberColumns: 1
-                                        },
-                                        location: 'e'
-                                    }
-                                     */
-                                });
-                                $("#" + pieChartId).unbind("jqplotDataClick");
-                                $("#" + pieChartId).bind("jqplotDataClick",
-                                  function (ev, seriesIndex, pointIndex, data) {
-                                      that.clickPieSlice(ev, pointIndex);
-                                  }
-                                );
+                WinJS.Promise.timeout(0).then(function() {
+                    var visitorsEditedChart = pageElement.querySelector("#" + pieChartId);
+                    if (visitorsEditedChart &&
+                        that.binding.dataStart &&
+                        typeof that.binding.dataStart.AnzNichtEditierteKontakte !== "undefined" &&
+                        typeof that.binding.dataStart.AnzEditierteKontakte !== "undefined") {
+                        var width = visitorsEditedChart.clientWidth;
+                        if (that.pieChartWidth !== width) {
+                            that.pieChartWidth = width;
+                            var diameter = width / 2;
+                            if (diameter < 128) {
+                                diameter = 128;
+                            } else if (diameter > 250) {
+                                diameter = 250;
+                            }
+                            Log.print(Log.l.trace, "diameter=" + diameter);
+                            var series = [
+                                [buttonEdited, that.binding.dataStart.AnzEditierteKontakte],
+                                [buttonNotEdited, that.binding.dataStart.AnzNichtEditierteKontakte]
+                            ];
+                            var dataLabels = [
+                                buttonEdited + ": " + that.binding.dataStart.AnzEditierteKontakte,
+                                buttonNotEdited + ": " + that.binding.dataStart.AnzNichtEditierteKontakte
+                            ];
+                            Log.print(Log.l.trace, dataLabels[0]);
+                            Log.print(Log.l.trace, dataLabels[1]);
+                            var seriesColors = [
+                                "#f0f0f0",
+                                Colors.navigationColor
+                            ];
+                            visitorsEditedChart.innerHTML = "";
+                            if (visitorsEditedChart.style) {
+                                visitorsEditedChart.style.height = (diameter + 48).toString() + "px";
                                 if (bAnimated) {
-                                    WinJS.Promise.timeout(50).then(function () {
-                                        if (visitorsEditedChart.style) {
-                                            visitorsEditedChart.style.visibility = "";
-                                        }
-                                        WinJS.UI.Animation.fadeIn(visitorsEditedChart);
-                                    });
+                                    visitorsEditedChart.style.visibility = "hidden";
                                 }
-                            } catch (ex) {
-                                Log.print(Log.l.error, "exception occurred: " + ex.message);
+                            }
+                            if (!series || !series.length || diameter < 96) {
+                                Log.print(Log.l.trace, "extra ignored");
+                            } else {
+                                try {
+                                    visitorsEditedChart.innerHTML = "";
+                                    that.pieChart = $.jqplot(pieChartId, [series], {
+                                        title: "",
+                                        grid: {
+                                            drawBorder: false,
+                                            drawGridlines: false,
+                                            background: "transparent",
+                                            shadow: false
+                                        },
+                                        axesDefaults: {},
+                                        seriesDefaults: {
+                                            shadow: false,
+                                            renderer: $.jqplot.PieRenderer,
+                                            rendererOptions: {
+                                                diameter: diameter,
+                                                dataLabels: dataLabels,
+                                                showDataLabels: true,
+                                                startAngle: -90,
+                                                sliceMargin: 2
+                                            }
+                                        },
+                                        seriesColors: seriesColors,
+                                        legend: {
+                                            show: false
+                                        }
+                                    });
+                                    $("#" + pieChartId).unbind("jqplotDataClick");
+                                    $("#" + pieChartId).bind("jqplotDataClick",
+                                      function (ev, seriesIndex, pointIndex, data) {
+                                          that.clickPieSlice(ev, pointIndex);
+                                      }
+                                    );
+                                    if (bAnimated) {
+                                        WinJS.Promise.timeout(50).then(function() {
+                                            if (visitorsEditedChart.style) {
+                                                visitorsEditedChart.style.visibility = "";
+                                            }
+                                            WinJS.UI.Animation.fadeIn(visitorsEditedChart).done(function() {
+                                                var pageControl = pageElement.winControl;
+                                                if (pageControl && pageControl.updateLayout) {
+                                                    pageControl.prevWidth = 0;
+                                                    pageControl.prevHeight = 0;
+                                                    pageControl.updateLayout.call(pageControl, pageElement);
+                                                }
+                                            });
+                                        });
+                                    } else {
+                                        var pageControl = pageElement.winControl;
+                                        if (pageControl && pageControl.updateLayout) {
+                                            pageControl.prevWidth = 0;
+                                            pageControl.prevHeight = 0;
+                                            pageControl.updateLayout.call(pageControl, pageElement);
+                                        }
+                                    }
+                                } catch (ex) {
+                                    Log.print(Log.l.error, "exception occurred: " + ex.message);
+                                }
                             }
                         }
-                    });
-                }
+                    }
+                });
                 Log.ret(Log.l.trace);
             }
             this.showPieChart = showPieChart;
 
             this.barChart = null;
+            this.barChartWidth = 0;
             var showBarChart = function(barChartId, bAnimated) {
                 Log.call(Log.l.trace, "Start.Controller.");
-                var visitorsPerDayChart = pageElement.querySelector("#" + barChartId);
-                if (visitorsPerDayChart) {
-                    var series = [];
-                    var ticks = [];
-                    if (that.kontaktanzahldata && that.kontaktanzahldata.length > 0) {
-                        for (var i = 0; i < that.kontaktanzahldata.length; i++) {
-                            var row = that.kontaktanzahldata[i];
-                            series[i] = [AppData.toDateString(row.Datum, true), row.AnzahlProTag];
-                            ticks[i] = i;
-                        }    
-                    }
-                    var seriesColors = [
-                        Colors.backgroundColor
-                    ];
-                    visitorsPerDayChart.innerHTML = "";
-                    WinJS.Promise.timeout(0).then(function () {
-                        if (!series || !series.length) {
-                            Log.print(Log.l.trace, "extra ignored");
-                        } else {
-                            try {
+                WinJS.Promise.timeout(0).then(function () {
+                    if (!that.kontaktanzahldata || !that.kontaktanzahldata.length) {
+                        Log.print(Log.l.trace, "extra ignored");
+                    } else {
+                        var visitorsPerDayChart = pageElement.querySelector("#" + barChartId);
+                        if (visitorsPerDayChart) {
+                            var width = visitorsPerDayChart.clientWidth;
+                            if (that.barChartWidth !== width) {
+                                that.barChartWidth = width;
+                                var series = [];
+                                var ticks = [];
+                                if (that.kontaktanzahldata && that.kontaktanzahldata.length > 0) {
+                                    for (var i = 0; i < that.kontaktanzahldata.length; i++) {
+                                        var row = that.kontaktanzahldata[i];
+                                        series[i] = [AppData.toDateString(row.Datum, true), row.AnzahlProTag];
+                                        ticks[i] = i;
+                                    }
+                                }
+                                var seriesColors = [
+                                    Colors.backgroundColor
+                                ];
                                 visitorsPerDayChart.innerHTML = "";
-                                that.barChart = $.jqplot(barChartId, [series], {
-                                    grid: {
-                                        drawBorder: false,
-                                        drawGridlines: false,
-                                        background: "transparent",
-                                        shadow: false
-                                    },
-                                    animate: bAnimated,
-                                    seriesDefaults: {
-                                        renderer: $.jqplot.BarRenderer,
-                                        rendererOptions: {
-                                            animation: {
-                                                speed: 500
+                                try {
+                                    visitorsPerDayChart.innerHTML = "";
+                                    that.barChart = $.jqplot(barChartId, [series], {
+                                        grid: {
+                                            drawBorder: false,
+                                            drawGridlines: false,
+                                            background: "transparent",
+                                            shadow: false
+                                        },
+                                        animate: bAnimated,
+                                        seriesDefaults: {
+                                            renderer: $.jqplot.BarRenderer,
+                                            rendererOptions: {
+                                                animation: {
+                                                    speed: 500
+                                                }
+                                            },
+                                            shadow: false,
+                                            pointLabels: {
+                                                show: true
                                             }
                                         },
-                                        shadow: false,
-                                        pointLabels: {
-                                            show: true
-                                        }
-                                    },
-                                    axes: {
-                                        xaxis: {
-                                            renderer: $.jqplot.CategoryAxisRenderer
+                                        axes: {
+                                            xaxis: {
+                                                renderer: $.jqplot.CategoryAxisRenderer
+                                            },
+                                            yaxis: {
+                                                renderer: $.jqplot.AxisThickRenderer,
+                                                show: false,
+                                                showTicks: false,
+                                                showTickMarks: false
+                                            }
                                         },
-                                        yaxis: {
-                                            renderer: $.jqplot.AxisThickRenderer,
-                                            show: false,
-                                            showTicks: false,
-                                            showTickMarks: false
+                                        seriesColors: seriesColors,
+                                        legend: {
+                                            show: false
                                         }
-                                    },
-                                    seriesColors: seriesColors,
-                                    legend: {
-                                        show: false
+                                    });
+                                    $("#" + barChartId).unbind("jqplotDataClick");
+                                    $("#" + barChartId).bind("jqplotDataClick",
+                                        function (ev, seriesIndex, pointIndex, data) {
+                                            that.clickBarSlice(ev, pointIndex);
+                                        }
+                                    );
+                                    var pageControl = pageElement.winControl;
+                                    if (pageControl && pageControl.updateLayout) {
+                                        pageControl.prevWidth = 0;
+                                        pageControl.prevHeight = 0;
+                                        pageControl.updateLayout.call(pageControl, pageElement);
                                     }
-                                });
-                                $("#" + barChartId).unbind("jqplotDataClick");
-                                $("#" + barChartId).bind("jqplotDataClick",
-                                    function (ev, seriesIndex, pointIndex, data) {
-                                        that.clickBarSlice(ev, pointIndex);
-                                    }
-                                );
-                            } catch (ex) {
-                                Log.print(Log.l.error, "exception occurred: " + ex.message);
+                                } catch (ex) {
+                                    Log.print(Log.l.error, "exception occurred: " + ex.message);
+                                }
                             }
                         }
-                    });
-                }
+                    }
+                });
                 Log.ret(Log.l.trace);
             }
             this.showBarChart = showBarChart;
@@ -501,6 +597,16 @@
                             // mitarbeiterView returns object already parsed from json file in response
                             if (json && json.d) {
                                 that.binding.dataStart = json.d;
+                                that.binding.dataStart.AnzKontakte = 0;
+                                if (that.binding.dataStart.AnzNichtEditierteKontakte) {
+                                    that.binding.dataStart.AnzKontakte +=
+                                        that.binding.dataStart.AnzNichtEditierteKontakte;
+                                }
+                                if (that.binding.dataStart.AnzEditierteKontakte) {
+                                    that.binding.dataStart.AnzKontakte +=
+                                        that.binding.dataStart.AnzEditierteKontakte;
+                                }
+                                that.pieChartWidth = 0;
                                 that.showPieChart("visitorsEditedChart", true);
                             }
                             return WinJS.Promise.as();
@@ -521,6 +627,7 @@
                             // kontaktanzahlView returns object already parsed from json file in response
                             if (json && json.d) {
                                 that.kontaktanzahldata = json.d.results;
+                                that.barChartWidth = 0;
                                 that.showBarChart("visitorsPerDayChart", true);
                             }
                             return WinJS.Promise.as();
@@ -535,18 +642,21 @@
                 }).then(function () {
                     return Start.reportLand.select(function(json) {
                         Log.print(Log.l.trace, "reportLand: success!");
-                        if (json && json.d && json.d.results && json.d.results.length > 0) {
+                        if (json && json.d && json.d.results && json.d.results.length > 0 &&
+                            that.binding.dataStart.AnzKontakte > 0) {
                             var color = Colors.navigationColor;
                             that.countryKeyData = {};
                             // store result for next use
-                            countryresult = json.d.results;
-                            for (ci = 0; ci < json.d.results.length; ci++) {
+                            var countryresult = json.d.results;
+                            for (var ci = 0; ci < countryresult.length; ci++) {
                                 if (countryresult[ci].Land === null) {
                                     countryresult[ci].Land = getResourceText("reporting.nocountry");
                                 }
                                 if (countryresult[ci].Land) {
-                                    that.countrydata[ci] = [countryresult[ci].Land, countryresult[ci].Anzahl, countryresult[ci].LandID];
-                                    that.dunotData[countryresult[ci].LandID] = countryresult[ci].Land;
+                                    var percent = 100 * countryresult[ci].Anzahl / that.binding.dataStart.AnzKontakte;
+                                    that.countryPercent[ci] = formatFloat(percent, 1) + "%";
+                                    var label = countryresult[ci].Land + " (" + that.countryPercent[ci] + ")";
+                                    that.countrydata[ci] = [label, percent, countryresult[ci].LandID];
                                     that.countryColors[ci] = color;
                                     var rgbColor = Colors.hex2rgb(color);
                                     var hsvColor = Colors.rgb2hsv(rgbColor);
@@ -562,8 +672,10 @@
                                     }
                                 }
                             }
+                            that.worldMapHeight = 0;
+                            that.countryChartWidth = 0;
+                            that.worldChart(true);
                             that.showDonutChart("countryPie", true);
-                            that.worldChart();
                         }
                             
                     },

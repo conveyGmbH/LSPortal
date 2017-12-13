@@ -48,14 +48,13 @@
     z-index: 10011;
 }
 
-#root-split-view-pane {
+#root-split-view {
     margin-top: 0;
     height: calc(100% - 48px);
 }
-.nav-commands {
-    height: 100%;
+#root-split-view-pane {
+    overflow-y: auto;
 }
-
 #root-split-view.win-splitview-pane-opened.rootsplitview-mobile .win-splitview-panewrapper,
 #root-split-view.win-splitview-pane-opened.rootsplitview-mobile .win-splitview-pane {
     width:100%;

@@ -75,10 +75,9 @@
 
             var changeAppSetting = function (toggleId, checked) {
                 Log.call(Log.l.trace, "Settings.Controller.", "toggleId=" + toggleId + " checked=" + checked);
-                if (that.binding) {
-                    var pOptionTypeId = null;
-                    var pageProperty = null;
-                    switch (toggleId) {
+                var pOptionTypeId = null;
+                var pageProperty = null;
+                switch (toggleId) {
                     case "showQuestionnaire":
                         pOptionTypeId = 20;
                         pageProperty = "questionnaire";
@@ -101,30 +100,29 @@
                         that.binding.isCameraVisible = checked;
                         AppData._persistentStates.hideCameraScan = !checked;
                         break;
+                }
+                if (pOptionTypeId) {
+                    var pValue;
+                    // value: show => pValue: hide!
+                    if (!checked) {
+                        pValue = "1";
+                    } else {
+                        pValue = "0";
                     }
-                    if (pOptionTypeId) {
-                        var pValue;
-                        // value: show => pValue: hide!
-                        if (!checked) {
-                            pValue = "1";
+                    AppData.call("PRC_SETVERANSTOPTION", {
+                        pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                        pOptionTypeID: pOptionTypeId,
+                        pValue: pValue
+                    }, function (json) {
+                        Log.print(Log.l.info, "call success! ");
+                    }, function (error) {
+                        Log.print(Log.l.error, "call error");
+                    });
+                    if (pageProperty) {
+                        if (pValue === "1") {
+                            NavigationBar.disablePage(pageProperty);
                         } else {
-                            pValue = "0";
-                        }
-                        AppData.call("PRC_SETVERANSTOPTION", {
-                            pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
-                            pOptionTypeID: pOptionTypeId,
-                            pValue: pValue
-                        }, function (json) {
-                            Log.print(Log.l.info, "call success! ");
-                        }, function (error) {
-                            Log.print(Log.l.error, "call error");
-                        });
-                        if (pageProperty) {
-                            if (pValue === "1") {
-                                NavigationBar.disablePage(pageProperty);
-                            } else {
-                                NavigationBar.enablePage(pageProperty);
-                            }
+                            NavigationBar.enablePage(pageProperty);
                         }
                     }
                 }

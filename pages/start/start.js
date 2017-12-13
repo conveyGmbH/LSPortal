@@ -58,7 +58,7 @@
                         var contentarea = element.querySelector(".contentarea");
                         if (contentarea) {
                             var width = contentarea.clientWidth;
-                            var height = contentarea.clientHeight - 8;
+                            var height = contentarea.clientHeight;
                             var contentHeader = element.querySelector(".content-header");
                             if (contentHeader) {
                                 height -= contentHeader.clientHeight;
@@ -76,9 +76,27 @@
                                         tileTop.style.height = "";
                                     }
                                 }
+                                var worldContainer = element.querySelector('#worldcontainer');
+                                if (worldContainer && worldContainer.style) {
+                                    var worldContainerWidth = width / 2 - 52;
+                                    if (element.className) {
+                                        if (element.className.indexOf("view-size-small") >= 0) {
+                                            worldContainerWidth = width - 20;
+                                        } else if (element.className.indexOf("view-size-medium") >= 0) {
+                                            worldContainerWidth = width - 36;
+                                        }
+                                    }
+                                    if (worldContainerWidth > that.controller.worldMapMaxWidth) {
+                                        worldContainer.style.width = that.controller.worldMapMaxWidth.toString() + "px";
+                                        worldContainer.style.marginLeft = ((worldContainerWidth - that.controller.worldMapMaxWidth) / 2).toString() + "px";
+                                    } else {
+                                        worldContainer.style.width = "";
+                                        worldContainer.style.marginLeft = "";
+                                    }
+                                }
                                 if (width !== that.prevWidth) {
-                                    if (typeof that.controller.showcountryChart === "function") {
-                                        that.controller.showcountryChart("countryPie", false);    
+                                    if (typeof that.controller.worldChart === "function") {
+                                        that.controller.worldChart();    
                                     }
                                     if (typeof that.controller.showDonutChart === "function") {
                                         that.controller.showDonutChart("countryPie", false);

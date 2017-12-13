@@ -20,9 +20,6 @@
 
             var that = this;
 
-            // First, we call WinJS.Binding.as to get the bindable proxy object
-            this.binding = WinJS.Binding.as(this.pageData);
-
             // Then, do anything special on this page
             this.eventHandlers = {
                 clickBack: function(event) {
