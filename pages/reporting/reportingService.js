@@ -169,9 +169,35 @@
                 return Reporting._KontaktReport;
             }
         },
+        ___xLAuswertungViewNoQuestTitle: null,
+        _xLAuswertungViewNoQuestTitle: {
+            get: function () {
+                if (!Reporting.___xLAuswertungViewNoQuestTitle) {
+                    Reporting.___xLAuswertungViewNoQuestTitle = new AppData.formatViewData("Kontakt", 20461);
+                    Reporting.___xLAuswertungViewNoQuestTitle.maxPageSize = 2;
+                }
+                return Reporting.___xLAuswertungViewNoQuestTitle;
+            }
+        },
+        xLAuswertungViewNoQuestTitle: {
+            select: function (complete, error) {
+                Log.call(Log.l.trace, "Reporting.");
+                var ret = Reporting._xLAuswertungViewNoQuestTitle.select(complete, error, null, {
+                    ordered: true,
+                    orderAttribute: "KontaktID"
+                });
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+        },
+        __xLAuswertungViewNoQuest: null,
         _xLAuswertungViewNoQuest: {
             get: function() {
-                return AppData.getFormatView("Kontakt", 20461);
+                if (!Reporting.___xLAuswertungViewNoQuest) {
+                    Reporting.___xLAuswertungViewNoQuest = new AppData.formatViewData("Kontakt", 20461);
+                }
+                return Reporting.___xLAuswertungViewNoQuest;
             }
         },
         xLAuswertungViewNoQuest: {
@@ -202,9 +228,35 @@
                 return Reporting._xLAuswertungViewNoQuest;
             }
         },
+        __xLReportViewNoQuestTitle: null,
+        _xLReportViewNoQuestTitle: {
+            get: function () {
+                if (!Reporting.__xLReportViewNoQuestTitle) {
+                    Reporting.__xLReportViewNoQuestTitle = new AppData.formatViewData("Kontakt", 20462);
+                    Reporting.__xLReportViewNoQuestTitle.maxPageSize = 2;
+                }
+                return Reporting.__xLReportViewNoQuestTitle;
+            }
+        },
+        xLReportViewNoQuestTitle: {
+            select: function (complete, error) {
+                Log.call(Log.l.trace, "Reporting.");
+                var ret = Reporting._xLReportViewNoQuestTitle.select(complete, error, null, {
+                    ordered: true,
+                    orderAttribute: "ContactID"
+                });
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+        },
+        __xLReportViewNoQuest: null,
         _xLReportViewNoQuest: {
             get: function() {
-                return AppData.getFormatView("Kontakt", 20462);
+                if (!Reporting.__xLReportViewNoQuest) {
+                    Reporting.__xLReportViewNoQuest = new AppData.formatViewData("Kontakt", 20462);
+                }
+                return Reporting.__xLReportViewNoQuest;
             }
         },
         xLReportViewNoQuest: {

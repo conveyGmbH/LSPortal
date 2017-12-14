@@ -179,83 +179,111 @@
                 }, null, nextUrl);
                 Log.ret(Log.l.trace);
             },
-            selectAllViewData: function (dbView, sheetData, openedSpreadsheet, fileName, complete, error, restriction) {
+            selectAllViewData: function (dbView, sheetData, openedSpreadsheet, fileName, complete, error, restriction, dbViewTitle) {
                 var baseDbView = dbView.getDbView();
                 Log.call(Log.l.trace, "ExportXlsx.", "relationName=" + baseDbView.relationName + " formatId=" + baseDbView.formatId);
+                var resultsTitle = [];
                 var that = this;
-                dbView.select(function (json) {
-                    Log.print(Log.l.trace, "analysisListView: success!");
-                    that.progressNext = 20;
-                    that.showProgress(that.progressNext);
-                    if (json && json.d && json.d.results) {
-                        var attribSpecs = baseDbView.attribSpecs;
-                        var colCount = attribSpecs.length;
-                        Log.print(Log.l.trace, colCount + " cloumns to export. Write column header...");
-                        var newRow = new XElement(S.row);
-                        if (baseDbView.relationName === "KontaktReport") {
-                            for (var c = 0; c < colCount; c++) {
-                                var row = json.d.results[0];
-                                var key = attribSpecs[c].ODataAttributeName;
-                                var value = row && row[key];
-                                if (value) {
-                                    attribSpecs[c].hidden = false;
-                                } else {
-                                    attribSpecs[c].hidden = true;
-                                }
-                            }
-                        } else {
-                            for (var c = 1; c < colCount; c++) {
-                                var value = attribSpecs[c].Name;
-                                var type = null;
-                                var valueName = S.v;
-                                if (typeof value === "undefined" ||
-                                    value === null) {
-                                    value = "";
-                                } else {
-                                    valueName = S._is;
-                                    type = "inlineStr";
-                                    value = new XElement(S.t, value);
-                                }
-                                var newCell = new XElement(S.c, new XElement(valueName, value));
-                                if (type) {
-                                    newCell.setAttributeValue("t", type);
-                                }
-                                newRow.add(newCell);
-                            }
+                var promise;
+                if (dbViewTitle) {
+                    promise = dbViewTitle.select(function(json) {
+                        Log.print(Log.l.trace, "analysisListViewTitle: success!");
+                        if (json && json.d && json.d.results && json.d.results.length > 0) {
+                            resultsTitle = json.d.results;
                         }
-                        sheetData.replaceAll(newRow);
-
-                        Log.print(Log.l.trace, colCount + "write row data...");
-                        WinJS.Promise.timeout(50).then(function () {
-                            that.writeResultToSheetData(sheetData, json.d.results, attribSpecs, colCount);
-                        }).then(function() {
-                            var nextUrl = dbView.getNextUrl(json);
-                            if (nextUrl) {
-                                Log.print(Log.l.trace, "analysisListView: fech more data...");
-                                WinJS.Promise.timeout(0).then(function () {
-                                    that.selectNextViewData(nextUrl, dbView, attribSpecs, colCount, sheetData, openedSpreadsheet, fileName, complete, error);
+                    }, function (errorResponse) {
+                        Log.print(Log.l.error, "error: " + errorResponse.messageText);
+                        if (typeof error === "function") {
+                            error(errorResponse);
+                        }
+                    });
+                } else {
+                    promise = WinJS.Promise.as();
+                }
+                promise.then(function() {
+                    dbView.select(function (json) {
+                        Log.print(Log.l.trace, "analysisListView: success!");
+                        that.progressNext = 20;
+                        that.showProgress(that.progressNext);
+                        if (json && json.d && json.d.results) {
+                            var results;
+                            if (dbViewTitle) {
+                                results = resultsTitle;
+                                json.d.results.forEach(function (item) {
+                                    results.push(item);
                                 });
                             } else {
-                                Log.print(Log.l.trace, "analysisListView: export file...");
-                                that.saveSpreadSheet(openedSpreadsheet, fileName, complete, error);
+                                results = json.d.results;
                             }
-                        });
-                    } else {
-                        Log.print(Log.l.error, "not data found");
-                        if (typeof error === "function") {
-                            error("not data found");
+                            var attribSpecs = baseDbView.attribSpecs;
+                            var colCount = attribSpecs.length;
+                            Log.print(Log.l.trace, colCount + " cloumns to export. Write column header...");
+                            var newRow = new XElement(S.row);
+                            if (baseDbView.relationName === "KontaktReport") {
+                                for (var c = 0; c < colCount; c++) {
+                                    var row = results[0];
+                                    var key = attribSpecs[c].ODataAttributeName;
+                                    var value = row && row[key];
+                                    if (value) {
+                                        attribSpecs[c].hidden = false;
+                                    } else {
+                                        attribSpecs[c].hidden = true;
+                                    }
+                                }
+                            } else {
+                                for (var c = 1; c < colCount; c++) {
+                                    var value = attribSpecs[c].Name;
+                                    var type = null;
+                                    var valueName = S.v;
+                                    if (typeof value === "undefined" ||
+                                        value === null) {
+                                        value = "";
+                                    } else {
+                                        valueName = S._is;
+                                        type = "inlineStr";
+                                        value = new XElement(S.t, value);
+                                    }
+                                    var newCell = new XElement(S.c, new XElement(valueName, value));
+                                    if (type) {
+                                        newCell.setAttributeValue("t", type);
+                                    }
+                                    newRow.add(newCell);
+                                }
+                            }
+                            sheetData.replaceAll(newRow);
+
+                            Log.print(Log.l.trace, colCount + "write row data...");
+                            WinJS.Promise.timeout(50).then(function () {
+                                that.writeResultToSheetData(sheetData, results, attribSpecs, colCount);
+                            }).then(function () {
+                                var nextUrl = dbView.getNextUrl(json);
+                                if (nextUrl) {
+                                    Log.print(Log.l.trace, "analysisListView: fech more data...");
+                                    WinJS.Promise.timeout(0).then(function () {
+                                        that.selectNextViewData(nextUrl, dbView, attribSpecs, colCount, sheetData, openedSpreadsheet, fileName, complete, error);
+                                    });
+                                } else {
+                                    Log.print(Log.l.trace, "analysisListView: export file...");
+                                    that.saveSpreadSheet(openedSpreadsheet, fileName, complete, error);
+                                }
+                            });
+                        } else {
+                            Log.print(Log.l.error, "not data found");
+                            if (typeof error === "function") {
+                                error("not data found");
+                            }
+                            ;
                         }
-                        ;
-                    }
-                }, function (errorResponse) {
-                    Log.print(Log.l.error, "error: " + errorResponse.messageText);
-                    if (typeof error === "function") {
-                        error(errorResponse);
-                    }
-                }, restriction);
+                    }, function (errorResponse) {
+                        Log.print(Log.l.error, "error: " + errorResponse.messageText);
+                        if (typeof error === "function") {
+                            error(errorResponse);
+                        }
+                    }, restriction);
+                });
                 Log.ret(Log.l.trace);
             },
-            saveXlsxFromView: function (dbView, fileName, complete, error, restriction) {
+            saveXlsxFromView: function (dbView, fileName, complete, error, restriction, dbViewTitle) {
                 Log.call(Log.l.trace, "ExportXlsx.");
                 if (!this.xlsx) {
                     Log.ret(Log.l.error, "OpenXmlPackage not created");
@@ -340,7 +368,7 @@
                             var wsXDoc = worksheetPart.getXDocument();
                             var sheetData = wsXDoc.descendants(S.sheetData).firstOrDefault();
                             if (sheetData) {
-                                that.selectAllViewData(dbView, sheetData, openedSpreadsheet, fileName, complete, error, restriction);
+                                that.selectAllViewData(dbView, sheetData, openedSpreadsheet, fileName, complete, error, restriction, dbViewTitle);
                             } else {
                                 if (typeof error === "function") {
                                     error("no sheetData found in Excel template!");

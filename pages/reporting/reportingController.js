@@ -151,57 +151,41 @@
             this.getRestriction = getRestriction;
 
             var setRestriction = function () {
-                var reportingRestriction = {};
-                if (that.binding.restriction.InitLandID === "null") {
-                    if (AppData.getLanguageId() === 1031) {
-                        delete reportingRestriction.Land;
-                    } else {
-                        delete reportingRestriction.Country;
-                    }
-                }
+                var reportingRestriction = null;
                 if (that.binding.restriction.InitLandID && that.binding.restriction.InitLandID !== "null") {
+                    if (!reportingRestriction) {
+                        reportingRestriction = {};
+                    }
                     if (AppData.getLanguageId() === 1031) {
                         reportingRestriction.Land = that.binding.restriction.InitLandID;
                     } else {
                         reportingRestriction.Country = that.binding.restriction.InitLandID;
                     }
                 }
-                if (that.binding.restriction.ErfasserID === "undefined") {
-                    if (AppData.getLanguageId() === 1031) {
-                        delete reportingRestriction.Mitarbeiter;
-                    } else {
-                        delete reportingRestriction.RecordedBy;
-                    }
-                }
                 if (that.binding.restriction.ErfasserID && that.binding.restriction.ErfasserID !== "undefined") {
+                    if (!reportingRestriction) {
+                        reportingRestriction = {};
+                    }
                     if (AppData.getLanguageId() === 1031) {
                         reportingRestriction.Mitarbeiter = that.binding.restriction.ErfasserID;
                     } else {
                         reportingRestriction.RecordedBy = that.binding.restriction.ErfasserID;
                     }
                 }
-                if (!that.binding.showErfassungsdatum && that.binding.restriction.ReportingErfassungsdatum !== "undefined") {
-                    if (AppData.getLanguageId() === 1031) {
-                        delete reportingRestriction.Erfassungsdatum;
-                    } else {
-                        delete reportingRestriction.RecordDate;
-                    }
-                }
                 if (that.binding.showErfassungsdatum && that.binding.restriction.ReportingErfassungsdatum) {
+                    if (!reportingRestriction) {
+                        reportingRestriction = {};
+                    }
                     if (AppData.getLanguageId() === 1031) {
                         reportingRestriction.Erfassungsdatum = that.binding.restriction.ReportingErfassungsdatum;
                     } else {
                         reportingRestriction.RecordDate = that.binding.restriction.ReportingErfassungsdatum;
                     }
                 }
-                if (!that.binding.showModifiedTS && that.binding.restriction.ModifiedTS !== "undefined") {
-                    if (AppData.getLanguageId() === 1031) {
-                        delete reportingRestriction.AenderungsDatum;
-                    } else {
-                        delete reportingRestriction.ModificationDate;
-                    }
-                }
                 if (that.binding.showModifiedTS && that.binding.restriction.ModifiedTS) {
+                    if (!reportingRestriction) {
+                        reportingRestriction = {};
+                    }
                     if (AppData.getLanguageId() === 1031) {
                         reportingRestriction.AenderungsDatum = that.binding.restriction.ModifiedTS;
                     } else {
@@ -247,6 +231,7 @@
 
             var exportData = function(exportselection) {
                 Log.call(Log.l.trace, "Reporting.Controller.");
+                var dbViewTitle = null;
                 var dbView = null;
                 var fileName = null;
                 ExportXlsx.restriction = that.getRestriction();
@@ -272,6 +257,7 @@
                 case 10:
                     if (AppData.getLanguageId() === 1031) {
                         dbView = Reporting.xLAuswertungViewNoQuest;
+                        dbViewTitle = Reporting.xLAuswertungViewNoQuestTitle;
                         fileName = "KontakteKeineFragen";
                         //ExportXlsx.restriction.KontaktID = [-2,-1];
                         if (!that.binding.showErfassungsdatum) {
@@ -279,6 +265,7 @@
 						}
                     } else {
                         dbView = Reporting.xLReportViewNoQuest;
+                        dbViewTitle = Reporting.xLReportViewNoQuestTitle;
                         fileName = "ContactsNoQuestion";
                         //ExportXlsx.restriction.ContactID = [-2,-1];
                         if (!that.binding.showErfassungsdatum) {
@@ -316,7 +303,12 @@
                         exporter = new ExportXlsx.ExporterClass(that.binding.progress);
                     }
                     exporter.showProgress(0);
-                    WinJS.Promise.timeout(50).then(function() {
+                    WinJS.Promise.timeout(50).then(function () {
+                        var restriction = that.setRestriction();
+                        if (!restriction) {
+                            dbViewTitle = null;
+                            restriction = {};
+                        }
                         exporter.saveXlsxFromView(dbView, fileName, function(result) {
                                 AppBar.busy = false;
                                 AppBar.triggerDisableHandlers();
@@ -324,8 +316,7 @@
                                 AppData.setErrorMsg(that.binding, errorResponse);
                                 AppBar.busy = false;
                                 AppBar.triggerDisableHandlers();
-                            },
-                            that.setRestriction());
+                            }, restriction, dbViewTitle);
                     });
                 } else {
                     AppBar.busy = false;
@@ -495,27 +486,25 @@
                     }
                     Log.ret(Log.l.trace);
                 },
-                clickExport: function(event) {
+                clickOk: function(event) {
                     Log.call(Log.l.trace, "Reporting.Controller.");
-                    var exportselection = event.currentTarget.value;
-                    AppBar.busy = true;
-                    AppBar.triggerDisableHandlers();
-                    WinJS.Promise.timeout(0).then(function() {
-                        //that.templatecall();
-                        that.exportData(exportselection);
-                    });
+                    if (AppBar.barControl && !AppBar.barControl.opened) {
+                        AppBar.barControl.open();
+                    }
                     Log.ret(Log.l.trace);
                 },
-                resizeExport: function (event) {
+                clickExport: function(event) {
                     Log.call(Log.l.trace, "Reporting.Controller.");
-                    WinJS.Promise.timeout(0).then(function () {
-                        var employeeChart = pageElement.querySelector("#employeeChart");
-                        var height = employeeChart.parentElement.clientHeight;
-                        var width = employeeChart.parentElement.clientWidth;
-                        if (width > "300") {
-                            employeeChart.getElementsByClassName("jqplot-base-canvas").width = "400px";
-                        }
-                    });
+                    if (event && event.currentTarget) {
+                        var exportselection = event.currentTarget.value;
+                        AppBar.busy = true;
+                        AppBar.triggerDisableHandlers();
+                        WinJS.Promise.timeout(0).then(function () {
+                            //that.templatecall();
+                            that.exportData(exportselection);
+                        });
+                    }
+                    Log.ret(Log.l.trace);
                 },
                 clickChangeUserState: function(event) {
                     Log.call(Log.l.trace, "Reporting.Controller.");
@@ -556,9 +545,9 @@
                         return true;
                     }
                 },
-                clickExport: function() {
+                clickOk: function() {
                     var ret = true;
-                    if (that.binding.curOLELetterID && !AppBar.busy) {
+                    if (!AppBar.busy && AppBar.barControl && !AppBar.barControl.opened) {
                         ret = false;
                     }
                     return ret;

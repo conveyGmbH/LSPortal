@@ -18,6 +18,6 @@
     height: 300px;
 }
 
-.view-size-small #reportingListhost {
-    height: 400px;
+.view-size-small .reportingListhost-line {
+    display: none;
 }
