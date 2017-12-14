@@ -499,6 +499,12 @@
                                 visitorsPerDayChart.innerHTML = "";
                                 try {
                                     visitorsPerDayChart.innerHTML = "";
+                                    var rendererOptions = {};
+                                    if (bAnimated) {
+                                        rendererOptions.animation = {
+                                            speed: 500
+                                        };
+                                    }
                                     that.barChart = $.jqplot(barChartId, [series], {
                                         grid: {
                                             drawBorder: false,
@@ -509,11 +515,7 @@
                                         animate: bAnimated,
                                         seriesDefaults: {
                                             renderer: $.jqplot.BarRenderer,
-                                            rendererOptions: {
-                                                animation: {
-                                                    speed: 500
-                                                }
-                                            },
+                                            rendererOptions: rendererOptions,
                                             shadow: false,
                                             pointLabels: {
                                                 show: true

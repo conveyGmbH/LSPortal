@@ -905,7 +905,7 @@ input.win-textbox, input.win-checkbox, input.win-radio, textarea.win-textarea, s
 }
 .view-size-medium .input_big_left {
     float: left;
-    width: 328px;
+    width: calc(100% - 150px);
     margin-left: 0;
 }
 .view-size-medium .input_small_right {
@@ -913,7 +913,7 @@ input.win-textbox, input.win-checkbox, input.win-radio, textarea.win-textarea, s
 }
 .view-size-medium .input_big_right {
     float: right;
-    width: 108px;
+    width: 150px;
     margin-right: 0;
 }
 
@@ -1061,6 +1061,20 @@ input.win-textbox, input.win-checkbox, input.win-radio, textarea.win-textarea, s
     margin-bottom: 4px;
 }
 */
+
+.view-size-medium-small .input_big_left,
+.view-size-small .input_big_left {
+    float: left;
+    width: 100%;
+    margin-top: 0;
+}
+.view-size-medium-small .input_big_right,
+.view-size-small .input_big_right {
+    float: left;
+    width: 100%;
+    margin-top: 0;
+}
+
 
 .view-size-small .button_line {
     display: -webkit-flex; /* Safari */

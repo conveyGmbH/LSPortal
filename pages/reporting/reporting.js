@@ -12,7 +12,6 @@
     "use strict";
 
     var pageName = Application.getPagePath("reporting");
-    var inResize = 0;
 
     WinJS.UI.Pages.define(pageName, {
         // This function is called whenever a user navigates to this page. It
@@ -20,7 +19,9 @@
         ready: function (element, options) {
             Log.call(Log.l.trace, pageName + ".");
             // TODO: Initialize the page here.
-            inResize = 0;
+            this.inResize = 0;
+            this.prevWidth = 0;
+            this.prevHeight = 0;
 
             // add page specific commands to AppBar
             AppBar.commandList = [
@@ -62,15 +63,31 @@
         updateLayout: function (element, viewState, lastViewState) {
             var ret = null;
             var that = this;
-            /// <param name="element" domElement="true" />
             Log.call(Log.l.u1, pageName + ".");
+            /// <param name="element" domElement="true" />
             // TODO: Respond to changes in viewState.
-            if (element && !this.inResize) {
+            if (element && !that.inResize) {
                 that.inResize = 1;
-                ret =  WinJS.Promise.timeout(0).then(function () {
-                    var countryChart = element.querySelector("#countryChart");
-                    if (countryChart && countryChart.style) {
-                       
+                ret = WinJS.Promise.timeout(0).then(function () {
+                    if (that.controller) {
+                        var contentarea = element.querySelector(".contentarea");
+                        if (contentarea) {
+                            var width = contentarea.clientWidth;
+                            var height = contentarea.clientHeight;
+                            var contentHeader = element.querySelector(".content-header");
+                            if (contentHeader) {
+                                height -= contentHeader.clientHeight;
+                            }
+                            if (width !== that.prevWidth || height !== that.prevHeight) {
+                                if (width !== that.prevWidth) {
+                                    if (typeof that.controller.showemployeeChart === "function") {
+                                        that.controller.showemployeeChart("employeeChart", false);
+                                    }
+                                }
+                                that.prevWidth = width;
+                                that.prevHeight = height;
+                            }
+                        }
                     }
                     that.inResize = 0;
                 });

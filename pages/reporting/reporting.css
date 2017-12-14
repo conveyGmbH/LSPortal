@@ -1,28 +1,23 @@
 /**
     reporting page styles
 */
-.progress-container-centered {
-    margin-top: 64px;
-    margin-left: calc(50% - 32px);
-    display: inline;
+.reporting-bar-chart {
+    height: 100%;
+    width: 100%;
 }
-.progress-centered {
+
+#reportingListhost {
+    height: 100px;
 }
-#employeeChart {
-    width: 90%;
+
+.view-size-medium #reportingListhost {
     height: 200px;
-    float: left;
-    margin-left: 2%;
 }
-#countryChart {
-    width: 90%;
-    height: 200px;
-    float: left;
-    margin-top: 5%;
-    margin-left: 2%;
+
+.view-size-medium-small #reportingListhost {
+    height: 300px;
 }
-@media (max-width:940px) and (min-width: 550px) {
-   .win-datepicker {
-    padding-left: 50px;
-}
+
+.view-size-small #reportingListhost {
+    height: 400px;
 }

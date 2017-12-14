@@ -336,177 +336,84 @@
             that.exportData = exportData;
 
             
-            this.countryChart = null;
-            this.countrytitle = that.title("reporting.countrychart");
-            this.countryChartArray = [];
-            this.countrydata = [];
-            this.countryticks = [];
-            var countryresult = null, ci = 9, cl = 0;
-            var showcountryChart = function(countryChartId, bAnimated) {
-                Log.call(Log.l.trace, "Reporting.Controller.");
-                var ret = new WinJS.Promise.as().then(function() {
-                    return Reporting.reportLand.select(function(json) {
-                        Log.print(Log.l.trace, "reportLand: success!");
-                        if (json && json.d && json.d.results && json.d.results.length > 0) {
-                            // store result for next use
-                            countryresult = json.d.results;
-                            if (countryresult.length - 1 < ci) {
-                                ci = countryresult.length - 1;
-                            }
-                            cl = json.d.results.length;
-                            for (ci; ci >= 0; ci--) {
-                                if (countryresult[ci].Land === null) {
-                                    countryresult[ci].Land = getResourceText("reporting.nocountry");
-                                }
-                                that.countrydata[ci] = [countryresult[ci].Land, countryresult[ci].Anzahl];
-                            }
-                        }
-                    }, function(errorResponse) {
-                        // called asynchronously if an error occurs
-                        // or server returns response with an error status.
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                    });
-                }).then(function () {
-                    try {
-                        that.showcountryChart = $.jqplot(countryChartId, [that.countrydata], {
-                            title: that.countrytitle,
-                            grid: {
-                                drawBorder: false,
-                                drawGridlines: false,
-                                background: "transparent",
-                                shadow: false
-                            },
-                            animate: bAnimated,
-                            seriesDefaults: {
-                                renderer: $.jqplot.BarRenderer,
-                                rendererOptions: {
-                                    animation: {
-                                        speed: 500
-                                    }
-                                },
-                                shadow: false,
-                                pointLabels: {
-                                    show: true
-                                },
-                                tickRenderer: $.jqplot.CanvasAxisTickRenderer,
-                                tickOptions: {
-                                    angle: -30
-                                }
-                            },
-                            axes: {
-                                xaxis: {
-                                    renderer: $.jqplot.CategoryAxisRenderer
-                                },
-                                yaxis: {
-                                    autoscale: true,
-                                    tickRenderer: $.jqplot.CanvasAxisTickRenderer,
-                                    tickOptions: {
-                                        labelPosition: 'start'
-                                    }
-                                }
-                            },
-                            legend: {
-                                show: false
-                            }
-                        });
-                        $("#" + countryChartId).unbind("jqplotDataClick");
-                        $("#" + countryChartId).bind("jqplotDataClick",
-                            function(ev, seriesIndex, pointIndex, data) {
-                                that.clickCountrySlice(that.countrydata, pointIndex);
-                            }
-                        );
-                        that.setLabelColor(showcountryChart, "jqplot-xaxis-tick", "#f0f0f0");
-                        that.setLabelColor(showcountryChart, "jqplot-point-label", "#f0f0f0");
-                    } catch (ex) {
-                        Log.print(Log.l.error, "exception occurred: " + ex.message);
-                    }
-                });
-                Log.ret(Log.l.trace);
-                return ret;
-            };
-            this.showcountryChart = showcountryChart;
-
             this.employeeChart = null;
+            this.barChartWidth = 0;
             this.employeetitle = that.title("reporting.employeechart");
             this.employeeChartArray = [];
             this.employeedata = [];
             this.employeedataID = [];
             this.employeeticks = [];
             var employeeResult = null, ei = 0, el = 0;
-            var showemployeeChart = function(employeeChartId, bAnimated) {
+            var showemployeeChart = function (barChartId, bAnimated) {
                 Log.call(Log.l.trace, "Reporting.Controller.");
-                var ret = new WinJS.Promise.as().then(function() {
-                    return Reporting.reportMitarbeiter.select(function(json) {
-                        Log.print(Log.l.trace, "reportMitarbeiter: success!");
-                        if (json && json.d && json.d.results) {
-                            // store result for next use
-                            employeeResult = json.d.results;
-                            el = json.d.results.length;
-                            for (ei; ei < el; ei++) {
-                                that.employeedata[ei] = [employeeResult[ei].EmployeeName, employeeResult[ei].Anzahl];
-                                that.employeedataID[ei] = [employeeResult[ei].EmployeeID];
+                WinJS.Promise.timeout(0).then(function () {
+                    if (!that.employeedata || !that.employeedata.length) {
+                        Log.print(Log.l.trace, "extra ignored");
+                    } else {
+                        var reportingBarChart = pageElement.querySelector("#" + barChartId);
+                        if (reportingBarChart) {
+                            var width = reportingBarChart.clientWidth;
+                            if (that.barChartWidth !== width) {
+                                that.barChartWidth = width;
+                                if (reportingBarChart.style) {
+                                    reportingBarChart.style.height = (that.employeedata.length * 60).toString() + "px";
+                                }
+                                try {
+                                    reportingBarChart.innerHTML = "";
+                                    var rendererOptions = {
+                                        barDirection: "horizontal"
+                                    };
+                                    if (bAnimated) {
+                                        rendererOptions.animation = {
+                                            speed: 500
+                                        };
+                                    }
+                                    that.employeeChart = $.jqplot(barChartId, [that.employeedata], {
+                                        title: that.employeetitle,
+                                        grid: {
+                                            drawBorder: false,
+                                            drawGridlines: false,
+                                            background: "transparent",
+                                            shadow: false
+                                        },
+                                        animate: bAnimated,
+                                        seriesDefaults: {
+                                            renderer: $.jqplot.BarRenderer,
+                                            rendererOptions: rendererOptions,
+                                            shadow: false,
+                                            pointLabels: {
+                                                show: true
+                                            }
+                                        },
+                                        axes: {
+                                            yaxis: {
+                                                renderer: $.jqplot.CategoryAxisRenderer
+                                            },
+                                            xaxis: {
+                                                renderer: $.jqplot.AxisThickRenderer
+                                            }
+                                        },
+                                        tickOptions: {
+                                            fontSize: '10pt'
+                                        },
+                                        legend: {
+                                            show: false
+                                        }
+                                    });
+                                    $("#" + barChartId).unbind("jqplotDataClick");
+                                    $("#" + barChartId).bind("jqplotDataClick",
+                                        function (ev, seriesIndex, pointIndex, data) {
+                                            that.clickEmployeeSlice(that.employeedataID, pointIndex);
+                                        }
+                                    );
+                                } catch (ex) {
+                                    Log.print(Log.l.error, "exception occurred: " + ex.message);
+                                }
                             }
                         }
-                    }, function(errorResponse) {
-                        // called asynchronously if an error occurs
-                        // or server returns response with an error status.
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                    });
-                }).then(function() {
-                    try {
-                        that.showemployeeChart = $.jqplot(employeeChartId, [that.employeedata], {
-                            title: that.employeetitle,
-                            grid: {
-                                drawBorder: false,
-                                drawGridlines: false,
-                                background: "transparent",
-                                shadow: false
-                            },
-                            animate: bAnimated,
-                            seriesDefaults: {
-                                renderer: $.jqplot.BarRenderer,
-                                rendererOptions: {
-                                    animation: {
-                                        speed: 500
-                                    }
-                                },
-                                shadow: false,
-                                pointLabels: {
-                                    show: true
-                                }
-                            },
-                            axes: {
-                                xaxis: {
-                                    renderer: $.jqplot.CategoryAxisRenderer
-                                },
-                                yaxis: {
-                                    renderer: $.jqplot.AxisThickRenderer
-
-                                }
-                            },
-                            tickOptions: {
-                                angle: -30,
-                                fontSize: '10pt'
-                            },
-                            legend: {
-                                show: false
-                            }
-                        });
-                        $("#" + employeeChartId).unbind("jqplotDataClick");
-                        $("#" + employeeChartId).bind("jqplotDataClick",
-                            function(ev, seriesIndex, pointIndex, data) {
-                                //that.clickBarSlice(ev, pointIndex);
-                                that.clickEmployeeSlice(that.employeedataID, pointIndex);
-                            }
-                        );
-                        that.setLabelColor(showemployeeChart, "jqplot-xaxis-tick", "#f0f0f0");
-                        that.setLabelColor(showemployeeChart, "jqplot-point-label", "#f0f0f0");
-                    } catch (ex) {
-                        Log.print(Log.l.error, "exception occurred: " + ex.message);
                     }
                 });
                 Log.ret(Log.l.trace);
-                return ret;
             };
             this.showemployeeChart = showemployeeChart;
             
@@ -736,6 +643,29 @@
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
+                    that.employeedata = [];
+                    that.employeedataID = [];
+                    return Reporting.reportMitarbeiter.select(function (json) {
+                        Log.print(Log.l.trace, "reportMitarbeiter: success!");
+                        if (json && json.d && json.d.results) {
+                            // store result for next use
+                            employeeResult = json.d.results;
+                            el = json.d.results.length;
+                            for (ei; ei < el; ei++) {
+                                // y-axis is ascending to top
+                                var ed = el - ei - 1;
+                                that.employeedata[ed] = [employeeResult[ei].Anzahl, employeeResult[ei].EmployeeName];
+                                that.employeedataID[ed] = [employeeResult[ei].EmployeeID];
+                            }
+                            that.barChartWidth = 0;
+                            that.showemployeeChart("employeeChart", true);
+                        }
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    });
+                }).then(function () {
                     var savedRestriction = AppData.getRestriction("Kontakt");
                     if (!savedRestriction) {
                         savedRestriction = {};
@@ -760,9 +690,6 @@
                     }
 
                 }).then(function () {
-                    Log.print(Log.l.trace, "Data loaded");
-                    return that.showcountryChart("countryChart", true);
-                }).then(function () {
                     AppBar.notifyModified = true;
                     AppBar.triggerDisableHandlers();
                     return WinJS.Promise.as();
@@ -776,12 +703,6 @@
             that.processAll().then(function() {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
-            }).then(function() {
-                Log.print(Log.l.trace, "Data loaded");
-                //return that.showcountryChart("countryChart", true);
-            }).then(function () {
-                Log.print(Log.l.trace, "Data loaded");
-                return that.showemployeeChart("employeeChart", true);
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
             });

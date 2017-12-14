@@ -77,7 +77,6 @@
                     <div class="field_line">
                         <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'reporting.exportlist'}"></span>
                         <span class="label landscape_only" data-win-res="{textContent: 'reporting.exportlist'}"></span>
-                        <br/>
                         <div id="reportingListhost" class="input_field fragmenthost"></div>
                     </div>
                     <div class="line-separator"></div>
@@ -93,16 +92,12 @@
                         <span class="large_field"
                                   data-win-bind="textContent: progress.text"></span>
                     </div>
-                    <div id="field_line_chart" class="field_line">
-                    <div id="employeeChart" class="plot bar-chart">
+                    <div class="line-separator"
+                         data-win-bind="style.display: progress.show Binding.Converter.toDisplay"></div>
+                    <div class="field_line">
+                        <div id="employeeChart" class="reporting-bar-chart">
+                        </div>
                     </div>
-                    </div>
-                    <div id="field_line_chart" class="field_line">
-                    <div id="countryChart" class="plot bar-chart">
-                    </div>
-                    
-                    </div>
-                    <br/>
                 </div>
             </div>
             <div class="error-message"
