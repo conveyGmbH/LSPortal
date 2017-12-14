@@ -208,10 +208,7 @@
                         if (json && json.d && json.d.results) {
                             var results;
                             if (dbViewTitle) {
-                                results = resultsTitle;
-                                json.d.results.forEach(function (item) {
-                                    results.push(item);
-                                });
+                                results = resultsTitle.concat(json.d.results);
                             } else {
                                 results = json.d.results;
                             }
