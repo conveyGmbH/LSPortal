@@ -455,6 +455,16 @@
     "mailing.mailtext"      : "Texte mail",
     "mailing.standart"      : "Standart",
 
+	    "mailingProduct.title"         : "Mailing Produit",
+    "mailingProduct.event"         : "événement",
+    "mailingProduct.language"      : "Langue",
+    "mailingProduct.sender"        : "Expéditeur",
+    "mailingProduct.reply"         : "Réponse",
+    "mailingProduct.subject"       : "Respect",
+    "mailingProduct.cc"            : "CC",
+    "mailingProduct.bcc"           : "BCC",
+    "mailingProduct.mailtext"      : "Texte mail",
+
     "productlist.title"     : "Sélection de produits",
     "productlist.comment"   : "Utilisez le bouton Retour sur cette page pour y retourner!",
     "productlist.count"     : "Nombre",

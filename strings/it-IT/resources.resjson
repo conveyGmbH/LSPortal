@@ -455,6 +455,16 @@
     "mailing.mailtext"      : "Testo della mail",
     "mailing.standart"      : "Standart",
 
+	"mailingProduct.title"         : "Mailing Prodotto",
+    "mailingProduct.event"         : "Evento",
+    "mailingProduct.language"      : "Lingua",
+    "mailingProduct.sender"        : "Mittente",
+    "mailingProduct.reply"         : "Risposta",
+    "mailingProduct.subject"       : "Riguardo",
+    "mailingProduct.cc"            : "CC",
+    "mailingProduct.bcc"           : "BCC",
+    "mailingProduct.mailtext"      : "Testo della mail",
+
     "productlist.title"     : "Selezione del prodotto",
     "productlist.comment"   : "Utilizzate il pulsante \"indietro\" su questa pagina per tornare alla pagina precedente!",
     "productlist.count"     : "Totale",
