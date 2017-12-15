@@ -355,6 +355,7 @@
     "label.skills"          : "Ruolo",
     "label.skillentry"      : "Immetti ruolo",
     "label.mailing"         : "Email",
+    "label.mailingProduct"  : "Prodotto Email",
     "label.infodesk"        : "Infodesk",
     "label.mandatory"       : "Campo obbligatorio",
 	  "label.barcodeAdministration" : "Barcode",
@@ -463,5 +464,7 @@
     "mandatory.doMandatory" : "Mostra campo obbligatorio di questionario",
     "mandatory.doQuestionnaireMandatory"  : "Show message for mandatory fields in questionnaire",
     "mandatory.doContactMandatory"  : "Show message for mandatory fields in contact",
-    "mandatory.count"  : "Count"
+    "mandatory.count"  : "Count",
+
+    "barcodeAdministration.title" : "Barcode"
 }

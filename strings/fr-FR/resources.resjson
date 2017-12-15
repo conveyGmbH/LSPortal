@@ -355,6 +355,7 @@
     "label.skills"          : "Capacités",
     "label.skillentry"      : "entrer une capacité",
     "label.mailing"         : "Mail",
+    "label.mailingProduct"  : "Produit Mail",
     "label.infodesk"        : "Infodesk",
     "label.mandatory"       : "Champs obligatoires",
     "label.barcodeAdministration" : "Code barre",
@@ -463,5 +464,7 @@
     "mandatory.questionnaire" : "Champs obligatoires du Questionnaire",
     "mandatory.doQuestionnaireMandatory"  : "afficher message",
     "mandatory.doContactMandatory"  : "afficher message",
-    "mandatory.count"  : "Nombre"
+    "mandatory.count"  : "Nombre",
+
+	  "barcodeAdministration.title" : "Barcode"
 }

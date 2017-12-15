@@ -355,10 +355,10 @@
     "label.skills"          : "Skills",
     "label.skillentry"      : "Skill entries",
     "label.mailing"         : "Mail",
+    "label.mailingProduct"  : "Product Mail",
     "label.infodesk"        : "Infodesk",
     "label.mandatory"       : "Mandatory Fields",
 	  "label.barcodeAdministration" : "Barcode",
-
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Cancel",
@@ -464,5 +464,7 @@
     "mandatory.questionnaire" : "Mandatory fields in Questionnaire",
     "mandatory.doQuestionnaireMandatory"  : "Show message",
     "mandatory.doContactMandatory"  : "Show message",
-    "mandatory.count"  : "Count"
+    "mandatory.count"  : "Count",
+
+	"barcodeAdministration.title" : "Barcode"
 }
