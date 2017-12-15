@@ -196,7 +196,7 @@
                 (item.Vorname ? (item.Vorname + " ") : "") +
                 (item.Nachname ? item.Nachname : ""); // muss geändert werden
                 //}
-                if (item.INITBenAnwID !== 0 && item.INITBenAnwID !== null) {
+                if (item.INITBenAnwID !== 0 && item.INITBenAnwID !== null && item.Present !== 1) {
                     for (var i = 0; i < messages.length; i++) {
                         if (messages[i].INITBenAnwID === item.INITBenAnwID) {
                             item.title = messages[i].TITLE;
@@ -205,13 +205,13 @@
 
                     }
                 }
-                if (item.Present === 1) { // && item.Aktiv === "X"
+               /* if (item.Present === 1) { // && item.Aktiv === "X"
                     //document.getElementById("list-empList").className = "list-compressed";
                     item.presentClass = "list-compressed-green";
                 } else {
                     //document.getElementById("list-empList").className = "list-compressed-gray";
-                    item.presentClass = "list-compressed-gray";
-                }
+                    item.presentClass = "list-compressed-red";
+                }*/
             }
             this.resultConverter = resultConverter;
 
@@ -372,6 +372,10 @@
                             });
                         }
                     }).then(function () {
+                        var restriction = AppData.getRestriction("SkillEntry");
+                        if (!restriction) {
+                            restriction = {};
+                        }
                         return InfodeskEmpList.employeeView.select(function (json) {
                             // this callback will be called asynchronously
                             // when the response is available
@@ -468,7 +472,7 @@
                                 counter.style.display = "inline";
                             }
                             that.loading = false;
-                        }, that.binding.restriction); //that.binding.restriction beim neuladen ist die leer
+                        }, restriction); //that.binding.restriction beim neuladen ist die leer
                     });
                 });
                 Log.ret(Log.l.trace);

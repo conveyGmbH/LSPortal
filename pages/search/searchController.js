@@ -193,6 +193,9 @@
                     if (that.binding.restriction.INITLandID === "0") {
                         that.binding.restriction.INITLandID = "";
                     }
+                    if (that.binding.restriction.MitarbeiterID === 0) {
+                        that.binding.restriction.MitarbeiterID = "";
+                    }
                     AppData.setRestriction('Kontakt', that.binding.restriction);
                     AppData.setRecordId("Kontakt", null);
                     complete({});

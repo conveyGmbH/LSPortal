@@ -315,10 +315,12 @@
     "infodesk.name"         : "Nom",
     "infodesk.messages"     : "Nouvelles",
     "infodesk.receiver"     : "Récepteur",
-    "infodesk.message"     :  "Message",
+    "infodesk.message"     :  "Message aux récepteur",
 
     "infodeskEmpList.title" : "Comptes utilisateurs",
     "infodeskEmpList.count" : "Nombre",
+	  "infodeskEmpList.name"  : "Nom",
+	  "infodeskEmpList.firstName" : "Prénom",
     "infodeskEmpList.login" : "Utilisateur",
 
     "userinfo.title"        : "Données d'utilisateur",
@@ -355,6 +357,7 @@
     "label.mailing"         : "Mail",
     "label.infodesk"        : "Infodesk",
     "label.mandatory"       : "Champs obligatoires",
+    "label.barcodeAdministration" : "Code barre",
     
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annuler",
@@ -368,8 +371,8 @@
     "event.showHideQuestionnaire" : "afficher le champ de Questionnaire",
     "event.showHideSketch"  :   "afficher le champ de Esquisse",
     "event.showHideNavigationPages": "page de navigation",
-	"event.showHideBarcodeScan" : "Code barre",
-	"event.showHideCamera"  : "Caméra",
+	  "event.showHideBarcodeScan" : "Code barre",
+	  "event.showHideCamera"  : "Caméra",
     "event.note"            : "allusion",
     "event.appInfo"         : "Pour que ces modifications prennent effet, vous devez redémarrer votre APP",
 

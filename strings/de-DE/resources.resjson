@@ -192,7 +192,7 @@
     "camera.title"          : "Kamera",
     "camera.comment"        : "Verwende die Zurück-Schaltfläche auf dieser Seite um zurück zu gehen!",
 
-    "barcode.title"         : "Barcode",
+    "barcode.title"         : "Barcode Administration",
     "barcode.comment"       : "Verwende die Zurück-Schaltfläche auf dieser Seite um zurück zu gehen!",
     "barcode.barcode"       : "Barcode",
     "barcode.placement"     : "Plazieren Sie den Barcode innerhalb des Scan-Feldes",
@@ -314,11 +314,13 @@
     "infodesk.firstName"    : "Vorname",
     "infodesk.name"         : "Name",
     "infodesk.messages"     : "InfoText",
-	"infodesk.receiver"		: "Empfänger",
-	"infodesk.message"		: "Info2Text",
+	  "infodesk.receiver"		: "Empfänger",
+	  "infodesk.message"		: "Info an Empfänger",
 
     "infodeskEmpList.title" : "Benutzerkonten",
     "infodeskEmpList.count" : "Anzahl",
+	  "infodeskEmpList.name"  : "Name",
+	  "infodeskEmpList.firstName" : "Vorname",
     "infodeskEmpList.login" : "Benutzer",
 
     "userinfo.title"        : "Benutzerinfo",
@@ -356,6 +358,7 @@
     "label.mailingProduct"  : "Produkt E-Mail",
     "label.infodesk"        : "Infodesk",
     "label.mandatory"       : "Pflichtfelder",
+	  "label.barcodeAdministration" : "Barcode",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Abbrechen",
@@ -472,5 +475,7 @@
     "mandatory.questionnaire" : "Pflichtfelder im Fragebogen",
     "mandatory.doQuestionnaireMandatory"  : "Hinweis anzeigen",
     "mandatory.doContactMandatory"  : "Hinweis anzeigen",
-    "mandatory.count"  : "Anzahl"
+    "mandatory.count"       : "Anzahl",
+
+	"barcodeAdministration.title" : "Barcode"
 }

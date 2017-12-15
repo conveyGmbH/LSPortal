@@ -28,11 +28,6 @@
                 { TextDatumID: 1, TITLE: getResourceText("questionList.text") },
                 { TextDatumID: 2, TITLE: getResourceText("questionList.date") }
             ]);
-            /*this.requiredField = new WinJS.Binding.List([
-               { RequiredFieldID: 0, TITLE: null },
-               { RequiredFieldID: 1, TITLE: getResourceText("questionList.required") },
-               { RequiredFieldID: 2, TITLE: getResourceText("questionList.checkRequired") }
-            ]);*/
 
             var that = this;
 
@@ -50,21 +45,6 @@
                     that.initFragengruppe = null;
                 }
             }
-
-            // prevent some keyboard actions from listview to navigate within controls!
-           /* listView.addEventListener("keydown", function (e) {
-                if (!e.ctrlKey && !e.altKey) {
-                    switch (e.keyCode) {
-                        case WinJS.Utilities.Key.end:
-                        case WinJS.Utilities.Key.home:
-                        case WinJS.Utilities.Key.leftArrow:
-                        case WinJS.Utilities.Key.rightArrow:
-                        case WinJS.Utilities.Key.space:
-                            e.stopImmediatePropagation();
-                            break;
-                    }
-                }
-            }.bind(this), true);*/
 
             var singleRatingTemplate = null, multiRatingTemplate = null, comboTemplate = null, singleTemplate = null, multiTemplate = null;
             // Conditional renderer that chooses between templates
@@ -150,15 +130,6 @@
                         item["TextDatumID"] = 1;
                     }
                 }
-                // requiredFiled -> analog zu oben auch if(item.requiredfield === 1) 
-               /* item["RequiredFieldID"] = 0;
-                if (item.PflichtFlag) {
-                    if (item.PflichtFlag === 1) { //Anstatt DateCombobox -< RequiredCombobox
-                        item["RequiredFieldID"] = 1;
-                    } else {
-                        item["RequiredFieldID"] = 2;
-                    }
-                }*/
                 item.questionNumber = item.Sortierung.toString() + ".";
             }
             this.resultConverter = resultConverter;
@@ -440,11 +411,10 @@
                         that.loadData().then(function () {
                             that.selectRecordId(that.binding.questionId);
                         });
-                    },
-                        function (errorResponse) {
-                            AppBar.busy = false;
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        });
+                    }, function (errorResponse) {
+                        AppBar.busy = false;
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    });
 
                     Log.ret(Log.l.trace);
                 },
@@ -571,38 +541,6 @@
                     }
                     Log.ret(Log.l.trace);
                 },
-                /*changedcheckRequiredField: function (event) {
-                    Log.call(Log.l.trace, "QuestionList.Controller.");
-                    //analog zu changedTextDate
-                    Log.call(Log.l.trace, "QuestionList.Controller.");
-                    if (event.currentTarget && AppBar.notifyModified) {
-                        var value = event.currentTarget.value;
-                        if (that.curRecId && !that.prevRecId) {
-                            var curScope = that.scopeFromRecordId(that.curRecId);
-                            if (curScope && curScope.item &&
-                                curScope.item.RequiredFieldID !== value) {
-                                curScope.item.RequiredFieldID = value;
-                                switch (curScope.item.RequiredFieldID) {
-                                    case "1":
-                                        curScope.item.PflichtFlag = "1";
-                                        break;
-                                    case "2":
-                                        curScope.item.PflichtFlag = "2";
-                                        break;
-                                    default:
-                                        curScope.item.PflichtFlag = null;
-                                }
-                                var newRecord = that.getFieldEntries(curScope.index, curScope.item.Fragentyp);
-                                that.mergeRecord(curScope.item, newRecord);
-                                that.questions.setAt(curScope.index, curScope.item);
-                                // set modified!
-                                AppBar.modified = true;
-                            }
-                        }
-                    }
-                    Log.ret(Log.l.trace);
-
-                },*/
                 changedAnswerCount: function (event) {
                     Log.call(Log.l.trace, "QuestionList.Controller.");
                     if (event.target && AppBar.notifyModified) {
@@ -890,14 +828,6 @@
                                                     comboTextDatum.value = item.TextDatumID;
                                                 }
                                             }
-                                            /* var comboRequiredField = element.querySelector("#RequiredField.win-dropdown");
-                                             if (comboRequiredField && comboRequiredField.winControl) {
-                                                 if (!comboRequiredField.winControl.data ||
-                                                     comboRequiredField.winControl.data && !comboRequiredField.winControl.data.length) {
-                                                     comboRequiredField.winControl.data = that.requiredField;
-                                                     comboRequiredField.value = item.RequiredFieldID;
-                                                 }
-                                             }*/
                                         }
                                     }
                                 }

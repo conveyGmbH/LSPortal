@@ -315,10 +315,12 @@
     "infodesk.name"         : "Last name",
     "infodesk.messages"     : "Messages",
     "infodesk.receiver"     : "Receiver",
-    "infodesk.message"      : "Message",
+    "infodesk.message"      : "Message to receiver",
 
     "infodeskEmpList.title" : "User accounts",
     "infodeskEmpList.count" : "Count",
+	  "infodeskEmpList.name"  : "Last name",
+	  "infodeskEmpList.firstName" : "First name",
     "infodeskEmpList.login" : "User",
 
     "userinfo.title"        : "User Info",
@@ -355,6 +357,8 @@
     "label.mailing"         : "Mail",
     "label.infodesk"        : "Infodesk",
     "label.mandatory"       : "Mandatory Fields",
+	  "label.barcodeAdministration" : "Barcode",
+
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Cancel",
@@ -368,8 +372,8 @@
     "event.showHideQuestionnaire" : "Show Questionnaire",
     "event.showHideSketch"  :  "Show Sketch",
     "event.showHideNavigationPages": "Navigationpages",
-	"event.showHideBarcodeScan" : "Barcode",
-	"event.showHideCamera"  : "Camera",
+	  "event.showHideBarcodeScan" : "Barcode",
+	  "event.showHideCamera"  : "Camera",
     "event.note"            : "Note",
     "event.appInfo"         : "Please restart the APP for the changes to take effect",
 

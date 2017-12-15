@@ -110,3 +110,39 @@
     padding-top: 4px;
     padding-bottom: 4px;
 }
+
+.onsite-offsite {
+    width: 16px;
+    height: 16px;
+    border-radius: 10px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: white;
+    display: block;
+    position: relative;
+    left: 22px;
+    top: 22px;
+    z-index: 10000;
+    padding: 0;
+    text-align: center;
+    vertical-align: top;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+.onsite-offsite-symbol {
+    font-family: "Symbols";
+    padding: 16px;
+    display: block;
+    position: relative;
+    left: -14px;
+    top: -15px;
+}
+.statusOn {
+    background-color:forestgreen;
+    color: white;
+}
+
+.statusOff {
+    background-color: red;
+    color: white;
+}
