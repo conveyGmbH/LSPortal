@@ -23,7 +23,47 @@
             this.prevWidth = 0;
             this.prevHeight = 0;
 
-            var commandList = [];
+            if (element) {
+                var shapeElements = element.querySelectorAll(".tool-image");
+                if (shapeElements && shapeElements.length > 0) {
+                    for (var i = 0; i < shapeElements.length; i++) {
+                        if (shapeElements[i].id && shapeElements[i].id.length > 0) {
+                            var svgObject = shapeElements[i];
+                            // insert svg object before span element 
+                            if (svgObject && !svgObject.firstChild) {
+                                var size = 32;
+                                if (svgObject.parentNode &&
+                                    svgObject.parentNode.clientWidth) {
+                                    size = svgObject.parentNode.clientWidth;
+                                }
+                                svgObject.setAttribute("width", size.toString());
+                                svgObject.setAttribute("height", size.toString());
+                                svgObject.style.display = "inline";
+
+                                // overlay span element over svg object to enable user input
+                                //winCommandimage.setAttribute("style", "position: relative; top: -28px; width: 24px; height: 24px;");
+
+                                // load the image file
+                                Colors.loadSVGImage({
+                                    fileName: shapeElements[i].id,
+                                    color: Colors.textColor,
+                                    size: size,
+                                    useFillColor: false,
+                                    useStrokeColor: true
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+
+            var commandList = options && options.isLocal ? [
+                { id: 'clickUndo', label: getResourceText('command.undo'), tooltip: getResourceText('tooltip.undo'), section: 'primary', svg: 'undo' },
+                { id: 'clickRedo', label: getResourceText('command.redo'), tooltip: getResourceText('tooltip.redo'), section: 'primary', svg: 'redo' },
+                { id: 'clickShapes', label: getResourceText('sketch.shape'), tooltip: getResourceText('sketch.shape'), section: 'secondary' },
+                { id: 'clickColors', label: getResourceText('sketch.color'), tooltip: getResourceText('sketch.color'), section: 'secondary' },
+                { id: 'clickWidths', label: getResourceText('sketch.width'), tooltip: getResourceText('sketch.width'), section: 'secondary' }
+            ] : [];
             this.controller = new SvgSketch.Controller(element, options, commandList);
 
             Log.ret(Log.l.trace);
@@ -36,6 +76,26 @@
             Log.ret(Log.l.trace);
         },
 
+        canUnload: function (complete, error) {
+            Log.call(Log.l.trace, fragmentName + ".");
+            var ret;
+            if (this.controller) {
+                ret = this.controller.saveData(function (response) {
+                    // called asynchronously if ok
+                    complete(response);
+                }, function (errorResponse) {
+                    error(errorResponse);
+                });
+            } else {
+                ret = WinJS.Promise.as().then(function () {
+                    var err = { status: 500, statusText: "fatal: fragment already deleted!" };
+                    error(err);
+                });
+            }
+            Log.ret(Log.l.trace);
+            return ret;
+        },
+
         updateLayout: function (element, viewState, lastViewState) {
             var ret = null;
             var that = this;
@@ -44,8 +104,8 @@
             if (element && !that.inResize) {
                 that.inResize = 1;
                 ret = WinJS.Promise.timeout(0).then(function () {
-                    var svg = element.querySelector("#svgsketch.svgdiv");
-                    if (svg && svg.style) {
+                    var doccontainer = element.querySelector(".doc-container");
+                    if (doccontainer && doccontainer.style) {
                         var fragment = element.querySelector(".contentarea");
                         if (fragment) {
                             var width = fragment.clientWidth;
@@ -53,11 +113,11 @@
 
                             if (width > 0 && width !== that.prevWidth) {
                                 that.prevWidth = width;
-                                svg.style.width = width.toString() + "px";
+                                doccontainer.style.width = width.toString() + "px";
                             }
                             if (height > 0 && height !== that.prevHeight) {
                                 that.prevHeight = height;
-                                svg.style.height = height.toString() + "px";
+                                doccontainer.style.height = height.toString() + "px";
                             }
                         }
                     }

@@ -1,12 +1,15 @@
 ﻿// controller for page: imgSketch
 /// <reference path="~/www/lib/WinJS/scripts/base.js" />
 /// <reference path="~/www/lib/WinJS/scripts/ui.js" />
-/// <reference path="~/www/lib/convey/scripts/appSettings.js" />
+/// <reference path="~/www/lib/convey/scripts/logging.js" />
 /// <reference path="~/www/lib/convey/scripts/dataService.js" />
 /// <reference path="~/www/lib/convey/scripts/fragmentController.js" />
 /// <reference path="~/www/lib/hammer/scripts/hammer.js" />
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/fragments/imgSketch/imgSketchService.js" />
+/// <reference path="~/plugins/cordova-plugin-camera/www/CameraConstants.js" />
+/// <reference path="~/plugins/cordova-plugin-camera/www/Camera.js" />
+/// <reference path="~/plugins/cordova-plugin-device/www/device.js" />
 
 (function () {
     "use strict";
@@ -25,7 +28,8 @@
             var scaleOut = 0.8;
 
             Fragments.Controller.apply(this, [fragmentElement, {
-                noteId: 0,
+                noteId: null,
+                isLocal: options.isLocal,
                 dataSketch: {}
             }, commandList]);
             this.img = null;
@@ -41,8 +45,8 @@
             this.hasDoc = hasDoc;
 
             this.dispose = function () {
+                that.removeDoc();
                 if (that.img) {
-                    that.removePhoto();
                     that.img.src = "";
                     that.img = null;
                 }
@@ -69,7 +73,7 @@
                     if (photoItemBox) {
                         var oldElement = photoItemBox.firstElementChild || photoItemBox.firstChild;
                         if (oldElement) {
-                            oldElement.parentNode.removeChild(oldElement);
+                            photoItemBox.removeChild(oldElement);
                             oldElement.innerHTML = "";
                         }
                     }
@@ -149,6 +153,7 @@
                                 }
                         }
                     }
+
                     if (imgRotation === 90 || imgRotation === 270) {
                         marginTop = (imgHeight - imgWidth) / 2;
                         marginLeft = (imgWidth - imgHeight) / 2;
@@ -189,13 +194,6 @@
                     var photoItemBox = fragmentElement.querySelector("#notePhoto .win-itembox");
                     if (photoItemBox) {
                         if (getDocData()) {
-                            if (photoItemBox.childElementCount > 1) {
-                                var oldElement = photoItemBox.firstElementChild || photoItemBox.firstChild;
-                                if (oldElement) {
-                                    oldElement.style.display = "block";
-                                    oldElement.style.position = "absolute";
-                                }
-                            }
                             that.img = new Image();
                             WinJS.Utilities.addClass(that.img, "active");
                             that.img.src = getDocData();
@@ -345,45 +343,45 @@
                                 imgRotation = 0;
                                 imgScale = 1;
                                 calcImagePosition();
-                                if (photoItemBox.childElementCount > 0) {
-                                    if (that.img.style) {
-                                        that.img.style.transform = "";
-                                        that.img.style.visibility = "hidden";
-                                        that.img.style.display = "block";
-                                        that.img.style.position = "absolute";
-                                        that.img.style.top = "0px";
-                                    }
-                                    photoItemBox.appendChild(that.img);
+                                var oldElement = photoItemBox.firstElementChild || photoItemBox.firstChild;
+                                if (oldElement && oldElement.style) {
+                                    oldElement.style.display = "block";
+                                    oldElement.style.position = "absolute";
+                                }
+                                if (that.img.style) {
+                                    that.img.style.transform = "";
+                                    that.img.style.visibility = "hidden";
+                                    that.img.style.display = "block";
+                                    that.img.style.position = "absolute";
+                                }
+                                photoItemBox.appendChild(that.img);
 
-                                    var animationDistanceX = imgWidth / 4;
-                                    var animationOptions = { top: "0px", left: animationDistanceX.toString() + "px" };
+                                var animationDistanceX = imgWidth / 4;
+                                var animationOptions = { top: "0px", left: animationDistanceX.toString() + "px" };
+                                if (that.img.style) {
+                                    that.img.style.visibility = "";
+                                }
+                                WinJS.UI.Animation.enterContent(that.img, animationOptions).then(function () {
                                     if (that.img.style) {
-                                        that.img.style.visibility = "";
+                                        that.img.style.display = "";
+                                        that.img.style.position = "";
                                     }
-                                    WinJS.UI.Animation.enterContent(that.img, animationOptions).then(function () {
-                                        if (that.img.style) {
-                                            that.img.style.display = "";
-                                            that.img.style.position = "";
+                                    while (photoItemBox.childElementCount > 1) {
+                                        oldElement = photoItemBox.firstElementChild || photoItemBox.firstChild;
+                                        if (oldElement) {
+                                            photoItemBox.removeChild(oldElement);
+                                            oldElement.innerHTML = "";
                                         }
-                                        if (photoItemBox.childElementCount > 1) {
-                                            var oldElement = photoItemBox.firstElementChild || photoItemBox.firstChild;
-                                            if (oldElement) {
-                                                oldElement.parentNode.removeChild(oldElement);
-                                                oldElement.innerHTML = "";
-                                            }
+                                    }
+                                });
+                                if (photoItemBox.childElementCount > 1) {
+                                    WinJS.Promise.timeout(50).then(function () {
+                                        oldElement = photoItemBox.firstElementChild || photoItemBox.firstChild;
+                                        if (oldElement) {
+                                            animationOptions.left = (-animationDistanceX).toString() + "px";
+                                            WinJS.UI.Animation.exitContent(oldElement, animationOptions);
                                         }
                                     });
-                                    if (photoItemBox.childElementCount > 1) {
-                                        WinJS.Promise.timeout(50).then(function () {
-                                            var oldElement = photoItemBox.firstElementChild || photoItemBox.firstChild;
-                                            if (oldElement) {
-                                                animationOptions.left = (-animationDistanceX).toString() + "px";
-                                                WinJS.UI.Animation.exitContent(oldElement, animationOptions);
-                                            }
-                                        });
-                                    }
-                                } else {
-                                    photoItemBox.appendChild(that.img);
                                 }
                             });
                         } else {
@@ -407,6 +405,161 @@
                 }
                 Log.ret(Log.l.trace);
             }
+
+            var insertCameradata = function (imageData, width, height) {
+                var ovwEdge = 256;
+                var err = null;
+                Log.call(Log.l.trace, "ImgSketch.Controller.");
+                AppData.setErrorMsg(that.binding);
+                var dataSketch = that.binding.dataSketch;
+                var ret = new WinJS.Promise.as().then(function () {
+                    if (imageData.length < 500000) {
+                        // keep original 
+                        return WinJS.Promise.as();
+                    }
+                    return Colors.resizeImageBase64(imageData, "image/jpeg", 2560, AppData.generalData.cameraQuality, 0.25);
+                }).then(function (resizeData) {
+                    if (resizeData) {
+                        Log.print(Log.l.trace, "resized");
+                        imageData = resizeData;
+                    }
+                    return Colors.resizeImageBase64(imageData, "image/jpeg", ovwEdge, AppData.generalData.cameraQuality);
+                }).then(function (ovwData) {
+                    dataSketch.KontaktID = AppData.getRecordId("Kontakt");
+                    if (!dataSketch.KontaktID) {
+                        err = {
+                            status: -1,
+                            statusText: "missing recordId for table Kontakt"
+                        }
+                        AppData.setErrorMsg(that.binding, err);
+                        return WinJS.Promise.as();
+                    } else {
+                        // JPEG note
+                        dataSketch.ExecAppTypeID = 3;
+                        dataSketch.DocGroup = 1;
+                        dataSketch.DocFormat = 3;
+                        dataSketch.Width = width;
+                        dataSketch.Height = height;
+                        dataSketch.OvwEdge = ovwEdge;
+                        dataSketch.ColorType = 11;
+                        dataSketch.DocExt = "jpg";
+
+                        // UTC-Zeit in Klartext
+                        var now = new Date();
+                        var dateStringUtc = now.toUTCString();
+
+                        // decodierte Dateigröße
+                        var contentLength = Math.floor(imageData.length * 3 / 4);
+
+                        dataSketch.Quelltext = "Content-Type: image/jpegAccept-Ranges: bytes\x0D\x0ALast-Modified: " +
+                            dateStringUtc +
+                            "\x0D\x0AContent-Length: " +
+                            contentLength +
+                            "\x0D\x0A\x0D\x0A" +
+                            imageData;
+
+                        if (ovwData) {
+                            var contentLengthOvw = Math.floor(ovwData.length * 3 / 4);
+                            dataSketch.OvwQuelltext =
+                                "Content-Type: image/jpegAccept-Ranges: bytes\x0D\x0ALast-Modified: " +
+                                dateStringUtc +
+                                "\x0D\x0AContent-Length: " +
+                                contentLengthOvw +
+                                "\x0D\x0A\x0D\x0A" +
+                                ovwData;
+                        }
+                        return ImgSketch.sketchView.insert(function (json) {
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            AppBar.busy = false;
+                            Log.print(Log.l.trace, "sketchData insert: success!");
+                            // select returns object already parsed from json file in response
+                            if (json && json.d) {
+                                that.resultConverter(json.d);
+                                that.binding.dataSketch = json.d;
+                                that.binding.noteId = json.d.KontaktNotizVIEWID;
+                                WinJS.Promise.timeout(0).then(function () {
+                                    showPhotoAfterResize();
+                                }).then(function () {
+                                    // reload list
+                                    if (AppBar.scope && typeof AppBar.scope.loadList === "function") {
+                                        AppBar.scope.loadList(that.binding.noteId);
+                                    }
+                                });
+                            }
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppBar.busy = false;
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        },
+                        dataSketch,
+                        that.binding.isLocal);
+                    }
+                });
+                Log.ret(Log.l.trace);
+                return ret;
+            };
+            this.insertCameradata = insertCameradata;
+
+            var onPhotoDataSuccess = function (imageData) {
+                Log.call(Log.l.trace, "Questionnaire.Controller.");
+                // Get image handle
+                //
+                var cameraImage = new Image();
+                // Show the captured photo
+                // The inline CSS rules are used to resize the image
+                //
+                cameraImage.src = "data:image/jpeg;base64," + imageData;
+
+                var width = cameraImage.width;
+                var height = cameraImage.height;
+                Log.print(Log.l.trace, "width=" + width + " height=" + height);
+
+                // todo: create preview from imageData
+                that.insertCameradata(imageData, width, height);
+                Log.ret(Log.l.trace);
+            };
+
+            var onPhotoDataFail = function (message) {
+                Log.call(Log.l.error, "Questionnaire.Controller.");
+                //message: The message is provided by the device's native code
+                //AppData.setErrorMsg(that.binding, message);
+                AppBar.busy = false;
+                Log.ret(Log.l.error);
+            };
+
+            //start native Camera async
+            AppData.setErrorMsg(that.binding);
+            var takePhoto = function () {
+                Log.call(Log.l.trace, "ImgSketch.Controller.");
+                if (navigator.camera &&
+                    typeof navigator.camera.getPicture === "function") {
+                    // shortcuts for camera definitions
+                    //pictureSource: navigator.camera.PictureSourceType,   // picture source
+                    //destinationType: navigator.camera.DestinationType, // sets the format of returned value
+                    Log.print(Log.l.trace, "calling camera.getPicture...");
+                    // Take picture using device camera and retrieve image as base64-encoded string
+                    AppBar.busy = true;
+                    navigator.camera.getPicture(onPhotoDataSuccess, onPhotoDataFail, {
+                        destinationType: Camera.DestinationType.DATA_URL,
+                        sourceType: Camera.PictureSourceType.CAMERA,
+                        allowEdit: true,
+                        quality: AppData.generalData.cameraQuality,
+                        targetWidth: -1,
+                        targetHeight: -1,
+                        encodingType: Camera.EncodingType.JPEG,
+                        saveToPhotoAlbum: false,
+                        cameraDirection: Camera.Direction.BACK,
+                        variableEditRect: true
+                    });
+                } else {
+                    Log.print(Log.l.error, "camera.getPicture not supported...");
+                    AppData.setErrorMsg(that.binding, { errorMessage: "Camera plugin not supported" });
+                }
+                Log.ret(Log.l.trace);
+            }
+            this.takePhoto = takePhoto;
 
             var loadData = function (noteId) {
                 var ret;
@@ -436,8 +589,13 @@
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
                     },
-                    noteId);
+                    noteId,
+                    that.binding.isLocal);
                 } else {
+                    if (that.binding.isLocal) {
+                        // take photo first - but only if isLocal!
+                        that.takePhoto();
+                    }
                     ret = WinJS.Promise.as();
                 }
                 Log.ret(Log.l.trace);
@@ -452,6 +610,59 @@
                 Log.ret(Log.l.trace);
             }
             this.removeDoc = removeDoc;
+
+            var saveData = function (complete, error) {
+                //img can't be changed
+                Log.call(Log.l.trace, "ImgSketch.Controller.");
+                var ret = new WinJS.Promise.as().then(function () {
+                    if (typeof complete === "function") {
+                        complete(that.binding.dataSketch);
+                    }
+                });
+                Log.ret(Log.l.trace, ret);
+                return ret;
+            };
+            this.saveData = saveData;
+
+            var deleteData = function() {
+                Log.call(Log.l.trace, "ImgSketch.Controller.");
+                var ret= WinJS.Promise.as().then(function () {
+                    if (options && options.isLocal) {
+                        return ImgSketch.sketchView.deleteRecord(function (response) {
+                            // called asynchronously if ok
+                            Log.print(Log.l.trace, "ImgSketchData delete: success!");
+                            //reload sketchlist
+                            if (AppBar.scope && typeof AppBar.scope.loadList === "function") {
+                                AppBar.scope.loadList(null);
+                            }
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                            var message = null;
+                            Log.print(Log.l.error, "error status=" + errorResponse.status + " statusText=" + errorResponse.statusText);
+                            if (errorResponse.data && errorResponse.data.error) {
+                                Log.print(Log.l.error, "error code=" + errorResponse.data.error.code);
+                                if (errorResponse.data.error.message) {
+                                    Log.print(Log.l.error, "error message=" + errorResponse.data.error.message.value);
+                                    message = errorResponse.data.error.message.value;
+                                }
+                            }
+                            if (!message) {
+                                message = getResourceText("error.delete");
+                            }
+                            alert(message);
+                        },
+                        that.binding.noteId,
+                        that.binding.isLocal);
+                    } else {
+                        return WinJS.Promise.as();
+                    }
+                });
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+            this.deleteData = deleteData;
 
             // define handlers
             this.eventHandlers = {
@@ -513,48 +724,6 @@
                         rotate: rotate
                     });
                     AppBar.triggerDisableHandlers();
-                    Log.ret(Log.l.trace);
-                },
-                clickDelete: function (event) {
-                    Log.call(Log.l.trace, "ImgSketch.Controller.");
-                    var confirmTitle = getResourceText("sketch.questionDelete");
-                    confirm(confirmTitle, function (result) {
-                        if (result) {
-                            WinJS.Promise.as().then(function () {
-                                return ImgSketch.sketchView.deleteRecord(function (response) {
-                                    // called asynchronously if ok
-                                    Log.print(Log.l.trace, "ImgSketchData delete: success!");
-                                    //reload sketchlist
-                                    if (AppBar.scope && typeof AppBar.scope.loadList === "function") {
-                                        AppBar.scope.loadList(null);
-                                    }
-                                },
-                                    function (errorResponse) {
-                                        // called asynchronously if an error occurs
-                                        // or server returns response with an error status.
-                                        AppData.setErrorMsg(that.binding, errorResponse);
-
-                                        var message = null;
-                                        Log.print(Log.l.error, "error status=" + errorResponse.status + " statusText=" + errorResponse.statusText);
-                                        if (errorResponse.data && errorResponse.data.error) {
-                                            Log.print(Log.l.error, "error code=" + errorResponse.data.error.code);
-                                            if (errorResponse.data.error.message) {
-                                                Log.print(Log.l.error, "error message=" + errorResponse.data.error.message.value);
-                                                message = errorResponse.data.error.message.value;
-                                            }
-                                        }
-                                        if (!message) {
-                                            message = getResourceText("error.delete");
-                                        }
-                                        alert(message);
-                                    },
-                                    that.binding.noteId,
-                                    that.binding.isLocal);
-                            });
-                        } else {
-                            Log.print(Log.l.trace, "clickDelete: user choice CANCEL");
-                        }
-                    });
                     Log.ret(Log.l.trace);
                 }
             };

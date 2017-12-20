@@ -24,10 +24,10 @@
                 showPhoto: false,
                 showList: false,
                 moreNotes: false,
-                userHidesList: false
+                userHidesList: false,
+                contactId: AppData.getRecordId("Kontakt_Remote")
             }, commandList]);
 
-            this.contactId = AppData.getRecordId("Kontakt");
             this.pageElement = pageElement;
             this.docViewer = null;
 
@@ -37,6 +37,10 @@
                     that.binding.moreNotes = true;
                 } else {
                     that.binding.moreNotes = false;
+                    if (!count) {
+                        that.binding.showSvg = false;
+                        that.binding.showPhoto = false;
+                    }
                 }
                 if (!that.binding.userHidesList) {
                     that.binding.showList = that.binding.moreNotes;
@@ -56,8 +60,8 @@
                     that.binding.showPhoto = false;
                     docViewer = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("svgSketch"));
                 } else if (AppData.isImg(docGroup, docFormat)) {
-                    that.binding.showSvg = false;
                     that.binding.showPhoto = true;
+                    that.binding.showSvg = false;
                     docViewer = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("imgSketch"));
                 } else {
                     docViewer = null;
@@ -98,9 +102,9 @@
                         bUpdateCommands = true;
                         ret = that.docViewer.controller.loadData(noteId);
                     } else if (AppData.isSvg(docGroup, docFormat)) {
-                        Log.print(Log.l.trace, "load new svgSketch!");
                         that.binding.showSvg = true;
                         that.binding.showPhoto = false;
+                        Log.print(Log.l.trace, "load new svgSketch!");
                         parentElement = pageElement.querySelector("#svghost");
                         if (parentElement) {
                             bGetNewDocViewer = true;
@@ -110,9 +114,9 @@
                             ret = WinJS.Promise.as();
                         }
                     } else if (AppData.isImg(docGroup, docFormat)) {
-                        Log.print(Log.l.trace, "load new imgSketch!");
-                        that.binding.showSvg = false;
                         that.binding.showPhoto = true;
+                        that.binding.showSvg = false;
+                        Log.print(Log.l.trace, "load new imgSketch!");
                         parentElement = pageElement.querySelector("#imghost");
                         if (parentElement) {
                             bGetNewDocViewer = true;
@@ -168,11 +172,11 @@
                 var ret;
                 var sketchListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("sketchList"));
                 if (sketchListFragmentControl && sketchListFragmentControl.controller) {
-                    ret = sketchListFragmentControl.controller.loadData(that.contactId, noteId);
+                    ret = sketchListFragmentControl.controller.loadData(that.binding.contactId, noteId);
                 } else {
                     var parentElement = pageElement.querySelector("#listhost");
                     if (parentElement) {
-                        ret = Application.loadFragmentById(parentElement, "sketchList", { contactId: that.contactId, isLocal: false });
+                        ret = Application.loadFragmentById(parentElement, "sketchList", { contactId: that.binding.contactId, isLocal: false });
                     } else {
                         ret = WinJS.Promise.as();
                     }
@@ -282,13 +286,6 @@
             this.disableHandlers = {
                 clickBack: function () {
                     if (WinJS.Navigation.canGoBack === true) {
-                        return false;
-                    } else {
-                        return true;
-                    }
-                },
-                clickNew: function () {
-                    if (that.binding.generalData.contactId) {
                         return false;
                     } else {
                         return true;
