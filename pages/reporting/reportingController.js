@@ -347,7 +347,7 @@
                             if (that.barChartWidth !== width) {
                                 that.barChartWidth = width;
                                 if (reportingBarChart.style) {
-                                    reportingBarChart.style.height = (that.employeedata.length * 60).toString() + "px";
+                                    reportingBarChart.style.height = (that.employeedata.length * 60 + 40).toString() + "px";
                                 }
                                 try {
                                     reportingBarChart.innerHTML = "";
