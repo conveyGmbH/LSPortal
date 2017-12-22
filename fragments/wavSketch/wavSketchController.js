@@ -296,26 +296,6 @@
 
             // define handlers
             this.eventHandlers = {
-                clickPlay: function(event) {
-                    Log.call(Log.l.trace, "WavSketch.Controller.");
-                    if (fragmentElement) {
-                        var audio = fragmentElement.querySelector("#noteAudio");
-                        if (audio) {
-                            audio.play();
-                        }
-                    }
-                    Log.ret(Log.l.trace);
-                },
-                clickPause: function(event) {
-                    Log.call(Log.l.trace, "WavSketch.Controller.");
-                    if (fragmentElement) {
-                        var audio = fragmentElement.querySelector("#noteAudio");
-                        if (audio) {
-                            audio.pause();
-                        }
-                    }
-                    Log.ret(Log.l.trace);
-                }
             };
 
             this.disableHandlers = {
