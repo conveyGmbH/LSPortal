@@ -22,6 +22,7 @@
             Application.Controller.apply(this, [pageElement, {
                 showSvg: false,
                 showPhoto: false,
+                showAudio: false,
                 showList: false,
                 moreNotes: false,
                 userHidesList: false,
@@ -58,11 +59,18 @@
                 if (AppData.isSvg(docGroup, docFormat)) {
                     that.binding.showSvg = true;
                     that.binding.showPhoto = false;
+                    that.binding.showAudio = false;
                     docViewer = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("svgSketch"));
                 } else if (AppData.isImg(docGroup, docFormat)) {
                     that.binding.showPhoto = true;
                     that.binding.showSvg = false;
+                    that.binding.showAudio = false;
                     docViewer = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("imgSketch"));
+                } else if (AppData.isAudio(docGroup, docFormat)) {
+                    that.binding.showAudio = true;
+                    that.binding.showSvg = false;
+                    that.binding.showPhoto = false;
+                    docViewer = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("wavSketch"));
                 } else {
                     docViewer = null;
                 }
@@ -104,6 +112,7 @@
                     } else if (AppData.isSvg(docGroup, docFormat)) {
                         that.binding.showSvg = true;
                         that.binding.showPhoto = false;
+                        that.binding.showAudio = false;
                         Log.print(Log.l.trace, "load new svgSketch!");
                         parentElement = pageElement.querySelector("#svghost");
                         if (parentElement) {
@@ -116,12 +125,26 @@
                     } else if (AppData.isImg(docGroup, docFormat)) {
                         that.binding.showPhoto = true;
                         that.binding.showSvg = false;
+                        that.binding.showAudio = false;
                         Log.print(Log.l.trace, "load new imgSketch!");
                         parentElement = pageElement.querySelector("#imghost");
                         if (parentElement) {
                             bGetNewDocViewer = true;
                             bUpdateCommands = true;
                             ret = Application.loadFragmentById(parentElement, "imgSketch", { noteId: noteId, isLocal: false });
+                        } else {
+                            ret = WinJS.Promise.as();
+                        }
+                    } else if (AppData.isAudio(docGroup, docFormat)) {
+                        that.binding.showAudio = true;
+                        that.binding.showSvg = false;
+                        that.binding.showPhoto = false;
+                        Log.print(Log.l.trace, "load new wavSketch!");
+                        parentElement = pageElement.querySelector("#wavhost");
+                        if (parentElement) {
+                            bGetNewDocViewer = true;
+                            bUpdateCommands = true;
+                            ret = Application.loadFragmentById(parentElement, "wavSketch", { noteId: noteId, isLocal: false });
                         } else {
                             ret = WinJS.Promise.as();
                         }
