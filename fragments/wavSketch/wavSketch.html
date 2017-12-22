@@ -13,7 +13,10 @@
         <section aria-label="Main content" role="main" class="animationElement">
             <div class="contentarea win-type-body">
                 <div class="doc-container">
-                    <div id="noteAudio" class="player"></div>
+                    <audio controls id="noteAudio">
+                    </audio>
+                    <button onclick="AppBar.handleEvent('click', 'clickPlay', event)">Play</button>
+                    <button onclick="AppBar.handleEvent('click', 'clickPause', event)">Pause</button> 
                 </div>
             </div>
         </section>

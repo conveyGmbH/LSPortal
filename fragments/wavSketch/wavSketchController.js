@@ -1,4 +1,4 @@
-﻿// controller for page: imgSketch
+﻿// controller for page: wavSketch
 /// <reference path="~/www/lib/WinJS/scripts/base.js" />
 /// <reference path="~/www/lib/WinJS/scripts/ui.js" />
 /// <reference path="~/www/lib/convey/scripts/appSettings.js" />
@@ -20,7 +20,7 @@
                 isLocal: options.isLocal,
                 dataSketch: {}
             }, commandList]);
-            this.img = null;
+            this.wav = null;
 
             var that = this;
 
@@ -34,9 +34,9 @@
 
             this.dispose = function () {
                 that.removeDoc();
-                if (that.img) {
-                    that.img.src = "";
-                    that.img = null;
+                if (that.wav) {
+                    that.wav.src = "";
+                    that.wav = null;
                 }
             }
 
@@ -58,7 +58,7 @@
             }
             this.resultConverter = resultConverter;
 
-            var removeAudio = function () {
+            var removeAudio = function () {//TODO adapt
                 if (fragmentElement) {
                     var photoItemBox = fragmentElement.querySelector("#noteAudio .win-itembox");
                     if (photoItemBox) {
@@ -91,7 +91,7 @@
                     } else {
                         // JPEG note
                         dataSketch.ExecAppTypeID = 16;
-                        dataSketch.DocGroup = 5;
+                        dataSketch.DocGroup = 5;//TODO nicht 6?
                         dataSketch.DocFormat = 67;
                         dataSketch.DocExt = "mp3";
 
@@ -100,7 +100,7 @@
                         var dateStringUtc = now.toUTCString();
 
                         // decodierte Dateigröße
-                        var contentLength = Math.floor(imageData.length * 3 / 4);
+                        var contentLength = Math.floor(audioData.length * 3 / 4);
 
                         dataSketch.Quelltext = "Content-Type: audio/jpegAccept-Ranges: bytes\x0D\x0ALast-Modified: " +
                             dateStringUtc +
@@ -119,7 +119,7 @@
                                 that.binding.dataSketch = json.d;
                                 that.binding.noteId = json.d.KontaktNotizVIEWID;
                                 WinJS.Promise.timeout(0).then(function () {
-                                    playAudio();
+                                    that.bindAudio();
                                 }).then(function () {
                                     // reload list
                                     if (AppBar.scope && typeof AppBar.scope.loadList === "function") {
@@ -140,6 +140,19 @@
                 return ret;
             };
             this.insertAudiodata = insertAudiodata;
+
+            var bindAudio = function () {
+                //TODO
+                Log.call(Log.l.trace, "WavSketch.Controller.");
+                if (fragmentElement) {
+                    var audio = fragmentElement.querySelector("#noteAudio");
+                    if (audio && hasDoc()) {
+                        audio.src = getDocData();
+                    }
+                }
+                Log.ret(Log.l.trace);
+            };
+            this.bindAudio = bindAudio;
 
             var onCaptureSuccess = function (result) {
                 var audioData = null;
@@ -198,7 +211,7 @@
                                     getDocData().substr(0, 100) +
                                     "...");
                             }
-                            playAudio();
+                            that.bindAudio();
                         }
                     },
                     function (errorResponse) {
@@ -283,6 +296,26 @@
 
             // define handlers
             this.eventHandlers = {
+                clickPlay: function(event) {
+                    Log.call(Log.l.trace, "WavSketch.Controller.");
+                    if (fragmentElement) {
+                        var audio = fragmentElement.querySelector("#noteAudio");
+                        if (audio) {
+                            audio.play();
+                        }
+                    }
+                    Log.ret(Log.l.trace);
+                },
+                clickPause: function(event) {
+                    Log.call(Log.l.trace, "WavSketch.Controller.");
+                    if (fragmentElement) {
+                        var audio = fragmentElement.querySelector("#noteAudio");
+                        if (audio) {
+                            audio.pause();
+                        }
+                    }
+                    Log.ret(Log.l.trace);
+                }
             };
 
             this.disableHandlers = {

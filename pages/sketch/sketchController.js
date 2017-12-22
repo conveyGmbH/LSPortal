@@ -26,7 +26,7 @@
                 showList: false,
                 moreNotes: false,
                 userHidesList: false,
-                contactId: AppData.getRecordId("Kontakt_Remote")
+                contactId: AppData.getRecordId("Kontakt")
             }, commandList]);
 
             this.pageElement = pageElement;
