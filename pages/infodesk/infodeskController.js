@@ -210,6 +210,11 @@
                     Log.call(Log.l.trace, "QuestionList.Controller.");
                     Application.navigateById("publish", event);
                     Log.ret(Log.l.trace);
+                },
+                clickChangeUserState: function (event) {
+                    Log.call(Log.l.trace, "Event.Controller.");
+                    Application.navigateById("userinfo", event);
+                    Log.ret(Log.l.trace);
                 }
             };
             this.disableHandlers = {
@@ -227,6 +232,16 @@
 
             var saveRestriction = function (complete, error) {
                 var ret = WinJS.Promise.as().then(function () {
+                    that.binding.restriction.countRestriction = 0;
+                    if (that.binding.restriction.Login.length > 0) {
+                        that.binding.restriction.countRestriction++;
+                    }
+                    if (that.binding.restriction.Vorname.length > 0) {
+                        that.binding.restriction.countRestriction++;
+                    }
+                    if (that.binding.restriction.Nachname.length > 0) {
+                        that.binding.restriction.countRestriction++;
+                    }
                      //SkillEntryView_20472
                     // Abfrage wenn beide comboboxen nicht ausgewählt
                     // spannende Stelle // letzen Wert der Comboboxen
@@ -528,12 +543,14 @@
                             AppData.setErrorMsg(that.binding);
                             Log.print(Log.l.trace, "skillEntryView: success!");
                             if (json && json.d) {
+                                if (json.d.results[0].MitarbeiterID === recordId) {
+                                    that.binding.dataEmployee.Vorname = json.d.results[0].Vorname;
+                                    that.binding.dataEmployee.Nachname = json.d.results[0].Nachname;
+                                    that.binding.dataEmployee.Login = json.d.results[0].Login;
+                                }
                                 for (var i = 0; i < json.d.results.length; i++) {
                                     //SkillTypeID und Sortierung
                                     if (json.d.results[i].MitarbeiterID === recordId) {
-                                        that.binding.dataEmployee.Vorname = json.d.results[i].Vorname;
-                                        that.binding.dataEmployee.Nachname = json.d.results[i].Nachname;
-                                        that.binding.dataEmployee.Login = json.d.results[i].Login;
                                         if (json.d.results[i].Aktiv === "X") {
                                             if (firstskill.skilltypesortierung && json.d.results[i].SkillTypeID === firstskill.skilltypesortierung) {
                                                 for (var j = 0; j < firstskill.length; j++) {
@@ -607,6 +624,26 @@
                             });
 
                         });
+                    } else {
+                        return WinJS.Promise.as();
+                    }
+                }).then(function() {
+                    if (recordId) {
+                        return Infodesk.employeeView.select(function(json) {
+                                AppData.setErrorMsg(that.binding);
+                                Log.print(Log.l.trace, "skillEntryView: success!");
+                                if (json && json.d) {
+                                    that.binding.dataEmployee.Vorname = json.d.results[0].Vorname;
+                                    that.binding.dataEmployee.Nachname = json.d.results[0].Nachname;
+                                    that.binding.dataEmployee.Login = json.d.results[0].Login;
+                                }
+                            },
+                            function(errorResponse) {
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                            },
+                            {
+                                MitarbeiterVIEWID: recordId
+                            });
                     } else {
                         return WinJS.Promise.as();
                     }

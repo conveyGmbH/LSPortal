@@ -457,11 +457,16 @@ select {
     width: calc(100% - 4px);
     min-width: calc(100% - 4px);
 }
-
+.input_field_noLabel {
+    float:left;
+    width: calc(100% - 4px);
+    min-width: calc(100% - 0px);
+    min-height: 32px;
+}
 .input_field {
     float:left;
     width: calc(100% - 4px);
-    min-width: calc(100% - 4px);
+    min-width: calc(100% - 0px);
     min-height: 32px; 
 }
 .large_field {
@@ -471,7 +476,7 @@ select {
 }
 .input_group {
     float:left;
-    width: calc(100% - 4px);
+    width: 100% /*width: calc(100% - 4px)*/;
     margin-top: 0;
     margin-bottom: -4px;
     margin-left: 0;
@@ -596,7 +601,7 @@ input.win-textbox, input.win-checkbox, input.win-radio, textarea.win-textarea, s
 }
 .input_half_right {
     min-height: 32px;
-    margin-right: -2px;
+    margin-right: 0px; /*-2*/
     float: right;
     width: 50%;
    /* margin-left: 1em;*/
@@ -874,6 +879,10 @@ input.win-textbox, input.win-checkbox, input.win-radio, textarea.win-textarea, s
     width: calc(100% - 124px);
     min-width: calc(100% - 124px);
     margin-right: 16px;
+}
+.view-size-medium .input_field_noLabel {
+    float: right;
+    width: calc(100% - 124px);
 }
 .view-size-medium .input_field {
     float: right;
@@ -1158,5 +1167,3 @@ input.win-textbox, input.win-checkbox, input.win-radio, textarea.win-textarea, s
 .lightthemeMandatory:focus {
     background-color: lightyellow;
 }
-
-

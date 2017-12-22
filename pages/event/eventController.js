@@ -175,22 +175,32 @@
                     return false;
                 }
             };
-            var loadData = function() {
+            var resultConverter = function (item, index) {
+                var property = AppData.getPropertyFromInitoptionTypeID(item);
+                /*if (property && property !== "individualColors" && (!item.pageProperty) && item.LocalValue) {
+                    item.colorValue = "#" + item.LocalValue;
+                    AppData.applyColorSetting(property, item.colorValue);
+                }*/
+
+            }
+            this.resultConverter = resultConverter;
+
+            var loadData = function () {
                 Log.call(Log.l.trace, "Event.Controller.");
                 AppData.setErrorMsg(that.binding);
-                var ret = new WinJS.Promise.as().then(function() {
+                var ret = new WinJS.Promise.as().then(function () {
                     var recordId = getRecordId();
                     if (recordId) {
                         //load of format relation record data
                         Log.print(Log.l.trace, "calling select eventView...");
-                        return Event.eventView.select(function(json) {
+                        return Event.eventView.select(function (json) {
                             AppData.setErrorMsg(that.binding);
                             Log.print(Log.l.trace, "eventView: success!");
                             if (json && json.d) {
                                 // now always edit!
                                 that.setDataEvent(json.d);
                             }
-                        }, function(errorResponse) {
+                        }, function (errorResponse) {
                             AppData.setErrorMsg(that.binding, errorResponse);
                         }, recordId);
                     } else {
@@ -204,11 +214,12 @@
                 return ret;
             };
             this.loadData = loadData;
-            
+
             // save data
-            var saveData = function(complete, error) {
+            var saveData = function (complete, error) {
                 Log.call(Log.l.trace, "Event.Controller.");
                 AppData.setErrorMsg(that.binding);
+                var err = null;
                 var ret;
                 var dataEvent = that.binding.dataEvent;
                 if (dataEvent && AppBar.modified && !AppBar.busy) {
@@ -226,7 +237,7 @@
                             AppBar.modified = false;
                             AppData.getUserData();
                             complete(response);
-                        }, function(errorResponse) {
+                        }, function (errorResponse) {
                             AppBar.busy = false;
                             AppBar.triggerDisableHandlers();
                             // called asynchronously if an error occurs
@@ -239,12 +250,40 @@
                         ret = WinJS.Promise.as();
                     }
                 } else if (AppBar.busy) {
-                    ret = WinJS.Promise.timeout(100).then(function() {
+                    ret = WinJS.Promise.timeout(100).then(function () {
                         return that.saveData(complete, error);
                     });
                 } else {
-                    ret = new WinJS.Promise.as().then(function() {
+                    ret = new WinJS.Promise.as().then(function () {
                         complete(dataEvent);
+                    }).then(function () {
+                        if (!err) {
+                            // load color settings
+                            AppData._persistentStates.hideQuestionnaire = false;
+                            AppData._persistentStates.hideSketch = false;
+                            return Event.CR_VERANSTOPTION_ODataView.select(function (json) {
+                                // this callback will be called asynchronously
+                                // when the response is available
+                                Log.print(Log.l.trace, "Account: success!");
+                                // CR_VERANSTOPTION_ODataView returns object already parsed from json file in response
+                                if (json && json.d && json.d.results && json.d.results.length > 1) {
+                                    var results = json.d.results;
+                                    results.forEach(function (item, index) {
+                                        that.resultConverter(item, index);
+                                    });
+                                    Application.pageframe.savePersistentStates();
+                                }
+                            }, function (errorResponse) {
+                                // called asynchronously if an error occurs
+                                // or server returns response with an error status.
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                            }).then(function () {
+                                Colors.updateColors();
+                                return WinJS.Promise.as();
+                            });
+                        } else {
+                            return WinJS.Promise.as();
+                        }
                     });
                 }
                 Log.ret(Log.l.trace);
@@ -255,7 +294,7 @@
             that.binding.dataEvent.dateBegin = getDateObject();
             that.binding.dataEvent.dateEnd = getDateObject();
 
-            that.processAll().then(function() {
+            that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
             }).then(function () {

@@ -33,7 +33,7 @@
 
             // ListView control
             var listView = pageElement.querySelector("#listQuestionList.listview");
-           
+
             this.dispose = function () {
                 if (listView && listView.winControl) {
                     listView.winControl.itemDataSource = null;
@@ -91,6 +91,8 @@
 
             var resultConverter = function (item) {
                 var key = "Line";
+                var antwort;
+
                 for (var j = 1; j <= 28; j++) {
                     if (j <= item.Anzahl) {
                         item[key + j.toString()] = 1;
@@ -110,7 +112,14 @@
                     } else {
                         item[checked] = false;
                     }
-
+                    if (j < 10) {
+                        antwort = "Antwort0" + j;
+                    } else {
+                        antwort = "Antwort" + j;
+                    }
+                    if (item[antwort] === "null") {
+                        item[antwort] = "";
+                    }
                 }
                 var name = "SSANTWORT" + item.FragenAntwortenVIEWID.toString();
                 item.SSNAME = name;
@@ -547,7 +556,7 @@
                         if (that.inAnswerCountFromRange) {
                             Log.print(Log.l.trace, "extra ignored");
                         } else {
-                            WinJS.Promise.timeout(0).then(function() {
+                            WinJS.Promise.timeout(0).then(function () {
                                 if (listView && listView.winControl) {
                                     var isSelected = false;
                                     var target = event.target;

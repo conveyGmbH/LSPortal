@@ -316,11 +316,14 @@
     "infodesk.messages"     : "Messages",
     "infodesk.receiver"     : "Receiver",
     "infodesk.message"      : "Message to receiver",
+	"infodesk.search"		: "Search",
+	"infodesk.account"		: "Account",
+	"infodesk.info"		    : "Message",
 
     "infodeskEmpList.title" : "User accounts",
     "infodeskEmpList.count" : "Count",
-	  "infodeskEmpList.name"  : "Last name",
-	  "infodeskEmpList.firstName" : "First name",
+	"infodeskEmpList.name"  : "Last name",
+	"infodeskEmpList.firstName" : "First name",
     "infodeskEmpList.login" : "User",
 
     "userinfo.title"        : "User Info",
@@ -476,5 +479,6 @@
     "mandatory.doContactMandatory"  : "Show message",
     "mandatory.count"  : "Count",
 
-	"barcodeAdministration.title" : "Barcode"
+	"barcodeAdministration.title" : "Barcode",
+	"barcodeAdministration.count" : "Count"
 }

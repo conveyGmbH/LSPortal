@@ -123,6 +123,25 @@
                 Info1: "",
                 Info2: ""
             }
+        },
+        _employeeView: {
+            get: function () {
+                return AppData.getFormatView("Mitarbeiter", 0, false);
+            }
+        },
+        employeeView: {
+            select: function (complete, error, recordId) {
+                Log.call(Log.l.trace, "employeeView.");
+                var ret = Infodesk._employeeView.select(complete, error, recordId);
+                Log.ret(Log.l.trace);
+                return ret;
+
+            },
+            defaultValue: {
+                Vorname: "",
+                Nachname: "",
+                Login: ""
+            }
         }
     });
 })();

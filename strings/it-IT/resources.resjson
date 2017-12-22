@@ -316,11 +316,14 @@
     "infodesk.messages"     : "notizie",
     "infodesk.receiver"     : "Ricevitore",
     "infodesk.message"      : "Messaggio ai ricevitore",
+	"infodesk.search"		: "Ricerca",
+	"infodesk.account"		: "Conto",
+	"infodesk.info"		    : "Messaggio",
 
     "infodeskEmpList.title" : "Utenti",
     "infodeskEmpList.count" : "Numero",
-	  "infodeskEmpList.name"  : "Cognome",
-	  "infodeskEmpList.firstName" : "Primo nome",
+	"infodeskEmpList.name"  : "Cognome",
+	"infodeskEmpList.firstName" : "Primo nome",
     "infodeskEmpList.login" : "Utente",
 
     "userinfo.title"        : "Informazioni utente",
@@ -474,7 +477,8 @@
     "mandatory.doMandatory" : "Mostra campo obbligatorio di questionario",
     "mandatory.doQuestionnaireMandatory"  : "Show message for mandatory fields in questionnaire",
     "mandatory.doContactMandatory"  : "Show message for mandatory fields in contact",
-    "mandatory.count"  : "Count",
+    "mandatory.count"  : "Totale",
 
-    "barcodeAdministration.title" : "Barcode"
+    "barcodeAdministration.title" : "Barcode",
+	"barcodeAdministration.count" : "Totale"
 }

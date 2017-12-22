@@ -7,9 +7,39 @@
     "use strict";
 
     WinJS.Namespace.define("InfodeskEmpList", {
-        _employeeView: {
+        _employeeSkillentryView: {
             get: function () {
                 return AppData.getFormatView("SkillEntry", 20472, false); // -> wichtig für später MitarbeiterView_20471
+            }
+        },
+        employeeSkillentryView: {
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, "InfodeskEmpList.");
+                var ret = InfodeskEmpList._employeeSkillentryView.select(complete, error, restriction, {
+                    ordered: true,
+                    orderAttribute: "Login" // in der Datenbank muss verbessert werden in Nachname
+                });
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getNextUrl: function (response) {
+                Log.call(Log.l.trace, "InfodeskEmpList.");
+                var ret = InfodeskEmpList._employeeSkillentryView.getNextUrl(response);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            selectNext: function (complete, error, response, nextUrl) {
+                Log.call(Log.l.trace, "InfodeskEmpList.");
+                var ret = InfodeskEmpList._employeeSkillentryView.selectNext(complete, error, response, nextUrl);
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+        },
+        _employeeView: {
+            get: function () {
+                return AppData.getFormatView("Mitarbeiter", 0, false); // -> wichtig für später MitarbeiterView_20471
             }
         },
         employeeView: {

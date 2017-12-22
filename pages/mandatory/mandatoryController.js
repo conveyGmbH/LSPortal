@@ -203,6 +203,11 @@
                     Application.navigateById("publish", event);
                     Log.ret(Log.l.trace);
                 },
+                clickChangeUserState: function (event) {
+                    Log.call(Log.l.trace, "Event.Controller.");
+                    Application.navigateById("userinfo", event);
+                    Log.ret(Log.l.trace);
+                },
                 onSelectionChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "Mandatory.Controller.");
                     if (listView && listView.winControl) {
