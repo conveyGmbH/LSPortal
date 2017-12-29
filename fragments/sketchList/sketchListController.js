@@ -102,6 +102,14 @@
                         item.nameIcon = "movie";
                         item.showIcon = true;
                     }
+                    if (item.ErfasstAm) {
+                        var msString = item.ErfasstAm.replace("\/Date(", "").replace(")\/", "");
+                        var milliseconds = parseInt(msString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
+                        var date = new Date(milliseconds);
+                        item.date = date.toLocaleDateString() + " " + date.toLocaleTimeString();
+                    } else {
+                        item.date = "";
+                    }
                 }
                 Log.ret(Log.l.trace);
             }
