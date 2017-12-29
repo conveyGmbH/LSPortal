@@ -139,7 +139,8 @@
     "sketch.shape"          : "Drawing shape",
     "sketch.color"          : "Color",
     "sketch.width"          : "Pen width",
-    "sketch.showList"		    : "More notes",
+    "sketch.showList"		: "Show list",
+    "sketch.noPlayer"		: "HTML5 Playback not supported on this browser",
 
     "search.title"          : "Enter search criteria",
     "search.comment"        : "On this page, use the Back button to go back!",
@@ -161,7 +162,7 @@
     "search.businesscard"   : "Business Card",
     "search.default"        : "Default",
     "search.edited"         : "Edited",
-   "search.notEdited"       : "Not Edited",
+     "search.notEdited"     : "Not Edited",
 
     "listLocal.title"       : "List of local contacts",
     "listLocal.comment"     : "On this page, use the Back button to go back!",

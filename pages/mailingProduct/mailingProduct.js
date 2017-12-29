@@ -21,13 +21,15 @@
             // TODO: Initialize the page here.
             // add page specific commands to AppBar
             var commandList = [
-                { id: "clickOk", label: getResourceText("command.ok"), tooltip: getResourceText("tooltip.ok"), section: "primary", svg: "navigate_check", key: WinJS.Utilities.Key.enter }
+                //{ id: "clickOk", label: getResourceText("command.ok"), tooltip: getResourceText("tooltip.ok"), section: "primary", svg: "navigate_check", key: WinJS.Utilities.Key.enter },
+                { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" },
+                { id: "clickSave", label: getResourceText("command.save"), tooltip: getResourceText("tooltip.save"), section: "primary", svg: "navigate_check", key: WinJS.Utilities.Key.enter }
             ];
 
             this.controller = new MailingProduct.Controller(element, commandList);
             if (this.controller.eventHandlers) {
                 // general event listener for hardware back button, too!
-                this.controller.addRemovableEventListener(document, "backbutton", this.controller.eventHandlers.clickOk.bind(this.controller));
+                this.controller.addRemovableEventListener(document, "backbutton", this.controller.eventHandlers.clickBack.bind(this.controller));
             }
             Log.ret(Log.l.trace);
         },
@@ -37,7 +39,7 @@
             // TODO: Respond to navigations away from this page.
             Log.ret(Log.l.trace);
         },
-
+        
         updateLayout: function (element, viewState, lastViewState) {
             /// <param name="element" domElement="true" />
             // TODO: Respond to changes in viewState.

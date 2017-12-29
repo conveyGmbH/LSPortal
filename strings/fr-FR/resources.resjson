@@ -139,7 +139,8 @@
     "sketch.shape"          : "Forme",
     "sketch.color"          : "Couleur",
     "sketch.width"          : "Largeur du crayon",
-    "sketch.showList"		    : "Plus de notes",
+    "sketch.showList"		: "Afficher la liste",
+    "sketch.noPlayer"		: "HTML5 Lecture non prise en charge sur ce navigateur",
 
     "search.title"          : "Entrez les critères de recherche",
     "search.comment"        : "Utilisez le bouton Retour sur cette page pour y retourner!",

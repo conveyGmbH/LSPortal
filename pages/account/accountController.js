@@ -278,14 +278,15 @@
                 if (contentarea) {
                     contentarea.scrollTop = 0;
                 }
+                var newLanguageId = getLanguage();
+                var prevLanguageId = AppData._persistentStates.languageId
+                if (newLanguageId !== prevLanguageId) {
+                    AppData._persistentStates.languageId = newLanguageId;
+                    Application.pageframe.savePersistentStates();
+                }
                 that.binding.messageText = null;
                 AppData.setErrorMsg(that.binding);
-                if (!that.binding.doEdit) {
-                    var newLanguageId = getLanguage();
-                    if (newLanguageId !== AppData._persistentStates.languageId) {
-                        AppData._persistentStates.languageId = newLanguageId;
-                        Application.pageframe.savePersistentStates();
-                    }
+                if (!that.binding.doEdit && newLanguageId === prevLanguageId) {
                     ret = WinJS.Promise.as();
                     complete({});
                 } else {
