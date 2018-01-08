@@ -20,13 +20,18 @@
             Fragments.Controller.apply(this, [fragmentElement, {
                 noteId: null,
                 isLocal: options.isLocal,
-                dataSketch: {}
+                dataSketch: {
+                    audioData: ""
+                }
             }, commandList]);
 
             var that = this;
 
             var getDocData = function () {
-                return that.binding.dataSketch && that.binding.dataSketch.audioData;
+                if (that.binding && that.binding.dataSketch && that.binding.dataSketch.audioData) {
+                    return that.binding.dataSketch.audioData;
+                }
+                return "";
             }
             var hasDoc = function () {
                 return (getDocData() && typeof getDocData() === "string");
@@ -45,6 +50,8 @@
                         if (item.type) {
                             var sub = item.DocContentDOCCNT1.search("\r\n\r\n");
                             item.audioData = "data:" + item.type + ";base64," + item.DocContentDOCCNT1.substr(sub + 4);
+                        } else {
+                            item.audioData = "";
                         }
                     } else {
                         item.audioData = "";
@@ -199,12 +206,20 @@
             this.loadDataFile = loadDataFile;
 
             var bindAudio = function () {
-                //TODO
                 Log.call(Log.l.trace, "WavSketch.Controller.");
                 if (fragmentElement) {
                     var audio = fragmentElement.querySelector("#noteAudio");
                     if (audio && hasDoc()) {
+                        if (audio.style) {
+                            audio.style.display = "";
+                        }
                         audio.src = getDocData();
+                        if (typeof audio.load === "function") {
+                            audio.load();
+                        }
+                        if (typeof audio.play === "function") {
+                            audio.play();
+                        }
                     }
                 }
                 Log.ret(Log.l.trace);
@@ -294,7 +309,9 @@
                                     getDocData().substr(0, 100) +
                                     "...");
                             }
-                            that.bindAudio();
+                            WinJS.Promise.timeout(0).then(function() {
+                                that.bindAudio();
+                            });
                         }
                     },
                     function (errorResponse) {
