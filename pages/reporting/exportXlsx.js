@@ -214,8 +214,6 @@
                             }
                             var attribSpecs = baseDbView.attribSpecs;
                             var colCount = attribSpecs.length;
-                            Log.print(Log.l.trace, colCount + " cloumns to export. Write column header...");
-                            var newRow = new XElement(S.row);
                             if (baseDbView.relationName === "KontaktReport") {
                                 for (var c = 0; c < colCount; c++) {
                                     var row = results[0];
@@ -227,7 +225,10 @@
                                         attribSpecs[c].hidden = true;
                                     }
                                 }
-                            } else {
+                            }
+                            else {
+                                Log.print(Log.l.trace, colCount + " cloumns to export. Write column header...");
+                                var newRow = new XElement(S.row);
                                 for (var c = 1; c < colCount; c++) {
                                     var value = attribSpecs[c].Name;
                                     var type = null;

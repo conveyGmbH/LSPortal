@@ -145,8 +145,7 @@
                 Log.call(Log.l.trace, "Reporting.");
                 var ret = Reporting._KontaktReport.select(complete, error, restriction, {
                     ordered: true,
-                    orderAttribute: "KontaktID",
-                    asc: true
+                    orderAttribute: "KontaktVIEWID"
                 });
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);

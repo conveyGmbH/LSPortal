@@ -133,16 +133,16 @@
             this.saveData = saveData;
 
             var eventHandlers = {
+                clickBack: function (event) {
+                    Log.call(Log.l.trace, "ReportingColumnList.Controller.");
+                    if (!Application.showMaster() && WinJS.Navigation.canGoBack === true) {
+                        WinJS.Navigation.back(1).done();
+                    }
+                    Log.ret(Log.l.trace);
+                },
                 clickSave: function (event) {
                     Log.call(Log.l.trace, "ReportingColumnList.Controller.");
-                    AppBar.busy = true;
-                    that.saveData(function (response) {
-                        AppBar.busy = false;
-                        Log.print(Log.l.trace, "selection saved");
-                    }, function (errorResponse) {
-                        AppBar.busy = false;
-                        Log.print(Log.l.error, "error saving selection");
-                    });
+                    Application.navigateById("Reporting");
                     Log.ret(Log.l.trace);
                 },
                 onSelectionChanged: function (eventInfo) {
@@ -182,6 +182,16 @@
                     }
                     Log.ret(Log.l.trace);
                 },
+                clickChangeUserState: function (event) {
+                    Log.call(Log.l.trace, "ReportingColumnList.Controller.");
+                    Application.navigateById("userinfo", event);
+                    Log.ret(Log.l.trace);
+                },
+                clickGotoPublish: function (event) {
+                    Log.call(Log.l.trace, "ReportingColumnList.Controller.");
+                    Application.navigateById("publish", event);
+                    Log.ret(Log.l.trace);
+                },
                 onLoadingStateChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "ReportingColumnList.Controller.");
                     if (listView && listView.winControl) {
@@ -219,6 +229,16 @@
                 }
             }
             this.eventHandlers = eventHandlers;
+
+            this.disableHandlers = {
+                clickBack: function () {
+                    if (WinJS.Navigation.canGoBack === true) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                }
+            };
 
             // register ListView event handler
             if (listView) {

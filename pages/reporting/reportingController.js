@@ -290,7 +290,7 @@
                         fileName = "BenutzerdefinierterReport";
                     } else {
                         dbView = Reporting.KontaktReport;
-                        fileName = "BenutzerdefinierterReport";
+                        fileName = "CostumReport";
                     }
                     break;
                 default:
