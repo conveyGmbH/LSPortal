@@ -22,12 +22,36 @@
                         </div>
                     </div>
                     <div class="mailing-content">
-                        <div class="fields-container">
+                        <div class="row-separator"></div>
+                        <div class="email">
+                            <span data-win-res="{textContent: 'mailing.contactinfo'}"></span>
+                            <a href="mailto:leadsuccess@convey.de">E-Mail</a>
+                        </div>
+                        <!--<div class="fields-container">
                             <div class="line-separator"></div>
                             <div class="field_line">
                                 <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailing.info'}"></span>
                                 <span class="label landscape_only" data-win-res="{textContent: 'mailing.info'}"></span>
                                 <input class="input_field win-textbox" type="text"/>
+                            </div>
+                            <div class="line-separator"></div>
+                            <div class="field_line field_line_odd">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailing.event'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'mailing.event'}"></span>
+                                <br/>
+                                <span class="not-published-event win-type-subtitle event-name win-type-ellipsis"
+                                      data-win-bind="textContent: generalData.eventName"></span>
+                            </div>
+                            <div class="field_line field_line_even">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailing.language'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'mailing.language'}"></span>
+                                <select id="InitLanguage"
+                                        class="input_field win-dropdown"
+                                        data-win-control="WinJS.UI.Repeater"
+                                        data-win-bind="style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone">
+                                    <option data-win-bind=""></option>
+                                </select>
+                                <span class="input_field win-type-subtitle" data-win-bind="textContent: InitLandItem.TITLE; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
                             </div>
                             <div class="line-separator"></div>
                             <div class="field_line field_line_odd">
@@ -69,7 +93,7 @@
                                        data-win-bind=""/>
                                 <span data-win-res="{textContent: 'mailing.standart'}"></span>
                             </div>
-                        </div>
+                        </div>-->
                     </div>
                     <div class="error-message"
                          data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
