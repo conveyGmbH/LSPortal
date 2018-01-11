@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="mailingProductLine.css" rel="stylesheet" />
+    <script type="text/javascript" src="mailingProductLineService.js"></script>
+    <script type="text/javascript" src="mailingProductLineController.js"></script>
+    <script type="text/javascript" src="mailingProductLine.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="mailingProductLine fragment">
+        <div id="mailingProductLineController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="contentarea win-type-body">
+                    <div class="mailingProductLineList-template"
+                         data-win-control="WinJS.Binding.Template" style="display: none">
+                        <div class="list-role-item">
+                            <label class="list-role-field">
+                                <textarea class="input_field win-textbox input_text_comment"
+                                              data-win-bind="value: ZeilenText Binding.Mode.twoway; style.display: dataProduct.Flag_NoEdit Binding.Converter.toDisplayNone"></textarea>
+                           </label>
+                      </div>
+                    </div>
+                    <div id="mailingProductLineList"
+                         class="listview win-selectionstylefilled"
+                         data-win-control="WinJS.UI.ListView"
+                         data-win-options="{
+                            itemTemplate: select('.mailingProductLineList-template')
+                         }">
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>
