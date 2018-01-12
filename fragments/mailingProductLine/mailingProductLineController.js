@@ -13,11 +13,18 @@
         WinJS.Namespace.define("MailingProductLine", {
             Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options) {
                 Log.call(Log.l.trace, "EmpRoles.Controller.");
-                Fragments.Controller.apply(this, [fragmentElement, options]);
+                Fragments.Controller.apply(this, [fragmentElement, {
+                    mailingLine: options.mailingLine
+                }]);
                 var that = this;
                 this.curRecId = 0;
                 this.prevRecId = 0;
+
+                var progress = null;
+                var counter = null;
                 var layout = null;
+
+                var mouseDown = false;
 
                 // now do anything...
                 var listView = fragmentElement.querySelector("#mailingProductLineList.listview");
@@ -29,8 +36,8 @@
                     if (listView && listView.winControl) {
                         var element = listView.winControl.elementFromIndex(index);
                         if (element) {
-                            var fields = element.querySelectorAll('input[type="input"]');
-                            //ret["Active"] = (fields[0] && fields[0].checked) ? 1 : null;
+                            var fields = element.querySelectorAll('textarea');
+                            ret["ZeilenText"] = fields[0] && fields[0].value;
                         }
                     }
                     Log.ret(Log.l.trace, ret);
@@ -93,7 +100,7 @@
                             var newRecord = that.getFieldEntries(curScope.index);
                             if (that.mergeRecord(curScope.item, newRecord) || AppBar.modified) {
                                 Log.print(Log.l.trace, "save changes of recordId:" + recordId);
-                                ret = MailingProductLine.MAILERZEILENU.update(function (response) {
+                                ret = MailingProductLine.MAILERZEILENView.update(function (response) {
                                     Log.print(Log.l.info, "MailingProductLine.Controller. update: success!");
                                     // called asynchronously if ok
                                     AppBar.modified = false;
@@ -124,6 +131,28 @@
                 this.saveData = saveData;
 
                 var eventHandlers = {
+                    onPointerDown: function (e) {
+                        Log.call(Log.l.trace, "Questiongroup.Controller.");
+                        that.cursorPos = { x: e.pageX, y: e.pageY };
+                        mouseDown = true;
+                        Log.ret(Log.l.trace);
+                    },
+                    onMouseDown: function (e) {
+                        Log.call(Log.l.trace, "Questiongroup.Controller.");
+                        that.cursorPos = { x: e.pageX, y: e.pageY };
+                        mouseDown = true;
+                        Log.ret(Log.l.trace);
+                    },
+                    onPointerUp: function (e) {
+                        Log.call(Log.l.trace, "Questiongroup.Controller.");
+                        mouseDown = false;
+                        Log.ret(Log.l.trace);
+                    },
+                    onMouseUp: function (e) {
+                        Log.call(Log.l.trace, "Questiongroup.Controller.");
+                        mouseDown = false;
+                        Log.ret(Log.l.trace);
+                    },
                     onSelectionChanged: function (eventInfo) {
                         Log.call(Log.l.trace, "MailingProductLine.Controller.");
                         if (listView && listView.winControl) {
@@ -185,38 +214,142 @@
                             }
                         }
                         Log.ret(Log.l.trace);
+                    },
+                    onHeaderVisibilityChanged: function (eventInfo) {
+                        Log.call(Log.l.trace, "Questionnaire.Controller.");
+                        Log.ret(Log.l.trace);
+                    },
+                    onFooterVisibilityChanged: function (eventInfo) {
+                        Log.call(Log.l.trace, "Questionnaire.Controller.");
+                        if (eventInfo && eventInfo.detail) {
+                            progress = listView.querySelector(".list-footer .progress");
+                            counter = listView.querySelector(".list-footer .counter");
+                            var visible = eventInfo.detail.visible;
+                            if (visible) {
+                                if (that.contacts && that.nextUrl) {
+                                    that.loading = true;
+                                    if (progress && progress.style) {
+                                        progress.style.display = "inline";
+                                    }
+                                    if (counter && counter.style) {
+                                        counter.style.display = "none";
+                                    }
+                                    AppData.setErrorMsg(that.binding);
+                                    Log.print(Log.l.trace, "calling select ListLocal.contactView...");
+                                    var nextUrl = that.nextUrl;
+                                    that.nextUrl = null;
+                                    MailingProductLine.MAILERZEILENView.selectNext(function (json) {
+                                        // this callback will be called asynchronously
+                                        // when the response is available
+                                        Log.print(Log.l.trace, "ListLocal.contactView: success!");
+                                        // startContact returns object already parsed from json file in response
+                                        if (json && json.d) {
+                                            that.nextUrl = MailingProductLine.MAILERZEILENView.getNextUrl(json);
+                                            var results = json.d.results;
+                                            results.forEach(function (item) {
+                                                that.resultConverter(item);
+                                                that.binding.count = that.questions.push(item);
+                                            });
+                                        }
+                                    }, function (errorResponse) {
+                                        // called asynchronously if an error occurs
+                                        // or server returns response with an error status.
+                                        AppData.setErrorMsg(that.binding, errorResponse);
+                                        if (progress && progress.style) {
+                                            progress.style.display = "none";
+                                        }
+                                        if (counter && counter.style) {
+                                            counter.style.display = "inline";
+                                        }
+                                        that.loading = false;
+                                    }, null, nextUrl);
+                                } else {
+                                    if (progress && progress.style) {
+                                        progress.style.display = "none";
+                                    }
+                                    if (counter && counter.style) {
+                                        counter.style.display = "inline";
+                                    }
+                                    that.loading = false;
+                                }
+                            }
+                        }
+                        Log.ret(Log.l.trace);
+                    },
+                    onItemInvoked: function (eventInfo) {
+                        Log.call(Log.l.trace, "Questionnaire.Controller.");
+                        if (eventInfo && eventInfo.target) {
+                            var comboInputFocus = eventInfo.target.querySelector(".win-dropdown:focus");
+                            if (comboInputFocus) {
+                                eventInfo.preventDefault();
+                            } else {
+                                // set focus into textarea if current mouse cursor is inside of element position
+                                var freitextInput = eventInfo.target.querySelector(".field-text-comment");
+                                if (freitextInput) {
+                                    var position = WinJS.Utilities.getPosition(freitextInput);
+                                    if (position) {
+                                        var left = position.left;
+                                        var top = position.top;
+                                        var width = position.width;
+                                        var height = position.height;
+                                        if (that.cursorPos.x >= left &&
+                                            that.cursorPos.x <= left + width &&
+                                            that.cursorPos.y >= top &&
+                                            that.cursorPos.y <= top + height) {
+                                            WinJS.Promise.timeout(0).then(function () {
+                                                // set focus async!
+                                                freitextInput.focus();
+                                            });
+                                            /* Log.call(Log.l.trace, "Questionnaire.Controller.");
+                                             for (var i = 0; i < AppBar.commandList.length; i++) {
+                                                 if (AppBar.commandList[i].id === "clickForward")
+                                                     AppBar.commandList[i].key = null;
+                                             }*/
+                                        }/* else {
+                                        Log.call(Log.l.trace, "Questionnaire.Controller.");
+                                        for (var j = 0; j < AppBar.commandList.length; j++) {
+                                            if (AppBar.commandList[j].id === "clickForward")
+                                                AppBar.commandList[j].key = WinJS.Utilities.Key.enter;
+                                        }
+                                    }*/
+
+                                    }
+                                    if (freitextInput.value) {
+                                        WinJS.Utilities.addClass(freitextInput, "field-text-comment-big");
+                                    } else {
+                                        WinJS.Utilities.removeClass(freitextInput, "field-text-comment-big");
+                                    }
+                                }
+                            }
+                        }
+                        Log.ret(Log.l.trace);
                     }
                 }
                 this.eventHandlers = eventHandlers;
 
                 // register ListView event handler
                 if (listView) {
-                    this.addRemovableEventListener(listView,
-                        "selectionchanged",
-                        this.eventHandlers.onSelectionChanged.bind(this));
-                    this.addRemovableEventListener(listView,
-                        "loadingstatechanged",
-                        this.eventHandlers.onLoadingStateChanged.bind(this));
-                }
-
-                var resultConverter = function (item, index) {
-                    var map = MailingProductLine.MAILERZEILENView.getMap();
-                    var results = MailingProductLine.MAILERZEILENView.getResults();
-                    if (map && results) {
-                        var curIndex = map[item.MAILERZEILENVIEWID];
-                        if (typeof curIndex !== "undefined") {
-                            var curMailingLine = results[curIndex];
-                            if (curMailingLine) {
-                                item["ZeilenText"] = curMailingLine.ZeilenText;
+                    this.addRemovableEventListener(listView, "selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
+                    this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
+                    this.addRemovableEventListener(listView, "headervisibilitychanged", this.eventHandlers.onHeaderVisibilityChanged.bind(this));
+                    this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
+                    this.addRemovableEventListener(listView, "iteminvoked", this.eventHandlers.onItemInvoked.bind(this));
+                    // prevent some keyboard actions from listview to navigate within controls!
+                    this.addRemovableEventListener(listView, "keydown", function (e) {
+                        if (!e.ctrlKey && !e.altKey) {
+                            switch (e.keyCode) {
+                            case WinJS.Utilities.Key.leftArrow:
+                            case WinJS.Utilities.Key.rightArrow:
+                            case WinJS.Utilities.Key.space:
+                                e.stopImmediatePropagation();
+                                break;
                             }
                         }
-                    }
-                    item.index = index;
+                    }.bind(this), true);
                 }
-                this.resultConverter = resultConverter;
 
                 var loadData = function (curMailingLine) {
-                    Log.call(Log.l.trace, "MailingProductLine.");
+                    Log.call(Log.l.trace, "MailingProductLine.", "curMailingLine=" + curMailingLine);
                     AppData.setErrorMsg(that.binding);
                     var ret = new WinJS.Promise.as().then(function () {
                         return MailingProductLine.MAILERZEILENView.select(function(json) {
@@ -226,10 +359,8 @@
                             Log.print(Log.l.trace, "MAILERZEILENView: success!");
                             // startContact returns object already parsed from json file in response
                             if (json && json.d) {
+                                that.nextUrl = MailingProductLine.MAILERZEILENView.getNextUrl(json);
                                 var results = json.d.results;
-                                results.forEach(function(item, index) {
-                                    that.resultConverter(item, index);
-                                });
                                 that.mailingLine = new WinJS.Binding.List(results);
 
                                 if (listView && listView.winControl) {
@@ -388,7 +519,8 @@
                 });
                 Log.ret(Log.l.trace);
             }, {
-                    mailingLine: null
-                })
+                mailingLine: null,
+                cursorPos: { x: 0, y: 0 }
+            })
         });
     })();

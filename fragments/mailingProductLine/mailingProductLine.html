@@ -21,11 +21,22 @@
                            </label>
                       </div>
                     </div>
+                    <div class="headerFooterPlaceholder">
+                        <div class="list-footer">
+                            <div class="status">
+                                <progress class="win-progress-bar progress"></progress>
+                                <div class="counter">
+                                    <span data-win-res="{textContent: 'questiongroup.count'}"></span><span>: </span><span data-win-bind="textContent: count"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div id="mailingProductLineList"
                          class="listview win-selectionstylefilled"
                          data-win-control="WinJS.UI.ListView"
                          data-win-options="{
-                            itemTemplate: select('.mailingProductLineList-template')
+                             itemTemplate: select('.mailingProductLineList-template'),
+                             footer: select('.list-footer')
                          }">
                     </div>
                 </div>

@@ -23,7 +23,12 @@
         },
         _MAILERZEILENView: {
             get: function () {
-                return AppData.getFormatView("MAILERZEILEN");
+                return AppData.getFormatView("MAILERZEILEN", 20514);
+            }
+        },
+        _MAILERZEILENTable: {
+            get: function () {
+                return AppData.getFormatView("MAILERZEILEN", 0);
             }
         },
         MAILERZEILENView: {
@@ -34,7 +39,7 @@
                     restriction,
                     {
                         ordered: true,
-                        orderAttribute: "MaildokumentID"
+                        orderAttribute: "Sortierung"
                     });
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
@@ -53,18 +58,6 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            getMap: function() {
-                Log.call(Log.l.trace, "EmpRoles.LGNTINITAPUserRole.");
-                var ret = MailingProductLine._MAILERZEILENView.map;
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            getResults: function() {
-                Log.call(Log.l.trace, "EmpRoles.LGNTINITAPUserRole.");
-                var ret = MailingProductLine._MAILERZEILENView.results;
-                Log.ret(Log.l.trace);
-                return ret;
-            },
             defaultValue: {
                 Zeilentext: null,
                 Inaktiv: null,
@@ -73,31 +66,13 @@
                 AntwortenID: null,
                 ProduktID: null
             },
-        },
-            _MAILERZEILENU: {
-                get: function () {
-                    return AppData.getFormatView("MAILERZEILEN", 20514);
-                }
-            },
-            MAILERZEILENU: {
-                select: function (complete, error, restriction) {
-                    Log.call(Log.l.trace, "MailingProductLine.");
-                    var ret = MailingProductLine._MAILERZEILENU.select(complete, error, restriction,
-                        {
-                            ordered: true,
-                            orderAttribute: "MaildokumentID"
-                        });
-                    // this will return a promise to controller
-                    Log.ret(Log.l.trace);
-                    return ret;
-                },
-                update: function (complete, error, recordId, viewResponse) {
-                    Log.call(Log.l.trace, "MailingProduct.");
-                    var ret = MailingProductLine._MAILERZEILENU.update(complete, error, recordId, viewResponse);
-                    // this will return a promise to controller
-                    Log.ret(Log.l.trace);
-                    return ret;
-                }
+            update: function (complete, error, recordId, viewResponse) {
+                Log.call(Log.l.trace, "MailingProduct.");
+                var ret = MailingProductLine._MAILERZEILENTable.update(complete, error, recordId, viewResponse);
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            }
         }
     });
 })();

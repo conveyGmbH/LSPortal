@@ -15,10 +15,8 @@
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "MailingProduct.Controller.");
             Application.Controller.apply(this, [pageElement, {
-                dataProduct: MailingProduct.MaildokumentView.defaultValue
+                dataProduct: getEmptyDefaultValue(MailingProduct.MaildokumentView.defaultValue)
             }, commandList]);
-            this.MaildokumentVIEWID = 0;
-            this.productMail = 0;
             var that = this;
             
             // Then, do anything special on this page
@@ -43,23 +41,6 @@
                 return lang;
             }
             this.LanguageId = LanguageId;
-
-            var setDataProductMail = function () {
-                var prevNotifyModified = AppBar.notifyModified;
-                AppBar.notifyModified = false;
-                that.binding.dataProduct.MaildokumentVIEWID = that.productMail.MaildokumentVIEWID;
-                that.binding.dataProduct.Sender = that.productMail.Sender;
-                that.binding.dataProduct.Subject = that.productMail.Subject;
-                that.binding.dataProduct.CCAddr = that.productMail.CCAddr;
-                that.binding.dataProduct.BCCAddr = that.productMail.BCCAddr;
-                that.binding.dataProduct.Mailtext = that.productMail.Mailtext;
-                that.binding.dataProduct.ReplyTo = that.productMail.ReplyTo;
-                that.binding.dataProduct.INITSpracheID = that.LanguageId();
-                AppBar.modified = false;
-                AppBar.notifyModified = prevNotifyModified;
-                AppBar.triggerDisableHandlers();
-            }
-            this.setDataProductMail = setDataProductMail;
 
             this.eventHandlers = {
                 clickBack: function (event) {
@@ -117,14 +98,18 @@
                                 // called asynchronously if ok
                                 Log.print(Log.l.info, "dataProduct update: success!");
                                 AppBar.modified = false;
-                                complete(response);
+                                if (typeof complete === "function") {
+                                    complete(response);
+                                }
                             },
                             function(errorResponse) {
                                 AppBar.busy = false;
                                 // called asynchronously if an error occurs
                                 // or server returns response with an error status.
                                 AppData.setErrorMsg(that.binding, errorResponse);
-                                error(errorResponse);
+                                if (typeof error === "function") {
+                                    error(errorResponse);
+                                }
                             },
                             recordId, dataProduct);
                     } else {
@@ -138,7 +123,9 @@
                     });
                 } else {
                     ret = new WinJS.Promise.as().then(function () {
-                        complete(dataProduct);
+                        if (typeof complete === "function") {
+                            complete(dataProduct);
+                        }
                     });
                 }
                 Log.ret(Log.l.trace);
@@ -146,61 +133,49 @@
             }
             this.saveData = saveData;
 
-            var resultConverter = function (item, index) {
-                var map = MailingProduct.MAILERZEILENView.getMap();
-                var results = MailingProduct.MAILERZEILENView.getResults();
-                if (map && results) {
-                    var curIndex = map[item.MAILERZEILENVIEWID];
-                    if (typeof curIndex !== "undefined") {
-                        var curMailerline = results[curIndex];
-                        if (curMailerline) {
-                            item["ZeilenText"] = curMailerline.ZeilenText;
-                        }
-                    }
-                }
-                item.index = index;
-            }
-            this.resultConverter = resultConverter;
-
             var loadData = function () {
                 Log.call(Log.l.trace, "MailingProduct.");
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
-                        return MailingProduct.MaildokumentView.select(function(json) {
-                                // this callback will be called asynchronously
-                                // when the response is available
+                    return MailingProduct.MaildokumentView.select(function(json) {
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            Log.print(Log.l.trace, "MailingProduct: success!");
+                            // startContact returns object already parsed from json file in response
+                            if (json && json.d && json.d.results) {
+                                that.binding.dataProduct = json.d.results[0];
                                 Log.print(Log.l.trace, "MailingProduct: success!");
-                                // startContact returns object already parsed from json file in response
-                                if (json && json.d) {
-                                    //that.nextUrl = MailingProduct.MaildokumentView.getNextUrl(json);
-                                    var results = json.d.results[0];
-                                    that.MaildokumentVIEWID = results.MaildokumentVIEWID;
-                                    that.productMail = results;
-                                    that.setDataProductMail();
-                                    Log.print(Log.l.trace, "MailingProduct: success!");
-                                } else {
-                                    
-                                }
-                            }, function(errorResponse) {
-                                // called asynchronously if an error occurs
-                                // or server returns response with an error status.
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                            },
+                            }
+                        }, function(errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        },
                         {
-                            INITSpracheID: that.LanguageId()
+                            INITSpracheID: that.LanguageId(),
+                            SpecType: 2
                         }
                     );
                 }).then(function () {
-                    var mailingProductLineFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("mailingProductLine"));
-                    if (mailingProductLineFragmentControl && mailingProductLineFragmentControl.controller) {
-                        return mailingProductLineFragmentControl.controller.loadData();
-                    } else {
-                        var parentElement = pageElement.querySelector("#mailingProductLinehost");
-                        if (parentElement) {
-                            return Application.loadFragmentById(parentElement, "mailingProductLine", { mailingLine: that.MaildokumentVIEWID });
+                    if (that.binding.dataProduct.MaildokumentVIEWID) {
+                        var mailingProductLineFragmentControl =
+                            Application.navigator.getFragmentControlFromLocation(
+                                Application.getFragmentPath("mailingProductLine"));
+                        if (mailingProductLineFragmentControl && mailingProductLineFragmentControl.controller) {
+                            return mailingProductLineFragmentControl.controller.loadData(that.binding.dataProduct
+                                .MaildokumentVIEWID);
                         } else {
-                            return WinJS.Promise.as();
+                            var parentElement = pageElement.querySelector("#mailingProductLinehost");
+                            if (parentElement) {
+                                return Application.loadFragmentById(parentElement,
+                                    "mailingProductLine",
+                                    { mailingLine: that.binding.dataProduct.MaildokumentVIEWID });
+                            } else {
+                                return WinJS.Promise.as();
+                            }
                         }
+                    } else {
+                        return WinJS.Promise.as();
                     }
                 }).then(function () {
                     AppBar.notifyModified = true;
@@ -219,8 +194,6 @@
                 Log.print(Log.l.trace, "Data loaded");
             });
             Log.ret(Log.l.trace);
-        }, {
-            mailingZeile: null
         })
     });
 })();
