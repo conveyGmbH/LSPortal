@@ -9,7 +9,7 @@
         WinJS.Namespace.define("MailingProduct", {
             _MaildokumentView: {
                 get: function() {
-                    return AppData.getFormatView("Maildokument", 20513);
+                    return AppData.getFormatView("Maildokument", 20527);
                 }
             },
             _MaildokumentTable: {

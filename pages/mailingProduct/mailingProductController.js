@@ -21,27 +21,6 @@
             
             // Then, do anything special on this page
 
-            var LanguageId = function () {
-                var lang = AppData.getLanguageId();
-                switch (lang) {
-                    case 1031:
-                        lang = 1;
-                    break;
-                    case 1033:
-                        lang = 2;
-                    break;
-                    case 1036:
-                        lang = 3;
-                    break;
-                    case 1040:
-                        lang = 4;
-                    break;
-                default:
-                }
-                return lang;
-            }
-            this.LanguageId = LanguageId;
-
             this.eventHandlers = {
                 clickBack: function (event) {
                     Log.call(Log.l.trace, "Contact.Controller.");
@@ -152,7 +131,7 @@
                             AppData.setErrorMsg(that.binding, errorResponse);
                         },
                         {
-                            INITSpracheID: that.LanguageId(),
+                            LanguageID: AppData.getLanguageId(),
                             SpecType: 2
                         }
                     );
