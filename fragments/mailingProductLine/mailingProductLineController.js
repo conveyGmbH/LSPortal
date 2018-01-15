@@ -14,7 +14,8 @@
             Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options) {
                 Log.call(Log.l.trace, "EmpRoles.Controller.");
                 Fragments.Controller.apply(this, [fragmentElement, {
-                    mailingLine: options.mailingLine
+                    mailingLine: options.mailingLine,
+                    count: 0
                 }]);
                 var that = this;
                 this.curRecId = 0;
@@ -361,6 +362,7 @@
                             if (json && json.d) {
                                 that.nextUrl = MailingProductLine.MAILERZEILENView.getNextUrl(json);
                                 var results = json.d.results;
+                                that.binding.count = results.length;
                                 that.mailingLine = new WinJS.Binding.List(results);
 
                                 if (listView && listView.winControl) {

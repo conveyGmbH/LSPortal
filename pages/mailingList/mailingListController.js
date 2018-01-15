@@ -29,8 +29,6 @@
             var progress = null;
             var counter = null;
             var layout = null;
-            var messages = [];
-            var lastPrevLogin = [];
 
             var maxLeadingPages = 0;
             var maxTrailingPages = 0;
@@ -67,23 +65,21 @@
                         counter.style.display = "none";
                     }
                     AppData.setErrorMsg(that.binding);
-                    Log.print(Log.l.trace, "calling select MailingList.employeeView...");
+                    Log.print(Log.l.trace, "calling select MailingList.MaildokumentView...");
                     var nextUrl = that.nextUrl;
                     that.nextUrl = null;
-                    MailingList.maildokumentView.selectNext(function (json) { //json is undefined
+                    MailingList.MaildokumentView.selectNext(function (json) { //json is undefined
                         // this callback will be called asynchronously
                         // when the response is available
-                        Log.print(Log.l.trace, "MailingList.employeeView: success!");
+                        Log.print(Log.l.trace, "MailingList.MaildokumentView: success!");
                         // startContact returns object already parsed from json file in response
                         if (json && json.d && that.maildocuments) {
-                            that.nextUrl = MailingList.maildokumentView.getNextUrl(json);
+                            that.nextUrl = MailingList.MaildokumentView.getNextUrl(json);
                             var results = json.d.results;
                             } else {
                                 
                             }
                             Log.print(lastPrevLogin);
-                            results = resultsUnique;
-
                             results.forEach(function (item, index) {
                                 that.resultConverter(item, that.binding.count);
                                 that.binding.count = that.maildocuments.push(item);
@@ -125,8 +121,8 @@
                 if (recordId && listView && listView.winControl && listView.winControl.selection) {
                     for (var i = 0; i < that.maildocuments.length; i++) {
                         var maildocument = that.maildocuments.getAt(i);
-                        if (maildocument && typeof employee === "object" &&
-                            maildocument.MaildokumentID === recordId) {
+                        if (maildocument && typeof maildocument === "object" &&
+                            maildocument.MaildokumentVIEWID === recordId) {
                             listView.winControl.selection.set(i);
                             break;
                         }
@@ -160,12 +156,12 @@
                                 // Only one item is selected, show the page
                                 listControl.selection.getItems().done(function (items) {
                                     var item = items[0];
-                                    if (item.data && item.data.MaildokumentID &&
-                                        item.data.MaildokumentID !== that.binding.mailingId) {
+                                    if (item.data && item.data.MaildokumentVIEWID &&
+                                        item.data.MaildokumentVIEWID !== that.binding.mailingId) {
                                         // called asynchronously if ok
-                                        that.binding.mailingId = item.data.MaildokumentID;
+                                        that.binding.mailingId = item.data.MaildokumentVIEWID;
                                         var curPageId = Application.getPageId(nav.location);
-                                        if ((curPageId === "mailing" || curPageId === "mailingList") &&
+                                        if ((curPageId === "mailingList" || curPageId === "mailing") &&
                                             typeof AppBar.scope.loadData === "function") {
                                             AppBar.scope.loadData(that.binding.mailingId);
                                             Application.navigateById("mailing");
@@ -285,22 +281,18 @@
                 }
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
-                    return MailingList.maildokumentView.select(function (json) {
+                    return MailingList.MaildokumentView.select(function (json) {
                             // this callback will be called asynchronously
                             // when the response is available
                             AppData.setErrorMsg(that.binding);
                             Log.print(Log.l.trace, "MailingList: success!");
                             // employeeView returns object already parsed from json file in response
                             if (json && json.d && json.d.results) {
-                                that.nextUrl = MailingList.maildokumentView.getNextUrl(json);
+                                that.nextUrl = MailingList.MaildokumentView.getNextUrl(json);
                                 var results = json.d.results;
                                 
-                                results = resultsUnique;
                                 that.binding.count = results.length;
-
-                                results.forEach(function (item, index) {
-                                    that.resultConverter(item, index);
-                                });
+                                
                                 that.maildocuments = new WinJS.Binding.List(results);
 
                                 if (listView.winControl) {
@@ -308,9 +300,9 @@
                                     listView.winControl.itemDataSource = that.maildocuments.dataSource;
                                 }
                                 Log.print(Log.l.trace, "Data loaded");
-                                if (results[0] && results[0].MaildokumentID) {
+                                if (results[0] && results[0].MaildokumentVIEWID) {
                                     WinJS.Promise.timeout(0).then(function () {
-                                        that.selectRecordId(results[0].MaildokumentID);
+                                        that.selectRecordId(results[0].MaildokumentVIEWID);
                                     });
                                 }
                             } else {
@@ -344,8 +336,12 @@
                                 counter.style.display = "inline";
                             }
                             that.loading = false;
-                        }); 
-                    });
+                        },
+                        {
+                            LanguageID: AppData.getLanguageId()
+                        }
+                    ); 
+                 });
                 Log.ret(Log.l.trace);
                 return ret;
             };
@@ -356,7 +352,7 @@
                 return that.loadData();
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
-                return that.selectRecordId();
+                // return that.selectRecordId();
             }).then(function () {
                 AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Record selected");

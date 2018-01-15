@@ -468,6 +468,9 @@
     "mailingProduct.cc"            : "CC",
     "mailingProduct.bcc"           : "BCC",
     "mailingProduct.mailtext"      : "Mailtext",
+	
+    "mailingList.title"            : "Maildocuments",
+    "mailingList.count"            : "Count",
 
     "productlist.title"     : "Product selection",
     "productlist.comment"   : "On this page, use the buttons to go to additional pages!",

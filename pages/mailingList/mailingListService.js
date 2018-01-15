@@ -7,37 +7,36 @@
         "use strict";
 
         WinJS.Namespace.define("MailingList", {
-            _maildokumentView: {
+            _MaildokumentView: {
                 get: function () {
-                    return AppData.getFormatView("Maildokument"); 
+                    return AppData.getFormatView("Maildokument", 20527);
                 }
             },
-            maildokumentView: {
-                select: function (complete, error) {
+            MaildokumentView: {
+                select: function (complete, error, restriction) {
                     Log.call(Log.l.trace, "MailingList.");
-                    var ret = MailingList._maildokumentView.select(complete,
-                        error,
-                        { SpecType : 1 },
-                        {
-                            ordered: true,
-                            orderAttribute: "MaildokumentID"
-                        });
+                    var ret = MailingList._MaildokumentView.select(complete, error, restriction, { ordered: true });
                     // this will return a promise to controller
                     Log.ret(Log.l.trace);
                     return ret;
                 },
                 getNextUrl: function (response) {
                     Log.call(Log.l.trace, "MailingList.");
-                    var ret = MailingList._maildokumentView.getNextUrl(response);
+                    var ret = MailingList._MaildokumentView.getNextUrl(response);
                     Log.ret(Log.l.trace);
                     return ret;
                 },
                 selectNext: function (complete, error, response, nextUrl) {
                     Log.call(Log.l.trace, "MailingList.");
-                    var ret = MailingList._maildokumentView.selectNext(complete, error, response, nextUrl);
+                    var ret = MailingList._MaildokumentView.selectNext(complete, error, response, nextUrl);
                     // this will return a promise to controller
                     Log.ret(Log.l.trace);
                     return ret;
+                },
+                defaultValue: {
+                    MaildokumentVIEWID: 0,
+                    Beschreibung: null,
+                    Subject: null
                 }
             }
         });

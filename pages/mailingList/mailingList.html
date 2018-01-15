@@ -17,13 +17,6 @@
                             <span data-win-res="{textContent: 'mailingList.title'}"></span>
                         </div>
                     </div>
-                <div class="headerFooterPlaceholder">
-                    <div class="list-header">
-                        <div class="list-landscape-only list-header-columns">
-                            <div class="list-field-small-fixed"
-                                 data-win-res="{textContent: 'mailingList.beschreibung'}"></div>
-                        </div>
-                    </div>
                     <div class="mailingList-template"
                          data-win-control="WinJS.Binding.Template" style="display: none">
                         <div class="list-landscape-only">
@@ -31,13 +24,24 @@
                                  data-win-bind="style.display: index Binding.Converter.oddToDisplay"></div>
                             <div class="list-field-small-fixed win-type-ellipsis"
                                  data-win-bind="textContent: Beschreibung"></div>
+                            <div class="list-field-small-fixed win-type-ellipsis"
+                                 data-win-bind="textContent: Subject"></div>
+                            
                         </div>
                         <div class="list-portrait-only">
                             <div class="row-separator"></div>
                             <div class="list-div-left">
+                                <div class="list-symbol-ID">
+                                    <div id="mail" class="action-image"></div>
+                                    <div class="list-field-small-fixed win-type-ellipsis"
+                                         data-win-bind="textContent: Beschreibung"></div>
+                                </div>
                                 <div class="list-compressed">
+                                    <!--list-empList-->
                                     <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
                                           data-win-bind="textContent: Beschreibung"></span>
+                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
+                                          data-win-bind="textContent: Subject"></span>
                                 </div>
                             </div>
                         </div>
@@ -57,14 +61,12 @@
                          data-win-control="WinJS.UI.ListView"
                          data-win-options="{
                                 itemTemplate: select('.mailingList-template'),
-                                header: select('.list-header'),
                                 footer: select('.list-footer')
                          }">
                     </div>
                     <div class="error-message"
                          data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
                 </div>
-              </div>
             </section>
         </div>
     </div>

@@ -468,6 +468,9 @@
     "mailingProduct.cc"            : "CC",
     "mailingProduct.bcc"           : "BCC",
     "mailingProduct.mailtext"      : "Texte mail",
+	
+    "mailingList.title"            : "Mailing Produits",
+    "mailingList.count"            : "Nombre",
 
     "productlist.title"     : "Sélection de produits",
     "productlist.comment"   : "Utilisez le bouton Retour sur cette page pour y retourner!",
