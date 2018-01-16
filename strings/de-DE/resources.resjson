@@ -362,7 +362,7 @@
     "label.mailingProduct"  : "Produkt E-Mail",
     "label.infodesk"        : "Infodesk",
     "label.mandatory"       : "Pflichtfelder",
-	  "label.barcodeAdministration" : "Barcode",
+	"label.barcodeAdministration" : "Barcode",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Abbrechen",
@@ -457,7 +457,7 @@
     "mailing.cc"            : "CC",
     "mailing.bcc"           : "BCC",
     "mailing.mailtext"      : "Mailtext",
-    "mailing.standart"      : "Standart",
+    "mailing.standard"      : "Standard",
 
     "mailingProduct.title"         : "Mailing Produkte",
     "mailingProduct.event"         : "Veranstaltung",

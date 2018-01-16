@@ -457,7 +457,7 @@
     "mailing.cc"            : "CC",
     "mailing.bcc"           : "BCC",
     "mailing.mailtext"      : "Mail text",
-    "mailing.standart"      : "Standart",
+    "mailing.standard"      : "default",
     
 	"mailingProduct.title"         : "Mailing Products",
     "mailingProduct.event"         : "Event",
