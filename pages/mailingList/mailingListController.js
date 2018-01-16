@@ -204,7 +204,7 @@
                         }
                         if (listView.winControl.loadingState === "itemsLoading") {
                             if (!layout) {
-                                layout = Application.MailingListLayout.mailingListLayout;
+                                layout = Application.MailingListLayout.MailingListLayout;
                                 listView.winControl.layout = { type: layout };
                             }
                         } else if (listView.winControl.loadingState === "complete") {
