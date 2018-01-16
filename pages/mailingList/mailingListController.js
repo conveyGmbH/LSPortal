@@ -338,7 +338,8 @@
                             that.loading = false;
                         },
                         {
-                            LanguageID: AppData.getLanguageId()
+                            LanguageID: AppData.getLanguageId(),
+                            SpecType: [0,1]
                         }
                     ); 
                  });

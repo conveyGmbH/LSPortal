@@ -7,20 +7,15 @@
     "use strict";
 
     WinJS.Namespace.define("Mailing", {
-        _MaildokumentView: {
-            get: function () {
-                return AppData.getFormatView("Maildokument", 20527);
-            }
-        },
         _MaildokumentTable: {
             get: function () {
                 return AppData.getFormatView("Maildokument", 0);
             }
         },
         MaildokumentView: {
-            select: function (complete, error, restriction) {
+            select: function (complete, error, recordId) {
                 Log.call(Log.l.trace, "Mailing.");
-                var ret = Mailing._MaildokumentView.select(complete, error, restriction, { ordered: true });
+                var ret = Mailing._MaildokumentTable.selectById(complete, error, recordId);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;

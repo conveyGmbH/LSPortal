@@ -111,7 +111,7 @@
             }
             
             var loadData = function (mailID) {
-                Log.call(Log.l.trace, "MailingProduct.");
+                Log.call(Log.l.trace, "MailingProduct.", "mailID=" + mailID);
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                     return Mailing.MaildokumentView.select(function (json) {
@@ -119,20 +119,15 @@
                         // when the response is available
                         Log.print(Log.l.trace, "Mailing: success!");
                         // startContact returns object already parsed from json file in response
-                        if (json && json.d && json.d.results) {
-                            that.binding.dataMail = json.d.results[0];
+                        if (json && json.d) {
+                            that.binding.dataMail = json.d;
                             Log.print(Log.l.trace, "Mailing: success!");
                         }
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
-                    },
-                        {
-                            MaildokumentVIEWID : mailID,
-                            LanguageID: AppData.getLanguageId()
-                        }
-                    );
+                    }, mailID);
                 }).then(function () {
                     AppBar.notifyModified = true;
                     return WinJS.Promise.as();
