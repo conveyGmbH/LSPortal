@@ -279,7 +279,7 @@
                     contentarea.scrollTop = 0;
                 }
                 var newLanguageId = getLanguage();
-                var prevLanguageId = AppData._persistentStates.languageId
+                var prevLanguageId = AppData._persistentStates.languageId;
                 if (newLanguageId !== prevLanguageId) {
                     AppData._persistentStates.languageId = newLanguageId;
                     Application.pageframe.savePersistentStates();
