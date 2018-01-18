@@ -291,8 +291,8 @@
                     complete({});
                 } else {
                     AppBar.busy = true;
-                    that.binding.appSettings.odata.onlinePath = AppData._persistentStatesDefaults.odata.onlinePath;
-                    that.binding.appSettings.odata.registerPath = AppData._persistentStatesDefaults.odata.registerPath;
+                    that.binding.appSettings.odata.onlinePath = "odata_online";//AppData._persistentStatesDefaults.odata.onlinePath;
+                    that.binding.appSettings.odata.registerPath = "odata_register";//AppData._persistentStatesDefaults.odata.registerPath;
                     ret = Account.loginRequest.insert(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
@@ -306,7 +306,8 @@
                                 error(err);
                             } else {
                                 var location = json.d.ODataLocation;
-                                if (location !== AppData._persistentStatesDefaults.odata.onlinePath) {
+                                //if (location !== AppData._persistentStatesDefaults.odata.onlinePath) {
+                                if (location !== "odata_online") {
                                     that.binding.appSettings.odata.onlinePath = location + that.binding.appSettings.odata.onlinePath;
                                     that.binding.appSettings.odata.registerPath = location + that.binding.appSettings.odata.registerPath;
                                 }
