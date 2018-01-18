@@ -31,8 +31,6 @@
             // First, we call WinJS.Binding.as to get the bindable proxy object
             this.binding = WinJS.Binding.as(this.pageData);
 
-            // Then, do anything special on this page
-
             // show business card photo
             var userPhotoContainer = pageElement.querySelector("#user");
             var showPhoto = function () {
