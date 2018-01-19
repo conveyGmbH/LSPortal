@@ -22,9 +22,6 @@
                 pageElement, {
                     restriction: getEmptyDefaultValue(Reporting.defaultrestriction),
                     curOLELetterID: null,
-                    exportTemplateRestriction: {
-                        DOC3OLELetterVIEWID: 0
-                    },
                     progress: {
                         percent: 0,
                         text: "",
@@ -199,31 +196,19 @@
             var templatecall = function() {
                 Log.call(Log.l.trace, "Reporting.Controller.");
                 AppData.setErrorMsg(that.binding);
-                var ret = new WinJS.Promise.as().then(function() {
-                    return Reporting.exportTemplate.select(function(json) {
-                        Log.print(Log.l.trace, "exportTemplate: success!");
-                        if (json && json.d && json.d.results) {
-                            // store result for next use
-                            var i = that.binding.curOLELetterID - 1;
-                            that.template = json.d.results[i].DocContentDOCCNT1;
-                            if (i === 0) {
-                                that.templatestr = that.template.substring(131);
-                                that.exportData();
-                            } else {
-                                that.templatestr = that.template.substring(131);
-                                that.exportData();
-                            }
-                        }
-                    }, function(errorResponse) {
-                        // called asynchronously if an error occurs
-                        // or server returns response with an error status.
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                    });
-                }).then(function() {
-                    AppBar.notifyModified = true;
-                    AppBar.triggerDisableHandlers();
-                    return WinJS.Promise.as();
-                });
+                var ret = Reporting.exportTemplate.select(function (json) {
+                    Log.print(Log.l.trace, "exportTemplate: success!");
+                    if (json && json.d) {
+                        // store result for next use
+                        var template = json.d.DocContentDOCCNT1;
+                        var sub = template.search("\r\n\r\n");
+                        that.templatestr = template.substr(sub + 4);
+                    }
+                }, function (errorResponse) {
+                    // called asynchronously if an error occurs 176
+                    // or server returns response with an error status.
+                    AppData.setErrorMsg(that.binding, errorResponse);
+                }, 26);
                 Log.ret(Log.l.trace);
                 return ret;
             };
@@ -297,27 +282,24 @@
                     Log.print(Log.l.error, "curOLELetterID=" + that.binding.curOLELetterID + "not supported");
                 }
                 if (dbView) {
-                    var temp = that.templatestr;
                     var exporter = ExportXlsx.exporter;
                     if (!exporter) {
                         exporter = new ExportXlsx.ExporterClass(that.binding.progress);
                     }
                     exporter.showProgress(0);
-                    WinJS.Promise.timeout(50).then(function () {
-                        var restriction = that.setRestriction();
-                        if (!restriction) {
-                            dbViewTitle = null;
-                            restriction = {};
-                        }
-                        exporter.saveXlsxFromView(dbView, fileName, function(result) {
-                                AppBar.busy = false;
-                                AppBar.triggerDisableHandlers();
-                            }, function(errorResponse) {
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                                AppBar.busy = false;
-                                AppBar.triggerDisableHandlers();
-                            }, restriction, dbViewTitle);
-                    });
+                    var restriction = that.setRestriction();
+                    if (!restriction) {
+                        dbViewTitle = null;
+                        restriction = {};
+                    }
+                    exporter.saveXlsxFromView(dbView, fileName, function (result) {
+                        AppBar.busy = false;
+                        AppBar.triggerDisableHandlers();
+                    }, function (errorResponse) {
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                        AppBar.busy = false;
+                        AppBar.triggerDisableHandlers();
+                    }, restriction, dbViewTitle, that.templatestr);
                 } else {
                     AppBar.busy = false;
                     AppBar.triggerDisableHandlers();
@@ -500,8 +482,9 @@
                         AppBar.busy = true;
                         AppBar.triggerDisableHandlers();
                         WinJS.Promise.timeout(0).then(function () {
-                            //that.templatecall();
-                            that.exportData(exportselection);
+                            return that.templatecall(exportselection);
+                        }).then(function() {
+                            return that.exportData(exportselection);
                         });
                     }
                     Log.ret(Log.l.trace);
@@ -557,6 +540,7 @@
             var loadData = function() {
                 Log.call(Log.l.trace, "Reporting.Controller.");
                 AppData.setErrorMsg(that.binding);
+                //that.templatecall();
                 var ret = new WinJS.Promise.as().then(function() {
                     var reportingListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("ReportingList"));
                     if (reportingListFragmentControl && reportingListFragmentControl.controller) {
@@ -699,7 +683,6 @@
         }, {
             analysis: null,
             employees: null,
-            template: null,
             templatestr: null,
             landHisto: null,
             employeeHisto: null,

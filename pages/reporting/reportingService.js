@@ -424,12 +424,9 @@
             }
         },
         exportTemplate: {
-            select: function (complete, error, restriction) {
+            select: function (complete, error, recordId) {
                 Log.call(Log.l.trace, "Reporting.");
-                var ret = Reporting._exportTemplate.select(complete, error, restriction, {
-                    ordered: true,
-                    orderAttribute: "DOC3OLELetterVIEWID"
-                });
+                var ret = Reporting._exportTemplate.selectById(complete, error, recordId);
                 Log.ret(Log.l.trace);
                 return ret;
             }

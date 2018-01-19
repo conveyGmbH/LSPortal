@@ -281,8 +281,13 @@
                 });
                 Log.ret(Log.l.trace);
             },
-            saveXlsxFromView: function (dbView, fileName, complete, error, restriction, dbViewTitle) {
+            saveXlsxFromView: function (dbView, fileName, complete, error, restriction, dbViewTitle, temp) {
                 Log.call(Log.l.trace, "ExportXlsx.");
+                if (!temp) {
+
+                } else {
+                    this.templateSpreadsheet = temp;
+                }
                 if (!this.xlsx) {
                     Log.ret(Log.l.error, "OpenXmlPackage not created");
                     return;
@@ -366,7 +371,7 @@
                             var wsXDoc = worksheetPart.getXDocument();
                             var sheetData = wsXDoc.descendants(S.sheetData).firstOrDefault();
                             if (sheetData) {
-                                that.selectAllViewData(dbView, sheetData, openedSpreadsheet, fileName, complete, error, restriction, dbViewTitle);
+                                that.selectAllViewData(dbView, sheetData, openedSpreadsheet, fileName, complete, error, restriction, dbViewTitle, temp);
                             } else {
                                 if (typeof error === "function") {
                                     error("no sheetData found in Excel template!");
@@ -535,7 +540,7 @@
     "AAAAAABEGQAAZG9jUHJvcHMvY29yZS54bWxQSwECLQAUAAYACAAAACEAaS/Zj5QBAABHAwAAEAAA" +
     "AAAAAAAAAAAAAAC4GwAAZG9jUHJvcHMvYXBwLnhtbFBLBQYAAAAACwALAMoCAACCHgAAAAA=",
             spreadsheetToSave: null,
-            xlsx: null
+            xlsx: 1
             
         })
     });
