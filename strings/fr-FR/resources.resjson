@@ -358,7 +358,7 @@
     "label.reportingColumnList"       : "Coutume",	
     "label.skills"          : "Capacités",
     "label.skillentry"      : "entrer une capacité",
-    "label.mailing"         : "Mail",
+    "label.mailing"         : "Standard Mail",
     "label.mailingProduct"  : "Produit Mail",
     "label.infodesk"        : "Infodesk",
     "label.mandatory"       : "Champs obligatoires",
@@ -446,7 +446,7 @@
     "appheader.notpublished": "Pas publié",
     "appheader.portal"      : "Portal",
 
-    "mailing.title"         : "Messagerie",
+    "mailing.title"         : "Standard Mail",
     "mailing.contactinfo"   : "Si vous désirez un envoi postal, veuillez composer le + 49 (0) 8954 34 49 30 ou écrivez-nous un ",
 	"mailing.info"          : "Description",
     "mailing.event"         : "événement",

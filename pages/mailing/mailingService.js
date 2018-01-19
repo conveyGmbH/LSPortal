@@ -28,7 +28,6 @@
                 return ret;
             },
             defaultValue: {
-                MaildokumentVIEWID: 0,
                 Beschreibung: null,
                 Subject: null,
                 Mailtext: null,

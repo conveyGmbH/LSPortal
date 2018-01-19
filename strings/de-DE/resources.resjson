@@ -358,7 +358,7 @@
     "label.reportingColumnList"       : "Benutzerdefiniert",
     "label.skills"          : "Fähigkeiten",
     "label.skillentry"      : "Fähigkeit eintragen",
-    "label.mailing"         : "Dankes E-Mail",
+    "label.mailing"         : "Standard Mail",
     "label.mailingProduct"  : "Produkt E-Mail",
     "label.infodesk"        : "Infodesk",
     "label.mandatory"       : "Pflichtfelder",
@@ -446,7 +446,7 @@
     "appheader.notpublished": "Nicht publiziert",
     "appheader.portal"      : "Portal",
 
-    "mailing.title"         : "Mailing",
+    "mailing.title"         : "Standard Mail",
     "mailing.contactinfo"   : "Wenn Sie ein Mailing wünschen, rufen Sie bitte die +49(0) 8954 34 49 30 an oder schreiben Sie uns einfach eine ",
     "mailing.info"          : "Beschreibung",
     "mailing.event"         : "Veranstaltung",

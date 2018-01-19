@@ -358,7 +358,7 @@
     "label.reportingColumnList"       : "Custom",
     "label.skills"          : "Skills",
     "label.skillentry"      : "Skill entries",
-    "label.mailing"         : "Mail",
+    "label.mailing"         : "Standard Mail",
     "label.mailingProduct"  : "Product Mail",
     "label.infodesk"        : "Infodesk",
     "label.mandatory"       : "Mandatory Fields",
@@ -446,7 +446,7 @@
     "appheader.notpublished": "Not published",
     "appheader.portal"      : "Portal",
 
-    "mailing.title"         : "Mailing",
+    "mailing.title"         : "Standard Mail",
     "mailing.contactinfo"   : "If you want a mailing, please call +49 (0) 8954 34 49 30 or write us an email ",
 	"mailing.info"			: "Description",
 	"mailing.event"         : "Event",

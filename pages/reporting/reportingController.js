@@ -208,7 +208,7 @@
                     // called asynchronously if an error occurs 176
                     // or server returns response with an error status.
                     AppData.setErrorMsg(that.binding, errorResponse);
-                }, 26);
+                    }, 26);
                 Log.ret(Log.l.trace);
                 return ret;
             };

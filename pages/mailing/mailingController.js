@@ -18,11 +18,43 @@
                 dataMail: getEmptyDefaultValue(Mailing.MaildokumentView.defaultValue)
             }, commandList]);
             var that = this;
-            
+
+            var standard = pageElement.querySelector("#standard");
+
+            var setstandard = function () {
+                if (that.binding.dataMail.IsDefault === null) {
+                    return standard.checked = false;
+                } else {
+                    return standard.checked = true;
+                }
+            }
+            this.setstandard = setstandard;
+
+            var getstandard = function () {
+                if (standard.checked === false) {
+                    that.binding.dataMail.IsDefault = null;
+                } else {
+                    that.binding.dataMail.IsDefault = 1;
+                }
+            }
+            this.getstandard = getstandard;
+
+            var setDataMail = function (newDataMail) {
+                var prevNotifyModified = AppBar.notifyModified;
+                AppBar.notifyModified = false;
+                that.binding.newMail.VeranstaltungID = AppData.getRecordId("Veranstaltung");
+                that.binding.newMail.SpracheID = AppData.getLanguageId();
+                AppBar.modified = false;
+                AppBar.notifyModified = prevNotifyModified;
+                AppBar.triggerDisableHandlers();
+            }
+            this.setDataMail = setDataMail;
+
             var saveData = function (complete, error) {
                 Log.call(Log.l.trace, "Mailing.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret;
+                that.getstandard();
                 var dataMail = that.binding.dataMail;
                 if (dataMail && AppBar.modified && !AppBar.busy) {
                     var recordId = dataMail.MaildokumentVIEWID;
@@ -77,6 +109,39 @@
                     }
                     Log.ret(Log.l.trace);
                 },
+                clickNew: function (event) {
+                    Log.call(Log.l.trace, "Mailing.Controller.");
+                    that.saveData(function (response) {
+                        AppBar.busy = true;
+                        Log.print(Log.l.trace, "Mail saved");
+                        var newMail = getEmptyDefaultValue(Mailing.MaildokumentView.defaultValue);
+                        Mailing.MaildokumentView.insert(function (json) {
+                            AppBar.busy = false;
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            Log.print(Log.l.info, "MaildokumentView insert: success!");
+                            // employeeView returns object already parsed from json file in response
+                            if (json && json.d) {
+                                that.setDataMail(json.d);
+                                /* Mitarbeiter Liste neu laden und Selektion auf neue Zeile setzen */
+                                var master = Application.navigator.masterControl;
+                                if (master && master.controller && master.controller.binding) {
+                                    master.controller.binding.mailId = that.binding.dataMail.MaildokumentVIEWID;
+                                    master.controller.loadData().then(function () {
+                                        master.controller.selectRecordId(that.binding.dataMail.MaildokumentVIEWID);
+                                    });
+                                }
+                            }
+                        }, function (errorResponse) {
+                            Log.print(Log.l.error, "error inserting mail");
+                            AppBar.busy = false;
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                            }, newMail);
+                    }, function (errorResponse) {
+                        Log.print(Log.l.error, "error saving mail");
+                    });
+                    Log.ret(Log.l.trace);
+                },
                 clickSave: function (event) {
                     Log.call(Log.l.trace, "Mailing.Controller.");
                     that.saveData();
@@ -121,6 +186,7 @@
                         // startContact returns object already parsed from json file in response
                         if (json && json.d) {
                             that.binding.dataMail = json.d;
+                            that.setstandard();
                             Log.print(Log.l.trace, "Mailing: success!");
                         }
                     }, function (errorResponse) {
