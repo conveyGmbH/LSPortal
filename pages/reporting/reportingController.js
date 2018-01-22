@@ -193,7 +193,7 @@
             }
             this.setRestriction = setRestriction;
 
-            var templatecall = function() {
+            var templatecall = function(tID) {
                 Log.call(Log.l.trace, "Reporting.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret = Reporting.exportTemplate.select(function (json) {
@@ -208,7 +208,7 @@
                     // called asynchronously if an error occurs 176
                     // or server returns response with an error status.
                     AppData.setErrorMsg(that.binding, errorResponse);
-                    }, 26);
+                    }, tID);
                 Log.ret(Log.l.trace);
                 return ret;
             };
@@ -671,7 +671,7 @@
                 return ret;
             };
             this.loadData = loadData;
-            //that.setInitialDate();
+            that.setInitialDate();
             that.showDateRestrictions();
             that.processAll().then(function() {
                 Log.print(Log.l.trace, "Binding wireup page complete");
