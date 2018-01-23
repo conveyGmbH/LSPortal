@@ -447,7 +447,7 @@
     "appheader.portal"      : "Portal",
 
     "mailing.title"         : "Standard Mail",
-    "mailing.contactinfo"   : "Si vous désirez un envoi postal, veuillez composer le + 49 (0) 8954 34 49 30 ou écrivez-nous un ",
+    "mailing.contactinfo"   : "Si vous désirez un envoi postal, veuillez composer le + +49 (0)89 95 45 867 - 55 ou écrivez-nous un ",
 	"mailing.info"          : "Description",
     "mailing.event"         : "événement",
     "mailing.language"      : "Langue",

@@ -47,7 +47,7 @@
             serverFailure: false
         }
     };
-
+    
     // static array of menu groups for the split view pane
     Application.navigationBarGroups = [
         { id: "start", group: 1, svg: "home", disabled: true },
@@ -68,7 +68,9 @@
         { id: "questiongroup", group: 2, disabled: false },
         { id: "questionList", group: 2, disabled: false },
         { id: "skills", group: 2, disabled: false },
+        { id: "mandatory", group: 2, disabled: false },
         { id: "mailing", group: -3, disabled: false },
+        //{ id: "mailingProduct", group: 3, disabled: false },
         { id: "employee", group: 4, disabled: false },
         { id: "skillentry", group: 4, disabled: false },
         { id: "contact", group: 5, disabled: false },
@@ -80,7 +82,7 @@
         { id: "info", group: 8, disabled: false },
         { id: "settings", group: 8, disabled: false },
         { id: "account", group: 8, disabled: false },
-        { id: "search", group: -9, disabled: false}
+        { id: "search", group: -9, disabled: false }
     ];
 
 
@@ -92,7 +94,8 @@
         { id: "photo", master: "contactList" },
         { id: "employee", master: "empList" },
         { id: "skillentry", master: "empList" },
-        { id: "infodesk", master: "infodeskEmpList" }
+        { id: "infodesk", master: "infodeskEmpList" },
+        //{ id: "mailing", master: "mailingList" }
     ];
 
     // init page for app startup

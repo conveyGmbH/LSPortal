@@ -206,7 +206,7 @@
             // Finally, wire up binding
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.loadData(that.binding.mailID);
+                //return that.loadData(that.binding.mailID);
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
             });
