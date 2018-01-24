@@ -363,6 +363,7 @@
     "label.infodesk"        : "Infodesk",
     "label.mandatory"       : "Champs obligatoires",
     "label.barcodeAdministration" : "Code barre",
+    "label.eventcreation"   : "Créer un événement",
     
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annuler",
@@ -484,5 +485,7 @@
     "mandatory.count"  : "Nombre",
 
 	  "barcodeAdministration.title" : "Barcode",
-	  "barcodeAdministration.count" : "Nombre"
+	  "barcodeAdministration.count" : "Nombre",
+
+    "eventcreation.title" : "Créer un événement"
 }

@@ -362,7 +362,8 @@
     "label.mailingProduct"  : "Prodotto Mail",
     "label.infodesk"        : "Infodesk",
     "label.mandatory"       : "Campo obbligatorio",
-	  "label.barcodeAdministration" : "Barcode",
+	"label.barcodeAdministration" : "Barcode",
+    "label.eventcreation"   : "Crea evento",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annulla",
@@ -484,5 +485,7 @@
     "mandatory.count"  : "Totale",
 
     "barcodeAdministration.title" : "Barcode",
-	"barcodeAdministration.count" : "Totale"
+	"barcodeAdministration.count" : "Totale",
+
+    "eventcreation.title" : "Crea evento"
 }

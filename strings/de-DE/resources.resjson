@@ -363,6 +363,7 @@
     "label.infodesk"        : "Infodesk",
     "label.mandatory"       : "Pflichtfelder",
 	"label.barcodeAdministration" : "Barcode",
+    "label.eventcreation"   : "Veranstaltung erstellen",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Abbrechen",
@@ -485,5 +486,7 @@
     "mandatory.count"       : "Anzahl",
 
 	"barcodeAdministration.title" : "Barcode",
-	"barcodeAdministration.count" : "Anzahl"
-}
+	"barcodeAdministration.count" : "Anzahl",
+
+    "eventcreation.title" : "Veranstaltung erstellen"
+}			

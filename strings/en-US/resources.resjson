@@ -363,6 +363,7 @@
     "label.infodesk"        : "Infodesk",
     "label.mandatory"       : "Mandatory Fields",
 	  "label.barcodeAdministration" : "Barcode",
+    "label.eventcreation"   : "Create an event",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Cancel",
@@ -484,5 +485,7 @@
     "mandatory.count"  : "Count",
 
 	"barcodeAdministration.title" : "Barcode",
-	"barcodeAdministration.count" : "Count"
+	"barcodeAdministration.count" : "Count",
+
+    "eventcreation.title" : "Create an event"
 }
