@@ -173,12 +173,11 @@
                 var ret = false;
                 for (var prop in newRecord) {
                     if (newRecord.hasOwnProperty(prop)) {
-                        if (prevRecord[prop] !== null) {
+                        /*if (prevRecord[prop] !== null) {*/
                             if (newRecord[prop] !== prevRecord[prop]) {
                                 prevRecord[prop] = newRecord[prop];
                                 ret = true;
-                            }
-                        }
+                            }  
                     }
                 }
                 Log.ret(Log.l.trace, ret);
