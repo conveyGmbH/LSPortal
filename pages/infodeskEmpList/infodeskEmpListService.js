@@ -39,7 +39,7 @@
         },
         _employeeView: {
             get: function () {
-                return AppData.getFormatView("Mitarbeiter", 20471, false); // -> wichtig für später MitarbeiterView_20471
+                return AppData.getFormatView("Mitarbeiter", 0, false); // -> wichtig für später MitarbeiterView_20471
             }
         },
         employeeView: {
