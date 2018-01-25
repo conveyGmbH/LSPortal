@@ -196,7 +196,7 @@
                 (item.Vorname ? (item.Vorname + " ") : "") +
                 (item.Nachname ? item.Nachname : ""); // muss geändert werden
                 //}
-                if (item.INITBenAnwID !== 0 && item.INITBenAnwID !== null && item.Present !== 1) {
+                if (item.INITBenAnwID !== 0 && item.INITBenAnwID !== null) {
                     for (var i = 0; i < messages.length; i++) {
                         if (messages[i].INITBenAnwID === item.INITBenAnwID) {
                             item.title = messages[i].TITLE;
