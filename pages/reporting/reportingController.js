@@ -179,14 +179,14 @@
                         reportingRestriction.RecordDate = that.binding.restriction.ReportingErfassungsdatum;
                     }
                 }
-                if (that.binding.showModifiedTS && that.binding.restriction.ModifiedTS) {
+                if (that.binding.showModifiedTS && that.binding.restriction.ModifiedTs) {
                     if (!reportingRestriction) {
                         reportingRestriction = {};
                     }
                     if (AppData.getLanguageId() === 1031) {
-                        reportingRestriction.AenderungsDatum = that.binding.restriction.ModifiedTS;
+                        reportingRestriction.AenderungsDatum = that.binding.restriction.ModifiedTs;
                     } else {
-                        reportingRestriction.ModificationDate = that.binding.restriction.ModifiedTS;
+                        reportingRestriction.ModificationDate = that.binding.restriction.ModifiedTs;
                     }
                 }
                 return reportingRestriction;
@@ -205,10 +205,10 @@
                         that.templatestr = template.substr(sub + 4);
                     }
                 }, function (errorResponse) {
-                    // called asynchronously if an error occurs 176
+                    // called asynchronously if an error occurs
                     // or server returns response with an error status.
                     AppData.setErrorMsg(that.binding, errorResponse);
-                    }, tID);
+                    }, 26);
                 Log.ret(Log.l.trace);
                 return ret;
             };
@@ -287,7 +287,12 @@
                         exporter = new ExportXlsx.ExporterClass(that.binding.progress);
                     }
                     exporter.showProgress(0);
-                    var restriction = that.setRestriction();
+                    var restriction = {};
+                    if (exportselection != 26) {
+                        restriction = that.setRestriction(); 
+                    } else {
+                        restriction = {};
+                    }
                     if (!restriction) {
                         dbViewTitle = null;
                         restriction = {};
@@ -482,7 +487,7 @@
                         AppBar.busy = true;
                         AppBar.triggerDisableHandlers();
                         WinJS.Promise.timeout(0).then(function () {
-                            return that.templatecall(exportselection);
+                            //return that.templatecall(exportselection);
                         }).then(function() {
                             return that.exportData(exportselection);
                         });

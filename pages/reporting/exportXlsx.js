@@ -283,11 +283,12 @@
             },
             saveXlsxFromView: function (dbView, fileName, complete, error, restriction, dbViewTitle, temp) {
                 Log.call(Log.l.trace, "ExportXlsx.");
-                if (!temp) {
-
+                /*if (fileName === "BenutzerdefinierterReport" || fileName === "CostumReport") {
+                    this.template = temp;
                 } else {
-                    this.templateSpreadsheet = temp;
-                }
+                    this.template = this.templateSpreadsheet;
+                }*/
+                this.template = this.templateSpreadsheet;
                 if (!this.xlsx) {
                     Log.ret(Log.l.error, "OpenXmlPackage not created");
                     return;
@@ -299,7 +300,7 @@
                 var that = this;
 
                 this.showProgress(1);
-                that.xlsx.openFromBase64Async(that.templateSpreadsheet, function (openedSpreadsheet) {
+                that.xlsx.openFromBase64Async(that.template, function (openedSpreadsheet) {
                     Log.call(Log.l.trace, "ExportXlsx.loadXlsxFromView.openFromBase64Async.");
                     try {
                         var workbookPart = openedSpreadsheet.workbookPart();
@@ -540,7 +541,8 @@
     "AAAAAABEGQAAZG9jUHJvcHMvY29yZS54bWxQSwECLQAUAAYACAAAACEAaS/Zj5QBAABHAwAAEAAA" +
     "AAAAAAAAAAAAAAC4GwAAZG9jUHJvcHMvYXBwLnhtbFBLBQYAAAAACwALAMoCAACCHgAAAAA=",
             spreadsheetToSave: null,
-            xlsx: null
+            xlsx: null,
+            template: null
             
         })
     });
