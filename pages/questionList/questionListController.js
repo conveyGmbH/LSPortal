@@ -173,9 +173,11 @@
                 var ret = false;
                 for (var prop in newRecord) {
                     if (newRecord.hasOwnProperty(prop)) {
-                        if (newRecord[prop] !== prevRecord[prop]) {
-                            prevRecord[prop] = newRecord[prop];
-                            ret = true;
+                        if (prevRecord[prop] !== null) {
+                            if (newRecord[prop] !== prevRecord[prop]) {
+                                prevRecord[prop] = newRecord[prop];
+                                ret = true;
+                            }
                         }
                     }
                 }

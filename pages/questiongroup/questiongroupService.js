@@ -29,7 +29,7 @@
                 Log.call(Log.l.trace, "Questiongroup.CR_V_FragengruppeView.");
                 var ret = Questiongroup._CR_V_FragengruppeView.select(complete, error, restriction, {
                     ordered: true,
-                    orderAttribute: "TITLE"
+                    orderAttribute: "CR_V_FragengruppeVIEWID"
                 });
                 Log.ret(Log.l.trace);
                 return ret;
