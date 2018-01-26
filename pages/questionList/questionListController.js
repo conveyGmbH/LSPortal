@@ -412,6 +412,12 @@
                 clickNew: function (event) {
                     Log.call(Log.l.trace, "QuestionList.Controller.");
                     AppBar.busy = true;
+                    that.saveData(function (response) {
+                        Log.print(Log.l.trace, "question saved");
+                        AppBar.triggerDisableHandlers();
+                    }, function (errorResponse) {
+                        Log.print(Log.l.error, "error saving question");
+                    });
                     QuestionList.questionListView.insert(function (json) {
                         AppBar.busy = false;
                         // called asynchronously if ok
@@ -425,7 +431,6 @@
                         AppBar.busy = false;
                         AppData.setErrorMsg(that.binding, errorResponse);
                     });
-
                     Log.ret(Log.l.trace);
                 },
                 clickForward: function (event) {
