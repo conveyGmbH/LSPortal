@@ -54,6 +54,21 @@
             };
             this.background = background;
 
+            var cutSerialnumer = function (serialnumer) {
+                Log.call(Log.l.trace, "EmpList.Controller.");
+                AppData.setErrorMsg(that.binding);
+                if (serialnumer === null) {
+                    return "";
+                } else {
+                    var serialnumernew = serialnumer;
+                    var sub = serialnumernew.search("0000000000");
+                    serialnumernew = serialnumernew.substr(sub + 10);
+                    return serialnumernew;
+                }
+
+            };
+            this.cutSerialnumer = cutSerialnumer;
+
             var selectRecordId = function (recordId) {
                 Log.call(Log.l.trace, "EmpList.Controller.", "recordId=" + recordId);
                 if (recordId && listView && listView.winControl && listView.winControl.selection && that.employees) {
@@ -97,6 +112,7 @@
                 item.fullName =
                 (item.Vorname ? (item.Vorname + " ") : "") +
                 (item.Nachname ? item.Nachname : "");
+                item.CS1504SerienNr = that.cutSerialnumer(item.CS1504SerienNr);
             }
             this.resultConverter = resultConverter;
 

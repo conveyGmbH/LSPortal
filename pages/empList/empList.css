@@ -47,7 +47,10 @@
     padding-bottom: 2px;
 }
  
-
+#Seriennummer {
+    text-align: right;
+    width: 118%;
+}
 /*
     margins/paddings for bigger size screens 
 

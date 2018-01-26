@@ -9,7 +9,7 @@
     WinJS.Namespace.define("EmpList", {
         _employeeView: {
             get: function () {
-                return AppData.getFormatView("Mitarbeiter", 0, false);
+                return AppData.getFormatView("Mitarbeiter", 20471);
             }
         },
         employeeView: {
