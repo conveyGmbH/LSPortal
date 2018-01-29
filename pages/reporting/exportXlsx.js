@@ -97,7 +97,7 @@
                             style = null;
                             valueName = S.v;
                             if (typeof value === "undefined" ||
-                                value === null) {
+                                value === null || value === "NULL") {
                                 value = "";
                             } else if (attribTypeId === 8 || attribTypeId === 6) { // timestamp or date
                                 var dateString = value.replace("\/Date(", "").replace(")\/", "");
