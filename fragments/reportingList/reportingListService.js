@@ -19,7 +19,8 @@
                     LanguageID: AppData.getLanguageId()
                 }, {
                     ordered: true,
-                    orderAttribute: "Text"
+                    orderAttribute: "OLELetterID",
+                    desc: true
                 });
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
