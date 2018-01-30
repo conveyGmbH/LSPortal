@@ -542,7 +542,7 @@
                         return Infodesk.SkillEntry.select(function (json) {
                             AppData.setErrorMsg(that.binding);
                             Log.print(Log.l.trace, "skillEntryView: success!");
-                            if (json && json.d) {
+                            if (json && json.d && json.d.results.length > 0) {
                                 if (json.d.results[0].MitarbeiterID === recordId) {
                                     that.binding.dataEmployee.Vorname = json.d.results[0].Vorname;
                                     that.binding.dataEmployee.Nachname = json.d.results[0].Nachname;
