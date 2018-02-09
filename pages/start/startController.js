@@ -687,6 +687,7 @@
                         AppData.setErrorMsg(that.binding, errorResponse);
                     });
                 });
+                Log.ret(Log.l.trace);
             };
             this.loadData = loadData;
 
