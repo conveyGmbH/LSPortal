@@ -100,33 +100,30 @@
                             // defaultvalues
                     }
                     if (pOptionTypeId) {
-                        Application.pageframe.savePersistentStates();
                         AppData.call("PRC_SETVERANSTOPTION", {
                             pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
                             pOptionTypeID: pOptionTypeId,
                             pValue: pValue
-                        }, function (json) {
+                        },
+                        function(json) {
                             Log.print(Log.l.info, "call success! ");
-                        }, function (error) {
-                            Log.print(Log.l.error, "call error");
-                        });
-                        AppData.applyColorSetting(colorProperty, color);
-                        that.binding.generalData.colorSettings[colorProperty] = color;
-                        WinJS.Promise.timeout(0).then(function () {
-                            switch (colorProperty) {
-                                case "accentColor":
+                            that.binding.generalData.colorSettings[colorProperty] = color;
+                            Application.pageframe.savePersistentStates();
+                            AppData.applyColorSetting(colorProperty, color);
+                            WinJS.Promise.timeout(0).then(function () {
+                                if (colorProperty === "accentColor") {
                                     that.createColorPicker("backgroundColor");
                                     that.createColorPicker("textColor");
                                     that.createColorPicker("labelColor");
                                     that.createColorPicker("tileTextColor");
                                     that.createColorPicker("tileBackgroundColor");
                                     that.createColorPicker("navigationColor");
-                                    // fall through...
-                                case "navigationColor":
-                                    AppBar.loadIcons();
-                                    NavigationBar.groups = Application.navigationBarGroups;
-                                    break;
-                            }
+                                }
+                            });
+                        },
+                        function(error) {
+                            Log.print(Log.l.error, "call error");
+                            that.loadData();
                         });
                     }
                 }
@@ -350,6 +347,17 @@
                         }
                     }
                     AppData.applyColorSetting(property, item.colorValue);
+                    if (property === "accentColor") {
+                        WinJS.Promise.timeout(0).then(function () {
+                            that.createColorPicker("accentColor", true);
+                            that.createColorPicker("backgroundColor");
+                            that.createColorPicker("textColor");
+                            that.createColorPicker("labelColor");
+                            that.createColorPicker("tileTextColor");
+                            that.createColorPicker("tileBackgroundColor");
+                            that.createColorPicker("navigationColor");
+                        });
+                    }
                 } else if (property === "individualColors") {
                     if (that.binding && that.binding.generalData) {
                         if (item.LocalValue === "1") {
