@@ -439,6 +439,7 @@
                     NavigationBar.enablePage(item.pageProperty);
                 }
             }
+            Log.ret(Log.l.u1, property);
             return property;
         },
         applyColorSetting: function (colorProperty, color) {

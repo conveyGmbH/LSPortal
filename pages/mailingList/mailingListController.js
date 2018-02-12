@@ -339,7 +339,7 @@
                         },
                         {
                             LanguageID: AppData.getLanguageId(),
-                            SpecType: [0,1]
+                            SpecType: ["NULL",1]
                         }
                     ); 
                  });
