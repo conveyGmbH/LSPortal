@@ -732,7 +732,9 @@
                 return that.loadData(getRecordId());// parameter übergeben ? getRecordId()
             }).then(function () {
                 var master = Application.navigator.masterControl;
-                master.controller.selectRecordId(getRecordId());
+                if (master) {
+                    master.controller.selectRecordId(getRecordId());
+                }
                 Log.print(Log.l.trace, "Data loaded");
             }).then(function () {
                 AppBar.notifyModified = true;

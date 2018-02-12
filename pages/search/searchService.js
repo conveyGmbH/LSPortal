@@ -148,6 +148,7 @@
                 MitarbeiterVIEWID: "",
                 Vorname: "",
                 Nachname: "",
+                Login: "",
                 fullName: ""
             }
         }

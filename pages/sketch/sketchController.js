@@ -247,7 +247,7 @@
                             pageControl.prevWidth = 0;
                         }
                         AppBar.replaceCommands([
-                            { id: 'clickShowList', label: getResourceText('sketch.showList'), tooltip: getResourceText('sketch.showList'), section: 'primary', svg: that.binding.showList ? 'document_height' : 'elements3' }
+                            { id: 'clickShowList', label: !that.binding.showList ? getResourceText('sketch.showList') : getResourceText('sketch.hideList'), tooltip: !that.binding.showList ? getResourceText('sketch.showList') : getResourceText('sketch.hideList'), section: 'primary', svg: that.binding.showList ? 'document_height' : 'elements3' }
                         ]);
                         WinJS.Promise.timeout(50).then(function () {
                             mySketchList = pageElement.querySelector(".listfragmenthost");

@@ -111,7 +111,7 @@
     padding-bottom: 4px;
 }
 
-.onsite-offsite {
+/*.onsite-offsite {
     width: 16px;
     height: 16px;
     border-radius: 10px;
@@ -136,13 +136,4 @@
     position: relative;
     left: -14px;
     top: -15px;
-}
-.statusOn {
-    background-color:forestgreen;
-    color: white;
-}
-
-.statusOff {
-    background-color: red;
-    color: white;
-}
+}*/

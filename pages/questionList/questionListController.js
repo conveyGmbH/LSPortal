@@ -375,7 +375,6 @@
                                 Log.print(Log.l.info, "questionListView update: success!");
                                 AppData.getUserData();
                                 // called asynchronously if ok
-                                AppBar.modified = false;
                                 if (typeof complete === "function") {
                                     complete(response);
                                 }
