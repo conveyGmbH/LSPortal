@@ -111,6 +111,7 @@
                             Log.print(Log.l.error, "call error");
                         });
                         AppData.applyColorSetting(colorProperty, color);
+                        that.binding.generalData.colorSettings[colorProperty] = color;
                         WinJS.Promise.timeout(0).then(function () {
                             switch (colorProperty) {
                                 case "accentColor":
