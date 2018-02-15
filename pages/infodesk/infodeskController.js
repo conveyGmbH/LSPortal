@@ -271,31 +271,32 @@
                         that.binding.restriction.Aktiv = [];
                         that.binding.restriction.SkillTypeID = [];
                         that.binding.restriction.Sortierung = [];
+                        that.binding.restriction.countCombobox = 0;
 
                         that.binding.restriction.Aktiv = "X";
-                        if (firstskill.skilltypesortierung !== "undefined") {
+                        if (firstskill.skilltypesortierung) {
                             that.binding.restriction.SkillTypeID.push(firstskill.skilltypesortierung);
                             that.binding.restriction.Sortierung.push(that.binding.restriction.SkillType1Sortierung);
                             that.binding.restriction.countCombobox++;
                         }
-                        if (secondskill.skilltypesortierung !== "undefined") {
+                        if (secondskill.skilltypesortierung) {
                             that.binding.restriction.SkillTypeID.push(secondskill.skilltypesortierung);
                             that.binding.restriction.Sortierung.push(that.binding.restriction.SkillType2Sortierung);
                             that.binding.restriction.countCombobox++;
                         }
-                        if (thirdskill.skilltypesortierung !== "undefined") {
+                        if (thirdskill.skilltypesortierung) {
                             that.binding.restriction.SkillTypeID.push(thirdskill.skilltypesortierung);
                             that.binding.restriction.Sortierung.push(that.binding.restriction.SkillType3Sortierung);
                             that.binding.restriction.countCombobox++;
                         }
 
-                        if (fourthskill.skilltypesortierung !== "undefined") {
+                        if (fourthskill.skilltypesortierung) {
                             that.binding.restriction.SkillTypeID.push(fourthskill.skilltypesortierung);
                             that.binding.restriction.Sortierung.push(that.binding.restriction.SkillType4Sortierung);
                             that.binding.restriction.countCombobox++;
                         }
 
-                        if (fifthskill.skilltypesortierung !== "undefined") {
+                        if (fifthskill.skilltypesortierung) {
                             that.binding.restriction.SkillTypeID.push(fifthskill.skilltypesortierung);
                             that.binding.restriction.Sortierung.push(that.binding.restriction.SkillType5Sortierung);
                             that.binding.restriction.countCombobox++;

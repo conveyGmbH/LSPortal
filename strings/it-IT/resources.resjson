@@ -33,6 +33,7 @@
     "command.photo"         : "Photo",
     "command.zoomin"        : "ingrandire",
     "command.zoomout"       : "ridurre",
+	"command.print"			: "stampa",
 
     "tooltip.backward"      : "Pagina precedente",
     "tooltip.edit"          : "Modifica Record attuale",
@@ -62,6 +63,7 @@
     "tooltip.export"        : "Data export",
     "tooltip.publish"       : "Pubblicare il questionario",
     "tooltip.photo"         : "Scattare foto",
+	"tooltip.print"			: "stampa",
 
     "start.title"           : "Pagina iniziale",
     "start.comment"         : "Utilizzate i pulsanti su questa pagina per muoversi tra le pagine!",
@@ -379,6 +381,7 @@
     "event.showHideNavigationPages" : "pagina di navigazione",
 	  "event.showHideBarcodeScan" : "Barcode",
 	  "event.showHideCamera"  : "Camera",
+    "event.productMail"		: "posta elettronica del prodotto",
     "event.note"            : "suggerimento",
     "event.appInfo"         : "Affinché le modifiche abbiano effetto, si prega di riavviare l´APP",
 

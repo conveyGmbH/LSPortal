@@ -429,6 +429,13 @@
                         AppData._persistentStates.hideCameraScan = false;
                     }
                     break;
+                case 30:
+                    if (item.LocalValue === "1") {
+                        AppData._persistentStates.productMailOn = true;
+                    } else {
+                        AppData._persistentStates.productMailOn = false;
+                    }
+                    break;
                 default:
                     // defaultvalues
             }

@@ -33,6 +33,7 @@
     "command.photo"         : "Photo",
     "command.zoomin"        : "agrandir",
     "command.zoomout"       : "diminuer",
+	"command.print"			: "imprimer",
 
     "tooltip.backward"      : "Page présédente",
     "tooltip.edit"          : "Modifier le contact en cours",
@@ -62,6 +63,7 @@
     "tooltip.export"        : "Data export",
     "tooltip.publish"       : "Publier le questionnaire",
     "tooltip.photo"         : "Prendre photo",
+	"tooltip.print"			: "imprimer",
 
     "start.title"           : "Accueil",
     "start.comment"         : "Utilisez les boutons sur cette page pour accéder à d'autres pages!",
@@ -379,6 +381,7 @@
     "event.showHideNavigationPages": "page de navigation",
 	  "event.showHideBarcodeScan" : "Code barre",
 	  "event.showHideCamera"  : "Caméra",
+    "event.productMail"		: "mail produit",
     "event.note"            : "allusion",
     "event.appInfo"         : "Pour que ces modifications prennent effet, vous devez redémarrer votre APP",
 

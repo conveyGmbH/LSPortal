@@ -18,7 +18,8 @@
                 isQuestionnaireVisible: !AppData._persistentStates.hideQuestionnaire,
                 isSketchVisible: !AppData._persistentStates.hideSketch,
                 isCameraVisible: !AppData._persistentStates.hideCameraScan,
-                isBarcodeScanVisible: !AppData._persistentStates.hideBarcodeScan
+                isBarcodeScanVisible: !AppData._persistentStates.hideBarcodeScan,
+                isProductMailOn: !AppData._persistentStates.productMailOn
             }, commandList]);
 
             var that = this;
@@ -99,6 +100,11 @@
                         pOptionTypeId = 24;
                         that.binding.isCameraVisible = checked;
                         AppData._persistentStates.hideCameraScan = !checked;
+                        break;
+                    case "productMail":
+                        pOptionTypeId = 30;
+                        that.binding.isProductMailOn = checked;
+                        AppData._persistentStates.productMailOn = !checked;
                         break;
                 }
                 if (pOptionTypeId) {

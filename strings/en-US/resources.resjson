@@ -33,6 +33,7 @@
     "command.photo"         : "Photo",
     "command.zoomin"        : "zoom in",
     "command.zoomout"       : "zoom out",
+	"command.print"			: "Print",
 
     "tooltip.backward"      : "Browse back",
     "tooltip.edit"          : "Edit current record",
@@ -62,6 +63,7 @@
     "tooltip.export"        : "Data export",
     "tooltip.publish"       : "Publish questionnaire",
     "tooltip.photo"         : "Capture photo",
+	"tooltip.print"			: "Print",
 
     "start.title"           : "Start Page",
     "start.comment"         : "On this page, use the buttons to go to additional pages!",
@@ -379,6 +381,7 @@
     "event.showHideNavigationPages": "Navigationpages",
 	  "event.showHideBarcodeScan" : "Barcode",
 	  "event.showHideCamera"  : "Camera",
+    "event.productMail"		: "Productmail",
     "event.note"            : "Note",
     "event.appInfo"         : "Please restart the APP for the changes to take effect",
 

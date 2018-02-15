@@ -33,6 +33,7 @@
     "command.photo"         : "Foto",
     "command.zoomin"		: "Vergrößern",
     "command.zoomout"		: "Verkleinern",
+	"command.print"			: "Drucken",
 
     "tooltip.backward"      : "Zurück blättern",
     "tooltip.edit"          : "Aktuellen Datensatz bearbeiten",
@@ -62,6 +63,7 @@
     "tooltip.export"        : "Daten exportieren",
     "tooltip.publish"       : "Fragebogen publizieren",
     "tooltip.photo"         : "Foto aufnehmen",
+	"tooltip.print"			: "Drucken",
 
     "start.title"           : "Startseite",
     "start.comment"         : "Verwende die Schaltflächen auf dieser Seite um auf weitere Seiten zu gehen!",
@@ -140,6 +142,7 @@
     "sketch.color"          : "Farbe",
     "sketch.width"          : "Stiftbreite",
 	"sketch.showList"		: "Liste anzeigen",
+	"sketch.hideList"		: "Liste verstecken",
     "sketch.noPlayer"		: "HTML5 Wiedergabe wird auf diesem Browser nicht unterstützt",
 
     "search.title"          : "Kriterien zur Suche",
@@ -379,6 +382,7 @@
 	"event.showHideNavigationPages" : "Navigationsseiten",
 	"event.showHideBarcodeScan" : "Barcode",
 	"event.showHideCamera"  : "Kamera",
+	"event.productMail"		: "Produktmail",
 	"event.note"			: "Hinweis",
 	"event.appInfo"			: "Änderungen werden in Mobile App erst beim nächsten Start der App wirksam",
 
