@@ -451,6 +451,8 @@
                     if (initskills && initskills.winControl) {
                         initskills.winControl.data = new WinJS.Binding.List(skills);
                     }
+                    that.binding.restriction.Sortierung[index] = item.Sortierung;
+                    that.binding.restriction.SkillTypeID[index] = item.SkillTypeSkillsVIEWID;
                     if (item.Sortierung === 1) {
                         firstskill = skills;
                         firstskill.skilltypesortierung = item.SkillTypeSkillsVIEWID;
