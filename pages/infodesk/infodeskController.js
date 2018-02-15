@@ -44,7 +44,7 @@
 
             var restriction = AppData.getRestriction("SkillEntry"); //
             if (!restriction) {
-                restriction = {};
+                restriction = Infodesk.defaultRestriction;
             }
             that.binding.restriction = restriction;
             var defaultRestriction = Infodesk.defaultRestriction;

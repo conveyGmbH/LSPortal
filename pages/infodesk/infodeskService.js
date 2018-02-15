@@ -58,7 +58,9 @@
             }
         },
         defaultRestriction: {
-            //Aktiv: null,
+            Aktiv: "",
+            bAndInEachRow: true,
+            countCombobox: 0,
             Vorname: "",
             Nachname: "",
             Login: "",
@@ -66,7 +68,9 @@
             SkillType2Sortierung: 0,
             SkillType3Sortierung: 0,
             SkillType4Sortierung: 0,
-            SkillType5Sortierung: 0
+            SkillType5Sortierung: 0,
+            SkillTypeID: {},
+            Sortierung: {}
         },
         _SkillEntry: {
             get: function () {

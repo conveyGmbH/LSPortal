@@ -105,7 +105,7 @@
                                 results.forEach(function (item, index) {
                                     if (!actualItem) {
                                         actualItem = item;
-                                        if (lastPrevLogin.MitarbeiterID !== actualItem.MitarbeiterID)
+                                        if (lastPrevLogin.MitarbeiterID !== actualItem.MitarbeiterID || lastPrevLogin.MitarbeiterVIEWID !== actualItem.MitarbeiterVIEWID)
                                             resultsUnique.push(actualItem);
                                     }
 
