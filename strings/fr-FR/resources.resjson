@@ -379,9 +379,10 @@
     "event.showHideQuestionnaire" : "afficher le champ de Questionnaire",
     "event.showHideSketch"  :   "afficher le champ de notes",
     "event.showHideNavigationPages": "page de navigation",
-	  "event.showHideBarcodeScan" : "Code barre",
-	  "event.showHideCamera"  : "Caméra",
-    "event.productMail"		: "mail produit",
+	"event.showHideBarcodeScan" : "Code barre",
+	"event.showHideCamera"  : "Caméra",
+    "event.productMail"		: "Mail produit: \n Un seul livraison de courrier par e-mail",
+	"event.thankMail"		: "Merci courrier: \n Un seul livraison de courrier par e-mail",
     "event.note"            : "allusion",
     "event.appInfo"         : "Pour que ces modifications prennent effet, vous devez redémarrer votre APP",
 

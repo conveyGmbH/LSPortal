@@ -1,0 +1,175 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="barcodeAdministration.css" rel="stylesheet" />
+    <script type="text/javascript" src="barcodeAdministrationService.js"></script>
+    <script type="text/javascript" src="barcodeAdministrationController.js"></script>
+    <script type="text/javascript" src="barcodeAdministration.js"></script>
+    <script type="text/javascript" src="../../lib/barcode/scripts/JsBarcode.all.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="barcodeAdministration fragment">
+        <div id="barcodeAdministrationController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="contentarea win-type-body">
+                    <div class="header-separator"></div>
+                    <div class="content-header">
+                        <div class="half-circle half-circle-textcolor">&nbsp;</div>
+                        <div class="content-header-line win-type-caption">
+                            <span class="id-field"></span>
+                            <span class="caption-field" data-win-res="{textContent: 'barcodeAdministration.title'}"></span>
+                            <span class="date-field"></span>
+                        </div>
+                    </div>
+                    <div class="barcodeAdministration-template"
+                         data-win-control="WinJS.Binding.Template" style="display: none">
+                        <div class="barcodeAdministration-content">
+                            <div class="frage-container">
+                                <div class="barcode-frage-titel">
+                                    <span data-win-bind="textContent: Sortierung"></span>.&nbsp;<span data-win-bind="textContent: Thema"></span>
+                                </div>
+                                <div class="barcode-item" data-win-bind="style.display: Antwort01 Binding.Converter.toDisplay">
+                                    <svg class="barcode-image" data-win-bind="barcode: Antwort01"></svg>
+                                    <span class="barcode-antwort-text win-type-ellipsis" data-win-bind="textContent: AntwortNr01"></span>
+                                </div>
+                                <div class="barcode-item" data-win-bind="style.display: Antwort02 Binding.Converter.toDisplay">
+                                    <svg class="barcode-image" data-win-bind="barcode: Antwort02"></svg>
+                                    <span class="barcode-antwort-text win-type-ellipsis" data-win-bind="textContent: AntwortNr02"></span>
+                                </div>
+                                <div class="barcode-item" data-win-bind="style.display: Antwort03 Binding.Converter.toDisplay">
+                                    <svg class="barcode-image" data-win-bind="barcode: Antwort03"></svg>
+                                    <span class="barcode-antwort-text win-type-ellipsis" data-win-bind="textContent: AntwortNr03"></span>
+                                </div>
+                                <div class="barcode-item" data-win-bind="style.display: Antwort04 Binding.Converter.toDisplay">
+                                    <svg class="barcode-image" data-win-bind="barcode: Antwort04"></svg>
+                                    <span class="barcode-antwort-text win-type-ellipsis" data-win-bind="textContent: AntwortNr04"></span>
+                                </div>
+                                <div class="barcode-item" data-win-bind="style.display: Antwort05 Binding.Converter.toDisplay">
+                                    <svg class="barcode-image" data-win-bind="barcode: Antwort05"></svg>
+                                    <span class="barcode-antwort-text win-type-ellipsis" data-win-bind="textContent: AntwortNr05"></span>
+                                </div>
+                                <div class="barcode-item" data-win-bind="style.display: Antwort06 Binding.Converter.toDisplay">
+                                    <svg class="barcode-image" data-win-bind="barcode: Antwort06"></svg>
+                                    <span class="barcode-antwort-text win-type-ellipsis" data-win-bind="textContent: AntwortNr06"></span>
+                                </div>
+                                <div class="barcode-item" data-win-bind="style.display: Antwort07 Binding.Converter.toDisplay">
+                                    <svg class="barcode-image" data-win-bind="barcode: Antwort07"></svg>
+                                    <span class="barcode-antwort-text win-type-ellipsis" data-win-bind="textContent: AntwortNr07"></span>
+                                </div>
+                                <div class="barcode-item" data-win-bind="style.display: Antwort08 Binding.Converter.toDisplay">
+                                    <svg class="barcode-image" data-win-bind="barcode: Antwort08"></svg>
+                                    <span class="barcode-antwort-text win-type-ellipsis" data-win-bind="textContent: AntwortNr08"></span>
+                                </div>
+                                <div class="barcode-item" data-win-bind="style.display: Antwort09 Binding.Converter.toDisplay">
+                                    <svg class="barcode-image" data-win-bind="barcode: Antwort09"></svg>
+                                    <span class="barcode-antwort-text win-type-ellipsis" data-win-bind="textContent: AntwortNr09"></span>
+                                </div>
+                                <div class="barcode-item" data-win-bind="style.display: Antwort10 Binding.Converter.toDisplay">
+                                    <svg class="barcode-image" data-win-bind="barcode: Antwort10"></svg>
+                                    <span class="barcode-antwort-text win-type-ellipsis" data-win-bind="textContent: AntwortNr10"></span>
+                                </div>
+                                <div class="barcode-item" data-win-bind="style.display: Antwort11 Binding.Converter.toDisplay">
+                                    <svg class="barcode-image" data-win-bind="barcode: Antwort11"></svg>
+                                    <span class="barcode-antwort-text win-type-ellipsis" data-win-bind="textContent: AntwortNr11"></span>
+                                </div>
+                                <div class="barcode-item" data-win-bind="style.display: Antwort12 Binding.Converter.toDisplay">
+                                    <svg class="barcode-image" data-win-bind="barcode: Antwort12"></svg>
+                                    <span class="barcode-antwort-text win-type-ellipsis" data-win-bind="textContent: AntwortNr12"></span>
+                                </div>
+                                <div class="barcode-item" data-win-bind="style.display: Antwort13 Binding.Converter.toDisplay">
+                                    <svg class="barcode-image" data-win-bind="barcode: Antwort13"></svg>
+                                    <span class="barcode-antwort-text win-type-ellipsis" data-win-bind="textContent: AntwortNr13"></span>
+                                </div>
+                                <div class="barcode-item" data-win-bind="style.display: Antwort14 Binding.Converter.toDisplay">
+                                    <svg class="barcode-image" data-win-bind="barcode: Antwort14"></svg>
+                                    <span class="barcode-antwort-text win-type-ellipsis" data-win-bind="textContent: AntwortNr14"></span>
+                                </div>
+                                
+                                <div class="barcode-item" data-win-bind="style.display: Antwort15 Binding.Converter.toDisplay">
+                                    <svg class="barcode-image" data-win-bind="barcode: Antwort15"></svg>
+                                    <span class="barcode-antwort-text win-type-ellipsis" data-win-bind="textContent: AntwortNr15"></span>
+                                </div>
+                                <div class="barcode-item" data-win-bind="style.display: Antwort16 Binding.Converter.toDisplay">
+                                    <svg class="barcode-image" data-win-bind="barcode: Antwort16"></svg>
+                                    <span class="barcode-antwort-text win-type-ellipsis" data-win-bind="textContent: AntwortNr16"></span>
+                                </div>
+                                <div class="barcode-item" data-win-bind="style.display: Antwort17 Binding.Converter.toDisplay">
+                                    <svg class="barcode-image" data-win-bind="barcode: Antwort17"></svg>
+                                    <span class="barcode-antwort-text win-type-ellipsis" data-win-bind="textContent: AntwortNr17"></span>
+                                </div>
+                                <div class="barcode-item" data-win-bind="style.display: Antwort18 Binding.Converter.toDisplay">
+                                    <svg class="barcode-image" data-win-bind="barcode: Antwort18"></svg>
+                                    <span class="barcode-antwort-text win-type-ellipsis" data-win-bind="textContent: AntwortNr18"></span>
+                                </div>
+                                <div class="barcode-item" data-win-bind="style.display: Antwort19 Binding.Converter.toDisplay">
+                                    <svg class="barcode-image" data-win-bind="barcode: Antwort19"></svg>
+                                    <span class="barcode-antwort-text win-type-ellipsis" data-win-bind="textContent: AntwortNr19"></span>
+                                </div>
+                                <div class="barcode-item" data-win-bind="style.display: Antwort20 Binding.Converter.toDisplay">
+                                    <svg class="barcode-image" data-win-bind="barcode: Antwort20"></svg>
+                                    <span class="barcode-antwort-text win-type-ellipsis" data-win-bind="textContent: AntwortNr20"></span>
+                                </div>
+                                <div class="barcode-item" data-win-bind="style.display: Antwort21 Binding.Converter.toDisplay">
+                                    <svg class="barcode-image" data-win-bind="barcode: Antwort21"></svg>
+                                    <span class="barcode-antwort-text win-type-ellipsis" data-win-bind="textContent: AntwortNr21"></span>
+                                </div>
+                                <div class="barcode-item" data-win-bind="style.display: Antwort22 Binding.Converter.toDisplay">
+                                    <svg class="barcode-image" data-win-bind="barcode: Antwort22"></svg>
+                                    <span class="barcode-antwort-text win-type-ellipsis" data-win-bind="textContent: AntwortNr22"></span>
+                                </div>
+                                <div class="barcode-item" data-win-bind="style.display: Antwort23 Binding.Converter.toDisplay">
+                                    <svg class="barcode-image" data-win-bind="barcode: Antwort23"></svg>
+                                    <span class="barcode-antwort-text win-type-ellipsis" data-win-bind="textContent: AntwortNr23"></span>
+                                </div>
+                                <div class="barcode-item" data-win-bind="style.display: Antwort24 Binding.Converter.toDisplay">
+                                    <svg class="barcode-image" data-win-bind="barcode: Antwort24"></svg>
+                                    <span class="barcode-antwort-text win-type-ellipsis" data-win-bind="textContent: AntwortNr24"></span>
+                                </div>
+                                <div class="barcode-item" data-win-bind="style.display: Antwort25 Binding.Converter.toDisplay">
+                                    <svg class="barcode-image" data-win-bind="barcode: Antwort25"></svg>
+                                    <span class="barcode-antwort-text win-type-ellipsis" data-win-bind="textContent: AntwortNr25"></span>
+                                </div>
+                                <div class="barcode-item" data-win-bind="style.display: Antwort26 Binding.Converter.toDisplay">
+                                    <svg class="barcode-image" data-win-bind="barcode: Antwort26"></svg>
+                                    <span class="barcode-antwort-text win-type-ellipsis" data-win-bind="textContent: AntwortNr26"></span>
+                                </div>
+                                <div class="barcode-item" data-win-bind="style.display: Antwort27 Binding.Converter.toDisplay">
+                                    <svg class="barcode-image" data-win-bind="barcode: Antwort27"></svg>
+                                    <span class="barcode-antwort-text win-type-ellipsis" data-win-bind="textContent: AntwortNr27"></span>
+                                </div>
+                                <div class="barcode-item" data-win-bind="style.display: Antwort28 Binding.Converter.toDisplay">
+                                    <svg class="barcode-image" data-win-bind="barcode: Antwort28"></svg>
+                                    <span class="barcode-antwort-text win-type-ellipsis" data-win-bind="textContent: AntwortNr28"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="headerFooterPlaceholder">
+                        <div class="list-footer">
+                            <div class="status">
+                                <progress class="win-progress-bar progress"></progress>
+                                <div class="counter">
+                                    <span data-win-res="{textContent: 'barcodeAdministration.count'}"></span><span>: </span><span data-win-bind="textContent: count"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="barcodeAdministration"
+                         class="listview"
+                         data-win-control="WinJS.UI.ListView"
+                         data-win-options="{
+                                itemTemplate: select('.barcodeAdministration-template'),
+                                footer: select('.list-footer'),
+                                selectionMode: 'none',
+                                tapBehavior: 'none'
+                         }">
+                    </div>
+                    <div class="error-message"
+                         data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

@@ -379,9 +379,10 @@
     "event.showHideQuestionnaire" : "Show Questionnaire",
     "event.showHideSketch"  :  "Show Notes",
     "event.showHideNavigationPages": "Navigationpages",
-	  "event.showHideBarcodeScan" : "Barcode",
-	  "event.showHideCamera"  : "Camera",
-    "event.productMail"		: "Productmail",
+	"event.showHideBarcodeScan" : "Barcode",
+	"event.showHideCamera"  : "Camera",
+    "event.productMail"		: "Product mail: \n Only one mail shipment per mail",
+	"event.thankMail"		: "Thank mail: \n Only one mail shipment per mail",
     "event.note"            : "Note",
     "event.appInfo"         : "Please restart the APP for the changes to take effect",
 

@@ -19,7 +19,8 @@
                 isSketchVisible: !AppData._persistentStates.hideSketch,
                 isCameraVisible: !AppData._persistentStates.hideCameraScan,
                 isBarcodeScanVisible: !AppData._persistentStates.hideBarcodeScan,
-                isProductMailOn: !AppData._persistentStates.productMailOn
+                isProductMailOn: !AppData._persistentStates.productMailOn,
+                isThankMailOn: !AppData._persistentStates.thankMailOn
             }, commandList]);
 
             var that = this;
@@ -106,6 +107,10 @@
                         that.binding.isProductMailOn = checked;
                         AppData._persistentStates.productMailOn = !checked;
                         break;
+                    case "thankMail":
+                        pOptionTypeId = 31;
+                        that.binding.isThankMailOn = checked;
+                        AppData._persistentStates.thankMailOn = !checked;
                 }
                 if (pOptionTypeId) {
                     var pValue;

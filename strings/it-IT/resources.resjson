@@ -379,9 +379,10 @@
     "event.showHideQuestionnaire" : "Mostra casella questionario",
     "event.showHideSketch"  :  "Mostra casella note",
     "event.showHideNavigationPages" : "pagina di navigazione",
-	  "event.showHideBarcodeScan" : "Barcode",
+    "event.showHideBarcodeScan" : "Barcode",
 	  "event.showHideCamera"  : "Camera",
-    "event.productMail"		: "posta elettronica del prodotto",
+    "event.productMail"		: "Posta elettronica del prodotto: \n Solo una spedizione e-mail",
+	  "event.thankMail"		: "Grazie posta elettronica: \n Solo una spedizione e-mail",
     "event.note"            : "suggerimento",
     "event.appInfo"         : "Affinché le modifiche abbiano effetto, si prega di riavviare l´APP",
 
