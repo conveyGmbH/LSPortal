@@ -331,7 +331,15 @@
                                 // or server returns response with an error status.
                                 AppData.setErrorMsg(that.binding, errorResponse);
                                 error(errorResponse);
-                            }, recordId, dataEmployee);
+                            }, recordId, dataEmployee).then(function () {
+                                var recordid = AppData.getRecordId("Mitarbeiter");
+                                if (recordid === dataEmployee.MitarbeiterVIEWID)
+                                if (AppData._persistentStates.odata.login !== that.binding.dataEmployee.Login || dataEmployee.Password !== AppData._persistentStates.odata.password) {
+                                    ret = new WinJS.Promise.as().then(function () {
+                                        Application.navigateById("login", event);
+                                    });
+                                }
+                            });
                         } else {
                             Log.print(Log.l.info, "not supported");
                             ret = WinJS.Promise.as();
