@@ -34,7 +34,7 @@
                 var ret = Start._kontaktanzahlView.select(complete, error, null, {
                     ordered: true,
                     orderAttribute: "Datum",
-                    desc: true
+                    asc: true
                 });
                     
                 // this will return a promise to controller
