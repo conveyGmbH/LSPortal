@@ -114,12 +114,12 @@
                                 height -= contentheader.clientHeight;
                             }
                             if (that.controller.hasDoc()) {
-                                var maxDocContainerWidth = height / Math.sqrt(2);
                                 if (width > 699) {
                                     fieldWidth = width / 2;
+                                    var maxDocContainerWidth = height / Math.sqrt(2) - 16;
                                     if (fieldWidth > maxDocContainerWidth) {
-                                        docWidth = maxDocContainerWidth - 16;
-                                        fieldWidth = width - docWidth;
+                                        docWidth = maxDocContainerWidth;
+                                        fieldWidth = width - docWidth - 16;
                                     } else {
                                         docWidth = fieldWidth - 16;
                                     }

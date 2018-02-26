@@ -27,18 +27,6 @@
 
             var that = this;
 
-            //var contentarea = pageElement.querySelector(".contentarea");
-            //var docContainer = pageElement.querySelector(".doc-container");
-
-            //var onContentareaScroll = function (event) {
-            //    if (contentarea && docContainer && docContainer.style) {
-            //        docContainer.style.paddingTop = contentarea.scrollTop.toString() + "px";
-            //    }
-            //}
-            //if (contentarea) {
-            //    this.addRemovableEventListener(contentarea, "scroll", onContentareaScroll.bind(this));
-            //}
-
             // ListView control
             var listView = pageElement.querySelector("#listQuestionnaire.listview");
             var flipView = pageElement.querySelector("#imgListQuestionnaire.flipview");
@@ -842,13 +830,13 @@
                                     counter.style.display = "none";
                                 }
                                 AppData.setErrorMsg(that.binding);
-                                Log.print(Log.l.trace, "calling select ListLocal.contactView...");
+                                Log.print(Log.l.trace, "calling select Questionnaire.questionnaireView...");
                                 var nextUrl = that.nextUrl;
                                 that.nextUrl = null;
                                 Questionnaire.questionnaireView.selectNext(function (json) {
                                     // this callback will be called asynchronously
                                     // when the response is available
-                                    Log.print(Log.l.trace, "ListLocal.contactView: success!");
+                                    Log.print(Log.l.trace, "Questionnaire.questionnaireView: success!");
                                     // startContact returns object already parsed from json file in response
                                     if (json && json.d) {
                                         that.nextUrl = Questionnaire.questionnaireView.getNextUrl(json);

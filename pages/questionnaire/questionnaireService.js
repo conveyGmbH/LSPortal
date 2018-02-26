@@ -79,7 +79,7 @@
             },
             insert: function (complete, error, viewResponse) {
                 Log.call(Log.l.trace, "Questionnaire.questionnaireDocView.");
-                var ret = Questionnaire._questionnaireDocView.insert(complete, error, viewResponse);
+                var ret = Questionnaire._questionnaireDocView.insertWithId(complete, error, viewResponse);
                 Log.ret(Log.l.trace);
                 return ret;
             }
