@@ -96,6 +96,7 @@
             if (element && !that.inResize) {
                 that.inResize = 1;
                 ret = WinJS.Promise.timeout(0).then(function () {
+                    var headerInner = element.querySelector(".header-inner");
                     var flipView = element.querySelector("#imgListQuestionnaire.flipview");
                     var docContainer = element.querySelector(".doc-container");
                     var fieldsContainer = element.querySelector(".fields-container");
@@ -108,7 +109,7 @@
                             var height = contentarea.clientHeight - 8;
                             var fieldWidth;
                             var docWidth;
-                            var contentheader = element.querySelector(".content-header");
+                            var contentheader = element.querySelector(".header-container .content-header");
                             if (contentheader) {
                                 height -= contentheader.clientHeight;
                             }
@@ -145,8 +146,22 @@
                             }
                             if (docWidth > 0) {
                                 docContainer.style.display = "";
+                                var headerContainer = element.querySelector(".header-container");
+                                if (headerContainer && headerInner && (!headerInner.parentElement || !WinJS.Utilities.hasClass(flipView.parentElement, "header-container"))) {
+                                    if (headerInner.parentElement) {
+                                        headerInner.parentElement.removeChild(headerInner);
+                                    }
+                                    headerContainer.appendChild(headerInner);
+                                }
                             } else {
                                 docContainer.style.display = "none";
+                                var listHeader = element.querySelector("#listQuestionnaire .list-header");
+                                if (listHeader && headerInner && (!headerInner.parentElement || !WinJS.Utilities.hasClass(flipView.parentElement, "list-header"))) {
+                                    if (headerInner.parentElement) {
+                                        headerInner.parentElement.removeChild(headerInner);
+                                    }
+                                    listHeader.appendChild(headerInner);
+                                }
                             }
                             var imgFooterContainer = element.querySelector("#listQuestionnaire .img-footer-container");
                             if (docWidth > 0 || !imgFooterContainer) {
