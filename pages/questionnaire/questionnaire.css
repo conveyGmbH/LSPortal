@@ -11,6 +11,11 @@
     height: 100%;
 }
 
+#questionnaireController .doc-container {
+    margin: 0;
+}
+
+
 /* Styles used for the custom layout */
 .listView .questionnaireLayout {
     position: static;
@@ -184,7 +189,7 @@ textarea:-ms-input-placeholder { font-style:italic; } /* ie */
     background-image: url("/www/images/bkgtexture.png");
     left:0;
     padding: 0;
-    width: 100%;
+    width: calc(100% - 16px);
     height: 100%;
 }
 
@@ -216,6 +221,20 @@ textarea:-ms-input-placeholder { font-style:italic; } /* ie */
     color: rgba(255, 255, 255, 0.8);
 }
 
+.img-footer-container {
+    width: 100%;
+    display: none;
+}
+
+.view-size-medium-small .img-footer-container {
+    display: inline;
+}
+.view-size-small .img-footer-container {
+    display: inline;
+}
+.view-size-split .img-footer-container {
+    display: none;
+}
 
 /*
     margins/paddings for medium size screens

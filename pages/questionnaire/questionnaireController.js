@@ -27,28 +27,28 @@
 
             var that = this;
 
-            var contentarea = pageElement.querySelector(".contentarea");
-            var docContainer = pageElement.querySelector(".doc-container");
+            //var contentarea = pageElement.querySelector(".contentarea");
+            //var docContainer = pageElement.querySelector(".doc-container");
 
-            var onContentareaScroll = function (event) {
-                if (contentarea && docContainer && docContainer.style) {
-                    docContainer.style.paddingTop = contentarea.scrollTop.toString() + "px";
-                }
-            }
-            if (contentarea) {
-                this.addRemovableEventListener(contentarea, "scroll", onContentareaScroll.bind(this));
-            }
+            //var onContentareaScroll = function (event) {
+            //    if (contentarea && docContainer && docContainer.style) {
+            //        docContainer.style.paddingTop = contentarea.scrollTop.toString() + "px";
+            //    }
+            //}
+            //if (contentarea) {
+            //    this.addRemovableEventListener(contentarea, "scroll", onContentareaScroll.bind(this));
+            //}
 
             // ListView control
             var listView = pageElement.querySelector("#listQuestionnaire.listview");
-            var flipview = pageElement.querySelector("#imgListQuestionnaire.flipview");
+            var flipView = pageElement.querySelector("#imgListQuestionnaire.flipview");
 
             this.dispose = function () {
                 if (listView && listView.winControl) {
                     listView.winControl.itemDataSource = null;
                 }
-                if (flipview && flipview.winControl) {
-                    flipview.winControl.itemDataSource = null;
+                if (flipView && flipView.winControl) {
+                    flipView.winControl.itemDataSource = null;
                 }
                 if (that.questions) {
                     that.questions = null;
@@ -878,6 +878,10 @@
                                     counter.style.display = "inline";
                                 }
                                 that.loading = false;
+                                if (flipView &&  flipView.parentElement && flipView.winControl &&
+                                    WinJS.Utilities.hasClass(flipView.parentElement, "img-footer-container")) {
+                                    flipView.winControl.forceLayout();
+                                }
                             }
                         }
                     }
@@ -961,8 +965,8 @@
                 }
             }
 
-            if (flipview && flipview.winControl) {
-                flipview.winControl.itemDataSource = null;
+            if (flipView && flipView.winControl) {
+                flipView.winControl.itemDataSource = null;
             }
 
             // register ListView event handler
@@ -988,18 +992,18 @@
 
             var loadPicture = function (pictureId, orderId) {
                 var i;
-                var pageControl = pageElement.winControl;
                 Log.call(Log.l.trace, "Questionnaire.Controller.", "pictureId=" + pictureId + " orderId=" + orderId);
                 var ret = null;
                 if (that.images && that.images.length > 0) {
                     for (i = 0; i < that.images.length; i++) {
                         var imageItem = that.images[i];
                         if (imageItem && imageItem.DOC1ZeilenantwortID === pictureId) {
-                            if (flipview && flipview.winControl) {
+                            if (flipView && flipView.winControl) {
                                 if (that.images && that.images.length > 0) {
-                                    flipview.winControl.itemDataSource = that.images.dataSource;
+                                    flipView.winControl.itemDataSource = that.images.dataSource;
                                 }
                             }
+                            var pageControl = pageElement.winControl;
                             if (pageControl && pageControl.updateLayout) {
                                 pageControl.prevWidth = 0;
                                 pageControl.prevHeight = 0;
@@ -1055,12 +1059,13 @@
                                 });
                             }
                         }
-                        if (flipview && flipview.winControl) {
+                        if (flipView && flipView.winControl) {
                             if (that.images && that.images.length > 0) {
-                                flipview.winControl.itemDataSource = that.images.dataSource;
+                                flipView.winControl.itemDataSource = that.images.dataSource;
                             }
                         }
                         WinJS.Promise.timeout(50).then(function () {
+                            var pageControl = pageElement.winControl;
                             if (pageControl && pageControl.updateLayout) {
                                 pageControl.prevWidth = 0;
                                 pageControl.prevHeight = 0;

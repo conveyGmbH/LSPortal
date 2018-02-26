@@ -46,7 +46,6 @@
             this.inResize = 0;
             this.prevWidth = 0;
             this.prevHeight = 0;
-            this.prevShowDoc = false;
 
             // add page specific commands to AppBar
             var commandList = [
@@ -97,9 +96,12 @@
             if (element && !that.inResize) {
                 that.inResize = 1;
                 ret = WinJS.Promise.timeout(0).then(function () {
+                    var flipView = element.querySelector("#imgListQuestionnaire.flipview");
                     var docContainer = element.querySelector(".doc-container");
                     var fieldsContainer = element.querySelector(".fields-container");
-                    if (that.controller && fieldsContainer && fieldsContainer.style && docContainer && docContainer.style) {
+                    if (that.controller &&
+                        fieldsContainer && fieldsContainer.style &&
+                        docContainer && docContainer.style) {
                         var contentarea = element.querySelector(".contentarea");
                         if (contentarea) {
                             var width = contentarea.clientWidth;
@@ -110,20 +112,19 @@
                             if (contentheader) {
                                 height -= contentheader.clientHeight;
                             }
-                            // max. docContainer-width: height * 3 / 4 - 16!
                             if (that.controller.hasDoc()) {
-                                //var maxDocContainerWidth = height * 3 / 4 - 16;
-                                var maxDocContainerWidth = height / Math.sqrt(2) - 16;
+                                var maxDocContainerWidth = height / Math.sqrt(2);
                                 if (width > 699) {
-                                    fieldWidth = width / 2 - 16;
+                                    fieldWidth = width / 2;
+                                    if (fieldWidth > maxDocContainerWidth) {
+                                        docWidth = maxDocContainerWidth - 16;
+                                        fieldWidth = width - docWidth;
+                                    } else {
+                                        docWidth = fieldWidth - 16;
+                                    }
                                 } else {
                                     fieldWidth = width - 16;
-                                }
-                                if (fieldWidth > maxDocContainerWidth) {
-                                    docWidth = maxDocContainerWidth;
-                                    fieldWidth = width - docWidth - 32;
-                                } else {
-                                    docWidth = fieldWidth;
+                                    docWidth = 0;
                                 }
                             } else {
                                 fieldWidth = width;
@@ -137,27 +138,41 @@
                             if (height !== that.prevHeight) {
                                 that.prevHeight = height;
                                 docContainer.style.height = height.toString() + "px";
-                            }
-                            if (that.controller.hasDoc()) {
-                                if (docContainer.style) {
-                                    docContainer.style.display = "inline";
-                                    docContainer.style.paddingTop = contentarea.scrollTop.toString() + "px";
-                                    docContainer.style.paddingRight = "16px";
+                                fieldsContainer.style.height = height.toString() + "px";
+                                if (that.controller.hasDoc() && flipView && flipView.style) {
+                                    flipView.style.height = height.toString() + "px";
                                 }
-                                if (!that.prevShowDoc) {
-                                    WinJS.Promise.timeout(0).then(function () {
-                                        var flipView = element.querySelector("#imgListQuestionnaire.flipview");
-                                        if (flipView) {
-                                            WinJS.UI.Animation.enterContent(flipView);
-                                            that.prevShowDoc = true;
-                                        }
-                                    });
+                            }
+                            if (docWidth > 0) {
+                                docContainer.style.display = "";
+                            } else {
+                                docContainer.style.display = "none";
+                            }
+                            var imgFooterContainer = element.querySelector("#listQuestionnaire .img-footer-container");
+                            if (docWidth > 0 || !imgFooterContainer) {
+                                WinJS.Utilities.addClass(element, "view-size-split");
+                                if (flipView &&
+                                    (!flipView.parentElement || !WinJS.Utilities.hasClass(flipView.parentElement, "doc-container"))) {
+                                    if (flipView.parentElement) {
+                                        flipView.parentElement.removeChild(flipView);
+                                    }
+                                    docContainer.appendChild(flipView);
+                                    if (flipView.winControl) {
+                                        flipView.winControl.forceLayout();
+                                    }
                                 }
                             } else {
-                                if (docContainer.style) {
-                                    docContainer.style.display = "none";
+                                WinJS.Utilities.removeClass(element, "view-size-split");
+                                if (flipView && imgFooterContainer &&
+                                    (!flipView.parentElement || !WinJS.Utilities.hasClass(flipView.parentElement, "img-footer-container"))) {
+                                    if (flipView.parentElement) {
+                                        flipView.parentElement.removeChild(flipView);
+                                    }
+                                    imgFooterContainer.appendChild(flipView);
+                                    if (flipView.winControl) {
+                                        flipView.winControl.forceLayout();
+                                    }
                                 }
-                                that.prevShowDoc = false;
                             }
                             WinJS.Utilities.removeClass(element, "view-size-small");
                             WinJS.Utilities.removeClass(element, "view-size-medium-small");
