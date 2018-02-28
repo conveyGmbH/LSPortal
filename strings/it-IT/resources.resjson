@@ -444,6 +444,7 @@
     "skills.title"          : "Ruolo",
     "skills.count"          : "Numero",
     "skills.answercnt"      : "Risposte",
+	"skills.questionDelete" : "Siete sicuri di vole cancellare ruolo domande?",
 
     "skillentry.title"      : "Immetti ruolo",
     "skillentry.count"      : "Numero",

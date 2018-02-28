@@ -445,6 +445,7 @@
     "skills.title"          : "Fähigkeiten",
     "skills.count"          : "Anzahl",
     "skills.answercnt"      : "Antworten",
+	"skills.skillDelete"    : "Wollen Sie diese Fähigkeit löschen?",
 
     "skillentry.title"      : "Fähigkeit eintragen",
     "skillentry.count"      : "Anzahl",

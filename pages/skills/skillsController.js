@@ -394,8 +394,7 @@
                     if (recordId) {
                         var curScope = that.scopeFromRecordId(that.curRecId);
                         if (curScope && curScope.item) {
-                            var confirmTitle = Skills.resources.labelDelete + ": " + curScope.item.Fragestellung +
-                                "\r\n" + Skills.resources.questionDelete;
+                            var confirmTitle = getResourceText("skills.skillDelete") + "\r\n" + curScope.item.TITLE;
                             confirm(confirmTitle, function (result) {
                                 if (result) {
                                     Log.print(Log.l.trace, "clickDelete: user choice OK");

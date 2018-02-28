@@ -444,6 +444,7 @@
     "skills.title"          : "Skills",
     "skills.count"          : "Count",
     "skills.answercnt"      : "Answers",
+	"skills.skillDelete"    : "Do you want to delete the current skill?",
 
     "skillentry.title"      : "Enter skill",
     "skillentry.count"      : "Count",

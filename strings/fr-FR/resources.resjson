@@ -444,6 +444,7 @@
     "skills.title"          : "Capacités",
     "skills.count"          : "Nombre",
     "skills.answercnt"      : "Réponses",
+	"skills.questionDelete" : "Voulez-vous supprimer cet groupe de capacité?",
 
     "skillentry.title"      : "entrer une capacité",
     "skillentry.count"      : "Nombre",
