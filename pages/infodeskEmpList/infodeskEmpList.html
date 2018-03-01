@@ -40,28 +40,22 @@
                                  data-win-bind="textContent: Vorname"></div>
                             <div class="list-field-small-fixed win-type-ellipsis"
                                  data-win-bind="textContent: Login"></div>
-                            <!-- Spalte für Erfassungsart -->
-                           <!-- <div class="list-field-small-fixed win-type-ellipsis">
-                                <div data-win-bind="name: svgSource; style.display: svgSource Binding.Converter.toDisplay"
-                                     class="action-image"></div>
-                            </div>-->
                             <div class="list-field-small-fixed win-type-ellipsis"
                                  data-win-bind="textContent: mitarbeiterFullName"></div>
                         </div>
                         <div class="list-portrait-only">
                             <div class="row-separator"></div>
                             <div class="list-div-left">
-                                <div class="list-symbol-ID">
+                                <div class="list-symbol-ID">                               
+                                    <div id="user" class="action-image" data-win-bind="style.display: OvwContentDOCCNT3 Binding.Converter.toDisplayNone"></div>
+                                    <img class="user-photo-list" data-win-bind="src: OvwContentDOCCNT3; style.display: OvwContentDOCCNT3 Binding.Converter.toDisplay">
                                     <div class="onsite-offsite win-type-caption">
                                         <span class="onsite-offsite-symbol statusOn"
                                               data-win-bind="style.display: Present Binding.Converter.toDisplay">&#xe10b;</span>
                                         <span class="onsite-offsite-symbol statusOff"
                                               data-win-bind="style.display: Present Binding.Converter.toDisplayNone">&#xe108;</span>
                                     </div>
-                                    <div id="user" class="action-image"></div>
-
                                 </div>
-
                                 <div class="list-compressed">
                                     <!--list-empList-->
                                     <span class="list-compressed-title win-type-subtitle win-type-ellipsis"

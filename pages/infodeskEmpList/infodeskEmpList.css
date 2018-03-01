@@ -72,7 +72,10 @@
     padding-top: 8px;
     padding-bottom: 8px;
 }
-
+.view-size-bigger .action-image{
+    width: 100%;
+    float: left;
+}
 /*
     margins/paddings for middle sized screens 
 
@@ -137,3 +140,31 @@
     left: -14px;
     top: -15px;
 }*/
+.user-image-container {
+    display: block;
+    position: absolute;
+    top: 2px;
+    left: calc(100% - 40px);
+    background-color: gray;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    padding: 0;
+}
+.user-image {
+    display: block;
+    position: relative;
+    left: 0;
+    top: -14px;
+    z-index: 9900;
+}
+.user-photo-list {
+    display: inline;
+    position: absolute;
+    left:25px;
+    top: 0px;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    z-index: 9901;
+}

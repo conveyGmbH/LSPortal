@@ -91,6 +91,32 @@
                 Log.ret(Log.l.trace);
                 return ret;
             }
+        },
+        _userPhotoView: {
+            get: function () {
+                return AppData.getFormatView("DOC1Mitarbeiter", 0);
+            }
+        },
+        userPhotoView: {
+            select: function (complete, error, recordId) {
+                Log.call(Log.l.trace, "userPhotoView.");
+                var ret = InfodeskEmpList._userPhotoView.select(complete, error, recordId);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getNextUrl: function (response) {
+                Log.call(Log.l.trace, "ContactList.");
+                var ret = InfodeskEmpList._userPhotoView.getNextUrl(response);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            selectNext: function (complete, error, response, nextUrl) {
+                Log.call(Log.l.trace, "ContactList.");
+                var ret = InfodeskEmpList._userPhotoView.selectNext(complete, error, response, nextUrl);
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            }
         }
     });
 })();

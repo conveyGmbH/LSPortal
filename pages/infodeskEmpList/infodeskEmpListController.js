@@ -31,9 +31,12 @@
             var layout = null;
             var messages = [];
             var lastPrevLogin = [];
+            this.docs = null;
 
             var maxLeadingPages = 0;
             var maxTrailingPages = 0;
+            this.firstDocsIndex = 0;
+            this.firstContactsIndex = 0;
 
             this.dispose = function () {
                 if (listView && listView.winControl) {
@@ -47,6 +50,30 @@
 
 
             //byhung
+            // show business card photo
+            var userPhotoContainer = pageElement.querySelector("#user");
+            var showPhoto = function () {
+                if (that.binding.photoData) {
+                    if (userPhotoContainer) {
+                        var userImg = new Image();
+                        userImg.id = "userImg";
+                        userPhotoContainer.appendChild(userImg);
+                        WinJS.Utilities.addClass(userImg, "user-photo-list");
+                        userImg.src = "data:image/jpeg;base64," + that.binding.photoData;
+                        if (userPhotoContainer.childElementCount > 2) {
+                            var oldElement = userPhotoContainer.firstElementChild.nextElementSibling;
+                            oldElement.parentNode.removeChild(oldElement);
+                            oldElement.innerHTML = "";
+                        }
+                    }
+                    AppBar.triggerDisableHandlers();
+                } else {
+                    var userimg = pageElement.querySelector("#userImg");
+                    if (userimg) {
+                        userimg.parentNode.removeChild(userimg);
+                    }
+                }
+            }
 
             var getRestriction = function () {
                 var restriction = AppData.getRestriction("SkillEntry");
@@ -147,6 +174,32 @@
                         if (recordId) {
                             that.selectRecordId(recordId);
                         }
+                        if (that.nextDocUrl) {
+                            WinJS.Promise.timeout(250).then(function () {
+                                Log.print(Log.l.trace, "calling select ContactList.contactDocView...");
+                                var nextDocUrl = that.nextDocUrl;
+                                that.nextDocUrl = null;
+                                InfodeskEmpList.userPhotoView.selectNext(function (jsonDoc) {
+                                    // this callback will be called asynchronously
+                                    // when the response is available
+                                    Log.print(Log.l.trace, "ContactList.contactDocView: success!");
+                                    // startContact returns object already parsed from json file in response
+                                    if (jsonDoc && jsonDoc.d) {
+                                        that.nextDocUrl = InfodeskEmpList.userPhotoView.getNextUrl(jsonDoc);
+                                        var resultsDoc = jsonDoc.d.results;
+                                        resultsDoc.forEach(function (item, index) {
+                                            that.resultDocConverter(item, that.binding.doccount);
+                                            that.binding.doccount = that.docs.push(item);
+                                        });
+                                    }
+                                }, function (errorResponse) {
+                                    // called asynchronously if an error occurs
+                                    // or server returns response with an error status.
+                                    Log.print(Log.l.error, "ContactList.contactDocView: error!");
+                                    AppData.setErrorMsg(that.binding, errorResponse);
+                                }, null, nextDocUrl);
+                            });
+                        }
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
@@ -207,16 +260,68 @@
 
                     }
                 }
-               /* if (item.Present === 1) { // && item.Aktiv === "X"
-                    //document.getElementById("list-empList").className = "list-compressed";
-                    item.presentClass = "list-compressed-green";
-                } else {
-                    //document.getElementById("list-empList").className = "list-compressed-gray";
-                    item.presentClass = "list-compressed-red";
-                }*/
+                item.OvwContentDOCCNT3 = "";
+                if (that.docs && index >= that.firstContactsIndex) {
+                    for (var i = 0; i < that.docs.length; i++) {
+                        var doc = that.docs[i];
+                        if (doc.DOC1MitarbeiterVIEWID === item.MitarbeiterVIEWID) {
+                            var docContent = doc.OvwContentDOCCNT3 ? doc.OvwContentDOCCNT3 : doc.DocContentDOCCNT1;
+                            if (docContent) {
+                                var sub = docContent.search("\r\n\r\n");
+                                item.OvwContentDOCCNT3 = "data:image/jpeg;base64," + docContent.substr(sub + 4);
+                            }
+                            that.firstDocsIndex = i + 1;
+                            that.firstContactsIndex = index + 1;
+                            that.binding.photoData = item.OvwContentDOCCNT3;
+                            //showPhoto();
+                            break;
+                        }
+                    }
+                }
+                /* if (item.Present === 1) { // && item.Aktiv === "X"
+                     //document.getElementById("list-empList").className = "list-compressed";
+                     item.presentClass = "list-compressed-green";
+                 } else {
+                     //document.getElementById("list-empList").className = "list-compressed-gray";
+                     item.presentClass = "list-compressed-red";
+                 }*/
             }
             this.resultConverter = resultConverter;
 
+            var resultDocConverter = function (item, index) {
+
+                //if (that.employees && index >= that.firstDocsIndex) {
+                    for (var i = 0; i < that.employees.length; i++) { // geänderte Stelle
+                        var employee = that.employees.getAt(i);
+                        if ((employee.MitarbeiterID || employee.MitarbeiterVIEWID) === item.DOC1MitarbeiterVIEWID) {
+                            var docContent = item.OvwContentDOCCNT3
+                                   ? item.OvwContentDOCCNT3
+                                   : item.DocContentDOCCNT1;
+                            if (docContent) {
+                                var sub = docContent.search("\r\n\r\n");
+                                employee.OvwContentDOCCNT3 = "data:image/jpeg;base64," + docContent.substr(sub + 4);
+                            } else {
+                                employee.OvwContentDOCCNT3 = "";
+                            }
+                            // preserve scroll position on change of row data!
+                            var indexOfFirstVisible = -1;
+                            if (listView && listView.winControl) {
+                                indexOfFirstVisible = listView.winControl.indexOfFirstVisible;
+                            }
+                            that.employees.setAt(i, employee);
+                            if (i === 0 && listView && listView.winControl) {
+                                listView.winControl.indexOfFirstVisible = indexOfFirstVisible;
+                            }
+                            that.firstContactsIndex = i + 1;
+                            that.firstDocsIndex = index + 1;
+                            that.binding.photoData = employee.OvwContentDOCCNT3;
+                            showPhoto();
+                            break;
+                        }
+                    }
+                //}
+            }
+            this.resultDocConverter = resultDocConverter;
             // define handlers
             this.eventHandlers = {
                 clickBack: function (event) {
@@ -529,6 +634,32 @@
                                 that.loading = false;
                             }, restriction);
                         }
+                    }).then(function () {
+                        // todo: load image data and set src of img-element
+                        Log.print(Log.l.trace, "calling select contactView...");
+                        return WinJS.Promise.timeout(250).then(function () {
+                            return InfodeskEmpList.userPhotoView.select(function (json) {
+                                Log.print(Log.l.trace, "userPhotoView: success!");
+                                if (json && json.d) {
+                                    that.binding.doccount = json.d.results.length;
+                                    that.nextDocUrl = InfodeskEmpList.userPhotoView.getNextUrl(json);
+                                    var results = json.d.results;
+
+                                    results.forEach(function (item, index) {
+                                        that.resultDocConverter(item, index);
+                                    });
+                                    that.docs = results;
+                                } else {
+                                    that.binding.photoData = "";
+                                    //showPhoto();
+                                }
+
+                            }, function (errorResponse) {
+                                that.binding.photoData = "";
+                                //showPhoto();
+                                // ignore that
+                            });
+                        });
                     });
                 });
                 Log.ret(Log.l.trace);
