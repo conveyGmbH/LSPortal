@@ -22,12 +22,14 @@
 
             var that = this;
             var prevLogin = null;
+            var prevPassword;
 
             var setDataEmployee = function (newDataEmployee) {
                 var prevNotifyModified = AppBar.notifyModified;
                 AppBar.notifyModified = false;
                 prevLogin = newDataEmployee.Login;
                 that.binding.dataEmployee = newDataEmployee;
+                prevPassword = newDataEmployee.Password;
                 that.binding.dataEmployee.Password2 = newDataEmployee.Password;
                 AppBar.modified = false;
                 AppBar.notifyModified = prevNotifyModified;
@@ -334,7 +336,7 @@
                             }, recordId, dataEmployee).then(function () {
                                 var recordid = AppData.getRecordId("Mitarbeiter");
                                 if (recordid === dataEmployee.MitarbeiterVIEWID)
-                                if (AppData._persistentStates.odata.login !== that.binding.dataEmployee.Login || dataEmployee.Password !== AppData._persistentStates.odata.password) {
+                                    if (AppData._persistentStates.odata.login !== that.binding.dataEmployee.Login || that.binding.dataEmployee.Password !== prevPassword) {
                                     ret = new WinJS.Promise.as().then(function () {
                                         Application.navigateById("login", event);
                                     });
