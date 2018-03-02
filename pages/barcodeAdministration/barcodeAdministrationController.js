@@ -75,9 +75,7 @@
                         var printSurface = document.createElement("div");
                         WinJS.Utilities.addClass(printSurface, "barcode-print-surface");
                         //printSurface.style.height = "3000px"; //height.toString()height.toString() +
-                        printSurface.style.overflowY = "scroll";
                         printSurface.innerHTML = listSurface.innerHTML;
-                        printSurface.style.overflowY = "scroll";
                         document.body.insertBefore(printSurface, document.body.firstElementChild);
                     }
                 },
@@ -92,18 +90,11 @@
                 clickPrint: function (event) {
                     Log.call(Log.l.trace, "BarcodeAdministration.Controller.");
                     // chrome beforeprint
-                    /*var mywindow = window.open('', 'PRINT', 'height=4400,width=1100');
-                    //mywindow.document.write('<html><head><link href="barcodeAdministration.css" rel="stylesheet" /></head><body>');
-                    mywindow.document.write(document.getElementById("printarea").innerHTML);
-                    mywindow.document.write('<style>.barcode img {margin: 25px 50px; background: transparent;}</style>');
-                    //mywindow.document.write('</body></html>');
-                    mywindow.document.close(); // necessary for IE >= 10
-                    mywindow.focus(); // necessary for IE >= 10*/
 
                     setTimeout(function() {
                         window.print();
                     }, 100);
-                    /*mywindow.close();*/
+                    
                     Log.ret(Log.l.trace);
                 },
                 clickChangeUserState: function (event) {

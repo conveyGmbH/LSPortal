@@ -210,8 +210,10 @@
                 }).then(function () {
                     if (!err) {
                         // load color settings
-                        //AppData._persistentStates.hideQuestionnaire = false;
-                        //AppData._persistentStates.hideSketch = false;
+                        AppData._persistentStates.hideQuestionnaire = false;
+                        AppData._persistentStates.hideSketch = false;
+                        AppData._persistentStates.productMailOn = true;
+                        AppData._persistentStates.thankMailOn = true;
                         return Login.CR_VERANSTOPTION_ODataView.select(function (json) {
                             // this callback will be called asynchronously
                             // when the response is available

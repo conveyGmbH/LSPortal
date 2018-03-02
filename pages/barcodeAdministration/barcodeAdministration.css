@@ -39,7 +39,7 @@
     padding-right: 26px;
     padding-top: 2px;
     padding-bottom: 2px;
-    border-color: transparent;
+    background-color: white;
 }
  
 
@@ -80,14 +80,18 @@
 /*Styles DinA4*/
 .barcodeAdministration-content {
     width: 29.7cm;
+    page-break-inside: avoid;
 }
 .frage-container {
-    width: 100%
+    width: 100%;
+    page-break-inside: avoid;
 }
 .barcode-frage-titel {
     display: inline;
     width: 100%;
     float: left;
+    page-break-before: always;
+    page-break-after: avoid
 }
 .barcode-item {
     margin: 50px;
@@ -95,6 +99,7 @@
     height: 100px;
     overflow: hidden;
     float: left;
+    page-break-before:avoid
 }
 .barcode-antwort-text {
     display: block;

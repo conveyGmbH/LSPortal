@@ -94,8 +94,10 @@
                             }
                         }
                     }).then(function () {
-                        //AppData._persistentStates.hideQuestionnaire = false;
-                        //AppData._persistentStates.hideSketch = false;
+                        AppData._persistentStates.hideQuestionnaire = false;
+                        AppData._persistentStates.hideSketch = false;
+                        AppData._persistentStates.productMailOn = true;
+                        AppData._persistentStates.thankMailOn = true;
                         if (getStartPage() === "start") {
                             // load color settings
                             return DBInit.CR_VERANSTOPTION_ODataView.select(function (json) {
