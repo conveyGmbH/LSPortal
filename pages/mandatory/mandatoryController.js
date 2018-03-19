@@ -188,7 +188,6 @@
                 },
                 clickDoMandatory: function (event) {
                     Log.call(Log.l.trace, "Mandatory.Controller.");
-                    console.log(event.currentTarget.winControl.checked);
                     Log.call(Log.l.trace, "Event.Controller.");
                     var toggle = event.currentTarget.winControl;
                     if (toggle) {
