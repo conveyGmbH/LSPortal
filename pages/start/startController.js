@@ -229,7 +229,8 @@
                 that.isClicked = true;
                 
                 that.setRestriction({
-                      INITLandID : data
+                    INITLandID: data,
+                    bExact: true
                 });
                
                 AppData.setRecordId("Kontakt", null);

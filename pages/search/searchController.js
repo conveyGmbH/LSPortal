@@ -196,6 +196,7 @@
                     if (that.binding.restriction.MitarbeiterID === 0) {
                         that.binding.restriction.MitarbeiterID = "";
                     }
+                    that.binding.restriction.bExact = false;
                     AppData.setRestriction('Kontakt', that.binding.restriction);
                     AppData.setRecordId("Kontakt", null);
                     complete({});
