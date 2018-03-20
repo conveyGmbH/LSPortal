@@ -859,11 +859,6 @@ input.win-textbox, input.win-checkbox, input.win-radio, textarea.win-textarea, s
     left: 18px;
     width: calc(100% - 18px);
 }
-.view-size-medium .contentarea {
-    
-    width: calc(100% - 32px);
-    
-}
 .view-size-medium .row-separator {
     margin-top: -8px;
     margin-left: -18px;
