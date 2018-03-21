@@ -216,11 +216,9 @@
 
             var disableReportingList = function(disableFlag) {
                 var reportingListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("ReportingList"));
-                if (disableFlag === 1) {
-                    reportingListFragmentControl.controller.disableFlag = 1;
-                    reportingListFragmentControl.controller.loadData();
-                } else {
-                    reportingListFragmentControl.controller.disableList(0);
+                if (reportingListFragmentControl && 
+                    reportingListFragmentControl.controller) {
+                    reportingListFragmentControl.controller.disableList(disableFlag);
                 }
             }
             this.disableReportingList = disableReportingList;
@@ -231,66 +229,67 @@
                 var dbView = null;
                 var fileName = null;
                 ExportXlsx.restriction = that.getRestriction();
-                switch (parseInt(exportselection)) {
-                case 1:
-                    if (AppData.getLanguageId() === 1031) {
-                        dbView = Reporting.xLAuswertungView;
-                        fileName = "Kontakte";
-                    } else {
-                        dbView = Reporting.xLReportView;
-                        fileName = "Contacts";
-                    }
-                    break;
-                case 8:
-                    if (AppData.getLanguageId() === 1031) {
-                        dbView = Reporting.landHistoDe;
-                        fileName = "Landstatistik";
-                    } else {
-                        dbView = Reporting.landHistoEn;
-                        fileName = "Countrystatistics";
-                    }
-                    break;
-                case 10:
-                    if (AppData.getLanguageId() === 1031) {
-                        dbView = Reporting.xLAuswertungViewNoQuest;
-                        dbViewTitle = Reporting.xLAuswertungViewNoQuestTitle;
-                        fileName = "KontakteKeineFragen";
-                        //ExportXlsx.restriction.KontaktID = [-2,-1];
-                        if (!that.binding.showErfassungsdatum) {
-                            ExportXlsx.restriction.ReportingErfassungsdatum = "NOT NULL";
-						}
-                    } else {
-                        dbView = Reporting.xLReportViewNoQuest;
-                        dbViewTitle = Reporting.xLReportViewNoQuestTitle;
-                        fileName = "ContactsNoQuestion";
-                        //ExportXlsx.restriction.ContactID = [-2,-1];
-                        if (!that.binding.showErfassungsdatum) {
-						     ExportXlsx.restriction.RecordDate = "NOT NULL";
-						}
-                    }
-                    ExportXlsx.restriction.bUseOr = true;
-                    break;
+                var exportselectionId = parseInt(exportselection);
+                switch (exportselectionId) {
+                    case 1:
+                        if (AppData.getLanguageId() === 1031) {
+                            dbView = Reporting.xLAuswertungView;
+                            fileName = "Kontakte";
+                        } else {
+                            dbView = Reporting.xLReportView;
+                            fileName = "Contacts";
+                        }
+                        break;
+                    case 8:
+                        if (AppData.getLanguageId() === 1031) {
+                            dbView = Reporting.landHistoDe;
+                            fileName = "Landstatistik";
+                        } else {
+                            dbView = Reporting.landHistoEn;
+                            fileName = "Countrystatistics";
+                        }
+                        break;
+                    case 10:
+                        if (AppData.getLanguageId() === 1031) {
+                            dbView = Reporting.xLAuswertungViewNoQuest;
+                            dbViewTitle = Reporting.xLAuswertungViewNoQuestTitle;
+                            fileName = "KontakteKeineFragen";
+                            //ExportXlsx.restriction.KontaktID = [-2,-1];
+                            if (!that.binding.showErfassungsdatum) {
+                                ExportXlsx.restriction.ReportingErfassungsdatum = "NOT NULL";
+                            }
+                        } else {
+                            dbView = Reporting.xLReportViewNoQuest;
+                            dbViewTitle = Reporting.xLReportViewNoQuestTitle;
+                            fileName = "ContactsNoQuestion";
+                            //ExportXlsx.restriction.ContactID = [-2,-1];
+                            if (!that.binding.showErfassungsdatum) {
+                                ExportXlsx.restriction.RecordDate = "NOT NULL";
+                            }
+                        }
+                        ExportXlsx.restriction.bUseOr = true;
+                        break;
 
-                case 13:
-                    if (AppData.getLanguageId() === 1031) {
-                        dbView = Reporting.mitarbeiterHistoDe;
-                        fileName = "Mitarbeiterstatistik";
-                    } else {
-                        dbView = Reporting.mitarbeiterHistoEn;
-                        fileName = "Employeestatistics";
-                    }
-                    break;
-                case 26:
-                    if (AppData.getLanguageId() === 1031) {
-                        dbView = Reporting.KontaktReport;
-                        fileName = "BenutzerdefinierterReport";
-                    } else {
-                        dbView = Reporting.KontaktReport;
-                        fileName = "CostumReport";
-                    }
-                    break;
-                default:
-                    Log.print(Log.l.error, "curOLELetterID=" + that.binding.curOLELetterID + "not supported");
+                    case 13:
+                        if (AppData.getLanguageId() === 1031) {
+                            dbView = Reporting.mitarbeiterHistoDe;
+                            fileName = "Mitarbeiterstatistik";
+                        } else {
+                            dbView = Reporting.mitarbeiterHistoEn;
+                            fileName = "Employeestatistics";
+                        }
+                        break;
+                    case 26:
+                        if (AppData.getLanguageId() === 1031) {
+                            dbView = Reporting.KontaktReport;
+                            fileName = "BenutzerdefinierterReport";
+                        } else {
+                            dbView = Reporting.KontaktReport;
+                            fileName = "CostumReport";
+                        }
+                        break;
+                    default:
+                        Log.print(Log.l.error, "curOLELetterID=" + that.binding.curOLELetterID + "not supported");
                 }
                 if (dbView) {
                     var exporter = ExportXlsx.exporter;
@@ -298,10 +297,10 @@
                         exporter = new ExportXlsx.ExporterClass(that.binding.progress);
                     }
                     exporter.showProgress(0);
-                    that.disableReportingList(1);
+                    that.disableReportingList(true);
                     var restriction = {};
-                    if (exportselection != 26) {
-                        restriction = that.setRestriction(); 
+                    if (exportselectionId !== 26) {
+                        restriction = that.setRestriction();
                     } else {
                         restriction = {};
                     }
@@ -310,9 +309,11 @@
                         restriction = {};
                     }
                     exporter.saveXlsxFromView(dbView, fileName, function (result) {
+                        that.disableReportingList(false);
                         AppBar.busy = false;
                         AppBar.triggerDisableHandlers();
                     }, function (errorResponse) {
+                        that.disableReportingList(false);
                         AppData.setErrorMsg(that.binding, errorResponse);
                         AppBar.busy = false;
                         AppBar.triggerDisableHandlers();

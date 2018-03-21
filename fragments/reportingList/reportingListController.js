@@ -41,18 +41,26 @@
             }
 
             var disableList = function (disableFlag) {
-                var element = listView.winControl.elementFromIndex(i);
-                if (element) {
-                    if (element.firstElementChild.disabled) {
-                        if (!WinJS.Utilities.hasClass(element, "win-nonselectable")) {
-                            WinJS.Utilities.addClass(element, "win-nonselectable");
-                        }
-                    } else {
-                        if (WinJS.Utilities.hasClass(element, "win-nonselectable")) {
-                            WinJS.Utilities.removeClass(element, "win-nonselectable");
+                if (that.reportingItem) {
+                    for (var i = 0; i < that.reportingItem.length; i++) {
+                        var element = listView.winControl.elementFromIndex(i);
+                        if (element) {
+                            var reportingButton = element.querySelector(".reporting-button");
+                            if (reportingButton) {
+                                reportingButton.disabled = disableFlag;
+                            }
+                            if (disableFlag) {
+                                if (!WinJS.Utilities.hasClass(element, "win-nonselectable")) {
+                                    WinJS.Utilities.addClass(element, "win-nonselectable");
+                                }
+                            } else {
+                                if (WinJS.Utilities.hasClass(element, "win-nonselectable")) {
+                                    WinJS.Utilities.removeClass(element, "win-nonselectable");
+                                }
+                            }
+
                         }
                     }
-
                 }
             }
             this.disableList = disableList;
