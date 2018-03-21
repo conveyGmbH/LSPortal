@@ -59,7 +59,7 @@
                         userImg.id = "userImg";
                         userPhotoContainer.appendChild(userImg);
                         WinJS.Utilities.addClass(userImg, "user-photo-list");
-                        userImg.src = "data:image/jpeg;base64," + that.binding.photoData;
+                        userImg.src = that.binding.photoData;
                         if (userPhotoContainer.childElementCount > 2) {
                             var oldElement = userPhotoContainer.firstElementChild.nextElementSibling;
                             oldElement.parentNode.removeChild(oldElement);
@@ -273,24 +273,16 @@
                             that.firstDocsIndex = i + 1;
                             that.firstContactsIndex = index + 1;
                             that.binding.photoData = item.OvwContentDOCCNT3;
-                            //showPhoto();
                             break;
                         }
                     }
                 }
-                /* if (item.Present === 1) { // && item.Aktiv === "X"
-                     //document.getElementById("list-empList").className = "list-compressed";
-                     item.presentClass = "list-compressed-green";
-                 } else {
-                     //document.getElementById("list-empList").className = "list-compressed-gray";
-                     item.presentClass = "list-compressed-red";
-                 }*/
             }
             this.resultConverter = resultConverter;
 
             var resultDocConverter = function (item, index) {
 
-                //if (that.employees && index >= that.firstDocsIndex) {
+                if (that.employees) {
                     for (var i = 0; i < that.employees.length; i++) { // geänderte Stelle
                         var employee = that.employees.getAt(i);
                         if ((employee.MitarbeiterID || employee.MitarbeiterVIEWID) === item.DOC1MitarbeiterVIEWID) {
@@ -319,7 +311,7 @@
                             break;
                         }
                     }
-                //}
+                }
             }
             this.resultDocConverter = resultDocConverter;
             // define handlers

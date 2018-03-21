@@ -462,6 +462,8 @@ select {
     width: calc(100% - 4px);
     min-width: calc(100% - 0px);
     min-height: 32px;
+    margin-top: 0;
+    margin-left: 0;
 }
 .input_field {
     float:left;
@@ -856,11 +858,6 @@ input.win-textbox, input.win-checkbox, input.win-radio, textarea.win-textarea, s
 .view-size-medium .error-message {
     left: 18px;
     width: calc(100% - 18px);
-}
-.view-size-medium .contentarea {
-    /*
-    width: calc(100% - 32px);
-    */
 }
 .view-size-medium .row-separator {
     margin-top: -8px;
