@@ -21,7 +21,7 @@
 
             // now do anything...
             var listView = fragmentElement.querySelector("#reportingList.listview");
-
+            
             var eventHandlers = {
 
             }
@@ -39,6 +39,23 @@
                 }
                 Log.ret(Log.l.trace);
             }
+
+            var disableList = function (disableFlag) {
+                var element = listView.winControl.elementFromIndex(i);
+                if (element) {
+                    if (element.firstElementChild.disabled) {
+                        if (!WinJS.Utilities.hasClass(element, "win-nonselectable")) {
+                            WinJS.Utilities.addClass(element, "win-nonselectable");
+                        }
+                    } else {
+                        if (WinJS.Utilities.hasClass(element, "win-nonselectable")) {
+                            WinJS.Utilities.removeClass(element, "win-nonselectable");
+                        }
+                    }
+
+                }
+            }
+            this.disableList = disableList;
 
             var loadData = function () {
                 Log.call(Log.l.trace, "ReportingList.");
@@ -83,6 +100,9 @@
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, {
                         
+                        }).then(function () {
+                       
+                        Log.print(Log.l.trace, "Data loaded");
                     });
                 });
                 Log.ret(Log.l.trace);
@@ -98,7 +118,8 @@
             });
             Log.ret(Log.l.trace);
         }, {
-            reportingItem: null
+                reportingItem: null,
+                disableFlag: 0
         })
     });
 })();

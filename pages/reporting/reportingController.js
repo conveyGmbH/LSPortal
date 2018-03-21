@@ -43,7 +43,7 @@
             var erfasserID = pageElement.querySelector("#ErfasserIDReporting");
             var erfassungsdatum = pageElement.querySelector("#ReportingErfassungsdatum.win-datepicker");
             var modifiedTs = pageElement.querySelector("#ModifiedTs.win-datepicker");
-
+            
             var resultConverter = function(item, index) {
                 item.index = index;
                 item.fullName = (item.Vorname ? (item.Vorname + " ") : "") + (item.Nachname ? item.Nachname : "");
@@ -214,6 +214,17 @@
             };
             this.templatecall = templatecall;
 
+            var disableReportingList = function(disableFlag) {
+                var reportingListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("ReportingList"));
+                if (disableFlag === 1) {
+                    reportingListFragmentControl.controller.disableFlag = 1;
+                    reportingListFragmentControl.controller.loadData();
+                } else {
+                    reportingListFragmentControl.controller.disableList(0);
+                }
+            }
+            this.disableReportingList = disableReportingList;
+
             var exportData = function(exportselection) {
                 Log.call(Log.l.trace, "Reporting.Controller.");
                 var dbViewTitle = null;
@@ -287,6 +298,7 @@
                         exporter = new ExportXlsx.ExporterClass(that.binding.progress);
                     }
                     exporter.showProgress(0);
+                    that.disableReportingList(1);
                     var restriction = {};
                     if (exportselection != 26) {
                         restriction = that.setRestriction(); 
@@ -484,6 +496,7 @@
                     Log.call(Log.l.trace, "Reporting.Controller.");
                     if (event && event.currentTarget) {
                         var exportselection = event.currentTarget.value;
+                        that.disableFlag = event.currentTarget.index;
                         AppBar.busy = true;
                         AppBar.triggerDisableHandlers();
                         WinJS.Promise.timeout(0).then(function () {
