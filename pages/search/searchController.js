@@ -69,9 +69,9 @@
             var resultConverter = function (item, index) {
                 item.index = index;
                 item.fullName = (item.Vorname ? (item.Vorname + " ") : "") + (item.Nachname ? item.Nachname : "");
-                if (that.employees) {
+                /*if (that.employees) {
                     that.employees.push(item);
-                }
+                }*/
             }
             this.resultConverter = resultConverter;
 
@@ -225,7 +225,7 @@
                                 var results = json.d.results;
                                 results.forEach(function(item, index) {
                                     that.resultConverter(item, index);
-                                    // that.binding.count = that.employees.push(item);
+                                    that.binding.count = that.employees.push(item);
                                 });
                                 if (erfasserID && erfasserID.winControl) {
                                     erfasserID.winControl.data = that.employees;
@@ -289,7 +289,6 @@
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
-                    
                     if (!that.employees || !that.employees.length) {
                         that.employees = new WinJS.Binding.List([Search.employeeView.defaultValue]);
                         return Search.employeeView.select(function (json) {
@@ -302,6 +301,7 @@
                                 var results = json.d.results;
                                 results.forEach(function (item, index) {
                                     that.resultConverter(item, index);
+                                    that.employees.push(item);
                                 });
                                 if (erfasserID && erfasserID.winControl) {
                                     erfasserID.winControl.data = that.employees;

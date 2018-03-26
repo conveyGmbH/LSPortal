@@ -126,7 +126,7 @@
                 Log.call(Log.l.trace, "Search.");
                 var ret = Search._employeeView.select(complete, error, restriction, {
                     ordered: true,
-                    orderAttribute: "Login"
+                    orderAttribute: "Vorname"
                 });
                 Log.ret(Log.l.trace);
                 return ret;
