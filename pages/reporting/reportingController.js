@@ -302,7 +302,15 @@
                     if (exportselectionId !== 26) {
                         restriction = that.setRestriction();
                     } else {
-                        restriction = {};
+                        var listRestriction = that.setRestriction();
+                        restriction["KontaktVIEWID"] = ["<0", ">0"];
+                        for (var prop in listRestriction) {
+                            if (listRestriction.hasOwnProperty(prop)) {
+                                restriction[prop] = [null, listRestriction[prop]];
+                            }
+                        }
+                        restriction.bAndInEachRow = true;
+                        restriction.bExact = true;
                     }
                     if (!restriction) {
                         dbViewTitle = null;
