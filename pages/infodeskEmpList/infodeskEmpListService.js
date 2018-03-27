@@ -47,7 +47,7 @@
                 Log.call(Log.l.trace, "InfodeskEmpList.");
                 var ret = InfodeskEmpList._employeeView.select(complete, error, restriction, {
                     ordered: true,
-                    orderAttribute: "Login" // in der Datenbank muss verbessert werden in Nachname
+                    orderAttribute: "Nachname" 
                 });
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
