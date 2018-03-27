@@ -564,6 +564,58 @@
                 }
             }
 
+            // if there is still employees to load 
+            var getNextData = function () {
+                if (that.nextUrl !== null) {
+                    that.loading = true;
+                    AppData.setErrorMsg(that.binding);
+                    Log.print(Log.l.trace, "calling select Search.employeeView...");
+                    Reporting.employeeView.selectNext(function (json) {
+                        // this callback will be called asynchronously
+                        // when the response is available
+                        Log.print(Log.l.trace, "Search.employeeView: success!");
+                        var savediD = erfasserID.value;
+                        var saveIndex = erfasserID.selectedIndex;
+                        // employeeView returns object already parsed from json file in response
+                        if (json && json.d) {
+                            that.nextUrl = Reporting.employeeView.getNextUrl(json);
+                            var results = json.d.results;
+                            results.forEach(function (item, index) {
+                                that.resultConverter(item, index);
+                                that.binding.count = that.employees.push(item);
+                            });
+                            if (erfasserID && erfasserID.winControl) {
+                                erfasserID.winControl.data = that.employees;
+                            }
+                        } else {
+                            that.nextUrl = null;
+                        }
+
+                        for (var i = 0; i < erfasserID.length; i++) {
+                            if (erfasserID[i].value === that.binding.restriction.MitarbeiterID) {
+                                saveIndex = i;
+                            }
+                        }
+                        //erfasserIDname.selectedIndex = saveIndex; 
+                        erfasserID.selectedIndex = saveIndex;
+                    },
+                        function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                            if (progress && progress.style) {
+                                progress.style.display = "none";
+                            }
+                            that.loading = false;
+                        },
+                        null,
+                        that.nextUrl);
+
+                    that.loading = false;
+                }
+            }
+            this.getNextData = getNextData;
+
             var loadData = function() {
                 Log.call(Log.l.trace, "Reporting.Controller.");
                 AppData.setErrorMsg(that.binding);
@@ -641,6 +693,10 @@
                         }
                         that.binding.mitarbeiterId = Reporting.employeeView.defaultValue.MitarbeiterVIEWID;
                         return WinJS.Promise.as();
+                    }
+                }).then(function () {
+                    if (that.nextUrl !== null) {
+                        that.getNextData();
                     }
                 }).then(function () {
                     that.employeedata = [];
