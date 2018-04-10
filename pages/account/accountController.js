@@ -77,7 +77,11 @@
                 },
                 clickOk: function (event) {
                     Log.call(Log.l.trace, "Account.Controller.");
-                    Application.navigateById("start", event);
+                    if (!that.binding.doEdit && WinJS.Navigation.canGoBack === true) {
+                        WinJS.Navigation.back(1).done();
+                    } else {
+                        Application.navigateById("start", event);
+                    }
                     Log.ret(Log.l.trace);
                 },
                 clickLogoff: function (event) {
