@@ -45,19 +45,19 @@
                 return ret;
             },
             defaultValue: {
-                Beschreibung: null,
-                Subject: null,
+                Beschreibung: "",
+                Subject: "",
                 Mailtext: "",
-                IsDefault: null,
-                CCAddr: null,
-                BCCAddr: null,
-                Sender: null,
-                MemoSpec: null,
-                SpecType: null,
-                ReplyTo: null,
-                VeranstaltungID: 0,
+                IsDefault: "",
+                CCAddr: "",
+                BCCAddr: "",
+                Sender: "",
+                MemoSpec: "",
+                SpecType: "",
+                ReplyTo: "",
+                VeranstaltungID: AppData.getRecordId("Veranstaltung"),
                 INITSpracheID: 0,
-                MailFooter: null
+                MailFooter: ""
             }
         },
         _FragebogenzeileView: {

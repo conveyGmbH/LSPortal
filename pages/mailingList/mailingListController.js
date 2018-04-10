@@ -18,7 +18,8 @@
             Log.call(Log.l.trace, "MailingList.Controller.");
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
-                mailingId: 0
+                mailingId: 0,
+                languageId: AppData.getLanguageId()
             }, commandList, true]);
             this.nextUrl = null;
 
@@ -52,7 +53,7 @@
             };
             this.background = background;
 
-            var loadNextUrl = function (recordId) {
+            var loadNextUrl = function () {
                 Log.call(Log.l.trace, "MailingList.Controller.");
                 progress = listView.querySelector(".list-footer .progress");
                 counter = listView.querySelector(".list-footer .counter");
@@ -73,21 +74,21 @@
                         // when the response is available
                         Log.print(Log.l.trace, "MailingList.MaildokumentView: success!");
                         // startContact returns object already parsed from json file in response
-                        if (json && json.d && that.maildocuments) {
+                        if (json && json.d && json.d.results && that.maildocuments) {
                             that.nextUrl = MailingList.MaildokumentView.getNextUrl(json);
                             var results = json.d.results;
-                            } else {
-                                
-                            }
-                            Log.print(lastPrevLogin);
                             results.forEach(function (item, index) {
                                 that.resultConverter(item, that.binding.count);
                                 that.binding.count = that.maildocuments.push(item);
                             });
-                       
-                        if (recordId) {
-                            that.selectRecordId(recordId);
                         }
+                        if (progress && progress.style) {
+                            progress.style.display = "none";
+                        }
+                        if (counter && counter.style) {
+                            counter.style.display = "inline";
+                        }
+                        that.loading = false;
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
@@ -101,8 +102,8 @@
                         }
                         that.loading = false;
                     },
-                        null,
-                        nextUrl);
+                    null,
+                    nextUrl);
                 } else {
                     if (progress && progress.style) {
                         progress.style.display = "none";
@@ -161,16 +162,15 @@
                                         // called asynchronously if ok
                                         that.binding.mailingId = item.data.MaildokumentVIEWID;
                                         var curPageId = Application.getPageId(nav.location);
-                                        if ((curPageId === "mailingList" || curPageId === "mailing") &&
-                                            typeof AppBar.scope.loadData === "function") {
-                                            AppBar.scope.loadData(that.binding.mailingId);
-                                            Application.navigateById("mailing");
+                                        if (curPageId === "mailing") {
+                                            if (typeof AppBar.scope.loadData === "function") {
+                                                AppBar.scope.loadData(that.binding.mailingId);
+                                            }
                                         } else {
                                             Application.navigateById("mailing");
                                         }
                                     }
                                 });
-                                Application.navigateById("mailing");
                             }
                         }
                     }
@@ -336,9 +336,8 @@
                                 counter.style.display = "inline";
                             }
                             that.loading = false;
-                        },
-                        {
-                            LanguageID: AppData.getLanguageId(),
+                        }, {
+                            /*LanguageID: that.binding.languageId,*/
                             SpecType: ["NULL",1]
                         }
                     ); 
@@ -353,18 +352,13 @@
                 return that.loadData();
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
-                // return that.selectRecordId();
-            }).then(function () {
                 AppBar.notifyModified = true;
-                Log.print(Log.l.trace, "Record selected");
-            }).then(function () {
-                Application.navigateById("mailing");
             });
             Log.ret(Log.l.trace);
         }, {
-                nextUrl: null,
-                loading: false,
-                maildocuments: null
-            })
+            nextUrl: null,
+            loading: false,
+            maildocuments: null
+        })
     });
 })();
