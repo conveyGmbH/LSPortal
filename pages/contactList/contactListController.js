@@ -147,7 +147,7 @@
 
                 var loadNextUrl = function (recordId) {
                     Log.call(Log.l.trace, "QuestionList.Controller.", "recordId=" + recordId);
-                    if (that.contacts && that.nextUrl && listView) {
+                    if (that.contacts && that.nextUrl && that.nextDocUrl && listView) {
                         progress = listView.querySelector(".list-footer .progress");
                         counter = listView.querySelector(".list-footer .counter");
                         that.loading = true;

@@ -436,6 +436,13 @@
                         AppData._persistentStates.productMailOn = false;
                     }
                     break;
+                case 31:
+                    if (item.LocalValue === "1") {
+                        AppData._persistentStates.thankYouMailOn = true;
+                    } else {
+                        AppData._persistentStates.thankYouMailOn = false;
+                    }
+                    break;
                 default:
                     // defaultvalues
             }

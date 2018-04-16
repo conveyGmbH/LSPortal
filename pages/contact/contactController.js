@@ -364,16 +364,8 @@
                         WinJS.Utilities.removeClass(textComment, "input_text_comment_big");
                     }
                 }
-                that.binding.dataContact.Mitarbeiter_Fullname = that.binding.dataContact.Mitarbeiter_Vorname + " " + that.binding.dataContact.Mitarbeiter_Nachname;
-
-                if (that.binding.dataContact.Bearbeiter_Vorname && that.binding.dataContact.Bearbeiter_Nachname) {
-                    that.binding.dataContact
-                        .Bearbeiter_Fullname = that.binding.dataContact.Bearbeiter_Vorname +
-                        " " +
-                        that.binding.dataContact.Bearbeiter_Nachname;
-                } else {
-                    that.binding.dataContact.Bearbeiter_Fullname = "";
-                }
+                that.binding.dataContact.Mitarbeiter_Fullname = (that.binding.dataContact.Mitarbeiter_Vorname ? (that.binding.dataContact.Mitarbeiter_Vorname + " ") : "") + (that.binding.dataContact.Mitarbeiter_Nachname ? that.binding.dataContact.Mitarbeiter_Nachname : "");
+                that.binding.dataContact.Bearbeiter_Fullname = (that.binding.dataContact.Bearbeiter_Vorname ? (that.binding.dataContact.Bearbeiter_Vorname + " ") : "") + (that.binding.dataContact.Bearbeiter_Nachname ? that.binding.dataContact.Bearbeiter_Nachname : "");
                 AppBar.modified = false;
                 AppBar.notifyModified = prevNotifyModified;
                 AppBar.triggerDisableHandlers();

@@ -20,7 +20,7 @@
                 isCameraVisible: !AppData._persistentStates.hideCameraScan,
                 isBarcodeScanVisible: !AppData._persistentStates.hideBarcodeScan,
                 isProductMailOn: !AppData._persistentStates.productMailOn,
-                isThankMailOn: !AppData._persistentStates.thankMailOn
+                isThankMailOn: !AppData._persistentStates.thankYouMailOn
             }, commandList]);
 
             var that = this;
@@ -110,7 +110,7 @@
                     case "thankMail":
                         pOptionTypeId = 31;
                         that.binding.isThankMailOn = checked;
-                        AppData._persistentStates.thankMailOn = !checked;
+                        AppData._persistentStates.thankYouMailOn = !checked;
                 }
                 if (pOptionTypeId) {
                     var pValue;

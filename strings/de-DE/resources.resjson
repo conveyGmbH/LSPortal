@@ -148,7 +148,7 @@
     "search.title"          : "Kriterien zur Suche",
     "search.comment"        : "Verwende die Zurück-Schaltfläche auf dieser Seite um zurück zu gehen!",
     "search.ID"             : "ID",
-    "search.deviceID"       : "Gerätenummer",
+    "search.deviceID"       : "Gerät",
     "search.company"        : "Firma",
     "search.firstName"      : "Vorname",
     "search.name"           : "Name",
@@ -383,7 +383,7 @@
 	"event.showHideBarcodeScan" : "Barcode",
 	"event.showHideCamera"  : "Kamera",
 	"event.productMail"		: "Produktmail: \n Nur ein Mailversand pro E-Mail",
-	"event.thankMail"		: "Dankesmail: \n Nur ein Mailversand pro E-Mail",
+	"event.thankYouMail"	: "Dankesmail: \n Nur ein Mailversand pro E-Mail",
 	"event.note"			: "Hinweis",
 	"event.appInfo"			: "Änderungen werden in Mobile App erst beim nächsten Start der App wirksam",
 

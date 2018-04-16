@@ -147,7 +147,7 @@
     "search.title"          : "Enter search criteria",
     "search.comment"        : "On this page, use the Back button to go back!",
     "search.ID"             : "ID",
-    "search.deviceID"       : "Device number",
+    "search.deviceID"       : "Device",
     "search.company"        : "Company",
     "search.firstName"      : "First Name",
     "search.name"           : "Last Name",
@@ -382,7 +382,7 @@
 	"event.showHideBarcodeScan" : "Barcode",
 	"event.showHideCamera"  : "Camera",
     "event.productMail"		: "Product mail: \n Only one mail shipment per mail",
-	"event.thankMail"		: "Thank mail: \n Only one mail shipment per mail",
+	"event.thankYouMail"	: "Thank you mail: \n Only one mail shipment per mail",
     "event.note"            : "Note",
     "event.appInfo"         : "Please restart the APP for the changes to take effect",
 
