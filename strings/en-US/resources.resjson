@@ -413,7 +413,7 @@
     "reporting.exportlist"  : "Export type",
     "reporting.progress"    : "Progress",
     "reporting.progressMsg" : "Create Excel File",
-    "reporting.dateofentry" : "Edited on",
+    "reporting.dateofentry" : "Created on",
     "reporting.changedate"  : "Modified on",
     "reporting.country"     : "Country",
     "reporting.employee"    : "Employee",
