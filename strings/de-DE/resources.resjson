@@ -367,6 +367,8 @@
     "label.mandatory"       : "Pflichtfelder",
 	"label.barcodeAdministration" : "Barcode",
     "label.eventcreation"   : "Veranstaltung erstellen",
+    "label.products"        : "Produkte",
+    "label.localevents"     : "Veranstaltung erstellen",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Abbrechen",
@@ -494,5 +496,12 @@
 	"barcodeAdministration.title" : "Barcode",
 	"barcodeAdministration.count" : "Anzahl",
 
-    "eventcreation.title" : "Veranstaltung erstellen"
+    "eventcreation.title" : "Veranstaltung erstellen",
+
+    "products.title" : "Produkte",
+
+    "localevents.title" : "Veranstaltung anlegen",
+    "localevents.event" : "Veranstaltung",
+    "localevents.begin" : "Anfang",
+    "localevents.end"   : "Ende"
 }			

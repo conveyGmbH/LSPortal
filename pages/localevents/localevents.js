@@ -6,12 +6,12 @@
 /// <reference path="~/www/lib/convey/scripts/logging.js" />
 /// <reference path="~/www/lib/convey/scripts/navigator.js" />
 /// <reference path="~/www/lib/convey/scripts/appbar.js" />
-/// <reference path="~/www/pages/eventCreation/eventCreationController.js" />
+/// <reference path="~/www/pages/localEvents/localEventsController.js" />
 
 (function () {
     "use strict";
 
-    var pageName = Application.getPagePath("eventCreation");
+    var pageName = Application.getPagePath("localevents");
 
     WinJS.UI.Pages.define(pageName, {
         // This function is called whenever a user navigates to this page. It
@@ -25,10 +25,10 @@
                 { id: "clickOk", label: getResourceText("command.ok"), tooltip: getResourceText("tooltip.ok"), section: "primary", svg: "navigate_check", key: WinJS.Utilities.Key.enter }
             ];
 
-            this.controller = new EventCreation.Controller(element, commandList);
+            this.controller = new LocalEvents.Controller(element, commandList);
             if (this.controller.eventHandlers) {
                 // general event listener for hardware back button, too!
-                this.controller.addRemovableEventListener(document, "backbutton", this.controller.eventHandlers.clickBack.bind(this.controller));
+                //this.controller.addRemovableEventListener(document, "backbutton", this.controller.eventHandlers.clickBack.bind(this.controller));
             }
             Log.ret(Log.l.trace);
         },

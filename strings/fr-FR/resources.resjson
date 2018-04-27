@@ -366,6 +366,8 @@
     "label.mandatory"       : "Champs obligatoires",
     "label.barcodeAdministration" : "Code barre",
     "label.eventcreation"   : "Créer un événement",
+    "label.products"        : "Produits",
+    "label.localevents"     : "Créer un événement",
     
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annuler",
@@ -492,5 +494,10 @@
 	  "barcodeAdministration.title" : "Barcode",
 	  "barcodeAdministration.count" : "Nombre",
 
-    "eventcreation.title" : "Créer un événement"
+    "products.title" : "Produits",
+
+    "localevents.title" : "Créer un événement",
+    "localevents.event" : "événement",
+    "localevents.begin" : "Début",
+    "localevents.end"   : "Fin"
 }

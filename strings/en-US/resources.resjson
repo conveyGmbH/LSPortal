@@ -366,6 +366,8 @@
     "label.mandatory"       : "Mandatory Fields",
 	  "label.barcodeAdministration" : "Barcode",
     "label.eventcreation"   : "Create an event",
+    "label.products"        : "Products",,
+    "label.localevents"     : "Create event",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Cancel",
@@ -492,5 +494,12 @@
 	"barcodeAdministration.title" : "Barcode",
 	"barcodeAdministration.count" : "Count",
 
-    "eventcreation.title" : "Create an event"
+    "eventcreation.title" : "Create an event",
+
+    "products.title" : "Products",
+
+    "localevents.title" : "Create event",
+    "localevents.event" : "Event",
+    "localevents.begin" : "Begin",
+    "localevents.end"   : "End"
 }

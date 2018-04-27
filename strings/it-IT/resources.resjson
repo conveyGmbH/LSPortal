@@ -366,6 +366,8 @@
     "label.mandatory"       : "Campo obbligatorio",
 	"label.barcodeAdministration" : "Barcode",
     "label.eventcreation"   : "Crea evento",
+    "label.products"        : "Prodotti",
+    "label.localevents"     : "Crea evento",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annulla",
@@ -492,5 +494,12 @@
     "barcodeAdministration.title" : "Barcode",
 	"barcodeAdministration.count" : "Totale",
 
-    "eventcreation.title" : "Crea evento"
+    "eventcreation.title" : "Crea evento",
+
+    "products.title" : "Prodotti",
+
+    "localevents.title" : "Crea evento",
+    "localevents.event" : "evento",
+    "localevents.begin" : "inizio",
+    "localevents.end"   : "fine"
 }

@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="localevents.css" rel="stylesheet" />
+    <script type="text/javascript" src="localeventsService.js"></script>
+    <script type="text/javascript" src="localeventsController.js"></script>
+    <script type="text/javascript" src="localevents.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="settings fragment">
+        <div id="localEventsController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="contentarea win-type-body">
+                    <div class="header-separator"></div>
+                    <div class="content-header">
+                        <div class="half-circle half-circle-textcolor">&nbsp;</div>
+                        <div class="content-header-line win-type-caption">
+                            <span class="id-field"></span>
+                            <span class="caption-field" data-win-res="{textContent: 'localevents.title'}"></span>
+                            <span class="date-field"></span>
+                        </div>
+                    </div>
+                    <div class="row-separator"></div>
+                    <div class="fields-container">
+                        <div class="field_line">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'localevents.event'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'localevents.event'}"></span>
+                            <input class="input_field win-textbox" type="text" data-win-bind="value: dataLocalEvents.Name Binding.Mode.twoway" />
+                        </div>
+                        <div class="line-separator"></div>
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'localevents.begin'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'localevents.begin'}"></span>
+                            <div data-win-control="WinJS.UI.DatePicker" id="startDatum" class="input_field"
+                                 data-win-bind="winControl.current: dataLocalEvents.Startdatum Binding.Mode.twoway">
+                            </div>
+                        </div>
+                        <div class="field_line field_line_even">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'localevents.end'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'localevents.end'}"></span>
+                            <div data-win-control="WinJS.UI.DatePicker" id="endDatum" class="input_field"
+                                 data-win-bind="winControl.current: dataLocalEvents.Enddatum Binding.Mode.twoway">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="error-message"
+                         data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>
