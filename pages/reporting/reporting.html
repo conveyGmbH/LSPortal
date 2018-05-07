@@ -81,11 +81,12 @@
                     </div>
                     <div class="line-separator"></div>
                     <div class="field_line"
-                         >
+                         data-win-bind="style.display: progress.show Binding.Converter.toDisplay">
                         <span 
                               data-win-res="{textContent: 'reporting.progress'}"></span>
                         <span 
-                              data-win-bind="textContent: progress.percent"></span>
+                            data-win-bind="textContent: progress.percent"></span>
+                        <span>%</span>
                         <progress class="progress_field win-progress-bar"
                                   data-win-bind="value: progress.percent"
                                   min="0" max="100"></progress>

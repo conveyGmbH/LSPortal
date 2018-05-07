@@ -47,10 +47,7 @@
             
             var resultConverter = function(item, index) {
                 item.index = index;
-                item.fullName = (item.Nachname ? (item.Nachname + ", ") : "") + (item.Vorname ? item.Vorname : "");//(item.Vorname ? (item.Vorname + " ") : "") + (item.Nachname ? item.Nachname : "");
-                /*if (that.employees) {
-                    that.employees.push(item);
-                }*/
+                item.fullName = (item.Nachname ? (item.Nachname + ", ") : "") + (item.Vorname ? item.Vorname : "");
                 item.fullNameValue = (item.Nachname ? (item.Nachname + ", ") : "") + (item.Vorname ? item.Vorname : "");
             }
             this.resultConverter = resultConverter;
@@ -118,56 +115,9 @@
             }
             this.saveRestriction = saveRestriction;
 
-         /*   var getRestriction = function(complete, error) {
-                var myrestriction = {};
-                if (that.binding.showErfassungsdatum &&
-                    typeof that.binding.restriction.ReportingErfassungsdatum !== "undefined") {
-                    if (AppData.getLanguageId() === 1031) {
-                        myrestriction.Erfassungsdatum = that.binding.restriction.ReportingErfassungsdatum;
-                        that.binding.restriction.Erfassungsdatum = that.binding.restriction.ReportingErfassungsdatum;
-                    } else {
-                        myrestriction.RecordDate = that.binding.restriction.ReportingErfassungsdatum;
-                    }
-                    AppData.entrydate = that.binding.restriction.ReportingErfassungsdatum;
-                } else {
-                    delete AppData.entrydate;
-                    //delete that.binding.restriction.ReportingErfassungsdatum;
-                }
-
-                if (that.binding.showModifiedTS &&
-                    typeof that.binding.restriction.ModifiedTs !== "undefined") {
-                    if (AppData.getLanguageId() === 1031) {
-                        //myrestriction.Erfassungsdatum = that.binding.restriction.ReportingErfassungsdatum;
-                        that.binding.restriction.AenderungsDatum = that.binding.restriction.ModifiedTs;
-
-                    } else {
-                        myrestriction.RecordDate = that.binding.restriction.ReportingErfassungsdatum;
-                    }
-                    AppData.entrydate = that.binding.restriction.ReportingErfassungsdatum;
-                } else {
-                    delete AppData.entrydate;
-                //delete that.binding.restriction.ReportingErfassungsdatum;
-            }
-            
-                if (!that.binding.showModifiedTS &&
-                    typeof that.binding.restriction.ModifiedTs !== "undefined") {
-                    delete that.binding.restriction.ModifiedTs;
-                }
-                if (!that.binding.restriction.InitLandID &&
-                    typeof that.binding.restriction.InitLandID !== "undefined") {
-                    delete that.binding.restriction.InitLandID;
-                }
-                if ((!that.binding.restriction.ErfasserID || that.binding.restriction.ErfasserID === "0") &&
-                    typeof that.binding.restriction.ErfasserID !== "undefined") {
-                    delete that.binding.restriction.ErfasserID;
-                }
-                return that.binding.restriction;
-            }
-            this.getRestriction = getRestriction;*/
-
             var setRestriction = function () {
                 var reportingRestriction = null;
-                if (that.binding.restriction.InitLandID === "null" || that.binding.restriction.InitLandID === "undefined") {
+               /* if (that.binding.restriction.InitLandID === "null" || that.binding.restriction.InitLandID === "undefined") {
                     that.binding.restriction.InitLandID = null;
                     that.binding.restriction.Land = null;
                     that.binding.restriction.Country = null;
@@ -177,7 +127,7 @@
                     that.binding.restriction.Mitarbeiter = null;
                     that.binding.restriction.RecordedBy = null;
                 }
-
+                */
                 if (that.binding.restriction.InitLandID && that.binding.restriction.InitLandID !== "null") {
                     if (!reportingRestriction) {
                         reportingRestriction = {};
@@ -306,20 +256,20 @@
                             dbView = Reporting.xLAuswertungViewNoQuest;
                             dbViewTitle = Reporting.xLAuswertungViewNoQuestTitle;
                             fileName = "KontakteKeineFragen";
-                            //ExportXlsx.restriction.KontaktID = [-2,-1];
-                            if (!that.binding.showErfassungsdatum) {
-                                ExportXlsx.restriction.ReportingErfassungsdatum = "NOT NULL";
-                            }
+                            //restriction["KontaktVIEWID"] = ["<0", ">0"];
+                          /*  if (!that.binding.showErfassungsdatum) {
+                                restriction.Erfassungsdatum = "NOT NULL";
+                            }*/
                         } else {
                             dbView = Reporting.xLReportViewNoQuest;
                             dbViewTitle = Reporting.xLReportViewNoQuestTitle;
                             fileName = "ContactsNoQuestion";
                             //ExportXlsx.restriction.ContactID = [-2,-1];
                             if (!that.binding.showErfassungsdatum) {
-                                ExportXlsx.restriction.RecordDate = "NOT NULL";
+                                restriction.RecordDate = "NOT NULL";
                             }
                         }
-                        ExportXlsx.restriction.bUseOr = true;
+                        restriction.bUseOr = true;
                         break;
 
                     case 13:

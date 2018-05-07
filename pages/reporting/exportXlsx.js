@@ -41,7 +41,7 @@
             this.progress = progress;
             this.progressFirst = 0;
             this.progressNext = 0;
-            this.progressStep = 40;
+            //this.progressStep = 40;
             this.xlsx = new openXml.OpenXmlPackage();
             ExportXlsx.exporter = this;
             Log.ret(Log.l.trace);
@@ -51,10 +51,10 @@
                     if (!percent) {
                         this.progressFirst = 0;
                         this.progressNext = 0;
-                        this.progressStep = 40;
+                        //this.progressStep = 40;
                     }
-                    this.progress.percent = percent;
-                    this.progress.show = percent ? 1 : null;
+                    this.progress.percent = parseInt(percent);
+                    this.progress.show = percent >= 0 && percent < 100 ? 1 : null;
                     this.progress.text = text ? text : getResourceText("reporting.progressMsg");
                 }
             },
@@ -82,8 +82,9 @@
                 var rowCount = results.length;
                 Log.call(Log.l.trace, "ExportXlsx.", "rowCount=" + rowCount);
                 that.progressFirst = that.progressNext;
+                that.progressStep = rowCount / AppData.generalData.AnzahlKontakte * 100;
                 that.progressNext += that.progressStep;
-                that.progressStep /= 2;
+
                 var newCell, valueName, type, style, value;
                 for (var r = 0; r < rowCount; r++) {
                     var newRow = new XElement(S.row);
@@ -203,7 +204,7 @@
                 if (restriction) {
                     dbView.select(function (json) {
                         Log.print(Log.l.trace, "analysisListView: success!");
-                        that.progressNext = 20;
+                        that.progressNext = 0;
                         that.showProgress(that.progressNext);
                         if (json && json.d && json.d.results) {
                             var results;
@@ -212,6 +213,8 @@
                             } else {
                                 results = json.d.results;
                             }
+                           // that.progressNext = results.length / AppData.generalData.AnzahlKontakte * 100;
+                           // that.showProgress(that.progressNext);
                             var attribSpecs = baseDbView.attribSpecs;
                             var colCount = attribSpecs.length;
                             if (baseDbView.relationName === "KontaktReport") {
@@ -299,7 +302,7 @@
                 }
                 var that = this;
 
-                this.showProgress(1);
+                //this.showProgress(1);
                 that.xlsx.openFromBase64Async(that.template, function (openedSpreadsheet) {
                     Log.call(Log.l.trace, "ExportXlsx.loadXlsxFromView.openFromBase64Async.");
                     try {
