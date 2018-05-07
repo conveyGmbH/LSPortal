@@ -528,7 +528,7 @@
                 return ret;
             },
             defaultValue: {
-                MitarbeiterVIEWID: "0",
+                MitarbeiterVIEWID: "", //0
                 Vorname: "",
                 Nachname: "",
                 fullName: ""
@@ -537,9 +537,10 @@
         defaultrestriction: {
             ErfasserID: null,
             InitLandID: null,
-            //ReportErfassungsdatum: null,
+            Erfassungsdatum: null,
             showErfassungsdatum: false,
-            ModifiedTs: null
+            ModifiedTs: null,
+            showModifiedTS: false
         }
     });
 })();

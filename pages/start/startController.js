@@ -612,6 +612,7 @@
                                 that.pieChartWidth = 0;
                                 that.showPieChart("visitorsEditedChart", true);
                             }
+                            AppData.generalData.AnzahlKontakte = that.binding.dataStart.AnzKontakte;
                             return WinJS.Promise.as();
                         }, function(errorResponse) {
                             that.binding.dataStart = {};

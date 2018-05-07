@@ -29,11 +29,11 @@
                         <span class="label landscape_only" data-win-res="{textContent: 'reporting.dateofentry'}"></span>
                         <div class="input_group">
                             <div data-win-control="WinJS.UI.DatePicker" id="ReportingErfassungsdatum" class="input_big_left"
-                                 data-win-bind="winControl.current: restriction.ReportingErfassungsdatum Binding.Mode.twoway">
+                                 data-win-bind="winControl.current: restriction.Erfassungsdatum Binding.Mode.twoway">
                             </div>
                             <label class="input_big_right">
                                 <input type="checkbox" class="win-checkbox" value="1"
-                                       data-win-bind="checked: showErfassungsdatum"
+                                       data-win-bind="checked: restriction.showErfassungsdatum"
                                        onchange="AppBar.handleEvent('change', 'clickErfassungsdatum', event)"/>
                                 <span data-win-res="{textContent: 'search.useRestriction'}"></span>
                             </label>
@@ -48,7 +48,7 @@
                             </div>
                             <label class="input_big_right">
                                 <input type="checkbox" class="win-checkbox" value="1"
-                                       data-win-bind="checked: showModifiedTS"
+                                       data-win-bind="checked: restriction.showModifiedTS"
                                        onchange="AppBar.handleEvent('change', 'clickModifiedTs', event)"/>
                                 <span data-win-res="{textContent: 'search.useRestriction'}"></span>
                             </label>
@@ -81,11 +81,11 @@
                     </div>
                     <div class="line-separator"></div>
                     <div class="field_line"
-                         data-win-bind="style.display: progress.show Binding.Converter.toDisplay">
-                        <span class="label win-type-caption portrait_only"
-                                  data-win-res="{textContent: 'reporting.progress'}"></span>
-                        <span class="label landscape_only"
-                                  data-win-res="{textContent: 'reporting.progress'}"></span>
+                         >
+                        <span 
+                              data-win-res="{textContent: 'reporting.progress'}"></span>
+                        <span 
+                              data-win-bind="textContent: progress.percent"></span>
                         <progress class="progress_field win-progress-bar"
                                   data-win-bind="value: progress.percent"
                                   min="0" max="100"></progress>

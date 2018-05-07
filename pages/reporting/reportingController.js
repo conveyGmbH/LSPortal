@@ -13,7 +13,8 @@
 (function () {
     "use strict";
     WinJS.Namespace.define("Reporting", {
-        controller: null
+        controller: null,
+        gesamtZahl: AppData.generalData.AnzahlKontakte
     });
     WinJS.Namespace.define("Reporting", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement) {
@@ -46,17 +47,16 @@
             
             var resultConverter = function(item, index) {
                 item.index = index;
-                item.fullName = (item.Vorname ? (item.Vorname + " ") : "") + (item.Nachname ? item.Nachname : "");
-                if (that.employees) {
+                item.fullName = (item.Nachname ? (item.Nachname + ", ") : "") + (item.Vorname ? item.Vorname : "");//(item.Vorname ? (item.Vorname + " ") : "") + (item.Nachname ? item.Nachname : "");
+                /*if (that.employees) {
                     that.employees.push(item);
-                }
+                }*/
                 item.fullNameValue = (item.Nachname ? (item.Nachname + ", ") : "") + (item.Vorname ? item.Vorname : "");
             }
             this.resultConverter = resultConverter;
 
             var title = function(t) {
-                var t = getResourceText(t);
-                return t;
+                return  getResourceText(t);
             }
             this.title = title;
 
@@ -64,8 +64,8 @@
            // datePicker.calendar = calendar;
             
             var setInitialDate = function () {
-                if (typeof that.binding.restriction.ReportingErfassungsdatum === "undefined") {
-                    that.binding.restriction.ReportingErfassungsdatum = new Date();
+                if (typeof that.binding.restriction.Erfassungsdatum === "undefined") {
+                    that.binding.restriction.Erfassungsdatum = new Date();
                 }
                 if (typeof that.binding.restriction.ModifiedTS === "undefined") {
                     that.binding.restriction.ModifiedTS = new Date();
@@ -98,8 +98,8 @@
                     }
                     //@nedra:10.11.2015: Erfassungsdatum is undefined if it is not updated -> Erfassungsdatum = current date
                     if (that.binding.showErfassungsdatum &&
-                        typeof that.binding.restriction.ReportingErfassungsdatum === "undefined") {
-                        that.binding.restriction.ReportingErfassungsdatum = new Date();
+                        typeof that.binding.restriction.Erfassungsdatum === "undefined") {
+                        that.binding.restriction.Erfassungsdatum = new Date();
                     }
                     if (!that.binding.restriction.usemodifiedTS &&
                         typeof that.binding.restriction.ModifiedTS !== "undefined") {
@@ -118,19 +118,37 @@
             }
             this.saveRestriction = saveRestriction;
 
-            var getRestriction = function(complete, error) {
+         /*   var getRestriction = function(complete, error) {
                 var myrestriction = {};
                 if (that.binding.showErfassungsdatum &&
                     typeof that.binding.restriction.ReportingErfassungsdatum !== "undefined") {
                     if (AppData.getLanguageId() === 1031) {
                         myrestriction.Erfassungsdatum = that.binding.restriction.ReportingErfassungsdatum;
+                        that.binding.restriction.Erfassungsdatum = that.binding.restriction.ReportingErfassungsdatum;
                     } else {
                         myrestriction.RecordDate = that.binding.restriction.ReportingErfassungsdatum;
                     }
                     AppData.entrydate = that.binding.restriction.ReportingErfassungsdatum;
                 } else {
                     delete AppData.entrydate;
+                    //delete that.binding.restriction.ReportingErfassungsdatum;
                 }
+
+                if (that.binding.showModifiedTS &&
+                    typeof that.binding.restriction.ModifiedTs !== "undefined") {
+                    if (AppData.getLanguageId() === 1031) {
+                        //myrestriction.Erfassungsdatum = that.binding.restriction.ReportingErfassungsdatum;
+                        that.binding.restriction.AenderungsDatum = that.binding.restriction.ModifiedTs;
+
+                    } else {
+                        myrestriction.RecordDate = that.binding.restriction.ReportingErfassungsdatum;
+                    }
+                    AppData.entrydate = that.binding.restriction.ReportingErfassungsdatum;
+                } else {
+                    delete AppData.entrydate;
+                //delete that.binding.restriction.ReportingErfassungsdatum;
+            }
+            
                 if (!that.binding.showModifiedTS &&
                     typeof that.binding.restriction.ModifiedTs !== "undefined") {
                     delete that.binding.restriction.ModifiedTs;
@@ -143,12 +161,23 @@
                     typeof that.binding.restriction.ErfasserID !== "undefined") {
                     delete that.binding.restriction.ErfasserID;
                 }
-                return myrestriction;
+                return that.binding.restriction;
             }
-            this.getRestriction = getRestriction;
+            this.getRestriction = getRestriction;*/
 
             var setRestriction = function () {
                 var reportingRestriction = null;
+                if (that.binding.restriction.InitLandID === "null" || that.binding.restriction.InitLandID === "undefined") {
+                    that.binding.restriction.InitLandID = null;
+                    that.binding.restriction.Land = null;
+                    that.binding.restriction.Country = null;
+                }
+                if (that.binding.restriction.ErfasserID === "null" || that.binding.restriction.ErfasserID === "undefined") {
+                    that.binding.restriction.ErfasserID = null;
+                    that.binding.restriction.Mitarbeiter = null;
+                    that.binding.restriction.RecordedBy = null;
+                }
+
                 if (that.binding.restriction.InitLandID && that.binding.restriction.InitLandID !== "null") {
                     if (!reportingRestriction) {
                         reportingRestriction = {};
@@ -169,12 +198,12 @@
                         reportingRestriction.RecordedBy = that.binding.restriction.ErfasserID;
                     }
                 }
-                if (that.binding.showErfassungsdatum && that.binding.restriction.ReportingErfassungsdatum) {
+                if (that.binding.showErfassungsdatum && that.binding.restriction.Erfassungsdatum) {
                     if (!reportingRestriction) {
                         reportingRestriction = {};
                     }
                     if (AppData.getLanguageId() === 1031) {
-                        reportingRestriction.Erfassungsdatum = that.binding.restriction.ReportingErfassungsdatum;
+                        reportingRestriction.Erfassungsdatum = that.binding.restriction.Erfassungsdatum; //.toISOString().substring(0, 10)
                     } else {
                         reportingRestriction.RecordDate = that.binding.restriction.ReportingErfassungsdatum;
                     }
@@ -228,7 +257,12 @@
                 var dbViewTitle = null;
                 var dbView = null;
                 var fileName = null;
-                ExportXlsx.restriction = that.getRestriction();
+                var restriction = null;
+                var hasRestriction = false;
+                var tempRestriction = null;
+                var prop = null;
+
+                // ExportXlsx.restriction = that.getRestriction();
                 var exportselectionId = parseInt(exportselection);
                 switch (exportselectionId) {
                     case 1:
@@ -247,6 +281,24 @@
                         } else {
                             dbView = Reporting.landHistoEn;
                             fileName = "Countrystatistics";
+                        }
+                        hasRestriction = false;
+                        tempRestriction = that.setRestriction();
+                        for (prop in tempRestriction) {
+                            if (tempRestriction.hasOwnProperty(prop)) {
+                                hasRestriction = true;
+                                if (!restriction) {
+                                    restriction = {};
+                                }
+                                switch (prop) {
+                                    case "Erfassungsdatum":
+                                    case "RecordDate":
+                                        restriction["Datum"] = tempRestriction[prop];
+                                        break;
+                                    default:
+                                        restriction[prop] = tempRestriction[prop];
+                                }
+                            }
                         }
                         break;
                     case 10:
@@ -278,6 +330,24 @@
                             dbView = Reporting.mitarbeiterHistoEn;
                             fileName = "Employeestatistics";
                         }
+                        hasRestriction = false;
+                        tempRestriction = that.setRestriction();
+                        for (prop in tempRestriction) {
+                            if (tempRestriction.hasOwnProperty(prop)) {
+                                hasRestriction = true;
+                                if (!restriction) {
+                                    restriction = {};
+                                }
+                                switch (prop) {
+                                    case "Erfassungsdatum":
+                                    case "RecordDate":
+                                        restriction["Datum"] = tempRestriction[prop];
+                                        break;
+                                    default:
+                                        restriction[prop] = tempRestriction[prop];
+                                }
+                            }
+                        }
                         break;
                     case 26:
                         if (AppData.getLanguageId() === 1031) {
@@ -287,30 +357,46 @@
                             dbView = Reporting.KontaktReport;
                             fileName = "CostumReport";
                         }
+                        hasRestriction = false;
+                        tempRestriction = that.setRestriction();
+                        for (prop in tempRestriction) {
+                            if (tempRestriction.hasOwnProperty(prop)) {
+                                hasRestriction = true;
+                                if (!restriction) {
+                                    restriction = {};
+                                }
+                                switch (prop) {
+                                    case "Erfassungsdatum":
+                                    case "RecordDate":
+                                        restriction["ErfassungsdatumValue"] = [null, tempRestriction[prop]];
+                                        break;
+                                    case "AenderungsDatum":
+                                    case "ModificationDate":
+                                        restriction["AenderungsDatumValue"] = [null, tempRestriction[prop]];
+                                        break;
+                                    default:
+                                        restriction[prop] = [null, tempRestriction[prop]];
+                                }
+                            }
+                        }
+                        if (hasRestriction) {
+                            restriction["KontaktVIEWID"] = ["<0", ">0"];
+                            restriction.bAndInEachRow = true;
+                            restriction.bExact = true;
+                        }
                         break;
                     default:
                         Log.print(Log.l.error, "curOLELetterID=" + that.binding.curOLELetterID + "not supported");
                 }
                 if (dbView) {
                     var exporter = ExportXlsx.exporter;
-                    if (!exporter) {
+                    //if (!exporter) {
                         exporter = new ExportXlsx.ExporterClass(that.binding.progress);
-                    }
+                    //}
                     exporter.showProgress(0);
                     that.disableReportingList(true);
-                    var restriction = {};
-                    if (exportselectionId !== 26) {
+                    if (!restriction) {
                         restriction = that.setRestriction();
-                    } else {
-                        var listRestriction = that.setRestriction();
-                        restriction["KontaktVIEWID"] = ["<0", ">0"];
-                        for (var prop in listRestriction) {
-                            if (listRestriction.hasOwnProperty(prop)) {
-                                restriction[prop] = [null, listRestriction[prop]];
-                            }
-                        }
-                        restriction.bAndInEachRow = true;
-                        restriction.bExact = true;
                     }
                     if (!restriction) {
                         dbViewTitle = null;
@@ -504,8 +590,8 @@
                 clickExport: function(event) {
                     Log.call(Log.l.trace, "Reporting.Controller.");
                     if (event && event.currentTarget) {
-                        var exportselection = event.currentTarget.value;
-                        that.disableFlag = event.currentTarget.index;
+                        var exportselection = event.target.value;
+                        that.disableFlag = event.target.index;
                         AppBar.busy = true;
                         AppBar.triggerDisableHandlers();
                         WinJS.Promise.timeout(0).then(function () {
@@ -529,7 +615,7 @@
                 clickErfassungsdatum: function(event) {
                     if (event.currentTarget) {
                         that.binding.showErfassungsdatum = event.currentTarget.checked;
-                        that.binding.restriction.ReportingErfassungsdatum = new Date();
+                        that.binding.restriction.Erfassungsdatum = new Date();
                     }
                     that.showDateRestrictions();
                 },
@@ -542,7 +628,7 @@
                 },
                 changeModifiedTS: function(event) {
                     if (event.currentTarget) {
-                        that.binding.ModifiedTs = event.currentTarget.current;
+                        that.binding.restriction.ModifiedTs = event.currentTarget.current;
                     }
                 }
             };
@@ -671,11 +757,11 @@
                                 var results = json.d.results;
                                 results.forEach(function(item, index) {
                                     that.resultConverter(item, index);
+                                    that.employees.push(item);
                                 });
                                 if (erfasserID && erfasserID.winControl) {
                                     erfasserID.winControl.data = that.employees;
                                 }
-                                that.binding.mitarbeiterId = Reporting.employeeView.defaultValue.MitarbeiterVIEWID;
                             } else {
                                 that.nextUrl = null;
                                 that.employees = null;
@@ -689,9 +775,9 @@
                         });
                     } else {
                         if (erfasserID && erfasserID.winControl) {
-                            erfasserID.winControl.data = that.erfasserID;
+                            erfasserID.winControl.data = that.employees;
                         }
-                        that.binding.mitarbeiterId = Reporting.employeeView.defaultValue.MitarbeiterVIEWID;
+                        //that.binding.mitarbeiterId = Reporting.employeeView.defaultValue.MitarbeiterVIEWID;
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
@@ -737,11 +823,12 @@
                     }
                     that.binding.restriction = savedRestriction;
                     // always define date types
-                    if (typeof that.binding.restriction.ReportingErfassungsdatum === "undefined") {
-                        that.binding.restriction.ReportingErfassungsdatum = new Date();
+                    if (typeof that.binding.restriction.Erfassungsdatum === "undefined" || that.binding.restriction.Erfassungsdatum === null) {
+                        //that.binding.restriction.ReportingErfassungsdatum = new Date();
+                        that.binding.restriction.Erfassungsdatum = new Date();
                     }
                     // always define date types
-                    if (typeof that.binding.modifiedTS === "undefined") {
+                    if (typeof that.binding.restriction.ModifiedTs === "undefined" || that.binding.restriction.ModifiedTs === null) {
                         that.binding.modifiedTS = new Date();
                     }
 
@@ -754,6 +841,7 @@
                 return ret;
             };
             this.loadData = loadData;
+
             that.setInitialDate();
             that.showDateRestrictions();
             that.processAll().then(function() {

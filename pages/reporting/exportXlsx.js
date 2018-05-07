@@ -54,7 +54,7 @@
                         this.progressStep = 40;
                     }
                     this.progress.percent = percent;
-                    this.progress.show = (percent > 0) ? 1 : null;
+                    this.progress.show = percent ? 1 : null;
                     this.progress.text = text ? text : getResourceText("reporting.progressMsg");
                 }
             },
@@ -200,7 +200,7 @@
                 } else {
                     promise = WinJS.Promise.as();
                 }
-                promise.then(function() {
+                if (restriction) {
                     dbView.select(function (json) {
                         Log.print(Log.l.trace, "analysisListView: success!");
                         that.progressNext = 20;
@@ -219,14 +219,13 @@
                                     var row = results[0];
                                     var key = attribSpecs[c].ODataAttributeName;
                                     var value = row && row[key];
-                                    if (value) {
+                                    if (value && value !== "NULL") {
                                         attribSpecs[c].hidden = false;
                                     } else {
                                         attribSpecs[c].hidden = true;
                                     }
                                 }
-                            }
-                            else {
+                            } else {
                                 Log.print(Log.l.trace, colCount + " cloumns to export. Write column header...");
                                 var newRow = new XElement(S.row);
                                 for (var c = 1; c < colCount; c++) {
@@ -241,15 +240,17 @@
                                         type = "inlineStr";
                                         value = new XElement(S.t, value);
                                     }
-                                    var newCell = new XElement(S.c, new XElement(valueName, value));
-                                    if (type) {
-                                        newCell.setAttributeValue("t", type);
+                                    var newCell;
+                                    if (value !== "") {
+                                        newCell = new XElement(S.c, new XElement(valueName, value));
+                                        if (type) {
+                                            newCell.setAttributeValue("t", type);
+                                        }
+                                        newRow.add(newCell);
                                     }
-                                    newRow.add(newCell);
                                 }
                             }
                             sheetData.replaceAll(newRow);
-
                             Log.print(Log.l.trace, colCount + "write row data...");
                             WinJS.Promise.timeout(50).then(function () {
                                 that.writeResultToSheetData(sheetData, results, attribSpecs, colCount);
@@ -269,8 +270,7 @@
                             Log.print(Log.l.error, "not data found");
                             if (typeof error === "function") {
                                 error("not data found");
-                            }
-                            ;
+                            };
                         }
                     }, function (errorResponse) {
                         Log.print(Log.l.error, "error: " + errorResponse.messageText);
@@ -278,7 +278,7 @@
                             error(errorResponse);
                         }
                     }, restriction);
-                });
+                }
                 Log.ret(Log.l.trace);
             },
             saveXlsxFromView: function (dbView, fileName, complete, error, restriction, dbViewTitle, temp) {
