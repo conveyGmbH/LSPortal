@@ -24,6 +24,8 @@
     "command.new"           : "Nuovo",
     "command.delete"        : "Elimina",
     "command.rotate"        : "Ruota biglietto da visita",
+    "command.rotateLeft"    : "Ruotare a sinistra",
+    "command.rotateRight"   : "Ruotare a destra",
     "command.open"          : "Apri biglietto da visita",
     "command.search"        : "Cerca",
     "command.lineUp"        : "Riga sopra",
@@ -33,7 +35,7 @@
     "command.photo"         : "Photo",
     "command.zoomin"        : "ingrandire",
     "command.zoomout"       : "ridurre",
-	"command.print"			: "stampa",
+    "command.print"         : "stampa",
 
     "tooltip.backward"      : "Pagina precedente",
     "tooltip.edit"          : "Modifica Record attuale",
@@ -42,6 +44,7 @@
     "tooltip.redo"          : "Ripristina ultima azione",
     "tooltip.undo"          : "Annulla ultima azione",
     "tooltip.delete"        : "Elimina record attuale",
+    "tooltip.new"           : "Aggiungi nuovo contatto",
     "tooltip.deleteEmployee": "Elimina Employee",
     "tooltip.deleteSkill"   : "Elimina Ruolo",
     "tooltip.deleteQuestiongroup": "Elimina Gruppo domande",
@@ -63,7 +66,7 @@
     "tooltip.export"        : "Data export",
     "tooltip.publish"       : "Pubblicare il questionario",
     "tooltip.photo"         : "Scattare foto",
-	"tooltip.print"			: "stampa",
+    "tooltip.print"         : "stampa",
 
     "start.title"           : "Pagina iniziale",
     "start.comment"         : "Utilizzate i pulsanti su questa pagina per muoversi tra le pagine!",
@@ -81,7 +84,7 @@
     "start.off"             : "Off",
     "start.onSite"          : "Presente",
     "start.notOnSite"       : "Assente",
-    "start.buttonAll"       : "Alle",
+    "start.buttonAll"       : "Tutti",
     "start.buttonEdited"    : "Modificato",
     "start.buttonNotEdited" : "Non modificato",
     "start.recent"          : "Ultimo contatto",
@@ -127,6 +130,8 @@
     "contact.mrs"           : "Sig.ra",
     "contact.useRestriction": "Utilizza",
 
+    "contactRemote.title"   : "Contatto già caricato",
+
     "photo.title"           : "Biglietto da visita",
     "photo.comment"         : "Utilizzate il pulsante \"indietro\" su questa pagina per tornare alla pagina precedente!",
 
@@ -135,14 +140,19 @@
     "questionnaire.textarea": "Inserite eventuali commenti in questo spazio",
     "questionnaire.count"   : "Totale",
     "questionnaire.attachments" : "Allegati",
+    "questionnaire.labelConfirmMandatoryField" : "Domanda obbligatoria non compilata",
 
     "sketch.title"          : "Disegnare schizzi",
     "sketch.comment"        : "Utilizzate il pulsante \"indietro\" su questa pagina per tornare alla pagina precedente!",
     "sketch.shape"          : "Tipo forma",
     "sketch.color"          : "Colore",
     "sketch.width"          : "Larghezza",
-    "sketch.showList"		: "Mostra elenco",
-    "sketch.noPlayer"		: "HTML5 Riproduzione non supportata in questo browser",
+    "sketch.showList"       : "Mostra elenco",
+    "sketch.addNote"        : "Aggiungete una notizia",
+    "sketch.addSvg"         : "Aggiungete uno schizzo",
+    "sketch.addImg"         : "Aggiungete una foto",
+    "sketch.questionDelete"	: "Vuoi eliminare questa notizia?",
+    "sketch.noPlayer"		    : "Riproduzione non supportata in questo browser",
 
     "search.title"          : "Immettere i criteri di ricerca",
     "search.comment"        : "Utilizzate il pulsante \"indietro\" su questa pagina per tornare alla pagina precedente!",
@@ -257,8 +267,14 @@
     "register.confirmation" : "Conferma",
     "register.complete"     : "Grazie per esserti registrato! A breve riceverai una E-Mail di conferma all'indirizzo immesso prima.",
      
+    "recover.title"         : "Password dimenticata",
+    "recover.commentEmail"  : "Per favore inserisci la tua E-Mail. È possibile utilizzarlo per reimpostare la password.",
+    "recover.email"         : "Email",
+    "recover.complete"      : "A breve riceverai una E-Mail di conferma.",
+     
     "account.title"         : "Impostazioni di login",
-    "account.comment"       : "Please, pay attention to the fact, that all data of the app stored locally on the deviced will be deleted if you logoff or login with another account!",
+    "account.comment"       : "Attenzione: al momento del log-out o connettendosi con un altro utente, tutti i dati salvati solo localmente verranno cancellati",
+    "account.confirmLogOff" : "Attenzione: al momento del log-out o connettendosi con un altro utente, tutti i dati salvati solo localmente verranno cancellati",
     "account.hostName"      : "Nome server",
     "account.https"         : "HTTPS",
     "account.onlinePort"    : "Online-Port",
@@ -301,6 +317,7 @@
     "info.cameraOptions"    : "Opzioni fotocamera",
     "info.cameraQuality"    : "Qualità",
     "info.cameraUseGrayscale" : "Scala di grigi",
+    "info.useClippingCamera": "Riconoscimento automatico",
     "info.replication"      : "Opzioni di sincronizzazione",
     "info.replActive"       : "Sincronizzazione",
     "info.replInterval"     : "Intervallo in s",
@@ -308,6 +325,8 @@
     "info.upload"           : "Upload",
     "info.download"         : "Download",
     "info.portal"           : "Portal",
+    "info.useAudioNote"     : "Registrazione audio",
+    "info.autoShutterTime"  : "Tempo di innesco [ms]",
 
     "infodesk.employee"     : "Employee",
     "infodesk.title"        : "Infodesk",
@@ -319,14 +338,14 @@
     "infodesk.messages"     : "notizie",
     "infodesk.receiver"     : "Ricevitore",
     "infodesk.message"      : "Messaggio ai ricevitore",
-	"infodesk.search"		: "Ricerca",
-	"infodesk.account"		: "Conto",
-	"infodesk.info"		    : "Messaggio",
+    "infodesk.search"       : "Ricerca",
+    "infodesk.account"      : "Conto",
+    "infodesk.info"         : "Messaggio",
 
     "infodeskEmpList.title" : "Utenti",
     "infodeskEmpList.count" : "Numero",
-	"infodeskEmpList.name"  : "Cognome",
-	"infodeskEmpList.firstName" : "Primo nome",
+    "infodeskEmpList.name"  : "Cognome",
+    "infodeskEmpList.firstName" : "Primo nome",
     "infodeskEmpList.login" : "Utente",
 
     "userinfo.title"        : "Informazioni utente",
@@ -349,6 +368,7 @@
     "label.info"            : "Options",
     "label.login"           : "Login",
     "label.register"        : "Registrazione",
+    "label.recover"         : "Password",
     "label.listContact"     : "Contatti",
     "label.contacts"        : "Modifica contatti",
     "label.questionList"    : "Domande/Risposte",
@@ -364,14 +384,17 @@
     "label.mailingProduct"  : "Prodotto Mail",
     "label.infodesk"        : "Infodesk",
     "label.mandatory"       : "Campo obbligatorio",
-	"label.barcodeAdministration" : "Barcode",
+    "label.barcodeAdministration" : "Barcode",
     "label.eventcreation"   : "Crea evento",
     "label.products"        : "Prodotti",
     "label.localevents"     : "Crea evento",
+    "label.contactRemote"   : "Contatto",
+    "label.questionnaireRemote" : "Questionario",
+    "label.sketchRemote"    : "Note",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annulla",
-	
+
     "error.delete"          : "Errore: impossibile cancellare",
   
     "event.title"           : "Evento",
@@ -383,8 +406,8 @@
     "event.showHideNavigationPages" : "pagina di navigazione",
     "event.showHideBarcodeScan" : "Barcode",
 	  "event.showHideCamera"  : "Camera",
-    "event.productMail"		: "Posta elettronica del prodotto: \n Solo una spedizione e-mail",
-	"event.thankYouMail"	: "Grazie posta elettronica: \n Solo una spedizione e-mail",
+    "event.productMail"     : "Posta elettronica del prodotto: \n Solo una spedizione e-mail",
+	  "event.thankYouMail"    : "Grazie posta elettronica: \n Solo una spedizione e-mail",
     "event.note"            : "suggerimento",
     "event.appInfo"         : "Affinché le modifiche abbiano effetto, si prega di riavviare l´APP",
 
@@ -415,8 +438,8 @@
     "reporting.exportlist"  : "Export type",
     "reporting.progress"    : "Progresso",
     "reporting.progressMsg" : "Creazione Excel file",
-    "reporting.dateofentry" : "Registrato il",
-    "reporting.changedate"  : "Modificato il",
+    "reporting.dateofentry" : "Registrato",
+    "reporting.changedate"  : "Modificato",
     "reporting.country"     : "Country",
     "reporting.employee"    : "Employee",
     "reporting.employeechart"  : "Statistiche personale (numer contatti per persona)",
@@ -446,7 +469,7 @@
     "skills.title"          : "Ruolo",
     "skills.count"          : "Numero",
     "skills.answercnt"      : "Risposte",
-	"skills.questionDelete" : "Siete sicuri di vole cancellare ruolo domande?",
+    "skills.questionDelete" : "Siete sicuri di vole cancellare ruolo domande?",
 
     "skillentry.title"      : "Immetti ruolo",
     "skillentry.count"      : "Numero",
@@ -456,7 +479,7 @@
 
     "mailing.title"         : "Standard Mail",
     "mailing.contactinfo"   : "If you would like a mailing, please call +49 (0)89 95 45 867 - 55 or write us an ",
-	"mailing.info"          : "Descrizione",
+	  "mailing.info"          : "Descrizione",
     "mailing.event"         : "Evento",
     "mailing.language"      : "Lingua",
     "mailing.sender"        : "Mittente",
@@ -467,7 +490,7 @@
     "mailing.mailtext"      : "Testo della mail",
     "mailing.standard"      : "standard",
 
-	"mailingProduct.title"         : "Mailing Prodotto",
+	  "mailingProduct.title"         : "Mailing Prodotto",
     "mailingProduct.event"         : "Evento",
     "mailingProduct.language"      : "Lingua",
     "mailingProduct.sender"        : "Mittente",
@@ -492,7 +515,7 @@
     "mandatory.count"  : "Totale",
 
     "barcodeAdministration.title" : "Barcode",
-	"barcodeAdministration.count" : "Totale",
+    "barcodeAdministration.count" : "Totale",
 
     "eventcreation.title" : "Crea evento",
 
