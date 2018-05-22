@@ -60,10 +60,12 @@
         defaultRestriction: {
             Aktiv: "",
             bAndInEachRow: true,
+            bUseOr: false,
             countCombobox: 0,
             Vorname: "",
             Nachname: "",
             Login: "",
+            Names: "",
             SkillType1Sortierung: 0,
             SkillType2Sortierung: 0,
             SkillType3Sortierung: 0,
@@ -144,7 +146,21 @@
             defaultValue: {
                 Vorname: "",
                 Nachname: "",
-                Login: ""
+                Login: "",
+                Names: ""
+            }
+        },
+        _userPhotoView: {
+            get: function () {
+                return AppData.getFormatView("DOC1Mitarbeiter", 0);
+            }
+        },
+        userPhotoView: {
+            select: function (complete, error, recordId) {
+                Log.call(Log.l.trace, "userPhotoView.");
+                var ret = Infodesk._userPhotoView.selectById(complete, error, recordId);
+                Log.ret(Log.l.trace);
+                return ret;
             }
         }
     });

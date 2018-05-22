@@ -15,6 +15,11 @@
                     <div class="content-header">
                         <div class="win-type-subtitle master-list-header">
                             <span data-win-res="{textContent: 'infodeskEmpList.title'}"></span>
+                            <input class="input_half_right win-textbox" type="text" data-win-bind="value: dataEmployee.Names Binding.Mode.twoway" oninput="AppBar.handleEvent('oninput', 'changeSearchField', event)"/>
+                        </div>
+                        
+                        <div>
+                            
                         </div>
                     </div>
                     <div class="headerFooterPlaceholder">

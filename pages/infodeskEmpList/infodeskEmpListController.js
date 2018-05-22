@@ -17,6 +17,7 @@
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "InfodeskEmpList.Controller.");
             Application.Controller.apply(this, [pageElement, {
+                dataEmployee: getEmptyDefaultValue(InfodeskEmpList.defaultValue),
                 count: 0,
                 employeeId: AppData.getRecordId("Mitarbeiter")
             }, commandList, true]);
@@ -333,8 +334,8 @@
                                 // Only one item is selected, show the page
                                 listControl.selection.getItems().done(function (items) {
                                     var item = items[0];
-                                    if (item.data && (item.data.MitarbeiterID || item.data.MitarbeiterVIEWID) &&
-                                        (item.data.MitarbeiterID || item.data.MitarbeiterVIEWID) !== that.binding.employeeId) {
+                                    if (item.data && (item.data.MitarbeiterID || item.data.MitarbeiterVIEWID)) {
+                                        //&&(item.data.MitarbeiterID || item.data.MitarbeiterVIEWID) !== that.binding.employeeId
                                         // called asynchronously if ok
                                         that.binding.employeeId = item.data.MitarbeiterID || item.data.MitarbeiterVIEWID;
                                         var curPageId = Application.getPageId(nav.location);
@@ -474,6 +475,10 @@
                         var restriction = AppData.getRestriction("SkillEntry");
                         if (!restriction) {
                             restriction = {};
+                        }
+                        if (restriction.Names && restriction.Names.length > 0) {
+                            //restriction.bUseOr = true;
+                            that.binding.dataEmployee.Names = restriction.Names;
                         }
                         if (restriction.countCombobox && restriction.countCombobox > 0) {
                             return InfodeskEmpList.employeeSkillentryView.select(function (json) {
@@ -628,7 +633,7 @@
                         }
                     }).then(function () {
                         // todo: load image data and set src of img-element
-                        Log.print(Log.l.trace, "calling select contactView...");
+                        Log.print(Log.l.trace, "calling select userPhotoView...");
                         return WinJS.Promise.timeout(250).then(function () {
                             return InfodeskEmpList.userPhotoView.select(function (json) {
                                 Log.print(Log.l.trace, "userPhotoView: success!");

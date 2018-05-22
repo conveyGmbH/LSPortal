@@ -67,6 +67,9 @@
                 return ret;
             }
         },
+        defaultValue: {
+            Names: ""
+        },
         _initBenAnwView: {
             get: function () {
                 return AppData.getLgntInit("LGNTINITBenAnw");

@@ -168,3 +168,12 @@
     border-radius: 20px;
     z-index: 9901;
 }
+.content-header .input_half_right {
+    min-height: 32px;
+    margin-right: 20px; /*-2*/
+    float: right;
+    width: 30%;
+   /* margin-left: 1em;*/
+    margin-top: 0;
+    margin-left: 0px;
+}
