@@ -1,4 +1,4 @@
-﻿// service for page: localEvents
+﻿// service for page: LocalEvents
 /// <reference path="~/www/lib/convey/scripts/strings.js" />
 /// <reference path="~/www/lib/convey/scripts/logging.js" />
 /// <reference path="~/www/lib/convey/scripts/dataService.js" />
@@ -12,42 +12,40 @@
                 return AppData.getFormatView("Veranstaltung", 20542);
             }
         },
-        _VeranstaltungTable: {
-            get: function () {
-                return AppData.getFormatView("Veranstaltung", 0);
+        VeranstaltungView: {
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, "LocalEvents.");
+                var ret = LocalEvents._VeranstaltungView.select(complete, error, restriction);
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getNextUrl: function (response) {
+                Log.call(Log.l.trace, "LocalEvents.");
+                var ret = LocalEvents._VeranstaltungView.getNextUrl(response);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            selectNext: function (complete, error, response, nextUrl) {
+                Log.call(Log.l.trace, "LocalEvents.");
+                var ret = LocalEvents._VeranstaltungView.selectNext(complete, error, response, nextUrl);
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
             }
         },
-        VeranstaltungView: {
-            select: function (complete, error, recordId) {
+        _PRCChangeUser: {
+            get: function () {
+                return AppData.getFormatView("PRC_ChangeUserVeranstaltung", 0);
+            }
+        },
+        PRCChangeUser: {
+            select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, "LocalEvents.");
-                var ret = LocalEvents._VeranstaltungView.selectById(complete, error, recordId);
+                var ret = LocalEvents._PRCChangeUser.select(complete, error, restriction);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
-            },
-            update: function (complete, error, recordId, viewResponse) {
-                Log.call(Log.l.trace, "LocalEvents.");
-                var ret = LocalEvents._VeranstaltungTable.update(complete, error, recordId, viewResponse);
-                // this will return a promise to controller
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            insert: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "LocalEvents.");
-                var ret = LocalEvents._VeranstaltungTable.insert(complete, error, restriction);
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            deleteRecord: function (complete, error, recordId) {
-                Log.call(Log.l.trace, "LocalEvents.");
-                var ret = LocalEvents._VeranstaltungTable.deleteRecord(complete, error, recordId);
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            defaultValue: {
-                Name: "",
-                Startdatum: "",
-                Enddatum: ""
             }
         }
     });

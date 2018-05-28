@@ -391,9 +391,6 @@
     "label.eventcreation"   : "Veranstaltung erstellen",
     "label.products"        : "Produkte",
     "label.localevents"     : "Veranstaltung erstellen",
-    "label.contactRemote"   : "Kontakt",
-    "label.questionnaireRemote" : "Fragebogen",
-    "label.sketchRemote"    : "Notizen",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Abbrechen",
@@ -524,8 +521,12 @@
 
     "products.title" : "Produkte",
 
-    "localevents.title" : "Veranstaltung anlegen",
-    "localevents.event" : "Veranstaltung",
-    "localevents.begin" : "Anfang",
-    "localevents.end"   : "Ende"
-}
+    "localeventscreate.title" : "Veranstaltung anlegen",
+    "localeventscreate.event" : "Veranstaltung",
+    "localeventscreate.begin" : "Anfang",
+    "localeventscreate.end"   : "Ende",
+	"localeventscreate.leadsuccessmobileapp"   : "Anzahl der Mobile-App Benutzer",
+	"localeventscreate.mobilerbarcodescanner"   : "Anzahl der Barcodescanner Benutzer",
+
+    "localevents.title" : "Veranstaltungen"
+}			

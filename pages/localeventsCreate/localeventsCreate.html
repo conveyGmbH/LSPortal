@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="localeventsCreate.css" rel="stylesheet" />
+    <script type="text/javascript" src="localeventsCreateService.js"></script>
+    <script type="text/javascript" src="localeventsCreateController.js"></script>
+    <script type="text/javascript" src="localeventsCreate.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="localeventsCreate fragment">
+        <div id="localeventsCreateController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="contentarea win-type-body">
+                    <div class="header-separator"></div>
+                    <div class="content-header">
+                        <div class="half-circle half-circle-textcolor">&nbsp;</div>
+                        <div class="content-header-line win-type-caption">
+                            <span class="id-field"></span>
+                            <span class="caption-field" data-win-res="{textContent: 'localeventscreate.title'}"></span>
+                            <span class="date-field"></span>
+                        </div>
+                    </div>
+                    <div class="row-separator"></div>
+                    <div class="fields-container">
+                        <div class="field_line">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'localeventscreate.event'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'localeventscreate.event'}"></span>
+                            <input class="input_field win-textbox" type="text" data-win-bind="value: eventData.VeranstaltungName Binding.Mode.twoway" />
+                        </div>
+                        <div class="line-separator"></div>
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'localeventscreate.begin'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'localeventscreate.begin'}"></span>
+                            <div data-win-control="WinJS.UI.DatePicker" id="startDatum" class="input_field"
+                                 data-win-bind="winControl.current: eventData.StartDatum Binding.Mode.twoway">
+                            </div>
+                        </div>
+                        <div class="field_line field_line_even">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'localeventscreate.end'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'localeventscreate.end'}"></span>
+                            <div data-win-control="WinJS.UI.DatePicker" id="endDatum" class="input_field"
+                                 data-win-bind="winControl.current: eventData.EndDatum Binding.Mode.twoway">
+                            </div>
+                        </div>
+                        <div class="line-separator"></div>
+                        <div class="Accounts">
+                            <div class="field_line field_line_odd LeadsuccessMobileAppInput">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'localeventscreate.leadsuccessmobileapp'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'localeventscreate.LeadsuccessMobileApp'}"></span>
+                                <input class="input_field win-textbox" id="LeadsuccessMobileAppInput" type="number" data-win-bind="value: eventData.LeadSuccessMobileApp Binding.Mode.twoway" />
+                            </div>
+                            <div class="field_line field_line_even MobilerBarcodescannerInput">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'localeventscreate.mobilerbarcodescanner'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'localeventscreate.mobilerbarcodescanner'}"></span>
+                                <input class="input_field win-textbox" id="MobilerBarcodescannerInput" type="number" data-win-bind="value: eventData.MobilerBarcodescanner Binding.Mode.twoway" />
+                            </div>
+                        </div>
+                    <div class="error-message"
+                         data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>
