@@ -12,10 +12,15 @@
 .view-size-small #empRoleList {
 
 }
-
+.userMessage-title {
+    width: 100%;
+    margin-left: 25px;
+    min-height: 12px;
+}
 
 .list-role-item {
     width: 100%;
+    margin-left: 16px;
     min-height: 12px;
 }
 #userMessageList.listview {

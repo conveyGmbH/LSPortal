@@ -104,8 +104,13 @@
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.loadData();
+                   return that.loadData();
             }).then(function () {
+                var loadingTime = 30000;
+                Log.print(Log.l.trace, "Loading Message: " + loadingTime + "sec");
+                setInterval(function () {
+                    return that.loadData();
+                }, loadingTime);
                 Log.print(Log.l.trace, "Data loaded");
             });
             Log.ret(Log.l.trace);

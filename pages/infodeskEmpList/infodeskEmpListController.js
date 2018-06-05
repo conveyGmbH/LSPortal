@@ -18,6 +18,7 @@
             Log.call(Log.l.trace, "InfodeskEmpList.Controller.");
             Application.Controller.apply(this, [pageElement, {
                 dataEmployee: getEmptyDefaultValue(InfodeskEmpList.defaultValue),
+                mitarbeiterText: getResourceText("infodesk.employee"),
                 count: 0,
                 employeeId: AppData.getRecordId("Mitarbeiter")
             }, commandList, true]);
