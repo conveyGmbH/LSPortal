@@ -87,58 +87,137 @@
 
                 var newCell, valueName, type, style, value;
                 for (var r = 0; r < rowCount; r++) {
-                    var newRow = new XElement(S.row);
-                    var row = results[r];
-                    for (var c = 1; c < colCount; c++) {
-                        if (!attribSpecs[c].hidden) {
-                            var key = attribSpecs[c].ODataAttributeName;
-                            value = row[key];
-                            var attribTypeId = attribSpecs[c].AttribTypeID;
-                            type = null;
-                            style = null;
-                            valueName = S.v;
-                            if (typeof value === "undefined" ||
-                                value === null || value === "NULL") {
-                                value = "";
-                            } else if (attribTypeId === 8 || attribTypeId === 6) { // timestamp or date
-                                var dateString = value.replace("\/Date(", "").replace(")\/", "");
-                                var milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
-                                var date = new Date(milliseconds);
-                                var year = date.getFullYear();
-                                var month = date.getMonth() + 1;
-                                var day = date.getDate();
-                                if (attribTypeId === 8) {
-                                    var hour = date.getHours();
-                                    var minute = date.getMinutes();
-                                    value = year.toString() +
-                                    ((month < 10) ? "-0" : "-") + month.toString() +
-                                    ((day < 10) ? "-0" : "-") + day.toString() +
-                                    ((hour < 10) ? "T0" : "T") + hour.toString() +
-                                    ((minute < 10) ? ":0" : ":") + minute.toString() +
-                                        "Z";
+                    if (r == 0 || r == 1){
+                        var newRow = new XElement(S.row);
+                        var row = results[r];
+                        for (var c = 1; c < colCount; c++) {
+                            if (!attribSpecs[c].hidden) {
+                                var key = attribSpecs[c].ODataAttributeName;
+                                value = row[key];
+                                var attribTypeId = attribSpecs[c].AttribTypeID;
+                                type = null;
+                                style = null;
+                                valueName = S.v;
+                                if (typeof value === "undefined" ||
+                                    value === null || value === "NULL") {
+                                    value = "";
+                                } else if (attribTypeId === 8 || attribTypeId === 6) { // timestamp or date
+                                    var dateString = value.replace("\/Date(", "").replace(")\/", "");
+                                    var milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
+                                    var date = new Date(milliseconds);
+                                    var year = date.getFullYear();
+                                    var month = date.getMonth() + 1;
+                                    var day = date.getDate();
+                                    if (attribTypeId === 8) {
+                                        var hour = date.getHours();
+                                        var minute = date.getMinutes();
+                                        value = year.toString() +
+                                            ((month < 10) ? "-0" : "-") + month.toString() +
+                                            ((day < 10) ? "-0" : "-") + day.toString() +
+                                            ((hour < 10) ? "T0" : "T") + hour.toString() +
+                                            ((minute < 10) ? ":0" : ":") + minute.toString() +
+                                            "Z";
+                                    } else {
+                                        value = year.toString() +
+                                            ((month < 10) ? "-0" : "-") + month.toString() +
+                                            ((day < 10) ? "-0" : "-") + day.toString() +
+                                            "T";
+                                    }
+                                    type = "d";
+                                    style = 1;
+                                } else if (attribTypeId === 3 || !attribTypeId) { // text
+                                    valueName = S._is;
+                                    type = "inlineStr";
+                                    value = new XElement(S.t, value);
                                 } else {
-                                    value = year.toString() +
-                                    ((month < 10) ? "-0" : "-") + month.toString() +
-                                    ((day < 10) ? "-0" : "-") + day.toString() +
-                                        "T";
+                                    type = "n";
                                 }
-                                type = "d";
-                                style = 1;
-                            } else if (attribTypeId === 3 || !attribTypeId) { // text
-                                valueName = S._is;
-                                type = "inlineStr";
-                                value = new XElement(S.t, value);
-                            } else {
-                                type = "n";
+                                newCell = new XElement(S.c, new XElement(valueName, value));
+                                if (type) {
+                                    newCell.setAttributeValue("t", type);
+                                }
+                                if (style) {
+                                    newCell.setAttributeValue("s", style);
+                                }
+                                newRow.add(newCell);
                             }
-                            newCell = new XElement(S.c, new XElement(valueName, value));
-                            if (type) {
-                                newCell.setAttributeValue("t", type);
+                        }
+                    }
+                    else {
+                        var newRow = new XElement(S.row);
+                        var row = results[r];
+                        for (var c = 1; c < colCount; c++) {
+                            if (!attribSpecs[c].hidden) {
+                                var key = attribSpecs[c].ODataAttributeName;
+                                value = row[key];
+                                if (key == "Erfassungsdatum" || key == "AenderungsDatum") {
+                                    var attribTypeId = 6;
+                                } else {
+                                    var attribTypeId = attribSpecs[c].AttribTypeID;
+                                }
+                                type = null;
+                                style = null;
+                                valueName = S.v;
+                                if (typeof value === "undefined" ||
+                                    value === null || value === "NULL") {
+                                    value = "";
+                                } else if (attribTypeId === 8 || attribTypeId === 6) { // timestamp or date
+                                    value = value.substring(0, 16);
+                                   
+                                    function toDate (value) {
+                                        var year = value.substring(0, 4);
+                                        var month = value.substring(6, 7);
+                                        var day = value.substring(9, 10);
+                                        var hour = value.substring(11, 13);
+                                        var minute = value.substring(14, 16);
+                                        
+                                        return new Date(year, month - 1, day, hour, minute);
+                                    };
+                                   
+                                    value = toDate(value);
+                                    var date = new Date();
+                                    value = new Date(value - (date.getTimezoneOffset() * 60000)).toISOString().slice(0, -1);
+                                    /*
+                                    var dateString = value.replace("\/Date(", "").replace(")\/", "");
+                                    var milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
+                                    var date = new Date(milliseconds);
+                                    var year = date.getFullYear();
+                                    var month = date.getMonth() + 1; .toISOString()
+                                    var day = date.getDate();
+                                    if (attribTypeId === 8) {
+                                        var hour = date.getHours();
+                                        var minute = date.getMinutes();
+                                        value = year.toString() +
+                                            ((month < 10) ? "-0" : "-") + month.toString() +
+                                            ((day < 10) ? "-0" : "-") + day.toString() +
+                                            ((hour < 10) ? "T0" : "T") + hour.toString() +
+                                            ((minute < 10) ? ":0" : ":") + minute.toString() +
+                                            "Z";
+                                    } else {
+                                        value = year.toString() +
+                                            ((month < 10) ? "-0" : "-") + month.toString() +
+                                            ((day < 10) ? "-0" : "-") + day.toString() +
+                                            "T";
+                                    }
+                                    */
+                                    type = "d";
+                                    style = 1;
+                                } else if (attribTypeId === 3 || !attribTypeId) { // text
+                                    valueName = S._is;
+                                    type = "inlineStr";
+                                    value = new XElement(S.t, value);
+                                } else {
+                                    type = "n";
+                                }
+                                newCell = new XElement(S.c, new XElement(valueName, value));
+                                if (type) {
+                                    newCell.setAttributeValue("t", type);
+                                }
+                                if (style) {
+                                    newCell.setAttributeValue("s", style);
+                                }
+                                newRow.add(newCell);
                             }
-                            if (style) {
-                                newCell.setAttributeValue("s", style);
-                            }
-                            newRow.add(newCell);
                         }
                     }
                     sheetData.add(newRow);
@@ -214,7 +293,7 @@
                                 results = json.d.results;
                             }
                            // that.progressNext = results.length / AppData.generalData.AnzahlKontakte * 100;
-                           // that.showProgress(that.progressNext);
+                           // that.showProgress(that.progressNext); 35 / 36
                             var attribSpecs = baseDbView.attribSpecs;
                             var colCount = attribSpecs.length;
                             if (baseDbView.relationName === "KontaktReport") {
