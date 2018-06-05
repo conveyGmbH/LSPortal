@@ -528,8 +528,8 @@
     "localeventscreate.event" : "evento",
     "localeventscreate.begin" : "inizio",
     "localeventscreate.end"   : "fine",
-	"localeventscreate.leadsuccessmobileapp"   : "Numero di utenti di applicazioni mobili",
-	"localeventscreate.mobilerbarcodescanner"   : "Numero di utenti di barcode scanner",
+	  "localeventscreate.leadsuccessmobileapp"   : "Numero di utenti di applicazioni mobili",
+	  "localeventscreate.mobilerbarcodescanner"   : "Numero di utenti di barcode scanner",
 
     "localevents.title" : "Eventi"
 }
