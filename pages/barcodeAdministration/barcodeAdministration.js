@@ -57,9 +57,8 @@
                 // general event listener for hardware back button, too!
                 this.controller.addRemovableEventListener(document, "backbutton", this.controller.eventHandlers.clickOk.bind(this.controller));
                 this.controller.addRemovableEventListener(window, "beforeprint", this.controller.eventHandlers.clickbeforeprint.bind(this.controller));
-                this.controller.addRemovableEventListener(window, "afterprint", this.controller.eventHandlers.clickafterprint.bind(this.controller));
+                //this.controller.addRemovableEventListener(window, "afterprint", this.controller.eventHandlers.clickafterprint.bind(this.controller));
             }
-            //JsBarcode(".barcode").init();
             Log.ret(Log.l.trace);
         },
 

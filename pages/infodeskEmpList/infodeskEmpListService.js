@@ -39,7 +39,9 @@
         },
         _employeeView: {
             get: function () {
-                return AppData.getFormatView("Mitarbeiter", 20471, false); // -> wichtig für später MitarbeiterView_20471
+                var ret = AppData.getFormatView("Mitarbeiter", 20471, false); // -> wichtig für später MitarbeiterView_20471
+                ret.maxPageSize = 20;
+                return ret;
             }
         },
         employeeView: {

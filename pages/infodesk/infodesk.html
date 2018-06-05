@@ -89,10 +89,13 @@
                             </div>
                         </div>
                         <div class="field_line field_line_odd">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'infodesk.message'}"></span>
+                            <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'infodesk.message'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'infodesk.message'}"></span>
                             <!--<input class="input_field win-textbox" type="text" data-win-bind="value: dataEmployee.Nachname"/>-->
-                            <textarea class="input_field win-textbox input_text_message" data-win-bind="value: dataBenutzer.Info2 Binding.Mode.twoway"></textarea>
+                            <span class="label win-type-caption portrait_only_right"></span>
+                            <span class="label landscape_only"></span>
+                            <textarea class="field_line_left win-textbox input_text_message" data-win-bind="value: dataBenutzer.Info2 Binding.Mode.twoway"></textarea>
+                            <div class="field_line_right" id="userPhoto"></div>
                         </div>
                         <div class="field_line field_line_even" data-win-bind="style.display: messestandData.SkillType1 Binding.Converter.toDisplay">
                             <span class="label win-type-caption portrait_only" data-win-bind="textContent: messestandData.SkillType1"></span>
@@ -119,19 +122,21 @@
                             <span class="label landscape_only" data-win-bind="textContent: messestandData.SkillType5"></span>
                             <div data-win-bind="textContent: dataEmployee.fifthskill"></div>
                         </div>
-                        <div class="field_line field_line_odd">
+                       <!-- <div class="field_line field_line_odd">
+
+                        </div>-->
+                        <div class="field_line field_line_even">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'infodesk.firstName'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'infodesk.firstName'}"></span>
-                            <div data-win-bind="textContent: dataEmployee.Vorname"></div>
+                            <div class="input_field" data-win-bind="textContent: dataEmployee.Vorname"></div>
                         </div>
+                        <!--<div class="field_line field_line_odd">
+
+                        </div>-->
                         <div class="field_line field_line_even">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'infodesk.name'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'infodesk.name'}"></span>
-                            <div data-win-bind="textContent: dataEmployee.Nachname"></div>
-                        </div>
-                        <div class="field_line field_line_even">
-                            <div id="userPhoto" ></div> 
-                            <!--data-win-bind="src: binding.photoData style.display: binding.photoData Binding.Converter.toDisplayNone"-->
+                            <div class="input_field" data-win-bind="textContent: dataEmployee.Nachname"></div>
                         </div>
                         <div class="header-separator float-left"></div>
                         <div class="content-header float-left">

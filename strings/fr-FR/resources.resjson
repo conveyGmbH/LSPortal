@@ -391,6 +391,9 @@
     "label.eventcreation"   : "Créer un événement",
     "label.products"        : "Produits",
     "label.localevents"     : "Créer un événement",
+    "label.contactRemote"   : "Contact",
+    "label.questionnaireRemote" : "Quoitionnaire",
+    "label.sketchRemote"    : "Notes",
     
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annuler",

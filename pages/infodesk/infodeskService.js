@@ -45,11 +45,11 @@
                 return ret;
             },
             defaultValue: {
-                SkillType1: "",
-                SkillType2: "",
-                SkillType3: "",
-                SkillType4: "",
-                SkillType5: "",
+                SkillType1: "Skill1",
+                SkillType2: "Skill2",
+                SkillType3: "Skill3",
+                SkillType4: "Skill4",
+                SkillType5: "Skill5",
                 SkillType1ID: null,
                 SkillType2ID: null,
                 SkillType3ID: null,

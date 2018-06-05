@@ -232,12 +232,14 @@
             var selectRecordId = function (recordId) {
                 Log.call(Log.l.trace, "InfodeskEmpList.Controller.", "recordId=" + recordId);
                 if (recordId && listView && listView.winControl && listView.winControl.selection) {
-                    for (var i = 0; i < that.employees.length; i++) {
-                        var employee = that.employees.getAt(i);
-                        if (employee && typeof employee === "object" &&
-                            (employee.MitarbeiterID || employee.MitarbeiterVIEWID) === recordId) {
-                            listView.winControl.selection.set(i);
-                            break;
+                    if (that.employees && that.employees.length) {
+                        for (var i = 0; i < that.employees.length; i++) {
+                            var employee = that.employees.getAt(i);
+                            if (employee && typeof employee === "object" &&
+                                (employee.MitarbeiterID || employee.MitarbeiterVIEWID) === recordId) {
+                                listView.winControl.selection.set(i);
+                                break;
+                            }
                         }
                     }
                 }
@@ -342,13 +344,13 @@
                                         if ((curPageId === "infodesk" || curPageId === "infodeskEmpList") &&
                                             typeof AppBar.scope.loadData === "function") {
                                             AppBar.scope.loadData(that.binding.employeeId);
-                                            Application.navigateById("infodesk");
+                                         //   Application.navigateById("infodesk");
                                         } else {
-                                            Application.navigateById("infodesk");
+                                           // Application.navigateById("infodesk");
                                         }
                                     }
                                 });
-                                Application.navigateById("infodesk");
+                                //Application.navigateById("infodesk");
                             }
                         }
                     }
@@ -389,7 +391,7 @@
                             // load SVG images
                             Colors.loadSVGImageElements(listView, "action-image", 40, Colors.textColor);
 
-                            that.loadNextUrl();
+                            //that.loadNextUrl();
                         }
                     }
                     Log.ret(Log.l.trace);
@@ -433,7 +435,42 @@
                         }
                     }
                     Log.ret(Log.l.trace);
-                }
+                },
+               /* changeSearchField: function (event) {
+                    setTimeout(function () {
+                        Log.call(Log.l.trace, "Event.Controller.");
+                        that.binding.restriction.Vorname = [];
+                        that.binding.restriction.Nachname = [];
+                        that.binding.restriction.Login = [];
+                        if (event.target.value) {
+                            that.binding.restriction.Names = event.target.value;
+                            that.binding.restriction.Vorname = [event.target.value, null, null];
+                            that.binding.restriction.Login = [null, event.target.value, null];
+                            that.binding.restriction.Nachname = [null, null, event.target.value];
+                            that.binding.restriction.bUseOr = false;
+                            that.binding.restriction.bAndInEachRow = true;
+                        } else {
+                            that.binding.restriction.Names = event.target.value;
+                            that.binding.restriction.Login = event.target.value;
+                            that.binding.restriction.Vorname = event.target.value;
+                            that.binding.restriction.Nachname = event.target.value;
+                            delete that.binding.restriction.bUseOr;
+                        }
+                        that.saveRestriction(function () {
+                            // called asynchronously if ok
+                            complete({});
+                        });
+                       // var master = Application.navigator.masterControl;
+                        //if (master && master.controller && master.controller.binding) {
+                            //master.controller.binding.contactId = that.binding.dataContact.KontaktVIEWID;
+                            that.loadData().then(function () {
+                                if (that.binding.employeeId)
+                                    that.selectRecordId(that.binding.employeeId);
+                            });
+                        //}
+                    }, 2000);
+
+                }*/
             };
 
             this.disableHandlers = null;
@@ -540,11 +577,11 @@
                                         listView.winControl.itemDataSource = that.employees.dataSource;
                                     }
                                     Log.print(Log.l.trace, "Data loaded");
-                                    if (results[0]) {
+                                    /*if (results[0]) {
                                         WinJS.Promise.timeout(0).then(function () {
                                             that.selectRecordId(results[0].MitarbeiterVIEWID);
                                         });
-                                    }
+                                    }*/
                                 } else {
                                     that.binding.count = 0;
                                     that.nextUrl = null;
@@ -667,10 +704,10 @@
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
-            }).then(function () {
+            })/*.then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 return that.selectRecordId(that.binding.employeeId);
-            }).then(function () {
+            })*/.then(function () {
                 AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Record selected");
             }).then(function () {

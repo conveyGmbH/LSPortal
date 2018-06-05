@@ -215,7 +215,7 @@
                     Log.ret(Log.l.trace);
                 },
                 changeSearchField: function (event) {
-                    setTimeout(function () {
+                    setTimeout(function() {
                         Log.call(Log.l.trace, "Event.Controller.");
                         that.binding.restriction.Vorname = [];
                         that.binding.restriction.Nachname = [];
@@ -260,9 +260,20 @@
                 },
                 clickSearch: function () {
                     return false;
+                },
+                clickSendMessage: function() {
+                    var ret = true;
+                    if (that.binding.dataBenutzer.BenutzerVIEWID) {
+                        ret = false;
+                    }
+                    return ret;
                 }
             };
 
+            // register comboboxSkills1 event handler
+            if (comboboxSkills1) {
+                this.addRemovableEventListener(comboboxSkills1, "onchange", this.eventHandlers.testChangeSomething.bind(this));
+            }
             var saveRestriction = function (complete, error) {
                 var ret = WinJS.Promise.as().then(function () {
                     if (typeof firstskill.skilltypesortierung === "undefined")
@@ -506,7 +517,7 @@
             // show business card photo
             var userPhotoContainer = pageElement.querySelector("#userPhoto");
             var showPhoto = function () {
-                if (that.binding.photoData !== null) {
+                if (that.binding.photoData) {
                     if (userPhotoContainer) {
                         var userImg = new Image();
                         userImg.id = "userImg";
@@ -553,14 +564,26 @@
                             if (results.length > 0) {
                                 that.binding.messestandData = results[0];
                             } else {
-                                that.binding
-                                    .messestandData = getEmptyDefaultValue(Infodesk.Messestand.defaultValue);
+                                that.binding.messestandData = Infodesk.Messestand.defaultValue;
                             }
                         }
                     },
                         function (errorResponse) {
                             AppData.setErrorMsg(that.binding, errorResponse);
                         });
+                }).then(function () {
+                    var empRolesFragmentControl = Application.navigator
+                        .getFragmentControlFromLocation(Application.getFragmentPath("userMessages"));
+                    if (empRolesFragmentControl && empRolesFragmentControl.controller) {
+                        return empRolesFragmentControl.controller.loadData();
+                    } else {
+                        var parentElement = pageElement.querySelector("#userMessageshost");
+                        if (parentElement) {
+                            return Application.loadFragmentById(parentElement, "userMessages", { recordId: recordId });
+                        } else {
+                            return WinJS.Promise.as();
+                        }
+                    }
                 }).then(function () {
                     //restriction speichern
                     var savedRestriction = AppData.getRestriction("SkillEntry"); //
@@ -579,6 +602,18 @@
                     }
                     that.binding.restriction = savedRestriction;
                 }).then(function () {
+                    Log.print(Log.l.trace, "calling select skillTypeSkills...");
+                    return Infodesk.skillTypeSkills.select(function (json) {
+                        Log.print(Log.l.trace, "skillTypeSkills: success!");
+                        if (json && json.d) {
+                            json.d.results.forEach(function (item, index) {
+                                that.loadInitSelection(item);
+                            });
+                        }
+                        Log.print(Log.l.trace, "Infodesk: success!");
+                    });
+
+                }).then(function () {
                     if (that.binding.dataEmployee.firstskill !== "" ||
                         that.binding.dataEmployee.secondskill !== "" ||
                         that.binding.dataEmployee.thirdskill !== "" ||
@@ -593,113 +628,101 @@
                     if (recordId) {
                         //load of format relation record data
                         Log.print(Log.l.trace, "calling select employeeView...");
-                        return Infodesk.SkillEntry.select(function (json) {
-                            AppData.setErrorMsg(that.binding);
-                            Log.print(Log.l.trace, "skillEntryView: success!");
-                            if (json && json.d && json.d.results.length > 0) {
-                                if (json.d.results[0].MitarbeiterID === recordId) {
-                                    that.binding.dataEmployee.Vorname = json.d.results[0].Vorname;
-                                    that.binding.dataEmployee.Nachname = json.d.results[0].Nachname;
-                                    that.binding.dataEmployee.Login = json.d.results[0].Login;
-                                }
-                                for (var i = 0; i < json.d.results.length; i++) {
-                                    //SkillTypeID und Sortierung
-                                    if (json.d.results[i].MitarbeiterID === recordId) {
-                                        if (json.d.results[i].Aktiv === "X") {
-                                            if (firstskill.skilltypesortierung &&
-                                                json.d.results[i].SkillTypeID === firstskill.skilltypesortierung) {
-                                                for (var j = 0; j < firstskill.length; j++) {
-                                                    if (json.d.results[i].Sortierung === firstskill[j].value) {
-                                                        that.binding.dataEmployee
-                                                            .firstskill =
-                                                            that.binding.dataEmployee.firstskill +
-                                                            firstskill[j].title +
-                                                            "\n";
+                        return Infodesk.SkillEntry.select(function(json) {
+                                AppData.setErrorMsg(that.binding);
+                                Log.print(Log.l.trace, "skillEntryView: success!");
+                                if (json && json.d && json.d.results.length > 0) {
+                                    if (json.d.results[0].MitarbeiterID === recordId) {
+                                        that.binding.dataEmployee.Vorname = json.d.results[0].Vorname;
+                                        that.binding.dataEmployee.Nachname = json.d.results[0].Nachname;
+                                        that.binding.dataEmployee.Login = json.d.results[0].Login;
+                                    }
+                                    for (var i = 0; i < json.d.results.length; i++) {
+                                        //SkillTypeID und Sortierung
+                                        if (json.d.results[i].MitarbeiterID === recordId) {
+                                            if (json.d.results[i].Aktiv === "X") {
+                                                if (firstskill.skilltypesortierung &&
+                                                    json.d.results[i].SkillTypeID === firstskill.skilltypesortierung) {
+                                                    for (var j = 0; j < firstskill.length; j++) {
+                                                        if (json.d.results[i].Sortierung === firstskill[j].value) {
+                                                            that.binding.dataEmployee
+                                                                .firstskill =
+                                                                that.binding.dataEmployee.firstskill +
+                                                                firstskill[j].title +
+                                                                "\n";
+                                                        }
                                                     }
-                                                }
-                                            } else if (secondskill.skilltypesortierung &&
-                                                json.d.results[i].SkillTypeID === secondskill.skilltypesortierung) {
-                                                for (var k = 0; k < secondskill.length; k++) {
-                                                    if (json.d.results[i].Sortierung === secondskill[k].value) {
-                                                        that.binding.dataEmployee
-                                                            .secondskill =
-                                                            that.binding.dataEmployee.secondskill +
-                                                            secondskill[k].title +
-                                                            "\t";
+                                                } else if (secondskill.skilltypesortierung &&
+                                                    json.d.results[i].SkillTypeID === secondskill.skilltypesortierung) {
+                                                    for (var k = 0; k < secondskill.length; k++) {
+                                                        if (json.d.results[i].Sortierung === secondskill[k].value) {
+                                                            that.binding.dataEmployee
+                                                                .secondskill =
+                                                                that.binding.dataEmployee.secondskill +
+                                                                secondskill[k].title +
+                                                                "\t";
+                                                        }
                                                     }
-                                                }
-                                            } else if (thirdskill.skilltypesortierung &&
-                                                json.d.results[i].SkillTypeID === thirdskill.skilltypesortierung) {
-                                                for (var l = 0; l < thirdskill.length; l++) {
-                                                    if (json.d.results[i].Sortierung === thirdskill[l].value) {
-                                                        that.binding.dataEmployee
-                                                            .thirdskill =
-                                                            that.binding.dataEmployee.thirdskill +
-                                                            thirdskill[l].title +
-                                                            "\t";
+                                                } else if (thirdskill.skilltypesortierung &&
+                                                    json.d.results[i].SkillTypeID === thirdskill.skilltypesortierung) {
+                                                    for (var l = 0; l < thirdskill.length; l++) {
+                                                        if (json.d.results[i].Sortierung === thirdskill[l].value) {
+                                                            that.binding.dataEmployee
+                                                                .thirdskill =
+                                                                that.binding.dataEmployee.thirdskill +
+                                                                thirdskill[l].title +
+                                                                "\t";
+                                                        }
                                                     }
-                                                }
-                                            } else if (fourthskill.skilltypesortierung &&
-                                                json.d.results[i].SkillTypeID === fourthskill.skilltypesortierung) {
-                                                for (var m = 0; m < fourthskill.length; m++) {
-                                                    if (json.d.results[i].Sortierung === fourthskill[m].value) {
-                                                        that.binding.dataEmployee
-                                                            .fourthskill =
-                                                            that.binding.dataEmployee.fourthskill +
-                                                            fourthskill[m].title +
-                                                            "\t";
+                                                } else if (fourthskill.skilltypesortierung &&
+                                                    json.d.results[i].SkillTypeID === fourthskill.skilltypesortierung) {
+                                                    for (var m = 0; m < fourthskill.length; m++) {
+                                                        if (json.d.results[i].Sortierung === fourthskill[m].value) {
+                                                            that.binding.dataEmployee
+                                                                .fourthskill =
+                                                                that.binding.dataEmployee.fourthskill +
+                                                                fourthskill[m].title +
+                                                                "\t";
+                                                        }
                                                     }
-                                                }
-                                            } else if (fifthskill.skilltypesortierung &&
-                                                json.d.results[i].SkillTypeID === fifthskill.skilltypesortierung) {
-                                                for (var n = 0; n < fifthskill.length; n++) {
-                                                    if (json.d.results[i].Sortierung === fifthskill[n].value) {
-                                                        that.binding.dataEmployee
-                                                            .fifthskill =
-                                                            that.binding.dataEmployee.fifthskill +
-                                                            fifthskill[n].title +
-                                                            "\t";
+                                                } else if (fifthskill.skilltypesortierung &&
+                                                    json.d.results[i].SkillTypeID === fifthskill.skilltypesortierung) {
+                                                    for (var n = 0; n < fifthskill.length; n++) {
+                                                        if (json.d.results[i].Sortierung === fifthskill[n].value) {
+                                                            that.binding.dataEmployee
+                                                                .fifthskill =
+                                                                that.binding.dataEmployee.fifthskill +
+                                                                fifthskill[n].title +
+                                                                "\t";
+                                                        }
                                                     }
                                                 }
                                             }
                                         }
-                                    }
-                                };
-                            }
-                        },
-                            function (errorResponse) {
+                                    };
+                                }
+                            },
+                            function(errorResponse) {
                                 AppData.setErrorMsg(that.binding, errorResponse);
                             },
                             {
                                 MitarbeiterID: recordId
-                            }).then(function () {
-                                Log.print(Log.l.trace, "calling select skillTypeSkills...");
-                                return Infodesk.skillTypeSkills.select(function (json) {
-                                    Log.print(Log.l.trace, "skillTypeSkills: success!");
-                                    if (json && json.d) {
-                                        json.d.results.forEach(function (item, index) {
-                                            that.loadInitSelection(item);
-                                        });
-                                    }
-                                    Log.print(Log.l.trace, "Infodesk: success!");
-                                });
-
                             });
                     } else {
                         return WinJS.Promise.as();
                     }
-                }).then(function () {
+                }).then(function() {
                     if (recordId) {
-                        return Infodesk.employeeView.select(function (json) {
-                            AppData.setErrorMsg(that.binding);
-                            Log.print(Log.l.trace, "skillEntryView: success!");
-                            if (json && json.d) {
-                                that.binding.dataEmployee.Vorname = json.d.results[0].Vorname;
-                                that.binding.dataEmployee.Nachname = json.d.results[0].Nachname;
-                                that.binding.dataEmployee.Login = json.d.results[0].Login;
-                            }
-                        },
-                            function (errorResponse) {
+                        return Infodesk.employeeView.select(function(json) {
+                                AppData.setErrorMsg(that.binding);
+                                Log.print(Log.l.trace, "skillEntryView: success!");
+                                if (json && json.d) {
+                                    that.binding.dataEmployee.Vorname = json.d.results[0].Vorname;
+                                    that.binding.dataEmployee.Nachname = json.d.results[0].Nachname;
+                                    that.binding.dataEmployee.Login = json.d.results[0].Login;
+                                }
+                            },
+                            function(errorResponse) {
                                 AppData.setErrorMsg(that.binding, errorResponse);
                             },
                             {
@@ -767,19 +790,6 @@
                     }
                 }).then(function () {
                     that.showPhoto();
-                }).then(function () {
-                    var empRolesFragmentControl = Application.navigator
-                    .getFragmentControlFromLocation(Application.getFragmentPath("userMessages"));
-                    if (empRolesFragmentControl && empRolesFragmentControl.controller) {
-                        return empRolesFragmentControl.controller.loadData();
-                    } else {
-                        var parentElement = pageElement.querySelector("#userMessageshost");
-                        if (parentElement) {
-                            return Application.loadFragmentById(parentElement, "userMessages", { recordId: recordId });
-                        } else {
-                            return WinJS.Promise.as();
-                        }
-                    }
                 });
             }
             this.loadData = loadData;
@@ -823,14 +833,14 @@
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.loadData(getRecordId()); // parameter übergeben ? getRecordId()
-            }).then(function () {
+                return that.loadData();// parameter übergeben ? getRecordId()
+            })/*.then(function () {
                 var master = Application.navigator.masterControl;
                 if (master) {
                     master.controller.selectRecordId(getRecordId());
                 }
                 Log.print(Log.l.trace, "Data loaded");
-            }).then(function () {
+            })*/.then(function () {
                 AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Date restrictions shown");
             });
