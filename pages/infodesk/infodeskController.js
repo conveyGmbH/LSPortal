@@ -24,6 +24,9 @@
                 restrictionNames: InfodeskEmpList.defaultValue.Names,
                 messages: getEmptyDefaultValue(Infodesk.benutzerView.defaultValue)
             }, commandList]);
+
+            var prevMasterLoadPromise = null;
+
             //Infodesk.controller = this;
             var comboboxSkills1 = pageElement.querySelector("#skills1");
             var comboboxSkills2 = pageElement.querySelector("#skills2");
@@ -166,6 +169,155 @@
             }
             this.loadInitSelection = loadInitSelection;
 
+            // register comboboxSkills1 event handler
+            //if (comboboxSkills1) {
+            //    this.addRemovableEventListener(comboboxSkills1, "onchange", this.eventHandlers.testChangeSomething.bind(this));
+            //}
+            var saveRestriction = function () {
+                Log.call(Log.l.trace, "Infodesk.Controller.");
+                if (typeof firstskill.skilltypesortierung === "undefined")
+                    firstskill.skilltypesortierung = null;
+                if (typeof secondskill.skilltypesortierung === "undefined")
+                    secondskill.skilltypesortierung = null;
+                if (typeof thirdskill.skilltypesortierung === "undefined")
+                    thirdskill.skilltypesortierung = null;
+                if (typeof fourthskill.skilltypesortierung === "undefined")
+                    fourthskill.skilltypesortierung = null;
+                if (typeof fifthskill.skilltypesortierung === "undefined")
+                    fifthskill.skilltypesortierung = null;
+
+                that.binding.restriction.countRestriction = 0;
+                if (that.binding.restriction.Login.length > 0) {
+                    that.binding.restriction.countRestriction++;
+                }
+                if (that.binding.restriction.Vorname.length > 0) {
+                    that.binding.restriction.countRestriction++;
+                }
+                if (that.binding.restriction.Nachname.length > 0) {
+                    that.binding.restriction.countRestriction++;
+                }
+                if (that.binding.restriction.Names) {
+
+                }
+                //SkillEntryView_20472
+                // Abfrage wenn beide comboboxen nicht ausgewählt
+                // spannende Stelle // letzen Wert der Comboboxen
+                if (comboboxSkills1.value === "") {
+                    comboboxSkills1.value = "0";
+                }
+                if (comboboxSkills2.value === "") {
+                    comboboxSkills2.value = "0";
+                }
+                if (comboboxSkills3.value === "") {
+                    comboboxSkills3.value = "0";
+                }
+                if (comboboxSkills4.value === "") {
+                    comboboxSkills4.value = "0";
+                }
+                if (comboboxSkills5.value === "") {
+                    comboboxSkills5.value = "0";
+                }
+                if (that.binding.restriction.Names && that.binding.restriction.Names.length > 0) {
+                    that.binding.restriction.Aktiv = ["X", "X", "X"];
+                } else {
+                    that.binding.restriction.Aktiv = ["X", "X", "X"];
+                }
+                that.binding.restriction.SkillTypeID = [];
+                that.binding.restriction.Sortierung = [];
+
+                that.binding.restriction.countCombobox = 0;
+
+                if (that.binding.restriction.SkillType1Sortierung === "0") {
+                    that.binding.restriction.SkillType1Sortierung = 0;
+                }
+                if (that.binding.restriction.SkillType2Sortierung === "0") {
+                    that.binding.restriction.SkillType2Sortierung = 0;
+                }
+                if (that.binding.restriction.SkillType3Sortierung === "0") {
+                    that.binding.restriction.SkillType3Sortierung = 0;
+                }
+                if (that.binding.restriction.SkillType4Sortierung === "0") {
+                    that.binding.restriction.SkillType4Sortierung = 0;
+                }
+                if (that.binding.restriction.SkillType5Sortierung === "0") {
+                    that.binding.restriction.SkillType5Sortierung = 0;
+                }
+                if (firstskill.skilltypesortierung && that.binding.restriction.SkillType1Sortierung) {
+                    if (that.binding.restriction.SkillType1Sortierung !== 0) {
+                        that.binding.restriction.SkillTypeID = [firstskill.skilltypesortierung, firstskill.skilltypesortierung, firstskill.skilltypesortierung];
+                        that.binding.restriction.Sortierung = [that.binding.restriction.SkillType1Sortierung, that.binding.restriction.SkillType1Sortierung, that.binding.restriction.SkillType1Sortierung];
+                        if (that.binding.restriction.Names) {
+                            that.binding.restriction.Vorname = [that.binding.restriction.Names, null, null];
+                            that.binding.restriction.Login = [null, that.binding.restriction.Names, null];
+                            that.binding.restriction.Nachname = [null, null, that.binding.restriction.Names];
+                        }
+
+                        that.binding.restriction.countCombobox++;
+                    }
+                }
+                if (secondskill.skilltypesortierung && that.binding.restriction.SkillType2Sortierung) {
+                    if (that.binding.restriction.SkillType2Sortierung !== 0) {
+                        that.binding.restriction.SkillTypeID = [firstskill.skilltypesortierung, firstskill.skilltypesortierung, firstskill.skilltypesortierung, secondskill.skilltypesortierung, secondskill.skilltypesortierung, secondskill.skilltypesortierung];
+                        that.binding.restriction.Sortierung = [that.binding.restriction.SkillType1Sortierung, that.binding.restriction.SkillType1Sortierung, that.binding.restriction.SkillType1Sortierung, that.binding.restriction.SkillType2Sortierung, that.binding.restriction.SkillType2Sortierung, that.binding.restriction.SkillType2Sortierung];
+                        that.binding.restriction.Aktiv = ["X", "X", "X", "X", "X", "X"];
+                        if (that.binding.restriction.Names) {
+                            that.binding.restriction.Vorname = [that.binding.restriction.Names, null, null, that.binding.restriction.Names, null, null];
+                            that.binding.restriction.Login = [null, that.binding.restriction.Names, null, null, that.binding.restriction.Names, null];
+                            that.binding.restriction.Nachname = [null, null, that.binding.restriction.Names, null, null, that.binding.restriction.Names];
+                        }
+                        that.binding.restriction.countCombobox++;
+                    }
+                }
+                if (thirdskill.skilltypesortierung && that.binding.restriction.SkillType3Sortierung) {
+                    if (that.binding.restriction.SkillType3Sortierung !== 0) {
+                        that.binding.restriction.SkillTypeID = [firstskill.skilltypesortierung, firstskill.skilltypesortierung, firstskill.skilltypesortierung, secondskill.skilltypesortierung, secondskill.skilltypesortierung, secondskill.skilltypesortierung, thirdskill.skilltypesortierung, thirdskill.skilltypesortierung, thirdskill.skilltypesortierung];
+                        that.binding.restriction.Sortierung = [that.binding.restriction.SkillType1Sortierung, that.binding.restriction.SkillType1Sortierung, that.binding.restriction.SkillType1Sortierung, that.binding.restriction.SkillType2Sortierung, that.binding.restriction.SkillType2Sortierung, that.binding.restriction.SkillType2Sortierung, that.binding.restriction.SkillType3Sortierung, that.binding.restriction.SkillType3Sortierung, that.binding.restriction.SkillType3Sortierung];
+                        //that.binding.restriction.Aktiv.push("X");
+                        that.binding.restriction.Aktiv = ["X", "X", "X", "X", "X", "X", "X", "X", "X"];
+                        if (that.binding.restriction.Names) {
+                            that.binding.restriction.Vorname = [that.binding.restriction.Names, null, null, that.binding.restriction.Names, null, null, that.binding.restriction.Names, null, null];
+                            that.binding.restriction.Login = [null, that.binding.restriction.Names, null, null, that.binding.restriction.Names, null, null, that.binding.restriction.Names, null];
+                            that.binding.restriction.Nachname = [null, null, that.binding.restriction.Names, null, null, that.binding.restriction.Names, null, null, that.binding.restriction.Names];
+                        }
+                        that.binding.restriction.countCombobox++;
+                    }
+                }
+                if (fourthskill.skilltypesortierung && that.binding.restriction.SkillType4Sortierung) {
+                    if (that.binding.restriction.SkillType4Sortierung !== 0) {
+                        that.binding.restriction.SkillTypeID = [firstskill.skilltypesortierung, firstskill.skilltypesortierung, firstskill.skilltypesortierung, secondskill.skilltypesortierung, secondskill.skilltypesortierung, secondskill.skilltypesortierung, thirdskill.skilltypesortierung, thirdskill.skilltypesortierung, thirdskill.skilltypesortierung, fourthskill.skilltypesortierung, fourthskill.skilltypesortierung, fourthskill.skilltypesortierung];
+                        that.binding.restriction.Sortierung = [that.binding.restriction.SkillType1Sortierung, that.binding.restriction.SkillType1Sortierung, that.binding.restriction.SkillType1Sortierung, that.binding.restriction.SkillType2Sortierung, that.binding.restriction.SkillType2Sortierung, that.binding.restriction.SkillType2Sortierung, that.binding.restriction.SkillType3Sortierung, that.binding.restriction.SkillType3Sortierung, that.binding.restriction.SkillType3Sortierung, that.binding.restriction.SkillType4Sortierung, that.binding.restriction.SkillType4Sortierung, that.binding.restriction.SkillType4Sortierung];
+                        //that.binding.restriction.Aktiv.push("X");
+                        that.binding.restriction.Aktiv = ["X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X"];
+                        if (that.binding.restriction.Names) {
+                            that.binding.restriction.Vorname = [that.binding.restriction.Names, null, null, that.binding.restriction.Names, null, null, that.binding.restriction.Names, null, null, that.binding.restriction.Names, null, null];
+                            that.binding.restriction.Login = [null, that.binding.restriction.Names, null, null, that.binding.restriction.Names, null, null, that.binding.restriction.Names, null, null, that.binding.restriction.Names, null];
+                            that.binding.restriction.Nachname = [null, null, that.binding.restriction.Names, null, null, that.binding.restriction.Names, null, null, that.binding.restriction.Names, null, null, that.binding.restriction.Names];
+                        }
+                        that.binding.restriction.countCombobox++;
+                    }
+                }
+                if (fifthskill.skilltypesortierung && that.binding.restriction.SkillType5Sortierung) {
+                    if (that.binding.restriction.SkillType5Sortierung !== 0) {
+                        that.binding.restriction.SkillTypeID = [firstskill.skilltypesortierung, firstskill.skilltypesortierung, firstskill.skilltypesortierung, secondskill.skilltypesortierung, secondskill.skilltypesortierung, secondskill.skilltypesortierung, thirdskill.skilltypesortierung, thirdskill.skilltypesortierung, thirdskill.skilltypesortierung, fourthskill.skilltypesortierung, fourthskill.skilltypesortierung, fourthskill.skilltypesortierung, fifthskill.skilltypesortierung, fifthskill.skilltypesortierung, fifthskill.skilltypesortierung];
+                        that.binding.restriction.Sortierung = [that.binding.restriction.SkillType1Sortierung, that.binding.restriction.SkillType1Sortierung, that.binding.restriction.SkillType1Sortierung, that.binding.restriction.SkillType2Sortierung, that.binding.restriction.SkillType2Sortierung, that.binding.restriction.SkillType2Sortierung, that.binding.restriction.SkillType3Sortierung, that.binding.restriction.SkillType3Sortierung, that.binding.restriction.SkillType3Sortierung, that.binding.restriction.SkillType4Sortierung, that.binding.restriction.SkillType4Sortierung, that.binding.restriction.SkillType4Sortierung, that.binding.restriction.SkillType5Sortierung, that.binding.restriction.SkillType5Sortierung, that.binding.restriction.SkillType5Sortierung];
+                        that.binding.restriction.Aktiv = ["X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X"];
+                        if (that.binding.restriction.Names) {
+                            that.binding.restriction.Vorname = [that.binding.restriction.Names, null, null, that.binding.restriction.Names, null, null, that.binding.restriction.Names, null, null, that.binding.restriction.Names, null, null, that.binding.restriction.Names, null, null];
+                            that.binding.restriction.Login = [null, that.binding.restriction.Names, null, null, that.binding.restriction.Names, null, null, that.binding.restriction.Names, null, null, that.binding.restriction.Names, null, null, that.binding.restriction.Names, null];
+                            that.binding.restriction.Nachname = [null, null, that.binding.restriction.Names, null, null, that.binding.restriction.Names, null, null, that.binding.restriction.Names, null, null, that.binding.restriction.Names, null, null, that.binding.restriction.Names];
+                        }
+                        that.binding.restriction.countCombobox++;
+                    }
+                }
+                that.binding.restriction.bAndInEachRow = true;
+                that.binding.restriction.bUseOr = false;
+                Log.print("restriction number:" + that.binding.restriction.countCombobox + ", restriction: " + that.binding.restriction);
+                AppData.setRestriction("SkillEntry", that.binding.restriction);
+                Log.ret(Log.l.trace, "");
+            }
+            this.saveRestriction = saveRestriction;
+
+
             this.eventHandlers = {
                 clickBack: function (event) {
                     Log.call(Log.l.trace, "Infodesk.Controller.");
@@ -189,15 +341,19 @@
                 },
                 clickSearch: function (event) {
                     Log.call(Log.l.trace, "Infodesk.Controller.");
-                    that.saveRestriction(function () {
-                        // called asynchronously if ok
-                        complete({});
-                    });
+                    that.saveRestriction();
                     var master = Application.navigator.masterControl;
                     if (master && master.controller && master.controller.binding) {
                         //master.controller.binding.contactId = that.binding.dataContact.KontaktVIEWID;
-                        master.controller.loadData().then(function () {
-                            master.controller.selectRecordId(that.binding.employeeId);
+                        if (prevMasterLoadPromise &&
+                            typeof prevMasterLoadPromise.cancel === "function") { 
+                            prevMasterLoadPromise.cancel();
+                        }
+                        prevMasterLoadPromise = master.controller.loadData().then(function () {
+                            prevMasterLoadPromise = null;
+                            if (master && master.controller && that.binding.employeeId) {
+                                master.controller.selectRecordId(that.binding.employeeId);
+                            }
                         });
                     }
                     //that.loadData(getRecordId());
@@ -214,82 +370,65 @@
                     Application.navigateById("userinfo", event);
                     Log.ret(Log.l.trace);
                 },
-                pressEnterKey: function (event) {
-                    Log.call(Log.l.trace, "Questionnaire.Controller.");
-                    if (event && event.keyCode === WinJS.Utilities.Key.enter &&
-                        event.target && event.target.tagName &&
-                        event.target.tagName.toLowerCase() === "textarea") {
-                        if (event.stopPropagation) {
-                            event.stopPropagation();
-                        } else {
-                            event.cancelBubble = true;
-                        }
-                    }
-                    Log.ret(Log.l.trace);
-                },
-                activateEnterKey: function (event) {
-                    Log.call(Log.l.trace, "Questionnaire.Controller.");
-                    for (var i = 0; i < AppBar.commandList.length; i++) {
-                        if (AppBar.commandList[i].id === "clickSendMessage") {
-                            AppBar.commandList[i].key = WinJS.Utilities.Key.enter;
+                changedSkill: function(event) {
+                    Log.call(Log.l.trace, "Event.Controller.");
+                    switch (event.target.id) {
+                        case "skills1":
+                            that.binding.restriction.SkillType1Sortierung = event.target.value;
                             break;
+                    }
+                    that.saveRestriction();
+                    var master = Application.navigator.masterControl;
+                    if (master && master.controller && master.controller.binding) {
+                        //master.controller.binding.contactId = that.binding.dataContact.KontaktVIEWID;
+                        if (prevMasterLoadPromise &&
+                            typeof prevMasterLoadPromise.cancel === "function") {
+                            prevMasterLoadPromise.cancel();
                         }
-                    }
-                    if (event && event.target && !event.target.value) {
-                        WinJS.Utilities.removeClass(event.target, "field-text-comment-big");
-                    }
-                    Log.ret(Log.l.trace);
-                },
-                deactivateEnterKey: function (event) {
-                    Log.call(Log.l.trace, "Questionnaire.Controller.");
-                    for (var i = 0; i < AppBar.commandList.length; i++) {
-                        if (AppBar.commandList[i].id === "clickSendMessage") {
-                            AppBar.commandList[i].key = null;
-                            break;
-                        }
-                    }
-                    if (event && event.target) {
-                        WinJS.Utilities.addClass(event.target, "field-text-comment-big");
+                        prevMasterLoadPromise = master.controller.loadData().then(function () {
+                            prevMasterLoadPromise = null;
+                            if (master && master.controller && that.binding.employeeId) {
+                                master.controller.selectRecordId(that.binding.employeeId);
+                            }
+                        });
                     }
                     Log.ret(Log.l.trace);
                 },
                 changeSearchField: function (event) {
-                    setTimeout(function() {
-                        Log.call(Log.l.trace, "Event.Controller.");
-                        that.binding.restriction.Vorname = [];
-                        that.binding.restriction.Nachname = [];
-                        that.binding.restriction.Login = [];
-                        if (event.target.value) {
-                            that.binding.restriction.Names = event.target.value;
-                            that.binding.restriction.Vorname = [event.target.value, null, null];
-                            that.binding.restriction.Login = [null, event.target.value, null];
-                            that.binding.restriction.Nachname = [null, null, event.target.value];
-                            that.binding.restriction.bUseOr = false;
-                            that.binding.restriction.bAndInEachRow = true;
-                        } else {
-                            that.binding.restriction.Names = event.target.value;
-                            that.binding.restriction.Login = event.target.value;
-                            that.binding.restriction.Vorname = event.target.value;
-                            that.binding.restriction.Nachname = event.target.value;
-                            delete that.binding.restriction.bUseOr;
-                        }
-                        that.saveRestriction(function () {
-                            // called asynchronously if ok
-                            complete({});
-                        });
-                        var master = Application.navigator.masterControl;
-                        if (master && master.controller && master.controller.binding) {
-                            //master.controller.binding.contactId = that.binding.dataContact.KontaktVIEWID;
-                            master.controller.loadData().then(function () {
-                                if (that.binding.employeeId)
-                                    master.controller.selectRecordId(that.binding.employeeId);
-                            });
-                        }
-                    }, 2000);
-
-                },
-                testChangeSomething: function(event) {
                     Log.call(Log.l.trace, "Event.Controller.");
+                    that.binding.restriction.Vorname = [];
+                    that.binding.restriction.Nachname = [];
+                    that.binding.restriction.Login = [];
+                    if (event.target.value) {
+                        that.binding.restriction.Names = event.target.value;
+                        that.binding.restriction.Vorname = [event.target.value, null, null];
+                        that.binding.restriction.Login = [null, event.target.value, null];
+                        that.binding.restriction.Nachname = [null, null, event.target.value];
+                        that.binding.restriction.bUseOr = false;
+                        that.binding.restriction.bAndInEachRow = true;
+                    } else {
+                        that.binding.restriction.Names = event.target.value;
+                        that.binding.restriction.Login = event.target.value;
+                        that.binding.restriction.Vorname = event.target.value;
+                        that.binding.restriction.Nachname = event.target.value;
+                        delete that.binding.restriction.bUseOr;
+                    }
+                    that.saveRestriction();
+                    var master = Application.navigator.masterControl;
+                    if (master && master.controller && master.controller.binding) {
+                        if (prevMasterLoadPromise &&
+                            typeof prevMasterLoadPromise.cancel === "function") {
+                            prevMasterLoadPromise.cancel();
+                        }
+                        //master.controller.binding.contactId = that.binding.dataContact.KontaktVIEWID;
+                        prevMasterLoadPromise = master.controller.loadData().then(function () {
+                            prevMasterLoadPromise = null;
+                            if (master && master.controller && that.binding.employeeId) {
+                                master.controller.selectRecordId(that.binding.employeeId);
+                            }
+                        });
+                    }
+                    Log.ret(Log.l.trace);
                 }
             };
             this.disableHandlers = {
@@ -303,7 +442,7 @@
                 clickSearch: function () {
                     return false;
                 },
-                clickSendMessage: function() {
+                clickSendMessage: function () {
                     var ret = true;
                     if (that.binding.dataBenutzer.BenutzerVIEWID) {
                         ret = false;
@@ -312,160 +451,8 @@
                 }
             };
 
-            // register comboboxSkills1 event handler
-            /*if (comboboxSkills1) {
-                this.addRemovableEventListener(comboboxSkills1, "onchange", this.eventHandlers.testChangeSomething.bind(this));
-            }*/
-            var saveRestriction = function (complete, error) {
-                var ret = WinJS.Promise.as().then(function () {
-                    if (typeof firstskill.skilltypesortierung === "undefined")
-                        firstskill.skilltypesortierung = null;
-                    if (typeof secondskill.skilltypesortierung === "undefined")
-                        secondskill.skilltypesortierung = null;
-                    if (typeof thirdskill.skilltypesortierung === "undefined")
-                        thirdskill.skilltypesortierung = null;
-                    if (typeof fourthskill.skilltypesortierung === "undefined")
-                        fourthskill.skilltypesortierung = null;
-                    if (typeof fifthskill.skilltypesortierung === "undefined")
-                        fifthskill.skilltypesortierung = null;
-
-                    that.binding.restriction.countRestriction = 0;
-                    if (that.binding.restriction.Login.length > 0) {
-                        that.binding.restriction.countRestriction++;
-                    }
-                    if (that.binding.restriction.Vorname.length > 0) {
-                        that.binding.restriction.countRestriction++;
-                    }
-                    if (that.binding.restriction.Nachname.length > 0) {
-                        that.binding.restriction.countRestriction++;
-                    }
-                    if (that.binding.restriction.Names) {
-                    }
-                    //SkillEntryView_20472
-                    // Abfrage wenn beide comboboxen nicht ausgewählt
-                    // spannende Stelle // letzen Wert der Comboboxen
-                    if (comboboxSkills1.value === "") {
-                        comboboxSkills1.value = "0";
-                    }
-                    if (comboboxSkills2.value === "") {
-                        comboboxSkills2.value = "0";
-                    }
-                    if (comboboxSkills3.value === "") {
-                        comboboxSkills3.value = "0";
-                    }
-                    if (comboboxSkills4.value === "") {
-                        comboboxSkills4.value = "0";
-                    }
-                    if (comboboxSkills5.value === "") {
-                        comboboxSkills5.value = "0";
-                    }
-                    if (that.binding.restriction.Names && that.binding.restriction.Names.length > 0) {
-                        that.binding.restriction.Aktiv = ["X", "X", "X"];
-                    } else {
-                        that.binding.restriction.Aktiv = ["X", "X", "X"];
-                    }
-                    that.binding.restriction.SkillTypeID = [];
-                    that.binding.restriction.Sortierung = [];
-
-                    that.binding.restriction.countCombobox = 0;
-
-                    if (that.binding.restriction.SkillType1Sortierung === "0") {
-                        that.binding.restriction.SkillType1Sortierung = 0;
-                    }
-                    if (that.binding.restriction.SkillType2Sortierung === "0") {
-                        that.binding.restriction.SkillType2Sortierung = 0;
-                    }
-                    if (that.binding.restriction.SkillType3Sortierung === "0") {
-                        that.binding.restriction.SkillType3Sortierung = 0;
-                    }
-                    if (that.binding.restriction.SkillType4Sortierung === "0") {
-                        that.binding.restriction.SkillType4Sortierung = 0;
-                    }
-                    if (that.binding.restriction.SkillType5Sortierung === "0") {
-                        that.binding.restriction.SkillType5Sortierung = 0;
-                    }
-                    if (firstskill.skilltypesortierung && that.binding.restriction.SkillType1Sortierung) {
-                        if (that.binding.restriction.SkillType1Sortierung !== 0) {
-                            that.binding.restriction.SkillTypeID = [firstskill.skilltypesortierung, firstskill.skilltypesortierung, firstskill.skilltypesortierung];
-                            that.binding.restriction.Sortierung = [that.binding.restriction.SkillType1Sortierung, that.binding.restriction.SkillType1Sortierung, that.binding.restriction.SkillType1Sortierung];
-                            if (that.binding.restriction.Names) {
-                                that.binding.restriction.Vorname = [that.binding.restriction.Names, null, null];
-                                that.binding.restriction.Login = [null, that.binding.restriction.Names, null];
-                                that.binding.restriction.Nachname = [null, null, that.binding.restriction.Names];
-                            }
-
-                            that.binding.restriction.countCombobox++;
-                        }
-                    }
-                    if (secondskill.skilltypesortierung && that.binding.restriction.SkillType2Sortierung) {
-                        if (that.binding.restriction.SkillType2Sortierung !== 0) {
-                            that.binding.restriction.SkillTypeID = [firstskill.skilltypesortierung, firstskill.skilltypesortierung, firstskill.skilltypesortierung, secondskill.skilltypesortierung, secondskill.skilltypesortierung, secondskill.skilltypesortierung];
-                            that.binding.restriction.Sortierung = [that.binding.restriction.SkillType1Sortierung, that.binding.restriction.SkillType1Sortierung, that.binding.restriction.SkillType1Sortierung, that.binding.restriction.SkillType2Sortierung, that.binding.restriction.SkillType2Sortierung, that.binding.restriction.SkillType2Sortierung];
-                            that.binding.restriction.Aktiv = ["X", "X", "X", "X", "X", "X"];
-                            if (that.binding.restriction.Names) {
-                                that.binding.restriction.Vorname = [that.binding.restriction.Names, null, null, that.binding.restriction.Names, null, null];
-                                that.binding.restriction.Login = [null, that.binding.restriction.Names, null, null, that.binding.restriction.Names, null];
-                                that.binding.restriction.Nachname = [null, null, that.binding.restriction.Names, null, null, that.binding.restriction.Names];
-                            }
-                            that.binding.restriction.countCombobox++;
-                        }
-                    }
-                    if (thirdskill.skilltypesortierung && that.binding.restriction.SkillType3Sortierung) {
-                        if (that.binding.restriction.SkillType3Sortierung !== 0) {
-                            that.binding.restriction.SkillTypeID = [firstskill.skilltypesortierung, firstskill.skilltypesortierung, firstskill.skilltypesortierung, secondskill.skilltypesortierung, secondskill.skilltypesortierung, secondskill.skilltypesortierung, thirdskill.skilltypesortierung, thirdskill.skilltypesortierung, thirdskill.skilltypesortierung];
-                            that.binding.restriction.Sortierung = [that.binding.restriction.SkillType1Sortierung, that.binding.restriction.SkillType1Sortierung, that.binding.restriction.SkillType1Sortierung, that.binding.restriction.SkillType2Sortierung, that.binding.restriction.SkillType2Sortierung, that.binding.restriction.SkillType2Sortierung, that.binding.restriction.SkillType3Sortierung, that.binding.restriction.SkillType3Sortierung, that.binding.restriction.SkillType3Sortierung];
-                            //that.binding.restriction.Aktiv.push("X");
-                            that.binding.restriction.Aktiv = ["X", "X", "X", "X", "X", "X", "X", "X", "X"];
-                            if (that.binding.restriction.Names) {
-                                that.binding.restriction.Vorname = [that.binding.restriction.Names, null, null, that.binding.restriction.Names, null, null, that.binding.restriction.Names, null, null];
-                                that.binding.restriction.Login = [null, that.binding.restriction.Names, null, null, that.binding.restriction.Names, null, null, that.binding.restriction.Names, null];
-                                that.binding.restriction.Nachname = [null, null, that.binding.restriction.Names, null, null, that.binding.restriction.Names, null, null, that.binding.restriction.Names];
-                            }
-                            that.binding.restriction.countCombobox++;
-                        }
-                    }
-                    if (fourthskill.skilltypesortierung && that.binding.restriction.SkillType4Sortierung) {
-                        if (that.binding.restriction.SkillType4Sortierung !== 0) {
-                            that.binding.restriction.SkillTypeID = [firstskill.skilltypesortierung, firstskill.skilltypesortierung, firstskill.skilltypesortierung, secondskill.skilltypesortierung, secondskill.skilltypesortierung, secondskill.skilltypesortierung, thirdskill.skilltypesortierung, thirdskill.skilltypesortierung, thirdskill.skilltypesortierung, fourthskill.skilltypesortierung, fourthskill.skilltypesortierung, fourthskill.skilltypesortierung];
-                            that.binding.restriction.Sortierung = [that.binding.restriction.SkillType1Sortierung, that.binding.restriction.SkillType1Sortierung, that.binding.restriction.SkillType1Sortierung, that.binding.restriction.SkillType2Sortierung, that.binding.restriction.SkillType2Sortierung, that.binding.restriction.SkillType2Sortierung, that.binding.restriction.SkillType3Sortierung, that.binding.restriction.SkillType3Sortierung, that.binding.restriction.SkillType3Sortierung, that.binding.restriction.SkillType4Sortierung, that.binding.restriction.SkillType4Sortierung, that.binding.restriction.SkillType4Sortierung];
-                            //that.binding.restriction.Aktiv.push("X");
-                            that.binding.restriction.Aktiv = ["X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X"];
-                            if (that.binding.restriction.Names) {
-                                that.binding.restriction.Vorname = [that.binding.restriction.Names, null, null, that.binding.restriction.Names, null, null, that.binding.restriction.Names, null, null, that.binding.restriction.Names, null, null];
-                                that.binding.restriction.Login = [null, that.binding.restriction.Names, null, null, that.binding.restriction.Names, null, null, that.binding.restriction.Names, null, null, that.binding.restriction.Names, null];
-                                that.binding.restriction.Nachname = [null, null, that.binding.restriction.Names, null, null, that.binding.restriction.Names, null, null, that.binding.restriction.Names, null, null, that.binding.restriction.Names];
-                            }
-                            that.binding.restriction.countCombobox++;
-                        }
-                    }
-                    if (fifthskill.skilltypesortierung && that.binding.restriction.SkillType5Sortierung) {
-                        if (that.binding.restriction.SkillType5Sortierung !== 0) {
-                            that.binding.restriction.SkillTypeID = [firstskill.skilltypesortierung, firstskill.skilltypesortierung, firstskill.skilltypesortierung, secondskill.skilltypesortierung, secondskill.skilltypesortierung, secondskill.skilltypesortierung, thirdskill.skilltypesortierung, thirdskill.skilltypesortierung, thirdskill.skilltypesortierung, fourthskill.skilltypesortierung, fourthskill.skilltypesortierung, fourthskill.skilltypesortierung, fifthskill.skilltypesortierung, fifthskill.skilltypesortierung, fifthskill.skilltypesortierung];
-                            that.binding.restriction.Sortierung = [that.binding.restriction.SkillType1Sortierung, that.binding.restriction.SkillType1Sortierung, that.binding.restriction.SkillType1Sortierung, that.binding.restriction.SkillType2Sortierung, that.binding.restriction.SkillType2Sortierung, that.binding.restriction.SkillType2Sortierung, that.binding.restriction.SkillType3Sortierung, that.binding.restriction.SkillType3Sortierung, that.binding.restriction.SkillType3Sortierung, that.binding.restriction.SkillType4Sortierung, that.binding.restriction.SkillType4Sortierung, that.binding.restriction.SkillType4Sortierung, that.binding.restriction.SkillType5Sortierung, that.binding.restriction.SkillType5Sortierung, that.binding.restriction.SkillType5Sortierung];
-                            that.binding.restriction.Aktiv = ["X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X"];
-                            if (that.binding.restriction.Names) {
-                                that.binding.restriction.Vorname = [that.binding.restriction.Names, null, null, that.binding.restriction.Names, null, null, that.binding.restriction.Names, null, null, that.binding.restriction.Names, null, null, that.binding.restriction.Names, null, null];
-                                that.binding.restriction.Login = [null, that.binding.restriction.Names, null, null, that.binding.restriction.Names, null, null, that.binding.restriction.Names, null, null, that.binding.restriction.Names, null, null, that.binding.restriction.Names, null];
-                                that.binding.restriction.Nachname = [null, null, that.binding.restriction.Names, null, null, that.binding.restriction.Names, null, null, that.binding.restriction.Names, null, null, that.binding.restriction.Names, null, null, that.binding.restriction.Names];
-                            }
-                            that.binding.restriction.countCombobox++;
-                        }
-                    }
-
-                    that.binding.restriction.bAndInEachRow = true;
-                    that.binding.restriction.bUseOr = false;
-
-                    //}
-                    Log.print("restriction number:" + that.binding.restriction.countCombobox + ", restriction: " + that.binding.restriction);
-                    AppData.setRestriction("SkillEntry", that.binding.restriction);
-                    complete({});
-                    return WinJS.Promise.as();
-                });
-                return ret;
-
-            }
-            this.saveRestriction = saveRestriction;
             var resultDocConverter = function (item, recordId) { // geänderte Stelle
+                Log.call(Log.l.trace, "Infodesk.Controller.");
                 if (recordId && item && item.DOC1MitarbeiterVIEWID) {
                     if (recordId === item.DOC1MitarbeiterVIEWID) {
                         item.OvwContentDOCCNT3 = item.OvwContentDOCCNT3 ? item.OvwContentDOCCNT3 : item.DocContentDOCCNT1;
@@ -478,6 +465,7 @@
                     }
                     // that.showPhoto();
                 }
+                Log.ret(Log.l.trace, "");
             }
             this.resultDocConverter = resultDocConverter;
 

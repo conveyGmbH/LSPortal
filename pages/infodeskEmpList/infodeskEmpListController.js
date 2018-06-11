@@ -525,7 +525,7 @@
                                 AppData.setErrorMsg(that.binding);
                                 Log.print(Log.l.trace, "InfodeskEmpList: success!");
                                 // employeeView returns object already parsed from json file in response
-                                if (json && json.d) {
+                                if (json && json.d && json.d.results && json.d.results.length > 0) {
                                     that.nextUrl = InfodeskEmpList.employeeSkillentryView.getNextUrl(json);
                                     var results = json.d.results;
 
