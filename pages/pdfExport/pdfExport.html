@@ -22,68 +22,69 @@
                         </div>
                     </div>
                     <div class="row-separator"></div>
-                    <div class="fields-container">
-                        <div class="field_line field_line_odd">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'pdfExport.filenamepartone'}"></span>
-                            <span class="label landscape_only" data-win-res="{textContent: 'pdfExport.filenamepartone'}"></span>
-                            <select id="InitExportField1"
-                                    class="input_field win-dropdown"
-                                    data-win-control="WinJS.UI.Repeater"
-                                    data-win-bind="value: restriction.NameField1ID Binding.Mode.twoway">
-                                <option data-win-bind="value: INITExportFieldID; textContent: TITLE"></option>
-                            </select>
-                        </div>
-                        <div class="field_line field_line_even">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'pdfExport.filenameparttwo'}"></span>
-                            <span class="label landscape_only" data-win-res="{textContent: 'pdfExport.filenameparttwo'}"></span>
-                            <select id="InitExportField2"
-                                    class="input_field win-dropdown"
-                                    data-win-control="WinJS.UI.Repeater"
-                                    data-win-bind="value: restriction.NameField2ID Binding.Mode.twoway">
-                                <option data-win-bind="value: INITExportFieldID; textContent: TITLE"></option>
-                            </select>
-                        </div>
-                        <div class="field_line field_line_odd">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'pdfExport.filenamepartthree'}"></span>
-                            <span class="label landscape_only" data-win-res="{textContent: 'pdfExport.filenamepartthree'}"></span>
-                            <select id="InitExportField3"
-                                    class="input_field win-dropdown"
-                                    data-win-control="WinJS.UI.Repeater"
-                                    data-win-bind="value: restriction.NameField3ID Binding.Mode.twoway">
-                                <option data-win-bind="value: INITExportFieldID; textContent: TITLE"></option>
-                            </select>
-                        </div>
-                        <div class="field_line field_line_even">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'pdfExport.filenamepartfour'}"></span>
-                            <span class="label landscape_only" data-win-res="{textContent: 'pdfExport.filenamepartfour'}"></span>
-                            <select id="InitExportField4"
-                                    class="input_field win-dropdown"
-                                    data-win-control="WinJS.UI.Repeater"
-                                    data-win-bind="value: restriction.NameField4ID Binding.Mode.twoway">
-                                <option data-win-bind="value: INITExportFieldID; textContent: TITLE"></option>
-                            </select>
-                        </div>
-                        <div class="field_line field_line_odd">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'pdfExport.seperator'}"></span>
-                            <span class="label landscape_only" data-win-res="{textContent: 'pdfExport.seperator'}"></span>
-                            <input class="input_field win-textbox" type="text" data-win-bind="value: restriction.Separator Binding.Mode.twoway" />
-                        </div>
-                        <div class="line-separator"></div>
-                        <div class="field_line field_line_odd">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'pdfExport.samplename'}"></span>
-                            <span class="label landscape_only" data-win-res="{textContent: 'pdfExport.samplename'}"></span>
-                            <span class="caption-field" id="samplename" data-win-bind="textContent: sampleName Binding.Mode.oneway"></span>
-                        </div>
-                        <div class="line-separator"></div>
-                        <div class="field_line field_line_odd">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'pdfExport.msg'}"></span>
-                            <span class="label landscape_only" data-win-res="{textContent: 'pdfExport.msg'}"></span>
-                            <span class="caption-field" id="exportMsg" data-win-bind="textContent: exportPdfMsg Binding.Mode.oneway"></span>
-                            <a href="" id="exportPdfString" data-win-bind="textContent: exportPdfString Binding.Mode.oneway"></a>
-                        </div>
-                        <div class="error-message"
-                             data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
+                <div class="fields-container">
+                    <div class="field_line field_line_odd">
+                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'pdfExport.filenamepartone'}"></span>
+                        <span class="label landscape_only" data-win-res="{textContent: 'pdfExport.filenamepartone'}"></span>
+                        <select id="InitExportField1"
+                                class="input_field win-dropdown"
+                                data-win-control="WinJS.UI.Repeater"
+                                data-win-bind="value: restriction.NameField1ID Binding.Mode.twoway">
+                            <option data-win-bind="value: INITExportFieldID; textContent: TITLE"></option>
+                        </select>
                     </div>
+                    <div class="field_line field_line_even">
+                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'pdfExport.filenameparttwo'}"></span>
+                        <span class="label landscape_only" data-win-res="{textContent: 'pdfExport.filenameparttwo'}"></span>
+                        <select id="InitExportField2"
+                                class="input_field win-dropdown"
+                                data-win-control="WinJS.UI.Repeater"
+                                data-win-bind="value: restriction.NameField2ID Binding.Mode.twoway">
+                            <option data-win-bind="value: INITExportFieldID; textContent: TITLE"></option>
+                        </select>
+                    </div>
+                    <div class="field_line field_line_odd">
+                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'pdfExport.filenamepartthree'}"></span>
+                        <span class="label landscape_only" data-win-res="{textContent: 'pdfExport.filenamepartthree'}"></span>
+                        <select id="InitExportField3"
+                                class="input_field win-dropdown"
+                                data-win-control="WinJS.UI.Repeater"
+                                data-win-bind="value: restriction.NameField3ID Binding.Mode.twoway">
+                            <option data-win-bind="value: INITExportFieldID; textContent: TITLE"></option>
+                        </select>
+                    </div>
+                    <div class="field_line field_line_even">
+                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'pdfExport.filenamepartfour'}"></span>
+                        <span class="label landscape_only" data-win-res="{textContent: 'pdfExport.filenamepartfour'}"></span>
+                        <select id="InitExportField4"
+                                class="input_field win-dropdown"
+                                data-win-control="WinJS.UI.Repeater"
+                                data-win-bind="value: restriction.NameField4ID Binding.Mode.twoway">
+                            <option data-win-bind="value: INITExportFieldID; textContent: TITLE"></option>
+                        </select>
+                    </div>
+                    <div class="field_line field_line_odd">
+                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'pdfExport.seperator'}"></span>
+                        <span class="label landscape_only" data-win-res="{textContent: 'pdfExport.seperator'}"></span>
+                        <input class="input_field win-textbox" type="text" data-win-bind="value: restriction.Separator Binding.Mode.twoway" />
+                    </div>
+                    <div class="line-separator"></div>
+                    <div class="field_line">
+                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'pdfExport.samplename'}"></span>
+                        <span class="label landscape_only" data-win-res="{textContent: 'pdfExport.samplename'}"></span>
+                        <span class="caption-field" id="samplename" data-win-bind="textContent: sampleName Binding.Mode.oneway"></span>
+                    </div>
+                    <div class="line-separator"></div>
+                    <div class="field_line">
+                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'pdfExport.msg'}"></span>
+                        <span class="label landscape_only" data-win-res="{textContent: 'pdfExport.msg'}"></span>
+                        <span class="caption-field" id="exportMsg" data-win-bind="textContent: exportPdfMsg Binding.Mode.oneway"></span>
+                        <a href="" id="exportPdfString" data-win-bind="textContent: exportPdfString Binding.Mode.oneway"></a>
+                    </div>
+                    <div class="error-message"
+                         data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
+                </div>
+                </div>
             </section>
         </div>
     </div>
