@@ -248,6 +248,9 @@
                         }
                     }, 2000);
 
+                },
+                testChangeSomething: function(event) {
+                    Log.call(Log.l.trace, "Event.Controller.");
                 }
             };
             this.disableHandlers = {
