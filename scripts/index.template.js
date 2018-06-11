@@ -47,7 +47,7 @@
             serverFailure: false
         }
     };
-    
+
     // static array of menu groups for the split view pane
     Application.navigationBarGroups = [
         { id: "start", group: 1, svg: "home", disabled: true },
@@ -78,6 +78,7 @@
         { id: "sketch", group: 5, disabled: false },
         { id: "reporting", group: 6, disabled: false },
         { id: "reportingColumnList", group: 6, disabled: false },
+        { id: "pdfExport", group: 6, disabled: false },
         { id: "infodesk", group: -7, disabled: false },
         { id: "info", group: 8, disabled: false },
         { id: "settings", group: 8, disabled: false },

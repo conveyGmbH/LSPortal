@@ -395,6 +395,7 @@
     "label.contactRemote"   : "Contact",
     "label.questionnaireRemote" : "Quoitionnaire",
     "label.sketchRemote"    : "Notes",
+    "label.pdfExport"     : "Export PDF",
     
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annuler",
@@ -529,8 +530,20 @@
     "localeventscreate.event" : "événement",
     "localeventscreate.begin" : "Début",
     "localeventscreate.end"   : "Fin",
-	  "localeventscreate.leadsuccessmobileapp"   : "Nombre d'utilisateurs de l'application mobile",
-	  "localeventscreate.mobilerbarcodescanner"   : "Nombre d'utilisateurs de scanners de codes à barres",
+	"localeventscreate.leadsuccessmobileapp"   : "Nombre d'utilisateurs de l'application mobile",
+	"localeventscreate.mobilerbarcodescanner"   : "Nombre d'utilisateurs de scanners de codes à barres",
 
-    "localevents.title" : "Événements"
+    "localevents.title" : "Événements",
+	"employeegenpwlist.login" : "nom de connexion",
+	"employeegenpwlist.password" : "mot de passe",
+
+	"pdfExport.title" : "Export PDF",
+	"pdfExport.filenamepartone" : "Première partie du nom de fichier",
+	"pdfExport.filenameparttwo" : "Deuxième partie du nom de fichier",
+	"pdfExport.filenamepartthree" : "Troisième partie du nom de fichier",
+	"pdfExport.filenamepartfour" : "Quatrième partie du nom de fichier",
+	"pdfExport.seperator" : "seperator",
+	"pdfExport.samplename" : "Nom de l'exemple",
+	"pdfExport.exportPdfMsg" : "Création de votre PDF",
+	"pdfExport.msg" : "Modifier/lier"
 }

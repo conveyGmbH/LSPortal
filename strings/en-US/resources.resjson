@@ -395,6 +395,7 @@
     "label.contactRemote"   : "Contact",
     "label.questionnaireRemote" : "Questionnaire",
     "label.sketchRemote"    : "Notes",
+    "label.pdfExport"     : "PDF Export",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Cancel",
@@ -533,4 +534,16 @@
 	"localeventscreate.mobilerbarcodescanner"   : "Number of Barcode scanner users",
 	
     "localevents.title" : "Events"
+	"employeegenpwlist.login" : "Loginname",
+	"employeegenpwlist.password" : "Password",
+
+	"pdfExport.title" : "PDF Export",
+	"pdfExport.filenamepartone" : "First part of the file name",
+	"pdfExport.filenameparttwo" : "Second part of the file name",
+	"pdfExport.filenamepartthree" : "Third part of the file name",
+	"pdfExport.filenamepartfour" : "Fourth part of the file name",
+	"pdfExport.seperator" : "seperator",
+	"pdfExport.samplename" : "example name",
+	"pdfExport.exportPdfMsg" : "Creating your PDF",
+	"pdfExport.msg" : "Edit/Link"
 }
