@@ -214,6 +214,45 @@
                     Application.navigateById("userinfo", event);
                     Log.ret(Log.l.trace);
                 },
+                pressEnterKey: function (event) {
+                    Log.call(Log.l.trace, "Questionnaire.Controller.");
+                    if (event && event.keyCode === WinJS.Utilities.Key.enter &&
+                        event.target && event.target.tagName &&
+                        event.target.tagName.toLowerCase() === "textarea") {
+                        if (event.stopPropagation) {
+                            event.stopPropagation();
+                        } else {
+                            event.cancelBubble = true;
+                        }
+                    }
+                    Log.ret(Log.l.trace);
+                },
+                activateEnterKey: function (event) {
+                    Log.call(Log.l.trace, "Questionnaire.Controller.");
+                    for (var i = 0; i < AppBar.commandList.length; i++) {
+                        if (AppBar.commandList[i].id === "clickSendMessage") {
+                            AppBar.commandList[i].key = WinJS.Utilities.Key.enter;
+                            break;
+                        }
+                    }
+                    if (event && event.target && !event.target.value) {
+                        WinJS.Utilities.removeClass(event.target, "field-text-comment-big");
+                    }
+                    Log.ret(Log.l.trace);
+                },
+                deactivateEnterKey: function (event) {
+                    Log.call(Log.l.trace, "Questionnaire.Controller.");
+                    for (var i = 0; i < AppBar.commandList.length; i++) {
+                        if (AppBar.commandList[i].id === "clickSendMessage") {
+                            AppBar.commandList[i].key = null;
+                            break;
+                        }
+                    }
+                    if (event && event.target) {
+                        WinJS.Utilities.addClass(event.target, "field-text-comment-big");
+                    }
+                    Log.ret(Log.l.trace);
+                },
                 changeSearchField: function (event) {
                     setTimeout(function() {
                         Log.call(Log.l.trace, "Event.Controller.");
@@ -274,9 +313,9 @@
             };
 
             // register comboboxSkills1 event handler
-            if (comboboxSkills1) {
+            /*if (comboboxSkills1) {
                 this.addRemovableEventListener(comboboxSkills1, "onchange", this.eventHandlers.testChangeSomething.bind(this));
-            }
+            }*/
             var saveRestriction = function (complete, error) {
                 var ret = WinJS.Promise.as().then(function () {
                     if (typeof firstskill.skilltypesortierung === "undefined")
@@ -301,7 +340,6 @@
                         that.binding.restriction.countRestriction++;
                     }
                     if (that.binding.restriction.Names) {
-
                     }
                     //SkillEntryView_20472
                     // Abfrage wenn beide comboboxen nicht ausgewählt
