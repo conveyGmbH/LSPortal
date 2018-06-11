@@ -395,6 +395,7 @@
     "label.contactRemote"   : "Kontakt",
     "label.questionnaireRemote" : "Fragebogen",
     "label.sketchRemote"    : "Notizen",
+    "label.pdfExport"     : "PDF Export",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Abbrechen",
@@ -529,8 +530,22 @@
     "localeventscreate.event" : "Veranstaltung",
     "localeventscreate.begin" : "Anfang",
     "localeventscreate.end"   : "Ende",
-	  "localeventscreate.leadsuccessmobileapp"   : "Anzahl der Mobile-App Benutzer",
-	  "localeventscreate.mobilerbarcodescanner"   : "Anzahl der Barcodescanner Benutzer",
+	"localeventscreate.leadsuccessmobileapp"   : "Anzahl der Mobile-App Benutzer",
+	"localeventscreate.mobilerbarcodescanner"   : "Anzahl der Barcodescanner Benutzer",
 
-    "localevents.title" : "Veranstaltungen"
+    "localevents.title" : "Veranstaltungen", 
+
+	"employeegenpwlist.title" : "Mitarbeiter generierte Passwörter",
+	"employeegenpwlist.login" : "Loginname",
+	"employeegenpwlist.password" : "Passwort",
+
+	"pdfExport.title" : "PDF Export",
+	"pdfExport.filenamepartone" : "Erster Teil des Dateinamens",
+	"pdfExport.filenameparttwo" : "Zweiter Teil des Dateinamens",
+	"pdfExport.filenamepartthree" : "Dritter Teil des Dateinamens",
+	"pdfExport.filenamepartfour" : "Vierter Teil des Dateinamens",
+	"pdfExport.seperator" : "Seperator",
+	"pdfExport.samplename" : "Beispielname",
+	"pdfExport.exportPdfMsg" : "Ihr PDF wird erstellt",
+	"pdfExport.msg" : "Bearbeitung / Link"
 }			

@@ -395,6 +395,7 @@
     "label.contactRemote"   : "Contatto",
     "label.questionnaireRemote" : "Questionario",
     "label.sketchRemote"    : "Note",
+    "label.pdfExport"     : "Esportazione PDF",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annulla",
@@ -529,8 +530,20 @@
     "localeventscreate.event" : "evento",
     "localeventscreate.begin" : "inizio",
     "localeventscreate.end"   : "fine",
-	  "localeventscreate.leadsuccessmobileapp"   : "Numero di utenti di applicazioni mobili",
-	  "localeventscreate.mobilerbarcodescanner"   : "Numero di utenti di barcode scanner",
+	"localeventscreate.leadsuccessmobileapp"   : "Numero di utenti di applicazioni mobili",
+	"localeventscreate.mobilerbarcodescanner"   : "Numero di utenti di barcode scanner",
 
-    "localevents.title" : "Eventi"
+    "localevents.title" : "Eventi",
+	"employeegenpwlist.login" : "nome di accesso",
+	"employeegenpwlist.password" : "password",
+
+	"pdfExport.title" : "Esportazione PDF",
+	"pdfExport.filenamepartone" : "Prima parte del nome del file",
+	"pdfExport.filenameparttwo" : "Seconda parte del nome del file",
+	"pdfExport.filenamepartthree" : "Terza parte del nome del file",
+	"pdfExport.filenamepartfour" : "Quarta parte del nome del file",
+	"pdfExport.seperator" : "Seperator",
+	"pdfExport.samplename" : "nome esempio",
+	"pdfExport.exportPdfMsg" : "Creazione del PDF",
+	"pdfExport.msg" : "Modifica/collegamento"
 }
