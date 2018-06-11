@@ -174,7 +174,7 @@
                     }
                     Log.ret(Log.l.trace);
                 },
-                clickForward: function (event) {
+                clickSendMessage: function (event) {
                     Log.call(Log.l.trace, "Contact.Controller.");
                     that.saveData(function (response) {
                         Log.print(Log.l.trace, "contact saved");
@@ -425,7 +425,7 @@
             }
             this.saveRestriction = saveRestriction;
             var resultDocConverter = function (item, recordId) { // geänderte Stelle
-                if (recordId) {
+                if (recordId && item && item.DOC1MitarbeiterVIEWID) {
                     if (recordId === item.DOC1MitarbeiterVIEWID) {
                         item.OvwContentDOCCNT3 = item.OvwContentDOCCNT3 ? item.OvwContentDOCCNT3 : item.DocContentDOCCNT1;
                         if (item.OvwContentDOCCNT3) {
@@ -771,11 +771,8 @@
                             if (json && json.d) {
                                 //that.binding.doccount = json.d.results.length;
                                 //that.nextDocUrl = InfodeskEmpList.userPhotoView.getNextUrl(json);
-                                var results = json.d;
-                                that.doc = results;
-
-                                that.resultDocConverter(that.doc, recordId);
-
+                                var results = json.d.results;
+                                that.resultDocConverter(results[0], recordId);
                             }
                         },
                             function (errorResponse) {
@@ -784,7 +781,7 @@
                                 } else {
                                     AppData.setErrorMsg(that.binding, errorResponse);
                                 }
-                            }, recordId);
+                            }, { DOC1MitarbeiterVIEWID: recordId });
                     } else {
                         return WinJS.Promise.as();
                     }

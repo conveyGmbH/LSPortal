@@ -158,7 +158,7 @@
         userPhotoView: {
             select: function (complete, error, recordId) {
                 Log.call(Log.l.trace, "userPhotoView.");
-                var ret = Infodesk._userPhotoView.selectById(complete, error, recordId);
+                var ret = Infodesk._userPhotoView.select(complete, error, recordId);
                 Log.ret(Log.l.trace);
                 return ret;
             }
