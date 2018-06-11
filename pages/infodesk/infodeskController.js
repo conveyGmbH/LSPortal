@@ -376,6 +376,18 @@
                         case "skills1":
                             that.binding.restriction.SkillType1Sortierung = event.target.value;
                             break;
+                        case "skills2":
+                            that.binding.restriction.SkillType2Sortierung = event.target.value;
+                            break;
+                        case "skills3":
+                            that.binding.restriction.SkillType3Sortierung = event.target.value;
+                            break;
+                        case "skills4":
+                            that.binding.restriction.SkillType4Sortierung = event.target.value;
+                            break;
+                        case "skills5":
+                            that.binding.restriction.SkillType5Sortierung = event.target.value;
+                            break;
                     }
                     that.saveRestriction();
                     var master = Application.navigator.masterControl;

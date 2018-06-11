@@ -51,7 +51,8 @@
                             <select id="skills2"
                                     class="input_field win-dropdown"
                                     data-win-control="WinJS.UI.Repeater"
-                                    data-win-bind="value: restriction.SkillType2Sortierung Binding.Mode.twoway">
+                                    data-win-bind="value: restriction.SkillType2Sortierung"
+                                    onchange="AppBar.handleEvent('onchange', 'changedSkill', event)">
                                 <option data-win-bind="value: value; textContent: title"></option>
                             </select>
                         </div>
@@ -62,7 +63,8 @@
                             <select id="skills3"
                                     class="input_field win-dropdown"
                                     data-win-control="WinJS.UI.Repeater"
-                                    data-win-bind="value: restriction.SkillType3Sortierung Binding.Mode.twoway">
+                                    data-win-bind="value: restriction.SkillType3Sortierung"
+                                    onchange="AppBar.handleEvent('onchange', 'changedSkill', event)">
                                 <option data-win-bind="value: value; textContent: title"></option>
                             </select>
                         </div>
@@ -73,7 +75,8 @@
                             <select id="skills4"
                                     class="input_field win-dropdown"
                                     data-win-control="WinJS.UI.Repeater"
-                                    data-win-bind="value: restriction.SkillType4Sortierung Binding.Mode.twoway">
+                                    data-win-bind="value: restriction.SkillType4Sortierung"
+                                    onchange="AppBar.handleEvent('onchange', 'changedSkill', event)">
                                 <option data-win-bind="value: value; textContent: title"></option>
                             </select>
                         </div>
@@ -84,7 +87,8 @@
                             <select id="skills5"
                                     class="input_field win-dropdown"
                                     data-win-control="WinJS.UI.Repeater"
-                                    data-win-bind="value: restriction.SkillType5Sortierung Binding.Mode.twoway">
+                                    data-win-bind="value: restriction.SkillType5Sortierung"
+                                    onchange="AppBar.handleEvent('onchange', 'changedSkill', event)">
                                 <option data-win-bind="value: value; textContent: title"></option>
                             </select>
                         </div>
