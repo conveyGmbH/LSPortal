@@ -67,7 +67,12 @@
     "tooltip.publish"       : "Publier le questionnaire",
     "tooltip.photo"         : "Prendre photo",
     "tooltip.print"         : "imprimer",
-	  "tooltip.sendMessage"	: "Envoyer un message",
+    "tooltip.sendMessage"	: "Envoyer un message",
+    "tooltip.newevent"		: "Créer un nouvel événement",
+    "tooltip.eventchange"	: "Changer d'événement",
+    "tooltip.savepdf"	    : "Enregistrer le nom du fichier PDF",
+    "tooltip.exportpdf"	    : "Exporter PDF",
+    "tooltip.deletemail"	: "Supprimer le mail",
 
     "start.title"           : "Accueil",
     "start.comment"         : "Utilisez les boutons sur cette page pour accéder à d'autres pages!",

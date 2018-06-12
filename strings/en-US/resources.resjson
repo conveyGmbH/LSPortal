@@ -67,7 +67,12 @@
     "tooltip.publish"       : "Publish questionnaire",
     "tooltip.photo"         : "Capture photo",
     "tooltip.print"         : "Print",
-	  "tooltip.sendMessage"	: "Send Message",
+    "tooltip.sendMessage"	: "Send Message",
+    "tooltip.newevent"		: "Create new event",
+    "tooltip.eventchange"	: "Change event",
+    "tooltip.savepdf"	    : "Save PDF filename",
+    "tooltip.exportpdf"	    : "Export PDF",
+    "tooltip.deletemail"	: "Delete mail",
 
     "start.title"           : "Start Page",
     "start.comment"         : "On this page, use the buttons to go to additional pages!",

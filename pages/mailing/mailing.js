@@ -48,7 +48,7 @@
             // add page specific commands to AppBar
             var commandList = [
                 { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" },
-                { id: "clickDelete", label: getResourceText("command.delete"), tooltip: getResourceText("tooltip.deleteSkill"), section: "primary", svg: "garbage_can" },
+                { id: "clickDelete", label: getResourceText("command.delete"), tooltip: getResourceText("tooltip.deletemail"), section: "primary", svg: "garbage_can" },
                 { id: "clickNew", label: getResourceText("command.new"), tooltip: getResourceText("tooltip.new"), section: "primary", svg: "plus" },
                 { id: "clickSave", label: getResourceText("command.save"), tooltip: getResourceText("tooltip.save"), section: "primary", svg: "navigate_check", key: WinJS.Utilities.Key.enter },
             ];
