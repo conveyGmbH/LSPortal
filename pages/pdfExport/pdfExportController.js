@@ -37,7 +37,8 @@
                         return PDFExport.ExportKontaktDataView.select(function (json) {
                             if (json && json.d && json.d.results) {
                                 var results = json.d.results;
-                                if (results[0].JobStatus === 0){
+                                var i = results.length -1;
+                                if (results[i].JobStatus === 0){
                                     that.timerFlag = true;
                                     WinJS.Promise.timeout(5000).then(function () {
                                         that.statusExportPDF();
@@ -46,7 +47,7 @@
                                 else {
                                     that.timerFlag = false;
                                     that.binding.exportPdfMsg = "";
-                                    that.binding.exportPdfString = results[0].DataPath;
+                                    that.binding.exportPdfString = results[i].DataPath;
                                 }
                             }
                         }, function (errorResponse) {

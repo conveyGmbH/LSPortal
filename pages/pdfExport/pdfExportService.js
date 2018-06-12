@@ -93,9 +93,14 @@
             }
         },
         ExportKontaktDataView: {
-            select: function (complete, error, restriction) {
+            select: function (complete, error) {
                 Log.call(Log.l.trace, "PDFExport.");
-                var ret = PDFExport._ExportKontaktDataView.select(complete, error, restriction);
+                var ret = PDFExport._ExportKontaktDataView.select(complete, error,
+                    {
+                        ordered: true,
+                        orderAttribute: "ExportKontaktDataVIEWID",
+                        desc: true
+                    });
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
