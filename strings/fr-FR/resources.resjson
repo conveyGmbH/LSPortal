@@ -36,6 +36,7 @@
     "command.zoomin"        : "agrandir",
     "command.zoomout"       : "diminuer",
     "command.print"         : "imprimer",
+	"command.save"			: "sauver",
 
     "tooltip.backward"      : "Page présédente",
     "tooltip.edit"          : "Modifier le contact en cours",
@@ -73,6 +74,7 @@
     "tooltip.savepdf"	    : "Enregistrer le nom du fichier PDF",
     "tooltip.exportpdf"	    : "Exporter PDF",
     "tooltip.deletemail"	: "Supprimer le mail",
+    "tooltip.save"			    : "Sauver",
 
     "start.title"           : "Accueil",
     "start.comment"         : "Utilisez les boutons sur cette page pour accéder à d'autres pages!",
@@ -400,7 +402,7 @@
     "label.contactRemote"   : "Contact",
     "label.questionnaireRemote" : "Quoitionnaire",
     "label.sketchRemote"    : "Notes",
-    "label.pdfExport"     : "Export PDF",
+    "label.pdfExport"       : "Export PDF",
     
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annuler",
@@ -539,6 +541,8 @@
 	"localeventscreate.mobilerbarcodescanner"   : "Nombre d'utilisateurs de scanners de codes à barres",
 
     "localevents.title" : "Événements",
+  
+  "employeegenpwlist.title" : "Mots de passe générés par les employés",
 	"employeegenpwlist.login" : "nom de connexion",
 	"employeegenpwlist.password" : "mot de passe",
 
