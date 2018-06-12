@@ -105,7 +105,8 @@
                             if (typeof complete === "function") {
                                 complete(response);
                             }
-                        },
+                                that.loadData();
+                            },
                             function (errorResponse) {
                                 AppBar.busy = false;
                                 // called asynchronously if an error occurs
