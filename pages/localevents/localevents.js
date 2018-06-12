@@ -53,8 +53,8 @@
             // add page specific commands to AppBar
             var commandList = [
                 { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" },
-                { id: "clickNew", label: getResourceText("command.new"), tooltip: getResourceText("tooltip.new"), section: "primary", svg: "plus" },
-                { id: "clickChange", label: getResourceText("command.desk"), tooltip: getResourceText("tooltip.desk"), section: "primary", svg: "desk" }
+                { id: "clickNew", label: getResourceText("command.new"), tooltip: getResourceText("tooltip.newevent"), section: "primary", svg: "plus" },
+                { id: "clickChange", label: getResourceText("command.desk"), tooltip: getResourceText("tooltip.eventchange"), section: "primary", svg: "desk" }
             ];
 
             this.controller = new LocalEvents.Controller(element, commandList);
