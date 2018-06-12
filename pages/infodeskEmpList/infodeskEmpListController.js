@@ -487,8 +487,13 @@
             var loadData = function (recordid) {
                 Log.call(Log.l.trace, "InfodeskEmpList.Controller.");
                 that.loading = true;
-                progress = listView.querySelector(".list-footer .progress");
-                counter = listView.querySelector(".list-footer .counter");
+                if (listView.querySelector(".list-footer .progress")) {
+                    progress = listView.querySelector(".list-footer .progress");
+                }
+                if (listView.querySelector(".list-footer .counter")) {
+                    counter = listView.querySelector(".list-footer .counter");
+                }
+
                 if (progress && progress.style) {
                     progress.style.display = "inline";
                 }
