@@ -205,7 +205,6 @@
                                         var date = new Date();
                                         value = new Date(value - (date.getTimezoneOffset() * 60000)).toISOString().slice(0, -1);
                                     }
-                                    */
                                     type = "d";
                                     style = 1;
                                 } else if (attribTypeId === 3 || !attribTypeId) { // text
