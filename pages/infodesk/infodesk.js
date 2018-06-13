@@ -27,7 +27,7 @@
             // add page specific commands to AppBar
             var commandList = [
                 { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" },
-                { id: "clickSearch", label: getResourceText("command.search"), tooltip: getResourceText("tooltip.searchEmployee"), section: "primary", svg: "magnifying_glass", key: WinJS.Utilities.Key.enter },
+                //{ id: "clickSearch", label: getResourceText("command.search"), tooltip: getResourceText("tooltip.searchEmployee"), section: "primary", svg: "magnifying_glass", key: WinJS.Utilities.Key.enter },
                 { id: "clickSendMessage", label: getResourceText("command.ok"), tooltip: getResourceText("tooltip.sendMessage"), section: "primary", svg: "mail", key: WinJS.Utilities.Key.enter }
             ];
 

@@ -487,8 +487,13 @@
             var loadData = function (recordid) {
                 Log.call(Log.l.trace, "InfodeskEmpList.Controller.");
                 that.loading = true;
-                progress = listView.querySelector(".list-footer .progress");
-                counter = listView.querySelector(".list-footer .counter");
+                if (listView.querySelector(".list-footer .progress")) {
+                    progress = listView.querySelector(".list-footer .progress");
+                }
+                if (listView.querySelector(".list-footer .counter")) {
+                    counter = listView.querySelector(".list-footer .counter");
+                }
+
                 if (progress && progress.style) {
                     progress.style.display = "inline";
                 }
@@ -705,6 +710,13 @@
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
+            }).then(function () {
+                var loadingTime = 30000;
+                Log.print(Log.l.trace, "Loading InfodeskEmpList: " + loadingTime + "sec");
+                setInterval(function () {
+                    return that.loadData();
+                }, loadingTime);
+                Log.print(Log.l.trace, "Data loaded");
             })/*.then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 return that.selectRecordId(that.binding.employeeId);

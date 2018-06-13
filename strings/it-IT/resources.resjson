@@ -36,6 +36,7 @@
     "command.zoomin"        : "ingrandire",
     "command.zoomout"       : "ridurre",
     "command.print"         : "stampa",
+	  "command.save"			: "Salvare",
 
     "tooltip.backward"      : "Pagina precedente",
     "tooltip.edit"          : "Modifica Record attuale",
@@ -73,6 +74,7 @@
     "tooltip.savepdf"	    : "Salva il nome del file PDF",
     "tooltip.exportpdf"	    : "Esporta PDF",
     "tooltip.deletemail"	: "Elimina la posta",
+    "tooltip.save"			    : "Salvare",
 
     "start.title"           : "Pagina iniziale",
     "start.comment"         : "Utilizzate i pulsanti su questa pagina per muoversi tra le pagine!",
@@ -400,7 +402,7 @@
     "label.contactRemote"   : "Contatto",
     "label.questionnaireRemote" : "Questionario",
     "label.sketchRemote"    : "Note",
-    "label.pdfExport"     : "Esportazione PDF",
+    "label.pdfExport"       : "Esportazione PDF",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annulla",
@@ -539,6 +541,8 @@
 	"localeventscreate.mobilerbarcodescanner"   : "Numero di utenti di barcode scanner",
 
     "localevents.title" : "Eventi",
+
+    "employeegenpwlist.title" : "Le password generate dai dipendenti",
 	"employeegenpwlist.login" : "nome di accesso",
 	"employeegenpwlist.password" : "password",
 

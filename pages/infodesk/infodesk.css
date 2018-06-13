@@ -258,7 +258,7 @@ textarea:-ms-input-placeholder { font-style:italic; } /* ie */
     padding-left: 9px;
 }
 .input_text_message {
-    height: 296px;
+    height: 225px;
 }
 #userPhoto .user-photo {
     margin: 47px;
