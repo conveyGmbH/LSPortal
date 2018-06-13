@@ -35,6 +35,8 @@
     var S = openXml.S;
     var R = openXml.R;
 
+    var cr = false;
+
     WinJS.Namespace.define("ExportXlsx", {
         ExporterClass: WinJS.Class.define(function exporterClass(progress) {
             Log.call(Log.l.trace, "ExportXlsx.");
@@ -162,42 +164,46 @@
                                     value === null || value === "NULL") {
                                     value = "";
                                 } else if (attribTypeId === 8 || attribTypeId === 6) { // timestamp or date
-                                    value = value.substring(0, 16);
-                                   
-                                    function toDate (value) {
-                                        var year = value.substring(0, 4);
-                                        var month = value.substring(6, 7);
-                                        var day = value.substring(9, 10);
-                                        var hour = value.substring(11, 13);
-                                        var minute = value.substring(14, 16);
-                                        
-                                        return new Date(year, month - 1, day, hour, minute);
-                                    };
-                                   
-                                    value = toDate(value);
-                                    var date = new Date();
-                                    value = new Date(value - (date.getTimezoneOffset() * 60000)).toISOString().slice(0, -1);
-                                    /*
-                                    var dateString = value.replace("\/Date(", "").replace(")\/", "");
-                                    var milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
-                                    var date = new Date(milliseconds);
-                                    var year = date.getFullYear();
-                                    var month = date.getMonth() + 1; .toISOString()
-                                    var day = date.getDate();
-                                    if (attribTypeId === 8) {
-                                        var hour = date.getHours();
-                                        var minute = date.getMinutes();
-                                        value = year.toString() +
-                                            ((month < 10) ? "-0" : "-") + month.toString() +
-                                            ((day < 10) ? "-0" : "-") + day.toString() +
-                                            ((hour < 10) ? "T0" : "T") + hour.toString() +
-                                            ((minute < 10) ? ":0" : ":") + minute.toString() +
-                                            "Z";
-                                    } else {
-                                        value = year.toString() +
-                                            ((month < 10) ? "-0" : "-") + month.toString() +
-                                            ((day < 10) ? "-0" : "-") + day.toString() +
-                                            "T";
+
+                                    if (cr === false){
+                                        var dateString = value.replace("\/Date(", "").replace(")\/", "");
+                                        var milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
+                                        var date = new Date(milliseconds);
+                                        var year = date.getFullYear();
+                                        var month = date.getMonth() + 1;
+                                        var day = date.getDate();
+                                        if (attribTypeId === 8) {
+                                            var hour = date.getHours();
+                                            var minute = date.getMinutes();
+                                            value = year.toString() +
+                                                ((month < 10) ? "-0" : "-") + month.toString() +
+                                                ((day < 10) ? "-0" : "-") + day.toString() +
+                                                ((hour < 10) ? "T0" : "T") + hour.toString() +
+                                                ((minute < 10) ? ":0" : ":") + minute.toString() +
+                                                "Z";
+                                        } else {
+                                            value = year.toString() +
+                                                ((month < 10) ? "-0" : "-") + month.toString() +
+                                                ((day < 10) ? "-0" : "-") + day.toString() +
+                                                "T";
+                                        }
+                                    }
+                                    else {
+                                        value = value.substring(0, 16);
+
+                                        function toDate(value) {
+                                            var year = value.substring(0, 4);
+                                            var month = value.substring(6, 7);
+                                            var day = value.substring(9, 10);
+                                            var hour = value.substring(11, 13);
+                                            var minute = value.substring(14, 16);
+
+                                            return new Date(year, month - 1, day, hour, minute);
+                                        };
+
+                                        value = toDate(value);
+                                        var date = new Date();
+                                        value = new Date(value - (date.getTimezoneOffset() * 60000)).toISOString().slice(0, -1);
                                     }
                                     */
                                     type = "d";
@@ -297,6 +303,7 @@
                             var attribSpecs = baseDbView.attribSpecs;
                             var colCount = attribSpecs.length;
                             if (baseDbView.relationName === "KontaktReport") {
+                                cr = true;
                                 for (var c = 0; c < colCount; c++) {
                                     var row = results[0];
                                     var key = attribSpecs[c].ODataAttributeName;
