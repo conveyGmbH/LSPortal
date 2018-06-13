@@ -56,7 +56,7 @@
                 //mywindow.document.write('<link href=\"barcodeAdministration.css\" rel=\"stylesheet\" media=\"all\"/>');
                 mywindow.document.write('</head><body >');
                 mywindow.document.write((document.getElementById(elem)).querySelector(".win-surface").innerHTML);
-                mywindow.document.write('<style> .barcodeAdministration-content {width: 100%;}.frage-container {width: 100%; page-break-inside: avoid} @media print {.frage-container {page-break-inside; avoid}}.barcode-frage-titel {display: inline;width: 100%;float: left;}.barcode-item { width: 180px; height: 100px; margin-right: 180px;margin-bottom: 100px;overflow: hidden;float: left;} .barcode-antwort-text {display: block;margin-left: 8px;}</style>');
+                mywindow.document.write('<style> .barcodeAdministration-content {width: 100%; zoom: 0.6; orientation: landscape; page-break-inside: avoid}.frage-container {width: 100%; page-break-inside: avoid}.barcode-items{page-break-inside: avoid} @media print {.frage-container {width: 100%; page-break-inside; avoid}}.barcode-frage-titel {display: inline;width: 100%;float: left;}.barcode-items{page-break-inside: avoid} .barcode-item { width: 180px; height: 100px; margin-right: 180px;margin-bottom: 100px;overflow: hidden;float: left; page-break-inside: avoid} .barcode-antwort-text {display: block;margin-left: 8px;}</style>');
                 mywindow.document.write('</body></html>');
 
                 mywindow.document.close(); // necessary for IE >= 10
