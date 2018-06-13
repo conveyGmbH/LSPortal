@@ -79,7 +79,7 @@
                         <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'pdfExport.msg'}"></span>
                         <span class="label landscape_only" data-win-res="{textContent: 'pdfExport.msg'}"></span>
                         <span class="caption-field" id="exportMsg" data-win-bind="textContent: exportPdfMsg Binding.Mode.oneway"></span>
-                        <a href="" id="exportPdfString" data-win-bind="textContent: exportPdfString Binding.Mode.oneway"></a>
+                        <a href="" id="exportPdfString" data-win-bind="textContent: exportPdfString Binding.Mode.oneway; href: exportPdfString Binding.Mode.oneway"></a>
                     </div>
                     <div class="error-message"
                          data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
