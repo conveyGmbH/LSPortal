@@ -359,10 +359,10 @@
     "infodeskEmpList.name"  : "Cognome",
     "infodeskEmpList.firstName" : "Primo nome",
     "infodeskEmpList.login" : "Utente",
-	"infodeskEmpList.firstNameDesc"  : "Vorname(discendente)",
-	"infodeskEmpList.firstNameAsc"  : "Vorname(ascendente)",
+	"infodeskEmpList.firstNameDesc"  : "Primo nome (discendente)",
+	"infodeskEmpList.firstNameAsc"  : "Primo nome (ascendente)",
 	"infodeskEmpList.nameDesc"  : "Cognome (discendente)",
-	"infodeskEmpList.nameAsc"  : "Cognome(Crescente)",
+	"infodeskEmpList.nameAsc"  : "Cognome (Crescente)",
 
     "userinfo.title"        : "Informazioni utente",
     "userinfo.present"      : "Io sono ora presente",
