@@ -448,7 +448,7 @@
                     //that.binding.restriction.OrderDesc = !that.binding.restriction.OrderDesc;
                     AppData.setRestriction("SkillEntry", that.binding.restriction);
 
-                    if (event.target.textContent === "Vorname(absteigend)") {
+                    if (event.target.textContent === getResourceText("infodeskEmpList.firstNameDesc")) {
                         event.target.textContent = getResourceText("infodeskEmpList.firstNameAsc");
                         that.binding.restriction.OrderDesc = false;
                     } else {
@@ -467,7 +467,7 @@
                     that.binding.restriction.OrderAttribute = "Nachname";
                     //that.binding.restriction.OrderDesc = !that.binding.restriction.OrderDesc;
                     AppData.setRestriction("SkillEntry", that.binding.restriction);
-                    if (event.target.textContent === "Name(absteigend)") {
+                    if (event.target.textContent === getResourceText("infodeskEmpList.nameDesc")) {
                         event.target.textContent = getResourceText("infodeskEmpList.nameAsc");
                         that.binding.restriction.OrderDesc = false;
                     } else {
