@@ -49,14 +49,11 @@
             this.binding = WinJS.Binding.as(this.pageData);
 
             function PrintElem(elem) {
-                var mywindow = window.open('', 'PRINT', 'height=600,width=600');
-
-                //mywindow.document.write('<html><head><title>' + document.title + '</title>');
-                //<link href="barcodeAdministration.css" rel="stylesheet" />
-                //mywindow.document.write('<link href=\"barcodeAdministration.css\" rel=\"stylesheet\" media=\"all\"/>');
+                var mywindow = window.open('', 'PRINT', 'height=600,width=1000');
+                mywindow.document.write('<html><head><title>' + getResourceText("barcodeAdministration.title") + '</title>');
                 mywindow.document.write('</head><body >');
                 mywindow.document.write((document.getElementById(elem)).querySelector(".win-surface").innerHTML);
-                mywindow.document.write('<style> .barcodeAdministration-content {width: 100%; zoom: 0.6; orientation: landscape; page-break-inside: avoid}.frage-container {width: 100%; page-break-inside: avoid}.barcode-items{page-break-inside: avoid} @media print {.frage-container {width: 100%; page-break-inside; avoid}}.barcode-frage-titel {display: inline;width: 100%;float: left;}.barcode-items{page-break-inside: avoid} .barcode-item { width: 180px; height: 100px; margin-right: 180px;margin-bottom: 100px;overflow: hidden;float: left; page-break-inside: avoid} .barcode-antwort-text {display: block;margin-left: 8px;}</style>');
+                mywindow.document.write('<style> .barcodeAdministration-content {width: 100%; zoom: 66%; orientation: landscape; page-break-inside: avoid}.frage-container {width: 100%; page-break-inside: avoid}.barcode-items{page-break-inside: avoid} @media print {.frage-container {width: 100%; page-break-inside; avoid}}.barcode-frage-titel {display: inline;width: 100%; font-size: 25px; float: left;}.barcode-items{page-break-inside: avoid} .barcode-item { width: 180px; height: 130px; margin-right: 180px;margin-bottom: 120px;overflow: hidden;float: left; page-break-inside: avoid} .barcode-antwort-text {display: block;margin-left: 8px; font-size: 25px;}</style>');
                 mywindow.document.write('</body></html>');
 
                 mywindow.document.close(); // necessary for IE >= 10
@@ -204,7 +201,7 @@
                                                 var value = barcodeImage.barcode.substring(9, 13);
                                                 JsBarcode("[name=" + name + "]",
                                                     value,
-                                                    { width: 2, height: 25, displayValue: false });
+                                                    { height: 50, displayValue: false });
                                             }
                                         }
                                     }

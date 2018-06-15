@@ -28,6 +28,8 @@
 
             // ListView control
             var listView = pageElement.querySelector("#infodeskEmployeeList.listview");
+            var btnFirstName = document.getElementById("btn_firstName");
+            var btnName = document.getElementById("btn_Name");
             var progress = null;
             var counter = null;
             var layout = null;
@@ -340,11 +342,11 @@
                                     if (item.data && (item.data.MitarbeiterID || item.data.MitarbeiterVIEWID)) {
                                         //&&(item.data.MitarbeiterID || item.data.MitarbeiterVIEWID) !== that.binding.employeeId
                                         // called asynchronously if ok
-                                        that.binding.employeeId = item.data.MitarbeiterID || item.data.MitarbeiterVIEWID;
+                                        var employeeId = item.data.MitarbeiterID || item.data.MitarbeiterVIEWID;
                                         var curPageId = Application.getPageId(nav.location);
                                         if ((curPageId === "infodesk" || curPageId === "infodeskEmpList") &&
                                             typeof AppBar.scope.loadData === "function") {
-                                            AppBar.scope.loadData(that.binding.employeeId);
+                                            AppBar.scope.loadData(employeeId);
                                          //   Application.navigateById("infodesk");
                                         } else {
                                            // Application.navigateById("infodesk");
@@ -487,10 +489,10 @@
             var loadData = function (recordid) {
                 Log.call(Log.l.trace, "InfodeskEmpList.Controller.");
                 that.loading = true;
-                if (listView.querySelector(".list-footer .progress")) {
+                if (listView && listView.querySelector(".list-footer .progress")) {
                     progress = listView.querySelector(".list-footer .progress");
                 }
-                if (listView.querySelector(".list-footer .counter")) {
+                if (listView && listView.querySelector(".list-footer .counter")) {
                     counter = listView.querySelector(".list-footer .counter");
                 }
 
@@ -516,8 +518,18 @@
                         }
                     }).then(function () {
                         var restriction = AppData.getRestriction("SkillEntry");
+                        var defaultrestriction = InfodeskEmpList.defaultRestriction;
                         if (!restriction) {
-                            restriction = {};
+                            restriction = defaultrestriction;
+                        }
+                        if (restriction.OrderAttribute === "Vorname") {
+                            if (btnName) {
+                                btnName.textContent = getResourceText("infodeskEmpList.name");
+                            }
+                        } else {
+                            if (btnFirstName) {
+                                btnFirstName.textContent = getResourceText("infodeskEmpList.firstName");
+                            }
                         }
                         if (restriction.Names && restriction.Names.length > 0) {
                             //restriction.bUseOr = true;
@@ -621,7 +633,8 @@
                                     }
                                     that.loading = false;
                                 },
-                                restriction); //that.binding.restriction beim neuladen ist die leer
+                                restriction,
+                                { orderAttribute: restriction.OrderAttribute, desc: true }); //that.binding.restriction beim neuladen ist die leer
                         } else {
                             return InfodeskEmpList.employeeView.select(function (json) {
                                 // this callback will be called asynchronously

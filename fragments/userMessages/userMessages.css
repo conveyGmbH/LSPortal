@@ -14,13 +14,13 @@
 }
 .userMessage-title {
     width: 100%;
-    margin-left: 25px;
+    margin-left: 20px;
     min-height: 12px;
 }
 
 .list-role-item {
     width: 100%;
-    margin-left: 16px;
+    margin-left: 5px;
     min-height: 12px;
 }
 #userMessageList.listview {

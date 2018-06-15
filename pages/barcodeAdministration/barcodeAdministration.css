@@ -87,19 +87,21 @@
 .barcode-frage-titel {
     display: inline;
     width: 100%;
+    font-size: 16.5px;
     float: left;
 }
 .barcode-item {
     width: 180px;
     height: 100px;
     margin-right: 180px;
-    margin-bottom: 100px;
+    margin-bottom: 130px;
     overflow: hidden;
     float: left;
 }
 .barcode-antwort-text {
     display: block;
     margin-left: 8px;
+    font-size: 16.5px;
 }
 .barcode-print-surface {
     /*display: block;*/

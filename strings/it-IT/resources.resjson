@@ -338,6 +338,7 @@
     "info.useAudioNote"     : "Registrazione audio",
     "info.autoShutterTime"  : "Tempo di innesco [ms]",
 
+    "infodesk.actualEmployee"     : "Employee attuale",
     "infodesk.employee"     : "Employee",
     "infodesk.title"        : "Infodesk",
     "infodesk.language"     : "Lingua",
@@ -358,6 +359,10 @@
     "infodeskEmpList.name"  : "Cognome",
     "infodeskEmpList.firstName" : "Primo nome",
     "infodeskEmpList.login" : "Utente",
+	"infodeskEmpList.firstNameDesc"  : "Vorname(discendente)",
+	"infodeskEmpList.firstNameAsc"  : "Vorname(ascendente)",
+	"infodeskEmpList.nameDesc"  : "Cognome (discendente)",
+	"infodeskEmpList.nameAsc"  : "Cognome(Crescente)",
 
     "userinfo.title"        : "Informazioni utente",
     "userinfo.present"      : "Io sono ora presente",

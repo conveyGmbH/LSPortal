@@ -72,7 +72,9 @@
             SkillType4Sortierung: 0,
             SkillType5Sortierung: 0,
             SkillTypeID: {},
-            Sortierung: {}
+            Sortierung: {},
+            OrderAttribute: "Nachname",
+            OrderDesc: true
         },
         _SkillEntry: {
             get: function () {

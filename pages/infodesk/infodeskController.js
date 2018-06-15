@@ -441,6 +441,43 @@
                         });
                     }
                     Log.ret(Log.l.trace);
+                },
+                clickOrderFirstname: function (event) {
+                    Log.call(Log.l.trace, "InfodeskEmpList.Controller.");
+                    that.binding.restriction.OrderAttribute = "Vorname";
+                    //that.binding.restriction.OrderDesc = !that.binding.restriction.OrderDesc;
+                    AppData.setRestriction("SkillEntry", that.binding.restriction);
+
+                    if (event.target.textContent === "Vorname(absteigend)") {
+                        event.target.textContent = getResourceText("infodeskEmpList.firstNameAsc");
+                        that.binding.restriction.OrderDesc = false;
+                    } else {
+                        event.target.textContent = getResourceText("infodeskEmpList.firstNameDesc");
+                        that.binding.restriction.OrderDesc = true;
+                    }
+                       
+
+                    var master = Application.navigator.masterControl;
+                    master.controller.loadData();
+                    Log.ret(Log.l.trace);
+                },
+                clickOrderLastname: function (event) {
+                    Log.call(Log.l.trace, "InfodeskEmpList.Controller.");
+                    var master = Application.navigator.masterControl;
+                    that.binding.restriction.OrderAttribute = "Nachname";
+                    //that.binding.restriction.OrderDesc = !that.binding.restriction.OrderDesc;
+                    AppData.setRestriction("SkillEntry", that.binding.restriction);
+                    if (event.target.textContent === "Name(absteigend)") {
+                        event.target.textContent = getResourceText("infodeskEmpList.nameAsc");
+                        that.binding.restriction.OrderDesc = false;
+                    } else {
+                        event.target.textContent = getResourceText("infodeskEmpList.nameDesc");
+                        that.binding.restriction.OrderDesc = true;
+                    }
+
+
+                    master.controller.loadData();
+                    Log.ret(Log.l.trace);
                 }
             };
             this.disableHandlers = {
@@ -518,9 +555,6 @@
                     if (initskills && initskills.winControl) {
                         initskills.winControl.data = new WinJS.Binding.List(skills);
                     }
-                    that.binding.restriction.Sortierung[index] = item.Sortierung; //exception
-                    that.binding.restriction.SkillTypeID[index] = item.SkillTypeSkillsVIEWID;
-
                     if (item.Sortierung === 1) {
                         firstskill = skills;
                         if (item.SkillTypeSkillsVIEWID)

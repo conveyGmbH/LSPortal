@@ -126,6 +126,7 @@
     padding: 0;
 }
 .field_line_right {
+    margin-top: 0px;
     float: right;
     width: 50%;
     padding: 0;
@@ -258,11 +259,13 @@ textarea:-ms-input-placeholder { font-style:italic; } /* ie */
     padding-left: 9px;
 }
 .input_text_message {
+    margin-top: 10px;
     height: 225px;
 }
 #userPhoto .user-photo {
-    margin: 47px;
-    width: 50%;
-    height: 50%;
+    margin-top: 40px;
+    margin-left: 40px;
+    width: 66%;
+    height: 66%;
     border-radius: 0px;
 }

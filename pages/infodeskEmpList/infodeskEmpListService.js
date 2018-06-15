@@ -17,7 +17,8 @@
                 Log.call(Log.l.trace, "InfodeskEmpList.");
                 var ret = InfodeskEmpList._employeeSkillentryView.select(complete, error, restriction, {
                     ordered: true,
-                    orderAttribute: "Login" // in der Datenbank muss verbessert werden in Nachname
+                    orderAttribute: restriction.OrderAttribute, // in der Datenbank muss verbessert werden in Nachname
+                    desc: restriction.OrderDesc
                 });
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
@@ -49,7 +50,8 @@
                 Log.call(Log.l.trace, "InfodeskEmpList.");
                 var ret = InfodeskEmpList._employeeView.select(complete, error, restriction, {
                     ordered: true,
-                    orderAttribute: "Nachname" 
+                    orderAttribute: restriction.OrderAttribute,
+                    desc: restriction.OrderDesc
                 });
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
@@ -72,6 +74,25 @@
         defaultValue: {
             Names: ""
         },
+        defaultRestriction: {
+            Aktiv: "",
+            bAndInEachRow: true,
+            bUseOr: false,
+            countCombobox: 0,
+            Vorname: "",
+            Nachname: "",
+            Login: "",
+            Names: "",
+            SkillType1Sortierung: 0,
+            SkillType2Sortierung: 0,
+            SkillType3Sortierung: 0,
+            SkillType4Sortierung: 0,
+            SkillType5Sortierung: 0,
+            SkillTypeID: {},
+            Sortierung: {},
+            OrderAttribute: "Nachname",
+            OrderDesc: true
+        }, 
         _initBenAnwView: {
             get: function () {
                 return AppData.getLgntInit("LGNTINITBenAnw");
