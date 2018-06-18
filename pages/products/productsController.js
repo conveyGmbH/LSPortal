@@ -425,9 +425,11 @@
                     Log.print(Log.l.trace, "calling select MaildokumentView...");
                     return Products.ProduktnameView.select(function (json) {
                         Log.print(Log.l.trace, "MaildokumentView: success!");
-                        if (json && json.d && json.d.results) {
+                        if (json && json.d && json.d.results && json.d.results.length > 0) {
                             // store result for next use
-                            that.mailID = json.d.results[0].ProduktnameVIEWID;
+                            if (json.d.results[0].ProduktnameVIEWID) {
+                                that.mailID = json.d.results[0].ProduktnameVIEWID;
+                            }
                         }
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
