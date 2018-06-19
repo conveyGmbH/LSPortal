@@ -15,74 +15,75 @@
             Log.call(Log.l.trace, "LocalEventsCreate.Controller.");
             Application.Controller.apply(this,
                 [pageElement, {
-                    eventData: getEmptyDefaultValue(LocalEventsCreate.VeranstaltungView.defaultValue)
+                    eventData: copyByValue(LocalEventsCreate.VeranstaltungView.defaultValue)
                 }, commandList]
             );
+            this.binding.eventData.dateBegin = new Date();
+            this.binding.eventData.dateEnd = new Date();
 
             var that = this;
 
-            this.newEventData = [];
-
-            var getRecordId = function() {
-                Log.call(Log.l.trace, "LocalEventsCreate.Controller.");
-                var recordId = that.binding.eventData && that.binding.eventData.VeranstaltungVIEWID;
-                if (!recordId) {
-                    var master = Application.navigator.masterControl;
-                    if (master && master.controller && master.controller.binding) {
-                        recordId = master.controller.binding.veranstaltungid;
-                    }
-                }
-                Log.ret(Log.l.trace, recordId);
-                return recordId;
+            var setDataEvent = function (newDataEvent) {
+                var prevNotifyModified = AppBar.notifyModified;
+                AppBar.notifyModified = false;
+                that.binding.eventData = newDataEvent;
+                // convert StartDatum 
+                that.binding.eventData.dateBegin = getDateObject(newDataEvent.StartDatum);
+                // convert EndDatum 
+                that.binding.eventData.dateEnd = getDateObject(newDataEvent.EndDatum);
+                AppBar.modified = false;
+                AppBar.notifyModified = prevNotifyModified;
+                AppBar.triggerDisableHandlers();
             };
-            this.getRecordId = getRecordId;
-
-            var getDateObject = function(dateData) {
-                var ret;
-                if (dateData) {
-                    var dateString = dateData.replace("\/Date(", "").replace(")\/", "");
-                    var milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
-                    ret = new Date(milliseconds).toDateString();
-                } else {
-                    ret = new Date();
-                }
-                return ret;
-            };
-            this.getDateObject = getDateObject;
+            this.setDataEvent = setDataEvent;
 
             var getEventData = function() {
-                that.binding.eventData.StartDatum = "/Date(" + Date.parse(that.binding.eventData.StartDatum) + ")/";
-                that.binding.eventData.EndDatum = "/Date(" + Date.parse(that.binding.eventData.EndDatum) + ")/";
-                if (that.binding.eventData.MobilerBarcodescanner === 0){
-                    delete that.binding.eventData.MobilerBarcodescanner;
+                var dataEvent = that.binding.eventData;
+                dataEvent.StartDatum = getDateData(dataEvent.dateBegin);
+                dataEvent.EndDatum = getDateData(dataEvent.dateEnd);
+                if (!dataEvent.MobilerBarcodescanner || dataEvent.MobilerBarcodescanner < 1) {
+                    dataEvent.MobilerBarcodescanner = 1;
                 }
-                if (that.binding.eventData.LeadSuccessMobileApp === 0) {
-                    delete that.binding.eventData.LeadSuccessMobileApp;
+                if (dataEvent.LeadSuccessMobileApp === 0) {
+                    delete dataEvent.LeadSuccessMobileApp;
                 }
+                return dataEvent;
             }
             this.getEventData = getEventData;
 
             var insertData = function() {
                 Log.call(Log.l.trace, "LocalEventsCreate.Controller.");
                 AppData.setErrorMsg(that.binding);
-                //that.templatecall();
-                var ret = new WinJS.Promise.as().then(function () {
-                    return LocalEventsCreate.VeranstaltungView.insert(function (json) {
-                        AppBar.busy = false;
-                        // this callback will be called asynchronously
-                        // when the response is available
-                        Log.print(Log.l.info, "VeranstaltungView insert: success!");
-                        AppBar.modified = false;
-                        // employeeView returns object already parsed from json file in response
-                        if (json && json.d) {
-                            Application.navigateById("localevents", event);
-                        }
-                    }, function (errorResponse) {
-                        Log.print(Log.l.error, "error inserting event");
-                        AppBar.busy = false;
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                        }, that.binding.eventData);
-                });
+                var ret;
+                var dataEvent = getEventData();
+                if (dataEvent && AppBar.modified && !AppBar.busy) {
+                    AppBar.busy = true;
+                    ret = new WinJS.Promise.as().then(function() {
+                        return LocalEventsCreate.VeranstaltungView.insert(function(json) {
+                            AppBar.busy = false;
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            Log.print(Log.l.info, "VeranstaltungView insert: success!");
+                            AppBar.modified = false;
+                            // employeeView returns object already parsed from json file in response
+                            if (json && json.d) {
+                                setDataEvent(json.d);
+                                WinJS.Promise.timeout(0).then(function() {
+                                    AppBar.busy = false;
+                                    Application.navigateById("localevents", event);
+                                });
+                            }
+                        },
+                        function(errorResponse) {
+                            Log.print(Log.l.error, "error inserting event");
+                            AppBar.busy = false;
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        },
+                        dataEvent);
+                    });
+                } else {
+                    ret = WinJS.Promise.as();
+                }
                 Log.ret(Log.l.trace);
                 return ret;
             }
@@ -99,7 +100,6 @@
                 },
                 clickSave: function (event) {
                     Log.call(Log.l.trace, "LocalEventsCreate.Controller.");
-                    that.getEventData();
                     that.insertData();
                     Log.ret(Log.l.trace);
                 },
@@ -123,7 +123,7 @@
                     }
                 },
                 clickSave: function () {
-                    if (that.binding.eventData) {
+                    if (that.binding.eventData && AppBar.modified && !AppBar.busy) {
                         return false;
                     } else {
                         return true;

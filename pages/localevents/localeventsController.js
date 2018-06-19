@@ -306,6 +306,20 @@
                     } else {
                         return true;
                     }
+                },
+                clickNew: function() {
+                    if (that.binding.fairmandantId) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                },
+                clickChange: function () {
+                    if (that.curRecId) {
+                        return false;
+                    } else {
+                        return true;
+                    }
                 }
             };
 

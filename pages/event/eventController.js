@@ -25,31 +25,6 @@
 
             var that = this;
 
-            //27.12.2016 generate the string date
-            var getDateObject = function(dateData) {
-                var ret;
-                if (dateData) {
-                    var dateString = dateData.replace("\/Date(", "").replace(")\/", "");
-                    var milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
-                    ret = new Date(milliseconds);
-                } else {
-                    ret = new Date();
-                }
-                return ret;
-            };
-            this.getDateObject = getDateObject;
-
-            //03.01.2016 convert Date() to String
-            var getDateData = function(dateObj) {
-                if (!dateObj) {
-                    dateObj = new Date();
-                }
-                var milliseconds = dateObj.getTime() + AppData.appSettings.odata.timeZoneAdjustment * 60000;
-                var dateString = milliseconds.toString();
-                return "/Date(" + dateString + ")/";
-            };
-            this.getDateData = getDateData;
-
             var setDataEvent = function(newDataEvent) {
                 var prevNotifyModified = AppBar.notifyModified;
                 AppBar.notifyModified = false;

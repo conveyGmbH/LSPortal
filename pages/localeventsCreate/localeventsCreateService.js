@@ -22,9 +22,7 @@
             },
             defaultValue: {
                 VeranstaltungName: "",
-                StartDatum: new Date(),
-                EndDatum: new Date(),
-                LeadSuccessMobileApp: 0,
+                LeadSuccessMobileApp: 1,
                 MobilerBarcodescanner: 0
             }
         }
