@@ -148,17 +148,16 @@
             this.selectRecordId = selectRecordId;
 
             var changeEvent = function () {
-                var Loginname = AppData._persistentStates.odata.login;
                 Log.call(Log.l.trace, "LocalEvents.Controller.");
                 AppData.setErrorMsg(that.binding);
-                AppData.call("PRC_ChangeUserVeranstaltung", 
-                    {
-                        pNewVeranstaltungID : that.curRecId,
-                        pLoginName: AppData._persistentStates.odata.login
-                    }
-                    , function (json) {
-                     Log.print(Log.l.info, "call success! ");
-                     Application.navigateById("login", event);
+                AppData.call("PRC_ChangeUserVeranstaltung", {
+                    pNewVeranstaltungID : that.curRecId,
+                    pLoginName: AppData._persistentStates.odata.login
+                }, function (json) {
+                    Log.print(Log.l.info, "call success! ");
+                    AppData.prevLogin = AppData._persistentStates.odata.login;
+                    AppData.prevPassword = AppData._persistentStates.odata.password;
+                    Application.navigateById("login", event);
                  }, function (error) {
                         Log.print(Log.l.error, "call error");
                  });
@@ -250,6 +249,7 @@
                                                 that.prevRecId = that.curRecId;
                                             }
                                             that.curRecId = newRecId;
+                                            AppBar.triggerDisableHandlers();
                                         }
                                     }
                                 });
@@ -315,7 +315,7 @@
                     }
                 },
                 clickChange: function () {
-                    if (that.curRecId) {
+                    if (that.curRecId && AppData.generalData.eventId !== that.curRecId) {
                         return false;
                     } else {
                         return true;

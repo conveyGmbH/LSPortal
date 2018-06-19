@@ -71,7 +71,7 @@
                         }
                     }
                 }
-            }
+            };
             this.isotoInitlandId = isotoInitlandId;
 
             this.worldMapMaxWidth = 600;

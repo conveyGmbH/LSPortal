@@ -480,6 +480,7 @@
                 data.contactDateTime = (function() {
                     return (AppData.getContactDateString() + " " + AppData.getContactTimeString());
                 })();
+                data.eventId = AppData._userData.VeranstaltungID;
                 data.eventName = AppData._userData.VeranstaltungName;
                 data.userName = AppData._userData.Login;
                 data.userPresent = AppData._userData.Present;
@@ -498,6 +499,8 @@
                 return data;
             }
         },
+        prevLogin: null,
+        prevPassword: null,
         _initAnredeView: {
             get: function () {
                 return AppData.getLgntInit("LGNTINITAnrede");

@@ -35,6 +35,7 @@
                     Login: "",
                     Password: ""
                 },
+                hideLoginData: false,
                 progress: {
                     percent: 0,
                     text: "",
@@ -266,6 +267,16 @@
             };
             this.saveData = saveData;
 
+            if (AppData.prevLogin && AppData.prevPassword) {
+                that.binding.dataLogin.Login = AppData.prevLogin;
+                that.binding.dataLogin.Password = AppData.prevPassword;
+                that.binding.hideLoginData = true;
+                AppData.prevLogin = null;
+                AppData.prevPassword = null;
+                WinJS.Promise.timeout(0).then(function () {
+                    Application.navigateById("start");
+                });
+            }
             that.processAll().then(function () {
                 AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Binding wireup page complete");
