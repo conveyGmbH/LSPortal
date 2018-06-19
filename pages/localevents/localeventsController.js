@@ -336,7 +336,7 @@
                         AppData.setErrorMsg(that.binding);
                         Log.print(Log.l.trace, "LocalEvent: success!");
                         // employeeView returns object already parsed from json file in response
-                        if (json && json.d && json.d.results) {
+                        if (json && json.d && json.d.results && json.d.results.length) {
                             that.nextUrl = LocalEvents.VeranstaltungView.getNextUrl(json);
                             var results = json.d.results;
                             results.forEach(function (item, index) {
