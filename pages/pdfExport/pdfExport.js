@@ -22,8 +22,7 @@
             // add page specific commands to AppBar
             var commandList = [
                 { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" },
-                { id: "clickSave", label: getResourceText("command.save"), tooltip: getResourceText("tooltip.savepdf"), section: "primary", svg: "navigate_check", key: WinJS.Utilities.Key.enter },
-                { id: "clickExportPDF", label: getResourceText("command.new"), tooltip: getResourceText("tooltip.exportpdf"), section: "primary", svg: "folder_out" },
+                { id: "clickSave", label: getResourceText("command.save"), tooltip: getResourceText("tooltip.savepdf"), section: "primary", svg: "navigate_check", key: WinJS.Utilities.Key.enter }
             ];
             
             this.controller = new PDFExport.Controller(element, commandList);

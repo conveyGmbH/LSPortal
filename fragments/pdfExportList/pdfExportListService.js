@@ -9,7 +9,7 @@
     WinJS.Namespace.define("PdfExportList", {
         _pdfExportListView: {
             get: function () {
-                return AppData.getFormatView("", 0);
+                return AppData.getFormatView("OLELetter", 20546);
             }
         },
         pdfExportListView: {
@@ -19,7 +19,7 @@
                     LanguageID: AppData.getLanguageId()
                 }, {
                         ordered: true,
-                        orderAttribute: "",
+                        orderAttribute: "OLELetterID",
                         desc: true
                     });
                 // this will return a promise to controller

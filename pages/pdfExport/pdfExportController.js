@@ -17,7 +17,9 @@
                 restriction: getEmptyDefaultValue(PDFExport.pdfExportParamView.defaultValue),
                 sampleName: getEmptyDefaultValue(PDFExport.pdfExportParamView.defaultValue),
                 exportPdfString: "",
-                exportPdfMsg: ""
+                exportPdfMsg: "",
+                curOLELetterID: null,
+                timerFlag: false
             }, commandList]);
 
             var that = this;
@@ -27,26 +29,46 @@
             var exportFieldList2 = pageElement.querySelector("#InitExportField2");
             var exportFieldList3 = pageElement.querySelector("#InitExportField3");
             var exportFieldList4 = pageElement.querySelector("#InitExportField4");
-            
+            var pdfExportList = pageElement.querySelector("#PDFExportList");
+            var spinner = pageElement.querySelector(".loader");
+
+            var disableReportingList = function (disableFlag) {
+                var reportingListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("PDFExportList"));
+                if (reportingListFragmentControl &&
+                    reportingListFragmentControl.controller) {
+                    reportingListFragmentControl.controller.disableList(disableFlag);
+                }
+            }
+            this.disableReportingList = disableReportingList;
+
+            var spinnercontl = function (timerFlag) {
+                if (timerFlag === true) {
+                    spinner.style.display = 'block';
+                } else {
+                    spinner.style.display = 'none';
+                }
+            }
+            this.spinnercontl = spinnercontl;
+
             var statusExportPDF = function () {
                 Log.call(Log.l.trace, "PDFExport.Controller.");
-                that.binding.exportPdfMsg = getResourceText("pdfExport.exportPdfMsg");
-                if (that.timerFlag === true){
+                if (that.binding.timerFlag === true){
                     AppData.setErrorMsg(that.binding);
                     var ret = new WinJS.Promise.as().then(function () {
                         return PDFExport.ExportKontaktDataView.select(function (json) {
                             if (json && json.d && json.d.results) {
                                 var results = json.d.results;
                                 var i = results.length -1;
-                                if (results[i].JobStatus === 0){
-                                    that.timerFlag = true;
+                                if (results[i].JobStatus === 0) {
+                                    that.binding.timerFlag = true;
+                                    that.spinnercontl(that.binding.timerFlag);
                                     WinJS.Promise.timeout(5000).then(function () {
                                         that.statusExportPDF();
                                     });
                                 }
                                 else {
-                                    that.timerFlag = false;
-                                    that.binding.exportPdfMsg = "";
+                                    that.binding.timerFlag = false;
+                                    that.spinnercontl(that.binding.timerFlag);
                                     that.binding.exportPdfString = results[i].DataPath;
                                 }
                             }
@@ -65,7 +87,8 @@
 
             //export PDF Data
             var exportPDFData = function () {
-                that.timerFlag = true;
+                that.binding.timerFlag = true;
+                that.spinnercontl(that.binding.timerFlag);
                 var VeranstaltungID = AppData.getRecordId("Veranstaltung");
                 Log.call(Log.l.trace, "PDFExport.Controller.");
                 AppData.setErrorMsg(that.binding);
@@ -79,7 +102,7 @@
 
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
-                        that.statusExportPDF();
+                        that.statusExportPDF(that.binding.timerFlag);
                     }, function (error) {
                         Log.print(Log.l.error, "call error");
                     });
@@ -161,9 +184,17 @@
                     that.saveData();
                     Log.ret(Log.l.trace);
                 },
-                clickExportPDF: function (event) {
-                    Log.call(Log.l.trace, "PDFExport.Controller.");
-                    that.exportPDFData();
+                clickExport: function (event) {
+                    Log.call(Log.l.trace, "Reporting.Controller.");
+                    if (event && event.currentTarget) {
+                        var exportselection = event.target.value;
+                        that.disableFlag = event.target.index;
+                        AppBar.busy = true;
+                        AppBar.triggerDisableHandlers();
+                        WinJS.Promise.timeout(0).then(function () {
+                            return that.exportPDFData(exportselection);
+                        });
+                    }
                     Log.ret(Log.l.trace);
                 }
             };
@@ -184,6 +215,18 @@
                 Log.call(Log.l.trace, "PDFExport.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
+                    var reportingListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("PdfExportList"));
+                    if (reportingListFragmentControl && reportingListFragmentControl.controller) {
+                        return reportingListFragmentControl.controller.loadData();
+                    } else {
+                        var parentElement = pageElement.querySelector("#pdfExportListhost");
+                        if (parentElement) {
+                            return Application.loadFragmentById(parentElement, "PdfExportList", {});
+                        } else {
+                            return WinJS.Promise.as();
+                        }
+                    }
+                }).then(function () {
                     return PDFExport.pdfExportView.select(function (json) {
                         Log.print(Log.l.trace, "Mailing.FragebogenzeileView: success!");
                         // select returns object already parsed from json file in response
@@ -263,12 +306,14 @@
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
             }).then(function () {
+                Log.print(Log.l.trace, "Binding wireup page complete");
+                return that.spinnercontl(that.binding.timerFlag);
+            }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 AppBar.notifyModified = true;
             });
             Log.ret(Log.l.trace);
         }, {
-                timerFlag: false,
                 exportPDFStringFlag: ""
             })
     });

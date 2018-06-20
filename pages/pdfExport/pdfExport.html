@@ -74,11 +74,16 @@
                         <span class="label landscape_only" data-win-res="{textContent: 'pdfExport.samplename'}"></span>
                         <span class="caption-field" id="samplename" data-win-bind="textContent: sampleName Binding.Mode.oneway"></span>
                     </div>
+                    <div class="field_line reportingListhost-line">
+                    <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'reporting.exportlist'}"></span>
+                    <span class="label landscape_only" data-win-res="{textContent: 'reporting.exportlist'}"></span>
+                    <div id="pdfExportListhost" class="input_field fragmenthost"></div>
+                    </div>
                     <div class="line-separator"></div>
                     <div class="field_line">
                         <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'pdfExport.msg'}"></span>
                         <span class="label landscape_only" data-win-res="{textContent: 'pdfExport.msg'}"></span>
-                        <span class="caption-field" id="exportMsg" data-win-bind="textContent: exportPdfMsg Binding.Mode.oneway"></span>
+                        <div class="loader"></div>
                         <a href="" id="exportPdfString" data-win-bind="textContent: exportPdfString Binding.Mode.oneway; href: exportPdfString Binding.Mode.oneway"></a>
                     </div>
                     <div class="error-message"
