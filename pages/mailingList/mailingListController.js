@@ -19,7 +19,7 @@
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
                 mailingId: 0,
-                languageId: AppData.getLanguageId()
+                selIdx: 0
             }, commandList, true]);
             this.nextUrl = null;
 
@@ -157,6 +157,7 @@
                                 // Only one item is selected, show the page
                                 listControl.selection.getItems().done(function (items) {
                                     var item = items[0];
+                                    that.binding.selIdx = item.index;
                                     if (item.data && item.data.MaildokumentVIEWID &&
                                         item.data.MaildokumentVIEWID !== that.binding.mailingId) {
                                         // called asynchronously if ok
@@ -287,7 +288,7 @@
                             AppData.setErrorMsg(that.binding);
                             Log.print(Log.l.trace, "MailingList: success!");
                             // employeeView returns object already parsed from json file in response
-                            if (json && json.d && json.d.results) {
+                            if (json && json.d && json.d.results && json.d.results.length > 0) {
                                 that.nextUrl = MailingList.MaildokumentView.getNextUrl(json);
                                 var results = json.d.results;
                                 
@@ -300,9 +301,12 @@
                                     listView.winControl.itemDataSource = that.maildocuments.dataSource;
                                 }
                                 Log.print(Log.l.trace, "Data loaded");
-                                if (results[0] && results[0].MaildokumentVIEWID) {
+                                if (that.binding.selIdx >= json.d.results.length) {
+                                    that.binding.selIdx = json.d.results.length - 1;
+                                }
+                                if (results[that.binding.selIdx] && results[that.binding.selIdx].MaildokumentVIEWID) {
                                     WinJS.Promise.timeout(0).then(function () {
-                                        that.selectRecordId(results[0].MaildokumentVIEWID);
+                                        that.selectRecordId(results[that.binding.selIdx].MaildokumentVIEWID);
                                     });
                                 }
                             } else {
@@ -337,7 +341,6 @@
                             }
                             that.loading = false;
                         }, {
-                            /*LanguageID: that.binding.languageId,*/
                             SpecType: ["NULL",1]
                         }
                     ); 

@@ -27,36 +27,9 @@
             // select combo
             var initSprache = pageElement.querySelector("#InitSprache");
 
-            var getLanguage = function () {
-                var ret = null;
-                Log.call(Log.l.trace, "Mailing.Controller.");
-                var results = Mailing.initSpracheView.getResults();
-                var map = Mailing.initSpracheView.getMap();
-                if (map && results && that.binding.dataMail &&
-                    that.binding.dataMail.INITSpracheID) {
-                    var curIndex = map[that.binding.dataMail.INITSpracheID];
-                    if (typeof curIndex !== "undefined") {
-                        var row = results[curIndex];
-                        Log.print(Log.l.info, "found LanguageId=" + row.LanguageID);
-                        ret = row.LanguageID;
-                    }
-                }
-                if (!ret) {
-                    ret = Application.getLanguageId();
-                }
-                Log.ret(Log.l.trace);
-                return ret;
-            }
-
             var getRecordId = function () {
                 Log.call(Log.l.trace, "Employee.Controller.");
-                var recordId = that.binding.dataMail && that.binding.dataMail.MaildokumentVIEWID;
-                if (!recordId) {
-                    var master = Application.navigator.masterControl;
-                    if (master && master.controller && master.controller.binding) {
-                        recordId = master.controller.binding.mailingId;
-                    }
-                }
+                var recordId = AppData.getRecordId("Maildokument");
                 Log.ret(Log.l.trace, recordId);
                 return recordId;
             };
@@ -69,6 +42,7 @@
                 if (recordId) {
                     AppBar.busy = true;
                     Mailing.MaildokumentView.deleteRecord(function (response) {
+                        that.setNewDataMail();
                         AppBar.busy = false;
                         var master = Application.navigator.masterControl;
                         if (master && master.controller) {
@@ -83,69 +57,21 @@
             };
             this.deleteData = deleteData;
 
-            var getDataMail = function (dataMail) {
-                if (dataMail.ReplyTo === "") {
-                    dataMail.ReplyTo = null;
-                }
-                if (dataMail.Sender === "") {
-                    dataMail.Sender = null;
-                }
-                if (dataMail.BCCAddr === "") {
-                    dataMail.BCCAddr = null;
-                }
-                if (dataMail.CCAddr === "") {
-                    dataMail.CCAddr = null;
-                }
-                if (dataMail.Subject === "") {
-                    dataMail.Subject = null;
-                }
-                if (dataMail.Beschreibung === "") {
-                    dataMail.Beschreibung = null;
-                }
-                if (dataMail.MemoSpec === "") {
-                    dataMail.MemoSpec = null;
-                }
-                if (dataMail.Mailtext === "") {
-                    dataMail.Mailtext = null;
-                }
-            };
-            this.getDataMail = getDataMail;
 
             var setDataMail = function (dataMail) {
-                if (typeof dataMail.ReplyTo === "undefined" || dataMail.ReplyTo === null) {
-                    dataMail.ReplyTo = "";
-                }
-                if (typeof dataMail.Sender === "undefined" || dataMail.Sender === null) {
-                    dataMail.Sender = "";
-                }
-                if (typeof dataMail.BCCAddr === "undefined" || dataMail.BCCAddr === null) {
-                    dataMail.BCCAddr = "";
-                }
-                if (typeof dataMail.CCAddr === "undefined" || dataMail.CCAddr === null) {
-                    dataMail.CCAddr = "";
-                }
-                if (typeof dataMail.Subject === "undefined" || dataMail.Subject === null) {
-                    dataMail.Subject = "";
-                }
-                if (typeof dataMail.Beschreibung === "undefined" || dataMail.Beschreibung === null) {
-                    dataMail.Beschreibung = "";
-                }
-                if (typeof dataMail.MemoSpec === "undefined" || dataMail.MemoSpec === null) {
-                    dataMail.MemoSpec = "";
-                }
-                if (typeof dataMail.Mailtext === "undefined" || dataMail.Mailtext === null) {
+                // Bug: textarea control shows 'null' string on null value in Internet Explorer!
+                if (dataMail.Mailtext === null) {
                     dataMail.Mailtext = "";
                 }
+                return dataMail;
             };
             this.setDataMail = setDataMail;
 
             var setNewDataMail = function (newDataMail) {
-                var prevSpracheId = that.binding.dataMail.INITSpracheID;
+                AppData.setRecordId("Maildokument", 0);
                 that.binding.dataMail = getEmptyDefaultValue(Mailing.MaildokumentView.defaultValue);
-                that.binding.dataMail.MaildokumentVIEWID = 0;
                 that.binding.dataMail.VeranstaltungID = AppData.getRecordId("Veranstaltung");
-                that.binding.dataMail.INITSpracheID = prevSpracheId;
-                AppBar.modified = true;
+                that.binding.dataMail.INITSpracheID = 0;
             };
             this.setNewDataMail = setNewDataMail;
 
@@ -187,9 +113,8 @@
                 var ret;
                 var dataMail = that.binding.dataMail;
                 if (dataMail && AppBar.modified && !AppBar.busy) {
-                    that.getDataMail(dataMail);
                     AppBar.busy = true;
-                    var recordId = dataMail.MaildokumentVIEWID;
+                    var recordId = getRecordId();
                     if (recordId) {
                         ret = Mailing.MaildokumentView.update(function (response) {
                             AppBar.busy = false;
@@ -197,11 +122,9 @@
                             Log.print(Log.l.info, "dataMail update: success!");
                             AppBar.modified = false;
                             var master = Application.navigator.masterControl;
-                            if (master && master.controller &&
-                                master.controller.binding) {
-                                master.controller.binding.languageId = getLanguage();
+                            if (master && master.controller) {
                                 master.controller.loadData().then(function () {
-                                    master.controller.selectRecordId(that.binding.dataMail.MaildokumentVIEWID);
+                                    master.controller.selectRecordId(recordId);
                                     if (typeof complete === "function") {
                                         complete(response);
                                     }
@@ -221,7 +144,7 @@
                         },
                         recordId, dataMail);
                     } else {
-                        Mailing.MaildokumentView.insert(function (json) {
+                        ret = Mailing.MaildokumentView.insert(function (json) {
                             AppBar.busy = false;
                             // this callback will be called asynchronously
                             // when the response is available
@@ -229,12 +152,13 @@
                             AppBar.modified = false;
                             // employeeView returns object already parsed from json file in response
                             if (json && json.d) {
-                                that.binding.dataMail = json.d;
+                                that.binding.dataMail = setDataMail(json.d);
+                                AppData.setRecordId("Maildokument", that.binding.dataMail.MaildokumentVIEWID);
                                 /* Mitarbeiter Liste neu laden und Selektion auf neue Zeile setzen */
                                 var master = Application.navigator.masterControl;
                                 if (master && master.controller) {
                                     master.controller.loadData().then(function () {
-                                        master.controller.selectRecordId(that.binding.dataMail.MaildokumentVIEWID);
+                                        master.controller.selectRecordId(getRecordId());
                                     });
                                 }
                             }
@@ -274,6 +198,7 @@
                     that.saveData(function (response) {
                         Log.print(Log.l.trace, "prev Mail saved");
                         that.setNewDataMail();
+                        AppBar.modified = true;
                         that.saveData();
                     }, function (errorResponse) {
                         Log.print(Log.l.error, "error saving mail");
@@ -282,7 +207,7 @@
                 },
                 clickDelete: function (event) {
                     Log.call(Log.l.trace, "Mailing.Controller.");
-                    var recordId = that.binding.dataMail.MaildokumentVIEWID;
+                    var recordId = getRecordId();
                     if (recordId) {
                         var curScope = that.binding.dataMail;
                         if (curScope) {
@@ -380,8 +305,8 @@
             };
 
 
-            var loadData = function (mailId) {
-                Log.call(Log.l.trace, "Mailing.", "mailId=" + mailId);
+            var loadData = function (recordId) {
+                Log.call(Log.l.trace, "Mailing.", "recordId=" + recordId);
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                     if (!Mailing.initSpracheView.getResults().length) {
@@ -396,18 +321,6 @@
                                 if (initSprache && initSprache.winControl) {
                                     initSprache.winControl.data = new WinJS.Binding.List(results);
                                 }
-                                var master = Application.navigator.masterControl;
-                                if (master && master.controller &&
-                                    master.controller.binding &&
-                                    that.binding.dataMail && !that.binding.dataMail.INITSpracheID) {
-                                    for (var i = 0; i < results.length; i++) {
-                                        var row = results[i];
-                                        if (row.LanguageID === master.controller.binding.languageId) {
-                                            that.binding.dataMail.INITSpracheID = row.INITSpracheID;
-                                            break;
-                                        }
-                                    }
-                                }
                             }
                         }, function (errorResponse) {
                             // called asynchronously if an error occurs
@@ -415,7 +328,8 @@
                             AppData.setErrorMsg(that.binding, errorResponse);
                         });
                     } else {
-                        if (initSprache && initSprache.winControl) {
+                        if (initSprache && initSprache.winControl &&
+                            (!initSprache.winControl.data || !initSprache.winControl.data.length)) {
                             var results = Mailing.initSpracheView.getResults();
                             initSprache.winControl.data = new WinJS.Binding.List(results);
                         }
@@ -446,14 +360,14 @@
                         SORTIERUNG: 1
                     });
                 }).then(function () {
-                    if (mailId) {
-                        return Mailing.MaildokumentView.select(function(json) {
+                    if (recordId) {
+                        AppData.setRecordId("Maildokument", recordId);
+                        return Mailing.MaildokumentView.select(function (json) {
                             // this callback will be called asynchronously
                             // when the response is available
                             Log.print(Log.l.trace, "Mailing: success!");
                             if (json && json.d) {
-                                that.setDataMail(json.d);
-                                that.binding.dataMail = json.d;
+                                that.binding.dataMail = setDataMail(json.d);
                                 Log.print(Log.l.trace, "Mailing: success!");
                             }
                             // startContact returns object already parsed from json file in response
@@ -464,7 +378,7 @@
 
                             AppData.setErrorMsg(that.binding, errorResponse);
                         },
-                        mailId);
+                            recordId);
                     } else {
                         return WinJS.Promise.as();
                     }

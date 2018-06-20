@@ -48,7 +48,6 @@
                 Beschreibung: "",
                 Subject: "",
                 Mailtext: "",
-                IsDefault: "",
                 CCAddr: "",
                 BCCAddr: "",
                 Sender: "",
