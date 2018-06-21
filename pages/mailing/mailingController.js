@@ -296,7 +296,7 @@
                     }
                 },
                 clickNew: function () {
-                    if (that.binding.dataMail && that.binding.dataMail.MaildokumentVIEWID && !AppBar.busy) {
+                    if (!AppBar.busy) {
                         return false;
                     } else {
                         return true;
