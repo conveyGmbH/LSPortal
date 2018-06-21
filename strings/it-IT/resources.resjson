@@ -462,7 +462,7 @@
     "reporting.employeechart"  : "Statistiche personale (numer contatti per persona)",
     "reporting.countrychart": "Statistiche paesi di provenienza (contatti per nazione)",
     "reporting.nocountry"   : "Nessuna Nazione",
-
+    "reporting.pdfExportPath" : "Esportazione link",
     "reportingColumnList.title"       : "Costume Export",
 
     "employee.title"        : "Utenti",

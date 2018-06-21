@@ -462,7 +462,7 @@
     "reporting.employeechart"  : "Statistiques Employés (contacts par employé)",
     "reporting.countrychart": "Statistiques nationales (contacts par pays)",
     "reporting.nocountry"   : "Aucun pays",
-
+    "reporting.pdfExportPath" : "Lien d'export",
     "reportingColumnList.title"       : "Coutume Export",
 
     "employee.title"        : "Comptes utilisateurs",
