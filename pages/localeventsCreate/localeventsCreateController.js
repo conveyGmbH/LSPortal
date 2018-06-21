@@ -41,6 +41,7 @@
                 var dataEvent = that.binding.eventData;
                 dataEvent.StartDatum = getDateData(dataEvent.dateBegin);
                 dataEvent.EndDatum = getDateData(dataEvent.dateEnd);
+                dataEvent.LoginName = AppData.getOnlineLogin();
                 if (!dataEvent.MobilerBarcodescanner || dataEvent.MobilerBarcodescanner < 1) {
                     dataEvent.MobilerBarcodescanner = 1;
                 }
