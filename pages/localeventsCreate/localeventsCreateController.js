@@ -37,11 +37,22 @@
             };
             this.setDataEvent = setDataEvent;
 
+            function toDate(date) {
+                var value = date;
+                var year = value.getFullYear();
+                var month = value.getMonth() + 1;
+                var day = value.getDate();
+                var Date = year.toString() + '-' + (month <= 9 ? '0' + month.toString() : month.toString()) + '-' + (day <= 9 ? '0' + day.toString() : day.toString());
+                Date = Date;
+
+                return Date;
+            }
+            this.toDate = toDate;
+
             var getEventData = function() {
                 var dataEvent = that.binding.eventData;
-                dataEvent.StartDatum = getDateData(dataEvent.dateBegin);
-                dataEvent.EndDatum = getDateData(dataEvent.dateEnd);
-                dataEvent.LoginName = AppData.getOnlineLogin();
+                dataEvent.StartDatum = dataEvent.dateBegin;
+                dataEvent.EndDatum = dataEvent.dateEnd;
                 if (!dataEvent.MobilerBarcodescanner || dataEvent.MobilerBarcodescanner < 1) {
                     dataEvent.MobilerBarcodescanner = 1;
                 }
@@ -51,42 +62,30 @@
                 return dataEvent;
             }
             this.getEventData = getEventData;
-
+            
             var insertData = function() {
                 Log.call(Log.l.trace, "LocalEventsCreate.Controller.");
                 AppData.setErrorMsg(that.binding);
-                var ret;
                 var dataEvent = getEventData();
-                if (dataEvent && AppBar.modified && !AppBar.busy) {
-                    AppBar.busy = true;
-                    ret = new WinJS.Promise.as().then(function() {
-                        return LocalEventsCreate.VeranstaltungView.insert(function(json) {
-                            AppBar.busy = false;
-                            // this callback will be called asynchronously
-                            // when the response is available
-                            Log.print(Log.l.info, "VeranstaltungView insert: success!");
-                            AppBar.modified = false;
-                            // employeeView returns object already parsed from json file in response
-                            if (json && json.d) {
-                                setDataEvent(json.d);
-                                WinJS.Promise.timeout(0).then(function() {
-                                    AppBar.busy = false;
-                                    Application.navigateById("localevents", event);
-                                });
-                            }
-                        },
-                        function(errorResponse) {
-                            Log.print(Log.l.error, "error inserting event");
-                            AppBar.busy = false;
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        },
-                        dataEvent);
+                var StartDatum = that.toDate(dataEvent.StartDatum);
+                var EndDatum = that.toDate(dataEvent.EndDatum);
+                Log.call(Log.l.trace, "PDFExport.Controller.");
+                AppData.setErrorMsg(that.binding);
+                AppData.call("PRC_CreateUserVeranstaltung",
+                    {
+                        pVeranstaltungName: dataEvent.VeranstaltungName,
+                        pStartDatum: StartDatum,
+                        pEndDatum: EndDatum,
+                        pAppUser: dataEvent.LeadSuccessMobileApp,
+                        pScanUser: dataEvent.MobilerBarcodescanner
+
+                    }, function (json) {
+                        Log.print(Log.l.info, "call success! ");
+                        Application.navigateById("localevents", event);
+                    }, function (error) {
+                        Log.print(Log.l.error, "call error");
                     });
-                } else {
-                    ret = WinJS.Promise.as();
-                }
                 Log.ret(Log.l.trace);
-                return ret;
             }
             this.insertData = insertData;
             
