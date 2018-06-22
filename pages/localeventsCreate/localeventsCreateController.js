@@ -37,27 +37,20 @@
             };
             this.setDataEvent = setDataEvent;
 
-            function toDate(date) {
-                var value = date;
-                var year = value.getFullYear();
-                var month = value.getMonth() + 1;
-                var day = value.getDate();
-                var Date = year.toString() + '-' + (month <= 9 ? '0' + month.toString() : month.toString()) + '-' + (day <= 9 ? '0' + day.toString() : day.toString());
-                Date = Date;
-
-                return Date;
-            }
-            this.toDate = toDate;
-
             var getEventData = function() {
                 var dataEvent = that.binding.eventData;
-                dataEvent.StartDatum = dataEvent.dateBegin;
-                dataEvent.EndDatum = dataEvent.dateEnd;
-                if (!dataEvent.MobilerBarcodescanner || dataEvent.MobilerBarcodescanner < 1) {
-                    dataEvent.MobilerBarcodescanner = 1;
+                dataEvent.StartDatum = getDateIsoString(dataEvent.dateBegin);
+                dataEvent.EndDatum = getDateIsoString(dataEvent.dateEnd);
+                if (typeof dataEvent.LeadSuccessMobileApp === "string") {
+                    dataEvent.LeadSuccessMobileApp = parseInt(dataEvent.LeadSuccessMobileApp);
                 }
-                if (dataEvent.LeadSuccessMobileApp === 0) {
-                    delete dataEvent.LeadSuccessMobileApp;
+                if (!dataEvent.LeadSuccessMobileApp || dataEvent.LeadSuccessMobileApp < 1) {
+                    dataEvent.LeadSuccessMobileApp = 1;
+                }
+                if (!dataEvent.MobilerBarcodescanner) {
+                    dataEvent.MobilerBarcodescanner = 0;
+                } else if (typeof dataEvent.MobilerBarcodescanner === "string") {
+                    dataEvent.MobilerBarcodescanner = parseInt(dataEvent.LeadSuccessMobileApp);
                 }
                 return dataEvent;
             }
@@ -67,23 +60,22 @@
                 Log.call(Log.l.trace, "LocalEventsCreate.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var dataEvent = getEventData();
-                var StartDatum = that.toDate(dataEvent.StartDatum);
-                var EndDatum = that.toDate(dataEvent.EndDatum);
                 Log.call(Log.l.trace, "PDFExport.Controller.");
                 AppData.setErrorMsg(that.binding);
                 AppData.call("PRC_CreateUserVeranstaltung",
                     {
                         pVeranstaltungName: dataEvent.VeranstaltungName,
-                        pStartDatum: StartDatum,
-                        pEndDatum: EndDatum,
+                        pStartDatumString: dataEvent.StartDatum,
+                        pEndDatumString: dataEvent.EndDatum,
                         pAppUser: dataEvent.LeadSuccessMobileApp,
                         pScanUser: dataEvent.MobilerBarcodescanner
 
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
                         Application.navigateById("localevents", event);
-                    }, function (error) {
+                    }, function (errorResponse) {
                         Log.print(Log.l.error, "call error");
+                        AppData.setErrorMsg(that.binding, errorResponse);
                     });
                 Log.ret(Log.l.trace);
             }
