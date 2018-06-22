@@ -462,7 +462,7 @@
     "reporting.employeechart"  : "Mitarbeiterstatistik (Kontakte pro Mitarbeiter)",
     "reporting.countrychart": "Landstatistik (v pro Land)",
     "reporting.nocountry"   : "Kein Land",
-
+	"reporting.pdfExportPath" : "Export-Link",
     "reportingColumnList.title"       : "Benutzerdefinierter Export",
 
     "employee.title"        : "Benutzerkonten",

@@ -485,6 +485,7 @@
                 data.userName = AppData._userData.Login;
                 data.userPresent = AppData._userData.Present;
                 data.publishFlag = AppData._userData.PublishFlag;
+                data.exportPath = AppData._userData.VeranstText_1;
                 data.contactDate = (AppData._contactData && AppData._contactData.Erfassungsdatum);
                 data.contactId = (AppData._contactData && AppData._contactData.KontaktVIEWID);
                 data.globalContactID = ((AppData._contactData && AppData._contactData.CreatorRecID)
