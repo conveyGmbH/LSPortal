@@ -39,54 +39,45 @@
 
             var getEventData = function() {
                 var dataEvent = that.binding.eventData;
-                dataEvent.StartDatum = getDateData(dataEvent.dateBegin);
-                dataEvent.EndDatum = getDateData(dataEvent.dateEnd);
-                dataEvent.LoginName = AppData.getOnlineLogin();
-                if (!dataEvent.MobilerBarcodescanner || dataEvent.MobilerBarcodescanner < 1) {
-                    dataEvent.MobilerBarcodescanner = 1;
+                dataEvent.StartDatum = getDateIsoString(dataEvent.dateBegin);
+                dataEvent.EndDatum = getDateIsoString(dataEvent.dateEnd);
+                if (typeof dataEvent.LeadSuccessMobileApp === "string") {
+                    dataEvent.LeadSuccessMobileApp = parseInt(dataEvent.LeadSuccessMobileApp);
                 }
-                if (dataEvent.LeadSuccessMobileApp === 0) {
-                    delete dataEvent.LeadSuccessMobileApp;
+                if (!dataEvent.LeadSuccessMobileApp || dataEvent.LeadSuccessMobileApp < 1) {
+                    dataEvent.LeadSuccessMobileApp = 1;
+                }
+                if (!dataEvent.MobilerBarcodescanner) {
+                    dataEvent.MobilerBarcodescanner = 0;
+                } else if (typeof dataEvent.MobilerBarcodescanner === "string") {
+                    dataEvent.MobilerBarcodescanner = parseInt(dataEvent.LeadSuccessMobileApp);
                 }
                 return dataEvent;
             }
             this.getEventData = getEventData;
-
+            
             var insertData = function() {
                 Log.call(Log.l.trace, "LocalEventsCreate.Controller.");
                 AppData.setErrorMsg(that.binding);
-                var ret;
                 var dataEvent = getEventData();
-                if (dataEvent && AppBar.modified && !AppBar.busy) {
-                    AppBar.busy = true;
-                    ret = new WinJS.Promise.as().then(function() {
-                        return LocalEventsCreate.VeranstaltungView.insert(function(json) {
-                            AppBar.busy = false;
-                            // this callback will be called asynchronously
-                            // when the response is available
-                            Log.print(Log.l.info, "VeranstaltungView insert: success!");
-                            AppBar.modified = false;
-                            // employeeView returns object already parsed from json file in response
-                            if (json && json.d) {
-                                setDataEvent(json.d);
-                                WinJS.Promise.timeout(0).then(function() {
-                                    AppBar.busy = false;
-                                    Application.navigateById("localevents", event);
-                                });
-                            }
-                        },
-                        function(errorResponse) {
-                            Log.print(Log.l.error, "error inserting event");
-                            AppBar.busy = false;
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        },
-                        dataEvent);
+                Log.call(Log.l.trace, "PDFExport.Controller.");
+                AppData.setErrorMsg(that.binding);
+                AppData.call("PRC_CreateUserVeranstaltung",
+                    {
+                        pVeranstaltungName: dataEvent.VeranstaltungName,
+                        pStartDatumString: dataEvent.StartDatum,
+                        pEndDatumString: dataEvent.EndDatum,
+                        pAppUser: dataEvent.LeadSuccessMobileApp,
+                        pScanUser: dataEvent.MobilerBarcodescanner
+
+                    }, function (json) {
+                        Log.print(Log.l.info, "call success! ");
+                        Application.navigateById("localevents", event);
+                    }, function (errorResponse) {
+                        Log.print(Log.l.error, "call error");
+                        AppData.setErrorMsg(that.binding, errorResponse);
                     });
-                } else {
-                    ret = WinJS.Promise.as();
-                }
                 Log.ret(Log.l.trace);
-                return ret;
             }
             this.insertData = insertData;
             

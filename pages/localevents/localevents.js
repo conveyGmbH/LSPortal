@@ -54,7 +54,7 @@
             var commandList = [
                 { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" },
                 { id: "clickNew", label: getResourceText("command.new"), tooltip: getResourceText("tooltip.newevent"), section: "primary", svg: "plus" },
-                { id: "clickChange", label: getResourceText("command.desk"), tooltip: getResourceText("tooltip.eventchange"), section: "primary", svg: "desk" }
+                { id: "clickChange", label: getResourceText("command.desk"), tooltip: getResourceText("tooltip.eventchange"), section: "primary", svg: "navigate_check" }
             ];
 
             this.controller = new LocalEvents.Controller(element, commandList);
