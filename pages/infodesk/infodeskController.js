@@ -590,14 +590,14 @@
             this.resultConverter = resultConverter;
 
             // show business card photo
-            var userPhotoContainer = pageElement.querySelector("#userPhoto");
+            var userPhotoContainer = pageElement.querySelector("#user"); //userphoto
             var showPhoto = function () {
                 if (that.binding.photoData) {
                     if (userPhotoContainer) {
                         var userImg = new Image();
                         userImg.id = "userImg";
                         userPhotoContainer.appendChild(userImg);
-                        WinJS.Utilities.addClass(userImg, "user-photo");
+                        WinJS.Utilities.addClass(userImg, "user-photo-info");
                         userImg.src = that.binding.photoData;
                     }
                     AppBar.triggerDisableHandlers();
@@ -862,6 +862,18 @@
                     }
                 }).then(function () {
                     that.showPhoto();
+                }).then(function() {
+                    var userImageContainer = pageElement.querySelector(".image-container");
+                    if (userImageContainer) {
+                        Colors.loadSVGImageElements(userImageContainer, "action-image", 250, Colors.textColor);
+                    }
+                    var imagesvg = pageElement.getElementsByTagName('svg');
+                    if (imagesvg && imagesvg[0] && that.binding.photoData) {
+                        imagesvg[0].style.display = "none";
+                    } else
+                        imagesvg[0].style.display = "inline";
+
+                    Log.print(Log.l.trace, "Infodesk: Image!");
                 });
             }
             this.loadData = loadData;

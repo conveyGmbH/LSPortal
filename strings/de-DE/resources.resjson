@@ -1,4 +1,4 @@
-{
+﻿{
     "general.event"         : "Veranstaltung",
     "general.today"         : "Heute",
     "general.yesterday"     : "Gestern",
@@ -73,7 +73,7 @@
     "tooltip.eventchange"	: "Veranstaltung wechseln",
     "tooltip.savepdf"	    : "PDF Dateiname speichern",
     "tooltip.exportpdf"	    : "PDF exportieren",
-    "tooltip.deletemail"	: "Mail löschen",
+    "tooltip.deletemail"	: "Mail lÃ¶schen",
     "tooltip.save"			    : "Speichern",
 
     "start.title"           : "Startseite",
@@ -356,13 +356,13 @@
 
     "infodeskEmpList.title" : "Benutzerkonten",
     "infodeskEmpList.count" : "Anzahl",
-    "infodeskEmpList.name"  : "Name",
-    "infodeskEmpList.firstName" : "Vorname",
+	  "infodeskEmpList.name"  : "Name",
+	  "infodeskEmpList.firstName" : "Vorname",
     "infodeskEmpList.login" : "Benutzer",
-	"infodeskEmpList.firstNameDesc"  : "Vorname (absteigend)",
-	"infodeskEmpList.firstNameAsc"  : "Vorname (aufsteigend)",
-	"infodeskEmpList.nameDesc"  : "Name (absteigend)",
-	"infodeskEmpList.nameAsc"  : "Name (aufsteigend)",
+	"infodeskEmpList.firstNameDesc"  : "Vorname ↓",
+	"infodeskEmpList.firstNameAsc"  : "Vorname ↑",
+	"infodeskEmpList.nameDesc"  : "Name ↓",
+	"infodeskEmpList.nameAsc"  : "Name ↑",
 
     "userinfo.title"        : "Benutzerinfo",
     "userinfo.present"      : "Ich bin jetzt auf dem Gelände",
@@ -396,7 +396,7 @@
     "label.reportingColumnList"       : "Benutzerdefiniert",
     "label.skills"          : "Fähigkeiten",
     "label.skillentry"      : "Fähigkeit eintragen",
-    "label.mailing"         : "Mail",
+    "label.mailing"         : "Standard Mail",
     "label.mailingProduct"  : "Produkt E-Mail",
     "label.infodesk"        : "Infodesk",
     "label.mandatory"       : "Pflichtfelder",

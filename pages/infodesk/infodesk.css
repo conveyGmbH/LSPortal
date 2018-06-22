@@ -262,10 +262,26 @@ textarea:-ms-input-placeholder { font-style:italic; } /* ie */
     margin-top: 10px;
     height: 225px;
 }
-#userPhoto .user-photo {
-    margin-top: 40px;
-    margin-left: 40px;
-    width: 66%;
-    height: 66%;
-    border-radius: 0px;
+.user-image-container {
+    display: block;
+    position: absolute;
+    top: 2px;
+    left: calc(100% - 40px);
+    background-color: gray;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    padding: 0;
 }
+.user-image {
+    display: block;
+    position: relative;
+    left: 0;
+    top: -14px;
+    z-index: 9900;
+}
+.user-photo-info {
+    margin-left: 25px;
+    width: 30%;
+}
+

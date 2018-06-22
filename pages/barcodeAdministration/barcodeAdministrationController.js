@@ -49,11 +49,25 @@
             this.binding = WinJS.Binding.as(this.pageData);
 
             function PrintElem(elem) {
-                var mywindow = window.open('', 'PRINT', 'height=600,width=1000');
+                var mywindow = window.open('', 'PRINT', 'height=800,width=1400');
                 mywindow.document.write('<html><head><title>' + getResourceText("barcodeAdministration.title") + '</title>');
                 mywindow.document.write('</head><body >');
                 mywindow.document.write((document.getElementById(elem)).querySelector(".win-surface").innerHTML);
-                mywindow.document.write('<style> .barcodeAdministration-content {width: 100%; zoom: 66%; orientation: landscape; page-break-inside: avoid}.frage-container {width: 100%; page-break-inside: avoid}.barcode-items{page-break-inside: avoid} @media print {.frage-container {width: 100%; page-break-inside; avoid}}.barcode-frage-titel {display: inline;width: 100%; font-size: 25px; float: left;}.barcode-items{page-break-inside: avoid} .barcode-item { width: 180px; height: 130px; margin-right: 180px;margin-bottom: 120px;overflow: hidden;float: left; page-break-inside: avoid} .barcode-antwort-text {display: block;margin-left: 8px; font-size: 25px;}</style>');
+                mywindow.document.write(
+                '<style> .barcodeAdministration-content {' +
+                    'width: 100%; ' +
+                    'font-family: "Segoe UI",sans-serif,"Segoe MDL2 Assets",Symbols,"Segoe UI Emoji"; ' +
+                    'orientation: landscape; transform: scale(66%); transform-origin: left top; page-break-inside: avoid' +
+                '}' +
+                '.frage-container {width: 100%; page-break-inside: avoid' +
+                '}' +
+                '.barcode-item { width: 480px; ' +
+                'margin-right: 20px;' +
+                'overflow: hidden;' +
+                'float: left; page-break-inside: avoid' +
+                '}' +
+                '.barcode-items{page-break-inside: avoid} ' +
+                '@media print {.frage-container {width: 100%; page-break-inside; avoid}}.barcode-frage-titel {display: inline;width: 100%; font-size: 25px; float: left;word-break: break-word;}.barcode-items{page-break-inside: avoid} .barcode-item { width: 480px; margin-right: 20px;overflow: hidden;float: left; page-break-inside: avoid} .barcode-antwort-text {height: 200px;display: block;margin-left: 8px; font-size: 25px; word-break: break-word;}</style>');
                 mywindow.document.write('</body></html>');
 
                 mywindow.document.close(); // necessary for IE >= 10
@@ -141,7 +155,7 @@
 
                 Log.ret(Log.l.trace);
             },
-                
+
             clickChangeUserState: function (event) {
                 Log.call(Log.l.trace, "BarcodeAdministration.Controller.");
                 Application.navigateById("userinfo", event);
@@ -207,7 +221,7 @@
                                     }
                                 }
                             }
-                                
+
                             /*
                             if (that.records) {
                                 var items = that.records;
@@ -329,7 +343,7 @@
         },
         clickbeforeprint: function() {
             return false;
-        } 
+        }
     };
 
     // Finally, wire up binding
