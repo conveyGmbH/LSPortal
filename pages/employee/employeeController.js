@@ -136,9 +136,10 @@
                                 /* Mitarbeiter Liste neu laden und Selektion auf neue Zeile setzen */
                                 var master = Application.navigator.masterControl;
                                 if (master && master.controller && master.controller.binding) {
-                                    master.controller.binding.employeeId = that.binding.dataEmployee.MitarbeiterVIEWID;
+                                    var prevSelIdx = master.controller.binding.selIdx;
                                     master.controller.loadData().then(function () {
                                         Log.print(Log.l.info, "master.controller.loadData: success!");
+                                        master.controller.setSelIndex(prevSelIdx);
                                     });
                                 }
                             }, function (errorResponse) {
@@ -171,6 +172,7 @@
                         if (master && master.controller && master.controller.binding) {
                             master.controller.binding.employeeId = that.binding.dataEmployee.MitarbeiterVIEWID;
                             master.controller.loadData(that.binding.dataEmployee.MitarbeiterVIEWID).then(function () {
+                                Log.print(Log.l.info, "master.controller.loadData: success!");
                                 master.controller.selectRecordId(that.binding.dataEmployee.MitarbeiterVIEWID);
                             });
                         }
@@ -216,7 +218,13 @@
                 },
                 clickNew: function() {
                     if (that.binding.dataEmployee && that.binding.dataEmployee.MitarbeiterVIEWID && !AppBar.busy) {
-                        return false;
+                        var master = Application.navigator.masterControl;
+                        if (master && master.controller && master.controller.binding &&
+                            master.controller.binding.hasLocalevents) {
+                            return false;
+                        } else {
+                            return true;
+                        }
                     } else {
                         return true;
                     }
@@ -224,7 +232,14 @@
                 clickDelete: function() {
                     if (that.binding.dataEmployee && that.binding.dataEmployee.MitarbeiterVIEWID && !AppBar.busy &&
                         that.binding.dataEmployee.MitarbeiterVIEWID !== AppData.getRecordId("Mitarbeiter")) {
-                        return false;
+                        var master = Application.navigator.masterControl;
+                        if (master && master.controller && master.controller.binding &&
+                            master.controller.binding.hasLocalevents &&
+                            !master.controller.binding.hasContacts) {
+                            return false;
+                        } else {
+                            return true;
+                        }
                     } else {
                         return true;
                     }
