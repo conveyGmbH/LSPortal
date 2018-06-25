@@ -45,6 +45,11 @@
 
             var that = this;
 
+            var privacyPolicyLink = pageElement.querySelector("#privacyPolicyLink");
+            if (privacyPolicyLink) {
+                privacyPolicyLink.innerHTML = "<a href=\"http://" + getResourceText("login.privacyPolicyLink") + "\">" + getResourceText("login.privacyPolicyLink") + "</a>";
+            }
+
             // define handlers
             this.eventHandlers = {
                 clickOk: function (event) {
@@ -56,17 +61,24 @@
                     Log.call(Log.l.trace, "Login.Controller.");
                     Application.navigateById("newAccount", event, true);
                     Log.ret(Log.l.trace);
+                },
+                clickPrivacyPolicy: function (event) {
+                    Log.call(Log.l.trace, "Login.Controller.");
+                    that.binding.privacyPolicyFlag = event.currentTarget.checked;
+                    AppBar.triggerDisableHandlers();
+                    Log.ret(Log.l.trace);
                 }
             };
 
             this.disableHandlers = {
-                clickOk: function() {
-                    if (AppBar.busy) {
+                clickOk: function () {
+                    if (AppBar.busy || (that.binding.dataLogin.Login.length === 0 || that.binding.dataLogin.Password.length === 0 || !that.binding.privacyPolicyFlag)) {
                         NavigationBar.disablePage("start");
                     } else {
                         NavigationBar.enablePage("start");
                     }
-                    return AppBar.busy;
+
+                    return AppBar.busy || (that.binding.dataLogin.Login.length === 0 || that.binding.dataLogin.Password.length === 0 || !that.binding.privacyPolicyFlag);
                 }
             };
 
@@ -113,7 +125,7 @@
             };
             that.openDb = openDb;
 
-            var saveData = function(complete, error) {
+            var saveData = function (complete, error) {
                 var err = null;
                 Log.call(Log.l.trace, "Login.Controller.");
                 that.binding.messageText = null;

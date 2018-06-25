@@ -20,6 +20,13 @@
             Log.call(Log.l.trace, pageName + ".");
             // TODO: Initialize the page here.
             NavigationBar.enablePage("start");
+            NavigationBar.disablePage("localevents");
+            NavigationBar.disablePage("events");
+            NavigationBar.disablePage("mailing");
+            NavigationBar.disablePage("employee");
+            NavigationBar.disablePage("contacts");
+            NavigationBar.disablePage("reporting");
+            NavigationBar.disablePage("infodesk");
             NavigationBar.disablePage("settings");
             NavigationBar.disablePage("info");
             NavigationBar.disablePage("search");

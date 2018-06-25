@@ -211,7 +211,6 @@
                         } else if (listView.winControl.loadingState === "complete") {
                             // load SVG images
                             Colors.loadSVGImageElements(listView, "action-image", 40, Colors.textColor);
-
                             that.loadNextUrl();
                         }
                     }

@@ -67,6 +67,12 @@
                             <span class="large_field"
                                   data-win-bind="textContent: progress.text"></span>
                         </div>
+                        <div class="field_line">
+                            <input type="checkbox" class="win-checkbox checkbox" onclick="AppBar.handleEvent('click', 'clickPrivacyPolicy', event)"/> <!--data-win-bind="checked: SSANTWORT19"-->
+                            <span data-win-res="{textContent: 'login.privacyPolicy'}"></span>
+                            <span class="large_field"
+                                  id="privacyPolicyLink"></span>
+                        </div>
                         <div class="line-separator"></div>
                     </div>
                     <div class="error-message"
