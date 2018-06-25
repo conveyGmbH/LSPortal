@@ -1,0 +1,23 @@
+﻿body {
+}
+
+.win-itemscontainer {
+    padding-left: 20px;
+}
+
+.list-field-small-fixed {
+    width: 300px;
+    padding-left: 20px;
+}
+
+.status {
+    padding-left: 20px;
+}
+.list-header {
+    padding-left: 27px;
+    font-weight: bold;
+}
+.row-separator {
+    padding-left: 20px;
+    padding-right: 20px;
+}

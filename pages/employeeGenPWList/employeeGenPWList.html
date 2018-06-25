@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="employeeGenPWList.css" rel="stylesheet" />
+    <script type="text/javascript" src="employeeGenPWListService.js"></script>
+    <script type="text/javascript" src="employeeGenPWListController.js"></script>
+    <script type="text/javascript" src="employeeGenPWList.js"></script>
+    <script type="text/javascript" src="exportXlsx.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="employeeGenPWList fragment">
+        <div id="employeeGenPWListController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="contentarea win-type-body">
+                    <div class="content-header">
+                    <div class="half-circle half-circle-textcolor">&nbsp;</div>
+                    <div class="content-header-line win-type-caption">
+                        <span class="id-field"></span>
+                        <span class="caption-field" data-win-res="{textContent: 'employeegenpwlist.title'}"></span>
+                        <span class="date-field"></span>
+                    </div>
+                </div>
+                    <div class="headerFooterPlaceholder">
+                        <div class="list-header">
+                            <div class="row-separator"></div>
+                            <div class="list-landscape-only">
+                                <div class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'employeegenpwlist.login'}"></div>
+                                <div class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'employeegenpwlist.password'}"></div>
+                            </div>
+                            <div class="row-separator"></div>
+                        </div>
+                    </div>
+                    <div class="employeegenpwlist-template"
+                         data-win-control="WinJS.Binding.Template" style="display: none">
+                        <div class="list-landscape-only">
+                            <div class="row-bkg-gray"
+                                 data-win-bind="style.display: index Binding.Converter.oddToDisplay"></div>
+                            <div class="list-field-small-fixed win-type-ellipsis"
+                                 data-win-bind="textContent: Login"></div>
+                            <div class="list-field-small-fixed win-type-ellipsis"
+                                 data-win-bind="textContent: GenPassword"></div>
+                        </div>
+                        <div class="list-portrait-only">
+                            <div class="row-separator"></div>
+                            <div class="list-div-left">
+                                <div class="list-symbol-ID">
+                                    <div id="drop_down_list" class="action-image"></div>
+                                </div>
+                                <div class="list-compressed">
+                                    <!--list-localeventsList-->
+                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
+                                          data-win-bind="textContent: Login"></span>
+                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
+                                          data-win-bind="textContent: GenPassword"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="headerFooterPlaceholder">
+                        <div class="list-footer">
+                            <div class="status">
+                                <progress class="win-progress-bar progress"></progress>
+                                <div class="counter">
+                                    <span data-win-res="{textContent: 'mailingList.count'}"></span><span>: </span><span data-win-bind="textContent: count"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="employeegenpwlist"
+                         class="listview win-selectionstylefilled"
+                         data-win-control="WinJS.UI.ListView"
+                         data-win-options="{
+                                header: select('.list-header'),
+                                itemTemplate: select('.employeegenpwlist-template'),
+                                footer: select('.list-footer')
+                         }">
+                    </div>
+                    <div class="error-message"
+                         data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>
