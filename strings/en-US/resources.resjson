@@ -410,6 +410,7 @@
     "label.questionnaireRemote" : "Questionnaire",
     "label.sketchRemote"    : "Notes",
     "label.pdfExport"     : "PDF Export",
+    "label.employeeGenPWList"     : "Pre-generated",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Cancel",
@@ -549,9 +550,10 @@
 	
     "localevents.title" : "Events",
 
-    "employeegenpwlist.title"   : "Employee generated passwords",
-	"employeegenpwlist.login" : "Loginname",
-	"employeegenpwlist.password" : "Password",
+    "employeegenpwlist.title" : "Pre-generated employee passwords",
+        "employeegenpwlist.login" : "Loginname",
+        "employeegenpwlist.password" : "Password",
+    "employeegenpwlist.passwordchanged" : "Password was changed",
 
 	"pdfExport.title" : "PDF Export",
 	"pdfExport.filenamepartone" : "First part of the file name",
