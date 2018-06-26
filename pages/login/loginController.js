@@ -19,6 +19,7 @@
             // delete login data first
             AppData._persistentStates.odata.login = null;
             AppData._persistentStates.odata.password = null;
+            AppData._persistentStates.odata.privacyPolicyFlag = null;
             AppData._persistentStates.odata.dbSiteId = null;
             AppData._persistentStates.allRestrictions = {};
             AppData._persistentStates.allRecIds = {};
@@ -33,7 +34,8 @@
             Application.Controller.apply(this, [pageElement, {
                 dataLogin: {
                     Login: "",
-                    Password: ""
+                    Password: "",
+                    privacyPolicyFlag: false
                 },
                 hideLoginData: false,
                 progress: {
@@ -64,7 +66,7 @@
                 },
                 clickPrivacyPolicy: function (event) {
                     Log.call(Log.l.trace, "Login.Controller.");
-                    that.binding.privacyPolicyFlag = event.currentTarget.checked;
+                    that.binding.dataLogin.privacyPolicyFlag = event.currentTarget.checked;
                     AppBar.triggerDisableHandlers();
                     Log.ret(Log.l.trace);
                 }
@@ -72,13 +74,13 @@
 
             this.disableHandlers = {
                 clickOk: function () {
-                    if (AppBar.busy || (that.binding.dataLogin.Login.length === 0 || that.binding.dataLogin.Password.length === 0 || !that.binding.privacyPolicyFlag)) {
+                    if (AppBar.busy || (that.binding.dataLogin.Login.length === 0 || that.binding.dataLogin.Password.length === 0 || !that.binding.dataLogin.privacyPolicyFlag)) {
                         NavigationBar.disablePage("start");
                     } else {
                         NavigationBar.enablePage("start");
                     }
 
-                    return AppBar.busy || (that.binding.dataLogin.Login.length === 0 || that.binding.dataLogin.Password.length === 0 || !that.binding.privacyPolicyFlag);
+                    return AppBar.busy || (that.binding.dataLogin.Login.length === 0 || that.binding.dataLogin.Password.length === 0 || !that.binding.dataLogin.privacyPolicyFlag);
                 }
             };
 
@@ -185,6 +187,7 @@
                                 if (dataLogin.OK_Flag === "X" && dataLogin.MitarbeiterID) {
                                     AppData._persistentStates.odata.login = that.binding.dataLogin.Login;
                                     AppData._persistentStates.odata.password = that.binding.dataLogin.Password;
+                                    AppData._persistentStates.odata.privacyPolicyFlag = that.binding.dataLogin.privacyPolicyFlag;
                                     AppData.setRecordId("Mitarbeiter", dataLogin.MitarbeiterID);
                                     NavigationBar.enablePage("settings");
                                     NavigationBar.enablePage("info");

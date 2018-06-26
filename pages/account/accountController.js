@@ -23,6 +23,7 @@
                 dataLogin: {
                     Login: AppData._persistentStates.odata.login,
                     Password: AppData._persistentStates.odata.password,
+                    PrivacyPolicyFlag: AppData._persistentStates.odata.privacyPolicyFlag,
                     INITSpracheID: 0,
                     LanguageID: null
                 },
@@ -65,6 +66,11 @@
             var contentarea = pageElement.querySelector(".contentarea");
 
             var that = this;
+
+            var privacyPolicyLink = pageElement.querySelector("#privacyPolicyLink");
+            if (privacyPolicyLink) {
+                privacyPolicyLink.innerHTML = "<a href=\"http://" + getResourceText("login.privacyPolicyLink") + "\">" + getResourceText("login.privacyPolicyLink") + "</a>";
+            }
 
             // define handlers
             this.eventHandlers = {
@@ -139,6 +145,12 @@
                         }
                     }
                     Log.ret(Log.l.trace);
+                },
+                clickPrivacyPolicy: function (event) {
+                    Log.call(Log.l.trace, "Login.Controller.");
+                    that.binding.dataLogin.privacyPolicyFlag = event.currentTarget.checked;
+                    AppBar.triggerDisableHandlers();
+                    Log.ret(Log.l.trace);
                 }
             };
 
@@ -156,12 +168,16 @@
                         that.binding.doReloadDb = true;
                         that.binding.doEdit = true;
                     }
-                    if (AppBar.busy) {
+                    if (!that.binding.dataLogin.Login || !that.binding.dataLogin.Password) {
+                        that.binding.dataLogin.PrivacyPolicyFlag = false;
+                    }
+                    if (AppBar.busy || (!that.binding.dataLogin.Login || !that.binding.dataLogin.Password || !that.binding.dataLogin.PrivacyPolicyFlag)) {
                         NavigationBar.disablePage("start");
                     } else {
                         NavigationBar.enablePage("start");
                     }
-                    return AppBar.busy;
+
+                    return AppBar.busy || (!that.binding.dataLogin.Login || !that.binding.dataLogin.Password || !that.binding.dataLogin.privacyPolicyFlag);
                 }
             };
 
