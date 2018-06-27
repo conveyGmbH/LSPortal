@@ -19,7 +19,6 @@
             // delete login data first
             AppData._persistentStates.odata.login = null;
             AppData._persistentStates.odata.password = null;
-            AppData._persistentStates.odata.privacyPolicyFlag = null;
             AppData._persistentStates.odata.dbSiteId = null;
             AppData._persistentStates.allRestrictions = {};
             AppData._persistentStates.allRecIds = {};
@@ -35,7 +34,8 @@
                 dataLogin: {
                     Login: "",
                     Password: "",
-                    privacyPolicyFlag: false
+                    privacyPolicyFlag: false,
+                    privacyPolicydisabled: false
                 },
                 hideLoginData: false,
                 progress: {
@@ -67,6 +67,7 @@
                 clickPrivacyPolicy: function (event) {
                     Log.call(Log.l.trace, "Login.Controller.");
                     that.binding.dataLogin.privacyPolicyFlag = event.currentTarget.checked;
+                    that.binding.dataLogin.privacyPolicydisabled = event.currentTarget.checked;
                     AppBar.triggerDisableHandlers();
                     Log.ret(Log.l.trace);
                 }
@@ -187,7 +188,6 @@
                                 if (dataLogin.OK_Flag === "X" && dataLogin.MitarbeiterID) {
                                     AppData._persistentStates.odata.login = that.binding.dataLogin.Login;
                                     AppData._persistentStates.odata.password = that.binding.dataLogin.Password;
-                                    AppData._persistentStates.odata.privacyPolicyFlag = that.binding.dataLogin.privacyPolicyFlag;
                                     AppData.setRecordId("Mitarbeiter", dataLogin.MitarbeiterID);
                                     NavigationBar.enablePage("settings");
                                     NavigationBar.enablePage("info");

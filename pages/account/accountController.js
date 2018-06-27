@@ -23,7 +23,8 @@
                 dataLogin: {
                     Login: AppData._persistentStates.odata.login,
                     Password: AppData._persistentStates.odata.password,
-                    PrivacyPolicyFlag: AppData._persistentStates.odata.privacyPolicyFlag,
+                    PrivacyPolicyFlag: true,
+                    PrivacyPolicydisabled: true,
                     INITSpracheID: 0,
                     LanguageID: null
                 },
@@ -170,9 +171,20 @@
                     }
                     if (!that.binding.dataLogin.Login || !that.binding.dataLogin.Password) {
                         that.binding.dataLogin.PrivacyPolicyFlag = false;
-                    }
+                        that.binding.dataLogin.PrivacyPolicydisabled = false;
+                    } 
                     if (AppBar.busy || (!that.binding.dataLogin.Login || !that.binding.dataLogin.Password || !that.binding.dataLogin.PrivacyPolicyFlag)) {
                         NavigationBar.disablePage("start");
+                        NavigationBar.disablePage("localevents");
+                        NavigationBar.disablePage("events");
+                        NavigationBar.disablePage("mailing");
+                        NavigationBar.disablePage("employee");
+                        NavigationBar.disablePage("contacts");
+                        NavigationBar.disablePage("reporting");
+                        NavigationBar.disablePage("infodesk");
+                        NavigationBar.disablePage("settings");
+                        NavigationBar.disablePage("info");
+                        NavigationBar.disablePage("search");
                     } else {
                         NavigationBar.enablePage("start");
                     }
