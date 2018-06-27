@@ -177,7 +177,7 @@
                         NavigationBar.enablePage("start");
                     }
 
-                    return AppBar.busy || (!that.binding.dataLogin.Login || !that.binding.dataLogin.Password || !that.binding.dataLogin.privacyPolicyFlag);
+                    return AppBar.busy || (!that.binding.dataLogin.Login || !that.binding.dataLogin.Password || !that.binding.dataLogin.PrivacyPolicyFlag);
                 }
             };
 
