@@ -282,6 +282,43 @@ textarea:-ms-input-placeholder { font-style:italic; } /* ie */
 }
 .user-photo-info {
     margin-left: 25px;
-    width: 30%;
+   /* width: 75%;*/
 }
-
+.svgimg {
+    width: 50%;
+    float: left;
+}
+.label_half_right {
+    min-height: 32px;
+    margin-right: 0px; /*-2*/
+    float: right;
+    width: 50%;
+   /* margin-left: 1em;*/
+    margin-top: 0;
+    margin-left: 0px;
+}
+.view-size-small .label_half_left{
+    width: 50%;
+}
+.view-size-small .label_half_right{
+    width: 50%;
+}
+.view-size-medium .label_half{
+    width: 100%;
+}
+.label_half_left {
+    min-height: 32px;
+    float: left;
+    width: 49%;
+}   
+.label_half {
+    min-height: 32px;
+    float: left;
+    width: 49%;
+}
+.view-size-small .label_half {
+    width: 100%;
+}
+.view-size-small .label_half{
+    width: 100%;
+}

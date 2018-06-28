@@ -865,7 +865,7 @@
                 }).then(function() {
                     var userImageContainer = pageElement.querySelector(".image-container");
                     if (userImageContainer) {
-                        Colors.loadSVGImageElements(userImageContainer, "action-image", 250, Colors.textColor);
+                        Colors.loadSVGImageElements(userImageContainer, "svgimg", 250, Colors.textColor);
                     }
                     var imagesvg = pageElement.getElementsByTagName('svg');
                     if (imagesvg && imagesvg[0] && that.binding.photoData) {
