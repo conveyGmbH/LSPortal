@@ -288,7 +288,6 @@
                             that.firstContactsIndex = i + 1;
                             that.firstDocsIndex = index + 1;
                             that.binding.photoData = employee.OvwContentDOCCNT3;
-                            showPhoto();
                             break;
                         }
                     }
@@ -673,13 +672,10 @@
                                 that.docs = results;
                             } else {
                                 that.binding.photoData = "";
-                                //showPhoto();
                             }
 
                         }, function (errorResponse) {
                             that.binding.photoData = "";
-                            //showPhoto();
-                            // ignore that
                         });
                     });
                 });

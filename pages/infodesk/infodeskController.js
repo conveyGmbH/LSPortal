@@ -61,7 +61,6 @@
             var setRecordId = function (recordId) {
                 Log.call(Log.l.trace, "UserInfo.Controller.", recordId);
                 that.binding.employeeId = recordId;
-                AppData.setRecordId("Mitarbeiter", recordId);
                 AppBar.triggerDisableHandlers();
                 Log.ret(Log.l.trace);
             };
