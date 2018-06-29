@@ -100,8 +100,7 @@
                 fourthskill: "",
                 fifthskill: "",
                 Info2: "",
-                receiver: "",
-                photoData: ""
+                receiver: ""
             }
         },
         _benutzerView: {

@@ -21,7 +21,8 @@
                 restriction: getEmptyDefaultValue(Infodesk.defaultRestriction),
                 dataEmployee: getEmptyDefaultValue(Infodesk.SkillEntry.defaultValue),
                 dataBenutzer: getEmptyDefaultValue(Infodesk.benutzerView.defaultValue),
-                employeeId: null
+                employeeId: null,
+                photoData: ""
             }, commandList]);
 
             var prevMasterLoadPromise = null;
@@ -645,7 +646,6 @@
                         AppData.setErrorMsg(that.binding);
                         return Infodesk.employeeView.select(function (json) {
                                 Log.print(Log.l.trace, "skillEntryView: success!");
-                                that.binding.dataEmployee = getEmptyDefaultValue(Infodesk.SkillEntry.defaultValue);
                                 if (json && json.d) {
                                     that.binding.dataEmployee = json.d;
                                     setRecordId(that.binding.dataEmployee.MitarbeiterVIEWID);
@@ -776,9 +776,10 @@
                             if (json && json.d &&
                                 typeof json.d.DocContentDOCCNT1 === "string") {
                                 var sub = json.d.DocContentDOCCNT1.search("\r\n\r\n");
-                                that.binding.dataEmployee.photoData = "data:image/jpeg;base64," + json.d.DocContentDOCCNT1.substr(sub + 4);
+                                that.binding.photoData = "data:image/jpeg;base64," + json.d.DocContentDOCCNT1.substr(sub + 4);
                             }
-                        },  function (errorResponse) {
+                        }, function (errorResponse) {
+                            that.binding.photoData = "";
                             if (errorResponse.status === 404) {
                                 Log.print(Log.l.trace, "userPhotoView: ignore NOT_FOUND error here!");
                             } else {
@@ -786,6 +787,7 @@
                             }
                         }, recordId);
                     } else {
+                        that.binding.photoData = "";
                         return WinJS.Promise.as();
                     }
                 });
