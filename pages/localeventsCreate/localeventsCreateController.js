@@ -50,7 +50,7 @@
                 if (!dataEvent.MobilerBarcodescanner) {
                     dataEvent.MobilerBarcodescanner = 0;
                 } else if (typeof dataEvent.MobilerBarcodescanner === "string") {
-                    dataEvent.MobilerBarcodescanner = parseInt(dataEvent.LeadSuccessMobileApp);
+                    dataEvent.MobilerBarcodescanner = parseInt(dataEvent.MobilerBarcodescanner);
                 }
                 return dataEvent;
             }
