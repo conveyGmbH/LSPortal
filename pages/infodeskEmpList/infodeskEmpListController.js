@@ -481,7 +481,7 @@
                             Log.print(Log.l.trace, "InitBenAnw: success!");
                         });
                     } else {
-                        return WinJS.promise.as();
+                        return WinJS.Promise.as();
                     }
                 }).then(function () {
                     var restriction = AppData.getRestriction("SkillEntry");
