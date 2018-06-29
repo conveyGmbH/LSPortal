@@ -590,6 +590,18 @@ input.win-textbox, input.win-checkbox, input.win-radio, textarea.win-textarea, s
     margin-top: 0;
     margin-right: 4px;
 }
+.view-size-small .input_half_left{
+    width: 49%;
+}
+.view-size-small .input_half_right{
+    width: 49%;
+}
+.view-size-medium .input_half_left{
+    width: 49%;
+}
+.view-size-medium .input_half_right{
+    width: 49%;
+}
 .input_half_left {
     min-height: 32px;
     float: left;
@@ -911,6 +923,7 @@ input.win-textbox, input.win-checkbox, input.win-radio, textarea.win-textarea, s
     margin-bottom: 0;
 }
 .view-size-medium .portrait_only_quarter,
+.view-size-medium .portrait_half,
 .view-size-medium .portrait_only_half,
 .view-size-medium .portrait_only, 
 .view-size-medium .portrait_only_left, 
