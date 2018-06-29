@@ -20,7 +20,7 @@
                 dataEmployee: getEmptyDefaultValue(InfodeskEmpList.defaultValue),
                 mitarbeiterText: getResourceText("infodesk.employee"),
                 count: 0,
-                employeeId: AppData.getRecordId("Mitarbeiter")
+                employeeId: AppData.getRecordId("Benutzer")
             }, commandList, true]);
             this.nextUrl = null;
 
@@ -53,32 +53,6 @@
             }
 
 
-            //byhung
-            // show business card photo
-            var userPhotoContainer = pageElement.querySelector("#user");
-            var showPhoto = function () {
-                if (that.binding.photoData) {
-                    if (userPhotoContainer) {
-                        var userImg = new Image();
-                        userImg.id = "userImg";
-                        userPhotoContainer.appendChild(userImg);
-                        WinJS.Utilities.addClass(userImg, "user-photo-list");
-                        userImg.src = that.binding.photoData;
-                        if (userPhotoContainer.childElementCount > 2) {
-                            var oldElement = userPhotoContainer.firstElementChild.nextElementSibling;
-                            oldElement.parentNode.removeChild(oldElement);
-                            oldElement.innerHTML = "";
-                        }
-                    }
-                    AppBar.triggerDisableHandlers();
-                } else {
-                    var userimg = pageElement.querySelector("#userImg");
-                    if (userimg) {
-                        userimg.parentNode.removeChild(userimg);
-                    }
-                }
-            }
-
             var getRestriction = function () {
                 var restriction = AppData.getRestriction("SkillEntry");
                 if (!restriction) {
@@ -105,7 +79,10 @@
             this.background = background;
 
             var loadNextUrl = function (recordId) {
-                Log.call(Log.l.trace, "QuestionList.Controller.");
+                Log.call(Log.l.trace, "QuestionList.Controller.", "recordId=" + recordId);
+                if (!recordId) {
+                    recordId = that.binding.employeeId;
+                }
                 progress = listView.querySelector(".list-footer .progress");
                 counter = listView.querySelector(".list-footer .counter");
                 if (that.employees && that.nextUrl && listView) {
@@ -258,12 +235,11 @@
                 (item.Nachname ? item.Nachname : ""); // muss geändert werden
                 //}
                 if (item.INITBenAnwID !== 0 && item.INITBenAnwID !== null && item.Present !== 1) {
-                    for (var i = 0; i < messages.length; i++) {
-                        if (messages[i].INITBenAnwID === item.INITBenAnwID) {
-                            item.title = messages[i].TITLE;
-                            break;
-                        }
-
+                    var map = InfodeskEmpList.initBenAnwView.getMap();
+                    var results = InfodeskEmpList.initBenAnwView.getResults();
+                    if (map && results) {
+                        var curIndex = map[item.INITBenAnwID];
+                        item.title = results[curIndex].TITLE;
                     }
                 }
                 item.OvwContentDOCCNT3 = "";
@@ -278,7 +254,6 @@
                             }
                             that.firstDocsIndex = i + 1;
                             that.firstContactsIndex = index + 1;
-                            that.binding.photoData = item.OvwContentDOCCNT3;
                             break;
                         }
                     }
@@ -347,13 +322,9 @@
                                         if ((curPageId === "infodesk" || curPageId === "infodeskEmpList") &&
                                             typeof AppBar.scope.loadData === "function") {
                                             AppBar.scope.loadData(employeeId);
-                                         //   Application.navigateById("infodesk");
-                                        } else {
-                                           // Application.navigateById("infodesk");
                                         }
                                     }
                                 });
-                                //Application.navigateById("infodesk");
                             }
                         }
                     }
@@ -504,178 +475,106 @@
                 }
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
-                    return InfodeskEmpList.initBenAnwView.select(function (json) {
-                        AppData.setErrorMsg(that.binding);
-                        Log.print(Log.l.trace, "InitBenAnw: success!");
-                        if (json && json.d) {
-                            // now always edit!
-                            var results = json.d.results;
-
-                            results.forEach(function (item, index) {
-                                messages.push(item);
-
-                            });
+                    if (!InfodeskEmpList.initBenAnwView.getResults().length) {
+                        return InfodeskEmpList.initBenAnwView.select(function (json) {
+                            AppData.setErrorMsg(that.binding);
+                            Log.print(Log.l.trace, "InitBenAnw: success!");
+                        });
+                    } else {
+                        return WinJS.promise.as();
+                    }
+                }).then(function () {
+                    var restriction = AppData.getRestriction("SkillEntry");
+                    var defaultrestriction = InfodeskEmpList.defaultRestriction;
+                    if (!restriction) {
+                        restriction = defaultrestriction;
+                    }
+                    if (restriction.OrderAttribute === "Vorname") {
+                        if (btnName) {
+                            btnName.textContent = getResourceText("infodeskEmpList.name");
                         }
-                    }).then(function () {
-                        var restriction = AppData.getRestriction("SkillEntry");
-                        var defaultrestriction = InfodeskEmpList.defaultRestriction;
-                        if (!restriction) {
-                            restriction = defaultrestriction;
+                    } else {
+                        if (btnFirstName) {
+                            btnFirstName.textContent = getResourceText("infodeskEmpList.firstName");
                         }
-                        if (restriction.OrderAttribute === "Vorname") {
-                            if (btnName) {
-                                btnName.textContent = getResourceText("infodeskEmpList.name");
-                            }
-                        } else {
-                            if (btnFirstName) {
-                                btnFirstName.textContent = getResourceText("infodeskEmpList.firstName");
-                            }
-                        }
-                        if (restriction.Names && restriction.Names.length > 0) {
-                            //restriction.bUseOr = true;
-                            that.binding.dataEmployee.Names = restriction.Names;
-                        }
-                        if (restriction.countCombobox && restriction.countCombobox > 0) {
-                            return InfodeskEmpList.employeeSkillentryView.select(function (json) {
-                                // this callback will be called asynchronously
-                                // when the response is available
-                                AppData.setErrorMsg(that.binding);
-                                Log.print(Log.l.trace, "InfodeskEmpList: success!");
-                                // employeeView returns object already parsed from json file in response
-                                if (json && json.d && json.d.results && json.d.results.length > 0) {
-                                    that.nextUrl = InfodeskEmpList.employeeSkillentryView.getNextUrl(json);
-                                    var results = json.d.results;
+                    }
+                    if (restriction.Names && restriction.Names.length > 0) {
+                        //restriction.bUseOr = true;
+                        that.binding.dataEmployee.Names = restriction.Names;
+                    }
+                    if (restriction.countCombobox && restriction.countCombobox > 0) {
+                        return InfodeskEmpList.employeeSkillentryView.select(function (json) {
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            AppData.setErrorMsg(that.binding);
+                            Log.print(Log.l.trace, "InfodeskEmpList: success!");
+                            // employeeView returns object already parsed from json file in response
+                            if (json && json.d && json.d.results && json.d.results.length > 0) {
+                                that.nextUrl = InfodeskEmpList.employeeSkillentryView.getNextUrl(json);
+                                var results = json.d.results;
 
-                                    //hole anhand der recordid die Fähigkeiten des jeweiligen Mitarbeiters mit der recordid
+                                //hole anhand der recordid die Fähigkeiten des jeweiligen Mitarbeiters mit der recordid
 
-                                    var actualItem = null;
-                                    var resultsUnique = [];
-                                    if (restriction.countCombobox >= 1) {
-                                        var zähler = 0;
-                                        results.forEach(function (item) {
-                                            if (!actualItem)
-                                                actualItem = item;
-                                            if (actualItem.Login === item.Login)
-                                                zähler++;
-                                            else {
-                                                actualItem = item;
-                                                zähler = 1;
-                                            }
-                                            if (zähler === restriction.countCombobox) {
-                                                resultsUnique.push(actualItem);
-                                                zähler = 0;
-                                                actualItem = null;
-                                            }
-                                        });
-                                    } else {
-                                        //Die Mitarbeiterliste muss zu Beginn unique Mitarbeiter sein
-                                        results.forEach(function (item, index) {
-                                            if (!actualItem) {
-                                                actualItem = item;
-                                                resultsUnique.push(actualItem);
-                                            }
-
-                                            if (actualItem.Login !== item.Login) {
-                                                actualItem = item;
-                                                resultsUnique.push(actualItem);
-                                            }
-                                            if (results.length - 1 === 99)
-                                                lastPrevLogin = actualItem;
-                                        });
-                                    }
-                                    results = resultsUnique;
-                                    that.binding.count = results.length;
-
-                                    results.forEach(function (item, index) {
-                                        that.resultConverter(item, index);
+                                var actualItem = null;
+                                var resultsUnique = [];
+                                if (restriction.countCombobox >= 1) {
+                                    var zähler = 0;
+                                    results.forEach(function (item) {
+                                        if (!actualItem)
+                                            actualItem = item;
+                                        if (actualItem.Login === item.Login)
+                                            zähler++;
+                                        else {
+                                            actualItem = item;
+                                            zähler = 1;
+                                        }
+                                        if (zähler === restriction.countCombobox) {
+                                            resultsUnique.push(actualItem);
+                                            zähler = 0;
+                                            actualItem = null;
+                                        }
                                     });
-                                    that.employees = new WinJS.Binding.List(results);
-                                    if (listView.winControl) {
-                                        // add ListView dataSource
-                                        listView.winControl.itemDataSource = that.employees.dataSource;
-                                    }
-                                    Log.print(Log.l.trace, "Data loaded");
-                                    /*if (results[0]) {
-                                        WinJS.Promise.timeout(0).then(function () {
-                                            that.selectRecordId(results[0].MitarbeiterVIEWID);
-                                        });
-                                    }*/
                                 } else {
-                                    that.binding.count = 0;
-                                    that.nextUrl = null;
-                                    that.employees = null;
-                                    if (listView.winControl) {
-                                        // add ListView dataSource
-                                        listView.winControl.itemDataSource = null;
-                                    }
-                                    progress = listView.querySelector(".list-footer .progress");
-                                    counter = listView.querySelector(".list-footer .counter");
-                                    if (progress && progress.style) {
-                                        progress.style.display = "none";
-                                    }
-                                    if (counter && counter.style) {
-                                        counter.style.display = "inline";
-                                    }
-                                    that.loading = false;
-                                }
-                            },
-                                function (errorResponse) {
-                                    // called asynchronously if an error occurs
-                                    // or server returns response with an error status.
-                                    AppData.setErrorMsg(that.binding, errorResponse);
-                                    progress = listView.querySelector(".list-footer .progress");
-                                    counter = listView.querySelector(".list-footer .counter");
-                                    if (progress && progress.style) {
-                                        progress.style.display = "none";
-                                    }
-                                    if (counter && counter.style) {
-                                        counter.style.display = "inline";
-                                    }
-                                    that.loading = false;
-                                },
-                                restriction,
-                                { orderAttribute: restriction.OrderAttribute, desc: true }); //that.binding.restriction beim neuladen ist die leer
-                        } else {
-                            return InfodeskEmpList.employeeView.select(function (json) {
-                                // this callback will be called asynchronously
-                                // when the response is available
-                                Log.print(Log.l.trace, "EmpList: success!");
-                                // employeeView returns object already parsed from json file in response
-                                if (json && json.d && json.d.results.length > 0) {
-                                    that.binding.count = json.d.results.length;
-                                    that.nextUrl = InfodeskEmpList.employeeView.getNextUrl(json);
-                                    var results = json.d.results;
+                                    //Die Mitarbeiterliste muss zu Beginn unique Mitarbeiter sein
                                     results.forEach(function (item, index) {
-                                        that.resultConverter(item, index);
-                                    });
-                                    that.employees = new WinJS.Binding.List(results);
+                                        if (!actualItem) {
+                                            actualItem = item;
+                                            resultsUnique.push(actualItem);
+                                        }
 
-                                    if (listView.winControl) {
-                                        // add ListView dataSource
-                                        listView.winControl.itemDataSource = that.employees.dataSource;
-                                    }
-                                } else {
-                                    that.binding.count = 0;
-                                    that.nextUrl = null;
-                                    that.employees = null;
-                                    if (listView.winControl) {
-                                        // add ListView dataSource
-                                        listView.winControl.itemDataSource = null;
-                                    }
-                                    progress = listView.querySelector(".list-footer .progress");
-                                    counter = listView.querySelector(".list-footer .counter");
-                                    if (progress && progress.style) {
-                                        progress.style.display = "none";
-                                    }
-                                    if (counter && counter.style) {
-                                        counter.style.display = "inline";
-                                    }
-                                    that.loading = false;
+                                        if (actualItem.Login !== item.Login) {
+                                            actualItem = item;
+                                            resultsUnique.push(actualItem);
+                                        }
+                                        if (results.length - 1 === 99)
+                                            lastPrevLogin = actualItem;
+                                    });
                                 }
-                            }, function (errorResponse) {
-                                // called asynchronously if an error occurs
-                                // or server returns response with an error status.
-                                AppData.setErrorMsg(that.binding, errorResponse);
+                                results = resultsUnique;
+                                that.binding.count = results.length;
+
+                                results.forEach(function (item, index) {
+                                    that.resultConverter(item, index);
+                                });
+                                that.employees = new WinJS.Binding.List(results);
+                                if (listView.winControl) {
+                                    // add ListView dataSource
+                                    listView.winControl.itemDataSource = that.employees.dataSource;
+                                }
+                                Log.print(Log.l.trace, "Data loaded");
+                                /*if (results[0]) {
+                                    WinJS.Promise.timeout(0).then(function () {
+                                        that.selectRecordId(results[0].MitarbeiterVIEWID);
+                                    });
+                                }*/
+                            } else {
+                                that.binding.count = 0;
+                                that.nextUrl = null;
+                                that.employees = null;
+                                if (listView.winControl) {
+                                    // add ListView dataSource
+                                    listView.winControl.itemDataSource = null;
+                                }
                                 progress = listView.querySelector(".list-footer .progress");
                                 counter = listView.querySelector(".list-footer .counter");
                                 if (progress && progress.style) {
@@ -685,33 +584,102 @@
                                     counter.style.display = "inline";
                                 }
                                 that.loading = false;
-                            }, restriction);
-                        }
-                    }).then(function () {
-                        // todo: load image data and set src of img-element
-                        Log.print(Log.l.trace, "calling select userPhotoView...");
-                        return WinJS.Promise.timeout(250).then(function () {
-                            return InfodeskEmpList.userPhotoView.select(function (json) {
-                                Log.print(Log.l.trace, "userPhotoView: success!");
-                                if (json && json.d) {
-                                    that.binding.doccount = json.d.results.length;
-                                    that.nextDocUrl = InfodeskEmpList.userPhotoView.getNextUrl(json);
-                                    var results = json.d.results;
+                            }
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                            progress = listView.querySelector(".list-footer .progress");
+                            counter = listView.querySelector(".list-footer .counter");
+                            if (progress && progress.style) {
+                                progress.style.display = "none";
+                            }
+                            if (counter && counter.style) {
+                                counter.style.display = "inline";
+                            }
+                            that.loading = false;
+                        }, restriction, {
+                           orderAttribute: restriction.OrderAttribute, desc: true
+                        }); //that.binding.restriction beim neuladen ist die leer
+                    } else {
+                        return InfodeskEmpList.employeeView.select(function (json) {
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            Log.print(Log.l.trace, "EmpList: success!");
+                            // employeeView returns object already parsed from json file in response
+                            if (json && json.d && json.d.results.length > 0) {
+                                that.binding.count = json.d.results.length;
+                                that.nextUrl = InfodeskEmpList.employeeView.getNextUrl(json);
+                                var results = json.d.results;
+                                results.forEach(function (item, index) {
+                                    that.resultConverter(item, index);
+                                });
+                                that.employees = new WinJS.Binding.List(results);
 
-                                    results.forEach(function (item, index) {
-                                        that.resultDocConverter(item, index);
-                                    });
-                                    that.docs = results;
-                                } else {
-                                    that.binding.photoData = "";
-                                    //showPhoto();
+                                if (listView.winControl) {
+                                    // add ListView dataSource
+                                    listView.winControl.itemDataSource = that.employees.dataSource;
                                 }
+                            } else {
+                                that.binding.count = 0;
+                                that.nextUrl = null;
+                                that.employees = null;
+                                if (listView.winControl) {
+                                    // add ListView dataSource
+                                    listView.winControl.itemDataSource = null;
+                                }
+                                progress = listView.querySelector(".list-footer .progress");
+                                counter = listView.querySelector(".list-footer .counter");
+                                if (progress && progress.style) {
+                                    progress.style.display = "none";
+                                }
+                                if (counter && counter.style) {
+                                    counter.style.display = "inline";
+                                }
+                                that.loading = false;
+                            }
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                            progress = listView.querySelector(".list-footer .progress");
+                            counter = listView.querySelector(".list-footer .counter");
+                            if (progress && progress.style) {
+                                progress.style.display = "none";
+                            }
+                            if (counter && counter.style) {
+                                counter.style.display = "inline";
+                            }
+                            that.loading = false;
+                        }, restriction);
+                    }
+                }).then(function () {
+                    if (that.binding.employeeId) {
+                        that.selectRecordId(that.binding.employeeId);
+                    }
+                    // todo: load image data and set src of img-element
+                    Log.print(Log.l.trace, "calling select userPhotoView...");
+                    return WinJS.Promise.timeout(250).then(function () {
+                        return InfodeskEmpList.userPhotoView.select(function (json) {
+                            Log.print(Log.l.trace, "userPhotoView: success!");
+                            if (json && json.d) {
+                                that.binding.doccount = json.d.results.length;
+                                that.nextDocUrl = InfodeskEmpList.userPhotoView.getNextUrl(json);
+                                var results = json.d.results;
 
-                            }, function (errorResponse) {
+                                results.forEach(function (item, index) {
+                                    that.resultDocConverter(item, index);
+                                });
+                                that.docs = results;
+                            } else {
                                 that.binding.photoData = "";
                                 //showPhoto();
-                                // ignore that
-                            });
+                            }
+
+                        }, function (errorResponse) {
+                            that.binding.photoData = "";
+                            //showPhoto();
+                            // ignore that
                         });
                     });
                 });
@@ -730,14 +698,12 @@
                     return that.loadData();
                 }, loadingTime);
                 Log.print(Log.l.trace, "Data loaded");
-            })/*.then(function () {
+            }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 return that.selectRecordId(that.binding.employeeId);
-            })*/.then(function () {
-                AppBar.notifyModified = true;
-                Log.print(Log.l.trace, "Record selected");
             }).then(function () {
-                Application.navigateById("infodesk");
+                Log.print(Log.l.trace, "Record selected");
+                AppBar.notifyModified = true;
             });
             Log.ret(Log.l.trace);
         }, {

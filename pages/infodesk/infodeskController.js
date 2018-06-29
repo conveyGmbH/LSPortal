@@ -20,9 +20,8 @@
                 messestandData: getEmptyDefaultValue(Infodesk.Messestand.defaultValue),
                 restriction: getEmptyDefaultValue(Infodesk.defaultRestriction),
                 dataEmployee: getEmptyDefaultValue(Infodesk.SkillEntry.defaultValue),
-                dataBenutzer: Infodesk.benutzerView && Infodesk.benutzerView.defaultValue,
-                restrictionNames: InfodeskEmpList.defaultValue.Names,
-                messages: getEmptyDefaultValue(Infodesk.benutzerView.defaultValue)
+                dataBenutzer: getEmptyDefaultValue(Infodesk.benutzerView.defaultValue),
+                employeeId: null
             }, commandList]);
 
             var prevMasterLoadPromise = null;
@@ -60,6 +59,7 @@
 
             var setRecordId = function (recordId) {
                 Log.call(Log.l.trace, "UserInfo.Controller.", recordId);
+                that.binding.employeeId = recordId;
                 AppData.setRecordId("Benutzer", recordId);
                 Log.ret(Log.l.trace);
             };
@@ -67,15 +67,8 @@
 
             var getRecordId = function () {
                 Log.call(Log.l.trace, "Infodesk.Controller.");
-                var recordId = that.binding.dataEmployee && that.binding.dataEmployee.MitarbeiterID;
-                if (!recordId) {
-                    var master = Application.navigator.masterControl;
-                    if (master && master.controller && master.controller.binding) {
-                        recordId = master.controller.binding.employeeId;
-                    }
-                }
-                Log.ret(Log.l.trace, recordId);
-                return recordId;
+                Log.ret(Log.l.trace, that.binding.employeeId);
+                return that.binding.employeeId;
             }
             this.getRecordId = getRecordId;
 
@@ -500,24 +493,6 @@
                 }
             };
 
-            var resultDocConverter = function (item, recordId) { // geänderte Stelle
-                Log.call(Log.l.trace, "Infodesk.Controller.");
-                if (recordId && item && item.DOC1MitarbeiterVIEWID) {
-                    if (recordId === item.DOC1MitarbeiterVIEWID) {
-                        item.OvwContentDOCCNT3 = item.OvwContentDOCCNT3 ? item.OvwContentDOCCNT3 : item.DocContentDOCCNT1;
-                        if (item.OvwContentDOCCNT3) {
-                            var sub = item.OvwContentDOCCNT3.search("\r\n\r\n");
-                            that.binding.photoData = "data:image/jpeg;base64," + item.OvwContentDOCCNT3.substr(sub + 4);
-                        } else {
-                            that.binding.photoData = null;
-                        }
-                    }
-                    // that.showPhoto();
-                }
-                Log.ret(Log.l.trace, "");
-            }
-            this.resultDocConverter = resultDocConverter;
-
             var resultConverter = function (item, index) {
                 Log.call(Log.l.trace, "Infodesk.Controller.");
                 if (index >= 0 && index < 5) {
@@ -588,27 +563,6 @@
                 Log.ret(Log.l.trace, "");
             }
             this.resultConverter = resultConverter;
-
-            // show business card photo
-            var userPhotoContainer = pageElement.querySelector("#user"); //userphoto
-            var showPhoto = function () {
-                if (that.binding.photoData) {
-                    if (userPhotoContainer) {
-                        var userImg = new Image();
-                        userImg.id = "userImg";
-                        userPhotoContainer.appendChild(userImg);
-                        WinJS.Utilities.addClass(userImg, "user-photo-info");
-                        userImg.src = that.binding.photoData;
-                    }
-                    AppBar.triggerDisableHandlers();
-                } else {
-                    var userimg = pageElement.querySelector("#userImg");
-                    if (userimg) {
-                        userimg.parentNode.removeChild(userimg);
-                    }
-                }
-            }
-            this.showPhoto = showPhoto;
 
             // Then, do anything special on this page
             var loadData = function (recordId) {
@@ -687,19 +641,27 @@
                         }
                         Log.print(Log.l.trace, "Infodesk: success!");
                     });
-
                 }).then(function () {
-                    if (that.binding.dataEmployee.firstskill !== "" ||
-                        that.binding.dataEmployee.secondskill !== "" ||
-                        that.binding.dataEmployee.thirdskill !== "" ||
-                        that.binding.dataEmployee.fourthskill !== "" ||
-                        that.binding.dataEmployee.fifthskill !== "") {
-                        that.binding.dataEmployee.firstskill = "";
-                        that.binding.dataEmployee.secondskill = "";
-                        that.binding.dataEmployee.thirdskill = "";
-                        that.binding.dataEmployee.fourthskill = "";
-                        that.binding.dataEmployee.fifthskill = "";
+                    if (recordId) {
+                        AppData.setErrorMsg(that.binding);
+                        return Infodesk.employeeView.select(function (json) {
+                                Log.print(Log.l.trace, "skillEntryView: success!");
+                                that.binding.dataEmployee = getEmptyDefaultValue(Infodesk.SkillEntry.defaultValue);
+                                if (json && json.d) {
+                                    that.binding.dataEmployee.Vorname = json.d.Vorname;
+                                    that.binding.dataEmployee.Nachname = json.d.Nachname;
+                                    that.binding.dataEmployee.Login = json.d.Login;
+                                }
+                            },
+                            function (errorResponse) {
+                                that.binding.dataEmployee = getEmptyDefaultValue(Infodesk.SkillEntry.defaultValue);
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                            }, recordId);
+                    } else {
+                        that.binding.dataEmployee = getEmptyDefaultValue(Infodesk.SkillEntry.defaultValue);
+                        return WinJS.Promise.as();
                     }
+                }).then(function () {
                     if (recordId) {
                         //load of format relation record data
                         Log.print(Log.l.trace, "calling select employeeView...");
@@ -707,11 +669,6 @@
                                 AppData.setErrorMsg(that.binding);
                                 Log.print(Log.l.trace, "skillEntryView: success!");
                                 if (json && json.d && json.d.results.length > 0) {
-                                    if (json.d.results[0].MitarbeiterID === recordId) {
-                                        that.binding.dataEmployee.Vorname = json.d.results[0].Vorname;
-                                        that.binding.dataEmployee.Nachname = json.d.results[0].Nachname;
-                                        that.binding.dataEmployee.Login = json.d.results[0].Login;
-                                    }
                                     for (var i = 0; i < json.d.results.length; i++) {
                                         //SkillTypeID und Sortierung
                                         if (json.d.results[i].MitarbeiterID === recordId) {
@@ -786,94 +743,51 @@
                     } else {
                         return WinJS.Promise.as();
                     }
-                }).then(function() {
-                    if (recordId) {
-                        return Infodesk.employeeView.select(function(json) {
-                                AppData.setErrorMsg(that.binding);
-                                Log.print(Log.l.trace, "skillEntryView: success!");
-                                if (json && json.d) {
-                                    that.binding.dataEmployee.Vorname = json.d.results[0].Vorname;
-                                    that.binding.dataEmployee.Nachname = json.d.results[0].Nachname;
-                                    that.binding.dataEmployee.Login = json.d.results[0].Login;
-                                }
-                            },
-                            function(errorResponse) {
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                            },
-                            {
-                                MitarbeiterVIEWID: recordId
-                            });
-                    } else {
-                        return WinJS.Promise.as();
-                    }
                 }).then(function () {
                     if (recordId) {
                         //load of format relation record data
+                        AppData.setErrorMsg(that.binding);
                         Log.print(Log.l.trace, "calling select benutzerView...");
                         return Infodesk.benutzerView.select(function (json) {
-                            AppData.setErrorMsg(that.binding);
                             Log.print(Log.l.trace, "benutzerView: success!");
                             if (json && json.d) {
                                 that.setDataBenutzer(json.d);
                                 setRecordId(that.binding.dataBenutzer.BenutzerVIEWID);
                             }
+                        },  function (errorResponse) {
+                            if (errorResponse.status === 404) {
+                                Log.print(Log.l.trace, "benutzerView: ignore NOT_FOUND error here!");
+                                that.setDataBenutzer(getEmptyDefaultValue(Infodesk.benutzerView.defaultValue));
+                            } else {
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                            }
                         },
-                            function (errorResponse) {
-                                if (errorResponse.status === 404) {
-                                    // ignore NOT_FOUND error here!
-                                    that.setDataBenutzer(getEmptyDefaultValue(Infodesk.benutzerView.defaultValue));
-                                } else {
-                                    AppData.setErrorMsg(that.binding, errorResponse);
-                                }
-                            },
-                            recordId);
+                        recordId);
                     } else {
                         that.setDataBenutzer(getEmptyDefaultValue(Infodesk.benutzerView.defaultValue));
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
-                    if (!recordId) {
-                        setRecordId(that.binding.dataBenutzer.BenutzerVIEWID);
-                    }
                     if (recordId) {
-                        if (that.binding.photoData !== null) {
-                            that.binding.photoData = null;
-                            that.showPhoto();
-                        }
+                        AppData.setErrorMsg(that.binding);
+                        Log.print(Log.l.trace, "calling select userPhotoView...");
                         return Infodesk.userPhotoView.select(function (json) {
-                            AppData.setErrorMsg(that.binding);
-                            Log.print(Log.l.trace, "benutzerView: success!");
-                            if (json && json.d) {
-                                //that.binding.doccount = json.d.results.length;
-                                //that.nextDocUrl = InfodeskEmpList.userPhotoView.getNextUrl(json);
-                                var results = json.d.results;
-                                that.resultDocConverter(results[0], recordId);
+                            Log.print(Log.l.trace, "userPhotoView: success!");
+                            if (json && json.d &&
+                                typeof json.d.DocContentDOCCNT1 === "string") {
+                                var sub = json.d.DocContentDOCCNT1.search("\r\n\r\n");
+                                that.binding.dataEmployee.photoData = "data:image/jpeg;base64," + json.d.DocContentDOCCNT1.substr(sub + 4);
                             }
-                        },
-                            function (errorResponse) {
-                                if (errorResponse.status === 404) {
-                                    //that.setDataBenutzer(getEmptyDefaultValue(Infodesk.benutzerView.defaultValue));
-                                } else {
-                                    AppData.setErrorMsg(that.binding, errorResponse);
-                                }
-                            }, { DOC1MitarbeiterVIEWID: recordId });
+                        },  function (errorResponse) {
+                            if (errorResponse.status === 404) {
+                                Log.print(Log.l.trace, "userPhotoView: ignore NOT_FOUND error here!");
+                            } else {
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                            }
+                        }, recordId);
                     } else {
                         return WinJS.Promise.as();
                     }
-                }).then(function () {
-                    that.showPhoto();
-                }).then(function() {
-                    var userImageContainer = pageElement.querySelector(".image-container");
-                    if (userImageContainer) {
-                        Colors.loadSVGImageElements(userImageContainer, "svgimg", 250, Colors.textColor);
-                    }
-                    var imagesvg = pageElement.getElementsByTagName('svg');
-                    if (imagesvg && imagesvg[0] && that.binding.photoData) {
-                        imagesvg[0].style.display = "none";
-                    } else
-                        imagesvg[0].style.display = "inline";
-
-                    Log.print(Log.l.trace, "Infodesk: Image!");
                 });
             }
             this.loadData = loadData;
@@ -882,32 +796,36 @@
                 Log.call(Log.l.trace, "Infodesk.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret;
-                var dataBenutzer = setDataBenutzer(that.binding.dataBenutzer);
-                if (dataBenutzer && AppBar.modified && !AppBar.busy) {
-                    var recordId = getRecordId();
-                    if (recordId) {
-                        Infodesk.benutzerView.update(function (response) {
-                            // called asynchronously if ok
-                            // force reload of userData for Present flag
-                            AppBar.modified = false;
-                            // AppData.getUserData();
-                            complete(response);
-                        }, function (errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                            error(errorResponse);
-                        }, recordId, dataBenutzer);
+                var recordId = getRecordId();
+                if (recordId) {
+                    var dataBenutzer = setDataBenutzer(that.binding.dataBenutzer);
+                    if (dataBenutzer && AppBar.modified && !AppBar.busy) {
+                        ret = Infodesk.benutzerView.update(function(response) {
+                                // called asynchronously if ok
+                                // force reload of userData for Present flag
+                                AppBar.modified = false;
+                                // AppData.getUserData();
+                                complete(response);
+                            },
+                            function(errorResponse) {
+                                // called asynchronously if an error occurs
+                                // or server returns response with an error status.
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                                error(errorResponse);
+                            },
+                            recordId,
+                            dataBenutzer);
+                    } else if (AppBar.busy) {
+                        ret = WinJS.Promise.timeout(100).then(function() {
+                            return that.saveData(complete, error);
+                        });
+                    } else {
+                        ret = new WinJS.Promise.as().then(function() {
+                            complete(dataBenutzer);
+                        });
                     }
-                    ret = WinJS.Promise.as();
-                } else if (AppBar.busy) {
-                    ret = WinJS.Promise.timeout(100).then(function () {
-                        return that.saveData(complete, error);
-                    });
                 } else {
-                    ret = new WinJS.Promise.as().then(function () {
-                        complete(dataBenutzer);
-                    });
+                    ret = WinJS.Promise.as();
                 }
                 Log.ret(Log.l.trace);
                 return ret;
@@ -918,13 +836,11 @@
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();// parameter übergeben ? getRecordId()
-            })/*.then(function () {
-                var master = Application.navigator.masterControl;
-                if (master) {
-                    master.controller.selectRecordId(getRecordId());
+            }).then(function () {
+                var userImageContainer = pageElement.querySelector(".userimg-container");
+                if (userImageContainer) {
+                    Colors.loadSVGImageElements(userImageContainer, "svgimg", 256, Colors.textColor, "name");
                 }
-                Log.print(Log.l.trace, "Data loaded");
-            })*/.then(function () {
                 AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Date restrictions shown");
             });

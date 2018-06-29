@@ -100,7 +100,8 @@
                 fourthskill: "",
                 fifthskill: "",
                 Info2: "",
-                receiver: ""
+                receiver: "",
+                photoData: ""
             }
         },
         _benutzerView: {
@@ -140,7 +141,7 @@
         employeeView: {
             select: function (complete, error, recordId) {
                 Log.call(Log.l.trace, "employeeView.");
-                var ret = Infodesk._employeeView.select(complete, error, recordId);
+                var ret = Infodesk._employeeView.selectById(complete, error, recordId);
                 Log.ret(Log.l.trace);
                 return ret;
 
@@ -160,7 +161,7 @@
         userPhotoView: {
             select: function (complete, error, recordId) {
                 Log.call(Log.l.trace, "userPhotoView.");
-                var ret = Infodesk._userPhotoView.select(complete, error, recordId);
+                var ret = Infodesk._userPhotoView.selectById(complete, error, recordId);
                 Log.ret(Log.l.trace);
                 return ret;
             }
