@@ -24,7 +24,106 @@
             }, commandList, true]);
             this.nextUrl = null;
 
+            this.refreshPromise = null;
+            this.refreshWaitTimeMs = 30000;
+
+            // idle wait Promise and wait time:
+            this.restartPromise = null;
+            this.idleWaitTimeMs = 60000;
+
+            this.failurePromise = null;
+            this.failureWaitTimeMs = 6000;
+
+            this.animationPromise = null;
+
             var that = this;
+
+            this.dispose = function () {
+                that.cancelPromises();
+            };
+
+            var cancelPromises = function () {
+                Log.call(Log.l.trace, "Barcode.Controller.");
+                if (that.animationPromise) {
+                    Log.print(Log.l.trace, "cancel previous animation Promise");
+                    that.animationPromise.cancel();
+                    that.animationPromise = null;
+                }
+                if (that.restartPromise) {
+                    Log.print(Log.l.trace, "cancel previous restart Promise");
+                    that.restartPromise.cancel();
+                    that.restartPromise = null;
+                }
+                if (that.failurePromise) {
+                    Log.print(Log.l.trace, "cancel previous failure Promise");
+                    that.failurePromise.cancel();
+                    that.failurePromise = null;
+                }
+                Log.ret(Log.l.trace);
+            }
+            this.cancelPromises = cancelPromises;
+
+            /*var deleteAndNavigate = function (targetPage) {
+                Log.call(Log.l.trace, "Barcode.Controller.", "targetPage=" + that.targetPage);
+                that.cancelPromises();
+                var contactId = AppData.getRecordId("Kontakt");
+                Log.print(Log.l.trace, "contactId=" + contactId);
+                if (contactId) {
+                    Log.print(Log.l.trace, "delete existing contactID=" + contactId);
+                    Barcode.contactView.deleteRecord(function (json) {
+                        // this callback will be called asynchronously
+                        Log.print(Log.l.trace, "contactView: deleteRecord success!");
+                        AppData.setRecordId("Kontakt", null);
+                        if (that.refreshPromise) {
+                            Log.print(Log.l.trace, "cancel previous refresh Promise");
+                            that.refreshPromise.cancel();
+                            that.refreshPromise = null;
+                        }
+                        that.cancelPromises();
+                        Application.navigateById(targetPage);
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    }, contactId);
+                }
+                Log.ret(Log.l.trace);
+            }
+            this.deleteAndNavigate = deleteAndNavigate;*/
+
+            var waitForIdleAction = function () {
+                Log.call(Log.l.trace, "Barcode.Controller.", "idleWaitTimeMs=" + that.idleWaitTimeMs);
+                that.cancelPromises();
+                that.restartPromise = WinJS.Promise.timeout(that.idleWaitTimeMs).then(function () {
+                    Log.print(Log.l.trace, "timeout occurred, navigate back to start page!");
+                    if (that.refreshPromise) {
+                        Log.print(Log.l.trace, "cancel previous refresh Promise");
+                        that.refreshPromise.cancel();
+                        that.refreshPromise = null;
+                    }
+                    that.cancelPromises();
+                    Application.navigateById("start");
+                });
+                Log.ret(Log.l.trace);
+            };
+            this.waitForIdleAction = waitForIdleAction;
+
+            var waitForFailureAction = function () {
+                Log.call(Log.l.trace, "Barcode.Controller.", "failureWaitTimeMs=" + that.failureWaitTimeMs);
+                that.cancelPromises();
+                that.failurePromise = WinJS.Promise.timeout(that.failureWaitTimeMs).then(function () {
+                    Log.print(Log.l.trace, "timeout occurred, navigate to failed page!");
+                    if (that.refreshPromise) {
+                        Log.print(Log.l.trace, "cancel previous refresh Promise");
+                        that.refreshPromise.cancel();
+                        that.refreshPromise = null;
+                    }
+                    that.cancelPromises();
+                    Application.navigateById("failed");
+                });
+                Log.ret(Log.l.trace);
+            };
+            this.waitForFailureAction = waitForFailureAction;
 
             // ListView control
             var listView = pageElement.querySelector("#infodeskEmployeeList.listview");
@@ -85,7 +184,7 @@
                 }
                 progress = listView.querySelector(".list-footer .progress");
                 counter = listView.querySelector(".list-footer .counter");
-                if (that.employees && that.nextUrl && listView) {
+                if (that.employees && (that.nextUrl || that.nextskillentryUrl) && listView) {
                     that.loading = true;
                     if (progress && progress.style) {
                         progress.style.display = "inline";
@@ -320,7 +419,11 @@
                                         var curPageId = Application.getPageId(nav.location);
                                         if ((curPageId === "infodesk" || curPageId === "infodeskEmpList") &&
                                             typeof AppBar.scope.loadData === "function") {
-                                            AppBar.scope.loadData(employeeId);
+                                            if (employeeId) {
+                                                that.binding.employeeId = employeeId;
+                                                AppBar.scope.loadData(that.binding.employeeId);
+                                            }
+                                            
                                         }
                                     }
                                 });
@@ -509,7 +612,7 @@
                             Log.print(Log.l.trace, "InfodeskEmpList: success!");
                             // employeeView returns object already parsed from json file in response
                             if (json && json.d && json.d.results && json.d.results.length > 0) {
-                                that.nextUrl = InfodeskEmpList.employeeSkillentryView.getNextUrl(json);
+                                that.nextskillentryUrl = InfodeskEmpList.employeeSkillentryView.getNextUrl(json);
                                 var results = json.d.results;
 
                                 //hole anhand der recordid die Fähigkeiten des jeweiligen Mitarbeiters mit der recordid
@@ -568,7 +671,7 @@
                                 }*/
                             } else {
                                 that.binding.count = 0;
-                                that.nextUrl = null;
+                                that.nextskillentryUrl = null;
                                 that.employees = null;
                                 if (listView.winControl) {
                                     // add ListView dataSource
@@ -619,6 +722,12 @@
                                     // add ListView dataSource
                                     listView.winControl.itemDataSource = that.employees.dataSource;
                                 }
+                                if (that.refreshPromise) {
+                                    that.refreshPromise.cancel();
+                                }
+                                that.refreshPromise = WinJS.Promise.timeout(that.refreshWaitTimeMs).then(function () {
+                                    that.loadData();
+                                });
                             } else {
                                 that.binding.count = 0;
                                 that.nextUrl = null;
@@ -636,6 +745,12 @@
                                     counter.style.display = "inline";
                                 }
                                 that.loading = false;
+                                if (that.refreshPromise) {
+                                    that.refreshPromise.cancel();
+                                }
+                                that.refreshPromise = WinJS.Promise.timeout(that.refreshWaitTimeMs).then(function () {
+                                    that.loadData();
+                                });
                             }
                         }, function (errorResponse) {
                             // called asynchronously if an error occurs
@@ -678,6 +793,10 @@
                             that.binding.photoData = "";
                         });
                     });
+                }).then(function () {
+                    Log.print(Log.l.trace, "Data loaded");
+                    AppBar.notifyModified = true;
+                    that.waitForIdleAction();
                 });
                 Log.ret(Log.l.trace);
                 return ret;
@@ -687,13 +806,6 @@
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
-            }).then(function () {
-                var loadingTime = 30000;
-                Log.print(Log.l.trace, "Loading InfodeskEmpList: " + loadingTime + "sec");
-                setInterval(function () {
-                    return that.loadData();
-                }, loadingTime);
-                Log.print(Log.l.trace, "Data loaded");
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 return that.selectRecordId(that.binding.employeeId);

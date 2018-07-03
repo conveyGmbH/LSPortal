@@ -323,11 +323,9 @@
                     that.saveData(function (response) {
                         Log.print(Log.l.trace, "contact saved");
 
-                    },
-                        function (errorResponse) {
-                            Log.print(Log.l.error, "error saving employee");
-                        });
-
+                    }, function (errorResponse) {
+                        Log.print(Log.l.error, "error saving employee");
+                    });
                     AppBar.triggerDisableHandlers();
                     Log.ret(Log.l.trace);
                 },
@@ -338,7 +336,7 @@
                     if (master && master.controller && master.controller.binding) {
                         //master.controller.binding.contactId = that.binding.dataContact.KontaktVIEWID;
                         if (prevMasterLoadPromise &&
-                            typeof prevMasterLoadPromise.cancel === "function") { 
+                            typeof prevMasterLoadPromise.cancel === "function") {
                             prevMasterLoadPromise.cancel();
                         }
                         prevMasterLoadPromise = master.controller.loadData().then(function () {
@@ -348,7 +346,6 @@
                             }
                         });
                     }
-                    //that.loadData(getRecordId());
                     Log.ret(Log.l.trace);
 
                 },
@@ -362,7 +359,7 @@
                     Application.navigateById("userinfo", event);
                     Log.ret(Log.l.trace);
                 },
-                changedSkill: function(event) {
+                changedSkill: function (event) {
                     Log.call(Log.l.trace, "Event.Controller.");
                     switch (event.target.id) {
                         case "skills1":
@@ -447,7 +444,7 @@
                         event.target.textContent = getResourceText("infodeskEmpList.firstNameDesc");
                         that.binding.restriction.OrderDesc = true;
                     }
-                       
+
 
                     var master = Application.navigator.masterControl;
                     master.controller.loadData();
@@ -644,12 +641,17 @@
                     if (recordId) {
                         AppData.setErrorMsg(that.binding);
                         return Infodesk.employeeView.select(function (json) {
-                                Log.print(Log.l.trace, "skillEntryView: success!");
-                                if (json && json.d) {
-                                    that.binding.dataEmployee = json.d;
-                                    setRecordId(that.binding.dataEmployee.MitarbeiterVIEWID);
-                                }
-                            },
+                            Log.print(Log.l.trace, "skillEntryView: success!");
+                            that.binding.dataEmployee = getEmptyDefaultValue(Infodesk.SkillEntry.defaultValue);
+                            if (json && json.d) {
+                                that.binding.dataEmployee.Vorname = json.d.Vorname;
+                                that.binding.dataEmployee.Nachname = json.d.Nachname;
+                                that.binding.dataEmployee.Login = json.d.Login;
+
+                                setRecordId(that.binding.dataEmployee.MitarbeiterVIEWID);
+                            }
+                            //copyMissingMembersByValue(that.binding.dataEmployee, Infodesk.SkillEntry.defaultValue);
+                        },
                             function (errorResponse) {
                                 that.binding.dataEmployee = getEmptyDefaultValue(Infodesk.SkillEntry.defaultValue);
                                 AppData.setErrorMsg(that.binding, errorResponse);
@@ -857,7 +859,7 @@
             }).then(function () {
                 var userImageContainer = pageElement.querySelector(".userimg-container");
                 if (userImageContainer) {
-                    Colors.loadSVGImageElements(userImageContainer, "svgimg", 256, Colors.textColor, "name");
+                    Colors.loadSVGImageElements(userImageContainer, "svgimg", 128, Colors.textColor, "name");
                 }
                 AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Date restrictions shown");
