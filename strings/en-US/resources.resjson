@@ -481,6 +481,7 @@
 
     "empList.title"         : "User accounts",
     "empList.count"         : "Count",
+    "empList.exportbutton"  : "User export",
 
     "publish.title"         : "Publish questionnaire",
     "publish.comment"       : "Are you sure you want to publish the questionnaire?",

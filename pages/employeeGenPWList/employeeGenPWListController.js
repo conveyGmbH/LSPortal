@@ -7,7 +7,6 @@
 /// <reference path="~/www/lib/convey/scripts/pageController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/pages/infodeskEmpList/infodeskEmpListService.js" />
-/// <reference path="~/www/pages/employeeGenPWList/exportXlsx.js" />
 
 (function () {
     "use strict";
@@ -128,21 +127,6 @@
                     }
                     Log.ret(Log.l.trace);
                 },
-                clickExport: function (event) {
-                    Log.call(Log.l.trace, "LocalEvents.Controller.");
-                    var exporter = new ExportXlsx.ExporterClass();
-                    var dbView = EmployeeGenPWList.employeePWExportView;
-                    var fileName = "Passworte";
-                    exporter.saveXlsxFromView(dbView, fileName, function (result) {
-                        AppBar.busy = false;
-                        AppBar.triggerDisableHandlers();
-                    }, function (errorResponse) {
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                        AppBar.busy = false;
-                        AppBar.triggerDisableHandlers();
-                    }, null , null);
-                    Log.ret(Log.l.trace);
-                },
                 onItemInvoked: function (eventInfo) {
                     Log.call(Log.l.trace, "LocalEvents.Controller.");
                     Application.showDetail();
@@ -243,9 +227,7 @@
 
             var resultConverter = function (item, index) {
                 item.index = index;
-                if (item.GenPassword === null) {
-                    item.GenPassword = getResourceText("employeegenpwlist.passwordchanged");
-                }
+                item.Name = (item.Vorname ? (item.Vorname + " ") : "") + (item.Nachname ? item.Nachname : "");
             }
             this.resultConverter = resultConverter;
 
@@ -316,8 +298,8 @@
                         }
                         that.loading = false;
                     }, {
-                            
-                        }
+                       GenPassword: ['NOT NULL']
+                       }
                     );
                 });
                 Log.ret(Log.l.trace);

@@ -16,8 +16,7 @@
             select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, "EmployeeGenPWList.");
                 var ret = EmployeeGenPWList._employeePWView.select(complete, error, restriction, {
-                    ordered: true,
-                    orderAttribute: "MitarbeiterVIEWID"
+                    ordered: true
                 });
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);

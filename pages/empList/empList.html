@@ -6,6 +6,7 @@
     <script type="text/javascript" src="empListService.js"></script>
     <script type="text/javascript" src="empListController.js"></script>
     <script type="text/javascript" src="empList.js"></script>
+    <script type="text/javascript" src="exportXlsx.js"></script>
 </head>
 <body class="win-type-body">
     <div class="settings fragment">
@@ -15,6 +16,7 @@
                     <div class="content-header">
                         <div class="win-type-subtitle master-list-header">
                             <span data-win-res="{textContent: 'empList.title'}"></span>
+                            <button class="employeelist-button win-button" data-win-res="{textContent: 'empList.exportbutton'}" onclick="AppBar.handleEvent('onclick', 'clickExport', event)"></button>
                         </div>
                     </div>
                     <div class="employeeList-template"

@@ -111,3 +111,8 @@
     padding-top: 4px;
     padding-bottom: 4px;
 }
+.employeelist-button {
+    float: right;
+    margin-right: 20px;
+    margin-top: -5px
+}

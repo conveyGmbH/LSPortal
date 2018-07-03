@@ -25,6 +25,7 @@
                         <div class="list-header">
                             <div class="row-separator"></div>
                             <div class="list-landscape-only">
+                                <div class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'employeegenpwlist.name'}"></div>
                                 <div class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'employeegenpwlist.login'}"></div>
                                 <div class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'employeegenpwlist.password'}"></div>
                             </div>
@@ -36,6 +37,8 @@
                         <div class="list-landscape-only">
                             <div class="row-bkg-gray"
                                  data-win-bind="style.display: index Binding.Converter.oddToDisplay"></div>
+                            <div class="list-field-small-fixed win-type-ellipsis"
+                                 data-win-bind="textContent: Name"></div>
                             <div class="list-field-small-fixed win-type-ellipsis"
                                  data-win-bind="textContent: Login"></div>
                             <div class="list-field-small-fixed win-type-ellipsis"
@@ -49,6 +52,8 @@
                                 </div>
                                 <div class="list-compressed">
                                     <!--list-localeventsList-->
+                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
+                                          data-win-bind="textContent: Name"></span>
                                     <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
                                           data-win-bind="textContent: Login"></span>
                                     <span class="list-compressed-title win-type-subtitle win-type-ellipsis"

@@ -481,6 +481,7 @@
 
     "empList.title"         : "Benutzerkonten",
     "empList.count"         : "Anzahl",
+    "empList.exportbutton"  : "Benutzer exportieren",
 
     "publish.title"         : "Fragebogen publizieren",
     "publish.comment"       : "Sind Sie sicher, dass Sie den Fragebogen publizieren wollen?",
