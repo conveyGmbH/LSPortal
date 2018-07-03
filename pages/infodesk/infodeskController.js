@@ -647,8 +647,8 @@
                                 that.binding.dataEmployee.Vorname = json.d.Vorname;
                                 that.binding.dataEmployee.Nachname = json.d.Nachname;
                                 that.binding.dataEmployee.Login = json.d.Login;
-
-                                setRecordId(that.binding.dataEmployee.MitarbeiterVIEWID);
+                                that.binding.dataEmployee.MitarbeiterID = json.d.MitarbeiterID; //
+                                setRecordId(that.binding.dataEmployee.MitarbeiterID);//
                             }
                             //copyMissingMembersByValue(that.binding.dataEmployee, Infodesk.SkillEntry.defaultValue);
                         },
