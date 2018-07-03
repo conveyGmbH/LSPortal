@@ -102,7 +102,7 @@
                         that.refreshPromise = null;
                     }
                     that.cancelPromises();
-                    Application.navigateById("start");
+                    //Application.navigateById("start");
                 });
                 Log.ret(Log.l.trace);
             };
