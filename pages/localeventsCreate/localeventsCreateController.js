@@ -72,9 +72,11 @@
 
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
+                        AppBar.busy = false;
                         Application.navigateById("localevents", event);
                     }, function (errorResponse) {
                         Log.print(Log.l.error, "call error");
+                        AppBar.busy = false;
                         AppData.setErrorMsg(that.binding, errorResponse);
                     });
                 Log.ret(Log.l.trace);
@@ -92,6 +94,7 @@
                 },
                 clickSave: function (event) {
                     Log.call(Log.l.trace, "LocalEventsCreate.Controller.");
+                    AppBar.busy = true;
                     that.insertData();
                     Log.ret(Log.l.trace);
                 },
