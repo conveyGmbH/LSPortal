@@ -7,6 +7,7 @@
 /// <reference path="~/www/lib/convey/scripts/pageController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/pages/empList/empListService.js" />
+/// <reference path="~/www/pages/empList/exportXlsx.js" />
 
 (function () {
     "use strict";
@@ -18,10 +19,7 @@
             Log.call(Log.l.trace, "EmpList.Controller.");
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
-                employeeId: AppData.getRecordId("Mitarbeiter"),
-                hasContacts: null,
-                hasLocalevents: null,
-                selIdx: 0
+                employeeId: AppData.getRecordId("Mitarbeiter")
             }, commandList, true]);
             this.nextUrl = null;
             this.loading = false;
@@ -60,7 +58,7 @@
             var cutSerialnumer = function (serialnumer) {
                 Log.call(Log.l.trace, "EmpList.Controller.");
                 AppData.setErrorMsg(that.binding);
-                if (!serialnumer) {
+                if (serialnumer === null) {
                     return "";
                 } else {
                     var serialnumernew = serialnumer;
@@ -68,21 +66,9 @@
                     serialnumernew = serialnumernew.substr(sub + 10);
                     return serialnumernew;
                 }
+
             };
             this.cutSerialnumer = cutSerialnumer;
-
-            var setSelIndex = function (index) {
-                Log.call(Log.l.trace, "EmpList.Controller.", "index=" + index);
-                if (that.employees && that.employees.length > 0) {
-                    if (index >= that.employees.length) {
-                        index = that.employees.length - 1;
-                    }
-                    that.binding.selIdx = index;
-                    listView.winControl.selection.set(index);
-                }
-                Log.ret(Log.l.trace);
-            }
-            this.setSelIndex = setSelIndex;
 
             var selectRecordId = function (recordId) {
                 Log.call(Log.l.trace, "EmpList.Controller.", "recordId=" + recordId);
@@ -91,13 +77,12 @@
                         var employee = that.employees.getAt(i);
                         if (employee && typeof employee === "object" &&
                             employee.MitarbeiterVIEWID === recordId) {
-                            that.binding.hasContacts = employee.HatKontakte;
-                            that.binding.hasLocalevents = employee.HatLocalevents;
-                            setSelIndex(i);
+                            listView.winControl.selection.set(i);
                             break;
                         }
                     }
                 }
+                Log.ret(Log.l.trace);
             }
             this.selectRecordId = selectRecordId;
 
@@ -151,9 +136,6 @@
                                             AppBar.scope.saveData(function (response) {
                                                 // called asynchronously if ok
                                                 that.binding.employeeId = item.data.MitarbeiterVIEWID;
-                                                that.binding.hasContacts = item.data.HatKontakte;
-                                                that.binding.hasLocalevents = item.data.HatLocalevents;
-                                                that.binding.selIdx = item.index;
                                                 var curPageId = Application.getPageId(nav.location);
                                                 if ((curPageId === "employee" || curPageId === "skillentry") &&
                                                     typeof AppBar.scope.loadData === "function") {
