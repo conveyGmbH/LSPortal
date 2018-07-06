@@ -9,7 +9,9 @@
     WinJS.Namespace.define("InfodeskEmpList", {
         _employeeSkillentryView: {
             get: function () {
-                return AppData.getFormatView("SkillEntry", 20472, false); // -> wichtig für später MitarbeiterView_20471
+                var ret = AppData.getFormatView("SkillEntry", 20472, false); // -> wichtig für später MitarbeiterView_20471
+                ret.maxPageSize = 20;
+                return ret;
             }
         },
         employeeSkillentryView: {
