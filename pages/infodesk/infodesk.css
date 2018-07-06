@@ -200,7 +200,7 @@ textarea {
 .view-size-medium .landscape_only_small {
     display: inline-block;
     position: relative;
-    top: 5px;
+    /*top: 5px;*/
 }
 .view-size-small .landscape_only_small {
     display: none;
