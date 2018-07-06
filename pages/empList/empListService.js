@@ -21,7 +21,8 @@
                 } else {
                     ret = EmpList._employeeView.select(complete, error, restriction, {
                         ordered: true,
-                        orderAttribute: "Nachname"
+                        desc: restriction.OrderDesc,
+                        orderAttribute: restriction.OrderAttribute
                     });
                 }
 
@@ -41,6 +42,14 @@
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
+            },
+            defaultRestriction: {
+                Vorname: "",
+                Nachname: "",
+                Login: "",
+                Names: "",
+                OrderAttribute: "Nachname",
+                OrderDesc: true
             }
         },
         _employeePWExportView: {

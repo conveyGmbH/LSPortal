@@ -17,10 +17,13 @@
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "Employee.Controller.");
             Application.Controller.apply(this, [pageElement, {
-               dataEmployee: getEmptyDefaultValue(Employee.employeeView.defaultValue)
+                dataEmployee: getEmptyDefaultValue(Employee.employeeView.defaultValue),
+                restriction: getEmptyDefaultValue(Employee.employeeView.defaultRestriction)
             }, commandList]);
 
             var that = this;
+
+            var prevMasterLoadPromise = null;
             var prevLogin = null;
             var prevPassword;
 
@@ -36,6 +39,19 @@
                 AppBar.triggerDisableHandlers();
             }
             this.setDataEmployee = setDataEmployee;
+
+            var saveRestriction = function () {
+                if (that.binding.restriction.Names && that.binding.restriction.Names.length > 0) {
+                    that.binding.restriction.Aktiv = ["X", "X", "X"];
+                } else {
+                    that.binding.restriction.Aktiv = ["X", "X", "X"];
+                }
+                that.binding.restriction.bAndInEachRow = true;
+                that.binding.restriction.bUseOr = false;
+                Log.print("restriction number:" + that.binding.restriction.countCombobox + ", restriction: " + that.binding.restriction);
+                AppData.setRestriction("Employee", that.binding.restriction);
+            }
+            this.saveRestriction = saveRestriction;
 
             var getRecordId = function () {
                 Log.call(Log.l.trace, "Employee.Controller.");
@@ -219,6 +235,79 @@
                     if (event.currentTarget && AppBar.notifyModified) {
                         pageElement.querySelector("#password2").value = "";
                     }
+                    Log.ret(Log.l.trace);
+                },
+                changeSearchField: function (event) {
+                    Log.call(Log.l.trace, "Event.Controller.");
+                    that.binding.restriction.Vorname = [];
+                    that.binding.restriction.Nachname = [];
+                    that.binding.restriction.Login = [];
+                    if (event.target.value) {
+                        that.binding.restriction.Names = event.target.value;
+                        that.binding.restriction.Vorname = [event.target.value, null, null];
+                        that.binding.restriction.Login = [null, event.target.value, null];
+                        that.binding.restriction.Nachname = [null, null, event.target.value];
+                        that.binding.restriction.bUseOr = false;
+                        that.binding.restriction.bAndInEachRow = true;
+                    } else {
+                        that.binding.restriction.Names = event.target.value;
+                        that.binding.restriction.Login = event.target.value;
+                        that.binding.restriction.Vorname = event.target.value;
+                        that.binding.restriction.Nachname = event.target.value;
+                        delete that.binding.restriction.bUseOr;
+                    }
+                    that.saveRestriction();
+                    var master = Application.navigator.masterControl;
+                    if (master && master.controller && master.controller.binding) {
+                        if (prevMasterLoadPromise &&
+                            typeof prevMasterLoadPromise.cancel === "function") {
+                            prevMasterLoadPromise.cancel();
+                        }
+                        //master.controller.binding.contactId = that.binding.dataContact.KontaktVIEWID;
+                        prevMasterLoadPromise = master.controller.loadData().then(function () {
+                            prevMasterLoadPromise = null;
+                            if (master && master.controller && that.binding.employeeId) {
+                                master.controller.selectRecordId(that.binding.employeeId);
+                            }
+                        });
+                    }
+                    Log.ret(Log.l.trace);
+                },
+                clickOrderFirstname: function (event) {
+                    Log.call(Log.l.trace, "Employee.Controller.");
+                    that.binding.restriction.OrderAttribute = "Vorname";
+                    //that.binding.restriction.OrderDesc = !that.binding.restriction.OrderDesc;
+                    AppData.setRestriction("Employee", that.binding.restriction);
+
+                    if (event.target.textContent === getResourceText("employee.firstNameDesc")) {
+                        event.target.textContent = getResourceText("employee.firstNameAsc");
+                        that.binding.restriction.OrderDesc = false;
+                    } else {
+                        event.target.textContent = getResourceText("employee.firstNameDesc");
+                        that.binding.restriction.OrderDesc = true;
+                    }
+
+                    that.saveRestriction();
+                    var master = Application.navigator.masterControl;
+                    master.controller.loadData();
+                    Log.ret(Log.l.trace);
+                },
+                clickOrderLastname: function (event) {
+                    Log.call(Log.l.trace, "Employee.Controller.");
+                    var master = Application.navigator.masterControl;
+                    that.binding.restriction.OrderAttribute = "Nachname";
+                    //that.binding.restriction.OrderDesc = !that.binding.restriction.OrderDesc;
+                    AppData.setRestriction("Employee", that.binding.restriction);
+                    if (event.target.textContent === getResourceText("employee.nameDesc")) {
+                        event.target.textContent = getResourceText("employee.nameAsc");
+                        that.binding.restriction.OrderDesc = false;
+                    } else {
+                        event.target.textContent = getResourceText("employee.nameDesc");
+                        that.binding.restriction.OrderDesc = true;
+                    }
+
+                    that.saveRestriction();
+                    master.controller.loadData();
                     Log.ret(Log.l.trace);
                 }
             };

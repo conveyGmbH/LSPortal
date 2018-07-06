@@ -46,6 +46,14 @@
                 VeranstaltungID: AppData.getRecordId("Veranstaltung"),
                 INITAPUserRoleID: 3,
                 Password2: ""
+            },
+            defaultRestriction: {
+                Vorname: "",
+                Nachname: "",
+                Login: "",
+                Names: "",
+                OrderAttribute: "Nachname",
+                OrderDesc: true
             }
         }
     });

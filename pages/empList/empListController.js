@@ -29,6 +29,8 @@
 
             // ListView control
             var listView = pageElement.querySelector("#employeeList.listview");
+            var btnFirstName = document.getElementById("btn_employee_firstName");
+            var btnName = document.getElementById("btn_employee_Name");
 
             this.dispose = function () {
                 if (listView && listView.winControl) {
@@ -66,7 +68,6 @@
                     serialnumernew = serialnumernew.substr(sub + 10);
                     return serialnumernew;
                 }
-
             };
             this.cutSerialnumer = cutSerialnumer;
 
@@ -110,6 +111,7 @@
 
             var resultConverter = function (item, index) {
                 item.index = index;
+                item.Names = "",
                 item.fullName =
                 (item.Vorname ? (item.Vorname + " ") : "") +
                 (item.Nachname ? item.Nachname : "");
@@ -277,7 +279,6 @@
                     }
                     Log.ret(Log.l.trace);
                 }
-
             };
 
             this.disableHandlers = null;
@@ -300,6 +301,21 @@
                 }
                 if (counter && counter.style) {
                     counter.style.display = "none";
+                }
+                var restriction = AppData.getRestriction("Employee");
+                Log.call(Log.l.trace, "EmpList.Controller. restriction Employee:" + restriction);
+                var defaultrestriction = EmpList.employeeView.defaultRestriction;
+                if (!restriction) {
+                    restriction = defaultrestriction;
+                }
+                if (restriction.OrderAttribute === "Vorname") {
+                    if (btnName) {
+                        btnName.textContent = getResourceText("employee.name");
+                    }
+                } else {
+                    if (btnFirstName) {
+                        btnFirstName.textContent = getResourceText("employee.firstName");
+                    }
                 }
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
@@ -361,7 +377,7 @@
                             counter.style.display = "inline";
                         }
                         that.loading = false;
-                    }, null, recordId);
+                    }, restriction, recordId);
                 });
                 Log.ret(Log.l.trace);
                 return ret;
