@@ -199,8 +199,12 @@
                     });
                 }).then(function () {
                     Log.print(Log.l.trace, "Data loaded");
-                    AppBar.notifyModified = true;
-                    that.waitForIdleAction();
+                    if (that.refreshPromise) {
+                        that.refreshPromise.cancel();
+                    }
+                    that.refreshPromise = WinJS.Promise.timeout(that.refreshWaitTimeMs).then(function () {
+                        that.loadData();
+                    });
                 });
                 Log.ret(Log.l.trace);
                 return ret;
@@ -210,14 +214,14 @@
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                    return that.loadData();
-            }).then(function () {
+            })/*.then(function () {
                 var loadingTime = 30000;
                 Log.print(Log.l.trace, "Loading Message: " + loadingTime + "sec");
                 setInterval(function () {
                     return that.loadData();
                 }, loadingTime);
                 Log.print(Log.l.trace, "Data loaded");
-            });
+            })*/;
             Log.ret(Log.l.trace);
         }, {
             apuserRole: null
