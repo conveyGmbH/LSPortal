@@ -82,31 +82,47 @@
 
             }
         },
-        _ExportKontaktDataView: {
+        _exportKontaktDataView: {
             get: function () {
-                return AppData.getFormatView("ExportKontaktData", 0);
+                return AppData.getFormatView("DOC3ExportKontaktData", 20553);
             }
         },
-        _ExportKontaktDataTable: {
-            get: function () {
-                return AppData.getFormatView("ExportKontaktData", 0);
-            }
-        },
-        ExportKontaktDataView: {
-            select: function (complete, error) {
+        exportKontaktDataView: {
+            select: function (complete, error, recordId) {
                 Log.call(Log.l.trace, "PDFExport.");
-                var ret = PDFExport._ExportKontaktDataView.select(complete, error,
-                    {
-                        ordered: true,
-                        orderAttribute: "ExportKontaktDataVIEWID",
-                        desc: true
-                    });
+                var ret = PDFExport._exportKontaktDataView.selectById(complete, error, recordId);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
             },
             defaultValue: {
 
+            }
+        },
+        _contactViewFormat: {
+            get: function () {
+                return AppData.getFormatView("DOC3ExportKontaktData", 20554);
+            }
+        },
+        contactView: {
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, "contactView.");
+                var ret = PDFExport._contactViewFormat.select(complete, error, restriction);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getNextUrl: function (response) {
+                Log.call(Log.l.trace, "ContactList.");
+                var ret = PDFExport._contactViewFormat.getNextUrl(response);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            selectNext: function (complete, error, response, nextUrl) {
+                Log.call(Log.l.trace, "ContactList.");
+                var ret = PDFExport._contactViewFormat.selectNext(complete, error, response, nextUrl);
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
             }
         }
     });

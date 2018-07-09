@@ -7,6 +7,18 @@
 /// <reference path="~/www/lib/convey/scripts/pageController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/pages/event/eventService.js" />
+/// <reference path="~/www/lib/WinJS/scripts/base.js" />
+/// <reference path="~/www/lib/convey/scripts/logging.js" />
+/// <reference path="~/www/lib/convey/scripts/dataService.js" />
+/// <reference path="~/www/lib/OpenXml/scripts/linq.js" />
+/// <reference path="~/www/lib/OpenXml/scripts/ltxml.js" />
+/// <reference path="~/www/lib/OpenXml/scripts/ltxml-extensions.js" />
+/// <reference path="~/www/lib/OpenXml/scripts/jszip.js" />
+/// <reference path="~/www/lib/OpenXml/scripts/jszip-load.js" />
+/// <reference path="~/www/lib/OpenXml/scripts/jszip-inflate.js" />
+/// <reference path="~/www/lib/OpenXml/scripts/jszip-deflate.js" />
+/// <reference path="~/www/lib/OpenXml/scripts/FileSaver.js" />
+/// <reference path="~/www/lib/OpenXml/scripts/openxml.js" />
 
 (function () {
     "use strict";
@@ -50,65 +62,98 @@
             }
             this.spinnercontl = spinnercontl;
 
+            var getPdfIdDaten = function() {
+                Log.call(Log.l.trace, "PDFExport.Controller.");
+                AppData.setErrorMsg(that.binding);
+                var ret = PDFExport.contactView.select(function (json) {
+                    Log.print(Log.l.trace, "exportTemplate: success!");
+                    if (json && json.d) {
+                        // store result for next use
+                        that.nextUrl = PDFExport.contactView.getNextUrl(json);
+                        var results = json.d.results;
+                        var pdfIddata = [];
+                        for (var i = 0; i < results.length; i++) {
+                            pdfIddata.push({ DOC3ExportKontaktDataVIEWID: results[i].DOC3ExportKontaktDataVIEWID});
+                        }
+                        that.generateZip(pdfIddata);
+                    }
+                }, function (errorResponse) {
+                    // called asynchronously if an error occurs
+                    // or server returns response with an error status.
+                    AppData.setErrorMsg(that.binding, errorResponse);
+                });
+                Log.ret(Log.l.trace);
+                return ret;    
+            }
+            this.getPdfIdDaten = getPdfIdDaten;
+
+
             var statusExportPDF = function () {
                 Log.call(Log.l.trace, "PDFExport.Controller.");
-                if (that.binding.timerFlag === true){
-                    AppData.setErrorMsg(that.binding);
-                    var ret = new WinJS.Promise.as().then(function () {
-                        return PDFExport.ExportKontaktDataView.select(function (json) {
-                            if (json && json.d && json.d.results) {
-                                var results = json.d.results;
-                                var i = results.length -1;
-                                if (results[i].JobStatus === 0) {
-                                    that.binding.timerFlag = true;
-                                    that.spinnercontl(that.binding.timerFlag);
-                                    WinJS.Promise.timeout(5000).then(function () {
-                                        that.statusExportPDF();
-                                    });
-                                }
-                                else {
-                                    that.binding.timerFlag = false;
-                                    that.spinnercontl(that.binding.timerFlag);
-                                    that.binding.exportPdfString = results[i].DataPath;
-                                }
-                            }
-                        }, function (errorResponse) {
-                            Log.print(Log.l.error, "error");
-                            AppBar.busy = false;
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        });
-                    });
-                    Log.ret(Log.l.trace);
-                    return ret;
-                }
+                
                 
             }
             this.statusExportPDF = statusExportPDF;
 
-            //export PDF Data
-            var exportPDFData = function () {
-                that.binding.timerFlag = true;
-                that.spinnercontl(that.binding.timerFlag);
-                var VeranstaltungID = AppData.getRecordId("Veranstaltung");
+            var addPdfToZip = function (filename, data) {
+                that.pdfzip.file(filename, data);
+            }
+            this.addPdfToZip = addPdfToZip;
+
+            var getPdfData = function (recordId) {
                 Log.call(Log.l.trace, "PDFExport.Controller.");
                 AppData.setErrorMsg(that.binding);
-                AppData.call("PRC_ExportKontakte",
-                    {
-                        pVeranstaltungID: VeranstaltungID,
-                        pKontaktID: 0,
-                        pAnhangFlag: 1,
-                        pLangFlag: 1,
-                        pNurNeueDaten: 0
+                var ret = PDFExport.exportKontaktDataView.select(function (json) {
+                    Log.print(Log.l.trace, "ExportKontaktDataView: success!");
+                    if (json && json.d) {
+                        // store result for next use
+                        var results = json.d;
+                        that.addPdfToZip(results.szOriFileNameDOC1, results.DocContentDOCCNT1);
+                    }
+                }, function (errorResponse) {
+                    // called asynchronously if an error occurs
+                    // or server returns response with an error status.
+                    AppData.setErrorMsg(that.binding, errorResponse);
+                }, recordId);
+                Log.ret(Log.l.trace);
+                return ret;    
+            }
+            this.getPdfData = getPdfData;
 
+            //ensure that all PDF are created and ready for download
+            var ensurePdfDone = function () {
+                that.binding.timerFlag = true;
+                that.spinnercontl(that.binding.timerFlag);
+                Log.call(Log.l.trace, "PDFExport.Controller.");
+                AppData.setErrorMsg(that.binding);
+                AppData.call("PRC_EnsurePDFdone",
+                    {
+                       
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
-                        that.statusExportPDF(that.binding.timerFlag);
+                        that.binding.timerFlag = false;
+                        that.spinnercontl(that.binding.timerFlag);
+                        that.getPdfIdDaten();
                     }, function (error) {
                         Log.print(Log.l.error, "call error");
+                        that.binding.timerFlag = false;
+                        that.spinnercontl(that.binding.timerFlag);
                     });
                 Log.ret(Log.l.trace);
             }
-            this.exportPDFData = exportPDFData;
+            this.ensurePdfDone = ensurePdfDone;
+            
+            var generateZip = function (pdfIddata) {
+                var l = pdfIddata.length;
+                that.pdfzip = new JSZip();
+                for (var i = 0; i < l; i++) {
+                    that.getPdfData(pdfIddata[i].DOC3ExportKontaktDataVIEWID);
+                }
+                var pdfData = that.pdfzip.generate();
+                location.href = "data:application/zip;base64," + pdfData;
+                Log.call(Log.l.trace, "PDFExport.Controller.");
+            }
+            this.generateZip = generateZip;
 
             // save data
             var saveData = function (complete, error) {
@@ -192,7 +237,8 @@
                         AppBar.busy = true;
                         AppBar.triggerDisableHandlers();
                         WinJS.Promise.timeout(0).then(function () {
-                            return that.exportPDFData(exportselection);
+                           // return that.exportPDFData(exportselection);
+                            that.getPdfIdDaten();
                         });
                     }
                     Log.ret(Log.l.trace);
@@ -314,7 +360,9 @@
             });
             Log.ret(Log.l.trace);
         }, {
-                exportPDFStringFlag: ""
+                exportPDFStringFlag: "",
+                pdfzip: null,
+                pdfzipfiles: []
             })
     });
 })();
