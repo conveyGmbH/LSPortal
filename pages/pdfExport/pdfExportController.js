@@ -22,6 +22,8 @@
 
 (function () {
     "use strict";
+    var b64 = window.base64js;
+
     WinJS.Namespace.define("PDFExport", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "PDFExport.Controller.");
@@ -44,6 +46,11 @@
             var pdfExportList = pageElement.querySelector("#PDFExportList");
             var spinner = pageElement.querySelector(".loader");
 
+            this.pdfzip = null;
+            this.pdfIddata = [];
+            this.nextUrl = null;
+            this.curPdfIdx = -1;
+
             var disableReportingList = function (disableFlag) {
                 var reportingListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("PDFExportList"));
                 if (reportingListFragmentControl &&
@@ -62,21 +69,21 @@
             }
             this.spinnercontl = spinnercontl;
 
-            var getPdfIdDaten = function() {
+            var getPdfIdDaten = function () {
+                that.pdfzip = null;
+                that.pdfIddata = [];
+                that.nextUrl = null;
+                that.curPdfIdx = -1;
                 Log.call(Log.l.trace, "PDFExport.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret = PDFExport.contactView.select(function (json) {
                     Log.print(Log.l.trace, "exportTemplate: success!");
-                    if (json && json.d) {
+                    if (json && json.d && json.d.results && json.d.results.length > 0) {
                         // store result for next use
                         that.nextUrl = PDFExport.contactView.getNextUrl(json);
-                        var results = json.d.results;
-                        var pdfIddata = [];
-                        for (var i = 0; i < results.length; i++) {
-                            pdfIddata.push({ DOC3ExportKontaktDataVIEWID: results[i].DOC3ExportKontaktDataVIEWID});
-                        }
-                        that.generateZip(pdfIddata);
+                        that.pdfIddata = json.d.results;
                     }
+                    that.getNextPdfData();
                 }, function (errorResponse) {
                     // called asynchronously if an error occurs
                     // or server returns response with an error status.
@@ -90,35 +97,81 @@
 
             var statusExportPDF = function () {
                 Log.call(Log.l.trace, "PDFExport.Controller.");
-                
-                
             }
             this.statusExportPDF = statusExportPDF;
 
-            var addPdfToZip = function (filename, data) {
-                that.pdfzip.file(filename, data);
+            var addPdfToZip = function (filename, docContent) {
+                if (filename && docContent) {
+                    if (!that.pdfzip) {
+                        that.pdfzip = new JSZip();
+                    }
+                    var sub = docContent.search("\r\n\r\n");
+                    if (sub > 0) {
+                        var data = b64.toByteArray(docContent.substr(sub + 4));
+                        that.pdfzip.file(filename, data);
+                    } else {
+                        that.pdfzip.file(filename, docContent);
+                    }
+                }
             }
             this.addPdfToZip = addPdfToZip;
 
-            var getPdfData = function (recordId) {
+            var getNextPdfData = function () {
+                var ret;
                 Log.call(Log.l.trace, "PDFExport.Controller.");
-                AppData.setErrorMsg(that.binding);
-                var ret = PDFExport.exportKontaktDataView.select(function (json) {
-                    Log.print(Log.l.trace, "ExportKontaktDataView: success!");
-                    if (json && json.d) {
-                        // store result for next use
-                        var results = json.d;
-                        that.addPdfToZip(results.szOriFileNameDOC1, results.DocContentDOCCNT1);
-                    }
-                }, function (errorResponse) {
-                    // called asynchronously if an error occurs
-                    // or server returns response with an error status.
-                    AppData.setErrorMsg(that.binding, errorResponse);
-                }, recordId);
+                if (that.nextUrl) {
+                    var nextUrl = that.nextUrl;
+                    Log.print(Log.l.trace, "nextUrl=%d" + nextUrl);
+                    that.nextUrl = null;
+                    ret = PDFExport.contactView.selectNext(function (json) {
+                        // this callback will be called asynchronously
+                        // when the response is available
+                        Log.print(Log.l.trace, "ExportKontaktDataView selectNext: success!");
+                        // employeeView returns object already parsed from json file in response
+                        if (json && json.d && json.d.results && json.d.results.length > 0) {
+                            that.nextUrl = PDFExport.contactView.getNextUrl(json);
+                            that.pdfIddata = json.d.results;
+                        }
+                        that.getNextPdfData();
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    }, that.pdfIddata, nextUrl);
+                } else if (++that.curPdfIdx < that.pdfIddata.length) {
+                    AppData.setErrorMsg(that.binding);
+                    var recordId = that.pdfIddata[that.curPdfIdx].DOC3ExportKontaktDataVIEWID;
+                    Log.print(Log.l.trace, "that.pdfIddata[%d" + that.curPdfIdx + "].DOC3ExportKontaktDataVIEWID=" + recordId + " pdfIddata.length=" + that.pdfIddata.length);
+                    ret = PDFExport.exportKontaktDataView.select(function (json) {
+                        Log.print(Log.l.trace, "ExportKontaktDataView: success!");
+                        if (json && json.d) {
+                            // store result for next use
+                            that.addPdfToZip(json.d.szOriFileNameDOC1, json.d.DocContentDOCCNT1);
+                        }
+                        that.getNextPdfData();
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    }, recordId);
+                } else if (that.pdfIddata.length > 0) {
+                    Log.print(Log.l.trace, "collected all, pdfIddata.length=" + that.pdfIddata.length);
+                    var pdfData = that.pdfzip.generate({
+                        base64: false,
+                        compression: "STORE",
+                        type: "blob"
+                    });
+                    //location.href = "data:application/zip;base64," + pdfData;
+                    saveAs(pdfData, "PDFExport.zip");
+                    ret = WinJS.Promise.as();
+                } else {
+                    Log.print(Log.l.trace, "no data");
+                    ret = WinJS.Promise.as();
+                }
                 Log.ret(Log.l.trace);
                 return ret;    
             }
-            this.getPdfData = getPdfData;
+            this.getNextPdfData = getNextPdfData;
 
             //ensure that all PDF are created and ready for download
             var ensurePdfDone = function () {
@@ -144,13 +197,17 @@
             this.ensurePdfDone = ensurePdfDone;
             
             var generateZip = function (pdfIddata) {
+                /*
                 var l = pdfIddata.length;
-                that.pdfzip = new JSZip();
+                if (!that.pdfzip) {
+                    that.pdfzip = new JSZip();
+                }
                 for (var i = 0; i < l; i++) {
                     that.getPdfData(pdfIddata[i].DOC3ExportKontaktDataVIEWID);
                 }
                 var pdfData = that.pdfzip.generate();
                 location.href = "data:application/zip;base64," + pdfData;
+                 */
                 Log.call(Log.l.trace, "PDFExport.Controller.");
             }
             this.generateZip = generateZip;
