@@ -494,17 +494,25 @@ select {
 }
 .portrait_only_left {
     display: block;
+    width: 175px;
     position: relative;
     top: 4px;
 }
 .portrait_only_quarter {
     display: block;
     position: relative;
-    left: 25%;
+    left: 50%;
     top: -16px;
     height: 0;
 }
 .portrait_only_half {
+    display: block;
+    position: relative;
+    left: 50%;
+    top: -16px;
+    height: 4px;
+}
+.portrait_only_threeQuarter {
     display: block;
     position: relative;
     left: 50%;
@@ -922,6 +930,7 @@ input.win-textbox, input.win-checkbox, input.win-radio, textarea.win-textarea, s
     margin-right: 16px;
     margin-bottom: 0;
 }
+.view-size-medium .portrait_only_threeQuarter,
 .view-size-medium .portrait_only_quarter,
 .view-size-medium .portrait_half,
 .view-size-medium .portrait_only_half,
@@ -1076,6 +1085,8 @@ input.win-textbox, input.win-checkbox, input.win-radio, textarea.win-textarea, s
 .view-size-small .portrait_only {
     display: inline;
 }
+
+.view-size-small .portrait_only_threeQuarter,
 .view-size-small .portrait_only_quarter {
     display: block;
 }

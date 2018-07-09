@@ -1,14 +1,5 @@
 ﻿body {
 }
-/*
-#employeeList .listview .win-selectionstylefilled {
-    position: relative;
-    left: 0px;
-    top: 0px;
-    width: 200px;
-    height: 200px;
-}
-*/
 #infodeskEmployeeList .win-itemcontainer .win-itembox,
 #infodeskEmployeeList .win-listview .win-itembox {
     background-color: transparent;
@@ -32,15 +23,6 @@
 #infodeskEmployeeList .win-container {
     margin: 0;
 }
-/*
-#employeeList .win-item {
-    padding: 4px 8px;
-    width: calc(100% - 20px);
-    border-style: solid;
-    border-width: 2px;
-    border-color: transparent;
-}
-*/
 #infodeskEmployeeList .win-item {
     width: calc(100% - 52px);
     padding-left: 26px;
@@ -59,14 +41,6 @@
     is now signalled by additional class: view-size-bigger
 */
 
-/*
-.view-size-bigger #employeeList .win-container {
-    margin-left: 0;
-    margin-right: 0;
-    margin-top: 0;
-    margin-bottom: 16px;
-}
-*/
 .view-size-bigger #employeeList .win-item {
     width: calc(100% - 52px);
     padding-top: 8px;

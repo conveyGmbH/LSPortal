@@ -93,6 +93,7 @@
                 MitarbeiterID: 0,
                 Vorname: "",
                 Nachname: "",
+                fullname: "",
                 Login:"",
                 firstskill: "",
                 secondskill: "",

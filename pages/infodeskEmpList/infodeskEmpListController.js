@@ -23,24 +23,42 @@
                 employeeId: AppData.getRecordId("Benutzer")
             }, commandList, true]);
             this.nextUrl = null;
-
-            this.refreshPromise = null;
             this.refreshWaitTimeMs = 30000;
-
-            // idle wait Promise and wait time:
-            this.restartPromise = null;
-            this.idleWaitTimeMs = 60000;
-
-            this.failurePromise = null;
-            this.failureWaitTimeMs = 6000;
-
-            this.animationPromise = null;
+            this.idleWaitTimeMs = 30000;
 
             var that = this;
 
-            this.dispose = function () {
+            // ListView control
+            var listView = pageElement.querySelector("#infodeskEmployeeList.listview");
+            var btnFirstName = document.getElementById("btn_firstName");
+            var btnName = document.getElementById("btn_Name");
+            var progress = null;
+            var counter = null;
+            var layout = null;
+            var lastPrevLogin = [];
+            this.docs = null;
+
+            var maxLeadingPages = 0;
+            var maxTrailingPages = 0;
+            this.firstDocsIndex = 0;
+            this.firstContactsIndex = 0;
+
+            var waitForIdleAction = function () {
+                Log.call(Log.l.trace, "Barcode.Controller.", "idleWaitTimeMs=" + that.idleWaitTimeMs);
                 that.cancelPromises();
+                that.restartPromise = WinJS.Promise.timeout(that.idleWaitTimeMs).then(function () {
+                    Log.print(Log.l.trace, "timeout occurred, navigate back to start page!");
+                    if (that.refreshPromise) {
+                        Log.print(Log.l.trace, "cancel previous refresh Promise");
+                        that.refreshPromise.cancel();
+                        that.refreshPromise = null;
+                    }
+                    that.cancelPromises();
+                    //Application.navigateById("start");
+                });
+                Log.ret(Log.l.trace);
             };
+            this.waitForIdleAction = waitForIdleAction;
 
             var cancelPromises = function () {
                 Log.call(Log.l.trace, "Barcode.Controller.");
@@ -62,84 +80,6 @@
                 Log.ret(Log.l.trace);
             }
             this.cancelPromises = cancelPromises;
-
-            /*var deleteAndNavigate = function (targetPage) {
-                Log.call(Log.l.trace, "Barcode.Controller.", "targetPage=" + that.targetPage);
-                that.cancelPromises();
-                var contactId = AppData.getRecordId("Kontakt");
-                Log.print(Log.l.trace, "contactId=" + contactId);
-                if (contactId) {
-                    Log.print(Log.l.trace, "delete existing contactID=" + contactId);
-                    Barcode.contactView.deleteRecord(function (json) {
-                        // this callback will be called asynchronously
-                        Log.print(Log.l.trace, "contactView: deleteRecord success!");
-                        AppData.setRecordId("Kontakt", null);
-                        if (that.refreshPromise) {
-                            Log.print(Log.l.trace, "cancel previous refresh Promise");
-                            that.refreshPromise.cancel();
-                            that.refreshPromise = null;
-                        }
-                        that.cancelPromises();
-                        Application.navigateById(targetPage);
-                    }, function (errorResponse) {
-                        // called asynchronously if an error occurs
-                        // or server returns response with an error status.
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                    }, contactId);
-                }
-                Log.ret(Log.l.trace);
-            }
-            this.deleteAndNavigate = deleteAndNavigate;*/
-
-            var waitForIdleAction = function () {
-                Log.call(Log.l.trace, "Barcode.Controller.", "idleWaitTimeMs=" + that.idleWaitTimeMs);
-                that.cancelPromises();
-                that.restartPromise = WinJS.Promise.timeout(that.idleWaitTimeMs).then(function () {
-                    Log.print(Log.l.trace, "timeout occurred, navigate back to start page!");
-                    if (that.refreshPromise) {
-                        Log.print(Log.l.trace, "cancel previous refresh Promise");
-                        that.refreshPromise.cancel();
-                        that.refreshPromise = null;
-                    }
-                    that.cancelPromises();
-                    //Application.navigateById("start");
-                });
-                Log.ret(Log.l.trace);
-            };
-            this.waitForIdleAction = waitForIdleAction;
-
-            var waitForFailureAction = function () {
-                Log.call(Log.l.trace, "Barcode.Controller.", "failureWaitTimeMs=" + that.failureWaitTimeMs);
-                that.cancelPromises();
-                that.failurePromise = WinJS.Promise.timeout(that.failureWaitTimeMs).then(function () {
-                    Log.print(Log.l.trace, "timeout occurred, navigate to failed page!");
-                    if (that.refreshPromise) {
-                        Log.print(Log.l.trace, "cancel previous refresh Promise");
-                        that.refreshPromise.cancel();
-                        that.refreshPromise = null;
-                    }
-                    that.cancelPromises();
-                    Application.navigateById("failed");
-                });
-                Log.ret(Log.l.trace);
-            };
-            this.waitForFailureAction = waitForFailureAction;
-
-            // ListView control
-            var listView = pageElement.querySelector("#infodeskEmployeeList.listview");
-            var btnFirstName = document.getElementById("btn_firstName");
-            var btnName = document.getElementById("btn_Name");
-            var progress = null;
-            var counter = null;
-            var layout = null;
-            var messages = [];
-            var lastPrevLogin = [];
-            this.docs = null;
-
-            var maxLeadingPages = 0;
-            var maxTrailingPages = 0;
-            this.firstDocsIndex = 0;
-            this.firstContactsIndex = 0;
 
             this.dispose = function () {
                 if (listView && listView.winControl) {
@@ -184,7 +124,7 @@
                 }
                 progress = listView.querySelector(".list-footer .progress");
                 counter = listView.querySelector(".list-footer .counter");
-                if (that.employees && (that.nextUrl || that.nextskillentryUrl) && listView) {
+                if (that.employees && that.nextskillentryUrl && listView) { //that.nextskillentryUrl
                     that.loading = true;
                     if (progress && progress.style) {
                         progress.style.display = "inline";
@@ -194,15 +134,15 @@
                     }
                     AppData.setErrorMsg(that.binding);
                     Log.print(Log.l.trace, "calling select InfodeskEmpList.employeeView...");
-                    var nextUrl = that.nextUrl;
-                    that.nextUrl = null;
-                    InfodeskEmpList.employeeView.selectNext(function (json) { //json is undefined
+                    var nextskillentryUrl = that.nextskillentryUrl;
+                    that.nextskillentryUrl = null;
+                    InfodeskEmpList.employeeSkillentryView.selectNext(function (json) { //skillentryview employeeView
                         // this callback will be called asynchronously
                         // when the response is available
                         Log.print(Log.l.trace, "InfodeskEmpList.employeeView: success!");
                         // startContact returns object already parsed from json file in response
                         if (json && json.d && that.employees) {
-                            that.nextUrl = InfodeskEmpList.employeeView.getNextUrl(json);
+                            that.nextskillentryUrl = InfodeskEmpList.employeeSkillentryView.getNextUrl(json); //that.nextskillentryview
                             var results = json.d.results;
 
                             //hole anhand der recordid die Fähigkeiten des jeweiligen Mitarbeiters mit der recordid
@@ -254,6 +194,8 @@
                         if (recordId) {
                             that.selectRecordId(recordId);
                         }
+                        
+                        /*(that.nextDocUrl)*/
                         if (that.nextDocUrl) {
                             WinJS.Promise.timeout(250).then(function () {
                                 Log.print(Log.l.trace, "calling select ContactList.contactDocView...");
@@ -294,7 +236,37 @@
                         that.loading = false;
                     },
                     null,
-                    nextUrl);
+                    nextskillentryUrl);
+                } else if (that.employees && that.nextUrl && listView) {
+                    var nextUrl = that.nextUrl;
+                    that.nextUrl = null;
+                    Log.print(Log.l.trace, "calling select InfodeskEmpList.employeeView...");
+                        InfodeskEmpList.employeeView.selectNext(function (json) {
+                            Log.print(Log.l.trace, "InfodeskEmpList.employeeView: success!");
+                            // startContact returns object already parsed from json file in response
+                            if (json && json.d && that.employees) {
+                                that.nextUrl = InfodeskEmpList.employeeView.getNextUrl(json); //that.nextskillentryview
+                                var results = json.d.results;
+                                results.forEach(function (item, index) {
+                                    that.resultConverter(item, index);
+                                    that.binding.count = that.employees.push(item);
+                                });
+                            }
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            //Log.print(Log.l.error, "ContactList.contactView: error!");
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                            if (progress && progress.style) {
+                                progress.style.display = "none";
+                            }
+                            if (counter && counter.style) {
+                                counter.style.display = "inline";
+                            }
+                            that.loading = false;
+                        },
+                        null,
+                        nextUrl);
                 } else {
                     if (progress && progress.style) {
                         progress.style.display = "none";
@@ -416,14 +388,11 @@
                                         //&&(item.data.MitarbeiterID || item.data.MitarbeiterVIEWID) !== that.binding.employeeId
                                         // called asynchronously if ok
                                         var employeeId = item.data.MitarbeiterID || item.data.MitarbeiterVIEWID;
+                                        that.binding.employeeId = employeeId;
                                         var curPageId = Application.getPageId(nav.location);
                                         if ((curPageId === "infodesk" || curPageId === "infodeskEmpList") &&
                                             typeof AppBar.scope.loadData === "function") {
-                                            if (employeeId) {
-                                                that.binding.employeeId = employeeId;
-                                                AppBar.scope.loadData(that.binding.employeeId);
-                                            }
-                                            
+                                            AppBar.scope.loadData(that.binding.employeeId);
                                         }
                                     }
                                 });
@@ -497,7 +466,7 @@
                         progress = listView.querySelector(".list-footer .progress");
                         counter = listView.querySelector(".list-footer .counter");
                         var visible = eventInfo.detail.visible;
-                        if (visible && that.employees && that.nextUrl) {
+                        if (visible && that.employees && (that.nextUrl || that.nextskillentryUrl)) {
                             that.loading = true;
                             that.loadNextUrl();
                         } else {
@@ -511,42 +480,7 @@
                         }
                     }
                     Log.ret(Log.l.trace);
-                },
-               /* changeSearchField: function (event) {
-                    setTimeout(function () {
-                        Log.call(Log.l.trace, "Event.Controller.");
-                        that.binding.restriction.Vorname = [];
-                        that.binding.restriction.Nachname = [];
-                        that.binding.restriction.Login = [];
-                        if (event.target.value) {
-                            that.binding.restriction.Names = event.target.value;
-                            that.binding.restriction.Vorname = [event.target.value, null, null];
-                            that.binding.restriction.Login = [null, event.target.value, null];
-                            that.binding.restriction.Nachname = [null, null, event.target.value];
-                            that.binding.restriction.bUseOr = false;
-                            that.binding.restriction.bAndInEachRow = true;
-                        } else {
-                            that.binding.restriction.Names = event.target.value;
-                            that.binding.restriction.Login = event.target.value;
-                            that.binding.restriction.Vorname = event.target.value;
-                            that.binding.restriction.Nachname = event.target.value;
-                            delete that.binding.restriction.bUseOr;
-                        }
-                        that.saveRestriction(function () {
-                            // called asynchronously if ok
-                            complete({});
-                        });
-                       // var master = Application.navigator.masterControl;
-                        //if (master && master.controller && master.controller.binding) {
-                            //master.controller.binding.contactId = that.binding.dataContact.KontaktVIEWID;
-                            that.loadData().then(function () {
-                                if (that.binding.employeeId)
-                                    that.selectRecordId(that.binding.employeeId);
-                            });
-                        //}
-                    }, 2000);
-
-                }*/
+                }
             };
 
             this.disableHandlers = null;
@@ -605,6 +539,7 @@
                         that.binding.dataEmployee.Names = restriction.Names;
                     }
                     if (restriction.countCombobox && restriction.countCombobox > 0) {
+                        that.nextUrl = null;
                         return InfodeskEmpList.employeeSkillentryView.select(function (json) {
                             // this callback will be called asynchronously
                             // when the response is available
@@ -664,14 +599,14 @@
                                     listView.winControl.itemDataSource = that.employees.dataSource;
                                 }
                                 Log.print(Log.l.trace, "Data loaded");
-                                /*if (results[0]) {
-                                    WinJS.Promise.timeout(0).then(function () {
-                                        that.selectRecordId(results[0].MitarbeiterVIEWID);
-                                    });
-                                }*/
+                                WinJS.Promise.timeout(0).then(function () {
+                                    if (that.binding.employeeId)
+                                        that.selectRecordId(that.binding.employeeId);
+                                });
                             } else {
                                 that.binding.count = 0;
                                 that.nextskillentryUrl = null;
+                                //that.nextskillentryUrl = null;
                                 that.employees = null;
                                 if (listView.winControl) {
                                     // add ListView dataSource
@@ -701,7 +636,7 @@
                             }
                             that.loading = false;
                         }, restriction, {
-                           orderAttribute: restriction.OrderAttribute, desc: true
+                            orderAttribute: restriction.OrderAttribute, desc: true
                         }); //that.binding.restriction beim neuladen ist die leer
                     } else {
                         return InfodeskEmpList.employeeView.select(function (json) {
@@ -722,12 +657,6 @@
                                     // add ListView dataSource
                                     listView.winControl.itemDataSource = that.employees.dataSource;
                                 }
-                                if (that.refreshPromise) {
-                                    that.refreshPromise.cancel();
-                                }
-                                that.refreshPromise = WinJS.Promise.timeout(that.refreshWaitTimeMs).then(function () {
-                                    that.loadData();
-                                });
                             } else {
                                 that.binding.count = 0;
                                 that.nextUrl = null;
@@ -745,12 +674,6 @@
                                     counter.style.display = "inline";
                                 }
                                 that.loading = false;
-                                if (that.refreshPromise) {
-                                    that.refreshPromise.cancel();
-                                }
-                                that.refreshPromise = WinJS.Promise.timeout(that.refreshWaitTimeMs).then(function () {
-                                    that.loadData();
-                                });
                             }
                         }, function (errorResponse) {
                             // called asynchronously if an error occurs
@@ -795,8 +718,12 @@
                     });
                 }).then(function () {
                     Log.print(Log.l.trace, "Data loaded");
-                    AppBar.notifyModified = true;
-                    that.waitForIdleAction();
+                    if (that.refreshPromise) {
+                        that.refreshPromise.cancel();
+                    }
+                    that.refreshPromise = WinJS.Promise.timeout(that.refreshWaitTimeMs).then(function () {
+                        that.loadData();
+                    });
                 });
                 Log.ret(Log.l.trace);
                 return ret;
