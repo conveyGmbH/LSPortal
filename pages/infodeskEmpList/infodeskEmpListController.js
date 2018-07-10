@@ -23,8 +23,8 @@
                 employeeId: AppData.getRecordId("Benutzer")
             }, commandList, true]);
             this.nextUrl = null;
+            this.refreshPromise = null;
             this.refreshWaitTimeMs = 30000;
-            this.idleWaitTimeMs = 30000;
             this.firstDocsIndex = 0;
             this.firstEmployeesIndex = 0;
 
@@ -43,45 +43,19 @@
             var maxLeadingPages = 0;
             var maxTrailingPages = 0;
 
-            var waitForIdleAction = function () {
-                Log.call(Log.l.trace, "Barcode.Controller.", "idleWaitTimeMs=" + that.idleWaitTimeMs);
-                that.cancelPromises();
-                that.restartPromise = WinJS.Promise.timeout(that.idleWaitTimeMs).then(function () {
-                    Log.print(Log.l.trace, "timeout occurred, navigate back to start page!");
-                    if (that.refreshPromise) {
-                        Log.print(Log.l.trace, "cancel previous refresh Promise");
-                        that.refreshPromise.cancel();
-                        that.refreshPromise = null;
-                    }
-                    that.cancelPromises();
-                    //Application.navigateById("start");
-                });
-                Log.ret(Log.l.trace);
-            };
-            this.waitForIdleAction = waitForIdleAction;
-
             var cancelPromises = function () {
                 Log.call(Log.l.trace, "Barcode.Controller.");
-                if (that.animationPromise) {
-                    Log.print(Log.l.trace, "cancel previous animation Promise");
-                    that.animationPromise.cancel();
-                    that.animationPromise = null;
-                }
-                if (that.restartPromise) {
-                    Log.print(Log.l.trace, "cancel previous restart Promise");
-                    that.restartPromise.cancel();
-                    that.restartPromise = null;
-                }
-                if (that.failurePromise) {
-                    Log.print(Log.l.trace, "cancel previous failure Promise");
-                    that.failurePromise.cancel();
-                    that.failurePromise = null;
+                if (that.refreshPromise) {
+                    Log.print(Log.l.trace, "cancel previous refresh Promise");
+                    that.refreshPromise.cancel();
+                    that.refreshPromise = null;
                 }
                 Log.ret(Log.l.trace);
             }
             this.cancelPromises = cancelPromises;
 
             this.dispose = function () {
+                that.cancelPromises();
                 if (listView && listView.winControl) {
                     listView.winControl.itemDataSource = null;
                 }
@@ -596,24 +570,39 @@
                                     that.resultConverter(item, index);
                                 });
                                 that.employees = new WinJS.Binding.List(results);
-                                if (listView.winControl) {
+                                if (listView && listView.winControl) {
                                     // add ListView dataSource
                                     listView.winControl.itemDataSource = that.employees.dataSource;
+                                    Log.print(Log.l.trace, "Data loaded");
+                                    WinJS.Promise.timeout(0).then(function () {
+                                        if (that.binding.employeeId)
+                                            that.selectRecordId(that.binding.employeeId);
+                                    });
                                 }
-                                Log.print(Log.l.trace, "Data loaded");
-                                WinJS.Promise.timeout(0).then(function () {
-                                    if (that.binding.employeeId)
-                                        that.selectRecordId(that.binding.employeeId);
-                                });
                             } else {
                                 that.binding.count = 0;
                                 that.nextskillentryUrl = null;
                                 //that.nextskillentryUrl = null;
                                 that.employees = null;
-                                if (listView.winControl) {
+                                if (listView && listView.winControl) {
                                     // add ListView dataSource
                                     listView.winControl.itemDataSource = null;
+                                    progress = listView.querySelector(".list-footer .progress");
+                                    counter = listView.querySelector(".list-footer .counter");
+                                    if (progress && progress.style) {
+                                        progress.style.display = "none";
+                                    }
+                                    if (counter && counter.style) {
+                                        counter.style.display = "inline";
+                                    }
                                 }
+                                that.loading = false;
+                            }
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                            if (listView) {
                                 progress = listView.querySelector(".list-footer .progress");
                                 counter = listView.querySelector(".list-footer .counter");
                                 if (progress && progress.style) {
@@ -622,19 +611,6 @@
                                 if (counter && counter.style) {
                                     counter.style.display = "inline";
                                 }
-                                that.loading = false;
-                            }
-                        }, function (errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                            progress = listView.querySelector(".list-footer .progress");
-                            counter = listView.querySelector(".list-footer .counter");
-                            if (progress && progress.style) {
-                                progress.style.display = "none";
-                            }
-                            if (counter && counter.style) {
-                                counter.style.display = "inline";
                             }
                             that.loading = false;
                         }, restriction, {
@@ -655,7 +631,7 @@
                                 });
                                 that.employees = new WinJS.Binding.List(results);
 
-                                if (listView.winControl) {
+                                if (listView && listView.winControl) {
                                     // add ListView dataSource
                                     listView.winControl.itemDataSource = that.employees.dataSource;
                                 }
@@ -663,10 +639,25 @@
                                 that.binding.count = 0;
                                 that.nextUrl = null;
                                 that.employees = null;
-                                if (listView.winControl) {
+                                if (listView && listView.winControl) {
                                     // add ListView dataSource
                                     listView.winControl.itemDataSource = null;
+                                    progress = listView.querySelector(".list-footer .progress");
+                                    counter = listView.querySelector(".list-footer .counter");
+                                    if (progress && progress.style) {
+                                        progress.style.display = "none";
+                                    }
+                                    if (counter && counter.style) {
+                                        counter.style.display = "inline";
+                                    }
                                 }
+                                that.loading = false;
+                            }
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                            if (listView) {
                                 progress = listView.querySelector(".list-footer .progress");
                                 counter = listView.querySelector(".list-footer .counter");
                                 if (progress && progress.style) {
@@ -675,19 +666,6 @@
                                 if (counter && counter.style) {
                                     counter.style.display = "inline";
                                 }
-                                that.loading = false;
-                            }
-                        }, function (errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                            progress = listView.querySelector(".list-footer .progress");
-                            counter = listView.querySelector(".list-footer .counter");
-                            if (progress && progress.style) {
-                                progress.style.display = "none";
-                            }
-                            if (counter && counter.style) {
-                                counter.style.display = "inline";
                             }
                             that.loading = false;
                         }, restriction);
@@ -720,9 +698,7 @@
                     });
                 }).then(function () {
                     Log.print(Log.l.trace, "Data loaded");
-                    if (that.refreshPromise) {
-                        that.refreshPromise.cancel();
-                    }
+                    that.cancelPromises();
                     that.refreshPromise = WinJS.Promise.timeout(that.refreshWaitTimeMs).then(function () {
                         that.loadData();
                     });

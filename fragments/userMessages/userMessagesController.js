@@ -23,103 +23,20 @@
             this.refreshPromise = null;
             this.refreshWaitTimeMs = 30000;
 
-            // idle wait Promise and wait time:
-            this.restartPromise = null;
-            this.idleWaitTimeMs = 60000;
-
-            this.failurePromise = null;
-            this.failureWaitTimeMs = 6000;
-
-            this.animationPromise = null;
-
-            var that = this;
-
             this.dispose = function () {
                 that.cancelPromises();
             };
 
             var cancelPromises = function () {
                 Log.call(Log.l.trace, "Barcode.Controller.");
-                if (that.animationPromise) {
-                    Log.print(Log.l.trace, "cancel previous animation Promise");
-                    that.animationPromise.cancel();
-                    that.animationPromise = null;
-                }
-                if (that.restartPromise) {
-                    Log.print(Log.l.trace, "cancel previous restart Promise");
-                    that.restartPromise.cancel();
-                    that.restartPromise = null;
-                }
-                if (that.failurePromise) {
-                    Log.print(Log.l.trace, "cancel previous failure Promise");
-                    that.failurePromise.cancel();
-                    that.failurePromise = null;
+                if (that.refreshPromise) {
+                    Log.print(Log.l.trace, "cancel previous refresh Promise");
+                    that.refreshPromise.cancel();
+                    that.refreshPromise = null;
                 }
                 Log.ret(Log.l.trace);
             }
             this.cancelPromises = cancelPromises;
-
-            var deleteAndNavigate = function (targetPage) {
-                Log.call(Log.l.trace, "Barcode.Controller.", "targetPage=" + that.targetPage);
-                that.cancelPromises();
-                var contactId = AppData.getRecordId("Kontakt");
-                Log.print(Log.l.trace, "contactId=" + contactId);
-                if (contactId) {
-                    Log.print(Log.l.trace, "delete existing contactID=" + contactId);
-                    Barcode.contactView.deleteRecord(function (json) {
-                        // this callback will be called asynchronously
-                        Log.print(Log.l.trace, "contactView: deleteRecord success!");
-                        AppData.setRecordId("Kontakt", null);
-                        if (that.refreshPromise) {
-                            Log.print(Log.l.trace, "cancel previous refresh Promise");
-                            that.refreshPromise.cancel();
-                            that.refreshPromise = null;
-                        }
-                        that.cancelPromises();
-                        Application.navigateById(targetPage);
-                    }, function (errorResponse) {
-                        // called asynchronously if an error occurs
-                        // or server returns response with an error status.
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                    }, contactId);
-                }
-                Log.ret(Log.l.trace);
-            }
-            this.deleteAndNavigate = deleteAndNavigate;
-
-            var waitForIdleAction = function () {
-                Log.call(Log.l.trace, "Barcode.Controller.", "idleWaitTimeMs=" + that.idleWaitTimeMs);
-                that.cancelPromises();
-                that.restartPromise = WinJS.Promise.timeout(that.idleWaitTimeMs).then(function () {
-                    Log.print(Log.l.trace, "timeout occurred, navigate back to start page!");
-                    if (that.refreshPromise) {
-                        Log.print(Log.l.trace, "cancel previous refresh Promise");
-                        that.refreshPromise.cancel();
-                        that.refreshPromise = null;
-                    }
-                    that.cancelPromises();
-                    //Application.navigateById("start");
-                });
-                Log.ret(Log.l.trace);
-            };
-            this.waitForIdleAction = waitForIdleAction;
-
-            var waitForFailureAction = function () {
-                Log.call(Log.l.trace, "Barcode.Controller.", "failureWaitTimeMs=" + that.failureWaitTimeMs);
-                that.cancelPromises();
-                that.failurePromise = WinJS.Promise.timeout(that.failureWaitTimeMs).then(function () {
-                    Log.print(Log.l.trace, "timeout occurred, navigate to failed page!");
-                    if (that.refreshPromise) {
-                        Log.print(Log.l.trace, "cancel previous refresh Promise");
-                        that.refreshPromise.cancel();
-                        that.refreshPromise = null;
-                    }
-                    that.cancelPromises();
-                    Application.navigateById("failed");
-                });
-                Log.ret(Log.l.trace);
-            };
-            this.waitForFailureAction = waitForFailureAction;
 
             var layout = null;
 
@@ -199,9 +116,7 @@
                     });
                 }).then(function () {
                     Log.print(Log.l.trace, "Data loaded");
-                    if (that.refreshPromise) {
-                        that.refreshPromise.cancel();
-                    }
+                    that.cancelPromises();
                     that.refreshPromise = WinJS.Promise.timeout(that.refreshWaitTimeMs).then(function () {
                         that.loadData();
                     });
