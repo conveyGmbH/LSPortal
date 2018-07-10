@@ -161,10 +161,6 @@
             }
             this.loadInitSelection = loadInitSelection;
 
-            // register comboboxSkills1 event handler
-            //if (comboboxSkills1) {
-            //    this.addRemovableEventListener(comboboxSkills1, "onchange", this.eventHandlers.testChangeSomething.bind(this));
-            //}
             var saveRestriction = function () {
                 Log.call(Log.l.trace, "Infodesk.Controller.");
                 if (typeof firstskill.skilltypesortierung === "undefined")

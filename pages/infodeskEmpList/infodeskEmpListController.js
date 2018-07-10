@@ -25,6 +25,8 @@
             this.nextUrl = null;
             this.refreshWaitTimeMs = 30000;
             this.idleWaitTimeMs = 30000;
+            this.firstDocsIndex = 0;
+            this.firstEmployeesIndex = 0;
 
             var that = this;
 
@@ -40,8 +42,6 @@
 
             var maxLeadingPages = 0;
             var maxTrailingPages = 0;
-            this.firstDocsIndex = 0;
-            this.firstContactsIndex = 0;
 
             var waitForIdleAction = function () {
                 Log.call(Log.l.trace, "Barcode.Controller.", "idleWaitTimeMs=" + that.idleWaitTimeMs);
@@ -194,34 +194,6 @@
                         if (recordId) {
                             that.selectRecordId(recordId);
                         }
-                        
-                        /*(that.nextDocUrl)*/
-                        if (that.nextDocUrl) {
-                            WinJS.Promise.timeout(250).then(function () {
-                                Log.print(Log.l.trace, "calling select ContactList.contactDocView...");
-                                var nextDocUrl = that.nextDocUrl;
-                                that.nextDocUrl = null;
-                                InfodeskEmpList.userPhotoView.selectNext(function (jsonDoc) {
-                                    // this callback will be called asynchronously
-                                    // when the response is available
-                                    Log.print(Log.l.trace, "ContactList.contactDocView: success!");
-                                    // startContact returns object already parsed from json file in response
-                                    if (jsonDoc && jsonDoc.d) {
-                                        that.nextDocUrl = InfodeskEmpList.userPhotoView.getNextUrl(jsonDoc);
-                                        var resultsDoc = jsonDoc.d.results;
-                                        resultsDoc.forEach(function (item, index) {
-                                            that.resultDocConverter(item, that.binding.doccount);
-                                            that.binding.doccount = that.docs.push(item);
-                                        });
-                                    }
-                                }, function (errorResponse) {
-                                    // called asynchronously if an error occurs
-                                    // or server returns response with an error status.
-                                    Log.print(Log.l.error, "ContactList.contactDocView: error!");
-                                    AppData.setErrorMsg(that.binding, errorResponse);
-                                }, null, nextDocUrl);
-                            });
-                        }
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
@@ -267,6 +239,34 @@
                         },
                         null,
                         nextUrl);
+                } else if (that.nextDocUrl) {
+                    WinJS.Promise.timeout(250).then(function() {
+                        Log.print(Log.l.trace, "calling select ContactList.contactDocView...");
+                        var nextDocUrl = that.nextDocUrl;
+                        that.nextDocUrl = null;
+                        InfodeskEmpList.userPhotoView.selectNext(function(jsonDoc) {
+                                // this callback will be called asynchronously
+                                // when the response is available
+                                Log.print(Log.l.trace, "ContactList.contactDocView: success!");
+                                // startContact returns object already parsed from json file in response
+                                if (jsonDoc && jsonDoc.d) {
+                                    that.nextDocUrl = InfodeskEmpList.userPhotoView.getNextUrl(jsonDoc);
+                                    var resultsDoc = jsonDoc.d.results;
+                                    resultsDoc.forEach(function(item, index) {
+                                        that.resultDocConverter(item, that.binding.doccount);
+                                        that.binding.doccount = that.docs.push(item);
+                                    });
+                                }
+                            },
+                            function(errorResponse) {
+                                // called asynchronously if an error occurs
+                                // or server returns response with an error status.
+                                Log.print(Log.l.error, "ContactList.contactDocView: error!");
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                            },
+                            null,
+                            nextDocUrl);
+                    });
                 } else {
                     if (progress && progress.style) {
                         progress.style.display = "none";
@@ -314,7 +314,7 @@
                     }
                 }
                 item.OvwContentDOCCNT3 = "";
-                if (that.docs && index >= that.firstContactsIndex) {
+                if (that.docs) {  //  && index >= that.firstEmployeesIndex
                     for (var i = 0; i < that.docs.length; i++) {
                         var doc = that.docs[i];
                         if (doc.DOC1MitarbeiterVIEWID === item.MitarbeiterVIEWID) {
@@ -324,7 +324,7 @@
                                 item.OvwContentDOCCNT3 = "data:image/jpeg;base64," + docContent.substr(sub + 4);
                             }
                             that.firstDocsIndex = i + 1;
-                            that.firstContactsIndex = index + 1;
+                            that.firstEmployeesIndex = index + 1;
                             break;
                         }
                     }
@@ -356,7 +356,7 @@
                             if (i === 0 && listView && listView.winControl) {
                                 listView.winControl.indexOfFirstVisible = indexOfFirstVisible;
                             }
-                            that.firstContactsIndex = i + 1;
+                            that.firstEmployeesIndex = i + 1;
                             that.firstDocsIndex = index + 1;
                             that.binding.photoData = employee.OvwContentDOCCNT3;
                             break;
@@ -495,6 +495,8 @@
 
             var loadData = function (recordid) {
                 Log.call(Log.l.trace, "InfodeskEmpList.Controller.");
+                that.firstDocsIndex = 0;
+                that.firstEmployeesIndex = 0;
                 that.loading = true;
                 if (listView && listView.querySelector(".list-footer .progress")) {
                     progress = listView.querySelector(".list-footer .progress");

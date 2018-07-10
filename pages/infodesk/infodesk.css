@@ -147,9 +147,7 @@ textarea {
     width: 50%
 }
 .view-size-medium .label_half_left {
-    margin-top: 5px;
     width: 100%;
-    word-break: break-word;
 } 
 .view-size-medium .label_half_right {
     width: 100%

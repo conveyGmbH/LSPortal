@@ -501,7 +501,7 @@ select {
 .portrait_only_quarter {
     display: block;
     position: relative;
-    left: 50%;
+    left: 25%;
     top: -16px;
     height: 0;
 }
