@@ -33,7 +33,13 @@
                 exportPdfString: "",
                 exportPdfMsg: "",
                 curOLELetterID: null,
-                timerFlag: false
+                timerFlag: false,
+                progress: {
+                    count: 0,
+                    max: 0,
+                    text: "",
+                    show: null
+                }
             }, commandList]);
 
             var that = this;
@@ -118,6 +124,7 @@
 
             var getNextPdfData = function () {
                 var ret;
+                that.binding.progress.show = true;
                 Log.call(Log.l.trace, "PDFExport.Controller.");
                 if (that.nextUrl) {
                     var nextUrl = that.nextUrl;
@@ -131,6 +138,7 @@
                         if (json && json.d && json.d.results && json.d.results.length > 0) {
                             that.nextUrl = PDFExport.contactView.getNextUrl(json);
                             that.pdfIddata = json.d.results;
+                            that.binding.progress.max = that.pdfIddata.length;
                         }
                         that.getNextPdfData();
                     }, function (errorResponse) {
@@ -147,6 +155,7 @@
                         if (json && json.d) {
                             // store result for next use
                             that.addPdfToZip(json.d.szOriFileNameDOC1, json.d.DocContentDOCCNT1);
+                            that.binding.progress.count++;
                         }
                         that.getNextPdfData();
                     }, function (errorResponse) {
@@ -163,6 +172,8 @@
                     });
                     //location.href = "data:application/zip;base64," + pdfData;
                     saveAs(pdfData, "PDFExport.zip");
+                    that.binding.progress.show = null;
+                    that.binding.progress.count = 0;
                     ret = WinJS.Promise.as();
                 } else {
                     Log.print(Log.l.trace, "no data");
@@ -174,7 +185,7 @@
             this.getNextPdfData = getNextPdfData;
 
             //ensure that all PDF are created and ready for download
-            var ensurePdfDone = function () {
+           /* var ensurePdfDone = function () {
                 that.binding.timerFlag = true;
                 that.spinnercontl(that.binding.timerFlag);
                 Log.call(Log.l.trace, "PDFExport.Controller.");
@@ -195,7 +206,7 @@
                 Log.ret(Log.l.trace);
             }
             this.ensurePdfDone = ensurePdfDone;
-            
+            */
             var generateZip = function (pdfIddata) {
                 /*
                 var l = pdfIddata.length;
@@ -294,7 +305,6 @@
                         AppBar.busy = true;
                         AppBar.triggerDisableHandlers();
                         WinJS.Promise.timeout(0).then(function () {
-                           // return that.exportPDFData(exportselection);
                             that.getPdfIdDaten();
                         });
                     }

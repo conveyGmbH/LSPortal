@@ -80,10 +80,18 @@
                     <div id="pdfExportListhost" class="input_field fragmenthost"></div>
                     </div>
                     <div class="line-separator"></div>
-                    <div class="field_line">
-                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'pdfExport.msg'}"></span>
-                        <span class="label landscape_only" data-win-res="{textContent: 'pdfExport.msg'}"></span>
-                        <div class="loader"></div>
+                    <div class="field_line"
+                         data-win-bind="style.display: progress.show Binding.Converter.toDisplay">
+                        <span 
+                            data-win-res="{textContent: 'reporting.progress'}"></span>
+                        <span 
+                            data-win-bind="textContent: progress.count"></span>
+                        <span data-win-res="{textContent: 'label.listContact'}"></span>
+                        <progress class="progress_field win-progress-bar"
+                                  data-win-bind="value: progress.count; max: progress.max"
+                                  min="0"></progress>
+                        <span class="large_field"
+                              data-win-bind="textContent: progress.text"></span>
                     </div>
                     <div class="error-message"
                          data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
