@@ -26,7 +26,7 @@
             // add page specific commands to AppBar
             AppBar.commandList = [
                 { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" },
-                { id: "clickOk", label: getResourceText("command.export"), tooltip: getResourceText("tooltip.export"), section: "primary", svg: "folder_out", key: WinJS.Utilities.Key.enter }
+                { id: "clickOk", label: getResourceText("command.export"), tooltip: getResourceText("tooltip.export"), section: "primary", svg: "arrow_barrier_down", key: WinJS.Utilities.Key.enter }
             ];
 
             this.controller = new Reporting.Controller(element);
