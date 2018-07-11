@@ -97,6 +97,23 @@
                 Log.ret(Log.l.trace);
                 return ret;
             }
+        },
+        _exportKontaktDataView: {
+            get: function () {
+                return AppData.getFormatView("DOC3ExportKontaktData", 20553);
+            }
+        },
+        exportKontaktDataView: {
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, "PDFExport.");
+                var ret = Contact._exportKontaktDataView.select(complete, error, restriction);
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            defaultValue: {
+
+            }
         }
     });
 })();

@@ -1,4 +1,4 @@
-﻿{
+{
     "general.event"         : "Événement",
     "general.today"         : "Aujourd'hui",
     "general.yesterday"     : "Hier",
@@ -37,6 +37,7 @@
     "command.zoomout"       : "diminuer",
     "command.print"         : "imprimer",
 	"command.save"			: "sauver",
+    "command.exportPdf"		: "PDF exportation",
 
     "tooltip.backward"      : "Page présédente",
     "tooltip.edit"          : "Modifier le contact en cours",
@@ -64,7 +65,8 @@
     "tooltip.searchEmployee": "Chercher des Personnel",
     "tooltip.lineUp"        : "Ligne actuelle plus un en haut",
     "tooltip.lineDown"      : "Ligne actuelle plus un ci-dessus",
-    "tooltip.export"        : "Data export",
+    "tooltip.export"        : "Data exportation",
+    "tooltip.exportPdf"     : "PDF exportation",
     "tooltip.publish"       : "Publier le questionnaire",
     "tooltip.photo"         : "Prendre photo",
     "tooltip.print"         : "imprimer",

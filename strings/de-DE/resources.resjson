@@ -1,4 +1,4 @@
-﻿{
+{
     "general.event"         : "Veranstaltung",
     "general.today"         : "Heute",
     "general.yesterday"     : "Gestern",
@@ -37,6 +37,7 @@
     "command.zoomout"       : "Verkleinern",
     "command.print"			    : "Drucken",
     "command.save"			    : "Speichern",
+    "command.exportPdf"		: "PDF exportieren",
 
     "tooltip.backward"      : "Zurück blättern",
     "tooltip.edit"          : "Aktuellen Datensatz bearbeiten",
@@ -65,6 +66,7 @@
     "tooltip.lineUp"        : "Aktuelle Zeile eins weiter hoch",
     "tooltip.lineDown"      : "Aktuelle Zeile eins weiter runter",
     "tooltip.export"        : "Daten exportieren",
+    "tooltip.exportPdf"     : "PDF exportieren",
     "tooltip.publish"       : "Fragebogen publizieren",
     "tooltip.photo"         : "Foto aufnehmen",
     "tooltip.print"			    : "Drucken",

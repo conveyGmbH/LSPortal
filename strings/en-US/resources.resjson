@@ -1,4 +1,4 @@
-﻿{
+{
     "general.event"         : "Event",
     "general.today"         : "Today",
     "general.yesterday"     : "Yesterday",
@@ -36,7 +36,8 @@
     "command.zoomin"        : "zoom in",
     "command.zoomout"       : "zoom out",
     "command.print"         : "Print",
-	"command.save"			: "Save", 
+	"command.save"			: "Save",
+    "command.exportPdf"		: "PDF export", 
 
     "tooltip.backward"      : "Browse back",
     "tooltip.edit"          : "Edit current record",
@@ -65,6 +66,7 @@
     "tooltip.lineUp"        : "Current line one position up",
     "tooltip.lineDown"      : "Current line one position down",
     "tooltip.export"        : "Data export",
+    "tooltip.exportPdf"     : "PDF export",
     "tooltip.publish"       : "Publish questionnaire",
     "tooltip.photo"         : "Capture photo",
     "tooltip.print"         : "Print",

@@ -1,4 +1,4 @@
-﻿{
+{
     "general.event"         : "Evento",
     "general.today"         : "Oggi",
     "general.yesterday"     : "Ieri",
@@ -36,7 +36,8 @@
     "command.zoomin"        : "ingrandire",
     "command.zoomout"       : "ridurre",
     "command.print"         : "stampa",
-	  "command.save"			: "Salvare",
+    "command.save"			: "Salvare",
+    "command.exportPdf"		: "PDF esportazione",
 
     "tooltip.backward"      : "Pagina precedente",
     "tooltip.edit"          : "Modifica Record attuale",
@@ -64,7 +65,8 @@
     "tooltip.searchEmployee": "Ricerca Employee",
     "tooltip.lineUp"        : "Sposta linea una posizione verso sopra",
     "tooltip.lineDown"      : "Sposta linea una posizione verso sotto",
-    "tooltip.export"        : "Data export",
+    "tooltip.export"        : "Data esportazione",
+    "tooltip.exportPdf"     : "PDF esportazione",
     "tooltip.publish"       : "Pubblicare il questionario",
     "tooltip.photo"         : "Scattare foto",
     "tooltip.print"         : "stampa",
