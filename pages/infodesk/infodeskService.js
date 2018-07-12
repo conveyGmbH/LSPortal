@@ -101,7 +101,9 @@
                 fourthskill: "",
                 fifthskill: "",
                 Info2: "",
-                receiver: ""
+                Info2TS: "",
+                receiver: "",
+                Doc1MitarbeiterID: 0
             }
         },
         _benutzerView: {

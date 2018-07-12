@@ -82,7 +82,8 @@
                 if (newDataBenutzer.Info2 === null) {
                     newDataBenutzer.Info2 = "";
                 }
-                that.binding.dataBenutzer = newDataBenutzer;
+                if (that.binding.dataBenutzer.Name !== newDataBenutzer.Name)
+                    that.binding.dataBenutzer = newDataBenutzer;
                 AppBar.notifyModified = prevNotifyModified;
                 AppData.setRecordId("Benutzer", newDataBenutzer.BenutzerVIEWID);
             };
@@ -466,6 +467,24 @@
 
                     master.controller.loadData();
                     Log.ret(Log.l.trace);
+                },
+                clickResetRestriction: function() {
+                    Log.call(Log.l.trace, "InfodeskEmpList.Controller.");
+                    that.binding.restriction = Infodesk.defaultRestriction;
+                    that.binding.restriction.SkillType1Sortierung = 0;
+                    that.binding.restriction.SkillType2Sortierung = 0;
+                    that.binding.restriction.SkillType3Sortierung = 0;
+                    that.binding.restriction.SkillType4Sortierung = 0;
+                    that.binding.restriction.SkillType5Sortierung = 0;
+                    that.binding.restriction.Names = "";
+                    that.binding.restriction.Login = [null, null, null];
+                    that.binding.restriction.Vorname = [null, null, null];
+                    that.binding.restriction.Nachname = [null, null, null];
+                    that.binding.restriction.countCombobox = 0;
+                    AppData.setRestriction("SkillEntry", that.binding.restriction);
+                    var master = Application.navigator.masterControl;
+                    master.controller.loadData();
+                    Log.ret(Log.l.trace);
                 }
             };
             this.disableHandlers = {
@@ -640,7 +659,7 @@
                     if (recordId) {
                         AppData.setErrorMsg(that.binding);
                         return Infodesk.employeeView.select(function (json) {
-                                Log.print(Log.l.trace, "skillEntryView: success!");
+                            Log.print(Log.l.trace, "Infodesk employeeView: success!");
                                 if (json && json.d) {
                                     that.binding.dataEmployee.Vorname = json.d.Vorname;
                                     that.binding.dataEmployee.Nachname = json.d.Nachname;
@@ -676,6 +695,7 @@
                                     that.binding.dataEmployee.Vorname = json.d.results[0].Vorname;
                                     that.binding.dataEmployee.Nachname = json.d.results[0].Nachname;
                                     that.binding.dataEmployee.Login = json.d.results[0].Login;
+                                    that.binding.dataEmployee.Doc1MitarbeiterID = json.d.results[0].DOC1MitarbeiterID;
                                     for (var i = 0; i < json.d.results.length; i++) {
                                         //SkillTypeID und Sortierung
                                         if (json.d.results[i].Aktiv === "X") {
@@ -772,7 +792,7 @@
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
-                    if (recordId) {
+                    if (recordId && that.binding.dataEmployee.Doc1MitarbeiterID) {
                         AppData.setErrorMsg(that.binding);
                         Log.print(Log.l.trace, "calling select userPhotoView...");
                         return Infodesk.userPhotoView.select(function (json) {
@@ -820,8 +840,30 @@
                                 AppData.setErrorMsg(that.binding, errorResponse);
                                 error(errorResponse);
                             },
-                            recordId,
-                            dataBenutzer);
+                            recordId, dataBenutzer).then(function() {
+                                if (recordId) {
+                                    //load of format relation record data
+                                    AppData.setErrorMsg(that.binding);
+                                    Log.print(Log.l.trace, "calling select benutzerView...");
+                                    return Infodesk.benutzerView.select(function (json) {
+                                        Log.print(Log.l.trace, "benutzerView: success!");
+                                        if (json && json.d) {
+                                            that.binding.dataBenutzer.Info2TS = json.d.Info2TS;
+                                        }
+                                    }, function (errorResponse) {
+                                        if (errorResponse.status === 404) {
+                                            Log.print(Log.l.trace, "benutzerView: ignore NOT_FOUND error here!");
+                                            that.setDataBenutzer(getEmptyDefaultValue(Infodesk.benutzerView.defaultValue));
+                                        } else {
+                                            AppData.setErrorMsg(that.binding, errorResponse);
+                                        }
+                                    },
+                                    recordId);
+                                } else {
+                                    that.setDataBenutzer(getEmptyDefaultValue(Infodesk.benutzerView.defaultValue));
+                                    return WinJS.Promise.as();
+                                }
+                            });
                         } else if (that.binding.employeeId) {
                             dataBenutzer.BenutzerVIEWID = that.binding.employeeId;
                             ret = Infodesk.benutzerView.insert(function (json) {

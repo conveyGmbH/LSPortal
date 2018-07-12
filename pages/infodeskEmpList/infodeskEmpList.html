@@ -15,7 +15,7 @@
                     <div class="content-header">
                         <div class="win-type-subtitle master-list-header">
                            <!-- <span data-win-res="{textContent: 'infodeskEmpList.title'}"></span>-->
-                            <input class="input_half_right win-textbox" type="text" data-win-bind="placeholder: mitarbeiterText; value: dataEmployee.Names Binding.Mode.twoway" oninput="AppBar.handleEvent('oninput', 'changeSearchField', event)"/>
+                            <input class="input_half_right win-textbox" type="text" data-win-bind="placeholder: mitarbeiterText; value: dataEmployee.Names" oninput="AppBar.handleEvent('oninput', 'changeSearchField', event)"/>
                             <div>
                                 <button class="win-button" id="btn_firstName" data-win-res="{textContent: 'infodeskEmpList.firstNameDesc'}" onclick="AppBar.handleEvent('onclick', 'clickOrderFirstname', event)"></button>
                                 <button class="win-button" id="btn_Name" data-win-res="{textContent: 'infodeskEmpList.nameDesc'}" onclick="AppBar.handleEvent('onclick', 'clickOrderLastname', event)"></button>

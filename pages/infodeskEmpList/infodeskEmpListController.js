@@ -44,7 +44,7 @@
             var maxTrailingPages = 0;
 
             var cancelPromises = function () {
-                Log.call(Log.l.trace, "Barcode.Controller.");
+                Log.call(Log.l.trace, "InfodeskEmpList.Controller.");
                 if (that.refreshPromise) {
                     Log.print(Log.l.trace, "cancel previous refresh Promise");
                     that.refreshPromise.cancel();
@@ -92,7 +92,7 @@
             this.background = background;
 
             var loadNextUrl = function (recordId) {
-                Log.call(Log.l.trace, "QuestionList.Controller.", "recordId=" + recordId);
+                Log.call(Log.l.trace, "InfodeskEmpList.Controller.", "recordId=" + recordId);
                 if (!recordId) {
                     recordId = that.binding.employeeId;
                 }
@@ -187,55 +187,55 @@
                     var nextUrl = that.nextUrl;
                     that.nextUrl = null;
                     Log.print(Log.l.trace, "calling select InfodeskEmpList.employeeView...");
-                        InfodeskEmpList.employeeView.selectNext(function (json) {
-                            Log.print(Log.l.trace, "InfodeskEmpList.employeeView: success!");
-                            // startContact returns object already parsed from json file in response
-                            if (json && json.d && that.employees) {
-                                that.nextUrl = InfodeskEmpList.employeeView.getNextUrl(json); //that.nextskillentryview
-                                var results = json.d.results;
-                                results.forEach(function (item, index) {
-                                    that.resultConverter(item, index);
-                                    that.binding.count = that.employees.push(item);
-                                });
-                            }
-                        }, function (errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            //Log.print(Log.l.error, "ContactList.contactView: error!");
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                            if (progress && progress.style) {
-                                progress.style.display = "none";
-                            }
-                            if (counter && counter.style) {
-                                counter.style.display = "inline";
-                            }
-                            that.loading = false;
-                        },
-                        null,
-                        nextUrl);
+                    InfodeskEmpList.employeeView.selectNext(function (json) {
+                        Log.print(Log.l.trace, "InfodeskEmpList.employeeView: success!");
+                        // startContact returns object already parsed from json file in response
+                        if (json && json.d && that.employees) {
+                            that.nextUrl = InfodeskEmpList.employeeView.getNextUrl(json); //that.nextskillentryview
+                            var results = json.d.results;
+                            results.forEach(function (item, index) {
+                                that.resultConverter(item, index);
+                                that.binding.count = that.employees.push(item);
+                            });
+                        }
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        //Log.print(Log.l.error, "ContactList.contactView: error!");
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                        if (progress && progress.style) {
+                            progress.style.display = "none";
+                        }
+                        if (counter && counter.style) {
+                            counter.style.display = "inline";
+                        }
+                        that.loading = false;
+                    },
+                    null,
+                    nextUrl);
                 } else if (that.nextDocUrl) {
-                    WinJS.Promise.timeout(250).then(function() {
-                        Log.print(Log.l.trace, "calling select ContactList.contactDocView...");
+                    WinJS.Promise.timeout(250).then(function () {
+                        Log.print(Log.l.trace, "calling select InfodeskEmpList.employeeDocView...");
                         var nextDocUrl = that.nextDocUrl;
                         that.nextDocUrl = null;
-                        InfodeskEmpList.userPhotoView.selectNext(function(jsonDoc) {
-                                // this callback will be called asynchronously
-                                // when the response is available
-                                Log.print(Log.l.trace, "ContactList.contactDocView: success!");
-                                // startContact returns object already parsed from json file in response
-                                if (jsonDoc && jsonDoc.d) {
-                                    that.nextDocUrl = InfodeskEmpList.userPhotoView.getNextUrl(jsonDoc);
-                                    var resultsDoc = jsonDoc.d.results;
-                                    resultsDoc.forEach(function(item, index) {
-                                        that.resultDocConverter(item, that.binding.doccount);
-                                        that.binding.doccount = that.docs.push(item);
-                                    });
-                                }
-                            },
-                            function(errorResponse) {
+                        InfodeskEmpList.userPhotoView.selectNext(function (jsonDoc) {
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            Log.print(Log.l.trace, "ContactList.contactDocView: success!");
+                            // startContact returns object already parsed from json file in response
+                            if (jsonDoc && jsonDoc.d) {
+                                that.nextDocUrl = InfodeskEmpList.userPhotoView.getNextUrl(jsonDoc);
+                                var resultsDoc = jsonDoc.d.results;
+                                resultsDoc.forEach(function (item, index) {
+                                    that.resultDocConverter(item, that.binding.doccount);
+                                    that.binding.doccount = that.docs.push(item);
+                                });
+                            }
+                        },
+                            function (errorResponse) {
                                 // called asynchronously if an error occurs
                                 // or server returns response with an error status.
-                                Log.print(Log.l.error, "ContactList.contactDocView: error!");
+                                Log.print(Log.l.error, "InfodeskEmpList.employeeDocView: error!");
                                 AppData.setErrorMsg(that.binding, errorResponse);
                             },
                             null,
@@ -342,7 +342,7 @@
             // define handlers
             this.eventHandlers = {
                 clickBack: function (event) {
-                    Log.call(Log.l.trace, "Infodesk.Controller.");
+                    Log.call(Log.l.trace, "InfodeskEmpList.Controller.");
                     if (WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done();
                     }
@@ -583,20 +583,20 @@
                                 that.binding.count = 0;
                                 that.nextskillentryUrl = null;
                                 //that.nextskillentryUrl = null;
+                                listView.winControl.itemDataSource = null;
                                 that.employees = null;
-                                if (listView && listView.winControl) {
-                                    // add ListView dataSource
-                                    listView.winControl.itemDataSource = null;
-                                    progress = listView.querySelector(".list-footer .progress");
-                                    counter = listView.querySelector(".list-footer .counter");
-                                    if (progress && progress.style) {
-                                        progress.style.display = "none";
-                                    }
-                                    if (counter && counter.style) {
-                                        counter.style.display = "inline";
-                                    }
-                                }
                                 that.loading = false;
+                            }
+                            if (listView && listView.winControl) {
+                                // add ListView dataSource
+                                progress = listView.querySelector(".list-footer .progress");
+                                counter = listView.querySelector(".list-footer .counter");
+                                if (progress && progress.style) {
+                                    progress.style.display = "none";
+                                }
+                                if (counter && counter.style) {
+                                    counter.style.display = "inline";
+                                }
                             }
                         }, function (errorResponse) {
                             // called asynchronously if an error occurs
@@ -620,7 +620,7 @@
                         return InfodeskEmpList.employeeView.select(function (json) {
                             // this callback will be called asynchronously
                             // when the response is available
-                            Log.print(Log.l.trace, "EmpList: success!");
+                            Log.print(Log.l.trace, "InfodeskEmpList: success!");
                             // employeeView returns object already parsed from json file in response
                             if (json && json.d && json.d.results.length > 0) {
                                 that.binding.count = json.d.results.length;
