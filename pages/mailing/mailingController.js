@@ -23,6 +23,7 @@
             this.ssItems = [];
             var firstquestion = pageElement.querySelector("#firstquestioncombo"); 
             var erstefragelabel = pageElement.querySelector("#erstefragelabel");
+            var textComment = pageElement.querySelector(".input_text_comment");
 
             // select combo
             var initSprache = pageElement.querySelector("#InitSprache");
@@ -62,6 +63,13 @@
                 // Bug: textarea control shows 'null' string on null value in Internet Explorer!
                 if (dataMail.Mailtext === null) {
                     dataMail.Mailtext = "";
+                }
+                if (textComment) {
+                    if (that.binding.dataMail.Mailtext) {
+                        WinJS.Utilities.addClass(textComment, "input_text_comment_big");
+                    } else {
+                        WinJS.Utilities.removeClass(textComment, "input_text_comment_big");
+                    }
                 }
                 return dataMail;
             };
@@ -368,6 +376,7 @@
                             Log.print(Log.l.trace, "Mailing: success!");
                             if (json && json.d) {
                                 that.binding.dataMail = setDataMail(json.d);
+                                that.setDataMail(that.binding.dataMail);
                                 Log.print(Log.l.trace, "Mailing: success!");
                             }
                             // startContact returns object already parsed from json file in response
