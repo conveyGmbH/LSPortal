@@ -17,6 +17,8 @@
             Application.Controller.apply(this, [pageElement, {
                 dataMail: getEmptyDefaultValue(Mailing.MaildokumentView.defaultValue),
                 dataFirstQuestion: null,
+                firstquestionbez: getResourceText("mailing.on"),
+                memobez: getResourceText("mailing.off"),
                 specTypeToggle: null
             }, commandList]);
             var that = this;
@@ -57,8 +59,7 @@
                 Log.ret(Log.l.trace);
             };
             this.deleteData = deleteData;
-
-
+            
             var setDataMail = function (dataMail) {
                 // Bug: textarea control shows 'null' string on null value in Internet Explorer!
                 if (dataMail.Mailtext === null) {
@@ -114,7 +115,6 @@
             };
             this.resultConverter = resultConverter;
             
-           
             var saveData = function (complete, error) {
                 Log.call(Log.l.trace, "Mailing.Controller.");
                 AppData.setErrorMsg(that.binding);
