@@ -6,7 +6,6 @@
 /// <reference path="~/www/lib/convey/scripts/appbar.js" />
 /// <reference path="~/www/lib/convey/scripts/pageController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
-/// <reference path="~/www/pages/event/eventService.js" />
 /// <reference path="~/www/lib/WinJS/scripts/base.js" />
 /// <reference path="~/www/lib/convey/scripts/logging.js" />
 /// <reference path="~/www/lib/convey/scripts/dataService.js" />
@@ -21,6 +20,7 @@
 /// <reference path="~/www/lib/OpenXml/scripts/openxml.js" />
 /// <reference path="~/www/lib/base64js/scripts/base64js.min.js" />
 /// <reference path="~/www/pages/contactList/contactListController.js" />
+/// <reference path="~/www/pages/contact/contactService.js" />
 
 
 
@@ -35,7 +35,8 @@
                 InitAnredeItem: { InitAnredeID: 0, TITLE: "" },
                 InitLandItem: { InitLandID: 0, TITLE: "" },
                 showPhoto: false,
-                showModified: false
+                showModified: false,
+                
             }, commandList]);
             this.img = null;
             var that = this;
@@ -44,6 +45,9 @@
             var initAnrede = pageElement.querySelector("#InitAnrede");
             var initLand = pageElement.querySelector("#InitLand");
             var textComment = pageElement.querySelector(".input_text_comment");
+
+            //pdf exists flag
+            var pdfExists = false;
 
             // show business card photo
             var imageOffsetX = 0;
@@ -424,6 +428,36 @@
             }
             this.setRecordId = setRecordId;
 
+            var checkOnPdf = function() {
+                Log.call(Log.l.trace, "Contact.Controller.");
+                AppData.setErrorMsg(that.binding);
+                var ret;
+                var recordId = getRecordId();
+                if (recordId) {
+                    AppBar.busy = true;
+                    ret = Contact.exportKontaktDataView.select(function (json) {
+                        Log.print(Log.l.trace, "exportKontaktDataView: success!");
+                        if (json && json.d) {
+                            var results = json.d.results[0];
+                            if (!results) {
+                                Log.print(Log.l.trace, "No PDF-File found!");
+                                pdfExists = false;
+                            } else {
+                                Log.print(Log.l.trace, "PDF-File found!");
+                                pdfExists = true;
+                            }
+                            AppBar.busy = false;
+                        }
+                    }, function (errorResponse) {
+                        AppBar.busy = false;
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    }, { KontaktID: recordId });
+                } 
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+            this.checkOnPdf = checkOnPdf;
+
             var base64ToBlob = function (base64Data, contentType) {
                 contentType = contentType || '';
                 var sliceSize = 1024;
@@ -703,6 +737,13 @@
                         return true;
                     }
                 },
+                clickExport: function() {
+                    if (pdfExists === true) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                },
                 clickNew: function() {
                     if (that.binding.dataContact && that.binding.dataContact.KontaktVIEWID) {
                         return false;
@@ -876,6 +917,7 @@
                                     AppData.setRecordId("DOC1IMPORT_CARDSCAN", json.d.DOC1Import_CardscanID);
                                 }
                                 loadInitSelection();
+                                that.checkOnPdf();
                             }
                         }, function (errorResponse) {
                             AppData._photoData = null;
@@ -1025,6 +1067,9 @@
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
+            }).then(function () {
+                
+                Log.print(Log.l.trace, "Checking if there is a PDF-File!");
             }).then(function () {
                 AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Data loaded");
