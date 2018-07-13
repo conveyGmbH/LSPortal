@@ -193,8 +193,8 @@
 
                                         function toDate(value) {
                                             var year = value.substring(0, 4);
-                                            var month = value.substring(6, 7);
-                                            var day = value.substring(9, 10);
+                                            var month = value.substring(5, 7);
+                                            var day = value.substring(8, 10);
                                             var hour = value.substring(11, 13);
                                             var minute = value.substring(14, 16);
 
