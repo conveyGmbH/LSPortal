@@ -1,4 +1,4 @@
-{
+Ôªø{
     "general.event"         : "√âv√©nement",
     "general.today"         : "Aujourd'hui",
     "general.yesterday"     : "Hier",
@@ -35,8 +35,8 @@
     "command.photo"         : "Photo",
     "command.zoomin"        : "agrandir",
     "command.zoomout"       : "diminuer",
-    "command.print"         : "imprimer",
-	"command.save"			: "sauver",
+    "command.save"		    : "Sauver",
+	  "command.print"			: "imprimer",
     "command.exportPdf"		: "PDF exportation",
 
     "tooltip.backward"      : "Page pr√©s√©dente",
@@ -508,12 +508,12 @@
     "appheader.portal"      : "Portal",
 
     "mailing.title"         : "Standard Mail",
-    "mailing.contactinfo"   : "Si vous dÈsirez un envoi postal, veuillez composer le + +49 (0)89 95 45 867 - 55 ou Ècrivez-nous un ",
+    "mailing.contactinfo"   : "Si vous d√©sirez un envoi postal, veuillez composer le + +49 (0)89 95 45 867 - 55 ou √©crivez-nous un ",
     "mailing.info"          : "Description",
-    "mailing.event"         : "ÈvÈnement",
+    "mailing.event"         : "√©v√©nement",
     "mailing.language"      : "Langue",
-    "mailing.sender"        : "ExpÈditeur",
-    "mailing.reply"         : "RÈponse",
+    "mailing.sender"        : "Exp√©diteur",
+    "mailing.reply"         : "R√©ponse",
     "mailing.subject"       : "Respect",
     "mailing.cc"            : "CC",
     "mailing.bcc"           : "BCC",
@@ -521,11 +521,11 @@
     "mailing.labelDelete"   : "Mail",
     "mailing.mailDelete"    : "Voulez-vous supprimer ce mail?",
     "mailing.memo"          : "Note",
-    "mailing.firstquestionmemo"    : "MÈmo / PremiËre question", 
-    "mailing.maillingerrormsg"    : "Aucun courrier crÈÈ!",
-    "mailing.maillingtoggle"    : "MÈmo / PremiËre question", 
-    "mailing.on"            : "PremiËre question",
-    "mailing.off"           : "MÈmo",
+    "mailing.firstquestionmemo"    : "M√©mo / Premi√®re question", 
+    "mailing.maillingerrormsg"    : "Aucun courrier cr√©√©!",
+    "mailing.maillingtoggle"    : "M√©mo / Premi√®re question", 
+    "mailing.on"            : "Premi√®re question",
+    "mailing.off"           : "M√©mo",
 
     "mailingProduct.title"         : "Mailing Produit",
     "mailingProduct.event"         : "√©v√©nement",
@@ -537,7 +537,7 @@
     "mailingProduct.bcc"           : "BCC",
     "mailingProduct.mailtext"      : "Texte mail",
 	
-    "mailingList.title"            : "Mailing Produits",
+    "mailingList.title"            : "Envoyer des documents",
     "mailingList.count"            : "Nombre",
 
     "productlist.title"     : "S√©lection de produits",
