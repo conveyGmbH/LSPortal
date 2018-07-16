@@ -510,10 +510,10 @@
                             btnFirstName.textContent = getResourceText("infodeskEmpList.firstName");
                         }
                     }
-                    if (restriction.Names && restriction.Names.length > 0) {
+                    //if (restriction.Names && restriction.Names.length > 0) {
                         //restriction.bUseOr = true;
                         that.binding.dataEmployee.Names = restriction.Names;
-                    }
+                    //}
                     if (restriction.countCombobox && restriction.countCombobox > 0) {
                         that.nextUrl = null;
                         return InfodeskEmpList.employeeSkillentryView.select(function (json) {
