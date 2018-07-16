@@ -50,7 +50,8 @@
 
             // add page specific commands to AppBar
             var commandList = [
-                { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" }
+                { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" },
+                { id: "clickExport", label: getResourceText("command.export"), tooltip: getResourceText("tooltip.export"), section: "primary", svg: "download" }
             ];
 
             this.controller = new EmployeeGenPWList.Controller(element, commandList);

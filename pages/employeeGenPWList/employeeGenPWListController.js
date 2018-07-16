@@ -7,6 +7,7 @@
 /// <reference path="~/www/lib/convey/scripts/pageController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/pages/infodeskEmpList/infodeskEmpListService.js" />
+/// <reference path="~/www/pages/employeeGenPWList/exportXlsx.js" />
 
 (function () {
     "use strict";
@@ -125,6 +126,21 @@
                     if (WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done();
                     }
+                    Log.ret(Log.l.trace);
+                },
+                clickExport: function (event) {
+                    Log.call(Log.l.trace, "Reporting.Controller.");
+                    var exporter = new ExportXlsx.ExporterClass();
+                    var dbView = EmployeeGenPWList.employeePWExportView;
+                    var fileName = "Passworte";
+                    exporter.saveXlsxFromView(dbView, fileName, function (result) {
+                        AppBar.busy = false;
+                        AppBar.triggerDisableHandlers();
+                    }, function (errorResponse) {
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                        AppBar.busy = false;
+                        AppBar.triggerDisableHandlers();
+                    }, null , null);
                     Log.ret(Log.l.trace);
                 },
                 onItemInvoked: function (eventInfo) {

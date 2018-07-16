@@ -365,7 +365,7 @@
                         if (typeof error === "function") {
                             error(errorResponse);
                         }
-                    }, restriction);
+                    }, { GenPassword: ["NOT NULL"] });
                 }
                 Log.ret(Log.l.trace);
             },
