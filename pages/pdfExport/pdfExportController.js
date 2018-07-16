@@ -259,6 +259,7 @@
                     }
 
                 } else if (AppBar.busy) {
+                    AppBar.busy = false;
                     ret = WinJS.Promise.timeout(100).then(function () {
                         return that.saveData(complete, error);
                     });
@@ -299,6 +300,7 @@
                 },
                 clickExport: function (event) {
                     Log.call(Log.l.trace, "Reporting.Controller.");
+                    that.saveData();
                     if (event && event.currentTarget) {
                         var exportselection = event.target.value;
                         that.disableFlag = event.target.index;
