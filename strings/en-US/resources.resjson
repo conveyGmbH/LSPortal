@@ -571,6 +571,7 @@
         "employeegenpwlist.login" : "Loginname",
         "employeegenpwlist.password" : "Password",
     "employeegenpwlist.passwordchanged" : "Password was changed",
+    "employeegenpwlist.name" : "Name",
 
 	"pdfExport.title" : "PDF Export",
 	"pdfExport.filenamepartone" : "First part of the file name",

@@ -568,9 +568,10 @@
     "localevents.title" : "Eventi",
 
     "employeegenpwlist.title" : "Password dei dipendenti pre-generate",
-        "employeegenpwlist.login" : "nome di accesso",
-        "employeegenpwlist.password" : "password",
+    "employeegenpwlist.login" : "nome di accesso",
+    "employeegenpwlist.password" : "password",
     "employeegenpwlist.passwordchanged" : "La password è stata cambiata",
+    "employeegenpwlist.name" : "nome",
 
 	"pdfExport.title" : "Esportazione PDF",
 	"pdfExport.filenamepartone" : "Prima parte del nome del file",
