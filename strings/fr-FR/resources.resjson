@@ -565,6 +565,11 @@
 	"localeventscreate.leadsuccessmobileapp"   : "Nombre d'utilisateurs de l'application mobile",
 	"localeventscreate.mobilerbarcodescanner"   : "Nombre d'utilisateurs de scanners de codes à barres",
 
+    "localevents.title" : "Événements",
+    "localevents.event" : "Événement",
+    "localevents.begin" : "Début",
+    "localevents.end"   : "Fin",
+
     "employeegenpwlist.title" : "Mots de passe employés pré-générés",
     "employeegenpwlist.login" : "nom de connexion",
     "employeegenpwlist.password" : "mot de passe",

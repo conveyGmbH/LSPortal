@@ -566,7 +566,10 @@
 	"localeventscreate.mobilerbarcodescanner"   : "Number of Barcode scanner users",
 	
     "localevents.title" : "Events",
-
+    "localevents.event" : "Event",
+    "localevents.begin" : "Start",
+    "localevents.end"   : "End",
+	
     "employeegenpwlist.title" : "Pre-generated employee passwords",
         "employeegenpwlist.login" : "Loginname",
         "employeegenpwlist.password" : "Password",

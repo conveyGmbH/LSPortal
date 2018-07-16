@@ -566,7 +566,10 @@
 	"localeventscreate.leadsuccessmobileapp"   : "Anzahl der Mobile-App Benutzer",
 	"localeventscreate.mobilerbarcodescanner"   : "Anzahl der Barcodescanner Benutzer",
 
-    "localevents.title" : "Veranstaltungen", 
+    "localevents.title" : "Veranstaltungen",
+    "localevents.event" : "Veranstaltung",
+    "localevents.begin" : "Anfang",
+    "localevents.end"   : "Ende",
 
 	"employeegenpwlist.title" : "Mitarbeiter generierte Passwörter",
 		"employeegenpwlist.login" : "Loginname",
