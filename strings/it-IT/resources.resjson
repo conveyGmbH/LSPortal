@@ -1,4 +1,4 @@
-{
+﻿{
     "general.event"         : "Evento",
     "general.today"         : "Oggi",
     "general.yesterday"     : "Ieri",
@@ -33,9 +33,9 @@
     "command.export"        : "Export",
     "command.publish"       : "Pubblicare",
     "command.photo"         : "Photo",
-    "command.zoomin"        : "ingrandire",
-    "command.zoomout"       : "ridurre",
-    "command.print"         : "stampa",
+    "command.zoomin"        : "Ingrandire",
+    "command.zoomout"       : "Ridurre",
+    "command.print"         : "Stampa",
     "command.save"			: "Salvare",
     "command.exportPdf"		: "PDF esportazione",
 
@@ -69,7 +69,7 @@
     "tooltip.exportPdf"     : "PDF esportazione",
     "tooltip.publish"       : "Pubblicare il questionario",
     "tooltip.photo"         : "Scattare foto",
-    "tooltip.print"         : "stampa",
+    "tooltip.print"         : "Stampa",
     "tooltip.sendMessage"	: "Invia un messaggio",
     "tooltip.newevent"		: "Crea un nuovo evento",
     "tooltip.eventchange"	: "Cambia evento",
@@ -350,7 +350,7 @@
     "infodesk.documentView" : "Visualizza documento",
     "infodesk.firstName"    : "Primo nome",
     "infodesk.name"         : "Cognome",
-    "infodesk.messages"     : "notizie",
+    "infodesk.messages"     : "Notizie",
     "infodesk.receiver"     : "Ricevitore",
     "infodesk.message"      : "Messaggio ai ",
 	  "infodesk.newsOverview" : "News Sommario",
@@ -509,7 +509,7 @@
 
     "mailing.title"         : "Standard Mail",
     "mailing.contactinfo"   : "If you would like a mailing, please call +49 (0)89 95 45 867 - 55 or write us an ",
-    "mailing.info"          : "Descrizione",
+	  "mailing.info"          : "Descrizione",
     "mailing.event"         : "Evento",
     "mailing.language"      : "Lingua",
     "mailing.sender"        : "Mittente",

@@ -1,4 +1,4 @@
-{
+﻿{
     "general.event"         : "Veranstaltung",
     "general.today"         : "Heute",
     "general.yesterday"     : "Gestern",
@@ -353,6 +353,7 @@
     "infodesk.messages"     : "InfoText",
     "infodesk.receiver"     : "Empfänger",
     "infodesk.message"      : "Info an ",
+	"infodesk.message1time" : "Gesendet",
 	"infodesk.newsOverview" : "Nachrichtenübersicht",
     "infodesk.search"       : "Suche",
     "infodesk.account"      : "Konto",
@@ -526,7 +527,7 @@
     "mailing.maillingtoggle"    : "Memo / Erste Frage", 
     "mailing.on"            : "Erste Frage",
     "mailing.off"           : "Memo",
-
+    
     "mailingProduct.title"         : "Mailing Produkte",
     "mailingProduct.event"         : "Veranstaltung",
     "mailingProduct.language"      : "Sprache",
