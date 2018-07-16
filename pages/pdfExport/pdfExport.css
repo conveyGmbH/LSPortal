@@ -28,3 +28,14 @@
         transform: rotate(360deg);
     }
 }
+#pdfExportListhost {
+    height: 100px;
+}
+
+.view-size-medium #pdfExportListhost {
+    height: 200px;
+}
+
+.view-size-medium-small #pdfExportListhost {
+    height: 300px;
+}
