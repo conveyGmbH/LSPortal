@@ -485,6 +485,19 @@
                     var master = Application.navigator.masterControl;
                     master.controller.loadData();
                     Log.ret(Log.l.trace);
+                },
+                blockEnterKey: function (event) {
+                    for (var i = 0; i < AppBar.commandList.length; i++) {
+                        if (AppBar.commandList[i].id === "clickSendMessage")
+                            AppBar.commandList[i].key = null;
+                    }
+
+                },
+                releaseEnterKey: function (event) {
+                    for (var i = 0; i < AppBar.commandList.length; i++) {
+                        if (AppBar.commandList[i].id === "clickSendMessage")
+                            AppBar.commandList[i].key = WinJS.Utilities.Key.enter;
+                    }
                 }
             };
             this.disableHandlers = {
@@ -686,80 +699,80 @@
                         that.binding.dataEmployee.fourthskill = "";
                         that.binding.dataEmployee.fifthskill = "";
                         Log.print(Log.l.trace, "calling select employeeView...");
-                        return Infodesk.SkillEntry.select(function(json) {
-                                AppData.setErrorMsg(that.binding);
-                                Log.print(Log.l.trace, "skillEntryView: success!");
-                                if (json && json.d && json.d.results.length > 0) {
-                                    that.binding.dataEmployee.MitarbeiterVIEWID = json.d.results[0].MitarbeiterID;
-                                    setRecordId(that.binding.dataEmployee.MitarbeiterVIEWID);
-                                    that.binding.dataEmployee.Vorname = json.d.results[0].Vorname;
-                                    that.binding.dataEmployee.Nachname = json.d.results[0].Nachname;
-                                    that.binding.dataEmployee.Login = json.d.results[0].Login;
-                                    that.binding.dataEmployee.Doc1MitarbeiterID = json.d.results[0].DOC1MitarbeiterID;
-                                    for (var i = 0; i < json.d.results.length; i++) {
-                                        //SkillTypeID und Sortierung
-                                        if (json.d.results[i].Aktiv === "X") {
-                                            if (firstskill.skilltypesortierung &&
-                                                json.d.results[i].SkillTypeID === firstskill.skilltypesortierung) {
-                                                for (var j = 0; j < firstskill.length; j++) {
-                                                    if (json.d.results[i].Sortierung === firstskill[j].value) {
-                                                        that.binding.dataEmployee
-                                                            .firstskill =
-                                                            that.binding.dataEmployee.firstskill +
-                                                            firstskill[j].title +
-                                                            "\n";
-                                                    }
+                        return Infodesk.SkillEntry.select(function (json) {
+                            AppData.setErrorMsg(that.binding);
+                            Log.print(Log.l.trace, "skillEntryView: success!");
+                            if (json && json.d && json.d.results.length > 0) {
+                                that.binding.dataEmployee.MitarbeiterVIEWID = json.d.results[0].MitarbeiterID;
+                                setRecordId(that.binding.dataEmployee.MitarbeiterVIEWID);
+                                that.binding.dataEmployee.Vorname = json.d.results[0].Vorname;
+                                that.binding.dataEmployee.Nachname = json.d.results[0].Nachname;
+                                that.binding.dataEmployee.Login = json.d.results[0].Login;
+                                that.binding.dataEmployee.Doc1MitarbeiterID = json.d.results[0].DOC1MitarbeiterID;
+                                for (var i = 0; i < json.d.results.length; i++) {
+                                    //SkillTypeID und Sortierung
+                                    if (json.d.results[i].Aktiv === "X") {
+                                        if (firstskill.skilltypesortierung &&
+                                            json.d.results[i].SkillTypeID === firstskill.skilltypesortierung) {
+                                            for (var j = 0; j < firstskill.length; j++) {
+                                                if (json.d.results[i].Sortierung === firstskill[j].value) {
+                                                    that.binding.dataEmployee
+                                                        .firstskill =
+                                                        that.binding.dataEmployee.firstskill +
+                                                        firstskill[j].title +
+                                                        "\n";
                                                 }
-                                            } else if (secondskill.skilltypesortierung &&
-                                                json.d.results[i].SkillTypeID === secondskill.skilltypesortierung) {
-                                                for (var k = 0; k < secondskill.length; k++) {
-                                                    if (json.d.results[i].Sortierung === secondskill[k].value) {
-                                                        that.binding.dataEmployee
-                                                            .secondskill =
-                                                            that.binding.dataEmployee.secondskill +
-                                                            secondskill[k].title +
-                                                            "\t";
-                                                    }
+                                            }
+                                        } else if (secondskill.skilltypesortierung &&
+                                            json.d.results[i].SkillTypeID === secondskill.skilltypesortierung) {
+                                            for (var k = 0; k < secondskill.length; k++) {
+                                                if (json.d.results[i].Sortierung === secondskill[k].value) {
+                                                    that.binding.dataEmployee
+                                                        .secondskill =
+                                                        that.binding.dataEmployee.secondskill +
+                                                        secondskill[k].title +
+                                                        "\t";
                                                 }
-                                            } else if (thirdskill.skilltypesortierung &&
-                                                json.d.results[i].SkillTypeID === thirdskill.skilltypesortierung) {
-                                                for (var l = 0; l < thirdskill.length; l++) {
-                                                    if (json.d.results[i].Sortierung === thirdskill[l].value) {
-                                                        that.binding.dataEmployee
-                                                            .thirdskill =
-                                                            that.binding.dataEmployee.thirdskill +
-                                                            thirdskill[l].title +
-                                                            "\t";
-                                                    }
+                                            }
+                                        } else if (thirdskill.skilltypesortierung &&
+                                            json.d.results[i].SkillTypeID === thirdskill.skilltypesortierung) {
+                                            for (var l = 0; l < thirdskill.length; l++) {
+                                                if (json.d.results[i].Sortierung === thirdskill[l].value) {
+                                                    that.binding.dataEmployee
+                                                        .thirdskill =
+                                                        that.binding.dataEmployee.thirdskill +
+                                                        thirdskill[l].title +
+                                                        "\t";
                                                 }
-                                            } else if (fourthskill.skilltypesortierung &&
-                                                json.d.results[i].SkillTypeID === fourthskill.skilltypesortierung) {
-                                                for (var m = 0; m < fourthskill.length; m++) {
-                                                    if (json.d.results[i].Sortierung === fourthskill[m].value) {
-                                                        that.binding.dataEmployee
-                                                            .fourthskill =
-                                                            that.binding.dataEmployee.fourthskill +
-                                                            fourthskill[m].title +
-                                                            "\t";
-                                                    }
+                                            }
+                                        } else if (fourthskill.skilltypesortierung &&
+                                            json.d.results[i].SkillTypeID === fourthskill.skilltypesortierung) {
+                                            for (var m = 0; m < fourthskill.length; m++) {
+                                                if (json.d.results[i].Sortierung === fourthskill[m].value) {
+                                                    that.binding.dataEmployee
+                                                        .fourthskill =
+                                                        that.binding.dataEmployee.fourthskill +
+                                                        fourthskill[m].title +
+                                                        "\t";
                                                 }
-                                            } else if (fifthskill.skilltypesortierung &&
-                                                json.d.results[i].SkillTypeID === fifthskill.skilltypesortierung) {
-                                                for (var n = 0; n < fifthskill.length; n++) {
-                                                    if (json.d.results[i].Sortierung === fifthskill[n].value) {
-                                                        that.binding.dataEmployee
-                                                            .fifthskill =
-                                                            that.binding.dataEmployee.fifthskill +
-                                                            fifthskill[n].title +
-                                                            "\t";
-                                                    }
+                                            }
+                                        } else if (fifthskill.skilltypesortierung &&
+                                            json.d.results[i].SkillTypeID === fifthskill.skilltypesortierung) {
+                                            for (var n = 0; n < fifthskill.length; n++) {
+                                                if (json.d.results[i].Sortierung === fifthskill[n].value) {
+                                                    that.binding.dataEmployee
+                                                        .fifthskill =
+                                                        that.binding.dataEmployee.fifthskill +
+                                                        fifthskill[n].title +
+                                                        "\t";
                                                 }
                                             }
                                         }
-                                    };
-                                }
-                            },
-                            function(errorResponse) {
+                                    }
+                                };
+                            }
+                        },
+                            function (errorResponse) {
                                 AppData.setErrorMsg(that.binding, errorResponse);
                             },
                             {
@@ -778,7 +791,7 @@
                             if (json && json.d) {
                                 that.setDataBenutzer(json.d);
                             }
-                        },  function (errorResponse) {
+                        }, function (errorResponse) {
                             if (errorResponse.status === 404) {
                                 Log.print(Log.l.trace, "benutzerView: ignore NOT_FOUND error here!");
                                 that.setDataBenutzer(getEmptyDefaultValue(Infodesk.benutzerView.defaultValue));
@@ -840,7 +853,7 @@
                                 AppData.setErrorMsg(that.binding, errorResponse);
                                 error(errorResponse);
                             },
-                            recordId, dataBenutzer).then(function() {
+                            recordId, dataBenutzer).then(function () {
                                 if (recordId) {
                                     //load of format relation record data
                                     AppData.setErrorMsg(that.binding);
@@ -866,7 +879,7 @@
                             });
                         } else if (that.binding.employeeId) {
                             dataBenutzer.BenutzerVIEWID = that.binding.employeeId;
-                            ret = Infodesk.benutzerView.insert(function (json) {
+                            ret = Infodesk.benutzerView.insert(function(json) {
                                 // called asynchronously if ok
                                 // force reload of userData for Present flag
                                 AppBar.modified = false;

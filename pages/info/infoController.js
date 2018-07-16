@@ -75,7 +75,7 @@
                     Application.navigateById("publish", event);
                     Log.ret(Log.l.trace);
                 },
-                clickLogEnabled: function (event) {
+                /*clickLogEnabled: function (event) {
                     Log.call(Log.l.trace, "info.Controller.");
                     if (event.currentTarget && AppBar.notifyModified) {
                         var toggle = event.currentTarget.winControl;
@@ -84,7 +84,7 @@
                         }
                     }
                     Log.ret(Log.l.trace);
-                },
+                },*/
                 clickCameraUseGrayscale: function (event) {
                     Log.call(Log.l.trace, "info.Controller.");
                     if (event.currentTarget && AppBar.notifyModified) {
@@ -105,7 +105,7 @@
                     }
                     Log.ret(Log.l.trace);
                 },
-                changedLogLevel: function (event) {
+                /*changedLogLevel: function (event) {
                     Log.call(Log.l.trace, "info.Controller.");
                     if (event.currentTarget && AppBar.notifyModified) {
                         var range = event.currentTarget;
@@ -114,7 +114,7 @@
                         }
                     }
                     Log.ret(Log.l.trace);
-                },
+                },*/
                 clickLogGroup: function (event) {
                     Log.call(Log.l.trace, "info.Controller.");
                     if (event.currentTarget && AppBar.notifyModified) {

@@ -55,10 +55,10 @@
                         <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'info.logenabled'}"></span>
                         <span class="label landscape_only" data-win-res="{textContent: 'info.logenabled'}"></span>
                         <div class="input_field toggle-switch-parent">
-                            <div id="logEnabled" class="input_field"
+                            <div class="input_field"
                                  data-win-control="WinJS.UI.ToggleSwitch"
-                                 data-win-bind="winControl.checked: generalData.logEnabled; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                 onchange="AppBar.handleEvent('change', 'clickLogEnabled', event)">
+                                 data-win-bind="winControl.checked: generalData.logEnabled Binding.Mode.twoway; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                                 > <!--onchange="AppBar.handleEvent('change', 'clickLogEnabled', event)"-->
                             </div>
                         </div>
                     </div>
@@ -66,20 +66,20 @@
                         <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'info.loglevel'}"></span>
                         <span class="label landscape_only" data-win-res="{textContent: 'info.loglevel'}"></span>
                         <span class="input_field win-type-subtitle" data-win-bind="textContent: generalData.logLevel Binding.Converter.toLogLevelName"></span>
-                        <input id="logLevel" class="input_field win-range"
+                        <input class="input_field win-range"
                                type="range" min="1" max="6" step="1"
-                               data-win-bind="value: generalData.logLevel"
-                               onchange="AppBar.handleEvent('change', 'changedLogLevel', event)" />
+                               data-win-bind="value: generalData.logLevel Binding.Mode.twoway"
+                               />
                     </div>
                     <div class="line-separator"></div>
                     <div class="field_line field_line_odd" data-win-bind="style.display: generalData.logEnabled Binding.Converter.toDisplay">
                         <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'info.loggroup'}"></span>
                         <span class="label landscape_only" data-win-res="{textContent: 'info.loggroup'}"></span>
                         <div class="input_field toggle-switch-parent">
-                            <div id="logGroup" class="input_field"
+                            <div class="input_field"
                                  data-win-control="WinJS.UI.ToggleSwitch"
-                                 data-win-bind="winControl.checked: generalData.logGroup; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                 onchange="AppBar.handleEvent('change', 'clickLogGroup', event)">
+                                 data-win-bind="winControl.checked: generalData.logGroup Binding.Mode.twoway; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                                 >
                             </div>
                         </div>
                     </div>

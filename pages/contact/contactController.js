@@ -5,7 +5,9 @@
 /// <reference path="~/www/lib/convey/scripts/dataService.js" />
 /// <reference path="~/www/lib/convey/scripts/appbar.js" />
 /// <reference path="~/www/lib/convey/scripts/pageController.js" />
+/// <reference path="~/www/lib/hammer/scripts/hammer.js" />
 /// <reference path="~/www/scripts/generalData.js" />
+/// <reference path="~/www/pages/event/eventService.js" />
 /// <reference path="~/www/lib/WinJS/scripts/base.js" />
 /// <reference path="~/www/lib/convey/scripts/logging.js" />
 /// <reference path="~/www/lib/convey/scripts/dataService.js" />
@@ -35,8 +37,7 @@
                 InitAnredeItem: { InitAnredeID: 0, TITLE: "" },
                 InitLandItem: { InitLandID: 0, TITLE: "" },
                 showPhoto: false,
-                showModified: false,
-                
+                showModified: false
             }, commandList]);
             this.img = null;
             var that = this;
