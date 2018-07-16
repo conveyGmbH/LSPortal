@@ -17,6 +17,17 @@
                             <span data-win-res="{textContent: 'localevents.title'}"></span>
                         </div>
                     </div>
+                    <div class="headerFooterPlaceholder">
+                        <div class="list-header">
+                            <div class="row-separator"></div>
+                            <div class="list-landscape-only">
+                                <div class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'localevents.event'}"></div>
+                                <div class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'localevents.begin'}"></div>
+                                <div class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'localevents.end'}"></div>
+                            </div>
+                            <div class="row-separator"></div>
+                        </div>
+                    </div>
                     <div class="localevents-template"
                          data-win-control="WinJS.Binding.Template" style="display: none">
                         <div class="list-landscape-only">
@@ -61,6 +72,7 @@
                          class="listview win-selectionstylefilled"
                          data-win-control="WinJS.UI.ListView"
                          data-win-options="{
+                                header : select('.list-header'),
                                 itemTemplate: select('.localevents-template'),
                                 footer: select('.list-footer')
                          }">

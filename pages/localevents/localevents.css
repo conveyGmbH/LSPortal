@@ -13,3 +13,7 @@
 #localevents {
     height: 100%;
 }
+.list-header {
+    padding-left: 27px;
+    font-weight: bold;
+}
