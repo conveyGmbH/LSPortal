@@ -26,8 +26,8 @@
 
             // add page specific commands to AppBar
             var commandList = [
-                { id: "clickResetRestriction", label: getResourceText("command.resetRestriction"), tooltip: getResourceText("tooltip.resetRestriction"), section: "primary", svg: "funnel_delete" },
                 { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" },
+                { id: "clickResetRestriction", label: getResourceText("command.resetRestriction"), tooltip: getResourceText("tooltip.resetRestriction"), section: "primary", svg: "funnel_delete" },
                 { id: "clickSendMessage", label: getResourceText("command.ok"), tooltip: getResourceText("tooltip.sendMessage"), section: "primary", svg: "paper_jet2", key: WinJS.Utilities.Key.enter }
             ];
 
