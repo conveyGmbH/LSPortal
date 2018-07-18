@@ -429,6 +429,7 @@
     "event.showHideCamera"  : "Kamera",
     "event.productMail"		  : "Produktmail: \n Nur ein Mailversand pro E-Mail",
     "event.thankYouMail"    : "Dankesmail: \n Nur ein Mailversand pro E-Mail",
+    "event.company"         : "Company",
     "event.note"            : "Hinweis",
     "event.appInfo"         : "Änderungen werden in Mobile App erst beim nächsten Start der App wirksam",
 

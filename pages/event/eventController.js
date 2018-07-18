@@ -25,7 +25,16 @@
 
             var that = this;
 
-            var setDataEvent = function(newDataEvent) {
+            //select combo
+            var initLand = pageElement.querySelector("#InitLand");
+
+            this.dispose = function () {
+                if (initLand && initLand.winControl) {
+                    initLand.winControl.data = null;
+                }
+            }
+
+            var setDataEvent = function (newDataEvent) {
                 var prevNotifyModified = AppBar.notifyModified;
                 AppBar.notifyModified = false;
                 that.binding.dataEvent = newDataEvent;
@@ -175,6 +184,32 @@
                 Log.call(Log.l.trace, "Event.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
+                    if (!AppData.initLandView.getResults().length) {
+                        Log.print(Log.l.trace, "calling select initLandData...");
+                        //@nedra:25.09.2015: load the list of INITLand for Combobox
+                        return AppData.initLandView.select(function (json) {
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            Log.print(Log.l.trace, "initLandView: success!");
+                            if (json && json.d && json.d.results) {
+                                // Now, we call WinJS.Binding.List to get the bindable list
+                                if (initLand && initLand.winControl) {
+                                    initLand.winControl.data = new WinJS.Binding.List(json.d.results);
+                                }
+                            }
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        });
+                    } else {
+                        if (initLand && initLand.winControl &&
+                            (!initLand.winControl.data || !initLand.winControl.data.length)) {
+                            initLand.winControl.data = new WinJS.Binding.List(AppData.initLandView.getResults());
+                        }
+                        return WinJS.Promise.as();
+                    }
+                }).then(function () {
                     var recordId = getRecordId();
                     if (recordId) {
                         //load of format relation record data

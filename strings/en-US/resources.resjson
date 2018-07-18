@@ -115,7 +115,7 @@
     "contact.position"      : "Position",
     "contact.formOf"        : "Mr/Ms",
     "contact.academicTitle" : "Title",
-    "contact.company"       : "Company",
+    "contact.company"       : "Company name",
     "contact.email"         : "Email",
     "contact.fax"           : "Fax",
     "contact.phone"         : "Phone",
@@ -431,6 +431,7 @@
     "event.showHideCamera"  : "Camera",
     "event.productMail"     : "Product mail: \n Only one mail shipment per mail",
     "event.thankYouMail"    : "Thank you mail: \n Only one mail shipment per mail",
+    "event.company"         : "Company",
     "event.note"            : "Note",
     "event.appInfo"         : "Please restart the APP for the changes to take effect",
 

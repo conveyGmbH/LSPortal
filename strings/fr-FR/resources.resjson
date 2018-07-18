@@ -36,7 +36,7 @@
     "command.zoomin"        : "agrandir",
     "command.zoomout"       : "diminuer",
     "command.save"		    : "Sauver",
-	  "command.print"			: "imprimer",
+	"command.print"			: "imprimer",
     "command.exportPdf"		: "PDF exportation",
 
     "tooltip.backward"      : "Page présédente",
@@ -115,7 +115,7 @@
     "contact.position"      : "Position",
     "contact.formOf"        : "Civilité ",
     "contact.academicTitle" : "Titre",
-    "contact.company"       : "Société",
+    "contact.company"       : "Nom de l'entreprise",
     "contact.email"         : "E-mail",
     "contact.fax"           : "Fax",
     "contact.phone"         : "Téléphone",
@@ -431,7 +431,8 @@
     "event.showHideCamera"  : "Caméra",
     "event.productMail"		: "Mail produit: \n Un seul livraison de courrier par e-mail",
     "event.thankYouMail"	: "Merci courrier: \n Un seul livraison de courrier par e-mail",
-    "event.note"            : "allusion",
+    "event.company"         : "Société",
+    "event.note"            : "Allusion",
     "event.appInfo"         : "Pour que ces modifications prennent effet, vous devez redémarrer votre APP",
 
     "questiongroup.title"   : "Groupe de questions",
