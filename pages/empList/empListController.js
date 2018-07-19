@@ -115,7 +115,12 @@
                 item.fullName =
                 (item.Vorname ? (item.Vorname + " ") : "") +
                 (item.Nachname ? item.Nachname : "");
-                item.CS1504SerienNr = that.cutSerialnumer(item.CS1504SerienNr);
+                if (item.CS1504SerienNr === null) {
+                    item.CS1504SerienNr = " ";
+                } else {
+                    item.CS1504SerienNr = that.cutSerialnumer(item.CS1504SerienNr);
+                }
+                
             }
             this.resultConverter = resultConverter;
 
