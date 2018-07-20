@@ -57,14 +57,14 @@
             this.nextUrl = null;
             this.curPdfIdx = -1;
 
-            var disableReportingList = function (disableFlag) {
-                var reportingListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("PDFExportList"));
-                if (reportingListFragmentControl &&
-                    reportingListFragmentControl.controller) {
-                    reportingListFragmentControl.controller.disableList(disableFlag);
+            var disablePdfExportList = function (disableFlag) {
+                var pdfExportListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("PdfExportList"));
+                if (pdfExportListFragmentControl &&
+                    pdfExportListFragmentControl.controller) {
+                    pdfExportListFragmentControl.controller.disableList(disableFlag);
                 }
             }
-            this.disableReportingList = disableReportingList;
+            this.disablePdfExportList = disablePdfExportList;
 
             var spinnercontl = function (timerFlag) {
                 if (timerFlag === true) {
@@ -144,6 +144,7 @@
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
+                        that.disablePdfExportList(false);
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, that.pdfIddata, nextUrl);
                 } else if (++that.curPdfIdx < that.pdfIddata.length) {
@@ -161,6 +162,7 @@
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
+                        that.disablePdfExportList(false);
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, recordId);
                 } else if (that.pdfIddata.length > 0) {
@@ -172,11 +174,13 @@
                     });
                     //location.href = "data:application/zip;base64," + pdfData;
                     saveAs(pdfData, "PDFExport.zip");
+                    that.disablePdfExportList(false);
                     that.binding.progress.show = null;
                     that.binding.progress.count = 0;
                     ret = WinJS.Promise.as();
                 } else {
                     Log.print(Log.l.trace, "no data");
+                    that.disablePdfExportList(false);
                     ret = WinJS.Promise.as();
                 }
                 Log.ret(Log.l.trace);
@@ -306,6 +310,7 @@
                         that.disableFlag = event.target.index;
                         AppBar.busy = true;
                         AppBar.triggerDisableHandlers();
+                        that.disablePdfExportList(true);
                         WinJS.Promise.timeout(0).then(function () {
                             that.getPdfIdDaten();
                         });
