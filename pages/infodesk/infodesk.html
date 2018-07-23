@@ -151,6 +151,42 @@
                                 <div name="user" class="svgimg" data-win-bind="style.display: photoData Binding.Converter.toDisplayNone"></div>
                             </div>
                         </div>
+                        <div class="field_line field_line_odd_small">
+                            <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'infodesk.phone'}"></span>
+                            <span class="label win-type-caption portrait_only_threeQuarter" data-win-res="{textContent: 'infodesk.mobile'}"></span>
+                            <div class="label landscape_only_small">
+                                <span data-win-res="{textContent: 'infodesk.phone'}"></span> / <span data-win-res="{textContent: 'infodesk.mobile'}"></span>
+                            </div>
+                            <div class="input_group">
+                                <span class="label_half_left" type="text" data-win-bind="textContent: dataBenutzer.TelefonFestnetz"></span>
+                                <span class="input_small_left win-type-subtitle" data-win-bind="textContent: dataBenutzer.TelefonFestnetz; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                                <span class="label_half_right" type="text" data-win-bind="textContent: dataBenutzer.TelefonMobil"></span>
+                                <span class="input_field win-type-subtitle" data-win-bind="textContent: dataBenutzer.TelefonMobil; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                            </div>
+                        </div>
+                        <div class="field_line field_line_odd_small">
+                            <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'infodesk.academicTitle'}"></span>
+                            <span class="label win-type-caption portrait_only_threeQuarter" data-win-res="{textContent: 'infodesk.position'}"></span>
+                            <div class="label landscape_only_small">
+                                <span data-win-res="{textContent: 'infodesk.academicTitle'}"></span> / <span data-win-res="{textContent: 'infodesk.position'}"></span>
+                            </div>
+                            <div class="input_group">
+                                <span class="label_half_left" type="text" data-win-bind="textContent: dataBenutzer.Titel"></span>
+                                <span class="input_small_left win-type-subtitle" data-win-bind="textContent: dataBenutzer.Titel; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                                <span class="label_half_right" type="text" data-win-bind="textContent: dataBenutzer.Position"></span>
+                                <span class="input_field win-type-subtitle" data-win-bind="textContent: dataBenutzer.Position; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                            </div>
+                        </div>
+                        <div class="field_line field_line_odd_small">
+                            <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'infodesk.email'}"></span>
+                            <div class="label landscape_only_small">
+                                <span data-win-res="{textContent: 'infodesk.email'}"></span>
+                            </div>
+                            <div class="input_group">
+                                <span class="label_half_left" type="text" data-win-bind="textContent: dataBenutzer.EMail; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone"></span>
+                            </div>
+
+                        </div>
                     </div>
                     <div class="header-separator float-left"></div>
                     <div class="content-header float-left">

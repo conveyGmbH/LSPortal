@@ -73,7 +73,7 @@
             SkillType5Sortierung: 0,
             SkillTypeID: {},
             Sortierung: {},
-            OrderAttribute: "Nachname",
+            OrderAttribute: "SortNachname",
             OrderDesc: true
         },
         _SkillEntry: {

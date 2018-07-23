@@ -38,6 +38,7 @@
     "command.print"         : "Stampa",
     "command.save"			: "Salvare",
     "command.exportPdf"		: "PDF esportazione",
+	"command.resetRestriction" : "Elimina",
 
     "tooltip.backward"      : "Pagina precedente",
     "tooltip.edit"          : "Modifica Record attuale",
@@ -77,6 +78,7 @@
     "tooltip.exportpdf"	    : "Esporta PDF",
     "tooltip.deletemail"	: "Elimina la posta",
     "tooltip.save"			    : "Salvare",
+	"tooltip.resetRestriction" : "Elimina filtro",
 
     "start.title"           : "Pagina iniziale",
     "start.comment"         : "Utilizzate i pulsanti su questa pagina per muoversi tra le pagine!",
@@ -358,6 +360,11 @@
     "infodesk.account"      : "Conto",
     "infodesk.info"         : "Messaggio",
     "infodesk.filter"		: "Filtro",
+    "infodesk.academicTitle" : "Titolo",
+    "infodesk.company"       : "Azienda",
+    "infodesk.email"         : "Email",
+    "infodesk.phone"         : "Tel",
+    "infodesk.mobile"        : "Cell",
 
     "infodeskEmpList.title" : "Utenti",
     "infodeskEmpList.count" : "Numero",

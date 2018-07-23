@@ -433,7 +433,7 @@
                 },
                 clickOrderFirstname: function (event) {
                     Log.call(Log.l.trace, "InfodeskEmpList.Controller.");
-                    that.binding.restriction.OrderAttribute = "Vorname";
+                    that.binding.restriction.OrderAttribute = "SortVorname";
                     //that.binding.restriction.OrderDesc = !that.binding.restriction.OrderDesc;
                     AppData.setRestriction("SkillEntry", that.binding.restriction);
 
@@ -453,7 +453,7 @@
                 clickOrderLastname: function (event) {
                     Log.call(Log.l.trace, "InfodeskEmpList.Controller.");
                     var master = Application.navigator.masterControl;
-                    that.binding.restriction.OrderAttribute = "Nachname";
+                    that.binding.restriction.OrderAttribute = "SortNachname";
                     //that.binding.restriction.OrderDesc = !that.binding.restriction.OrderDesc;
                     AppData.setRestriction("SkillEntry", that.binding.restriction);
                     if (event.target.textContent === getResourceText("infodeskEmpList.nameDesc")) {
@@ -831,15 +831,25 @@
             }
             this.loadData = loadData;
 
-            var saveData = function (complete, error) {
+            var saveData = function (data, complete, error) {
                 Log.call(Log.l.trace, "Infodesk.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret;
                 var recordId = getRecordId();
+                if (!recordId) {
+                    if (data && data.BenutzerVIEWID) {
+                        recordId = data.BenutzerVIEWID;
+                    }
+                }
                 if (recordId) {
+                    AppBar.modified = true;
                     var dataBenutzer = that.binding.dataBenutzer;
+                    if (!dataBenutzer && data) {
+                        dataBenutzer = data;
+                    } 
+
                     if (dataBenutzer && AppBar.modified && !AppBar.busy) {
-                        if (dataBenutzer.BenutzerVIEWID) {
+                        if (dataBenutzer.BenutzerVIEWID || data.BenutzerVIEWID) {
                             ret = Infodesk.benutzerView.update(function (response) {
                                 // called asynchronously if ok
                                 // force reload of userData for Present flag

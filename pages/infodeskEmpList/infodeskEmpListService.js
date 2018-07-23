@@ -92,7 +92,7 @@
             SkillType5Sortierung: 0,
             SkillTypeID: {},
             Sortierung: {},
-            OrderAttribute: "Nachname",
+            OrderAttribute: "SortNachname",
             OrderDesc: true
         }, 
         _initBenAnwView: {
@@ -122,13 +122,19 @@
         },
         _userPhotoView: {
             get: function () {
-                return AppData.getFormatView("DOC1Mitarbeiter", 0);
+                var ret = AppData.getFormatView("DOC1Mitarbeiter", 20555, false);
+                ret.maxPageSize = 20;
+                return ret;
             }
         },
         userPhotoView: {
-            select: function (complete, error, recordId) {
+            select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, "userPhotoView.");
-                var ret = InfodeskEmpList._userPhotoView.select(complete, error, recordId);
+                var ret = InfodeskEmpList._userPhotoView.select(complete, error, restriction, {
+                    ordered: true,
+                    orderAttribute: restriction.OrderAttribute, // in der Datenbank muss verbessert werden in Nachname
+                    desc: restriction.OrderDesc
+                });
                 Log.ret(Log.l.trace);
                 return ret;
             },

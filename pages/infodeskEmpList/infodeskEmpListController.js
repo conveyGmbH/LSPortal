@@ -213,7 +213,8 @@
                     },
                     null,
                     nextUrl);
-                } else if (that.nextDocUrl) {
+                }
+                if (that.nextDocUrl) {
                     WinJS.Promise.timeout(250).then(function () {
                         Log.print(Log.l.trace, "calling select InfodeskEmpList.employeeDocView...");
                         var nextDocUrl = that.nextDocUrl;
@@ -288,8 +289,8 @@
                     }
                 }
                 item.OvwContentDOCCNT3 = "";
-                if (that.docs) {  //  && index >= that.firstEmployeesIndex
-                    for (var i = 0; i < that.docs.length; i++) {
+                if (that.docs && index >= that.firstEmployeesIndex) {  //   && index >= that.firstEmployeesIndex
+                    for (var i = that.firstDocsIndex; i < that.docs.length; i++) {
                         var doc = that.docs[i];
                         if (doc.DOC1MitarbeiterVIEWID === item.MitarbeiterVIEWID) {
                             var docContent = doc.OvwContentDOCCNT3 ? doc.OvwContentDOCCNT3 : doc.DocContentDOCCNT1;
@@ -308,8 +309,8 @@
 
             var resultDocConverter = function (item, index) {
 
-                if (that.employees) {
-                    for (var i = 0; i < that.employees.length; i++) { // geänderte Stelle
+                if (that.employees && index >= that.firstDocsIndex) {
+                    for (var i = that.firstEmployeesIndex; i < that.employees.length; i++) { // geänderte Stelle
                         var employee = that.employees.getAt(i);
                         if ((employee.MitarbeiterID || employee.MitarbeiterVIEWID) === item.DOC1MitarbeiterVIEWID) {
                             var docContent = item.OvwContentDOCCNT3
@@ -327,7 +328,7 @@
                                 indexOfFirstVisible = listView.winControl.indexOfFirstVisible;
                             }
                             that.employees.setAt(i, employee);
-                            if (i === 0 && listView && listView.winControl) {
+                            if (indexOfFirstVisible >= 0 && listView && listView.winControl) {
                                 listView.winControl.indexOfFirstVisible = indexOfFirstVisible;
                             }
                             that.firstEmployeesIndex = i + 1;
@@ -501,7 +502,7 @@
                     if (!restriction) {
                         restriction = defaultrestriction;
                     }
-                    if (restriction.OrderAttribute === "Vorname") {
+                    if (restriction.OrderAttribute === "SortVorname") {
                         if (btnName) {
                             btnName.textContent = getResourceText("infodeskEmpList.name");
                         }
@@ -614,7 +615,7 @@
                             }
                             that.loading = false;
                         }, restriction, {
-                            orderAttribute: restriction.OrderAttribute, desc: true
+                            orderAttribute: restriction.OrderAttribute, desc: restriction.OrderDesc
                         }); //that.binding.restriction beim neuladen ist die leer
                     } else {
                         return InfodeskEmpList.employeeView.select(function (json) {
@@ -674,6 +675,11 @@
                     if (that.binding.employeeId) {
                         that.selectRecordId(that.binding.employeeId);
                     }
+                    var restriction = AppData.getRestriction("SkillEntry");
+                    var defaultrestriction = InfodeskEmpList.defaultRestriction;
+                    if (!restriction) {
+                        restriction = defaultrestriction;
+                    }
                     // todo: load image data and set src of img-element
                     Log.print(Log.l.trace, "calling select userPhotoView...");
                     return WinJS.Promise.timeout(250).then(function () {
@@ -694,6 +700,8 @@
 
                         }, function (errorResponse) {
                             that.binding.photoData = "";
+                        },restriction, {
+                            orderAttribute: restriction.OrderAttribute, desc: restriction.OrderDesc
                         });
                     });
                 }).then(function () {

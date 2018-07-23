@@ -4,17 +4,22 @@
 /// <reference path="~/www/lib/convey/scripts/appSettings.js" />
 /// <reference path="~/www/lib/convey/scripts/dataService.js" />
 /// <reference path="~/www/lib/convey/scripts/fragmentController.js" />
+/// <reference path="~/www/lib/convey/scripts/appbar.js" />
+/// <reference path="~/www/lib/convey/scripts/pageController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/fragments/userMessages/userMessagesService.js" />
 
 (function () {
     "use strict";
 
+    var nav = WinJS.Navigation;
+
     WinJS.Namespace.define("UserMessages", {
         Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options) {
             Log.call(Log.l.trace, "UserMessages.Controller.");
             Fragments.Controller.apply(this, [fragmentElement, {
-                recordId: options ? options.recordId : null
+                recordId: options ? options.recordId : null,
+                newInfo1Flag: 0
             }]);
             this.messages = null;
 
@@ -44,6 +49,35 @@
             var listView = fragmentElement.querySelector("#userMessageList.listview");
 
             var eventHandlers = {
+                onSelectionChanged: function (eventInfo) {
+                    Log.call(Log.l.trace, "EmpList.Controller.");
+                    if (listView && listView.winControl) {
+                        var listControl = listView.winControl;
+                        if (listControl.selection) {
+                            var selectionCount = listControl.selection.count();
+                            if (selectionCount === 1) {
+                                // Only one item is selected, show the page
+                                listControl.selection.getItems().done(function (items) {
+                                    var item = items[0];
+                                    if (item.data && item.data.BenutzerVIEWID &&
+                                        item.data.BenutzerVIEWID !== that.binding.employeeId) {
+                                        if (AppBar.scope && typeof AppBar.scope.saveData === "function") {
+                                            //=== "function" save wird nicht aufgerufen wenn selectionchange
+                                            // current detail view has saveData() function
+                                            AppBar.scope.saveData(item.data, function (response) {
+                                                // called asynchronously if ok
+                                            }, function (errorResponse) {
+                                                that.selectRecordId(that.binding.contactId);
+                                            });
+                                        }
+                                        
+                                    }
+                                });
+                            }
+                        }
+                    }
+                    Log.ret(Log.l.trace);
+                },
                 onLoadingStateChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "UserMessages.Controller.");
                     if (listView && listView.winControl) {
@@ -75,12 +109,18 @@
             // register ListView event handler
             if (listView) {
                 this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
+                this.addRemovableEventListener(listView, "selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
             }
 
             var resultConverter = function (item, index) {
                 // push to that.messages if (item.Info1) is not empty!
                 if (item.Info1) {
                     that.messages.push(item);
+                }
+                if (item.Info1 && !item.Info1TSRead) {
+                    item.newInfo1Flag = 1;
+                } else {
+                    item.newInfo1Flag = 0;
                 }
             }
             this.resultConverter = resultConverter;
@@ -129,14 +169,10 @@
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                    return that.loadData();
-            })/*.then(function () {
-                var loadingTime = 30000;
-                Log.print(Log.l.trace, "Loading Message: " + loadingTime + "sec");
-                setInterval(function () {
-                    return that.loadData();
-                }, loadingTime);
-                Log.print(Log.l.trace, "Data loaded");
-            })*/;
+            }).then(function () {
+                AppBar.notifyModified = true;
+                Log.print(Log.l.trace, "Message selected");
+            });;
             Log.ret(Log.l.trace);
         }, {
             apuserRole: null
