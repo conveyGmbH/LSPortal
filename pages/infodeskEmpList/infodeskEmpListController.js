@@ -25,6 +25,13 @@
             this.nextUrl = null;
             this.refreshPromise = null;
             this.refreshWaitTimeMs = 30000;
+
+            this.nextUrl = null;
+            this.nextDocUrl = null;
+            this.loading = false;
+            this.employees = null;
+            this.docs = null;
+
             this.firstDocsIndex = 0;
             this.firstEmployeesIndex = 0;
 
@@ -289,8 +296,8 @@
                     }
                 }
                 item.OvwContentDOCCNT3 = "";
-                if (that.docs && index >= that.firstEmployeesIndex) {  //   && index >= that.firstEmployeesIndex
-                    for (var i = that.firstDocsIndex; i < that.docs.length; i++) {
+                if (that.docs) {  //   && index >= that.firstEmployeesIndex
+                    for (var i = 0; i < that.docs.length; i++) {
                         var doc = that.docs[i];
                         if (doc.DOC1MitarbeiterVIEWID === item.MitarbeiterVIEWID) {
                             var docContent = doc.OvwContentDOCCNT3 ? doc.OvwContentDOCCNT3 : doc.DocContentDOCCNT1;
@@ -308,9 +315,8 @@
             this.resultConverter = resultConverter;
 
             var resultDocConverter = function (item, index) {
-
-                if (that.employees && index >= that.firstDocsIndex) {
-                    for (var i = that.firstEmployeesIndex; i < that.employees.length; i++) { // geänderte Stelle
+                if (that.employees) { // && index >= that.firstDocsIndex
+                    for (var i = 0; i < that.employees.length; i++) { // geänderte Stelle
                         var employee = that.employees.getAt(i);
                         if ((employee.MitarbeiterID || employee.MitarbeiterVIEWID) === item.DOC1MitarbeiterVIEWID) {
                             var docContent = item.OvwContentDOCCNT3
