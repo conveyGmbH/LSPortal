@@ -49,13 +49,14 @@
             this.binding = WinJS.Binding.as(this.pageData);
 
             function PrintElem(elem) {
-                var mywindow = window.open('', 'PRINT', 'resizable=1,height=800,width=1400');
+                var mywindow = window.open('', 'PRINT', 'resizable=1,height=800,width=1000');
                 mywindow.document.write('<html><head><title>' + getResourceText("barcodeAdministration.title") + '</title>');
                 mywindow.document.write('</head><body >');
                 mywindow.document.write((document.getElementById(elem)).querySelector(".win-surface").innerHTML);
                 //mywindow.document.write('<style> .barcodeAdministration-content {width: 100%; font-family: "Segoe UI",sans-serif,"Segoe MDL2 Assets",Symbols,"Segoe UI Emoji"; orientation: landscape; transform: scale(66%); transform-origin: left top; page-break-inside: avoid}.frage-container {width: 100%; page-break-inside: avoid}.barcode-item { width: 480px; margin-right: 20px;overflow: hidden;float: left; page-break-inside: avoid}.barcode-items{page-break-inside: avoid} @media print {.frage-container {width: 100%; page-break-inside; avoid}}.barcode-frage-titel {display: inline;width: 100%; font-size: 25px; float: left;word-break: break-word;}.barcode-items{page-break-inside: avoid} .barcode-item { width: 480px; margin-right: 20px;overflow: hidden;float: left; page-break-inside: avoid} .barcode-antwort-text {height: 200px;display: block;margin-left: 8px; font-size: 25px; word-break: break-word;}</style>');
                 //mywindow.document.write('<style> .barcodeAdministration-content {width: 100%; zoom: 0.6; orientation: landscape; page-break-inside: avoid}.frage-container {width: 100%; page-break-inside: avoid}.barcode-items{page-break-inside: avoid} @media print {.frage-container {width: 100%; page-break-inside; avoid}}.barcode-frage-titel {display: inline;width: 100%; font-size: 25px; float: left;}.barcode-items{page-break-inside: avoid} .barcode-item { width: 450px; height: 170px; margin-right: 150px;margin-bottom: 120px;overflow: hidden;float: left; page-break-inside: avoid} .barcode-antwort-text {display: block;margin-left: 8px; font-size: 25px;}</style>');
-                mywindow.document.write('<style> @media print{@page {size: A4 landscape;max-height:100%; max-width:100%}}' +
+                mywindow.document.write('<style> @supports (-ms-ime-align: auto) {body {zoom: 75%;}}' +
+                    '@media print{@page {size: A4 landscape;max-height:100%; max-width:100%}}' +
                     '.barcodeAdministration-content {width: 100%;}' +
                     '.frage-container {width: 100%;}' +
                     '.barcode-frage-titel {display: inline;width: 100%;font-size: 16.5px;float: left;word-break: break-word;}' +
