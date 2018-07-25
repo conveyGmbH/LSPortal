@@ -1,4 +1,4 @@
-﻿// export Excel file for download
+// export Excel file for download
 /// <reference path="~/www/lib/WinJS/scripts/base.js" />
 /// <reference path="~/www/lib/convey/scripts/logging.js" />
 /// <reference path="~/www/lib/convey/scripts/dataService.js" />
@@ -315,6 +315,7 @@
                                 }
                             } else {
                                 Log.print(Log.l.trace, colCount + " cloumns to export. Write column header...");
+                                cr = false;
                                 var newRow = new XElement(S.row);
                                 for (var c = 1; c < colCount; c++) {
                                     var value = attribSpecs[c].Name;
