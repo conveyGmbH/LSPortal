@@ -49,7 +49,7 @@
             var listView = fragmentElement.querySelector("#userMessageList.listview");
 
             var eventHandlers = {
-                onSelectionChanged: function (eventInfo) {
+                /*onSelectionChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "EmpList.Controller.");
                     if (listView && listView.winControl) {
                         var listControl = listView.winControl;
@@ -77,7 +77,7 @@
                         }
                     }
                     Log.ret(Log.l.trace);
-                },
+                },*/
                 onLoadingStateChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "UserMessages.Controller.");
                     if (listView && listView.winControl) {
@@ -109,7 +109,7 @@
             // register ListView event handler
             if (listView) {
                 this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
-                this.addRemovableEventListener(listView, "selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
+                //this.addRemovableEventListener(listView, "selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
             }
 
             var resultConverter = function (item, index) {
