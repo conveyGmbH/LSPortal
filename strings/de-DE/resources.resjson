@@ -76,7 +76,7 @@
     "tooltip.eventchange"	: "Veranstaltung wechseln",
     "tooltip.savepdf"	    : "PDF Dateiname speichern",
     "tooltip.exportpdf"	    : "PDF exportieren",
-    "tooltip.deletemail"	: "Mail lÃ¶schen",
+    "tooltip.deletemail"	: "Mail löschen",
     "tooltip.save"			    : "Speichern",
 	"tooltip.resetRestriction" : "Filter löschen",
 
