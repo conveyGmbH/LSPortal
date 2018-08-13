@@ -51,6 +51,8 @@
     "tooltip.deleteEmployee": "Elimina Employee",
     "tooltip.deleteSkill"   : "Elimina Ruolo",
     "tooltip.deleteQuestiongroup": "Elimina Gruppo domande",
+	"tooltip.newOpQuestionList" : "Neue optionale Fragen/Antworten",
+	"tooltip.deleteOpQuestionList": "Optionale Fragen/Antworten löschen",
     "tooltip.deleteQuestions/Answers" :   "Elimina Domande/Risposte",
     "tooltip.createNewContact"           : "Aggiungi nuovo contatto",
     "tooltip.newSkill"      : "Aggiungere nuova Ruolo",
@@ -441,6 +443,11 @@
     "event.company"         : "Azienda",
     "event.note"            : "Suggerimento",
     "event.appInfo"         : "Affinché le modifiche abbiano effetto, si prega di riavviare l´APP",
+
+    "optQuestionList.title"   : "Optional Fragen/Antworten",
+    "optQuestionList.count"   : "Anzahl",
+    "optQuestionList.labelDelete": "Fragengruppe",
+    "optQuestionList.questionDelete": "Wollen Sie diese Fragengruppe löschen?",
 
     "questiongroup.title"   : "Gruppo domande",
     "questiongroup.count"   : "Numero",

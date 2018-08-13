@@ -51,6 +51,8 @@
     "tooltip.deleteEmployee": "Supprimer le Personnel",
     "tooltip.deleteSkill"   : "Supprimer capacité",
     "tooltip.deleteQuestiongroup": "Supprimer le Groupe de questions",
+	"tooltip.newOpQuestionList" : "Neue optionale Fragen/Antworten",
+	"tooltip.deleteOpQuestionList": "Optionale Fragen/Antworten löschen",
     "tooltip.deleteQuestions/Answers" :   "Supprimer le Questions/Réponses",
     "tooltip.createNewContact"           : "Créer contact",
     "tooltip.newSkill"      : "Ajouter nouveau capacité",
@@ -441,6 +443,11 @@
     "event.company"         : "Société",
     "event.note"            : "Allusion",
     "event.appInfo"         : "Pour que ces modifications prennent effet, vous devez redémarrer votre APP",
+
+	"optQuestionList.title"   : "Optional Fragen/Antworten",
+    "optQuestionList.count"   : "Anzahl",
+    "optQuestionList.labelDelete": "Fragengruppe",
+    "optQuestionList.questionDelete": "Wollen Sie diese Fragengruppe löschen?",
 
     "questiongroup.title"   : "Groupe de questions",
     "questiongroup.count"   : "Nombre",

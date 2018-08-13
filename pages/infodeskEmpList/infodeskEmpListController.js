@@ -510,10 +510,16 @@
                     }
                     if (restriction.OrderAttribute === "SortVorname") {
                         if (btnName) {
+                            if (restriction.btn_textContent) {
+                                btnFirstName.textContent = restriction.btn_textContent;
+                            }
                             btnName.textContent = getResourceText("infodeskEmpList.name");
                         }
                     } else {
                         if (btnFirstName) {
+                            if (restriction.btn_textContent) {
+                                btnName.textContent = restriction.btn_textContent;
+                            }
                             btnFirstName.textContent = getResourceText("infodeskEmpList.firstName");
                         }
                     }

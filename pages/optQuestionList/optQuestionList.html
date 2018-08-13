@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="optQuestionList.css" rel="stylesheet" />
+    <script type="text/javascript" src="optQuestionListService.js"></script>
+    <script type="text/javascript" src="optQuestionListController.js"></script>
+    <script type="text/javascript" src="optQuestionList.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="optQuestionList fragment">
+        <div id="optQuestionListController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="contentarea win-type-body">
+                    <div class="content-header">
+                        <div class="header-separator"></div>
+                        <div class="half-circle half-circle-textcolor">&nbsp;</div>
+                        <div class="content-header-line win-type-caption">
+                            <span class="id-field"></span>
+                            <span class="caption-field" data-win-res="{textContent: 'optQuestionList.title'}"></span>
+                            <span class="date-field"></span>
+                        </div>
+                    </div>
+                    <div class="optQuestionList-template"
+                         data-win-control="WinJS.Binding.Template" style="display: none">
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'optQuestionList.optQuestion'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'optQuestionList.optQuestion'}"></span>
+                            <select id="InitFragenopt"
+                                    class="input_field win-dropdown"
+                                    data-win-control="WinJS.UI.Repeater"
+                                    onchange="AppBar.handleEvent('change', 'changeOptionQuestion', event)"
+                                    >
+                                <option data-win-bind="value: FragenAntwortenVIEWID; textContent: Fragestellung"></option>
+                            </select>
+                        </div>
+                        <div class="field_line field_line_even">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'optQuestionList.selectedQuestion'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'optQuestionList.selectedQuestion'}"></span>
+                            <select id="SelektFragenopt"
+                                    class="input_field win-dropdown"
+                                    data-win-control="WinJS.UI.Repeater"
+                                    onchange="AppBar.handleEvent('change', 'changeSelektedQuestion', event)"
+                                    >
+                                <option data-win-bind="value: FragenAntwortenVIEWID; textContent: Fragestellung"></option>
+                            </select>
+                        </div>
+                        <div class="field_line field_line_full">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'optQuestionList.selectedAnswer'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'optQuestionList.selectedAnswer'}"></span>
+                            <select id="SelektAntwortopt"
+                                    class="input_field win-dropdown"
+                                    data-win-control="WinJS.UI.Repeater"
+                                    onchange="AppBar.handleEvent('change', 'changeSelektedAnswer', event)"
+                                    >
+                                <option data-win-bind="value: index; textContent: antwort"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="headerFooterPlaceholder">
+                        <div class="list-footer">
+                            <div class="status">
+                                <progress class="win-progress-bar progress"></progress>
+                                <div class="counter">
+                                    <span data-win-res="{textContent: 'optQuestionList.count'}"></span><span>: </span><span data-win-bind="textContent: count"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="optQuestionList"
+                         class="listview win-selectionstylefilled"
+                         data-win-control="WinJS.UI.ListView"
+                         data-win-options="{
+                                itemTemplate: select('.optQuestionList-template'),
+                                footer: select('.list-footer')
+                         }">
+                    </div>
+                    <div class="error-message"
+                         data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

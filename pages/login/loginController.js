@@ -37,6 +37,7 @@
                     privacyPolicyFlag: false,
                     privacyPolicydisabled: false
                 },
+                isPrivacyPolicyFlag: AppData._persistentStates.privacyPolicyFlag,
                 hideLoginData: false,
                 progress: {
                     percent: 0,
@@ -66,8 +67,10 @@
                 },
                 clickPrivacyPolicy: function (event) {
                     Log.call(Log.l.trace, "Login.Controller.");
-                    that.binding.dataLogin.privacyPolicyFlag = event.currentTarget.checked;
-                    that.binding.dataLogin.privacyPolicydisabled = event.currentTarget.checked;
+                    //that.binding.dataLogin.privacyPolicyFlag = event.currentTarget.checked;
+                    //that.binding.dataLogin.privacyPolicydisabled = event.currentTarget.checked;
+                    that.binding.isPrivacyPolicyFlag = event.currentTarget.checked;
+                    AppData._persistentStates.privacyPolicyFlag = event.currentTarget.checked;
                     AppBar.triggerDisableHandlers();
                     Log.ret(Log.l.trace);
                 }
@@ -75,7 +78,7 @@
 
             this.disableHandlers = {
                 clickOk: function () {
-                    if (AppBar.busy || (that.binding.dataLogin.Login.length === 0 || that.binding.dataLogin.Password.length === 0 || !that.binding.dataLogin.privacyPolicyFlag)) {
+                    if (AppBar.busy || (that.binding.dataLogin.Login.length === 0 || that.binding.dataLogin.Password.length === 0 || !that.binding.isPrivacyPolicyFlag)) {
                         NavigationBar.disablePage("start");
                     } else {
                         NavigationBar.enablePage("start");
@@ -83,8 +86,9 @@
                     if (!that.binding.dataLogin.Login || !that.binding.dataLogin.Password) {
                         that.binding.dataLogin.privacyPolicyFlag = false;
                         that.binding.dataLogin.privacyPolicydisabled = false;
+                        that.binding.isPrivacyPolicyFlag = false;
                     }
-                    return AppBar.busy || (that.binding.dataLogin.Login.length === 0 || that.binding.dataLogin.Password.length === 0 || !that.binding.dataLogin.privacyPolicyFlag);
+                    return AppBar.busy || (that.binding.dataLogin.Login.length === 0 || that.binding.dataLogin.Password.length === 0 || !that.binding.isPrivacyPolicyFlag);
                 }
             };
 

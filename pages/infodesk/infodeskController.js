@@ -439,9 +439,11 @@
 
                     if (event.target.textContent === getResourceText("infodeskEmpList.firstNameDesc")) {
                         event.target.textContent = getResourceText("infodeskEmpList.firstNameAsc");
+                        that.binding.restriction.btn_textContent = event.target.textContent;
                         that.binding.restriction.OrderDesc = false;
                     } else {
                         event.target.textContent = getResourceText("infodeskEmpList.firstNameDesc");
+                        that.binding.restriction.btn_textContent = event.target.textContent;
                         that.binding.restriction.OrderDesc = true;
                     }
                        
@@ -458,9 +460,11 @@
                     AppData.setRestriction("SkillEntry", that.binding.restriction);
                     if (event.target.textContent === getResourceText("infodeskEmpList.nameDesc")) {
                         event.target.textContent = getResourceText("infodeskEmpList.nameAsc");
+                        that.binding.restriction.btn_textContent = event.target.textContent;
                         that.binding.restriction.OrderDesc = false;
                     } else {
                         event.target.textContent = getResourceText("infodeskEmpList.nameDesc");
+                        that.binding.restriction.btn_textContent = event.target.textContent;
                         that.binding.restriction.OrderDesc = true;
                     }
 

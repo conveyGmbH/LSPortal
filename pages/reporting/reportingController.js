@@ -64,8 +64,8 @@
                 if (typeof that.binding.restriction.Erfassungsdatum === "undefined") {
                     that.binding.restriction.Erfassungsdatum = new Date();
                 }
-                if (typeof that.binding.restriction.ModifiedTS === "undefined") {
-                    that.binding.restriction.ModifiedTS = new Date();
+                if (typeof that.binding.restriction.ModifiedTs === "undefined") {
+                    that.binding.restriction.ModifiedTs = new Date();
                 }
                 Log.call(Log.l.trace, "Initialdate set");
             }
@@ -99,8 +99,8 @@
                         that.binding.restriction.Erfassungsdatum = new Date();
                     }
                     if (!that.binding.restriction.usemodifiedTS &&
-                        typeof that.binding.restriction.ModifiedTS !== "undefined") {
-                        delete that.binding.restriction.ModifiedTS;
+                        typeof that.binding.restriction.ModifiedTs !== "undefined") {
+                        delete that.binding.restriction.ModifiedTs;
                     }
                     //@nedra:10.11.2015: modifiedTS is undefined if it is not updated -> modifiedTS = current date
                     if (that.binding.restriction.usemodifiedTS &&

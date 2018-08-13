@@ -51,6 +51,8 @@
     "tooltip.deleteEmployee": "Delete Employee",
     "tooltip.deleteSkill"   : "Delete Skill",
     "tooltip.deleteQuestiongroup": "Delete Questiongroup",
+    "tooltip.newOpQuestionList" : "Neue optionale Fragen/Antworten",
+	"tooltip.deleteOpQuestionList": "Optionale Fragen/Antworten löschen",
     "tooltip.deleteQuestions/Answers" :   "Delete Questions/Answers",
     "tooltip.createNewContact"           : "Add new contact",
     "tooltip.newSkill"      : "Add new skill",
@@ -441,6 +443,11 @@
     "event.company"         : "Company",
     "event.note"            : "Note",
     "event.appInfo"         : "Please restart the APP for the changes to take effect",
+
+	"optQuestionList.title"   : "Optional Fragen/Antworten",
+    "optQuestionList.count"   : "Anzahl",
+    "optQuestionList.labelDelete": "Fragengruppe",
+    "optQuestionList.questionDelete": "Wollen Sie diese Fragengruppe löschen?",
 
     "questiongroup.title"   : "Question groups",
     "questiongroup.count"   : "Count",

@@ -51,6 +51,8 @@
     "tooltip.deleteEmployee": "Mitarbeiter löschen",
     "tooltip.deleteSkill"   : "Fähigkeit löschen",
     "tooltip.deleteQuestiongroup": "Fragengruppe löschen",
+	"tooltip.newOpQuestionList" : "Neue optionale Fragen/Antworten",
+	"tooltip.deleteOpQuestionList": "Optionale Fragen/Antworten löschen",
     "tooltip.deleteQuestionsAnswers" :   "Fragen/Antworten löschen",
     "tooltip.createNewContact"           : "Neuen Kontakt erfassen",
     "tooltip.newSkill"      : "Neue Fähigkeit hinzufügen",
@@ -422,6 +424,7 @@
     "label.sketchRemote"    : "Notizen",
     "label.pdfExport"     : "PDF Export",
     "label.employeeGenPWList"     : "Vorgeneriert",
+	"label.optQuestionList" : "optional FRA/ANTW",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Abbrechen",
@@ -447,6 +450,14 @@
     "questiongroup.count"   : "Anzahl",
     "questiongroup.labelDelete": "Fragengruppe",
     "questiongroup.questionDelete": "Wollen Sie diese Fragengruppe löschen?",
+
+    "optQuestionList.title"   : "Optional Fragen/Antworten",
+    "optQuestionList.count"   : "Anzahl",
+    "optQuestionList.labelDelete": "Fragengruppe",
+    "optQuestionList.questionDelete": "Wollen Sie diese Fragengruppe löschen?",
+	"optQuestionList.optQuestion" : "optionale Frage",
+	"optQuestionList.selectedQuestion": "selektierte Frage",
+	"optQuestionList.selectedAnswer": "selektierte Antwort",
 
     "questionList.title"    : "Fragen/Antworten",
     "questionList.count"    : "Anzahl",
