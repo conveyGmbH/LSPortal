@@ -65,16 +65,7 @@
                 }
             }
             this.disablePdfExportList = disablePdfExportList;
-
-            var spinnercontl = function (timerFlag) {
-                if (timerFlag === true) {
-                    spinner.style.display = 'block';
-                } else {
-                    spinner.style.display = 'none';
-                }
-            }
-            this.spinnercontl = spinnercontl;
-
+            
             var getPdfIdDaten = function () {
                 that.pdfzip = null;
                 that.pdfIddata = [];
