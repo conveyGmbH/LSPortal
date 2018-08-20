@@ -281,9 +281,11 @@
 
                     if (event.target.textContent === getResourceText("employee.firstNameDesc")) {
                         event.target.textContent = getResourceText("employee.firstNameAsc");
+                        that.binding.restriction.btn_textContent = event.target.textContent;
                         that.binding.restriction.OrderDesc = false;
                     } else {
                         event.target.textContent = getResourceText("employee.firstNameDesc");
+                        that.binding.restriction.btn_textContent = event.target.textContent;
                         that.binding.restriction.OrderDesc = true;
                     }
 
@@ -300,9 +302,11 @@
                     AppData.setRestriction("Employee", that.binding.restriction);
                     if (event.target.textContent === getResourceText("employee.nameDesc")) {
                         event.target.textContent = getResourceText("employee.nameAsc");
+                        that.binding.restriction.btn_textContent = event.target.textContent;
                         that.binding.restriction.OrderDesc = false;
                     } else {
                         event.target.textContent = getResourceText("employee.nameDesc");
+                        that.binding.restriction.btn_textContent = event.target.textContent;
                         that.binding.restriction.OrderDesc = true;
                     }
 

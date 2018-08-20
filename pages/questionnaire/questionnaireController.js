@@ -29,14 +29,14 @@
 
             // ListView control
             var listView = pageElement.querySelector("#listQuestionnaire.listview");
-            var flipView = pageElement.querySelector("#imgListQuestionnaire.flipview");
+            var flipview = pageElement.querySelector("#imgListQuestionnaire.flipview");
 
             this.dispose = function () {
                 if (listView && listView.winControl) {
                     listView.winControl.itemDataSource = null;
                 }
-                if (flipView && flipView.winControl) {
-                    flipView.winControl.itemDataSource = null;
+                if (flipview && flipview.winControl) {
+                    flipview.winControl.itemDataSource = null;
                 }
                 if (that.questions) {
                     that.questions = null;
@@ -861,9 +861,9 @@
                                     counter.style.display = "inline";
                                 }
                                 that.loading = false;
-                                if (flipView &&  flipView.parentElement && flipView.winControl &&
-                                    WinJS.Utilities.hasClass(flipView.parentElement, "img-footer-container")) {
-                                    flipView.winControl.forceLayout();
+                                if (flipview &&  flipview.parentElement && flipview.winControl &&
+                                    WinJS.Utilities.hasClass(flipview.parentElement, "img-footer-container")) {
+                                    flipview.winControl.forceLayout();
                                 }
                             }
                         }
@@ -931,8 +931,8 @@
                 }
             }
 
-            if (flipView && flipView.winControl) {
-                flipView.winControl.itemDataSource = null;
+            if (flipview && flipview.winControl) {
+                flipview.winControl.itemDataSource = null;
             }
 
             // register ListView event handler
@@ -968,9 +968,9 @@
                     for (i = 0; i < that.images.length; i++) {
                         var imageItem = that.images[i];
                         if (imageItem && imageItem.DOC1ZeilenantwortID === pictureId) {
-                            if (flipView && flipView.winControl) {
+                            if (flipview && flipview.winControl) {
                                 if (that.images && that.images.length > 0) {
-                                    flipView.winControl.itemDataSource = that.images.dataSource;
+                                    flipview.winControl.itemDataSource = that.images.dataSource;
                                 }
                             }
                             var pageControl = pageElement.winControl;
@@ -1029,9 +1029,9 @@
                                 });
                             }
                         }
-                        if (flipView && flipView.winControl) {
+                        if (flipview && flipview.winControl) {
                             if (that.images && that.images.length > 0) {
-                                flipView.winControl.itemDataSource = that.images.dataSource;
+                                flipview.winControl.itemDataSource = that.images.dataSource;
                             }
                         }
                         WinJS.Promise.timeout(50).then(function () {

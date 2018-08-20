@@ -93,6 +93,7 @@
                 },
                 clickLogoff: function (event) {
                     Log.call(Log.l.trace, "Account.Controller.");
+                    AppData._persistentStates.privacyPolicyFlag = false;
                     Application.navigateById("login", event);
                     Log.ret(Log.l.trace);
                 },
@@ -150,6 +151,7 @@
                 clickPrivacyPolicy: function (event) {
                     Log.call(Log.l.trace, "Login.Controller.");
                     that.binding.dataLogin.privacyPolicyFlag = event.currentTarget.checked;
+                    AppData._persistentStates.privacyPolicyFlag = event.currentTarget.checked;
                     AppBar.triggerDisableHandlers();
                     Log.ret(Log.l.trace);
                 }

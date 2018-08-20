@@ -297,6 +297,25 @@
                         }
                     }
                     Log.ret(Log.l.trace);
+                },
+                copyQuestionnaire: function () {
+                    Log.call(Log.l.trace, "LocalEvents.Controller.");
+                    var toVeranstaltungsid = AppData.getRecordId("Veranstaltung");
+                    AppData.call("PRC_CopyFragebogen",
+                    {
+                        pFromVeranstID: that.curRecId,
+                        pToVeranstID: toVeranstaltungsid
+
+                    }, function (json) {
+                        Log.print(Log.l.info, "call success! ");
+                        AppBar.busy = false;
+                        //Application.navigateById("localevents", event);
+                    }, function (errorResponse) {
+                        Log.print(Log.l.error, "call error");
+                        AppBar.busy = false;
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    });
+                    Log.ret(Log.l.trace);
                 }
             };
             this.disableHandlers = {
@@ -315,6 +334,13 @@
                     }
                 },
                 clickChange: function () {
+                    if (that.curRecId && AppData.generalData.eventId !== that.curRecId) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                },
+                copyQuestionnaire: function () {
                     if (that.curRecId && AppData.generalData.eventId !== that.curRecId) {
                         return false;
                     } else {

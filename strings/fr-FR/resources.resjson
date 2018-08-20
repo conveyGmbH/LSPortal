@@ -39,6 +39,7 @@
 	"command.print"			: "imprimer",
     "command.exportPdf"		: "PDF exportation",
 	"command.resetRestriction" : "Supprimer",
+  "command.copyQuestionnaire" : "Copie",
 
     "tooltip.backward"      : "Page présédente",
     "tooltip.edit"          : "Modifier le contact en cours",
@@ -81,6 +82,7 @@
     "tooltip.deletemail"	: "Supprimer le mail",
     "tooltip.save"			    : "Sauver",
 	"tooltip.resetRestriction" : "Supprimer le filtre",
+    "tooltip.copyQuestionnaire" : "Répondre au questionnaire",
 
     "start.title"           : "Accueil",
     "start.comment"         : "Utilisez les boutons sur cette page pour accéder à d'autres pages!",
@@ -357,6 +359,7 @@
     "infodesk.messages"     : "Nouvelles",
     "infodesk.receiver"     : "Récepteur",
     "infodesk.message"      : "Message aux ",
+	  "infodesk.message1time" : "Envoyé",
     "infodesk.search"       : "Rechercher",
     "infodesk.newsOverview" : "Nouvelles Résumé",
     "infodesk.account"      : "Compte",
@@ -423,7 +426,8 @@
     "label.sketchRemote"    : "Notes",
     "label.pdfExport"       : "Export PDF",
     "label.employeeGenPWList"     : "Prégénérée",
-    
+    "label.optQuestionList" : "quest. / répo. facultatives",
+
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annuler",
 
@@ -444,15 +448,18 @@
     "event.note"            : "Allusion",
     "event.appInfo"         : "Pour que ces modifications prennent effet, vous devez redémarrer votre APP",
 
-	"optQuestionList.title"   : "Optional Fragen/Antworten",
-    "optQuestionList.count"   : "Anzahl",
-    "optQuestionList.labelDelete": "Fragengruppe",
-    "optQuestionList.questionDelete": "Wollen Sie diese Fragengruppe löschen?",
+	"optQuestionList.title"   : "En option Questions/Réponses",
+    "optQuestionList.count"   : "Nombre",
+    "optQuestionList.labelDelete": "En option Question/Réponse",
+    "optQuestionList.questionDelete": "Voulez-vous supprimer cet en option Questions/Réponses?",
 
     "questiongroup.title"   : "Groupe de questions",
     "questiongroup.count"   : "Nombre",
     "questiongroup.labelDelete": "Groupe de questions",
     "questiongroup.questionDelete": "Voulez-vous supprimer cet groupe de questions?",
+	"optQuestionList.optQuestion" : "Question optionnelle",
+	"optQuestionList.selectedQuestion": "Question sélectionnée",
+	"optQuestionList.selectedAnswer": "Réponse sélectionnée",
 
     "questionList.title"    : "Questions/Réponses",
     "questionList.count"    : "Nombre",

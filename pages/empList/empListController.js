@@ -315,10 +315,16 @@
                 }
                 if (restriction.OrderAttribute === "Vorname") {
                     if (btnName) {
+                        if (restriction.btn_textContent) {
+                            btnFirstName.textContent = restriction.btn_textContent;
+                        }
                         btnName.textContent = getResourceText("employee.name");
                     }
                 } else {
                     if (btnFirstName) {
+                        if (restriction.btn_textContent) {
+                            btnName.textContent = restriction.btn_textContent;
+                        }
                         btnFirstName.textContent = getResourceText("employee.firstName");
                     }
                 }
