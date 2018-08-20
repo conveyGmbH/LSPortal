@@ -8,7 +8,7 @@
 /// <reference path="~/www/lib/convey/scripts/pageFrame.js" />
 /// <reference path="~/www/scripts/generalData.js" />
 
-(function() {
+(function () {
     "use strict";
 
     // default settings
@@ -23,6 +23,7 @@
         logGroup: false,
         logNoStack: true,
         inputBorder: 1,
+        navVertWidth: 300,
         odata: {
             https: true,
             hostName: "leadsuccess.convey.de",
@@ -31,6 +32,8 @@
             onlinePath: "odata_online", // serviceRoot online requests
             login: "",
             password: "",
+            privacyPolicyFlag: false,
+            privacyPolicydisabled: true,
             registerPath: "odata_register", // serviceRoot register requests
             registerLogin: "AppRegister",
             registerPassword: "6530bv6OIUed3",
@@ -51,13 +54,14 @@
     // static array of menu groups for the split view pane
     Application.navigationBarGroups = [
         { id: "start", group: 1, svg: "home", disabled: true },
+        { id: "localevents", group: 10, svg: "calendar_1", disabled: true },
         { id: "events", group: 2, svg: "question_and_answer", disabled: true },
         { id: "mailing", group: 3, svg: "mail", disabled: true },
         { id: "employee", group: 4, svg: "keys", disabled: true },
         { id: "contacts", group: 5, svg: "businesspeople2", disabled: true },
         { id: "search", group: 9, svg: "magnifying_glass", disabled: true },
         { id: "reporting", group: 6, svg: "chart_column", disabled: true },
-        { id: "infodesk", group: 7, svg: "desk", disabled: true },
+        { id: "infodesk", group: 7, svg: "information", disabled: true },
         { id: "info", group: 8, svg: "gearwheel", disabled: true }
     ];
 
@@ -67,12 +71,16 @@
         { id: "event", group: 2, disabled: false },
         { id: "questiongroup", group: 2, disabled: false },
         { id: "questionList", group: 2, disabled: false },
-        { id: "skills", group: 2, disabled: false },
+        { id: "optQuestionList", group: 2, disabled: false },
         { id: "mandatory", group: 2, disabled: false },
-        { id: "mailing", group: -3, disabled: false },
-        //{ id: "mailingProduct", group: 3, disabled: false },
+        { id: "barcodeAdministration", group: 2, disbaled: false },
+        { id: "products", group: 2, disabled: false },
+        { id: "skills", group: 2, disabled: false },
+        { id: "mailing", group: 3, disabled: false },
+        { id: "mailingProduct", group: 3, disabled: false },
         { id: "employee", group: 4, disabled: false },
         { id: "skillentry", group: 4, disabled: false },
+        { id: "employeeGenPWList", group: 4, disabled: false },
         { id: "contact", group: 5, disabled: false },
         { id: "questionnaire", group: 5, disabled: false },
         { id: "sketch", group: 5, disabled: false },
@@ -83,7 +91,8 @@
         { id: "info", group: 8, disabled: false },
         { id: "settings", group: 8, disabled: false },
         { id: "account", group: 8, disabled: false },
-        { id: "search", group: -9, disabled: false }
+        { id: "search", group: -9, disabled: false },
+        { id: "localevents", group: -10, disabled: false }
     ];
 
 
@@ -124,4 +133,3 @@
     // initiate the page frame class
     var pageframe = new Application.PageFrame("LeadSuccessPortal");
 })();
-
