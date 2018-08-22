@@ -349,6 +349,14 @@
                     }.bind(this), true);
                 }
 
+                var resultConverter = function (item, index) {
+                    item.index = index;
+                    if (item.ZeilenText === null) {
+                        item.ZeilenText = "";
+                    }
+                                    }
+                this.resultConverter = resultConverter;
+
                 var loadData = function (curMailingLine) {
                     Log.call(Log.l.trace, "MailingProductLine.", "curMailingLine=" + curMailingLine);
                     AppData.setErrorMsg(that.binding);
@@ -363,6 +371,9 @@
                                 that.nextUrl = MailingProductLine.MAILERZEILENView.getNextUrl(json);
                                 var results = json.d.results;
                                 that.binding.count = results.length;
+                                results.forEach(function (item, index) {
+                                    that.resultConverter(item, index);
+                                });
                                 that.mailingLine = new WinJS.Binding.List(results);
 
                                 if (listView && listView.winControl) {

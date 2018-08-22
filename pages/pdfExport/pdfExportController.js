@@ -417,9 +417,6 @@
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
             }).then(function () {
-                Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.spinnercontl(that.binding.timerFlag);
-            }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 AppBar.notifyModified = true;
             });

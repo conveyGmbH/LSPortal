@@ -447,6 +447,9 @@
     "event.company"         : "Azienda",
     "event.note"            : "Suggerimento",
     "event.appInfo"         : "Affinché le modifiche abbiano effetto, si prega di riavviare l´APP",
+	"event.privacypolicy"   : "Schizzo della privacy",
+	"event.privacyPolicyText" : "Testo sulla privacy",
+	"event.privacyPolicyStandartText" : "Con la presente confermo che i miei dati sono raccolti e trattati in base al GDPR",
 
     "optQuestionList.title"   : "opzionale Domande/Risposte",
     "optQuestionList.count"   : "Numero",
@@ -579,6 +582,9 @@
     "eventcreation.title" : "Crea evento",
 
     "products.title" : "Prodotti",
+    "products.product" : "Prodotto",
+    "products.question" : "Domanda",
+    "products.anwser" : "Risposta",
 
     "localeventscreate.title" : "Crea evento",
     "localeventscreate.event" : "evento",

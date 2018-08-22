@@ -20,7 +20,8 @@
                 isCameraVisible: !AppData._persistentStates.hideCameraScan,
                 isBarcodeScanVisible: !AppData._persistentStates.hideBarcodeScan,
                 isProductMailOn: !AppData._persistentStates.productMailOn,
-                isThankMailOn: !AppData._persistentStates.thankYouMailOn
+                isThankMailOn: !AppData._persistentStates.thankYouMailOn,
+                isPrivacyPolicySVGVisible: !AppData._persistentStates.privacyPolicySVGVisible
             }, commandList]);
 
             var that = this;
@@ -38,6 +39,10 @@
                 var prevNotifyModified = AppBar.notifyModified;
                 AppBar.notifyModified = false;
                 that.binding.dataEvent = newDataEvent;
+                if (!that.binding.dataEvent.DatenschutzText) {
+                    //that.binding.dataEvent.privacyPolicyStandartText = getResourceText("event.privacyPolicyStandartText");
+                    //that.binding.dataEvent.DatenschutzText = getResourceText("event.privacyPolicyStandartText");
+                }
                 // convert Startdatum 
                 that.binding.dataEvent.dateBegin = getDateObject(newDataEvent.Startdatum);
                 // convert Enddatum 
@@ -95,6 +100,20 @@
                         pOptionTypeId = 31;
                         that.binding.isThankMailOn = checked;
                         AppData._persistentStates.thankYouMailOn = !checked;
+                        break;
+                    case "showPrivacyPolicySVG":
+                        pOptionTypeId = 34;
+                        that.binding.isPrivacyPolicySVGVisible = checked;
+                        if (!checked) {
+                            that.binding.dataEvent.DatenschutzText = "";
+                        } else {
+                            that.binding.dataEvent.DatenschutzText = getResourceText("event.privacyPolicyStandartText");
+                        }
+                        if (!AppBar.modified) {
+                            AppBar.modified = true;
+                        }
+                        AppData._persistentStates.privacyPolicySVGVisible = !checked;
+                        break;
                 }
                 if (pOptionTypeId) {
                     var pValue;

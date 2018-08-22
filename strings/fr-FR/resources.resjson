@@ -447,6 +447,9 @@
     "event.company"         : "Société",
     "event.note"            : "Allusion",
     "event.appInfo"         : "Pour que ces modifications prennent effet, vous devez redémarrer votre APP",
+"event.privacypolicy"   : "Esquisse de confidentialité",
+	"event.privacyPolicyText" : "Texte de confidentialité",
+	"event.privacyPolicyStandartText" : "Je confirme par la présente que mes données sont collectées et traitées conformément au RGPD",
 
 	"optQuestionList.title"   : "En option Questions/Réponses",
     "optQuestionList.count"   : "Nombre",
@@ -579,6 +582,9 @@
     "eventcreation.title" : "Créer un événement",
 
     "products.title" : "Produits",
+    "products.product" : "Produit",
+    "products.question" : "Question",
+    "products.anwser" : "Réponses",
 
     "localeventscreate.title" : "Créer un événement",
     "localeventscreate.event" : "événement",

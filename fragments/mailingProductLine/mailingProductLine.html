@@ -17,7 +17,8 @@
                         <div class="list-role-item">
                             <label class="list-role-field">
                                 <textarea class="input_field win-textbox input_text_comment"
-                                              data-win-bind="value: ZeilenText Binding.Mode.twoway; style.display: dataProduct.Flag_NoEdit Binding.Converter.toDisplayNone"></textarea>
+                                          onfocusout="AppBar.handleEvent('blur', 'clickASave', event)"
+                                          data-win-bind="value: ZeilenText Binding.Mode.twoway; style.display: dataProduct.Flag_NoEdit Binding.Converter.toDisplayNone"></textarea>
                            </label>
                       </div>
                     </div>

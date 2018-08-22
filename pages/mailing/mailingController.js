@@ -19,7 +19,8 @@
                 dataFirstQuestion: null,
                 firstquestionbez: getResourceText("mailing.on"),
                 memobez: getResourceText("mailing.off"),
-                specTypeToggle: null
+                specTypeToggle: null,
+                saveFlag: null
             }, commandList]);
             var that = this;
             this.ssItems = [];
@@ -131,12 +132,17 @@
                             AppBar.modified = false;
                             var master = Application.navigator.masterControl;
                             if (master && master.controller) {
-                                master.controller.loadData().then(function () {
-                                    master.controller.selectRecordId(recordId);
-                                    if (typeof complete === "function") {
-                                        complete(response);
-                                    }
-                                });
+                                if (that.binding.saveFlag === true) {
+                                    that.binding.saveFlag = false;
+                                    master.controller.loadData();
+                                } else {
+                                    master.controller.loadData().then(function () {
+                                        master.controller.selectRecordId(recordId);
+                                        if (typeof complete === "function") {
+                                            complete(response);
+                                        }
+                                    }  
+                                )};
                             } else if (typeof complete === "function") {
                                 complete(response);
                             }

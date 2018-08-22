@@ -98,7 +98,7 @@
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                     var optFrage = {};
-                    if (target.id === "InitFragenopt") {
+                    if (target.id === "InitFragenopt" && parseInt(target.value)) {
                         optFrage.FragenID = target.value; // String
                         //that.binding.dataOptQuestionAnswer.FragenID = target.value;
                     } else if (target.id === "SelektFragenopt") {
@@ -192,36 +192,81 @@
 
             // define handlers
             this.eventHandlers = {
-                changeOptionQuestion: function (event, index) {
+                changeSelektedQuestion: function (event, index) {
                     Log.call(Log.l.trace, "OptQuestionList.Controller.");
                     that.optAnswer = new WinJS.Binding.List([{ index: 0, antwort: "" }]);
                     Log.print(Log.l.trace, "question saved" + index + "event.currentTarget.value:" + event.currentTarget.value + "Fragestellung" + event.currentTarget.textContent);
                     if (event.currentTarget && event.currentTarget.value) {
-                        that.binding.showAnswers = true;
-                        Log.print(Log.l.trace, "event changeOptionQuestion: value=" + event.currentTarget.value);
+                        var sameOptSelektQuestion = false;
+                        Log.print(Log.l.trace, "event changeSelektedQuestion: value=" + event.currentTarget.value);
+                        if (that.records.getAt(that.currentlistIndex).FragenID === parseInt(event.currentTarget.value)) {
+                            event.currentTarget.value = that.records.getAt(that.currentlistIndex).SelektierteFragenID;
+                            sameOptSelektQuestion = true;
+                        }
+                        if (!sameOptSelektQuestion) {
+                            for (var i = 0; i < that.records.length; i++) {
+                                if (that.records.getAt(i).CR_OptFragenAntwortenVIEWID) {
+                                    if (i !== that.currentlistIndex && that.records.getAt(i).SelektierteFragenID === parseInt(event.currentTarget.value)) {
+                                        event.currentTarget.value = that.records.getAt(that.currentlistIndex).SelektierteFragenID;
+                                    } else {
+                                        var element = listView.winControl.elementFromIndex(that.currentlistIndex);
+                                        if (element) {
+                                            var comboSelektAntwortopt = element
+                                                .querySelector("#SelektAntwortopt.win-dropdown");
+                                            if (comboSelektAntwortopt && comboSelektAntwortopt.winControl) {
+                                                comboSelektAntwortopt.value = 0;
+                                            }
+                                        }
+                                        comboSelektAntwortopt.value = 0;
+                                        if (i === that.records.length - 1) {
+                                            that.saveData(function (response) {
+                                                AppBar.busy = false;
+                                                Log.print(Log.l.trace, "question saved");
+                                            },
+                                            function (errorResponse) {
+                                                AppBar.busy = false;
+                                                Log.print(Log.l.error, "error saving question");
+                                            });
+                                        }
+                                    }
+
+                                } else {
+                                    that.insertOptQuestion(event.currentTarget);
+                                    break;
+                                }
+                            }
+                        }
                         that.initoptionQuestion.forEach(function (item, index) {
                             that.resultAnswerConverter(item, index, event.currentTarget.value);
 
                         });
                         if (that.optAnswer) {
                             //for (var y = 0; y < that.optAnswer.length; y++) {
-                                //var answer = that.optAnswer[y];
+                            //var answer = that.optAnswer[y];
                             var element = listView.winControl.elementFromIndex(that.currentlistIndex);
-                                if (element) {
-                                    var comboSelektAntwortopt = element
-                                        .querySelector("#SelektAntwortopt.win-dropdown");
-                                    if (comboSelektAntwortopt && comboSelektAntwortopt.winControl) {
-                                        if (that.optAnswer) {
-                                            comboSelektAntwortopt.winControl.data = that.optAnswer;
-                                        } else {
-                                            comboSelektAntwortopt.winControl.data = new WinJS.Binding.List([]);
-                                        }
+                            if (element) {
+                                var comboSelektAntwortopt = element
+                                    .querySelector("#SelektAntwortopt.win-dropdown");
+                                if (comboSelektAntwortopt && comboSelektAntwortopt.winControl) {
+                                    if (that.optAnswer) {
+                                        comboSelektAntwortopt.winControl.data = that.optAnswer;
+                                    } else {
+                                        comboSelektAntwortopt.winControl.data = new WinJS.Binding.List([]);
                                     }
+                                    comboSelektAntwortopt.value = 0;
                                 }
+                            }
                             //}
                         }
-                        for (var i = 0; i < that.records.length; i++) {
-                            if (that.records.getAt(i).CR_OptFragenAntwortenVIEWID) {
+                    }
+                    Log.ret(Log.l.trace);
+                },
+                changeOptionQuestion: function (event) {
+                    Log.call(Log.l.trace, "OptQuestionList.Controller.");
+                    if (event.currentTarget && event.currentTarget.value) {
+                        //if (that.records.getAt(i).FragenID === parseInt(event.currentTarget.value)) {
+                        if (that.records.getAt(that.currentlistIndex).CR_OptFragenAntwortenVIEWID) {
+                            if (that.records.getAt(that.currentlistIndex).SelektierteFragenID !== parseInt(event.currentTarget.value)) {
                                 that.saveData(function (response) {
                                     AppBar.busy = false;
                                     Log.print(Log.l.trace, "question saved");
@@ -231,30 +276,10 @@
                                         Log.print(Log.l.error, "error saving question");
                                     });
                             } else {
-                                that.insertOptQuestion(event.currentTarget);
+                                event.currentTarget.value = that.records.getAt(that.currentlistIndex).FragenID;
                             }
-                        }
-                    }
-                    Log.ret(Log.l.trace);
-                },
-                changeSelektedQuestion: function (event) {
-                    Log.call(Log.l.trace, "OptQuestionList.Controller.");
-                    if (event.currentTarget && event.currentTarget.value) {
-                        for (var i = 0; i < that.records.length; i++) {
-                            //if (that.records.getAt(i).FragenID === parseInt(event.currentTarget.value)) {
-                                if (that.records.getAt(i).CR_OptFragenAntwortenVIEWID) {
-                                    that.saveData(function (response) {
-                                        AppBar.busy = false;
-                                        Log.print(Log.l.trace, "question saved");
-                                    },
-                                        function (errorResponse) {
-                                            AppBar.busy = false;
-                                            Log.print(Log.l.error, "error saving question");
-                                        });
-                                } else {
-                                    that.insertOptQuestion(event.currentTarget);
-                                }
-                            //}
+                        } else {
+                            that.insertOptQuestion(event.currentTarget);
                         }
                     }
                     Log.ret(Log.l.trace);
@@ -408,18 +433,18 @@
                                         if (item) {
                                             element = listView.winControl.elementFromIndex(i);
                                             if (element) {
-                                                var comboInitFragengruppe = element.querySelector("#InitFragenopt.win-dropdown");
-                                                if (comboInitFragengruppe && comboInitFragengruppe.winControl) {
-                                                    if (!comboInitFragengruppe.winControl.data ||
-                                                        comboInitFragengruppe.winControl.data && !comboInitFragengruppe.winControl.data.length) {
-                                                        comboInitFragengruppe.winControl.data = that.initoptionQuestion;
-                                                        comboInitFragengruppe.value = item.FragenID;
+                                                var comboSelektFragenopt = element.querySelector("#SelektFragenopt.win-dropdown");
+                                                if (comboSelektFragenopt && comboSelektFragenopt.winControl) {
+                                                    if (!comboSelektFragenopt.winControl.data ||
+                                                        comboSelektFragenopt.winControl.data && !comboSelektFragenopt.winControl.data.length) {
+                                                        comboSelektFragenopt.winControl.data = that.initoptionQuestion;
+                                                        comboSelektFragenopt.value = item.SelektierteFragenID;
                                                     }
-                                                    if (item.FragenID) {
+                                                    if (item.SelektierteFragenID) {
                                                         // load the answer of optional Question
                                                         that.optAnswer = [];
                                                         that.initoptionQuestion.forEach(function (questionItem, index) {
-                                                            that.resultAnswerConverter(questionItem, index, item.FragenID);
+                                                            that.resultAnswerConverter(questionItem, index, item.SelektierteFragenID);
                                                             /*if (questionItem.FragenAntwortenVIEWID === item.FragenID) {
                                                                 var removedItem = that.initoptionQuestion.splice(index, 1);
                                                             }*/
@@ -445,20 +470,13 @@
                                                         }
                                                     }
                                                 }
-                                                var comboSelektFragenopt = element.querySelector("#SelektFragenopt.win-dropdown");
-                                                if (comboSelektFragenopt && comboSelektFragenopt.winControl) {
-                                                    if (!comboSelektFragenopt.winControl.data ||
-                                                        comboSelektFragenopt.winControl.data && !comboSelektFragenopt.winControl.data.length) {
-                                                        comboSelektFragenopt.winControl.data = that.optQuestions;
-                                                        comboSelektFragenopt.value = item.SelektierteFragenID;
+                                                var comboInitFragengruppe = element.querySelector("#InitFragenopt.win-dropdown");
+                                                if (comboInitFragengruppe && comboInitFragengruppe.winControl) {
+                                                    if (!comboInitFragengruppe.winControl.data ||
+                                                        comboInitFragengruppe.winControl.data && !comboInitFragengruppe.winControl.data.length) {
+                                                        comboInitFragengruppe.winControl.data = that.optQuestions;
+                                                        comboInitFragengruppe.value = item.FragenID;
                                                     }
-                                                    /*that.optQuestions.forEach(function (questionItem, index) {
-                                                        that.resultAnswerConverter(questionItem, index, item.FragenID);
-                                                        if (questionItem.FragenAntwortenVIEWID === item.FragenID) {
-                                                            var removed = that.optQuestions.splice(index, 1);
-                                                            console.log(removed + " " + that.optQuestions);
-                                                        }
-                                                    });*/
                                                 }
                                             }
                                         }

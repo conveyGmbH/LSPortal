@@ -33,6 +33,21 @@
                 Antwort08: "",
                 Antwort09: ""
             }
+        },
+        _barcodeExportPdfView: {
+            get: function () {
+                return AppData.getFormatView("DOC3Fragebogen", 20557, false);
+            }
+        },
+        barcodeExportPdfView: {
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, "eventView.");
+                var ret = BarcodeAdministration._barcodeExportPdfView.select(complete, error, restriction, {
+                    
+                });
+                Log.ret(Log.l.trace);
+                return ret;
+            }
         }
     });
 })();

@@ -17,9 +17,13 @@
             Application.Controller.apply(this, [pageElement, {
                 dataProduct: getEmptyDefaultValue(Products.ProduktnameView.defaultValue),
                 dataNewProduct: getEmptyDefaultValue(Products.ProduktView.defaultValue),
+                emtyQuestion: Products.FragenView.defaultValue,
+                mailingProductLineQuestionID: null,
+                qaID: null,
                 count: 0
             }, commandList]);
             var that = this;
+            this.LanguageID = AppData.getLanguageId();
             this.curRecId = 0;
             this.prevRecId = 0;
             this.fields = null;
@@ -29,6 +33,25 @@
             var layout = null;
             
             var listView = pageElement.querySelector("#productsList.listview");
+
+            var languageIDtoInitID = function() {
+                switch (that.LanguageID) {
+                case 1031:
+                    that.LanguageID = 1;
+                        break;
+                case 1033:
+                    that.LanguageID = 2;
+                        break;
+                case 1036:
+                    that.LanguageID = 3;
+                        break;
+                case 1040:
+                    that.LanguageID = 4;
+                        break;
+                default:
+                }
+            }
+            this.languageIDtoInitID = languageIDtoInitID;
 
             var getFieldEntries = function (index) {
                 Log.call(Log.l.trace, "Products.Controller.");
@@ -43,7 +66,7 @@
                 return ret;
             };
             this.getFieldEntries = getFieldEntries;
-
+            
             var deleteData = function () {
                 Log.call(Log.l.trace, "Products.Controller.");
                 AppData.setErrorMsg(that.binding);
@@ -118,7 +141,7 @@
                 }
             };
             this.scopeFromRecordId = scopeFromRecordId;
-
+            
             var insertProduct = function () {
                 Log.call(Log.l.trace, "Products.Controller.");
                 AppData.setErrorMsg(that.binding);
@@ -141,6 +164,107 @@
                 return ret;
             }
             this.insertProduct = insertProduct;
+
+            var getMailerzeilenVIEWID = function() {
+                Log.call(Log.l.trace, "Products.Controller.");
+                AppData.setErrorMsg(that.binding);
+                var produktID = that.deleteIDProduct;
+                var ret = new WinJS.Promise.as().then(function () {
+                    return Products.MAILERZEILENView.select(function (json) {
+                        // this callback will be called asynchronously
+                        // when the response is available
+                        Log.print(Log.l.info, "MAILERZEILENView select: success!");
+                        if (json && json.d && json.d.results && json.d.results.length > 0) {
+                            that.MailerzeilenID = json.d.results[0].MAILERZEILENVIEWID;
+                            that.MailerZeile = json.d.results[0];
+                            that.updateQuestionAnwser();
+                        }
+                        
+                    }, function (errorResponse) {
+                        Log.print(Log.l.error, "error selecting mailerzeilen");
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                        }, { MaildokumentID: that.mailID, ProduktID: produktID });
+                });
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+            this.getMailerzeilenVIEWID = getMailerzeilenVIEWID;
+
+            var updateQuestionAnwser = function () {
+                Log.call(Log.l.trace, "Products.Controller.");
+                var index = listView.winControl._selection._focused.index;
+                var elementA = listView.winControl.elementFromIndex(index);
+                var comboboxAnwser = elementA.querySelector("#productanwsercombo.win-dropdown");
+                that.MailerZeile.AntwortenID = parseInt(comboboxAnwser.value);
+                var elementQ = listView.winControl.elementFromIndex(index);
+                var comboboxQuestion = elementQ.querySelector("#productquestioncombo.win-dropdown");
+                that.MailerZeile.FragenID = parseInt(comboboxQuestion.value);
+                delete that.MailerZeile.MAILERZEILENVIEWID;
+                var ret = null;
+                Log.call(Log.l.trace, "Product.Controller.");
+                AppData.setErrorMsg(that.binding);
+                var recordId = that.MailerzeilenID;
+                if (recordId) {
+                            Log.print(Log.l.trace, "save changes of recordId:" + recordId);
+                            ret = Products.MAILERZEILENView.update(function (response) {
+                                Log.print(Log.l.info, "Products.Controller. update: success!");
+                                // called asynchronously if ok
+                                AppBar.modified = false;
+                                if (typeof complete === "function") {
+                                    complete(response);
+                                }
+                            }, function (errorResponse) {
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                                if (typeof error === "function") {
+                                    error(errorResponse);
+                                }
+                                }, recordId, that.MailerZeile);
+                }
+                if (!ret) {
+                    ret = new WinJS.Promise.as().then(function () {
+                        if (typeof complete === "function") {
+                            complete({});
+                        }
+                    });
+                }
+                Log.ret(Log.l.trace, ret);
+                return ret;
+
+            }
+            this.updateQuestionAnwser = updateQuestionAnwser;
+
+            var getAnwserDataOnRAW = function(inx, questionID) {
+                Log.call(Log.l.trace, "Products.Controller.");
+                AppData.setErrorMsg(that.binding);
+                that.productAnwserData = [];
+                for (var i = 0; i < that.productAnwserDataRaw.length; i++) {
+                    if (!questionID) {
+                        if (that.productAnwserDataRaw[i].FragenID === 1684) {
+                            that.productAnwserData.push({
+                                AntwortenVIEWID: that.productAnwserDataRaw[i].AntwortenVIEWID,
+                                Antwort: that.productAnwserDataRaw[i].Antwort
+                            });
+                        }
+                    } else {
+                        if(that.productAnwserDataRaw[i].FragenID == questionID) {
+                            that.productAnwserData.push({
+                                AntwortenVIEWID: that.productAnwserDataRaw[i].AntwortenVIEWID,
+                                Antwort: that.productAnwserDataRaw[i].Antwort
+                            });
+                        }
+                    }
+                }
+                that.productAnwserData.push({
+                    AntwortenVIEWID: null,
+                    Antwort: null
+                });
+                var elementA = listView.winControl.elementFromIndex(inx);
+                var comboboxAnwser = elementA.querySelector("#productanwsercombo.win-dropdown");
+                comboboxAnwser.winControl.data = new WinJS.Binding.List(that.productAnwserData);
+                comboboxAnwser.value = that.binding.qaID[inx].AntwortenID;
+                Log.call(Log.l.trace, "Products.Controller.");
+            }
+            this.getAnwserDataOnRAW = getAnwserDataOnRAW;
 
             var saveData = function (complete, error) {
                 var ret = null;
@@ -244,6 +368,17 @@
                 clickSave: function (event) {
                     Log.call(Log.l.trace, "Products.Controller.");
                     that.saveData();
+                    that.getMailerzeilenVIEWID();
+                    Log.ret(Log.l.trace);
+                },
+                clickQuestionProduct: function (event) {
+                    Log.call(Log.l.trace, "Products.Controller.");
+                    if(event.currentTarget) {
+                        //var productindex = listView.options[listView.selectedIndex];
+                        var productindex = listView.winControl.selection._focused.index;
+                        var productquestion = event.currentTarget.value;
+                        that.getAnwserDataOnRAW(productindex, productquestion);
+                    }
                     Log.ret(Log.l.trace);
                 },
                 onSelectionChanged: function (eventInfo) {
@@ -362,6 +497,19 @@
                             if (that.loading) {
                                 that.loading = false;
                             }
+                            for (var i = 0; i < that.binding.count; i++) {
+                                var elementQ = listView.winControl.elementFromIndex(i);
+                                var comboboxQuestion = elementQ.querySelector("#productquestioncombo.win-dropdown");
+                                comboboxQuestion.winControl.data = that.productQuestionData;
+                                comboboxQuestion.value = that.binding.qaID[i].FragenID;
+                                that.getAnwserDataOnRAW(i, that.binding.qaID[i].FragenID);
+                            } 
+                            /*for (var i = 0; i < that.binding.count; i++) {
+                                var elementA = listView.winControl.elementFromIndex(i);
+                                var comboboxAnwser = elementA.querySelector("#productanwsercombo.win-dropdown");
+                                comboboxAnwser.winControl.data = that.productAnwserData;
+                            }
+                            */
                         }
                     }
                     Log.ret(Log.l.trace);
@@ -417,26 +565,92 @@
                     }
                 }.bind(this), true);
             }
-
+            
             var loadData = function() {
                 Log.call(Log.l.trace, "Products");
                 AppData.setErrorMsg(that.binding);
+                that.languageIDtoInitID();
                 var ret = new WinJS.Promise.as().then(function () {
                     Log.print(Log.l.trace, "calling select MaildokumentView...");
-                    return Products.ProduktnameView.select(function (json) {
+                    return Products.MaildokumentView.select(function (json) {
                         Log.print(Log.l.trace, "MaildokumentView: success!");
-                        if (json && json.d && json.d.results && json.d.results.length > 0) {
+                        if (json && json.d && json.d.results) {
                             // store result for next use
-                            if (json.d.results[0].ProduktnameVIEWID) {
-                                that.mailID = json.d.results[0].ProduktnameVIEWID;
-                            }
+                            that.mailID = json.d.results[0].MaildokumentVIEWID;
                         }
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, {
-                        LanguageID: AppData.getLanguageId()
+                            INITSpracheID: that.LanguageID,
+                            SpecType : 2
+                    });
+                }).then(function () {
+                    Log.print(Log.l.trace, "calling select FragenView...");
+                    //@nedra:25.09.2015: load the list of FragenView for Combobox
+                    return Products.MAILERZEILENView.select(function (json) {
+                        // this callback will be called asynchronously
+                        // when the response is available
+                        Log.print(Log.l.trace, "FragenView: success!");
+                        if (json && json.d && json.d.results) {
+                            // Now, we call WinJS.Binding.List to get the bindable list
+                            that.binding.qaID = json.d.results;
+                        }
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                        }, { MaildokumentID: that.mailID});
+                }).then(function () {
+                    Log.print(Log.l.trace, "calling select FragenView...");
+                    //@nedra:25.09.2015: load the list of FragenView for Combobox
+                    return Products.AntwortenView.select(function (json) {
+                        // this callback will be called asynchronously
+                        // when the response is available
+                        Log.print(Log.l.trace, "FragenView: success!");
+                        if (json && json.d && json.d.results) {
+                            // Now, we call WinJS.Binding.List to get the bindable list
+                            that.productAnwserDataRaw = json.d.results;
+                        }
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    });
+                }).then(function () {
+                    Log.print(Log.l.trace, "calling select FragenView...");
+                    //@nedra:25.09.2015: load the list of FragenView for Combobox
+                    return Products.FragenView.select(function (json) {
+                        // this callback will be called asynchronously
+                        // when the response is available
+                        Log.print(Log.l.trace, "FragenView: success!");
+                        if (json && json.d && json.d.results) {
+                            that.productQuestionDataRAW = json.d.results;
+                            that.productQuestionDataRAW.unshift(that.binding.emtyQuestion);    
+                            // Now, we call WinJS.Binding.List to get the bindable list
+                            that.productQuestionData = new WinJS.Binding.List(that.productQuestionDataRAW);
+                        }
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    });
+                }).then(function () {
+                    Log.print(Log.l.trace, "calling select FragenView...");
+                    //@nedra:25.09.2015: load the list of FragenView for Combobox
+                    return Products.AntwortenView.select(function (json) {
+                        // this callback will be called asynchronously
+                        // when the response is available
+                        Log.print(Log.l.trace, "FragenView: success!");
+                        if (json && json.d && json.d.results) {
+                            // Now, we call WinJS.Binding.List to get the bindable list
+                            that.productAnwserData = new WinJS.Binding.List(json.d.results);
+                        }
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
                     });
                 }).then(function () {
                     return Products.ProduktnameView.select(function (json) {
@@ -589,7 +803,7 @@
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
                         }, { LanguageSpecID: AppData.getLanguageId()});
-                }).then(function () {
+                    }).then(function () {
                     //getshowMailSpec();
                 }).then(function () {
                     AppBar.notifyModified = true;
@@ -612,8 +826,14 @@
                 newProduct: null,
                 productList : null,
                 MailID: null,
+                MailerzeilenID: null,
+                MailerZeile : null,
                 lastProduct: null,
-                deleteIDProduct : null
+                deleteIDProduct: null,
+                productQuestionDataRAW: null,
+                productQuestionData: null,
+                productAnwserData: null,
+                productAnwserDataRaw: null
             })
     });
 })();

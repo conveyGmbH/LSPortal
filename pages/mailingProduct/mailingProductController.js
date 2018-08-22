@@ -22,25 +22,31 @@
             // Then, do anything special on this page
 
             this.eventHandlers = {
+                clickASave: function (event) {
+                    Log.call(Log.l.trace, "MailingProduct.Controller.");
+                    var mailingProductLineFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("mailingProductLine"));
+                    mailingProductLineFragmentControl.controller.saveData();
+                    Log.call(Log.l.trace, "MailingProduct.Controller.");
+                },
                 clickBack: function (event) {
-                    Log.call(Log.l.trace, "Contact.Controller.");
+                    Log.call(Log.l.trace, "MailingProduct.Controller.");
                     if (WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done();
                     }
                     Log.ret(Log.l.trace);
                 },
                 clickSave: function (event) {
-                    Log.call(Log.l.trace, "Info.Controller.");
+                    Log.call(Log.l.trace, "MailingProduct.Controller.");
                     that.saveData();
                     Log.ret(Log.l.trace);
                 },
                 clickChangeUserState: function (event) {
-                    Log.call(Log.l.trace, "Reporting.Controller.");
+                    Log.call(Log.l.trace, "MailingProduct.Controller.");
                     Application.navigateById("userinfo", event);
                     Log.ret(Log.l.trace);
                 },
                 clickGotoPublish: function (event) {
-                    Log.call(Log.l.trace, "Reporting.Controller.");
+                    Log.call(Log.l.trace, "MailingProduct.Controller.");
                     Application.navigateById("publish", event);
                     Log.ret(Log.l.trace);
                 }

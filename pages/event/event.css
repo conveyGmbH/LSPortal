@@ -14,6 +14,9 @@
 .toggle-switch-parent {
     height: 50px;
 }
+#showPrivacyPolicySVG .win-toggleswitch-header,
+#thankMail .win-toggleswitch-header,
+#productMail .win-toggleswitch-header,
 #showBarcodeScan .win-toggleswitch-header,
 #showCamera .win-toggleswitch-header,
 #showQuestionnaire .win-toggleswitch-header,
