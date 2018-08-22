@@ -27,12 +27,6 @@
 
             var that = this;
 
-            this.resultConverter = function (item, index) {
-                Log.call(Log.l.trace, "OptQuestionList.Controller.");
-
-                Log.ret(Log.l.trace, "");
-            };
-
             this.dispose = function () {
                 if (listView && listView.winControl) {
                     listView.winControl.itemDataSource = null;
@@ -49,24 +43,33 @@
             var mouseDown = false;
 
             var resultAnswerConverter = function (item, index, value) {
-                Log.call(Log.l.trace, "OptQuestionList.Controller." + that.records);
-                for (var i = 1; i <= item.Anzahl; i++) {
-                    var answer = {};
-                    if (item.FragenAntwortenVIEWID && item.FragenAntwortenVIEWID === parseInt(value)) {
+                Log.call(Log.l.trace, "OptQuestionList.Controller." + value);
+                if (item && item.FragenAntwortenVIEWID && item.FragenAntwortenVIEWID === value) {
+                    for (var i = 1; i <= item.Anzahl; i++) {
+                        var answer = {};
+                        answer.antwort = i.toString() + ". ";
                         if (i < 10) {
-                            answer.antwort = item["Antwort0" + i];
+                            answer.antwort += item["Antwort0" + i];
                         } else {
-                            answer.antwort = item["Antwort" + i];
+                            answer.antwort += item["Antwort" + i];
                         }
                         answer.index = i;
                         that.optAnswer.push(answer);
-                    } else {
-                        continue;
                     }
                 }
                 Log.ret(Log.l.trace, "");
             }
             this.resultAnswerConverter = resultAnswerConverter;
+
+            var fillOptAnswer = function (value) {
+                var questionId = parseInt(value);
+                that.optAnswer = [];
+                that.initoptionQuestion.forEach(function (questionItem, index) {
+                    that.resultAnswerConverter(questionItem, index, questionId);
+                });
+            }
+            this.fillOptAnswer = fillOptAnswer;
+
 
             // get field entries
             var getFieldEntries = function (index) {
@@ -100,8 +103,7 @@
                     var optFrage = {};
                     if (target.id === "InitFragenopt" && parseInt(target.value)) {
                         optFrage.FragenID = target.value; // String
-                        //that.binding.dataOptQuestionAnswer.FragenID = target.value;
-                    } else if (target.id === "SelektFragenopt") {
+                    } else if (target.id === "SelektFragenopt") { // kommt nicht hin da es ein updateFall ist
                         optFrage.SelektierteFragenID = target.value;
                     } else if (target.id === "SelektAntwortopt") { // kommt nicht hin da es ein updateFall ist
                         optFrage.SortIndex = target.value;
@@ -136,127 +138,71 @@
             var loadQuestion = function () {
                 Log.call(Log.l.trace, "optQuestionList.Controller.");
                 AppData.setErrorMsg(that.binding);
-                var ret = new WinJS.Promise.as().then(function () {
-                    that.initoptionQuestion = new WinJS.Binding.List([{ FragenAntwortenVIEWID: 0, Fragestellung: "" }]);
-                    that.optQuestions = new WinJS.Binding.List([{ FragenAntwortenVIEWID: 0, Fragestellung: "" }]);
-                    return OptQuestionList.questionListView.select(function (json) {
-                        // this callback will be called asynchronously
-                        // when the response is available
-                        Log.print(Log.l.trace, "contactView: success!");
+                that.initoptionQuestion = new WinJS.Binding.List([{ FragenAntwortenVIEWID: 0, frage: "" }]);
+                that.optQuestions = new WinJS.Binding.List([{ FragenAntwortenVIEWID: 0, frage: "" }]);
+                var ret = OptQuestionList.questionListView.select(function (json) {
+                    // this callback will be called asynchronously
+                    // when the response is available
+                    Log.print(Log.l.trace, "questionListView: success!");
 
-                        if (json && json.d) {
-                            //that.binding.count = json.d.results.length;
-                            that.nextUrl = OptQuestionList.questionListView.getNextUrl(json);
-                            var results = json.d.results;
-                            results.forEach(function (item, index) {
-                                that.initoptionQuestion.push(item);
-                                that.optQuestions.push(item);
-                            });
-                            /*if (comboInitFragengruppe && comboInitFragengruppe.winControl) {
-                                comboInitFragengruppe.winControl.data = new WinJS.Binding.List(json.d.results);
-                            }*/
-                            Log.print(Log.l.trace, "Data loaded" + that.binding.dataOptQuestionAnswer);
-                            Log.print(Log.l.trace, "Data loaded" + that.binding.InitoptionQuestionItem);
-                            Log.print(Log.l.trace, "Data loaded" + that.initoptionQuestion);
-                            Log.print(Log.l.trace, "Data loaded" + that.binding.count);
-                        } else {
-                            that.binding.count = 0;
-                            that.nextUrl = null;
-
-                            if (listView) {
-                                if (listView.winControl) {
-                                    // add ListView dataSource
-                                    listView.winControl.itemDataSource = null;
-                                }
-                                progress = listView.querySelector(".list-footer .progress");
-                                counter = listView.querySelector(".list-footer .counter");
-                                if (progress && progress.style) {
-                                    progress.style.display = "none";
-                                }
-                                if (counter && counter.style) {
-                                    counter.style.display = "inline";
-                                }
-                            }
-                            that.loading = false;
-                        }
-                    },
-                        function (errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
+                    if (json && json.d) {
+                        //that.binding.count = json.d.results.length;
+                        //that.nextUrl = OptQuestionList.questionListView.getNextUrl(json);
+                        var results = json.d.results;
+                        results.forEach(function (item, index) {
+                            item.frage = item.Sortierung + ". " + item.Fragestellung;
+                            that.initoptionQuestion.push(item);
+                            that.optQuestions.push(item);
                         });
+                        Log.print(Log.l.trace, "Data loaded initoptionQuestion.count=" + that.initoptionQuestion.length);
+                    }
+                },
+                function (errorResponse) {
+                    // called asynchronously if an error occurs
+                    // or server returns response with an error status.
+                    AppData.setErrorMsg(that.binding, errorResponse);
                 });
                 Log.ret(Log.l.trace);
+                return ret;
             }
             this.loadQuestion = loadQuestion;
 
             // define handlers
             this.eventHandlers = {
-                changeSelektedQuestion: function (event, index) {
+                changeSelektedQuestion: function (event) {
                     Log.call(Log.l.trace, "OptQuestionList.Controller.");
-                    that.optAnswer = new WinJS.Binding.List([{ index: 0, antwort: "" }]);
-                    Log.print(Log.l.trace, "question saved" + index + "event.currentTarget.value:" + event.currentTarget.value + "Fragestellung" + event.currentTarget.textContent);
                     if (event.currentTarget && event.currentTarget.value) {
-                        var sameOptSelektQuestion = false;
-                        Log.print(Log.l.trace, "event changeSelektedQuestion: value=" + event.currentTarget.value);
-                        if (that.records.getAt(that.currentlistIndex).FragenID === parseInt(event.currentTarget.value)) {
-                            event.currentTarget.value = that.records.getAt(that.currentlistIndex).SelektierteFragenID;
-                            sameOptSelektQuestion = true;
-                        }
-                        if (!sameOptSelektQuestion) {
-                            for (var i = 0; i < that.records.length; i++) {
-                                if (that.records.getAt(i).CR_OptFragenAntwortenVIEWID) {
-                                    if (i !== that.currentlistIndex && that.records.getAt(i).SelektierteFragenID === parseInt(event.currentTarget.value)) {
-                                        event.currentTarget.value = that.records.getAt(that.currentlistIndex).SelektierteFragenID;
-                                    } else {
-                                        var element = listView.winControl.elementFromIndex(that.currentlistIndex);
-                                        if (element) {
-                                            var comboSelektAntwortopt = element
-                                                .querySelector("#SelektAntwortopt.win-dropdown");
-                                            if (comboSelektAntwortopt && comboSelektAntwortopt.winControl) {
-                                                comboSelektAntwortopt.value = 0;
-                                            }
-                                        }
-                                        comboSelektAntwortopt.value = 0;
-                                        if (i === that.records.length - 1) {
-                                            that.saveData(function (response) {
-                                                AppBar.busy = false;
-                                                Log.print(Log.l.trace, "question saved");
-                                            },
-                                            function (errorResponse) {
-                                                AppBar.busy = false;
-                                                Log.print(Log.l.error, "error saving question");
-                                            });
+                        Log.print(Log.l.trace, "event changeSelektedQuestion: value=" + event.currentTarget.value + "Fragestellung" + event.currentTarget.textContent);
+                        var crossItem = that.records.getAt(that.currentlistIndex);
+                        if (crossItem) {
+                            if (crossItem.FragenID === parseInt(event.currentTarget.value)) {
+                                event.currentTarget.value = crossItem.SelektierteFragenID;
+                            } else {
+                                for (var i = 0; i < that.records.length; i++) {
+                                    if (i !== that.currentlistIndex) {
+                                        var otherCrossItem = that.records.getAt(i);
+                                        if (otherCrossItem.SelektierteFragenID === parseInt(event.currentTarget.value)) {
+                                            event.currentTarget.value = crossItem.SelektierteFragenID;
                                         }
                                     }
-
-                                } else {
-                                    that.insertOptQuestion(event.currentTarget);
-                                    break;
                                 }
                             }
-                        }
-                        that.initoptionQuestion.forEach(function (item, index) {
-                            that.resultAnswerConverter(item, index, event.currentTarget.value);
-
-                        });
-                        if (that.optAnswer) {
-                            //for (var y = 0; y < that.optAnswer.length; y++) {
-                            //var answer = that.optAnswer[y];
-                            var element = listView.winControl.elementFromIndex(that.currentlistIndex);
-                            if (element) {
-                                var comboSelektAntwortopt = element
-                                    .querySelector("#SelektAntwortopt.win-dropdown");
-                                if (comboSelektAntwortopt && comboSelektAntwortopt.winControl) {
-                                    if (that.optAnswer) {
-                                        comboSelektAntwortopt.winControl.data = that.optAnswer;
-                                    } else {
-                                        comboSelektAntwortopt.winControl.data = new WinJS.Binding.List([]);
+                            if (event.currentTarget.value !== crossItem.SelektierteFragenID) {
+                                that.fillOptAnswer(event.currentTarget.value);
+                                var element = listView.winControl.elementFromIndex(that.currentlistIndex);
+                                if (element) {
+                                    var comboSelektAntwortopt = element.querySelector("#SelektAntwortopt.win-dropdown");
+                                    if (comboSelektAntwortopt && comboSelektAntwortopt.winControl) {
+                                        if (that.optAnswer.length > 0) {
+                                            comboSelektAntwortopt.winControl.data = new WinJS.Binding.List(that.optAnswer);
+                                            comboSelektAntwortopt.value = that.optAnswer[0] ? that.optAnswer[0].index : 0;
+                                        } else {
+                                            comboSelektAntwortopt.winControl.data = new WinJS.Binding.List([{ index: 0, antwort: "" }]);
+                                            comboSelektAntwortopt.value = 0;
+                                        }
                                     }
-                                    comboSelektAntwortopt.value = 0;
                                 }
                             }
-                            //}
                         }
                     }
                     Log.ret(Log.l.trace);
@@ -264,42 +210,22 @@
                 changeOptionQuestion: function (event) {
                     Log.call(Log.l.trace, "OptQuestionList.Controller.");
                     if (event.currentTarget && event.currentTarget.value) {
-                        //if (that.records.getAt(i).FragenID === parseInt(event.currentTarget.value)) {
-                        if (that.records.getAt(that.currentlistIndex).CR_OptFragenAntwortenVIEWID) {
-                            if (that.records.getAt(that.currentlistIndex).SelektierteFragenID !== parseInt(event.currentTarget.value)) {
+                        var crossItem = that.records.getAt(that.currentlistIndex);
+                        if (crossItem && crossItem.CR_OptFragenAntwortenVIEWID) {
+                            if (crossItem.SelektierteFragenID === parseInt(event.currentTarget.value)) {
+                                event.currentTarget.value = crossItem.FragenID;
+                            } else {
                                 that.saveData(function (response) {
-                                    AppBar.busy = false;
-                                    Log.print(Log.l.trace, "question saved");
-                                },
-                                    function (errorResponse) {
+                                        AppBar.busy = false;
+                                        Log.print(Log.l.trace, "question saved");
+                                    },
+                                    function(errorResponse) {
                                         AppBar.busy = false;
                                         Log.print(Log.l.error, "error saving question");
                                     });
-                            } else {
-                                event.currentTarget.value = that.records.getAt(that.currentlistIndex).FragenID;
                             }
                         } else {
                             that.insertOptQuestion(event.currentTarget);
-                        }
-                    }
-                    Log.ret(Log.l.trace);
-                },
-                changeSelektedAnswer: function (event) {
-                    Log.call(Log.l.trace, "OptQuestionList.Controller.");
-                    if (event.currentTarget && event.currentTarget.value) {
-                        for (var i = 0; i < that.records.length; i++) {
-                            if (that.records.getAt(i).CR_OptFragenAntwortenVIEWID) {
-                                that.saveData(function (response) {
-                                    AppBar.busy = false;
-                                    Log.print(Log.l.trace, "question saved");
-                                },
-                                    function (errorResponse) {
-                                        AppBar.busy = false;
-                                        Log.print(Log.l.error, "error saving question");
-                                    });
-                            } else {
-                                that.insertOptQuestion(event.currentTarget);
-                            }
                         }
                     }
                     Log.ret(Log.l.trace);
@@ -440,32 +366,19 @@
                                                         comboSelektFragenopt.winControl.data = that.initoptionQuestion;
                                                         comboSelektFragenopt.value = item.SelektierteFragenID;
                                                     }
-                                                    if (item.SelektierteFragenID) {
-                                                        // load the answer of optional Question
-                                                        that.optAnswer = [];
-                                                        that.initoptionQuestion.forEach(function (questionItem, index) {
-                                                            that.resultAnswerConverter(questionItem, index, item.SelektierteFragenID);
-                                                            /*if (questionItem.FragenAntwortenVIEWID === item.FragenID) {
-                                                                var removedItem = that.initoptionQuestion.splice(index, 1);
-                                                            }*/
-                                                        });
-                                                        if (that.optAnswer) {
-                                                            for (var y = 0; y < that.optAnswer.length; y++) {
-                                                                var answer = that.optAnswer[y];
-                                                                //var element = listView.winControl.elementFromIndex(y);
-                                                                if (element) {
-                                                                    var comboSelektAntwortopt = element
-                                                                        .querySelector("#SelektAntwortopt.win-dropdown");
-                                                                    if (comboSelektAntwortopt && comboSelektAntwortopt.winControl) {
-                                                                        if (that.optAnswer) {
-                                                                            comboSelektAntwortopt.winControl.data = new WinJS.Binding
-                                                                                .List(that.optAnswer);
-                                                                        } else {
-                                                                            comboSelektAntwortopt.winControl.data = new WinJS.Binding.List([]);
-                                                                        }
-                                                                        comboSelektAntwortopt.value = item.SortIndex;
-                                                                    }
+                                                    var comboSelektAntwortopt = element.querySelector("#SelektAntwortopt.win-dropdown");
+                                                    if (comboSelektAntwortopt && comboSelektAntwortopt.winControl) {
+                                                        if (!comboSelektAntwortopt.winControl.data ||
+                                                            comboSelektAntwortopt.winControl.data && !comboSelektAntwortopt.winControl.data.length) {
+                                                            if (item.SelektierteFragenID) {
+                                                                // load the answer of optional Question
+                                                                that.fillOptAnswer(item.SelektierteFragenID);
+                                                                if (that.optAnswer.length > 0) {
+                                                                    comboSelektAntwortopt.winControl.data = new WinJS.Binding.List(that.optAnswer);
+                                                                } else {
+                                                                    comboSelektAntwortopt.winControl.data = new WinJS.Binding.List([{ index: 0, antwort: "" }]);
                                                                 }
+                                                                comboSelektAntwortopt.value = item.SortIndex;
                                                             }
                                                         }
                                                     }
@@ -473,7 +386,8 @@
                                                 var comboInitFragengruppe = element.querySelector("#InitFragenopt.win-dropdown");
                                                 if (comboInitFragengruppe && comboInitFragengruppe.winControl) {
                                                     if (!comboInitFragengruppe.winControl.data ||
-                                                        comboInitFragengruppe.winControl.data && !comboInitFragengruppe.winControl.data.length) {
+                                                        comboInitFragengruppe.winControl.data &&
+                                                        !comboInitFragengruppe.winControl.data.length) {
                                                         comboInitFragengruppe.winControl.data = that.optQuestions;
                                                         comboInitFragengruppe.value = item.FragenID;
                                                     }
@@ -628,9 +542,41 @@
                 this.addRemovableEventListener(listView, "iteminvoked", this.eventHandlers.onItemInvoked.bind(this));
             }
 
+            this.baseLoadData = this.loadData;
+            var loadData = function(restriction, options, itemRenderer, complete, error) {
+                Log.call(Log.l.trace, "OptQuestionList.Controller.");
+                var ret = that.baseLoadData(restriction, options, itemRenderer, complete, error).then(function () {
+                    if (that.records &&
+                        that.records.length > 0 &&
+                        that.optQuestions &&
+                        that.optQuestions.length > 0) {
+                        function setQuestionTitle(crossItem, index) {
+                            for (var j = 0; j < that.optQuestions.length; j++) {
+                                var optQuestion = that.optQuestions.getAt(j);
+                                if (optQuestion && optQuestion.FragenAntwortenVIEWID === crossItem.FragenID) {
+                                    crossItem.frage = optQuestion.frage;
+                                    that.records.setAt(index, crossItem);
+                                    break;
+                                }
+                            }
+                        }
+                        for (var i = 0; i < that.records.length; i++) {
+                            var item = that.records.getAt(i);
+                            if (item) {
+                                setQuestionTitle(item, i);
+                            }
+                        };
+                    }
+                    return WinJS.Promise.as();
+                });
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+            this.loadData = loadData;
+
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Load Question");
-                that.loadQuestion();
+                return that.loadQuestion();
             }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();

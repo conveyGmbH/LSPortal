@@ -29,27 +29,28 @@
                             <select id="InitFragenopt"
                                     class="input_field win-dropdown"
                                     data-win-control="WinJS.UI.Repeater"
+                                    data-win-bind="style.display: FragenID Binding.Converter.toDisplayNone"
                                     onchange="AppBar.handleEvent('change', 'changeOptionQuestion', event)">
-                                <option data-win-bind="value: FragenAntwortenVIEWID; textContent: Fragestellung"></option>
+                                <option data-win-bind="value: FragenAntwortenVIEWID; textContent: frage"></option>
                             </select>
+                            <span class="input_field win-type-subtitle" data-win-bind="textContent: frage; style.display: FragenID Binding.Converter.toDisplay"></span>
                         </div>
-                        <div class="field_line field_line_odd">
+                        <div class="field_line field_line_odd" data-win-bind="style.display: FragenID Binding.Converter.toDisplay">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'optQuestionList.selectedQuestion'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'optQuestionList.selectedQuestion'}"></span>
                             <select id="SelektFragenopt"
                                     class="input_field win-dropdown"
                                     data-win-control="WinJS.UI.Repeater"
                                     onchange="AppBar.handleEvent('change', 'changeSelektedQuestion', event)">
-                                <option data-win-bind="value: FragenAntwortenVIEWID; textContent: Fragestellung"></option>
+                                <option data-win-bind="value: FragenAntwortenVIEWID; textContent: frage"></option>
                             </select>
                         </div>
-                        <div class="field_line field_line_even">
+                        <div class="field_line field_line_even" data-win-bind="style.display: FragenID Binding.Converter.toDisplay">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'optQuestionList.selectedAnswer'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'optQuestionList.selectedAnswer'}"></span>
                             <select id="SelektAntwortopt"
                                     class="input_field win-dropdown"
-                                    data-win-control="WinJS.UI.Repeater"
-                                    onchange="AppBar.handleEvent('change', 'changeSelektedAnswer', event)">
+                                    data-win-control="WinJS.UI.Repeater">
                                 <option data-win-bind="value: index; textContent: antwort"></option>
                             </select>
                         </div>
