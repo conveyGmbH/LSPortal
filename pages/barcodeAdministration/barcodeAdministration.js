@@ -49,7 +49,6 @@
             var commandList = [
                 { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" },
                 { id: "clickOk", label: getResourceText("command.ok"), tooltip: getResourceText("tooltip.ok"), section: "primary", svg: "navigate_check", key: WinJS.Utilities.Key.enter },
-                { id: "clickPrint", label: getResourceText("command.print"), tooltip: getResourceText("tooltip.print"), section: "primary", svg: "printer" },// Print Barcode questionnaire
                 { id: "clickPdf", label: getResourceText("command.exportPdf"), tooltip: getResourceText("tooltip.exportPdf"), section: "primary", svg: "document_pdf" }
             ];
 
