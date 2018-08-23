@@ -36,6 +36,7 @@
             this.questionslistBarcode = null;
 
             var that = this;
+            that.checkingQuestionareBarcodePDFFlag = false;
 
             this.resultConverter = function (item, index) {
             };
@@ -135,6 +136,34 @@
             }
             this.exportQuestionnaireBarcodePdf = exportQuestionnaireBarcodePdf;
 
+            var checkingQuestionnaireBarcodePdf = function() {
+                Log.call(Log.l.trace, "Contact.Controller.");
+                AppData.setErrorMsg(that.binding);
+                var ret;
+                AppBar.busy = true;
+                ret = BarcodeAdministration.barcodeExportPdfView.select(function (json) {
+                    Log.print(Log.l.trace, "exportKontaktDataView: success!");
+                    if (json && json.d && json.d.results) {
+                        var results = json.d.results[0];
+                        if (!results) {
+                            that.checkingQuestionareBarcodePDFFlag = false;
+                        } else {
+                            that.checkingQuestionareBarcodePDFFlag = true;
+                        }
+                        AppBar.busy = false;
+                    }
+                }, function (errorResponse) {
+                    AppBar.busy = false;
+                    AppData.setErrorMsg(that.binding, errorResponse);
+                    if (typeof error === "function") {
+                        error(errorResponse);
+                    }
+                });
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+            this.checkingQuestionnaireBarcodePdf = checkingQuestionnaireBarcodePdf;
+
             /*this.beforeprint = function (event) {
                 Log.call(Log.l.trace, "BarcodeAdministration.Controller.");
                 /*var listSurface = pageElement.querySelector("#barcodeAdministration .win-surface");
@@ -206,17 +235,7 @@
                     printSurface.innerHTML = "";
                 }
             },*/
-            clickPrint: function (event) {
-                Log.call(Log.l.trace, "BarcodeAdministration.Controller.");
-                // chrome beforeprint
-                var listSurface = pageElement.querySelector("#barcodeAdministration .win-surface");
-                setTimeout(function () {
-                    PrintElem("barcodeAdministration");
-                }, 100);
-
-                Log.ret(Log.l.trace);
-            },
-
+            
             clickChangeUserState: function (event) {
                 Log.call(Log.l.trace, "BarcodeAdministration.Controller.");
                 Application.navigateById("userinfo", event);
@@ -396,8 +415,12 @@
             // always enabled!
             return false;
         },
-        clickPrint: function () {
-            return false;
+        clickPdf: function () {
+            if (that.checkingQuestionareBarcodePDFFlag === false) {
+                 return true;
+            } else {
+                 return false;
+            }
         },
         clickafterprint: function () {
             return false;
@@ -411,6 +434,9 @@
     that.processAll().then(function () {
         Log.print(Log.l.trace, "Binding wireup page complete");
         return that.loadData();
+    }).then(function () {
+        that.checkingQuestionnaireBarcodePdf();
+        Log.print(Log.l.trace, "Binding wireup page complete");
     }).then(function () {
         AppBar.notifyModified = true;
         Log.print(Log.l.trace, "Binding wireup page complete");
