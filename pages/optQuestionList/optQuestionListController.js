@@ -177,15 +177,6 @@
                         if (crossItem) {
                             if (crossItem.FragenID === parseInt(event.currentTarget.value)) {
                                 event.currentTarget.value = crossItem.SelektierteFragenID;
-                            } else {
-                                for (var i = 0; i < that.records.length; i++) {
-                                    if (i !== that.currentlistIndex) {
-                                        var otherCrossItem = that.records.getAt(i);
-                                        if (otherCrossItem.SelektierteFragenID === parseInt(event.currentTarget.value)) {
-                                            event.currentTarget.value = crossItem.SelektierteFragenID;
-                                        }
-                                    }
-                                }
                             }
                             if (event.currentTarget.value !== crossItem.SelektierteFragenID) {
                                 that.fillOptAnswer(event.currentTarget.value);
@@ -211,21 +202,34 @@
                     Log.call(Log.l.trace, "OptQuestionList.Controller.");
                     if (event.currentTarget && event.currentTarget.value) {
                         var crossItem = that.records.getAt(that.currentlistIndex);
-                        if (crossItem && crossItem.CR_OptFragenAntwortenVIEWID) {
+                        if (crossItem) {
                             if (crossItem.SelektierteFragenID === parseInt(event.currentTarget.value)) {
                                 event.currentTarget.value = crossItem.FragenID;
                             } else {
+                                for (var i = 0; i < that.records.length; i++) {
+                                    if (i !== that.currentlistIndex) {
+                                        var otherCrossItem = that.records.getAt(i);
+                                        if (otherCrossItem.FragenID === parseInt(event.currentTarget.value)) {
+                                            event.currentTarget.value = crossItem.FragenID;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        if (event.currentTarget.value) {
+                            if (crossItem && crossItem.CR_OptFragenAntwortenVIEWID) {
                                 that.saveData(function (response) {
                                         AppBar.busy = false;
                                         Log.print(Log.l.trace, "question saved");
                                     },
-                                    function(errorResponse) {
+                                    function (errorResponse) {
                                         AppBar.busy = false;
                                         Log.print(Log.l.error, "error saving question");
                                     });
+                            } else {
+                                that.insertOptQuestion(event.currentTarget);
                             }
-                        } else {
-                            that.insertOptQuestion(event.currentTarget);
                         }
                     }
                     Log.ret(Log.l.trace);
