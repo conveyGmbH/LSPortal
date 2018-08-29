@@ -108,14 +108,22 @@
                     } else if (target.id === "SelektAntwortopt") { // kommt nicht hin da es ein updateFall ist
                         optFrage.SortIndex = target.value;
                     }
-                    return OptQuestionList.CR_OptFragenAntwortenVIEW.insert(function (json) {
+                    AppBar.busy = true;
+                    return that.tableView.insert(function (json) {
                         AppBar.busy = false;
+                        AppBar.modified = false;
                         // this callback will be called asynchronously
                         // when the response is available
-                        Log.print(Log.l.info, "ProduktView insert: success!");
-                        AppBar.modified = false;
-                        // ProduktView returns object already parsed from json file in response
-                        that.loadData();
+                        Log.print(Log.l.info, "record insert: success!");
+                        // contactData returns object already parsed from json file in response
+                        if (json && json.d) {
+                            that.curRecId = that.tableView.getRecordId(json.d);
+                            Log.print(Log.l.trace, "inserted recordId=" + that.curRecIdd);
+                            AppData.setRecordId(that.tableView.relationName, that.curRecId);
+                            that.loadData().then(function () {
+                                that.selectRecordId(that.curRecId);
+                            });
+                        }
                     }, function (errorResponse) {
                         Log.print(Log.l.error, "error inserting product");
                         AppBar.busy = false;
@@ -129,9 +137,13 @@
 
             var insertDefaultQuestion = function () {
                 Log.call(Log.l.trace, "optQuestionList.Controller.");
-                var defaultQuestion = { CR_OptFragenAntwortenVIEWID: null, FragenID: 0, SelektierteFragenID: 0, SortIndex: 0, insertStatus: true };
-                that.binding.count = that.records.push(defaultQuestion);
-                listView.winControl.itemDataSource = that.records.dataSource;
+                if (that.records) {
+                    var defaultQuestion = { CR_OptFragenAntwortenVIEWID: null, FragenID: 0, SelektierteFragenID: 0, SortIndex: 0, insertStatus: true };
+                    that.binding.count = that.records.push(defaultQuestion);
+                    that.listView.winControl.selection.set(that.records.length - 1);
+                    AppBar.triggerDisableHandlers();
+                }
+                Log.ret(Log.l.trace);
             }
             this.insertDefaultQuestion = insertDefaultQuestion;
 
@@ -169,10 +181,26 @@
 
             // define handlers
             this.eventHandlers = {
+                changeSelektedAnswer: function (event) {
+                    Log.call(Log.l.trace, "OptQuestionList.Controller.");
+                    if (event.currentTarget && event.currentTarget.value) {
+                        Log.print(Log.l.trace, "event changeSelektedAnswer: value=" + event.currentTarget.value + "Antwort=" + event.currentTarget.textContent);
+                        AppBar.busy = true;
+                        that.saveData(function (response) {
+                            AppBar.busy = false;
+                            Log.print(Log.l.trace, "question saved");
+                        },
+                        function (errorResponse) {
+                            AppBar.busy = false;
+                            Log.print(Log.l.error, "error saving question");
+                        });
+                    }
+                    Log.ret(Log.l.trace);
+                },
                 changeSelektedQuestion: function (event) {
                     Log.call(Log.l.trace, "OptQuestionList.Controller.");
                     if (event.currentTarget && event.currentTarget.value) {
-                        Log.print(Log.l.trace, "event changeSelektedQuestion: value=" + event.currentTarget.value + "Fragestellung" + event.currentTarget.textContent);
+                        Log.print(Log.l.trace, "event changeSelektedQuestion: value=" + event.currentTarget.value + "Fragestellung=" + event.currentTarget.textContent);
                         var crossItem = that.records.getAt(that.currentlistIndex);
                         if (crossItem) {
                             if (crossItem.FragenID === parseInt(event.currentTarget.value)) {
@@ -192,6 +220,17 @@
                                             comboSelektAntwortopt.value = 0;
                                         }
                                     }
+                                }
+                                if (event.currentTarget.value) {
+                                    AppBar.busy = true;
+                                    that.saveData(function (response) {
+                                        AppBar.busy = false;
+                                        Log.print(Log.l.trace, "question saved");
+                                    },
+                                    function (errorResponse) {
+                                        AppBar.busy = false;
+                                        Log.print(Log.l.error, "error saving question");
+                                    });
                                 }
                             }
                         }
@@ -219,6 +258,7 @@
                         }
                         if (event.currentTarget.value) {
                             if (crossItem && crossItem.CR_OptFragenAntwortenVIEWID) {
+                                AppBar.busy = true;
                                 that.saveData(function (response) {
                                         AppBar.busy = false;
                                         Log.print(Log.l.trace, "question saved");
@@ -267,7 +307,6 @@
                             var confirmTitle = getResourceText("optQuestionList.questionDelete");
                             confirm(confirmTitle, function (result) {
                                 if (result) {
-                                    AppBar.busy = true;
                                     Log.print(Log.l.trace, "clickDelete: user choice OK");
                                     that.deleteData();
                                 } else {
@@ -513,7 +552,14 @@
                 },
                 clickNew: function () {
                     // never disabled!
-                    return AppBar.busy;
+                    var bHasNew = false;
+                    if (that.records && that.records.length > 0) {
+                        var item = that.records.getAt(that.records.length - 1);
+                        if (item && !item.CR_OptFragenAntwortenVIEWID) {
+                            bHasNew = true;
+                        }
+                    }
+                    return bHasNew || AppBar.busy;
                 },
                 clickOk: function () {
                     return !that.curRecId || AppBar.busy;

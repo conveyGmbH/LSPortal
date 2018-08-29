@@ -7,11 +7,6 @@
     "use strict";
 
     WinJS.Namespace.define("OptQuestionList", {
-        /*_initFragengruppeView: {
-            get: function () {
-                return AppData.getLgntInit("LGNTINITFragengruppe");
-            }
-        },*/
         _CR_OptFragenAntwortenVIEW: {
             get: function () {
                 return AppData.getFormatView("CR_OptFragenAntworten", 0);
@@ -19,11 +14,6 @@
         }
     });
     WinJS.Namespace.define("OptQuestionList", {
-        /*initFragengruppeView: {
-            clear: function() {
-                OptQuestionList._initFragengruppeView.clear();
-            }
-        },*/
         CR_OptFragenAntwortenVIEW: {
             select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, "OptQuestionList.CR_V_FragengruppeView.");
@@ -36,34 +26,19 @@
             },
             deleteRecord: function (complete, error, recordId) {
                 Log.call(Log.l.trace, "OptQuestionList.CR_V_FragengruppeView.");
-                var ret = OptQuestionList._CR_OptFragenAntwortenVIEW.deleteRecord(function () {
-                    //OptQuestionList.initFragengruppeView.clear();
-                    if (typeof complete === "function") {
-                        complete();
-                    }
-                }, error, recordId);
+                var ret = OptQuestionList._CR_OptFragenAntwortenVIEW.deleteRecord(complete, error, recordId);
                 Log.ret(Log.l.trace);
                 return ret;
             },
             update: function (complete, error, recordId, viewResponse) {
                 Log.call(Log.l.trace, "OptQuestionList.CR_V_FragengruppeView.");
-                var ret = OptQuestionList._CR_OptFragenAntwortenVIEW.update(function () {
-                    //OptQuestionList.initFragengruppeView.clear();
-                    if (typeof complete === "function") {
-                        complete();
-                    }
-                }, error, recordId, viewResponse);
+                var ret = OptQuestionList._CR_OptFragenAntwortenVIEW.update(complete, error, recordId, viewResponse);
                 Log.ret(Log.l.trace);
                 return ret;
             },
             insert: function (complete, error, viewResponse) {
                 Log.call(Log.l.trace, "OptQuestionList.CR_V_FragengruppeView.");
-                var ret = OptQuestionList._CR_OptFragenAntwortenVIEW.insert(function () {
-                    //OptQuestionList.initFragengruppeView.clear();
-                    if (typeof complete === "function") {
-                        complete();
-                    }
-                }, error, viewResponse);
+                var ret = OptQuestionList._CR_OptFragenAntwortenVIEW.insert(complete, error, viewResponse);
                 Log.ret(Log.l.trace);
                 return ret;
             },
@@ -133,28 +108,6 @@
                 FragenAntwortenVIEWID: 0,
                 Fragestellung: ""
             }
-            /*update: function (complete, error, recordId, viewResponse) {
-                Log.call(Log.l.trace, "QuestionList.");
-                var ret = OptQuestionList._questionListView.update(complete, error, recordId, viewResponse);
-                // this will return a promise to controller
-                Log.ret(Log.l.trace);
-                return ret;
-
-            },
-            insert: function (complete, error) {
-                Log.call(Log.l.trace, "questionView.");
-                var ret = OptQuestionList._questionView.insert(complete, error, {
-                    FragengruppeID: 0
-                });
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            deleteRecord: function (complete, error, recordId) {
-                Log.call(Log.l.trace, "questionView.");
-                var ret = OptQuestionList._questionView.deleteRecord(complete, error, recordId);
-                Log.ret(Log.l.trace);
-                return ret;
-            }*/
         }
     });
 })();
