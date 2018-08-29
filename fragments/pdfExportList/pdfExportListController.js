@@ -76,7 +76,7 @@
                         // startContact returns object already parsed from json file in response
                         if (json && json.d && json.d.results && json.d.results.length > 0) {
                             var results = json.d.results;
-
+                            delete results[1];
                             that.reportingItem = new WinJS.Binding.List(results);
                             if (listView && listView.winControl) {
                                 // add ListView dataSource
