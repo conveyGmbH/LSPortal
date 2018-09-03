@@ -183,7 +183,7 @@
                     }, function (errorResponse) {
                         Log.print(Log.l.error, "error selecting mailerzeilen");
                         AppData.setErrorMsg(that.binding, errorResponse);
-                        }, { MaildokumentID: that.mailID, ProduktID: produktID });
+                        }, { MaildokumentID: that.MailID, ProduktID: produktID });
                 });
                 Log.ret(Log.l.trace);
                 return ret;
@@ -576,7 +576,14 @@
                         Log.print(Log.l.trace, "MaildokumentView: success!");
                         if (json && json.d && json.d.results) {
                             // store result for next use
-                            that.mailID = json.d.results[0].MaildokumentVIEWID;
+                            if (json.d.results.length === 0) {
+                                Log.print(Log.l.trace, "No productmail found!");
+                                that.MailIDFlag = false;
+                            } else
+                            {
+                                that.MailID = json.d.results[0].MaildokumentVIEWID;
+                                that.MailIDFlag = true;
+                            }
                         }
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
@@ -587,71 +594,79 @@
                             SpecType : 2
                     });
                 }).then(function () {
-                    Log.print(Log.l.trace, "calling select FragenView...");
-                    //@nedra:25.09.2015: load the list of FragenView for Combobox
-                    return Products.MAILERZEILENView.select(function (json) {
-                        // this callback will be called asynchronously
-                        // when the response is available
-                        Log.print(Log.l.trace, "FragenView: success!");
-                        if (json && json.d && json.d.results) {
-                            // Now, we call WinJS.Binding.List to get the bindable list
-                            that.binding.qaID = json.d.results;
-                        }
-                    }, function (errorResponse) {
-                        // called asynchronously if an error occurs
-                        // or server returns response with an error status.
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                        }, { MaildokumentID: that.mailID});
+                    if (that.MailIDFlag === true) {
+                        Log.print(Log.l.trace, "calling select FragenView...");
+                        //@nedra:25.09.2015: load the list of FragenView for Combobox
+                        return Products.MAILERZEILENView.select(function (json) {
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            Log.print(Log.l.trace, "FragenView: success!");
+                            if (json && json.d && json.d.results) {
+                                // Now, we call WinJS.Binding.List to get the bindable list
+                                that.binding.qaID = json.d.results;
+                            }
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        }, { MaildokumentID: that.mailID });
+                    }
                 }).then(function () {
-                    Log.print(Log.l.trace, "calling select FragenView...");
-                    //@nedra:25.09.2015: load the list of FragenView for Combobox
-                    return Products.AntwortenView.select(function (json) {
-                        // this callback will be called asynchronously
-                        // when the response is available
-                        Log.print(Log.l.trace, "FragenView: success!");
-                        if (json && json.d && json.d.results) {
-                            // Now, we call WinJS.Binding.List to get the bindable list
-                            that.productAnwserDataRaw = json.d.results;
-                        }
-                    }, function (errorResponse) {
-                        // called asynchronously if an error occurs
-                        // or server returns response with an error status.
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                    });
+                    if (that.MailIDFlag === true) {
+                        Log.print(Log.l.trace, "calling select FragenView...");
+                        //@nedra:25.09.2015: load the list of FragenView for Combobox
+                        return Products.AntwortenView.select(function (json) {
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            Log.print(Log.l.trace, "FragenView: success!");
+                            if (json && json.d && json.d.results) {
+                                // Now, we call WinJS.Binding.List to get the bindable list
+                                that.productAnwserDataRaw = json.d.results;
+                            }
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        }); 
+                    }
                 }).then(function () {
-                    Log.print(Log.l.trace, "calling select FragenView...");
-                    //@nedra:25.09.2015: load the list of FragenView for Combobox
-                    return Products.FragenView.select(function (json) {
-                        // this callback will be called asynchronously
-                        // when the response is available
-                        Log.print(Log.l.trace, "FragenView: success!");
-                        if (json && json.d && json.d.results) {
-                            that.productQuestionDataRAW = json.d.results;
-                            that.productQuestionDataRAW.unshift(that.binding.emtyQuestion);    
-                            // Now, we call WinJS.Binding.List to get the bindable list
-                            that.productQuestionData = new WinJS.Binding.List(that.productQuestionDataRAW);
-                        }
-                    }, function (errorResponse) {
-                        // called asynchronously if an error occurs
-                        // or server returns response with an error status.
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                    });
+                    if (that.MailIDFlag === true) {
+                        Log.print(Log.l.trace, "calling select FragenView...");
+                        //@nedra:25.09.2015: load the list of FragenView for Combobox
+                        return Products.FragenView.select(function (json) {
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            Log.print(Log.l.trace, "FragenView: success!");
+                            if (json && json.d && json.d.results) {
+                                that.productQuestionDataRAW = json.d.results;
+                                that.productQuestionDataRAW.unshift(that.binding.emtyQuestion);
+                                // Now, we call WinJS.Binding.List to get the bindable list
+                                that.productQuestionData = new WinJS.Binding.List(that.productQuestionDataRAW);
+                            }
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        });
+                    }
                 }).then(function () {
-                    Log.print(Log.l.trace, "calling select FragenView...");
-                    //@nedra:25.09.2015: load the list of FragenView for Combobox
-                    return Products.AntwortenView.select(function (json) {
-                        // this callback will be called asynchronously
-                        // when the response is available
-                        Log.print(Log.l.trace, "FragenView: success!");
-                        if (json && json.d && json.d.results) {
-                            // Now, we call WinJS.Binding.List to get the bindable list
-                            that.productAnwserData = new WinJS.Binding.List(json.d.results);
-                        }
-                    }, function (errorResponse) {
-                        // called asynchronously if an error occurs
-                        // or server returns response with an error status.
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                    });
+                    if (that.MailIDFlag === true) {
+                        Log.print(Log.l.trace, "calling select FragenView...");
+                        //@nedra:25.09.2015: load the list of FragenView for Combobox
+                        return Products.AntwortenView.select(function (json) {
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            Log.print(Log.l.trace, "FragenView: success!");
+                            if (json && json.d && json.d.results) {
+                                // Now, we call WinJS.Binding.List to get the bindable list
+                                that.productAnwserData = new WinJS.Binding.List(json.d.results);
+                            }
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        });  
+                    }
                 }).then(function () {
                     return Products.ProduktnameView.select(function (json) {
                         // this callback will be called asynchronously
@@ -826,6 +841,7 @@
                 newProduct: null,
                 productList : null,
                 MailID: null,
+                MailIDFlag: false,
                 MailerzeilenID: null,
                 MailerZeile : null,
                 lastProduct: null,
