@@ -1,4 +1,4 @@
-// export Excel file for download
+﻿// export Excel file for download
 /// <reference path="~/www/lib/WinJS/scripts/base.js" />
 /// <reference path="~/www/lib/convey/scripts/logging.js" />
 /// <reference path="~/www/lib/convey/scripts/dataService.js" />
@@ -164,7 +164,6 @@
                                     value === null || value === "NULL") {
                                     value = "";
                                 } else if (attribTypeId === 8 || attribTypeId === 6) { // timestamp or date
-
                                     if (cr === false){
                                         var dateString = value.replace("\/Date(", "").replace(")\/", "");
                                         var milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;

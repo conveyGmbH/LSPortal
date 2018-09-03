@@ -64,8 +64,8 @@
                 if (typeof that.binding.restriction.Erfassungsdatum === "undefined") {
                     that.binding.restriction.Erfassungsdatum = new Date();
                 }
-                if (typeof that.binding.restriction.ModifiedTs === "undefined") {
-                    that.binding.restriction.ModifiedTs = new Date();
+                if (typeof that.binding.restriction.ModifiedTS === "undefined") {
+                    that.binding.restriction.ModifiedTS = new Date();
                 }
                 Log.call(Log.l.trace, "Initialdate set");
             }
@@ -99,8 +99,8 @@
                         that.binding.restriction.Erfassungsdatum = new Date();
                     }
                     if (!that.binding.restriction.usemodifiedTS &&
-                        typeof that.binding.restriction.ModifiedTs !== "undefined") {
-                        delete that.binding.restriction.ModifiedTs;
+                        typeof that.binding.restriction.ModifiedTS !== "undefined") {
+                        delete that.binding.restriction.ModifiedTS;
                     }
                     //@nedra:10.11.2015: modifiedTS is undefined if it is not updated -> modifiedTS = current date
                     if (that.binding.restriction.usemodifiedTS &&
@@ -135,7 +135,7 @@
                     if (AppData.getLanguageId() === 1031) {
                         reportingRestriction.Land = that.binding.restriction.InitLandID;
                     } else {
-                        reportingRestriction.Country = that.binding.restriction.InitLandID;
+                        reportingRestriction.Land = that.binding.restriction.InitLandID;
                     }
                 }
                 if (that.binding.restriction.ErfasserID && that.binding.restriction.ErfasserID !== "undefined") {
@@ -145,7 +145,7 @@
                     if (AppData.getLanguageId() === 1031) {
                         reportingRestriction.Mitarbeiter = that.binding.restriction.ErfasserID;
                     } else {
-                        reportingRestriction.RecordedBy = that.binding.restriction.ErfasserID;
+                        reportingRestriction.Mitarbeiter = that.binding.restriction.ErfasserID;
                     }
                 }
                 if (that.binding.showErfassungsdatum && that.binding.restriction.Erfassungsdatum) {
@@ -153,9 +153,9 @@
                         reportingRestriction = {};
                     }
                     if (AppData.getLanguageId() === 1031) {
-                        reportingRestriction.Erfassungsdatum = that.binding.restriction.Erfassungsdatum; //.toISOString().substring(0, 10)
+                        reportingRestriction.ErfassungsdatumValue = that.binding.restriction.Erfassungsdatum; //.toISOString().substring(0, 10)
                     } else {
-                        reportingRestriction.RecordDate = that.binding.restriction.ReportingErfassungsdatum;
+                        reportingRestriction.RecordDate = that.binding.restriction.Erfassungsdatum;
                     }
                 }
                 if (that.binding.showModifiedTS && that.binding.restriction.ModifiedTs) {
@@ -163,7 +163,7 @@
                         reportingRestriction = {};
                     }
                     if (AppData.getLanguageId() === 1031) {
-                        reportingRestriction.AenderungsDatum = that.binding.restriction.ModifiedTs;
+                        reportingRestriction.AenderungsDatumValue = that.binding.restriction.ModifiedTs;
                     } else {
                         reportingRestriction.ModificationDate = that.binding.restriction.ModifiedTs;
                     }
@@ -646,7 +646,6 @@
                         },
                         null,
                         that.nextUrl);
-
                     that.loading = false;
                 }
             }
@@ -680,6 +679,7 @@
                                 // Now, we call WinJS.Binding.List to get the bindable list
                                 if (initLand && initLand.winControl) {
                                     initLand.winControl.data = new WinJS.Binding.List(json.d.results);
+                                    initLand.value = json.d.results[0];
                                 }
                             }
                         }, function(errorResponse) {
