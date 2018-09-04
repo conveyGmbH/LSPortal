@@ -137,7 +137,7 @@
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'event.privacyPolicyText'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'event.privacyPolicyText'}"></span>
                             <!--<input class="input_field win-textbox" type="text" data-win-bind="value: dataEvent.DatenschutzText Binding.Mode.twoway" />-->
-                            <textarea class="win-textarea field-text-comment" data-win-bind="value: dataEvent.DatenschutzText Binding.Mode.twoway" onblur="AppBar.handleEvent('blur', 'activateEnterKey', event)" onfocus="AppBar.handleEvent('focus', 'deactivateEnterKey', event)" onkeydown="AppBar.handleEvent('keydown', 'pressEnterKey', event)"></textarea>
+                            <textarea class="input_field win-textbox input_text_comment" data-win-bind="value: dataEvent.DatenschutzText Binding.Mode.twoway" onfocusin="AppBar.handleEvent('focusin', 'blockEnterKey', event)" onfocusout="AppBar.handleEvent('focusout', 'releaseEnterKey', event)"></textarea>
                         </div>
                         <div class="header-separator float-left"></div>
                         <div class="content-header float-left">

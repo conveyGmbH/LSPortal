@@ -28,6 +28,7 @@
 
             //select combo
             var initLand = pageElement.querySelector("#InitLand");
+            var textComment = pageElement.querySelector(".input_text_comment");
 
             this.dispose = function () {
                 if (initLand && initLand.winControl) {
@@ -43,6 +44,13 @@
                     that.binding.dataEvent.DatenschutzText = "";
                     //that.binding.dataEvent.privacyPolicyStandartText = getResourceText("event.privacyPolicyStandartText");
                     //that.binding.dataEvent.DatenschutzText = getResourceText("event.privacyPolicyStandartText");
+                }
+                if (textComment) {
+                    if (that.binding.dataEvent.DatenschutzText) {
+                        WinJS.Utilities.addClass(textComment, "input_text_comment_big");
+                    } else {
+                        WinJS.Utilities.removeClass(textComment, "input_text_comment_big");
+                    }
                 }
                 // convert Startdatum 
                 that.binding.dataEvent.dateBegin = getDateObject(newDataEvent.Startdatum);
@@ -182,44 +190,18 @@
                     }
                     Log.ret(Log.l.trace);
                 },
-                pressEnterKey: function (event) {
-                    Log.call(Log.l.trace, "Questionnaire.Controller.");
-                    if (event && event.keyCode === WinJS.Utilities.Key.enter &&
-                        event.target && event.target.tagName &&
-                        event.target.tagName.toLowerCase() === "textarea") {
-                        if (event.stopPropagation) {
-                            event.stopPropagation();
-                        } else {
-                            event.cancelBubble = true;
-                        }
-                    }
-                    Log.ret(Log.l.trace);
-                },
-                activateEnterKey: function (event) {
-                    Log.call(Log.l.trace, "Questionnaire.Controller.");
+                blockEnterKey: function (event) {
                     for (var i = 0; i < AppBar.commandList.length; i++) {
-                        if (AppBar.commandList[i].id === "clickOk") {
-                            AppBar.commandList[i].key = WinJS.Utilities.Key.enter;
-                            break;
-                        }
-                    }
-                    if (event && event.target && !event.target.value) {
-                        WinJS.Utilities.removeClass(event.target, "field-text-comment-big");
-                    }
-                    Log.ret(Log.l.trace);
-                },
-                deactivateEnterKey: function (event) {
-                    Log.call(Log.l.trace, "Questionnaire.Controller.");
-                    for (var i = 0; i < AppBar.commandList.length; i++) {
-                        if (AppBar.commandList[i].id === "clickOk") {
+                        if (AppBar.commandList[i].id === "clickOk")
                             AppBar.commandList[i].key = null;
-                            break;
-                        }
                     }
-                    if (event && event.target) {
-                        WinJS.Utilities.addClass(event.target, "field-text-comment-big");
+
+                },
+                releaseEnterKey: function (event) {
+                    for (var i = 0; i < AppBar.commandList.length; i++) {
+                        if (AppBar.commandList[i].id === "clickOk")
+                            AppBar.commandList[i].key = WinJS.Utilities.Key.enter;
                     }
-                    Log.ret(Log.l.trace);
                 }
             };
 

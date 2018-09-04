@@ -34,11 +34,3 @@
     }
 }
 
-.field-text-comment {
-    width: 100%;
-    height:26px;
-}
-.field-text-comment-big{/*:focus*/
-    height: 100px;
-    width: 100%;
-}
