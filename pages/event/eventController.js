@@ -39,7 +39,8 @@
                 var prevNotifyModified = AppBar.notifyModified;
                 AppBar.notifyModified = false;
                 that.binding.dataEvent = newDataEvent;
-                if (!that.binding.dataEvent.DatenschutzText) {
+                if (that.binding.dataEvent.DatenschutzText === null) {
+                    that.binding.dataEvent.DatenschutzText = "";
                     //that.binding.dataEvent.privacyPolicyStandartText = getResourceText("event.privacyPolicyStandartText");
                     //that.binding.dataEvent.DatenschutzText = getResourceText("event.privacyPolicyStandartText");
                 }
@@ -178,6 +179,45 @@
                         if (toggle) {
                             that.changeAppSetting(event.currentTarget.id, toggle.checked);
                         }
+                    }
+                    Log.ret(Log.l.trace);
+                },
+                pressEnterKey: function (event) {
+                    Log.call(Log.l.trace, "Questionnaire.Controller.");
+                    if (event && event.keyCode === WinJS.Utilities.Key.enter &&
+                        event.target && event.target.tagName &&
+                        event.target.tagName.toLowerCase() === "textarea") {
+                        if (event.stopPropagation) {
+                            event.stopPropagation();
+                        } else {
+                            event.cancelBubble = true;
+                        }
+                    }
+                    Log.ret(Log.l.trace);
+                },
+                activateEnterKey: function (event) {
+                    Log.call(Log.l.trace, "Questionnaire.Controller.");
+                    for (var i = 0; i < AppBar.commandList.length; i++) {
+                        if (AppBar.commandList[i].id === "clickOk") {
+                            AppBar.commandList[i].key = WinJS.Utilities.Key.enter;
+                            break;
+                        }
+                    }
+                    if (event && event.target && !event.target.value) {
+                        WinJS.Utilities.removeClass(event.target, "field-text-comment-big");
+                    }
+                    Log.ret(Log.l.trace);
+                },
+                deactivateEnterKey: function (event) {
+                    Log.call(Log.l.trace, "Questionnaire.Controller.");
+                    for (var i = 0; i < AppBar.commandList.length; i++) {
+                        if (AppBar.commandList[i].id === "clickOk") {
+                            AppBar.commandList[i].key = null;
+                            break;
+                        }
+                    }
+                    if (event && event.target) {
+                        WinJS.Utilities.addClass(event.target, "field-text-comment-big");
                     }
                     Log.ret(Log.l.trace);
                 }

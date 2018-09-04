@@ -20,7 +20,7 @@
                 count: 0,
                 veranstaltungId: 0,
                 fairmandantId: 0,
-                firstentry : 0
+                firstentry: 0
             }, commandList]);
             this.nextUrl = null;
 
@@ -151,16 +151,16 @@
                 Log.call(Log.l.trace, "LocalEvents.Controller.");
                 AppData.setErrorMsg(that.binding);
                 AppData.call("PRC_ChangeUserVeranstaltung", {
-                    pNewVeranstaltungID : that.curRecId,
+                    pNewVeranstaltungID: that.curRecId,
                     pLoginName: AppData._persistentStates.odata.login
                 }, function (json) {
                     Log.print(Log.l.info, "call success! ");
                     AppData.prevLogin = AppData._persistentStates.odata.login;
                     AppData.prevPassword = AppData._persistentStates.odata.password;
                     Application.navigateById("login", event);
-                 }, function (error) {
-                        Log.print(Log.l.error, "call error");
-                 });
+                }, function (error) {
+                    Log.print(Log.l.error, "call error");
+                });
                 Log.ret(Log.l.trace);
             }
             this.changeEvent = changeEvent;
@@ -301,21 +301,33 @@
                 copyQuestionnaire: function () {
                     Log.call(Log.l.trace, "LocalEvents.Controller.");
                     var toVeranstaltungsid = AppData.getRecordId("Veranstaltung");
-                    AppData.call("PRC_CopyFragebogen",
-                    {
-                        pFromVeranstID: that.curRecId,
-                        pToVeranstID: toVeranstaltungsid
+                    if (toVeranstaltungsid) {
+                        // hinweis fragebogen übernehmen
+                        var confirmTitle = getResourceText("localevents.confirmCopyQuestionnaire");
+                        confirm(confirmTitle, function (result) {
+                            if (result) {
+                                //AppBar.busy = true;
+                                Log.print(Log.l.trace, "copyQuestionnaire: user choice OK");
+                                    AppData.call("PRC_CopyFragebogen",
+                                    {
+                                        pFromVeranstID: that.curRecId,
+                                        pToVeranstID: toVeranstaltungsid
+                                    }, function (json) {
+                                        Log.print(Log.l.info, "call success! ");
+                                        AppBar.busy = false;
+                                        //Application.navigateById("localevents", event);
+                                    }, function (errorResponse) {
+                                        Log.print(Log.l.error, "call error");
+                                        AppBar.busy = false;
+                                        AppData.setErrorMsg(that.binding, errorResponse);
+                                    });
+                                    Log.ret(Log.l.trace);
 
-                    }, function (json) {
-                        Log.print(Log.l.info, "call success! ");
-                        AppBar.busy = false;
-                        //Application.navigateById("localevents", event);
-                    }, function (errorResponse) {
-                        Log.print(Log.l.error, "call error");
-                        AppBar.busy = false;
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                    });
-                    Log.ret(Log.l.trace);
+                            } else {
+                                Log.print(Log.l.trace, "copyQuestionnaire: user choice CANCEL");
+                            }
+                        });
+                    }
                 }
             };
             this.disableHandlers = {
@@ -326,7 +338,7 @@
                         return true;
                     }
                 },
-                clickNew: function() {
+                clickNew: function () {
                     if (that.binding.fairmandantId) {
                         return false;
                     } else {
@@ -356,7 +368,7 @@
                 this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
                 this.addRemovableEventListener(listView, "selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
             }
-            
+
             var loadData = function () {
                 Log.call(Log.l.trace, "LocalEvents.Controller.");
                 that.loading = true;
@@ -387,13 +399,13 @@
                             that.binding.firstentry = results[0].VeranstaltungVIEWID;
 
                             that.localeventsdata = new WinJS.Binding.List(results);
-                           
+
                             if (listView.winControl) {
                                 // add ListView dataSource
                                 listView.winControl.itemDataSource = that.localeventsdata.dataSource;
                             }
                             Log.print(Log.l.trace, "Data loaded");
-                            
+
                         } else {
                             that.binding.count = 0;
                             that.nextUrl = null;
@@ -426,8 +438,8 @@
                         }
                         that.loading = false;
                     }, {
-                          
-                        }
+
+                    }
                     );
                 });
                 Log.ret(Log.l.trace);

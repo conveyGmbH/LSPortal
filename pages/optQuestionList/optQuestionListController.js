@@ -480,7 +480,7 @@
                             that.loadNext(function (json) {
                                 // this callback will be called asynchronously
                                 // when the response is available
-                                Log.print(Log.l.trace, "OptQuestionList.CR_V_FragengruppeView: success!");
+                                Log.print(Log.l.trace, "OptQuestionList.CR_OptFragenAntwortenVIEW: success!");
                             }, function (errorResponse) {
                                 // called asynchronously if an error occurs
                                 // or server returns response with an error status.

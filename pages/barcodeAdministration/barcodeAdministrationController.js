@@ -380,7 +380,21 @@
                         if (counter && counter.style) {
                             counter.style.display = "none";
                         }
-
+                        that.loadNext(function (json) {
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            Log.print(Log.l.trace, "BarcodeAdministration.NCHRFragenAntworten: success!");
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                            if (progress && progress.style) {
+                                progress.style.display = "none";
+                            }
+                            if (counter && counter.style) {
+                                counter.style.display = "inline";
+                            }
+                        });
                     } else {
                         if (progress && progress.style) {
                             progress.style.display = "none";

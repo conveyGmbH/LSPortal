@@ -22,6 +22,19 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
+            getNextUrl: function (response) {
+                Log.call(Log.l.trace, "Questiongroup.CR_V_FragengruppeView.");
+                var ret = BarcodeAdministration._fragebogenZeileBCView.getNextUrl(response);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            selectNext: function (complete, error, response, nextUrl) {
+                Log.call(Log.l.trace, "Questiongroup.CR_V_FragengruppeView.");
+                var ret = BarcodeAdministration._fragebogenZeileBCView.selectNext(complete, error, response, nextUrl);
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
             defaultValue: {
                 Antwort01: "",
                 Antwort02: "",

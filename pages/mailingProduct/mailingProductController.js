@@ -142,7 +142,7 @@
                         }
                     );
                 }).then(function () {
-                    if (that.binding.dataProduct.MaildokumentVIEWID) {
+                    if (that.binding.dataProduct && that.binding.dataProduct.MaildokumentVIEWID) {
                         var mailingProductLineFragmentControl =
                             Application.navigator.getFragmentControlFromLocation(
                                 Application.getFragmentPath("mailingProductLine"));
