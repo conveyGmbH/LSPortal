@@ -597,6 +597,8 @@
     "localevents.event" : "Événement",
     "localevents.begin" : "Début",
     "localevents.end"   : "Fin",
+    "localevents.confirmCopyQuestionnaire1" : "Questionnaire de ",
+	"localevents.confirmCopyQuestionnaire2" : "est irrévocablement remplacé par un questionnaire ",
 
     "employeegenpwlist.title" : "Mots de passe employés pré-générés",
     "employeegenpwlist.login" : "nom de connexion",

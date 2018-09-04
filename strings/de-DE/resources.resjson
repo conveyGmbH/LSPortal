@@ -597,6 +597,8 @@
     "localevents.event" : "Veranstaltung",
     "localevents.begin" : "Anfang",
     "localevents.end"   : "Ende",
+	"localevents.confirmCopyQuestionnaire1" : "Fragebogen von ",
+	"localevents.confirmCopyQuestionnaire2" : "wird unwiederruflich ersetzt durch Fragebogen ",
 
 	"employeegenpwlist.title" : "Mitarbeiter generierte Passwörter",
 		"employeegenpwlist.login" : "Loginname",

@@ -67,16 +67,16 @@
                         counter.style.display = "none";
                     }
                     AppData.setErrorMsg(that.binding);
-                    Log.print(Log.l.trace, "calling select LocalEvents.MaildokumentView...");
+                    Log.print(Log.l.trace, "calling select LocalEvents.VeranstaltungView...");
                     var nextUrl = that.nextUrl;
                     that.nextUrl = null;
                     LocalEvents.VeranstaltungView.selectNext(function (json) { //json is undefined
                         // this callback will be called asynchronously
                         // when the response is available
-                        Log.print(Log.l.trace, "LocalEvents.MaildokumentView: success!");
+                        Log.print(Log.l.trace, "LocalEvents.VeranstaltungView: success!");
                         // startContact returns object already parsed from json file in response
                         if (json && json.d && json.d.results && that.localeventsdata) {
-                            that.nextUrl = MailingList.MaildokumentView.getNextUrl(json);
+                            that.nextUrl = LocalEvents.VeranstaltungView.getNextUrl(json);
                             var results = json.d.results;
                             results.forEach(function (item, index) {
                                 that.resultConverter(item, that.binding.count);
@@ -241,6 +241,7 @@
                                 // Only one item is selected, show the page
                                 listControl.selection.getItems().done(function (items) {
                                     var item = items[0];
+                                    that.actualSelectedItem = item.data;
                                     if (item.data && item.data.VeranstaltungVIEWID) {
                                         var newRecId = item.data.VeranstaltungVIEWID;
                                         Log.print(Log.l.trace, "newRecId:" + newRecId + " curRecId:" + that.curRecId);
@@ -301,31 +302,33 @@
                 copyQuestionnaire: function () {
                     Log.call(Log.l.trace, "LocalEvents.Controller.");
                     var toVeranstaltungsid = AppData.getRecordId("Veranstaltung");
-                    if (toVeranstaltungsid) {
-                        // hinweis fragebogen übernehmen
-                        var confirmTitle = getResourceText("localevents.confirmCopyQuestionnaire");
-                        confirm(confirmTitle, function (result) {
-                            if (result) {
-                                //AppBar.busy = true;
-                                Log.print(Log.l.trace, "copyQuestionnaire: user choice OK");
-                                    AppData.call("PRC_CopyFragebogen",
-                                    {
-                                        pFromVeranstID: that.curRecId,
-                                        pToVeranstID: toVeranstaltungsid
-                                    }, function (json) {
-                                        Log.print(Log.l.info, "call success! ");
-                                        AppBar.busy = false;
-                                        //Application.navigateById("localevents", event);
-                                    }, function (errorResponse) {
-                                        Log.print(Log.l.error, "call error");
-                                        AppBar.busy = false;
-                                        AppData.setErrorMsg(that.binding, errorResponse);
-                                    });
-                                    Log.ret(Log.l.trace);
-
-                            } else {
-                                Log.print(Log.l.trace, "copyQuestionnaire: user choice CANCEL");
-                            }
+                    var ret = null;
+                    var confirmTitle = getResourceText("localevents.confirmCopyQuestionnaire1") + "-" + that.actualSelectedItem.Name + "-" +
+                        "\r\n" + getResourceText("localevents.confirmCopyQuestionnaire2") + "-" + that.binding.generalData.eventName + "- !";
+                    confirm(confirmTitle, function (result) {
+                        if (result) {
+                            AppBar.busy = true;
+                            Log.print(Log.l.trace, "clickDelete: user choice OK");
+                            ret = AppData.call("PRC_CopyFragebogen",
+                                {
+                                    pFromVeranstID: that.curRecId,
+                                    pToVeranstID: toVeranstaltungsid
+                                }, function (json) {
+                                    Log.print(Log.l.info, "call success! ");
+                                    AppBar.busy = false;
+                                    //Application.navigateById("localevents", event);
+                                }, function (errorResponse) {
+                                    Log.print(Log.l.error, "call error");
+                                    AppBar.busy = false;
+                                    AppData.setErrorMsg(that.binding, errorResponse);
+                                });
+                        } else {
+                            Log.print(Log.l.trace, "clickDelete: user choice CANCEL");
+                        }
+                    });
+                    if (ret) {
+                        WinJS.Promise.as().then(function () {
+                            complete({});
                         });
                     }
                 }
@@ -456,9 +459,9 @@
             });
             Log.ret(Log.l.trace);
         }, {
-                nextUrl: null,
-                loading: false,
-                localeventsdata: null
-            })
+            nextUrl: null,
+            loading: false,
+            localeventsdata: null
+        })
     });
 })();
