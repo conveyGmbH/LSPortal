@@ -16,7 +16,8 @@
             select: function (complete, error) {
                 Log.call(Log.l.trace, "PdfExportList.");
                 var ret = PdfExportList._pdfExportListView.select(complete, error, {
-                    LanguageID: AppData.getLanguageId()
+                    LanguageID: AppData.getLanguageId(),
+                    OLELetterID: 29
                 }, {
                         ordered: true,
                         orderAttribute: "OLELetterID",
