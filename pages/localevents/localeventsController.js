@@ -303,8 +303,8 @@
                     Log.call(Log.l.trace, "LocalEvents.Controller.");
                     var toVeranstaltungsid = AppData.getRecordId("Veranstaltung");
                     var ret = null;
-                    var confirmTitle = getResourceText("localevents.confirmCopyQuestionnaire1") + "-" + that.actualSelectedItem.Name + "-" +
-                        "\r\n" + getResourceText("localevents.confirmCopyQuestionnaire2") + "-" + that.binding.generalData.eventName + "- !";
+                    var confirmTitle = getResourceText("localevents.confirmCopyQuestionnaire1") + "-" + that.binding.generalData.eventName + "-" +
+                        "\r\n" + getResourceText("localevents.confirmCopyQuestionnaire2") + "-" + that.actualSelectedItem.Name + "- !";
                     confirm(confirmTitle, function (result) {
                         if (result) {
                             AppBar.busy = true;
