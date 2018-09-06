@@ -447,6 +447,7 @@
     "event.company"         : "Firma",
     "event.note"            : "Hinweis",
     "event.appInfo"         : "Änderungen werden in Mobile App erst beim nächsten Start der App wirksam",
+	"event.privacyPolicySetting" : "Datenschutzeinstellung",
 	"event.privacypolicy"   : "Datenschutzskizze",
 	"event.privacyPolicyText" : "Datenschutztext",
 	"event.privacyPolicyStandartText" : "Hiermit bestätige ich, dass meine Daten nach den DSGVO erfasst und verarbeitet werden",

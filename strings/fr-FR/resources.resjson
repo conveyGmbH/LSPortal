@@ -447,6 +447,7 @@
     "event.company"         : "Société",
     "event.note"            : "Allusion",
     "event.appInfo"         : "Pour que ces modifications prennent effet, vous devez redémarrer votre APP",
+	"event.privacyPolicySetting" : "Paramètre de confidentialité",
 "event.privacypolicy"   : "Esquisse de confidentialité",
 	"event.privacyPolicyText" : "Texte de confidentialité",
 	"event.privacyPolicyStandartText" : "Je confirme par la présente que mes données sont collectées et traitées conformément au RGPD",

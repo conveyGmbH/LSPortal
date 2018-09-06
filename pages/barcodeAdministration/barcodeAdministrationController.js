@@ -45,9 +45,6 @@
                 if (listView && listView.winControl) {
                     listView.winControl.itemDataSource = null;
                 }
-                if (that.questionslistBarcode) {
-                    that.questionslistBarcode = null;
-                }
             }
 
             var progress = null;
@@ -273,7 +270,7 @@
                             listView.winControl.layout = { type: layout };
                         }
                     } else if (listView.winControl.loadingState === "complete") {
-                        if (that.loading) {
+                        if (that.records) {
                             progress = listView.querySelector(".list-footer .progress");
                             counter = listView.querySelector(".list-footer .counter");
                             if (progress && progress.style) {
@@ -301,46 +298,6 @@
                                     }
                                 }
                             }
-
-                            /*
-                            if (that.records) {
-                                var items = that.records;
-                                var barcode = document.querySelector(".barcode");
-                                if (items) {
-                                    for (var i = 0; i < items.length; i++) {
-                                        var item = items.getAt(i);
-                                        var thema = document.createElement("div");
-                                        var sortierung = document.createElement("div");
-                                        thema.textContent = item.Thema;
-                                        sortierung.textContent = item.Sortierung+".";
-                                        barcode.appendChild(sortierung);
-                                        barcode.appendChild(thema);
-                                        for (var y = 1; y < item.Anzahl + 1; y++) {
-                                            var value, antworttext;
-                                            if (y < 10) {
-                                                if (item["Antwort0" + y]) {
-                                                    value = item["Antwort0" + y].substring(9, 13);
-                                                    antworttext = item["AntwortNr0" + y];
-                                                }
-                                            } else {
-                                                if (item["Antwort" + y]) {
-                                                    value = item["Antwort" + y].substring(9, 13);
-                                                    antworttext = item["AntwortNr" + y];
-                                                }
-                                            }
-                                            if (antworttext) {
-                                                var barcode1 = document.createElement("img");
-                                                barcode.appendChild(barcode1);
-                                                barcode1.setAttribute("id", "barcode" + i + "" + y);
-                                                JsBarcode("#barcode" + i + "" + y, value, { width: 1.5, height: 25, text: antworttext, fontsize: 8, textAlign: "left", textMargin: 25, background: "transparent"});
-                                            }
-
-                                        }
-                                    }
-
-                                }
-                            }
-                            */
                             that.loading = false;
                         }
                     }
@@ -402,10 +359,8 @@
                         if (counter && counter.style) {
                             counter.style.display = "inline";
                         }
-                        if (that.records && that.loading!== true)
-                            that.loading = false;
-                        else
-                            that.loading = true;
+                        that.loading = false;
+
                     }
                 }
                 Log.ret(Log.l.trace);

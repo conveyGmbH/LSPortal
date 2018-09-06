@@ -447,6 +447,7 @@
     "event.company"         : "Company",
     "event.note"            : "Note",
     "event.appInfo"         : "Please restart the APP for the changes to take effect",
+	"event.privacyPolicySetting" : "Privacy setting",
 "event.privacypolicy"   : "Privacypolicynote",
 	"event.privacyPolicyText" : "Privacypolicy",
 	"event.privacyPolicyStandartText" : "I hereby confirm that my data is collected and processed according to the GDPR",
