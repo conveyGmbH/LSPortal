@@ -117,7 +117,7 @@
                     } else {
                         antwort = "Antwort" + j;
                     }
-                    if (item[antwort] === "null") {
+                    if (item[antwort] === null) {
                         item[antwort] = "";
                     }
                 }

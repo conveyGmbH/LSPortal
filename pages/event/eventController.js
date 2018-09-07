@@ -19,9 +19,10 @@
                 isSketchVisible: !AppData._persistentStates.hideSketch,
                 isCameraVisible: !AppData._persistentStates.hideCameraScan,
                 isBarcodeScanVisible: !AppData._persistentStates.hideBarcodeScan,
-                isProductMailOn: !AppData._persistentStates.productMailOn,
-                isThankMailOn: !AppData._persistentStates.thankYouMailOn,
-                isPrivacyPolicySVGVisible: !AppData._persistentStates.privacyPolicySVGVisible
+                isProductMailOn: AppData._persistentStates.productMailOn,
+                isNachbearbeitetFlagAutoSetToNull: AppData._persistentStates.nachbearbeitetFlagAutoSetToNull,
+                isThankMailOn: AppData._persistentStates.thankYouMailOn,
+                isPrivacyPolicySVGVisible: AppData._persistentStates.privacyPolicySVGVisible
             }, commandList]);
 
             var that = this;
@@ -77,6 +78,7 @@
                 Log.call(Log.l.trace, "Settings.Controller.", "toggleId=" + toggleId + " checked=" + checked);
                 var pOptionTypeId = null;
                 var pageProperty = null;
+                var hidePageItem = true;
                 switch (toggleId) {
                     case "showQuestionnaire":
                         pOptionTypeId = 20;
@@ -103,12 +105,14 @@
                     case "productMail":
                         pOptionTypeId = 30;
                         that.binding.isProductMailOn = checked;
-                        AppData._persistentStates.productMailOn = !checked;
+                        AppData._persistentStates.productMailOn = checked;
+                        hidePageItem = false;
                         break;
                     case "thankMail":
                         pOptionTypeId = 31;
                         that.binding.isThankMailOn = checked;
-                        AppData._persistentStates.thankYouMailOn = !checked;
+                        AppData._persistentStates.thankYouMailOn = checked;
+                        hidePageItem = false;
                         break;
                     case "showPrivacyPolicySVG":
                         pOptionTypeId = 34;
@@ -121,16 +125,31 @@
                         if (!AppBar.modified) {
                             AppBar.modified = true;
                         }
-                        AppData._persistentStates.privacyPolicySVGVisible = !checked;
+                        AppData._persistentStates.privacyPolicySVGVisible = checked;
+                        hidePageItem = false;
+                        break;
+                    case "nachbearbeitetFlagAutoSetToNull":
+                        pOptionTypeId = 35;
+                        that.binding.isNachbearbeitetFlagAutoSetToNull = checked;
+                        AppData._persistentStates.nachbearbeitetFlagAutoSetToNull = checked;
+                        hidePageItem = false;
                         break;
                 }
                 if (pOptionTypeId) {
                     var pValue;
                     // value: show => pValue: hide!
-                    if (!checked) {
-                        pValue = "1";
+                    if (hidePageItem) {
+                        if (!checked) {
+                            pValue = "1";
+                        } else {
+                            pValue = "0";
+                        }
                     } else {
-                        pValue = "0";
+                        if (checked) {
+                            pValue = "1";
+                        } else {
+                            pValue = "0";
+                        }
                     }
                     AppData.call("PRC_SETVERANSTOPTION", {
                         pVeranstaltungID: AppData.getRecordId("Veranstaltung"),

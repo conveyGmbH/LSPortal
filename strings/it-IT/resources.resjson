@@ -447,6 +447,8 @@
     "event.company"         : "Azienda",
     "event.note"            : "Suggerimento",
     "event.appInfo"         : "Affinché le modifiche abbiano effetto, si prega di riavviare l´APP",
+	"event.nachbearbeitetFlagAutoSetToNull" : "Produktmail: \n Modifica Flag automaticamente impostato su vuoto",
+	"event.mailSettings"    : "Impostazioni e-mail",
 	"event.privacyPolicySetting" : "Impostazione di privacy",
 	"event.privacypolicy"   : "Schizzo della privacy",
 	"event.privacyPolicyText" : "Testo sulla privacy",

@@ -443,6 +443,20 @@
                         AppData._persistentStates.thankYouMailOn = false;
                     }
                     break;
+                case 34:
+                    if (item.LocalValue === "1") {
+                        AppData._persistentStates.privacyPolicySVGVisible = true;
+                    } else {
+                        AppData._persistentStates.privacyPolicySVGVisible = false;
+                    }
+                    break;
+                case 35:
+                    if (item.LocalValue === "1") {
+                        AppData._persistentStates.nachbearbeitetFlagAutoSetToNull = true;
+                    } else {
+                        AppData._persistentStates.nachbearbeitetFlagAutoSetToNull = false;
+                    }
+                    break;
                 default:
                     // defaultvalues
             }
