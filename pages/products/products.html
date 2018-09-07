@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -23,13 +23,23 @@
                     </div>
                     <div class="productsList-template"
                          data-win-control="WinJS.Binding.Template" style="display: none">
-                            <label class="list-role-field">
-                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'products.product'}"></span>
-                                <span class="label landscape_only" data-win-res="{textContent: 'products.product'}"></span>
-                                <input class="input_field win-textbox" type="text"
-                                       data-win-bind="value: Name Binding.Mode.twoway; style.display: dataProduct.Flag_NoEdit Binding.Converter.toDisplayNone">
-                            </label>
-                            <div class="field_line field_line_even">
+                        <label class="list-role-field">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'products.product'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'products.product'}"></span>
+                            <input class="input_field win-textbox" type="text"
+                                   data-win-bind="value: Name Binding.Mode.twoway; style.display: dataProduct.Flag_NoEdit Binding.Converter.toDisplayNone">
+                        </label>
+                        <div class="field_line field_line_even">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'products.question'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'products.question'}"></span>
+                            <select id="productquestioncombo"
+                                    class="input_field win-dropdown"
+                                    data-win-control="WinJS.UI.Repeater"
+                                    onchange="AppBar.handleEvent('change', 'clickQuestionProduct', event)">
+                                <option data-win-bind="value: FragenVIEWID; textContent: Fragestellung"></option>
+                            </select>
+                        </div> 
+                            <div class="field_line field_line_odd">
                                 <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'products.anwser'}"></span>
                                 <span class="label landscape_only" data-win-res="{textContent: 'products.anwser'}"></span>
                                 <select id="productanwsercombo"
@@ -37,17 +47,7 @@
                                         data-win-control="WinJS.UI.Repeater">
                                     <option data-win-bind="value: AntwortenVIEWID; textContent: Antwort"></option>
                                 </select>
-                            </div>
-                            <div class="field_line field_line_odd">
-                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'products.question'}"></span>
-                                <span class="label landscape_only" data-win-res="{textContent: 'products.question'}"></span>
-                                <select id="productquestioncombo"
-                                        class="input_field win-dropdown"
-                                        data-win-control="WinJS.UI.Repeater"
-                                        onchange="AppBar.handleEvent('change', 'clickQuestionProduct', event)">
-                                    <option data-win-bind="value: FragenVIEWID; textContent: Fragestellung"></option>
-                                </select>
-                           </div>
+                            </div> 
                     </div>
                     <div class="headerFooterPlaceholder">
                         <div class="list-footer">
