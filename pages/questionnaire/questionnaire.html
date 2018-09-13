@@ -42,8 +42,8 @@
                             <div class="row-separator" data-win-bind="style.display: FLAG_Trennlinie Binding.Converter.toDisplayNone"></div>
                             <span class="list-question-field label-color" data-win-bind="textContent: FRAGESTELLUNG"></span>
                             <!-- <div data-win-bind="style.display: PflichtFeld Binding.Converter.toDisplay">
-                         <span class="require-field label-color" data-win-res="{textContent:'questionnaire.requiredmarker'}"></span>
-                     </div>-->
+                                <span class="require-field label-color" data-win-res="{textContent:'questionnaire.requiredmarker'}"></span>
+                            </div>-->
                             <div class="rating-question-field">
                                 <div data-win-control="WinJS.UI.Rating"
                                      data-win-bind="winControl.maxRating: SRMax; winControl.userRating: RRANTWORT Binding.Converter.toInteger"></div>
@@ -83,8 +83,8 @@
                             <div class="row-separator" data-win-bind="style.display: FLAG_Trennlinie Binding.Converter.toDisplayNone"></div>
                             <span class="list-question-multi-rating label-color" data-win-bind="textContent: FRAGESTELLUNG"></span>
                             <!--<div data-win-bind="style.display: PflichtFeld Binding.Converter.toDisplay">
-                        <span class="require-field label-color" data-win-res="{textContent:'questionnaire.requiredmarker'}"></span>
-                    </div>-->
+                                <span class="require-field label-color" data-win-res="{textContent:'questionnaire.requiredmarker'}"></span>
+                            </div>-->
                             <div class="multi-rating-div">
                                 <div class="multi-rating">
                                     <span id="MR01" class="multi-rating-span"
@@ -158,8 +158,8 @@
                             <div class="row-separator" data-win-bind="style.display: FLAG_Trennlinie Binding.Converter.toDisplayNone"></div>
                             <span class="list-question-field label-color" data-win-bind="textContent: FRAGESTELLUNG"></span>
                             <!--<div data-win-bind="style.display: PflichtFeld Binding.Converter.toDisplay">
-                        <span class="require-field label-color" data-win-res="{textContent:'questionnaire.requiredmarker'}"></span>
-                    </div>-->
+                                <span class="require-field label-color" data-win-res="{textContent:'questionnaire.requiredmarker'}"></span>
+                            </div>-->
                             <div class="field_line_questionnaire win-type-subtitle">
                                 <select class="input_field_noLabel win-dropdown"
                                         data-win-control="WinJS.UI.Repeater">
@@ -170,20 +170,22 @@
                             <div data-win-bind="style.display: FreitextAktiv Binding.Converter.toDisplay">
                                 <textarea class="win-textarea field-text-comment"
                                           data-win-bind="placeholder: textarea; value: Freitext" onblur="AppBar.handleEvent('blur', 'activateEnterKey', event)" onfocus="AppBar.handleEvent('focus', 'deactivateEnterKey', event)" onkeydown="AppBar.handleEvent('keydown', 'pressEnterKey', event)"></textarea>
-                                <button id="showDateCombobox" class="win-button question-button"
-                                        data-win-bind="style.display: DateComboboxButtonShow Binding.Converter.toDisplay"
-                                        onclick="AppBar.handleEvent('click', 'clickButton', event)">
-                                    <div class="question-image-container">
-                                        <div class="question-image" id="calendar_1"></div>
-                                    </div>
-                                </button>
-                                <button id="useDateCombobox" class="win-button question-button"
-                                        data-win-bind="style.display: DateComboboxButtonOk Binding.Converter.toDisplay"
-                                        onclick="AppBar.handleEvent('click', 'clickButton', event)">
-                                    <div class="question-image-container">
-                                        <div class="question-image" id="navigate_check"></div>
-                                    </div>
-                                </button>
+                                <div data-win-bind="style.display: DateComboboxButtonShow Binding.Converter.toDisplay">
+                                    <button id="showDateCombobox" class="win-button question-button"
+                                            onclick="AppBar.handleEvent('click', 'clickButton', event)">
+                                        <div class="question-image-container">
+                                            <div class="question-image" id="calendar_1"></div>
+                                        </div>
+                                    </button>
+                                </div>
+                                <div data-win-bind="style.display: DateComboboxButtonShow Binding.Converter.toDisplay">
+                                    <button id="useDateCombobox" class="win-button question-button"
+                                            onclick="AppBar.handleEvent('click', 'clickButton', event)">
+                                        <div class="question-image-container">
+                                            <div class="question-image" id="navigate_check"></div>
+                                        </div>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -199,8 +201,8 @@
                             <div class="row-separator" data-win-bind="style.display: FLAG_Trennlinie Binding.Converter.toDisplayNone"></div>
                             <span class="list-question-field label-color" data-win-bind="textContent: FRAGESTELLUNG"></span>
                             <!--<div data-win-bind="style.display: PflichtFeld Binding.Converter.toDisplay">
-                        <span class="require-field label-color" data-win-res="{textContent:'questionnaire.requiredmarker'}"></span>
-                    </div>-->
+                                <span class="require-field label-color" data-win-res="{textContent:'questionnaire.requiredmarker'}"></span>
+                            </div>-->
                             <div class="field_line_questionnaire win-type-subtitle">
                                 <div class="field_row_odd">
                                     <div class="field_line_left">
@@ -309,8 +311,8 @@
                             <div class="row-separator" data-win-bind="style.display: FLAG_Trennlinie Binding.Converter.toDisplayNone"></div>
                             <span class="list-question-field label-color" data-win-bind="textContent: FRAGESTELLUNG"></span>
                             <!-- <div data-win-bind="style.display: PflichtFeld Binding.Converter.toDisplay">
-                         <span class="require-field label-color" data-win-res="{textContent:'questionnaire.requiredmarker'}"></span>
-                     </div>-->
+                                <span class="require-field label-color" data-win-res="{textContent:'questionnaire.requiredmarker'}"></span>
+                            </div>-->
                             <div class="field_line_questionnaire win-type-subtitle">
                                 <div class="field_row_odd">
                                     <div class="field_line_left">
@@ -603,8 +605,8 @@
                             <div class="row-separator" data-win-bind="style.display: FLAG_Trennlinie Binding.Converter.toDisplayNone"></div>
                             <span class="list-question-field label-color" data-win-bind="textContent: FRAGESTELLUNG"></span>
                             <!-- <div data-win-bind="style.display: PflichtFeld Binding.Converter.toDisplay">
-                         <span class="require-field label-color" data-win-res="{textContent:'questionnaire.requiredmarker'}"></span>
-                     </div>-->
+                                <span class="require-field label-color" data-win-res="{textContent:'questionnaire.requiredmarker'}"></span>
+                            </div>-->
                             <div class="field_line_questionnaire win-type-subtitle">
                                 <div class="field_row_odd">
                                     <div class="field_line_left">
@@ -713,8 +715,8 @@
                             <div class="row-separator" data-win-bind="style.display: FLAG_Trennlinie Binding.Converter.toDisplayNone"></div>
                             <span class="list-question-field label-color" data-win-bind="textContent: FRAGESTELLUNG"></span>
                             <!--<div data-win-bind="style.display: PflichtFeld Binding.Converter.toDisplay">
-                        <span class="require-field label-color" data-win-res="{textContent:'questionnaire.requiredmarker'}"></span>
-                    </div>-->
+                                <span class="require-field label-color" data-win-res="{textContent:'questionnaire.requiredmarker'}"></span>
+                            </div>-->
                             <div class="field_line_questionnaire win-type-subtitle">
                                 <div class="field_row_odd">
                                     <div class="field_line_left">

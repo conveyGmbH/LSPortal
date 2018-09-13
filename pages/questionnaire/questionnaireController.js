@@ -120,6 +120,10 @@
                         item.type = "single8";
                     }
                     if (typeof item.SSANTWORT !== "undefined") {
+                        ssItems.push({
+                            title: "",
+                            value: null
+                        });
                         for (var i = 1; i <= 28; i++) {
                             var keyValue, keyTitle;
                             var iStr = i.toString();
@@ -149,10 +153,6 @@
                         var name = "SSANTWORT" + item.ZeilenantwortVIEWID.toString();
                         item.SSNAME = name;
                         if (item.Combobox) {
-                            ssItems.push({
-                                title: "",
-                                value: null
-                            });
                             item.SSITEMS = ssItems;
                         }
                     }
@@ -513,7 +513,7 @@
                         switch (id) {
                             case "showDateCombobox":
                                 that.resultConverter(curScope);
-                                curScope.DateComboboxButtonShow = false
+                                curScope.DateComboboxButtonShow = false;
                                 curScope.DateComboboxButtonOk = true;
                                 break;
                             case "useDateCombobox":
