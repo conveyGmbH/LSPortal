@@ -1191,3 +1191,7 @@ input.win-textbox, input.win-checkbox, input.win-radio, textarea.win-textarea, s
 .lightthemeMandatory:focus {
     background-color: lightyellow;
 }
+
+.no-transform {
+    -webkit-transform: translate3d(0, 0, 0);
+}
