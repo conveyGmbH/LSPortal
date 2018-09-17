@@ -1,14 +1,18 @@
 ﻿// controller for page: questionnaire
 /// <reference path="~/www/lib/WinJS/scripts/base.js" />
 /// <reference path="~/www/lib/WinJS/scripts/ui.js" />
+/// <reference path="~/www/lib/convey/scripts/strings.js" />
+/// <reference path="~/www/lib/convey/scripts/logging.js" />
+/// <reference path="~/www/lib/convey/scripts/colors.js" />
 /// <reference path="~/www/lib/convey/scripts/appSettings.js" />
 /// <reference path="~/www/lib/convey/scripts/dataService.js" />
 /// <reference path="~/www/lib/convey/scripts/appbar.js" />
 /// <reference path="~/www/lib/convey/scripts/pageController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/pages/questionnaire/questionnaireService.js" />
-/*/// <reference path="~/plugins/cordova-plugin-camera/www/CameraConstants.js" />
-/// <reference path="~/plugins/cordova-plugin-camera/www/Camera.js" />*/
+/// <reference path="~/plugins/cordova-plugin-camera/www/CameraConstants.js" />
+/// <reference path="~/plugins/cordova-plugin-camera/www/Camera.js" />
+/// <reference path="~/plugins/cordova-plugin-device/www/device.js" />
 
 (function () {
     "use strict";
@@ -22,8 +26,20 @@
             this.nextUrl = null;
             this.loading = false;
             this.questions = null;
+            this.actualquestion = null;
             this.images = null;
             this.docIds = null;
+            this.selectQuestionIdxs = null;
+            this.showHideModified = false;
+
+            var hasIPhoneBug = false;
+            if (navigator.appVersion && 
+                (navigator.appVersion.indexOf("iPhone OS 11_3") >= 0 ||
+                navigator.appVersion.indexOf("iPhone OS 11_4") >= 0 ||
+                navigator.appVersion.indexOf("iPod OS 11_3") >= 0 ||
+                navigator.appVersion.indexOf("iPod OS 11_4") >= 0)) {
+                hasIPhoneBug = true;
+            }
 
             var that = this;
 
@@ -41,6 +57,9 @@
                 if (that.questions) {
                     that.questions = null;
                 }
+                if (that.actualquestion) {
+                    that.actualquestion = null;
+                }
                 if (that.images) {
                     that.images = null;
                 }
@@ -53,6 +72,99 @@
                 return (that.images && that.images.length > 0);
             }
             this.hasDoc = hasDoc;
+
+            var addImage = function(json) {
+                Log.call(Log.l.trace, "Questionnaire.Controller.");
+                if (json && json.d) {
+                    if (!that.images) {
+                        // Now, we call WinJS.Binding.List to get the bindable list
+                        that.images = new WinJS.Binding.List([]);
+                        if (flipView && flipView.winControl) {
+                            flipView.winControl.itemDataSource = that.images.dataSource;
+                        }
+                    }
+                    var docContent;
+                    if (json.d.PrevContentDOCCNT2) {
+                        docContent = json.d.PrevContentDOCCNT2;
+                    } else {
+                        docContent = json.d.DocContentDOCCNT1;
+                    }
+                    if (docContent) {
+                        var sub = docContent.search("\r\n\r\n");
+                        var title = (that.images.length + 1).toString() + " / " + that.docCount;
+                        var picture = "data:image/jpeg;base64," + docContent.substr(sub + 4);
+                        that.images.push({
+                            type: "item",
+                            DOC1ZeilenantwortID: json.d.DOC1ZeilenantwortVIEWID,
+                            title: title,
+                            picture: picture
+                        });
+                        if (that.images.length === 1) {
+                            WinJS.Promise.timeout(50).then(function() {
+                                var pageControl = pageElement.winControl;
+                                if (pageControl && pageControl.updateLayout) {
+                                    pageControl.prevWidth = 0;
+                                    pageControl.prevHeight = 0;
+                                    return pageControl.updateLayout.call(pageControl, pageElement);
+                                } else {
+                                    return WinJS.Promise.as();
+                                }
+                            }).then(function() {
+                                if (flipView && flipView.parentElement && flipView.winControl) {
+                                    flipView.winControl.currentPage = 0;
+                                    flipView.winControl.forceLayout();
+                                }
+                            });
+                        } else {
+                            flipView.winControl.currentPage = that.images.length - 1;
+                        }
+                    }
+                }
+                Log.ret(Log.l.trace);
+            }
+            this.addImage = addImage;
+
+            var scrollToRecordId = function (recordId) {
+                Log.call(Log.l.trace, "Questionnaire.Controller.", "recordId=" + recordId);
+                if (that.loading) {
+                    WinJS.Promise.timeout(50).then(function () {
+                        that.scrollToRecordId(recordId);
+                    });
+                } else {
+                    if (recordId && listView && listView.winControl) {
+                        for (var i = 0; i < that.questions.length; i++) {
+                            var question = that.questions.getAt(i);
+                            if (question && typeof question === "object" &&
+                                question.ZeilenantwortVIEWID === recordId) {
+                                listView.winControl.indexOfFirstVisible = i;
+                                break;
+                            }
+                        }
+                    }
+                }
+                Log.ret(Log.l.trace);
+            }
+            this.scrollToRecordId = scrollToRecordId;
+
+            var selectRecordId = function (recordId) {
+                Log.call(Log.l.trace, "Questionnaire.Controller.", "recordId=" + recordId);
+                if (recordId && listView && listView.winControl && listView.winControl.selection) {
+                    for (var i = 0; i < that.questions.length; i++) {
+                        var question = that.questions.getAt(i);
+                        if (question && typeof question === "object" &&
+                            question.ZeilenantwortVIEWID === recordId) {
+                            listView.winControl.selection.set(i).done(function () {
+                                WinJS.Promise.timeout(50).then(function () {
+                                    that.scrollToRecordId(recordId);
+                                });
+                            });
+                            break;
+                        }
+                    }
+                }
+                Log.ret(Log.l.trace);
+            }
+            this.selectRecordId = selectRecordId;
 
             var singleRatingTemplate = null, multiRatingTemplate = null, comboTemplate = null, singleTemplate8 = null, multiTemplate8 = null, singleTemplate28 = null, multiTemplate28 = null;
             // Conditional renderer that chooses between templates
@@ -106,6 +218,8 @@
             var maxTrailingPages = 0;
 
             var resultConverter = function (item, index) {
+                var keyValue, keyTitle, iStr, i;
+
                 if (item.SRMax) {
                     item.type = "single-rating";
                 } else if (item.MRShow01) {
@@ -120,13 +234,14 @@
                         item.type = "single8";
                     }
                     if (typeof item.SSANTWORT !== "undefined") {
-                        ssItems.push({
-                            title: "",
-                            value: null
-                        });
-                        for (var i = 1; i <= 28; i++) {
-                            var keyValue, keyTitle;
-                            var iStr = i.toString();
+                        if (item.Combobox) {
+                            ssItems.push({
+                                title: "",
+                                value: null
+                            });
+                        }
+                        for (i = 1; i <= 28; i++) {
+                            iStr = i.toString();
                             if (i < 10) {
                                 keyValue = "SSANTWORT0" + iStr;
                                 keyTitle = "SS0" + iStr;
@@ -143,10 +258,12 @@
                                 }
                             } else {
                                 var checked = keyValue + "CHECKED";
-                                if (item[keyValue] === item.SSANTWORT) {
-                                    item[checked] = true;
-                                } else {
-                                    item[checked] = false;
+                                if (item[keyValue] !== null) {
+                                    if (item[keyValue] === item.SSANTWORT) {
+                                        item[checked] = true;
+                                    } else {
+                                        item[checked] = false;
+                                    }
                                 }
                             }
                         }
@@ -165,41 +282,31 @@
                 if (item.Freitext === null) {
                     item.Freitext = "";
                 }
-
-                if (item.DOC1ZeilenantwortID !== "undefined") {
-                    that.docIds.push({
-                        ZeilenantwortVIEWID: item.ZeilenantwortVIEWID,
-                        DOC1ZeilenantwortID: item.DOC1ZeilenantwortID
-                    });
-                    if (item.DOC1ZeilenantwortID) {
-                        that.docCount++;
-                        WinJS.Promise.timeout(50).then(function () {
-                            that.loadPicture(item.DOC1ZeilenantwortID, item.Sortierung);
-                        });
-                    }
+                if (item.FreitextAktiv === null && hasIPhoneBug) { //  && device.version === "11.3"
+                    item.FreitextAktiv = 3;
                 }
                 if (item.DateCombobox) {
                     item["DateComboboxButtonShow"] = true;
                     item["DateComboboxButtonOk"] = false;
-                    //item["FreitextAktiv"] = null;
                 } else {
                     item["DateComboboxButtonShow"] = false;
                     item["DateComboboxButtonOk"] = false;
                 }
-
-                // Für Pflichtfeld analog zu DateCombobox
                 if (item.PflichtFeld) {
-                    item["RequiredFieldShow"] = true;
-                }else
-                    item["RequiredFieldShow"] = false;
-
+                    if (Colors.isDarkTheme) {
+                        item["mandatoryColor"] = "#8b4513";
+                    } else {
+                        item["mandatoryColor"] = "lightyellow";
+                    }
+                } else {
+                    item["mandatoryColor"] = AppData._persistentStates.showAppBkg ? "transparent" : Colors.backgroundColor;
+                }
                 // Abfrage welcher Typ um Typ von Antwort, dann alle null werte ignorieren 
                 if (item.type === "single-rating") {
-                    for (var y = 1; y <= 6; y++) {
-                        var keyValue, keyTitle;
-                        var iStr = y.toString();
-                        if (y < 10) {
-                           // keyValue = "SRANTWORT0" + iStr;
+                    for (i = 1; i <= 6; i++) {
+                        iStr = i.toString();
+                        if (i < 10) {
+                            // keyValue = "SRANTWORT0" + iStr;
                             keyTitle = "SR0" + iStr;
                         } else {
                             //keyValue = "SSANTWORT" + iStr;
@@ -214,10 +321,9 @@
                     }
                 }
                 if (item.type === "multi-rating") {
-                    for (var y = 1; y <= 6; y++) {
-                        var keyValue, keyTitle;
-                        var iStr = y.toString();
-                        if (y < 10) {
+                    for (i = 1; i <= 6; i++) {
+                        iStr = i.toString();
+                        if (i < 10) {
                             keyValue = "MRShow0" + iStr;
                             keyTitle = "MR0" + iStr;
                         } else {
@@ -232,9 +338,195 @@
                         }
                     }
                 }
-
+                if (index >= 0) {
+                    that.docIds[index] = {
+                        ZeilenantwortVIEWID: item.ZeilenantwortVIEWID,
+                        DOC1ZeilenantwortID: item.DOC1ZeilenantwortID
+                    };
+                    if (item.DOC1ZeilenantwortID) {
+                        that.docCount++;
+                        WinJS.Promise.timeout(50).then(function () {
+                            that.loadPicture(item.DOC1ZeilenantwortID);
+                        });
+                    }
+                }
             }
             this.resultConverter = resultConverter;
+
+            var resultMandatoryConverter = function (item) {
+                if (item.INITOptionTypeID === 22) {
+                    if (item.LocalValue === "1") {
+                        AppData._persistentStates.showConfirmQuestion = true;
+                    } else {
+                        AppData._persistentStates.showConfirmQuestion = false;
+                    }
+                }
+            }
+            this.resultMandatoryConverter = resultMandatoryConverter;
+
+            var getHideQuestion = function (item, sortIdx) {
+                var hideQuestion = false;
+                if (item && typeof sortIdx === "number") {
+                    var value, key;
+                    if (sortIdx > 0 && sortIdx < 9) {
+                        value = "0" + sortIdx.toString();
+                    } else {
+                        value = sortIdx.toString();
+                    }
+                    switch (item.type) {
+                        case "single-rating":
+                            if (sortIdx >= 1 && sortIdx <= 6) {
+                                if (item.RRANTWORT === value) {
+                                    hideQuestion = false;
+                                } else {
+                                    hideQuestion = true;
+                                }
+                            }
+                        break;
+                        case "multi-rating":
+                            if (sortIdx >= 1 && sortIdx <= 6) {
+                                key = "MrAntwort" + value;
+                                if (item[key] === "X") {
+                                    hideQuestion = false;
+                                } else {
+                                    hideQuestion = true;
+                                }
+                            }
+                        break;
+                        case "multi":
+                            key = "MSANTWORT" + value;
+                            if (item[key] === "X") {
+                                hideQuestion = false;
+                            } else {
+                                hideQuestion = true;
+                            }
+                        break;
+                        case "multi8":
+                            if (sortIdx >= 1 && sortIdx <= 8) {
+                                key = "MSANTWORT" + value;
+                                if (item[key] === "X") {
+                                    hideQuestion = false;
+                                } else {
+                                    hideQuestion = true;
+                                }
+                            }
+                        break;
+                        case "combo":
+                            if (item.SSANTWORT === value) {
+                                hideQuestion = false;
+                            } else {
+                                hideQuestion = true;
+                            }
+                        break;
+                        case "single":
+                            if (item.SSANTWORT === value) {
+                                hideQuestion = false;
+                            } else {
+                                hideQuestion = true;
+                            }
+                        break;
+                        case "single8":
+                            if (sortIdx >= 1 && sortIdx <= 8) {
+                                if (item.SSANTWORT === value) {
+                                    hideQuestion = false;
+                                } else {
+                                    hideQuestion = true;
+                                }
+                            }
+                        break;
+                    }
+                }
+                return hideQuestion;
+            }
+            this.getHideQuestion = getHideQuestion;
+
+            var checkForHideQuestion = function (items) {
+                var i, item, selItem, selQuestionIdx;
+                if (items) {
+                    for (i = 0; i < items.length; i++) {
+                        item = items[i];
+                        if (!item.PflichtFeld &&
+                            item.SelektierteFrageIdx > 0 &&
+                            item.SelektierteFrageIdx <= items.length &&
+                            item.SelektierteFrageIdx !== i + 1) {
+                            selQuestionIdx = item.SelektierteFrageIdx - 1;
+                            selItem = items[selQuestionIdx];
+                            item.hideQuestion = getHideQuestion(selItem, item.SelektierteAntwortIdx);
+                            if (!that.selectQuestionIdxs) {
+                                that.selectQuestionIdxs = [];
+                            }
+                            if (!that.selectQuestionIdxs[selQuestionIdx]) {
+                                that.selectQuestionIdxs[selQuestionIdx] = [i];
+                            } else {
+                                that.selectQuestionIdxs[selQuestionIdx].push(i);
+                            }
+                        } else {
+                            item.hideQuestion = false;
+                        }
+                    }
+                } else if (that.questions) {
+                    for (i = 0; i < that.questions.length; i++) {
+                        item = that.questions.getAt(i);
+                        if (!item.PflichtFeld &&
+                            item.SelektierteFrageIdx > 0 &&
+                            item.SelektierteFrageIdx <= that.questions.length &&
+                            item.SelektierteFrageIdx !== i + 1) {
+                            selQuestionIdx = item.SelektierteFrageIdx - 1;
+                            selItem = that.questions.getAt(selQuestionIdx);
+                            var hideQuestion = getHideQuestion(selItem, item.SelektierteAntwortIdx);
+                            if (hideQuestion !== item.hideQuestion) {
+                                item.hideQuestion = hideQuestion;
+                                that.questions.setAt(i, item);
+                            }
+                            if (!that.selectQuestionIdxs) {
+                                that.selectQuestionIdxs = [];
+                            }
+                            if (!that.selectQuestionIdxs[selQuestionIdx]) {
+                                that.selectQuestionIdxs[selQuestionIdx] = [i];
+                            } else {
+                                that.selectQuestionIdxs[selQuestionIdx].push(i);
+                            }
+                        } else {
+                            item.hideQuestion = false;
+                        }
+                    }
+                }
+            }
+            this.checkForHideQuestion = checkForHideQuestion;
+
+            var checkForSelectionQuestion = function (selIdx) {
+                if (that.selectQuestionIdxs && that.questions) {
+                    var curScope = null;
+                    var question = that.questions.getAt(selIdx);
+                    if (question && typeof question === "object" &&
+                        typeof that.selectQuestionIdxs[selIdx] === "object") {
+                        curScope = copyByValue(question);
+                    }
+                    if (curScope) {
+                        var newRecord = that.getFieldEntries(selIdx, curScope.type);
+                        if (that.mergeRecord(curScope, newRecord) || that.showHideModified) {
+                            Log.print(Log.l.trace, "handle changes of item[" + selIdx + "]");
+                            var optionQuestionIdxs = that.selectQuestionIdxs[selIdx];
+                            for (var i = 0; i < optionQuestionIdxs.length; i++) {
+                                var idx = optionQuestionIdxs[i];
+                                var item = that.questions.getAt(idx);
+                                var selQuestionIdx = item.SelektierteFrageIdx > 0 ? item.SelektierteFrageIdx - 1 : -1;
+                                if (!item.PflichtFeld &&
+                                    selQuestionIdx === selIdx &&
+                                    selQuestionIdx !== idx) {
+                                    var hideQuestion = getHideQuestion(curScope, item.SelektierteAntwortIdx);
+                                    if (hideQuestion !== item.hideQuestion) {
+                                        item.hideQuestion = hideQuestion;
+                                        that.questions.setAt(idx, item);
+                                        that.showHideModified = true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            this.checkForSelectionQuestion = checkForSelectionQuestion;
 
             // get field entries
             var getFieldEntries = function (index, type) {
@@ -298,12 +590,12 @@
                             }
                         } else if (type === "combo") {
                             field = element.querySelector(".win-dropdown");
-                            if (field) {
+                            if (field && field.value !== "null") {
                                 ret["SSANTWORT"] = field.value;
                             }
                         }
                         field = element.querySelector("textarea");
-                        if (field) {
+                        if (field && field.value !== "null") {
                             ret["Freitext"] = field.value;
                         }
                     }
@@ -313,7 +605,7 @@
             this.getFieldEntries = getFieldEntries;
 
             var mergeRecord = function (prevRecord, newRecord) {
-                Log.call(Log.l.u1, "questionnaireController.");
+                Log.call(Log.l.u1, "Questionnaire.Controller.");
                 var ret = false;
                 for (var prop in newRecord) {
                     if (newRecord.hasOwnProperty(prop)) {
@@ -376,6 +668,57 @@
             };
             this.saveData = saveData;
 
+            var showConfirmBoxMandatory = function () {
+                var ret = false;
+                Log.call(Log.l.trace, "Questionnaire.Controller.");
+                for (var i = 0; i < that.questions.length; i++) {
+                    var question = that.questions.getAt(i);
+                    if (question &&
+                        typeof question === "object" &&
+                        question.PflichtFeld) {
+
+                        var curScope = question;
+                        that.actualquestion = question;
+                        var newRecord = that.getFieldEntries(i, curScope.type);
+                        var prop;
+                        
+                        ret = true;
+                        if (curScope.type.substr(0,5) === "multi") {
+                            for (prop in newRecord) {
+                                if (newRecord.hasOwnProperty(prop)) {
+                                    var propPrefix = prop.substr(0, 9);
+                                    if (propPrefix === "MSANTWORT" || propPrefix === "MsAntwort" || propPrefix === "MrAntwort") {
+                                        if (newRecord[prop] === "X") {
+                                            ret = false;
+                                            break;
+                                        }
+                                    }    
+                                }
+                            }
+                            if (ret) {
+                                break;
+                            }
+                        } else {
+                            if (curScope.type === "single-rating") {
+                                prop = "RRANTWORT";
+                            } else {
+                                prop = "SSANTWORT";
+                            }
+                            if (newRecord[prop] && newRecord[prop].length > 0 && newRecord[prop] !== "0" && newRecord[prop] !== "00") {
+                                Log.call(Log.l.u1, "Questionnaire.Controller. Answer not empty" + newRecord.prop);
+                                ret = false;
+                            }
+                            if (ret) {
+                                break;
+                            }
+                        }
+                    }
+                }
+                Log.ret(Log.l.u1);
+                return ret;
+            };
+            this.showConfirmBoxMandatory = showConfirmBoxMandatory;
+
             var getNextDocId = function () {
                 var ret = null;
                 Log.call(Log.l.u1, "Questionnaire.Controller.");
@@ -406,18 +749,52 @@
                 }
                 AppBar.triggerDisableHandlers();
                 Log.ret(Log.l.u1);
-            }
+            };
             that.setNextDocId = setNextDocId;
 
             var insertCameradata = function (imageData, width, height) {
+                var ovwEdge = 256;
+                var prvEdge = 512;
                 Log.call(Log.l.trace, "Questionnaire.Controller.");
+                var prvData = null;
                 var ret = new WinJS.Promise.as().then(function () {
+                    if (imageData.length < 500000) {
+                        // keep original 
+                        return WinJS.Promise.as();
+                    }
+                    return Colors.resizeImageBase64(imageData, "image/jpeg", 2560, AppData.generalData.cameraQuality, 0.25);
+                }).then(function (resizeData) {
+                    if (resizeData) {
+                        Log.print(Log.l.trace, "resized image");
+                        imageData = resizeData;
+                    }
+                    if (imageData.length < 200000) {
+                        // keep original 
+                        return WinJS.Promise.as();
+                    }
+                    return Colors.resizeImageBase64(imageData, "image/jpeg", prvEdge, AppData.generalData.cameraQuality);
+                }).then(function (resizeData) {
+                    if (resizeData) {
+                        Log.print(Log.l.trace, "resized preview");
+                        prvData = resizeData;
+                    }
+                    if (!prvData || prvData.length < 50000) {
+                        // keep original 
+                        return WinJS.Promise.as();
+                    }
+                    return Colors.resizeImageBase64(prvData, "image/jpeg", ovwEdge, AppData.generalData.cameraQuality);
+                }).then(function (ovwData) {
+                    if (ovwData) {
+                        Log.print(Log.l.trace, "resized overview");
+                    }
                     // UTC-Zeit in Klartext
                     var now = new Date();
                     var dateStringUTC = now.toUTCString();
 
                     // decodierte Dateigröße
                     var contentLength = Math.floor(imageData.length * 3 / 4);
+                    var prvLength = prvData ? Math.floor(imageData.length * 3 / 4) : 0;
+                    var ovwLength = ovwData ? Math.floor(imageData.length * 3 / 4) : 0;
 
                     var newPicture = {
                         DOC1ZeilenantwortVIEWID: that.getNextDocId(),
@@ -428,11 +805,11 @@
                         ulDpm: 0,
                         szOriFileNameDOC1: "Question.jpg",
                         DocContentDOCCNT1:
-                        "Content-Type: image/jpegAccept-Ranges: bytes\x0D\x0ALast-Modified: " + dateStringUTC + "\x0D\x0AContent-Length: " + contentLength + "\x0D\x0A\x0D\x0A" + imageData,
-                        PrevContentDOCCNT2: null,
-                        OvwContentDOCCNT3: null,
-                        szOvwPathDOC3: null,
-                        szPrevPathDOC4: null,
+                            "Content-Type: image/jpegAccept-Ranges: bytes\x0D\x0ALast-Modified: " + dateStringUtc + "\x0D\x0AContent-Length: " + contentLength + "\x0D\x0A\x0D\x0A" + imageData,
+                        PrevContentDOCCNT2: prvData ? 
+                            "Content-Type: image/jpegAccept-Ranges: bytes\x0D\x0ALast-Modified: " + dateStringUtc + "\x0D\x0AContent-Length: " + prvLength + "\x0D\x0A\x0D\x0A" + prvData : null,
+                        OvwContentDOCCNT3: ovwData ? 
+                            "Content-Type: image/jpegAccept-Ranges: bytes\x0D\x0ALast-Modified: " + dateStringUtc + "\x0D\x0AContent-Length: " + ovwLength + "\x0D\x0A\x0D\x0A" + ovwData : null,
                         ContentEncoding: 4096
                     };
                     //load of format relation record data
@@ -445,6 +822,7 @@
                         if (json && json.d) {
                             that.setNextDocId(json.d.DOC1ZeilenantwortVIEWID);
                             Log.print(Log.l.info, "DOC1ZeilenantwortVIEWID=" + json.d.DOC1ZeilenantwortVIEWID);
+                            that.addImage(json);
                             that.docCount++;
                             WinJS.Promise.timeout(50).then(function () {
                                 that.loadPicture(json.d.DOC1ZeilenantwortVIEWID);
@@ -483,7 +861,7 @@
                 // todo: create preview from imageData
                 that.insertCameradata(imageData, width, height);
                 Log.ret(Log.l.trace);
-            }
+            };
 
             var onPhotoDataFail = function (message) {
                 Log.call(Log.l.error, "Questionnaire.Controller.");
@@ -491,7 +869,7 @@
                 //AppData.setErrorMsg(that.binding, message);
                 AppBar.busy = false;
                 Log.ret(Log.l.error);
-            }
+            };
 
             var textFromDateCombobox = function (id, element) {
                 Log.call(Log.l.error, "Questionnaire.Controller.");
@@ -501,7 +879,8 @@
                     var i;
                     for (i = 0; i < that.questions.length; i++) {
                         var question = that.questions.getAt(i);
-                        if (question && typeof question === "object" &&
+                        if (question &&
+                            typeof question === "object" &&
                             question.ZeilenantwortVIEWID === recordId) {
                             curScope = question;
                             break;
@@ -512,7 +891,7 @@
                         that.mergeRecord(curScope, newRecord);
                         switch (id) {
                             case "showDateCombobox":
-                                that.resultConverter(curScope);
+                                that.resultConverter(curScope, -1);
                                 curScope.DateComboboxButtonShow = false;
                                 curScope.DateComboboxButtonOk = true;
                                 break;
@@ -523,7 +902,11 @@
                                     if (curScope.Freitext && curScope.Freitext.length > 0) {
                                         curScope.Freitext += " ";
                                     }
-                                    curScope.Freitext += current.getDate().toString() + "." + (current.getMonth() + 1).toString() + "." + current.getFullYear().toString();
+                                    curScope.Freitext += current.getDate().toString() +
+                                        "." +
+                                        (current.getMonth() + 1).toString() +
+                                        "." +
+                                        current.getFullYear().toString();
                                 }
                                 Log.print(Log.l.trace, "save changes of recordId:" + recordId);
                                 Questionnaire.questionnaireView.update(function (response) {
@@ -532,7 +915,7 @@
                                 }, function (errorResponse) {
                                     AppData.setErrorMsg(that.binding, errorResponse);
                                 }, recordId, curScope);
-                                that.resultConverter(curScope);
+                                that.resultConverter(curScope, -1);
                                 curScope.DateComboboxButtonShow = true;
                                 curScope.DateComboboxButtonOk = false;
                                 break;
@@ -541,31 +924,46 @@
                     }
                 }
                 Log.ret(Log.l.error);
-            }
+            };
             this.textFromDateCombobox = textFromDateCombobox;
 
             //start native Camera async
             AppData.setErrorMsg(that.binding);
             var takePhoto = function () {
                 Log.call(Log.l.trace, "Questionnaire.Controller.");
-                if (navigator.camera &&
-                    typeof navigator.camera.getPicture === "function") {
+                var isWindows10 = false;
+                if (typeof device === "object" && typeof device.platform === "string" && typeof device.version === "string") {
+                    if (device.platform.substr(0, 7) === "windows" && device.version.substr(0, 4) === "10.0") {
+                        isWindows10 = true;
+                    }
+                }
+                if (isWindows10 &&
+                    !WinJS.Utilities.isPhone &&
+                    navigator.clippingCamera &&
+                    typeof navigator.clippingCamera.getPicture === "function") {
+                    navigator.clippingCamera.getPicture(onPhotoDataSuccess, onPhotoDataFail, {
+                        quality: AppData.generalData.cameraQuality,
+                        maxResolution: 5000000,
+                        autoShutter: 0,
+                        dontClip: true
+                    });
+                } else if (navigator.camera && typeof navigator.camera.getPicture === "function") {
                     // shortcuts for camera definitions
                     //pictureSource: navigator.camera.PictureSourceType,   // picture source
                     //destinationType: navigator.camera.DestinationType, // sets the format of returned value
                     Log.print(Log.l.trace, "calling camera.getPicture...");
                     // Take picture using device camera and retrieve image as base64-encoded string
-                    AppBar.busy = true;
                     navigator.camera.getPicture(onPhotoDataSuccess, onPhotoDataFail, {
                         destinationType: Camera.DestinationType.DATA_URL,
                         sourceType: Camera.PictureSourceType.CAMERA,
-                        allowEdit: true,
+                        allowEdit: !isWindows10,
                         quality: AppData.generalData.cameraQuality,
                         targetWidth: -1,
                         targetHeight: -1,
                         encodingType: Camera.EncodingType.JPEG,
                         saveToPhotoAlbum: false,
-                        cameraDirection: Camera.Direction.BACK
+                        cameraDirection: Camera.Direction.BACK,
+                        variableEditRect: true
                     });
                 } else {
                     Log.print(Log.l.error, "camera.getPicture not supported...");
@@ -599,17 +997,7 @@
                     Application.navigateById('sketch', event);
                     Log.ret(Log.l.trace);
                 },
-                clickRating: function(event) {
-                    Log.call(Log.l.trace, "Questionnaire.Controller.");
-                    WinJS.Promise.timeout(0).then(function() {
-                        var recordId = that.curRecId;
-                        if (recordId) {
-                            // handle setDirty
-                        }
-                    });
-                    Log.ret(Log.l.trace);
-                },
-                clickChangeUserState: function(event) {
+                clickChangeUserState: function (event) {
                     Log.call(Log.l.trace, "Questionnaire.Controller.");
                     Application.navigateById("userinfo", event);
                     Log.ret(Log.l.trace);
@@ -646,7 +1034,7 @@
                             break;
                         }
                     }
-                    if (event && event.target && !event.target.value) {
+                    if (event && event.target && !event.target.value && !hasIPhoneBug) {
                         WinJS.Utilities.removeClass(event.target, "field-text-comment-big");
                     }
                     Log.ret(Log.l.trace);
@@ -659,7 +1047,7 @@
                             break;
                         }
                     }
-                    if (event && event.target) {
+                    if (event && event.target && !hasIPhoneBug) {
                         WinJS.Utilities.addClass(event.target, "field-text-comment-big");
                     }
                     Log.ret(Log.l.trace);
@@ -688,6 +1076,7 @@
                                         var newRecId = item.data.ZeilenantwortVIEWID;
                                         Log.print(Log.l.trace, "newRecId:" + newRecId + " curRecId:" + that.curRecId);
                                         if (newRecId !== 0 && newRecId !== that.curRecId) {
+                                            that.showHideModified = false;
                                             AppData.setRecordId('Zeilenantwort', newRecId);
                                             if (that.curRecId) {
                                                 that.prevRecId = that.curRecId;
@@ -783,6 +1172,15 @@
                                                 }
                                             }
                                         }
+                                        if (hasIPhoneBug) {
+                                            element = listView.winControl.elementFromIndex(i);
+                                            if (element) {
+                                                var textarea = element.querySelector(".win-textarea.field-text-comment");
+                                                if (item.FreitextAktiv === 3) {
+                                                    textarea.readOnly = true;
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -837,9 +1235,10 @@
                                         that.nextUrl = Questionnaire.questionnaireView.getNextUrl(json);
                                         var results = json.d.results;
                                         results.forEach(function (item) {
-                                            that.resultConverter(item);
+                                            that.resultConverter(item, that.binding.count);
                                             that.binding.count = that.questions.push(item);
                                         });
+                                        that.checkForHideQuestion();
                                     }
                                 }, function (errorResponse) {
                                     // called asynchronously if an error occurs
@@ -900,6 +1299,20 @@
                         }
                     }
                     Log.ret(Log.l.trace);
+                },
+                onModified: function (event) {
+                    if (that.selectQuestionIdxs && event && event.currentTarget &&
+                        listView && listView.winControl) {
+                        var element = event.currentTarget.parentElement;
+                        while (element && element !== listView) {
+                            if (element.className === "questionnaire-row") {
+                                var i = listView.winControl.indexOfElement(element.parentElement);
+                                that.checkForSelectionQuestion(i);
+                                break;
+                            }
+                            element = element.parentElement;
+                        }
+                    }
                 }
             };
 
@@ -912,7 +1325,8 @@
                     }
                 },
                 clickNew: function () {
-                    if (that.binding.generalData.contactId) {
+                    var contactId = AppData.getRecordId("Kontakt");
+                    if (contactId) {
                         return false;
                     } else {
                         return true;
@@ -929,10 +1343,6 @@
                         return false;
                     }
                 }
-            }
-
-            if (flipview && flipview.winControl) {
-                flipview.winControl.itemDataSource = null;
             }
 
             // register ListView event handler
@@ -960,25 +1370,18 @@
                 }.bind(this), true);
             }
 
-            var loadPicture = function (pictureId, orderId) {
-                var i;
-                Log.call(Log.l.trace, "Questionnaire.Controller.", "pictureId=" + pictureId + " orderId=" + orderId);
+            var loadPicture = function (pictureId) {
+                Log.call(Log.l.trace, "Questionnaire.Controller.", "pictureId=" + pictureId);
                 var ret = null;
+                if (!pictureId) {
+                    Log.ret(Log.l.error, "NULL param!");
+                    return WinJS.Promise.as();
+                }
                 if (that.images && that.images.length > 0) {
-                    for (i = 0; i < that.images.length; i++) {
-                        var imageItem = that.images[i];
+                    for (var i = 0; i < that.images.length; i++) {
+                        var imageItem = that.images.getAt(i);
                         if (imageItem && imageItem.DOC1ZeilenantwortID === pictureId) {
-                            if (flipview && flipview.winControl) {
-                                if (that.images && that.images.length > 0) {
-                                    flipview.winControl.itemDataSource = that.images.dataSource;
-                                }
-                            }
-                            var pageControl = pageElement.winControl;
-                            if (pageControl && pageControl.updateLayout) {
-                                pageControl.prevWidth = 0;
-                                pageControl.prevHeight = 0;
-                                pageControl.updateLayout.call(pageControl, pageElement);
-                            }
+                            Log.print(Log.l.trace, "questionnaireDocView: success!");
                             ret = WinJS.Promise.as();
                             break;
                         }
@@ -989,59 +1392,7 @@
                         // this callback will be called asynchronously
                         // when the response is available
                         Log.print(Log.l.trace, "questionnaireDocView: success!");
-                        if (json.d) {
-                            // no format handling for now until bugfixed binaries are relased
-                            var format = "image/jpeg";
-                            if (!that.images) {
-                                // Now, we call WinJS.Binding.List to get the bindable list
-                                that.images = new WinJS.Binding.List([]);
-                                that.images = that.images.createSorted(function (first, second) {
-                                    if (first.orderId === second.orderId) {
-                                        return 0;
-                                    } else if (first.orderId < second.orderId) {
-                                        return -1;
-                                    } else {
-                                        return 1;
-                                    }
-                                });
-                            }
-                            var docContent;
-                            if (json.d.PrevContentDOCCNT2) {
-                                docContent = json.d.PrevContentDOCCNT2;
-                            } else {
-                                docContent = json.d.DocContentDOCCNT1;
-                            }
-                            if (docContent) {
-                                var sub = docContent.search("\r\n\r\n");
-                                var picture = "data:" + format + ";base64," + docContent.substr(sub + 4);
-                                var title;
-                                if (orderId) {
-                                    title = orderId + ". " + getResourceText("questionnaire.count") + ": " + that.docCount;
-                                } else {
-                                    title = (that.images.length + 1).toString() + " / " + that.docCount;
-                                }
-                                that.images.push({
-                                    type: "item",
-                                    DOC1ZeilenantwortID: json.d.DOC1ZeilenantwortVIEWID,
-                                    title: title,
-                                    picture: picture,
-                                    orderId: orderId
-                                });
-                            }
-                        }
-                        if (flipview && flipview.winControl) {
-                            if (that.images && that.images.length > 0) {
-                                flipview.winControl.itemDataSource = that.images.dataSource;
-                            }
-                        }
-                        WinJS.Promise.timeout(50).then(function () {
-                            var pageControl = pageElement.winControl;
-                            if (pageControl && pageControl.updateLayout) {
-                                pageControl.prevWidth = 0;
-                                pageControl.prevHeight = 0;
-                                pageControl.updateLayout.call(pageControl, pageElement);
-                            }
-                        });
+                        that.addImage(json);
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
@@ -1056,6 +1407,9 @@
             var loadData = function () {
                 Log.call(Log.l.trace, "Questionnaire.Controller.");
                 AppData.setErrorMsg(that.binding);
+                if (that.questions) {
+                    that.questions.length = 0;
+                }
                 that.docIds = [];
                 if (that.images) {
                     that.images.length = 0;
@@ -1071,17 +1425,26 @@
                             // this callback will be called asynchronously
                             // when the response is available
                             Log.print(Log.l.trace, "Questionnaire.questionnaireView: success!");
+                            that.selectQuestionIdxs = null;
                             // startContact returns object already parsed from json file in response
                             if (json && json.d) {
-                                that.binding.count = json.d.results.length;
                                 that.nextUrl = Questionnaire.questionnaireView.getNextUrl(json);
                                 var results = json.d.results;
-                                results.forEach(function (item, index) {
-                                    that.resultConverter(item, index);
-                                });
-                                // Now, we call WinJS.Binding.List to get the bindable list
-                                that.questions = new WinJS.Binding.List(results);
-
+                                if (!that.questions) {
+                                    results.forEach(function (item, index) {
+                                        that.resultConverter(item, index);
+                                    });
+                                    that.checkForHideQuestion(results);
+                                    // Now, we call WinJS.Binding.List to get the bindable list
+                                    that.questions = new WinJS.Binding.List(results);
+                                    that.binding.count = that.questions.length;
+                                } else {
+                                    results.forEach(function (item) {
+                                        that.resultConverter(item, that.binding.count);
+                                        that.binding.count = that.questions.push(item);
+                                    });
+                                    that.checkForHideQuestion();
+                                }
                                 if (listView && listView.winControl) {
                                     var getTextareaForFocus = function (element) {
                                         var focusElement = null;
@@ -1215,6 +1578,21 @@
                         });
                     }
                 }).then(function () {
+                    ret = Questionnaire.CR_VERANSTOPTION_ODataView.select(function (json) {
+                        // this callback will be called asynchronously
+                        // when the response is available
+                        Log.print(Log.l.trace, "Login: success!");
+                        // CR_VERANSTOPTION_ODataView returns object already parsed from json file in response
+                        if (json && json.d && json.d.results && json.d.results.length > 1) {
+                            var results = json.d.results;
+                            results.forEach(function (item) {
+                                that.resultMandatoryConverter(item);
+                            });
+                        } else {
+                            AppData._persistentStates.showConfirmQuestion = false;
+                        }
+                    });
+                }).then(function () {
                     AppBar.triggerDisableHandlers();
                     return WinJS.Promise.as();
                 });
@@ -1247,6 +1625,7 @@
                             for (var i = 0; i < this.images.length; i++) {
                                 var item = this.images.getAt(i);
                                 item.title = (i + 1).toString() + " / " + this._docCount;
+                                this.images.setAt(i, item);
                             }
                         }
                     }
