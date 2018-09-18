@@ -406,6 +406,7 @@
     "label.contacts"        : "Modifica contatti",
     "label.questionList"    : "Domande/Risposte",
     "label.events"          : "Organizza evento",
+    "label.serviceevents"	: "Organizza evento",
     "label.event"           : "Evento",
     "label.questiongroup"   : "Gruppo domande",
     "label.employee"        : "Utenti",

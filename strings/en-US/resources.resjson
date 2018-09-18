@@ -406,6 +406,7 @@
     "label.contacts"        : "Edit Contacts",
     "label.questionList"    : "Questions/Answers",
     "label.events"          : "Plan event",
+	"label.serviceevents"	: "Plan event",
     "label.event"           : "Event",
     "label.questiongroup"   : "Question groups",
     "label.employee"        : "User accounts",
