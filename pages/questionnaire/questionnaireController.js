@@ -45,14 +45,14 @@
 
             // ListView control
             var listView = pageElement.querySelector("#listQuestionnaire.listview");
-            var flipview = pageElement.querySelector("#imgListQuestionnaire.flipview");
+            var flipView = pageElement.querySelector("#imgListQuestionnaire.flipview");
 
             this.dispose = function () {
                 if (listView && listView.winControl) {
                     listView.winControl.itemDataSource = null;
                 }
-                if (flipview && flipview.winControl) {
-                    flipview.winControl.itemDataSource = null;
+                if (flipView && flipView.winControl) {
+                    flipView.winControl.itemDataSource = null;
                 }
                 if (that.questions) {
                     that.questions = null;
@@ -1260,9 +1260,9 @@
                                     counter.style.display = "inline";
                                 }
                                 that.loading = false;
-                                if (flipview &&  flipview.parentElement && flipview.winControl &&
-                                    WinJS.Utilities.hasClass(flipview.parentElement, "img-footer-container")) {
-                                    flipview.winControl.forceLayout();
+                                if (flipView && flipView.parentElement && flipView.winControl &&
+                                    WinJS.Utilities.hasClass(flipView.parentElement, "img-footer-container")) {
+                                    flipView.winControl.forceLayout();
                                 }
                             }
                         }
