@@ -746,7 +746,19 @@
             }).then(function () {
                 Log.print(Log.l.trace, "Splash time over");
                 return Application.pageframe.hideSplashScreen();
-            }).then(function() {
+            }).then(function () {
+                WinJS.Promise.timeout(50).then(function() {
+                    if (that.binding.generalData.publishFlag) {
+                        var confirmTitle = getResourceText("start.confirmTextPublish");
+                        confirm(confirmTitle, function (result) {
+                            if (result) {
+                                Application.navigateById("publish", event);
+                            } else {
+                                Log.print(Log.l.trace, "publishflag: user choice CANCEL");
+                            }
+                        });
+                    }
+                });
                 Log.print(Log.l.trace, "Splash screen vanished");
             });
             Log.ret(Log.l.trace);

@@ -110,6 +110,7 @@
     "start.event"           : "Ihre Messe",
     "start.info"            : "Wichtige Hinweise",
     "start.language"        : "Sprache",
+	"start.confirmTextPublish"  : "Fragebogen hat sich geändert",
 
     "contact.title"         : "Erfasste Kontaktdaten",
     "contact.comment"       : "Verwende die Zurück-Schaltfläche auf dieser Seite um zurück zu gehen!",

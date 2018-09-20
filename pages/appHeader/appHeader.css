@@ -66,6 +66,12 @@
     color: red;
     width: 110px;
 }
+    @media only screen and (min-width: 1500px) {
+        .not-published-field {
+            font-weight: bold
+        }
+    }
+
 /*
     user name and on-site / off-site button
 */
