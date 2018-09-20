@@ -591,8 +591,23 @@
                 this.addRemovableEventListener(listView, "headervisibilitychanged", this.eventHandlers.onHeaderVisibilityChanged.bind(this));
                 this.addRemovableEventListener(listView, "iteminvoked", this.eventHandlers.onItemInvoked.bind(this));
             }
+            this.baseSaveData = this.saveData;
+
+            var saveData = function (complete, error) {
+                Log.call(Log.l.trace, "OptQuestionList.Controller.");
+                var ret = that.baseSaveData(function (result) {
+                    AppData.getUserData();
+                    if (typeof complete === "function") {
+                        complete(result);
+                    }
+                }, error);
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+            this.saveData = saveData;
 
             this.baseLoadData = this.loadData;
+
             var loadData = function(restriction, options, itemRenderer, complete, error) {
                 Log.call(Log.l.trace, "OptQuestionList.Controller.");
                 var ret = that.baseLoadData(restriction, options, itemRenderer, complete, error).then(function () {
