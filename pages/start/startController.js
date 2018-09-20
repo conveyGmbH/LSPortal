@@ -752,7 +752,7 @@
                         var confirmTitle = getResourceText("start.confirmTextPublish");
                         confirm(confirmTitle, function (result) {
                             if (result) {
-                                Application.navigateById("publish", event);
+                                Application.navigateById("publish");
                             } else {
                                 Log.print(Log.l.trace, "publishflag: user choice CANCEL");
                             }
