@@ -110,6 +110,7 @@
     "start.event"           : "Événement",
     "start.info"            : "Instructions importantes",
     "start.language"        : "Langue",
+	"start.confirmTextPublish"  : "Le questionnaire n'est pas encore publier. Appuyer sur \nOK svp. et publier le questionnaire, ou bien sont les \nChangement ne pas enregitrer et pas apparaître sur \nl'application / ou questionnaire",
 
     "contact.title"         : "Les données de Contact",
     "contact.comment"       : "Utilisez le bouton Retour sur cette page pour y retourner!",

@@ -110,6 +110,8 @@
     "start.event"           : "Your event",
     "start.info"            : "Important informations",
     "start.language"        : "Language",
+    "start.confirmTextPublish"  : "The questionnaire has not been published yet. Please press \nok and then publish it, otherwise the changes \nyou have done will not appear on the APP / Questionnaire",
+
 
     "contact.title"         : "Entered Contact Data",
     "contact.comment"       : "On this page, use the Back button to go back!",

@@ -110,7 +110,7 @@
     "start.event"           : "Ihre Messe",
     "start.info"            : "Wichtige Hinweise",
     "start.language"        : "Sprache",
-	"start.confirmTextPublish"  : "Fragebogen hat sich geändert",
+	"start.confirmTextPublish"  : "Der Fragebogen wurde noch nicht publiziert. Bitte drücken Sie \n'ok' und publizieren ihn, ansonsten werden die Änderungen \nnicht übernommen und erscheinen nicht auf der App / im Fragebogen",
 
     "contact.title"         : "Erfasste Kontaktdaten",
     "contact.comment"       : "Verwende die Zurück-Schaltfläche auf dieser Seite um zurück zu gehen!",

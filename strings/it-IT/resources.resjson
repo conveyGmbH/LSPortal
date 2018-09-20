@@ -110,6 +110,7 @@
     "start.event"           : "Il suo evento",
     "start.info"            : "Informazioni importanti",
     "start.language"        : "Lingua",
+	"start.confirmTextPublish"  : "Il questionario non é stato ancora pubblicato. Per favore \npremete ok e confermate la pubblicazione del questionario, \naltrimenti esso non verrá visualizzato correttamente nella \nAPP / questionario dei barcode",
 
     "contact.title"         : "Il dati di contatto",
     "contact.comment"       : "Utilizzate il pulsante \"indietro\" su questa pagina per tornare alla pagina precedente!",
