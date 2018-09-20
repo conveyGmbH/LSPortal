@@ -53,7 +53,7 @@
             VeranstaltungName: "",
             Login: "",
             Present: 0,
-            PublishFlag: 1
+            PublishFlag: 0
         },
         _photoData: null,
         _barcodeType: null,
