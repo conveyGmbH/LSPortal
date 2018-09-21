@@ -29,6 +29,7 @@
             Log.call(Log.l.trace, "PDFExport.Controller.");
             Application.Controller.apply(this, [pageElement, {
                 restriction: getEmptyDefaultValue(PDFExport.pdfExportParamView.defaultValue),
+                restrictionPdf: getEmptyDefaultValue(PDFExport.exportKontaktDataView.defaultValue),
                 sampleName: getEmptyDefaultValue(PDFExport.pdfExportParamView.defaultValue),
                 exportPdfString: "",
                 exportPdfMsg: "",
@@ -39,7 +40,8 @@
                     max: 0,
                     text: "",
                     show: null
-                }
+                },
+                showErfassungsdatum: false
             }, commandList]);
 
             var that = this;
@@ -51,6 +53,7 @@
             var exportFieldList4 = pageElement.querySelector("#InitExportField4");
             var pdfExportList = pageElement.querySelector("#PDFExportList");
             var spinner = pageElement.querySelector(".loader");
+            var erfassungsdatum = pageElement.querySelector("#ReportingErfassungsdatum.win-datepicker");
 
             this.pdfzip = null;
             this.pdfIddata = [];
@@ -65,13 +68,40 @@
                 }
             }
             this.disablePdfExportList = disablePdfExportList;
-            
+
+            var showDateRestrictions = function () {
+                if (typeof that.binding.showErfassungsdatum === "undefined") {
+                    that.binding.showErfassungsdatum = false;
+                }
+                if (erfassungsdatum && erfassungsdatum.winControl) {
+                    erfassungsdatum.winControl.disabled = !that.binding.showErfassungsdatum;
+                }
+            }
+            this.showDateRestrictions = showDateRestrictions;
+
+            var setRestriction = function () {
+                var reportingRestriction = null;
+                if (that.binding.showErfassungsdatum && that.binding.restrictionPdf.Erfassungsdatum) {
+                    if (!reportingRestriction) {
+                        reportingRestriction = {};
+                    }
+                    if (AppData.getLanguageId() === 1031) {
+                        reportingRestriction.Erfassungsdatum = that.binding.restrictionPdf.Erfassungsdatum; //.toISOString().substring(0, 10)
+                    } else {
+                        reportingRestriction.RecordDate = that.binding.restrictionPdf.Erfassungsdatum;
+                    }
+                }
+                return reportingRestriction;
+            }
+            this.setRestriction = setRestriction;
+
             var getPdfIdDaten = function () {
                 that.pdfzip = null;
                 that.pdfIddata = [];
                 that.nextUrl = null;
                 that.curPdfIdx = -1;
                 Log.call(Log.l.trace, "PDFExport.Controller.");
+                that.binding.restrictionPdf = that.setRestriction();
                 AppData.setErrorMsg(that.binding);
                 var ret = PDFExport.contactView.select(function (json) {
                     Log.print(Log.l.trace, "exportTemplate: success!");
@@ -85,7 +115,9 @@
                     // called asynchronously if an error occurs
                     // or server returns response with an error status.
                     AppData.setErrorMsg(that.binding, errorResponse);
-                });
+                },
+                    that.binding.restrictionPdf 
+               );
                 Log.ret(Log.l.trace);
                 return ret;    
             }
@@ -278,6 +310,13 @@
                     }
                     Log.ret(Log.l.trace);
                 },
+                clickErfassungsdatum: function (event) {
+                    if (event.currentTarget) {
+                        that.binding.showErfassungsdatum = event.currentTarget.checked;
+                        that.binding.restrictionPdf.Erfassungsdatum = new Date();
+                    }
+                    that.showDateRestrictions();
+                },
                 clickChangeUserState: function (event) {
                     Log.call(Log.l.trace, "PDFExport.Controller.");
                     Application.navigateById("userinfo", event);
@@ -295,6 +334,7 @@
                 },
                 clickExport: function (event) {
                     Log.call(Log.l.trace, "Reporting.Controller.");
+                    that.binding.showErfassungsdatum = 1;
                     that.saveData();
                     if (event && event.currentTarget) {
                         var exportselection = event.target.value;
@@ -412,7 +452,8 @@
                 return ret;
             };
             this.loadData = loadData;
-                        
+
+            that.showDateRestrictions();
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();

@@ -96,7 +96,7 @@
                 return ret;
             },
             defaultValue: {
-
+                Erfassungsdatum: new Date()
             }
         },
         _contactViewFormat: {
