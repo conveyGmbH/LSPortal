@@ -6,6 +6,16 @@
 /// <reference path="~/www/lib/convey/scripts/appbar.js" />
 /// <reference path="~/www/lib/convey/scripts/pageController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
+/// <reference path="~/www/lib/OpenXml/scripts/linq.js" />
+/// <reference path="~/www/lib/OpenXml/scripts/ltxml.js" />
+/// <reference path="~/www/lib/OpenXml/scripts/ltxml-extensions.js" />
+/// <reference path="~/www/lib/OpenXml/scripts/jszip.js" />
+/// <reference path="~/www/lib/OpenXml/scripts/jszip-load.js" />
+/// <reference path="~/www/lib/OpenXml/scripts/jszip-inflate.js" />
+/// <reference path="~/www/lib/OpenXml/scripts/jszip-deflate.js" />
+/// <reference path="~/www/lib/OpenXml/scripts/FileSaver.js" />
+/// <reference path="~/www/lib/OpenXml/scripts/openxml.js" />
+/// <reference path="~/www/lib/base64js/scripts/base64js.min.js" />
 /// <reference path="~/www/pages/questionList/questionListService.js" />
 
 (function () {
@@ -30,6 +40,7 @@
             ]);
 
             var that = this;
+            that.checkingQuestionareBarcodePDFFlag = false;
 
             // ListView control
             var listView = pageElement.querySelector("#listQuestionList.listview");
@@ -377,6 +388,7 @@
                                 // called asynchronously if ok
                                 if (typeof complete === "function") {
                                     complete(response);
+                                    that.checkingQuestionnaireBarcodePdf();
                                 }
                             }, function (errorResponse) {
                                 AppData.setErrorMsg(that.binding, errorResponse);
@@ -399,6 +411,85 @@
             };
             this.saveData = saveData;
 
+            var base64ToBlob = function (base64Data, contentType) {
+                contentType = contentType || '';
+                var sliceSize = 1024;
+                var byteCharacters = atob(base64Data);
+                var bytesLength = byteCharacters.length;
+                var slicesCount = Math.ceil(bytesLength / sliceSize);
+                var byteArrays = new Array(slicesCount);
+
+                for (var sliceIndex = 0; sliceIndex < slicesCount; ++sliceIndex) {
+                    var begin = sliceIndex * sliceSize;
+                    var end = Math.min(begin + sliceSize, bytesLength);
+
+                    var bytes = new Array(end - begin);
+                    for (var offset = begin, i = 0; offset < end; ++i, ++offset) {
+                        bytes[i] = byteCharacters[offset].charCodeAt(0);
+                    }
+                    byteArrays[sliceIndex] = new Uint8Array(bytes);
+                }
+                return new Blob(byteArrays, { type: contentType });
+            }
+            this.base64ToBlob = base64ToBlob;
+
+            var exportQuestionnaireBarcodePdf = function () {
+                Log.call(Log.l.trace, "Contact.Controller.");
+                AppData.setErrorMsg(that.binding);
+                var ret;
+                AppBar.busy = true;
+                ret = QuestionList.barcodeExportPdfView.select(function (json) {
+                    Log.print(Log.l.trace, "exportKontaktDataView: success!");
+                    if (json && json.d) {
+                        var results = json.d.results[0];
+                        var pdfDataraw = results.DocContentDOCCNT1;
+                        var sub = pdfDataraw.search("\r\n\r\n");
+                        var pdfDataBase64 = pdfDataraw.substr(sub + 4);
+                        var pdfData = that.base64ToBlob(pdfDataBase64, "pdf");
+                        var pdfName = results.szOriFileNameDOC1;
+                        saveAs(pdfData, pdfName);
+                        AppBar.busy = false;
+                    }
+                }, function (errorResponse) {
+                    AppBar.busy = false;
+                    AppData.setErrorMsg(that.binding, errorResponse);
+                    if (typeof error === "function") {
+                        error(errorResponse);
+                    }
+                });
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+            this.exportQuestionnaireBarcodePdf = exportQuestionnaireBarcodePdf;
+
+            var checkingQuestionnaireBarcodePdf = function () {
+                Log.call(Log.l.trace, "Contact.Controller.");
+                AppData.setErrorMsg(that.binding);
+                var ret;
+                AppBar.busy = true;
+                ret = QuestionList.barcodeExportPdfView.select(function (json) {
+                    Log.print(Log.l.trace, "exportKontaktDataView: success!");
+                    if (json && json.d && json.d.results) {
+                        var results = json.d.results[0];
+                        if (!results) {
+                            that.checkingQuestionareBarcodePDFFlag = false;
+                        } else {
+                            that.checkingQuestionareBarcodePDFFlag = true;
+                        }
+                        AppBar.busy = false;
+                    }
+                }, function (errorResponse) {
+                    AppBar.busy = false;
+                    AppData.setErrorMsg(that.binding, errorResponse);
+                    if (typeof error === "function") {
+                        error(errorResponse);
+                    }
+                });
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+            this.checkingQuestionnaireBarcodePdf = checkingQuestionnaireBarcodePdf;
+
             // define handlers
             this.eventHandlers = {
                 clickBack: function (event) {
@@ -406,6 +497,11 @@
                     if (WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done( /* Your success and error handlers */);
                     }
+                    Log.ret(Log.l.trace);
+                },
+                clickPdf: function (event) {
+                    Log.call(Log.l.trace, "Contact.Controller.");
+                    that.exportQuestionnaireBarcodePdf();
                     Log.ret(Log.l.trace);
                 },
                 clickNew: function (event) {
@@ -971,6 +1067,13 @@
                         return true;
                     }
                 },
+                clickPdf: function () {
+                    if (that.checkingQuestionareBarcodePDFFlag === false || that.binding.generalData.publishFlag === 1) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                },
                 clickNew: function () {
                     // never disabled!
                     return false;
@@ -1176,6 +1279,9 @@
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 return that.selectRecordId(that.binding.questionId);
+            }).then(function () {
+                that.checkingQuestionnaireBarcodePdf();
+                Log.print(Log.l.trace, "Binding wireup page complete");
             }).then(function () {
                
                 Log.print(Log.l.trace, "Record selected");

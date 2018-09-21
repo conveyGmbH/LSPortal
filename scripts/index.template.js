@@ -92,7 +92,8 @@
         { id: "settings", group: 8, disabled: false },
         { id: "account", group: 8, disabled: false },
         { id: "search", group: -9, disabled: false },
-        { id: "localevents", group: -10, disabled: false }
+        { id: "localevents", group: -10, disabled: false },
+        { id: "questionList", group: -11, disabled: false }
     ];
 
 
