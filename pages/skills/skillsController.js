@@ -749,73 +749,9 @@
                             that.questions = new WinJS.Binding.List(results);
 
                             if (listView.winControl) {
-                                var trySetActive = function (element, scroller) {
-                                    var success = true;
-                                    // don't call setActive() if a dropdown control has focus!
-                                    var comboInputFocus = element.querySelector(".win-dropdown:focus");
-                                    if (!comboInputFocus) {
-                                        try {
-                                            if (typeof element.setActive === "function") {
-                                                element.setActive();
-                                            }
-                                        } catch (e) {
-                                            // setActive() raises an exception when trying to focus an invisible item. Checking visibility is non-trivial, so it's best
-                                            // just to catch the exception and ignore it. focus() on the other hand, does not raise exceptions.
-                                            success = false;
-                                        }
-                                    }
-                                    return success;
-                                };
-                                // overwrite _setFocusOnItem for this ListView to supress automatic
-                                // scroll-into-view when calling item.focus() in base.ls implementation
-                                // by prevent the call of _ElementUtilities._setActive(item);
-                                listView.winControl._setFocusOnItem = function ListView_setFocusOnItem(entity) {
-                                    this._writeProfilerMark("_setFocusOnItem,info");
-                                    if (this._focusRequest) {
-                                        this._focusRequest.cancel();
-                                    }
-                                    if (this._isZombie()) {
-                                        return;
-                                    }
-                                    var that = this;
-                                    var setFocusOnItemImpl = function (item) {
-                                        if (that._isZombie()) {
-                                            return;
-                                        }
+                                // fix focus handling
+                                that.setFocusOnItemInListView(listView);
 
-                                        if (that._tabManager.childFocus !== item) {
-                                            that._tabManager.childFocus = item;
-                                        }
-                                        that._focusRequest = null;
-                                        if (that._hasKeyboardFocus && !that._itemFocused) {
-                                            if (that._selection._keyboardFocused()) {
-                                                that._drawFocusRectangle(item);
-                                            }
-                                            // The requestItem promise just completed so _cachedCount will
-                                            // be initialized.
-                                            if (entity.type === WinJS.UI.ObjectType.groupHeader || entity.type === WinJS.UI.ObjectType.item) {
-                                                that._view.updateAriaForAnnouncement(item, (entity.type === WinJS.UI.ObjectType.groupHeader ? that._groups.length() : that._cachedCount));
-                                            }
-
-                                            // Some consumers of ListView listen for item invoked events and hide the listview when an item is clicked.
-                                            // Since keyboard interactions rely on async operations, sometimes an invoke event can be received before we get
-                                            // to WinJS.Utilities._setActive(item), and the listview will be made invisible. If that happens and we call item.setActive(), an exception
-                                            // is raised for trying to focus on an invisible item. Checking visibility is non-trivial, so it's best
-                                            // just to catch the exception and ignore it.
-                                            that._itemFocused = true;
-                                            trySetActive(item);
-                                        }
-                                    };
-
-                                    if (entity.type === WinJS.UI.ObjectType.item) {
-                                        this._focusRequest = this._view.items.requestItem(entity.index);
-                                    } else if (entity.type === WinJS.UI.ObjectType.groupHeader) {
-                                        this._focusRequest = this._groups.requestHeader(entity.index);
-                                    } else {
-                                        this._focusRequest = WinJS.Promise.wrap(entity.type === WinJS.UI.ObjectType.header ? this._header : this._footer);
-                                    }
-                                    this._focusRequest.then(setFocusOnItemImpl);
-                                };
                                 listView.winControl._supressScrollIntoView = true;
                                 // add ListView dataSource
                                 listView.winControl.itemDataSource = that.questions.dataSource;
