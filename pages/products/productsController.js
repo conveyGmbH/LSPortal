@@ -510,6 +510,7 @@
                                 comboboxAnwser.winControl.data = that.productAnwserData;
                             }
                             */
+                            that.addScrollIntoViewCheckForInputElements(listView);
                         }
                     }
                     Log.ret(Log.l.trace);

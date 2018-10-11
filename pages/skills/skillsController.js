@@ -535,6 +535,7 @@
                             Colors.loadSVGImageElements(listView, "question-image", 28, Colors.textColor);
                             Colors.loadSVGImageElements(listView, "question-image-selected", 28, Colors.backgroundColor);
 
+                            that.addScrollIntoViewCheckForInputElements(listView);
                         }
                     }
                     Log.ret(Log.l.trace);
