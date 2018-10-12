@@ -56,6 +56,7 @@
         { id: "start", group: 1, svg: "home", disabled: true },
         { id: "localevents", group: 10, svg: "calendar_1", disabled: true },
         { id: "events", group: 2, svg: "question_and_answer", disabled: true },
+        { id: "serviceevents", group: 11, svg: "question_and_answer", disabled: true },
         { id: "mailing", group: 3, svg: "mail", disabled: true },
         { id: "employee", group: 4, svg: "keys", disabled: true },
         { id: "contacts", group: 5, svg: "businesspeople2", disabled: true },
@@ -121,6 +122,8 @@
         Log.call(Log.l.trace, "Application.", "id=" + id);
         if (id === "events") {
             id = "event";
+        } else if (id === "serviceevents") {
+            id = "questionList";
         } else if (id === "contacts") {
             AppData.setRestriction("Kontakt", {});
             id = "contact";
