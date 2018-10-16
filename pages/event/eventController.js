@@ -119,6 +119,7 @@
                         that.binding.isPrivacyPolicySVGVisible = checked;
                         if (!checked) {
                             that.binding.dataEvent.DatenschutzText = "";
+                            that.binding.dataEvent.DatenschutzSVG = null;
                         } else {
                             that.binding.dataEvent.DatenschutzText = getResourceText("event.privacyPolicyStandartText");
                         }
