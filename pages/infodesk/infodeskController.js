@@ -561,6 +561,7 @@
                     if (initskills && initskills.winControl) {
                         initskills.winControl.data = new WinJS.Binding.List(skills);
                     }
+                    initskills.selectedIndex = 0;
                     if (item.Sortierung === 1) {
                         firstskill = skills;
                         if (item.SkillTypeSkillsVIEWID)

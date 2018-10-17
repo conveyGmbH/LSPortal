@@ -21,7 +21,6 @@
                             <span class="date-field"></span>
                         </div>
                     </div>
-                    <div class="row-separator"></div>
                 <div class="fields-container">
                     <div class="field_line field_line_odd">
                         <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'pdfExport.filenamepartone'}"></span>
@@ -68,18 +67,15 @@
                         <span class="label landscape_only" data-win-res="{textContent: 'pdfExport.seperator'}"></span>
                         <input class="input_field win-textbox" type="text" data-win-bind="value: restriction.Separator Binding.Mode.twoway" />
                     </div>
-                    <div class="line-separator"></div>
-                    <div class="field_line">
+                    <div class="field_line field_line_even">
                         <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'pdfExport.samplename'}"></span>
                         <span class="label landscape_only" data-win-res="{textContent: 'pdfExport.samplename'}"></span>
-                        <span class="caption-field" id="samplename" data-win-bind="textContent: sampleName Binding.Mode.oneway"></span>
+                        <span class="caption-field" id="samplename" data-win-bind="textContent: sampleName"></span>
                     </div>
-                    <div class="field_line reportingListhost-line">
-                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'reporting.exportlist'}"></span>
-                        <span class="label landscape_only" data-win-res="{textContent: 'reporting.exportlist'}"></span>
+                    <div class="field_line field_line_odd">
+                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'reporting.dateofentry'}"></span>
+                        <span class="label landscape_only" data-win-res="{textContent: 'reporting.dateofentry'}"></span>
                         <div class="input_group">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'reporting.dateofentry'}"></span>
-                            <span class="label landscape_only" data-win-res="{textContent: 'reporting.dateofentry'}"></span>
                             <div data-win-control="WinJS.UI.DatePicker" id="ReportingErfassungsdatum" class="input_big_left"
                                  data-win-bind="winControl.current: restrictionPdf.Erfassungsdatum Binding.Mode.twoway">
                             </div>
@@ -90,6 +86,11 @@
                                 <span data-win-res="{textContent: 'search.useRestriction'}"></span>
                             </label>
                         </div>
+                    </div>
+                    <div class="line-separator"></div>
+                    <div class="field_line">
+                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'reporting.exportlist'}"></span>
+                        <span class="label landscape_only" data-win-res="{textContent: 'reporting.exportlist'}"></span>
                         <div id="pdfExportListhost" class="input_field fragmenthost"></div>
                     </div>
                     <div class="line-separator"></div>

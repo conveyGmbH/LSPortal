@@ -19,6 +19,7 @@
 /// <reference path="~/www/lib/OpenXml/scripts/jszip-deflate.js" />
 /// <reference path="~/www/lib/OpenXml/scripts/FileSaver.js" />
 /// <reference path="~/www/lib/OpenXml/scripts/openxml.js" />
+/// <reference path="~/www/pages/pdfExport/pdfExportService.js" />
 
 (function () {
     "use strict";
@@ -390,15 +391,19 @@
                             // Now, we call WinJS.Binding.List to get the bindable list
                             if (exportFieldList1 && exportFieldList1.winControl) {
                                 exportFieldList1.winControl.data = new WinJS.Binding.List(results);
+                                exportFieldList1.selectedIndex = 0;
                             }
                             if (exportFieldList2 && exportFieldList2.winControl) {
                                 exportFieldList2.winControl.data = new WinJS.Binding.List(results);
+                                exportFieldList2.selectedIndex = 0;
                             }
                             if (exportFieldList3 && exportFieldList3.winControl) {
                                 exportFieldList3.winControl.data = new WinJS.Binding.List(results);
+                                exportFieldList3.selectedIndex = 0;
                             }
                             if (exportFieldList4 && exportFieldList4.winControl) {
                                 exportFieldList4.winControl.data = new WinJS.Binding.List(results);
+                                exportFieldList4.selectedIndex = 0;
                             }
                         }
                     }, function (errorResponse) {

@@ -145,6 +145,7 @@
                 return ret;
             },
             defaultValue: {
+                index: 0,
                 MitarbeiterVIEWID: "",
                 Vorname: "",
                 Nachname: "",

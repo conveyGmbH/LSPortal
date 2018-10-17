@@ -79,7 +79,7 @@
                 return ret;
             },
             defaultValue: {
-
+                Separator: "_"
             }
         },
         _exportKontaktDataView: {
