@@ -21,3 +21,6 @@
 .view-size-small .reportingListhost-line {
     display: none;
 }
+#exportlist {
+    font-size: medium;
+}

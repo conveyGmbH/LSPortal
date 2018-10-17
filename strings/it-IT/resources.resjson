@@ -1,4 +1,4 @@
-﻿{
+{
     "general.event"         : "Evento",
     "general.today"         : "Oggi",
     "general.yesterday"     : "Ieri",
@@ -411,7 +411,7 @@
     "label.event"           : "Evento",
     "label.questiongroup"   : "Gruppo domande",
     "label.employee"        : "Utenti",
-    "label.reporting"       : "Export",
+    "label.reporting"       : "Excel Exports",
     "label.reportingColumnList"       : "Costume",	
     "label.skills"          : "Ruolo",
     "label.skillentry"      : "Immetti ruolo",
@@ -488,7 +488,7 @@
     "reporting.countryst"   : "Country statistics",
     "reporting.employeest"  : "Employee statistics",
     "reporting.statistics"  : "Statistics",
-    "reporting.exportlist"  : "Export type",
+    "reporting.exportlist"  : "Excel Export di:",
     "reporting.progress"    : "Progresso",
     "reporting.progressMsg" : "Creazione Excel file",
     "reporting.dateofentry" : "Registrato",

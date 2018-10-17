@@ -1,4 +1,4 @@
-﻿{
+{
     "general.event"         : "Événement",
     "general.today"         : "Aujourd'hui",
     "general.yesterday"     : "Hier",
@@ -411,7 +411,7 @@
     "label.event"           : "Événement",
     "label.questiongroup"   : "Groupe de questions",
     "label.employee"        : "Comptes utilisateurs",
-    "label.reporting"       : "Évaluations",
+    "label.reporting"       : "Excel Exports",
     "label.reportingColumnList"       : "Coutume",	
     "label.skills"          : "Capacités",
     "label.skillentry"      : "entrer une capacité",
@@ -488,7 +488,7 @@
     "reporting.countryst"   : "Statistiques pays",
     "reporting.employeest"  : "Statistiques du personnel",
     "reporting.statistics"  : "Statistiques",
-    "reporting.exportlist"  : "Type d’exportation",
+    "reporting.exportlist"  : "Excel Export de:",
     "reporting.progress"    : "Suivant",
     "reporting.progressMsg" : "Créer Excel fichier",
     "reporting.dateofentry" : "Créer",
