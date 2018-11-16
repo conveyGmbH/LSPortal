@@ -42,7 +42,8 @@
                     text: "",
                     show: null
                 },
-                showErfassungsdatum: false
+                showErfassungsdatum: false,
+                prevErfassungsdatum: null
             }, commandList]);
 
             var that = this;
@@ -54,7 +55,7 @@
             var exportFieldList4 = pageElement.querySelector("#InitExportField4");
             var pdfExportList = pageElement.querySelector("#PDFExportList");
             var spinner = pageElement.querySelector(".loader");
-            var erfassungsdatum = pageElement.querySelector("#ReportingErfassungsdatum.win-datepicker");
+            var erfassungsdatum = pageElement.querySelector("#ReportingPDFErfassungsdatum.win-datepicker");
 
             this.pdfzip = null;
             this.pdfIddata = [];
@@ -81,15 +82,13 @@
             this.showDateRestrictions = showDateRestrictions;
 
             var setRestriction = function () {
-                var reportingRestriction = null;
-                if (that.binding.showErfassungsdatum && that.binding.restrictionPdf.Erfassungsdatum) {
-                    if (!reportingRestriction) {
-                        reportingRestriction = {};
-                    }
-                    if (AppData.getLanguageId() === 1031) {
-                        reportingRestriction.Erfassungsdatum = that.binding.restrictionPdf.Erfassungsdatum; //.toISOString().substring(0, 10)
-                    } else {
-                        reportingRestriction.RecordDate = that.binding.restrictionPdf.Erfassungsdatum;
+                var reportingRestriction = {};
+                if (that.binding.restrictionPdf) {
+                    reportingRestriction = that.binding.restrictionPdf;
+                }
+                if (that.binding.showErfassungsdatum) {
+                    if (that.binding.showErfassungsdatum && !that.binding.restrictionPdf.Erfassungsdatum) {
+                        reportingRestriction.Erfassungsdatum = new Date(); //.toISOString().substring(0, 10)
                     }
                 }
                 return reportingRestriction;
@@ -103,6 +102,7 @@
                 that.curPdfIdx = -1;
                 Log.call(Log.l.trace, "PDFExport.Controller.");
                 that.binding.restrictionPdf = that.setRestriction();
+                that.showDateRestrictions();
                 AppData.setErrorMsg(that.binding);
                 var ret = PDFExport.contactView.select(function (json) {
                     Log.print(Log.l.trace, "exportTemplate: success!");
@@ -110,6 +110,9 @@
                         // store result for next use
                         that.nextUrl = PDFExport.contactView.getNextUrl(json);
                         that.pdfIddata = json.d.results;
+                        if (!that.nextUrl) {
+                            that.binding.progress.max = that.pdfIddata.length;
+                        }
                     }
                     that.getNextPdfData();
                 }, function (errorResponse) {
@@ -117,10 +120,10 @@
                     // or server returns response with an error status.
                     AppData.setErrorMsg(that.binding, errorResponse);
                 },
-                    that.binding.restrictionPdf 
+                    that.binding.restrictionPdf
                );
                 Log.ret(Log.l.trace);
-                return ret;    
+                return ret;
             }
             this.getPdfIdDaten = getPdfIdDaten;
 
@@ -199,8 +202,8 @@
                     //location.href = "data:application/zip;base64," + pdfData;
                     saveAs(pdfData, "PDFExport.zip");
                     that.disablePdfExportList(false);
-                    that.binding.progress.show = null;
-                    that.binding.progress.count = 0;
+                    //that.binding.progress.show = null;
+                    that.binding.progress.count = that.binding.progress.max;
                     ret = WinJS.Promise.as();
                 } else {
                     Log.print(Log.l.trace, "no data");
@@ -208,33 +211,33 @@
                     ret = WinJS.Promise.as();
                 }
                 Log.ret(Log.l.trace);
-                return ret;    
+                return ret;
             }
             this.getNextPdfData = getNextPdfData;
 
             //ensure that all PDF are created and ready for download
-           /* var ensurePdfDone = function () {
-                that.binding.timerFlag = true;
-                that.spinnercontl(that.binding.timerFlag);
-                Log.call(Log.l.trace, "PDFExport.Controller.");
-                AppData.setErrorMsg(that.binding);
-                AppData.call("PRC_EnsurePDFdone",
-                    {
-                       
-                    }, function (json) {
-                        Log.print(Log.l.info, "call success! ");
-                        that.binding.timerFlag = false;
-                        that.spinnercontl(that.binding.timerFlag);
-                        that.getPdfIdDaten();
-                    }, function (error) {
-                        Log.print(Log.l.error, "call error");
-                        that.binding.timerFlag = false;
-                        that.spinnercontl(that.binding.timerFlag);
-                    });
-                Log.ret(Log.l.trace);
-            }
-            this.ensurePdfDone = ensurePdfDone;
-            */
+            /* var ensurePdfDone = function () {
+                 that.binding.timerFlag = true;
+                 that.spinnercontl(that.binding.timerFlag);
+                 Log.call(Log.l.trace, "PDFExport.Controller.");
+                 AppData.setErrorMsg(that.binding);
+                 AppData.call("PRC_EnsurePDFdone",
+                     {
+                        
+                     }, function (json) {
+                         Log.print(Log.l.info, "call success! ");
+                         that.binding.timerFlag = false;
+                         that.spinnercontl(that.binding.timerFlag);
+                         that.getPdfIdDaten();
+                     }, function (error) {
+                         Log.print(Log.l.error, "call error");
+                         that.binding.timerFlag = false;
+                         that.spinnercontl(that.binding.timerFlag);
+                     });
+                 Log.ret(Log.l.trace);
+             }
+             this.ensurePdfDone = ensurePdfDone;
+             */
             var generateZip = function (pdfIddata) {
                 /*
                 var l = pdfIddata.length;
@@ -269,8 +272,8 @@
                             if (typeof complete === "function") {
                                 complete(response);
                             }
-                                that.loadData();
-                            },
+                            that.loadData();
+                        },
                             function (errorResponse) {
                                 AppBar.busy = false;
                                 // called asynchronously if an error occurs
@@ -314,7 +317,15 @@
                 clickErfassungsdatum: function (event) {
                     if (event.currentTarget) {
                         that.binding.showErfassungsdatum = event.currentTarget.checked;
-                        that.binding.restrictionPdf.Erfassungsdatum = new Date();
+                        that.binding.prevErfassungsdatum = erfassungsdatum.winControl.current;
+                        //erfassungsdatum.winControl.element.firstElementChild[0].innerText = "JANUAR";
+                        if (that.binding.showErfassungsdatum) {
+                            if (that.binding.restrictionPdf && !that.binding.restrictionPdf.Erfassungsdatum) {
+                                that.binding.restrictionPdf.Erfassungsdatum = that.binding.prevErfassungsdatum;
+                            }
+                        } else {
+                            delete that.binding.restrictionPdf.Erfassungsdatum;
+                        }
                     }
                     that.showDateRestrictions();
                 },
@@ -335,7 +346,9 @@
                 },
                 clickExport: function (event) {
                     Log.call(Log.l.trace, "Reporting.Controller.");
-                    that.binding.showErfassungsdatum = 1;
+                    that.binding.progress.count = 0;
+                    that.binding.progress.max = 0;
+                    //that.binding.showErfassungsdatum = 1;
                     that.saveData();
                     if (event && event.currentTarget) {
                         var exportselection = event.target.value;
@@ -343,7 +356,7 @@
                         AppBar.busy = true;
                         AppBar.triggerDisableHandlers();
                         that.disablePdfExportList(true);
-                        WinJS.Promise.timeout(0).then(function () {
+                        WinJS.Promise.timeout(1000).then(function () {
                             that.getPdfIdDaten();
                         });
                     }
@@ -357,12 +370,12 @@
                     return false;
                 }
             };
-            
+
             var resultConverter = function (item, index) {
                 item.index = index;
             }
             this.resultConverter = resultConverter;
-            
+
             var loadData = function () {
                 Log.call(Log.l.trace, "PDFExport.Controller.");
                 AppData.setErrorMsg(that.binding);
@@ -411,8 +424,8 @@
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, {
-                            LanguageSpecID: AppData.getLanguageId()
-                        });
+                        LanguageSpecID: AppData.getLanguageId()
+                    });
                 }).then(function () {
                     return PDFExport.pdfExportParamsView.select(function (json) {
                         Log.print(Log.l.trace, "Mailing.FragebogenzeileView: success!");
@@ -430,7 +443,7 @@
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, {
 
-                        });
+                    });
                 }).then(function () {
                     return PDFExport.pdfExportParamView.select(function (json) {
                         Log.print(Log.l.trace, "Mailing.FragebogenzeileView: success!");
@@ -448,7 +461,7 @@
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, {
 
-                        });
+                    });
                 }).then(function () {
                     AppBar.notifyModified = true;
                     return WinJS.Promise.as();
@@ -468,9 +481,9 @@
             });
             Log.ret(Log.l.trace);
         }, {
-                exportPDFStringFlag: "",
-                pdfzip: null,
-                pdfzipfiles: []
-            })
+            exportPDFStringFlag: "",
+            pdfzip: null,
+            pdfzipfiles: []
+        })
     });
 })();

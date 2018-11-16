@@ -76,7 +76,7 @@
                         <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'reporting.dateofentry'}"></span>
                         <span class="label landscape_only" data-win-res="{textContent: 'reporting.dateofentry'}"></span>
                         <div class="input_group">
-                            <div data-win-control="WinJS.UI.DatePicker" id="ReportingErfassungsdatum" class="input_big_left"
+                            <div data-win-control="WinJS.UI.DatePicker" id="ReportingPDFErfassungsdatum" class="input_big_left"
                                  data-win-bind="winControl.current: restrictionPdf.Erfassungsdatum Binding.Mode.twoway">
                             </div>
                             <label class="input_big_right">
@@ -101,11 +101,11 @@
                         <span 
                             data-win-bind="textContent: progress.count"></span>
                         <span data-win-res="{textContent: 'label.listContact'}"></span>
+                        <span data-win-bind="textContent: progress.text"></span>
+                        <span data-win-bind="textContent: progress.max"></span>
                         <progress class="progress_field win-progress-bar"
                                   data-win-bind="value: progress.count; max: progress.max"
                                   min="0"></progress>
-                        <span class="large_field"
-                              data-win-bind="textContent: progress.text"></span>
                     </div>
                     <div class="error-message"
                          data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
