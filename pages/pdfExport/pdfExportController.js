@@ -272,7 +272,7 @@
                             if (typeof complete === "function") {
                                 complete(response);
                             }
-                            that.loadData();
+                            //that.loadData();
                         },
                             function (errorResponse) {
                                 AppBar.busy = false;
@@ -282,8 +282,25 @@
                                 if (typeof error === "function") {
                                     error(errorResponse);
                                 }
-                            },
-                            recordId, dataPdfExport);
+                            }, recordId, dataPdfExport).then(function () {
+                                return PDFExport.pdfExportParamsView.select(function (json) {
+                                    Log.print(Log.l.trace, "PDFExport.pdfExportParamsView: success!");
+                                    // select returns object already parsed from json file in response
+                                    if (json && json.d && json.d.results) {
+                                        var results = json.d.results;
+                                        /*results.forEach(function (item, index) {
+                                            that.resultConverter(item, index);
+                                        }); */
+                                        that.binding.sampleName = results[0].SampleName;
+                                    }
+                                }, function (errorResponse) {
+                                    // called asynchronously if an error occurs
+                                    // or server returns response with an error status.
+                                    AppData.setErrorMsg(that.binding, errorResponse);
+                                }, {
+
+                                });
+                            });
                     } else {
                         Log.print(Log.l.info, "not supported");
                         ret = WinJS.Promise.as();
@@ -349,17 +366,26 @@
                     that.binding.progress.count = 0;
                     that.binding.progress.max = 0;
                     //that.binding.showErfassungsdatum = 1;
-                    that.saveData();
                     if (event && event.currentTarget) {
                         var exportselection = event.target.value;
                         that.disableFlag = event.target.index;
                         AppBar.busy = true;
                         AppBar.triggerDisableHandlers();
                         that.disablePdfExportList(true);
+
+                    }
+                    that.saveData(function (response) {
+                        AppBar.busy = false;
+                        Log.print(Log.l.trace, "question saved");
+                    }, function (errorResponse) {
+                        AppBar.busy = false;
+                        Log.print(Log.l.error, "error saving question");
+                    }).then(function () {
                         WinJS.Promise.timeout(1000).then(function () {
                             that.getPdfIdDaten();
                         });
-                    }
+                    });
+
                     Log.ret(Log.l.trace);
                 }
             };

@@ -489,7 +489,7 @@
     "reporting.employeest"  : "Employee statistics",
     "reporting.statistics"  : "Statistics",
     "reporting.exportlist"  : "Excel Export di:",
-    "reporting.progress"    : "Progresso",
+    "reporting.progress"    : "Progresso:",
     "reporting.progressMsg" : "Creazione Excel file",
     "reporting.dateofentry" : "Registrato",
     "reporting.changedate"  : "Modificato",
