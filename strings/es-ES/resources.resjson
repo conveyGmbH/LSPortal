@@ -499,6 +499,7 @@
     "reporting.nocountry"   : "Kein Land",
 	"reporting.pdfExportPath" : "Export-Link",
     "reportingColumnList.title"       : "Benutzerdefinierter Export",
+	"reporting.outOf": "von",
 
     "employee.title"        : "Benutzerkonten",
     "employee.firstname"    : "Vorname",

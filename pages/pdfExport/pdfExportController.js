@@ -39,7 +39,7 @@
                 progress: {
                     count: 0,
                     max: 0,
-                    text: "",
+                    text: getResourceText("reporting.outOf"),
                     show: null
                 },
                 showErfassungsdatum: false,

@@ -500,6 +500,7 @@
     "reporting.nocountry"   : "Nessuna Nazione",
     "reporting.pdfExportPath" : "Esportazione link",
     "reportingColumnList.title"       : "Costume Export",
+	"reporting.outOf": "sur",
 
     "employee.title"        : "Utenti",
     "employee.firstname"    : "Nome",

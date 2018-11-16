@@ -404,7 +404,7 @@
     "label.login"           : "Login",
     "label.register"        : "Register",
     "label.recover"         : "Password",
-    "label.listContact"     : "Contacts",
+    "label.listContact"     : "PDF-Contacts",
     "label.contacts"        : "Edit Contacts",
     "label.questionList"    : "Questions/Answers",
     "label.events"          : "Plan event",
@@ -501,6 +501,7 @@
     "reporting.nocountry"   : "No country",
     "reporting.pdfExportPath" : "Export link",
     "reportingColumnList.title"       : "Custom Export",
+	"reporting.outOf": "out of",
 
     "employee.title"        : "User accounts",
     "employee.firstname"    : "First name",

@@ -26,7 +26,7 @@
         background-color: rgba(255,255,255,0.4);
     }
 
-.win-nonselectable .pdfexport-button {
+.win-nonselectable {
     background-color: rgba(128,128,128,0.4) !important;
 }
 
