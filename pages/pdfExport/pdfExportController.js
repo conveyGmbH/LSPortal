@@ -13,12 +13,8 @@
 /// <reference path="~/www/lib/OpenXml/scripts/linq.js" />
 /// <reference path="~/www/lib/OpenXml/scripts/ltxml.js" />
 /// <reference path="~/www/lib/OpenXml/scripts/ltxml-extensions.js" />
-/// <reference path="~/www/lib/OpenXml/scripts/jszip.js" />
-/// <reference path="~/www/lib/OpenXml/scripts/jszip-load.js" />
-/// <reference path="~/www/lib/OpenXml/scripts/jszip-inflate.js" />
-/// <reference path="~/www/lib/OpenXml/scripts/jszip-deflate.js" />
-/// <reference path="~/www/lib/OpenXml/scripts/FileSaver.js" />
-/// <reference path="~/www/lib/OpenXml/scripts/openxml.js" />
+/// <reference path="~/www/lib/jszip/scripts/jszip.js" />
+/// <reference path="~/www/lib/FileSaver/scripts/FileSaver.js" />
 /// <reference path="~/www/pages/pdfExport/pdfExportService.js" />
 
 (function () {
@@ -194,16 +190,18 @@
                     }, recordId);
                 } else if (that.pdfIddata.length > 0) {
                     Log.print(Log.l.trace, "collected all, pdfIddata.length=" + that.pdfIddata.length);
-                    var pdfData = that.pdfzip.generate({
+                    that.pdfzip.generateAsync({
+                        blob: true,
                         base64: false,
                         compression: "STORE",
                         type: "blob"
+                    }).then(function (blob) {
+                        saveAs(blob, "PDFExport.zip");
+                        //location.href = "data:application/zip;base64," + pdfData;
+                        that.disablePdfExportList(false);
+                        //that.binding.progress.show = null;
+                        that.binding.progress.count = that.binding.progress.max;
                     });
-                    //location.href = "data:application/zip;base64," + pdfData;
-                    saveAs(pdfData, "PDFExport.zip");
-                    that.disablePdfExportList(false);
-                    //that.binding.progress.show = null;
-                    that.binding.progress.count = that.binding.progress.max;
                     ret = WinJS.Promise.as();
                 } else {
                     Log.print(Log.l.trace, "no data");
@@ -238,21 +236,6 @@
              }
              this.ensurePdfDone = ensurePdfDone;
              */
-            var generateZip = function (pdfIddata) {
-                /*
-                var l = pdfIddata.length;
-                if (!that.pdfzip) {
-                    that.pdfzip = new JSZip();
-                }
-                for (var i = 0; i < l; i++) {
-                    that.getPdfData(pdfIddata[i].DOC3ExportKontaktDataVIEWID);
-                }
-                var pdfData = that.pdfzip.generate();
-                location.href = "data:application/zip;base64," + pdfData;
-                 */
-                Log.call(Log.l.trace, "PDFExport.Controller.");
-            }
-            this.generateZip = generateZip;
 
             // save data
             var saveData = function (complete, error) {
