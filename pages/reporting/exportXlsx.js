@@ -5,11 +5,8 @@
 /// <reference path="~/www/lib/OpenXml/scripts/linq.js" />
 /// <reference path="~/www/lib/OpenXml/scripts/ltxml.js" />
 /// <reference path="~/www/lib/OpenXml/scripts/ltxml-extensions.js" />
-/// <reference path="~/www/lib/OpenXml/scripts/jszip.js" />
-/// <reference path="~/www/lib/OpenXml/scripts/jszip-load.js" />
-/// <reference path="~/www/lib/OpenXml/scripts/jszip-inflate.js" />
-/// <reference path="~/www/lib/OpenXml/scripts/jszip-deflate.js" />
-/// <reference path="~/www/lib/OpenXml/scripts/FileSaver.js" />
+/// <reference path="~/www/lib/jszip/scripts/jszip.js" />
+/// <reference path="~/www/lib/FileSaver/scripts/FileSaver.js" />
 /// <reference path="~/www/lib/OpenXml/scripts/openxml.js" />
 
 (function (root) {  // root = global
@@ -390,7 +387,7 @@
                 //this.showProgress(1);
                 that.xlsx.openFromBase64Async(that.template, function (openedSpreadsheet) {
                     Log.call(Log.l.trace, "ExportXlsx.loadXlsxFromView.openFromBase64Async.");
-                    try {
+                    //try {
                         var workbookPart = openedSpreadsheet.workbookPart();
                         var workbookStylesPart = workbookPart.workbookStylesPart();
                         var stXDoc = workbookStylesPart.getXDocument();
@@ -467,12 +464,12 @@
                                 }
                             }
                         }
-                    } catch (exception) {
+                    /*} catch (exception) {
                         Log.print(Log.l.error, "exception: " + (exception && exception.message));
                         if (typeof error === "function") {
                             error(exception);
                         }
-                    }
+                    }*/
                     Log.ret(Log.l.trace);
                 });
                 Log.ret(Log.l.trace);
