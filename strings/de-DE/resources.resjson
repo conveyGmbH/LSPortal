@@ -605,6 +605,8 @@
     "localevents.end"   : "Ende",
 	"localevents.confirmCopyQuestionnaire1" : "Fragebogen von ",
 	"localevents.confirmCopyQuestionnaire2" : "wird unwiederruflich ersetzt durch Fragebogen ",
+    "localevents.labelDelete"   : "Soll die Veranstaltung ",
+    "localevents.eventDelete"   : "wirklich gelöscht werden?",
 
 	"employeegenpwlist.title" : "Mitarbeiter generierte Passwörter",
 		"employeegenpwlist.login" : "Loginname",

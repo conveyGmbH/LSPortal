@@ -606,7 +606,9 @@
     "localevents.end"   : "End",
 	"localevents.confirmCopyQuestionnaire1" : "Questionnaire from ",
 	"localevents.confirmCopyQuestionnaire2" : "will be irrevocably replaced by questionnaire ",
-	
+    "localevents.labelDelete"   : "Should the event ",
+    "localevents.eventDelete"   : "really be deleted?",
+
     "employeegenpwlist.title" : "Pre-generated employee passwords",
         "employeegenpwlist.login" : "Loginname",
         "employeegenpwlist.password" : "Password",
