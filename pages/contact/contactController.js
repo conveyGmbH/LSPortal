@@ -520,37 +520,22 @@
             var deleteData = function (complete, error) {
                 Log.call(Log.l.trace, "Contact.Controller.");
                 AppData.setErrorMsg(that.binding);
-                var ret;
                 var recordId = getRecordId();
                 if (recordId) {
-                    AppBar.busy = true;
-                    ret = Contact.contactView.deleteRecord(function (response) {
-                        AppBar.busy = false;
-                        // called asynchronously if ok
-                        setRecordId(null);
-                        AppData.getUserData();
-                        //delete image
-                        if (photoview &&
-                            photoview.firstChild) {
-                            photoview.removeChild(photoview.firstChild);
-                        }
-                        if (typeof complete === "function") {
-                            complete(response);
-                        }
-                    }, function (errorResponse) {
-                        AppBar.busy = false;
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                        if (typeof error === "function") {
-                            error(errorResponse);
-                        }
-                    }, recordId);
+                        AppData.setErrorMsg(that.binding);
+                        AppData.call("PRC_DeleteKontakt", {
+                            pKontaktID: recordId
+                        }, function (json) {
+                            Log.print(Log.l.info, "call success! ");
+                            Application.navigateById("contactList", event);
+                        }, function (error) {
+                            Log.print(Log.l.error, "call error");
+                        });
                 } else {
                     var err = { status: 0, statusText: "no record selected" };
                     error(err);
-                    ret = WinJS.Promise.as();
                 }
                 Log.ret(Log.l.trace);
-                return ret;
             };
             this.deleteData = deleteData;
 
@@ -604,7 +589,6 @@
                             Log.print(Log.l.trace,"clickDelete: user choice OK");
                             deleteData(function(response) {
                                 // delete OK - goto start
-                                Application.navigateById("start", event);
                             }, function(errorResponse) {
                                 // delete ERROR
                                 var message = null;
