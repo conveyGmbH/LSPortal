@@ -429,6 +429,7 @@
     "label.pdfExport"     : "PDF Export",
     "label.employeeGenPWList"     : "Vorgeneriert",
 	  "label.optQuestionList" : "optional FRA/ANTW",
+    "label.support"     : "Support",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Abbrechen",

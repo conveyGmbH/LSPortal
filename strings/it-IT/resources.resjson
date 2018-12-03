@@ -429,6 +429,7 @@
     "label.pdfExport"       : "Esportazione PDF",
     "label.employeeGenPWList"     : "Pregenerati",
     "label.optQuestionList" : "Dom. / Risp. opzionali",
+    "label.support"     : "Support",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annulla",
