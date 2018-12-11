@@ -401,6 +401,7 @@
     "label.account"         : "Compte",
     "label.info"            : "Paramètres",
     "label.login"           : "Connecter",
+    "label.logoff"          : "Déconnecter",
     "label.register"        : "Registre",
     "label.recover"         : "Mot de passe",
     "label.listContact"     : "Contact",

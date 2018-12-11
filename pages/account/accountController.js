@@ -160,6 +160,14 @@
                     AppData._persistentStates.privacyPolicyFlag = event.currentTarget.checked;
                     AppBar.triggerDisableHandlers();
                     Log.ret(Log.l.trace);
+                },
+                clickTopButton: function (event) {
+                    Log.call(Log.l.trace, "Contact.Controller.");
+                    var anchor = document.getElementById("menuButton");
+                    var menu = document.getElementById("menu1").winControl;
+                    var placement = "bottom";
+                    menu.show(anchor, placement);
+                    Log.ret(Log.l.trace);
                 }
             };
 

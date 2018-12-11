@@ -401,6 +401,7 @@
     "label.account"         : "Conto",
     "label.info"            : "Options",
     "label.login"           : "Login",
+    "label.logoff"          : "Disconnettersi",
     "label.register"        : "Registrazione",
     "label.recover"         : "Password",
     "label.listContact"     : "Contatti",

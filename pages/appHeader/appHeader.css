@@ -28,7 +28,37 @@
     height: 48px;
     z-index: 10010;
 }
-
+#accountbutton {
+    color: black !important;
+    text-transform: uppercase;
+    background: #ffffff;
+    padding: 20px;
+    display: inline-block;
+}
+#accountbutton:hover {
+    color: black !important;
+    background: #d4d4d4;
+    border-color: #d4d4d4 !important;
+    transition: all 0.4s ease 0s;
+}
+#logoffbutton {
+    color: #ed3330 !important;
+    font-weight: bold;
+    text-transform: uppercase;
+    background: #ffffff;
+    padding: 20px;
+    display: inline-block;
+}
+#logoffbutton:hover {
+   color: #ffffff !important;
+   font-weight: bold;
+   background: #ed3330;
+   border-color: #ed3330 !important;
+   transition: all 0.4s ease 0s;
+}
+#menu1 {
+    border-color: #d4d4d4;
+}
 /*
     event name
 */

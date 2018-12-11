@@ -402,6 +402,7 @@
     "label.account"         : "Account",
     "label.info"            : "Options",
     "label.login"           : "Login",
+    "label.logoff"          : "Logoff",
     "label.register"        : "Register",
     "label.recover"         : "Password",
     "label.listContact"     : "PDF-Contacts",

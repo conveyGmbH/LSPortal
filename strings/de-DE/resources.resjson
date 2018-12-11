@@ -401,6 +401,7 @@
     "label.account"         : "Konto",
     "label.info"            : "Optionen",
     "label.login"           : "Anmelden",
+    "label.logoff"          : "Abmelden",
     "label.register"        : "Registrieren",
     "label.recover"         : "Kennwort",
     "label.listContact"     : "PDF-Kontakte",
