@@ -445,7 +445,8 @@
     "event.showHideSketch"  :  "Show Notes",
     "event.showHideNavigationPages": "Navigationpages",
     "event.showHideBarcodeScan" : "Barcode",
-    "event.showHideCamera"  : "Camera",
+    "event.showHideCamera"  : "Business card",
+	"event.showHideCameraQuestionnaire" : "Kamera im Fragebogen",
 	"event.mailSettings"    : "Mail settings",
     "event.productMail"     : "Product mail: \n Only one mail shipment per mail",
     "event.thankYouMail"    : "Thank you mail: \n Only one mail shipment per mail",
@@ -609,7 +610,7 @@
 	"localevents.confirmCopyQuestionnaire2" : "will be irrevocably replaced by questionnaire ",
     "localevents.labelDelete"   : "Should the event ",
     "localevents.eventDelete"   : "really be deleted?",
-
+	
     "employeegenpwlist.title" : "Pre-generated employee passwords",
         "employeegenpwlist.login" : "Loginname",
         "employeegenpwlist.password" : "Password",

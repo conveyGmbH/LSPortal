@@ -32,6 +32,20 @@
                 }
             }
         },
+        _generalUserMessageVIEW: {
+            get: function () {
+                return AppData.getFormatView("Benutzer", 20562);
+            }
+        },
+        generalUserMessageVIEW: {
+            select: function (complete, error) {
+                Log.call(Log.l.trace, "AppData.generalUserView.");
+                var ret = AppData._generalUserMessageVIEW.select(complete, error);
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+        },
         _generalContactView: {
             get: function () {
                 return AppData.getFormatView("Kontakt", 20434);
@@ -143,6 +157,7 @@
         },
         getUserData: function () {
             var ret;
+            AppData._userRemoteDataPromise = null;
             Log.call(Log.l.trace, "AppData.");
             var userId = AppData.getRecordId("Mitarbeiter");
             if (!AppData.appSettings.odata.login ||
@@ -189,6 +204,18 @@
                             Log.print(Log.l.info, "timeZoneAdjustment=" + AppData.appSettings.odata.timeZoneAdjustment);
                         }
                         AppData._curGetUserDataId = 0;
+                        //TEST
+                        var timeout = 30;
+                        Log.print(Log.l.info, "getUserRemoteData: Now, wait for timeout=" + timeout + "s");
+                        if (AppData._userRemoteDataPromise) {
+                            Log.print(Log.l.info, "Cancelling previous userRemoteDataPromise");
+                            AppData._userRemoteDataPromise.cancel();
+                        }
+                        AppData._userRemoteDataPromise = WinJS.Promise.timeout(timeout * 1000).then(function () {
+                            Log.print(Log.l.info, "getUserRemoteData: Now, timeout=" + timeout + "s is over!");
+                            AppData._curGetUserRemoteDataId = 0;
+                            AppData.getUserData();
+                        });
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
@@ -198,6 +225,45 @@
                 });
             } else {
                 ret = WinJS.Promise.as();
+            }
+            Log.ret(Log.l.trace);
+            return ret;
+        },
+        getMessagesData: function () {
+            var ret;
+            AppData._messagesDataPromise = null;
+            Log.call(Log.l.trace, "AppData.");
+            if (!AppData.appSettings.odata.login ||
+                !AppData.appSettings.odata.password) {
+                Log.print(Log.l.trace, "getUserData: no logon information provided!");
+                ret = WinJS.Promise.as();
+            } else {
+                ret = new WinJS.Promise.as().then(function () {
+                    Log.print(Log.l.trace, "calling select generalUserMessageVIEW...");
+                    return AppData.generalUserMessageVIEW.select(function (json) {
+                        Log.print(Log.l.trace, "generalUserView: success!");
+                        if (json && json.d) {
+                            
+                        }
+                        //TEST
+                        var timeout = 30;
+                        Log.print(Log.l.info, "getUserRemoteData: Now, wait for timeout=" + timeout + "s");
+                        if (AppData._messagesDataPromise) {
+                            Log.print(Log.l.info, "Cancelling previous userRemoteDataPromise");
+                            AppData._messagesDataPromise.cancel();
+                        }
+                        AppData._messagesDataPromise = WinJS.Promise.timeout(timeout * 1000).then(function () {
+                            Log.print(Log.l.info, "getUserRemoteData: Now, timeout=" + timeout + "s is over!");
+                            //AppData._curGetUserRemoteDataId = 0;
+                            AppData.getMessagesData();
+                        });
+                    }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            Log.print(Log.l.error,"error in select generalUserView statusText=" + errorResponse.statusText);
+                            //AppData._curGetUserDataId = 0;
+                        });
+                });
             }
             Log.ret(Log.l.trace);
             return ret;
@@ -397,6 +463,13 @@
                             AppData._persistentStates.isDarkTheme = false;
                         }
                         Colors.isDarkTheme = AppData._persistentStates.isDarkTheme;
+                    }
+                    break;
+                case 19:
+                    if (item.LocalValue === "1") {
+                        AppData._persistentStates.hideCameraQuestionnaire = true;
+                    } else {
+                        AppData._persistentStates.hideCameraQuestionnaire = false;
                     }
                     break;
                 case 20:

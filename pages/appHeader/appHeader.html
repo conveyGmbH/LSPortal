@@ -28,7 +28,7 @@
                                 <span class="not-published-field win-type-body"
                                       data-win-res="{textContent: 'appheader.notpublished'}"></span>
                             </button>
-                            <span class="win-type-subtitle event-name event-name-static win-type-ellipsis"
+                            <span class="win-h6 event-name event-name-static win-type-ellipsis"
                                   data-win-bind="textContent: userData.VeranstaltungName; style.display: userData.PublishFlag Binding.Converter.toDisplayNone"></span>
                         </div>
                     </div>
@@ -36,12 +36,16 @@
                             data-win-bind="style.visibility: userData.Login Binding.Converter.emptyToHidden"
                             onclick="AppBar.handleEvent('click', 'clickChangeUserState', event)">
                         <div id="username" class="user-name-container">
-                            <span class="win-type-subtitle user-name-field win-type-ellipsis"
+                            <span class="win-h6 user-name-field win-type-ellipsis"
                                   data-win-bind="textContent: userData.Login"></span>
                         </div>
                         <div class="user-image-container">
                             <div class="onsite-offsite win-type-caption"></div>
                             <div class="user-image" id="user"></div>
+                            <div class="new-message win-type-caption"
+                                 data-win-bind="style.display: userData.NewNoteCount Binding.Converter.toDisplay">
+                                <span class="new-message-symbol statusNew">&#xe134;</span>
+                            </div>
                         </div>
                     </button>
                 </div>

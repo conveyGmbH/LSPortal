@@ -317,7 +317,7 @@
                 },
                 clickSendMessage: function (event) {
                     Log.call(Log.l.trace, "Contact.Controller.");
-                    that.saveData(function (response) {
+                    that.saveData(that.binding.dataBenutzer, function (response) {
                         Log.print(Log.l.trace, "contact saved");
 
                     },
@@ -849,7 +849,7 @@
                 if (recordId) {
                     AppBar.modified = true;
                     var dataBenutzer = that.binding.dataBenutzer;
-                    if (!dataBenutzer && data) {
+                    if (data) { //!dataBenutzer && 
                         dataBenutzer = data;
                     } 
 
@@ -868,7 +868,7 @@
                                 AppData.setErrorMsg(that.binding, errorResponse);
                                 error(errorResponse);
                             },
-                            recordId, dataBenutzer).then(function () {
+                            data.BenutzerVIEWID, dataBenutzer).then(function () {
                                 if (recordId) {
                                     //load of format relation record data
                                     AppData.setErrorMsg(that.binding);
@@ -876,7 +876,7 @@
                                     return Infodesk.benutzerView.select(function (json) {
                                         Log.print(Log.l.trace, "benutzerView: success!");
                                         if (json && json.d) {
-                                            that.binding.dataBenutzer.Info2TS = json.d.Info2TS;
+                                            that.binding.dataBenutzer = json.d;
                                         }
                                     }, function (errorResponse) {
                                         if (errorResponse.status === 404) {
@@ -892,7 +892,8 @@
                                     return WinJS.Promise.as();
                                 }
                             });
-                        } else if (that.binding.employeeId) {
+                        } /*else {
+                            if (that.binding.employeeId) {
                             dataBenutzer.BenutzerVIEWID = that.binding.employeeId;
                             ret = Infodesk.benutzerView.insert(function(json) {
                                 // called asynchronously if ok
@@ -911,7 +912,8 @@
                                 error(errorResponse);
                             },
                             dataBenutzer);
-                        }
+                            }
+                        }*/
                     } else {
                         ret = new WinJS.Promise.as().then(function() {
                             complete(dataBenutzer);

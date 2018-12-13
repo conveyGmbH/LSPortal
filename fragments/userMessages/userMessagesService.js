@@ -24,6 +24,12 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
+            update: function (complete, error, recordId, viewResponse) {
+                Log.call(Log.l.trace, "benutzerView.");
+                var ret = UserMessages._BenutzerView.update(complete, error, recordId, viewResponse);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
             getResults: function () {
                 Log.call(Log.l.trace, "UserMessages.Benutzer.");
                 var ret = UserMessages._BenutzerView.results;

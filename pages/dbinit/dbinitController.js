@@ -81,6 +81,7 @@
                         Log.print(Log.l.info, "openDB success!");
                         AppData._curGetUserDataId = 0;
                         AppData.getUserData();
+                        AppData.getMessagesData();
                     }, function (err) {
                         AppBar.busy = false;
                         Log.print(Log.l.error, "openDB error!");

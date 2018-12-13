@@ -55,7 +55,7 @@
                         <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'info.logenabled'}"></span>
                         <span class="label landscape_only" data-win-res="{textContent: 'info.logenabled'}"></span>
                         <div class="input_field toggle-switch-parent">
-                            <div class="input_field"
+                            <div id="logEnabled" class="input_field"
                                  data-win-control="WinJS.UI.ToggleSwitch"
                                  data-win-bind="winControl.checked: generalData.logEnabled Binding.Mode.twoway; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
                                  > <!--onchange="AppBar.handleEvent('change', 'clickLogEnabled', event)"-->
@@ -76,7 +76,7 @@
                         <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'info.loggroup'}"></span>
                         <span class="label landscape_only" data-win-res="{textContent: 'info.loggroup'}"></span>
                         <div class="input_field toggle-switch-parent">
-                            <div class="input_field"
+                            <div id="logGroup" class="input_field"
                                  data-win-control="WinJS.UI.ToggleSwitch"
                                  data-win-bind="winControl.checked: generalData.logGroup Binding.Mode.twoway; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
                                  >

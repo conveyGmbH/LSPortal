@@ -443,6 +443,7 @@
     "event.showHideNavigationPages" : "Navigationsseiten",
     "event.showHideBarcodeScan" : "Barcode",
     "event.showHideCamera"  : "Kamera",
+	"event.showHideCameraQuestionaire" : "Kamera im Fragebogen",
 	"event.mailSettings"    : "Maileinstellung",
     "event.productMail"		: "Produktmail: \n Nur ein Mailversand pro E-Mail",
     "event.thankYouMail"    : "Dankesmail: \n Nur ein Mailversand pro E-Mail",

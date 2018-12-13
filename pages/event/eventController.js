@@ -18,6 +18,7 @@
                 isQuestionnaireVisible: !AppData._persistentStates.hideQuestionnaire,
                 isSketchVisible: !AppData._persistentStates.hideSketch,
                 isCameraVisible: !AppData._persistentStates.hideCameraScan,
+                isCameraQuestionnaireVisible: !AppData._persistentStates.hideCameraQuestionnaire,
                 isBarcodeScanVisible: !AppData._persistentStates.hideBarcodeScan,
                 isProductMailOn: AppData._persistentStates.productMailOn,
                 isNachbearbeitetFlagAutoSetToNull: AppData._persistentStates.nachbearbeitetFlagAutoSetToNull,
@@ -80,6 +81,11 @@
                 var pageProperty = null;
                 var hidePageItem = true;
                 switch (toggleId) {
+                    case "showCameraQuestionaire":
+                        pOptionTypeId = 19;
+                        that.binding.isCameraQuestionnaireVisible = checked;
+                        AppData._persistentStates.hideCameraQuestionnaire = !checked;
+                        break;
                     case "showQuestionnaire":
                         pOptionTypeId = 20;
                         pageProperty = "questionnaire";
