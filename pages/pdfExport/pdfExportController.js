@@ -357,17 +357,18 @@
                         that.disablePdfExportList(true);
 
                     }
-                    that.saveData(function (response) {
-                        AppBar.busy = false;
-                        Log.print(Log.l.trace, "question saved");
-                    }, function (errorResponse) {
-                        AppBar.busy = false;
-                        Log.print(Log.l.error, "error saving question");
-                    }).then(function () {
-                        WinJS.Promise.timeout(1000).then(function () {
+                    that.saveData(function(response) {
+                            AppBar.busy = false;
+                            Log.print(Log.l.trace, "question saved");
+                        },
+                        function(errorResponse) {
+                            AppBar.busy = false;
+                            Log.print(Log.l.error, "error saving question");
+                        }).then(function() {
+                        WinJS.Promise.timeout(1000).then(function() {
                             that.getPdfIdDaten();
                         });
-                    }
+                    });
                     Log.ret(Log.l.trace);
                 },
                 clickTopButton: function (event) {
