@@ -36,7 +36,9 @@
             this.textDateList = new WinJS.Binding.List([
                 { TextDatumID: 0, TITLE: null },
                 { TextDatumID: 1, TITLE: getResourceText("questionList.text") },
-                { TextDatumID: 2, TITLE: getResourceText("questionList.date") }
+                { TextDatumID: 2, TITLE: getResourceText("questionList.date") },
+                { TextDatumID: 3, TITLE: getResourceText("questionList.number") },
+                { TextDatumID: 4, TITLE: getResourceText("questionList.numberAnddate") }
             ]);
 
             var that = this;
@@ -148,6 +150,12 @@
                         item["TextDatumID"] = 2;
                     } else {
                         item["TextDatumID"] = 1;
+                    }
+                } else if(item.Freitext === "2") {
+                    if (item.DateCombobox === "1") {
+                        item["TextDatumID"] = 4;
+                    } else {
+                        item["TextDatumID"] = 3;
                     }
                 }
                 item.questionNumber = item.Sortierung.toString() + ".";
@@ -499,11 +507,11 @@
                     }
                     Log.ret(Log.l.trace);
                 },
-                clickPdf: function (event) {
+                /*clickPdf: function (event) {
                     Log.call(Log.l.trace, "Contact.Controller.");
                     that.exportQuestionnaireBarcodePdf();
                     Log.ret(Log.l.trace);
-                },
+                },*/
                 clickNew: function (event) {
                     Log.call(Log.l.trace, "QuestionList.Controller.");
                     AppBar.busy = true;
@@ -635,6 +643,14 @@
                                         break;
                                     case "2":
                                         curScope.item.Freitext = "1";
+                                        curScope.item.DateCombobox = "1";
+                                        break;
+                                    case "3":
+                                        curScope.item.Freitext = "2";
+                                        curScope.item.DateCombobox = null;
+                                        break;
+                                    case "4":
+                                        curScope.item.Freitext = "2";
                                         curScope.item.DateCombobox = "1";
                                         break;
                                     default:

@@ -28,17 +28,17 @@
             var lang = AppData.getLanguageId();
             var srcDatamaps;
             switch (lang) {
-            case 1033:
-                srcDatamaps = "lib/datamaps/scripts/datamaps.world.en.js";
-                break;
-            case 1036:
-                srcDatamaps = "lib/datamaps/scripts/datamaps.world.en.js";
-                break;
-            case 1040:
-                srcDatamaps = "lib/datamaps/scripts/datamaps.world.en.js";
-                break;
-            default:
-                srcDatamaps = "lib/datamaps/scripts/datamaps.world.de.js";
+                case 1033:
+                    srcDatamaps = "lib/datamaps/scripts/datamaps.world.en.js";
+                    break;
+                case 1036:
+                    srcDatamaps = "lib/datamaps/scripts/datamaps.world.en.js";
+                    break;
+                case 1040:
+                    srcDatamaps = "lib/datamaps/scripts/datamaps.world.en.js";
+                    break;
+                default:
+                    srcDatamaps = "lib/datamaps/scripts/datamaps.world.de.js";
             }
             Application.Controller.apply(this, [pageElement, {
                 dataStart: {},

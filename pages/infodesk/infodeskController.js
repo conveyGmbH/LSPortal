@@ -912,7 +912,9 @@
                                     return WinJS.Promise.as();
                                 }
                             });
-                        } /*else {
+                        }
+                        ret = WinJS.Promise.as();
+                        /*else {
                             if (that.binding.employeeId) {
                             dataBenutzer.BenutzerVIEWID = that.binding.employeeId;
                             ret = Infodesk.benutzerView.insert(function(json) {

@@ -42,7 +42,7 @@
             //var datePicker = pageElement.querySelector("#caBo");
             var initLand = pageElement.querySelector("#InitLandReporting");
             var erfasserID = pageElement.querySelector("#ErfasserIDReporting");
-            var erfassungsdatum = pageElement.querySelector("#ReportingErfassungsdatum.win-datepicker");
+            var erfassungsdatum = pageElement.querySelector("#ReportingExcelErfassungsdatum.win-datepicker");
             var modifiedTs = pageElement.querySelector("#ModifiedTs.win-datepicker");
             
             var resultConverter = function(item, index) {

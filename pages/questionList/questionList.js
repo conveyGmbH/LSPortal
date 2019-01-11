@@ -49,7 +49,7 @@
             // add page specific commands to AppBar
             var commandList = [
                 { id: 'clickBack', label: getResourceText('command.backward'), tooltip: getResourceText('tooltip.backward'), section: 'primary', svg: 'navigate_left' },
-                { id: "clickPdf", label: getResourceText("command.exportPdf"), tooltip: getResourceText("tooltip.exportPdf"), section: "primary", svg: "document_pdf" },
+                //{ id: "clickPdf", label: getResourceText("command.exportPdf"), tooltip: getResourceText("tooltip.exportPdf"), section: "primary", svg: "document_pdf" },
                 { id: "clickNew", label: getResourceText("command.new"), tooltip: getResourceText("tooltip.newQuestionsAnswers"), section: "primary", svg: "plus" },
                 { id: 'clickForward', label: getResourceText('command.ok'), tooltip: getResourceText('tooltip.ok'), section: 'primary', svg: 'navigate_check', key: WinJS.Utilities.Key.enter },
                 { id: "clickLineUp", label: getResourceText("command.lineUp"), tooltip: getResourceText("tooltip.lineUp"), section: "primary", svg: "navigate_up" },
@@ -64,7 +64,7 @@
                 this.controller.addRemovableEventListener(document, "pointerdown", this.controller.eventHandlers.onPointerDown.bind(this.controller));
                 this.controller.addRemovableEventListener(document, "mouseup", this.controller.eventHandlers.onMouseUp.bind(this.controller));
                 this.controller.addRemovableEventListener(document, "pointerup", this.controller.eventHandlers.onPointerUp.bind(this.controller));
-                this.controller.addRemovableEventListener(window, "clickPdf", this.controller.eventHandlers.clickPdf.bind(this.controller));
+                //this.controller.addRemovableEventListener(window, "clickPdf", this.controller.eventHandlers.clickPdf.bind(this.controller));
             }
             Log.ret(Log.l.trace);
         },
