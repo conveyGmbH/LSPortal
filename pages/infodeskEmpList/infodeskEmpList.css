@@ -88,7 +88,7 @@
     padding-bottom: 4px;
 }
 
-/*.onsite-offsite {
+.onsite-offsiteInfodeskList{
     width: 16px;
     height: 16px;
     border-radius: 10px;
@@ -98,7 +98,7 @@
     display: block;
     position: relative;
     left: 22px;
-    top: 22px;
+    top: -22px;
     z-index: 10000;
     padding: 0;
     text-align: center;
@@ -106,6 +106,8 @@
     overflow-x: hidden;
     overflow-y: hidden;
 }
+
+/*
 .onsite-offsite-symbol {
     font-family: "Symbols";
     padding: 16px;
