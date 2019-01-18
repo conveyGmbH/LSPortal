@@ -1063,7 +1063,9 @@
                     });
                 } else {
                     ret = new WinJS.Promise.as().then(function () {
-                        complete(dataContact);
+                        if (typeof complete === "function") {
+                            complete(dataContact);//dataContact
+                        }
                     });
                 }
                 Log.ret(Log.l.trace);

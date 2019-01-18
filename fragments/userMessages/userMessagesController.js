@@ -125,6 +125,7 @@
 
             var loadData = function () {
                 Log.call(Log.l.trace, "UserMessages.");
+                AppData.getMessagesData();
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                     Log.print(Log.l.trace, "calling select Benutzerview...");
@@ -174,17 +175,16 @@
                 AppData.setErrorMsg(that.binding);
                 var ret;
                 var recordId;
-                    if (item && item.data && item.data.BenutzerVIEWID) {
-                        recordId = item.data.BenutzerVIEWID;
-                    }
-                
+                if (item && item.data && item.data.BenutzerVIEWID) {
+                    recordId = item.data.BenutzerVIEWID;
+                }
+
                 if (recordId) {
                     AppBar.modified = true;
                     var dataBenutzer = that.binding.dataBenutzer;
                     if (item.data) { //!dataBenutzer && 
                         dataBenutzer = item.data;
                     }
-
                     if (dataBenutzer && AppBar.modified && !AppBar.busy) {
                         if (dataBenutzer.BenutzerVIEWID || item.data.BenutzerVIEWID) {
                             ret = UserMessages.BenutzerView.update(function (response) {
@@ -266,7 +266,7 @@
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                   return that.loadData();
+                return that.loadData();
             }).then(function () {
                 AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Message selected");

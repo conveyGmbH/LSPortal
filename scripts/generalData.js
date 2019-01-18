@@ -69,6 +69,9 @@
             Present: 0,
             PublishFlag: 0
         },
+        _userMessagesData: {
+            MessagesCounter: 0
+        },
         _photoData: null,
         _barcodeType: null,
         _barcodeRequest: null,
@@ -186,6 +189,7 @@
                             if (typeof AppHeader === "object" &&
                                 AppHeader.controller && AppHeader.controller.binding) {
                                 AppHeader.controller.binding.userData = AppData._userData;
+                                AppHeader.controller.binding.userMessagesDataCount = AppData._userMessagesData.MessagesCounter;
                                 AppHeader.controller.loadData();
                             }
                             if (typeof AppBar === "object" && AppBar.scope) {
@@ -243,7 +247,14 @@
                     return AppData.generalUserMessageVIEW.select(function (json) {
                         Log.print(Log.l.trace, "generalUserView: success!");
                         if (json && json.d) {
-                            
+                            var prevUserMessagesData = AppData._userMessagesData;
+                            AppData._userMessagesData.MessagesCounter = json.d.results.length;
+
+                            if (typeof AppHeader === "object" &&
+                                AppHeader.controller && AppHeader.controller.binding) {
+                                AppHeader.controller.binding.userMessagesDataCount = AppData._userMessagesData.MessagesCounter;
+                                AppHeader.controller.loadData();
+                            }
                         }
                         //TEST
                         var timeout = 30;

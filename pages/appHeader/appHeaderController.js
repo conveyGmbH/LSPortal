@@ -22,6 +22,7 @@
                 this.element.winControl = this;
             }
             this.pageData.userData = AppData._userData;
+            this.pageData.userMessagesDataCount = AppData._userMessagesData.MessagesCounter;
             this.pageData.photoData = null;
 
             AppHeader.controller = this;

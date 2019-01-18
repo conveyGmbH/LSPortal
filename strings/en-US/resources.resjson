@@ -482,7 +482,9 @@
     "questionList.textdate" : "Text",
     "questionList.requiredField" : "Mandatory item",
     "questionList.text"     : "Show text field",
+	"questionList.number"   : "Show text fieldnumber",
     "questionList.date"     : "Show text and date field",
+	"questionList.numberAnddate"     : "Show textfieldnumber and date field",
     "questionList.required" : "Requirefield",
     "questionList.checkRequired" : "Requirefield with check",
 

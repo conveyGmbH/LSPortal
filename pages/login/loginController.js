@@ -115,6 +115,7 @@
                         AppBar.busy = false;
                         AppData._curGetUserDataId = 0;
                         AppData.getUserData();
+                        AppData.getMessagesData();
                         complete(json);
                     }, function (curerr) {
                         AppBar.busy = false;
@@ -202,6 +203,7 @@
                                     AppBar.busy = false;
                                     AppData._curGetUserDataId = 0;
                                     AppData.getUserData();
+                                    AppData.getMessagesData();
                                     complete(json);
                                     return WinJS.Promise.as();
                                 } else {
