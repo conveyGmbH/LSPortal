@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="reorderList.css" rel="stylesheet" />
+    <script type="text/javascript" src="reorderListService.js"></script>
+    <script type="text/javascript" src="reorderListController.js"></script>
+    <script type="text/javascript" src="reorderList.js"></script>
+</head>
+<body class="win-type-body">
+<div class="reorderList fragment">
+    <div id="reorderListController" class="data-container">
+        <section aria-label="Main content" role="main" class="animationElement">
+            <div class="contentarea win-type-body">
+                <div class="headerFooterPlaceholder">
+                    <div class="list-header">
+                        <div class="row-separator"></div>
+                        <div class="list-landscape-only">
+                            <div class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'reorderlist.posno'}"></div>
+                            <div class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'reorderlist.eventname'}"></div>
+                            <div class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'reorderlist.orderedapps'}"></div>
+                            <div class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'reorderlist.orderdate'}"></div>
+                            <div class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'reorderlist.orderstatus'}"></div>
+                        </div>
+                        <div class="row-separator"></div>
+                    </div>
+                </div>
+                <div class="reorderList-template"
+                     data-win-control="WinJS.Binding.Template" style="display: none">
+                    <div class="list-landscape-only">
+                    <div class="row-bkg-gray"
+                         data-win-bind="style.display: index Binding.Converter.oddToDisplay"></div>
+                    <div class="list-field-small-fixed win-type-ellipsis"
+                         data-win-bind="textContent: PosNo"></div>
+                    <div class="list-field-small-fixed win-type-ellipsis"
+                         data-win-bind="textContent: VeranstaltungTerminName"></div>
+                    <div class="list-field-small-fixed win-type-ellipsis"
+                        data-win-bind="textContent: OrderedApp"></div>
+                     <div class="list-field-small-fixed win-type-ellipsis"
+                         data-win-bind="textContent: OrderedTS"></div>
+                     <button class="order-button win-button"
+                         data-win-bind="textContent: btnLabel; value: OpenOrderForDevice;"
+                         onclick="AppBar.handleEvent('click', 'clickOrder', event)"></button>
+                </div>
+                <div class="list-portrait-only">
+                    <div class="row-separator"></div>
+                    <div class="list-div-left">
+                        <div class="list-symbol-ID">
+                            <div id="drop_down_list" class="action-image"></div>
+                        </div>
+                        <div class="list-compressed">
+                            <!--list-localeventsList-->
+                            <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
+                                  data-win-bind="textContent: PosNo"></span>
+                            <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
+                                  data-win-bind="textContent: VeranstaltungTerminName"></span>
+                            <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
+                                  data-win-bind="textContent: OrderedApp"></span> 
+                            <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
+                                  data-win-bind="textContent: OrderedTS"></span> 
+                            <button class="order-button win-button"
+                                  data-win-bind="textContent: btnLabel; value: OpenOrderForDevice;"
+                                  onclick="AppBar.handleEvent('click', 'clickOrder', event)"></button>
+                            </div>
+                    </div>
+                </div>
+                </div>
+                <div id="reorderList"
+                     class="listview win-selectionstylefilled"
+                     data-win-control="WinJS.UI.ListView"
+                     data-win-options="{
+                            header : select('.list-header'),
+                            itemTemplate: select('.reorderList-template')
+                            }">
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+﻿.fields-container {
+    width: 100%;
+}
+
+.win-itemscontainer {
+    padding-left: 20px;
+}
+
+.list-field-small-fixed {
+    width: 300px;
+    padding-left: 20px;
+}
+
+.status {
+    padding-left: 20px;
+}
+
+#siteevents {
+    width: 100%;
+    height: 100%;
+    float: left;
+}
+
+.list-header {
+    padding-left: 27px;
+    font-weight: bold;
+}
+#suggestionBox {
+    width: 100%;
+}

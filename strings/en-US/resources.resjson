@@ -636,5 +636,44 @@
 	"pdfExport.seperator" : "seperator",
 	"pdfExport.samplename" : "example name",
 	"pdfExport.exportPdfMsg" : "Creating your PDF",
-	"pdfExport.msg" : "Edit/Link"
+	"pdfExport.msg" : "Edit/Link",
+	
+    "siteEventsList.title" : "Location",
+
+    "siteevents.title" : "Exhibitor",
+    "siteevents.event" : "Exhibitor",
+    "siteevents.begin" : "Beginning",
+    "siteevents.end"   : "End",
+    "siteevents.placeholder"   : "Exhibitor search",
+
+    "siteeventsneuaus.title" : "New Exhibitor",
+    "siteeventsneuaus.veranstaltungsname" : "Event name",
+    "siteeventsneuaus.firmenname" : "Company name",
+    "siteeventsneuaus.strasse" : "Street",
+    "siteeventsneuaus.plz" : "Zip code",
+    "siteeventsneuaus.ort" : "Place",
+    "siteeventsneuaus.stadt" : "City",
+    "siteeventsneuaus.land" : "Country",
+    "siteeventsneuaus.webadresse" : "Website URL",
+    "siteeventsneuaus.loginemail" : "Login-Email",
+    "siteeventsneuaus.appuser" : "Appuser",
+    "siteeventsneuaus.ordernumber" : "Ordernumber",
+    "siteeventsneuaus.standhall" : "Stand hall",
+    "siteeventsneuaus.standno" : "Stand number",
+    "siteeventsneuaus.displaytext" : "Display text",
+
+    "siteeventsbennach.title" : "Reorders",
+    "siteeventsbennach.eventname" : "Exhibitor",
+    "siteeventsbennach.startdatum" : "Start date",
+    "siteeventsbennach.enddatum" : "End date",
+    "siteeventsbennach.bestellungen" : "Orders",
+	
+    "reorderlist.posno" : "PosNo.",
+    "reorderlist.eventname" : "Event",
+    "reorderlist.orderedapps" : "Ordered apps",
+    "reorderlist.orderdate" : "Orderes date",
+    "reorderlist.orderstatus" : "Status",
+    "reorderlist.btnlabelB" : "Ordered",
+    "reorderlist.btnlabelO" : "Order"
+	
 }

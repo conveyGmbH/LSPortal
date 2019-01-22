@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="siteEventsBenNach.css" rel="stylesheet" />
+    <script type="text/javascript" src="siteEventsBenNachService.js"></script>
+    <script type="text/javascript" src="siteEventsBenNachController.js"></script>
+    <script type="text/javascript" src="siteEventsBenNach.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="settings fragment">
+        <div id="siteEventsBenNachController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="contentarea win-type-body">
+                    <div class="header-separator"></div>
+                    <div class="content-header">
+                        <div class="half-circle half-circle-textcolor">&nbsp;</div>
+                        <div class="content-header-line win-type-caption">
+                            <span class="id-field"></span>
+                            <span class="caption-field" data-win-res="{textContent: 'siteeventsbennach.title'}"></span>
+                            <span class="date-field"></span>
+                        </div>
+                    </div>
+                    <div class="content-record"
+                         data-win-bind="style.display: dataReorderEvent.VeranstaltungVIEWID Binding.Converter.toDisplay">
+                        <div class="line-separator"></div>
+                        <div class="field_line">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'siteeventsbennach.eventname'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'siteeventsbennach.eventname'}"></span>
+                            <input class="input_field win-textbox" type="text" data-win-bind="value: dataReorderEvent.Name Binding.Mode.twoway" />
+                        </div>
+                        <div class="field_line field_line_even">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'siteeventsbennach.enddatum'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'siteeventsbennach.enddatum'}"></span>
+                            <input class="input_field win-textbox" type="text" data-win-bind="value: dataReorderEvent.Enddatum Binding.Mode.twoway" />
+                        </div>
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'siteeventsbennach.startdatum'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'siteeventsbennach.startdatum'}"></span>
+                            <input class="input_field win-textbox" type="text" data-win-bind="value: dataReorderEvent.Startdatum Binding.Mode.twoway" />
+                        </div>
+                        <div class="line-separator"></div>
+                        <div class="field_line" data-win-bind="style.display: dataReorderEvent.VeranstaltungVIEWID Binding.Converter.toDisplay">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'siteeventsbennach.roles'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'siteeventsbennach.bestellungen'}"></span>
+                            <div id="reodershost" class="input_field fragmenthost"></div>
+                        </div>
+                    </div>
+                    <div class="error-message"
+                         data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

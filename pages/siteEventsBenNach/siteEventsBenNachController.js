@@ -1,0 +1,180 @@
+﻿// controller for page: siteEventsBenNachs
+/// <reference path="~/www/lib/WinJS/scripts/base.js" />
+/// <reference path="~/www/lib/WinJS/scripts/ui.js" />
+/// <reference path="~/www/lib/convey/scripts/appSettings.js" />
+/// <reference path="~/www/lib/convey/scripts/dataService.js" />
+/// <reference path="~/www/lib/convey/scripts/appbar.js" />
+/// <reference path="~/www/lib/convey/scripts/pageController.js" />
+/// <reference path="~/www/lib/convey/scripts/fragmentController.js" />
+/// <reference path="~/www/scripts/generalData.js" />
+/// <reference path="~/www/pages/employee/employeeService.js" />
+/// <reference path="~/www/pages/empList/empListController.js" />
+/// <reference path="~/www/fragments/empRoles/empRolesController.js" />
+
+(function () {
+    "use strict";
+    WinJS.Namespace.define("SiteEventsBenNach", {
+        Controller: WinJS.Class.derive(Application.Controller,
+            function Controller(pageElement, commandList) {
+                Log.call(Log.l.trace, "Employee.Controller.");
+                Application.Controller.apply(this,
+                    [
+                        pageElement, {
+                            dataReorderEvent: getEmptyDefaultValue(SiteEventsBenNach.VeranstaltungView.defaultValue),
+                            restriction: getEmptyDefaultValue(SiteEventsBenNach.VeranstaltungView.defaultRestriction),
+                            recordID: 0
+                        }, commandList
+                    ]);
+
+                var that = this;
+
+                var saveRestriction = function() {
+                    AppData.setRestriction("", that.binding.restriction);
+                }
+                this.saveRestriction = saveRestriction;
+
+                var getRecordId = function() {
+                    Log.call(Log.l.trace, "SiteEventsNeuAus.Controller.");
+                    that.binding.recordID = AppData.getRecordId("VeranstaltungAnlage");
+                    Log.ret(Log.l.trace, that.binding.recordID);
+                    return that.binding.recordID;
+                }
+                this.getRecordId = getRecordId;
+
+                var getDateObject = function (dateData) {
+                    var ret;
+                    if (dateData) {
+                        var dateString = dateData.replace("\/Date(", "").replace(")\/", "");
+                        var milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
+                        ret = new Date(milliseconds).toLocaleDateString();
+                        //.toLocaleString('de-DE').substr(0, 10);
+                    } else {
+                        ret = "";
+                    }
+                    return ret;
+                };
+                this.getDateObject = getDateObject;
+
+                var resultConverter = function (item, index) {
+                    item.index = index;
+                    item.Startdatum = that.getDateObject(item.Startdatum);
+                    item.Enddatum = that.getDateObject(item.Enddatum);
+                }
+                this.resultConverter = resultConverter;
+
+                // define handlers
+                this.eventHandlers = {
+                    clickBack: function(event) {
+                        Log.call(Log.l.trace, "SiteEventsBenNach.Controller.");
+                        if (!Application.showMaster() && WinJS.Navigation.canGoBack === true) {
+                            WinJS.Navigation.back(1).done();
+                        }
+                        Log.ret(Log.l.trace);
+                    },
+                    clickReorder: function(event) {
+                        Log.call(Log.l.trace, "SiteEventsBenNach.Controller.");
+
+
+                        Log.ret(Log.l.trace);
+                    },
+                    clickChangeUserState: function(event) {
+                        Log.call(Log.l.trace, "SiteEventsBenNach.Controller.");
+                        Application.navigateById("userinfo", event);
+                        Log.ret(Log.l.trace);
+                    },
+                    clickGotoPublish: function(event) {
+                        Log.call(Log.l.trace, "SiteEventsBenNach.Controller.");
+                        Application.navigateById("publish", event);
+                        Log.ret(Log.l.trace);
+                    },
+                    clickTopButton: function(event) {
+                        Log.call(Log.l.trace, "SiteEventsBenNach.Controller.");
+                        var anchor = document.getElementById("menuButton");
+                        var menu = document.getElementById("menu1").winControl;
+                        var placement = "bottom";
+                        menu.show(anchor, placement);
+                        Log.ret(Log.l.trace);
+                    },
+                    clickLogoff: function(event) {
+                        Log.call(Log.l.trace, "SiteEventsBenNach.Controller.");
+                        AppData._persistentStates.privacyPolicyFlag = false;
+                        if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
+                            AppHeader.controller.binding.userData = {};
+                            if (!AppHeader.controller.binding.userData.VeranstaltungName) {
+                                AppHeader.controller.binding.userData.VeranstaltungName = "";
+                            }
+                        }
+                        Application.navigateById("login", event);
+                        Log.ret(Log.l.trace);
+                    }
+                };
+
+                this.disableHandlers = {
+                    clickBack: function() {
+                        if (WinJS.Navigation.canGoBack === true) {
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    }
+                };
+
+                var loadData = function () {
+                    Log.call(Log.l.trace, "SiteEventsBenNach.Controller.");
+                    that.loading = true;
+                    AppData.setErrorMsg(that.binding);
+                    var ret = new WinJS.Promise.as().then(function () {
+                        return SiteEventsBenNach.VeranstaltungView.select(function (json) {
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            AppData.setErrorMsg(that.binding);
+                            Log.print(Log.l.trace, "SiteEventsBenNach: success!");
+                            // employeeView returns object already parsed from json file in response
+                            if (json && json.d && json.d.results && json.d.results.length) {
+                                var results = json.d.results[0];
+                                results.Startdatum = that.getDateObject(results.Startdatum);
+                                results.Enddatum = that.getDateObject(results.Enddatum);
+                                that.binding.dataReorderEvent = results;
+                                that.binding.count = results.length;
+                            } else {
+                                that.binding.count = 0;
+                            }
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                            
+                            }, { VeranstaltungVIEWID: that.binding.recordID}
+                        );
+                    }).then(function () {
+                        var empRolesFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("reorderList"));
+                        if (empRolesFragmentControl && empRolesFragmentControl.controller) {
+                            return empRolesFragmentControl.controller.loadData(that.binding.recordID);
+                        } else {
+                            var parentElement = pageElement.querySelector("#reodershost");
+                            if (parentElement) {
+                                return Application.loadFragmentById(parentElement, "reorderList", { VeranstaltungID: that.binding.recordID });
+                            } else {
+                                return WinJS.Promise.as();
+                            }
+                        }
+                    });
+                    Log.ret(Log.l.trace);
+                    return ret;
+                };
+                this.loadData = loadData;
+            
+            that.processAll().then(function () {
+                Log.print(Log.l.trace, "Binding wireup page complete");
+                return that.loadData(getRecordId());
+            }).then(function () {
+                AppBar.notifyModified = true;
+                Log.print(Log.l.trace, "Data loaded");
+            });
+            Log.ret(Log.l.trace);
+        })
+    });
+})();
+
+
+

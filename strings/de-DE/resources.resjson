@@ -635,5 +635,44 @@
 	"pdfExport.seperator" : "Seperator",
 	"pdfExport.samplename" : "Beispielname",
 	"pdfExport.exportPdfMsg" : "Ihr PDF wird erstellt",
-	"pdfExport.msg" : "Bearbeitung / Link"
+	"pdfExport.msg" : "Bearbeitung / Link",
+
+    "siteEventsList.title" : "Standort",
+
+    "siteevents.title" : "Aussteller",
+    "siteevents.event" : "Aussteller",
+    "siteevents.begin" : "Anfang",
+    "siteevents.end"   : "Ende",
+    "siteevents.placeholder"   : "Ausstellersuche",
+
+    "siteeventsneuaus.title" : "Neuer Aussteller",
+    "siteeventsneuaus.veranstaltungsname" : "Veranstaltungsname",
+    "siteeventsneuaus.firmenname" : "Firmenname",
+    "siteeventsneuaus.strasse" : "Straße",
+    "siteeventsneuaus.plz" : "PLZ",
+    "siteeventsneuaus.ort" : "Ort",
+    "siteeventsneuaus.stadt" : "Stadt",
+    "siteeventsneuaus.land" : "Land",
+    "siteeventsneuaus.webadresse" : "Webadresse",
+    "siteeventsneuaus.loginemail" : "Login-Email",
+    "siteeventsneuaus.appuser" : "Appuser",
+    "siteeventsneuaus.ordernumber" : "Bestellnummer",
+    "siteeventsneuaus.standhall" : "Standhalle",
+    "siteeventsneuaus.standno" : "Standnummer",
+    "siteeventsneuaus.displaytext" : "Anzeigetext",
+
+    "siteeventsbennach.title" : "Nachbestellungen",
+    "siteeventsbennach.eventname" : "Aussteller",
+    "siteeventsbennach.startdatum" : "Startdatum",
+    "siteeventsbennach.enddatum" : "Enddatum",
+    "siteeventsbennach.bestellungen" : "Bestellungen",
+	
+    "reorderlist.posno" : "PosNo.",
+    "reorderlist.eventname" : "Veranstaltung",
+    "reorderlist.orderedapps" : "Bestellte Apps",
+    "reorderlist.orderdate" : "Bestellungsdatum",
+    "reorderlist.orderstatus" : "Status",
+    "reorderlist.btnlabelB" : "bestellt",
+    "reorderlist.btnlabelO" : "bestellen"
+	
 }			
