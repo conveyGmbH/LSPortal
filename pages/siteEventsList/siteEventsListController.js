@@ -188,6 +188,7 @@
                                             if (typeof AppBar.scope.loadData === "function") {
                                                 AppData.setRecordId("Veranstaltung", that.binding.eventId);
                                                 AppBar.scope.loadData(that.binding.eventId);
+                                                AppData.setRecordId("VeranstaltungTermin", that.binding.eventId);
                                             }
                                         } else {
                                             Application.navigateById("siteeventsList");

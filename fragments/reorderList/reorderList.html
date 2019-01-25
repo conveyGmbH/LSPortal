@@ -20,6 +20,7 @@
                             <div class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'reorderlist.eventname'}"></div>
                             <div class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'reorderlist.orderedapps'}"></div>
                             <div class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'reorderlist.orderdate'}"></div>
+                            <div class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'reorderlist.deviceno'}"></div>
                             <div class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'reorderlist.orderstatus'}"></div>
                         </div>
                         <div class="row-separator"></div>
@@ -36,11 +37,14 @@
                          data-win-bind="textContent: VeranstaltungTerminName"></div>
                     <div class="list-field-small-fixed win-type-ellipsis"
                         data-win-bind="textContent: OrderedApp"></div>
-                     <div class="list-field-small-fixed win-type-ellipsis"
+                    <div class="list-field-small-fixed win-type-ellipsis"
                          data-win-bind="textContent: OrderedTS"></div>
-                     <button class="order-button win-button"
-                         data-win-bind="textContent: btnLabel; value: OpenOrderForDevice;"
-                         onclick="AppBar.handleEvent('click', 'clickOrder', event)"></button>
+                    <div class="list-field-small-fixed win-type-ellipsis"
+                         data-win-bind="textContent: DeviceNo"></div>
+                        <button class="confirm-button win-button"
+                         data-win-res="{textContent: 'reorderlist.btnlabelO'}"
+                         data-win-bind="value: VeranstaltungAnlageVIEWID; style.display: OpenOrderForDevice Binding.Converter.toDisplay"
+                         onclick="AppBar.handleEvent('click', 'clickUnlockDevice', event)"></button>
                 </div>
                 <div class="list-portrait-only">
                     <div class="row-separator"></div>
@@ -57,10 +61,12 @@
                             <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
                                   data-win-bind="textContent: OrderedApp"></span> 
                             <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
-                                  data-win-bind="textContent: OrderedTS"></span> 
-                            <button class="order-button win-button"
-                                  data-win-bind="textContent: btnLabel; value: OpenOrderForDevice;"
-                                  onclick="AppBar.handleEvent('click', 'clickOrder', event)"></button>
+                                  data-win-bind="textContent: OrderedTS"></span>
+                            <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
+                                  data-win-bind="textContent: DeviceNo"></span> 
+                            <button class="confirm-button win-button"
+                                  data-win-bind="value: VeranstaltungAnlageVIEWID; style.display: OpenOrderForDevice Binding.Converter.toDisplay"
+                                  onclick="AppBar.handleEvent('click', 'clickUnlockDevice', event)"></button>
                             </div>
                     </div>
                 </div>

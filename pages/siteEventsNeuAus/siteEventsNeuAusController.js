@@ -26,7 +26,7 @@
 
             var getRecordId = function () {
                 Log.call(Log.l.trace, "SiteEventsNeuAus.Controller.");
-                that.binding.VeranstaltungTerminID = AppData.getRecordId("Veranstaltung");
+                that.binding.VeranstaltungTerminID = AppData.getRecordId("VeranstaltungTermin");
                 Log.ret(Log.l.trace, that.binding.VeranstaltungTerminID);
                 return that.binding.VeranstaltungTerminID;
             }
@@ -58,9 +58,6 @@
                 }
                 if (dataExibitor.PLZ === "") {
                     dataExibitor.PLZ = null;
-                }
-                if (dataExibitor.Ort === "") {
-                    dataExibitor.Ort = null;
                 }
                 if (dataExibitor.Stadt === "") {
                     dataExibitor.Stadt = null;
@@ -100,7 +97,6 @@
                         pFirmenName: dataExibitor.FirmenName,
                         pStrasse: dataExibitor.Strasse,
                         pPLZ: dataExibitor.PLZ,
-                        pOrt: dataExibitor.Ort,
                         pStadt: dataExibitor.Stadt,
                         pLandID: dataExibitor.LandID,
                         pWebAdresse: dataExibitor.WebAdresse,

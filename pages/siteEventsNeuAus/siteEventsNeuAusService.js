@@ -71,7 +71,6 @@
             FirmenName: "",
             Strasse: "",
             PLZ: "",
-            Ort: "",
             Stadt: "",
             LandID: "",
             WebAdresse: "",

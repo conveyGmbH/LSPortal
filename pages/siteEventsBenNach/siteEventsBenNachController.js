@@ -16,13 +16,16 @@
     WinJS.Namespace.define("SiteEventsBenNach", {
         Controller: WinJS.Class.derive(Application.Controller,
             function Controller(pageElement, commandList) {
-                Log.call(Log.l.trace, "Employee.Controller.");
+                Log.call(Log.l.trace, "SiteEventsBenNach.Controller.");
                 Application.Controller.apply(this,
                     [
                         pageElement, {
                             dataReorderEvent: getEmptyDefaultValue(SiteEventsBenNach.VeranstaltungView.defaultValue),
                             restriction: getEmptyDefaultValue(SiteEventsBenNach.VeranstaltungView.defaultRestriction),
-                            recordID: 0
+                            recordID: 0,
+                            reorderDevicesShowFlag: false,
+                            newdevices: 0,
+                            orderbtnLabel: getResourceText("siteeventsbennach.btnlabelorder")
                         }, commandList
                     ]);
 
@@ -34,7 +37,7 @@
                 this.saveRestriction = saveRestriction;
 
                 var getRecordId = function() {
-                    Log.call(Log.l.trace, "SiteEventsNeuAus.Controller.");
+                    Log.call(Log.l.trace, "SiteEventsBenNach.Controller.");
                     that.binding.recordID = AppData.getRecordId("VeranstaltungAnlage");
                     Log.ret(Log.l.trace, that.binding.recordID);
                     return that.binding.recordID;
@@ -55,6 +58,21 @@
                 };
                 this.getDateObject = getDateObject;
 
+                var unlockDevice = function(id) {
+                    Log.call(Log.l.trace, "SiteEventsBenNach.Controller.");
+                    AppData.setErrorMsg(that.binding);
+                    AppData.call("PRC_VeranstaltungAddDevice", {
+                        pVeranstaltungAnlageID: id
+                    }, function (json) {
+                        Log.print(Log.l.info, "call success! ");
+                        that.loadData();
+                    }, function (error) {
+                        Log.print(Log.l.error, "call error");
+                    });
+                    Log.ret(Log.l.trace);
+                }
+                this.unlockDevice = unlockDevice;
+
                 var resultConverter = function (item, index) {
                     item.index = index;
                     item.Startdatum = that.getDateObject(item.Startdatum);
@@ -71,10 +89,34 @@
                         }
                         Log.ret(Log.l.trace);
                     },
-                    clickReorder: function(event) {
+                    clickUnlockDevice: function(event) {
                         Log.call(Log.l.trace, "SiteEventsBenNach.Controller.");
-
-
+                        that.unlockDevice(event.target.value);
+                        Log.ret(Log.l.trace);
+                    },
+                    clickShowNewDevices: function (event) {
+                        Log.call(Log.l.trace, "SiteEventsBenNach.Controller.");
+                        if (that.binding.reorderDevicesShowFlag === false) {
+                            that.binding.reorderDevicesShowFlag = true;
+                        } else {
+                            that.binding.reorderDevicesShowFlag = false;
+                        }
+                        Log.ret(Log.l.trace);
+                    },
+                    clickOrderNewDevices: function (event) {
+                        Log.call(Log.l.trace, "SiteEventsBenNach.Controller.");
+                        AppData.setErrorMsg(that.binding);
+                        AppData.call("PRC_VeranstaltungAddUser", {
+                            pVeranstaltungID: parseInt(event.target.value),
+                            pAppUser: parseInt(that.binding.newdevices)
+                        }, function (json) {
+                            Log.print(Log.l.info, "call success! ");
+                            that.binding.reorderDevicesShowFlag = false;
+                            that.binding.newdevices = 0;
+                            that.loadData();
+                        }, function (error) {
+                            Log.print(Log.l.error, "call error");
+                        });
                         Log.ret(Log.l.trace);
                     },
                     clickChangeUserState: function(event) {

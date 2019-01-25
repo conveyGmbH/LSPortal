@@ -21,7 +21,8 @@
             // TODO: Initialize the page here.
             // add page specific commands to AppBar
             var commandList = [
-                { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" }
+                { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" },
+                { id: "clickShowNewDevices", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "plus" }
             ];
 
             this.controller = new SiteEventsBenNach.Controller(element, commandList);

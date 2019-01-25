@@ -18,7 +18,8 @@
             Log.call(Log.l.trace, "ReorderList.Controller.");
             Fragments.Controller.apply(this, [fragmentElement, {
                 recordID: 0,
-                btnLabel : ""
+                btnLabel: getResourceText("reorderlist.btnlabelO"),
+                unlockDevicesShowFlag: true
             }]);
             var that = this;
 
@@ -29,6 +30,7 @@
 
             // now do anything...
             var listView = fragmentElement.querySelector("#reorderList.listview");
+            var context = fragmentElement.querySelector(".list-landscape-only");
 
             this.dispose = function () {
                 if (listView && listView.winControl) {
@@ -115,11 +117,6 @@
             var resultConverter = function (item, index) {
                 item.index = index;
                 item.OrderedTS = that.getDateObject(item.OrderedTS);
-                if (item.OpenOrderForDevice === 0) {
-                    that.binding.btnLabel = btnLabelO;
-                } else {
-                    that.binding.btnLabel = btnLabelB;
-                }
             }
             this.resultConverter = resultConverter;
 

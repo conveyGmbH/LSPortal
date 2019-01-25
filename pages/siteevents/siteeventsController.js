@@ -84,10 +84,33 @@
             }
             this.selectRecordId = selectRecordId;
 
+            var deleteData = function (complete, error) {
+                Log.call(Log.l.trace, "Contact.Controller.");
+                AppData.setErrorMsg(that.binding);
+                var recordId = that.binding.veranstaltungId;
+                if (recordId) {
+                    AppData.setErrorMsg(that.binding);
+                    AppData.call("PRC_DeleteVeranstaltung", {
+                        pVeranstaltungID: recordId
+                    }, function (json) {
+                        Log.print(Log.l.info, "call success! ");
+                        var master = Application.navigator.masterControl;
+                        master.controller.loadData();
+                    }, function (error) {
+                        Log.print(Log.l.error, "call error");
+                    });
+                } else {
+                    var err = { status: 0, statusText: "no record selected" };
+                    error(err);
+                }
+                Log.ret(Log.l.trace);
+            };
+            this.deleteData = deleteData;
+
             var changeEvent = function () {
                 Log.call(Log.l.trace, "LocalEvents.Controller.");
                 AppData.setErrorMsg(that.binding);
-                AppData.call("PRC_ChangeUserVeranstaltung", {
+                AppData.call("PRC_ChangeSiteVeranstaltung", {
                     pNewVeranstaltungID: that.eventChangeId,
                     pLoginName: AppData._persistentStates.odata.login
                 }, function (json) {
@@ -133,7 +156,7 @@
                     Log.ret(Log.l.trace);
                 },
                 onSuggestionsRequested: function (eventInfo) {
-                    Log.call(Log.l.trace, "SiteEventsList.Controller.");
+                    Log.call(Log.l.trace, "SiteEvents.Controller.");
                     var queryText = eventInfo && eventInfo.detail && eventInfo.detail.queryText;
                     Log.print(Log.l.trace, queryText);
                     function filterEvents(item) {
@@ -155,8 +178,38 @@
                     Log.ret(Log.l.trace);
                 },
                 clickChange: function (event) {
-                    Log.call(Log.l.trace, "LocalEvents.Controller.");
+                    Log.call(Log.l.trace, "SiteEvents.Controller.");
                     that.changeEvent();
+                    Log.ret(Log.l.trace);
+                },
+                clickDelete: function (event) {
+                    Log.call(Log.l.trace, "SiteEvents.Controller.");
+                    var confirmTitle = getResourceText("siteevents.eventdelete");
+                    confirm(confirmTitle, function (result) {
+                        if (result) {
+                            Log.print(Log.l.trace, "clickDelete: user choice OK");
+                            deleteData(function (response) {
+                                // delete OK - goto start
+                            }, function (errorResponse) {
+                                // delete ERROR
+                                var message = null;
+                                Log.print(Log.l.error, "error status=" + errorResponse.status + " statusText=" + errorResponse.statusText);
+                                if (errorResponse.data && errorResponse.data.error) {
+                                    Log.print(Log.l.error, "error code=" + errorResponse.data.error.code);
+                                    if (errorResponse.data.error.message) {
+                                        Log.print(Log.l.error, "error message=" + errorResponse.data.error.message.value);
+                                        message = errorResponse.data.error.message.value;
+                                    }
+                                }
+                                if (!message) {
+                                    message = getResourceText("error.delete");
+                                }
+                                alert(message);
+                            });
+                        } else {
+                            Log.print(Log.l.trace, "clickDelete: user choice CANCEL");
+                        }
+                    });
                     Log.ret(Log.l.trace);
                 },
                 changeSearchField: function (event) {
@@ -348,7 +401,14 @@
                     }
                 },
                 clickNew: function () {
-                    if (!that.vidID2) {
+                    if (typeof that.vidID2 !== "undefined") {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                },
+                clickDelete: function () {
+                    if (!that.reorderId) {
                         return true;
                     } else {
                         return false;
@@ -468,8 +528,8 @@
             Log.ret(Log.l.trace);
         }, {
                 eventChangeId: null,
-                vidID: 0,
-                vidID2: 0,
+                vidID: null,
+                vidID2: null,
                 nextUrl: null,
                 loading: false,
                 siteeventsdata: null,

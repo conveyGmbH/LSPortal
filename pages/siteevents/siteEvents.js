@@ -50,7 +50,8 @@
                 { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" },
                 { id: "clickNew", label: getResourceText("command.new"), tooltip: getResourceText("tooltip.new"), section: "primary", svg: "plus" },
                 { id: "clickReorder", label: getResourceText("command.new"), tooltip: getResourceText("tooltip.new"), section: "primary", svg: "id_card" },
-                { id: "clickChange", label: getResourceText("command.ok"), tooltip: getResourceText("tooltip.eventchange"), section: "primary", svg: "arrow_to" }
+                { id: "clickChange", label: getResourceText("command.ok"), tooltip: getResourceText("tooltip.eventchange"), section: "primary", svg: "arrow_to" },
+                { id: "clickDelete", label: getResourceText("command.delete"), tooltip: getResourceText("tooltip.delete"), section: "primary", svg: "garbage_can" }
             ];
 
             this.controller = new SiteEvents.Controller(element, commandList);

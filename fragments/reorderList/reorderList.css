@@ -1,3 +1,37 @@
-﻿.order-button {
-    position: relative;
+﻿.confirm-button {
+    position: absolute;
+    height: 100%;
+}
+body {
+}
+
+.win-itemscontainer {
+    padding-left: 20px;
+}
+
+.list-field-small-fixed {
+    width: 200px;
+    padding-left: 20px;
+}
+
+.status {
+    padding-left: 20px;
+}
+
+#reorderList {
+    height: 400px;
+}
+
+.list-header {
+    padding-left: 27px;
+    font-weight: bold;
+}
+.list-role-item {
+    width: 100%;
+    min-width: 200px;
+    height: 48px;
+    overflow: hidden;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
 }

@@ -45,6 +45,15 @@
                             <span class="label landscape_only" data-win-res="{textContent: 'siteeventsbennach.bestellungen'}"></span>
                             <div id="reodershost" class="input_field fragmenthost"></div>
                         </div>
+                        <div class="field_line" data-win-bind="style.display: reorderDevicesShowFlag Binding.Converter.toDisplay">
+                            <div class="field_line field_line_odd">
+                                <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'siteeventsbennach.newdevices'}"></span>
+                                <input class="input_small_left win-textbox" type="number" data-win-bind="value: newdevices Binding.Mode.twoway" />
+                                <button class="order-button win-button"
+                                        data-win-bind="textContent: orderbtnLabel; value: dataReorderEvent.VeranstaltungVIEWID;"
+                                        onclick="AppBar.handleEvent('click', 'clickOrderNewDevices', event)"></button>
+                            </div>
+                       </div>
                     </div>
                     <div class="error-message"
                          data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
