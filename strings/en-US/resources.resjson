@@ -645,6 +645,7 @@
     "siteevents.begin" : "Beginning",
     "siteevents.end"   : "End",
     "siteevents.placeholder"   : "Exhibitor search",
+    "siteevents.eventdelete"   : "Do you really want to delete the event?",
 
     "siteeventsneuaus.title" : "New Exhibitor",
     "siteeventsneuaus.veranstaltungsname" : "Event name",
@@ -667,6 +668,8 @@
     "siteeventsbennach.startdatum" : "Start date",
     "siteeventsbennach.enddatum" : "End date",
     "siteeventsbennach.bestellungen" : "Orders",
+    "siteeventsbennach.newdevices" : "New device",
+    "siteeventsbennach.btnlabelorder" : "Order",
 	
     "reorderlist.posno" : "PosNo.",
     "reorderlist.eventname" : "Event",

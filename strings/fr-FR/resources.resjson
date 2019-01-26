@@ -633,5 +633,48 @@
 	"pdfExport.seperator" : "seperator",
 	"pdfExport.samplename" : "Nom de l'exemple",
 	"pdfExport.exportPdfMsg" : "Création de votre PDF",
-	"pdfExport.msg" : "Modifier/lier"
+	"pdfExport.msg" : "Modifier/lier",
+    
+	"siteEventsList.title" : "Emplacement",
+
+    "siteevents.title" : "exposant",
+    "siteevents.event" : "exposant",
+    "siteevents.begin" : "date de début",
+    "siteevents.end"   : "date de fin",
+    "siteevents.placeholder"   : "Recherche exposants",
+    "siteevents.eventdelete"   : "Voulez-vous vraiment supprimer l'événement?",
+
+    "siteeventsneuaus.title" : "Nouvel exposant",
+    "siteeventsneuaus.veranstaltungsname" : "nom de l'événement",
+    "siteeventsneuaus.firmenname" : "Nom de l'entreprise",
+    "siteeventsneuaus.strasse" : "rue",
+    "siteeventsneuaus.plz" : "code postal",
+    "siteeventsneuaus.ort" : "lieu",
+    "siteeventsneuaus.stadt" : "ville",
+    "siteeventsneuaus.land" : "pays",
+    "siteeventsneuaus.webadresse" : "Adresse Web",
+    "siteeventsneuaus.loginemail" : "Login-Email",
+    "siteeventsneuaus.appuser" : "appuser",
+    "siteeventsneuaus.ordernumber" : "commande",
+    "siteeventsneuaus.standhall" : "Stand hall",
+    "siteeventsneuaus.standno" : "numéro de stand",
+    "siteeventsneuaus.displaytext" : "texte d'affichage",
+
+    "siteeventsbennach.title" : "réassorts",
+    "siteeventsbennach.eventname" : "exposant",
+    "siteeventsbennach.startdatum" : "date de début",
+    "siteeventsbennach.enddatum" : "date de fin",
+    "siteeventsbennach.bestellungen" : "ordres",
+    "siteeventsbennach.newdevices" : "Nouveaux appareils",
+    "siteeventsbennach.btnlabelorder" : "ordre",
+	
+    "reorderlist.posno" : "PosNo.",
+    "reorderlist.eventname" : "événement",
+    "reorderlist.orderedapps" : "Apps commandées",
+    "reorderlist.orderdate" : "date de commande",
+    "reorderlist.deviceno" : "numéro d'appareil",
+    "reorderlist.orderstatus" : "activement",
+    "reorderlist.btnlabelB" : "ordonné",
+    "reorderlist.btnlabelO" : "ordre"
+	
 }

@@ -633,5 +633,48 @@
 	"pdfExport.seperator" : "Seperator",
 	"pdfExport.samplename" : "nome esempio",
 	"pdfExport.exportPdfMsg" : "Creazione del PDF",
-	"pdfExport.msg" : "Modifica/collegamento"
+	"pdfExport.msg" : "Modifica/collegamento",
+	
+    "siteEventsList.title" : "posizione",
+
+    "siteevents.title" : "espositore",
+    "siteevents.event" : "espositore",
+    "siteevents.begin" : "data di inizio",
+    "siteevents.end"   : "data di fine",
+    "siteevents.placeholder"   : "Ricerca Espositori",
+    "siteevents.eventdelete"   : "Vuoi veramente cancellare l'evento?",
+
+    "siteeventsneuaus.title" : "Nuovo espositore",
+    "siteeventsneuaus.veranstaltungsname" : "nome dell'evento",
+    "siteeventsneuaus.firmenname" : "nome azienda",
+    "siteeventsneuaus.strasse" : "strada",
+    "siteeventsneuaus.plz" : "codice postale",
+    "siteeventsneuaus.ort" : "posto",
+    "siteeventsneuaus.stadt" : "città",
+    "siteeventsneuaus.land" : "paese",
+    "siteeventsneuaus.webadresse" : "indirizzo Web",
+    "siteeventsneuaus.loginemail" : "Login-Email",
+    "siteeventsneuaus.appuser" : "Appuser",
+    "siteeventsneuaus.ordernumber" : "ordine",
+    "siteeventsneuaus.standhall" : "stand Sala",
+    "siteeventsneuaus.standno" : "numero di stand",
+    "siteeventsneuaus.displaytext" : "visualizzazione del testo",
+
+    "siteeventsbennach.title" : "riordini",
+    "siteeventsbennach.eventname" : "espositore",
+    "siteeventsbennach.startdatum" : "data di inizio",
+    "siteeventsbennach.enddatum" : "data di fine",
+    "siteeventsbennach.bestellungen" : "ordini",
+    "siteeventsbennach.newdevices" : "Nuovi dispositivi",
+    "siteeventsbennach.btnlabelorder" : "ordine",
+	
+    "reorderlist.posno" : "PosNo.",
+    "reorderlist.eventname" : "evento",
+    "reorderlist.orderedapps" : "App ordinate",
+    "reorderlist.orderdate" : "data ordine",
+    "reorderlist.deviceno" : "numero di dispositivo",
+    "reorderlist.orderstatus" : "attivamente",
+    "reorderlist.btnlabelB" : "ordinato",
+    "reorderlist.btnlabelO" : "ordine"
+	
 }
