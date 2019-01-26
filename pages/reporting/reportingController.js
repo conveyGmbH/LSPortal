@@ -335,6 +335,42 @@
                             restriction.bExact = true;
                         }
                         break;
+                    case 31:
+                        if (AppData.getLanguageId() === 1031) {
+                            dbView = Reporting.KontaktPDF;
+                            fileName = "KontaktemitPDF";
+                        } else {
+                            dbView = Reporting.KontaktPDF;
+                            fileName = "ContactswithPDF";
+                        }
+                        hasRestriction = false;
+                        tempRestriction = that.setRestriction();
+                        for (prop in tempRestriction) {
+                            if (tempRestriction.hasOwnProperty(prop)) {
+                                hasRestriction = true;
+                                if (!restriction) {
+                                    restriction = {};
+                                }
+                                switch (prop) {
+                                case "Erfassungsdatum":
+                                case "RecordDate":
+                                    restriction["ErfassungsdatumValue"] = [null, tempRestriction[prop]];
+                                    break;
+                                case "AenderungsDatum":
+                                case "ModificationDate":
+                                    restriction["AenderungsDatumValue"] = [null, tempRestriction[prop]];
+                                    break;
+                                default:
+                                    restriction[prop] = [null, tempRestriction[prop]];
+                                }
+                            }
+                        }
+                        if (hasRestriction) {
+                            restriction["KontaktVIEWID"] = ["<0", ">0"];
+                            restriction.bAndInEachRow = true;
+                            restriction.bExact = true;
+                        }
+                        break;
                     default:
                         Log.print(Log.l.error, "curOLELetterID=" + that.binding.curOLELetterID + "not supported");
                 }

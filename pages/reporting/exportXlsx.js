@@ -297,7 +297,7 @@
                            // that.showProgress(that.progressNext); 35 / 36
                             var attribSpecs = baseDbView.attribSpecs;
                             var colCount = attribSpecs.length;
-                            if (baseDbView.relationName === "KontaktReport") {
+                            if (baseDbView.relationName === "KontaktReport" || baseDbView.relationName === "Kontakt") {
                                 cr = true;
                                 for (var c = 0; c < colCount; c++) {
                                     var row = results[0];
