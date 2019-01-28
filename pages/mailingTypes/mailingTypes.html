@@ -93,10 +93,30 @@
                                     class="input_field win-dropdown"
                                     data-win-control="WinJS.UI.Repeater"
                                     onchange="AppBar.handleEvent('change', 'changedMailType', event)"
-                                    >
+                            >
                                 <option data-win-bind="value: MailTypeVIEWID; textContent: Name"></option>
                             </select>
                         </div>
+                        <div class="field_line field_line_even">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingTypes.enabled'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'mailingTypes.enabled'}"></span>
+                            <div class="input_field toggle-switch-parent">
+                                <div id="MailEnabled" class="input_field"
+                                     data-win-control="WinJS.UI.ToggleSwitch"
+                                     data-win-bind="winControl.checked: dataMailingTypeData.Enabled; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                                     onclick="AppBar.handleEvent('click', 'changedMailTypeEnabledDisabled', event)">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="line-separator"></div>
+                        <!--<div class="field_line field_line_even">
+                            <label class="checkbox input_field">
+                                <input type="checkbox" class="win-checkbox checkbox" value="1"
+                                       data-win-bind="checked: dataMailingTypeData.Enabled Binding.Mode.twoway"
+                                       onchange="AppBar.handleEvent('change', 'changedMailTypeEnabledDisabled', event)" />
+                                <span class="checkbox" data-win-res="{textContent: 'mailingTypes.enabled'}"></span>
+                            </label>
+                        </div>-->
                     </div>
                     <div class="error-message"
                          data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>

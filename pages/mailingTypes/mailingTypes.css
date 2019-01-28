@@ -1,1 +1,3 @@
-﻿
+﻿#MailEnabled .win-toggleswitch-header {
+    display: none;
+}

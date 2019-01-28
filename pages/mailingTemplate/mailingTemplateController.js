@@ -282,7 +282,10 @@
                     }
                 },*/
                 clickOk: function () {
-                    return AppBar.busy;
+                    if ((that.binding.dataMailLayout.LanguageSpecID || that.binding.LanguageID) && that.binding.dataMailLayout.MailTextTemplate.length > 0)
+                        return false;
+                    else
+                        return true;
                 }
             };
 

@@ -232,6 +232,20 @@
                     AppData.setRecordId("MailType", event.currentTarget.value);
                     that.loadData(AppData.getRecordId("VeranstaltungTermin"), parseInt(event.currentTarget.value));
                     Log.ret(Log.l.trace);
+                },
+                changedMailTypeEnabledDisabled: function(event) {
+                    Log.call(Log.l.trace, "MailingTypes.Controller.");
+                    AppData.call("PRC_Check_All_Mailingdata",
+                        {
+                             pVeranstaltungTerminID: AppData.getRecordId("VeranstaltungTermin")
+                        },
+                        function(json) {
+                            Log.print(Log.l.info, "call success! ");
+                        },
+                        function(error) {
+                            Log.print(Log.l.error, "call error");
+                        });
+                    Log.ret(Log.l.trace);
                 }
             };
 
