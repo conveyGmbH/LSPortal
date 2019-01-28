@@ -1,0 +1,19 @@
+﻿/**
+    employee page styles
+*/
+
+#emproleshost.fragmenthost {
+    height: 120px;
+}
+
+.view-size-medium #emproleshost.fragmenthost {
+    height: 180px;
+}
+
+.view-size-small #emproleshost.fragmenthost {
+    height: 360px;
+}
+
+.input_text_mailing {
+     height: 600px;
+}

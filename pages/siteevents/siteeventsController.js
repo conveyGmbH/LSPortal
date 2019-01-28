@@ -520,7 +520,15 @@
                 return ret;
             };
             this.loadData = loadData;
-            
+
+            var loadNextUrl = function() {
+                Log.call(Log.l.trace, "Siteevents.Controller.");
+                //TODO call selectnext on view
+
+                Log.ret(Log.l.trace);
+            };
+            this.loadNextUrl = loadNextUrl;
+
             that.processAll().then(function () {
                 AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Binding wireup page complete");

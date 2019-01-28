@@ -114,6 +114,6 @@
                 Log.ret(Log.l.trace);
                 return ret;
             }
-        },
+        }
     });
 })();

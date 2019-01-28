@@ -431,6 +431,10 @@
     "label.employeeGenPWList"     : "Vorgeneriert",
 	  "label.optQuestionList" : "optional FRA/ANTW",
     "label.support"     : "Support",
+	"label.siteevents"	: "Ausstellerliste",
+	"label.mailingTypes"	: "MailTypen",
+	"label.mailingTemplate"	: "MailingVorlage",
+	"label.mailingTracking"	: "MailVerfolgung",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Abbrechen",
@@ -583,6 +587,21 @@
 
     "mailingList.title"            : "Maildokumente",
     "mailingList.count"            : "Anzahl",
+
+	"mailingTypes.title"	: "MailTypen",
+	"mailingTypes.bccAddr"	: "bccAddr",
+	"mailingTypes.ccAddr"	: "ccAddr",
+	"mailingTypes.fromAddr"	: "fromAddr",
+	"mailingTypes.replyToAddr"	: "replyToAddr",
+	"mailingTypes.sendDay"	: "sendDay",
+	"mailingTypes.sendDayHook"	: "sendDayHook",
+	"mailingTypes.sendLater"	: "sendLater",
+	"mailingTypes.sendStartTime"	: "sendStartTime",
+	"mailingTypes.mailTypeConfig" : "Mailtypconfig",
+
+	"mailingTemplate.title" : "Mailvorlage",
+	"mailingTemplate.subject" : "Betreff",
+	"mailingTemplate.mailtext" : "Mailtext",
 
     "productlist.title"     : "Produktauswahl",
     "productlist.comment"   : "Verwende die Zurück-Schaltfläche auf dieser Seite um zurück zu gehen!",

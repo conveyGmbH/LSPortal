@@ -165,7 +165,9 @@
                                         var curPageId = Application.getPageId(nav.location);
                                         if (curPageId === "mailing") {
                                             AppBar.scope.binding.saveFlag = true;
-                                            AppBar.scope.saveData();
+                                            if (typeof AppBar.scope.saveData === "function") {
+                                                AppBar.scope.saveData();
+                                            }
                                             if (typeof AppBar.scope.loadData === "function") {
                                                 AppBar.scope.loadData(that.binding.mailingId);
                                             }
