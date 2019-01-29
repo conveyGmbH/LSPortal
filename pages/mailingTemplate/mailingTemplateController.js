@@ -18,7 +18,7 @@
             Log.call(Log.l.trace, "MailingTemplate.Controller.");
             Application.Controller.apply(this, [pageElement, {
                 dataMailLayout: getEmptyDefaultValue(MailingTemplate.MailLayoutView.defaultValue),
-                LanguageID : 0
+                LanguageID: 0
             }, commandList]);
 
             var that = this;
@@ -38,7 +38,7 @@
                 AppBar.triggerDisableHandlers();
             }
             this.setDataMailLayout = setDataMailLayout;
-            
+
             var getRecordId = function () {
                 Log.call(Log.l.trace, "MailingTemplate.Controller.");
                 var recordId = that.binding.dataMailLayout && that.binding.dataMailLayout.MailLayoutVIEWID;
@@ -172,22 +172,22 @@
                             that.binding.dataMailLayout.LanguageSpecID = that.binding.LanguageID;
                         }
                         return MailingTemplate.MailLayoutView.insert(function (json) {
-                                AppBar.busy = false;
-                                AppBar.modified = false;
-                                // this callback will be called asynchronously
-                                // when the response is available
-                                Log.print(Log.l.info, "record insert: success!");
-                                // contactData returns object already parsed from json file in response
-                                if (json && json.d) {
-                                    //that.curRecId = that.tableView.getRecordId(json.d);
-                                    //Log.print(Log.l.trace, "inserted recordId=" + that.curRecIdd);
-                                    //AppData.setRecordId(that.tableView.relationName, that.curRecId);
-                                    that.loadData(AppData.getRecordId("VeranstaltungTermin"),
-                                        AppData.getRecordId("MailType"),
-                                        that.binding.dataMailLayout.LanguageID);
-                                }
-                            },
-                            function(errorResponse) {
+                            AppBar.busy = false;
+                            AppBar.modified = false;
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            Log.print(Log.l.info, "record insert: success!");
+                            // contactData returns object already parsed from json file in response
+                            if (json && json.d) {
+                                //that.curRecId = that.tableView.getRecordId(json.d);
+                                //Log.print(Log.l.trace, "inserted recordId=" + that.curRecIdd);
+                                //AppData.setRecordId(that.tableView.relationName, that.curRecId);
+                                that.loadData(AppData.getRecordId("VeranstaltungTermin"),
+                                    AppData.getRecordId("MailType"),
+                                    that.binding.LanguageID);
+                            }
+                        },
+                            function (errorResponse) {
                                 Log.print(Log.l.error, "error inserting product");
                                 AppBar.busy = false;
                                 AppData.setErrorMsg(that.binding, errorResponse);
@@ -238,12 +238,13 @@
                     Log.ret(Log.l.trace);
                 },
                 changedLanguageMailTemplate: function (event) {
-                        Log.call(Log.l.trace, "MailingTemplate.Controller.");
-                        //AppBar.modified = true;
-                        //AppData.setRecordId("MailType", event.currentTarget.value);
-                        that.loadData(AppData.getRecordId("VeranstaltungTermin"), AppData.getRecordId("MailType"), parseInt(event.currentTarget.value)); //, parseInt(event.currentTarget.value)
-                        Log.ret(Log.l.trace);
-                    }
+                    Log.call(Log.l.trace, "MailingTemplate.Controller.");
+                    //AppBar.modified = true;
+                    //AppData.setRecordId("MailType", parseInt(event.currentTarget.value));
+                    that.binding.LanguageID = parseInt(event.currentTarget.value);
+                    that.loadData(AppData.getRecordId("VeranstaltungTermin"), parseInt(AppData.getRecordId("MailType")), that.binding.LanguageID); //, parseInt(event.currentTarget.value)
+                    Log.ret(Log.l.trace);
+                }
             };
 
             this.disableHandlers = {
@@ -254,19 +255,19 @@
                         return true;
                     }
                 },
-               /* clickNew: function () {
-                    if (that.binding.dataEmployee && that.binding.dataEmployee.CR_Event_MailTypeVIEWID && !AppBar.busy) {
-                        var master = Application.navigator.masterControl;
-                        if (master && master.controller && master.controller.binding &&
-                            master.controller.binding.eventId) {
-                            return false;
-                        } else {
-                            return true;
-                        }
-                    } else {
-                        return true;
-                    }
-                },*/
+                /* clickNew: function () {
+                     if (that.binding.dataEmployee && that.binding.dataEmployee.CR_Event_MailTypeVIEWID && !AppBar.busy) {
+                         var master = Application.navigator.masterControl;
+                         if (master && master.controller && master.controller.binding &&
+                             master.controller.binding.eventId) {
+                             return false;
+                         } else {
+                             return true;
+                         }
+                     } else {
+                         return true;
+                     }
+                 },*/
                 /*clickDelete: function () {
                     if (that.binding.dataEmployee && that.binding.dataEmployee.CR_Event_MailTypeVIEWID && !AppBar.busy &&
                         that.binding.dataEmployee.EventID === AppData.getRecordId("VeranstaltungTermin")) {
@@ -317,7 +318,7 @@
                         return MailingTemplate.initSpracheView.select(function (json) {
                             Log.print(Log.l.trace, "initSpracheView: success!");
                             if (json && json.d && json.d.results) {
-                                var firstItem = [{LanguageID:0, TITLE:""}];
+                                var firstItem = [{ LanguageID: 0, TITLE: "" }];
                                 var results = firstItem.concat(json.d.results);
 
                                 // Now, we call WinJS.Binding.List to get the bindable list
@@ -333,7 +334,7 @@
                     } else {
                         if (initSprache && initSprache.winControl &&
                             (!initSprache.winControl.data || !initSprache.winControl.data.length)) {
-                            var firstItem = [{LanguageID: 0, TITLE: ""}];
+                            var firstItem = [{ LanguageID: 0, TITLE: "" }];
                             var results = firstItem.concat(MailingTemplate.initSpracheView.getResults());
                             initSprache.winControl.data = new WinJS.Binding.List(results);
                         }
@@ -344,17 +345,17 @@
                         //load of format relation record data
                         Log.print(Log.l.trace, "calling select MailLayoutView_20571...");
                         return MailingTemplate.MailLayoutView_20571.select(function (json) {
-                                AppData.setErrorMsg(that.binding);
-                                Log.print(Log.l.trace, "MailLayoutView_20571: success!");
-                                if (json && json.d && json.d.results.length > 0) {
-                                    // now always edit!
-                                    that.setDataMailLayout(json.d.results[0]);
+                            AppData.setErrorMsg(that.binding);
+                            Log.print(Log.l.trace, "MailLayoutView_20571: success!");
+                            if (json && json.d && json.d.results.length > 0) {
+                                // now always edit!
+                                that.setDataMailLayout(json.d.results[0]);
 
-                                } else {
-                                    that.setDataMailLayout(getEmptyDefaultValue(MailingTemplate.MailLayoutView.defaultValue));
-                                }
-                            },
-                            function(errorResponse) {
+                            } else {
+                                that.setDataMailLayout(getEmptyDefaultValue(MailingTemplate.MailLayoutView.defaultValue));
+                            }
+                        },
+                            function (errorResponse) {
                                 AppData.setErrorMsg(that.binding, errorResponse);
                             },
                             { MailTypeID: mailTypeId, VeranstaltungTerminID: eventId, LanguageSpecID: languageId });
@@ -382,25 +383,25 @@
                 if (dataMailLayout && AppBar.modified && !AppBar.busy) {
                     // provísorisch rein
                     var recordId = that.getRecordId();
-                        if (recordId) {
-                            AppBar.busy = true;
-                            ret = MailingTemplate.MailLayoutView.update(function (response) {
-                                AppBar.busy = false;
-                                // called asynchronously if ok
-                                Log.print(Log.l.info, "MailLayoutData update: success!");
-                                AppBar.modified = false;
-                                
-                            }, function (errorResponse) {
-                                AppBar.busy = false;
-                                // called asynchronously if an error occurs
-                                // or server returns response with an error status.
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                                error(errorResponse);
-                            }, recordId, dataMailLayout);
-                        } else {
-                            Log.print(Log.l.info, "not supported");
-                            ret = WinJS.Promise.as();
-                        }
+                    if (recordId) {
+                        AppBar.busy = true;
+                        ret = MailingTemplate.MailLayoutView.update(function (response) {
+                            AppBar.busy = false;
+                            // called asynchronously if ok
+                            Log.print(Log.l.info, "MailLayoutData update: success!");
+                            AppBar.modified = false;
+
+                        }, function (errorResponse) {
+                            AppBar.busy = false;
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                            error(errorResponse);
+                        }, recordId, dataMailLayout);
+                    } else {
+                        Log.print(Log.l.info, "not supported");
+                        ret = WinJS.Promise.as();
+                    }
                     ret = new WinJS.Promise.as().then(function () {
                         complete(dataMailLayout);
                     });

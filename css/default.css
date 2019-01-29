@@ -473,7 +473,7 @@ select {
 }
 .large_field {
     min-height:40px;
-    float:left;
+    /*float:left;*/
     width: calc(100% - 4px);
 }
 .input_group {
@@ -916,8 +916,8 @@ input.win-textbox, input.win-checkbox, input.win-radio, textarea.win-textarea, s
 .view-size-medium .large_field {
     /*
     min-height: 40px;
-    */
-    float: left;
+    
+    float: left;*/
     width: calc(100% - 120px);
 }
 .view-size-medium .input_group {
@@ -1071,7 +1071,7 @@ input.win-textbox, input.win-checkbox, input.win-radio, textarea.win-textarea, s
 }
 .view-size-small .large_field {
     min-height: 40px; /*58px*/
-    float:left;
+    /*float:left;*/
     width: calc(100% - 10px);
 }
 .view-size-small .input_group {

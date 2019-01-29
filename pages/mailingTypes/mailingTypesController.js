@@ -52,6 +52,10 @@
                         sendDayHook.value = newDataMailingTypeData.SendDayHook;
                     }
                 }
+               // if (toggle && toggle.winControl) {
+                    if (that.binding.dataMailingTypeData.Enabled === "f")
+                        that.binding.dataMailingTypeData.Enabled = null;
+              
                 AppBar.modified = false;
                 AppBar.notifyModified = prevNotifyModified;
                 AppBar.triggerDisableHandlers();
@@ -228,13 +232,16 @@
                 },
                 changedMailType: function (event) {
                     Log.call(Log.l.trace, "MailingTypes.Controller.");
-                    AppBar.modified = true;
-                    AppData.setRecordId("MailType", event.currentTarget.value);
+                    //AppBar.modified = true;
+                    AppData.setRecordId("MailType", parseInt(event.currentTarget.value));
                     that.loadData(AppData.getRecordId("VeranstaltungTermin"), parseInt(event.currentTarget.value));
                     Log.ret(Log.l.trace);
                 },
                 changedMailTypeEnabledDisabled: function(event) {
                     Log.call(Log.l.trace, "MailingTypes.Controller.");
+                    AppBar.modified = true;
+                    var toggle = event.currentTarget.winControl;
+                    that.binding.dataMailingTypeData.Enabled = toggle.checked;
                     AppData.call("PRC_Check_All_Mailingdata",
                         {
                              pVeranstaltungTerminID: AppData.getRecordId("VeranstaltungTermin")
@@ -317,7 +324,7 @@
                         } else {
                             AppData.call("PRC_InitCR_Event_MailType",
                                 {
-                                    pKontaktID: AppData.getRecordId("VeranstaltungTermin")
+                                    pEventID: AppData.getRecordId("VeranstaltungTermin")
                                 },
                                 function (json) {
                                     Log.print(Log.l.info, "call success! ");
@@ -339,7 +346,7 @@
                                 Log.print(Log.l.trace, "MMailTypeVIEW_20570: success!");
                                 if (json && json.d && json.d.results.length > 0) {
                                     // now always edit!
-                                    var recordId = json.d.results[0].CR_Event_MailTypeVIEWID;
+                                    var recordId = json.d.results[0].MailTypeID;
                                     that.setDataMailingTypeData(json.d.results[0]);
                                     AppData.setRecordId("MailType", recordId);
                                     mailTypes.value = recordId;
@@ -348,7 +355,7 @@
                                     that.setDataMailingTypeData(getEmptyDefaultValue(MailingTypes.cr_Event_MailTypeView.defaultValue));
                                     AppData.call("PRC_InitCR_Event_MailType",
                                         {
-                                            pKontaktID: AppData.getRecordId("VeranstaltungTermin")
+                                            pEventID: AppData.getRecordId("VeranstaltungTermin")
                                         },
                                         function(json) {
                                             Log.print(Log.l.info, "call success! ");
@@ -404,7 +411,7 @@
                                 // called asynchronously if ok
                                 Log.print(Log.l.info, "mailTypesData update: success!");
                                 AppBar.modified = false;
-                                
+                                complete(response);
                             }, function (errorResponse) {
                                 AppBar.busy = false;
                                 // called asynchronously if an error occurs

@@ -80,6 +80,8 @@
                             employee.MitarbeiterVIEWID === recordId) {
                             listView.winControl.selection.set(i);
                             break;
+                        } else {
+                            listView.winControl.selection.set(0);
                         }
                     }
                 }

@@ -17,110 +17,115 @@
                         <div class="half-circle half-circle-textcolor">&nbsp;</div>
                         <div class="content-header-line win-type-caption">
                             <span class="id-field"></span>
-                            <span class="caption-field" data-win-res="{textContent: 'mailingTypes.mailTypeConfig'}"></span>
+                            <span class="caption-field" data-win-res="{textContent: 'mailingTypes.title'}"></span>
                             <span class="date-field"></span>
                         </div>
                     </div>
-                    <div class="content-record"> <!--data-win-bind="style.display: dataMailingTypeData.CR_Event_MailTypeVIEWID Binding.Converter.toDisplay"-->
+                    <div class="content-record">
                         <div class="line-separator"></div>
-                        <div class="field_line field_line_odd">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingTypes.bccAddr'}"></span>
-                            <span class="label landscape_only" data-win-res="{textContent: 'mailingTypes.bccAddr'}"></span>
-                            <input class="input_field win-textbox" type="text" data-win-bind="value: dataMailingTypeData.BCCAddr Binding.Mode.twoway"/>
-                        </div>
-                        <div class="field_line field_line_even">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingTypes.ccAddr'}"></span>
-                            <span class="label landscape_only" data-win-res="{textContent: 'mailingTypes.ccAddr'}"></span>
-                            <input class="input_field win-textbox" type="text" data-win-bind="value: dataMailingTypeData.CCAddr Binding.Mode.twoway"/>
-                        </div>
-                        <div class="line-separator"></div>
-                        <div class="field_line field_line_odd">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingTypes.fromAddr'}"></span>
-                            <span class="label landscape_only" data-win-res="{textContent: 'mailingTypes.fromAddr'}"></span>
-                            <input class="input_field win-textbox" data-win-bind="value: dataMailingTypeData.FromAddr Binding.Mode.twoway" />
-                        </div>
-                        <div class="field_line field_line_odd">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingTypes.replyToAddr'}"></span>
-                            <span class="label landscape_only" data-win-res="{textContent: 'mailingTypes.replyToAddr'}"></span>
-                            <input class="input_field win-textbox" data-win-bind="value: dataMailingTypeData.ReplyToAddr Binding.Mode.twoway" />
-                        </div>
-                        <div class="line-separator"></div>
-                        <div class="field_line field_line_odd">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingTypes.sendDay'}"></span>
-                            <span class="label landscape_only" data-win-res="{textContent: 'mailingTypes.sendDay'}"></span>
-                            <input class="input_field win-textbox" type="number" min="-14" max="14" data-win-bind="value: dataMailingTypeData.SendDay Binding.Mode.twoway" />
-                        </div>
-                        <div class="field_line field_line_even">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingTypes.sendDayHook'}"></span>
-                            <span class="label landscape_only" data-win-res="{textContent: 'mailingTypes.sendDayHook'}"></span>
-                            <!--<input class="input_field win-textbox" data-win-bind="value: dataEmployee.SendDayHook Binding.Mode.twoway" />-->
-                            <select id="SendDayHook"
-                                    class="input_field win-dropdown"
-                                    data-win-control="WinJS.UI.Repeater"
-                                    data-win-bind="value: dataMailingTypeData.SendDayHook Binding.Mode.twoway">
-                                <option data-win-bind="value: SendDayHook; textContent: TITLE"></option>
-                            </select>
-                        </div>
-                        <div class="line-separator"></div>
-                        <div class="field_line field_line_odd">
-                            <!--<span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingTypes.sendLater'}"></span>
-                            <span class="label landscape_only" data-win-res="{textContent: 'mailingTypes.sendLater'}"></span>
-                            <input class="input_field win-textbox" data-win-bind="value: dataEmployee.SendLater Binding.Mode.twoway" />-->
-                            <label class="checkbox input_field">
-                                <input type="checkbox" class="win-checkbox checkbox" value="1"
-                                       data-win-bind="checked: dataMailingTypeData.SendLater Binding.Mode.twoway" />
-                                <span class="checkbox" data-win-res="{textContent: 'mailingTypes.sendLater'}"></span>
-                            </label>
-                        </div>
-                        <div class="field_line field_line_odd">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingTypes.sendStartTime'}"></span>
-                            <span class="label landscape_only" data-win-res="{textContent: 'mailingTypes.sendStartTime'}"></span>
-                            <input class="input_field win-textbox" data-win-bind="value: dataMailingTypeData.SendStartTime Binding.Mode.twoway" />
-                        </div>
-                        <div class="header-separator float-left"></div>
-                        <div class="content-header float-left">
-                            <div class="half-circle half-circle-textcolor">&nbsp;</div>
-                            <div class="idAndDate win-type-caption">
-                                <span class="id-field"></span>
-                                <span class="caption-field" data-win-res="{textContent: 'mailingTypes.title'}"></span>
-                                <span class="date-field"></span>
-                            </div>
-                        </div>
                         <div class="field_line field_line_odd">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingTypes.sendDayHook'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'mailingTypes.sendDayHook'}"></span>
                             <select id="MailTypes"
                                     class="input_field win-dropdown"
                                     data-win-control="WinJS.UI.Repeater"
-                                    onchange="AppBar.handleEvent('change', 'changedMailType', event)"
-                            >
+                                    onchange="AppBar.handleEvent('change', 'changedMailType', event)">
                                 <option data-win-bind="value: MailTypeVIEWID; textContent: Name"></option>
                             </select>
                         </div>
                         <div class="field_line field_line_even">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingTypes.enabled'}"></span>
-                            <span class="label landscape_only" data-win-res="{textContent: 'mailingTypes.enabled'}"></span>
-                            <div class="input_field toggle-switch-parent">
-                                <div id="MailEnabled" class="input_field"
-                                     data-win-control="WinJS.UI.ToggleSwitch"
-                                     data-win-bind="winControl.checked: dataMailingTypeData.Enabled; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                     onclick="AppBar.handleEvent('click', 'changedMailTypeEnabledDisabled', event)">
-                                </div>
+                        </div>
+                        <div class="header-separator float-left"></div>
+                        <div class="content-header float-left">
+                            <div class="half-circle half-circle-textcolor">&nbsp;</div>
+                            <div class="idAndDate win-type-caption">
+                                <span class="id-field"></span>
+                                <span class="caption-field" data-win-res="{textContent: 'mailingTypes.mailTypeConfig'}"></span>
+                                <span class="date-field"></span>
                             </div>
                         </div>
-                        <div class="line-separator"></div>
-                        <!--<div class="field_line field_line_even">
-                            <label class="checkbox input_field">
-                                <input type="checkbox" class="win-checkbox checkbox" value="1"
-                                       data-win-bind="checked: dataMailingTypeData.Enabled Binding.Mode.twoway"
-                                       onchange="AppBar.handleEvent('change', 'changedMailTypeEnabledDisabled', event)" />
-                                <span class="checkbox" data-win-res="{textContent: 'mailingTypes.enabled'}"></span>
-                            </label>
-                        </div>-->
+                        <div class="content-record" data-win-bind="style.display: dataMailingTypeData.CR_Event_MailTypeVIEWID Binding.Converter.toDisplay">
+                            <!--data-win-bind="style.display: dataMailingTypeData.CR_Event_MailTypeVIEWID Binding.Converter.toDisplay"-->
+                            <div class="line-separator"></div>
+                            <div class="field_line field_line_odd">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingTypes.bccAddr'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'mailingTypes.bccAddr'}"></span>
+                                <input class="input_field win-textbox" type="text" data-win-bind="value: dataMailingTypeData.BCCAddr Binding.Mode.twoway" data-win-res="{placeholder: 'mailingTypes.bccplaceholder'}"/>
+                            </div>
+                            <div class="field_line field_line_even">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingTypes.ccAddr'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'mailingTypes.ccAddr'}"></span>
+                                <input class="input_field win-textbox" type="text" data-win-bind="value: dataMailingTypeData.CCAddr Binding.Mode.twoway" data-win-res="{placeholder: 'mailingTypes.ccplaceholder'}"/>
+                            </div>
+                            <div class="line-separator"></div>
+                            <div class="field_line field_line_odd">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingTypes.fromAddr'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'mailingTypes.fromAddr'}"></span>
+                                <input class="input_field win-textbox" data-win-bind="value: dataMailingTypeData.FromAddr Binding.Mode.twoway" data-win-res="{placeholder: 'mailingTypes.senderplaceholder'}"/>
+                            </div>
+                            <div class="field_line field_line_odd">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingTypes.replyToAddr'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'mailingTypes.replyToAddr'}"></span>
+                                <input class="input_field win-textbox" data-win-bind="value: dataMailingTypeData.ReplyToAddr Binding.Mode.twoway" data-win-res="{placeholder: 'mailingTypes.replyplaceholder'}"/>
+                            </div>
+                            <div class="line-separator"></div>
+                            <div class="field_line field_line_odd">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingTypes.sendDay'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'mailingTypes.sendDay'}"></span>
+                                <input class="input_field win-textbox" type="number" min="-14" max="14" data-win-bind="value: dataMailingTypeData.SendDay Binding.Mode.twoway" data-win-res="{placeholder: 'mailingTypes.sendDayplaceholder'}"/>
+                            </div>
+                            <div class="field_line field_line_even">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingTypes.sendDayHook'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'mailingTypes.sendDayHook'}"></span>
+                                <!--<input class="input_field win-textbox" data-win-bind="value: dataEmployee.SendDayHook Binding.Mode.twoway"/>-->
+                                <select id="SendDayHook"
+                                        class="input_field win-dropdown"
+                                        data-win-control="WinJS.UI.Repeater"
+                                        data-win-bind="value: dataMailingTypeData.SendDayHook Binding.Mode.twoway">
+                                    <option data-win-bind="value: SendDayHook; textContent: TITLE"></option>
+                                </select>
+                            </div>
+                            <div class="line-separator"></div>
+                            <div class="field_line field_line_odd">
+                                <!--<span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingTypes.sendLater'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'mailingTypes.sendLater'}"></span>
+                                <input class="input_field win-textbox" data-win-bind="value: dataEmployee.SendLater Binding.Mode.twoway"/>-->
+                                <label class="checkbox input_field">
+                                    <input type="checkbox" class="win-checkbox checkbox" value="1"
+                                           data-win-bind="checked: dataMailingTypeData.SendLater Binding.Mode.twoway"/>
+                                    <span class="checkbox" data-win-res="{textContent: 'mailingTypes.sendLater'}"></span>
+                                </label>
+                            </div>
+                            <div class="field_line field_line_even">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingTypes.sendStartTime'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'mailingTypes.sendStartTime'}"></span>
+                                <input class="input_field win-textbox" data-win-bind="value: dataMailingTypeData.SendStartTime Binding.Mode.twoway" data-win-res="{placeholder: 'mailingTypes.sendStartTimeplaceholder'}"/>
+                            </div>
+                            <div class="line-separator"></div>
+                            <div class="field_line field_line_even">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingTypes.enabled'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'mailingTypes.enabled'}"></span>
+                                <div class="input_field toggle-switch-parent">
+                                    <div id="MailEnabled" class="input_field"
+                                         data-win-control="WinJS.UI.ToggleSwitch"
+                                         data-win-bind="winControl.checked: dataMailingTypeData.Enabled; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                                         onclick="AppBar.handleEvent('click', 'changedMailTypeEnabledDisabled', event)">
+                                    </div>
+                                </div>
+                            </div>
+                            <!--<div class="field_line field_line_even">
+                                <label class="checkbox input_field">
+                                    <input type="checkbox" class="win-checkbox checkbox" value="1"
+                                           data-win-bind="checked: dataMailingTypeData.Enabled Binding.Mode.twoway"
+                                           onchange="AppBar.handleEvent('change', 'changedMailTypeEnabledDisabled', event)"/>
+                                    <span class="checkbox" data-win-res="{textContent: 'mailingTypes.enabled'}"></span>
+                                </label>
+                            </div>-->
+                        </div>
                     </div>
-                    <div class="error-message"
-                         data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
-                   </div>
+                        <div class="error-message"
+                             data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
+                    </div>
             </section>
         </div>
     </div>
