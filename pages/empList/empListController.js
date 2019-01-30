@@ -200,6 +200,7 @@
                         } else if (listView.winControl.loadingState === "complete") {
                             // load SVG images
                             Colors.loadSVGImageElements(listView, "action-image", 40, Colors.textColor);
+                            Colors.loadSVGImageElements(listView, "warning-image", 40, "red");
                             if (that.loading) {
                                 progress = listView.querySelector(".list-footer .progress");
                                 counter = listView.querySelector(".list-footer .counter");
