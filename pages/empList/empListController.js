@@ -79,9 +79,12 @@
                         if (employee && typeof employee === "object" &&
                             employee.MitarbeiterVIEWID === recordId) {
                             listView.winControl.selection.set(i);
+                            that.binding.employeeId = AppData.getRecordId("Mitarbeiter");
                             break;
                         } else {
-                            listView.winControl.selection.set(0);
+                            var firstEmployee = that.employees.getAt(0);
+                            that.binding.employeeId = firstEmployee.MitarbeiterVIEWID;
+                            //listView.winControl.selection.set(0);
                         }
                     }
                 }
@@ -332,7 +335,7 @@
                 }
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
-                    return EmpList.employeeView.select(function (json) {
+                    EmpList.employeeView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
                         Log.print(Log.l.trace, "EmpList: success!");
@@ -351,6 +354,7 @@
                                     // add ListView dataSource
                                     listView.winControl.itemDataSource = that.employees.dataSource;
                                 }
+                                that.selectRecordId(that.binding.employeeId);
                             } else {
                                 that.binding.count = 0;
                                 that.nextUrl = null;
