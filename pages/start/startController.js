@@ -42,8 +42,10 @@
             }
             Application.Controller.apply(this, [pageElement, {
                 dataStart: {},
+                noLicence: getResourceText("info.nolicence"),
                 disableEditEvent: NavigationBar.isPageDisabled("event"),
                 comment: getResourceText("info.comment"),
+                dataLicence: null,
                 // add dynamic scripts to page element, src is either a file or inline text:
                 scripts: [{ src: srcDatamaps, type: "text/javascript" }]
             }, commandList]);
@@ -638,6 +640,25 @@
                         },
                         function(errorResponse) {
                             that.kontaktanzahldata = null;
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                            return WinJS.Promise.as();
+                        });
+                }).then(function () {
+                    return Start.licenceView.select(function (json) {
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            Log.print(Log.l.trace, "licenceView: success!");
+                            // kontaktanzahlView returns object already parsed from json file in response
+                            if (json && json.d) {
+                                that.binding.dataLicence = json.d.results[0];
+                                that.binding.dataLicence.UserListe = that.binding.dataLicence.UserListe.replace(/,/gi, " ");
+                            }
+                            return WinJS.Promise.as();
+                        },
+                        function (errorResponse) {
+                            that.userLicence = null;
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
                             AppData.setErrorMsg(that.binding, errorResponse);

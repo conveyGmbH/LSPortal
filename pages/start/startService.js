@@ -81,6 +81,21 @@
             getDbView: function () {
                 return Start._reportLand;
             }
+        },
+        _licenceView: {
+            get: function () {
+                var ret = AppData.getFormatView("Veranstaltung", 20574);
+                return ret;
+            }
+        },
+        licenceView: {
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, "licenceView.");
+                var ret = Start._licenceView.select(complete, error, restriction, { ordered: true });
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            }
         }
     
     });

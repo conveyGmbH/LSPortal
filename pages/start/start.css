@@ -13,6 +13,10 @@
 
 .tile-template { display: none; }
 
+.text-lightcolorU {
+    font-weight: bold;
+    color: red;
+}
 .tile-separator-left {
     border-left-style: solid !important;
     border-left-width: 2px !important;
