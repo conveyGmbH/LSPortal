@@ -348,6 +348,8 @@
     "info.portal"           : "Portal",
     "info.useAudioNote"     : "Enregistrement audio",
     "info.autoShutterTime"  : "Temps de déclenchement [ms]",
+    "info.nolicence"        : "Aucune licence n'a été trouvée pour les utilisateurs suivants :",
+    "info.nolicenceemployee"        : "L'utilisateur n'a pas de licence valide!",
 
     "infodesk.actualEmployee"     : "Personnel actuel",
     "infodesk.employee"     : "Personnel",

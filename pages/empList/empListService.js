@@ -48,7 +48,7 @@
                 Nachname: "",
                 Login: "",
                 Names: "",
-                OrderAttribute: "Nachname",
+                OrderAttribute: ["NichtLizenzierteApp", "Nachname"],
                 OrderDesc: true
             }
         },

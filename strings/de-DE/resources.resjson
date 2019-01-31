@@ -348,6 +348,8 @@
     "info.portal"           : "Portal",
     "info.useAudioNote"     : "Tonaufnahme",
     "info.autoShutterTime"  : "Selbstauslöser [ms]",
+    "info.nolicence"        : "Für folgende Appuser wurde keine Lizenz gefunden :",
+    "info.nolicenceemployee"        : "Benutzer verfügt über keine gültige Lizenz!",
 
 	  "infodesk.actualEmployee"     : "Aktueller Mitarbeiter",
     "infodesk.employee"     : "Mitarbeiter",

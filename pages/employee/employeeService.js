@@ -55,6 +55,20 @@
                 OrderAttribute: "Nachname",
                 OrderDesc: true
             }
+        },
+        _licenceBView: {
+            get: function () {
+                return AppData.getFormatView("Mitarbeiter", 20471);
+            }
+        },
+        licenceBView: {
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, "employeeView.");
+                var ret = Employee._licenceBView.select(complete, error, restriction);
+                Log.ret(Log.l.trace);
+                return ret;
+
+            }
         }
     });
 })();

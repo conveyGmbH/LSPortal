@@ -13,3 +13,8 @@
 .view-size-small #emproleshost.fragmenthost {
     height: 360px;
 }
+.text-lightcolorU {
+    font-weight: bold;
+    color: red;
+    margin-left: 40%;
+}
