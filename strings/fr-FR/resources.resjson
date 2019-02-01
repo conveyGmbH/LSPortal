@@ -563,7 +563,7 @@
     "mailing.on"            : "Première question",
     "mailing.off"           : "Mémo",
 	"mailing.infoplaceholder"           : "Entrez ici la description de votre message, par exemple : Courriel de remerciement français",
-    "mailing.senderplaceholder"           :"Entrez ici l'adresse e-mail de l'expéditeur. Veuillez noter que vous devez utiliser @convey.de comme votre domaine. Exemple : votresociété@convey.de",
+    "mailing.senderplaceholder"           :"? Adresse e-mail de l'expéditeur. Le domaine doit être @convey.de.Exemple : MyCompanyMyEvent@convey.de",
     "mailing.replyplaceholder"           : "Entrez ici l'adresse e-mail de réponse. Exemple : marketing@votresociété.fr",
     "mailing.ccplaceholder"           : "Entrez ici l'adresse e-mail du CC. Exemple : marketing@votresociété.fr",
     "mailing.bccplaceholder"           : "Entrez ici l'adresse e-mail du BCC. Exemple : marketing@votresociété.fr",

@@ -569,7 +569,7 @@
     "mailing.on"            : "Erste Frage",
     "mailing.off"           : "Memo",
     "mailing.infoplaceholder"           : "Geben Sie hier die Beschreibung der E-Mail ein, z.B. Vielen Dank E-Mail Deutsch",
-    "mailing.senderplaceholder"           : "Geben Sie hier die Absender E-Mail Adresse ein. Bitte beachten Sie, dass Sie @convey.de als Domain benutzen müssen. Beispiel: FirmennameMesse@convey.de",
+    "mailing.senderplaceholder"           : "Absender E-Mail Adresse. E-Mail Domain muss @convey.de sein. Beispiel: FirmennameMesse@convey.de",
     "mailing.replyplaceholder"           : "Geben Sie hier die Antwort an E-Mail Adresse ein. Beispiel: Firmenname@Frimenname.de",
     "mailing.ccplaceholder"           : "Geben Sie hier die CC E-Mail Adresse ein. Beispiel: Firmenname@Firmenname.de",
     "mailing.bccplaceholder"           : "Geben Sie hier die BCC E-Mail Adresse ein. Beispiel: Firmenname@Firmenname.de",
