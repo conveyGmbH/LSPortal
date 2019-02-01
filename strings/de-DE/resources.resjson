@@ -384,6 +384,13 @@
 	  "infodeskEmpList.nameDesc"  : "Name ↓",
 	  "infodeskEmpList.nameAsc"  : "Name ↑",
 
+	"infodeskContactList.title"     : "Produktauswahlliste",
+    "infodeskContactList.company"   : "Firma",
+    "infodeskContactList.name"      : "Name",
+    "infodeskContactList.firstName" : "Vorname",
+    "infodeskContactList.email"     : "Email",
+	"infodeskContactList.productSelection" : "Produkte",
+
     "userinfo.title"        : "Benutzerinfo",
     "userinfo.present"      : "Ich bin jetzt auf dem Gelände",
     "userinfo.absend"       : "Ich verlasse das Gelände",
@@ -421,6 +428,7 @@
     "label.mailing"         : "Standard Mail",
     "label.mailingProduct"  : "Produkt E-Mail",
     "label.infodesk"        : "Infodesk",
+	"label.infodeskContactList" : "InfodeskKontaktProdukt",
     "label.mandatory"       : "Pflichtfelder",
 	"label.barcodeAdministration" : "Barcode",
     "label.eventcreation"   : "Veranstaltung erstellen",
@@ -569,7 +577,7 @@
     "mailing.on"            : "Erste Frage",
     "mailing.off"           : "Memo",
     "mailing.infoplaceholder"           : "Geben Sie hier die Beschreibung der E-Mail ein, z.B. Vielen Dank E-Mail Deutsch",
-    "mailing.senderplaceholder"           : "Absender E-Mail Adresse. E-Mail Domain muss @convey.de sein. Beispiel: FirmennameMesse@convey.de",
+    "mailing.senderplaceholder"           : "Geben Sie hier die Absender E-Mail Adresse ein. Bitte beachten Sie, dass Sie @convey.de als Domain benutzen müssen. Beispiel: FirmennameMesse@convey.de",
     "mailing.replyplaceholder"           : "Geben Sie hier die Antwort an E-Mail Adresse ein. Beispiel: Firmenname@Frimenname.de",
     "mailing.ccplaceholder"           : "Geben Sie hier die CC E-Mail Adresse ein. Beispiel: Firmenname@Firmenname.de",
     "mailing.bccplaceholder"           : "Geben Sie hier die BCC E-Mail Adresse ein. Beispiel: Firmenname@Firmenname.de",
@@ -591,6 +599,7 @@
     "mailingList.count"            : "Anzahl",
 
 	"mailingTypes.title"	: "MailTypen",
+	"mailingTypes.type"     : "Mailtyp",
 	"mailingTypes.bccAddr"	: "BCC",
 	"mailingTypes.ccAddr"	: "CC",
 	"mailingTypes.fromAddr"	: "Absender",
