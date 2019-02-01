@@ -566,7 +566,7 @@
     "mailing.on"            : "First Question",
     "mailing.off"           : "Memo",
     "mailing.infoplaceholder"           : "Enter here the description of the email, for example Thank you email English",
-    "mailing.senderplaceholder"           : "Enter here the sender email address. Please note it must have @convey.de as domain. Example: MyCompanyMyEvent@convey.de",
+    "mailing.senderplaceholder"           : "Sender email address. Domain must be @convey.de. Example: MyCompanyMyEvent@convey.de",
     "mailing.replyplaceholder"           : "Enter here the reply to email address. Example: MyCompany@Company.com",
     "mailing.ccplaceholder"           : "Enter here the CC email address. Example: MyCompany@Company.com",
     "mailing.bccplaceholder"           : "Enter here the BCC email address. Example: MyCompany@Company.com",
