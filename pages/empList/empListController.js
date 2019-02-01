@@ -19,7 +19,7 @@
             Log.call(Log.l.trace, "EmpList.Controller.");
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
-                employeeId: AppData.getRecordId("Mitarbeiter")
+                employeeId: 0//AppData.getRecordId("Mitarbeiter")
             }, commandList, true]);
             this.nextUrl = null;
             this.loading = false;
@@ -79,13 +79,11 @@
                         if (employee && typeof employee === "object" &&
                             employee.MitarbeiterVIEWID === recordId) {
                             listView.winControl.selection.set(i);
-                            that.binding.employeeId = AppData.getRecordId("Mitarbeiter");
                             break;
-                        } else {
+                        } /*else {
                             var firstEmployee = that.employees.getAt(0);
-                            that.binding.employeeId = firstEmployee.MitarbeiterVIEWID;
                             //listView.winControl.selection.set(0);
-                        }
+                        }*/
                     }
                 }
                 Log.ret(Log.l.trace);
