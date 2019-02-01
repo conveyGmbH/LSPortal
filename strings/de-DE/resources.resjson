@@ -384,13 +384,6 @@
 	  "infodeskEmpList.nameDesc"  : "Name ↓",
 	  "infodeskEmpList.nameAsc"  : "Name ↑",
 
-	"infodeskContactList.title"     : "Produktauswahlliste",
-    "infodeskContactList.company"   : "Firma",
-    "infodeskContactList.name"      : "Name",
-    "infodeskContactList.firstName" : "Vorname",
-    "infodeskContactList.email"     : "Email",
-	"infodeskContactList.productSelection" : "Produkte",
-
     "userinfo.title"        : "Benutzerinfo",
     "userinfo.present"      : "Ich bin jetzt auf dem Gelände",
     "userinfo.absend"       : "Ich verlasse das Gelände",
@@ -428,7 +421,6 @@
     "label.mailing"         : "Standard Mail",
     "label.mailingProduct"  : "Produkt E-Mail",
     "label.infodesk"        : "Infodesk",
-	"label.infodeskContactList" : "InfodeskKontaktProdukt",
     "label.mandatory"       : "Pflichtfelder",
 	"label.barcodeAdministration" : "Barcode",
     "label.eventcreation"   : "Veranstaltung erstellen",
@@ -599,7 +591,6 @@
     "mailingList.count"            : "Anzahl",
 
 	"mailingTypes.title"	: "MailTypen",
-	"mailingTypes.type"     : "Mailtyp",
 	"mailingTypes.bccAddr"	: "BCC",
 	"mailingTypes.ccAddr"	: "CC",
 	"mailingTypes.fromAddr"	: "Absender",
