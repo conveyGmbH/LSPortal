@@ -588,6 +588,7 @@
     "mailingList.count"     : "Count",
 
 	"mailingTypes.title"	: "Mailtypes",
+	"mailingTypes.type"     : "Mailtype",
 	"mailingTypes.bccAddr"	: "BCC",
 	"mailingTypes.ccAddr"	: "CC",
 	"mailingTypes.fromAddr"	: "Sender",

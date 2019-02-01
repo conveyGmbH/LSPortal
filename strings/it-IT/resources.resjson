@@ -586,6 +586,7 @@
     "mailingList.count"            : "Totale",
 	
 	"mailingTypes.title"	: "Tipo di posta",
+	"mailingTypes.type"     : "Tipo di posta",
 	"mailingTypes.bccAddr"	: "BCC",
 	"mailingTypes.ccAddr"	: "CC",
 	"mailingTypes.fromAddr"	: "Mittente",
