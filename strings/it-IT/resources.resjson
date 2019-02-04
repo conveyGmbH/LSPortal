@@ -433,6 +433,10 @@
     "label.employeeGenPWList"     : "Pregenerati",
     "label.optQuestionList" : "Dom. / Risp. opzionali",
     "label.support"     : "Support",
+	"label.siteevents"	: "Elenco degli espositori",
+	"label.mailingTypes"	: "MailTypes",
+	"label.mailingTemplate"	: "Modello di spedizione",
+	"label.mailingTracking"	: "MailTracking",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annulla",

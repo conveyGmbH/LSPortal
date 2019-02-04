@@ -433,6 +433,10 @@
     "label.employeeGenPWList"     : "Prégénérée",
     "label.optQuestionList" : "quest. / répo. facultatives",
     "label.support"     : "Support",
+	"label.siteevents"	: "Liste des exposants",
+	"label.mailingTypes"	: "MailTypes",
+	"label.mailingTemplate"	: "Modèle de mailing",
+	"label.mailingTracking"	: "MailTracking",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annuler",
