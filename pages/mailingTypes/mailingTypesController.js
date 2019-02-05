@@ -310,7 +310,7 @@
                     }
                 }).then(function () {
                     Log.print(Log.l.trace, "calling select MailingTypes...");
-                    return MailingTypes._MailTypeVIEW.select(function (json) {
+                    return MailingTypes.MailTypeVIEW.select(function (json) {
                         AppData.setErrorMsg(that.binding);
                         Log.print(Log.l.trace, "MailingTypes: success!");
                         if (json && json.d && json.d.results.length > 0) {
