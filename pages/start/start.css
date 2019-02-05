@@ -17,6 +17,15 @@
     font-weight: bold;
     color: red;
 }
+
+#dataLicenceUserList  {
+    width: 100%;
+    height: 50px;
+}
+.dataLicenceUser-button {
+    width: 100%;
+}
+
 .tile-separator-left {
     border-left-style: solid !important;
     border-left-width: 2px !important;

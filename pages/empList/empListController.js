@@ -146,6 +146,7 @@
                                             AppBar.scope.saveData(function (response) {
                                                 // called asynchronously if ok
                                                 that.binding.employeeId = item.data.MitarbeiterVIEWID;
+                                                AppData.setRecordId("MitarbeiterVIEW_20471", that.binding.employeeId);
                                                 var curPageId = Application.getPageId(nav.location);
                                                 if ((curPageId === "employee" || curPageId === "skillentry") &&
                                                     typeof AppBar.scope.loadData === "function") {

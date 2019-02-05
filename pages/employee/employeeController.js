@@ -403,6 +403,10 @@
             var loadData = function (recordId) {
                 Log.call(Log.l.trace, "Employee.Controller.");
                 AppData.setErrorMsg(that.binding);
+                var id = AppData.getRecordId("MitarbeiterVIEW_20471");
+                if (id) {
+                    recordId = id;
+                }
                 var ret = new WinJS.Promise.as().then(function () {
                     if (AppBar.modified) {
                         return that.saveData(function () {
@@ -453,7 +457,7 @@
                             return WinJS.Promise.as();
                         }
                     }
-                }).then(function () {
+                    }).then(function () {
                     AppBar.notifyModified = true;
                     return WinJS.Promise.as();
                 });

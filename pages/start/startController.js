@@ -46,16 +46,23 @@
                 disableEditEvent: NavigationBar.isPageDisabled("event"),
                 comment: getResourceText("info.comment"),
                 dataLicence: null,
+                dataLicenceUser : null,
                 // add dynamic scripts to page element, src is either a file or inline text:
                 scripts: [{ src: srcDatamaps, type: "text/javascript" }]
             }, commandList]);
             this.kontaktanzahldata = null;
             this.countrydata = null;
             this.applist = null;
+            this.nextUrl = null;
 
             var that = this;
 
+            var listView = pageElement.querySelector("#dataLicenceUserList.listview");
+
             this.dispose = function () {
+                if (listView && listView.winControl) {
+                    listView.winControl.itemDataSource = null;
+                }
                 if (that.kontaktanzahldata) {
                     that.kontaktanzahldata = null;
                 }
@@ -563,6 +570,11 @@
             }
             this.showBarChart = showBarChart;
 
+            var resultConverter = function (item, index) {
+                item.index = index;
+            }
+            this.resultConverter = resultConverter;
+
             // define data handling standard methods
             var getRecordId = function () {
                 return AppData.getRecordId("Mitarbeiter");
@@ -665,6 +677,40 @@
                             return WinJS.Promise.as();
                         });
                 }).then(function () {
+                    return Start.licenceUserView.select(function(json) {
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            Log.print(Log.l.trace, "licenceView: success!");
+                           
+                            // licenceUserView returns object already parsed from json file in response
+                            if (json && json.d) {
+                                that.nextUrl = Start.licenceUserView.getNextUrl(json);
+                                var results = json.d.results;
+                                that.dataLicenceUser = new WinJS.Binding.List(results);
+                                if (listView.winControl) {
+                                    // add ListView dataSource
+                                    listView.winControl.itemDataSource = that.dataLicenceUser.dataSource;
+                                }
+                            } else {
+                                that.nextUrl = null;
+                                that.dataLicenceUser = null;
+                                if (listView.winControl) {
+                                    // add ListView dataSource
+                                    listView.winControl.itemDataSource = null;
+                                }
+                            }
+                            return WinJS.Promise.as();
+                        },
+                        function(errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                            return WinJS.Promise.as();
+                        }, 
+                        {
+                            LizenzFlag : 1
+                        });
+                }).then(function () {
                     return Start.reportLand.select(function(json) {
                         Log.print(Log.l.trace, "reportLand: success!");
                         if (json && json.d && json.d.results && json.d.results.length > 0 &&
@@ -761,6 +807,46 @@
                     }
                     Application.navigateById("login", event);
                     Log.ret(Log.l.trace);
+                },
+                onFooterVisibilityChanged: function (eventInfo) {
+                    Log.call(Log.l.trace, "EmpList.Controller.");
+                    if (eventInfo && eventInfo.detail) {
+                        var visible = eventInfo.detail.visible;
+                        if (visible && that.dataLicenceUser && that.nextUrl) {
+                            AppData.setErrorMsg(that.binding);
+                            Log.print(Log.l.trace, "calling select Start.licenceUserView...");
+                            var nextUrl = that.nextUrl;
+                            that.nextUrl = null;
+                            Start.licenceUserView.selectNext(function (json) {
+                                // this callback will be called asynchronously
+                                // when the response is available
+                                Log.print(Log.l.trace, "Start.licenceUserView: success!");
+                                // employeeView returns object already parsed from json file in response
+                                if (json && json.d) {
+                                    that.nextUrl = Start.licenceUserView.getNextUrl(json);
+                                    var results = json.d.results;
+                                    results.forEach(function (item, index) {
+                                        that.resultConverter(item, index);
+                                        that.binding.count = that.dataLicenceUser.push(item);
+                                    });
+                                }
+                            }, function (errorResponse) {
+                                // called asynchronously if an error occurs
+                                // or server returns response with an error status.
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                                that.loading = false;
+                            }, null, nextUrl);
+                        } else {
+                            that.loading = false;
+                        }
+                    }
+                    Log.ret(Log.l.trace);
+                },
+                clickLicenceUser: function (event) {
+                    Log.call(Log.l.trace, "Start.Controller.");
+                    AppData.setRecordId("MitarbeiterVIEW_20471", event.currentTarget.value);
+                    Application.navigateById("employee", event);
+                    Log.ret(Log.l.trace);
                 }
             };
 
@@ -776,6 +862,10 @@
                     return that.binding.disableEditEvent;
                 }
             };
+
+            if (listView) {
+                this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
+            }
 
             // finally, load the data
             that.processAll().then(function() {

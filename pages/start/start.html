@@ -57,6 +57,14 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="dataLicenceUserList-template"
+                             data-win-control="WinJS.Binding.Template" style="display: none">
+                            <div class="tile-navigationcolor">
+                                <button class="dataLicenceUser-button win-button"
+                                        data-win-bind="textContent: Login; value: MitarbeiterVIEWID;"
+                                        onclick="AppBar.handleEvent('click', 'clickLicenceUser', event)"></button>
+                            </div>
+                        </div>
                         <div name="info" class="tile tile-navigationcolor tile-bottom">
                             <div class="tile-button-color">
                                 <div class="half-circle half-circle-lightcolor">&nbsp;</div>
@@ -70,11 +78,13 @@
                             <div class="field_line field_line_full no-border">
                                 <span class="win-type-body text-lightcolorU" data-win-bind="innerHTML: noLicence; style.display: dataLicence.UserAnzahl Binding.Converter.toDisplay">
                                 </span>
-                                <br />
-                                <span class="win-type-body text-lightcolor" data-win-bind="innerHTML: dataLicence.UserListe; style.display: dataLicence.UserAnzahl Binding.Converter.toDisplay">
-                                </span>
-                                <br />
-                                <br />
+                                <div id="dataLicenceUserList"
+                                     class="listview win-selectionstylefilled"
+                                     data-win-control="WinJS.UI.ListView"
+                                     data-win-options="{
+                                        itemTemplate: select('.dataLicenceUserList-template')
+                                    }">
+                                </div>
                                 <span class="win-type-body text-lightcolor"
                                       data-win-bind="innerHTML: comment"></span>
                             </div>

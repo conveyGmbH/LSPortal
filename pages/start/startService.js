@@ -96,7 +96,34 @@
                 Log.ret(Log.l.trace);
                 return ret;
             }
+        },
+        _licenceUserView: {
+            get: function () {
+                var ret = AppData.getFormatView("Mitarbeiter", 20471);
+                return ret;
+            }
+        },
+        licenceUserView: {
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, "licenceUserView.");
+                var ret = Start._licenceUserView.select(complete, error, restriction, { ordered: true });
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getNextUrl: function (response) {
+                Log.call(Log.l.trace, "licenceUserView.");
+                var ret = Start._licenceUserView.getNextUrl(response);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            selectNext: function (complete, error, response, nextUrl) {
+                Log.call(Log.l.trace, "licenceUserView.");
+                var ret = Start._licenceUserView.selectNext(complete, error, response, nextUrl);
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            }
         }
-    
     });
 })();
