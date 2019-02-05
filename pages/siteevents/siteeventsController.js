@@ -358,6 +358,11 @@
                     Application.navigateById("siteEventsNeuAus", event);
                     Log.ret(Log.l.trace);
                 },
+                clickChangeUserState: function (event) {
+                    Log.call(Log.l.trace, "Contact.Controller.");
+                    Application.navigateById("userinfo", event);
+                    Log.ret(Log.l.trace);
+                },
                 clickReorder: function (event) {
                     Log.call(Log.l.trace, "LocalEvents.Controller.");
                     Application.navigateById("siteEventsBenNach", event);
