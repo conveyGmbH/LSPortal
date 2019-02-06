@@ -54,47 +54,52 @@
     // static array of menu groups for the split view pane
     Application.navigationBarGroups = [
         { id: "start", group: 1, svg: "home", disabled: true },
-        { id: "localevents", group: 10, svg: "calendar_1", disabled: true },
-        { id: "events", group: 2, svg: "question_and_answer", disabled: true },
-        { id: "serviceevents", group: 11, svg: "question_and_answer", disabled: true },
-        { id: "mailing", group: 3, svg: "mail", disabled: true },
-        { id: "employee", group: 4, svg: "keys", disabled: true },
-        { id: "contacts", group: 5, svg: "businesspeople2", disabled: true },
-        { id: "search", group: 9, svg: "magnifying_glass", disabled: true },
-        { id: "reporting", group: 6, svg: "chart_column", disabled: true },
-        { id: "infodesk", group: 7, svg: "information", disabled: true },
-        { id: "info", group: 8, svg: "gearwheel", disabled: true }
+        { id: "events", group: 2, svg: "office_building", disabled: true },
+        { id: "localevents", group: 12, svg: "office_building", disabled: true },
+        { id: "siteevents", group: 13, svg: "office_building", disabled: true },
+        { id: "questionList", group: 3, svg: "question_and_answer", disabled: true },
+        { id: "mailing", group: 4, svg: "mail", disabled: true },
+        { id: "employee", group: 5, svg: "keys", disabled: true },
+        { id: "contacts", group: 6, svg: "businesspeople2", disabled: true },
+        { id: "search", group: 7, svg: "magnifying_glass", disabled: true },
+        { id: "reporting", group: 8, svg: "chart_column", disabled: true },
+        { id: "infodesk", group: 9, svg: "about", disabled: true },
+        { id: "info", group: 10, svg: "gearwheel", disabled: true },
+        { id: "support", group: 11, svg: "user_headset", disabled: true }
     ];
 
     // static array of pages for the navigation bar
     Application.navigationBarPages = [
         { id: "start", group: -1, disabled: false },
         { id: "event", group: 2, disabled: false },
-        { id: "questiongroup", group: 2, disabled: false },
-        { id: "questionList", group: 2, disabled: false },
-        { id: "optQuestionList", group: 2, disabled: false },
-        { id: "mandatory", group: 2, disabled: false },
-        { id: "barcodeAdministration", group: 2, disbaled: false },
-        { id: "products", group: 2, disabled: false },
+        //{ id: "products", group: 2, disabled: false },
         { id: "skills", group: 2, disabled: false },
-        { id: "mailing", group: 3, disabled: false },
-        { id: "mailingProduct", group: 3, disabled: false },
-        { id: "employee", group: 4, disabled: false },
-        { id: "skillentry", group: 4, disabled: false },
-        { id: "employeeGenPWList", group: 4, disabled: false },
-        { id: "contact", group: 5, disabled: false },
-        { id: "questionnaire", group: 5, disabled: false },
-        { id: "sketch", group: 5, disabled: false },
-        { id: "reporting", group: 6, disabled: false },
-        { id: "reportingColumnList", group: 6, disabled: false },
-        { id: "pdfExport", group: 6, disabled: false },
-        { id: "infodesk", group: -7, disabled: false },
-        { id: "info", group: 8, disabled: false },
-        { id: "settings", group: 8, disabled: false },
-        { id: "account", group: 8, disabled: false },
-        { id: "search", group: -9, disabled: false },
-        { id: "localevents", group: -10, disabled: false },
-        { id: "questionList", group: -11, disabled: false }
+        { id: "questionList", group: 3, disabled: false },
+        { id: "questiongroup", group: 3, disabled: false },
+        { id: "optQuestionList", group: 3, disabled: false },
+        { id: "mandatory", group: 3, disabled: false },
+        { id: "mailing", group: 4, disabled: false },
+        //{ id: "mailingProduct", group: 4, disabled: false },
+        { id: "employee", group: 5, disabled: false },
+        { id: "skillentry", group: 5, disabled: false },
+        { id: "employeeGenPWList", group: 5, disabled: false },
+        { id: "contact", group: 6, disabled: false },
+        { id: "questionnaire", group: 6, disabled: false },
+        { id: "sketch", group: 6, disabled: false },
+        { id: "search", group: -7, disabled: false },
+        { id: "reporting", group: 8, disabled: false },
+        { id: "reportingColumnList", group: 8, disabled: false },
+        { id: "pdfExport", group: 8, disabled: false },
+        { id: "infodesk", group: -9, disabled: false },
+        { id: "info", group: 10, disabled: false },
+        { id: "settings", group: 10, disabled: false },
+        { id: "account", group: 10, disabled: false },
+        { id: "support", group: -11, disabled: false },
+        { id: "localevents", group: -12, disabled: false },
+        { id: "siteevents", group: 13, disbaled: false },
+        { id: "mailingTypes", group: 13, disabled: false },
+        { id: "mailingTemplate", group: 13, disabled: false },
+        //{ id: "mailingTracking", group: 13, disabled: false }
     ];
 
 
@@ -107,7 +112,11 @@
         { id: "employee", master: "empList" },
         { id: "skillentry", master: "empList" },
         { id: "infodesk", master: "infodeskEmpList" },
-        //{ id: "mailing", master: "mailingList" }
+        { id: "mailing", master: "mailingList" },
+        //{ id: "mailingTypes", master: "siteEventsList" },
+        //{ id: "mailingTemplate", master: "siteEventsList" },
+        //{ id: "mailingTracking", master: "siteEventsList" },
+        { id: "siteevents", master: "siteEventsList" }
     ];
 
     // init page for app startup
