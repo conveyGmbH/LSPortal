@@ -84,7 +84,7 @@
                 that.progressStep = rowCount / AppData.generalData.AnzahlKontakte * 100;
                 that.progressNext += that.progressStep;
 
-                var newCell, valueName, type, style, value;
+                var newCell, valueName, type, style, value, extraValue;
                 for (var r = 0; r < rowCount; r++) {
                     if (r == 0 || r == 1){
                         var newRow = new XElement(S.row);
@@ -149,6 +149,7 @@
                             if (!attribSpecs[c].hidden) {
                                 var key = attribSpecs[c].ODataAttributeName;
                                 value = row[key];
+                                extraValue = null;
                                 if (key == "Erfassungsdatum" || key == "AenderungsDatum") {
                                     var attribTypeId = 6;
                                 } else {
@@ -160,6 +161,14 @@
                                 if (typeof value === "undefined" ||
                                     value === null || value === "NULL") {
                                     value = "";
+                                } else if (value.substr(0, 10) === "HYPERLINK(") {
+                                    type = "str";
+                                    valueName = S.f;
+                                    var startPos = value.indexOf('"');
+                                    if (startPos >= 0) {
+                                      var stopPos = value.indexOf('"', startPos+1);
+                                      extraValue = new XElement(S.v, value.substr(startPos+1, stopPos - startPos - 1));
+                                    }
                                 } else if (attribTypeId === 8 || attribTypeId === 6) { // timestamp or date
                                     if (cr === false){
                                         var dateString = value.replace("\/Date(", "").replace(")\/", "");
@@ -210,7 +219,11 @@
                                 } else {
                                     type = "n";
                                 }
-                                newCell = new XElement(S.c, new XElement(valueName, value));
+                                if (extraValue) {
+                                    newCell = new XElement(S.c, new XElement(valueName, value), extraValue);
+                                } else {
+                                    newCell = new XElement(S.c, new XElement(valueName, value));
+                                }
                                 if (type) {
                                     newCell.setAttributeValue("t", type);
                                 }
