@@ -1,0 +1,15 @@
+﻿.toggle-switch-parent {
+    height: 50px;
+}
+
+#nachbearbeitetFlagAutoSetToNull .win-toggleswitch-header,
+#thankMail .win-toggleswitch-header,
+#productMail .win-toggleswitch-header {
+    display: none;
+}
+
+@media (max-width:899px) {
+    .toggle-switch-parent {
+        margin-bottom: 8px;
+    }
+}

@@ -18,11 +18,7 @@
                 isQuestionnaireVisible: !AppData._persistentStates.hideQuestionnaire,
                 isSketchVisible: !AppData._persistentStates.hideSketch,
                 isCameraVisible: !AppData._persistentStates.hideCameraScan,
-                isCameraQuestionnaireVisible: !AppData._persistentStates.hideCameraQuestionnaire,
                 isBarcodeScanVisible: !AppData._persistentStates.hideBarcodeScan,
-                isProductMailOn: AppData._persistentStates.productMailOn,
-                isNachbearbeitetFlagAutoSetToNull: AppData._persistentStates.nachbearbeitetFlagAutoSetToNull,
-                isThankMailOn: AppData._persistentStates.thankYouMailOn,
                 isPrivacyPolicySVGVisible: AppData._persistentStates.privacyPolicySVGVisible
             }, commandList]);
 
@@ -81,11 +77,6 @@
                 var pageProperty = null;
                 var hidePageItem = true;
                 switch (toggleId) {
-                    case "showCameraQuestionaire":
-                        pOptionTypeId = 19;
-                        that.binding.isCameraQuestionnaireVisible = checked;
-                        AppData._persistentStates.hideCameraQuestionnaire = !checked;
-                        break;
                     case "showQuestionnaire":
                         pOptionTypeId = 20;
                         pageProperty = "questionnaire";
@@ -108,18 +99,6 @@
                         that.binding.isCameraVisible = checked;
                         AppData._persistentStates.hideCameraScan = !checked;
                         break;
-                    case "productMail":
-                        pOptionTypeId = 30;
-                        that.binding.isProductMailOn = checked;
-                        AppData._persistentStates.productMailOn = checked;
-                        hidePageItem = false;
-                        break;
-                    case "thankMail":
-                        pOptionTypeId = 31;
-                        that.binding.isThankMailOn = checked;
-                        AppData._persistentStates.thankYouMailOn = checked;
-                        hidePageItem = false;
-                        break;
                     case "showPrivacyPolicySVG":
                         pOptionTypeId = 34;
                         that.binding.isPrivacyPolicySVGVisible = checked;
@@ -133,12 +112,6 @@
                             AppBar.modified = true;
                         }
                         AppData._persistentStates.privacyPolicySVGVisible = checked;
-                        hidePageItem = false;
-                        break;
-                    case "nachbearbeitetFlagAutoSetToNull":
-                        pOptionTypeId = 35;
-                        that.binding.isNachbearbeitetFlagAutoSetToNull = checked;
-                        AppData._persistentStates.nachbearbeitetFlagAutoSetToNull = checked;
                         hidePageItem = false;
                         break;
                 }
