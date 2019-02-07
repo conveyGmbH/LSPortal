@@ -433,7 +433,8 @@
     "label.pdfExport"     : "PDF Export",
     "label.employeeGenPWList"     : "Pre-generated",
     "label.optQuestionList" : "optional QUEST./ANSW.",
-    "label.support"     : "Support",
+    "label.support"     : "Support",	
+    "label.mailingOptions"	: "Mailingoptions",
     
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Cancel",

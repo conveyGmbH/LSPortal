@@ -445,6 +445,7 @@
 	"label.mailingTypes"	: "MailTypen",
 	"label.mailingTemplate"	: "MailingVorlage",
 	"label.mailingTracking"	: "MailVerfolgung",
+    "label.mailingOptions"	: "Mailingeinstellungen",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Abbrechen",

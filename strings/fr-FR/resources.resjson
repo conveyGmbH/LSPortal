@@ -432,7 +432,8 @@
     "label.pdfExport"       : "Export PDF",
     "label.employeeGenPWList"     : "Prégénérée",
     "label.optQuestionList" : "quest. / répo. facultatives",
-    "label.support"     : "Support",
+    "label.support"     : "Support",	
+    "label.mailingOptions"	: "Paramètres de diffusion",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annuler",
