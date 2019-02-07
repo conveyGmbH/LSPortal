@@ -512,6 +512,13 @@
                                 if (recordid === dataEmployee.MitarbeiterVIEWID)
                                     if (AppData._persistentStates.odata.login !== that.binding.dataEmployee.Login || that.binding.dataEmployee.Password !== prevPassword) {
                                     ret = new WinJS.Promise.as().then(function () {
+                                            AppData._persistentStates.privacyPolicyFlag = false;
+                                            if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
+                                                AppHeader.controller.binding.userData = {};
+                                                if (!AppHeader.controller.binding.userData.VeranstaltungName) {
+                                                    AppHeader.controller.binding.userData.VeranstaltungName = "";
+                                                }
+                                            }
                                         Application.navigateById("login", event);
                                     });
                                 }
