@@ -105,7 +105,7 @@
                         pOrderNumber: dataExibitor.OrderNumber,
                         pStandHall: dataExibitor.StandHall,
                         pStandNo: dataExibitor.StandNo,
-                        pDisplayText: dataExibitor.DisplayText
+                        pInfoText: dataExibitor.DisplayText
 
             }, function (json) {
                         Log.print(Log.l.info, "call success! ");
