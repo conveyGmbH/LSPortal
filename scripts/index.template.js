@@ -79,6 +79,7 @@
         { id: "optQuestionList", group: 3, disabled: false },
         { id: "mandatory", group: 3, disabled: false },
         { id: "mailing", group: 4, disabled: false },
+        { id: "mailingOptions", group: 4, disabled: false },
         //{ id: "mailingProduct", group: 4, disabled: false },
         { id: "employee", group: 5, disabled: false },
         { id: "skillentry", group: 5, disabled: false },
@@ -113,9 +114,9 @@
         { id: "skillentry", master: "empList" },
         { id: "infodesk", master: "infodeskEmpList" },
         { id: "mailing", master: "mailingList" },
-        //{ id: "mailingTypes", master: "siteEventsList" },
-        //{ id: "mailingTemplate", master: "siteEventsList" },
-        //{ id: "mailingTracking", master: "siteEventsList" },
+        { id: "mailingTypes", master: "siteEventsList" },
+        { id: "mailingTemplate", master: "siteEventsList" },
+        { id: "mailingTracking", master: "siteEventsList" },
         { id: "siteevents", master: "siteEventsList" }
     ];
 
