@@ -79,7 +79,7 @@
             OrderNumber: "",
             StandHall: "",
             StandNo: "",
-            DisplayText: ""
+            InfoText: ""
 }
     });
 })();

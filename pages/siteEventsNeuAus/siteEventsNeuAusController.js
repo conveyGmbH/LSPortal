@@ -32,7 +32,34 @@
             }
             this.getRecordId = getRecordId;
 
-            
+            var setMandetoryFields = function () {
+                var inputfieldland = pageElement.querySelector("#InitLandReporting");
+                var inputfieldVeranstaltungname = pageElement.querySelector("#veranstaltungname");
+                var inputfieldemailadress = pageElement.querySelector("#loginemail");
+                var inputfieldinfotext = pageElement.querySelector("#infotext");
+
+                if (Colors.isDarkTheme) {
+                    WinJS.Utilities.removeClass(inputfieldland, "lightthemeMandatory");
+                    WinJS.Utilities.removeClass(inputfieldVeranstaltungname, "lightthemeMandatory");
+                    WinJS.Utilities.removeClass(inputfieldemailadress, "lightthemeMandatory");
+                    WinJS.Utilities.removeClass(inputfieldinfotext, "lightthemeMandatory");
+                    WinJS.Utilities.addClass(inputfieldland, "darkthemeMandatory");
+                    WinJS.Utilities.addClass(inputfieldVeranstaltungname, "darkthemeMandatory");
+                    WinJS.Utilities.addClass(inputfieldemailadress, "darkthemeMandatory");
+                    WinJS.Utilities.addClass(inputfieldinfotext, "darkthemeMandatory");
+                } else {
+                    WinJS.Utilities.removeClass(inputfieldland, "darkthemeMandatory");
+                    WinJS.Utilities.removeClass(inputfieldVeranstaltungname, "darkthemeMandatory");
+                    WinJS.Utilities.removeClass(inputfieldemailadress, "darkthemeMandatory");
+                    WinJS.Utilities.removeClass(inputfieldinfotext, "darkthemeMandatory");
+                    WinJS.Utilities.addClass(inputfieldland, "lightthemeMandatory");
+                    WinJS.Utilities.addClass(inputfieldVeranstaltungname, "lightthemeMandatory");
+                    WinJS.Utilities.addClass(inputfieldemailadress, "lightthemeMandatory");
+                    WinJS.Utilities.addClass(inputfieldinfotext, "lightthemeMandatory");
+                }
+            }
+            this.setMandetoryFields = setMandetoryFields;
+
             var getExibitorData = function() {
                 var dataExibitor = that.binding.dataExhibitor;
                 if (typeof dataExibitor.AppUser === "string") {
@@ -77,8 +104,8 @@
                 if (dataExibitor.StandNo === "") {
                     dataExibitor.StandNo = null;
                 }
-                if (dataExibitor.DisplayText === "") {
-                    dataExibitor.DisplayText = null;
+                if (dataExibitor.InfoText === "") {
+                    dataExibitor.InfoText = null;
                 }
                 return dataExibitor;
             }
@@ -105,7 +132,7 @@
                         pOrderNumber: dataExibitor.OrderNumber,
                         pStandHall: dataExibitor.StandHall,
                         pStandNo: dataExibitor.StandNo,
-                        pInfoText: dataExibitor.DisplayText
+                        pInfoText: dataExibitor.InfoText
 
             }, function (json) {
                         Log.print(Log.l.info, "call success! ");
@@ -211,10 +238,13 @@
                 Log.print(Log.l.trace, "Binding wireup page complete");
             }).then(function () {
                 that.getRecordId();
-                Log.print(Log.l.trace, "loadData loaded!");
+                Log.print(Log.l.trace, "getRecordId loaded!");
             }).then(function () {
                 that.loadData();
                 Log.print(Log.l.trace, "loadData loaded!");
+            }).then(function () {
+                that.setMandetoryFields();
+                Log.print(Log.l.trace, "setMandetoryFields loaded!");
             });
             Log.ret(Log.l.trace);
         }, {
