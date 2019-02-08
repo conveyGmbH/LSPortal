@@ -19,7 +19,7 @@
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
                 eventId: 0,
-                selIdx: 0,
+                selIdx: AppData.getRecordId("VeranstaltungTermin") - 1,
                 eventText: getResourceText("siteEventsList.event")
             }, commandList, true]);
             this.nextUrl = null;
@@ -125,7 +125,7 @@
                     for (var i = 0; i < that.eventdatasets.length; i++) {
                         var eventdataset = that.eventdatasets.getAt(i);
                         if (eventdataset && typeof eventdataset === "object" &&
-                            eventdataset.VeranstaltungVIEWID === recordId) {
+                            eventdataset.VeranstaltungTerminVIEWID === recordId) {
                             
                             listView.winControl.selection.set(i);
                             break;
@@ -332,9 +332,9 @@
                             if (that.binding.selIdx >= json.d.results.length) {
                                 that.binding.selIdx = json.d.results.length - 1;
                             }
-                            if (results[that.binding.selIdx] && results[that.binding.selIdx].VeranstaltungVIEWID) {
+                            if (results[that.binding.selIdx] && results[that.binding.selIdx].VeranstaltungTerminVIEWID) {
                                 WinJS.Promise.timeout(0).then(function () {
-                                    that.selectRecordId(results[that.binding.selIdx].VeranstaltungVIEWID);
+                                    that.selectRecordId(results[that.binding.selIdx].VeranstaltungTerminVIEWID);
                                 });
                             }
                         } else {
