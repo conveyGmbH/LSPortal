@@ -83,6 +83,8 @@
     "tooltip.save"			    : "Sauver",
 	"tooltip.resetRestriction" : "Supprimer le filtre",
     "tooltip.copyQuestionnaire" : "Répondre au questionnaire",
+    "tooltip.newExhibitor" : "New exhibitor",
+    "tooltip.deleteExhibitor" : "Supprimer l'exposant",
 
     "start.title"           : "Accueil",
     "start.comment"         : "Utilisez les boutons sur cette page pour accéder à d'autres pages!",

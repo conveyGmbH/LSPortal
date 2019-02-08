@@ -83,6 +83,8 @@
     "tooltip.save"			    : "Salvare",
 	"tooltip.resetRestriction" : "Elimina filtro",
   "tooltip.copyQuestionnaire" : "Prendere il questionario",
+    "tooltip.newExhibitor" : "Nuovo espositore",
+    "tooltip.deleteExhibitor" : "Elimina espositore",
 
     "start.title"           : "Pagina iniziale",
     "start.comment"         : "Utilizzate i pulsanti su questa pagina per muoversi tra le pagine!",
