@@ -60,9 +60,10 @@
 
                 var unlockDevice = function(id) {
                     Log.call(Log.l.trace, "SiteEventsBenNach.Controller.");
+                    var parid = parseInt(id);
                     AppData.setErrorMsg(that.binding);
                     AppData.call("PRC_VeranstaltungAddDevice", {
-                        pVeranstaltungAnlageID: id
+                        pVeranstaltungAnlageID: parid
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
                         that.loadData();
