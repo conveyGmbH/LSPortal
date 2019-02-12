@@ -663,7 +663,7 @@
                             // when the response is available
                             Log.print(Log.l.trace, "licenceView: success!");
                             // kontaktanzahlView returns object already parsed from json file in response
-                            if (json && json.d) {
+                            if (json && json.d && json.d.results.length > 0) {
                                 that.binding.dataLicence = json.d.results[0];
                                 that.binding.dataLicence.UserListe = that.binding.dataLicence.UserListe.replace(/,/gi, " ");
                             }
@@ -683,7 +683,7 @@
                             Log.print(Log.l.trace, "licenceView: success!");
                            
                             // licenceUserView returns object already parsed from json file in response
-                            if (json && json.d) {
+                            if (json && json.d && json.d.results.length > 0) {
                                 that.nextUrl = Start.licenceUserView.getNextUrl(json);
                                 var results = json.d.results;
                                 that.dataLicenceUser = new WinJS.Binding.List(results);
