@@ -46,7 +46,7 @@
                 disableEditEvent: NavigationBar.isPageDisabled("event"),
                 comment: getResourceText("info.comment"),
                 dataLicence: null,
-                dataLicenceUser : null,
+                dataLicenceUser: getEmptyDefaultValue(Start.licenceUserView.defaultValue),
                 // add dynamic scripts to page element, src is either a file or inline text:
                 scripts: [{ src: srcDatamaps, type: "text/javascript" }]
             }, commandList]);
@@ -57,8 +57,13 @@
 
             var that = this;
 
-            var listView = pageElement.querySelector("#dataLicenceUserList.listview");
+            var layout = null;
 
+            var maxLeadingPages = 0;
+            var maxTrailingPages = 0;
+
+            var listView = pageElement.querySelector("#dataLicenceUserList.listview");
+            
             this.dispose = function () {
                 if (listView && listView.winControl) {
                     listView.winControl.itemDataSource = null;
@@ -572,6 +577,8 @@
 
             var resultConverter = function (item, index) {
                 item.index = index;
+                item.buttonColor = Colors.tileBackgroundColor;
+                item.buttonTitle = Colors.tileTextColor;
             }
             this.resultConverter = resultConverter;
 
@@ -686,6 +693,9 @@
                             if (json && json.d && json.d.results.length > 0) {
                                 that.nextUrl = Start.licenceUserView.getNextUrl(json);
                                 var results = json.d.results;
+                                results.forEach(function (item, index) {
+                                    that.resultConverter(item, index);
+                                });
                                 that.dataLicenceUser = new WinJS.Binding.List(results);
                                 if (listView.winControl) {
                                     // add ListView dataSource
@@ -806,6 +816,39 @@
                         }
                     }
                     Application.navigateById("login", event);
+                    Log.ret(Log.l.trace);
+                },
+                onLoadingStateChanged: function (eventInfo) {
+                    Log.call(Log.l.trace, "Skills.Controller.");
+                    if (listView && listView.winControl) {
+                        Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
+                        // single list selection
+                        if (listView.winControl.selectionMode !== WinJS.UI.SelectionMode.single) {
+                            listView.winControl.selectionMode = WinJS.UI.SelectionMode.single;
+                        }
+                        // direct selection on each tap
+                        if (listView.winControl.tapBehavior !== WinJS.UI.TapBehavior.directSelect) {
+                            listView.winControl.tapBehavior = WinJS.UI.TapBehavior.directSelect;
+                        }
+                        // Double the size of the buffers on both sides
+                        if (!maxLeadingPages) {
+                            maxLeadingPages = listView.winControl.maxLeadingPages * 4;
+                            listView.winControl.maxLeadingPages = maxLeadingPages;
+                        }
+                        if (!maxTrailingPages) {
+                            maxTrailingPages = listView.winControl.maxTrailingPages * 4;
+                            listView.winControl.maxTrailingPages = maxTrailingPages;
+                        }
+                        if (listView.winControl.loadingState === "itemsLoading") {
+                            if (!layout) {
+                                layout = Application.StartLayout.StartLayout;
+                                listView.winControl.layout = { type: layout };
+                            }
+                        } else if (listView.winControl.loadingState === "complete") {
+
+                            that.addScrollIntoViewCheckForInputElements(listView);
+                        }
+                    }
                     Log.ret(Log.l.trace);
                 },
                 onFooterVisibilityChanged: function (eventInfo) {

@@ -59,11 +59,9 @@
                         </div>
                         <div class="dataLicenceUserList-template"
                              data-win-control="WinJS.Binding.Template" style="display: none">
-                            <div class="tile-navigationcolor">
                                 <button class="dataLicenceUser-button win-button"
-                                        data-win-bind="textContent: Login; value: MitarbeiterVIEWID;"
+                                        data-win-bind="style.backgroundColor: buttonColor; style.color: buttonTitle; textContent: Login; value: MitarbeiterVIEWID;"
                                         onclick="AppBar.handleEvent('click', 'clickLicenceUser', event)"></button>
-                            </div>
                         </div>
                         <div name="info" class="tile tile-navigationcolor tile-bottom">
                             <div class="tile-button-color">
