@@ -73,7 +73,7 @@
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
                         AppBar.busy = false;
-                        Application.navigateById("localevents", event);
+                        Application.navigateById("localevents");
                     }, function (errorResponse) {
                         Log.print(Log.l.error, "call error");
                         AppBar.busy = false;

@@ -157,7 +157,7 @@
                     Log.print(Log.l.info, "call success! ");
                     AppData.prevLogin = AppData._persistentStates.odata.login;
                     AppData.prevPassword = AppData._persistentStates.odata.password;
-                    Application.navigateById("login", event);
+                    Application.navigateById("login");
                 }, function (error) {
                     Log.print(Log.l.error, "call error");
                 });
