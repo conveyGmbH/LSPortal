@@ -295,6 +295,9 @@
                 that.binding.dataLogin.Login = AppData.prevLogin;
                 that.binding.dataLogin.Password = AppData.prevPassword;
                 that.binding.hideLoginData = true;
+                that.binding.dataLogin.privacyPolicyFlag = true;
+                that.binding.dataLogin.privacyPolicydisabled = true;
+                that.binding.isPrivacyPolicyFlag = true;
                 AppData.prevLogin = null;
                 AppData.prevPassword = null;
                 WinJS.Promise.timeout(0).then(function () {

@@ -67,7 +67,7 @@
                             <span class="large_field"
                                   data-win-bind="textContent: progress.text"></span>
                         </div>
-                        <div class="field_line">
+                        <div class="field_line" data-win-bind="style.display: hideLoginData Binding.Converter.toDisplayNone">
                             <input type="checkbox" class="win-checkbox checkbox" data-win-bind="checked: isPrivacyPolicyFlag Binding.Mode.twoway" onclick="AppBar.handleEvent('click', 'clickPrivacyPolicy', event)"/> <!--data-win-bind="checked: SSANTWORT19"-->
                             <span class="large_field" data-win-res="{textContent: 'login.privacyPolicy'}"></span>
                             <span class="large_field"
