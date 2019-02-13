@@ -6,8 +6,9 @@
 /// <reference path="~/www/lib/convey/scripts/appbar.js" />
 /// <reference path="~/www/lib/convey/scripts/pageController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
-/// <reference path="~/www/pages/infodeskEmpList/infodeskEmpListService.js" />
+/// <reference path="~/www/pages/employeeGenPWList/employeeGenPWListService.js" />
 /// <reference path="~/www/pages/employeeGenPWList/exportXlsx.js" />
+/// <reference path="~/www/lib/jQueryQRCode/scripts/jquery.qrcode.min.js" />
 
 (function () {
     "use strict";
@@ -27,6 +28,8 @@
 
             var that = this;
 
+            var qrcodeContainer = pageElement.querySelector(".userinfo-qrcode-container");
+
             // ListView control
             var listView = pageElement.querySelector("#employeegenpwlist.listview");
             var progress = null;
@@ -40,8 +43,8 @@
                 if (listView && listView.winControl) {
                     listView.winControl.itemDataSource = null;
                 }
-                if (that.localeventsdata) {
-                    that.localeventstdata = null;
+                if (that.employeePWListdata) {
+                    that.employeePWListdata = null;
                 }
                 listView = null;
             }
@@ -59,7 +62,7 @@
                 Log.call(Log.l.trace, "LocalEvents.Controller.");
                 progress = listView.querySelector(".list-footer .progress");
                 counter = listView.querySelector(".list-footer .counter");
-                if (that.localeventsdata && that.nextUrl && listView) {
+                if (that.employeePWListdata && that.nextUrl && listView) {
                     that.loading = true;
                     if (progress && progress.style) {
                         progress.style.display = "inline";
@@ -71,18 +74,19 @@
                     Log.print(Log.l.trace, "calling select LocalEvents.MaildokumentView...");
                     var nextUrl = that.nextUrl;
                     that.nextUrl = null;
-                    LocalEvents.VeranstaltungView.selectNext(function (json) { //json is undefined
+                    EmployeeGenPWList.employeePWView.selectNext(function (json) { //json is undefined
                         // this callback will be called asynchronously
                         // when the response is available
                         Log.print(Log.l.trace, "LocalEvents.MaildokumentView: success!");
                         // startContact returns object already parsed from json file in response
-                        if (json && json.d && json.d.results && that.localeventsdata) {
-                            that.nextUrl = MailingList.MaildokumentView.getNextUrl(json);
+                        if (json && json.d && json.d.results && that.employeePWListdata) {
+                            that.nextUrl =EmployeeGenPWList.employeePWView.getNextUrl(json);
                             var results = json.d.results;
                             results.forEach(function (item, index) {
                                 that.resultConverter(item, that.binding.count);
-                                that.binding.count = that.localeventsdata.push(item);
+                                that.binding.count = that.employeePWListdata.push(item);
                             });
+                            //that.barcodeRecords = new WinJS.Binding.List(results);
                         }
                         if (progress && progress.style) {
                             progress.style.display = "none";
@@ -175,13 +179,55 @@
                                 listView.winControl.layout = { type: layout };
                             }
                         } else if (listView.winControl.loadingState === "complete") {
+                            if (that.employeePWListdata && that.loading) {
+                                progress = listView.querySelector(".list-footer .progress");
+                                counter = listView.querySelector(".list-footer .counter");
+                                if (progress && progress.style) {
+                                    progress.style.display = "none";
+                                }
+                                if (counter && counter.style) {
+                                    counter.style.display = "inline";
+                                }
+                                for (var i = 0; i < that.employeePWListdata.length; i++) {
+                                    var itemElement = listView.winControl.elementFromIndex(i);
+                                    if (itemElement) {
+                                        var barcodeImages = itemElement.querySelectorAll(".userinfo-qrcode-container");
+                                        if (barcodeImages) {
+                                            for (var j = 0; j < barcodeImages.length; j++) {
+                                                var barcodeImage = barcodeImages[j];
+                                                if (barcodeImage) { //barcodeImage.barcode
+                                                    var value = "#li:" + that.employeePWListdata.getAt(j).Login + "/" + that.employeePWListdata.getAt(j).GenPassword; // barcodeImage.barcode.substring(9, 13)
+                                                    var qrcodeViewer = document.createElement("div");
+                                                    WinJS.Utilities.addClass(qrcodeViewer, "userinfo-qrcode");
+                                                    $(qrcodeViewer).qrcode({
+                                                        text: value,//"#LI:gilbert@convey.de/blabla",
+                                                        width: 50,
+                                                        height: 50,
+                                                        correctLevel: 0 //QRErrorCorrectLevel.M
+                                                    });
+                                                    barcodeImage.appendChild(qrcodeViewer);
+                                                    if (qrcodeContainer.childElementCount > 1) {
+                                                        var oldElement = qrcodeContainer.firstElementChild;
+                                                        if (oldElement) {
+                                                            qrcodeContainer.removeChild(oldElement);
+                                                            oldElement.innerHTML = "";
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                that.loading = false;
+
                             // load SVG images
                             Colors.loadSVGImageElements(listView, "action-image", 40, Colors.textColor);
                             Colors.loadSVGImageElements(listView, "action-image-flag", 40);
                             that.loadNextUrl();
                         }
+                            Log.ret(Log.l.trace);
+                        }
                     }
-                    Log.ret(Log.l.trace);
                 },
                 onHeaderVisibilityChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "LocalEvents.Controller.");
@@ -208,7 +254,7 @@
                         progress = listView.querySelector(".list-footer .progress");
                         counter = listView.querySelector(".list-footer .counter");
                         var visible = eventInfo.detail.visible;
-                        if (visible && that.localeventsdata && that.nextUrl) {
+                        if (visible && that.employeePWListdata && that.nextUrl) {
                             that.loading = true;
                             that.loadNextUrl();
                         } else {
@@ -218,7 +264,7 @@
                             if (counter && counter.style) {
                                 counter.style.display = "inline";
                             }
-                            that.loading = false;
+                            //that.loading = false;
                         }
                     }
                     Log.ret(Log.l.trace);
@@ -239,6 +285,7 @@
                 this.addRemovableEventListener(listView, "iteminvoked", this.eventHandlers.onItemInvoked.bind(this));
                 this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
                 this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
+                this.addRemovableEventListener(listView, "headervisibilitychanged", this.eventHandlers.onHeaderVisibilityChanged.bind(this));
             }
 
             var resultConverter = function (item, index) {

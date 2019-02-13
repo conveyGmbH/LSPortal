@@ -562,7 +562,9 @@
             var loadData = function (mitarbeiterId) {
                 Log.call(Log.l.trace, "Skillentry.Controller.", "mitarbeiterId=" + mitarbeiterId);
                 AppData.setErrorMsg(that.binding);
-                var ret = new WinJS.Promise.as().then(function () {
+                var ret = null;
+                if (mitarbeiterId) {
+                    ret = new WinJS.Promise.as().then(function() {
                     return Skillentry._skillentryline_L.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
@@ -572,7 +574,6 @@
                             that.binding.countSkills = json.d.results.length;
                             that.nextUrl = Skillentry._skillentryline_L.getNextUrl(json);
                             var results = json.d.results;
-                            var skilltypeid = results.SkillTypeID;
                             //results.forEach(function (item) {
                             //    that.resultConverter(item);
                             //});
@@ -588,11 +589,13 @@
                                 listView.winControl.itemDataSource = that.questions.dataSource;
                             }
                         }
-                    }, function (errorResponse) {
+                            },
+                            function(errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
-                    }, {
+                            },
+                            {
                         MitarbeiterID: mitarbeiterId
                     });
                 }).then(function () {
@@ -600,6 +603,11 @@
                     AppBar.triggerDisableHandlers();
                     return WinJS.Promise.as();
                 });
+                } else {
+                    AppBar.notifyModified = true;
+                    AppBar.triggerDisableHandlers();
+                    return WinJS.Promise.as();
+                }
                 Log.ret(Log.l.trace);
                 return ret;
             };

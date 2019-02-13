@@ -7,6 +7,7 @@
     <script type="text/javascript" src="employeeGenPWListController.js"></script>
     <script type="text/javascript" src="employeeGenPWList.js"></script>
     <script type="text/javascript" src="exportXlsx.js"></script>
+    <script type="text/javascript" src="../../lib/jQueryQRCode/scripts/jquery.qrcode.min.js"></script>
 </head>
 <body class="win-type-body">
     <div class="employeeGenPWList fragment">
@@ -14,6 +15,7 @@
             <section aria-label="Main content" role="main" class="animationElement">
                 <div class="contentarea win-type-body">
                     <div class="content-header">
+                        <div class="header-separator"></div>
                     <div class="half-circle half-circle-textcolor">&nbsp;</div>
                     <div class="content-header-line win-type-caption">
                         <span class="id-field"></span>
@@ -23,13 +25,12 @@
                 </div>
                     <div class="headerFooterPlaceholder">
                         <div class="list-header">
-                            <div class="row-separator"></div>
-                            <div class="list-landscape-only">
-                                <div class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'employeegenpwlist.name'}"></div>
-                                <div class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'employeegenpwlist.login'}"></div>
-                                <div class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'employeegenpwlist.password'}"></div>
+                            <div class="list-landscape-only list-header-columns">
+                                <div class="list-field-small-fixed" data-win-res="{textContent: 'employeegenpwlist.name'}"></div>
+                                <div class="list-field-small-fixed" data-win-res="{textContent: 'employeegenpwlist.login'}"></div>
+                                <div class="list-field-small-fixed" data-win-res="{textContent: 'employeegenpwlist.password'}"></div>
+                                <div class="list-field-small-fixed" data-win-res="{textContent: 'employeegenpwlist.barcode'}"></div>
                             </div>
-                            <div class="row-separator"></div>
                         </div>
                     </div>
                     <div class="employeegenpwlist-template"
@@ -43,23 +44,8 @@
                                  data-win-bind="textContent: Login"></div>
                             <div class="list-field-small-fixed win-type-ellipsis"
                                  data-win-bind="textContent: GenPassword"></div>
-                        </div>
-                        <div class="list-portrait-only">
-                            <div class="row-separator"></div>
-                            <div class="list-div-left">
-                                <div class="list-symbol-ID">
-                                    <div id="drop_down_list" class="action-image"></div>
-                                </div>
-                                <div class="list-compressed">
-                                    <!--list-localeventsList-->
-                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
-                                          data-win-bind="textContent: Name"></span>
-                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
-                                          data-win-bind="textContent: Login"></span>
-                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
-                                          data-win-bind="textContent: GenPassword"></span>
-                                </div>
-                            </div>
+                            <div class="list-field-small-fixed list-barcodefield-small-fixed userinfo-qrcode-container">
+                    </div>
                         </div>
                     </div>
                     <div class="headerFooterPlaceholder">
@@ -76,8 +62,8 @@
                          class="listview win-selectionstylefilled"
                          data-win-control="WinJS.UI.ListView"
                          data-win-options="{
-                                header: select('.list-header'),
                                 itemTemplate: select('.employeegenpwlist-template'),
+                                header: select('.list-header'),
                                 footer: select('.list-footer')
                          }">
                     </div>
