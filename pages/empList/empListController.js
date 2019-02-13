@@ -211,6 +211,24 @@
                                 }
                                 that.loading = false;
                             }
+                            var i;
+                            if (that.employees) {
+                                for (i = 0; i < that.employees.length; i++) {
+                                    var employee = that.employees.getAt(i);
+                                    if (employee.Gesperrt === 1) {
+                                        var itemElement = listView.winControl.elementFromIndex(i);
+                                        itemElement.oncontextmenu = function (e) { e.stopPropagation(); };
+                                        // disable touch selection
+                                        itemElement.addEventListener('MSPointerDown', function (e) {
+                                            e.stopPropagation();
+                                        });
+                                        itemElement.addEventListener('pointerdown', function (e) {
+                                            e.stopPropagation();
+                                        });
+                                        itemElement.style.backgroundColor = "grey";
+                                    }
+                                }
+                            }
                         }
                     }
                     Log.ret(Log.l.trace);
