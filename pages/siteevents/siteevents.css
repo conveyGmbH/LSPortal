@@ -17,8 +17,7 @@
 
 #siteevents {
     width: 100%;
-    height: 100%;
-    float: left;
+    height: calc(100% - 96px);
 }
 
 .list-header {
@@ -26,5 +25,6 @@
     font-weight: bold;
 }
 #suggestionBox {
+    height: 48px;
     width: 100%;
 }

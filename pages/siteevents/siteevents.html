@@ -18,21 +18,20 @@
                         <div class="content-header-line win-type-caption">
                             <span class="id-field"></span>
                             <span class="caption-field" data-win-res="{textContent: 'siteevents.title'}"></span>
-                            <div id="suggestionBox"
-                                 class="input_half_right win-autosuggestbox"
-                                 data-win-control="WinJS.UI.AutoSuggestBox"
-                                 data-win-bind="winControl.placeholderText: eventText; wincontrol.queryText: siteeventsdata.Name" oninput="AppBar.handleEvent('oninput', 'changeSearchField', event)"></div>
                         </div>
+                    </div>
+                    <div id="suggestionBox"
+                         class="input_half_right win-autosuggestbox"
+                         data-win-control="WinJS.UI.AutoSuggestBox"
+                         data-win-bind="winControl.placeholderText: eventText; wincontrol.queryText: siteeventsdata.Name" oninput="AppBar.handleEvent('oninput', 'changeSearchField', event)">
                     </div>
                     <div class="headerFooterPlaceholder">
                         <div class="list-header">
-                            <div class="row-separator"></div>
                             <div class="list-landscape-only">
                                 <div class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'siteevents.event'}"></div>
                                 <div class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'siteevents.begin'}"></div>
                                 <div class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'siteevents.end'}"></div>
                             </div>
-                            <div class="row-separator"></div>
                         </div>
                     </div>
                     <div class="siteevents-template"
@@ -51,7 +50,7 @@
                             <div class="row-separator"></div>
                             <div class="list-div-left">
                                 <div class="list-symbol-ID">
-                                    <div id="drop_down_list" class="action-image"></div>
+                                    <div id="market_stand" class="action-image"></div>
                                 </div>
                                 <div class="list-compressed">
                                     <!--list-localeventsList-->
