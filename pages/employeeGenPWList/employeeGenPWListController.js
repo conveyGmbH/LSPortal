@@ -196,7 +196,7 @@
                                             for (var j = 0; j < barcodeImages.length; j++) {
                                                 var barcodeImage = barcodeImages[j];
                                                 if (barcodeImage) { //barcodeImage.barcode
-                                                    var value = "#li:" + that.employeePWListdata.getAt(j).Login + "/" + that.employeePWListdata.getAt(j).GenPassword; // barcodeImage.barcode.substring(9, 13)
+                                                    var value = "#li:" + that.employeePWListdata.getAt(i).Login + "/" + that.employeePWListdata.getAt(i).GenPassword; // barcodeImage.barcode.substring(9, 13)
                                                     var qrcodeViewer = document.createElement("div");
                                                     WinJS.Utilities.addClass(qrcodeViewer, "userinfo-qrcode");
                                                     $(qrcodeViewer).qrcode({
