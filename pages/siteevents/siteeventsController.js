@@ -27,6 +27,7 @@
             var that = this;
 
             var suggestionBox = pageElement.querySelector("#suggestionBox");
+            var autosuggestbox = pageElement.querySelector(".win-autosuggestbox");
 
             var prevMasterLoadPromise = null;
             // ListView control
@@ -83,6 +84,16 @@
                 Log.ret(Log.l.trace);
             }
             this.selectRecordId = selectRecordId;
+
+            var resetSearchFilter = function () {
+                that.binding.dataEvents = getEmptyDefaultValue(SiteEvents.VeranstaltungView.defaultValue),
+                that.binding.restriction = getEmptyDefaultValue(SiteEvents.defaultRestriction);
+                that.binding.restriction.Name = "";
+                autosuggestbox.winControl.queryText = "";
+                autosuggestbox.winControl._prevQueryText = "";
+                AppData.setRestriction("Veranstaltung", that.binding.restriction);
+            }
+            this.resetSearchFilter = resetSearchFilter;
 
             var deleteData = function (complete, error) {
                 Log.call(Log.l.trace, "Contact.Controller.");
@@ -225,7 +236,8 @@
                         delete that.binding.restriction.bUseOr;
                     }
                     AppData.setRestriction("Veranstaltung", that.binding.restriction);
-                   that.loadData();
+                    that.loadData();
+                    that.binding.restriction.Name = "";
                     /*var master = Application.navigator.masterControl;
                     if (master && master.controller && master.controller.binding) {
                         if (prevMasterLoadPromise &&
@@ -441,8 +453,22 @@
 
             var resultConverter = function (item, index) {
                 item.index = index;
-                item.Startdatum = that.getDateObject(item.Startdatum);
-                item.Enddatum = that.getDateObject(item.Enddatum);
+                if (!item.StandHall) {
+                    item.StandHall = "";
+                }
+                if (!item.StandNo) {
+                    item.StandNo = "";
+                }
+                if (typeof item.DevicesLicensed === "undefined") {
+                    item.DevicesLicensed = "0";
+                }
+                if (typeof item.DevicesNotLicensed === "undefined") {
+                    item.DevicesNotLicensed = "0";
+                }
+                if (item.OrderedApp === null) {
+                    item.OrderedApp = "0";
+                }
+                item.LULUsers = item.DevicesLicensed + " / " + item.DevicesNotLicensed;
             }
             this.resultConverter = resultConverter;
 
@@ -486,7 +512,6 @@
                                 listView.winControl.itemDataSource = that.siteeventsdata.dataSource;
                             }
                             Log.print(Log.l.trace, "Data loaded");
-
                         } else {
                             that.binding.count = 0;
                             that.nextUrl = null;

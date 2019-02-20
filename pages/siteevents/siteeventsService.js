@@ -36,7 +36,14 @@
                 return ret;
             },
             defaultValue: {
-                Name: null
+                Firmenname: null,
+                StandHall: null,
+                StandNo: null,
+                Adminuser: null,
+                OrderedApp: null,
+                DeviceNotLicensed: null,
+                DeviceLicensed: null,
+                LULUsers: null
             }
         },
         defaultRestriction: {
