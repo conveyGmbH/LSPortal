@@ -678,8 +678,11 @@
 
     "siteevents.title" : "espositore",
     "siteevents.event" : "espositore",
-    "siteevents.begin" : "data di inizio",
-    "siteevents.end"   : "data di fine",
+    "siteevents.hall" : "Sala",
+    "siteevents.stand"   : "Numéro de stand.",
+    "siteevents.adminuser"   : "Numero di stand",
+    "siteevents.appusercount"   : "Dispositivi",
+    "siteevents.freeolockappuser"   : "unlock. / lock. Dispositivi",
     "siteevents.placeholder"   : "Ricerca Espositori",
     "siteevents.eventdelete"   : "Vuoi veramente cancellare l'evento?",
 

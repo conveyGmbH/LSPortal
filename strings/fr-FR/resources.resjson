@@ -677,8 +677,11 @@
 
     "siteevents.title" : "exposant",
     "siteevents.event" : "exposant",
-    "siteevents.begin" : "date de début",
-    "siteevents.end"   : "date de fin",
+    "siteevents.hall" : "Salle",
+    "siteevents.stand"   : "Numéro de stand.",
+    "siteevents.adminuser"   : "Contact",
+    "siteevents.appusercount"   : "Appareils",
+    "siteevents.freeolockappuser"   : "unlock. / lock. appareils",
     "siteevents.placeholder"   : "Recherche exposants",
     "siteevents.eventdelete"   : "Voulez-vous vraiment supprimer l'événement?",
 

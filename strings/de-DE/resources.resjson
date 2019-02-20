@@ -692,8 +692,11 @@
 
     "siteevents.title" : "Aussteller",
     "siteevents.event" : "Aussteller",
-    "siteevents.begin" : "Anfang",
-    "siteevents.end"   : "Ende",
+    "siteevents.hall" : "Halle",
+    "siteevents.stand"   : "StandNr.",
+    "siteevents.adminuser"   : "Ansprechpartner",
+    "siteevents.appusercount"   : "Geräte",
+    "siteevents.freeolockappuser"   : "freige. / gesp. Geräte",
     "siteevents.placeholder"   : "Ausstellersuche",
     "siteevents.eventdelete"   : "Wollen Sie die Veranstaltung wirklich löschen?",
 
