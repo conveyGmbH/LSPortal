@@ -28,13 +28,13 @@
                     <div class="headerFooterPlaceholder">
                         <div class="list-header">
                             <div class="list-landscape-only">
+                                <div id="Warningicon" class="list-field-small-fixed win-type-ellipsis"></div>
                                 <div class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'siteevents.event'}"></div>
                                 <div id="Hall" class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'siteevents.hall'}"></div>
                                 <div id="Stand" class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'siteevents.stand'}"></div>
                                 <div id="Ansprechpartner" class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'siteevents.adminuser'}"></div>
                                 <div id="Appusers" class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'siteevents.appusercount'}"></div>
                                 <div id="UlLUser" class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'siteevents.freeolockappuser'}"></div>
-                                <div id="Warningicon" class="list-field-small-fixed win-type-ellipsis"></div>
                             </div>
                         </div>
                     </div>
@@ -43,6 +43,11 @@
                         <div class="list-landscape-only">
                             <div class="row-bkg-gray"
                                  data-win-bind="style.display: index Binding.Converter.oddToDisplay"></div>
+                            <div id="Warningicon" class="list-field-small-fixed win-type-ellipsis">
+                                <div class="list-symbol-ID v" data-win-bind="style.display: DevicesNotLicensed Binding.Converter.toDisplay">
+                                    <div id="about" class="action-image"></div>
+                                </div>
+                            </div>
                             <div class="list-field-small-fixed win-type-ellipsis"
                                  data-win-bind="textContent: Firmenname"></div>
                             <div id="Hall" class="list-field-small-fixed win-type-ellipsis"
@@ -55,9 +60,6 @@
                                  data-win-bind="textContent: OrderedApp"></div>
                             <div id="UlLUser" class="list-field-small-fixed win-type-ellipsis"
                                  data-win-bind="textContent: LULUsers"></div>
-                            <div class="list-symbol-ID" data-win-bind="style.display: DevicesNotLicensed Binding.Converter.toDisplay">
-                                <div id="about" class="action-image"></div>
-                            </div>
                         </div>
                         <div class="list-portrait-only">
                             <div class="row-separator"></div>

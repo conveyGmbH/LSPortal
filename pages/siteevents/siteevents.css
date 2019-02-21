@@ -22,6 +22,12 @@
     width: 150px;
     text-align: center;
 }
+#Warningicon {
+    width: 40px;
+}
+.list-symbol-ID.v {
+    width: 40px;
+}
 .win-itemscontainer {
     padding-left: 20px;
 }
