@@ -7,7 +7,7 @@
 
 .list-field-small-fixed {
     text-align: left;
-    width: calc(20% - 16px);
+    width: calc(20% - 25px);
     display: inline-block;
     position: relative;
     top: 0;
@@ -28,6 +28,7 @@
     top: 0;
     min-height: 32px;
     padding-top: 8px;
+    padding-left: 16px;
 }
 .status {
     padding-left: 42px;
