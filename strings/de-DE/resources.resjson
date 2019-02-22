@@ -688,7 +688,7 @@
 	"pdfExport.exportPdfMsg" : "Ihr PDF wird erstellt",
 	"pdfExport.msg" : "Bearbeitung / Link",
 
-    "siteEventsList.title" : "Standort",
+    "siteEventsList.title" : "Messen",
 
     "siteevents.title" : "Aussteller",
     "siteevents.event" : "Aussteller",
@@ -715,6 +715,9 @@
     "siteeventsneuaus.standhall" : "Standhalle",
     "siteeventsneuaus.standno" : "Standnummer",
     "siteeventsneuaus.displaytext" : "Anzeigetext",
+    "siteeventsneuaus.dbsynclogin" : "DBSYNCAnmeldekennung",
+    "siteeventsneuaus.dbsyncpassword" : "DBSYNCPasswort",
+    "siteeventsneuaus.customerid" : "Registrierungsnummer",
 
     "siteeventsbennach.title" : "Nachbestellungen",
     "siteeventsbennach.eventname" : "Aussteller",
@@ -730,7 +733,7 @@
     "reorderlist.orderdate" : "Bestellungsdatum",
     "reorderlist.deviceno" : "Gerätenummer",
     "reorderlist.orderstatus" : "Aktiv",
-    "reorderlist.btnlabelB" : "bestellt",
-    "reorderlist.btnlabelO" : "bestellen"
+    "reorderlist.btnlabelB" : "freigeschalten",
+    "reorderlist.btnlabelO" : "freischalten"
 	
 }			

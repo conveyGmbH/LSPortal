@@ -700,6 +700,9 @@
     "siteeventsneuaus.standhall" : "Stand hall",
     "siteeventsneuaus.standno" : "numéro de stand",
     "siteeventsneuaus.displaytext" : "texte d'affichage",
+	"siteeventsneuaus.dbsynclogin" : "DBSYNCLogin",
+    "siteeventsneuaus.dbsyncpassword" : "DBSYNCPassword",
+    "siteeventsneuaus.customerid" : "Numéro d'enregistrement",
 
     "siteeventsbennach.title" : "réassorts",
     "siteeventsbennach.eventname" : "exposant",

@@ -701,6 +701,9 @@
     "siteeventsneuaus.standhall" : "stand Sala",
     "siteeventsneuaus.standno" : "numero di stand",
     "siteeventsneuaus.displaytext" : "visualizzazione del testo",
+    "siteeventsneuaus.dbsynclogin" : "DBSYNCLogin",
+    "siteeventsneuaus.dbsyncpassword" : "DBSYNCPassword",
+    "siteeventsneuaus.customerid" : "Numero di targa",
 
     "siteeventsbennach.title" : "riordini",
     "siteeventsbennach.eventname" : "espositore",
