@@ -192,6 +192,7 @@
                                         } else {
                                             Application.navigateById("siteeventsList");
                                         }
+                                        AppBar.triggerDisableHandlers();
                                     }
                                 });
                             }

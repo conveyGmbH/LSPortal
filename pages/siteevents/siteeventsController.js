@@ -8,6 +8,7 @@
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/pages/info/infoService.js" />
 /// <reference path="~/www/lib/jstz/scripts/jstz.js" />
+/// <reference path="~/www/lib/base64js/scripts/base64js.min.js" />
 
 (function () {
     "use strict";
@@ -157,6 +158,66 @@
                 WinJS.log && WinJS.log(queryText, "sample", "status");
             };
             this.querySubmittedHandler = querySubmittedHandler;
+
+            var base64ToBlob = function (base64Data, contentType) {
+                contentType = contentType || '';
+                var sliceSize = 1024;
+                var byteCharacters = atob(base64Data);
+                var bytesLength = byteCharacters.length;
+                var slicesCount = Math.ceil(bytesLength / sliceSize);
+                var byteArrays = new Array(slicesCount);
+
+                for (var sliceIndex = 0; sliceIndex < slicesCount; ++sliceIndex) {
+                    var begin = sliceIndex * sliceSize;
+                    var end = Math.min(begin + sliceSize, bytesLength);
+
+                    var bytes = new Array(end - begin);
+                    for (var offset = begin, i = 0; offset < end; ++i, ++offset) {
+                        bytes[i] = byteCharacters[offset].charCodeAt(0);
+                    }
+                    byteArrays[sliceIndex] = new Uint8Array(bytes);
+                }
+                return new Blob(byteArrays, { type: contentType });
+            }
+            this.base64ToBlob = base64ToBlob;
+
+            var exportPwdQrCodeEmployeePdf = function () {
+                Log.call(Log.l.trace, "Contact.Controller.");
+                AppData.setErrorMsg(that.binding);
+                var ret;
+                var recordId = AppData.getRecordId("VeranstaltungTermin");
+                if (recordId) {
+                    ret = AppData.call("PRC_GetQRPdf", { 
+                        pVeranstaltungTerminID: recordId
+                    }, function (json) {
+                        Log.print(Log.l.info, "call success! ");
+                        if (json && json.d && json.d.results.length > 0) {
+                            var results = json.d.results[0];
+                            var pdfDataraw = results.DocContentDOCCNT1;
+                            var sub = pdfDataraw.search("\r\n\r\n");
+                            var pdfDataBase64 = pdfDataraw.substr(sub + 4);
+                            var pdfData = that.base64ToBlob(pdfDataBase64, "pdf");
+                            var pdfName = results.szOriFileNameDOC1;
+                            saveAs(pdfData, pdfName);
+                            AppBar.busy = false;
+                        }
+                    }, function (error) {
+                        Log.print(Log.l.error, "call error");
+                        AppBar.busy = false;
+                        AppData.setErrorMsg(that.binding, error);
+                        if (typeof error === "function") {
+                            error(error);
+                        }
+                    });
+                } else {
+                    var err = { status: 0, statusText: "no record selected" };
+                    error(err);
+                    ret = WinJS.Promise.as();
+                }
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+            this.exportPwdQrCodeEmployeePdf = exportPwdQrCodeEmployeePdf;
 
             this.eventHandlers = {
                 clickBack: function (event) {
@@ -399,6 +460,15 @@
                     }
                     Application.navigateById("login", event);
                     Log.ret(Log.l.trace);
+                },
+                clickExport: function (event) {
+                    Log.call(Log.l.trace, "Contact.Controller.");
+                    AppBar.busy = true;
+                    AppBar.triggerDisableHandlers();
+                    WinJS.Promise.timeout(0).then(function() {
+                        return that.exportPwdQrCodeEmployeePdf();
+                    });
+                    Log.ret(Log.l.trace);
                 }
             }
 
@@ -433,6 +503,13 @@
                 },
                 clickReorder: function () {
                     if (!that.reorderId) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                },
+                clickExport: function() {
+                    if (!AppData.getRecordId("VeranstaltungTermin") && !AppBar.busy) {
                         return true;
                     } else {
                         return false;
