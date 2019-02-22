@@ -17,12 +17,36 @@
             Application.Controller.apply(this, [pageElement, {
                 restriction: getEmptyDefaultValue(SiteEventsNeuAus.defaultRestriction),
                 dataExhibitor: getEmptyDefaultValue(SiteEventsNeuAus.defaultRestriction),
-                VeranstaltungTerminID : 0
+                VeranstaltungTerminID: 0,
+                VeranstaltungName: null
             }, commandList]);
             
             var that = this;
 
             var initLand = pageElement.querySelector("#InitLandReporting");
+            var initSprache = pageElement.querySelector("#InitSprache");
+            var companyname = pageElement.querySelector("#firmenname");
+            var ordernr = pageElement.querySelector("#OrderNumber");
+            var eventname = pageElement.querySelector("#veranstaltungname");
+
+            var setLangID = function(langID) {
+                switch (langID) {
+                case 1031:
+                     that.binding.dataExhibitor.INITSpracheID = 1;
+                     break;
+                case 1033:
+                    that.binding.dataExhibitor.INITSpracheID = 2;
+                    break;
+                case 1036:
+                    that.binding.dataExhibitor.INITSpracheID = 3;
+                    break;
+                case 1040:
+                    that.binding.dataExhibitor.INITSpracheID = 4;
+                    break;
+                default:
+                }
+            }
+            this.setLangID = setLangID;
 
             var getRecordId = function () {
                 Log.call(Log.l.trace, "SiteEventsNeuAus.Controller.");
@@ -31,7 +55,7 @@
                 return that.binding.VeranstaltungTerminID;
             }
             this.getRecordId = getRecordId;
-
+            
             var setMandetoryFields = function () {
                 var inputfieldland = pageElement.querySelector("#InitLandReporting");
                 var inputfieldVeranstaltungname = pageElement.querySelector("#veranstaltungname");
@@ -107,6 +131,15 @@
                 if (dataExibitor.InfoText === "") {
                     dataExibitor.InfoText = null;
                 }
+                if (dataExibitor.DBSYNCLogin === "") {
+                    dataExibitor.DBSYNCLogin = null;
+                }
+                if (dataExibitor.DBSYNCPassword === "") {
+                    dataExibitor.DBSYNCPassword = null;
+                }
+                if (dataExibitor.CustomerID === "") {
+                    dataExibitor.CustomerID = null;
+                }
                 return dataExibitor;
             }
             this.getExibitorData = getExibitorData;
@@ -120,7 +153,7 @@
                 AppData.call("PRC_CreateSiteVeranstaltung",
                     {
                         pVeranstaltungTerminID: that.binding.VeranstaltungTerminID,
-                        pVeranstaltungName: dataExibitor.VeranstaltungName,
+                        pVeranstaltungName: that.binding.VeranstaltungName,
                         pFirmenName: dataExibitor.FirmenName,
                         pStrasse: dataExibitor.Strasse,
                         pPLZ: dataExibitor.PLZ,
@@ -132,12 +165,16 @@
                         pOrderNumber: dataExibitor.OrderNumber,
                         pStandHall: dataExibitor.StandHall,
                         pStandNo: dataExibitor.StandNo,
-                        pInfoText: dataExibitor.InfoText
+                        pInfoText: dataExibitor.InfoText,
+                        pSpracheID: dataExibitor.INITSpracheID,
+                        pDBSYNCLogin: dataExibitor.DBSYNCLogin,
+                        pDBSYNCPassword: dataExibitor.DBSYNCPassword,
+                        pCustomerID: dataExibitor.CustomerID
 
             }, function (json) {
                         Log.print(Log.l.info, "call success! ");
                         AppBar.busy = false;
-                        Application.navigateById("siteevents");
+                        Application.navigateById("siteevents", event);
                     }, function (errorResponse) {
                         Log.print(Log.l.error, "call error");
                         AppBar.busy = false;
@@ -202,6 +239,50 @@
             var loadData = function (complete, error) {
                 AppData.setErrorMsg(that.binding);
                 var ret = WinJS.Promise.as().then(function () {
+                    Log.print(Log.l.trace, "calling select MaildokumentView...");
+                    return SiteEventsNeuAus.VeranstaltungTerminView.select(function (json) {
+                        Log.print(Log.l.trace, "MaildokumentView: success!");
+                        if (json && json.d && json.d.results) {
+                            // store result for next use
+                            var result = json.d.results[0];
+                            that.binding.VeranstaltungName = result.VeranstaltungName;
+                        }
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    }, {
+                         VeranstaltungTerminVIEWID: that.binding.VeranstaltungTerminID
+                    });
+                }).then(function () {
+                    if (!SiteEventsNeuAus.initSpracheView.getResults().length) {
+                        Log.print(Log.l.trace, "calling select initSpracheView...");
+                        //@nedra:25.09.2015: load the list of INITAnrede for Combobox
+                        return SiteEventsNeuAus.initSpracheView.select(function (json) {
+                            Log.print(Log.l.trace, "initSpracheView: success!");
+                            if (json && json.d && json.d.results) {
+                                var results = json.d.results;
+                                // Now, we call WinJS.Binding.List to get the bindable list
+                                if (initSprache && initSprache.winControl) {
+                                    initSprache.winControl.data = new WinJS.Binding.List(results);
+                                    that.setLangID(AppData.getLanguageId());
+                                }
+                            }
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        });
+                    } else {
+                        if (initSprache && initSprache.winControl &&
+                            (!initSprache.winControl.data || !initSprache.winControl.data.length)) {
+                            var results = SiteEventsNeuAus.initSpracheView.getResults();
+                            initSprache.winControl.data = new WinJS.Binding.List(results);
+                            that.setLangID(AppData.getLanguageId());
+                        }
+                        return WinJS.Promise.as();
+                    }
+                }).then(function () {
                     if (!AppData.initLandView.getResults().length) {
                         Log.print(Log.l.trace, "calling select initLandData...");
                         //@nedra:25.09.2015: load the list of INITLand for Combobox

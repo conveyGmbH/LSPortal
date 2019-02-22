@@ -1,2 +1,12 @@
 ﻿body {
 }
+#Ordernumber {
+    width: 150px;
+}
+#CustomerID {
+    margin-left: 78px;
+}
+#CustomerIDIN {
+    margin-left: 38px;
+    width: 150px;
+}
