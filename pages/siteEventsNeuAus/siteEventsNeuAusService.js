@@ -40,6 +40,25 @@
                 Name: null
             }
         },
+        _VeranstaltungTerminView: {
+            get: function () {
+                return AppData.getFormatView("VeranstaltungTermin", 20568);
+            }
+        },
+        VeranstaltungTerminView: {
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, "SiteEventsNeuAus.");
+                var ret = SiteEventsNeuAus._VeranstaltungTerminView.select(complete,
+                    error,
+                    restriction,
+                    {
+                        ordered: true
+                    });
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+        },
         _initLandView: {
             get: function () {
                 return AppData.getLgntInit("LGNTINITLand");
@@ -65,6 +84,31 @@
                 return ret;
             }
         },
+        _initSpracheView: {
+            get: function () {
+                return AppData.getLgntInit("LGNTINITSprache", false, true);
+            }
+        },
+        initSpracheView: {
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, "SiteEventsNeuAus._initSpracheView.");
+                var ret = SiteEventsNeuAus._initSpracheView.select(complete, error, restriction, { ordered: true });
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getResults: function () {
+                Log.call(Log.l.trace, "SiteEventsNeuAus._initSpracheView.");
+                var ret = SiteEventsNeuAus._initSpracheView.results;
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getMap: function () {
+                Log.call(Log.l.trace, "SiteEventsNeuAus._initSpracheView.");
+                var ret = SiteEventsNeuAus._initSpracheView.map;
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+        },
         defaultRestriction: {
             VeranstaltungTerminID: 0,
             VeranstaltungName: "",
@@ -79,7 +123,11 @@
             OrderNumber: "",
             StandHall: "",
             StandNo: "",
-            InfoText: ""
+            InfoText: "",
+            INITSpracheID: 0,
+            DBSYNCLogin: "",
+            DBSYNCPassword: "",
+            CustomerID: ""
 }
     });
 })();
