@@ -351,8 +351,8 @@
     "info.portal"           : "Portal",
     "info.useAudioNote"     : "Registrazione audio",
     "info.autoShutterTime"  : "Tempo di innesco [ms]",
-    "info.nolicence"        : "Nessuna licenza è stata trovata per i seguenti appusers :",
-    "info.nolicenceemployee"        : "L'utente non ha una licenza valida!",
+    "info.nolicence"        : "Il seguente utente é stato giá utilizzato su piú di un telefono. Solo l´ultimo su cui é stato utilizzato funzionerá :",
+    "info.nolicenceemployee"        : "Il seguente utente é stato giá utilizzato su piú di un telefono. Solo l´ultimo su cui é stato utilizzato funzionerá!",
 
     "infodesk.actualEmployee"     : "Employee attuale",
     "infodesk.employee"     : "Employee",

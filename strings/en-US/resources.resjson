@@ -352,8 +352,8 @@
     "info.portal"           : "Portal",
     "info.useAudioNote"     : "Audio recording",
     "info.autoShutterTime"  : "Trigger time [ms]",
-    "info.nolicence"        : "No license was found for the following appusers :",
-    "info.nolicenceemployee"        : "User does not have a valid license!",
+    "info.nolicence"        : "The following user has already been used on multiple devices. Only the device where it was last used will work :",
+    "info.nolicenceemployee"        : "The following user has already been used on multiple devices. Only the device where it was last used will work!",
 
     "infodesk.actualEmployee"     : "Current employee",
     "infodesk.employee"     : "Employee",

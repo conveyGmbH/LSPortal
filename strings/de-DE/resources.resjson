@@ -351,8 +351,8 @@
     "info.portal"           : "Portal",
     "info.useAudioNote"     : "Tonaufnahme",
     "info.autoShutterTime"  : "Selbstauslöser [ms]",
-    "info.nolicence"        : "Für folgende Appuser wurde keine Lizenz gefunden :",
-    "info.nolicenceemployee"        : "Benutzer verfügt über keine gültige Lizenz!",
+    "info.nolicence"        : "Folgender Zugang würde bereits auf einem/mehreren Geräten benutzt. Nur das zuletzt angemeldete Gerät wird funktionieren :",
+    "info.nolicenceemployee"        : "Folgender Zugang würde bereits auf einem/mehreren Geräten benutzt. Nur das zuletzt angemeldete Gerät wird funktionieren!",
 
 	  "infodesk.actualEmployee"     : "Aktueller Mitarbeiter",
     "infodesk.employee"     : "Mitarbeiter",

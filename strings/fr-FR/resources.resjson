@@ -351,8 +351,8 @@
     "info.portal"           : "Portal",
     "info.useAudioNote"     : "Enregistrement audio",
     "info.autoShutterTime"  : "Temps de déclenchement [ms]",
-    "info.nolicence"        : "Aucune licence n'a été trouvée pour les utilisateurs suivants :",
-    "info.nolicenceemployee"        : "L'utilisateur n'a pas de licence valide!",
+    "info.nolicence"        : "L'accès suivant est déjà utilisé sur un ou plusieurs appareils. Seulement le dernier périphérique connecté peut fonctionner :",
+    "info.nolicenceemployee"        : "L'accès suivant est déjà utilisé sur un ou plusieurs appareils. Seulement le dernier périphérique connecté peut fonctionner!",
 
     "infodesk.actualEmployee"     : "Personnel actuel",
     "infodesk.employee"     : "Personnel",
