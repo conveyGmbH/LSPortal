@@ -200,7 +200,7 @@
                                                     var qrcodeViewer = document.createElement("div");
                                                     WinJS.Utilities.addClass(qrcodeViewer, "userinfo-qrcode");
                                                     $(qrcodeViewer).qrcode({
-                                                        text: value,//"#LI:gilbert@convey.de/blabla",
+                                                        text: value,
                                                         width: 50,
                                                         height: 50,
                                                         correctLevel: 0 //QRErrorCorrectLevel.M

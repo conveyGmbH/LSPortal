@@ -677,6 +677,7 @@
 		"employeegenpwlist.password" : "Passwort",
     "employeegenpwlist.passwordchanged" : "Passwort wurde geändert",
     "employeegenpwlist.name" : "Name",
+	"employeegenpwlist.barcode" : "QR-Code",
 
 	"pdfExport.title" : "PDF Export",
 	"pdfExport.filenamepartone" : "Erster Teil des Dateinamens",

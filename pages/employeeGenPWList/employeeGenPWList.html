@@ -26,10 +26,22 @@
                     <div class="headerFooterPlaceholder">
                         <div class="list-header">
                             <div class="list-landscape-only list-header-columns">
+                                <div class="list-field-small-relative" data-win-res="{textContent: 'employeegenpwlist.name'}"></div>
+                                <div class="list-field-small-relative" data-win-res="{textContent: 'employeegenpwlist.login'}"></div>
+                                <div class="list-field-small-relative" data-win-res="{textContent: 'employeegenpwlist.password'}"></div>
+                                <div class="list-field-small-relative" data-win-res="{textContent: 'employeegenpwlist.barcode'}"></div>
+                            </div>
+                           <!-- <div class="list-only-small-screen list-header-columns">
                                 <div class="list-field-small-fixed" data-win-res="{textContent: 'employeegenpwlist.name'}"></div>
                                 <div class="list-field-small-fixed" data-win-res="{textContent: 'employeegenpwlist.login'}"></div>
                                 <div class="list-field-small-fixed" data-win-res="{textContent: 'employeegenpwlist.password'}"></div>
                                 <div class="list-field-small-fixed" data-win-res="{textContent: 'employeegenpwlist.barcode'}"></div>
+                            </div>-->
+                            <div class="list-portrait-only list-header-columns">
+                                <div class="list-field-small-relative" data-win-res="{textContent: 'employeegenpwlist.name'}"></div>
+                                <div class="list-field-small-relative" data-win-res="{textContent: 'employeegenpwlist.login'}"></div>
+                                <div class="list-field-small-relative" data-win-res="{textContent: 'employeegenpwlist.password'}"></div>
+                                <div class="list-field-small-relative" data-win-res="{textContent: 'employeegenpwlist.barcode'}"></div>
                             </div>
                         </div>
                     </div>
@@ -44,7 +56,32 @@
                                  data-win-bind="textContent: Login"></div>
                             <div class="list-field-small-fixed win-type-ellipsis"
                                  data-win-bind="textContent: GenPassword"></div>
-                            <div class="list-field-small-fixed list-barcodefield-small-fixed userinfo-qrcode-container">
+                            <div class="list-field-small-fixed userinfo-qrcode-container win-type-ellipsis">
+                            </div>
+                        </div>
+                        <!--<div class="list-only-small-screen">
+                            <div class="row-bkg-gray"
+                                 data-win-bind="style.display: index Binding.Converter.oddToDisplay"></div>
+                            <div class="list-field-small-relative win-type-ellipsis"
+                                 data-win-bind="textContent: Name"></div>
+                            <div class="list-field-small-relative win-type-ellipsis"
+                                 data-win-bind="textContent: Login"></div>
+                            <div class="list-field-small-relative win-type-ellipsis"
+                                 data-win-bind="textContent: GenPassword"></div>
+                            <div class="list-field-small-relative userinfo-qrcode-container win-type-ellipsis">
+                            </div>
+                        </div>-->
+                        <!--list-portrait-only-->
+                        <div class="list-portrait-only">
+                            <div class="row-bkg-gray"
+                                 data-win-bind="style.display: index Binding.Converter.oddToDisplay"></div>
+                            <div class="list-field-small-fixed win-type-ellipsis"
+                                 data-win-bind="textContent: Name"></div>
+                            <div class="list-field-small-fixed win-type-ellipsis"
+                                 data-win-bind="textContent: Login"></div>
+                            <div class="list-field-small-fixed win-type-ellipsis"
+                                 data-win-bind="textContent: GenPassword"></div>
+                            <div class="list-field-small-fixed userinfo-qrcode-container win-type-ellipsis">
                     </div>
                         </div>
                     </div>
