@@ -85,6 +85,7 @@
   "tooltip.copyQuestionnaire" : "Take over questionnaire",
     "tooltip.newExhibitor" : "New exhibitor",
     "tooltip.deleteExhibitor" : "Delete exhibitor",
+    "tooltip.newNachbestellungen": "Reorder",
 
     "start.title"           : "Start Page",
     "start.comment"         : "On this page, use the buttons to go to additional pages!",

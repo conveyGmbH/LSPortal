@@ -85,6 +85,7 @@
 	"tooltip.copyQuestionnaire" : "Fragebogen übernehmen",
     "tooltip.newExhibitor" : "Neuer Austeller",
     "tooltip.deleteExhibitor" : "Austeller löschen",
+	"tooltip.newNachbestellungen": "Nachbestellung",
 
     "start.title"           : "Startseite",
     "start.comment"         : "Verwende die Schaltflächen auf dieser Seite um auf weitere Seiten zu gehen!",
