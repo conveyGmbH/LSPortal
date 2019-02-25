@@ -236,8 +236,8 @@
                     function filterEvents(item) {
                         var srtrLower = this.queryText.toLowerCase();
                         if (srtrLower.length > 0 &&
-                        (item.Name &&
-                            item.Name.toLowerCase().substr(0, srtrLower.length) === srtrLower)) {
+                        (item.Firmenname &&
+                            item.FirmenName.toLowerCase().substr(0, srtrLower.length) === srtrLower)) {
                             return true;
                         } else {
                             return false;
