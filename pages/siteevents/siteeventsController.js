@@ -200,10 +200,12 @@
                             var pdfName = results.szOriFileNameDOC1;
                             saveAs(pdfData, pdfName);
                             AppBar.busy = false;
+                            AppBar.triggerDisableHandlers();
                         }
                     }, function (error) {
                         Log.print(Log.l.error, "call error");
                         AppBar.busy = false;
+                        AppBar.triggerDisableHandlers();
                         AppData.setErrorMsg(that.binding, error);
                         if (typeof error === "function") {
                             error(error);
@@ -509,10 +511,14 @@
                     }
                 },
                 clickExport: function() {
-                    if (!AppData.getRecordId("VeranstaltungTermin") && !AppBar.busy) {
+                    if (AppData.getRecordId("VeranstaltungTermin")) {
+                        if (AppBar.busy) {
                         return true;
                     } else {
                         return false;
+                    }
+                    } else {
+                        return true;
                     }
                 }
             }
