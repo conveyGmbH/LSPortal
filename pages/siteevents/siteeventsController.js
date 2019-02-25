@@ -236,7 +236,7 @@
                     function filterEvents(item) {
                         var srtrLower = this.queryText.toLowerCase();
                         if (srtrLower.length > 0 &&
-                        (item.Firmenname &&
+                        (item.FirmenName &&
                             item.FirmenName.toLowerCase().substr(0, srtrLower.length) === srtrLower)) {
                             return true;
                         } else {
@@ -246,7 +246,7 @@
                     if (that.siteeventsdata) {
                         var hits = that.siteeventsdata.filter(filterEvents, { queryText: queryText });
                         for (var i = 0; i < hits.length; i++) {
-                            eventInfo.detail.searchSuggestionCollection.appendQuerySuggestion(hits[i].Name);
+                            eventInfo.detail.searchSuggestionCollection.appendQuerySuggestion(hits[i].FirmenName);
                         }
                     }
                     Log.ret(Log.l.trace);
