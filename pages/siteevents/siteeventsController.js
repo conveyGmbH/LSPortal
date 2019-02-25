@@ -246,7 +246,7 @@
                     if (that.siteeventsdata) {
                         var hits = that.siteeventsdata.filter(filterEvents, { queryText: queryText });
                         for (var i = 0; i < hits.length; i++) {
-                            eventInfo.detail.searchSuggestionCollection.appendQuerySuggestion(hits[i].FirmenName);
+                            eventInfo.detail.searchSuggestionCollection.appendQuerySuggestion(hits[i].Name);
                         }
                     }
                     Log.ret(Log.l.trace);
