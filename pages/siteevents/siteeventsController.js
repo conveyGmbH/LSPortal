@@ -89,7 +89,7 @@
             var resetSearchFilter = function () {
                 that.binding.dataEvents = getEmptyDefaultValue(SiteEvents.VeranstaltungView.defaultValue),
                 that.binding.restriction = getEmptyDefaultValue(SiteEvents.defaultRestriction);
-                that.binding.restriction.Name = "";
+                that.binding.restriction.Firmenname = "";
                 autosuggestbox.winControl.queryText = "";
                 autosuggestbox.winControl._prevQueryText = "";
                 AppData.setRestriction("Veranstaltung", that.binding.restriction);
@@ -288,19 +288,19 @@
                 },
                 changeSearchField: function (event) {
                     Log.call(Log.l.trace, "Event.Controller.");
-                    that.binding.restriction.Name = [];
+                    that.binding.restriction.Firmenname = [];
                     if (event.target.value) {
-                        that.binding.restriction.Name = event.target.value;
+                        that.binding.restriction.Firmenname = event.target.value;
                         that.binding.restriction.VeranstaltungTerminID = that.vidID;
                         that.binding.restriction.bUseOr = false;
                         that.binding.restriction.bAndInEachRow = true;
                     } else {
-                        that.binding.restriction.Name = event.target.value;
+                        that.binding.restriction.Firmenname = event.target.value;
                         delete that.binding.restriction.bUseOr;
                     }
                     AppData.setRestriction("Veranstaltung", that.binding.restriction);
                     that.loadData();
-                    that.binding.restriction.Name = "";
+                    that.binding.restriction.Firmenname = "";
                     /*var master = Application.navigator.masterControl;
                     if (master && master.controller && master.controller.binding) {
                         if (prevMasterLoadPromise &&
