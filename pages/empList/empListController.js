@@ -1,4 +1,4 @@
-﻿// controller for page: info
+// controller for page: info
 /// <reference path="~/www/lib/WinJS/scripts/base.js" />
 /// <reference path="~/www/lib/WinJS/scripts/ui.js" />
 /// <reference path="~/www/lib/convey/scripts/appSettings.js" />
@@ -19,7 +19,9 @@
             Log.call(Log.l.trace, "EmpList.Controller.");
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
-                employeeId: 0//AppData.getRecordId("Mitarbeiter")
+                employeeId: 0,//AppData.getRecordId("Mitarbeiter")
+                hasContacts: null,
+                hasLocalevents: null,
             }, commandList, true]);
             this.nextUrl = null;
             this.loading = false;
@@ -57,6 +59,20 @@
             };
             this.background = background;
 
+            var setSelIndex = function (index) {
+                Log.call(Log.l.trace, "EmpList.Controller.", "index=" + index);
+                if (that.employees && that.employees.length > 0) {
+                    if (index >= that.employees.length) {
+                        index = that.employees.length - 1;
+                    }
+                    that.binding.selIdx = index;
+                    listView.winControl.selection.set(index);
+                }
+                Log.ret(Log.l.trace);
+            }
+            this.setSelIndex = setSelIndex;
+
+
             var cutSerialnumer = function (serialnumer) {
                 Log.call(Log.l.trace, "EmpList.Controller.");
                 AppData.setErrorMsg(that.binding);
@@ -79,6 +95,8 @@
                         if (employee && typeof employee === "object" &&
                             employee.MitarbeiterVIEWID === recordId) {
                             listView.winControl.selection.set(i);
+                            that.binding.hasContacts = employee.HatKontakte;
+                            setSelIndex(i);
                             break;
                         } /*else {
                             var firstEmployee = that.employees.getAt(0);
@@ -114,6 +132,9 @@
 
             var resultConverter = function (item, index) {
                 item.index = index;
+                if (item.MitarbeiterVIEWID === AppData.getRecordId("Mitarbeiter")) {
+                    that.binding.hasLocalevents = item.HatLocalevents;
+                }
                 item.Names = "",
                 item.fullName =
                 (item.Vorname ? (item.Vorname + " ") : "") +
@@ -146,6 +167,8 @@
                                             AppBar.scope.saveData(function (response) {
                                                 // called asynchronously if ok
                                                 that.binding.employeeId = item.data.MitarbeiterVIEWID;
+                                                that.binding.hasContacts = item.data.HatKontakte;
+                                                that.binding.selIdx = item.index;
                                                 AppData.setRecordId("MitarbeiterVIEW_20471", that.binding.employeeId);
                                                 var curPageId = Application.getPageId(nav.location);
                                                 if ((curPageId === "employee" || curPageId === "skillentry") &&

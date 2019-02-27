@@ -368,7 +368,7 @@
                     }
                 },
                 clickNew: function() {
-                    if (that.binding.dataEmployee && that.binding.dataEmployee.MitarbeiterVIEWID && !AppBar.busy) {
+                    if (!AppBar.busy) {
                         var master = Application.navigator.masterControl;
                         if (master && master.controller && master.controller.binding &&
                             master.controller.binding.hasLocalevents) {
@@ -437,6 +437,7 @@
                                 if (that.binding.dataEmployee.Login) {
                                     Log.print(Log.l.trace, "Checking for licence!");
                                     that.checkingLicence();
+                                    AppBar.busy = false;
                                 }
                             }
                         }, function (errorResponse) {
