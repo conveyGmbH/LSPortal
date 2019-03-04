@@ -80,6 +80,7 @@
     "tooltip.savepdf"	    : "Enregistrer le nom du fichier PDF",
     "tooltip.exportpdf"	    : "Exporter PDF",
     "tooltip.deletemail"	: "Supprimer le mail",
+    "tooltip.newmail"	    : "Nouveau mail",
     "tooltip.save"			    : "Sauver",
 	"tooltip.resetRestriction" : "Supprimer le filtre",
     "tooltip.copyQuestionnaire" : "Répondre au questionnaire",
