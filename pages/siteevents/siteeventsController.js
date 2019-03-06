@@ -18,6 +18,7 @@
             Application.Controller.apply(this, [pageElement, {
                 restriction: getEmptyDefaultValue(SiteEvents.defaultRestriction),
                 dataEvents: getEmptyDefaultValue(SiteEvents.VeranstaltungView.defaultValue),
+                siteeventsdata: null,
                 count: 0,
                 veranstaltungId: 0,
                 fairmandantId: 0,
@@ -151,6 +152,56 @@
                 }
             };
             this.suggestionsRequestedHandler = suggestionsRequestedHandler;
+
+            var loadNextUrl = function (recordId) {
+                Log.call(Log.l.trace, "SiteEvents.Controller.", "recordId=" + recordId);
+                if (that.siteeventsdata && that.nextUrl && listView) {
+                    progress = listView.querySelector(".list-footer .progress");
+                    counter = listView.querySelector(".list-footer .counter");
+                    that.loading = true;
+                    if (progress && progress.style) {
+                        progress.style.display = "inline";
+                    }
+                    if (counter && counter.style) {
+                        counter.style.display = "none";
+                    }
+                    AppData.setErrorMsg(that.binding);
+                    Log.print(Log.l.trace, "calling select SiteEvents.VeranstaltungView...");
+                    var nextUrl = that.nextUrl;
+                    that.nextUrl = null;
+                    SiteEvents.VeranstaltungView.selectNext(function (json) { //json is undefined
+                        // this callback will be called asynchronously
+                        // when the response is available
+                        Log.print(Log.l.trace, "SiteEvents.VeranstaltungView: success!");
+                        // startContact returns object already parsed from json file in response
+                        if (json && json.d && that.siteeventsdata) {
+                            that.nextUrl = SiteEvents.VeranstaltungView.getNextUrl(json);
+                            var results = json.d.results;
+                            results.forEach(function (item, index) {
+                                that.resultConverter(item, that.binding.count);
+                                that.binding.count = that.siteeventsdata.push(item);
+                            });
+                        }
+                        if (recordId) {
+                            that.selectRecordId(recordId);
+                        }
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        Log.print(Log.l.error, "SiteEvents.VeranstaltungView: error!");
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                        if (progress && progress.style) {
+                            progress.style.display = "none";
+                        }
+                        if (counter && counter.style) {
+                            counter.style.display = "inline";
+                        }
+                        that.loading = false;
+                    }, null, nextUrl);
+                }
+                Log.ret(Log.l.trace);
+            }
+            this.loadNextUrl = loadNextUrl;
 
             var querySubmittedHandler = function (eventObject) {
                 Log.call(Log.l.trace, "SiteEventsList.Controller.");
@@ -381,7 +432,7 @@
                             progress = listView.querySelector(".list-footer .progress");
                             counter = listView.querySelector(".list-footer .counter");
                             var visible = eventInfo.detail.visible;
-                            if (visible && that.localeventsdata && that.nextUrl) {
+                            if (visible && that.siteeventsdata && that.nextUrl) {
                                 that.loading = true;
                                 that.loadNextUrl();
                             } else {
@@ -580,13 +631,14 @@
                         AppData.setErrorMsg(that.binding);
                         Log.print(Log.l.trace, "LocalEvent: success!");
                         // employeeView returns object already parsed from json file in response
-                        if (json && json.d && json.d.results && json.d.results.length) {
+                        if (json && json.d) {
+                            that.binding.count = json.d.results.length;;
                             that.nextUrl = SiteEvents.VeranstaltungView.getNextUrl(json);
                             var results = json.d.results;
                             results.forEach(function (item, index) {
                                 that.resultConverter(item, index);
                             });
-                            that.binding.count = results.length;
+                            
                             that.vidID2 = vid;
                             that.siteeventsdata = new WinJS.Binding.List(results);
 
@@ -595,10 +647,15 @@
                                 listView.winControl.itemDataSource = that.siteeventsdata.dataSource;
                             }
                             Log.print(Log.l.trace, "Data loaded");
+                            if (results[0] && results[0].VeranstaltungVIEWID) {
+                                WinJS.Promise.timeout(0).then(function () {
+                                    that.selectRecordId(results[0].VeranstaltungVIEWID);
+                                });
+                            }
                         } else {
                             that.binding.count = 0;
                             that.nextUrl = null;
-                            that.localeventsdata = null;
+                            that.siteeventsdata = null;
                             if (listView.winControl) {
                                 // add ListView dataSource
                                 listView.winControl.itemDataSource = null;
@@ -633,14 +690,6 @@
                 return ret;
             };
             this.loadData = loadData;
-
-            var loadNextUrl = function() {
-                Log.call(Log.l.trace, "Siteevents.Controller.");
-                //TODO call selectnext on view
-
-                Log.ret(Log.l.trace);
-            };
-            this.loadNextUrl = loadNextUrl;
 
             that.processAll().then(function () {
                 AppBar.notifyModified = true;
