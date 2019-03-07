@@ -73,6 +73,7 @@
                         WinJS.Utilities.removeClass(textComment, "input_text_comment_big");
                     }
                 }
+                AppBar.modified = false;
                 return dataMail;
             };
             this.setDataMail = setDataMail;
@@ -91,6 +92,10 @@
                 erstefragelabel.textContent = item.ErsteFrage;
                 that.ssItems = [];
                 if (typeof item.Thema !== "undefined") {
+                    that.ssItems.push({
+                        title: "",
+                        value: null
+                    });
                     for (var i = 1; i <= 28; i++) {
                         var keyValue, keyTitle;
                         var iStr = i.toString();
@@ -104,14 +109,10 @@
                         if (item[keyTitle] && item[keyValue] && item[keyTitle] !== "null" && item[keyValue] !== "null") {
                             that.ssItems.push({
                                 title: item[keyTitle],
-                                value: item[keyValue]
+                                value: i
                             });
                         }
                     }
-                    that.ssItems.push({
-                            title: "",
-                            value: null
-                    });
                 }
             };
             this.resultConverter = resultConverter;
@@ -274,6 +275,7 @@
                                 that.saveData();
                             } else {
                                 that.binding.dataMail.SpecType = 1;
+                                that.binding.dataMail.MemoSpec = null;
                                 AppBar.modified = true;
                                 that.saveData();
                             }
@@ -385,7 +387,6 @@
                             results.forEach(function (item, index) {
                                 that.resultConverter(item, index);
                             });
-
                             // Now, we call WinJS.Binding.List to get the bindable list
                             if (firstquestion && firstquestion.winControl) {
                                 firstquestion.winControl.data = new WinJS.Binding.List(that.ssItems);
@@ -407,7 +408,6 @@
                             Log.print(Log.l.trace, "Mailing: success!");
                             if (json && json.d) {
                                 that.binding.dataMail = setDataMail(json.d);
-                                that.setDataMail(that.binding.dataMail);
                                 Log.print(Log.l.trace, "Mailing: success!");
                             }
                             // startContact returns object already parsed from json file in response
