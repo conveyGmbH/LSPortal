@@ -269,8 +269,11 @@
                         if (toggle) {
                             if (toggle.checked === false) {
                                 that.binding.dataMail.SpecType = null;
+                                that.binding.dataMail.MemoSpec = null;
+                                that.saveData();
                             } else {
                                 that.binding.dataMail.SpecType = 1;
+                                that.saveData();
                             }
                         }
                     //}
