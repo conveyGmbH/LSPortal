@@ -270,9 +270,11 @@
                             if (toggle.checked === false) {
                                 that.binding.dataMail.SpecType = null;
                                 that.binding.dataMail.MemoSpec = null;
+                                AppBar.modified = true;
                                 that.saveData();
                             } else {
                                 that.binding.dataMail.SpecType = 1;
+                                AppBar.modified = true;
                                 that.saveData();
                             }
                         }
