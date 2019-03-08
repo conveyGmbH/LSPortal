@@ -274,9 +274,13 @@
                                 AppBar.modified = true;
                             that.saveData(function (response) {
                                 // called asynchronously if ok
+                                if (typeof complete === "function") {
                                 complete(response);
+                                }
                             }, function (errorResponse) {
+                                if (typeof error === "function") {
                                 error(errorResponse);
+                                }
                             });
                             } else {
                                 that.binding.dataMail.SpecType = 1;
@@ -284,9 +288,13 @@
                                 AppBar.modified = true;
                             that.saveData(function (response) {
                                 // called asynchronously if ok
+                                if (typeof complete === "function") {
                                 complete(response);
+                                }
                             }, function (errorResponse) {
+                                if (typeof error === "function") {
                                 error(errorResponse);
+                                }
                             });
                             }
                         }
