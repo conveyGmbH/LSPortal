@@ -539,7 +539,9 @@
                     });
                 } else {
                     ret = new WinJS.Promise.as().then(function () {
+                        if (typeof complete === "function") {
                         complete(dataEmployee);
+                        }
                     });
                 }
                 Log.ret(Log.l.trace);

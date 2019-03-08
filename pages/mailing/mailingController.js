@@ -109,7 +109,7 @@
                         if (item[keyTitle] && item[keyValue] && item[keyTitle] !== "null" && item[keyValue] !== "null") {
                             that.ssItems.push({
                                 title: item[keyTitle],
-                                value: i
+                                value: "0"+i
                             });
                         }
                     }
@@ -214,7 +214,7 @@
                         Log.print(Log.l.trace, "prev Mail saved");
                         that.setNewDataMail();
                         AppBar.modified = true;
-                        that.saveData();
+                        //that.saveData();
                     }, function (errorResponse) {
                         Log.print(Log.l.error, "error saving mail");
                     });
@@ -272,12 +272,22 @@
                                 that.binding.dataMail.SpecType = null;
                                 that.binding.dataMail.MemoSpec = null;
                                 AppBar.modified = true;
-                                that.saveData();
+                            that.saveData(function (response) {
+                                // called asynchronously if ok
+                                complete(response);
+                            }, function (errorResponse) {
+                                error(errorResponse);
+                            });
                             } else {
                                 that.binding.dataMail.SpecType = 1;
                                 that.binding.dataMail.MemoSpec = null;
                                 AppBar.modified = true;
-                                that.saveData();
+                            that.saveData(function (response) {
+                                // called asynchronously if ok
+                                complete(response);
+                            }, function (errorResponse) {
+                                error(errorResponse);
+                            });
                             }
                         }
                     //}
