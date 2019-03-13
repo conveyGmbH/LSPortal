@@ -278,3 +278,9 @@
 
     
 .view-size-small .pie-chart { min-width: 96px; }
+
+.text-lightcolorU {
+    font-weight: bold;
+    color: red;
+    text-align: center
+}
