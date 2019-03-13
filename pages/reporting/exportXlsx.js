@@ -161,7 +161,7 @@
                                 if (typeof value === "undefined" ||
                                     value === null || value === "NULL") {
                                     value = "";
-                                } else if (value.substr(0, 10) === "HYPERLINK(") {
+                                } else if (typeof value === "string" && value.substr(0, 10) === "HYPERLINK(") {
                                     type = "str";
                                     valueName = S.f;
                                     var startPos = value.indexOf('"');
