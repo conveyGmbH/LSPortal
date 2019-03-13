@@ -39,7 +39,7 @@
 	"command.print"			: "imprimer",
     "command.exportPdf"		: "PDF exportation",
 	"command.resetRestriction" : "Supprimer",
-  "command.copyQuestionnaire" : "Copie",
+    "command.copyQuestionnaire" : "Copie",
 
     "tooltip.backward"      : "Page présédente",
     "tooltip.edit"          : "Modifier le contact en cours",
@@ -366,7 +366,7 @@
     "infodesk.messages"     : "Nouvelles",
     "infodesk.receiver"     : "Récepteur",
     "infodesk.message"      : "Message aux ",
-	  "infodesk.message1time" : "Envoyé",
+	"infodesk.message1time" : "Envoyé",
     "infodesk.search"       : "Rechercher",
     "infodesk.newsOverview" : "Nouvelles Résumé",
     "infodesk.account"      : "Compte",
@@ -387,6 +387,13 @@
 	"infodeskEmpList.firstNameAsc"  : "Prénom ↑",
 	"infodeskEmpList.nameDesc"  : "Nom ↓",
 	"infodeskEmpList.nameAsc"  : "Nom ↑",
+
+	"infodeskContactList.title"     : "Liste de sélection des produits",
+    "infodeskContactList.company"   : "Société",
+    "infodeskContactList.name"      : "Nom",
+    "infodeskContactList.firstName" : "Prénom",
+    "infodeskContactList.email"     : "Email",
+	"infodeskContactList.productSelection" : "Produits",
 
     "userinfo.title"        : "Données d'utilisateur",
     "userinfo.present"      : "En site",
@@ -425,6 +432,7 @@
     "label.mailing"         : "Standard Mail",
     "label.mailingProduct"  : "Produit Mail",
     "label.infodesk"        : "Infodesk",
+	"label.infodeskContactList" : "InfodeskContactProduit",
     "label.mandatory"       : "Champs obligatoires",
     "label.barcodeAdministration" : "Code barre",
     "label.eventcreation"   : "Créer un événement",
@@ -436,12 +444,12 @@
     "label.pdfExport"       : "Export PDF",
     "label.employeeGenPWList"     : "Prégénérée",
     "label.optQuestionList" : "quest. / répo. facultatives",
-    "label.support"     : "Support",	
+    "label.support"     : "Support",
     "label.mailingOptions"	: "Paramètres de diffusion",
-	  "label.siteevents"	: "Liste des exposants",
-	  "label.mailingTypes"	: "MailTypes",
-	  "label.mailingTemplate"	: "Modèle de mailing",
-	  "label.mailingTracking"	: "MailTracking",
+	"label.siteevents"	: "Liste des exposants",
+	"label.mailingTypes"	: "MailTypes",
+	"label.mailingTemplate"	: "Modèle de mailing",
+	"label.mailingTracking"	: "MailTracking",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annuler",
@@ -466,7 +474,7 @@
     "event.appInfo"         : "Pour que ces modifications prennent effet, vous devez redémarrer votre APP",
 	"event.nachbearbeitetFlagAutoSetToNull" : "Produktmail: \n Modification de l'indicateur défini automatiquement à vide",
 	"event.privacyPolicySetting" : "Paramètre de confidentialité",
-"event.privacypolicy"   : "Esquisse de confidentialité",
+    "event.privacypolicy"   : "Esquisse de confidentialité",
 	"event.privacyPolicyText" : "Texte de confidentialité",
 	"event.privacyPolicyStandartText" : "Je confirme par la présente que mes données sont collectées et traitées conformément au RGPD",
 
@@ -492,7 +500,9 @@
     "questionList.textdate" : "Texte libre",
     "questionList.requiredField" : "élément requis",
     "questionList.text"     : "afficher le champ de texte",
+	"questionList.number"   : "afficher le numéro du texte",
     "questionList.date"     : "afficher le champ de texte avec date",
+	"questionList.numberAnddate"     : "afficher le numéro de la zone de texte ",
     "questionList.required" : "champ obligatoire",
     "questionList.checkRequired" : "Champ obligatoire avec vérification",
 
@@ -571,7 +581,7 @@
     "mailing.maillingtoggle"    : "Mémo / Première question", 
     "mailing.on"            : "Première question",
     "mailing.off"           : "Mémo",
-	  "mailing.infoplaceholder"           : "Entrez ici la description de votre message, par exemple : Courriel de remerciement français",
+	"mailing.infoplaceholder"           : "Entrez ici la description de votre message, par exemple : Courriel de remerciement français",
     "mailing.senderplaceholder"           :"? Adresse e-mail de l'expéditeur. Le domaine doit être @convey.de. Exemple : MyCompanyMyEvent@convey.de",
     "mailing.replyplaceholder"           : "Entrez ici l'adresse e-mail de réponse. Exemple : marketing@votresociété.fr",
     "mailing.ccplaceholder"           : "Entrez ici l'adresse e-mail du CC. Exemple : marketing@votresociété.fr",
@@ -603,6 +613,8 @@
 	"mailingTypes.replyToAddr"	: "Réponse",
 	"mailingTypes.sendDay"	: "nombre de jours",
 	"mailingTypes.sendDayHook"	: "Décrochez le jour",
+	"mailingTypes.eventStart" : "Avec la date",
+	"mailingTypes.eventEnde" : "Bon début",
 	"mailingTypes.sendLater"	: "Envoi différé",
 	"mailingTypes.sendStartTime"	: "Heure de début",
 	"mailingTypes.mailTypeConfig" : "Configuration du type de courrier",
@@ -613,6 +625,7 @@
     "mailingTypes.ccplaceholder"           : "Entrez ici l'adresse e-mail du CC. Exemple : marketing@votresociété.fr",
     "mailingTypes.bccplaceholder"           : "Entrez ici l'adresse e-mail du BCC. Exemple : marketing@votresociété.fr",
 	"mailingTypes.sendDayplaceholder"   : "Entrez un nombre compris entre -14 et 14",
+	"mailingTypes.sendStartTimeplaceholder" : "Entrez une heure",
 
 	"mailingTemplate.title" : "Modèle de courrier",
 	"mailingTemplate.subject" : "Respect",
@@ -637,8 +650,8 @@
     "mandatory.doContactMandatory"  : "afficher message",
     "mandatory.count"  : "Nombre",
 
-	  "barcodeAdministration.title" : "Barcode",
-	  "barcodeAdministration.count" : "Nombre",
+	"barcodeAdministration.title" : "Barcode",
+	"barcodeAdministration.count" : "Nombre",
 
     "eventcreation.title" : "Créer un événement",
 
@@ -726,6 +739,5 @@
     "reorderlist.deviceno" : "numéro d'appareil",
     "reorderlist.orderstatus" : "activement",
     "reorderlist.btnlabelB" : "ordonné",
-    "reorderlist.btnlabelO" : "ordre"
-	
+    "reorderlist.btnlabelO" : "ordre"	
 }
