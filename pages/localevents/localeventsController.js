@@ -188,13 +188,16 @@
                             "\r\n" + getResourceText("localevents.eventDelete");
                         confirm(confirmTitle, function (result) {
                             if (result) {
+                                AppBar.busy = true;
                                 AppData.setErrorMsg(that.binding);
                                 AppData.call("PRC_DeleteVeranstaltung", {
                                     pVeranstaltungID: eventID
                                 }, function (json) {
                                     Log.print(Log.l.info, "call success! ");
+                                    AppBar.busy = false;
                                     that.loadData();
                                 }, function (error) {
+                                    AppBar.busy = false;
                                     Log.print(Log.l.error, "call error");
                                 });
                             } else {
@@ -413,10 +416,14 @@
                     }
                 },
                 clickDelete: function () {
-                    if (that.curRecId === AppData.getRecordId("Veranstaltung")) {
+                    if (that.curRecId) {
+                        if (that.curRecId !== AppData.getRecordId("Veranstaltung") && !AppBar.busy) {
+                            return false;
+                        } else {
                         return true;
+                        }
                     } else {
-                        return false;
+                        return true;
                     }
                 },
                 clickNew: function () {
