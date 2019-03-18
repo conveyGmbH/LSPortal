@@ -181,6 +181,30 @@
                         Log.print(Log.l.error, "error selecting mailerzeilen");
                         AppData.setErrorMsg(that.binding, errorResponse);
                         }, { VeranstaltungVIEWID: eventID});
+                }).then(function() {
+                    var curScope = that.deleteEventData;
+                    if (curScope) {
+                        var confirmTitle = getResourceText("localevents.labelDelete") + ": " + curScope.Name +
+                            "\r\n" + getResourceText("localevents.eventDelete");
+                        confirm(confirmTitle, function (result) {
+                            if (result) {
+                                AppBar.busy = true;
+                                AppData.setErrorMsg(that.binding);
+                                AppData.call("PRC_DeleteVeranstaltung", {
+                                    pVeranstaltungID: eventID
+                                }, function (json) {
+                                    Log.print(Log.l.info, "call success! ");
+                                    AppBar.busy = false;
+                                    that.loadData();
+                                }, function (error) {
+                                    AppBar.busy = false;
+                                    Log.print(Log.l.error, "call error");
+                                });
+                            } else {
+                                Log.print(Log.l.trace, "clickDelete: event choice CANCEL");
+                            }
+                        });
+                    }
                 });
                 Log.ret(Log.l.trace);
                 return ret;
@@ -206,28 +230,8 @@
                 clickDelete: function (event) {
                     Log.call(Log.l.trace, "LocalEvents.Controller.");
                     var recordId = that.curRecId;
-                    that.getDeleteEventData(recordId);
                     if (recordId) {
-                        var curScope = that.deleteEventData;
-                        if (curScope) {
-                            var confirmTitle = getResourceText("localevents.labelDelete") + ": " + curScope.Name +
-                                "\r\n" + getResourceText("localevents.eventDelete");
-                            confirm(confirmTitle, function (result) {
-                                if (result) {
-                                    AppData.setErrorMsg(that.binding);
-                                    AppData.call("PRC_DeleteVeranstaltung", {
-                                        pVeranstaltungID: recordId
-                                    }, function (json) {
-                                        Log.print(Log.l.info, "call success! ");
-                                        that.loadData();
-                                    }, function (error) {
-                                        Log.print(Log.l.error, "call error");
-                                    });
-                                } else {
-                                    Log.print(Log.l.trace, "clickDelete: event choice CANCEL");
-                                }
-                            });
-                        }
+                    that.getDeleteEventData(recordId);
                     }
                     Log.ret(Log.l.trace);
                 },
@@ -412,10 +416,14 @@
                     }
                 },
                 clickDelete: function () {
-                    if (that.curRecId === AppData.getRecordId("Veranstaltung")) {
+                    if (that.curRecId) {
+                        if (that.curRecId !== AppData.getRecordId("Veranstaltung") && !AppBar.busy) {
+                            return false;
+                        } else {
                         return true;
+                        }
                     } else {
-                        return false;
+                        return true;
                     }
                 },
                 clickNew: function () {
