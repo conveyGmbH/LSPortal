@@ -25,6 +25,7 @@
 
             var that = this;
 
+            var domain = pageElement.querySelector("#domain");
             var prevMasterLoadPromise = null;
             var prevLogin = null;
             var prevPassword;
@@ -34,6 +35,12 @@
                 AppBar.notifyModified = false;
                 prevLogin = newDataEmployee.Login;
                 that.binding.dataEmployee = newDataEmployee;
+                if (newDataEmployee.Login && newDataEmployee.Login.indexOf("@") > 0) {
+                    var firstLoginPart = newDataEmployee.Login.substr(0, newDataEmployee.Login.indexOf("@"));
+                    var secondLoginPart = newDataEmployee.Login.substr(newDataEmployee.Login.indexOf("@"), newDataEmployee.Login.length - 1);
+                    that.binding.dataEmployee.LogInNameBeforeAtSymbole = firstLoginPart;
+                    that.binding.dataEmployee.LogInNameAfterAtSymbole = secondLoginPart;
+                }
                 prevPassword = newDataEmployee.Password;
                 that.binding.dataEmployee.Password2 = newDataEmployee.Password;
                 AppBar.modified = false;
@@ -122,6 +129,17 @@
                 return ret;
             }
             this.checkingLicence = checkingLicence;
+
+            var checkingSiteadminreadonlyFlag = function() {
+                Log.call(Log.l.trace, "Employee.Controller.");
+                if (domain && AppHeader.controller.binding.userData.SiteAdmin) {
+                    domain.readOnly = false;
+                } else {
+                    domain.readOnly = true;
+                }
+                Log.ret(Log.l.trace);
+            }
+            this.checkingSiteadminreadonlyFlag = checkingSiteadminreadonlyFlag;
 
             // define handlers
             this.eventHandlers = {
@@ -250,6 +268,10 @@
                     if (event.currentTarget && AppBar.notifyModified) {
                         pageElement.querySelector("#password").value = "";
                         pageElement.querySelector("#password2").value = "";
+                    }
+                    if (event.currentTarget.id === "loginFirstPart") {
+                        that.binding.dataEmployee.Login = event.currentTarget.value +
+                            that.binding.dataEmployee.LogInNameAfterAtSymbole;
                     }
                     Log.ret(Log.l.trace);
                 },
@@ -437,6 +459,7 @@
                                 if (that.binding.dataEmployee.Login) {
                                     Log.print(Log.l.trace, "Checking for licence!");
                                     that.checkingLicence();
+                                    that.checkingSiteadminreadonlyFlag();
                                     AppBar.busy = false;
                                 }
                             }
