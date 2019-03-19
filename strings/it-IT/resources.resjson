@@ -530,6 +530,7 @@
     "employee.firstname"    : "Nome",
     "employee.lastname"     : "Cognome",
     "employee.login"        : "Username",
+	"employee.domain"		: "Dominio",
     "employee.password"     : "Password",
     "employee.password2"    : "Conferma",
     "employee.roles"        : "Ruoli",

@@ -530,6 +530,7 @@
     "employee.firstname"    : "Vorname",
     "employee.lastname"     : "Nachname",
     "employee.login"        : "Anmeldung",
+	"employee.domain"		: "Domain",
     "employee.password"     : "Kennwort",
     "employee.password2"    : "Bestätigung",
     "employee.roles"        : "Rollen",
