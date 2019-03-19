@@ -23,7 +23,8 @@
                 veranstaltungId: 0,
                 fairmandantId: 0,
                 firstentry: 0,
-                eventText: getResourceText("siteevents.placeholder")
+                eventText: getResourceText("siteevents.placeholder"),
+                active: null
             }, commandList]);
 
             var that = this;
@@ -457,6 +458,10 @@
                                 // Only one item is selected, show the page
                                 listControl.selection.getItems().done(function (items) {
                                     var item = items[0];
+                                    that.binding.active = null;
+                                    if (item.data.Aktiv) {
+                                        that.binding.active = 1;
+                                    }
                                     that.actualSelectedItem = item.data;
                                     if (item.data && item.data.VeranstaltungVIEWID) {
                                         var newRecId = item.data.VeranstaltungVIEWID;
@@ -548,7 +553,7 @@
                     }
                 },
                 clickDelete: function () {
-                    if (!that.reorderId) {
+                    if (!that.reorderId || that.binding.active === 1) {
                         return true;
                     } else {
                         return false;
