@@ -292,13 +292,16 @@
                             case 3:
                                 curScope.item.Multiselection = "3";
                                 curScope.item.Combobox = null;
+                                if (curScope.item.Anzahl > 6) {
+                                    curScope.item.Anzahl = 6;
+                                }
                                 break;
                             case 4:
                                 curScope.item.Multiselection = "0";
                                 curScope.item.Combobox = "1";
-                                /*if (curScope.item.Anzahl < 2) {
+                                if (curScope.item.Anzahl < 2) {
                                     curScope.item.Anzahl = 2;
-                                }*/
+                                }
                                 break;
                             default:
                                 curScope.item.Multiselection = "0";
@@ -755,6 +758,7 @@
                             default:
                                 type = 0;
                         }
+                        that.setQuestionType(type);
                         if (listView && listView.winControl) {
                             var listControl = listView.winControl;
                             if (listControl.selection) {
@@ -788,7 +792,6 @@
                                 }
                             }
                         }
-                        that.setQuestionType(type);
                     }
                     Log.ret(Log.l.trace);
                 },
