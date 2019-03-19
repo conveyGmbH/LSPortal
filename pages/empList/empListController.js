@@ -132,9 +132,7 @@
 
             var resultConverter = function (item, index) {
                 item.index = index;
-                if (item.MitarbeiterVIEWID === AppData.getRecordId("Mitarbeiter")) {
-                    that.binding.hasLocalevents = item.HatLocalevents;
-                }
+                that.binding.hasLocalevents = AppHeader.controller.binding.userData.HasLocalEvents;
                 item.Names = "",
                 item.fullName =
                 (item.Vorname ? (item.Vorname + " ") : "") +
@@ -280,6 +278,7 @@
                     if (eventInfo && eventInfo.detail) {
                         progress = listView.querySelector(".list-footer .progress");
                         counter = listView.querySelector(".list-footer .counter");
+                        var restriction = AppData.getRestriction("Employee");
                         var visible = eventInfo.detail.visible;
                         if (visible && that.employees && that.nextUrl) {
                             that.loading = true;
@@ -317,7 +316,7 @@
                                     counter.style.display = "inline";
                                 }
                                 that.loading = false;
-                            }, null, nextUrl);
+                            }, restriction, nextUrl);
                         } else {
                             if (progress && progress.style) {
                                 progress.style.display = "none";

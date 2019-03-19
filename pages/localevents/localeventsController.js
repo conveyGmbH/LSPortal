@@ -169,7 +169,7 @@
             var getDeleteEventData = function(eventID) {
                 Log.call(Log.l.trace, "LocalEvents.Controller.");
                 AppData.setErrorMsg(that.binding);
-                var ret = new WinJS.Promise.as().then(function () {
+                var ret = new WinJS.Promise.as()/*.then(function () {
                     return LocalEvents.VeranstaltungView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
@@ -182,8 +182,9 @@
                         Log.print(Log.l.error, "error selecting mailerzeilen");
                         AppData.setErrorMsg(that.binding, errorResponse);
                         }, { VeranstaltungVIEWID: eventID});
-                }).then(function() {
-                    var curScope = that.deleteEventData;
+                })*/.then(function() {
+                    // var curScope = that.deleteEventData;
+                    var curScope = that.actualSelectedItem;
                     if (curScope) {
                         var confirmTitle = getResourceText("localevents.labelDelete") + ": " + curScope.Name +
                             "\r\n" + getResourceText("localevents.eventDelete");

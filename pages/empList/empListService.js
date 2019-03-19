@@ -24,6 +24,7 @@
                         desc: restriction.OrderDesc,
                         orderAttribute: restriction.OrderAttribute
                     });
+                    ret.maxPageSize = 20;
                 }
 
                 // this will return a promise to controller
