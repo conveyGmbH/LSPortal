@@ -20,7 +20,8 @@
                 count: 0,
                 veranstaltungId: 0,
                 fairmandantId: 0,
-                firstentry: 0
+                firstentry: 0,
+                active: null
             }, commandList]);
             this.nextUrl = null;
 
@@ -295,6 +296,10 @@
                                 // Only one item is selected, show the page
                                 listControl.selection.getItems().done(function (items) {
                                     var item = items[0];
+                                    that.binding.active = null;
+                                    if (item.data.Aktiv) {
+                                        that.binding.active = 1;
+                                    }
                                     that.actualSelectedItem = item.data;
                                     if (item.data && item.data.VeranstaltungVIEWID) {
                                         var newRecId = item.data.VeranstaltungVIEWID;
@@ -417,7 +422,7 @@
                 },
                 clickDelete: function () {
                     if (that.curRecId) {
-                        if (that.curRecId !== AppData.getRecordId("Veranstaltung") && !AppBar.busy) {
+                        if (that.curRecId !== AppData.getRecordId("Veranstaltung") && !that.binding.active && !AppBar.busy) {
                             return false;
                         } else {
                         return true;
