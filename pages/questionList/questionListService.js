@@ -43,12 +43,17 @@
             }
         },
         questionListView: {
-            select: function (complete, error, restriction) {
+            select: function (complete, error, restriction, recordId) {
                 Log.call(Log.l.trace, "QuestionList.");
-                var ret = QuestionList._questionListView.select(complete, error, restriction, {
+                var ret;
+                if (recordId) {
+                    ret = QuestionList._questionListView.selectById(complete, error, recordId);
+                } else {
+                    ret = QuestionList._questionListView.select(complete, error, restriction, {
                     ordered: true,
                     orderAttribute: "Sortierung"
                 });
+                }
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;

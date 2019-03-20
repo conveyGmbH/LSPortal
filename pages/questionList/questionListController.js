@@ -713,9 +713,14 @@
                                                         that.prevRecId = that.curRecId;
                                                     }
                                                     that.curRecId = newRecId;
+                                                    var recordId = that.curRecId;
                                                     if (that.prevRecId !== 0) { //
                                                         that.saveData(function (response) {
                                                             Log.print(Log.l.trace, "question saved");
+                                                            that.binding.questionId = recordId;
+                                                            that.loadData(that.binding.questionId).then(function () {
+                                                                that.selectRecordId(that.binding.questionId);
+                                                            });
                                                             AppBar.triggerDisableHandlers();
                                                         }, function (errorResponse) {
                                                             Log.print(Log.l.error, "error saving question");
@@ -776,9 +781,14 @@
                                                 that.prevRecId = that.curRecId;
                                             }
                                             that.curRecId = newRecId;
+                                            var recordId = that.curRecId;
                                             if (that.prevRecId !== 0) { //
                                                 that.saveData(function (response) {
                                                     Log.print(Log.l.trace, "question saved");
+                                                    that.binding.questionId = recordId;
+                                                    that.loadData(that.binding.questionId).then(function () {
+                                                        that.selectRecordId(that.binding.questionId);
+                                                    });
                                                     AppBar.triggerDisableHandlers();
                                                 }, function (errorResponse) {
                                                     Log.print(Log.l.error, "error saving question");
@@ -1179,7 +1189,7 @@
                 this.addRemovableEventListener(listView, "iteminvoked", this.eventHandlers.onItemInvoked.bind(this));
             }
 
-            var loadData = function () {
+            var loadData = function (recordId) {
                 Log.call(Log.l.trace, "QuestionList.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
@@ -1207,6 +1217,14 @@
                         // when the response is available
                         Log.print(Log.l.trace, "QuestionList.questionListView: success!");
                         // select returns object already parsed from json file in response
+                        if (that.questions && recordId) {
+                            if (json && json.d) {
+                                var question = json.d;
+                                that.resultConverter(question);
+                                var objectrec = scopeFromRecordId(recordId);
+                                that.questions.setAt(objectrec.index, question);
+                            }
+                        } else {
                         if (json && json.d) {
                             that.binding.count = json.d.results.length;
                             that.nextUrl = QuestionList.questionListView.getNextUrl(json);
@@ -1228,13 +1246,14 @@
                                 listView.winControl.itemDataSource = that.questions.dataSource;
                             }
                         }
+                        }
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, {
                         
-                    });
+                    }, recordId);
                 }).then(function () {
                     AppBar.notifyModified = true;
                     AppBar.triggerDisableHandlers();
