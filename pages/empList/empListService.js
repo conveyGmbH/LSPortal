@@ -9,7 +9,9 @@
     WinJS.Namespace.define("EmpList", {
         _employeeView: {
             get: function () {
-                return AppData.getFormatView("Mitarbeiter", 20471);
+                var ret = AppData.getFormatView("Mitarbeiter", 20471);
+                ret.maxPageSize = 20;
+                return ret;
             }
         },
         employeeView: {
@@ -24,7 +26,6 @@
                         desc: restriction.OrderDesc,
                         orderAttribute: restriction.OrderAttribute
                     });
-                    ret.maxPageSize = 20;
                 }
 
                 // this will return a promise to controller

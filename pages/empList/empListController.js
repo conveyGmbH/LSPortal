@@ -278,7 +278,6 @@
                     if (eventInfo && eventInfo.detail) {
                         progress = listView.querySelector(".list-footer .progress");
                         counter = listView.querySelector(".list-footer .counter");
-                        var restriction = AppData.getRestriction("Employee");
                         var visible = eventInfo.detail.visible;
                         if (visible && that.employees && that.nextUrl) {
                             that.loading = true;
@@ -316,7 +315,7 @@
                                     counter.style.display = "inline";
                                 }
                                 that.loading = false;
-                            }, restriction, nextUrl);
+                            }, null, nextUrl);
                         } else {
                             if (progress && progress.style) {
                                 progress.style.display = "none";
