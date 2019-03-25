@@ -133,9 +133,9 @@
             var checkingSiteadminreadonlyFlag = function() {
                 Log.call(Log.l.trace, "Employee.Controller.");
                 if (domain && AppHeader.controller.binding.userData.SiteAdmin) {
-                    domain.readOnly = false;
+                    domain.disabled = false;
                 } else {
-                    domain.readOnly = true;
+                    domain.disabled = true;
                 }
                 Log.ret(Log.l.trace);
             }
