@@ -95,6 +95,9 @@
                 if (typeof dataExibitor.LandID === "string") {
                     dataExibitor.LandID = parseInt(dataExibitor.LandID);
                 }
+                if (typeof dataExibitor.INITSpracheID === "string") {
+                    dataExibitor.INITSpracheID = parseInt(dataExibitor.INITSpracheID);
+                }
                 if (dataExibitor.LandID === "") {
                     dataExibitor.LandID = null;
                 }
@@ -233,7 +236,7 @@
                     } else {
                         return true;
                     }
-                },
+                }
             }
 
             var loadData = function (complete, error) {
