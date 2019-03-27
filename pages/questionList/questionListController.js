@@ -713,14 +713,9 @@
                                                         that.prevRecId = that.curRecId;
                                                     }
                                                     that.curRecId = newRecId;
-                                                    //var recordId = that.curRecId;
                                                     if (that.prevRecId !== 0) { //
                                                         that.saveData(function (response) {
                                                             Log.print(Log.l.trace, "question saved");
-                                                            /*that.binding.questionId = recordId;
-                                                            that.loadData(that.binding.questionId).then(function () {
-                                                                that.selectRecordId(that.binding.questionId);
-                                                            });*/
                                                             AppBar.triggerDisableHandlers();
                                                         }, function (errorResponse) {
                                                             Log.print(Log.l.error, "error saving question");
@@ -728,7 +723,6 @@
                                                     } else {
                                                         AppBar.triggerDisableHandlers();
                                                     }
-                                                    //  }
                                                 }
                                             });
                                         }
