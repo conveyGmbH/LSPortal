@@ -182,7 +182,7 @@
                                         // called asynchronously if ok
                                         that.binding.eventId = item.data.VeranstaltungTerminVIEWID;
                                         var curPageId = Application.getPageId(nav.location);
-                                        if (curPageId === "siteevents" || curPageId === "siteEventsList") {
+                                        if (curPageId === "siteevents" || curPageId === "siteEventsList" || curPageId === "mailingTypes") {
                                             AppBar.scope.binding.saveFlag = true;
                                             //AppBar.scope.saveData();
                                             if (typeof AppBar.scope.loadData === "function") {
