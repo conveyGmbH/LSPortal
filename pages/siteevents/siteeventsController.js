@@ -6,9 +6,9 @@
 /// <reference path="~/www/lib/convey/scripts/appbar.js" />
 /// <reference path="~/www/lib/convey/scripts/pageController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
-/// <reference path="~/www/pages/info/infoService.js" />
 /// <reference path="~/www/lib/jstz/scripts/jstz.js" />
 /// <reference path="~/www/lib/base64js/scripts/base64js.min.js" />
+/// <reference path="~/www/pages/siteevents/siteeventsService.js"/>
 
 (function () {
     "use strict";
@@ -636,8 +636,8 @@
                         AppData.setErrorMsg(that.binding);
                         Log.print(Log.l.trace, "LocalEvent: success!");
                         // employeeView returns object already parsed from json file in response
-                        if (json && json.d) {
-                            that.binding.count = json.d.results.length;;
+                        if (json && json.d && json.d.results.length > 0) {
+                            that.binding.count = json.d.results.length;
                             that.nextUrl = SiteEvents.VeranstaltungView.getNextUrl(json);
                             var results = json.d.results;
                             results.forEach(function (item, index) {
