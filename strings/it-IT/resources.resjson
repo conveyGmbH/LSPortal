@@ -87,6 +87,7 @@
     "tooltip.newExhibitor" : "Nuovo espositore",
     "tooltip.deleteExhibitor" : "Elimina espositore",
     "tooltip.newNachbestellungen": "Riordinare",
+    "tooltip.testmailopen": "Testmail",
 
     "start.title"           : "Pagina iniziale",
     "start.comment"         : "Utilizzate i pulsanti su questa pagina per muoversi tra le pagine!",

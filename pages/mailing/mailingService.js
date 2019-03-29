@@ -114,6 +114,27 @@
                 Log.ret(Log.l.trace);
                 return ret;
             }
+        },
+        _TestMailView: {
+            get: function () {
+                return AppData.getFormatView("Testmail", 0);
+            }
+        },
+        TestMailView: {
+            insert: function (complete, error, restriction) {
+                Log.call(Log.l.trace, "Mailing.");
+                var ret = Mailing._TestMailView.insert(complete, error, restriction);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            defaultRestriction: {
+                TestType: 2,
+                TargetAddr: "",
+                Vorname: "",
+                Nachname: "",
+                MailDokumentID: null,
+                AnredeID: 0
+            }
         }
     });
 })();

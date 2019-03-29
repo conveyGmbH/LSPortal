@@ -87,6 +87,7 @@
     "tooltip.newExhibitor" : "Neuer Austeller",
     "tooltip.deleteExhibitor" : "Austeller löschen",
 	"tooltip.newNachbestellungen": "Nachbestellung",
+    "tooltip.testmailopen": "Testmail",
 
     "start.title"           : "Startseite",
     "start.comment"         : "Verwende die Schaltflächen auf dieser Seite um auf weitere Seiten zu gehen!",
@@ -592,6 +593,12 @@
     "mailing.memoplaceholder"           : "",
     "mailing.documenton"           : "Mit Dokument",
     "mailing.documentoff"          : "Ohne Dokument",
+    "mailing.foa"          : "Anrede",
+    "mailing.firstname"          : "Vorname",
+    "mailing.surname"          : "Nachname",
+    "mailing.email"          : "Email",
+    "mailing.send"          : "Senden",
+    "mailing.testmailsuccessmsg"          : "Ihr Testmail wurde erfolgreich verschickt",
     
     "mailingProduct.title"         : "Mailing Produkte",
     "mailingProduct.event"         : "Veranstaltung",

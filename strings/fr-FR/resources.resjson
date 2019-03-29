@@ -87,6 +87,7 @@
     "tooltip.newExhibitor" : "New exhibitor",
     "tooltip.deleteExhibitor" : "Supprimer l'exposant",
     "tooltip.newNachbestellungen": "Réorganiser",
+    "tooltip.testmailopen": "Testmail",
 
     "start.title"           : "Accueil",
     "start.comment"         : "Utilisez les boutons sur cette page pour accéder à d'autres pages!",
@@ -592,6 +593,12 @@
     "mailing.memoplaceholder"           : "",
     "mailing.documenton"           : "Avec document",
     "mailing.documentoff"          : "Sans document",
+    "mailing.foa"          : "Salutation",
+    "mailing.firstname"          : "Prénom",
+    "mailing.surname"          : "Nom de famille",
+    "mailing.email"          : "EMail",
+    "mailing.send"          : "Envoyer",
+    "mailing.testmailsuccessmsg"          : "Votre testmail a été envoyé avec succès",
 
     "mailingProduct.title"         : "Mailing Produit",
     "mailingProduct.event"         : "événement",

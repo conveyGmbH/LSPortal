@@ -16,17 +16,24 @@
             Log.call(Log.l.trace, "Mailing.Controller.");
             Application.Controller.apply(this, [pageElement, {
                 dataMail: getEmptyDefaultValue(Mailing.MaildokumentView.defaultValue),
+                dataTestMail: getEmptyDefaultValue(Mailing.TestMailView.defaultRestriction),
                 dataFirstQuestion: null,
                 firstquestionbez: getResourceText("mailing.on"),
                 memobez: getResourceText("mailing.off"),
                 specTypeToggle: null,
-                saveFlag: null
+                saveFlag: null,
+                sendTestMailShowFlag: 0,
+                testMailShowPanelFlag: 0,
+                testMailSuccessMsgFlag: 0,
+                sendtstmailLabel: getResourceText("mailing.send")
             }, commandList]);
             var that = this;
             this.ssItems = [];
             var firstquestion = pageElement.querySelector("#firstquestioncombo"); 
             var erstefragelabel = pageElement.querySelector("#erstefragelabel");
             var textComment = pageElement.querySelector(".input_text_comment");
+            var initAnrede = pageElement.querySelector("#InitAnrede");
+            var sendbtn = pageElement.querySelector(".sendtestmail-button.win-button");
 
             // select combo
             var initSprache = pageElement.querySelector("#InitSprache");
@@ -199,6 +206,13 @@
             };
             this.saveData = saveData;
 
+            var getTestMailData = function() {
+                that.binding.dataTestMail.MailDokumentID = parseInt(that.binding.dataMail.MaildokumentVIEWID);
+                that.binding.dataTestMail.AnredeID = parseInt(that.binding.dataTestMail.AnredeID);
+                that.binding.dataTestMail.TestType = parseInt(2);
+            }
+            this.getTestMailData = getTestMailData;
+            
             // Then, do anything special on this page
             this.eventHandlers = {
                 clickBack: function(event) {
@@ -219,6 +233,48 @@
                         Log.print(Log.l.error, "error saving mail");
                     });
                     Log.ret(Log.l.trace);
+                },
+                clickTestMailOpen : function(event) {
+                    Log.call(Log.l.trace, "Mailing.Controller.clickTestMailOpen");
+                    if (that.binding.sendTestMailShowFlag === 0) {
+                        that.binding.sendTestMailShowFlag = 1;
+                        that.binding.testMailShowPanelFlag = 1;
+                        that.binding.testMailSuccessMsgFlag = 0;
+                        window.setTimeout(function () {
+                            pageElement.querySelector(".sendtestmail-button.win-button").focus();
+                        }, 0);
+                    } else {
+                        that.binding.sendTestMailShowFlag = 0;
+                        that.binding.testMailShowPanelFlag = 0;
+                        that.binding.testMailSuccessMsgFlag = 0;
+                    }
+                    Log.ret(Log.l.trace);
+                },
+                clickSendTestMail: function() {
+                    Log.call(Log.l.trace, "Mailing.Controller.clickSendTestMail");
+                    AppData.setErrorMsg(that.binding);
+                    that.getTestMailData();
+                    Log.call(Log.l.trace, "Mailing.Controller.clickSendTestMail");
+                    var ret = new WinJS.Promise.as().then(function () {
+                        return Mailing.TestMailView.insert(function (json) {
+                            AppBar.busy = false;
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            Log.print(Log.l.info, "TestMailView insert: success!");
+                            AppBar.modified = false;
+                            that.binding.dataTestMail = getEmptyDefaultValue(Mailing.TestMailView.defaultRestriction);
+                            that.binding.testMailShowPanelFlag = 0;
+                            that.binding.testMailSuccessMsgFlag = 1;
+                            // ProduktView returns object already parsed from json file in response
+                        }, function (errorResponse) {
+                            Log.print(Log.l.error, "error inserting Testmail");
+                            AppBar.busy = false;
+                            that.binding.dataTestMail = getEmptyDefaultValue(Mailing.TestMailView.defaultRestriction);
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        }, that.binding.dataTestMail);
+                    });
+                    Log.ret(Log.l.trace);
+                    return ret;
                 },
                 clickDelete: function (event) {
                     Log.call(Log.l.trace, "Mailing.Controller.");
@@ -367,7 +423,36 @@
             var loadData = function (recordId) {
                 Log.call(Log.l.trace, "Mailing.", "recordId=" + recordId);
                 AppData.setErrorMsg(that.binding);
+                that.binding.sendTestMailShowFlag = 0;
+                that.binding.testMailShowPanelFlag = 0;
+                that.binding.testMailSuccessMsgFlag = 0;
                 var ret = new WinJS.Promise.as().then(function () {
+                    if (!AppData.initAnredeView.getResults().length) {
+                        Log.print(Log.l.trace, "calling select initAnredeData...");
+                        //@nedra:25.09.2015: load the list of INITAnrede for Combobox
+                        return AppData.initAnredeView.select(function (json) {
+                            Log.print(Log.l.trace, "initAnredeView: success!");
+                            if (json && json.d && json.d.results) {
+                                // Now, we call WinJS.Binding.List to get the bindable list
+                                if (initAnrede && initAnrede.winControl) {
+                                    initAnrede.winControl.data = new WinJS.Binding.List(json.d.results);
+                                    initAnrede.selectedIndex = 0;
+                                }
+                            }
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        });
+                    } else {
+                        if (initAnrede && initAnrede.winControl &&
+                            (!initAnrede.winControl.data || !initAnrede.winControl.data.length)) {
+                            initAnrede.winControl.data = new WinJS.Binding.List(AppData.initAnredeView.getResults());
+                            initAnrede.selectedIndex = 0;
+                        }
+                        return WinJS.Promise.as();
+                    }
+                }).then(function () {
                     if (!Mailing.initSpracheView.getResults().length) {
                         Log.print(Log.l.trace, "calling select initSpracheView...");
                         //@nedra:25.09.2015: load the list of INITAnrede for Combobox
