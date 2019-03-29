@@ -459,7 +459,7 @@
                                 if (that.binding.dataEmployee.Login) {
                                     Log.print(Log.l.trace, "Checking for licence!");
                                     that.checkingLicence();
-                                    that.checkingSiteadminreadonlyFlag();
+                                    that.checkingReadonlyFlag();
                                     AppBar.busy = false;
                                 }
                             }
