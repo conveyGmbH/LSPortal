@@ -139,7 +139,7 @@
                 }
                 Log.ret(Log.l.trace);
             }
-            this.checkingSiteadminreadonlyFlag = checkingSiteadminreadonlyFlag;
+            this.checkingReadonlyFlag = checkingReadonlyFlag;
 
             // define handlers
             this.eventHandlers = {
