@@ -593,6 +593,12 @@
     "mailing.memoplaceholder"           : "",
 	"mailing.documenton"           : "Con documento",
     "mailing.documentoff"          : "Senza un documento",
+    "mailing.foa"          : "Saluto",
+    "mailing.firstname"          : "Nome",
+    "mailing.surname"          : "Cognome",
+    "mailing.email"          : "EMail",
+    "mailing.send"          : "Inviare",
+    "mailing.testmailsuccessmsg"          : "Il tuo testmail è stato inviato con successo",
 
 	"mailingProduct.title"         : "Mailing Prodotto",
     "mailingProduct.event"         : "Evento",
