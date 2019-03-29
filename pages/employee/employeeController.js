@@ -130,9 +130,9 @@
             }
             this.checkingLicence = checkingLicence;
 
-            var checkingSiteadminreadonlyFlag = function() {
+            var checkingReadonlyFlag = function() {
                 Log.call(Log.l.trace, "Employee.Controller.");
-                if (domain && AppHeader.controller.binding.userData.SiteAdmin) {
+                if (domain && (AppHeader.controller.binding.userData.SiteAdmin || AppHeader.controller.binding.userData.HasLocalEvents)) {
                     domain.disabled = false;
                 } else {
                     domain.disabled = true;

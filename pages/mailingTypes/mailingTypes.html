@@ -86,21 +86,36 @@
                                 </select>
                             </div>
                             <div class="line-separator"></div>
-                            <div class="field_line field_line_odd">
+                            <!--<div class="field_line field_line_odd">
                                 <!--<span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingTypes.sendLater'}"></span>
                                 <span class="label landscape_only" data-win-res="{textContent: 'mailingTypes.sendLater'}"></span>
-                                <input class="input_field win-textbox" data-win-bind="value: dataEmployee.SendLater Binding.Mode.twoway"/>-->
+                                <input class="input_field win-textbox" data-win-bind="value: dataEmployee.SendLater Binding.Mode.twoway"/>
                                 <label class="checkbox input_field">
                                     <input type="checkbox" class="win-checkbox checkbox" value="1"
                                            data-win-bind="checked: dataMailingTypeData.SendLater Binding.Mode.twoway"/>
                                     <span class="checkbox" data-win-res="{textContent: 'mailingTypes.sendLater'}"></span>
                                 </label>
-                            </div>
-                            <div class="field_line field_line_even">
+                            </div>-->
+                            <!--<div class="field_line field_line_even">
                                 <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingTypes.sendStartTime'}"></span>
                                 <span class="label landscape_only" data-win-res="{textContent: 'mailingTypes.sendStartTime'}"></span>
                                 <input class="input_field win-textbox" data-win-bind="value: dataMailingTypeData.SendStartTime Binding.Mode.twoway" data-win-res="{placeholder: 'mailingTypes.sendStartTimeplaceholder'}"/>
+                            </div>-->
+                            <!--<div class="field_line field_line_even">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingTypes.sendStartTime'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'mailingTypes.sendStartTime'}"></span>
+                                <div class="input_group">
+                                    <div data-win-control="WinJS.UI.TimePicker" id="mailingTypeStartTime" class="input_big_left"
+                                         data-win-bind="winControl.current: dataMailingTypeData.SendStartTime Binding.Mode.twoway">
                             </div>
+                                    <!--<label class="input_big_right">
+                                        <input type="checkbox" class="win-checkbox" value="1"
+                                               data-win-bind="checked: restriction.useMailingTypeStartTime"
+                                               onchange="AppBar.handleEvent('change', 'clickErfassungsdatum', event)" />
+                                        <span data-win-res="{textContent: 'mailingTypes.sendStartTime'}"></span>
+                                    </label>
+                                </div>
+                            </div>-->
                             <div class="line-separator"></div>
                             <div class="field_line field_line_even">
                                 <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingTypes.enabled'}"></span>

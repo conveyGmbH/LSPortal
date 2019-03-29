@@ -23,8 +23,8 @@
 
             this.sendDayHookList = new WinJS.Binding.List([
                 { SendDayHook: null, TITLE: null },
-                { SendDayHook: "E", TITLE: "E" },
-                { SendDayHook: "S", TITLE: "S" }
+                { SendDayHook: "E", TITLE: getResourceText("mailingTypes.eventEnde") }, 
+                { SendDayHook: "S", TITLE: getResourceText("mailingTypes.eventStart") }
             ]);
 
             var that = this;
@@ -56,6 +56,7 @@
                     if (that.binding.dataMailingTypeData.Enabled === "f")
                         that.binding.dataMailingTypeData.Enabled = null;
               
+                that.binding.dataMailingTypeData.SendStartTime = getDateObject(newDataMailingTypeData.SendStartTime);
                 AppBar.modified = false;
                 AppBar.notifyModified = prevNotifyModified;
                 AppBar.triggerDisableHandlers();
@@ -401,8 +402,9 @@
                 Log.call(Log.l.trace, "mailTypes.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret;
-                var dataMailingTypeData = that.binding.dataMailingTypeData;
-                if (dataMailingTypeData && AppBar.modified && !AppBar.busy) {
+                var mailingTypeData = that.binding.dataMailingTypeData;
+                mailingTypeData.SendStartTime = getDateData(mailingTypeData.SendStartTime);
+                if (mailingTypeData && AppBar.modified && !AppBar.busy) {
                         var recordId = getRecordId();
                         if (recordId) {
                             AppBar.busy = true;
@@ -410,6 +412,7 @@
                                 AppBar.busy = false;
                                 // called asynchronously if ok
                                 Log.print(Log.l.info, "mailTypesData update: success!");
+                                that.binding.dataMailingTypeData.SendStartTime = getDateObject(mailingTypeData.SendStartTime);
                                 AppBar.modified = false;
                                 complete(response);
                             }, function (errorResponse) {
@@ -418,7 +421,7 @@
                                 // or server returns response with an error status.
                                 AppData.setErrorMsg(that.binding, errorResponse);
                                 error(errorResponse);
-                            }, recordId, dataMailingTypeData);
+                            }, recordId, mailingTypeData);
                         } else {
                             Log.print(Log.l.info, "not supported");
                             ret = WinJS.Promise.as();
@@ -430,7 +433,9 @@
                     });
                 } else {
                     ret = new WinJS.Promise.as().then(function () {
-                        complete(dataMailingTypeData);
+                        if (typeof complete === "function") {
+                            complete(mailingTypeData);
+                        }
                     });
                 }
                 Log.ret(Log.l.trace);
