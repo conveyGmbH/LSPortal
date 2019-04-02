@@ -731,6 +731,7 @@
 	"siteeventsneuaus.dbsynclogin" : "DBSYNCLogin",
     "siteeventsneuaus.dbsyncpassword" : "DBSYNCPassword",
     "siteeventsneuaus.customerid" : "Numéro d'enregistrement",
+    "siteeventsneuaus.exhibitorcategory" : "Catégorie",
 
     "siteeventsbennach.title" : "réassorts",
     "siteeventsbennach.eventname" : "exposant",

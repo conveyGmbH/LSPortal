@@ -731,6 +731,7 @@
     "siteeventsneuaus.dbsynclogin" : "DBSYNCLogin",
     "siteeventsneuaus.dbsyncpassword" : "DBSYNCPassword",
     "siteeventsneuaus.customerid" : "Registrationnumber",
+    "siteeventsneuaus.exhibitorcategory" : "Category",
 
     "siteeventsbennach.title" : "Reorders",
     "siteeventsbennach.eventname" : "Exhibitor",

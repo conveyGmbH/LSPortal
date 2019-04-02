@@ -127,7 +127,12 @@
             INITSpracheID: 0,
             DBSYNCLogin: "",
             DBSYNCPassword: "",
-            CustomerID: ""
-}
+            CustomerID: "",
+            ExhibitorCategory: ""
+        },
+        defaultDataExibitorCategory: {
+            value: null,
+            title: ""
+        }
     });
 })();

@@ -731,6 +731,7 @@
     "siteeventsneuaus.dbsynclogin" : "DBSYNCLogin",
     "siteeventsneuaus.dbsyncpassword" : "DBSYNCPassword",
     "siteeventsneuaus.customerid" : "Numero di targa",
+    "siteeventsneuaus.exhibitorcategory" : "Categoria",
 
     "siteeventsbennach.title" : "riordini",
     "siteeventsbennach.eventname" : "espositore",

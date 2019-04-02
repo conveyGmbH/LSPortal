@@ -731,6 +731,7 @@
     "siteeventsneuaus.dbsynclogin" : "DBSYNCAnmeldekennung",
     "siteeventsneuaus.dbsyncpassword" : "DBSYNCPasswort",
     "siteeventsneuaus.customerid" : "Registrierungsnummer",
+    "siteeventsneuaus.exhibitorcategory" : "Kategorie",
 
     "siteeventsbennach.title" : "Nachbestellungen",
     "siteeventsbennach.eventname" : "Aussteller",

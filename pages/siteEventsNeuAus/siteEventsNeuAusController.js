@@ -25,10 +25,42 @@
 
             var initLand = pageElement.querySelector("#InitLandReporting");
             var initSprache = pageElement.querySelector("#InitSprache");
+            var exibitorcategory = pageElement.querySelector("#exibitorcategory");
             var companyname = pageElement.querySelector("#firmenname");
             var ordernr = pageElement.querySelector("#OrderNumber");
             var eventname = pageElement.querySelector("#veranstaltungname");
-
+            
+            var creatingExhibitorCategory = function() {
+                Log.call(Log.l.trace, "SiteEventsNeuAus.Controller.");
+                var exhibitorCategory = [
+                    {
+                        value: null,
+                        title: ""
+                    },
+                    {
+                        value: "APP",
+                        title: "APP"
+                    },
+                    {
+                        value: "SERVICE",
+                        title: "SERVICE"
+                    },
+                    {
+                        value: "RTW",
+                        title: "RTW"
+                    },
+                    {
+                        value: "IPAD",
+                        title: "IPAD"
+                    }
+                ];
+                if (exibitorcategory && exibitorcategory.winControl) {
+                    exibitorcategory.winControl.data = new WinJS.Binding.List(exhibitorCategory);
+                    exibitorcategory.selectedIndex = 0;
+                }
+            }
+            this.creatingExhibitorCategory = creatingExhibitorCategory;
+            
             var setLangID = function(langID) {
                 switch (langID) {
                 case 1031:
@@ -172,7 +204,8 @@
                         pSpracheID: dataExibitor.INITSpracheID,
                         pDBSYNCLogin: dataExibitor.DBSYNCLogin,
                         pDBSYNCPassword: dataExibitor.DBSYNCPassword,
-                        pCustomerID: dataExibitor.CustomerID
+                        pCustomerID: dataExibitor.CustomerID,
+                        pExhibitorCategory: dataExibitor.ExhibitorCategory
 
             }, function (json) {
                         Log.print(Log.l.info, "call success! ");
@@ -326,6 +359,9 @@
             }).then(function () {
                 that.loadData();
                 Log.print(Log.l.trace, "loadData loaded!");
+            }).then(function () {
+                that.creatingExhibitorCategory();
+                Log.print(Log.l.trace, "creatingExhibitorCategory loaded!");
             }).then(function () {
                 that.setMandetoryFields();
                 Log.print(Log.l.trace, "setMandetoryFields loaded!");

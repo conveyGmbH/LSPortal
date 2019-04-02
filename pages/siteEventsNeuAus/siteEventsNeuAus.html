@@ -37,14 +37,22 @@
                         <div class="field_line field_line_odd">
                             <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'siteeventsneuaus.ordernumber'}"></span>
                             <span id="CustomerID" class="label win-type-caption portrait_only_right" data-win-res="{textContent: 'siteeventsneuaus.customerid'}"></span>
+                            <span id="exhibitorcategorylabel" class="label win-type-caption portrait_only_right" data-win-res="{textContent: 'siteeventsneuaus.exhibitorcategory'}"></span>
                             <div class="label landscape_only">
-                                <span data-win-res="{textContent: 'siteeventsneuaus.ordernumber'}"></span> / <span data-win-res="{textContent: 'siteeventsneuaus.customerid'}"></span>
+                                <span data-win-res="{textContent: 'siteeventsneuaus.ordernumber'}"></span> / <span data-win-res="{textContent: 'siteeventsneuaus.customerid'}"></span> / <span data-win-res="{textContent: 'siteeventsneuaus.exhibitorcategory'}"></span>
                             </div>
                             <div class="input_group">
                                 <input id="Ordernumber" class="input_small_left win-textbox" type="text" data-win-bind="value: dataExhibitor.OrderNumber Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" />
                                 <input id="CustomerIDIN" class="input_small_left win-textbox" type="text" data-win-bind="value: dataExhibitor.CustomerID Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" />
+                                <select id="exibitorcategory"
+                                        class="input_small_left win-dropdown"
+                                        data-win-control="WinJS.UI.Repeater"
+                                        data-win-bind="value: dataExhibitor.ExhibitorCategory Binding.Mode.twoway">
+                                    <option data-win-bind="value: value; textContent: title" id="eco"></option>
+                                </select>
                                 <span class="input_small_left win-type-subtitle" data-win-bind="textContent: dataExhibitor.OrderNumber; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
                                 <span class="input_small_left win-type-subtitle" data-win-bind="textContent: dataExhibitor.CustomerID; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                                <span class="input_small_left win-type-subtitle" data-win-bind="textContent: dataExhibitor.ExhibitorCategory; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
                             </div>
                         </div>
                         <div class="line-separator"></div>
