@@ -177,17 +177,15 @@
                                 listControl.selection.getItems().done(function (items) {
                                     var item = items[0];
                                     that.binding.selIdx = item.index;
-                                    if (item.data && item.data.VeranstaltungTerminVIEWID &&
-                                        item.data.VeranstaltungVIEWID !== that.binding.eventId) {
+                                    if (item.data && item.data.VeranstaltungTerminVIEWID) {
                                         // called asynchronously if ok
-                                        that.binding.eventId = item.data.VeranstaltungTerminVIEWID;
                                         var curPageId = Application.getPageId(nav.location);
                                         if (curPageId === "siteevents" || curPageId === "siteEventsList" || curPageId === "mailingTypes") {
                                             AppBar.scope.binding.saveFlag = true;
                                             //AppBar.scope.saveData();
                                             if (typeof AppBar.scope.loadData === "function") {
-                                                AppBar.scope.loadData(that.binding.eventId);
-                                                AppData.setRecordId("VeranstaltungTermin", that.binding.eventId);
+                                                AppBar.scope.loadData(item.data.VeranstaltungTerminVIEWID);
+                                                AppData.setRecordId("VeranstaltungTermin", item.data.VeranstaltungTerminVIEWID);
                                             }
                                         } else {
                                             Application.navigateById("siteeventsList");
@@ -314,15 +312,11 @@
                         if (json && json.d && json.d.results && json.d.results.length > 0) {
                             that.nextUrl = SiteEventsList.VeranstaltungView.getNextUrl(json);
                             var results = json.d.results;
-
-                            that.binding.eventId = results[0].VeranstaltungTerminVIEWID;
-
                             results.forEach(function (item, index) {
                                 that.resultConverter(item, index);
                             });
                            
                             that.binding.count = results.length;
-
                             that.eventdatasets = new WinJS.Binding.List(results);
                             
                             if (listView.winControl) {
@@ -333,9 +327,10 @@
                             if (that.binding.selIdx >= json.d.results.length) {
                                 that.binding.selIdx = json.d.results.length - 1;
                             }
-                            if (results[that.binding.selIdx] && results[that.binding.selIdx].VeranstaltungTerminVIEWID) {
+                            var recordId = AppData.getRecordId("VeranstaltungTermin");
+                            if (recordId) {
                                 WinJS.Promise.timeout(0).then(function () {
-                                    that.selectRecordId(results[that.binding.selIdx].VeranstaltungTerminVIEWID);
+                                    that.selectRecordId(recordId);
                                 });
                             }
                         } else {
