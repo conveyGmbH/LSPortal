@@ -1,4 +1,4 @@
-﻿// service for page: reportingList
+// service for page: reportingList
 /// <reference path="~/www/lib/convey/scripts/strings.js" />
 /// <reference path="~/www/lib/convey/scripts/logging.js" />
 /// <reference path="~/www/lib/convey/scripts/dataService.js" />
@@ -9,7 +9,7 @@
     WinJS.Namespace.define("ReorderList", {
         _VeranstaltunganlageView: {
             get: function () {
-                return AppData.getFormatView("VeranstaltungAnlage", 20569);
+                return AppData.getFormatView("Bestellung", 20569);
             }
         },
         VeranstaltunganlageView: {
@@ -17,7 +17,7 @@
                 Log.call(Log.l.trace, "ReorderList.");
                 var ret = ReorderList._VeranstaltunganlageView.select(complete, error, restriction, {
                     ordered: true,
-                    orderAttribute: "VeranstaltungAnlageVIEWID",
+                    orderAttribute: "BestellungVIEWID",
                     desc: true
                 });
                 // this will return a promise to controller
