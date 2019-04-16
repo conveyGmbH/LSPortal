@@ -553,7 +553,7 @@
                     }
                 },
                 clickDelete: function () {
-                    if (!that.reorderId || that.binding.active === 1) {
+                    if (!that.reorderId || that.binding.active === 1 || AppData.generalData.eventId === that.reorderId) {
                         return true;
                     } else {
                         return false;
