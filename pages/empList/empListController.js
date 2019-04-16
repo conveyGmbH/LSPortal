@@ -289,14 +289,14 @@
                             }
                             AppData.setErrorMsg(that.binding);
                             var nextUrl = that.nextUrl;
-                            that.nextUrl = null;
+                            //that.nextUrl = null;
                             Log.print(Log.l.trace, "calling select EmpList.employeeView...");
                             EmpList.employeeView.selectNext(function (json) {
                                 // this callback will be called asynchronously
                                 // when the response is available
                                 Log.print(Log.l.trace, "EmpList.employeeView: success!");
                                 // employeeView returns object already parsed from json file in response
-                                if (json && json.d) {
+                                if (json && json.d && json.d.results.length > 0) {
                                     that.nextUrl = EmpList.employeeView.getNextUrl(json);
                                     var results = json.d.results;
                                     results.forEach(function (item, index) {
@@ -374,13 +374,13 @@
                 }
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
-                    EmpList.employeeView.select(function (json) {
+                    return EmpList.employeeView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
                         Log.print(Log.l.trace, "EmpList: success!");
                         // employeeView returns object already parsed from json file in response
                         if (!recordId) {
-                            if (json && json.d) {
+                            if (json && json.d && json.d.results.length > 0) {
                                 that.binding.count = json.d.results.length;
                                 that.nextUrl = EmpList.employeeView.getNextUrl(json);
                                 var results = json.d.results;
@@ -393,7 +393,7 @@
                                     // add ListView dataSource
                                     listView.winControl.itemDataSource = that.employees.dataSource;
                                 }
-                                that.selectRecordId(that.binding.employeeId);
+                                //that.selectRecordId(json.d.results[0].MitarbeiterVIEWID);
                             } else {
                                 that.binding.count = 0;
                                 that.nextUrl = null;
