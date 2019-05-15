@@ -691,7 +691,7 @@
                                         target = target.parentElement;
                                     }
                                     if (!isSelected) {
-                                        if (target.className === "win-itembox") {
+                                        if (target && target.className === "win-itembox") {
                                             AppBar.handleEvent('change', 'changedAnswerCount', event);
                                             Log.ret(Log.l.trace);
                                             return;
