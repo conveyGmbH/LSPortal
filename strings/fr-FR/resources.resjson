@@ -115,7 +115,7 @@
     "start.event"           : "Événement",
     "start.info"            : "Instructions importantes",
     "start.language"        : "Langue",
-	"start.confirmTextPublish"  : "Le questionnaire n'est pas encore publier. Appuyer sur \nOK svp. et publier le questionnaire, ou bien sont les \nChangement ne pas enregitrer et pas apparaître sur \nl'application / ou questionnaire",
+	"start.confirmTextPublish"  : "Le questionnaire n'est pas encore publier. Appuyer sur OK svp. et publier le questionnaire, ou bien sont les Changement ne pas enregitrer et pas apparaître sur l'application / ou questionnaire",
 
     "contact.title"         : "Les données de Contact",
     "contact.comment"       : "Utilisez le bouton Retour sur cette page pour y retourner!",
@@ -456,6 +456,7 @@
     "flyout.cancel"         : "Annuler",
 
     "error.delete"          : "Erreur pendant la suppression",
+	"error.invalidTime"		: "Format d'heure invalide hh: mm",
 
     "event.title"           : "Événement",
     "event.name"            : "Nom",
@@ -624,7 +625,8 @@
 	"mailingTypes.eventStart" : "Avec la date",
 	"mailingTypes.eventEnde" : "Bon début",
 	"mailingTypes.sendLater"	: "Envoi différé",
-	"mailingTypes.sendStartTime"	: "Heure de début",
+	"mailingTypes.sendStartTime"	: "Heure de début (UTC)",
+	"mailingTypes.useSendStartTime" : "utiliser",
 	"mailingTypes.mailTypeConfig" : "Configuration du type de courrier",
 	"mailingTypes.enabled"    : "Aktiv",
 	"mailingTypes.infoplaceholder"           : "Entrez ici la description de votre message, par exemple : Courriel de remerciement français",

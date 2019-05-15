@@ -115,7 +115,7 @@
     "start.event"           : "Your event",
     "start.info"            : "Important informations",
     "start.language"        : "Language",
-    "start.confirmTextPublish"  : "The questionnaire has not been published yet. Please press \nok and then publish it, otherwise the changes \nyou have done will not appear on the APP / Questionnaire",
+    "start.confirmTextPublish"  : "The questionnaire has not been published yet. Please press ok and then publish it, otherwise the changes you have done will not appear on the APP / Questionnaire",
 
     "contact.title"         : "Entered Contact Data",
     "contact.comment"       : "On this page, use the Back button to go back!",
@@ -456,6 +456,7 @@
     "flyout.cancel"         : "Cancel",
 
     "error.delete"          : "Error on delete",
+	"error.invalidTime"		: "Timeformat invalid hh: mm",
 
     "event.title"           : "Event",
     "event.name"            : "Name",
@@ -624,7 +625,8 @@
 	"mailingTypes.eventStart" : "Fair start",
 	"mailingTypes.eventEnde" : "End of the fair",
 	"mailingTypes.sendLater"	: "Delayed mailing",
-	"mailingTypes.sendStartTime"	: "Start time",
+	"mailingTypes.sendStartTime"	: "Start time (UTC)",
+	"mailingTypes.useSendStartTime" : "use",
 	"mailingTypes.mailTypeConfig" : "Mailtype configuration",
 	"mailingTypes.enabled"    : "Active",
 	"mailingTypes.infoplaceholder"           : "Enter here the description of the email, for example Thank you email English",

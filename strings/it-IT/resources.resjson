@@ -115,7 +115,7 @@
     "start.event"           : "Il suo evento",
     "start.info"            : "Informazioni importanti",
     "start.language"        : "Lingua",
-	"start.confirmTextPublish"  : "Il questionario non é stato ancora pubblicato. Per favore \npremete ok e confermate la pubblicazione del questionario, \naltrimenti esso non verrá visualizzato correttamente nella \nAPP / questionario dei barcode",
+	"start.confirmTextPublish"  : "Il questionario non é stato ancora pubblicato. Per favore premete ok e confermate la pubblicazione del questionario, altrimenti esso non verrá visualizzato correttamente nella APP / questionario dei barcode",
 
     "contact.title"         : "Il dati di contatto",
     "contact.comment"       : "Utilizzate il pulsante \"indietro\" su questa pagina per tornare alla pagina precedente!",
@@ -456,6 +456,7 @@
     "flyout.cancel"         : "Annulla",
 
     "error.delete"          : "Errore: impossibile cancellare",
+	"error.invalidTime"		: "Formato ora non valido hh: mm",
   
     "event.title"           : "Evento",
     "event.name"            : "Nome",
@@ -622,9 +623,10 @@
 	"mailingTypes.sendDay"	: "Numero di giorni",
 	"mailingTypes.sendDayHook"	: "Tageshaken senden",
 	"mailingTypes.eventStart" : "Buon inizio",
+	"mailingTypes.useSendStartTime" : "Utilizza",
 	"mailingTypes.eventEnde" : "Fine della fiera",
 	"mailingTypes.sendLater"	: "Spedizione ritardata",
-	"mailingTypes.sendStartTime"	: "Ora di inizio",
+	"mailingTypes.sendStartTime"	: "Ora di inizio (UTC)",
 	"mailingTypes.mailTypeConfig" : "Configurazione del tipo di posta",
 	"mailingTypes.enabled"    : "Qttivamente",
 	"mailingTypes.infoplaceholder"           : "Inserire qui la descrizione della E-Mail, per esempio E-Mail di ringraziamento in inglese",
