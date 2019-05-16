@@ -68,7 +68,9 @@
                         <span class="input_field win-type-subtitle" data-win-bind="textContent: generalData.logLevel Binding.Converter.toLogLevelName"></span>
                         <input class="input_field win-range"
                                type="range" min="1" max="6" step="1"
-                               data-win-bind="value: generalData.logLevel Binding.Mode.twoway"
+                               data-win-bind="value: generalData.logLevel"
+                               onchange="AppBar.handleEvent('change', 'changedLogLevel', event)"
+                               oninput="AppBar.handleEvent('change', 'changedLogLevel', event)"
                                />
                     </div>
                     <div class="line-separator"></div>

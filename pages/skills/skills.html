@@ -39,6 +39,7 @@
                                                name="range4"
                                                type="range" min="0" max="28" step="1"
                                                data-win-bind="value: Anzahl"
+                                               oninput="AppBar.handleEvent('change', 'changedAnswerCount', event)"
                                                onchange="AppBar.handleEvent('change', 'changedAnswerCount', event)" />
                                         <span class="range_output" data-win-bind="textContent: Anzahl"></span>
                                     </div>
