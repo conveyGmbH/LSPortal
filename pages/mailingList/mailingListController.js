@@ -6,7 +6,7 @@
 /// <reference path="~/www/lib/convey/scripts/appbar.js" />
 /// <reference path="~/www/lib/convey/scripts/pageController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
-/// <reference path="~/www/pages/infodeskEmpList/infodeskEmpListService.js" />
+/// <reference path="~/www/pages/mailingList/mailingListService.js" />
 
 (function () {
     "use strict";
@@ -157,19 +157,22 @@
                                 // Only one item is selected, show the page
                                 listControl.selection.getItems().done(function (items) {
                                     var item = items[0];
+                                    var curPageId = Application.getPageId(nav.location);
                                     that.binding.selIdx = item.index;
                                     if (item.data && item.data.MaildokumentVIEWID &&
                                         item.data.MaildokumentVIEWID !== that.binding.mailingId) {
                                         // called asynchronously if ok
                                         that.binding.mailingId = item.data.MaildokumentVIEWID;
-                                        var curPageId = Application.getPageId(nav.location);
                                         if (curPageId === "mailing") {
                                             AppBar.scope.binding.saveFlag = true;
                                             if (typeof AppBar.scope.saveData === "function") {
-                                                AppBar.scope.saveData();
-                                            }
+                                                AppBar.scope.saveData(function() {
                                             if (typeof AppBar.scope.loadData === "function") {
                                                 AppBar.scope.loadData(that.binding.mailingId);
+                                            }
+                                                }, function (errorResponse) {
+                                                    //that.selectRecordId(that.binding.contactId);
+                                                });
                                             }
                                         } else {
                                             Application.navigateById("mailing");

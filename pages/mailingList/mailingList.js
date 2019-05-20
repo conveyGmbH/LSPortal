@@ -6,7 +6,7 @@
 /// <reference path="~/www/lib/convey/scripts/logging.js" />
 /// <reference path="~/www/lib/convey/scripts/navigator.js" />
 /// <reference path="~/www/lib/convey/scripts/appbar.js" />
-/// <reference path="~/www/pages/infodeskEmpList/infodeskEmpListController.js" />
+/// <reference path="~/www/pages/mailingList/mailingListController.js" />
 
 (function () {
     "use strict";
@@ -50,7 +50,12 @@
             this.prevWidth = 0;
             this.prevHeight = 0;
 
-            this.controller = new MailingList.Controller(element);
+            // add page specific commands to AppBar
+            var commandList = [
+                { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" }
+            ];
+            var isMaster = Application.navigator && Application.navigator._nextMaster === pageName;
+            this.controller = new MailingList.Controller(element, commandList, isMaster);
             Log.ret(Log.l.trace);
         },
 
