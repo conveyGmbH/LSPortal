@@ -32,7 +32,7 @@
             var firstquestion = pageElement.querySelector("#firstquestioncombo"); 
             var erstefragelabel = pageElement.querySelector("#erstefragelabel");
             var textComment = pageElement.querySelector(".input_text_comment");
-            var initAnrede = pageElement.querySelector("#InitAnrede");
+            var initAnrede = pageElement.querySelector("#InitMailingAnrede");
             var sendbtn = pageElement.querySelector(".sendtestmail-button.win-button");
 
             // select combo

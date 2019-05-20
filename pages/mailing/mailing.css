@@ -8,3 +8,12 @@
 .toggle-switch-parent {
     height: 50px;
 }
+#InitMailingAnrede {
+    margin-top: 10px;
+}
+.Testmail {
+    margin-top: 100px;
+    position: relative;
+    width: 50%;
+    height: 150px;
+}
