@@ -159,11 +159,124 @@
             };
             that.openDb = openDb;
 
+            var saveData = function (complete, error) {
+                var err = null;
+                Log.call(Log.l.trace, "DBInit.Controller.");
+                that.binding.messageText = null;
+                AppData.setErrorMsg(that.binding);
+                AppBar.busy = true;
+                var prevOnlinePath = that.binding.appSettings.odata.onlinePath;
+                that.binding.appSettings.odata.onlinePath = AppData._persistentStatesDefaults.odata.onlinePath;
+                that.binding.appSettings.odata.registerPath = AppData._persistentStatesDefaults.odata.registerPath;
+                var ret = DBInit.loginRequest.insert(function (json) {
+                    // this callback will be called asynchronously
+                    // when the response is available
+                    Log.call(Log.l.trace, "loginRequest: success!");
+                    // loginData returns object already parsed from json file in response
+                    if (json && json.d && json.d.ODataLocation) {
+                        if (json.d.InactiveFlag) {
+                            AppBar.busy = false;
+                            err = { status: 503, statusText: getResourceText("account.inactive") };
+                            AppData.setErrorMsg(that.binding, err);
+                            error(err);
+                        } else {
+                            var location = json.d.ODataLocation;
+                            if (location !== AppData._persistentStatesDefaults.odata.onlinePath) {
+                                that.binding.appSettings.odata.onlinePath = location + that.binding.appSettings.odata.onlinePath;
+                                that.binding.appSettings.odata.registerPath = location + that.binding.appSettings.odata.registerPath;
+                            }
+                            Application.pageframe.savePersistentStates();
+                        }
+                    } else {
+                        AppBar.busy = false;
+                        err = { status: 404, statusText: getResourceText("login.unknown") };
+                        AppData.setErrorMsg(that.binding, err);
+                        error(err);
+                    }
+                    return WinJS.Promise.as();
+                }, function (errorResponse) {
+                    // called asynchronously if an error occurs
+                    // or server returns response with an error status.
+                    Log.print(Log.l.info, "loginRequest error: " + AppData.getErrorMsgFromResponse(errorResponse) + " ignored for compatibility!");
+                    // ignore this error here for compatibility!
+                    return WinJS.Promise.as();
+                }, {
+                    LoginName: that.binding.appSettings.odata.login
+                }).then(function () {
+                    if (!err && prevOnlinePath !== that.binding.appSettings.odata.onlinePath) {
+                        var dataLogin = {
+                            Login: that.binding.dataLogin.Login,
+                            Password: that.binding.dataLogin.Password,
+                            LanguageID: AppData.getLanguageId(),
+                            Aktion: "Portal"
+                        };
+                        return DBInit.loginView.insert(function (json) {
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            Log.call(Log.l.trace, "loginData: success!");
+                            // loginData returns object already parsed from json file in response
+                            if (json && json.d) {
+                                dataLogin = json.d;
+                                if (dataLogin.OK_Flag === "X" && dataLogin.MitarbeiterID) {
+                                    AppData._persistentStates.odata.login = that.binding.dataLogin.Login;
+                                    AppData._persistentStates.odata.password = that.binding.dataLogin.Password;
+                                    AppData.setRecordId("Mitarbeiter", dataLogin.MitarbeiterID);
+                                    NavigationBar.enablePage("settings");
+                                    NavigationBar.enablePage("info");
+                                    Application.pageframe.savePersistentStates();
+                                    AppBar.busy = false;
+                                    AppData._curGetUserDataId = 0;
+                                    AppData.getUserData();
+                                    AppData.getMessagesData();
+                                    complete(json);
+                                    return WinJS.Promise.as();
+                                } else {
+                                    AppBar.busy = false;
+                                    that.binding.messageText = dataLogin.MessageText;
+                                    err = { status: 401, statusText: dataLogin.MessageText };
+                                    AppData.setErrorMsg(that.binding, err);
+                                    error(err);
+                                    return WinJS.Promise.as();
+                                }
+                            } else {
+                                AppBar.busy = false;
+                                err = { status: 404, statusText: "no data found" };
+                                AppData.setErrorMsg(that.binding, err);
+                                error(err);
+                                return WinJS.Promise.as();
+                            }
+                        }, function (errorResponse) {
+                            AppBar.busy = false;
+                            err = errorResponse;
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                            error(errorResponse);
+                            return WinJS.Promise.as();
+                        }, dataLogin);
+                    } else {
+                        return WinJS.Promise.as();
+                    }
+                });
+                Log.ret(Log.l.trace);
+                return ret;
+            };
+            this.saveData = saveData;
+
+            
             that.processAll().then(function () {
                 AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 // now open the DB
-                that.openDb();
+                return that.saveData(function (response) {
+                    // called asynchronously if ok
+                    Log.print(Log.l.trace, "saveData returned success!");
+                }, function (errorResponse) {
+                    Log.print(Log.l.error, "saveData returned error!");
+                });
+            }).then(function () {
+                Log.print(Log.l.trace, "Now calling openDb()");
+                return that.openDb();
             });
             Log.ret(Log.l.trace);
         })
