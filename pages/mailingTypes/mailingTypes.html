@@ -86,6 +86,11 @@
                                 </select>
                             </div>
                             <div class="line-separator"></div>
+                            <div class="field_line field_line_odd">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingTypes.sendStartTime'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'mailingTypes.sendStartTime'}"></span>
+                                <input class="input_field win-textbox" type="text" data-win-bind="value: dataMailingTypeData.SendStartTime Binding.Mode.twoway" data-win-res="{placeholder: 'mailingTypes.sendStartTimeplaceholder'}" />
+                            </div>
                             <!--<div class="field_line field_line_odd">
                                 <!--<span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingTypes.sendLater'}"></span>
                                 <span class="label landscape_only" data-win-res="{textContent: 'mailingTypes.sendLater'}"></span>
@@ -106,9 +111,10 @@
                                 <span class="label landscape_only" data-win-res="{textContent: 'mailingTypes.sendStartTime'}"></span>
                                 <div class="input_group">
                                     <div data-win-control="WinJS.UI.TimePicker" id="mailingTypeStartTime" class="input_big_left"
+                                          data-win-options="{clock : '24HourClock'}"
                                          data-win-bind="winControl.current: dataMailingTypeData.SendStartTime Binding.Mode.twoway">
                             </div>
-                                    <!--<label class="input_big_right">
+                                     <label class="input_big_right">
                                         <input type="checkbox" class="win-checkbox" value="1"
                                                data-win-bind="checked: restriction.useMailingTypeStartTime"
                                                onchange="AppBar.handleEvent('change', 'clickErfassungsdatum', event)" />
@@ -116,26 +122,14 @@
                                     </label>
                                 </div>
                             </div>-->
-                            <div class="line-separator"></div>
                             <div class="field_line field_line_even">
-                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingTypes.enabled'}"></span>
-                                <span class="label landscape_only" data-win-res="{textContent: 'mailingTypes.enabled'}"></span>
-                                <div class="input_field toggle-switch-parent">
-                                    <div id="MailEnabled" class="input_field"
-                                         data-win-control="WinJS.UI.ToggleSwitch"
-                                         data-win-bind="winControl.checked: dataMailingTypeData.Enabled; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                         onclick="AppBar.handleEvent('click', 'changedMailTypeEnabledDisabled', event)">
-                                    </div>
-                                </div>
-                            </div>
-                            <!--<div class="field_line field_line_even">
-                                <label class="checkbox input_field">
+                                <label class="input_field_noLabel">
                                     <input type="checkbox" class="win-checkbox checkbox" value="1"
                                            data-win-bind="checked: dataMailingTypeData.Enabled Binding.Mode.twoway"
-                                           onchange="AppBar.handleEvent('change', 'changedMailTypeEnabledDisabled', event)"/>
-                                    <span class="checkbox" data-win-res="{textContent: 'mailingTypes.enabled'}"></span>
+                                           onclick="AppBar.handleEvent('click', 'changedMailTypeEnabledDisabled', event)" />
+                                    <span data-win-res="{textContent: 'mailingTypes.enabled'}"></span>
                                 </label>
-                            </div>-->
+                            </div>
                         </div>
                     </div>
                         <div class="error-message"

@@ -32,6 +32,15 @@
             var sendDayHook = pageElement.querySelector("#SendDayHook");
             var mailTypes = pageElement.querySelector("#MailTypes");
 
+            var showDateRestrictions = function () {
+                return WinJS.Promise.as().then(function () {
+                    if (typeof that.binding.dataMailingTypeData.useSendStartTime == "undefined") {
+                        that.binding.dataMailingTypeData.useSendStartTime = false;
+                    }
+                });
+            }
+            this.showDateRestrictions = showDateRestrictions;
+
             this.dispose = function () {
                 if (sendDayHook && sendDayHook.winControl) {
                     sendDayHook.winControl.data = null;
@@ -52,11 +61,32 @@
                         sendDayHook.value = newDataMailingTypeData.SendDayHook;
                     }
                 }
-               // if (toggle && toggle.winControl) {
                     if (that.binding.dataMailingTypeData.Enabled === "f")
                         that.binding.dataMailingTypeData.Enabled = null;
               
-                that.binding.dataMailingTypeData.SendStartTime = getDateObject(newDataMailingTypeData.SendStartTime);
+                if (that.binding.dataMailingTypeData.SendStartTime) {
+                    that.binding.dataMailingTypeData.useSendStartTime = true;
+                    var dateString = that.binding.dataMailingTypeData.SendStartTime.replace("\/Date(", "").replace(")\/", "");
+                    var milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
+
+                    // milliseconds to hour, minute
+                    var hour = Math.floor(milliseconds / 3600000);
+                    if (hour < 10) {
+                        hour = "0" + hour;
+                    }
+                    milliseconds = milliseconds - hour * 3600000;
+                    var minutes = Math.floor(milliseconds / 60000);
+                    if (minutes < 10) {
+                        minutes = "0" + minutes;
+                    }
+                    var rest = milliseconds - minutes * 60000;
+
+                    if (rest === 0) {
+                        that.binding.dataMailingTypeData.SendStartTime = hour + ":" + minutes;
+                    }
+                } else {
+                    that.binding.dataMailingTypeData.useSendStartTime = false;
+                }
                 AppBar.modified = false;
                 AppBar.notifyModified = prevNotifyModified;
                 AppBar.triggerDisableHandlers();
@@ -195,9 +225,9 @@
                 clickOk: function (event) {
                     Log.call(Log.l.trace, "MailingTypes.Controller.");
                     that.saveData(function (response) {
-                        Log.print(Log.l.trace, "employee saved");
+                        Log.print(Log.l.trace, "MailingType saved");
                     }, function (errorResponse) {
-                        Log.print(Log.l.error, "error saving employee");
+                        Log.print(Log.l.error, "error saving MailingType");
                     });
                     Log.ret(Log.l.trace);
                 },
@@ -241,9 +271,13 @@
                 changedMailTypeEnabledDisabled: function(event) {
                     Log.call(Log.l.trace, "MailingTypes.Controller.");
                     AppBar.modified = true;
-                    var toggle = event.currentTarget.winControl;
-                    that.binding.dataMailingTypeData.Enabled = toggle.checked;
-                    AppData.call("PRC_Check_All_Mailingdata",
+                    var toggle = event.currentTarget;
+                    if (toggle.checked) {
+                        that.binding.dataMailingTypeData.Enabled = "1";
+                    } else {
+                        that.binding.dataMailingTypeData.Enabled = null;
+                    }
+                    AppData.call("PRC_Check_All_MailingdataRT",
                         {
                              pVeranstaltungTerminID: AppData.getRecordId("VeranstaltungTermin")
                         },
@@ -254,6 +288,13 @@
                             Log.print(Log.l.error, "call error");
                         });
                     Log.ret(Log.l.trace);
+                },
+                clickSendStartTime: function (event) {
+                    if (event.currentTarget) {
+                        that.binding.dataMailingTypeData.useSendStartTime = event.currentTarget.checked;
+                    }
+                    AppBar.modified = true;
+                    that.showDateRestrictions();
                 }
             };
 
@@ -344,7 +385,7 @@
                         Log.print(Log.l.trace, "calling select MailTypeVIEW_20570...");
                         return MailingTypes.cr_Event_MailTypeVIEW_20570.select(function(json) {
                                 AppData.setErrorMsg(that.binding);
-                                Log.print(Log.l.trace, "MMailTypeVIEW_20570: success!");
+                            Log.print(Log.l.trace, "MailTypeVIEW_20570: success!");
                                 if (json && json.d && json.d.results.length > 0) {
                                     // now always edit!
                                     var recordId = json.d.results[0].MailTypeID;
@@ -376,19 +417,7 @@
                         that.setDataMailingTypeData(getEmptyDefaultValue(MailingTypes.cr_Event_MailTypeView.defaultValue));
                         return WinJS.Promise.as();
                     }
-                }) /*.then(function () {
-                    var empRolesFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("empRoles"));
-                    if (empRolesFragmentControl && empRolesFragmentControl.controller) {
-                        return empRolesFragmentControl.controller.loadData(recordId);
-                    } else {
-                        var parentElement = pageElement.querySelector("#emproleshost");
-                        if (parentElement) {
-                            return Application.loadFragmentById(parentElement, "empRoles", { employeeId: recordId });
-                        } else {
-                            return WinJS.Promise.as();
-                        }
-                    }
-                })*/.then(function() {
+                }).then(function () {
                     AppBar.notifyModified = true;
                     return WinJS.Promise.as();
                 });
@@ -403,7 +432,24 @@
                 AppData.setErrorMsg(that.binding);
                 var ret;
                 var mailingTypeData = that.binding.dataMailingTypeData;
-                mailingTypeData.SendStartTime = getDateData(mailingTypeData.SendStartTime);
+                if (mailingTypeData.SendStartTime !== null && mailingTypeData.SendStartTime.trim() === "") {
+                    mailingTypeData.SendStartTime = null;
+                }
+                var matchValidTime;
+                if (mailingTypeData.SendStartTime) {
+                    matchValidTime = (mailingTypeData.SendStartTime).match(/^(0?[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/); //^([0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$
+                }
+                var milliseconds = 0;
+                if (mailingTypeData.SendStartTime && matchValidTime) {
+                    var hourMinute = mailingTypeData.SendStartTime.split(":");
+                    milliseconds = hourMinute[0] * 3600000 + hourMinute[1] * 60000;
+                    that.binding.dataMailingTypeData.SendStartTime = "/Date(" + milliseconds + ")/";
+                } else if (mailingTypeData.SendStartTime !== null) {
+                    Log.print(Log.l.error, "invalid time");
+                    alert(getResourceText("error.invalidTime"));
+                    return WinJS.Promise.as();
+                }
+
                 if (mailingTypeData && AppBar.modified && !AppBar.busy) {
                         var recordId = getRecordId();
                         if (recordId) {
@@ -412,7 +458,24 @@
                                 AppBar.busy = false;
                                 // called asynchronously if ok
                                 Log.print(Log.l.info, "mailTypesData update: success!");
-                                that.binding.dataMailingTypeData.SendStartTime = getDateObject(mailingTypeData.SendStartTime);
+                            // milliseconds to hour, minute
+                            if (mailingTypeData.SendStartTime) {
+                                var hour = Math.floor(milliseconds / 3600000);
+                                if (hour < 10) {
+                                    hour = "0" + hour;
+                                }
+                                milliseconds = milliseconds - hour * 3600000;
+                                var minutes = Math.floor(milliseconds / 60000);
+                                if (minutes < 10) {
+                                    minutes = "0" + minutes;
+                                }
+                                var rest = milliseconds - minutes * 60000;
+
+                                if (rest === 0) {
+                                    that.binding.dataMailingTypeData.SendStartTime = hour + ":" + minutes;
+                                }
+                            }
+
                                 AppBar.modified = false;
                                 complete(response);
                             }, function (errorResponse) {
@@ -426,12 +489,45 @@
                             Log.print(Log.l.info, "not supported");
                             ret = WinJS.Promise.as();
                         }
-                   
                 } else if (AppBar.busy) {
+                    if (mailingTypeData.SendStartTime) {
+                        var hour = Math.floor(milliseconds / 3600000);
+                        if (hour < 10) {
+                            hour = "0" + hour;
+                        }
+                        milliseconds = milliseconds - hour * 3600000;
+                        var minutes = Math.floor(milliseconds / 60000);
+                        if (minutes < 10) {
+                            minutes = "0" + minutes;
+                        }
+                        var rest = milliseconds - minutes * 60000;
+
+                        if (rest === 0) {
+                            that.binding.dataMailingTypeData.SendStartTime = hour + ":" + minutes;
+                        }
+                    }
+                   
                     ret = WinJS.Promise.timeout(100).then(function () {
                         return that.saveData(complete, error);
                     });
                 } else {
+                    if (mailingTypeData.SendStartTime) {
+                        var hour = Math.floor(milliseconds / 3600000);
+                        if (hour < 10) {
+                            hour = "0" + hour;
+                        }
+                        milliseconds = milliseconds - hour * 3600000;
+                        var minutes = Math.floor(milliseconds / 60000);
+                        if (minutes < 10) {
+                            minutes = "0" + minutes;
+                        }
+                        var rest = milliseconds - minutes * 60000;
+
+                        if (rest === 0) {
+                            that.binding.dataMailingTypeData.SendStartTime = hour + ":" + minutes;
+                        }
+                    }
+
                     ret = new WinJS.Promise.as().then(function () {
                         if (typeof complete === "function") {
                             complete(mailingTypeData);
@@ -449,10 +545,11 @@
                 if (AppData.getRecordId("MailType")) {
                     recordId = AppData.getRecordId("MailType");
                 }
-                return that.loadData(AppData.getRecordId("VeranstaltungTermin"), recordId);  //MailingTypes
+                that.loadData(AppData.getRecordId("VeranstaltungTermin"), recordId);  //MailingTypes
             }).then(function () {
                 AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Data loaded");
+                return that.showDateRestrictions();
             });
             Log.ret(Log.l.trace);
         })

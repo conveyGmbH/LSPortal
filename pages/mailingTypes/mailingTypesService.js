@@ -76,6 +76,7 @@
                 SendDayHook: "",
                 SendLater: "",
                 SendStartTime: "",
+                useSendStartTime: false,
                 OncePerType: "",
                 CCAddr: "",
                 BCCAddr: "",
