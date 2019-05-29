@@ -142,7 +142,9 @@
                 } else {
                     item.CS1504SerienNr = that.cutSerialnumer(item.CS1504SerienNr);
                 }
-                
+                if (item.Gesperrt === 1) {
+                    item.disabled = true;
+                }
             }
             this.resultConverter = resultConverter;
 
@@ -159,7 +161,7 @@
                                 listControl.selection.getItems().done(function (items) {
                                     var item = items[0];
                                     if (item.data && item.data.MitarbeiterVIEWID &&
-                                        item.data.MitarbeiterVIEWID !== that.binding.employeeId) {
+    item.data.MitarbeiterVIEWID !== that.binding.employeeId && item.data.Gesperrt !== 1) {
                                         if (AppBar.scope &&
                                             typeof AppBar.scope.saveData === "function") {
                                             AppBar.scope.saveData(function (response) {
@@ -192,6 +194,7 @@
                     Log.ret(Log.l.trace);
                 },
                 onLoadingStateChanged: function (eventInfo) {
+                    var i;
                     Log.call(Log.l.trace, "EmpList.Controller.");
                     if (listView && listView.winControl) {
                         Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
@@ -217,6 +220,28 @@
                                 layout = Application.EmpListLayout.EmployeesLayout;
                                 listView.winControl.layout = { type: layout };
                             }
+                        } else if (listView.winControl.loadingState === "itemsLoaded") {
+                            if (that.employees && that.employees.length > 0) {
+                                var indexOfFirstVisible = listView.winControl.indexOfFirstVisible;
+                                var indexOfLastVisible = listView.winControl.indexOfLastVisible;
+                                for (i = indexOfFirstVisible; i <= indexOfLastVisible; i++) {
+                                    var element = listView.winControl.elementFromIndex(i);
+                                    if (element) {
+                                        if (element.firstElementChild) {
+                                            if (element.firstElementChild.disabled) {
+                                                if (!WinJS.Utilities.hasClass(element, "win-nonselectable")) {
+                                                    WinJS.Utilities.addClass(element, "win-nonselectable");
+                                                    element.style.backgroundColor = "grey";
+                                                }
+                                            } else {
+                                                if (WinJS.Utilities.hasClass(element, "win-nonselectable")) {
+                                                    WinJS.Utilities.removeClass(element, "win-nonselectable");
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         } else if (listView.winControl.loadingState === "complete") {
                             // load SVG images
                             Colors.loadSVGImageElements(listView, "action-image", 40, Colors.textColor);
@@ -232,7 +257,7 @@
                                 }
                                 that.loading = false;
                             }
-                            var i;
+                            /*var i;
                             if (that.employees) {
                                 for (i = 0; i < that.employees.length; i++) {
                                     var employee = that.employees.getAt(i);
@@ -249,7 +274,7 @@
                                         itemElement.style.backgroundColor = "grey";
                                     }
                                 }
-                            }
+                            }*/
                         }
                     }
                     Log.ret(Log.l.trace);

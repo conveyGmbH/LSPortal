@@ -543,7 +543,7 @@
                                                     AppHeader.controller.binding.userData.VeranstaltungName = "";
                                                 }
                                             }
-                                        Application.navigateById("login", event);
+                                            Application.navigateById("dbinit", event);
                                     });
                                 }
                             });
