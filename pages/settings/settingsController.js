@@ -282,7 +282,22 @@
                     }
                     Log.ret(Log.l.trace);
                 },
-                ChangeColorPicker: function (event) {
+                changedInputBorderRadius: function (event) {
+                    Log.call(Log.l.trace, "Settings.Controller.");
+                    if (event.currentTarget && AppBar.notifyModified &&
+                        that.binding && that.binding.generalData) {
+                        var range = event.currentTarget;
+                        if (range) {
+                            that.binding.generalData.inputBorderRadius = range.value;
+                            Log.print(Log.l.trace, "inputBorderRadius=" + range.value);
+                            WinJS.Promise.timeout(0).then(function () {
+                                Colors.inputBorderRadius = that.binding.generalData.inputBorderRadius;
+                            });
+                        }
+                    }
+                    Log.ret(Log.l.trace);
+                },
+                                ChangeColorPicker: function (event) {
                     Log.call(Log.l.trace, "Settings.Controller.");
                     if (event.currentTarget) {
                         var colorProperty = event.currentTarget.id;
