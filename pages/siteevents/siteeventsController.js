@@ -18,6 +18,7 @@
             Application.Controller.apply(this, [pageElement, {
                 restriction: getEmptyDefaultValue(SiteEvents.defaultRestriction),
                 dataEvents: getEmptyDefaultValue(SiteEvents.VeranstaltungView.defaultValue),
+                siteeventsdataCombobox: null,
                 siteeventsdata: null,
                 count: 0,
                 veranstaltungId: 0,
@@ -146,7 +147,7 @@
                     suggestionCollection = eventObject.detail.searchSuggestionCollection;
                 if (queryText.length > 0) {
                     for (var i = 0, len = that.suggestionListAus.length; i < len; i++) {
-                        if (that.suggestionListAus[i].substr(0, query.length).toLowerCase() === query) {
+                        if (that.suggestionListAus[i].toLowerCase().indexOf(query)) {
                             suggestionCollection.appendQuerySuggestion(that.suggestionListAus[i]);
                         }
                     }
@@ -281,15 +282,16 @@
                     }
                     Log.ret(Log.l.trace);
                 },
-                onSuggestionsRequested: function (eventInfo) {
+                onquerychanged: function (eventInfo) {
                     Log.call(Log.l.trace, "SiteEvents.Controller.");
-                    var queryText = eventInfo && eventInfo.detail && eventInfo.detail.queryText;
+                    /*var queryText = eventInfo && eventInfo.detail && eventInfo.detail.queryText;
                     Log.print(Log.l.trace, queryText);
                     function filterEvents(item) {
-                        var srtrLower = this.queryText.toLowerCase();
+                        var srtrLower = queryText.toLowerCase();
+                        var re = new RegExp(srtrLower, "g");
                         if (srtrLower.length > 0 &&
-                        (item.FirmenName &&
-                            item.FirmenName.toLowerCase().substr(0, srtrLower.length) === srtrLower)) {
+                        (item.Firmenname &&
+                            item.Firmenname.toLowerCase().match(re))) {
                             return true;
                         } else {
                             return false;
@@ -298,7 +300,18 @@
                     if (that.siteeventsdata) {
                         var hits = that.siteeventsdata.filter(filterEvents, { queryText: queryText });
                         for (var i = 0; i < hits.length; i++) {
-                            eventInfo.detail.searchSuggestionCollection.appendQuerySuggestion(hits[i].FirmenName);
+                            eventInfo.detail.searchSuggestionCollection.appendQuerySuggestion(hits[i].Firmenname);
+                        }
+                    }*/
+                    var queryText = eventInfo.detail.queryText, query = queryText.toLowerCase(), suggestionCollection = eventInfo.detail.searchSuggestionCollection;
+                    if (queryText.length > 0 && that.siteeventsdata && that.siteeventsdata.length > 0) {
+                        for (var i = 0, len = that.siteeventsdata.length; i < len; i++) {
+                            if (that.siteeventsdata.getAt(i).Firmenname.toLowerCase().indexOf(query) >= 0
+                                || that.siteeventsdata.getAt(i).StandHall.toLowerCase().indexOf(query) >= 0
+                                || that.siteeventsdata.getAt(i).StandNo.toLowerCase().indexOf(query) >= 0
+                                || that.siteeventsdata.getAt(i).FairMandant_Email.toLowerCase().indexOf(query) >= 0) {
+                                suggestionCollection.appendQuerySuggestion(that.siteeventsdata.getAt(i).Firmenname);
+                            }
                         }
                     }
                     Log.ret(Log.l.trace);
@@ -340,7 +353,7 @@
                 },
                 changeSearchField: function (event) {
                     Log.call(Log.l.trace, "Event.Controller.");
-                    that.binding.restriction.Firmenname = [];
+                   /* that.binding.restriction.Firmenname = [];
                     if (event.target.value) {
                         that.binding.restriction.Firmenname = event.target.value;
                         that.binding.restriction.VeranstaltungTerminID = that.vidID;
@@ -353,7 +366,7 @@
                     AppData.setRestriction("Veranstaltung", that.binding.restriction);
                     that.loadData();
                     that.binding.restriction.Firmenname = "";
-                    /*var master = Application.navigator.masterControl;
+                    var master = Application.navigator.masterControl;
                     if (master && master.controller && master.controller.binding) {
                         if (prevMasterLoadPromise &&
                             typeof prevMasterLoadPromise.cancel === "function") {
@@ -367,6 +380,23 @@
                             }
                         });
                     }*/
+                    Log.ret(Log.l.trace);
+                },
+                onquerysubmitted: function (eventInfo) {
+                    Log.call(Log.l.trace, "Event.Controller.");
+                    that.binding.restriction.Firmenname = "";
+                    if (eventInfo.detail.queryText) {
+                        that.binding.restriction.Firmenname = eventInfo.detail.queryText;
+                        that.binding.restriction.VeranstaltungTerminID = that.vidID;
+                        that.binding.restriction.bUseOr = false;
+                        that.binding.restriction.bAndInEachRow = true;
+                    } else {
+                        that.binding.restriction.Firmenname = eventInfo.detail.queryText;
+                        delete that.binding.restriction.bUseOr;
+                    }
+                    AppData.setRestriction("Veranstaltung", that.binding.restriction);
+                    that.loadData();
+                    that.binding.restriction.Firmenname = "";
                     Log.ret(Log.l.trace);
                 },
                 onLoadingStateChanged: function (eventInfo) {
@@ -587,7 +617,8 @@
                 this.addRemovableEventListener(listView, "selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
             }
             if (suggestionBox) {
-                //this.addRemovableEventListener(suggestionBox, "suggestionsrequested", this.eventHandlers.onSuggestionsRequested.bind(this));
+                this.addRemovableEventListener(suggestionBox, "suggestionsrequested", this.eventHandlers.onquerychanged.bind(this));
+                this.addRemovableEventListener(suggestionBox, "querysubmitted", this.eventHandlers.onquerysubmitted.bind(this));
             }
 
             var resultConverter = function (item, index) {
@@ -629,7 +660,9 @@
                     counter.style.display = "none";
                 }
                 AppData.setErrorMsg(that.binding);
-                var ret = new WinJS.Promise.as().then(function () {
+                var ret = null;
+                if (that.binding.restriction.VeranstaltungTerminID) {
+                    ret = new WinJS.Promise.as().then(function () {
                     return SiteEvents.VeranstaltungView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
@@ -646,7 +679,6 @@
                             
                             that.vidID2 = vid;
                             that.siteeventsdata = new WinJS.Binding.List(results);
-
                             if (listView.winControl) {
                                 // add ListView dataSource
                                 listView.winControl.itemDataSource = that.siteeventsdata.dataSource;
@@ -691,12 +723,18 @@
                     }, that.binding.restriction
                     );
                 });
+                } else {
+                    ret = new WinJS.Promise.as();
+                }
                 Log.ret(Log.l.trace);
                 return ret;
             };
             this.loadData = loadData;
 
             that.processAll().then(function () {
+                Log.print(Log.l.trace, "Binding wireup page complete");
+                return that.loadData(AppData.getRecordId("VeranstaltungTermin"));
+            }).then(function () {
                 AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Binding wireup page complete");
             });
