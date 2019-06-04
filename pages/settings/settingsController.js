@@ -280,6 +280,20 @@
                     }
                     Log.ret(Log.l.trace);
                 },
+                ChangeIconStrokeWidth: function (event) {
+                    Log.call(Log.l.trace, "Settings.Controller.");
+                    if (event.currentTarget && AppBar.notifyModified &&
+                        that.binding && that.binding.generalData) {
+                        that.binding.generalData.iconStrokeWidth = event.currentTarget.value;
+                        Log.print(Log.l.trace, "iconStrokeWidth=" + event.currentTarget.value);
+                        WinJS.Promise.timeout(0).then(function () {
+                            AppBar.loadIcons();
+                            NavigationBar.groups = Application.navigationBarGroups;
+                            Application.pageframe.savePersistentStates();
+                        });
+                    }
+                    Log.ret(Log.l.trace);
+                },
                 changedInputBorder: function (event) {
                     Log.call(Log.l.trace, "Settings.Controller.");
                     if (event.currentTarget && AppBar.notifyModified &&
@@ -310,7 +324,7 @@
                     }
                     Log.ret(Log.l.trace);
                 },
-                                ChangeColorPicker: function (event) {
+                ChangeColorPicker: function (event) {
                     Log.call(Log.l.trace, "Settings.Controller.");
                     if (event.currentTarget) {
                         var colorProperty = event.currentTarget.id;

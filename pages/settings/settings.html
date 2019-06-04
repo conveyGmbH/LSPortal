@@ -54,7 +54,9 @@
                             <div class="label landscape_only"><span data-win-res="{textContent: 'settings.accentcolor'}"></span></div>
                             <div class="input_group">
                                 <div id="accentColor_picker" class="input_small_right color-picker-parent"></div>
-                                <input id="accentColor" class="input_small_left win-textbox" type="text" data-win-bind="value: generalData.colorSettings.accentColor" onchange="AppBar.handleEvent('change', 'ChangeColorPicker', event)" />
+                                <input id="accentColor" class="input_small_left win-textbox" type="text" 
+                                       data-win-bind="value: generalData.colorSettings.accentColor" 
+                                       onchange="AppBar.handleEvent('change', 'ChangeColorPicker', event)" />
                             </div>
                         </div>
                         <div class="line-separator"
@@ -66,7 +68,9 @@
                             <div class="label landscape_only"><span data-win-res="{textContent: 'settings.backgroundcol'}"></span></div>
                             <div class="input_group">
                                 <div id="backgroundColor_picker" class="input_small_right color-picker-parent"></div>
-                                <input id="backgroundColor" class="input_small_left win-textbox" type="text" data-win-bind="value: generalData.colorSettings.backgroundColor" onchange="AppBar.handleEvent('change', 'ChangeColorPicker', event)" />
+                                <input id="backgroundColor" class="input_small_left win-textbox" type="text" 
+                                       data-win-bind="value: generalData.colorSettings.backgroundColor" 
+                                       onchange="AppBar.handleEvent('change', 'ChangeColorPicker', event)" />
                             </div>
                         </div>
                         <div class="field_line field_line_even"
@@ -90,7 +94,9 @@
                             <div class="label landscape_only"><span data-win-res="{textContent: 'settings.navigationcol'}"></span></div>
                             <div class="input_group">
                                 <div id="navigationColor_picker" class="input_small_right color-picker-parent"></div>
-                                <input id="navigationColor" class="input_small_left win-textbox" type="text" data-win-bind="value: generalData.colorSettings.navigationColor" onchange="AppBar.handleEvent('change', 'ChangeColorPicker', event)" />
+                                <input id="navigationColor" class="input_small_left win-textbox" type="text" 
+                                       data-win-bind="value: generalData.colorSettings.navigationColor" 
+                                       onchange="AppBar.handleEvent('change', 'ChangeColorPicker', event)" />
                             </div>
                         </div>
                         <div class="line-separator"
@@ -102,7 +108,9 @@
                             <div class="label landscape_only"><span data-win-res="{textContent: 'settings.textcolor'}"></span></div>
                             <div class="input_group">
                                 <div id="textColor_picker" class="input_small_right color-picker-parent"></div>
-                                <input id="textColor" class="input_small_left win-textbox" type="text" data-win-bind="value: generalData.colorSettings.textColor" onchange="AppBar.handleEvent('change', 'ChangeColorPicker', event)" />
+                                <input id="textColor" class="input_small_left win-textbox" type="text" 
+                                       data-win-bind="value: generalData.colorSettings.textColor" 
+                                       onchange="AppBar.handleEvent('change', 'ChangeColorPicker', event)" />
                             </div>
                         </div>
                         <div class="field_line field_line_even"
@@ -112,7 +120,9 @@
                             <div class="label landscape_only"><span data-win-res="{textContent: 'settings.labelcolor'}"></span></div>
                             <div class="input_group">
                                 <div id="labelColor_picker" class="input_small_right color-picker-parent"></div>
-                                <input id="labelColor" class="input_small_left win-textbox" type="text" data-win-bind="value: generalData.colorSettings.labelColor" onchange="AppBar.handleEvent('change', 'ChangeColorPicker', event)" />
+                                <input id="labelColor" class="input_small_left win-textbox" type="text" 
+                                       data-win-bind="value: generalData.colorSettings.labelColor" #
+                                       onchange="AppBar.handleEvent('change', 'ChangeColorPicker', event)" />
                             </div>
                         </div>
                         <div class="line-separator"
@@ -124,7 +134,9 @@
                             <div class="label landscape_only"><span data-win-res="{textContent: 'settings.tiletextcolor'}"></span></div>
                             <div class="input_group">
                                 <div id="tileTextColor_picker" class="input_small_right color-picker-parent"></div>
-                                <input id="tileTextColor" class="input_small_left win-textbox" type="text" data-win-bind="value: generalData.colorSettings.tileTextColor" onchange="AppBar.handleEvent('change', 'ChangeColorPicker', event)" />
+                                <input id="tileTextColor" class="input_small_left win-textbox" type="text" 
+                                       data-win-bind="value: generalData.colorSettings.tileTextColor" 
+                                       onchange="AppBar.handleEvent('change', 'ChangeColorPicker', event)" />
                             </div>
                         </div>
                         <div class="field_line field_line_even"
@@ -134,7 +146,9 @@
                             <div class="label landscape_only"><span data-win-res="{textContent: 'settings.tilebkgcolor'}"></span></div>
                             <div class="input_group">
                                 <div id="tileBackgroundColor_picker" class="input_small_right color-picker-parent"></div>
-                                <input id="tileBackgroundColor" class="input_small_left win-textbox" type="text" data-win-bind="value: generalData.colorSettings.tileBackgroundColor" onchange="AppBar.handleEvent('change', 'ChangeColorPicker', event)" />
+                                <input id="tileBackgroundColor" class="input_small_left win-textbox" type="text" 
+                                       data-win-bind="value: generalData.colorSettings.tileBackgroundColor" 
+                                       onchange="AppBar.handleEvent('change', 'ChangeColorPicker', event)" />
                             </div>
                         </div>
                         <div class="line-separator"
@@ -182,7 +196,9 @@
                             <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'settings.iconStrokeWidth'}"></span>
                             <div class="label landscape_only"><span data-win-res="{textContent: 'settings.iconStrokeWidth'}"></span></div>
                             <div class="input_group">
-                                <input class="input_small_left win-textbox" type="text" data-win-bind="value: generalData.iconStrokeWidth Binding.Mode.twoway" />
+                                <input id="iconStrokeWidth" class="input_small_left win-textbox" type="text" 
+                                       data-win-bind="value: generalData.iconStrokeWidth"
+                                       onchange="AppBar.handleEvent('change', 'ChangeIconStrokeWidth', event)" />
                             </div>
                         </div>
                     </div>
