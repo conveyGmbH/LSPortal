@@ -267,6 +267,19 @@
                     }
                     Log.ret(Log.l.trace);
                 },
+                clickInputBorderBottom: function (event) {
+                    Log.call(Log.l.trace, "Settings.Controller.");
+                    if (event.currentTarget && AppBar.notifyModified &&
+                        that.binding && that.binding.generalData) {
+                        var toggle = event.currentTarget.winControl;
+                        if (toggle) {
+                            that.binding.generalData.inputBorderBottom = toggle.checked;
+                            Log.print(Log.l.trace, "inputBorderBottom=" + toggle.checked);
+                            Colors.updateColors();
+                        }
+                    }
+                    Log.ret(Log.l.trace);
+                },
                 changedInputBorder: function (event) {
                     Log.call(Log.l.trace, "Settings.Controller.");
                     if (event.currentTarget && AppBar.notifyModified &&

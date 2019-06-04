@@ -41,18 +41,18 @@
                                 <div class="half-circle half-circle-navigationcolor">&nbsp;</div>
                                 <div class="content-header-line win-type-caption">
                                     <span class="id-field"></span>
-                                    <span class="caption-field text-lightcolor"
+                                    <span class="caption-field window-text-color"
                                           data-win-res="{textContent: 'start.list'}"></span>
                                     <span class="date-field"></span>
                                 </div>
                             </div>
                             <div class="tile-content-inner">
                                 <div class="field_line field_line_odd">
-                                    <div id="visitorsEditedChart" class="start-pie-chart text-textcolor">
+                                    <div id="visitorsEditedChart" class="start-pie-chart text-lightcolor">
                                     </div>
                                 </div>
                                 <div class="field_line field_line_even">
-                                    <div id="visitorsPerDayChart" class="start-bar-chart">
+                                    <div id="visitorsPerDayChart" class="start-bar-chart text-textcolor">
                                     </div>
                                 </div>
                             </div>
@@ -73,8 +73,10 @@
                                     <span class="date-field"></span>
                                 </div>
                             </div>
-                            <div class="field_line field_line_full no-border">
-                                <div class="win-type-body text-lightcolorU" data-win-bind="innerHTML: noLicence; style.display: dataLicence.UserAnzahl Binding.Converter.toDisplay">
+                            <div class="field_line field_line_full no-border"
+                                 data-win-bind="style.display: dataLicence.UserAnzahl Binding.Converter.toDisplay">
+                                <div class="win-type-caption text-lightcolor" 
+                                     data-win-bind="textContent: noLicence">
                                 </div>
                                 <div id="dataLicenceUserList"
                                      class="listview win-selectionstylefilled"
@@ -83,6 +85,8 @@
                                         itemTemplate: select('.dataLicenceUserList-template')
                                     }">
                                 </div>
+                            </div>
+                            <div class="field_line field_line_full no-border">
                                 <span class="win-type-body text-lightcolor"
                                       data-win-bind="innerHTML: comment"></span>
                             </div>

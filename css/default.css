@@ -355,6 +355,7 @@ section[role=main] {
     text-transform: uppercase;
     font-weight: 600;
     white-space: nowrap;
+    color: gray;
 }
 
 .date-field {
@@ -392,6 +393,17 @@ section[role=main] {
 }
 .box-bkg {
     background-color: #f2f2f2;
+}
+
+.centerarea {
+    width: 500px;
+    height: auto;
+    margin-left: calc(50% - 250px);
+    margin-top: calc(20% - 80px);
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    background-color: gray;
 }
 
 .error-message {
@@ -532,34 +544,29 @@ select {
 
 .field_line {
     overflow-x: hidden;
-    margin-left: 0;
-    min-height: 60px; 
-    /*
-    padding-top: 4px;
+    padding: 0;
+    min-height: 60px;
     margin-top: 4px;
-    background-color: rgba(128, 128, 128, 0.2);
-    */
-    padding-top: 4px;
-    padding-left: 26px;
-    padding-right: 26px;
-    padding-bottom: 4px;
-
-    border-top-style: solid;
-    border-top-width: 1px;
-    border-top-color: #f8f8f8;
+    margin-left: 26px;
+    margin-right: 26px;
+    margin-bottom: 4px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: #f8f8f8;
+    width: calc(100% - 54px);
 }
 .field_line_full {
     float: left;
-    width: calc(100% - 52px);
+    width: calc(100% - 54px);
 }
 .field_line_odd {
     float: left;
-    width: calc(50% - 52px);
+    width: calc(50% - 54px);
     overflow-y: hidden
 }
 .field_line_even {
     float: right;
-    width: calc(50% - 52px);
+    width: calc(50% - 54px);
     overflow-y: hidden
 }
 /*
@@ -573,6 +580,11 @@ span.radio, span.checkbox {
     display: flex;
 }
 */
+span.input_field, span.input_small_right, span.input_small_left, span.input_threequarter_left, span.input_quarter_right {
+    border-bottom-style: none;
+    border-bottom-width: 0;
+    border-bottom-color: transparent;
+}
 select.input_field, select.input_small_left{
     height: 32px;
 }
@@ -617,21 +629,27 @@ input.win-textbox, input.win-checkbox, input.win-radio, textarea.win-textarea, s
    
     margin-top: 0;
 }
-.input_quarter_right {
-    min-height: 32px;
-    float: left;
-    width: calc(25% - 25px);
-    margin-top: 0;
-    margin-left: 0;
-}
 .input_half_right {
     min-height: 32px;
     margin-right: 0px; /*-2*/
     float: right;
     width: 50%;
-   /* margin-left: 1em;*/
+    /* margin-left: 1em;*/
     margin-top: 0;
     margin-left: 0px;
+}
+.input_threequarter_left {
+    min-height: 32px;
+    float: left;
+    width: 75%;
+    margin-top: 0;
+}
+.input_quarter_right {
+    min-height: 32px;
+    float: right;
+    width: 25%;
+    margin-top: 0;
+    margin-left: 0;
 }
 .input_small_left {
     min-height: 32px;
@@ -840,6 +858,12 @@ input.win-textbox, input.win-checkbox, input.win-radio, textarea.win-textarea, s
     text-align: right;
 }
 
+.win-type-body {
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: 0.1px;
+}
+
 
 /*
     margins/paddings for bigger size screens 
@@ -946,20 +970,17 @@ input.win-textbox, input.win-checkbox, input.win-radio, textarea.win-textarea, s
 }
 .view-size-medium .field_line {
     /*min-height: 40px;*/
-    padding-top: 16px;
-    padding-left: 18px;
-    padding-right: 18px;
+    margin-top: 16px;
+    margin-left: 18px;
+    margin-right: 18px;
+    width: calc(100% - 38px);
 }
 .view-size-medium .field_line_full, 
 .view-size-medium .field_line_odd, 
 .view-size-medium .field_line_even {
     float: left;
-    width: calc(100% - 36px);
+    width: calc(100% - 38px);
     min-height: 40px; 
-    /*
-    padding-left: 0;
-    padding-right: 0;
-    */
 }
 .view-size-medium .input_small_left {
     margin-left: 0;
@@ -993,6 +1014,120 @@ input.win-textbox, input.win-checkbox, input.win-radio, textarea.win-textarea, s
     width: 50%;
     height: auto;
 }
+
+/*
+    centerarea disables other styles
+*/
+.centerarea .progress_field {
+    float: right;
+    width: calc(100% - 124px);
+    min-width: calc(100% - 124px);
+    margin-right: 16px;
+}
+
+.centerarea .input_field_noLabel {
+    float: right;
+    width: calc(100% - 124px);
+}
+
+.centerarea .input_field {
+    float: right;
+    width: calc(100% - 124px);
+    min-width: calc(100% - 124px);
+    margin-right: 16px;
+    /*
+    min-height: 32px;
+    */
+}
+
+.centerarea .large_field {
+    /*
+    min-height: 40px;
+    
+    float: left;*/
+    width: calc(100% - 120px);
+}
+
+.centerarea .input_group {
+    float: right;
+    width: calc(100% - 124px);
+    min-width: calc(100% - 124px);
+    /*display: inline;*/
+    /*position: relative;*/
+    top: 0;
+    margin-right: 16px;
+    margin-bottom: 0;
+}
+
+.centerarea .portrait_only_threeQuarter,
+.centerarea .portrait_only_quarter,
+.centerarea .portrait_half,
+.centerarea .portrait_only_half,
+.centerarea .portrait_only,
+.centerarea .portrait_only_left,
+.centerarea .portrait_only_right {
+    display: none;
+}
+
+.centerarea .landscape_only {
+    display: inline-block;
+    position: relative;
+    top: 5px;
+}
+
+.centerarea .field_line {
+    /*min-height: 40px;*/
+    margin-top: 16px;
+    margin-left: 18px;
+    margin-right: 18px;
+    width: calc(100% - 38px);
+}
+
+.centerarea .field_line_full,
+.centerarea .field_line_odd,
+.centerarea .field_line_even {
+    float: left;
+    width: calc(100% - 38px);
+    min-height: 40px;
+}
+
+.centerarea .input_small_left {
+    margin-left: 0;
+}
+
+.centerarea .input_big_left {
+    float: left;
+    width: calc(100% - 150px);
+    margin-left: 0;
+}
+
+.centerarea .input_small_right {
+    margin-right: 0;
+}
+
+.centerarea .input_big_right {
+    float: right;
+    width: 150px;
+    margin-right: 0;
+}
+
+.centerarea .button_line {
+    display: -webkit-flex; /* Safari */
+    -webkit-align-items: center; /* Safari 7.0+ */
+    align-items: center;
+    width: calc(100% - 160px);
+}
+
+.centerarea .seperateDiv {
+    display: none;
+}
+
+.centerarea #pagePhoto {
+    margin-left: 108px;
+    width: 50%;
+    height: auto;
+}
+
 
 /*
     margins/paddings for small sized screens 
@@ -1050,6 +1185,15 @@ input.win-textbox, input.win-checkbox, input.win-radio, textarea.win-textarea, s
     width: calc(100% - 16px);
     */
 }
+
+.view-size-small .centerarea {
+    width: 100%;
+    height: auto;
+    margin: 0;
+    border: none;
+    background-color: transparent;
+}
+
 .view-size-small .row-separator {
     margin-top: -4px;
     margin-left: -10px;
@@ -1104,15 +1248,16 @@ input.win-textbox, input.win-checkbox, input.win-radio, textarea.win-textarea, s
 }
 .view-size-small .field_line {
     /*min-height: 40px;*/
-    padding-top: 4px;
-    padding-left: 10px;
-    padding-right: 10px;
+    margin-top: 4px;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: calc(100% - 22px);
 }
 .view-size-small .field_line_full,
 .view-size-small .field_line_odd,
 .view-size-small .field_line_even {
     float: left;
-    width: calc(100% - 20px);
+    width: calc(100% - 22px);
     min-height: 60px; 
 }
 /*
@@ -1169,10 +1314,13 @@ input.win-textbox, input.win-checkbox, input.win-radio, textarea.win-textarea, s
     font-size: 12px;
     line-height: 1.167;
 }
-.view-size-small .list-compressed-title.win-type-subtitle {
-    font-size: 15px;
-    line-height: 1.333;
+.view-size-small .list-compressed-content.win-type-subtitle {
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: 0.1px;
 }
+
+
 .darkthemeMandatory {
     background-color: saddlebrown;
 }
@@ -1195,3 +1343,6 @@ input.win-textbox, input.win-checkbox, input.win-radio, textarea.win-textarea, s
 .no-transform {
     -webkit-transform: translate3d(0, 0, 0);
 }
+
+
+

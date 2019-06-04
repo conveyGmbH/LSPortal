@@ -52,8 +52,8 @@
                 //{ id: "clickPdf", label: getResourceText("command.exportPdf"), tooltip: getResourceText("tooltip.exportPdf"), section: "primary", svg: "document_pdf" },
                 { id: "clickNew", label: getResourceText("command.new"), tooltip: getResourceText("tooltip.newQuestionsAnswers"), section: "primary", svg: "plus" },
                 { id: 'clickForward', label: getResourceText('command.ok'), tooltip: getResourceText('tooltip.ok'), section: 'primary', svg: 'navigate_check', key: WinJS.Utilities.Key.enter },
-                { id: "clickLineUp", label: getResourceText("command.lineUp"), tooltip: getResourceText("tooltip.lineUp"), section: "primary", svg: "navigate_up" },
-                { id: "clickLineDown", label: getResourceText("command.lineDown"), tooltip: getResourceText("tooltip.lineDown"), section: "primary", svg: "navigate_down" },
+                { id: "clickLineUp", label: getResourceText("command.lineUp"), tooltip: getResourceText("tooltip.lineUp"), section: "primary", svg: "navigate_up2" },
+                { id: "clickLineDown", label: getResourceText("command.lineDown"), tooltip: getResourceText("tooltip.lineDown"), section: "primary", svg: "navigate_down2" },
                 { id: "clickDelete", label: getResourceText("command.delete"), tooltip: getResourceText("tooltip.deleteQuestionsAnswers"), section: "primary", svg: "garbage_can" }
             ];
             this.controller = new QuestionList.Controller(element, commandList);

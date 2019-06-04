@@ -249,6 +249,8 @@
     "settings.dark"         : "Scuro",
     "settings.inputBorder"  : "Bordo campi immissione",
     "settings.inputBorderRadius"  : "Angolo campi immissione",
+    "settings.inputBorderBottom"  : "Linea campi immissione",
+    "settings.iconStrokeWidth" : "Larghezza della linea dell'icona 1/100",
     "settings.border0"      : "Nessuno",
     "settings.border1"      : "Sottile",
     "settings.border2"      : "Grosso",

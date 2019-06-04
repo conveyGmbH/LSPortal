@@ -243,6 +243,8 @@
     "settings.dark"         : "Dunkel",
     "settings.inputBorder"  : "Eingabefelder Rand",
     "settings.inputBorderRadius"  : "Input field corners",
+    "settings.inputBorderBottom"  : "Input field Line",
+    "settings.iconStrokeWidth" : "Icon stroke width 1/100",
     "settings.border0"      : "kein",
     "settings.border1"      : "dünn",
     "settings.border2"      : "dick",

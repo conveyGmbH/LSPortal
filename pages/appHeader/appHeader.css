@@ -124,7 +124,7 @@
     padding: 4px 40px 4px 4px;
     text-align: right;
     white-space: nowrap;
-    color: gray;
+    /*color: gray;*/
     max-width: 196px;
 }
 
@@ -266,7 +266,7 @@
         width: calc(100% - 180px);
         display: block;
         position: absolute;
-        top: 15px;
+        top: 13px;
         left: 0;
     }
     .event-name {

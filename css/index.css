@@ -86,6 +86,10 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
     background-color: transparent;
 }
 
+#navigationbar_horizontal .win-selected,
+#navigationbar_vertical .win-selected {
+    color: WindowText;
+}
 #navigationbar_horizontal.win-listview {
     margin: 0;
     padding: 0;
@@ -99,11 +103,11 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
 #navigationbar_vertical.win-listview {
     margin: 0;
     padding: 0;
-    width: calc(100% - 2px);
+    width: calc(100% - 1px);
     height: 100%;
     border-right-style: solid;
-    border-right-width: 2px;
-    border-right-color: transparent;
+    border-right-width: 1px;
+    border-right-color: gray;
 }
 
 #navigationbar_horizontal .win-viewport {

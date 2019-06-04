@@ -49,8 +49,10 @@
                                  data-win-bind="style.display: showModified Binding.Converter.toDisplay">
                                 <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'contact.modifiedOn'}"></span>
                                 <span class="label landscape_only" data-win-res="{textContent: 'contact.modifiedOn'}"></span>
-                                <span class="input_field win-type-subtitle" data-win-bind="textContent: dataContact.Bearbeiter_Fullname"></span>
-                                <span class="input_field win-type-subtitle" data-win-bind="textContent: dataContact.ModifiedTS Binding.Converter.toDateString"></span>
+                                <div class="input_group">
+                                    <span class="input_threequarter_left win-type-subtitle" data-win-bind="textContent: dataContact.Bearbeiter_Fullname"></span>
+                                    <span class="input_quarter_right win-type-subtitle" data-win-bind="textContent: dataContact.ModifiedTS Binding.Converter.toDateString"></span>
+                                </div>
                             </div>
                             <div class="line-separator"></div>
                             <div class="field_line field_line_odd">
