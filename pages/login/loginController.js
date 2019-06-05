@@ -88,7 +88,12 @@
                         that.binding.dataLogin.privacyPolicydisabled = false;
                         that.binding.isPrivacyPolicyFlag = false;
                     }
-                    return AppBar.busy || (that.binding.dataLogin.Login.length === 0 || that.binding.dataLogin.Password.length === 0 || !that.binding.isPrivacyPolicyFlag);
+                    var ret = AppBar.busy || (that.binding.dataLogin.Login.length === 0 || that.binding.dataLogin.Password.length === 0 || !that.binding.isPrivacyPolicyFlag);
+                    var loginButton = pageElement.querySelector("#loginButton");
+                    if (loginButton) {
+                        loginButton.disabled = ret;
+                    }
+                    return ret;
                 }
             };
 

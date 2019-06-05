@@ -246,7 +246,8 @@ header[role=banner] {
     display: -webkit-flex; /* Safari */
     -webkit-align-items: center; /* Safari 7.0+ */
     align-items: center;
-    width:calc(100% - 80px);
+    text-align: center;
+    width: 100%;
 }
 .changeStateButton{
     float:right;
@@ -999,12 +1000,6 @@ input.win-textbox, input.win-checkbox, input.win-radio, textarea.win-textarea, s
     margin-right: 0;
 }
 
-.view-size-medium .button_line {
-    display: -webkit-flex; /* Safari */
-    -webkit-align-items: center; /* Safari 7.0+ */
-    align-items: center;
-    width:calc(100% - 160px);
-}
 .view-size-medium .seperateDiv {
     display:none;
 }
@@ -1109,13 +1104,6 @@ input.win-textbox, input.win-checkbox, input.win-radio, textarea.win-textarea, s
     float: right;
     width: 150px;
     margin-right: 0;
-}
-
-.centerarea .button_line {
-    display: -webkit-flex; /* Safari */
-    -webkit-align-items: center; /* Safari 7.0+ */
-    align-items: center;
-    width: calc(100% - 160px);
 }
 
 .centerarea .seperateDiv {
@@ -1284,12 +1272,6 @@ input.win-textbox, input.win-checkbox, input.win-radio, textarea.win-textarea, s
 }
 
 
-.view-size-small .button_line {
-    display: -webkit-flex; /* Safari */
-    -webkit-align-items: center; /* Safari 7.0+ */
-    align-items: center;
-    width:calc(100% - 80px);
-}
 .view-size-small .seperateDiv {
         display:none;
 }

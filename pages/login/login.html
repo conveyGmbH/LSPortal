@@ -68,12 +68,21 @@
                                   data-win-bind="textContent: progress.text"></span>
                         </div>
                         <div class="field_line" data-win-bind="style.display: hideLoginData Binding.Converter.toDisplayNone">
-                            <input type="checkbox" class="win-checkbox checkbox" data-win-bind="checked: isPrivacyPolicyFlag Binding.Mode.twoway" onclick="AppBar.handleEvent('click', 'clickPrivacyPolicy', event)"/> <!--data-win-bind="checked: SSANTWORT19"-->
+                            <input type="checkbox" class="win-checkbox checkbox" data-win-bind="checked: isPrivacyPolicyFlag Binding.Mode.twoway" onclick="AppBar.handleEvent('click', 'clickPrivacyPolicy', event)" />
                             <span class="large_field" data-win-res="{textContent: 'login.privacyPolicy'}"></span>
                             <span class="large_field"
                                   id="privacyPolicyLink"></span>
                         </div>
-                        <div class="line-separator"></div>
+                        <div class="field_line field_line_full">
+                            <div class="button_line">
+                                <button id="loginButton"
+                                        class="text-lightcolor titlearea-bkg win-button"
+                                        onclick="AppBar.handleEvent('click', 'clickOk', event)">
+                                    <span class="win-type-title"
+                                          data-win-res="{textContent: 'label.login'}"></span>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                     <div class="error-message"
                          data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
