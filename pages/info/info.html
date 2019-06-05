@@ -65,7 +65,7 @@
                     <div class="field_line field_line_even" data-win-bind="style.display: generalData.logEnabled Binding.Converter.toDisplay">
                         <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'info.loglevel'}"></span>
                         <span class="label landscape_only" data-win-res="{textContent: 'info.loglevel'}"></span>
-                        <span class="input_field win-type-subtitle" data-win-bind="textContent: generalData.logLevel Binding.Converter.toLogLevelName"></span>
+                        <span class="input_field" data-win-bind="textContent: generalData.logLevel Binding.Converter.toLogLevelName"></span>
                         <input class="input_field win-range"
                                type="range" min="1" max="6" step="1"
                                data-win-bind="value: generalData.logLevel"
