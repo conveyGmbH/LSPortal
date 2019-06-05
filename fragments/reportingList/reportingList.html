@@ -8,17 +8,15 @@
     <script type="text/javascript" src="reportingList.js"></script>
 </head>
 <body class="win-type-body">
-    <div class="empRoles fragment">
-        <div id="empRolesController" class="data-container">
+    <div class="reportingList fragment">
+        <div id="reportingListController" class="data-container">
             <section aria-label="Main content" role="main" class="animationElement">
                 <div class="contentarea win-type-body">
                     <div class="reportingList-template"
                          data-win-control="WinJS.Binding.Template" style="display: none">
-                        <div class="tile-navigationcolor">
-                            <button class="reporting-button win-button"
-                                    data-win-bind="textContent: Text; value: OLELetterID;"
-                                    onclick="AppBar.handleEvent('click', 'clickExport', event)"></button>
-                        </div>
+                        <button class="reporting-button text-lightcolor titlearea-bkg win-button"
+                                data-win-bind="textContent: Text; value: OLELetterID;"
+                                onclick="AppBar.handleEvent('click', 'clickExport', event)"></button>
                     </div>
                     <div id="reportingList"
                          class="listview win-selectionstylefilled"

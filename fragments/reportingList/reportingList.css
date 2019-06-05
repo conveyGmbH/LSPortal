@@ -6,22 +6,28 @@
     height: 100%;
 }
 #reportingList .tile-navigationcolor {
+    /*
     border: none;
+    */
 }
 
 .reporting-button {
     height: 100%;
-    width:  100%;
+    width: 100%;
     min-height: 60px;
     min-width: 150px;
+    /*
     background-color: transparent;
+    */
 }
+/*
 .reporting-button:hover {
     background-color: rgba(255,255,255,0.2);
 }
 .reporting-button:active {
     background-color: rgba(255,255,255,0.4);
 }
+*/
 
 .win-nonselectable .reporting-button {
     background-color: rgba(128,128,128,0.4) !important;

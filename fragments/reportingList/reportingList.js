@@ -44,19 +44,19 @@
             if (element && !that.inResize) {
                 that.inResize = 1;
                 ret = WinJS.Promise.timeout(0).then(function () {
-                    var empList = element.querySelector("#reportingList.listview");
-                    if (empList && empList.style) {
+                    var reportingList = element.querySelector("#reportingList.listview");
+                    if (reportingList && reportingList.style) {
                         var contentarea = element.querySelector(".contentarea");
                         if (contentarea) {
                             var width = contentarea.clientWidth;
                             var height = contentarea.clientHeight;
                             if (width !== that.prevWidth) {
                                 that.prevWidth = width;
-                                empList.style.width = width.toString() + "px";
+                                reportingList.style.width = width.toString() + "px";
                             }
                             if (height !== that.prevHeight) {
                                 that.prevHeight = height;
-                                empList.style.height = height.toString() + "px";
+                                reportingList.style.height = height.toString() + "px";
                             }
                         }
                     }
