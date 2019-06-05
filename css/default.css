@@ -242,10 +242,7 @@ header[role=banner] {
 }
 
 
-.button_line{
-    display: -webkit-flex; /* Safari */
-    -webkit-align-items: center; /* Safari 7.0+ */
-    align-items: center;
+.button_line {
     text-align: center;
     width: 100%;
 }
@@ -400,11 +397,12 @@ section[role=main] {
     width: 500px;
     height: auto;
     margin-left: calc(50% - 250px);
-    margin-top: calc(20% - 80px);
+    margin-top: calc(20% - 100px);
     border-style: solid;
     border-width: 1px;
     border-color: black;
     background-color: gray;
+    box-shadow: rgba(0, 0, 0, 0.133) 1.0px 1.6px 3.6px 0.6px, rgba(0, 0, 0, 0.11) 0.4px 0.6px 0.9px 0px;
 }
 
 .error-message {
@@ -585,6 +583,7 @@ span.input_field, span.input_small_right, span.input_small_left, span.input_thre
     border-bottom-style: none;
     border-bottom-width: 0;
     border-bottom-color: transparent;
+    padding-top: 3px;
 }
 select.input_field, select.input_small_left{
     height: 32px;
@@ -592,8 +591,15 @@ select.input_field, select.input_small_left{
 .progress_field, .input_field, .large_field {
     margin-top: 0;
 }
-input.win-textbox, input.win-checkbox, input.win-radio, textarea.win-textarea, select.win-dropdown {
+input.win-textbox, textarea.win-textarea {
     border-width: 2px;
+    border-radius: 0;
+}
+input.win-checkbox, input.win-radio, select.win-dropdown {
+    border-width: 2px;
+}
+button.win-button {
+    border-radius: 0;
 }
 .input_text_comment {
     height: 32px;
@@ -967,8 +973,9 @@ input.win-textbox, input.win-checkbox, input.win-radio, textarea.win-textarea, s
 .view-size-medium .landscape_only {
     display: inline-block;
     position: relative;
-    top: 5px;
+    top: 3px;
 }
+
 .view-size-medium .field_line {
     /*min-height: 40px;*/
     margin-top: 16px;
@@ -1180,6 +1187,7 @@ input.win-textbox, input.win-checkbox, input.win-radio, textarea.win-textarea, s
     margin: 0;
     border: none;
     background-color: transparent;
+    box-shadow: none;
 }
 
 .view-size-small .row-separator {

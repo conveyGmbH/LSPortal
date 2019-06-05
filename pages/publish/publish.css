@@ -1,1 +1,8 @@
-﻿
+﻿.publish .centerarea {
+    height: 160px;
+}
+
+.view-size-small .publish .centerarea {
+    height: auto;
+}
+

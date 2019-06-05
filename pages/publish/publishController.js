@@ -58,6 +58,10 @@
                     }
                 },
                 clickPublish: function () {
+                    var publishButton = pageElement.querySelector("#publishButton");
+                    if (publishButton) {
+                        publishButton.disabled = !that.binding.generalData.publishFlag;
+                    }
                     // disabled if not to publish!
                     return !that.binding.generalData.publishFlag;
                 },

@@ -179,7 +179,7 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
 .navigationbar-vertical-text {
     padding-left: 24px;
     text-align: left;
-    width: 100%;
+    width: calc(100% - 24px);
 }
 
 #navigationbar_horizontal .win-itemscontainer {
@@ -205,7 +205,8 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
 /* Flyout buttons */
 #alertFlyout {
     visibility: hidden;
-    
+    margin-top: 48px;
+    box-shadow: rgba(0, 0, 0, 0.133) 1.0px 1.6px 3.6px 0.6px, rgba(0, 0, 0, 0.11) 0.4px 0.6px 0.9px 0px;
 }
 
 #alertText {

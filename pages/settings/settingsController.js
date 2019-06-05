@@ -304,6 +304,7 @@
                             Log.print(Log.l.trace, "inputBorder=" + range.value);
                             WinJS.Promise.timeout(0).then(function () {
                                 Colors.inputBorder = that.binding.generalData.inputBorder;
+                                Colors.changeCSS(".color_picker_trigger", "border-width", that.binding.generalData.inputBorder + "px");
                             });
                         }
                     }
@@ -319,6 +320,7 @@
                             Log.print(Log.l.trace, "inputBorderRadius=" + range.value);
                             WinJS.Promise.timeout(0).then(function () {
                                 Colors.inputBorderRadius = that.binding.generalData.inputBorderRadius;
+                                Colors.changeCSS(".color_picker_trigger", "border-radius", that.binding.generalData.inputBorderRadius + "px");
                             });
                         }
                     }

@@ -8,7 +8,7 @@
     <script type="text/javascript" src="publish.js"></script>
 </head>
 <body class="win-type-body">
-    <div class="settings fragment">
+    <div class="publish fragment">
         <div id="eventController" class="data-container">
             <section aria-label="Main content" role="main" class="animationElement">
                 <div class="contentarea win-type-body">
@@ -21,14 +21,26 @@
                             <span class="date-field"></span>
                         </div>
                     </div>
-                    <div class="content-record">
+                    <div class="centerarea">
                         <div class="field_line">
-                            <span class="input_field win-type-subtitle" 
+                            <span class="large_field"
                                   data-win-res="{textContent: 'publish.comment'}"
                                   data-win-bind="style.display: generalData.publishFlag Binding.Converter.toDisplay"></span>
-                            <span class="input_field win-type-subtitle" 
+                            <span class="large_field"
                                   data-win-res="{textContent: 'publish.published'}"
                                   data-win-bind="style.display: generalData.publishFlag Binding.Converter.toDisplayNone"></span>
+                        </div>
+                        <div class="field_line field_line_full">
+                            <div class="button_line">
+                                <div class="button-element">
+                                    <button id="publishButton"
+                                            class="text-lightcolor titlearea-bkg win-button"
+                                            onclick="AppBar.handleEvent('click', 'clickPublish', event)">
+                                        <span class="win-type-title"
+                                              data-win-res="{textContent: 'command.publish'}"></span>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="error-message"

@@ -9,6 +9,7 @@
     border-style: solid;
     border-width: 1px;
     border-color: Window;
+    border-radius: 0;
 }
 
 /*.toggle-switch-parent {

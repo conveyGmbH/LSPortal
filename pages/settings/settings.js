@@ -20,6 +20,9 @@
         ready: function (element, options) {
             Log.call(Log.l.trace, pageName + ".");
             // TODO: Initialize the page here.
+            Colors.changeCSS(".color_picker_trigger", "border-width", AppData._persistentStates.inputBorder + "px");
+            Colors.changeCSS(".color_picker_trigger", "border-radius", AppData._persistentStates.inputBorderRadius + "px");
+
             // add page specific commands to AppBar
             var commandList = [
                 { id: "clickOk", label: getResourceText("command.ok"), tooltip: getResourceText("tooltip.ok"), section: "primary", svg: "navigate_check", key: WinJS.Utilities.Key.enter }
