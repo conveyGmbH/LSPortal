@@ -101,9 +101,9 @@
                                     docContainer.style.display = "none";
                                 }
                             }
-                            var contentheader = element.querySelector(".content-header");
-                            if (contentheader) {
-                                height -= contentheader.clientHeight;
+                            var contentHeader = element.querySelector(".content-header");
+                            if (contentHeader) {
+                                height -= contentHeader.clientHeight;
                             }
                             if (width !== that.prevWidth) {
                                 that.prevWidth = width;
@@ -121,30 +121,38 @@
                             if (fieldWidth > 499) {
                                 // remove class: view-size-small  
                                 WinJS.Utilities.removeClass(fieldsContainer, "view-size-small");
+                                WinJS.Utilities.removeClass(contentHeader, "view-size-small");
                             } else {
                                 // add class: view-size-small    
                                 WinJS.Utilities.addClass(fieldsContainer, "view-size-small");
+                                WinJS.Utilities.addClass(contentHeader, "view-size-small");
                             }
                             if (fieldWidth > 699) {
                                 // remove class: view-size-medium-small  
                                 WinJS.Utilities.removeClass(fieldsContainer, "view-size-medium-small");
+                                WinJS.Utilities.removeClass(contentHeader, "view-size-medium-small");
                             } else {
                                 // add class: view-size-medium-small    
                                 WinJS.Utilities.addClass(fieldsContainer, "view-size-medium-small");
+                                WinJS.Utilities.addClass(contentHeader, "view-size-medium-small");
                             }
                             if (fieldWidth > 899) {
                                 // remove class: view-size-medium    
                                 WinJS.Utilities.removeClass(fieldsContainer, "view-size-medium");
+                                WinJS.Utilities.removeClass(contentHeader, "view-size-medium");
                             } else {
                                 // add class: view-size-medium
                                 WinJS.Utilities.addClass(fieldsContainer, "view-size-medium");
+                                WinJS.Utilities.addClass(contentHeader, "view-size-medium");
                             }
                             if (fieldWidth > 1099) {
                                 // remove class: view-size-bigger
                                 WinJS.Utilities.removeClass(fieldsContainer, "view-size-bigger");
+                                WinJS.Utilities.removeClass(contentHeader, "view-size-bigger");
                             } else {
                                 // add class: view-size-bigger
                                 WinJS.Utilities.addClass(fieldsContainer, "view-size-bigger");
+                                WinJS.Utilities.addClass(contentHeader, "view-size-bigger");
                             }
                             that.controller.calcImagePosition();
                         }

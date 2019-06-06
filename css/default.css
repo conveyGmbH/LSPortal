@@ -317,7 +317,7 @@ section[role=main] {
 }
 
 .content-header {
-    height: 48px;
+    height: 72px;
     /*
     width: calc(100% - 2px);
     height: calc(100% - 2px);
@@ -331,6 +331,8 @@ section[role=main] {
 
 .content-header-line {
     width: calc(100% - 52px);
+    vertical-align: bottom;
+    height: 48px;
     margin: 0;
     padding-left: 26px;
     padding-right: 26px;
@@ -341,21 +343,21 @@ section[role=main] {
     display: block;
     position: relative;
     left: 0;
-    top: 0;
-    height: 12px;
-    vertical-align: top;
+    top: 16px;
+    height: 48px;
+    vertical-align: bottom;
 }
 .caption-field {
     display: block;
     position: relative;
     left: 0;
-    top: -12px;
+    top: -32px;
     /*
     width: calc(100% - 200px);
     */
     width: 100%;
-    min-height: 12px;
-    vertical-align: top;
+    height: 48px;
+    vertical-align: bottom;
     text-align: center;
     text-transform: uppercase;
     font-weight: 600;
@@ -368,9 +370,9 @@ section[role=main] {
     display: block;
     position: relative;
     left: calc(100% - 100px);
-    top: -24px;
-    height: 12px;
-    vertical-align: top;
+    top: -80px;
+    height: 48px;
+    vertical-align: bottom;
     text-align: right;
 }
 
@@ -1138,15 +1140,6 @@ button.win-button {
     is now signalled by additional class: view-size-small
 */
 @media (max-width:499px) {
-    .pagetitle {
-        width: 80px;
-        text-align: right;
-        float: right;
-        /*text-transform: uppercase;*/
-        font-size: 15px;
-        font-weight: 600;
-        margin-right: 5px;
-    }
 }
 
 /* 
