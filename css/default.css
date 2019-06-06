@@ -165,6 +165,9 @@ img .field_line {
 .text-textcolor {
     color: WindowText;
 }
+.text-tile-textcolor {
+    color: WindowText;
+}
 .half-circle-navigationcolor {
     border-bottom-color: #c66145;
 }
@@ -208,13 +211,17 @@ img .field_line {
 .accent-background-color {
     background-color: rgb(0, 120, 215);
 }
+
+.win-textbox:focus,
+.win-textarea:focus {
+    padding: 3px 6px 5px 10px;
+}
 /*
     enable selection in input controls
 */
-input, select, 
-.win-textbox, 
-.win-dropdown
-{
+input, select,
+.win-textbox,
+.win-dropdown {
     -webkit-user-select: auto !important;
     -khtml-user-select: auto !important;
     /*-moz-user-select: auto !important;*/
@@ -1315,19 +1322,19 @@ button.win-button {
     background-color: saddlebrown;
 }
 .darkthemeMandatory:hover {
-    background-color: saddlebrown;
+    background-color: rgba(255,139,69,3);
 }
 .darkthemeMandatory:focus {
-    background-color: lightyellow;
+    background-color: rgba(255,255,224,244);
 }
 .lightthemeMandatory {
-    background-color: lightyellow;
+    background-color: rgb(255,255,224);
 }
 .lightthemeMandatory:hover {
-    background-color: lightyellow;
+    background-color: rgb(255,255,232);
 }
 .lightthemeMandatory:focus {
-    background-color: lightyellow;
+    background-color: rgb(255,255,242);
 }
 
 .no-transform {

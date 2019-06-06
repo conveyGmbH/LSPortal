@@ -407,7 +407,7 @@
                             Log.print(Log.l.trace, dataLabels[0]);
                             Log.print(Log.l.trace, dataLabels[1]);
                             var seriesColors = [
-                                Colors.textColor,
+                                Colors.tileTextColor,
                                 Colors.navigationColor
                             ];
                             visitorsEditedChart.innerHTML = "";
@@ -509,7 +509,7 @@
                                     }
                                 }
                                 var seriesColors = [
-                                    Colors.textColor
+                                    Colors.tileTextColor
                                 ];
                                 visitorsPerDayChart.innerHTML = "";
                                 try {

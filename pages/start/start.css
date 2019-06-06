@@ -50,6 +50,11 @@
     display: table-caption;
 }
 
+.start table.jqplot-table-legend, 
+.start table.jqplot-cursor-legend {
+    background-color: rgba(255,255,255,0.2);
+}
+
 .start-header-field {
     height: 20px;
     padding-top: 10px;

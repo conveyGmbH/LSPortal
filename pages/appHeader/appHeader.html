@@ -11,7 +11,6 @@
     <div class="appHeader fragment">
         <div id="appHeaderController" class="data-container">
             <header aria-label="Header content" role="banner">
-                <!--<div class="bkg-splitviewpanetoggle tile-navigationcolor"></div>-->
                 <div class="titlearea titlearea-bkg">
                     <div class="event-line">
                         <div class="app-logo-container">
@@ -20,16 +19,13 @@
                                   data-win-res="{textContent: 'appheader.portal'}"></span>
                         </div>
                         <div class="event-field">
-                            <button class="win-button publish-button titlearea-bkg"
+                            <span class="win-type-subtitle event-name win-type-ellipsis"
+                                  data-win-bind="textContent: userData.VeranstaltungName"></span>
+                            <button class="win-button publish-button"
+                                    data-win-res="{textContent: 'appheader.notpublished'}"
                                     data-win-bind="style.display: userData.PublishFlag Binding.Converter.toDisplay"
                                     onclick="AppBar.handleEvent('click', 'clickGotoPublish', event)">
-                                <span class="not-published-event win-type-subtitle event-name win-type-ellipsis"
-                                      data-win-bind="textContent: userData.VeranstaltungName"></span>
-                                <span class="not-published-field win-type-body"
-                                      data-win-res="{textContent: 'appheader.notpublished'}"></span>
                             </button>
-                            <span class="win-h6 event-name event-name-static win-type-ellipsis"
-                                  data-win-bind="textContent: userData.VeranstaltungName; style.display: userData.PublishFlag Binding.Converter.toDisplayNone"></span>
                         </div>
                     </div>
                     
