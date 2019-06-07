@@ -94,10 +94,10 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
     margin: 0;
     padding: 0;
     width: 100%;
-    height: 48px;
+    height: 47px;
     border-bottom-style: solid;
-    border-bottom-width: 2px;
-    border-bottom-color: transparent;
+    border-bottom-width: 1px;
+    border-bottom-color: gray;
 }
 
 #navigationbar_vertical.win-listview {
@@ -122,9 +122,9 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
 
 #navigationbar_horizontal .win-selectionbackground {
     height: 4px;
-    top: 44px;
-    left: 16px;
-    right: 16px;
+    top: 43px;
+    left: 0;
+    width: 0;
 }
 #navigationbar_vertical .win-selectionbackground {
     width: 4px;
@@ -177,9 +177,13 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
 }
 
 .navigationbar-vertical-text {
-    padding-left: 24px;
+    padding-left: 12px;
     text-align: left;
-    width: calc(100% - 24px);
+    width: calc(100% - 12px);
+}
+
+.navigationbar-inner-text {
+
 }
 
 #navigationbar_horizontal .win-itemscontainer {
@@ -546,3 +550,13 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
     }
 }
 
+.win-commandingsurface .win-commandingsurface-actionarea {
+    border-top-style: solid;
+    border-top-width: 1px;
+    border-top-color: gray;
+}
+
+.win-commandingsurface .win-commandingsurface-actionarea .leftmost {
+    position: absolute;
+    left: 0;
+}

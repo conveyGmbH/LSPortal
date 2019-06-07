@@ -21,6 +21,7 @@
             // TODO: Initialize the page here.
             // add page specific commands to AppBar
             var commandList = [
+                { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" },
                 { id: "clickOk", label: getResourceText("command.ok"), tooltip: getResourceText("tooltip.ok"), section: "primary", svg: "navigate_check" }
             ];
             this.controller = new Info.Controller(element, commandList);

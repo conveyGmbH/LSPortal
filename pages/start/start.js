@@ -92,7 +92,7 @@
                                 var tileMiddle = element.querySelector(".tile-middle");
                                 var tileBottom = element.querySelector(".tile-bottom");
                                 if (tileTop && tileMiddle && tileBottom && tileTop.style) {
-                                    if (tileBottom.clientHeight + 2 * tileMiddle.clientHeight < height) {
+                                    if (tileBottom.clientHeight + tileMiddle.clientHeight + tileTop.clientHeight < height) {
                                         tileTop.style.height =
                                             (height - tileBottom.clientHeight - tileMiddle.clientHeight).toString() +
                                             "px";

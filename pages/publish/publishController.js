@@ -31,7 +31,12 @@
                     Log.call(Log.l.trace, "Publish.Controller.");
                     that.saveData(function (response) {
                         AppData.getUserData();
-                        that.loadData();
+                        //that.loadData();
+                        if (WinJS.Navigation.canGoBack === true) {
+                            WinJS.Navigation.back(1).done();
+                        } else {
+                            Navigator.navigateById("start");
+                        }
                     }, function(errorResponse) {
                         // error already shown
                     });

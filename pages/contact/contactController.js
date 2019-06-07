@@ -541,23 +541,17 @@
             this.deleteData = deleteData;
 
             var resultMandatoryConverter = function (item, index) {
-                var inputfield = null;
-                if (item.AttributeName === "AnredeID") {
-                    inputfield = pageElement.querySelector("#InitAnrede");
-                } else if (item.AttributeName === "LandID") {
-                    inputfield = pageElement.querySelector("#InitLand");
-                } else {
-                    inputfield = pageElement.querySelector("input[name=" + item.AttributeName + "]");
-                }
                 if (item.FieldFlag) {
+                    var inputfield = null;
+                    if (item.AttributeName === "AnredeID") {
+                        inputfield = pageElement.querySelector("#InitAnrede");
+                    } else if (item.AttributeName === "LandID") {
+                        inputfield = pageElement.querySelector("#InitLand");
+                    } else {
+                        inputfield = pageElement.querySelector("input[name=" + item.AttributeName + "]");
+                    }
                     if (inputfield) {
-                        if (Colors.isDarkTheme) {
-                            WinJS.Utilities.removeClass(inputfield, "lightthemeMandatory");
-                            WinJS.Utilities.addClass(inputfield, "darkthemeMandatory");
-                        } else {
-                            WinJS.Utilities.removeClass(inputfield, "darkthemeMandatory");
-                            WinJS.Utilities.addClass(inputfield, "lightthemeMandatory");
-                        }
+                        WinJS.Utilities.addClass(inputfield, "mandatory-bkg");
                     }
                 }
             };
