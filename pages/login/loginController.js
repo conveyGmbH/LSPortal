@@ -67,11 +67,11 @@
                 },
                 clickPrivacyPolicy: function (event) {
                     Log.call(Log.l.trace, "Login.Controller.");
-                    //that.binding.dataLogin.privacyPolicyFlag = event.currentTarget.checked;
-                    //that.binding.dataLogin.privacyPolicydisabled = event.currentTarget.checked;
-                    that.binding.isPrivacyPolicyFlag = event.currentTarget.checked;
-                    AppData._persistentStates.privacyPolicyFlag = event.currentTarget.checked;
-                    AppBar.triggerDisableHandlers();
+                    if (event && event.currentTarget) {
+                        that.binding.isPrivacyPolicyFlag = event.currentTarget.checked;
+                        AppData._persistentStates.privacyPolicyFlag = event.currentTarget.checked;
+                        AppBar.triggerDisableHandlers();
+                    }
                     Log.ret(Log.l.trace);
                 }
             };

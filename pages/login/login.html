@@ -68,8 +68,13 @@
                                   data-win-bind="textContent: progress.text"></span>
                         </div>
                         <div class="field_line" data-win-bind="style.display: hideLoginData Binding.Converter.toDisplayNone">
-                            <input type="checkbox" class="win-checkbox checkbox" data-win-bind="checked: isPrivacyPolicyFlag Binding.Mode.twoway" onclick="AppBar.handleEvent('click', 'clickPrivacyPolicy', event)" />
-                            <span class="large_field" data-win-res="{textContent: 'login.privacyPolicy'}"></span>
+                            <label class="checkbox large_field" >
+                                <input type="checkbox" class="win-checkbox checkbox" 
+                                       data-win-bind="checked: isPrivacyPolicyFlag" 
+                                       onclick="AppBar.handleEvent('click', 'clickPrivacyPolicy', event)" />
+                                <span class="checkbox"
+                                    data-win-res="{textContent: 'login.privacyPolicy'}"></span>
+                            </label>
                             <span class="large_field"
                                   id="privacyPolicyLink"></span>
                         </div>

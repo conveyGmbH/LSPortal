@@ -137,11 +137,7 @@
                 item.fullName =
                 (item.Vorname ? (item.Vorname + " ") : "") +
                 (item.Nachname ? item.Nachname : "");
-                if (item.CS1504SerienNr === null) {
-                    item.CS1504SerienNr = " ";
-                } else {
-                    item.CS1504SerienNr = that.cutSerialnumer(item.CS1504SerienNr);
-                }
+                item.CS1504SerienNr = that.cutSerialnumer(item.CS1504SerienNr);
                 if (item.Gesperrt === 1) {
                     item.disabled = true;
                 }

@@ -320,7 +320,7 @@
                     ((item.Title ? (item.Title + " ") : "") +
                         (item.Vorname ? (item.Vorname + " ") : "") +
                         (item.Name ? item.Name : ""));
-                    item.address =
+                    /*item.address =
                         ((item.Strasse ? (item.Strasse + "\r\n") : "") +
                             ((item.PLZ || item.Stadt)
                                 ? ((item.PLZ ? (item.PLZ + " ") : "") + (item.Stadt ? item.Stadt : "") + "\r\n")
@@ -330,7 +330,8 @@
                                 ? (item.TelefonMobil + "\r\n")
                                 : (item.TelefonFestnetz ? (item.TelefonFestnetz + "\r\n") : "") +
                                 (item.EMail ? item.EMail : ""))) +
-                        (item.Freitext1 ? "\r\n" + item.Freitext1 : "");
+                        (item.Freitext1 ? "\r\n" + item.Freitext1 : "");*/
+                    item.address = item.EMail;
                     item.globalContactId = item.CreatorSiteID + "/" + item.CreatorRecID;
                     item.mitarbeiterFullName = (item.Mitarbeiter_Vorname ? (item.Mitarbeiter_Vorname + " ") : "") +
                         (item.Mitarbeiter_Nachname ? item.Mitarbeiter_Nachname : "");
@@ -382,6 +383,34 @@
                     }
                 }
                 this.resultDocConverter = resultDocConverter;
+
+                var imageRotate = function(element) {
+                    WinJS.Promise.timeout(0).then(function() {
+                        Log.call(Log.l.trace, "ContactList.Controller.");
+                        if (element && typeof element.querySelector === "function") {
+                            var img = element.querySelector(".list-compressed-doc");
+                            if (img) {
+                                var imgWidth = img.naturalWidth;
+                                var imgHeight = img.naturalHeight;
+                                Log.print(Log.l.trace, "img width=" + imgWidth + " height=" + imgHeight);
+                                if (imgWidth < imgHeight && img.style) {
+                                    var containerElement = img.parentNode;
+                                    if (containerElement) {
+                                        var marginLeft = (imgWidth - imgHeight) * containerElement.clientWidth / imgHeight/ 2;
+                                        var marginTop = (imgHeight - imgWidth) * containerElement.clientWidth / imgHeight/ 2;
+                                        img.style.marginLeft = -marginLeft + "px";
+                                        img.style.marginTop = -marginTop + "px";
+                                        img.style.height = containerElement.clientWidth + "px";
+                                    }
+                                    img.style.transform = "rotate(90deg)";
+                                    img.style.width = "auto";
+                                }
+                            }
+                        }
+                        Log.ret(Log.l.trace);
+                    });
+                }
+                this.imageRotate = imageRotate;
 
                 // define handlers
                 this.eventHandlers = {
@@ -472,6 +501,23 @@
                                 if (!layout) {
                                     layout = Application.ContactListLayout.ContactsLayout;
                                     listView.winControl.layout = { type: layout };
+                                }
+                            } else if (listView.winControl.loadingState === "itemsLoaded") {
+                                var indexOfFirstVisible = listView.winControl.indexOfFirstVisible;
+                                var indexOfLastVisible = listView.winControl.indexOfLastVisible;
+                                for (var i = indexOfFirstVisible; i <= indexOfLastVisible; i++) {
+                                    var element = listView.winControl.elementFromIndex(i);
+                                    if (element) {
+                                        var img = element.querySelector(".list-compressed-doc");
+                                        if (img) {
+                                            var imgWidth = img.naturalWidth;
+                                            var imgHeight = img.naturalHeight;
+                                            Log.print(Log.l.trace, "img[" + i + "] width=" + imgWidth + " height=" + imgHeight);
+                                            if (imgWidth < imgHeight && img.style) {
+                                                that.imageRotate(element);
+                                            }
+                                        }
+                                    }
                                 }
                             } else if (listView.winControl.loadingState === "complete") {
                                 // load SVG images
