@@ -23,6 +23,9 @@
         logGroup: false,
         logNoStack: true,
         inputBorder: 1,
+        inputBorderRadius: 2,
+        inputBorderBottom: true,
+        iconStrokeWidth: 150,
         navVertWidth: 300,
         odata: {
             https: true,
