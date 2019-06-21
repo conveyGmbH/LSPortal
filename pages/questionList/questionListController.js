@@ -510,11 +510,11 @@
                     }
                     Log.ret(Log.l.trace);
                 },
-                /*clickPdf: function (event) {
+                clickPdf: function (event) {
                     Log.call(Log.l.trace, "Contact.Controller.");
                     that.exportQuestionnaireBarcodePdf();
                     Log.ret(Log.l.trace);
-                },*/
+                },
                 clickNew: function (event) {
                     Log.call(Log.l.trace, "QuestionList.Controller.");
                     AppBar.busy = true;
