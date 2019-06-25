@@ -15,6 +15,9 @@ body {
     overflow-x: hidden;
     overflow-y: hidden;
 }
+label {
+    cursor: pointer;
+}
 img .list-image,
 img .photo-fullwidth,
 img .field_line {
@@ -93,6 +96,14 @@ img .field_line {
     border-top-color: white;
     */
 }
+.win-selectionstylefilled .win-container:hover .row-bkg {
+    background-color: rgb(128, 128, 128);
+}
+.win-selectionstylefilled .win-container .win-selected:hover .row-bkg,
+.win-selectionstylefilled .win-container .win-selected .row-bkg {
+    background-color: rgb(128, 128, 128);
+}
+
 
 .row-separator {
     display: block;
@@ -101,11 +112,8 @@ img .field_line {
     border-top-width: 1px;
     border-top-color: #f8f8f8;
     height: 1px;
-    /*
     margin-left: -26px;
     width: calc(100% + 52px);
-    */
-    width: 100%;
 }
 
 .row-bkg-gray {
@@ -446,8 +454,14 @@ section[role=main] {
     */
 }
 
+.short-label {
+    width: 50px;
+}
+.long-input {
+    width: calc(100% - 50px);
+}
+
 select {
-    
 }
 
 
@@ -926,6 +940,7 @@ button.win-button {
     float: right;
     width: 200px;
     margin-bottom: 16px;
+    max-height: 120px;
 }
 
 .list-compressed-doc {
@@ -997,10 +1012,8 @@ button.win-button {
 }
 .view-size-medium .row-separator {
     margin-top: -8px;
-    /*
     margin-left: -18px;
     width: calc(100% + 36px);
-    */
 }
 
 .view-size-medium .content-header-line {
@@ -1267,10 +1280,8 @@ button.win-button {
 
 .view-size-small .row-separator {
     margin-top: -4px;
-    /*
     margin-left: -10px;
     width: calc(100% + 20px);
-    */
 }
 
 .view-size-small .progress_field {
@@ -1383,6 +1394,7 @@ button.win-button {
 }
 .view-size-small .list-compressed-doc-container {
     width: 150px;
+    max-height: 100px;
 }
 
 .view-size-small .list-compressed-content,

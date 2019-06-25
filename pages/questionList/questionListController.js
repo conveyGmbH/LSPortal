@@ -936,8 +936,8 @@
                                 }
                                 that.loading = false;
                             }
-                            Colors.loadSVGImageElements(listView, "question-image", 28, Colors.textColor);
-                            Colors.loadSVGImageElements(listView, "question-image-selected", 28, Colors.backgroundColor);
+                            Colors.loadSVGImageElements(listView, "question-image", 28, "#2b2b2b");
+                            Colors.loadSVGImageElements(listView, "question-image-selected", 28, Colors.navigationColor);
 
                             if (that.questions) {
                                 for (var i = 0; i < that.questions.length; i++) {
