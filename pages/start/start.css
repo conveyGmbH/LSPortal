@@ -161,9 +161,7 @@
 }
 .start-donut-chart table.jqplot-table-legend {
     top: 0 !important;
-}
-.start-donut-chart table.jqplot-table-legend {
-    top: 0 !important;
+    padding: 4px;
 }
 .start-donut-chart td.jqplot-table-legend {
     white-space: nowrap;
