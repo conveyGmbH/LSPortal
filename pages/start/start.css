@@ -156,7 +156,19 @@
 .view-size-bigger .start-map-chart { margin-left: -100px; }
 */
 
-.start-donut-chart { width: 100%; }
+.start-donut-chart {
+    width: 100%;
+}
+.start-donut-chart table.jqplot-table-legend {
+    top: 0 !important;
+}
+.start-donut-chart table.jqplot-table-legend {
+    top: 0 !important;
+}
+.start-donut-chart td.jqplot-table-legend {
+    white-space: nowrap;
+}
+
 
 .view-size-medium .start-donut-chart {
     left: 15%;
@@ -233,5 +245,5 @@
 }
 
     
-.view-size-small .pie-chart { min-width: 96px; }
+.view-size-small .start-pie-chart { min-width: 96px; }
 
