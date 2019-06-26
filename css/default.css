@@ -444,7 +444,7 @@ section[role=main] {
     width: 500px;
     height: auto;
     margin-left: calc(50% - 250px);
-    margin-top: calc(20% - 100px);
+    margin-top: calc(10% - 50px);
     border-style: solid;
     border-width: 1px;
     border-color: black;
