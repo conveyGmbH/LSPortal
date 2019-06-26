@@ -330,6 +330,7 @@
     "info.title"            : "Information about the app",
     "info.comment"          : "&copy; convey Information Systems GmbH",
     "info.homepage"         : "www.convey.de",
+	"info.dataBaseVersion"  : "Database",
     "info.logOptions"       : "Logging options",
     "info.on"               : "On",
     "info.off"              : "Off",

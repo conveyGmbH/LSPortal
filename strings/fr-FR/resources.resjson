@@ -330,6 +330,7 @@
     "info.title"            : "Informations sur l’application",
     "info.comment"          : "&copy; convey Information Systems GmbH",
     "info.homepage"         : "www.convey.de",
+	"info.dataBaseVersion"  : "Base de données",
     "info.logOptions"       : "Paramètres de protocol",
     "info.on"               : "On",
     "info.off"              : "Off",
