@@ -20,12 +20,14 @@
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "Account.Controller.");
             Application.Controller.apply(this, [pageElement, {
+                count: 0,
                 dataLogin: {
                     Login: AppData._persistentStates.odata.login,
                     Password: AppData._persistentStates.odata.password,
                     PrivacyPolicyFlag: true,
                     PrivacyPolicydisabled: true,
                     INITSpracheID: 0,
+                    LocationID: null,
                     LanguageID: null
                 },
                 doEdit: false,
@@ -35,7 +37,8 @@
                     text: "",
                     show: null
                 },
-                showLanguages: false
+                showLanguages: false,
+                showServerList: false
             }, commandList]);
 
             if (typeof navigator.globalization === "object") {
@@ -47,6 +50,7 @@
 
             // select combo
             var initSprache = pageElement.querySelector("#InitSprache");
+            var globalUserServer = pageElement.querySelector("#GlobalUserServer");
 
             var prevLogin = AppData._persistentStates.odata.login;
             var prevPassword = AppData._persistentStates.odata.password;
@@ -84,10 +88,21 @@
                 },
                 clickOk: function (event) {
                     Log.call(Log.l.trace, "Account.Controller.");
+                    if (that.binding.doEdit && that.binding.count > 1) {
+                        AppData.call("PRC_ChangeLoginServer", {
+                            pNewLocationID: parseInt(that.binding.dataLogin.LocationID)
+                        }, function (json) {
+                            Log.print(Log.l.info, "call success! json=" + json);
+                        }, function (error) {
+                            Log.print(Log.l.error, "call error=" + error);
+                        });
+                        Application.navigateById("start", event);
+                    } else {
                     if (!that.binding.doEdit && WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done();
                     } else {
                         Application.navigateById("start", event);
+                    }
                     }
                     Log.ret(Log.l.trace);
                 },
@@ -101,6 +116,19 @@
                         }
                     }
                     Application.navigateById("login", event);
+                    Log.ret(Log.l.trace);
+                },
+                clickChangeServer: function (event) {
+                    Log.call(Log.l.trace, "Account.Controller.");
+                    // call prc PRC_ChangeLoginServer
+                    AppData.call("PRC_ChangeLoginServer", {
+                        pNewLocationID: parseInt(that.binding.dataLogin.LocationID)
+                    }, function (json) {
+                        Log.print(Log.l.info, "call success! ");
+                    }, function (error) {
+                        Log.print(Log.l.error, "call error");
+                    });
+                    Application.navigateById("start", event);
                     Log.ret(Log.l.trace);
                 },
                 clickChangeUserState: function (event) {
@@ -120,6 +148,7 @@
                         if (toggle) {
                             that.binding.doEdit = toggle.checked;
                         }
+                        AppBar.triggerDisableHandlers();
                     }
                     Log.ret(Log.l.trace);
                 },
@@ -208,6 +237,9 @@
                 },
                 clickLogoff: function() {
                     return !AppData.getRecordId("Mitarbeiter");
+                },
+                clickChangeServer: function () {
+                    return !that.binding.doEdit && !(that.binding.count <= 1);
                 }
             };
 
@@ -254,7 +286,20 @@
             };
             that.openDb = openDb;
 
-
+            var setServerList = function (results) {
+                Log.call(Log.l.trace, "Account.Controller.");
+                if (initSprache && results) {
+                    for (var i = 0; i < results.length; i++) {
+                        var row = results[i];
+                        if (row.IsActive === "1") {
+                            Log.print(Log.l.info, "found LanguageId=" + row.LocationID);
+                            that.binding.dataLogin.LocationID = row.LocationID;
+                            break;
+                        }
+                    }
+                }
+                Log.ret(Log.l.trace);
+            }
             var setLanguage = function (results) {
                 Log.call(Log.l.trace, "Account.Controller.");
                 if (initSprache && results) {
@@ -316,6 +361,31 @@
                         }
                         return WinJS.Promise.as();
                     }
+                }).then(function () {
+                    return Account.GlobalUserServersVIEW.select(function (json) {
+                        // this callback will be called asynchronously
+                        // when the response is available
+                        Log.print(Log.l.trace, "GlobalUserServersVIEW: success!");
+                        if (json && json.d && json.d.results && json.d.results.length) {
+                            that.binding.count = json.d.results.length;
+                            if (that.binding.count > 1) {
+                                that.binding.showServerList = true;
+                            }
+                            //that.nextDocUrl = Account.GlobalUserServersRT.getNextUrl(json);
+                            var results = json.d.results;
+                            if (globalUserServer && globalUserServer.winControl) {
+                                globalUserServer.winControl.data = new WinJS.Binding.List(results);
+                                setServerList(results);
+                            }
+                        } else {
+                            Log.print(Log.l.trace, "GlobalUserServersVIEW: no data found!");
+                        }
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        Log.print(Log.l.error, "Account.GlobalUserServersVIEW: error!");
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    }, null);
                 });
                 Log.ret(Log.l.trace);
                 return ret;

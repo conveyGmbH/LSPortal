@@ -20,6 +20,7 @@
 
             Log.call(Log.l.trace, "Info.Controller.");
             Application.Controller.apply(this, [pageElement, {
+                portalInfo: getEmptyDefaultValue(Info.appInfoSpecView.defaultValue),
                 version: Application.version,
                 environment: "Platform: " + navigator.appVersion,
                 timezone: timezone && ("Timezone: " + timezone.name())
@@ -48,6 +49,36 @@
             };
             this.setupLog = setupLog;
 
+            var setPortalInfo = function (portalInfo) {
+                if (portalInfo.VersionInfo) {
+                    that.binding.portalInfo.dbVersion = portalInfo.VersionInfo;
+                }
+            };
+            this.setPortalInfo = setPortalInfo;
+
+            var loadData = function() {
+                Log.call(Log.l.trace, "Info.Controller.");
+                AppData.setErrorMsg(that.binding);
+                var ret = new WinJS.Promise.as().then(function() {
+                    return Info.appInfoSpecView.select(function (json) {
+                        Log.print(Log.l.trace, "appInfoSpecView: success!");
+                        if (json && json.d && json.d.results && json.d.results.length > 0) {
+                            var result = json.d.results[0];
+                            that.setPortalInfo(result);
+                            Log.print(Log.l.trace, "Data loaded");
+                        }
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                        that.loading = false;
+                    });
+                });
+                Log.ret(Log.l.trace);
+
+                return ret;
+            };
+            this.loadData = loadData;
             this.eventHandlers = {
                 clickBack: function (event) {
                     Log.call(Log.l.trace, "Contact.Controller.");
@@ -167,6 +198,9 @@
             AppData.setErrorMsg(this.binding);
 
             that.processAll().then(function () {
+                Log.print(Log.l.trace, "Binding wireup page complete");
+                return that.loadData();
+            }).then(function () {
                 AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Binding wireup page complete");
             });
