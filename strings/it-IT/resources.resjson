@@ -510,6 +510,10 @@
 	"questionList.numberAnddate"     : "Mostra il numero della casella di testo con la data",
     "questionList.required" : "Campi obbligatori",
     "questionList.checkRequired" :"Campo obbligatorio con verifica",
+    "questionList.question": "Domande",
+    "questionList.on"       : "Acceso",
+    "questionList.off"      : "Spento",
+    "questionList.textarea" : "Inserite eventuali commenti in questo spazio",
 
     "reporting.title"       : "Exports",
     "reporting.with"        : "Excel export con titolo",

@@ -9,11 +9,8 @@
 /// <reference path="~/www/lib/OpenXml/scripts/linq.js" />
 /// <reference path="~/www/lib/OpenXml/scripts/ltxml.js" />
 /// <reference path="~/www/lib/OpenXml/scripts/ltxml-extensions.js" />
-/// <reference path="~/www/lib/OpenXml/scripts/jszip.js" />
-/// <reference path="~/www/lib/OpenXml/scripts/jszip-load.js" />
-/// <reference path="~/www/lib/OpenXml/scripts/jszip-inflate.js" />
-/// <reference path="~/www/lib/OpenXml/scripts/jszip-deflate.js" />
-/// <reference path="~/www/lib/OpenXml/scripts/FileSaver.js" />
+/// <reference path="~/www/lib/jszip/scripts/jszip.js" />
+/// <reference path="~/www/lib/FileSaver/scripts/FileSaver.js" />
 /// <reference path="~/www/lib/OpenXml/scripts/openxml.js" />
 /// <reference path="~/www/lib/base64js/scripts/base64js.min.js" />
 /// <reference path="~/www/pages/questionList/questionListService.js" />
@@ -32,14 +29,9 @@
             this.loading = false;
             this.initFragengruppe = null;
             this.questions = null;
-
-            this.textDateList = new WinJS.Binding.List([
-                { TextDatumID: 0, TITLE: null },
-                { TextDatumID: 1, TITLE: getResourceText("questionList.text") },
-                { TextDatumID: 2, TITLE: getResourceText("questionList.date") },
-                { TextDatumID: 3, TITLE: getResourceText("questionList.number") },
-                { TextDatumID: 4, TITLE: getResourceText("questionList.numberAnddate") }
-            ]);
+            this.labelOn = getResourceText("questionList.on");
+            this.labelOff = getResourceText("questionList.off");
+            this.textarea = getResourceText("questionList.textarea");
 
             var that = this;
             that.checkingQuestionareBarcodePDFFlag = false;
@@ -102,40 +94,28 @@
 
             var mouseDown = false;
 
-            var resultConverter = function (item) {
-                var key = "Line";
-                var antwort;
+            var resultConverter = function (item, index) {
+                var prevQuestion = null;
 
+                if (!index) {
+                    index = 0;
+                }
                 for (var j = 1; j <= 28; j++) {
-                    if (j <= item.Anzahl) {
-                        item[key + j.toString()] = 1;
+                    if (item.Anzahl && j <= item.Anzahl) {
+                        item["Line" + j.toString()] = 1;
                     } else {
-                        item[key + j.toString()] = null;
+                        item["Line" + j.toString()] = null;
                     }
-                    var keyValue;
-                    var iStr = j.toString();
+                    var key;
                     if (j < 10) {
-                        keyValue = "SSANTWORT0" + iStr;
+                        key = "Antwort0" + j.toString();
                     } else {
-                        keyValue = "SSANTWORT" + iStr;
+                        key = "Antwort" + j.toString();
                     }
-                    var checked = keyValue + "CHECKED";
-                    if (j === 1) {
-                        item[checked] = true;
-                    } else {
-                        item[checked] = false;
-                    }
-                    if (j < 10) {
-                        antwort = "Antwort0" + j;
-                    } else {
-                        antwort = "Antwort" + j;
-                    }
-                    if (item[antwort] === null) {
-                        item[antwort] = "";
+                    if (item[key] === null) {
+                        item[key] = "";
                     }
                 }
-                var name = "SSANTWORT" + item.FragenAntwortenVIEWID.toString();
-                item.SSNAME = name;
                 var map = QuestionList.initFragengruppeView.getMap();
                 var results = QuestionList.initFragengruppeView.getResults();
                 if (map && results) {
@@ -143,27 +123,44 @@
                     if (typeof curIndex !== "undefined" && results[curIndex]) {
                         item["FragengruppeTITLE"] = results[curIndex].TITLE;
                     }
-                }
-                item["TextDatumID"] = 0;
-                if (item.Freitext === "1") {
-                    if (item.DateCombobox === "1") {
-                        item["TextDatumID"] = 2;
-                    } else {
-                        item["TextDatumID"] = 1;
+                    if (index > 0) {
+                        prevQuestion = that.questions.getAt(index - 1);
                     }
-                } else if(item.Freitext === "2") {
-                    if (item.DateCombobox === "1") {
-                        item["TextDatumID"] = 4;
+                    if (prevQuestion) {
+                        if (map[prevQuestion.INITFragengruppeID] === curIndex) {
+                            item.FLAG_Trennlinie = null;
+                        } else {
+                            item.FLAG_Trennlinie = 1;
+                        }
                     } else {
-                        item["TextDatumID"] = 3;
+                        if (item.INITFragengruppeID && item.INITFragengruppeID !== "0") {
+                            item.FLAG_Trennlinie = 1;
+                        } else {
+                            item.FLAG_Trennlinie = null;
+                        }
                     }
                 }
-                item.questionNumber = item.Sortierung.toString() + ".";
+                item.showText = (item.Freitext === "1") ? true : false;
+                item.showDate = (item.DateCombobox === "1") ? true : false;
+                item.labelOn = that.labelOn;
+                item.labelOff = that.labelOff;
+                item.textarea = that.textarea;
+                if (item.Sortierung) {
+                    if (typeof item.Sortierung !== "string") {
+                        item.questionNumber = item.Sortierung.toString();
+                    } else {
+                        item.questionNumber = item.Sortierung;
+                    }
+                    item.questionNumber += ". ";
+                } else {
+                    item.questionNumber = "";
+                }
+                item.questionTitle = item.questionNumber + item.Fragestellung;
             }
             this.resultConverter = resultConverter;
 
             // get field entries
-            var getFieldEntries = function (index, type) {
+            var getFieldEntries = function (index, item) {
                 Log.call(Log.l.trace, "questionListController.");
                 var ret = {};
                 if (listView && listView.winControl) {
@@ -182,6 +179,17 @@
                         }
                     }
                 }
+                if (item.showText) {
+                    ret["Freitext"] = "1";
+                    if (item.showDate) {
+                        ret["DateCombobox"] = "1";
+                    } else {
+                        ret["DateCombobox"] = null;
+                    }
+                } else {
+                    ret["Freitext"] = null;
+                    ret["DateCombobox"] = null;
+                }
                 Log.ret(Log.l.trace, ret);
                 return ret;
             };
@@ -192,11 +200,10 @@
                 var ret = false;
                 for (var prop in newRecord) {
                     if (newRecord.hasOwnProperty(prop)) {
-                        /*if (prevRecord[prop] !== null) {*/
-                            if (newRecord[prop] !== prevRecord[prop]) {
-                                prevRecord[prop] = newRecord[prop];
-                                ret = true;
-                            }  
+                        if (newRecord[prop] !== prevRecord[prop]) {
+                            prevRecord[prop] = newRecord[prop];
+                            ret = true;
+                        }  
                     }
                 }
                 Log.ret(Log.l.trace, ret);
@@ -247,10 +254,10 @@
             this.selectRecordId = selectRecordId;
 
             var scopeFromRecordId = function (recordId) {
-                var i;
-                Log.call(Log.l.trace, "QuestionList.Controller.", "recordId=" + recordId);
+                var i = 0;
                 var item = null;
-                for (i = 0; i < that.questions.length; i++) {
+                Log.call(Log.l.trace, "QuestionList.Controller.", "recordId=" + recordId);
+                if (that.questions) for (i = 0; i < that.questions.length; i++) {
                     var question = that.questions.getAt(i);
                     if (question && typeof question === "object" &&
                         question.FragenAntwortenVIEWID === recordId) {
@@ -322,7 +329,7 @@
                     if (curScope && curScope.item &&
                         value !== curScope.item.Anzahl) {
                         curScope.item.Anzahl = value;
-                        that.resultConverter(curScope.item);
+                        that.resultConverter(curScope.item, curScope.index);
                         that.questions.setAt(curScope.index, curScope.item);
                         AppBar.modified = true;
                     }
@@ -390,7 +397,7 @@
                 if (recordId) {
                     var curScope = that.scopeFromRecordId(recordId);
                     if (curScope && curScope.item) {
-                        var newRecord = that.getFieldEntries(curScope.index, curScope.item.Fragentyp);
+                        var newRecord = that.getFieldEntries(curScope.index, curScope.item);
                         if (that.mergeRecord(curScope.item, newRecord) || AppBar.modified) {
                             Log.print(Log.l.trace, "save changes of recordId:" + recordId);
                             ret = QuestionList.questionListView.update(function (response) {
@@ -560,8 +567,9 @@
                         if (curScope && curScope.item &&
                             curScope.item.Sortierung > 1) {
                             curScope.item.Sortierung--;
-                            var newRecord = that.getFieldEntries(curScope.index, curScope.item.Fragentyp);
+                            var newRecord = that.getFieldEntries(curScope.index, curScope.item);
                             that.mergeRecord(curScope.item, newRecord);
+                            that.resultConverter(curScope.item, curScope.index);
                             that.questions.setAt(curScope.index, curScope.item);
                             // set modified!
                             AppBar.modified = true;
@@ -585,8 +593,9 @@
                         if (curScope && curScope.item &&
                             curScope.item.Sortierung < that.binding.count) {
                             curScope.item.Sortierung += 2;
-                            var newRecord = that.getFieldEntries(curScope.index, curScope.item.Fragentyp);
+                            var newRecord = that.getFieldEntries(curScope.index, curScope.item);
                             that.mergeRecord(curScope.item, newRecord);
+                            that.resultConverter(curScope.item, curScope.index);
                             that.questions.setAt(curScope.index, curScope.item);
                             // set modified!
                             AppBar.modified = true;
@@ -620,8 +629,9 @@
                                         curScope.item.FragengruppeTITLE = results[curIndex].TITLE;
                                     }
                                 }
-                                var newRecord = that.getFieldEntries(curScope.index, curScope.item.Fragentyp);
+                                var newRecord = that.getFieldEntries(curScope.index, curScope.item);
                                 that.mergeRecord(curScope.item, newRecord);
+                                that.resultConverter(curScope.item, curScope.index);
                                 that.questions.setAt(curScope.index, curScope.item);
                                 // set modified!
                                 AppBar.modified = true;
@@ -630,39 +640,47 @@
                     }
                     Log.ret(Log.l.trace);
                 },
-                changedTextDate: function (event) {
+                changedShowText: function(event) {
                     Log.call(Log.l.trace, "QuestionList.Controller.");
-                    if (event.currentTarget && AppBar.notifyModified) {
-                        var value = event.currentTarget.value;
-                        if (that.curRecId && !that.prevRecId) {
+                    if (event.currentTarget && AppBar.notifyModified && 
+                        listView && listView.winControl && listView.winControl.loadingState === "complete" &&
+                        that.curRecId && !that.prevRecId) {
+                        var toggle = event.currentTarget.winControl;
+                        if (toggle) {
                             var curScope = that.scopeFromRecordId(that.curRecId);
-                            if (curScope && curScope.item &&
-                                curScope.item.TextDatumID !== value) {
-                                curScope.item.TextDatumID = value;
-                                switch (curScope.item.TextDatumID) {
-                                    case "1":
-                                        curScope.item.Freitext = "1";
-                                        curScope.item.DateCombobox = null;
-                                        break;
-                                    case "2":
-                                        curScope.item.Freitext = "1";
-                                        curScope.item.DateCombobox = "1";
-                                        break;
-                                    case "3":
-                                        curScope.item.Freitext = "2";
-                                        curScope.item.DateCombobox = null;
-                                        break;
-                                    case "4":
-                                        curScope.item.Freitext = "2";
-                                        curScope.item.DateCombobox = "1";
-                                        break;
-                                    default:
-                                        curScope.item.Freitext = null;
-                                        curScope.item.DateCombobox = null;
-                                }
-                                var newRecord = that.getFieldEntries(curScope.index, curScope.item.Fragentyp);
+                            if (curScope && curScope.item && 
+                                curScope.item.showText !== toggle.checked) {
+                                curScope.item.showText = toggle.checked;
+                                var newRecord = that.getFieldEntries(curScope.index, curScope.item);
                                 that.mergeRecord(curScope.item, newRecord);
+                                that.resultConverter(curScope.item, curScope.index);
+                                AppBar.notifyModified = false;
                                 that.questions.setAt(curScope.index, curScope.item);
+                                AppBar.notifyModified = true;
+                                // set modified!
+                                AppBar.modified = true;
+                            }
+                        }
+                    }
+                    Log.ret(Log.l.trace);
+                },
+                changedShowDate: function(event) {
+                    Log.call(Log.l.trace, "QuestionList.Controller.");
+                    if (event.currentTarget && AppBar.notifyModified && 
+                        listView && listView.winControl && listView.winControl.loadingState === "complete" &&
+                        that.curRecId && !that.prevRecId) {
+                        var toggle = event.currentTarget.winControl;
+                        if (toggle) {
+                            var curScope = that.scopeFromRecordId(that.curRecId);
+                            if (curScope && curScope.item && 
+                                curScope.item.showDate !== toggle.checked) {
+                                curScope.item.showDate = toggle.checked;
+                                var newRecord = that.getFieldEntries(curScope.index, curScope.item);
+                                that.mergeRecord(curScope.item, newRecord);
+                                that.resultConverter(curScope.item, curScope.index);
+                                AppBar.notifyModified = false;
+                                that.questions.setAt(curScope.index, curScope.item);
+                                AppBar.notifyModified = true;
                                 // set modified!
                                 AppBar.modified = true;
                             }
@@ -936,8 +954,9 @@
                                 }
                                 that.loading = false;
                             }
-                            Colors.loadSVGImageElements(listView, "question-image", 28, "#2b2b2b");
-                            Colors.loadSVGImageElements(listView, "question-image-selected", 28, Colors.navigationColor);
+                            Colors.loadSVGImageElements(listView, "question-list-image", 28, "#2b2b2b");
+                            Colors.loadSVGImageElements(listView, "question-list-image-selected", 28, Colors.navigationColor);
+                            Colors.loadSVGImageElements(listView, "question-image", 28, Colors.textColor);
 
                             if (that.questions) {
                                 for (var i = 0; i < that.questions.length; i++) {
@@ -951,14 +970,6 @@
                                                     comboInitFragengruppe.winControl.data && !comboInitFragengruppe.winControl.data.length) {
                                                     comboInitFragengruppe.winControl.data = that.initFragengruppe;
                                                     comboInitFragengruppe.value = item.INITFragengruppeID;
-                                                }
-                                            }
-                                            var comboTextDatum = element.querySelector("#TextDatum.win-dropdown");
-                                            if (comboTextDatum && comboTextDatum.winControl) {
-                                                if (!comboTextDatum.winControl.data ||
-                                                    comboTextDatum.winControl.data && !comboTextDatum.winControl.data.length) {
-                                                    comboTextDatum.winControl.data = that.textDateList;
-                                                    comboTextDatum.value = item.TextDatumID;
                                                 }
                                             }
                                         }
@@ -1016,7 +1027,7 @@
                                     that.nextUrl = QuestionList.questionListView.getNextUrl(json);
                                     var results = json.d.results;
                                     results.forEach(function (item) {
-                                        that.resultConverter(item);
+                                        that.resultConverter(item, that.questions.length);
                                         that.binding.count = that.questions.push(item);
                                     });
                                 }
@@ -1214,32 +1225,36 @@
                         if (that.questions && recordId) {
                             if (json && json.d) {
                                 var question = json.d;
-                                that.resultConverter(question);
                                 var objectrec = scopeFromRecordId(recordId);
+                                that.resultConverter(question, objectrec.index);
                                 that.questions.setAt(objectrec.index, question);
                             }
                         } else {
-                        if (json && json.d) {
-                            that.binding.count = json.d.results.length;
-                            that.nextUrl = QuestionList.questionListView.getNextUrl(json);
-                            var results = json.d.results;
-                            results.forEach(function (item) {
-                                that.resultConverter(item);
-                            });
-                            // Now, we call WinJS.Binding.List to get the bindable list
-                            that.questions = new WinJS.Binding.List(results);
+                            if (json && json.d) {
+                                that.nextUrl = QuestionList.questionListView.getNextUrl(json);
+                                var results = json.d.results;
+                                if (that.questions) {
+                                    that.questions.length = 0;
+                                } else {
+                                    // Now, we call WinJS.Binding.List to get the bindable list
+                                    that.questions = new WinJS.Binding.List(results);
+                                }
+                                results.forEach(function (item) {
+                                    that.resultConverter(item, that.questions.length);
+                                    that.binding.count = that.questions.push(item);
+                                });
 
-                            if (listView.winControl) {
-                                // fix focus handling
-                                that.setFocusOnItemInListView(listView);
+                                if (listView.winControl) {
+                                    // fix focus handling
+                                    that.setFocusOnItemInListView(listView);
 
-                                listView.winControl._supressScrollIntoView = false;
-                                // add ListView itemTemplate
-                                listView.winControl.itemTemplate = that.listQuestionListRenderer.bind(that);
-                                // add ListView dataSource
-                                listView.winControl.itemDataSource = that.questions.dataSource;
+                                    listView.winControl._supressScrollIntoView = false;
+                                    // add ListView itemTemplate
+                                    listView.winControl.itemTemplate = that.listQuestionListRenderer.bind(that);
+                                    // add ListView dataSource
+                                    listView.winControl.itemDataSource = that.questions.dataSource;
+                                }
                             }
-                        }
                         }
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs

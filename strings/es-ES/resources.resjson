@@ -484,6 +484,10 @@
     "questionList.date"     : "Textfeld mit Datum anzeigen",
     "questionList.required" : "Pflichtfeld",
     "questionList.checkRequired" : "Pflichtfeld mit Überprüfung",
+    "questionList.question": "Question",
+    "questionList.on"       : "On",
+    "questionList.off"      : "Off",
+    "questionList.textarea" : "Please enter your notes here ",
 
     "reporting.title"       : "Auswertungen",
     "reporting.with"        : "Excelexport mit Überschriften",

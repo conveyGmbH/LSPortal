@@ -510,6 +510,10 @@
 	"questionList.numberAnddate"     : "afficher le numéro de la zone de texte ",
     "questionList.required" : "champ obligatoire",
     "questionList.checkRequired" : "Champ obligatoire avec vérification",
+    "questionList.question": "Question",
+    "questionList.on"       : "On",
+    "questionList.off"      : "Off",
+    "questionList.textarea" : "S'il vous plaît entrer votre commentaire ici",
 
     "reporting.title"       : "Évaluations",
     "reporting.with"        : "Excel export with title",

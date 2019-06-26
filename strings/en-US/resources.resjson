@@ -510,6 +510,10 @@
 	"questionList.numberAnddate"     : "Show textfieldnumber and date field",
     "questionList.required" : "Requirefield",
     "questionList.checkRequired" : "Requirefield with check",
+    "questionList.question": "Question",
+    "questionList.on"       : "On",
+    "questionList.off"      : "Off",
+    "questionList.textarea" : "Please enter your notes here ",
 
     "reporting.title"       : "Reports",
     "reporting.with"        : "Excel export with title",

@@ -136,14 +136,6 @@
     width: 50%;
     padding: 0;
 }
-.field-text-comment {
-    width: 100%;
-    height:26px;
-}
-.field-text-comment-big{/*:focus*/
-    height: 100px;
-    width: 100%;
-}
 .multi-rating {
     width: 15%;
     max-width: 70px;
@@ -172,10 +164,6 @@
     width: 100%;
     padding-left: 3px;
 }
-textarea::placeholder { font-style: italic; }
-textarea::-webkit-input-placeholder {font-style:italic; }
-textarea::-moz-placeholder { font-style:italic; } /* firefox 19+ */
-textarea:-ms-input-placeholder { font-style:italic; } /* ie */
 
 /*General Styles used for all FlipViews*/
 #imgListQuestionnaire.flipview {

@@ -240,6 +240,33 @@ input, select,
     user-select: auto !important;
 }
 
+textarea::placeholder {
+    font-style: italic;
+}
+
+textarea::-webkit-input-placeholder {
+    font-style: italic;
+}
+
+textarea::-moz-placeholder {
+    font-style: italic;
+}
+/* firefox 19+ */
+textarea:-ms-input-placeholder {
+    font-style: italic;
+}
+/* ie */
+
+.field-text-comment {
+    width: 100%;
+    height: 26px;
+}
+
+.field-text-comment-big { /*:focus*/
+    height: 100px;
+    width: 100%;
+}
+
 .win-command[disabled] .win-commandicon {
     opacity: 0.2;
 }
@@ -607,12 +634,15 @@ span.radio, span.checkbox {
 */
 
 span.checkbox, span.radio {
-    display: inline-block;
+    /*
     position: relative;
     margin-left: 36px;
     margin-top: -36px;
-    width: calc(100% - 40px);
+    */
+    width: calc(100% - 48px);
     vertical-align: top;
+    display: inline-block;
+    padding-top: 10px;
 }
 
 span.input_field, span.input_small_right, span.input_small_left, span.input_threequarter_left, span.input_quarter_right {
@@ -1413,7 +1443,10 @@ button.win-button {
 
 .view-size-small span.checkbox,
 .view-size-small span.radio {
+    /*
     margin-top: -32px;
+    */
+    padding-top: 6px;
 }
 
 .mandatory-bkg {
