@@ -146,6 +146,21 @@
                         <input class="input_field win-textbox" type="text"
                                data-win-bind="value: appSettings.odata.onlinePath Binding.Mode.twoway" />
                     </div>
+                    <div class="line-separator"
+                         data-win-bind="style.display: doEdit Binding.Converter.toDisplay"></div>
+                    <div data-win-bind="style.display: doEdit Binding.Converter.toDisplay">
+                        <div class="field_line field_line_odd"
+                             data-win-bind="style.display: showServerList Binding.Converter.toDisplay">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'account.serverlist'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'account.serverlist'}"></span>
+                            <select id="GlobalUserServer"
+                                    class="input_field win-dropdown"
+                                    data-win-control="WinJS.UI.Repeater"
+                                    data-win-bind="value: dataLogin.LocationID Binding.Mode.twoway">
+                                <option data-win-bind="value: LocationID; textContent: LocationName"></option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="error-message"
                          data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
                 </div>

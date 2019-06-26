@@ -7,7 +7,22 @@
     "use strict";
 
     WinJS.Namespace.define("Info", {
-        //empty
+        _appInfoSpecView: {
+            get: function () {
+                return AppData.getFormatView("AppInfoSpec", 20583, false);
+            }
+        },
+        appInfoSpecView: {
+            select: function(complete, error) {
+                Log.call(Log.l.trace, "benutzerView.");
+                var ret = Info._appInfoSpecView.select(complete, error);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            defaultValue: {
+                dbVersion: ""
+            }
+        }
     });
 })();
 
