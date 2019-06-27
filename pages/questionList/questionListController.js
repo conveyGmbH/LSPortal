@@ -616,7 +616,7 @@
                     Log.call(Log.l.trace, "QuestionList.Controller.");
                     if (event.currentTarget && AppBar.notifyModified) {
                         var value = event.currentTarget.value;
-                        if (that.curRecId && !that.prevRecId) {
+                        if (that.curRecId && !that.prevRecId && !that.inAnswerCountFromRange) {
                             var curScope = that.scopeFromRecordId(that.curRecId);
                             if (curScope && curScope.item &&
                                 curScope.item.INITFragengruppeID !== value) {
@@ -645,7 +645,7 @@
                     if (event.currentTarget && AppBar.notifyModified && 
                         listView && listView.winControl && 
                         (listView.winControl.loadingState === "complete" || listView.winControl.loadingState === "itemsLoaded") &&
-                        that.curRecId && !that.prevRecId) {
+                        that.curRecId && !that.prevRecId && !that.inAnswerCountFromRange) {
                         var toggle = event.currentTarget.winControl;
                         if (toggle) {
                             var curScope = that.scopeFromRecordId(that.curRecId);
@@ -670,7 +670,7 @@
                     if (event.currentTarget && AppBar.notifyModified && 
                         listView && listView.winControl && 
                         (listView.winControl.loadingState === "complete" || listView.winControl.loadingState === "itemsLoaded") &&
-                        that.curRecId && !that.prevRecId) {
+                        that.curRecId && !that.prevRecId && !that.inAnswerCountFromRange) {
                         var toggle = event.currentTarget.winControl;
                         if (toggle) {
                             var curScope = that.scopeFromRecordId(that.curRecId);
