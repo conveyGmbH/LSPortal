@@ -15,7 +15,7 @@
     AppData.persistentStatesDefaults = {
         colorSettings: {
             // navigation-color with 100% saturation and brightness
-            accentColor: "#ff3c00"
+            accentColor: "#fe3600"
         },
         showAppBkg: false,
         logEnabled: false,
