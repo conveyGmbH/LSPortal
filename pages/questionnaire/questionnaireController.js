@@ -1136,6 +1136,7 @@
                             listView.winControl.tapBehavior = WinJS.UI.TapBehavior.directSelect;
                         }
                         // Double the size of the buffers on both sides
+                        /*
                         if (!maxLeadingPages) {
                             maxLeadingPages = listView.winControl.maxLeadingPages * 4;
                             listView.winControl.maxLeadingPages = maxLeadingPages;
@@ -1144,6 +1145,7 @@
                             maxTrailingPages = listView.winControl.maxTrailingPages * 4;
                             listView.winControl.maxTrailingPages = maxTrailingPages;
                         }
+                        */
                         if (listView.winControl.loadingState === "itemsLoading") {
                             if (!layout) {
                                 layout = Application.QuestionnaireLayout.QuestionsLayout;

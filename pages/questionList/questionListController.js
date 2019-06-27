@@ -736,7 +736,6 @@
                                         if (item.data && item.data.FragenAntwortenVIEWID) {
                                             var newRecId = item.data.FragenAntwortenVIEWID;
                                             Log.print(Log.l.trace, "newRecId:" + newRecId + " curRecId:" + that.curRecId);
-                                            //if (newRecId !== 0 && newRecId !== that.curRecId) {
                                             AppData.setRecordId('FragenAntworten', newRecId);
                                             if (that.curRecId) {
                                                 that.prevRecId = that.curRecId;
@@ -757,7 +756,6 @@
                                             } else {
                                                 AppBar.triggerDisableHandlers();
                                             }
-                                            //  }
                                         }
                                     });
                                 }
@@ -878,14 +876,16 @@
                             listView.winControl.tapBehavior = WinJS.UI.TapBehavior.directSelect;
                         }
                         // Double the size of the buffers on both sides
+                        /*
                         if (!maxLeadingPages) {
-                            maxLeadingPages = listView.winControl.maxLeadingPages * 4;
+                            maxLeadingPages = listView.winControl.maxLeadingPages * 2;
                             listView.winControl.maxLeadingPages = maxLeadingPages;
                         }
                         if (!maxTrailingPages) {
-                            maxTrailingPages = listView.winControl.maxTrailingPages * 4;
+                            maxTrailingPages = listView.winControl.maxTrailingPages * 2;
                             listView.winControl.maxTrailingPages = maxTrailingPages;
                         }
+                        */
                         if (listView.winControl.loadingState === "itemsLoading") {
                             if (!layout) {
                                 layout = Application.QuestionListLayout.QuestionsLayout;
@@ -927,7 +927,6 @@
                                 }
                                 that.loading = false;
                             }
-                            //that.addScrollIntoViewCheckForInputElements(listView);
                         }
                     }
                     Log.ret(Log.l.trace);
@@ -1181,14 +1180,14 @@
                                 that.questions.setAt(objectrec.index, question);
                             }
                         } else {
-                            if (json && json.d) {
+                            if (json && json.d && json.d.results) {
                                 that.nextUrl = QuestionList.questionListView.getNextUrl(json);
                                 var results = json.d.results;
                                 if (that.questions) {
                                     that.questions.length = 0;
                                 } else {
                                     // Now, we call WinJS.Binding.List to get the bindable list
-                                    that.questions = new WinJS.Binding.List(results);
+                                    that.questions = new WinJS.Binding.List([]);
                                 }
                                 results.forEach(function (item) {
                                     that.resultConverter(item, that.questions.length);

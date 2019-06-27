@@ -39,7 +39,9 @@
         },
         _questionListView: {
             get: function () {
-                return AppData.getFormatView("FragenAntworten", 0);
+                var ret = AppData.getFormatView("FragenAntworten", 0);
+                ret.maxPageSize = 10;
+                return ret;
             }
         },
         questionListView: {

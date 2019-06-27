@@ -23,7 +23,7 @@
         _questionnaireView20433: {
             get: function () {
                 var ret = AppData.getFormatView("Zeilenantwort", 20433);
-                ret.maxPageSize = 20;
+                ret.maxPageSize = 10;
                 return ret;
             }
         },
