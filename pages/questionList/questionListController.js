@@ -643,7 +643,8 @@
                 changedShowText: function(event) {
                     Log.call(Log.l.trace, "QuestionList.Controller.");
                     if (event.currentTarget && AppBar.notifyModified && 
-                        listView && listView.winControl && listView.winControl.loadingState === "complete" &&
+                        listView && listView.winControl && 
+                        (listView.winControl.loadingState === "complete" || listView.winControl.loadingState === "itemsLoaded") &&
                         that.curRecId && !that.prevRecId) {
                         var toggle = event.currentTarget.winControl;
                         if (toggle) {
@@ -667,7 +668,8 @@
                 changedShowDate: function(event) {
                     Log.call(Log.l.trace, "QuestionList.Controller.");
                     if (event.currentTarget && AppBar.notifyModified && 
-                        listView && listView.winControl && listView.winControl.loadingState === "complete" &&
+                        listView && listView.winControl && 
+                        (listView.winControl.loadingState === "complete" || listView.winControl.loadingState === "itemsLoaded") &&
                         that.curRecId && !that.prevRecId) {
                         var toggle = event.currentTarget.winControl;
                         if (toggle) {
