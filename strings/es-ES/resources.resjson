@@ -38,6 +38,9 @@
     "command.print"			    : "Drucken",
     "command.save"			    : "Speichern",
     "command.exportPdf"		: "PDF exportieren",
+	"command.userPwExport"  : "PasswortQrCodeliste",
+	"command.registrationList" : "Registrierungsliste",
+	"command.lockedDeviceList" : "Gesperrte Geräteliste",
 	"command.resetRestriction" : "Zurücksetzen",
 	"command.copyQuestionnaire" : "Kopieren",
 
