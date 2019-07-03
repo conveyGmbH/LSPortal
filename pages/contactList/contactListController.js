@@ -58,6 +58,8 @@
                 var maxLeadingPages = 0;
                 var maxTrailingPages = 0;
 
+                var imgSrcDataType = "data:image/jpeg;base64,";
+
                 var handlePageEnable = function (contact) {
                     Log.call(Log.l.trace, "ContactList.Controller.", "recordId=" + (contact && contact.KontaktVIEWID));
                     if (AppData._persistentStates.hideQuestionnaire) {
@@ -79,19 +81,6 @@
                     }
                     Log.ret(Log.l.trace);
                 };
-
-                var svgFromContact = function (id) {
-                    if (id === 3) {
-                        return "office_building";
-                    } else if (id === 2) {
-                        return "businesswoman";
-                    } else if (id === 1) {
-                        return "businessperson";
-                    } else {
-                        return "user";
-                    }
-                };
-                this.svgFromContact = svgFromContact;
 
                 var svgFromOption = function (option) {
                     var ret = null;
@@ -310,7 +299,6 @@
                         }
                     }
                     item.index = index;
-                    item.svgFormOf = svgFromContact(item.INITAnredeID);
                     item.svgSource = svgFromOption({
                         isVisitenkarte: item.SHOW_Visitenkarte,
                         isBarcode: item.SHOW_Barcode
@@ -343,7 +331,13 @@
                                 var docContent = doc.OvwContentDOCCNT3;
                                 if (docContent) {
                                     var sub = docContent.search("\r\n\r\n");
-                                    item.OvwContentDOCCNT3 = "data:image/jpeg;base64," + docContent.substr(sub + 4);
+                                    if (sub) {
+                                        item.OvwContentDOCCNT3 = imgSrcDataType + docContent.substr(sub + 4);
+                                    } else {
+                                        item.OvwContentDOCCNT3 = "";
+                                    }
+                                } else {
+                                    item.OvwContentDOCCNT3 = "";
                                 }
                                 that.firstDocsIndex = i + 1;
                                 that.firstContactsIndex = index + 1;
@@ -362,7 +356,11 @@
                                 var docContent = item.OvwContentDOCCNT3;
                                 if (docContent) {
                                     var sub = docContent.search("\r\n\r\n");
-                                    contact.OvwContentDOCCNT3 = "data:image/jpeg;base64," + docContent.substr(sub + 4);
+                                    if (sub) {
+                                        contact.OvwContentDOCCNT3 = imgSrcDataType + docContent.substr(sub + 4);
+                                    } else {
+                                        contact.OvwContentDOCCNT3 = "";
+                                    }
                                 } else {
                                     contact.OvwContentDOCCNT3 = "";
                                 }
@@ -388,7 +386,7 @@
                     Log.call(Log.l.trace, "ContactList.Controller.");
                     if (element && typeof element.querySelector === "function") {
                         var img = element.querySelector(".list-compressed-doc");
-                        if (img && img.src) {
+                        if (img && img.src && img.src.substr(0, imgSrcDataType.length) === imgSrcDataType) {
                             var imgWidth = img.naturalWidth;
                             var imgHeight = img.naturalHeight;
                             Log.print(Log.l.trace, "img width=" + imgWidth + " height=" + imgHeight);
@@ -410,7 +408,7 @@
                                     img.style.width = "auto";
                                 }
                             } else {
-                                WinJS.Promise.timeout(50).then(function() {
+                                WinJS.Promise.timeout(0).then(function() {
                                     that.imageRotate(element);
                                 });
                             }

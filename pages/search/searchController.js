@@ -266,9 +266,6 @@
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
                             AppData.setErrorMsg(that.binding, errorResponse);
-                            if (progress && progress.style) {
-                                progress.style.display = "none";
-                            }
                             that.loading = false;
                         },
                         null,
