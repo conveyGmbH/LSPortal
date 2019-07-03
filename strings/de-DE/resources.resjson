@@ -364,6 +364,7 @@
     "info.autoShutterTime"  : "Selbstauslöser [ms]",
     "info.nolicence"        : "Folgender Zugang würde bereits auf einem/mehreren Geräten benutzt. Nur das zuletzt angemeldete Gerät wird funktionieren :",
     "info.nolicenceemployee"        : "Folgender Zugang würde bereits auf einem/mehreren Geräten benutzt. Nur das zuletzt angemeldete Gerät wird funktionieren!",
+	"info.turnThumbsLeft"   : "Vorschaubilder nach links drehen",
 
 	"infodesk.actualEmployee"     : "Aktueller Mitarbeiter",
     "infodesk.employee"     : "Mitarbeiter",

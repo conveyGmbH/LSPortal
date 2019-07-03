@@ -1,9 +1,8 @@
-﻿#logEnabled .win-toggleswitch-header,
+﻿#turnThumbsLeft .win-toggleswitch-header,
+#logEnabled .win-toggleswitch-header,
 #logGroup .win-toggleswitch-header,
 #cameraUseGrayscale .win-toggleswitch-header,
 #replActive .win-toggleswitch-header,
-#logNoStack .win-toggleswitch-header
-{
+#logNoStack .win-toggleswitch-header {
     display: none;
 }
-

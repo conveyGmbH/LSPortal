@@ -18,6 +18,7 @@
             accentColor: "#fe3600"
         },
         showAppBkg: false,
+        turnThumbsLeft: false,
         logEnabled: false,
         logLevel: 3,
         logGroup: false,

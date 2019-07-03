@@ -354,8 +354,9 @@
     "info.portal"           : "Portal",
     "info.useAudioNote"     : "Tonaufnahme",
     "info.autoShutterTime"  : "Selbstauslöser [ms]",
+    "info.turnThumbsLeft"   : "Turn thumbs left",
 
-	  "infodesk.actualEmployee"     : "Aktueller Mitarbeiter",
+    "infodesk.actualEmployee"     : "Aktueller Mitarbeiter",
     "infodesk.employee"     : "Mitarbeiter",
     "infodesk.title"        : "Infodesk",
     "infodesk.language"     : "Sprache",

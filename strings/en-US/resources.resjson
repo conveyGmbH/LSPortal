@@ -362,6 +362,7 @@
     "info.autoShutterTime"  : "Trigger time [ms]",
     "info.nolicence"        : "The following user has already been used on multiple devices. Only the device where it was last used will work :",
     "info.nolicenceemployee"        : "The following user has already been used on multiple devices. Only the device where it was last used will work!",
+    "info.turnThumbsLeft"   : "Turn thumbs left",
 
     "infodesk.actualEmployee"     : "Current employee",
     "infodesk.employee"     : "Employee",

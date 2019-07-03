@@ -36,18 +36,38 @@
                             <span data-win-bind="textContent: portalInfo.dbVersion"></span>
                         </div>
                         <div class="large_field"
-                              data-win-res="{innerHTML: 'info.comment'}"></div>
+                             data-win-res="{innerHTML: 'info.comment'}"></div>
                         <div class="large_field"
-                              id="homepageLink"></div>
+                             id="homepageLink"></div>
                         <div class="large_field win-type-caption"
-                              data-win-bind="textContent: environment"></div>
+                             data-win-bind="textContent: environment"></div>
                         <div class="large_field win-type-caption"
-                              data-win-bind="textContent: timezone"></div>
+                             data-win-bind="textContent: timezone"></div>
                     </div>
                     <div class="line-separator"></div>
                     <div class="field_line field_line_full">
                         &nbsp;
                     </div>
+                    <div class="header-separator float-left"></div>
+                    <div class="content-header float-left">
+                        <div class="half-circle half-circle-textcolor">&nbsp;</div>
+                        <div class="idAndDate win-type-caption">
+                            <span class="id-field"></span>
+                            <span class="caption-field" data-win-res="{textContent: 'info.log5'}"></span>
+                            <span class="date-field"></span>
+                        </div>
+                    </div>
+                    <div class="field_line field_line_odd">
+                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'info.turnThumbsLeft'}"></span>
+                        <span class="label landscape_only" data-win-res="{textContent: 'info.turnThumbsLeft'}"></span>
+                        <div class="input_field toggle-switch-parent">
+                            <div id="turnThumbsLeft" class="input_field"
+                                 data-win-control="WinJS.UI.ToggleSwitch"
+                                 data-win-bind="winControl.checked: generalData.turnThumbsLeft Binding.Mode.twoway; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="line-separator"></div>
                     <div class="header-separator float-left"></div>
                     <div class="content-header float-left">
                         <div class="half-circle half-circle-textcolor">&nbsp;</div>
@@ -63,8 +83,8 @@
                         <div class="input_field toggle-switch-parent">
                             <div id="logEnabled" class="input_field"
                                  data-win-control="WinJS.UI.ToggleSwitch"
-                                 data-win-bind="winControl.checked: generalData.logEnabled Binding.Mode.twoway; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                 > <!--onchange="AppBar.handleEvent('change', 'clickLogEnabled', event)"-->
+                                 data-win-bind="winControl.checked: generalData.logEnabled Binding.Mode.twoway; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off">
+                                <!--onchange="AppBar.handleEvent('change', 'clickLogEnabled', event)"-->
                             </div>
                         </div>
                     </div>
@@ -76,8 +96,7 @@
                                type="range" min="1" max="6" step="1"
                                data-win-bind="value: generalData.logLevel"
                                onchange="AppBar.handleEvent('change', 'changedLogLevel', event)"
-                               oninput="AppBar.handleEvent('change', 'changedLogLevel', event)"
-                               />
+                               oninput="AppBar.handleEvent('change', 'changedLogLevel', event)" />
                     </div>
                     <div class="line-separator"></div>
                     <div class="field_line field_line_odd" data-win-bind="style.display: generalData.logEnabled Binding.Converter.toDisplay">
@@ -86,8 +105,7 @@
                         <div class="input_field toggle-switch-parent">
                             <div id="logGroup" class="input_field"
                                  data-win-control="WinJS.UI.ToggleSwitch"
-                                 data-win-bind="winControl.checked: generalData.logGroup Binding.Mode.twoway; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                 >
+                                 data-win-bind="winControl.checked: generalData.logGroup Binding.Mode.twoway; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off">
                             </div>
                         </div>
                     </div>

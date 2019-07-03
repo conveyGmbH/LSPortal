@@ -362,6 +362,7 @@
     "info.autoShutterTime"  : "Temps de déclenchement [ms]",
     "info.nolicence"        : "L'accès suivant est déjà utilisé sur un ou plusieurs appareils. Seulement le dernier périphérique connecté peut fonctionner :",
     "info.nolicenceemployee"        : "L'accès suivant est déjà utilisé sur un ou plusieurs appareils. Seulement le dernier périphérique connecté peut fonctionner!",
+    "info.turnThumbsLeft"   : "Tourner l'aperçu à gauche",
 
     "infodesk.actualEmployee"     : "Personnel actuel",
     "infodesk.employee"     : "Personnel",
