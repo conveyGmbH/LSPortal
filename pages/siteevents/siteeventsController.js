@@ -9,6 +9,7 @@
 /// <reference path="~/www/lib/jstz/scripts/jstz.js" />
 /// <reference path="~/www/lib/base64js/scripts/base64js.min.js" />
 /// <reference path="~/www/pages/siteevents/siteeventsService.js"/>
+/// <reference path="~/www/pages/siteevents/exportXlsx.js" />
 
 (function () {
     "use strict";
@@ -274,6 +275,43 @@
             }
             this.exportPwdQrCodeEmployeePdf = exportPwdQrCodeEmployeePdf;
 
+            var exportData = function (eventID) {
+                Log.call(Log.l.trace, "Registration.Controller.");
+                var dbViewTitle = null;
+                var dbView;
+                var fileName;
+                if (eventID === "Registrierungsliste") {
+                    dbView = SiteEvents.registrationView;
+                    fileName = "Registrations";
+                } else if (eventID === "Gesperrte Geräteliste") {
+                    dbView = SiteEvents.OIMPImportJobView;
+                    fileName = "ListLockedDevices";
+                }
+
+                if (dbView) {
+                    var exporter = ExportXlsx.exporter;
+                    if (!exporter) {
+                        exporter = new ExportXlsx.ExporterClass(that.binding.progress);
+                    }
+                    exporter.showProgress(0);
+                    WinJS.Promise.timeout(50).then(function () {
+                        exporter.saveXlsxFromView(dbView, fileName, function (result) {
+                            AppBar.busy = false;
+                            AppBar.triggerDisableHandlers();
+                        }, function (errorResponse) {
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                            AppBar.busy = false;
+                            AppBar.triggerDisableHandlers();
+                        }, that.binding.restriction, dbViewTitle);
+                    });
+                } else {
+                    AppBar.busy = false;
+                    AppBar.triggerDisableHandlers();
+                }
+                Log.ret(Log.l.trace);
+            }
+            that.exportData = exportData;
+
             this.eventHandlers = {
                 clickBack: function (event) {
                     Log.call(Log.l.trace, "SiteEvents.Controller.");
@@ -306,13 +344,15 @@
                     var queryText = eventInfo.detail.queryText, query = queryText.toLowerCase(), suggestionCollection = eventInfo.detail.searchSuggestionCollection;
                     if (queryText.length > 0 && that.siteeventsdata && that.siteeventsdata.length > 0) {
                         for (var i = 0, len = that.siteeventsdata.length; i < len; i++) {
-                            if (that.siteeventsdata.getAt(i).Firmenname.toLowerCase().indexOf(query) >= 0
-                                || that.siteeventsdata.getAt(i).StandHall.toLowerCase().indexOf(query) >= 0
-                                || that.siteeventsdata.getAt(i).StandNo.toLowerCase().indexOf(query) >= 0
-                                || that.siteeventsdata.getAt(i).FairMandant_Email.toLowerCase().indexOf(query) >= 0) {
+                            if (that.siteeventsdata.getAt(i).Firmenname.toLowerCase().indexOf(query) >= 0 ||
+                                that.siteeventsdata.getAt(i).StandHall.toLowerCase().indexOf(query) >= 0 ||
+                                that.siteeventsdata.getAt(i).StandNo.toLowerCase().indexOf(query) >= 0 ||
+                                that.siteeventsdata.getAt(i).FairMandant_Email.toLowerCase().indexOf(query) >= 0) {
                                 suggestionCollection.appendQuerySuggestion(that.siteeventsdata.getAt(i).Firmenname);
                             }
                         }
+                    } else {
+                        that.loadData(AppData.getRecordId("VeranstaltungTermin"));
                     }
                     Log.ret(Log.l.trace);
                 },
@@ -550,7 +590,58 @@
                     Log.ret(Log.l.trace);
                 },
                 clickExport: function (event) {
-                    Log.call(Log.l.trace, "Contact.Controller.");
+                    Log.call(Log.l.trace, "SiteEvents.Controller.");
+                    /*if (AppBar.barControl && !AppBar.barControl.opened) {
+                        AppBar.barControl.open();
+                    } else {
+                        AppBar.barControl.close();
+                    }*/
+                    //AppBar.busy = true;
+                    Log.ret(Log.l.trace);
+                },
+                clickExportRegistrationList: function (event) {
+                    Log.call(Log.l.trace, "SiteEvents.Controller.");
+                    AppBar.busy = true;
+                    AppBar.triggerDisableHandlers();
+                    WinJS.Promise.timeout(0).then(function () {
+                        that.exportData(event.target.textContent);
+                    }).then(function () {
+                        var registrations = pageElement.querySelector("#registrations.listview");
+                        if (registrations && registrations.style) {
+                            var contentarea = pageElement.querySelector(".contentarea");
+                            var contentheader = pageElement.querySelector(".content-header");
+                            var progressbar = pageElement.querySelector("#progress");
+                            var filter = pageElement.querySelector("#restrictions");
+                            if (contentarea) {
+                                var height = contentarea.clientHeight;
+                                if (contentheader) {
+                                    height = height - contentheader.clientHeight;
+                                }
+                                if (progressbar) {
+                                    height = height - 80;
+                                }
+                                if (filter) {
+                                    if (that.binding.showFilter) {
+                                        height = height - filter.clientHeight;
+                                    }
+                                }
+                                registrations.style.height = height.toString() + "px";
+                            }
+                        }
+                    });
+                    Log.ret(Log.l.trace);
+                },
+                clickExportLockedDeviceList: function(event) {
+                    Log.call(Log.l.trace, "SiteEvents.Controller.");
+                    AppBar.busy = true;
+                    AppBar.triggerDisableHandlers();
+                    WinJS.Promise.timeout(0).then(function() {
+                        that.exportData(event.target.textContent);
+                    });
+                    Log.ret(Log.l.trace);
+                },
+                clickExportQrcode: function (event) {
+                    Log.call(Log.l.trace, "SiteEvents.Controller.");
                     AppBar.busy = true;
                     AppBar.triggerDisableHandlers();
                     WinJS.Promise.timeout(0).then(function() {
@@ -606,6 +697,40 @@
                     } else {
                         return true;
                     }
+
+                },
+                clickExportQrcode: function() {
+                    if (AppData.getRecordId("VeranstaltungTermin")) {
+                        if (AppBar.busy) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    } else {
+                        return true;
+                    }
+                },
+                clickExportRegistrationList: function () {
+                    //if (AppData.getRecordId("VeranstaltungTermin")) {
+                        if (AppBar.busy) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    //} else {
+                    //    return true;
+                    //}
+                },
+                clickExportLockedDeviceList: function() {
+                    //if (AppData.getRecordId("VeranstaltungTermin")) {
+                        if (AppBar.busy) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    //} else {
+                    //    return true;
+                    //}
                 }
             }
 
