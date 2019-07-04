@@ -958,6 +958,8 @@
                                             } else {
                                                 AppData._photoData = null;
                                             }
+                                        } else {
+                                            AppData._photoData = null;
                                         }
                                     } else {
                                         AppData._photoData = null;
