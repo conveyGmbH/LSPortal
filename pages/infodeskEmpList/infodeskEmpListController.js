@@ -303,7 +303,18 @@
                             var docContent = doc.OvwContentDOCCNT3 ? doc.OvwContentDOCCNT3 : doc.DocContentDOCCNT1;
                             if (docContent) {
                                 var sub = docContent.search("\r\n\r\n");
-                                item.OvwContentDOCCNT3 = "data:image/jpeg;base64," + docContent.substr(sub + 4);
+                                if (sub >= 0) {
+                                    var data = docContent.substr(sub + 4);
+                                    if (data && data !== "null") {
+                                        item.OvwContentDOCCNT3 = "data:image/jpeg;base64," + data;
+                                    } else {
+                                        item.OvwContentDOCCNT3 = "";
+                                    }
+                                } else {
+                                    item.OvwContentDOCCNT3 = "";
+                                }
+                            } else {
+                                item.OvwContentDOCCNT3 = "";
                             }
                             that.firstDocsIndex = i + 1;
                             that.firstEmployeesIndex = index + 1;
@@ -324,7 +335,16 @@
                                    : item.DocContentDOCCNT1;
                             if (docContent) {
                                 var sub = docContent.search("\r\n\r\n");
-                                employee.OvwContentDOCCNT3 = "data:image/jpeg;base64," + docContent.substr(sub + 4);
+                                if (sub >= 0) {
+                                    var data = docContent.substr(sub + 4);
+                                    if (data && data !== "null") {
+                                        employee.OvwContentDOCCNT3 = "data:image/jpeg;base64," + data;
+                                    } else {
+                                        employee.OvwContentDOCCNT3 = "";
+                                    }
+                                } else {
+                                    employee.OvwContentDOCCNT3 = "";
+                                }
                             } else {
                                 employee.OvwContentDOCCNT3 = "";
                             }

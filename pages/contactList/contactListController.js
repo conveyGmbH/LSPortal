@@ -331,8 +331,13 @@
                                 var docContent = doc.OvwContentDOCCNT3;
                                 if (docContent) {
                                     var sub = docContent.search("\r\n\r\n");
-                                    if (sub) {
-                                        item.OvwContentDOCCNT3 = imgSrcDataType + docContent.substr(sub + 4);
+                                    if (sub >= 0) {
+                                        var data = docContent.substr(sub + 4);
+                                        if (data && data !== "null") {
+                                            item.OvwContentDOCCNT3 = imgSrcDataType + data;
+                                        } else {
+                                            item.OvwContentDOCCNT3 = "";
+                                        }
                                     } else {
                                         item.OvwContentDOCCNT3 = "";
                                     }
@@ -356,8 +361,13 @@
                                 var docContent = item.OvwContentDOCCNT3;
                                 if (docContent) {
                                     var sub = docContent.search("\r\n\r\n");
-                                    if (sub) {
-                                        contact.OvwContentDOCCNT3 = imgSrcDataType + docContent.substr(sub + 4);
+                                    if (sub >= 0) {
+                                        var data = docContent.substr(sub + 4);
+                                        if (data && data !== "null") {
+                                            contact.OvwContentDOCCNT3 = imgSrcDataType + data;
+                                        } else {
+                                            contact.OvwContentDOCCNT3 = "";
+                                        }
                                     } else {
                                         contact.OvwContentDOCCNT3 = "";
                                     }

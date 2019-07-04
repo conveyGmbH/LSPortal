@@ -163,8 +163,8 @@
                                     var sub = docContent.search("\r\n\r\n");
                                     if (sub >= 0) {
                                         var newContent = docContent.substr(sub + 4);
-                                        if (!that.binding.photoData ||
-                                            that.binding.photoData !== newContent) {
+                                        if (newContent && newContent !== "null" &&
+                                            (!that.binding.photoData || that.binding.photoData !== newContent)) {
                                             that.binding.photoData = newContent;
                                             showPhoto();
                                         }
@@ -312,8 +312,8 @@
                                     var sub = docContent.search("\r\n\r\n");
                                     if (sub >= 0) {
                                         var newContent = docContent.substr(sub + 4);
-                                        if (!that.binding.photoData ||
-                                            that.binding.photoData !== newContent) {
+                                        if (newContent && newContent !== "null" &&
+                                            (!that.binding.photoData || that.binding.photoData !== newContent)) {
                                             that.binding.photoData = newContent;
                                             showPhoto();
                                         }

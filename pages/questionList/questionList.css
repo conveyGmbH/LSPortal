@@ -441,3 +441,8 @@ textarea:-ms-input-placeholder { font-style:italic; } /* ie */
 .view-size-small .list-question-content {
     padding-left: 9px;
 }
+
+.view-size-small .questionnaire-content span.checkbox,
+.view-size-small .questionnaire-content span.radio {
+    padding-top: 4px;
+}

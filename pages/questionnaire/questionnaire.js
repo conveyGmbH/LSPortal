@@ -144,8 +144,7 @@
                                 }
                             }
                             if (navigator.appVersion &&
-                            (navigator.appVersion.indexOf("iPhone OS") >= 0 ||
-                                navigator.appVersion.indexOf("iPod OS") >= 0)) {
+                                (navigator.appVersion.indexOf("iPhone OS") >= 0 || navigator.appVersion.indexOf("iPod OS") >= 0)) {
                                 if (headerInner) {
                                     WinJS.Utilities.addClass(headerInner, "no-transform");
                                 }
@@ -181,9 +180,12 @@
                                         flipView.parentElement.removeChild(flipView);
                                     }
                                     docContainer.appendChild(flipView);
-                                    if (flipView.winControl) {
-                                        flipView.winControl.forceLayout();
-                                    }
+                                    WinJS.Promise.timeout(50).then(function() {
+                                        if (flipView.winControl) {
+                                            flipView.winControl.forceLayout();
+                                        }
+                                        that.updateLayout(element, viewState, lastViewState);
+                                    });
                                 }
                             } else {
                                 WinJS.Utilities.removeClass(element, "view-size-split");
@@ -193,9 +195,12 @@
                                         flipView.parentElement.removeChild(flipView);
                                     }
                                     imgFooterContainer.appendChild(flipView);
-                                    if (flipView.winControl) {
-                                        flipView.winControl.forceLayout();
-                                    }
+                                    WinJS.Promise.timeout(50).then(function() {
+                                        if (flipView.winControl) {
+                                            flipView.winControl.forceLayout();
+                                        }
+                                        that.updateLayout(element, viewState, lastViewState);
+                                    });
                                 }
                             }
                             WinJS.Utilities.removeClass(element, "view-size-small");

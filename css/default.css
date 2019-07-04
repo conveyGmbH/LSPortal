@@ -1471,3 +1471,47 @@ button.win-button {
 
 
 
+/*Styles used in the Item Template of Split-View doc area*/
+.overlaid-item-template {
+    width: 100%;
+}
+
+    .overlaid-item-template img {
+        position: absolute;
+        width: 100%;
+        height: auto;
+        bottom: 0;
+        left: 0;
+    }
+
+    .overlaid-item-template .overlay {
+        position: absolute;
+        background-color: rgba(0,0,0,0.65);
+        height: 20px;
+        padding: 20px 15px;
+        overflow: hidden;
+        width: 100%;
+        bottom: 0;
+        left: 0;
+    }
+
+        .overlaid-item-template .overlay .item-title {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+.img-footer-container {
+    width: 100%;
+    display: none;
+}
+
+.view-size-medium-small .img-footer-container {
+    display: inline;
+}
+
+.view-size-small .img-footer-container {
+    display: inline;
+}
+
+.view-size-split .img-footer-container {
+    display: none;
+}
