@@ -89,6 +89,17 @@
         updateLayout: function (element, viewState, lastViewState) {
             var ret = null;
             var that = this;
+            var refreshFlipViewDelayed = function(flipView) {
+                return WinJS.Promise.timeout(50).then(function() {
+                    return that.updateLayout(element, viewState, lastViewState);
+                }).then(function() {
+                    return WinJS.Promise.timeout(50).then(function() {
+                        if (flipView.winControl) {
+                            flipView.winControl.forceLayout();
+                        }
+                    });
+                });
+            }
             /// <param name="element" domElement="true" />
             Log.call(Log.l.u1, pageName + ".");
             // TODO: Respond to changes in viewState.
@@ -180,12 +191,7 @@
                                         flipView.parentElement.removeChild(flipView);
                                     }
                                     docContainer.appendChild(flipView);
-                                    WinJS.Promise.timeout(50).then(function() {
-                                        if (flipView.winControl) {
-                                            flipView.winControl.forceLayout();
-                                        }
-                                        that.updateLayout(element, viewState, lastViewState);
-                                    });
+                                    refreshFlipViewDelayed(flipView);
                                 }
                             } else {
                                 WinJS.Utilities.removeClass(element, "view-size-split");
@@ -195,12 +201,7 @@
                                         flipView.parentElement.removeChild(flipView);
                                     }
                                     imgFooterContainer.appendChild(flipView);
-                                    WinJS.Promise.timeout(50).then(function() {
-                                        if (flipView.winControl) {
-                                            flipView.winControl.forceLayout();
-                                        }
-                                        that.updateLayout(element, viewState, lastViewState);
-                                    });
+                                    refreshFlipViewDelayed(flipView);
                                 }
                             }
                             WinJS.Utilities.removeClass(element, "view-size-small");
