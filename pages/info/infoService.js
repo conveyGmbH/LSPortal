@@ -14,7 +14,7 @@
         },
         appInfoSpecView: {
             select: function(complete, error) {
-                Log.call(Log.l.trace, "benutzerView.");
+                Log.call(Log.l.trace, "appInfoSpecView.");
                 var ret = Info._appInfoSpecView.select(complete, error);
                 Log.ret(Log.l.trace);
                 return ret;

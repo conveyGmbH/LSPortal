@@ -37,7 +37,7 @@
                 that.binding.dataEmployee = newDataEmployee;
                 if (newDataEmployee.Login && newDataEmployee.Login.indexOf("@") > 0) {
                     var firstLoginPart = newDataEmployee.Login.substr(0, newDataEmployee.Login.indexOf("@"));
-                    var secondLoginPart = newDataEmployee.Login.substr(newDataEmployee.Login.indexOf("@"), newDataEmployee.Login.length - 1);
+                    var secondLoginPart = newDataEmployee.Login.substr(newDataEmployee.Login.lastIndexOf("@"), newDataEmployee.Login.length - 1);
                     that.binding.dataEmployee.LogInNameBeforeAtSymbole = firstLoginPart;
                     that.binding.dataEmployee.LogInNameAfterAtSymbole = secondLoginPart;
                 }
@@ -132,7 +132,7 @@
 
             var checkingReadonlyFlag = function() {
                 Log.call(Log.l.trace, "Employee.Controller.");
-                if (domain && (AppHeader.controller.binding.userData.SiteAdmin || AppHeader.controller.binding.userData.HasLocalEvents)) {
+                if (domain && (AppHeader.controller.binding.userData.SiteAdmin || !AppHeader.controller.binding.userData.HasLocalEvents)) {
                     domain.disabled = false;
                 } else {
                     domain.disabled = true;
@@ -156,6 +156,7 @@
                         AppBar.busy = true;
                         Log.print(Log.l.trace, "eployee saved");
                         var newEmployee = getEmptyDefaultValue(Employee.employeeView.defaultValue);
+                        //var newEmployee = copyByValue(Employee.employeeView.defaultValue);
                         Employee.employeeView.insert(function(json) {
                             AppBar.busy = false;
                             // this callback will be called asynchronously
@@ -163,15 +164,9 @@
                             Log.print(Log.l.info, "employeeView insert: success!");
                             // employeeView returns object already parsed from json file in response
                             if (json && json.d) {
+                                json.d.Login = Employee.employeeView.defaultValue.Login;
                                 that.setDataEmployee(json.d);
-                                /* Mitarbeiter Liste neu laden und Selektion auf neue Zeile setzen */
-                                var master = Application.navigator.masterControl;
-                                if (master && master.controller && master.controller.binding) {
-                                    master.controller.binding.employeeId = that.binding.dataEmployee.MitarbeiterVIEWID;
-                                    master.controller.loadData().then(function () {
-                                        master.controller.selectRecordId(that.binding.dataEmployee.MitarbeiterVIEWID);
-                                    });
-                                }
+                                that.binding.dataEmployee.LogInNameBeforeAtSymbole = "";
                             }
                         }, function(errorResponse) {
                             Log.print(Log.l.error, "error inserting employee");
@@ -180,6 +175,17 @@
                         }, newEmployee);
                     }, function (errorResponse) {
                         Log.print(Log.l.error, "error saving employee");
+                    }).then(function() {
+                        /* Mitarbeiter Liste neu laden und Selektion auf neue Zeile setzen */
+                        var master = Application.navigator.masterControl;
+                        if (master && master.controller && master.controller.binding) {
+                            master.controller.binding.employeeId = that.binding.dataEmployee.MitarbeiterVIEWID;
+                            master.controller.loadData().then(function () {
+                                //master.controller.loadData(master.controller.binding.employeeId).then(function () {
+                                master.controller.selectRecordId(master.controller.binding.employeeId);
+                                //});
+                            });
+                        }
                     });
                     Log.ret(Log.l.trace);
                 },
@@ -226,9 +232,9 @@
                     that.saveData(function (response) {
                         Log.print(Log.l.trace, "employee saved");
                         var master = Application.navigator.masterControl;
-                        if (master && master.controller && master.controller.binding) {
+                        if (master && master.controller && master.controller.binding && typeof master.controller.selectRecordId !== "undefined") {
                             master.controller.binding.employeeId = that.binding.dataEmployee.MitarbeiterVIEWID;
-                            master.controller.loadData(that.binding.dataEmployee.MitarbeiterVIEWID).then(function () {
+                            master.controller.loadData().then(function () {
                                 Log.print(Log.l.info, "master.controller.loadData: success!");
                                 master.controller.selectRecordId(that.binding.dataEmployee.MitarbeiterVIEWID);
                             });
@@ -270,8 +276,15 @@
                         pageElement.querySelector("#password2").value = "";
                     }
                     if (event.currentTarget.id === "loginFirstPart") {
-                        that.binding.dataEmployee.Login = event.currentTarget.value +
-                            that.binding.dataEmployee.LogInNameAfterAtSymbole;
+                        if (event.currentTarget.value && event.currentTarget.value.indexOf("@") > 0) {
+                            that.binding.dataEmployee.LogInNameBeforeAtSymbole = event.currentTarget.value.substr(0, event.currentTarget.value.indexOf("@"));
+                        } else {
+                            that.binding.dataEmployee.LogInNameBeforeAtSymbole = event.currentTarget.value;
+                        }
+                        that.binding.dataEmployee.Login = that.binding.dataEmployee.LogInNameBeforeAtSymbole + that.binding.dataEmployee.LogInNameAfterAtSymbole;
+                    }
+                    if (event.currentTarget.id === "domain") {
+                        that.binding.dataEmployee.Login = that.binding.dataEmployee.LogInNameBeforeAtSymbole + event.currentTarget.value;
                     }
                     Log.ret(Log.l.trace);
                 },
@@ -506,6 +519,17 @@
                                 // called asynchronously if ok
                                 Log.print(Log.l.info, "employeeData update: success!");
                                 AppBar.modified = false;
+                                var recordid = AppData.getRecordId("Mitarbeiter");
+                                if (recordid === dataEmployee.MitarbeiterVIEWID) {
+                                    AppData._persistentStates.privacyPolicyFlag = false;
+                                    if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
+                                        AppHeader.controller.binding.userData = {};
+                                        if (!AppHeader.controller.binding.userData.VeranstaltungName) {
+                                            AppHeader.controller.binding.userData.VeranstaltungName = "";
+                                        }
+                                    }
+                                    Application.navigateById("dbinit", event);
+                                } 
                                 var empRolesFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("empRoles"));
                                 if (empRolesFragmentControl && empRolesFragmentControl.controller) {
                                     empRolesFragmentControl.controller.saveData(function () {

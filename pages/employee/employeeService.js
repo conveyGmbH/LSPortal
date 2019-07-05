@@ -2,6 +2,7 @@
 /// <reference path="~/www/lib/convey/scripts/strings.js" />
 /// <reference path="~/www/lib/convey/scripts/logging.js" />
 /// <reference path="~/www/lib/convey/scripts/dataService.js" />
+/// <reference path="~/www/scripts/generalData.js" />
 
 (function () {
     "use strict";
@@ -41,7 +42,7 @@
             defaultValue: {
                 Vorname: "",
                 Nachname: "",
-                Login: "",
+                Login: AppHeader.controller.binding.userData.Login || "",
                 LogInNameBeforeAtSymbole: "",
                 LogInNameAfterAtSymbole: "", 
                 Password: "",

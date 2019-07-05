@@ -568,9 +568,9 @@
                 },
                 clickOk: function(event) {
                     Log.call(Log.l.trace, "Reporting.Controller.");
-                    if (AppBar.barControl && !AppBar.barControl.opened) {
+                    /*if (AppBar.barControl && !AppBar.barControl.opened) {
                         AppBar.barControl.open();
-                    }
+                    }*/
                     Log.ret(Log.l.trace);
                 },
                 clickExport: function(event) {
@@ -649,7 +649,7 @@
                 },
                 clickOk: function() {
                     var ret = true;
-                    if (!AppBar.busy && AppBar.barControl && !AppBar.barControl.opened) {
+                    if (!AppBar.busy) { // && AppBar.barControl && !AppBar.barControl.opened
                         ret = false;
                     }
                     return ret;
