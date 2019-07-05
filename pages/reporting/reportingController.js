@@ -9,9 +9,15 @@
 /// <reference path="~/www/pages/reporting/reportingService.js" />
 /// <reference path="~/www/pages/reporting/exportXlsx.js" />
 /// <reference path="~/www/fragments/reportingList/reportingListController.js" />
+/// <reference path="~/www/lib/OpenXml/scripts/jszip.js" />
+/// <reference path="~/www/lib/OpenXml/scripts/jszip-load.js" />
+/// <reference path="~/www/lib/OpenXml/scripts/jszip-inflate.js" />
+/// <reference path="~/www/lib/OpenXml/scripts/jszip-deflate.js" />
+/// <reference path="~/www/lib/OpenXml/scripts/FileSaver.js" />
 
 (function () {
     "use strict";
+    var b64 = window.base64js;
     WinJS.Namespace.define("Reporting", {
         controller: null,
         gesamtZahl: AppData.generalData.AnzahlKontakte
@@ -22,6 +28,8 @@
             Application.Controller.apply(this, [
                 pageElement, {
                     restriction: getEmptyDefaultValue(Reporting.defaultrestriction),
+                    restrictionPdf: getEmptyDefaultValue(Reporting.exportAudioDataView.defaultValue),
+                    dataContactAudio: getEmptyDefaultValue(Reporting.exportAudioDataView.defaultValue),
                     curOLELetterID: null,
                     progress: {
                         percent: 0,
@@ -44,6 +52,10 @@
             var erfasserID = pageElement.querySelector("#ErfasserIDReporting");
             var erfassungsdatum = pageElement.querySelector("#ReportingExcelErfassungsdatum.win-datepicker");
             var modifiedTs = pageElement.querySelector("#ModifiedTs.win-datepicker");
+            this.audiozip = null;
+            this.audioIddata = [];
+            this.nextUrl = null;
+            this.curAudioIdx = 0;
             
             var resultConverter = function(item, index) {
                 item.index = index;
@@ -193,6 +205,52 @@
             };
             this.templatecall = templatecall;
 
+            var addAudioToZip = function (filename, docContent) {
+                if (filename && docContent) {
+                    if (!that.audiozip) {
+                        that.audiozip = new JSZip();
+                    }
+                    that.audiozip.file(filename, docContent);
+                }
+            }
+            this.addAudioToZip = addAudioToZip;
+
+            var getAudioData = function () {
+                Log.call(Log.l.trace, "Reporting.Controller.");
+                AppData.setErrorMsg(that.binding);
+                var ret = new WinJS.Promise.as().then(function () {
+                    return Reporting.exportAudioDataView.select(function (json) {
+                        // this callback will be called asynchronously
+                        // when the response is available
+                        Log.print(Log.l.info, "exportAudioDataView select: success!");
+                        if (json && json.d && json.d.results && json.d.results.length > 0) {
+                            var results = json.d.results;
+                            that.audioIddata(results);
+                        }
+                        }, function (errorResponse) {
+                        Log.print(Log.l.error, "error selecting audiofiles");
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    }, {  });
+                });
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+            this.getAudioData = getAudioData;
+
+            var exportContactAudio = function (audioData) {
+                AppBar.busy = true;
+                for (var i = 0; i < audioData.length; i++) {
+                    var audioType = audioData[i].DocExt;
+                    var audioDataraw = audioData[i].DocContentDOCCNT1;
+                    var audioDataBase64 = audioDataraw;
+                    var audioDatac = that.base64ToBlob(audioDataBase64, audioType);
+                    var audioName = audioData[i].DateiName;
+                    that.addAudioToZip(audioName, audioDatac);
+                }
+                AppBar.busy = false;
+            }
+            this.exportContactAudio = exportContactAudio;
+            
             var disableReportingList = function(disableFlag) {
                 var reportingListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("ReportingList"));
                 if (reportingListFragmentControl && 
@@ -201,6 +259,121 @@
                 }
             }
             this.disableReportingList = disableReportingList;
+
+            var base64ToBlob = function (base64Data, contentType) {
+                contentType = contentType || '';
+                var sliceSize = 1024;
+                var byteCharacters = atob(base64Data);
+                var bytesLength = byteCharacters.length;
+                var slicesCount = Math.ceil(bytesLength / sliceSize);
+                var byteArrays = new Array(slicesCount);
+
+                for (var sliceIndex = 0; sliceIndex < slicesCount; ++sliceIndex) {
+                    var begin = sliceIndex * sliceSize;
+                    var end = Math.min(begin + sliceSize, bytesLength);
+
+                    var bytes = new Array(end - begin);
+                    for (var offset = begin, i = 0; offset < end; ++i, ++offset) {
+                        bytes[i] = byteCharacters[offset].charCodeAt(0);
+                    }
+                    byteArrays[sliceIndex] = new Uint8Array(bytes);
+                }
+                return new Blob(byteArrays, { type: contentType });
+            }
+            this.base64ToBlob = base64ToBlob;
+
+            var getAudioIdDaten = function () {
+                that.audiozip = null;
+                that.audioIddata = [];
+                that.nextUrl = null;
+                that.curaudioIdx = 0;
+                Log.call(Log.l.trace, "PDFExport.Controller.");
+                that.binding.restrictionAudio = that.setRestriction();
+                that.showDateRestrictions();
+                AppData.setErrorMsg(that.binding);
+                var ret = Reporting.exportAudioDataView.select(function (json) {
+                        Log.print(Log.l.trace, "exportTemplate: success!");
+                        if (json && json.d && json.d.results && json.d.results.length > 0) {
+                            // store result for next use
+                            that.nextUrl = Reporting.exportAudioDataView.getNextUrl(json);
+                            that.audioIddata = json.d.results;
+                            that.exportContactAudio(json.d.results);
+                        }
+                        that.getNextAudioData();
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    },
+                    that.binding.restrictionAudio
+                );
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+            this.getAudioIdDaten = getAudioIdDaten;
+
+            var getNextAudioData = function () {
+                var ret;
+                Log.call(Log.l.trace, "PDFExport.Controller.");
+                if (that.nextUrl) {
+                    var nextUrl = that.nextUrl;
+                    Log.print(Log.l.trace, "nextUrl=%d" + nextUrl);
+                    that.nextUrl = null;
+                    ret = Reporting.exportAudioDataView.selectNext(function (json) {
+                        // this callback will be called asynchronously
+                        // when the response is available
+                        Log.print(Log.l.trace, "exportAudioDataView selectNext: success!");
+                        // employeeView returns object already parsed from json file in response
+                        if (json && json.d && json.d.results && json.d.results.length > 0) {
+                            that.nextUrl = Reporting.exportAudioDataView.getNextUrl(json);
+                            that.audioIddata = json.d.results;
+                        }
+                        that.getNextPdfData();
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        that.disablePdfExportList(false);
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    }, that.pdfIddata, nextUrl);
+                } else if (++that.curAudioIdx < that.audioIddata.length) {
+                    AppData.setErrorMsg(that.binding);
+                    var recordId = that.audioIddata[that.curaudioIdx].KontaktNotizVIEWID;
+                    Log.print(Log.l.trace, "that.audioIddata[%d" + that.curaudioIdx + "].KontaktNotizVIEWID=" + recordId + " audioIddata.length=" + that.audioIddata.length);
+                    ret = Reporting.exportAudioDataView.select(function (json) {
+                        Log.print(Log.l.trace, "exportAudioDataView: success!");
+                        if (json && json.d) {
+                            // store result for next use
+                            that.exportContactAudio(json.d.results);
+                        }
+                        that.getNextAudioData();
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        that.disablePdfExportList(false);
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    }, recordId);
+                } else if (that.audioIddata.length > 0) {
+                    Log.print(Log.l.trace, "collected all, audioIddata.length=" + that.audioIddata.length);
+                    that.audiozip.generateAsync({
+                        blob: true,
+                        base64: false,
+                        compression: "STORE",
+                        type: "blob"
+                    }).then(function (blob) {
+                        saveAs(blob, "AudioExport.zip");
+                        //location.href = "data:application/zip;base64," + pdfData;
+                        that.disablePdfExportList(false);
+                        //that.binding.progress.show = null;
+                    });
+                    ret = WinJS.Promise.as();
+                } else {
+                    Log.print(Log.l.trace, "no data");
+                    ret = WinJS.Promise.as();
+                }
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+            this.getNextAudioData = getNextAudioData;
 
             var exportData = function(exportselection) {
                 Log.call(Log.l.trace, "Reporting.Controller.");
@@ -586,6 +759,11 @@
                             return that.exportData(exportselection);
                         });
                     }
+                    Log.ret(Log.l.trace);
+                },
+                clickExportAudio: function (event) {
+                    Log.call(Log.l.trace, "Reporting.Controller.");
+                    that.getAudioIdDaten();
                     Log.ret(Log.l.trace);
                 },
                 clickChangeUserState: function(event) {

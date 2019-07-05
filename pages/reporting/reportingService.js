@@ -574,6 +574,38 @@
             showErfassungsdatum: false,
             ModifiedTs: null,
             showModifiedTS: false
+        },
+        _exportAudioDataView: {
+            get: function () {
+                return AppData.getFormatView("KontaktNotiz", 20584);
+            }
+        },
+        exportAudioDataView: {
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, "Reporting.");
+                var ret = Reporting._exportAudioDataView.select(complete, error, restriction);
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getNextUrl: function (response) {
+                Log.call(Log.l.trace, "Reporting.");
+                var ret = Reporting._exportAudioDataView.getNextUrl(response);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            selectNext: function (complete, error, response, nextUrl) {
+                Log.call(Log.l.trace, "Reporting.");
+                var ret = Reporting._exportAudioDataView.selectNext(complete, error, response, nextUrl);
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            defaultValue: {
+                DocExt: "",
+                DateName: "",
+                DocContentDOCCNT1: ""
+            }
         }
     });
 })();

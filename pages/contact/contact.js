@@ -27,6 +27,7 @@
             var commandList = [
                 { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" },
                 { id: "clickExport", label: getResourceText("command.exportPdf"), tooltip: getResourceText("tooltip.exportPdf"), section: "primary", svg: "document_pdf" },
+                { id: "clickExportAudio", label: getResourceText("command.exportAudio"), tooltip: getResourceText("tooltip.exportAudio"), section: "primary", svg: "music" },
                 //{ id: "clickNew", label: getResourceText("command.new"), tooltip: getResourceText("tooltip.createNewContact"), section: "primary", svg: "user_plus" },
                 { id: "clickRotateLeft", label: getResourceText("command.rotate"), tooltip: getResourceText("tooltip.rotateLeft"), section: "primary", svg: "rotate_left" },
                 { id: "clickRotateRight", label: getResourceText("command.rotate"), tooltip: getResourceText("tooltip.rotateRight"), section: "primary", svg: "rotate_right" },

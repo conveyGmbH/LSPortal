@@ -43,6 +43,7 @@
 	"command.lockedDeviceList" : "Gesperrte Geräteliste",
 	"command.resetRestriction" : "Zurücksetzen",
 	"command.copyQuestionnaire" : "Kopieren",
+    "command.exportAudio" : "Audio exportieren",
 
     "tooltip.backward"      : "Zurück blättern",
     "tooltip.edit"          : "Aktuellen Datensatz bearbeiten",
@@ -91,6 +92,7 @@
     "tooltip.deleteExhibitor" : "Austeller löschen",
 	"tooltip.newNachbestellungen": "Nachbestellung",
     "tooltip.testmailopen": "Testmail",
+    "tooltip.exportAudio": "Audio exportieren",
 
     "start.title"           : "Startseite",
     "start.comment"         : "Verwende die Schaltflächen auf dieser Seite um auf weitere Seiten zu gehen!",
@@ -541,6 +543,8 @@
 	"reporting.pdfExportPath" : "Export-Link",
     "reportingColumnList.title"       : "Benutzerdefinierter Export",
 	"reporting.outOf"       : "von",
+    "reporting.audioexport"       : "Export von:",
+    "reporting.audiobutton"       : "Audiodaten",
 
     "employee.title"        : "Benutzerkonten",
     "employee.firstname"    : "Vorname",

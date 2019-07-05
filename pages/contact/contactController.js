@@ -34,6 +34,7 @@
             Log.call(Log.l.trace, "Contact.Controller.");
             Application.Controller.apply(this, [pageElement, {
                 dataContact: getEmptyDefaultValue(Contact.contactView.defaultValue),
+                dataContactAudio: getEmptyDefaultValue(Contact.exportAudioDataView.defaultValue),
                 InitAnredeItem: { InitAnredeID: 0, TITLE: "" },
                 InitLandItem: { InitLandID: 0, TITLE: "" },
                 showPhoto: false,
@@ -49,6 +50,7 @@
 
             //pdf exists flag
             var pdfExists = false;
+            var audioExists = false;
 
             // show business card photo
             var imageOffsetX = 0;
@@ -428,6 +430,52 @@
                 Log.ret(Log.l.trace);
             }
             this.setRecordId = setRecordId;
+            
+            var getAudioData = function () {
+                Log.call(Log.l.trace, "Contact.Controller.");
+                AppData.setErrorMsg(that.binding);
+                var ret;
+                var recordId = getRecordId();
+                if (recordId) {
+                    AppBar.busy = true;
+                    ret = Contact.exportAudioDataView.select(function (json) {
+                        Log.print(Log.l.trace, "exportAudioDataView: success!");
+                        if (json && json.d) {
+                            var results = json.d.results;
+                            var resultcount = results.length;
+                            that.binding.dataContactAudio = results;
+                            if (resultcount === 0) {
+                                Log.print(Log.l.trace, "No Audio-File found!");
+                                audioExists = false;
+                            } else {
+                                Log.print(Log.l.trace, "Audio-File found!");
+                                audioExists = true;
+                            }
+                            AppBar.busy = false;
+                        }
+                    }, function (errorResponse) {
+                        AppBar.busy = false;
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    }, { KontaktID: recordId });
+                }
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+            this.getAudioData = getAudioData;
+
+            var exportContactAudio = function (audioData) {
+                AppBar.busy = true;
+                for (var i = 0; i < audioData.length; i++) {
+                    var audioType = audioData[i].DocExt;
+                    var audioDataraw = audioData[i].DocContentDOCCNT1;
+                    var audioDataBase64 = audioDataraw;
+                    var audioDatac = that.base64ToBlob(audioDataBase64, audioType);
+                    var audioName = audioData[i].DateiName;
+                    saveAs(audioDatac, audioName);
+                }
+                AppBar.busy = false;
+            }
+            this.exportContactAudio = exportContactAudio;
 
             var checkOnPdf = function() {
                 Log.call(Log.l.trace, "Contact.Controller.");
@@ -569,6 +617,11 @@
                 clickExport: function (event) {
                     Log.call(Log.l.trace, "Contact.Controller.");
                     that.exportContactPdf();
+                    Log.ret(Log.l.trace);
+                },
+                clickExportAudio: function() {
+                    Log.call(Log.l.trace, "Contact.Controller.");
+                    that.exportContactAudio(that.binding.dataContactAudio);
                     Log.ret(Log.l.trace);
                 },
                 clickNew: function(event){
@@ -740,6 +793,13 @@
                 },
                 clickExport: function() {
                     if (pdfExists === true) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                },
+                clickExportAudio: function () {
+                    if (audioExists === true) {
                         return false;
                     } else {
                         return true;
@@ -919,6 +979,7 @@
                                 }
                                 loadInitSelection();
                                 that.checkOnPdf();
+                                that.getAudioData();
                             }
                         }, function (errorResponse) {
                             AppData._photoData = null;

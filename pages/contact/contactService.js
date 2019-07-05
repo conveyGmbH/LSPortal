@@ -114,6 +114,25 @@
             defaultValue: {
 
             }
+        },
+        _exportAudioDataView: {
+            get: function () {
+                return AppData.getFormatView("KontaktNotiz", 20584);
+            }
+        },
+        exportAudioDataView: {
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, "PDFExport.");
+                var ret = Contact._exportAudioDataView.select(complete, error, restriction);
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            defaultValue: {
+                DocExt: "",
+                DateName: "",
+                DocContentDOCCNT1 : ""
+            }
         }
     });
 })();

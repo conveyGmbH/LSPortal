@@ -43,6 +43,7 @@
 	"command.lockedDeviceList" : "Elenco dispositivi bloccati",
 	"command.resetRestriction" : "Elimina",
     "command.copyQuestionnaire" : "Copia",
+    "command.exportAudio" : "Esporta audio",
 
     "tooltip.backward"      : "Pagina precedente",
     "tooltip.edit"          : "Modifica Record attuale",
@@ -91,6 +92,7 @@
     "tooltip.deleteExhibitor" : "Elimina espositore",
     "tooltip.newNachbestellungen": "Riordinare",
     "tooltip.testmailopen": "Testmail",
+    "tooltip.exportAudio": "Esporta audio",
 
     "start.title"           : "Pagina iniziale",
     "start.comment"         : "Utilizzate i pulsanti su questa pagina per muoversi tra le pagine!",
@@ -539,6 +541,8 @@
     "reporting.pdfExportPath" : "Esportazione link",
     "reportingColumnList.title"       : "Costume Export",
 	"reporting.outOf": "su",
+    "reporting.audioexport"       : "Export di:",
+    "reporting.audiobutton"       : "I dati audio",
 
     "employee.title"        : "Utenti",
     "employee.firstname"    : "Nome",
