@@ -87,6 +87,9 @@
             Log.ret(Log.l.trace);
         },
         updateLayout: function (element, viewState, lastViewState) {
+            /// <param name="element" domElement="true" />
+            Log.call(Log.l.u1, pageName + ".");
+            // TODO: Respond to changes in viewState.
             var ret = null;
             var that = this;
             var refreshFlipViewDelayed = function(flipView) {
@@ -100,9 +103,6 @@
                     });
                 });
             }
-            /// <param name="element" domElement="true" />
-            Log.call(Log.l.u1, pageName + ".");
-            // TODO: Respond to changes in viewState.
             if (element && !that.inResize) {
                 that.inResize = 1;
                 ret = WinJS.Promise.timeout(0).then(function () {
