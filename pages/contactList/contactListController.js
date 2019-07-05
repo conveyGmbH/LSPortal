@@ -749,6 +749,47 @@
                 };
                 this.loadData = loadData;
 
+                var deleteContactLineInList = function () {
+                    var selectedItem = listView.winControl.currentItem;
+                    var index = selectedItem.index;
+                    var recordId;
+                    var prevItem;
+                    var prevIndex;
+                    if (index > 0) {
+                        prevItem = that.contacts.getAt(index - 1);
+                        prevIndex = index - 1;
+                        recordId = prevItem.KontaktVIEWID;
+                    } else {
+                        //that.binding.dataContact.KontaktVIEWID = 0;
+                        recordId = 0;
+                        index = 0;
+                        prevIndex = 0;
+                    }
+
+                    AppData.setRecordId("Kontakt", recordId);
+
+                    if (that.contacts.length !== 1) {
+                        that.contacts.splice(index, 1);
+                    } else {
+                        that.contacts.length = 0;
+                        AppData.setRecordId("Kontakt", 0);
+                        handlePageEnable(null);
+                        // "leeren" Kontakt laden
+                        AppBar.scope.loadData();
+                    }
+                    if (recordId) {
+                        listView.winControl.selection.set(prevIndex).done(function() {
+                            WinJS.Promise.timeout(50).then(function() {
+                                that.scrollToRecordId(recordId);
+                            });
+                        });
+                    } else {
+                        // Liste neu laden bei leer
+                        that.loadData();
+                    }
+                }
+                this.deleteContactLineInList = deleteContactLineInList;
+
                 that.processAll().then(function () {
                     Log.print(Log.l.trace, "Binding wireup page complete");
                     return that.loadData();

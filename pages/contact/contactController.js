@@ -528,7 +528,7 @@
                         }, function (json) {
                             Log.print(Log.l.info, "call success! ");
                             var master = Application.navigator.masterControl;
-                            master.controller.loadData();
+                            master.controller.deleteContactLineInList();
                         }, function (error) {
                             Log.print(Log.l.error, "call error");
                         });
