@@ -61,8 +61,9 @@
                          class="listview win-selectionstylefilled"
                          data-win-control="WinJS.UI.ListView"
                          data-win-options="{
-                                itemTemplate: select('.employeeList-template'),
-                                footer: select('.list-footer')
+                             layout : { type: WinJS.UI.ListLayout },
+                             itemTemplate: select('.employeeList-template'),
+                             footer: select('.list-footer')
                          }">
                     </div>
                 </div>

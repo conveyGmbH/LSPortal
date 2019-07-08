@@ -87,9 +87,10 @@
                          class="listview win-selectionstylefilled"
                          data-win-control="WinJS.UI.ListView"
                          data-win-options="{
-                                itemTemplate: select('.infodeskEmployeeList-template'),
-                                header: select('.list-header'),
-                                footer: select('.list-footer')
+                             layout : { type: WinJS.UI.ListLayout },
+                             itemTemplate: select('.infodeskEmployeeList-template'),
+                             header: select('.list-header'),
+                             footer: select('.list-footer')
                          }">
                     </div>
                 </div>
