@@ -20,7 +20,7 @@
                 isCameraVisible: !AppData._persistentStates.hideCameraScan,
                 isBarcodeScanVisible: !AppData._persistentStates.hideBarcodeScan,
                 isPrivacyPolicySVGVisible: AppData._persistentStates.privacyPolicySVGVisible,
-                is1Dor2DVisible: AppData._persistentStates.hideQrCode
+                showQRCode: AppData._persistentStates.showQRCode
             }, commandList]);
 
             var that = this;
@@ -93,13 +93,6 @@
                     case "showBarcodeScan":
                         pOptionTypeId = 23;
                         that.binding.isBarcodeScanVisible = checked;
-                        if (checked) {
-                            /*that.binding.dataEvent.DatenschutzText = "";
-                            that.binding.dataEvent.DatenschutzSVG = null;*/
-                        } else {
-                            that.binding.is1Dor2DVisible = false;
-                            AppData._persistentStates.hideQrCode = false;
-                        }
                         AppData._persistentStates.hideBarcodeScan = !checked;
                         break;
                     case "showCamera":
@@ -122,10 +115,10 @@
                         AppData._persistentStates.privacyPolicySVGVisible = checked;
                         hidePageItem = false;
                         break;
-                    case "show1Dor2D":
+                    case "showQRCode":
                         pOptionTypeId = 38;
-                        that.binding.is1Dor2DVisible = checked;
-                        AppData._persistentStates.hideQrCode = !checked;
+                        that.binding.showQRCode = checked;
+                        AppData._persistentStates.showQRCode = !checked;
                         hidePageItem = false;
                         break;
                 }

@@ -543,9 +543,9 @@
                     break;
                 case 38:
                     if (item.LocalValue === "1") {
-                        AppData._persistentStates.hideQrCode = true;
+                        AppData._persistentStates.showQRCode = true;
                     } else {
-                        AppData._persistentStates.hideQrCode = false;
+                        AppData._persistentStates.showQRCode = false;
                     }
                     break;
                 default:
