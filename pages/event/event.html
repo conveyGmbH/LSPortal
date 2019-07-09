@@ -98,17 +98,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="field_line field_line_even" data-win-bind="style.display: isBarcodeScanVisible Binding.Converter.toDisplay">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'event.show2D-Code'}"></span>
-                            <span class="label landscape_only" data-win-res="{textContent: 'event.show2D-Code'}"></span>
-                            <div class="input_field toggle-switch-parent">
-                                <div id="showQRCode" class="input_field"
-                                     data-win-control="WinJS.UI.ToggleSwitch"
-                                     data-win-bind="winControl.checked: showQRCode; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                     onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
-                                </div>
-                            </div>
-                        </div>
                         <div class="line-separator"></div>
                         <div class="field_line field_line_odd" data-win-bind="style.display: isSketchVisible Binding.Converter.toDisplayNone">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'event.showHideCameraQuestionnaire'}"></span>
@@ -117,6 +106,37 @@
                                 <div id="showCameraQuestionaire" class="input_field"
                                      data-win-control="WinJS.UI.ToggleSwitch"
                                      data-win-bind="winControl.checked: isCameraQuestionnaireVisible; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                                     onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="header-separator float-left"></div>
+                        <div class="content-header float-left">
+                            <div class="half-circle half-circle-textcolor">&nbsp;</div>
+                            <div class="idAndDate win-type-caption">
+                                <span class="id-field"></span>
+                                <span class="caption-field" data-win-res="{textContent: 'event.displayOptions'}"></span>
+                                <span class="date-field"></span>
+                            </div>
+                        </div>
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'event.showNameInHeader'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'event.showNameInHeader'}"></span>
+                            <div class="input_field toggle-switch-parent">
+                                <div id="showNameInHeader" class="input_field"
+                                     data-win-control="WinJS.UI.ToggleSwitch"
+                                     data-win-bind="winControl.checked: showNameInHeader; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                                     onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field_line field_line_even" data-win-bind="style.display: isBarcodeScanVisible Binding.Converter.toDisplay">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'event.show2D-Code'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'event.show2D-Code'}"></span>
+                            <div class="input_field toggle-switch-parent">
+                                <div id="showQRCode" class="input_field"
+                                     data-win-control="WinJS.UI.ToggleSwitch"
+                                     data-win-bind="winControl.checked: showQRCode; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
                                      onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
                                 </div>
                             </div>

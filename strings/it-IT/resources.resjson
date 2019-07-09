@@ -490,6 +490,8 @@
 	"event.privacypolicy"   : "Schizzo della privacy",
 	"event.privacyPolicyText" : "Testo sulla privacy",
 	"event.privacyPolicyStandartText" : "Con la presente confermo che i miei dati sono raccolti e trattati in base al GDPR",
+    "event.displayOptions" : "Impostazioni di visualizzazione",
+	"event.showNameInHeader" : "Nome nell'intestazione",
 
     "optQuestionList.title"   : "opzionale Domande/Risposte",
     "optQuestionList.count"   : "Numero",

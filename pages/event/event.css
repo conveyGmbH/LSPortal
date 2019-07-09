@@ -14,6 +14,7 @@
 .toggle-switch-parent {
     height: 50px;
 }
+#showNameInHeader .win-toggleswitch-header,
 #showQRCode .win-toggleswitch-header,
 #nachbearbeitetFlagAutoSetToNull .win-toggleswitch-header,
 #showPrivacyPolicySVG .win-toggleswitch-header,

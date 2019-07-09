@@ -490,6 +490,8 @@
     "event.privacypolicy"   : "Privacypolicynote",
 	"event.privacyPolicyText" : "Privacypolicy",
 	"event.privacyPolicyStandartText" : "I hereby confirm that my data is collected and processed according to the GDPR",
+    "event.displayOptions" : "Display options",
+    "event.showNameInHeader" : "Name in header",
 
 	"optQuestionList.title"   : "Optional Questions/Answers",
     "optQuestionList.count"   : "Count",

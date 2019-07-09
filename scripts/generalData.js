@@ -190,6 +190,7 @@
                                 AppHeader.controller && AppHeader.controller.binding) {
                                 AppHeader.controller.binding.userData = AppData._userData;
                                 AppHeader.controller.binding.userMessagesDataCount = AppData._userMessagesData.MessagesCounter;
+                                AppHeader.controller.binding.showNameInHeader = AppData._persistentStates.showNameInHeader;
                                 AppHeader.controller.loadData();
                             }
                             if (typeof AppBar === "object" && AppBar.scope) {

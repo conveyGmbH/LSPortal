@@ -20,7 +20,8 @@
                 isCameraVisible: !AppData._persistentStates.hideCameraScan,
                 isBarcodeScanVisible: !AppData._persistentStates.hideBarcodeScan,
                 isPrivacyPolicySVGVisible: AppData._persistentStates.privacyPolicySVGVisible,
-                showQRCode: AppData._persistentStates.showQRCode
+                showQRCode: AppData._persistentStates.showQRCode,
+                showNameInHeader: AppData._persistentStates.showNameInHeader
             }, commandList]);
 
             var that = this;
@@ -76,33 +77,38 @@
                 Log.call(Log.l.trace, "Settings.Controller.", "toggleId=" + toggleId + " checked=" + checked);
                 var pOptionTypeId = null;
                 var pageProperty = null;
-                var hidePageItem = true;
+                var hidePageItem = false;
                 switch (toggleId) {
                     case "showQuestionnaire":
                         pOptionTypeId = 20;
                         pageProperty = "questionnaire";
                         that.binding.isQuestionnaireVisible = checked;
                         AppData._persistentStates.hideQuestionnaire = !checked;
+                        hidePageItem = true;
                         break;
                     case "showSketch":
                         pOptionTypeId = 21;
                         pageProperty = "sketch";
                         that.binding.isSketchVisible = checked;
                         AppData._persistentStates.hideSketch = !checked;
+                        hidePageItem = true;
                         break;
                     case "showBarcodeScan":
                         pOptionTypeId = 23;
                         that.binding.isBarcodeScanVisible = checked;
                         AppData._persistentStates.hideBarcodeScan = !checked;
+                        hidePageItem = true;
                         break;
                     case "showCamera":
                         pOptionTypeId = 24;
                         that.binding.isCameraVisible = checked;
                         AppData._persistentStates.hideCameraScan = !checked;
+                        hidePageItem = true;
                         break;
                     case "showPrivacyPolicySVG":
                         pOptionTypeId = 34;
                         that.binding.isPrivacyPolicySVGVisible = checked;
+                        AppData._persistentStates.privacyPolicySVGVisible = checked;
                         if (!checked) {
                             that.binding.dataEvent.DatenschutzText = "";
                             that.binding.dataEvent.DatenschutzSVG = null;
@@ -112,14 +118,19 @@
                         if (!AppBar.modified) {
                             AppBar.modified = true;
                         }
-                        AppData._persistentStates.privacyPolicySVGVisible = checked;
-                        hidePageItem = false;
                         break;
                     case "showQRCode":
                         pOptionTypeId = 38;
                         that.binding.showQRCode = checked;
-                        AppData._persistentStates.showQRCode = !checked;
-                        hidePageItem = false;
+                        AppData._persistentStates.showQRCode = checked;
+                        break;
+                    case "showNameInHeader":
+                        pOptionTypeId = 39;
+                        that.binding.showNameInHeader = checked;
+                        AppData._persistentStates.showNameInHeader = checked;
+                        WinJS.Promise.timeout(0).then(function() {
+                            AppData.getUserData();
+                        });
                         break;
                 }
                 if (pOptionTypeId) {
