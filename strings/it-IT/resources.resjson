@@ -230,6 +230,10 @@
     "contactList.ID"        : "ID",
     "contactList.captureType"  : "Acquisizione",
     "contactList.editer"    : "Autore",
+    "contactList.numberofcontactstotal"    : "Totale contatti",
+    "contactList.numberofeditedcontacts"    : "a cura",
+    "contactList.numberofunprocessedcontacts"    : "inedito",
+    "contactList.davon"    : "ne: ",
 
     "camera.title"          : "Camera",
     "camera.comment"        : "Utilizzate il pulsante \"indietro\" su questa pagina per tornare alla pagina precedente!",

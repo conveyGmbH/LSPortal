@@ -14,7 +14,12 @@
                 <div class="contentarea win-type-body">
                     <div class="content-header">
                         <div class="win-type-subtitle master-list-header">
-                            <span data-win-res="{textContent: 'contactList.title'}"></span>
+                            <span data-win-res="{textContent: 'contactList.title'}"></span><br/>
+                            <span id="konanz" data-win-res="{textContent: 'contactList.numberofcontactstotal'}"></span><span>: </span><span data-win-bind="textContent: noctcount"></span><br />
+                            <span id="konanz" data-win-res="{textContent: 'contactList.davon'}"></span>
+                            <span data-win-bind="textContent: noeccount"></span><span> </span><span id="konanz" data-win-res="{textContent: 'contactList.numberofeditedcontacts'}"></span>
+                            <span> / </span>
+                            <span data-win-bind="textContent: nouccount"></span><span> </span><span id="konanz" data-win-res="{textContent: 'contactList.numberofunprocessedcontacts'}"></span>
                         </div>
                     </div>
                     <div class="headerFooterPlaceholder">

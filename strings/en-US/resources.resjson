@@ -230,6 +230,10 @@
     "contactList.ID"        : "ID",
     "contactList.captureType"      : "Capturetype",
     "contactList.editer"    : "Author",
+    "contactList.numberofcontactstotal"    : "Total contacts",
+    "contactList.numberofeditedcontacts"    : "edited",
+    "contactList.numberofunprocessedcontacts"    : "unedited",
+    "contactList.davon"    : "from that: ",
 
     "camera.title"          : "Camera",
     "camera.comment"        : "On this page, use the Back button to go back!",
