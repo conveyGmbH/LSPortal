@@ -24,7 +24,7 @@
             this.pageData.userData = AppData._userData;
             this.pageData.userMessagesDataCount = AppData._userMessagesData.MessagesCounter;
             this.pageData.photoData = null;
-            this.pageData.showNameInHeader = AppData._persistentStates.showNameInHeader;
+            this.pageData.showNameInHeader = !!AppData._persistentStates.showNameInHeader;
 
             AppHeader.controller = this;
 
