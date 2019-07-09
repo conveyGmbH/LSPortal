@@ -541,6 +541,13 @@
                         AppData._persistentStates.nachbearbeitetFlagAutoSetToNull = false;
                     }
                     break;
+                case 38:
+                    if (item.LocalValue === "1") {
+                        AppData._persistentStates.hideQrCode = true;
+                    } else {
+                        AppData._persistentStates.hideQrCode = false;
+                    }
+                    break;
                 default:
                     // defaultvalues
             }

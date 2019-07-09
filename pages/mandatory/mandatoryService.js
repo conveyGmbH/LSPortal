@@ -9,7 +9,9 @@
     WinJS.Namespace.define("Mandatory", {
         _manquestView: {
             get: function () {
-                return AppData.getFormatView("FragenAntworten", 0, false);
+                var ret = AppData.getFormatView("FragenAntworten", 0, false);
+                ret.maxPageSize = 20;
+                return ret;
             }
         },
         manquestView: {

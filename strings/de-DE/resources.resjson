@@ -478,6 +478,7 @@
     "event.showHideSketch"  :   "Anhänge",
     "event.showHideNavigationPages" : "Navigationsseiten",
     "event.showHideBarcodeScan" : "Barcode",
+	"event.show2D-Code"     : "QR-Code",
     "event.showHideCamera"  : "Vistenkarte",
 	"event.showHideCameraQuestionnaire" : "Kamera im Fragebogen",
 	"event.mailSettings"    : "Maileinstellung",

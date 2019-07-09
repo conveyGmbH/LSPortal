@@ -19,7 +19,8 @@
                 isSketchVisible: !AppData._persistentStates.hideSketch,
                 isCameraVisible: !AppData._persistentStates.hideCameraScan,
                 isBarcodeScanVisible: !AppData._persistentStates.hideBarcodeScan,
-                isPrivacyPolicySVGVisible: AppData._persistentStates.privacyPolicySVGVisible
+                isPrivacyPolicySVGVisible: AppData._persistentStates.privacyPolicySVGVisible,
+                is1Dor2DVisible: AppData._persistentStates.hideQrCode
             }, commandList]);
 
             var that = this;
@@ -92,6 +93,13 @@
                     case "showBarcodeScan":
                         pOptionTypeId = 23;
                         that.binding.isBarcodeScanVisible = checked;
+                        if (checked) {
+                            /*that.binding.dataEvent.DatenschutzText = "";
+                            that.binding.dataEvent.DatenschutzSVG = null;*/
+                        } else {
+                            that.binding.is1Dor2DVisible = false;
+                            AppData._persistentStates.hideQrCode = false;
+                        }
                         AppData._persistentStates.hideBarcodeScan = !checked;
                         break;
                     case "showCamera":
@@ -112,6 +120,12 @@
                             AppBar.modified = true;
                         }
                         AppData._persistentStates.privacyPolicySVGVisible = checked;
+                        hidePageItem = false;
+                        break;
+                    case "show1Dor2D":
+                        pOptionTypeId = 38;
+                        that.binding.is1Dor2DVisible = checked;
+                        AppData._persistentStates.hideQrCode = !checked;
                         hidePageItem = false;
                         break;
                 }

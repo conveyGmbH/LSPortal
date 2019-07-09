@@ -476,6 +476,7 @@
     "event.showHideSketch"  :   "Annexes",
     "event.showHideNavigationPages": "page de navigation",
     "event.showHideBarcodeScan" : "Code barre",
+	"event.show2D-Code"     : "QR-Code",
     "event.showHideCamera"  : "Carte de visite",
 	"event.showHideCameraQuestionnaire" : "Kamera im Fragebogen",
 	"event.mailSettings"    : "Paramètres de messagerie",

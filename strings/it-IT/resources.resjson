@@ -476,6 +476,7 @@
     "event.showHideSketch"  :  "Mostra casella note",
     "event.showHideNavigationPages" : "pagina di navigazione",
     "event.showHideBarcodeScan" : "Barcode",
+	"event.show2D-Code"     : "QR-Code",
 	"event.showHideCamera"  : "Biglietto da visita",
 	"event.showHideCameraQuestionnaire" : "Kamera im Fragebogen",
     "event.productMail"     : "Posta elettronica del prodotto: \n Solo una spedizione e-mail",
