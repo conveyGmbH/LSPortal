@@ -744,34 +744,27 @@
                             },
                             getRestriction());
                         });
-                        }).then(function () {
-                        var recordId = getRecordId();
-                        if (!recordId) {
-                            that.binding.dataStart = {};
-                            ret = WinJS.Promise.as();
-                        } else {
-                            return ContactList.mitarbeiterView.select(function(json) {
-                                    // this callback will be called asynchronously
-                                    // when the response is available
-                                    Log.print(Log.l.trace, "mitarbeiterView: success!");
-                                    // startContact returns object already parsed from json file in response
-                                    if (json && json.d) {
-                                        var results = json.d;
-                                        that.binding.noctcount = results.AnzKontakte;
-                                        that.binding.noeccount = results.AnzEditierteKontakte;
-                                        that.binding.nouccount = results.AnzNichtEditierteKontakte;
-                                    } else {
-                                        Log.print(Log.l.trace, "mitarbeiterView: no data found!");
-                                    }
-                                },
-                                function(errorResponse) {
-                                    // called asynchronously if an error occurs
-                                    // or server returns response with an error status.
-                                    Log.print(Log.l.error, "ContactList.mitarbeiterView: error!");
-                                    AppData.setErrorMsg(that.binding, errorResponse);
-                                },
-                                AppData.getRecordId("Mitarbeiter"));
-                        }
+                    }).then(function () {
+                        return ContactList.mitarbeiterView.select(function(json) {
+                                // this callback will be called asynchronously
+                                // when the response is available
+                                Log.print(Log.l.trace, "mitarbeiterView: success!");
+                                // startContact returns object already parsed from json file in response
+                                  if (json && json.d) {
+                                      var results = json.d;
+                                      that.binding.noctcount = results.AnzKontakte;
+                                      that.binding.noeccount = results.AnzEditierteKontakte;
+                                      that.binding.nouccount = results.AnzNichtEditierteKontakte;
+                                  } else {
+                                      Log.print(Log.l.trace, "mitarbeiterView: no data found!");
+                                  }
+                              }, function(errorResponse) {
+                                  // called asynchronously if an error occurs
+                                  // or server returns response with an error status.
+                                  Log.print(Log.l.error, "ContactList.mitarbeiterView: error!");
+                                  AppData.setErrorMsg(that.binding, errorResponse);
+                              },
+                              AppData.getRecordId("Mitarbeiter"));
                     });
                     Log.ret(Log.l.trace);
 
