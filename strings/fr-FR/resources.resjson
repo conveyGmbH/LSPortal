@@ -230,6 +230,10 @@
     "contactList.ID"        : "ID",
     "contactList.captureType"      : "Saisirmode",
     "contactList.editer"    : "Auteur",
+    "contactList.numberofcontactstotal"    : "Total des contacts",
+    "contactList.numberofeditedcontacts"    : "édité",
+    "contactList.numberofunprocessedcontacts"    : "non édité",
+    "contactList.davon"    : "de celui-ci: ",
 
     "camera.title"          : "Camera",
     "camera.comment"        : "Utilisez le bouton Retour sur cette page pour y retourner!",
