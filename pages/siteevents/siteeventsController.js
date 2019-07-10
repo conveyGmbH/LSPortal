@@ -688,16 +688,11 @@
                     }
                 },
                 clickExport: function() {
-                    if (AppData.getRecordId("VeranstaltungTermin")) {
                         if (AppBar.busy) {
                         return true;
                     } else {
                         return false;
                     }
-                    } else {
-                        return true;
-                    }
-
                 },
                 clickExportQrcode: function() {
                     if (AppData.getRecordId("VeranstaltungTermin")) {
@@ -711,26 +706,18 @@
                     }
                 },
                 clickExportRegistrationList: function () {
-                    //if (AppData.getRecordId("VeranstaltungTermin")) {
                         if (AppBar.busy) {
                             return true;
                         } else {
                             return false;
                         }
-                    //} else {
-                    //    return true;
-                    //}
                 },
                 clickExportLockedDeviceList: function() {
-                    //if (AppData.getRecordId("VeranstaltungTermin")) {
                         if (AppBar.busy) {
                             return true;
                         } else {
                             return false;
                         }
-                    //} else {
-                    //    return true;
-                    //}
                 }
             }
 
