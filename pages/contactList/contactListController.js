@@ -82,21 +82,6 @@
                     Log.ret(Log.l.trace);
                 };
 
-                var svgFromOption = function (option) {
-                    var ret = null;
-                    if (option) {
-                        //console.log(option);
-                        if (option.isVisitenkarte) {
-                            ret = "id_card";
-                        } else if (option.isBarcode) {
-                            ret = "barcode";
-                        } else
-                            ret = "edit";
-                    }
-                    return ret;
-                }
-                this.svgFromOption = svgFromOption;
-
                 var background = function (index) {
                     if (index % 2 === 0) {
                         return 1;
@@ -299,10 +284,6 @@
                         }
                     }
                     item.index = index;
-                    item.svgSource = svgFromOption({
-                        isVisitenkarte: item.SHOW_Visitenkarte,
-                        isBarcode: item.SHOW_Barcode
-                    });
                     item.company = ((item.Firmenname ? (item.Firmenname + " ") : ""));
                     item.fullName =
                     ((item.Title ? (item.Title + " ") : "") +
@@ -350,6 +331,12 @@
                             }
                         }
                     }
+                    item.showDoc = (item.IMPORT_CARDSCANID || item.SHOW_Barcode) ? true: false;
+                    if (item.SHOW_Barcode || item.IMPORT_CARDSCANID && !item.SHOW_Visitenkarte) {
+                        item.svgSource = item.IMPORT_CARDSCANID ? "barcode-qr" : "barcode";
+                    } else {
+                        item.svgSource = "";
+                    }
                 }
                 this.resultConverter = resultConverter;
 
@@ -373,6 +360,12 @@
                                     }
                                 } else {
                                     contact.OvwContentDOCCNT3 = "";
+                                }
+                                contact.showDoc = (contact.IMPORT_CARDSCANID || contact.SHOW_Barcode) ? true: false;
+                                if (contact.SHOW_Barcode || contact.IMPORT_CARDSCANID && !contact.SHOW_Visitenkarte) {
+                                    contact.svgSource = contact.IMPORT_CARDSCANID ? "barcode-qr" : "barcode";
+                                } else {
+                                    contact.svgSource = "";
                                 }
                                 // preserve scroll position on change of row data!
                                 var indexOfFirstVisible = -1;
@@ -532,7 +525,9 @@
                                 }
                             } else if (listView.winControl.loadingState === "complete") {
                                 // load SVG images
-                                Colors.loadSVGImageElements(listView, "action-image", 40, Colors.textColor, "name");
+                                Colors.loadSVGImageElements(listView, "action-image", 40, Colors.textColor, "name", null, {
+                                    "barcode-qr": { useStrokeColor: false }
+                                });
                                 if (that.loading) {
                                     progress = listView.querySelector(".list-footer .progress");
                                     counter = listView.querySelector(".list-footer .counter");
