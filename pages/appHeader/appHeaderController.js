@@ -24,6 +24,7 @@
             this.pageData.userData = AppData._userData;
             this.pageData.userMessagesDataCount = AppData._userMessagesData.MessagesCounter;
             this.pageData.photoData = null;
+            this.pageData.showNameInHeader = !!AppData._persistentStates.showNameInHeader;
 
             AppHeader.controller = this;
 
@@ -33,33 +34,35 @@
             this.binding = WinJS.Binding.as(this.pageData);
 
             // show business card photo
-            var userPhotoContainer = pageElement.querySelector("#user");
+            var userImageElement = pageElement.querySelector(".user-image");
             var showPhoto = function () {
+                Log.call(Log.l.trace, "AppHeader.Controller.");
+                var userImg;
                 if (that.binding.photoData) {
-                    if (userPhotoContainer) {
-                        var userImg = new Image();
+                    if (userImageElement) {
+                        userImg = new Image();
                         userImg.id = "userImg";
-                        userPhotoContainer.appendChild(userImg);
                         WinJS.Utilities.addClass(userImg, "user-photo");
                         userImg.src = "data:image/jpeg;base64," + that.binding.photoData;
-                        if (userPhotoContainer.childElementCount > 2) {
-                            var oldElement = userPhotoContainer.firstElementChild.nextElementSibling;
+                        userImageElement.appendChild(userImg);
+                        if (userImageElement.childElementCount > 2) {
+                            var oldElement = userImageElement.firstElementChild.nextElementSibling;
                             oldElement.parentNode.removeChild(oldElement);
                             oldElement.innerHTML = "";
                         }
                     }
                     AppBar.triggerDisableHandlers();
                 } else {
-                    var userimg = pageElement.querySelector("#userImg");
-                    if (userimg) {
-                        userimg.parentNode.removeChild(userimg);
+                    userImg = pageElement.querySelector("#userImg");
+                    if (userImg) {
+                        userImg.parentNode.removeChild(userImg);
                     }
                 }
+                Log.ret(Log.l.trace);
             }
 
             var loadData = function () {
                 Log.call(Log.l.trace, "AppHeader.Controller.");
-                var usernamefield = pageElement.querySelector(".user-name-field");
                 var ret = new WinJS.Promise.as().then(function () {
                     var employeeId = AppData.getRecordId("Mitarbeiter");
                     if (employeeId) {

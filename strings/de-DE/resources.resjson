@@ -230,6 +230,10 @@
     "contactList.ID"        : "ID",
     "contactList.captureType"      : "Erfassungsart",
     "contactList.editer"    : "Erfasser",
+    "contactList.numberofcontactstotal"    : "Kontakte Gesamt",
+    "contactList.numberofeditedcontacts"    : "Editiert",
+    "contactList.numberofunprocessedcontacts"    : "Uneditiert",
+    "contactList.davon"    : "davon: ",
 
     "camera.title"          : "Kamera",
     "camera.comment"        : "Verwende die Zurück-Schaltfläche auf dieser Seite um zurück zu gehen!",
@@ -492,6 +496,8 @@
 	"event.privacypolicy"   : "Datenschutzskizze",
 	"event.privacyPolicyText" : "Datenschutztext",
 	"event.privacyPolicyStandartText" : "Hiermit bestätige ich, dass meine Daten nach den DSGVO erfasst und verarbeitet werden",
+    "event.displayOptions" : "Anzeigeoptionen",
+    "event.showNameInHeader" : "Name in Kopfzeile",
 
     "questiongroup.title"   : "Fragengruppen",
     "questiongroup.count"   : "Anzahl",

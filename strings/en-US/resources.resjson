@@ -230,6 +230,10 @@
     "contactList.ID"        : "ID",
     "contactList.captureType"      : "Capturetype",
     "contactList.editer"    : "Author",
+    "contactList.numberofcontactstotal"    : "Total contacts",
+    "contactList.numberofeditedcontacts"    : "edited",
+    "contactList.numberofunprocessedcontacts"    : "unedited",
+    "contactList.davon"    : "from that: ",
 
     "camera.title"          : "Camera",
     "camera.comment"        : "On this page, use the Back button to go back!",
@@ -490,6 +494,8 @@
     "event.privacypolicy"   : "Privacypolicynote",
 	"event.privacyPolicyText" : "Privacypolicy",
 	"event.privacyPolicyStandartText" : "I hereby confirm that my data is collected and processed according to the GDPR",
+    "event.displayOptions" : "Display options",
+    "event.showNameInHeader" : "Name in header",
 
 	"optQuestionList.title"   : "Optional Questions/Answers",
     "optQuestionList.count"   : "Count",

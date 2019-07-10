@@ -190,6 +190,7 @@
                                 AppHeader.controller && AppHeader.controller.binding) {
                                 AppHeader.controller.binding.userData = AppData._userData;
                                 AppHeader.controller.binding.userMessagesDataCount = AppData._userMessagesData.MessagesCounter;
+                                AppHeader.controller.binding.showNameInHeader = AppData._persistentStates.showNameInHeader;
                                 AppHeader.controller.loadData();
                             }
                             if (typeof AppBar === "object" && AppBar.scope) {
@@ -543,9 +544,9 @@
                     break;
                 case 38:
                     if (item.LocalValue === "1") {
-                        AppData._persistentStates.hideQrCode = true;
+                        AppData._persistentStates.showQRCode = true;
                     } else {
-                        AppData._persistentStates.hideQrCode = false;
+                        AppData._persistentStates.showQRCode = false;
                     }
                     break;
                 default:

@@ -463,6 +463,8 @@
 	"event.privacypolicy"   : "Datenschutzskizze",
 	"event.privacyPolicyText" : "Datenschutztext",
 	"event.privacyPolicyStandartText" : "Hiermit bestätige ich, dass meine Daten nach den DSGVO erfasst und verarbeitet werden",
+    "event.displayOptions" : "Display options",
+    "event.showNameInHeader" : "Name in header",
 
     "questiongroup.title"   : "Fragengruppen",
     "questiongroup.count"   : "Anzahl",
