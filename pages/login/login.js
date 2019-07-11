@@ -21,7 +21,9 @@
             // TODO: Initialize the page here.
             NavigationBar.enablePage("start");
             NavigationBar.disablePage("localevents");
+            NavigationBar.disablePage("siteevents");
             NavigationBar.disablePage("events");
+            NavigationBar.disablePage("questionList");
             NavigationBar.disablePage("mailing");
             NavigationBar.disablePage("employee");
             NavigationBar.disablePage("contacts");
@@ -30,6 +32,7 @@
             NavigationBar.disablePage("settings");
             NavigationBar.disablePage("info");
             NavigationBar.disablePage("search");
+            NavigationBar.disablePage("support");
 
             // add page specific commands to AppBar
             var commandList = [

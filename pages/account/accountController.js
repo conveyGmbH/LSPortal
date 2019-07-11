@@ -88,22 +88,23 @@
                 },
                 clickOk: function (event) {
                     Log.call(Log.l.trace, "Account.Controller.");
-                    if (that.binding.doEdit && that.binding.count > 1) {
+                    /*if (that.binding.doEdit && that.binding.count > 1) {
                         AppData.call("PRC_ChangeLoginServer", {
                             pNewLocationID: parseInt(that.binding.dataLogin.LocationID)
                         }, function (json) {
                             Log.print(Log.l.info, "call success! json=" + json);
+                            Application.navigateById("start", event);
                         }, function (error) {
                             Log.print(Log.l.error, "call error=" + error);
+                            AppData.setErrorMsg(that.binding, error);
                         });
-                        Application.navigateById("start", event);
                     } else {
                     if (!that.binding.doEdit && WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done();
                     } else {
                         Application.navigateById("start", event);
                     }
-                    }
+                    }*/
                     Log.ret(Log.l.trace);
                 },
                 clickLogoff: function (event) {
@@ -125,10 +126,11 @@
                         pNewLocationID: parseInt(that.binding.dataLogin.LocationID)
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
+                        Application.navigateById("start", event);
                     }, function (error) {
                         Log.print(Log.l.error, "call error");
+                        AppData.setErrorMsg(that.binding, error);
                     });
-                    Application.navigateById("start", event);
                     Log.ret(Log.l.trace);
                 },
                 clickChangeUserState: function (event) {
@@ -239,7 +241,11 @@
                     return !AppData.getRecordId("Mitarbeiter");
                 },
                 clickChangeServer: function () {
-                    return !that.binding.doEdit && !(that.binding.count <= 1);
+                    if (!that.binding.doEdit) {
+                        return true;
+                    } else {
+                        return (that.binding.count <= 1);
+                    }
                 }
             };
 

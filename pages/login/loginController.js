@@ -80,6 +80,16 @@
                 clickOk: function () {
                     if (AppBar.busy || (that.binding.dataLogin.Login.length === 0 || that.binding.dataLogin.Password.length === 0 || !that.binding.isPrivacyPolicyFlag)) {
                         NavigationBar.disablePage("start");
+                        NavigationBar.disablePage("localevents");
+                        NavigationBar.disablePage("events");
+                        NavigationBar.disablePage("mailing");
+                        NavigationBar.disablePage("employee");
+                        NavigationBar.disablePage("contacts");
+                        NavigationBar.disablePage("reporting");
+                        NavigationBar.disablePage("infodesk");
+                        NavigationBar.disablePage("settings");
+                        NavigationBar.disablePage("info");
+                        NavigationBar.disablePage("search");
                     } else {
                         NavigationBar.enablePage("start");
                     }
