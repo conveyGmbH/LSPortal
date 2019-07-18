@@ -314,6 +314,8 @@
     "account.comment"       : "Attenzione: al momento del log-out o connettendosi con un altro utente, tutti i dati salvati solo localmente verranno cancellati",
     "account.confirmLogOff" : "Attenzione: al momento del log-out o connettendosi con un altro utente, tutti i dati salvati solo localmente verranno cancellati",
     "account.hostName"      : "Nome server",
+    "account.serverlist"	: "Server",
+	"account.changeServer"  : "Cambia server", 
     "account.https"         : "HTTPS",
     "account.onlinePort"    : "Online-Port",
     "account.offlinePort"   : "Offline-Port",
