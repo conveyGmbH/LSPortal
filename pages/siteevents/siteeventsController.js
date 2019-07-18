@@ -275,19 +275,9 @@
             }
             this.exportPwdQrCodeEmployeePdf = exportPwdQrCodeEmployeePdf;
 
-            var exportData = function (eventID) {
+            var exportData = function (dbView, fileName) {
                 Log.call(Log.l.trace, "Registration.Controller.");
                 var dbViewTitle = null;
-                var dbView;
-                var fileName;
-                if (eventID === "Registrierungsliste") {
-                    dbView = SiteEvents.registrationView;
-                    fileName = "Registrations";
-                } else if (eventID === "Gesperrte Geräteliste") {
-                    dbView = SiteEvents.OIMPImportJobView;
-                    fileName = "ListLockedDevices";
-                }
-
                 if (dbView) {
                     var exporter = ExportXlsx.exporter;
                     if (!exporter) {
@@ -604,7 +594,7 @@
                     AppBar.busy = true;
                     AppBar.triggerDisableHandlers();
                     WinJS.Promise.timeout(0).then(function () {
-                        that.exportData(event.target.textContent);
+                        that.exportData(SiteEvents.registrationView, "Registrations");
                     }).then(function () {
                         var registrations = pageElement.querySelector("#registrations.listview");
                         if (registrations && registrations.style) {
@@ -636,7 +626,7 @@
                     AppBar.busy = true;
                     AppBar.triggerDisableHandlers();
                     WinJS.Promise.timeout(0).then(function() {
-                        that.exportData(event.target.textContent);
+                        that.exportData(SiteEvents.OIMPImportJobView, "ListLockedDevices");
                     });
                     Log.ret(Log.l.trace);
                 },
