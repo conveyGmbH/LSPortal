@@ -89,6 +89,111 @@
                 return SiteEvents._registrationView;
             }
         },
+        _registrationEnglishView: {
+            get: function () {
+                var ret = AppData.getFormatView("Mitarbeiter_Anschrift", 20587, false);
+                return ret;
+            }
+        },
+        registrationEnglishView: {
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, "SiteEvents.");
+                var ret = SiteEvents._registrationEnglishView.select(complete, error, restriction, {
+                    ordered: true,
+                    orderAttribute: "Mitarbeiter_AnschriftVIEWID",
+                    desc: true
+                });
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getNextUrl: function (response) {
+                Log.call(Log.l.trace, "SiteEvents.");
+                var ret = SiteEvents._registrationEnglishView.getNextUrl(response);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            selectNext: function (complete, error, response, nextUrl) {
+                Log.call(Log.l.trace, "SiteEvents.");
+                var ret = SiteEvents._registrationEnglishView.selectNext(complete, error, response, nextUrl);
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getDbView: function () {
+                return SiteEvents._registrationEnglishView;
+            }
+        },
+        _registrationFranzView: {
+            get: function () {
+                var ret = AppData.getFormatView("Mitarbeiter_Anschrift", 20592, false);
+                return ret;
+            }
+        },
+        registrationFranzView: {
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, "SiteEvents.");
+                var ret = SiteEvents._registrationFranzView.select(complete, error, restriction, {
+                    ordered: true,
+                    orderAttribute: "Mitarbeiter_AnschriftVIEWID",
+                    desc: true
+                });
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getNextUrl: function (response) {
+                Log.call(Log.l.trace, "SiteEvents.");
+                var ret = SiteEvents._registrationFranzView.getNextUrl(response);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            selectNext: function (complete, error, response, nextUrl) {
+                Log.call(Log.l.trace, "SiteEvents.");
+                var ret = SiteEvents._registrationFranzView.selectNext(complete, error, response, nextUrl);
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getDbView: function () {
+                return SiteEvents._registrationFranzView;
+            }
+        },
+        _registrationItalienView: {
+            get: function () {
+                var ret = AppData.getFormatView("Mitarbeiter_Anschrift", 20593, false);
+                return ret;
+            }
+        },
+        registrationItalienView: {
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, "SiteEvents.");
+                var ret = SiteEvents._registrationItalienView.select(complete, error, restriction, {
+                    ordered: true,
+                    orderAttribute: "Mitarbeiter_AnschriftVIEWID",
+                    desc: true
+                });
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getNextUrl: function (response) {
+                Log.call(Log.l.trace, "SiteEvents.");
+                var ret = SiteEvents._registrationItalienView.getNextUrl(response);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            selectNext: function (complete, error, response, nextUrl) {
+                Log.call(Log.l.trace, "SiteEvents.");
+                var ret = SiteEvents._registrationItalienView.selectNext(complete, error, response, nextUrl);
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getDbView: function () {
+                return SiteEvents._registrationItalienView;
+            }
+        },
         _OIMPImportJobView: {
             get: function () {
                 var ret = AppData.getFormatView("OIMPImportJob", 20580, false);
@@ -122,6 +227,114 @@
             },
             getDbView: function () {
                 return SiteEvents._OIMPImportJobView;
+            }
+        },
+
+        _OIMPImportJobEnglishView: {
+            get: function () {
+                var ret = AppData.getFormatView("OIMPImportJob", 20586, false);
+                return ret;
+            }
+        },
+        OIMPImportJobEnglishView: {
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, "SiteEvents.");
+                var ret = SiteEvents._OIMPImportJobEnglishView.select(complete, error, restriction, {
+                    ordered: true,
+                    orderAttribute: "OIMPImportJobVIEWID",
+                    desc: true
+                });
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getNextUrl: function (response) {
+                Log.call(Log.l.trace, "SiteEvents.");
+                var ret = SiteEvents._OIMPImportJobEnglishView.getNextUrl(response);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            selectNext: function (complete, error, response, nextUrl) {
+                Log.call(Log.l.trace, "SiteEvents.");
+                var ret = SiteEvents._OIMPImportJobEnglishView.selectNext(complete, error, response, nextUrl);
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getDbView: function () {
+                return SiteEvents._OIMPImportJobEnglishView;
+            }
+        },
+
+        _OIMPImportJobItalienView: {
+            get: function () {
+                var ret = AppData.getFormatView("OIMPImportJob", 20590, false);
+                return ret;
+            }
+        },
+        OIMPImportJobItalienView: {
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, "SiteEvents.");
+                var ret = SiteEvents._OIMPImportJobItalienView.select(complete, error, restriction, {
+                    ordered: true,
+                    orderAttribute: "OIMPImportJobVIEWID",
+                    desc: true
+                });
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getNextUrl: function (response) {
+                Log.call(Log.l.trace, "SiteEvents.");
+                var ret = SiteEvents._OIMPImportJobItalienView.getNextUrl(response);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            selectNext: function (complete, error, response, nextUrl) {
+                Log.call(Log.l.trace, "SiteEvents.");
+                var ret = SiteEvents._OIMPImportJobItalienView.selectNext(complete, error, response, nextUrl);
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getDbView: function () {
+                return SiteEvents._OIMPImportJobItalienView;
+            }
+        },
+
+        _OIMPImportJobFranzView: {
+            get: function () {
+                var ret = AppData.getFormatView("OIMPImportJob", 20589, false);
+                return ret;
+            }
+        },
+        OIMPImportJobFranzView: {
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, "SiteEvents.");
+                var ret = SiteEvents._OIMPImportJobFranzView.select(complete, error, restriction, {
+                    ordered: true,
+                    orderAttribute: "OIMPImportJobVIEWID",
+                    desc: true
+                });
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getNextUrl: function (response) {
+                Log.call(Log.l.trace, "SiteEvents.");
+                var ret = SiteEvents._OIMPImportJobFranzView.getNextUrl(response);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            selectNext: function (complete, error, response, nextUrl) {
+                Log.call(Log.l.trace, "SiteEvents.");
+                var ret = SiteEvents._OIMPImportJobFranzView.selectNext(complete, error, response, nextUrl);
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getDbView: function () {
+                return SiteEvents._OIMPImportJobFranzView;
             }
         }
     });
