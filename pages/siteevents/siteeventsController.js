@@ -276,7 +276,7 @@
             this.exportPwdQrCodeEmployeePdf = exportPwdQrCodeEmployeePdf;
 
             var exportData = function (dbView, fileName) {
-                Log.call(Log.l.trace, "Registration.Controller.");
+                Log.call(Log.l.trace, "SiteEvents.Controller.");
                 var dbViewTitle = null;
                 if (dbView) {
                     var exporter = ExportXlsx.exporter;

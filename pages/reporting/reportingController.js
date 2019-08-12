@@ -680,8 +680,7 @@
                                     that.res = json.d.results;
                                     that.resi = json.d.results.length;
                                     if (that.resi > 0) {
-                                    for (var i = 0; i < that.resi ; i++)
-                                        {
+                                    for (var i = 0; i < that.resi ; i++) {
                                             if (that.res[i].TITLE === that.country) {
                                                 that.countryID = that.res[i].INITLandID;
                                             }
@@ -741,9 +740,12 @@
                 },
                 clickOk: function(event) {
                     Log.call(Log.l.trace, "Reporting.Controller.");
-                    /*if (AppBar.barControl && !AppBar.barControl.opened) {
+                    if (event.currentTarget.id === "clickOk") {
+                        AppBar.barControl.opened = true;
+                    }
+                    if (AppBar.barControl) {
                         AppBar.barControl.open();
-                    }*/
+                    }
                     Log.ret(Log.l.trace);
                 },
                 clickExport: function(event) {
@@ -827,7 +829,7 @@
                 },
                 clickOk: function() {
                     var ret = true;
-                    if (!AppBar.busy) { // && AppBar.barControl && !AppBar.barControl.opened
+                    if (!AppBar.busy) {
                         ret = false;
                     }
                     return ret;

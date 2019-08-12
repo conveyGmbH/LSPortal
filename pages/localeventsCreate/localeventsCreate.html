@@ -32,14 +32,14 @@
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'localeventscreate.begin'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'localeventscreate.begin'}"></span>
                             <div data-win-control="WinJS.UI.DatePicker" id="startDatum" class="input_field"
-                                 data-win-bind="winControl.current: eventData.dateBegin Binding.Mode.twoway">
+                                 data-win-bind="winControl.current: eventData.dateBegin Binding.Mode.twoway; winControl.minYear: actualYear">
                             </div>
                         </div>
                         <div class="field_line field_line_even">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'localeventscreate.end'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'localeventscreate.end'}"></span>
                             <div data-win-control="WinJS.UI.DatePicker" id="endDatum" class="input_field"
-                                 data-win-bind="winControl.current: eventData.dateEnd Binding.Mode.twoway">
+                                 data-win-bind="winControl.current: eventData.dateEnd Binding.Mode.twoway; winControl.minYear: actualYear">
                             </div>
                         </div>
                         <div class="line-separator"></div>
@@ -49,12 +49,12 @@
                             <input class="input_field win-textbox" id="LeadsuccessMobileAppInput" type="number" 
                                    data-win-bind="value: eventData.LeadSuccessMobileApp Binding.Mode.twoway" />
                         </div>
-                        <div class="field_line field_line_even">
+                        <!--<div class="field_line field_line_even">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'localeventscreate.mobilerbarcodescanner'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'localeventscreate.mobilerbarcodescanner'}"></span>
                             <input class="input_field win-textbox" id="MobilerBarcodescannerInput" type="number" 
                                    data-win-bind="value: eventData.MobilerBarcodescanner Binding.Mode.twoway" />
-                        </div>
+                        </div>-->
                     </div>
                 </div>
                 <div class="error-message"

@@ -439,6 +439,9 @@
                 if (mailingTypeData.SendStartTime) {
                     matchValidTime = (mailingTypeData.SendStartTime).match(/^(0?[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/); //^([0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$
                 }
+                if (mailingTypeData.SendDay === null || mailingTypeData.SendDay === "") {
+                    mailingTypeData.SendDay = 0;
+                }
                 var milliseconds = 0;
                 if (matchValidTime === null) {
                     Log.print(Log.l.error, "invalid time");

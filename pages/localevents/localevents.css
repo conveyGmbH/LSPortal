@@ -17,3 +17,7 @@
     padding-left: 27px;
     font-weight: bold;
 }
+.confirm-button {
+    position: absolute;
+    height: 100%;
+}

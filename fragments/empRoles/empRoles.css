@@ -7,8 +7,8 @@
 }
 
 .list-role-item {
-    width: 33%;
-    min-width: 160px;
+    width: 50%;
+    min-width: 200px;
     height: 48px;
     overflow: hidden;
     display: -ms-flexbox;

@@ -31,6 +31,9 @@
                 that.binding.eventData.dateBegin = getDateObject(newDataEvent.StartDatum);
                 // convert EndDatum 
                 that.binding.eventData.dateEnd = getDateObject(newDataEvent.EndDatum);
+                if (that.binding.eventData.dateBegin) {
+                    that.binding.actualYear = that.binding.eventData.dateBegin.getFullYear();
+                } 
                 AppBar.modified = false;
                 AppBar.notifyModified = prevNotifyModified;
                 AppBar.triggerDisableHandlers();
