@@ -164,18 +164,16 @@
                             Log.print(Log.l.info, "employeeView insert: success!");
                             // employeeView returns object already parsed from json file in response
                             if (json && json.d) {
-                                json.d.Login = Employee.employeeView.defaultValue.Login;
+                                    json.d.Login = AppData.generalData.userName;
                                 that.setDataEmployee(json.d);
                                 that.binding.dataEmployee.LogInNameBeforeAtSymbole = "";
                             }
+                            AppBar.modified = true;
                         }, function(errorResponse) {
                             Log.print(Log.l.error, "error inserting employee");
                             AppBar.busy = false;
                             AppData.setErrorMsg(that.binding, errorResponse);
-                        }, newEmployee);
-                    }, function (errorResponse) {
-                        Log.print(Log.l.error, "error saving employee");
-                    }).then(function() {
+                            }, newEmployee).then(function () {
                         /* Mitarbeiter Liste neu laden und Selektion auf neue Zeile setzen */
                         var master = Application.navigator.masterControl;
                         if (master && master.controller && master.controller.binding) {
@@ -186,6 +184,9 @@
                                 //});
                             });
                         }
+                    });
+                    }, function (errorResponse) {
+                        Log.print(Log.l.error, "error saving employee");
                     });
                     Log.ret(Log.l.trace);
                 },
@@ -510,7 +511,7 @@
                 var ret;
                 var dataEmployee = that.binding.dataEmployee;
                 if (dataEmployee && AppBar.modified && !AppBar.busy) {
-                    if (dataEmployee.Password2 === dataEmployee.Password) {
+                    if (dataEmployee.Password2 && dataEmployee.Password && dataEmployee.Password2 === dataEmployee.Password) {
                         var recordId = getRecordId();
                         if (recordId) {
                             AppBar.busy = true;

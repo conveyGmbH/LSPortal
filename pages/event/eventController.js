@@ -21,18 +21,23 @@
                 isBarcodeScanVisible: !AppData._persistentStates.hideBarcodeScan,
                 isPrivacyPolicySVGVisible: AppData._persistentStates.privacyPolicySVGVisible,
                 showQRCode: AppData._persistentStates.showQRCode,
-                showNameInHeader: AppData._persistentStates.showNameInHeader
+                showNameInHeader: AppData._persistentStates.showNameInHeader,
+                actualYear: new Date().getFullYear()
             }, commandList]);
 
             var that = this;
 
             //select combo
             var initLand = pageElement.querySelector("#InitLand");
+            var initServer = pageElement.querySelector("#InitServer");
             var textComment = pageElement.querySelector(".input_text_comment");
 
             this.dispose = function () {
                 if (initLand && initLand.winControl) {
                     initLand.winControl.data = null;
+                }
+                if (initServer && initServer.winControl) {
+                    initServer.winControl.data = null;
                 }
             }
 
@@ -287,6 +292,30 @@
                         }
                         return WinJS.Promise.as();
                     }
+                }).then(function () {
+                    //load of format relation record data
+                    that.remoteServerList = new WinJS.Binding.List([Event.remoteKonfigurationView.defaultValue]);
+                    // that.employees = new WinJS.Binding.List([Search.employeeView.defaultValue]);
+                    initServer.winControl.data = new WinJS.Binding.List();
+                    Log.print(Log.l.trace, "calling select eventView...");
+                    return Event.remoteKonfigurationView.select(function (json) {
+                        AppData.setErrorMsg(that.binding);
+                        Log.print(Log.l.trace, "eventView: success!");
+                        if (json && json.d) {
+                            // now always edit!
+                            var results = json.d.results;
+                            //that.setDataEvent(json.d);
+                            results.forEach(function (item, index) {
+                                //that.resultConverter(item, index);
+                                that.remoteServerList.push(item);
+                            });
+                            if (initServer && initServer.winControl) {
+                                initServer.winControl.data = that.remoteServerList;
+                            }
+                        }
+                    }, function (errorResponse) {
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    });
                 }).then(function () {
                     var recordId = getRecordId();
                     if (recordId) {

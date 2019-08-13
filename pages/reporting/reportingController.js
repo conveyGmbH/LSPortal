@@ -36,6 +36,7 @@
                         text: "",
                         show: null
                     },
+                    templatexlsx: "",
                     //showErfassungsdatum: false,
                     showModifiedTS: false
                 }
@@ -184,10 +185,11 @@
             }
             this.setRestriction = setRestriction;
 
-            var templatecall = function(tID) {
+            /*var templatecall = function(tID) {
                 Log.call(Log.l.trace, "Reporting.Controller.");
                 AppData.setErrorMsg(that.binding);
-                var ret = Reporting.exportTemplate.select(function (json) {
+                var ret;
+                ret = Reporting.exportTemplate.select(function (json) {
                     Log.print(Log.l.trace, "exportTemplate: success!");
                     if (json && json.d) {
                         // store result for next use
@@ -199,12 +201,12 @@
                     // called asynchronously if an error occurs
                     // or server returns response with an error status.
                     AppData.setErrorMsg(that.binding, errorResponse);
-                    }, 26);
+                    }, 32);
                 Log.ret(Log.l.trace);
                 return ret;
             };
             this.templatecall = templatecall;
-
+            */
             var addAudioToZip = function (filename, docContent) {
                 if (filename && docContent) {
                     if (!that.audiozip) {
@@ -544,6 +546,43 @@
                             restriction.bExact = true;
                         }
                         break;
+                    case 32:
+                        if (AppData.getLanguageId() === 1031) {
+                            dbView = Reporting.Fragenstatistik;
+                            fileName = "Fragenstatistik";
+                        } else {
+                            dbView = Reporting.Fragenstatistik;
+                            fileName = "Questionstatistics";
+                        }
+                        that.templatestr = that.binding.templatexlsx;
+                        hasRestriction = false;
+                        tempRestriction = that.setRestriction();
+                        for (prop in tempRestriction) {
+                            if (tempRestriction.hasOwnProperty(prop)) {
+                                hasRestriction = true;
+                                if (!restriction) {
+                                    restriction = {};
+                                }
+                                switch (prop) {
+                                case "Erfassungsdatum":
+                                case "RecordDate":
+                                    restriction["ErfassungsdatumValue"] = [null, tempRestriction[prop]];
+                                    break;
+                                case "AenderungsDatum":
+                                case "ModificationDate":
+                                    restriction["AenderungsDatumValue"] = [null, tempRestriction[prop]];
+                                    break;
+                                default:
+                                    restriction[prop] = [null, tempRestriction[prop]];
+                                }
+                            }
+                        }
+                        if (hasRestriction) {
+                            restriction["KontaktVIEWID"] = ["<0", ">0"];
+                            restriction.bAndInEachRow = true;
+                            restriction.bExact = true;
+                        }
+                        break;
                     default:
                         Log.print(Log.l.error, "curOLELetterID=" + that.binding.curOLELetterID + "not supported");
                 }
@@ -741,9 +780,12 @@
                 },
                 clickOk: function(event) {
                     Log.call(Log.l.trace, "Reporting.Controller.");
-                    /*if (AppBar.barControl && !AppBar.barControl.opened) {
+                    if (event.currentTarget.id === "clickOk") {
+                        AppBar.barControl.opened = true;
+                    }
+                    if (AppBar.barControl) {
                         AppBar.barControl.open();
-                    }*/
+                    }
                     Log.ret(Log.l.trace);
                 },
                 clickExport: function(event) {
@@ -827,7 +869,7 @@
                 },
                 clickOk: function() {
                     var ret = true;
-                    if (!AppBar.busy) { // && AppBar.barControl && !AppBar.barControl.opened
+                    if (!AppBar.busy) {
                         ret = false;
                     }
                     return ret;
@@ -994,6 +1036,20 @@
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
                     });
+                }).then(function () {
+                    return Reporting.exportTemplate.select(function (json) {
+                        Log.print(Log.l.trace, "exportTemplate: success!");
+                        if (json && json.d) {
+                            // store result for next use
+                            var template = json.d.DocContentDOCCNT1;
+                            var sub = template.search("\r\n\r\n");
+                            that.binding.templatexlsx = template.substr(sub + 4);
+                        }
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    }, 32);
                 }).then(function () {
                     var savedRestriction = AppData.getRestriction("Kontakt");
                     if (!savedRestriction) {

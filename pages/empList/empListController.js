@@ -80,8 +80,10 @@
                     return "";
                 } else {
                     var serialnumernew = serialnumer;
+                    if (serialnumernew) {
                     var sub = serialnumernew.search("0000000000");
                     serialnumernew = serialnumernew.substr(sub + 10);
+                    }
                     return serialnumernew;
                 }
             };
@@ -137,7 +139,9 @@
                 item.fullName =
                 (item.Vorname ? (item.Vorname + " ") : "") +
                 (item.Nachname ? item.Nachname : "");
+                if (typeof cutSerialnumer !== "undefined" && typeof item.CS1504SerienNr !== "undefined") {
                 item.CS1504SerienNr = that.cutSerialnumer(item.CS1504SerienNr);
+                }
                 if (item.Gesperrt === 1) {
                     item.disabled = true;
                 }

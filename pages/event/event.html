@@ -214,6 +214,37 @@
                             <span class="label landscape_only" data-win-res="{textContent: 'contact.url'}"></span>
                             <input class="input_field win-textbox" type="text" data-win-bind="value: dataEvent.WebAdresse Binding.Mode.twoway" />
                         </div>
+                        <div class="header-separator float-left" data-win-bind="style.display: isBarcodeScanVisible Binding.Converter.toDisplay"></div>
+                        <div class="content-header float-left" data-win-bind="style.display: isBarcodeScanVisible Binding.Converter.toDisplay">
+                            <div class="half-circle half-circle-textcolor">&nbsp;</div>
+                            <div class="idAndDate win-type-caption">
+                                <span class="id-field"></span>
+                                <span class="caption-field" data-win-res="{textContent: 'event.ticketCodeServer'}"></span>
+                                <span class="date-field"></span>
+                            </div>
+                        </div>
+                        <div class="field_line field_line_odd" data-win-bind="style.display: isBarcodeScanVisible Binding.Converter.toDisplay">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'event.dbSyncLogin'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'event.dbSyncLogin'}"></span>
+                            <input class="input_field win-textbox" type="text" data-win-bind="value: dataEvent.DBSYNCLogin Binding.Mode.twoway" />
+                        </div>
+                        <div class="field_line field_line_even" data-win-bind="style.display: isBarcodeScanVisible Binding.Converter.toDisplay">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'event.dbSyncPassword'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'event.dbSyncPassword'}"></span>
+                            <input class="input_field win-textbox" type="text" data-win-bind="value: dataEvent.DBSYNCPassword Binding.Mode.twoway" />
+                        </div>
+                    <div class="line-separator"></div>
+                        <div class="field_line field_line_odd" data-win-bind="style.display: isBarcodeScanVisible Binding.Converter.toDisplay">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'event.serverList'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'event.serverList'}"></span>
+                            <select id="InitServer"
+                                    class="input_field win-dropdown"
+                                    data-win-control="WinJS.UI.Repeater"
+                                    data-win-bind="value: dataEvent.DBSyncConfigID Binding.Mode.twoway">
+                                <option data-win-bind="value: RemoteKonfigurationVIEWID; textContent: ShowText"></option>
+                            </select>
+                        </div>
+                        <div class="line-separator"></div>
                         <div class="header-separator float-left"></div>
                         <div class="content-header float-left">
                             <div class="half-circle half-circle-textcolor">&nbsp;</div>

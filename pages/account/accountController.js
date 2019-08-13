@@ -88,7 +88,7 @@
                 },
                 clickOk: function (event) {
                     Log.call(Log.l.trace, "Account.Controller.");
-                    /*if (that.binding.doEdit && that.binding.count > 1) {
+                    if (that.binding.doEdit && that.binding.count > 1) {
                         AppData.call("PRC_ChangeLoginServer", {
                             pNewLocationID: parseInt(that.binding.dataLogin.LocationID)
                         }, function (json) {
@@ -104,7 +104,7 @@
                     } else {
                         Application.navigateById("start", event);
                     }
-                    }*/
+                    }
                     Log.ret(Log.l.trace);
                 },
                 clickLogoff: function (event) {

@@ -63,7 +63,7 @@
                     var parid = parseInt(id);
                     AppData.setErrorMsg(that.binding);
                     AppData.call("PRC_VeranstaltungAddDevice", {
-                        pVeranstaltungAnlageID: parid
+                        pBestellungID: parid
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
                         that.loadData();

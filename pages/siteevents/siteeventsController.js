@@ -275,19 +275,9 @@
             }
             this.exportPwdQrCodeEmployeePdf = exportPwdQrCodeEmployeePdf;
 
-            var exportData = function (eventID) {
-                Log.call(Log.l.trace, "Registration.Controller.");
+            var exportData = function (dbView, fileName) {
+                Log.call(Log.l.trace, "SiteEvents.Controller.");
                 var dbViewTitle = null;
-                var dbView;
-                var fileName;
-                if (eventID === "Registrierungsliste") {
-                    dbView = SiteEvents.registrationView;
-                    fileName = "Registrations";
-                } else if (eventID === "Gesperrte Geräteliste") {
-                    dbView = SiteEvents.OIMPImportJobView;
-                    fileName = "ListLockedDevices";
-                }
-
                 if (dbView) {
                     var exporter = ExportXlsx.exporter;
                     if (!exporter) {
@@ -591,20 +581,35 @@
                 },
                 clickExport: function (event) {
                     Log.call(Log.l.trace, "SiteEvents.Controller.");
-                    /*if (AppBar.barControl && !AppBar.barControl.opened) {
+                    if (AppBar.barControl) {
                         AppBar.barControl.open();
-                    } else {
-                        AppBar.barControl.close();
-                    }*/
-                    //AppBar.busy = true;
+                    }
                     Log.ret(Log.l.trace);
                 },
                 clickExportRegistrationList: function (event) {
                     Log.call(Log.l.trace, "SiteEvents.Controller.");
+                    //registrationEnglishView
+                    var dbView, fileName;
+                    if (AppData.getLanguageId() === 1031) {
+                        dbView = SiteEvents.registrationView;
+                        fileName = "Liste der Registrierten Testuser";
+                    } else if (AppData.getLanguageId() === 1033) {
+                        dbView = SiteEvents.registrationEnglishView;
+                        fileName = "List of registered test users";
+                    } else if (AppData.getLanguageId() === 1036) {
+                        dbView = SiteEvents.registrationFranzView;
+                        fileName = "Liste des utilisateurs test enregistrés";
+                    } else if (AppData.getLanguageId() === 1040) {
+                        dbView = SiteEvents.registrationItalienView;
+                        fileName = "Elenco degli utenti di test registrati";
+                    } else {
+                        dbView = SiteEvents.OIMPImportJobEnglishView;
+                        fileName = "List of registered test users";
+                    }
                     AppBar.busy = true;
                     AppBar.triggerDisableHandlers();
                     WinJS.Promise.timeout(0).then(function () {
-                        that.exportData(event.target.textContent);
+                        that.exportData(dbView, fileName);
                     }).then(function () {
                         var registrations = pageElement.querySelector("#registrations.listview");
                         if (registrations && registrations.style) {
@@ -633,10 +638,27 @@
                 },
                 clickExportLockedDeviceList: function(event) {
                     Log.call(Log.l.trace, "SiteEvents.Controller.");
+                    var dbView, fileName;
+                    if (AppData.getLanguageId() === 1031) {
+                        dbView = SiteEvents.OIMPImportJobView;
+                        fileName = "Liste der gesperrten Geräte";
+                    } else if (AppData.getLanguageId() === 1033) {
+                        dbView = SiteEvents.OIMPImportJobEnglishView;
+                        fileName = "List of locked Devices";
+                    } else if (AppData.getLanguageId() === 1036) {
+                        dbView = SiteEvents.OIMPImportJobFranzView;
+                        fileName = "Liste des appareils verrouillés";
+                    } else if (AppData.getLanguageId() === 1040) {
+                        dbView = SiteEvents.OIMPImportJobItalienView;
+                        fileName = "Elenco di dispositivi bloccati";
+                    } else {
+                        dbView = SiteEvents.OIMPImportJobEnglishView;
+                        fileName = "List of locked Devices";
+                    }
                     AppBar.busy = true;
                     AppBar.triggerDisableHandlers();
                     WinJS.Promise.timeout(0).then(function() {
-                        that.exportData(event.target.textContent);
+                        that.exportData(dbView, fileName);
                     });
                     Log.ret(Log.l.trace);
                 },

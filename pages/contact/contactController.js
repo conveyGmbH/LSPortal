@@ -468,7 +468,13 @@
                 for (var i = 0; i < audioData.length; i++) {
                     var audioType = audioData[i].DocExt;
                     var audioDataraw = audioData[i].DocContentDOCCNT1;
-                    var audioDataBase64 = audioDataraw;
+                    var sub = audioDataraw.search("\r\n\r\n");
+                    var audioDataBase64;
+                    if(sub !== -1)
+                        audioDataBase64 = audioDataraw.substr(sub + 4);
+                    else
+                        audioDataBase64 = audioDataraw;
+
                     var audioDatac = that.base64ToBlob(audioDataBase64, audioType);
                     var audioName = audioData[i].DateiName;
                     saveAs(audioDatac, audioName);

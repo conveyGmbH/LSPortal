@@ -381,12 +381,12 @@
             },
             saveXlsxFromView: function (dbView, fileName, complete, error, restriction, dbViewTitle, temp) {
                 Log.call(Log.l.trace, "ExportXlsx.");
-                /*if (fileName === "BenutzerdefinierterReport" || fileName === "CostumReport") {
+                if (fileName === "Fragenstatistik" || fileName === "Questionstatistics") {
                     this.template = temp;
                 } else {
                     this.template = this.templateSpreadsheet;
-                }*/
-                this.template = this.templateSpreadsheet;
+                }
+                //this.template = this.templateSpreadsheet;
                 if (!this.xlsx) {
                     Log.ret(Log.l.error, "OpenXmlPackage not created");
                     return;

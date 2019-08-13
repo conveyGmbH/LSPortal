@@ -42,7 +42,7 @@
             defaultValue: {
                 Vorname: "",
                 Nachname: "",
-                Login: AppHeader.controller.binding.userData.Login || "",
+                Login: AppData.generalData.userName || "",
                 LogInNameBeforeAtSymbole: "",
                 LogInNameAfterAtSymbole: "", 
                 Password: "",

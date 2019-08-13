@@ -157,13 +157,13 @@
                                 // Only one item is selected, show the page
                                 listControl.selection.getItems().done(function (items) {
                                     var item = items[0];
-                                    var curPageId = Application.getPageId(nav.location);
                                     that.binding.selIdx = item.index;
                                     if (item.data && item.data.MaildokumentVIEWID &&
                                         item.data.MaildokumentVIEWID !== that.binding.mailingId) {
                                         // called asynchronously if ok
                                         that.binding.mailingId = item.data.MaildokumentVIEWID;
-                                        if (curPageId === "mailing") {
+                                        if (AppBar.scope._element &&
+                                            AppBar.scope._element.id === "mailingController") {
                                             AppBar.scope.binding.saveFlag = true;
                                             if (typeof AppBar.scope.saveData === "function") {
                                                 AppBar.scope.saveData(function() {

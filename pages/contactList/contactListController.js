@@ -662,10 +662,17 @@
                                         listView.winControl.itemDataSource = that.contacts.dataSource;
                                     }
                                     Log.print(Log.l.trace, "Data loaded");
+                                    var recordID = AppData.getRecordId("Kontakt");
+                                    if (recordID) {
+                                        WinJS.Promise.timeout(0).then(function() {
+                                            that.selectRecordId(recordID);
+                                        });
+                                    } else {
                                     if (results[0] && results[0].KontaktVIEWID) {
                                         WinJS.Promise.timeout(0).then(function() {
                                             that.selectRecordId(results[0].KontaktVIEWID);
                                         });
+                                    }
                                     }
                                 } else {
                                     that.binding.count = 0;

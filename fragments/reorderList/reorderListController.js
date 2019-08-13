@@ -122,7 +122,7 @@
 
             var createEventHandler = function (id) {
                 Log.call(Log.l.trace, "ReorderList.Controller.", "id=" + id);
-                eventHandlers["clickVeranstaltungAnlageVIEWID" + id] = function (event) {
+                eventHandlers["clickBestellungVIEWID" + id] = function (event) {
                     Log.call(Log.l.trace, "ReorderList.Controller.");
                     if (event && event.currentTarget) {
                         event.currentTarget.value = id;
@@ -155,9 +155,9 @@
                             var blup = { id: "clickZoomIn", label: getResourceText("command.zoomin"), tooltip: getResourceText("tooltip.zoomin"), section: "primary", svg: "zoom_in" }
                             var commandList = [];
                             for (var i = 0; i < results.length; i++) {
-                                var id = results[i].VeranstaltungAnlageVIEWID;
+                                var id = results[i].BestellungVIEWID;
                                 commandList.push({
-                                    id: "clickVeranstaltungAnlageVIEWID" + id,
+                                    id: "clickBestellungVIEWID" + id,
                                     label: results[i].Text,
                                     section: "secondary"
                                 });

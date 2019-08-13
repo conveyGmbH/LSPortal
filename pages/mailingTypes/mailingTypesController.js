@@ -439,12 +439,11 @@
                 if (mailingTypeData.SendStartTime) {
                     matchValidTime = (mailingTypeData.SendStartTime).match(/^(0?[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/); //^([0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$
                 }
+                if (mailingTypeData.SendDay === null || mailingTypeData.SendDay === "") {
+                    mailingTypeData.SendDay = 0;
+                }
                 var milliseconds = 0;
-                if (mailingTypeData.SendStartTime && matchValidTime) {
-                    var hourMinute = mailingTypeData.SendStartTime.split(":");
-                    milliseconds = hourMinute[0] * 3600000 + hourMinute[1] * 60000;
-                    that.binding.dataMailingTypeData.SendStartTime = "/Date(" + milliseconds + ")/";
-                } else if (mailingTypeData.SendStartTime !== null) {
+                if (matchValidTime === null) {
                     Log.print(Log.l.error, "invalid time");
                     alert(getResourceText("error.invalidTime"));
                     return WinJS.Promise.as();
@@ -454,12 +453,27 @@
                         var recordId = getRecordId();
                         if (recordId) {
                             AppBar.busy = true;
-                            ret = MailingTypes.cr_Event_MailTypeView.update(function (response) {
+                        AppData.call("PRC_UpdateCREventMailType",
+                            {
+                                pCREventMailTypeID: recordId,
+                                pMailTypeID: mailingTypeData.MailTypeID,
+                                pEventID: mailingTypeData.EventID,
+                                pSendDay: parseInt(mailingTypeData.SendDay),
+                                pSendDayHook: mailingTypeData.SendDayHook,
+                                pSendLater: mailingTypeData.SendLater,
+                                pSendStartTime: mailingTypeData.SendStartTime,
+                                pOncePerType: mailingTypeData.OncePerType,
+                                pCCAddr: mailingTypeData.CCAddr,
+                                pBCCAddr: mailingTypeData.BCCAddr,
+                                pFromAddr: mailingTypeData.FromAddr,
+                                pReplyToAddr: mailingTypeData.ReplyToAddr,
+                                pEnabled: mailingTypeData.Enabled
+                            },
+                            function (json) {
+                                Log.print(Log.l.info, "call  PRC_UpdateCREventMailType: success!");
+                                // milliseconds to hour, minute
                                 AppBar.busy = false;
-                                // called asynchronously if ok
-                                Log.print(Log.l.info, "mailTypesData update: success!");
-                            // milliseconds to hour, minute
-                            if (mailingTypeData.SendStartTime) {
+                                /*if (mailingTypeData.SendStartTime) {
                                 var hour = Math.floor(milliseconds / 3600000);
                                 if (hour < 10) {
                                     hour = "0" + hour;
@@ -474,17 +488,13 @@
                                 if (rest === 0) {
                                     that.binding.dataMailingTypeData.SendStartTime = hour + ":" + minutes;
                                 }
-                            }
-
+                                }*/
                                 AppBar.modified = false;
-                                complete(response);
-                            }, function (errorResponse) {
+                            },
+                            function (error) {
                                 AppBar.busy = false;
-                                // called asynchronously if an error occurs
-                                // or server returns response with an error status.
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                                error(errorResponse);
-                            }, recordId, mailingTypeData);
+                                Log.print(Log.l.error, "call error");
+                            });
                         } else {
                             Log.print(Log.l.info, "not supported");
                             ret = WinJS.Promise.as();
