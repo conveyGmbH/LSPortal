@@ -201,6 +201,39 @@
                 return Reporting._KontaktReport;
             }
         },
+        _Fragenstatistik: {
+            get: function () {
+                return AppData.getFormatView("Kontakt", 20594);
+            }
+        },
+        Fragenstatistik: {
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, "Reporting.");
+                var ret = Reporting._Fragenstatistik.select(complete, error, restriction, {
+                    ordered: true,
+                    orderAttribute: "KontaktVIEWID"
+                });
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            selectNext: function (complete, error, response, nextUrl) {
+                Log.call(Log.l.trace, "Reporting.");
+                var ret = Reporting._Fragenstatistik.selectNext(complete, error, response, nextUrl);
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getNextUrl: function (response) {
+                Log.call(Log.l.trace, "Reporting.xLReportView.");
+                var ret = Reporting._Fragenstatistik.getNextUrl(response);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getDbView: function () {
+                return Reporting._Fragenstatistik;
+            }
+        },
         ___xLAuswertungViewNoQuestTitle: null,
         _xLAuswertungViewNoQuestTitle: {
             get: function () {
