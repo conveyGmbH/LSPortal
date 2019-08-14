@@ -85,15 +85,32 @@
                 that.progressNext += that.progressStep;
 
                 var newCell, valueName, type, style, value, extraValue;
+                function isNumber(v) {
+                    if (typeof v === "number") {
+                        return true;
+                    } else if (typeof v === "string") {
+                        for (var l = 0; l < v.length; l++) {
+                            var c = v.substr(l, 1);
+                            if (c < "0" && c > "9") {
+                                return false;
+                            }
+                        }
+                        return true;
+                    } else {
+                        return false;
+                    }
+                };
+
                 for (var r = 0; r < rowCount; r++) {
-                    if (r == 0 || r == 1){
-                        var newRow = new XElement(S.row);
-                        var row = results[r];
-                        for (var c = 1; c < colCount; c++) {
+                    var newRow, row, c, key, attribTypeId, dateString, milliseconds, date, year, month, day, hour, minute;
+                    if (r === 0 || r === 1){
+                        newRow = new XElement(S.row);
+                        row = results[r];
+                        for (c = 1; c < colCount; c++) {
                             if (!attribSpecs[c].hidden) {
-                                var key = attribSpecs[c].ODataAttributeName;
+                                key = attribSpecs[c].ODataAttributeName;
                                 value = row[key];
-                                var attribTypeId = attribSpecs[c].AttribTypeID;
+                                attribTypeId = attribSpecs[c].AttribTypeID;
                                 type = null;
                                 style = null;
                                 valueName = S.v;
@@ -101,15 +118,15 @@
                                     value === null || value === "NULL") {
                                     value = "";
                                 } else if (attribTypeId === 8 || attribTypeId === 6) { // timestamp or date
-                                    var dateString = value.replace("\/Date(", "").replace(")\/", "");
-                                    var milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
-                                    var date = new Date(milliseconds);
-                                    var year = date.getFullYear();
-                                    var month = date.getMonth() + 1;
-                                    var day = date.getDate();
+                                    dateString = value.replace("\/Date(", "").replace(")\/", "");
+                                    milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
+                                    date = new Date(milliseconds);
+                                    year = date.getFullYear();
+                                    month = date.getMonth() + 1;
+                                    day = date.getDate();
                                     if (attribTypeId === 8) {
-                                        var hour = date.getHours();
-                                        var minute = date.getMinutes();
+                                        hour = date.getHours();
+                                        minute = date.getMinutes();
                                         value = year.toString() +
                                             ((month < 10) ? "-0" : "-") + month.toString() +
                                             ((day < 10) ? "-0" : "-") + day.toString() +
@@ -124,7 +141,7 @@
                                     }
                                     type = "d";
                                     style = 1;
-                                } else if (attribTypeId === 3 || !attribTypeId) { // text
+                                } else if ((attribTypeId === 3 || !attribTypeId) && !isNumber(value)) { // text
                                     valueName = S._is;
                                     type = "inlineStr";
                                     value = new XElement(S.t, value);
@@ -143,17 +160,17 @@
                         }
                     }
                     else {
-                        var newRow = new XElement(S.row);
-                        var row = results[r];
-                        for (var c = 1; c < colCount; c++) {
+                        newRow = new XElement(S.row);
+                        row = results[r];
+                        for (c = 1; c < colCount; c++) {
                             if (!attribSpecs[c].hidden) {
-                                var key = attribSpecs[c].ODataAttributeName;
+                                key = attribSpecs[c].ODataAttributeName;
                                 value = row[key];
                                 extraValue = null;
-                                if (key == "Erfassungsdatum" || key == "AenderungsDatum") {
-                                    var attribTypeId = 6;
+                                if (key === "Erfassungsdatum" || key === "AenderungsDatum") {
+                                    attribTypeId = 6;
                                 } else {
-                                    var attribTypeId = attribSpecs[c].AttribTypeID;
+                                    attribTypeId = attribSpecs[c].AttribTypeID;
                                 }
                                 type = null;
                                 style = null;
@@ -171,15 +188,15 @@
                                     }
                                 } else if (attribTypeId === 8 || attribTypeId === 6) { // timestamp or date
                                     if (cr === false){
-                                        var dateString = value.replace("\/Date(", "").replace(")\/", "");
-                                        var milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
-                                        var date = new Date(milliseconds);
-                                        var year = date.getFullYear();
-                                        var month = date.getMonth() + 1;
-                                        var day = date.getDate();
+                                        dateString = value.replace("\/Date(", "").replace(")\/", "");
+                                        milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
+                                        date = new Date(milliseconds);
+                                        year = date.getFullYear();
+                                        month = date.getMonth() + 1;
+                                        day = date.getDate();
                                         if (attribTypeId === 8) {
-                                            var hour = date.getHours();
-                                            var minute = date.getMinutes();
+                                            hour = date.getHours();
+                                            minute = date.getMinutes();
                                             value = year.toString() +
                                                 ((month < 10) ? "-0" : "-") + month.toString() +
                                                 ((day < 10) ? "-0" : "-") + day.toString() +
@@ -207,12 +224,12 @@
                                         };
 
                                         value = toDate(value);
-                                        var date = new Date();
+                                        date = new Date();
                                         value = new Date(value - (date.getTimezoneOffset() * 60000)).toISOString().slice(0, -1);
                                     }
                                     type = "d";
                                     style = 1;
-                                } else if (attribTypeId === 3 || !attribTypeId) { // text
+                                } else if ((attribTypeId === 3 || !attribTypeId) && !isNumber(value)) { // text
                                     valueName = S._is;
                                     type = "inlineStr";
                                     value = new XElement(S.t, value);
