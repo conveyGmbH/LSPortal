@@ -203,7 +203,7 @@
         },
         _Fragenstatistik: {
             get: function () {
-                return AppData.getFormatView("Kontakt", 20594);
+                return AppData.getFormatView("Fragen", 20596);
             }
         },
         Fragenstatistik: {
@@ -211,7 +211,7 @@
                 Log.call(Log.l.trace, "Reporting.");
                 var ret = Reporting._Fragenstatistik.select(complete, error, restriction, {
                     ordered: true,
-                    orderAttribute: "KontaktVIEWID"
+                    orderAttribute: "FragenVIEWID"
                 });
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
