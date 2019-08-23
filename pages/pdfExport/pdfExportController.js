@@ -16,6 +16,7 @@
 /// <reference path="~/www/lib/jszip/scripts/jszip.js" />
 /// <reference path="~/www/lib/FileSaver/scripts/FileSaver.js" />
 /// <reference path="~/www/pages/pdfExport/pdfExportService.js" />
+/// <reference path="~/www/pages/pdfExport/pdfexportXlsx.js" />
 
 (function () {
     "use strict";
@@ -57,6 +58,8 @@
             this.pdfIddata = [];
             this.nextUrl = null;
             this.curPdfIdx = -1;
+            this.xlsxblob = null;
+            this.xlsxfilename = "PDFExport.xlsx";
 
             var disablePdfExportList = function (disableFlag) {
                 var pdfExportListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("PdfExportList"));
@@ -130,20 +133,45 @@
             this.statusExportPDF = statusExportPDF;
 
             var addPdfToZip = function (filename, docContent) {
+                if (!that.pdfzip) {
+                    that.pdfzip = new JSZip();
+                }
                 if (filename && docContent) {
-                    if (!that.pdfzip) {
-                        that.pdfzip = new JSZip();
-                    }
-                    var sub = docContent.search("\r\n\r\n");
-                    if (sub > 0) {
-                        var data = b64.toByteArray(docContent.substr(sub + 4));
+                    if (filename === "PDFExcel.xlsx") {
+                        var data = b64.toByteArray(docContent);
                         that.pdfzip.file(filename, data);
                     } else {
-                        that.pdfzip.file(filename, docContent);
+                        var sub = docContent.search("\r\n\r\n");
+                        if (sub > 0) {
+                            var data = b64.toByteArray(docContent.substr(sub + 4));
+                            that.pdfzip.file(filename, data);
+                        } else {
+                            that.pdfzip.file(filename, docContent);
+                        }
                     }
                 }
             }
             this.addPdfToZip = addPdfToZip;
+
+            var insertExcelFiletoZip = function (event) {
+                Log.call(Log.l.trace, "Reporting.Controller.");
+                var exporter = new PDFExportXlsx.ExporterClass();
+                var dbView = PDFExport.KontaktPDF;
+                //var dbViewTitle = PDFExport.xLAuswertungViewNoQuestTitle;
+                var fileName = "PDFExcel";
+                exporter.saveXlsxFromView(dbView, fileName, function (result) {
+                    AppBar.busy = false;
+                    AppBar.triggerDisableHandlers();
+                    that.xlsxblob = result.blob;
+                    that.getPdfIdDaten();
+                }, function (errorResponse) {
+                    AppData.setErrorMsg(that.binding, errorResponse);
+                    AppBar.busy = false;
+                    AppBar.triggerDisableHandlers();
+                }, {}, null, null);
+                Log.ret(Log.l.trace);
+            }
+            this.insertExcelFiletoZip = insertExcelFiletoZip;
 
             var getNextPdfData = function () {
                 var ret;
@@ -190,18 +218,20 @@
                     }, recordId);
                 } else if (that.pdfIddata.length > 0) {
                     Log.print(Log.l.trace, "collected all, pdfIddata.length=" + that.pdfIddata.length);
-                    that.pdfzip.generateAsync({
-                        blob: true,
-                        base64: false,
-                        compression: "STORE",
-                        type: "blob"
-                    }).then(function (blob) {
-                        saveAs(blob, "PDFExport.zip");
-                        //location.href = "data:application/zip;base64," + pdfData;
-                        that.disablePdfExportList(false);
-                        //that.binding.progress.show = null;
-                        that.binding.progress.count = that.binding.progress.max;
-                    });
+                    // XLSX Einfügen
+                        that.pdfzip.file(that.xlsxfilename, that.xlsxblob);
+                        that.pdfzip.generateAsync({
+                            blob: true,
+                            base64: false,
+                            compression: "STORE",
+                            type: "blob"
+                        }).then(function (blob) {
+                            saveAs(blob, "PDFExport.zip");
+                            //location.href = "data:application/zip;base64," + pdfData;
+                            that.disablePdfExportList(false);
+                            //that.binding.progress.show = null;
+                            that.binding.progress.count = that.binding.progress.max;
+                        }); 
                     ret = WinJS.Promise.as();
                 } else {
                     Log.print(Log.l.trace, "no data");
@@ -355,7 +385,6 @@
                         AppBar.busy = true;
                         AppBar.triggerDisableHandlers();
                         that.disablePdfExportList(true);
-
                     }
                     that.saveData(function(response) {
                             AppBar.busy = false;
@@ -364,10 +393,13 @@
                         function(errorResponse) {
                             AppBar.busy = false;
                             Log.print(Log.l.error, "error saving question");
-                        }).then(function() {
-                        WinJS.Promise.timeout(1000).then(function() {
-                            that.getPdfIdDaten();
-                        });
+                        }).then(function () {
+                            WinJS.Promise.timeout(1000).then(function() {
+                                that.insertExcelFiletoZip();
+                            })}).then(function() {
+                            WinJS.Promise.timeout(1000).then(function() {
+                            
+                            }); 
                     });
                     Log.ret(Log.l.trace);
                 },
@@ -512,7 +544,8 @@
         }, {
             exportPDFStringFlag: "",
             pdfzip: null,
-            pdfzipfiles: []
+            pdfzipfiles: [],
+            loading: false
         })
     });
 })();
