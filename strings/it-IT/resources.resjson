@@ -92,7 +92,10 @@
     "tooltip.deleteExhibitor" : "Elimina espositore",
     "tooltip.newNachbestellungen": "Riordinare",
     "tooltip.testmailopen": "Testmail",
-    "tooltip.exportAudio": "Esporta audio",
+    "tooltip.exportAudio": "Esporta audio", 
+    "tooltip.newMandant": "Nuovo cliente", 
+    "tooltip.updateMandant": "Salvare", 
+    "tooltip.newLicense": "Nuova licenza",
 
     "start.title"           : "Pagina iniziale",
     "start.comment"         : "Utilizzate i pulsanti su questa pagina per muoversi tra le pagine!",
@@ -468,6 +471,8 @@
 	"label.mailingTemplate"	: "Modello di spedizione",
 	"label.mailingTracking"	: "MailTracking",
     "label.mailingOptions"	: "Impostazioni di invio",
+    "label.clientManagement"	: "Gestione dei client",
+    "label.clientManagementLicenses"	: "Licenze",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annulla",

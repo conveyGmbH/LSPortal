@@ -92,7 +92,10 @@
     "tooltip.deleteExhibitor" : "Austeller löschen",
 	"tooltip.newNachbestellungen": "Nachbestellung",
     "tooltip.testmailopen": "Testmail",
-    "tooltip.exportAudio": "Audio exportieren",
+    "tooltip.exportAudio": "Audio exportieren", 
+    "tooltip.newMandant": "Neuer Mandant", 
+    "tooltip.updateMandant": "Speichern", 
+    "tooltip.newLicense": "Neue Lizenz",
 
     "start.title"           : "Startseite",
     "start.comment"         : "Verwende die Schaltflächen auf dieser Seite um auf weitere Seiten zu gehen!",
@@ -468,6 +471,8 @@
 	"label.mailingTemplate"	: "MailingVorlage",
 	"label.mailingTracking"	: "MailVerfolgung",
     "label.mailingOptions"	: "Mailingeinstellungen",
+    "label.clientManagement"	: "Mandantenverwaltung",
+    "label.clientManagementLicenses"	: "Lizenzen",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Abbrechen",

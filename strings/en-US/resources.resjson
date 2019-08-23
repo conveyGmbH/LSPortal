@@ -92,7 +92,10 @@
     "tooltip.deleteExhibitor" : "Delete exhibitor",
     "tooltip.newNachbestellungen": "Reorder",
     "tooltip.testmailopen": "Testmail",
-    "tooltip.exportAudio": "Export Audio",
+    "tooltip.exportAudio": "Export Audio", 
+    "tooltip.newMandant": "New Client", 
+    "tooltip.updateMandant": "Save", 
+    "tooltip.newLicense": "New License",
 
     "start.title"           : "Start Page",
     "start.comment"         : "On this page, use the buttons to go to additional pages!",
@@ -468,6 +471,8 @@
 	"label.mailingTypes"	: "MailTypes",
 	"label.mailingTemplate"	: "MailingTemplate",
 	"label.mailingTracking"	: "MailTracking",
+    "label.clientManagement"	: "Client management",
+    "label.clientManagementLicenses"	: "Licenses",
     
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Cancel",
