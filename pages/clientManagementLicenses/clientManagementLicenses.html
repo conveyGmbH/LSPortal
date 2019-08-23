@@ -1,0 +1,147 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="clientManagementLicenses.css" rel="stylesheet" />
+    <script type="text/javascript" src="clientManagementLicensesService.js"></script>
+    <script type="text/javascript" src="clientManagementLicensesController.js"></script>
+    <script type="text/javascript" src="clientManagementLicenses.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="clientManagementLicenses fragment">
+        <div id="clientManagementLicensesController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="contentarea win-type-body">
+                    <div class="header-separator"></div>
+                    <div class="content-header">
+                        <div class="half-circle half-circle-textcolor">&nbsp;</div>
+                        <div class="content-header-line win-type-caption">
+                            <span class="id-field"></span>
+                            <span class="caption-field" data-win-res="{textContent: 'clientmanagementlicenses.title'}"></span>
+                        </div>
+                    </div>
+                    <div class="headerFooterPlaceholder">
+                        <div class="list-header">
+                            <div class="list-landscape-only">
+                                <div id="event" class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'clientmanagementlicenses.event'}"></div>
+                                <div id="startdate" class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'clientmanagementlicenses.startdate'}"></div>
+                                <div id="enddate" class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'clientmanagementlicenses.enddate'}"></div>
+                                <div id="licenses" class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'clientmanagementlicenses.licenses'}"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clientmanagementlicenseslist-template"
+                         data-win-control="WinJS.Binding.Template" style="display: none">
+                        <div class="list-landscape-only">
+                            <div class="row-bkg-gray"
+                                 data-win-bind="style.display: index Binding.Converter.oddToDisplay"></div>
+                            <div id="event" contentEditable="true" class="list-field-small-fixed win-type-ellipsis"
+                                 data-win-bind="textContent: VeranstaltungName"></div>
+                            <div id="startdate" class="list-field-small-fixed win-type-ellipsis"
+                                 data-win-bind="textContent: VeranstaltungBeginn"></div>
+                            <div id="enddate" class="list-field-small-fixed win-type-ellipsis"
+                                 data-win-bind="textContent: VeranstaltungEnde"></div>
+                            <div id="licenses" class="list-field-small-fixed win-type-ellipsis"
+                                 data-win-bind="textContent: NumLicenses"></div>
+                        </div>
+                        <div class="list-portrait-only">
+                            <div class="row-separator"></div>
+                            <div class="list-div-left">
+                                <div class="list-compressed">
+                                    <!--list-localeventsList-->
+                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
+                                          data-win-bind="textContent: VeranstaltungName"></span>
+                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
+                                          data-win-bind="textContent: VeranstaltungBeginn"></span>
+                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
+                                          data-win-bind="textContent: VeranstaltungEnde"></span>
+                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
+                                          data-win-bind="textContent: NumLicenses"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="editPlaceholder">
+                        <div class="edit">
+                            <div class="field_line" data-win-bind="style.display: editLicensesShowFlag Binding.Converter.toDisplay">
+                                <div class="field_line field_line_odd" id="licenseseditdialog">
+                                    <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'clientmanagementlicenses.newlicenses'}"></span>
+                                    <span class="label landscape_only" data-win-res="{textContent: 'clientmanagementlicenses.newlicenses'}"></span><br />
+                                    <select id="editveranstaltungLicenses"
+                                            class="input_field win-dropdown"
+                                            data-win-control="WinJS.UI.Repeater"
+                                            data-win-bind="value: dataLicense.VeranstaltungID Binding.Mode.twoway">
+                                        <option data-win-bind="value: VeranstaltungVIEWID; textContent: Name"></option>
+                                    </select>
+                                    <br />
+                                    <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'clientmanagementlicenses.newlicenses'}"></span>
+                                    <span class="label landscape_only" data-win-res="{textContent: 'clientmanagementlicenses.newlicenses'}"></span><br/>
+                                    <input class="input_small_left win-textbox" type="number" data-win-bind="value: dataLicense.NumLicenses Binding.Mode.twoway" min="1" max="100"/><br/><br/>
+                                    <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'clientmanagementlicenses.licensetext'}"></span>
+                                    <span class="label landscape_only" data-win-res="{textContent: 'clientmanagementlicenses.licensetext'}"></span>
+                                    <textarea class="input_field win-textarea input_text_comment" id="editinfoText" data-win-bind="value: dataLicense.InfoText Binding.Mode.twoway"></textarea><br/><br/>
+                                    <br/>
+                                    <button class="order-button win-button"
+                                            data-win-bind="textContent: editlicensebtnLabel;"
+                                            onclick="AppBar.handleEvent('click', 'clickEditVeranstaltungLicenses', event)"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="inputPlaceholder">
+                        <div class="input">
+                            <div class="field_line" data-win-bind="style.display: newLicensesShowFlag Binding.Converter.toDisplay">
+                                <div class="field_line field_line_odd" id="licensesupdatedialog">
+                                    <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'clientmanagementlicenses.event'}"></span>
+                                    <span class="label landscape_only" data-win-res="{textContent: 'clientmanagementlicenses.event'}"></span>
+                                    <select id="veranstaltungLicenses"
+                                            class="input_field win-dropdown"
+                                            data-win-control="WinJS.UI.Repeater"
+                                            data-win-bind="value: newLicensesdata.VeranstaltungVIEWID Binding.Mode.twoway">
+                                        <option data-win-bind="value: VeranstaltungVIEWID; textContent: Name"></option>
+                                    </select>
+                                    <br />
+                                    <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'clientmanagementlicenses.newlicenses'}"></span>
+                                    <span class="label landscape_only" data-win-res="{textContent: 'clientmanagementlicenses.newlicenses'}"></span><br />
+                                    <input class="input_small_left win-textbox" type="number" data-win-bind="value: newLicensesdata.NumLicenses Binding.Mode.twoway" min="1" max="100" /><br /><br />
+                                    <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'clientmanagementlicenses.licensetext'}"></span>
+                                    <span class="label landscape_only" data-win-res="{textContent: 'clientmanagementlicenses.licensetext'}"></span>
+                                    <textarea class="input_field win-textarea input_text_comment" id="infoText" data-win-bind="value: newLicensesdata.InfoText Binding.Mode.twoway"></textarea><br /><br />
+                                    <br />
+                                    <button class="order-button win-button"
+                                            data-win-bind="textContent: licensebtnLabel;"
+                                            onclick="AppBar.handleEvent('click', 'clickVeranstaltungLicenses', event)"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="headerFooterPlaceholder">
+                        <div class="list-footer">
+                            <div class="status">
+                                <progress class="win-progress-bar progress"></progress>
+                                <div class="counter">
+                                    <span data-win-res="{textContent: 'clientmanagementlicenses.count'}"></span><span>: </span><span data-win-bind="textContent: count"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="clientmanagementlicenseslist"
+                         class="listview win-selectionstylefilled"
+                         data-win-control="WinJS.UI.ListView"
+                         data-win-options="{
+                                header : select('.list-header'),
+                                itemTemplate: select('.clientmanagementlicenseslist-template'),
+                                input : select('.input'),
+                                edit : select('.edit'),
+                                footer: select('.list-footer')
+                         }">
+                    </div>
+                    
+                    <div class="error-message"
+                         data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

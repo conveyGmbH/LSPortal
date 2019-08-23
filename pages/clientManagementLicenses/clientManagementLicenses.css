@@ -1,0 +1,55 @@
+﻿.fields-container {
+    width: 100%;
+    height: auto;
+}
+
+#startdate {
+    width: 100px;
+    text-align: center;
+}
+
+#enddate {
+    width: 100px;
+    text-align: center;
+}
+
+#event {
+    width: 300px;
+    text-align: left;
+}
+
+#licenses {
+    width: 100px;
+    text-align: center;
+}
+
+.win-itemscontainer {
+    padding-left: 20px;
+}
+
+.list-field-small-fixed {
+    width: 300px;
+    padding-left: 20px;
+}
+
+#clientmanagementlicenseslist {
+    width: 100%;
+    height: auto;
+}
+
+.list-header {
+    padding-left: 27px;
+    font-weight: bold;
+}
+.input {
+    
+}
+#licensesupdatedialog {
+   
+}
+.inputPlaceholder {
+   
+}
+.list-footer {
+    margin-left: 22px;
+}

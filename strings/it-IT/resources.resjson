@@ -776,5 +776,32 @@
     "reorderlist.deviceno" : "numero di dispositivo",
     "reorderlist.orderstatus" : "attivamente",
     "reorderlist.btnlabelB" : "ordinato",
-    "reorderlist.btnlabelO" : "ordine"	
+    "reorderlist.btnlabelO" : "ordine",
+
+    "clientmanagement.title" : "Espositore",
+    "clientmanagement.companyname" : "Nome azienda",
+    "clientmanagement.contactperson" : "Contatto",
+    "clientmanagement.email" : "E-mail",
+    "clientmanagement.numLicenses" : "Licenze",
+    "clientmanagement.customerID" : "Numero cliente",
+    "clientmanagement.street" : "Strada",
+    "clientmanagement.zip" : "Codice postale",
+    "clientmanagement.city" : "Città",
+    "clientmanagement.country" : "Paese",
+    "clientmanagement.telefon" : "Telefono",
+
+
+    "clientmanagementlist.title" : "Espositore",
+    "clientmanagementlist.count" : "Numero",
+
+    "clientmanagementlicenses.title" : "Licenze",
+    "clientmanagementlicenses.event" : "Nome dell'evento",
+    "clientmanagementlicenses.startdate" : "Data d'inizio",
+    "clientmanagementlicenses.enddate" : "Data di fine",
+    "clientmanagementlicenses.licenses" : "Licenze",
+    "clientmanagementlicenses.count" : "Numero",
+    "clientmanagementlicenses.newlicenses" : "Licenze",
+    "clientmanagementlicenses.licensebtnLabel" : "Entrare",
+    "clientmanagementlicenses.licensetext" : "Ordinare Info", 
+    "clientmanagementlicenses.editlicensebtnLabel" : "Cambiamento"	
 }
