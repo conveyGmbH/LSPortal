@@ -334,11 +334,13 @@
                             }
                         }
                     }
-                    item.showDoc = (item.IMPORT_CARDSCANID || item.SHOW_Barcode) ? true: false;
+                    item.showDoc = true;
                     if (item.SHOW_Barcode || item.IMPORT_CARDSCANID && !item.SHOW_Visitenkarte) {
                         item.svgSource = item.IMPORT_CARDSCANID ? "barcode-qr" : "barcode";
-                    } else {
+                    } else if (!item.SHOW_Barcode && item.IMPORT_CARDSCANID && item.SHOW_Visitenkarte) {
                         item.svgSource = "";
+                    } else {
+                        item.svgSource = "manuel_Portal";
                     }
                 }
                 this.resultConverter = resultConverter;
