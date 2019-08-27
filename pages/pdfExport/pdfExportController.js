@@ -162,7 +162,7 @@
                 exporter.saveXlsxFromView(dbView, fileName, function (result) {
                     AppBar.busy = false;
                     AppBar.triggerDisableHandlers();
-                    that.xlsxblob = result.blob;
+                    that.xlsxblob = result;
                     that.getPdfIdDaten();
                 }, function (errorResponse) {
                     AppData.setErrorMsg(that.binding, errorResponse);
