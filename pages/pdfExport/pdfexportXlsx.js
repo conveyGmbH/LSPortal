@@ -66,7 +66,7 @@
                     try {
                         //addPdfToZip(blob, fileName + ".xlsx");
                         if (typeof complete === "function") {
-                            complete({blob});
+                            complete(blob);
                         }
                     } catch (exception) {
                         Log.print(Log.l.error, "exception: " + (exception && exception.message));
