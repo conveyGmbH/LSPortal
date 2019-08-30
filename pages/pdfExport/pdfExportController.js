@@ -28,6 +28,7 @@
             Application.Controller.apply(this, [pageElement, {
                 restriction: getEmptyDefaultValue(PDFExport.pdfExportParamView.defaultValue),
                 restrictionPdf: getEmptyDefaultValue(PDFExport.exportKontaktDataView.defaultValue),
+                restrictionExcel: {},
                 sampleName: getEmptyDefaultValue(PDFExport.pdfExportParamView.defaultValue),
                 exportPdfString: "",
                 exportPdfMsg: "",
@@ -159,6 +160,39 @@
                 var dbView = PDFExport.KontaktPDF;
                 //var dbViewTitle = PDFExport.xLAuswertungViewNoQuestTitle;
                 var fileName = "PDFExcel";
+                if (!that.binding.restrictionExcel) {
+                    that.binding.restrictionExcel = {};
+                }
+                if (AppData.getLanguageId() === 1031) {
+                    that.binding.restrictionExcel.ErfassungsdatumValue = that.binding.restrictionPdf.Erfassungsdatum; //.toISOString().substring(0, 10)
+                } else {
+                    that.binding.restrictionExcel.RecordDate = that.binding.restrictionPdf.Erfassungsdatum;
+                }
+                for (var prop in that.binding.restrictionPdf) {
+                    if (that.binding.restrictionPdf.hasOwnProperty(prop)) {
+                        //hasRestriction = true;
+                        /*if (!restriction) {
+                            restriction = {};
+                        }*/
+                        switch (prop) {
+                            case "Erfassungsdatum":
+                            case "RecordDate":
+                                that.binding.restrictionExcel["ErfassungsdatumValue"] = [null, that.binding.restrictionPdf[prop]];
+                                break;
+                            case "AenderungsDatum":
+                            case "ModificationDate":
+                                that.binding.restrictionExcel["AenderungsDatumValue"] = [null, that.binding.restrictionPdf[prop]];
+                                break;
+                            default:
+                                that.binding.restrictionExcel[prop] = [null, that.binding.restrictionPdf[prop]];
+                        }
+                    }
+                }
+                if (that.binding.restrictionPdf.Erfassungsdatum) {
+                    that.binding.restrictionExcel["KontaktVIEWID"] = ["<0", ">0"];
+                    that.binding.restrictionExcel.bAndInEachRow = true;
+                    that.binding.restrictionExcel.bExact = true;
+                }
                 exporter.saveXlsxFromView(dbView, fileName, function (result) {
                     AppBar.busy = false;
                     AppBar.triggerDisableHandlers();
@@ -168,7 +202,7 @@
                     AppData.setErrorMsg(that.binding, errorResponse);
                     AppBar.busy = false;
                     AppBar.triggerDisableHandlers();
-                }, {}, null, null);
+                }, that.binding.restrictionExcel, null, null);
                 Log.ret(Log.l.trace);
             }
             this.insertExcelFiletoZip = insertExcelFiletoZip;

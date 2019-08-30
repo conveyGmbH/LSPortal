@@ -15,7 +15,8 @@
             Log.call(Log.l.trace, "LocalEventsCreate.Controller.");
             Application.Controller.apply(this,
                 [pageElement, {
-                    eventData: copyByValue(LocalEventsCreate.VeranstaltungView.defaultValue)
+                    eventData: copyByValue(LocalEventsCreate.VeranstaltungView.defaultValue),
+                    actualYear: null
                 }, commandList]
             );
             this.binding.eventData.dateBegin = new Date();
@@ -86,6 +87,28 @@
             }
             this.insertData = insertData;
             
+            var createUsers = function() {
+                Log.call(Log.l.trace, "LocalEventsCreate.Controller.");
+                AppData.call("PRC_CreateUserVeranstaltung",
+                    {
+                        pVeranstaltungID: dataEvent.VeranstaltungName,
+                        pFairMandantID: dataEvent.StartDatum,
+                        pLoginName: dataEvent.EndDatum,
+                        pOrderedUser: dataEvent.LeadSuccessMobileApp
+
+                    }, function (json) {
+                        Log.print(Log.l.info, "call success! ");
+                        AppBar.busy = false;
+                        Application.navigateById("localevents");
+                    }, function (errorResponse) {
+                        Log.print(Log.l.error, "call error");
+                        AppBar.busy = false;
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    });
+                Log.ret(Log.l.trace);
+            }
+            this.createUsers = createUsers;
+
             // Then, do anything special on this page
             this.eventHandlers = {
                 clickBack: function (event) {
@@ -99,6 +122,12 @@
                     Log.call(Log.l.trace, "LocalEventsCreate.Controller.");
                     AppBar.busy = true;
                     that.insertData();
+                    Log.ret(Log.l.trace);
+                },
+                clickCreateUsers: function (event) {
+                    Log.call(Log.l.trace, "LocalEventsCreate.Controller.");
+                    AppBar.busy = true;
+                    that.createUsers();
                     Log.ret(Log.l.trace);
                 },
                 clickChangeUserState: function (event) {

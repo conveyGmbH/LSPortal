@@ -504,6 +504,10 @@
 	"event.privacyPolicyStandartText" : "Con la presente confermo che i miei dati sono raccolti e trattati in base al GDPR",
     "event.displayOptions" : "Impostazioni di visualizzazione",
 	"event.showNameInHeader" : "Nome nell'intestazione",
+	"event.ticketCodeServer" : "Ticketcode-Server",
+	"event.dbSyncLogin"     : "DBSYNCLogin",
+	"event.dbSyncPassword"  : "DBSYNCPassword",
+	"event.serverList"      : "Serverlist",
 
     "optQuestionList.title"   : "opzionale Domande/Risposte",
     "optQuestionList.count"   : "Numero",

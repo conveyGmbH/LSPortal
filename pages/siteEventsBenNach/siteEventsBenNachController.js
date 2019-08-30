@@ -25,11 +25,45 @@
                             recordID: 0,
                             reorderDevicesShowFlag: false,
                             newdevices: 0,
+                            category: null,
                             orderbtnLabel: getResourceText("siteeventsbennach.btnlabelorder")
                         }, commandList
                     ]);
 
                 var that = this;
+
+                var exibitorcategory = pageElement.querySelector("#exibitorCategoryBenNach");
+
+                var creatingExhibitorCategory = function () {
+                    Log.call(Log.l.trace, "SiteEventsNeuAus.Controller.");
+                    var exhibitorCategory = [
+                        {
+                            value: null,
+                            title: ""
+                        },
+                        {
+                            value: "APP",
+                            title: "APP"
+                        },
+                        {
+                            value: "SERVICE",
+                            title: "SERVICE"
+                        },
+                        {
+                            value: "RTW",
+                            title: "RTW"
+                        },
+                        {
+                            value: "IPAD",
+                            title: "IPAD"
+                        }
+                    ];
+                    if (exibitorcategory && exibitorcategory.winControl) {
+                        exibitorcategory.winControl.data = new WinJS.Binding.List(exhibitorCategory);
+                        exibitorcategory.selectedIndex = 0;
+                    }
+                }
+                this.creatingExhibitorCategory = creatingExhibitorCategory;
 
                 var saveRestriction = function() {
                     AppData.setRestriction("", that.binding.restriction);
@@ -109,7 +143,8 @@
                         AppData.setErrorMsg(that.binding);
                         AppData.call("PRC_VeranstaltungAddUser", {
                             pVeranstaltungID: parseInt(event.target.value),
-                            pAppUser: parseInt(that.binding.newdevices)
+                            pAppUser: parseInt(that.binding.newdevices),
+                            pUserType: that.binding.category
                         }, function (json) {
                             Log.print(Log.l.info, "call success! ");
                             that.binding.reorderDevicesShowFlag = false;
@@ -211,6 +246,9 @@
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData(getRecordId());
             }).then(function () {
+                    that.creatingExhibitorCategory();
+                    Log.print(Log.l.trace, "creatingExhibitorCategory loaded!");
+                }).then(function () {
                 AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Data loaded");
             });

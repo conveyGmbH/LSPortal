@@ -504,6 +504,10 @@
 	"event.privacyPolicyStandartText" : "Je confirme par la présente que mes données sont collectées et traitées conformément au RGPD",
     "event.displayOptions" : "Paramètres d'affichage",
     "event.showNameInHeader" : "Nom dans l'en-tête",
+	"event.ticketCodeServer" : "Ticketcode-Server",
+	"event.dbSyncLogin"     : "DBSYNCLogin",
+	"event.dbSyncPassword"  : "DBSYNCPassword",
+	"event.serverList"      : "Serverlist",
 
 	"optQuestionList.title"   : "En option Questions/Réponses",
     "optQuestionList.count"   : "Nombre",

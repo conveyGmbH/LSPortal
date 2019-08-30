@@ -465,6 +465,9 @@
 	"event.privacyPolicyStandartText" : "Hiermit bestätige ich, dass meine Daten nach den DSGVO erfasst und verarbeitet werden",
     "event.displayOptions" : "Display options",
     "event.showNameInHeader" : "Name in header",
+	"event.ticketCodeServer" : "Ticketcode-Server",
+	"event.dbSyncLogin"     : "DBSYNCLogin",
+	"event.dbSyncPassword"  : "DBSYNCPassword",
 
     "questiongroup.title"   : "Fragengruppen",
     "questiongroup.count"   : "Anzahl",

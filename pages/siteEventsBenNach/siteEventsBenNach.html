@@ -47,6 +47,17 @@
                         </div>
                         <div class="field_line" data-win-bind="style.display: reorderDevicesShowFlag Binding.Converter.toDisplay">
                             <div class="field_line field_line_odd">
+                                <div class="input_group">
+                                    <div class="input_half_left">
+                                        <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'siteeventsbennach.catergory'}"></span>
+                                        <select id="exibitorCategoryBenNach"
+                                                class="input_field_noLabel win-dropdown"
+                                                data-win-control="WinJS.UI.Repeater"
+                                                data-win-bind="value: category Binding.Mode.twoway">
+                                            <option data-win-bind="value: value; textContent: title"></option>
+                                        </select>
+                                    </div>
+                                    <div class="input_half_right">
                                 <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'siteeventsbennach.newdevices'}"></span>
                                 <input class="input_small_left win-textbox" type="number" data-win-bind="value: newdevices Binding.Mode.twoway" />
                                 <button class="order-button win-button"
@@ -54,6 +65,8 @@
                                         onclick="AppBar.handleEvent('click', 'clickOrderNewDevices', event)"></button>
                             </div>
                        </div>
+                    </div>
+                </div>
                     </div>
                 </div>
                 <div class="error-message"
