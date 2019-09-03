@@ -40,7 +40,7 @@
         _questionListView: {
             get: function () {
                 var ret = AppData.getFormatView("FragenAntworten", 0);
-                ret.maxPageSize = 10;
+                ret.maxPageSize = 50;
                 return ret;
             }
         },
