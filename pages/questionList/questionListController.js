@@ -314,6 +314,9 @@
                                 curScope.item.Multiselection = "0";
                                 curScope.item.Combobox = null;
                         }
+                        var newRecord = that.getFieldEntries(curScope.index, curScope.item);
+                        that.mergeRecord(curScope.item, newRecord);
+                        that.resultConverter(curScope.item, curScope.index);
                         that.questions.setAt(curScope.index, curScope.item);
                         AppBar.modified = true;
                     }
@@ -328,6 +331,8 @@
                     var curScope = that.scopeFromRecordId(that.curRecId);
                     if (curScope && curScope.item &&
                         value !== curScope.item.Anzahl) {
+                        var newRecord = that.getFieldEntries(curScope.index, curScope.item);
+                        that.mergeRecord(curScope.item, newRecord);
                         curScope.item.Anzahl = value;
                         that.resultConverter(curScope.item, curScope.index);
                         that.questions.setAt(curScope.index, curScope.item);
@@ -403,6 +408,7 @@
                             ret = QuestionList.questionListView.update(function (response) {
                                 Log.print(Log.l.info, "questionListView update: success!");
                                 AppData.getUserData();
+                                AppBar.modified = false;
                                 // called asynchronously if ok
                                 if (typeof complete === "function") {
                                     complete(response);
@@ -413,9 +419,7 @@
                                 if (typeof error === "function") {
                                     error(errorResponse);
                                 }
-                            }, recordId, curScope.item).then(function() {
-                                AppBar.modified = false;
-                            });
+                            }, recordId, curScope.item);
                         } else {
                             Log.print(Log.l.trace, "no changes in recordId:" + recordId);
                         }
@@ -702,42 +706,6 @@
                         } else {
                             that.inAnswerCountFromRange = true;
                             that.answerCountFromRange(event.target);
-                        }
-                        if (listView && listView.winControl) {
-                            var listControl = listView.winControl;
-                            if (listControl.selection) {
-                                var selectionCount = listControl.selection.count();
-                                if (selectionCount === 1) {
-                                    // Only one item is selected, show the page
-                                    listControl.selection.getItems().done(function (items) {
-                                        var item = items[0];
-                                        if (item.data && item.data.FragenAntwortenVIEWID) {
-                                            var newRecId = item.data.FragenAntwortenVIEWID;
-                                            Log.print(Log.l.trace, "newRecId:" + newRecId + " curRecId:" + that.curRecId);
-                                            AppData.setRecordId('FragenAntworten', newRecId);
-                                            if (that.curRecId) {
-                                                that.prevRecId = that.curRecId;
-                                            }
-                                            that.curRecId = newRecId;
-                                            var recordId = that.curRecId;
-                                            if (that.prevRecId !== 0) { //
-                                                that.saveData(function (response) {
-                                                    Log.print(Log.l.trace, "question saved");
-                                                    that.binding.questionId = recordId;
-                                                    that.loadData(that.binding.questionId).then(function () {
-                                                        that.selectRecordId(that.binding.questionId);
-                                                    });
-                                                    AppBar.triggerDisableHandlers();
-                                                }, function (errorResponse) {
-                                                    Log.print(Log.l.error, "error saving question");
-                                                });
-                                            } else {
-                                                AppBar.triggerDisableHandlers();
-                                            }
-                                        }
-                                    });
-                                }
-                            }
                         }
                     }
                     Log.ret(Log.l.trace);
