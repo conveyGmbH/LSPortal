@@ -552,9 +552,11 @@
                     that.saveData(function (response) {
                         Log.print(Log.l.trace, "question saved");
                         that.binding.questionId = recordId;
+                        if (AppBar.modified) {
                         that.loadData().then(function () {
                             that.selectRecordId(that.binding.questionId);
                         });
+                        }
                     }, function (errorResponse) {
                         Log.print(Log.l.error, "error saving question");
                     });

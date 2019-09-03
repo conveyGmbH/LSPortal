@@ -158,8 +158,8 @@
                     Log.print(Log.l.trace, "questionListView: success!");
 
                     if (json && json.d) {
-                        //that.binding.count = json.d.results.length;
-                        //that.nextUrl = OptQuestionList.questionListView.getNextUrl(json);
+                        that.binding.count = json.d.results.length;
+                        that.nextUrl = OptQuestionList.questionListView.getNextUrl(json);
                         var results = json.d.results;
                         results.forEach(function (item, index) {
                             item.frage = item.Sortierung + ". " + item.Fragestellung;
