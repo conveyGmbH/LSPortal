@@ -341,11 +341,10 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
 .event-field {
     width: calc(100% - 278px);
     float: right;
+    margin-top: 8px;
 }
 
 .event-name {
-    position: relative;
-    top: 8px;
     width: 100%;
 }
 
@@ -516,19 +515,24 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
 
     .event-line {
         margin-left: 52px;
-        width: calc(100% - 180px);
+        width: calc(100% - 230px);
     }
 
     .event-field {
         width: 100%;
         float: left;
     }
+
+    .status-on-off {
+        max-width: 178px;
+    }
+
+    .user-name-field {
+        font-size: 12px;
+    }
 }
 
 @media (max-width:499px) {
-    .status-on-off {
-        max-width: 200px;
-    }
 
     .user-name-container {
         padding-top: 4px;
