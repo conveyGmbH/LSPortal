@@ -127,7 +127,7 @@
                     }
                 },
                 clickTopButton: function (event) {
-                    Log.call(Log.l.trace, "Contact.Controller.");
+                    Log.call(Log.l.trace, "Search.Controller.");
                     var anchor = document.getElementById("menuButton");
                     var menu = document.getElementById("menu1").winControl;
                     var placement = "bottom";
@@ -135,7 +135,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickLogoff: function (event) {
-                    Log.call(Log.l.trace, "Account.Controller.");
+                    Log.call(Log.l.trace, "Search.Controller.");
                     AppData._persistentStates.privacyPolicyFlag = false;
                     if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
                         AppHeader.controller.binding.userData = {};
@@ -144,6 +144,19 @@
                         }
                     }
                     Application.navigateById("login", event);
+                    Log.ret(Log.l.trace);
+                },
+                clickResetRestriction: function () {
+                    Log.call(Log.l.trace, "Search.Controller.");
+                    that.binding.restriction = getEmptyDefaultValue(Search.defaultValue);
+                    if (Erfassungsdatum && Erfassungsdatum.winControl) {
+                        Erfassungsdatum.winControl.disabled = true;
+                    }
+                    if (modifiedTS && modifiedTS.winControl) {
+                        modifiedTS.winControl.disabled = true;
+                    }
+                    AppData.setRestriction("Kontakt", that.binding.restriction);
+                    that.loadData();
                     Log.ret(Log.l.trace);
                 }
             };

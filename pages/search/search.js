@@ -21,7 +21,8 @@
             // add page specific commands to AppBar
             var commandList = [
                 { id: 'clickBack', label: getResourceText('command.backward'), tooltip: getResourceText('tooltip.backward'), section: 'primary', svg: 'navigate_left' },
-                { id: 'clickForward', label: getResourceText('command.search'), tooltip: getResourceText('tooltip.search'), section: 'primary', svg: 'magnifying_glass', key: WinJS.Utilities.Key.enter }
+                { id: 'clickForward', label: getResourceText('command.search'), tooltip: getResourceText('tooltip.search'), section: 'primary', svg: 'magnifying_glass', key: WinJS.Utilities.Key.enter },
+                { id: "clickResetRestriction", label: getResourceText("command.resetRestriction"), tooltip: getResourceText("tooltip.resetRestriction"), section: "primary", svg: "funnel_delete" }
             ];
 
             this.controller = new Search.Controller(element, commandList);
