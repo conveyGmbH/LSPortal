@@ -77,7 +77,21 @@
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
                         AppBar.busy = false;
-                        Application.navigateById("localevents");
+                        if (json.d.results[0].ResultCode > 0) {
+                            var confirmTitle = json.d.results[0].ResultMessage;
+                            confirm(confirmTitle,
+                                function(result) {
+                                    if (result) {
+                                        Log.print(Log.l.trace, "ERROR: ");
+                                        Application.navigateById("localevents");
+                                    } else {
+                                        Log.print(Log.l.trace, "ERROR: ");
+                                        Application.navigateById("localevents");
+                                    }
+                                });
+                        } else {
+                            Application.navigateById("localevents");
+                        }
                     }, function (errorResponse) {
                         Log.print(Log.l.error, "call error");
                         AppBar.busy = false;
