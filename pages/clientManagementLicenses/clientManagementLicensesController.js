@@ -536,6 +536,7 @@
                         // select returns object already parsed from json file in response
                         if (json && json.d && json.d.results) {
                             var results = json.d.results;
+                            that.binding.newLicensesdata.VeranstaltungVIEWID = results[0].VeranstaltungVIEWID;
                             // Now, we call WinJS.Binding.List to get the bindable list
                             if (veranstaltungLicenses && veranstaltungLicenses.winControl) {
                                 veranstaltungLicenses.winControl.data = new WinJS.Binding.List(results);
