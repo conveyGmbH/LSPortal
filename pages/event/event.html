@@ -214,6 +214,7 @@
                             <span class="label landscape_only" data-win-res="{textContent: 'contact.url'}"></span>
                             <input class="input_field win-textbox" type="text" data-win-bind="value: dataEvent.WebAdresse Binding.Mode.twoway" />
                         </div>
+                    <div data-win-bind="style.display: isDBSyncVisible Binding.Converter.toDisplay">
                         <div class="header-separator float-left" data-win-bind="style.display: isBarcodeScanVisible Binding.Converter.toDisplay"></div>
                         <div class="content-header float-left" data-win-bind="style.display: isBarcodeScanVisible Binding.Converter.toDisplay">
                             <div class="half-circle half-circle-textcolor">&nbsp;</div>
@@ -245,6 +246,7 @@
                             </select>
                         </div>
                         <div class="line-separator"></div>
+                    </div>
                         <div class="header-separator float-left"></div>
                         <div class="content-header float-left">
                             <div class="half-circle half-circle-textcolor">&nbsp;</div>
