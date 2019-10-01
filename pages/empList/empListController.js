@@ -143,6 +143,11 @@
                 item.CS1504SerienNr = that.cutSerialnumer(item.CS1504SerienNr);
                 }
                 if (item.Gesperrt === 1) {
+                    if (AppHeader.controller.binding.userData.SiteAdmin) {
+                        item.Gesperrt = 0;
+                    } else {
+                        item.Gesperrt = 1;
+                    }
                     item.disabled = true;
                 }
             }
@@ -229,9 +234,15 @@
                                     if (element) {
                                         if (element.firstElementChild) {
                                             if (element.firstElementChild.disabled) {
+                                                element.style.backgroundColor = "grey";
+                                                if (AppHeader.controller.binding.userData.SiteAdmin) {
+                                                    if (WinJS.Utilities.hasClass(element, "win-nonselectable")) {
+                                                        WinJS.Utilities.removeClass(element, "win-nonselectable");
+                                                    }
+                                                } else {
                                                 if (!WinJS.Utilities.hasClass(element, "win-nonselectable")) {
                                                     WinJS.Utilities.addClass(element, "win-nonselectable");
-                                                    element.style.backgroundColor = "grey";
+                                                    }
                                                 }
                                             } else {
                                                 if (WinJS.Utilities.hasClass(element, "win-nonselectable")) {

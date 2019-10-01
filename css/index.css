@@ -356,7 +356,7 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
     display: block;
     position: relative;
     margin-left: calc(100% - 128px);
-    margin-top: -22px;
+    margin-top: -27px;
 }
 
 /*

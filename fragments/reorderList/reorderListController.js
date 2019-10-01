@@ -5,8 +5,8 @@
 /// <reference path="~/www/lib/convey/scripts/dataService.js" />
 /// <reference path="~/www/lib/convey/scripts/fragmentController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
-/// <reference path="~/www/fragments/reportingList/reportingListService.js" />
-/// <reference path="~/www/pages/reporting/reportingController.js" />
+/// <reference path="~/www/pages/siteEventsBenNach/siteEventsBenNachService.js" />
+/// <reference path="~/www/pages/siteEventsBenNach/siteEventsBenNachController.js" />
 
 
 

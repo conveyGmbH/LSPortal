@@ -19,6 +19,7 @@
                 isSketchVisible: !AppData._persistentStates.hideSketch,
                 isCameraVisible: !AppData._persistentStates.hideCameraScan,
                 isBarcodeScanVisible: !AppData._persistentStates.hideBarcodeScan,
+                isDBSyncVisible: AppHeader.controller.binding.userData.SiteAdmin,
                 isPrivacyPolicySVGVisible: AppData._persistentStates.privacyPolicySVGVisible,
                 showQRCode: AppData._persistentStates.showQRCode,
                 showNameInHeader: AppData._persistentStates.showNameInHeader,

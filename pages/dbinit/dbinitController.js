@@ -168,7 +168,20 @@
                 var prevOnlinePath = that.binding.appSettings.odata.onlinePath;
                 that.binding.appSettings.odata.onlinePath = AppData._persistentStatesDefaults.odata.onlinePath;
                 that.binding.appSettings.odata.registerPath = AppData._persistentStatesDefaults.odata.registerPath;
-                var ret = DBInit.loginRequest.insert(function (json) {
+                var ret;
+                WinJS.Promise.as().then(function () {
+                    var languageID = AppData.getLanguageId();
+                    ret = AppData.call("PRC_GetLangText", {
+                        pLanguageID: languageID,
+                        pResourceTypeID: 20004
+                    }, function (json) {
+                        Log.print(Log.l.info, "call success! ");
+                        var myResourceStrings = JSON.parse(json.d.results);
+                    }, function (error) {
+                        Log.print(Log.l.error, "call error");
+                    }, true);
+                }).then(function () {
+                    ret = DBInit.loginRequest.insert(function (json) {
                     // this callback will be called asynchronously
                     // when the response is available
                     Log.call(Log.l.trace, "loginRequest: success!");
@@ -182,8 +195,10 @@
                         } else {
                             var location = json.d.ODataLocation;
                             if (location !== AppData._persistentStatesDefaults.odata.onlinePath) {
-                                that.binding.appSettings.odata.onlinePath = location + that.binding.appSettings.odata.onlinePath;
-                                that.binding.appSettings.odata.registerPath = location + that.binding.appSettings.odata.registerPath;
+                                    that.binding.appSettings.odata.onlinePath =
+                                        location + that.binding.appSettings.odata.onlinePath;
+                                    that.binding.appSettings.odata.registerPath =
+                                        location + that.binding.appSettings.odata.registerPath;
                             }
                             Application.pageframe.savePersistentStates();
                         }
@@ -197,7 +212,10 @@
                 }, function (errorResponse) {
                     // called asynchronously if an error occurs
                     // or server returns response with an error status.
-                    Log.print(Log.l.info, "loginRequest error: " + AppData.getErrorMsgFromResponse(errorResponse) + " ignored for compatibility!");
+                        Log.print(Log.l.info,
+                            "loginRequest error: " +
+                            AppData.getErrorMsgFromResponse(errorResponse) +
+                            " ignored for compatibility!");
                     // ignore this error here for compatibility!
                     return WinJS.Promise.as();
                 }, {
@@ -264,12 +282,12 @@
                         });
                     }
                 });
+                });
                 Log.ret(Log.l.trace);
                 return ret;
             };
             this.saveData = saveData;
 
-            
             that.processAll().then(function () {
                 AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Binding wireup page complete");

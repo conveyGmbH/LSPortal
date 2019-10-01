@@ -549,6 +549,11 @@
                     Application.navigateById("siteEventsNeuAus", event);
                     Log.ret(Log.l.trace);
                 },
+                clickNewTermin: function (event) {
+                    Log.call(Log.l.trace, "LocalEvents.Controller.");
+                    Application.navigateById("siteEventsTermin", event);
+                    Log.ret(Log.l.trace);
+                },
                 clickChangeUserState: function (event) {
                     Log.call(Log.l.trace, "Contact.Controller.");
                     Application.navigateById("userinfo", event);

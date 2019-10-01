@@ -205,6 +205,7 @@
                                 (!initLand.winControl.data || !initLand.winControl.data.length)) {
                                 initLand.winControl.data = new WinJS.Binding.List(AppData.initLandView.getResults());
                             }
+                            initLand.selectedIndex = 0;
                             return WinJS.Promise.as();
                         }
                     }).then(function () {

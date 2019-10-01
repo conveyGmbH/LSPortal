@@ -780,6 +780,10 @@
     "siteeventsbennach.btnlabelorder" : "Bestellen",
 	"siteeventsbennach.catergory" : "Katergory",
 	
+	"siteeventsTermin.title" : "Veranstaltungstermin anlegen",
+	"siteeventsTermin.veranstaltungsname" : "Terminname",
+	"siteeventsTermin.veranstaltungsnameDisplay" : "Anzeigename",
+
     "reorderlist.posno" : "Pos Nummer",
     "reorderlist.eventname" : "Veranstaltung",
     "reorderlist.orderedapps" : "Bestellte Apps",

@@ -19,6 +19,18 @@
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
+            },
+            defaultValue: {
+                Name: "",
+                Ansprechpartner: "",
+                EMail: "",
+                NumLicenses: "",
+                CustomerID: "",
+                Strasse: "",
+                PLZ: "",
+                Stadt: "",
+                LandID: "",
+                TelefonFestnetz: ""
             }
         }
     });
