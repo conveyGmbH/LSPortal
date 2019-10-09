@@ -15,7 +15,7 @@
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "Mailing.Controller.");
             Application.Controller.apply(this, [pageElement, {
-                dataMail: getEmptyDefaultValue(Mailing.MaildokumentView.defaultValue),
+                dataMail: Mailing.MaildokumentView.defaultValue,
                 dataTestMail: getEmptyDefaultValue(Mailing.TestMailView.defaultRestriction),
                 dataFirstQuestion: null,
                 firstquestionbez: getResourceText("mailing.on"),

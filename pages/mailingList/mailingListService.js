@@ -35,8 +35,8 @@
                 },
                 defaultValue: {
                     MaildokumentVIEWID: 0,
-                    Beschreibung: null,
-                    Subject: null
+                    Beschreibung: "",
+                    Subject: ""
                 }
             }
         });
