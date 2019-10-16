@@ -129,9 +129,9 @@
                                 if (worldContainer && worldContainer.style) {
                                     var worldContainerWidth = width / 2 - 52;
                                     if (element.className) {
-                                        if (element.className.indexOf("view-size-small") >= 0) {
+                                        if (WinJS.Utilities.hasClass(element, "view-size-small")) {
                                             worldContainerWidth = width - 20;
-                                        } else if (element.className.indexOf("view-size-medium") >= 0) {
+                                        } else if (WinJS.Utilities.hasClass(element, "view-size-medium")) {
                                             worldContainerWidth = width - 36;
                                         }
                                     }

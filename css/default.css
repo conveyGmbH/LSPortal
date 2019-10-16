@@ -621,7 +621,8 @@ select {
 .field_tile {
     float: left;
     width: calc(33.333333% - 54px);
-    overflow-y: hidden
+    overflow-y: hidden;
+    min-height: 320px;
 }
 /*
 .input_field, .large_field, .input_small_left, .input_small_right {
@@ -1123,6 +1124,10 @@ button.win-button {
     width: calc(100% - 38px);
     min-height: 40px; 
 }
+.view-size-medium .field_tile {
+    width: calc(100% - 38px);
+}
+
 .view-size-medium .input_small_left {
     margin-left: 0;
 }
@@ -1373,7 +1378,9 @@ button.win-button {
     margin-right: 10px;
     width: calc(100% - 22px);
 }
-.view-size-small .field_tile,
+.view-size-small .field_tile {
+    width: calc(100% - 22px);
+}
 .view-size-small .field_line_full,
 .view-size-small .field_line_odd,
 .view-size-small .field_line_even {
