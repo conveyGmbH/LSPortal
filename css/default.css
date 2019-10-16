@@ -618,6 +618,11 @@ select {
     width: calc(50% - 54px);
     overflow-y: hidden
 }
+.field_tile {
+    float: left;
+    width: calc(33.333333% - 78px);
+    overflow-y: hidden
+}
 /*
 .input_field, .large_field, .input_small_left, .input_small_right {
     margin-bottom: 20px;
@@ -629,7 +634,6 @@ span.radio, span.checkbox {
     display: flex;
 }
 */
-
 span.checkbox, span.radio {
     /*
     position: relative;
@@ -1016,6 +1020,10 @@ button.win-button {
     width:100%;
     display:block;
 }
+.view-size-bigger .field_tile {
+    width: calc(50% - 66px);
+}
+
   
 /*
     margins/paddings for middle sized screens 
@@ -1365,12 +1373,13 @@ button.win-button {
     margin-right: 10px;
     width: calc(100% - 22px);
 }
+.view-size-small .field_tile,
 .view-size-small .field_line_full,
 .view-size-small .field_line_odd,
 .view-size-small .field_line_even {
     float: left;
     width: calc(100% - 22px);
-    min-height: 60px; 
+    min-height: 60px;
 }
 /*
 .view-size-small .progress_field, 

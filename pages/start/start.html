@@ -26,16 +26,25 @@
                         </div>
                     </div>
                     <div class="tiles-container">
-                        <div name="countries" class="tile tile-top">
+                        <div name="charts" class="tile tile-top">
                             <div class="tile-content-inner">
-                                <div class="field_line field_line_odd">
+                                <div class="field_line field_tile">
                                     <div id="worldcontainer" class="start-map-chart text-textcolor"></div>
                                 </div>
-                                <div class="field_line field_line_even">
+                                <div class="field_line field_tile">
                                     <div id="countryPie" class="start-donut-chart text-textcolor"></div>
+                                </div>
+                                <div class="field_line field_tile">
+                                    <div id="visitorsEditedChart" class="start-pie-chart text-lightcolor">
+                                    </div>
+                                </div>
+                                <div class="field_line field_tile">
+                                    <div id="visitorsPerDayChart" class="start-bar-chart text-tile-textcolor">
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <!--
                         <div name="list" class="tile tile-backgroundcolor tile-middle">
                             <div class="tile-button-color">
                                 <div class="half-circle half-circle-navigationcolor">&nbsp;</div>
@@ -47,22 +56,9 @@
                                 </div>
                             </div>
                             <div class="tile-content-inner">
-                                <div class="field_line field_line_odd">
-                                    <div id="visitorsEditedChart" class="start-pie-chart text-lightcolor">
-                                    </div>
-                                </div>
-                                <div class="field_line field_line_even">
-                                    <div id="visitorsPerDayChart" class="start-bar-chart text-tile-textcolor">
-                                    </div>
-                                </div>
                             </div>
                         </div>
-                        <div class="dataLicenceUserList-template"
-                             data-win-control="WinJS.Binding.Template" style="display: none">
-                                <button class="dataLicenceUser-button win-button"
-                                        data-win-bind="style.backgroundColor: buttonColor; style.color: buttonTitle; textContent: Login; value: MitarbeiterVIEWID;"
-                                        onclick="AppBar.handleEvent('click', 'clickLicenceUser', event)"></button>
-                        </div>
+                        -->
                         <div name="info" class="tile tile-navigationcolor tile-bottom">
                             <div class="tile-button-color">
                                 <div class="half-circle half-circle-lightcolor">&nbsp;</div>
@@ -75,8 +71,14 @@
                             </div>
                             <div class="field_line field_line_full no-border"
                                  data-win-bind="style.display: dataLicence.UserAnzahl Binding.Converter.toDisplay">
-                                <div class="win-type-caption text-lightcolor" 
+                                <div class="win-type-caption text-lightcolor"
                                      data-win-bind="textContent: noLicence">
+                                </div>
+                                <div class="dataLicenceUserList-template"
+                                     data-win-control="WinJS.Binding.Template" style="display: none">
+                                    <button class="dataLicenceUser-button win-button"
+                                            data-win-bind="style.backgroundColor: buttonColor; style.color: buttonTitle; textContent: Login; value: MitarbeiterVIEWID;"
+                                            onclick="AppBar.handleEvent('click', 'clickLicenceUser', event)"></button>
                                 </div>
                                 <div id="dataLicenceUserList"
                                      class="listview win-selectionstylefilled"
