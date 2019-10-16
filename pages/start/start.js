@@ -43,6 +43,20 @@
         ready: function (element, options) {
             Log.call(Log.l.trace, pageName + ".");
             // TODO: Initialize the page here.
+            var contentarea = element.querySelector(".contentarea");
+            if (contentarea && contentarea.style) {
+                contentarea.style.backgroundColor = Colors.tileBackgroundColor;
+            }
+            var fieldTiles = element.querySelectorAll(".field_tile");
+            if (fieldTiles && fieldTiles.length > 0) {
+                for (var i = 0; i < fieldTiles.length; i++) {
+                    var fieldTile = fieldTiles[i];
+                    if (fieldTile && fieldTile.style) {
+                        fieldTile.style.backgroundColor = Colors.backgroundColor;
+                    }
+                }
+            }
+
             this.inResize = 0;
             this.prevWidth = 0;
             this.prevHeight = 0;

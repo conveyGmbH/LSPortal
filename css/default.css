@@ -620,7 +620,7 @@ select {
 }
 .field_tile {
     float: left;
-    width: calc(33.333333% - 78px);
+    width: calc(33.333333% - 54px);
     overflow-y: hidden
 }
 /*
