@@ -447,7 +447,7 @@
     "label.questiongroup"   : "Groupe de questions",
     "label.employee"        : "Comptes utilisateurs",
     "label.reporting"       : "Excel Exports",
-    "label.reportingColumnList"       : "Coutume",	
+    "label.reportingColumnList"       : "Options",
     "label.skills"          : "Capacités",
     "label.skillentry"      : "entrer une capacité",
     "label.mailing"         : "Standard Mail",
@@ -541,7 +541,8 @@
     "questionList.off"      : "Off",
     "questionList.textarea" : "S'il vous plaît entrer votre commentaire ici",
 
-    "reporting.title"       : "Évaluations",
+    "reporting.titleExcel"  : "Excel Export",
+    "reporting.titleOther"  : "Autres exportations",
     "reporting.with"        : "Excel export with title",
     "reporting.without"     : "Excel export without title",
     "reporting.countryst"   : "Statistiques pays",

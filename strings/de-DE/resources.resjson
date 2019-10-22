@@ -447,7 +447,7 @@
     "label.questiongroup"   : "Fragengruppen",
     "label.employee"        : "Benutzerkonten",
     "label.reporting"       : "Excel Exporte",
-    "label.reportingColumnList"       : "Benutzerdefiniert",
+    "label.reportingColumnList"       : "Optionen",
     "label.skills"          : "Fähigkeiten",
     "label.skillentry"      : "Fähigkeit eintragen",
     "label.mailing"         : "Standard E-Mail",
@@ -542,7 +542,8 @@
     "questionList.off"      : "Aus",
     "questionList.textarea" : "Bitte geben Sie hier Ihren Kommentar ein ",
 
-    "reporting.title"       : "Auswertungen",
+    "reporting.titleExcel"  : "Excel Export",
+    "reporting.titleOther"  : "Andere Exporte",
     "reporting.with"        : "Excel Export mit Überschriften",
     "reporting.without"     : "Excel Export ohne Überschriften",
     "reporting.countryst"   : "Länderstatistik",

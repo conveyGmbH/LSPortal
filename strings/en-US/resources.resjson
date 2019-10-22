@@ -447,7 +447,7 @@
     "label.questiongroup"   : "Question groups",
     "label.employee"        : "User accounts",
     "label.reporting"       : "Excel Exports",
-    "label.reportingColumnList"       : "Custom",
+    "label.reportingColumnList"       : "Options",
     "label.skills"          : "Skills",
     "label.skillentry"      : "Skill entries",
     "label.mailing"         : "Standard Mail",
@@ -541,7 +541,8 @@
     "questionList.off"      : "Off",
     "questionList.textarea" : "Please enter your notes here ",
 
-    "reporting.title"       : "Reports",
+    "reporting.titleExcel"  : "Excel Export",
+    "reporting.titleOther"  : "Other exports",
     "reporting.with"        : "Excel export with title",
     "reporting.without"     : "Excel export without title",
     "reporting.countryst"   : "Country statistics",

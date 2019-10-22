@@ -447,7 +447,7 @@
     "label.questiongroup"   : "Gruppo domande",
     "label.employee"        : "Utenti",
     "label.reporting"       : "Excel Exports",
-    "label.reportingColumnList"       : "Costume",	
+    "label.reportingColumnList"       : "Opzioni",
     "label.skills"          : "Ruolo",
     "label.skillentry"      : "Immetti ruolo",
     "label.mailing"         : "Standard Mail",
@@ -541,7 +541,8 @@
     "questionList.off"      : "Spento",
     "questionList.textarea" : "Inserite eventuali commenti in questo spazio",
 
-    "reporting.title"       : "Exports",
+    "reporting.titleExcel"  : "Esportazione Excel",
+    "reporting.titleOther"  : "Altre esportazioni",
     "reporting.with"        : "Excel export con titolo",
     "reporting.without"     : "Excel export senza titolo",
     "reporting.countryst"   : "Country statistics",
