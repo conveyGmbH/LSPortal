@@ -308,10 +308,6 @@
                                 layout.orientation = "horizontal";
                                 listView.winControl.layout = { type: layout };
                             }*/
-                            if (!layout) {
-                                layout = Application.ReportingColumnListLayout.ReportingColumnListLayout;
-                                listView.winControl.layout = { type: layout };
-                            }
                         } else if (listView.winControl.loadingState === "complete") {
                             if (that.loading) {
                                 that.loading = false;

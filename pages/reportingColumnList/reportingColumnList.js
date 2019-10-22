@@ -10,32 +10,7 @@
 
 (function () {
     "use strict";
-    // OptQuestionListLayout
-    WinJS.Namespace.define("Application.ReportingColumnListLayout", {
-        ReportingColumnListLayout: WinJS.Class.define(function (options) {
-                this._site = null;
-                this._surface = null;
-            },
-            {
-                // This sets up any state and CSS layout on the surface of the custom layout
-                initialize: function (site) {
-                    this._site = site;
-                    this._surface = this._site.surface;
 
-                    // Add a CSS class to control the surface level layout
-                    WinJS.Utilities.addClass(this._surface, "optQuestionListLayout");
-
-                    return WinJS.UI.Orientation.vertical;
-                },
-
-                // Reset the layout to its initial state
-                uninitialize: function () {
-                    WinJS.Utilities.removeClass(this._surface, "optQuestionListLayout");
-                    this._site = null;
-                    this._surface = null;
-                }
-            })
-    });
     var pageName = Application.getPagePath("reportingColumnList");
     //var inResize = 0;
     //var prevListQuestionnaireWidth = 0;
@@ -64,6 +39,11 @@
             }
         },
 
+        unload: function () {
+            Log.call(Log.l.trace, pageName + ".");
+            // TODO: Respond to navigations away from this page.
+            Log.ret(Log.l.trace);
+        },
         canUnload: function (complete, error) {
             Log.call(Log.l.trace, pageName + ".");
             var ret;
@@ -83,12 +63,6 @@
             }
             Log.ret(Log.l.trace);
             return ret;
-        },
-
-        unload: function () {
-            Log.call(Log.l.trace, pageName + ".");
-            // TODO: Respond to navigations away from this page.
-            Log.ret(Log.l.trace);
         },
 
         updateLayout: function (element, viewState, lastViewState) {
