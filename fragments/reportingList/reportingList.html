@@ -14,9 +14,12 @@
                 <div class="contentarea win-type-body">
                     <div class="reportingList-template"
                          data-win-control="WinJS.Binding.Template" style="display: none">
-                        <button class="reporting-button text-lightcolor titlearea-bkg win-button"
+                        <div class="button-container win-surface win-itemscontainer">
+                            <button class="win-button reporting-button text-lightcolor titlearea-bkg"
                                 data-win-bind="textContent: Text; value: OLELetterID;"
-                                onclick="AppBar.handleEvent('click', 'clickExport', event)"></button>
+                                    onclick="AppBar.handleEvent('click', 'clickExport', event)">
+                            </button>
+                        </div>
                     </div>
                     <div id="reportingList"
                          class="listview win-selectionstylefilled"

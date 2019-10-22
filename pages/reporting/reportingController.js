@@ -14,6 +14,7 @@
 /// <reference path="~/www/lib/OpenXml/scripts/jszip-inflate.js" />
 /// <reference path="~/www/lib/OpenXml/scripts/jszip-deflate.js" />
 /// <reference path="~/www/lib/OpenXml/scripts/FileSaver.js" />
+/// <reference path="~/www/pages/pdfExport/pdfexportXlsx.js" />
 
 (function () {
     "use strict";
@@ -32,13 +33,17 @@
                     dataContactAudio: getEmptyDefaultValue(Reporting.exportAudioDataView.defaultValue),
                     curOLELetterID: null,
                     progress: {
+                        count: 0,
+                        max: 0,
                         percent: 0,
-                        text: "",
+                        text: getResourceText("reporting.outOf"),
                         show: null
                     },
                     templatexlsx: "",
                     //showErfassungsdatum: false,
-                    showModifiedTS: false
+                    showModifiedTS: false,
+                    showReportingFilter: false,
+                    showPdfReportingFilter: false
                 }
             ]);
             
@@ -52,6 +57,7 @@
             var initLand = pageElement.querySelector("#InitLandReporting");
             var erfasserID = pageElement.querySelector("#ErfasserIDReporting");
             var erfassungsdatum = pageElement.querySelector("#ReportingExcelErfassungsdatum.win-datepicker");
+            var pdfErfassungsdatum = pageElement.querySelector("#ReportingPDFErfassungsdatum.win-datepicker");
             var modifiedTs = pageElement.querySelector("#ModifiedTs.win-datepicker");
             this.audiozip = null;
             this.audioIddata = [];
@@ -93,6 +99,10 @@
                 }
                 if (erfassungsdatum && erfassungsdatum.winControl) {
                     erfassungsdatum.winControl.disabled = !that.binding.showErfassungsdatum;
+                }
+                //pdfErfassungsdatum
+                if (pdfErfassungsdatum && pdfErfassungsdatum.winControl) {
+                    pdfErfassungsdatum.winControl.disabled = !that.binding.showErfassungsdatum;
                 }
                 if (modifiedTs && modifiedTs.winControl) {
                     modifiedTs.winControl.disabled = !that.binding.showModifiedTS;
@@ -719,8 +729,7 @@
                                     that.res = json.d.results;
                                     that.resi = json.d.results.length;
                                     if (that.resi > 0) {
-                                    for (var i = 0; i < that.resi ; i++)
-                                        {
+                                    for (var i = 0; i < that.resi ; i++) {
                                             if (that.res[i].TITLE === that.country) {
                                                 that.countryID = that.res[i].INITLandID;
                                             }
@@ -769,6 +778,251 @@
             }
             this.clickEmployeeSlice = clickEmployeeSlice;
 
+            // save data
+            var saveData = function (complete, error) {
+                Log.call(Log.l.trace, "PDFExport.Controller.");
+                AppData.setErrorMsg(that.binding);
+                var ret;
+                var dataPdfExport = that.binding.restriction;
+                if (dataPdfExport && AppBar.modified && !AppBar.busy) {
+                    var recordId = dataPdfExport.PDFExportParamVIEWID;
+                    if (recordId) {
+                        AppBar.busy = true;
+                        ret = Reporting.pdfExportParamView.update(function (response) {
+                            AppBar.busy = false;
+                            // called asynchronously if ok
+                            Log.print(Log.l.info, "dataPdfExport update: success!");
+                            AppBar.modified = false;
+                            if (typeof complete === "function") {
+                                complete(response);
+                            }
+                            //that.loadData();
+                        },
+                            function (errorResponse) {
+                                AppBar.busy = false;
+                                // called asynchronously if an error occurs
+                                // or server returns response with an error status.
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                                if (typeof error === "function") {
+                                    error(errorResponse);
+                                }
+                            }, recordId, dataPdfExport).then(function () {
+                                return Reporting.pdfExportParamsView.select(function (json) {
+                                    Log.print(Log.l.trace, "PDFExport.pdfExportParamsView: success!");
+                                    // select returns object already parsed from json file in response
+                                    if (json && json.d && json.d.results) {
+                                        var results = json.d.results;
+                                        /*results.forEach(function (item, index) {
+                                            that.resultConverter(item, index);
+                                        }); */
+                                        that.binding.sampleName = results[0].SampleName;
+                                    }
+                                }, function (errorResponse) {
+                                    // called asynchronously if an error occurs
+                                    // or server returns response with an error status.
+                                    AppData.setErrorMsg(that.binding, errorResponse);
+                                }, {
+
+                                });
+                            });
+                    } else {
+                        Log.print(Log.l.info, "not supported");
+                        ret = WinJS.Promise.as();
+                    }
+
+                } else if (AppBar.busy) {
+                    AppBar.busy = false;
+                    ret = WinJS.Promise.timeout(100).then(function () {
+                        return that.saveData(complete, error);
+                    });
+                } else {
+                    ret = new WinJS.Promise.as().then(function () {
+                        if (typeof complete === "function") {
+                            complete(dataPdfExport);
+                        }
+                    });
+                }
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+            this.saveData = saveData;
+
+            var insertExcelFiletoZip = function (event) {
+                Log.call(Log.l.trace, "Reporting.Controller.");
+                var exporter = new PDFExportXlsx.ExporterClass();
+                var dbView = Reporting.KontaktPDF;
+                //var dbViewTitle = PDFExport.xLAuswertungViewNoQuestTitle;
+                var fileName = "PDFExcel";
+                if (!that.binding.restrictionExcel) {
+                    that.binding.restrictionExcel = {};
+                }
+                if (AppData.getLanguageId() === 1031) {
+                    that.binding.restrictionExcel.ErfassungsdatumValue = that.binding.restrictionPdf.Erfassungsdatum; //.toISOString().substring(0, 10)
+                } else {
+                    that.binding.restrictionExcel.RecordDate = that.binding.restrictionPdf.Erfassungsdatum;
+                }
+                for (var prop in that.binding.restrictionPdf) {
+                    if (that.binding.restrictionPdf.hasOwnProperty(prop)) {
+                        //hasRestriction = true;
+                        /*if (!restriction) {
+                            restriction = {};
+                        }*/
+                        switch (prop) {
+                            case "Erfassungsdatum":
+                            case "RecordDate":
+                                that.binding.restrictionExcel["ErfassungsdatumValue"] = [null, that.binding.restrictionPdf[prop]];
+                                break;
+                            case "AenderungsDatum":
+                            case "ModificationDate":
+                                that.binding.restrictionExcel["AenderungsDatumValue"] = [null, that.binding.restrictionPdf[prop]];
+                                break;
+                            default:
+                                that.binding.restrictionExcel[prop] = [null, that.binding.restrictionPdf[prop]];
+                        }
+                    }
+                }
+                if (that.binding.restrictionPdf.Erfassungsdatum) {
+                    that.binding.restrictionExcel["KontaktVIEWID"] = ["<0", ">0"];
+                    that.binding.restrictionExcel.bAndInEachRow = true;
+                    that.binding.restrictionExcel.bExact = true;
+                }
+                exporter.saveXlsxFromView(dbView, fileName, function (result) {
+                    AppBar.busy = false;
+                    AppBar.triggerDisableHandlers();
+                    that.xlsxblob = result;
+                    that.getPdfIdDaten();
+                }, function (errorResponse) {
+                    AppData.setErrorMsg(that.binding, errorResponse);
+                    AppBar.busy = false;
+                    AppBar.triggerDisableHandlers();
+                }, that.binding.restrictionExcel, null, null);
+                Log.ret(Log.l.trace);
+            }
+            this.insertExcelFiletoZip = insertExcelFiletoZip;
+
+            var getPdfIdDaten = function () {
+                that.pdfzip = null;
+                that.pdfIddata =[];
+                that.nextUrl = null;
+                that.curPdfIdx = -1;
+                Log.call(Log.l.trace, "PDFExport.Controller.");
+                that.binding.restrictionPdf = that.setRestriction();
+                that.showDateRestrictions();
+                AppData.setErrorMsg(that.binding);
+                var ret = Reporting.contactView.select(function(json) {
+                        Log.print(Log.l.trace, "exportTemplate: success!");
+                        if (json && json.d && json.d.results && json.d.results.length > 0) {
+                            // store result for next use
+                            that.nextUrl = Reporting.contactView.getNextUrl(json);
+                            that.pdfIddata = json.d.results;
+                            if (!that.nextUrl) {
+                                that.binding.progress.max = that.pdfIddata.length;
+                            }
+                        }
+                        that.getNextPdfData();
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    },
+                    that.binding.restrictionPdf
+                );
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+            this.getPdfIdDaten = getPdfIdDaten;
+
+            var getNextPdfData = function () {
+                var ret;
+                that.binding.progress.show = true;
+                Log.call(Log.l.trace, "PDFExport.Controller.");
+                if (that.nextUrl) {
+                    var nextUrl = that.nextUrl;
+                    Log.print(Log.l.trace, "nextUrl=%d" + nextUrl);
+                    that.nextUrl = null;
+                    ret = Reporting.contactView.selectNext(function (json) {
+                        // this callback will be called asynchronously
+                        // when the response is available
+                        Log.print(Log.l.trace, "ExportKontaktDataView selectNext: success!");
+                        // employeeView returns object already parsed from json file in response
+                        if (json && json.d && json.d.results && json.d.results.length > 0) {
+                            that.nextUrl = Reporting.contactView.getNextUrl(json);
+                            that.pdfIddata = json.d.results;
+                            that.binding.progress.max = that.pdfIddata.length;
+                        }
+                        that.getNextPdfData();
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        //that.disablePdfExportList(false);
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    }, that.pdfIddata, nextUrl);
+                } else if (++that.curPdfIdx < that.pdfIddata.length) {
+                    AppData.setErrorMsg(that.binding);
+                    var recordId = that.pdfIddata[that.curPdfIdx].DOC3ExportKontaktDataVIEWID;
+                    Log.print(Log.l.trace, "that.pdfIddata[%d" + that.curPdfIdx + "].DOC3ExportKontaktDataVIEWID=" + recordId + " pdfIddata.length=" + that.pdfIddata.length);
+                    ret = Reporting.exportKontaktDataView.select(function (json) {
+                        Log.print(Log.l.trace, "ExportKontaktDataView: success!");
+                        if (json && json.d) {
+                            // store result for next use
+                            that.addPdfToZip(json.d.szOriFileNameDOC1, json.d.DocContentDOCCNT1);
+                            that.binding.progress.count++;
+                        }
+                        that.getNextPdfData();
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        //that.disablePdfExportList(false);
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    }, recordId);
+                } else if (that.pdfIddata.length > 0) {
+                    Log.print(Log.l.trace, "collected all, pdfIddata.length=" + that.pdfIddata.length);
+                    // XLSX Einfügen
+                    that.pdfzip.file(that.xlsxfilename, that.xlsxblob);
+                    that.pdfzip.generateAsync({
+                        blob: true,
+                        base64: false,
+                        compression: "STORE",
+                        type: "blob"
+                    }).then(function (blob) {
+                        saveAs(blob, "PDFExport.zip");
+                        //location.href = "data:application/zip;base64," + pdfData;
+                        //that.disablePdfExportList(false);
+                        //that.binding.progress.show = null;
+                        that.binding.progress.count = that.binding.progress.max;
+                    });
+                    ret = WinJS.Promise.as();
+                } else {
+                    Log.print(Log.l.trace, "no data");
+                    //that.disablePdfExportList(false);
+                    ret = WinJS.Promise.as();
+                }
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+            this.getNextPdfData = getNextPdfData;
+
+            var addPdfToZip = function (filename, docContent) {
+                if (!that.pdfzip) {
+                    that.pdfzip = new JSZip();
+                }
+                if (filename && docContent) {
+                    if (filename === "PDFExcel.xlsx") {
+                        var data = b64.toByteArray(docContent);
+                        that.pdfzip.file(filename, data);
+                    } else {
+                        var sub = docContent.search("\r\n\r\n");
+                        if (sub > 0) {
+                            var data = b64.toByteArray(docContent.substr(sub + 4));
+                            that.pdfzip.file(filename, data);
+                        } else {
+                            that.pdfzip.file(filename, docContent);
+                        }
+                    }
+                }
+            }
+            this.addPdfToZip = addPdfToZip;
+
             // define handlers
             this.eventHandlers = {
                 clickBack: function(event) {
@@ -806,6 +1060,36 @@
                 clickExportAudio: function (event) {
                     Log.call(Log.l.trace, "Reporting.Controller.");
                     that.getAudioIdDaten();
+                    Log.ret(Log.l.trace);
+                },
+                clickExportAll: function (event) {
+                    // Erstmal soll der pdfexport mit excel funktionieren 
+                    Log.call(Log.l.trace, "Reporting.Controller.");
+                    that.binding.progress.count = 0;
+                    that.binding.progress.max = 0;
+                    //that.binding.showErfassungsdatum = 1;
+                    if (event && event.currentTarget) {
+                        var exportselection = event.target.value;
+                        that.disableFlag = event.target.index;
+                        AppBar.busy = true;
+                        AppBar.triggerDisableHandlers();
+                        //that.disablePdfExportList(true);
+                    }
+                    that.saveData(function (response) {
+                        AppBar.busy = false;
+                        Log.print(Log.l.trace, "question saved");
+                    }, function (errorResponse) {
+                            AppBar.busy = false;
+                            Log.print(Log.l.error, "error saving question");
+                        }).then(function () {
+                            WinJS.Promise.timeout(1000).then(function () {
+                                that.insertExcelFiletoZip();
+                            });
+                        }).then(function () {
+                            WinJS.Promise.timeout(1000).then(function () {
+
+                            });
+                        });
                     Log.ret(Log.l.trace);
                 },
                 clickChangeUserState: function(event) {
@@ -855,6 +1139,26 @@
                         }
                     }
                     Application.navigateById("login", event);
+                    Log.ret(Log.l.trace);
+                },
+                clickshowReportingFilter: function (event) {
+                    Log.call(Log.l.trace, "Event.Controller.");
+                    if (event.currentTarget) {
+                        var toggle = event.currentTarget.winControl;
+                        if (event.currentTarget.id === "showPdfReporting") {
+                            if (toggle) {
+                                //that.changeAppSetting(event.currentTarget.id, toggle.checked);
+                                that.binding.showPdfReportingFilter = toggle.checked;
+                            }
+                        }
+                        if (event.currentTarget.id === "showExcelReporting") {
+                            if (toggle) {
+                                //that.changeAppSetting(event.currentTarget.id, toggle.checked);
+                                that.binding.showReportingFilter = toggle.checked;
+                            }
+                        }
+
+                    }
                     Log.ret(Log.l.trace);
                 }
             };

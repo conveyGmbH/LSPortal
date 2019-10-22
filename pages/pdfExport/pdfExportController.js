@@ -44,6 +44,16 @@
                 prevErfassungsdatum: null
             }, commandList]);
 
+            this.exportPDFStringFlag = "";
+            this.pdfzip = null;
+            this.pdfzipfiles = [];
+            this.loading = false;
+            this.pdfzip = null;
+            this.pdfIddata = [];
+            this.nextUrl = null;
+            this.curPdfIdx = -1;
+            this.xlsxblob = null;
+            this.xlsxfilename = "PDFExport.xlsx";
             var that = this;
 
             // look for ComboBox element
@@ -51,16 +61,7 @@
             var exportFieldList2 = pageElement.querySelector("#InitExportField2");
             var exportFieldList3 = pageElement.querySelector("#InitExportField3");
             var exportFieldList4 = pageElement.querySelector("#InitExportField4");
-            var pdfExportList = pageElement.querySelector("#PDFExportList");
-            var spinner = pageElement.querySelector(".loader");
             var erfassungsdatum = pageElement.querySelector("#ReportingPDFErfassungsdatum.win-datepicker");
-
-            this.pdfzip = null;
-            this.pdfIddata = [];
-            this.nextUrl = null;
-            this.curPdfIdx = -1;
-            this.xlsxblob = null;
-            this.xlsxfilename = "PDFExport.xlsx";
 
             var disablePdfExportList = function (disableFlag) {
                 var pdfExportListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("PdfExportList"));
@@ -575,11 +576,6 @@
                 AppBar.notifyModified = true;
             });
             Log.ret(Log.l.trace);
-        }, {
-            exportPDFStringFlag: "",
-            pdfzip: null,
-            pdfzipfiles: [],
-            loading: false
         })
     });
 })();

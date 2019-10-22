@@ -12,9 +12,18 @@
         <div id="reportingColumnListController" class="data-container">
             <section aria-label="Main content" role="main" class="animationElement">
                 <div class="contentarea win-type-body">
-                        <div class="reportingColumnList-template"
+                    <div class="header-separator"></div>
+                    <div class="content-header">
+                        <div class="half-circle half-circle-textcolor">&nbsp;</div>
+                        <div class="content-header-line win-type-caption">
+                            <span class="id-field"></span>
+                            <span class="caption-field" data-win-res="{textContent: 'reporting.titleExcel'}"></span>
+                            <span class="date-field"></span>
+                        </div>
+                    </div>
+                    <div class="reportingColumnList-template field_line"
                              data-win-control="WinJS.Binding.Template" style="display: none">
-                            <div class="list-role-item">
+                        <div class="list-role-item win-surface win-itemscontainer">
                                 <label class="list-role-field">
                                     <input type="checkbox" class="win-checkbox" value="1"
                                            data-win-bind="checked: FieldFlag" />
@@ -22,15 +31,73 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="field_line">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'reporting.exportlist'}"></span>
-                            <span class="label landscape_only" data-win-res="{textContent: 'reporting.exportlist'}"></span>
                             <div id="reportingColumnList"
                              class="listview win-selectionstylefilled"
                              data-win-control="WinJS.UI.ListView"
                              data-win-options="{
+                             layout : { type: WinJS.UI.ListLayout },
                             itemTemplate: select('.reportingColumnList-template')
                          }">
+                        </div>
+                    <div class="header-separator"></div>
+                    <div class="content-header">
+                        <div class="half-circle half-circle-textcolor">&nbsp;</div>
+                        <div class="content-header-line win-type-caption">
+                            <span class="id-field"></span>
+                            <span class="caption-field" data-win-res="{textContent: 'reporting.titleOther'}"></span>
+                            <span class="date-field"></span>
+                        </div>
+                    </div>
+                    <div class="fields-container">
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'pdfExport.filenamepartone'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'pdfExport.filenamepartone'}"></span>
+                            <select id="InitExportField1"
+                                    class="input_field win-dropdown"
+                                    data-win-control="WinJS.UI.Repeater"
+                                    data-win-bind="value: restriction.NameField1ID Binding.Mode.twoway">
+                                <option data-win-bind="value: INITExportFieldID; textContent: TITLE"></option>
+                            </select>
+                        </div>
+                        <div class="field_line field_line_even">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'pdfExport.filenameparttwo'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'pdfExport.filenameparttwo'}"></span>
+                            <select id="InitExportField2"
+                                    class="input_field win-dropdown"
+                                    data-win-control="WinJS.UI.Repeater"
+                                    data-win-bind="value: restriction.NameField2ID Binding.Mode.twoway">
+                                <option data-win-bind="value: INITExportFieldID; textContent: TITLE"></option>
+                            </select>
+                        </div>
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'pdfExport.filenamepartthree'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'pdfExport.filenamepartthree'}"></span>
+                            <select id="InitExportField3"
+                                    class="input_field win-dropdown"
+                                    data-win-control="WinJS.UI.Repeater"
+                                    data-win-bind="value: restriction.NameField3ID Binding.Mode.twoway">
+                                <option data-win-bind="value: INITExportFieldID; textContent: TITLE"></option>
+                            </select>
+                        </div>
+                        <div class="field_line field_line_even">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'pdfExport.filenamepartfour'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'pdfExport.filenamepartfour'}"></span>
+                            <select id="InitExportField4"
+                                    class="input_field win-dropdown"
+                                    data-win-control="WinJS.UI.Repeater"
+                                    data-win-bind="value: restriction.NameField4ID Binding.Mode.twoway">
+                                <option data-win-bind="value: INITExportFieldID; textContent: TITLE"></option>
+                            </select>
+                        </div>
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'pdfExport.seperator'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'pdfExport.seperator'}"></span>
+                            <input class="input_field win-textbox" type="text" data-win-bind="value: restriction.Separator Binding.Mode.twoway"/>
+                        </div>
+                        <div class="field_line field_line_even">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'pdfExport.samplename'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'pdfExport.samplename'}"></span>
+                            <span class="caption-field" id="samplename" data-win-bind="textContent: sampleName"></span>
                         </div>
                     </div>
                 </div>

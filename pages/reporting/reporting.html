@@ -7,7 +7,7 @@
     <script type="text/javascript" src="reportingController.js"></script>
     <script type="text/javascript" src="reporting.js"></script>
     <script type="text/javascript" src="exportXlsx.js"></script>
-
+    <script type="text/javascript" src="pdfexportXlsx.js"></script>
 </head>
 <body class="win-type-body">
 <div class="settings fragment">
@@ -19,11 +19,23 @@
                     <div class="half-circle half-circle-textcolor">&nbsp;</div>
                     <div class="content-header-line win-type-caption">
                         <span class="id-field"></span>
-                        <span class="caption-field" data-win-res="{textContent: 'reporting.title'}"></span>
+                            <span class="caption-field" data-win-res="{textContent: 'reporting.titleExcel'}"></span>
                         <span class="date-field"></span>
                     </div>
                 </div>
                 <div class="content-record">
+                        <div class="field_line">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'event.showReportingFilter'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'event.showReportingFilter'}"></span>
+                            <div class="input_field toggle-switch-parent">
+                                <div id="showExcelReporting" class="input_field"
+                                     data-win-control="WinJS.UI.ToggleSwitch"
+                                     data-win-bind="winControl.checked: showReportingFilter; winControl.labelOn: generalData.filterOn; winControl.labelOff: generalData.filterOff"
+                                     onchange="AppBar.handleEvent('change', 'clickshowReportingFilter', event)">
+                                </div>
+                            </div>
+                        </div>
+                        <div data-win-bind="style.display: showReportingFilter  Binding.Converter.toDisplay">
                     <div class="field_line field_line_odd">
                         <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'reporting.dateofentry'}"></span>
                         <span class="label landscape_only" data-win-res="{textContent: 'reporting.dateofentry'}"></span>
@@ -74,18 +86,17 @@
                             <option data-win-bind="value: fullNameValue; textContent: fullName"></option>
                         </select>
                     </div>
-                    <div class="field_line reportingListhost-line">
+                        </div>
+                        <div class="field_line">
                         <span class="label win-type-caption portrait_only" id="exportlist" data-win-res="{textContent: 'reporting.exportlist'}"></span>
                         <span class="label landscape_only" id="exportlist" data-win-res="{textContent: 'reporting.exportlist'}"></span>
-                        <div id="reportingListhost" class="input_field fragmenthost"></div>
+                            <div id="reportingListhost" class="fragmenthost"></div>
                     </div>
                     <div class="line-separator"></div>
                     <div class="field_line"
                          data-win-bind="style.display: progress.show Binding.Converter.toDisplay">
-                        <span 
-                              data-win-res="{textContent: 'reporting.progress'}"></span>
-                        <span 
-                            data-win-bind="textContent: progress.percent"></span>
+                            <span data-win-res="{textContent: 'reporting.progress'}"></span>
+                            <span data-win-bind="textContent: progress.percent"></span>
                         <span>%</span>
                         <progress class="progress_field win-progress-bar"
                                   data-win-bind="value: progress.percent"
@@ -93,20 +104,72 @@
                         <span class="large_field"
                                   data-win-bind="textContent: progress.text"></span>
                     </div>
+                        <div class="header-separator"></div>
+                        <div class="content-header">
+                            <div class="half-circle half-circle-textcolor">&nbsp;</div>
+                            <div class="content-header-line win-type-caption">
+                                <span class="id-field"></span>
+                                <span class="caption-field" data-win-res="{textContent: 'reporting.titleOther'}"></span>
+                                <span class="date-field"></span>
+                            </div>
+                        </div>
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'event.showReportingFilter'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'event.showReportingFilter'}"></span>
+                            <div class="input_field toggle-switch-parent">
+                                <div id="showPdfReporting" class="input_field"
+                                     data-win-control="WinJS.UI.ToggleSwitch"
+                                     data-win-bind="winControl.checked: showPdfReportingFilter; winControl.labelOn: generalData.filterOn; winControl.labelOff: generalData.filterOff"
+                                     onchange="AppBar.handleEvent('change', 'clickshowReportingFilter', event)">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field_line field_line_even">
+
+                        </div>
+                        <div data-win-bind="style.display: showPdfReportingFilter  Binding.Converter.toDisplay">
+                            <div class="field_line field_line_odd">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'reporting.dateofentry'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'reporting.dateofentry'}"></span>
+                                <div class="input_group">
+                                    <div data-win-control="WinJS.UI.DatePicker" id="ReportingPDFErfassungsdatum" class="input_big_left"
+                                         data-win-bind="winControl.current: restriction.Erfassungsdatum Binding.Mode.twoway">
+                                    </div>
+                                    <label class="input_big_right">
+                                        <input type="checkbox" class="win-checkbox" value="1"
+                                               data-win-bind="checked: restriction.showErfassungsdatum"
+                                               onchange="AppBar.handleEvent('change', 'clickErfassungsdatum', event)" />
+                                        <span data-win-res="{textContent: 'search.useRestriction'}"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     <div class="line-separator"
                          data-win-bind="style.display: progress.show Binding.Converter.toDisplay"></div>
                     <div class="field_line">
-                        <div id="employeeChart" class="reporting-bar-chart">
-                        </div>
-                    </div>
-                    <div class="field_line">
-                        <span class="label win-type-caption portrait_only" id="audio" data-win-res="{textContent: 'reporting.audioexport'}"></span>
-                        <span class="label landscape_only" id="audio" data-win-res="{textContent: 'reporting.audioexport'}"></span><br/>
+                            <span class="label win-type-caption portrait_only" id="exportlist" data-win-res="{textContent: 'reporting.exportAll'}"></span>
+                            <span class="label landscape_only" id="exportlist" data-win-res="{textContent: 'reporting.exportAll'}"></span><br />
+                            <div class="button-container">
+                                <button class="audioexport-button win-button"
+                                        data-win-res="{textContent: 'reporting.exportAll'}"
+                                        onclick="AppBar.handleEvent('click', 'clickExportAll', event)"></button>
                         <button class="audioexport-button win-button"
                                 data-win-res="{textContent: 'reporting.audiobutton'}"
                                 onclick="AppBar.handleEvent('click', 'clickExportAudio', event)"></button>
                     </div>
                 </div>
+                        <div class="field_line"
+                             data-win-bind="style.display: progress.show Binding.Converter.toDisplay">
+                            <span data-win-res="{textContent: 'reporting.progress'}"></span>
+                            <span data-win-bind="textContent: progress.count"></span>
+                            <span data-win-res="{textContent: 'label.listContact'}"></span>
+                            <span data-win-bind="textContent: progress.text"></span>
+                            <span data-win-bind="textContent: progress.max"></span>
+                            <progress class="progress_field win-progress-bar"
+                                      data-win-bind="value: progress.count; max: progress.max"
+                                      min="0"></progress>
+                        </div>
+                    </div>
             </div>
             <div class="error-message"
                  data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>

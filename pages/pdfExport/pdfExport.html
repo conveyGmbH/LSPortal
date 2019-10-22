@@ -88,19 +88,18 @@
                                 </label>
                             </div>
                         </div>
+                    </div>
                         <div class="line-separator"></div>
                         <div class="field_line">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'reporting.exportlist'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'reporting.exportlist'}"></span>
-                            <div id="pdfExportListhost" class="input_field fragmenthost"></div>
+                        <div id="pdfExportListhost" class="fragmenthost"></div>
                         </div>
                         <div class="line-separator"></div>
                         <div class="field_line"
                              data-win-bind="style.display: progress.show Binding.Converter.toDisplay">
-                            <span 
-                                data-win-res="{textContent: 'reporting.progress'}"></span>
-                            <span 
-                                data-win-bind="textContent: progress.count"></span>
+                        <span data-win-res="{textContent: 'reporting.progress'}"></span>
+                        <span data-win-bind="textContent: progress.count"></span>
                             <span data-win-res="{textContent: 'label.listContact'}"></span>
                             <span data-win-bind="textContent: progress.text"></span>
                             <span data-win-bind="textContent: progress.max"></span>
@@ -109,7 +108,6 @@
                                       min="0"></progress>
                         </div>
                     </div>
-                </div>
                 <div class="error-message"
                      data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
             </section>

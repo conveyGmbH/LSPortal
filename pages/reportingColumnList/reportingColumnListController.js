@@ -3,7 +3,8 @@
 /// <reference path="~/www/lib/WinJS/scripts/ui.js" />
 /// <reference path="~/www/lib/convey/scripts/appSettings.js" />
 /// <reference path="~/www/lib/convey/scripts/dataService.js" />
-/// <reference path="~/www/lib/convey/scripts/fragmentController.js" />
+/// <reference path="~/www/lib/convey/scripts/appbar.js" />
+/// <reference path="~/www/lib/convey/scripts/pageController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/pages/reportingColumnList/reportingColumnListService.js" />
 
@@ -11,14 +12,29 @@
     "use strict";
 
     WinJS.Namespace.define("ReportingColumnList", {
-        Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, options) {
+        Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "ReportingColumnList.Controller.");
             Application.Controller.apply(this, [pageElement, {
-                dataColumn: ReportingColumnList.ExportReportColumnU.defaultValue
-        }, options]);
-            var that = this;
+                restriction: ReportingColumnList.pdfExportParamView.defaultValue,
+                //restrictionPdf: getEmptyDefaultValue(ReportingColumnList.exportKontaktDataView.defaultValue),
+                //restrictionExcel: {},
+                dataColumn: ReportingColumnList.ExportReportColumnU.defaultValue,
+                sampleName: getEmptyDefaultValue(ReportingColumnList.pdfExportParamView.defaultValue)
+            }, commandList]);
+
             this.curRecId = 0;
             this.prevRecId = 0;
+            this.reportingColumn = null;
+            
+            var that = this;
+
+            // look for ComboBox element
+            var exportFieldList1 = pageElement.querySelector("#InitExportField1");
+            var exportFieldList2 = pageElement.querySelector("#InitExportField2");
+            var exportFieldList3 = pageElement.querySelector("#InitExportField3");
+            var exportFieldList4 = pageElement.querySelector("#InitExportField4");
+            var erfassungsdatum = pageElement.querySelector("#ReportingPDFErfassungsdatum.win-datepicker");
+
             var layout = null;
             var maxLeadingPages = 0;
             var maxTrailingPages = 0;
@@ -80,6 +96,11 @@
             };
             this.scopeFromRecordId = scopeFromRecordId;
 
+            var resultConverter = function (item, index) {
+                item.index = index;
+            }
+            this.resultConverter = resultConverter;
+
             var saveData = function (complete, error) {
                 var ret = null;
                 var dataColumn = that.binding.dataColumn;
@@ -119,6 +140,74 @@
                             Log.print(Log.l.trace, "no changes in recordId:" + recordId);
                         }
                     }
+                }
+                AppData.setRestriction("PdfExportParam", that.binding.restriction);
+
+                var savedRestriction = AppData.getRestriction("PdfExportParam");
+                if (typeof savedRestriction === "undefined") {
+                    savedRestriction = ReportingColumnList.pdfExportParamView.defaultValue;
+                }
+                that.binding.restriction.NameField1ID = parseInt(savedRestriction.NameField1ID);
+                that.binding.restriction.NameField2ID = parseInt(savedRestriction.NameField2ID);
+                that.binding.restriction.NameField3ID = parseInt(savedRestriction.NameField3ID);
+                that.binding.restriction.NameField4ID = parseInt(savedRestriction.NameField4ID);
+                if (savedRestriction && AppBar.modified && !AppBar.busy) {
+                    var recordId = savedRestriction.PDFExportParamVIEWID;
+                    if (recordId) {
+                        AppBar.busy = true;
+                        ret = ReportingColumnList.pdfExportParamView.update(function (response) {
+                            AppBar.busy = false;
+                            // called asynchronously if ok
+                            Log.print(Log.l.info, "dataPdfExport update: success!");
+                            AppBar.modified = false;
+                            if (typeof complete === "function") {
+                                complete(response);
+                            }
+                            //that.loadData();
+                        },
+                            function (errorResponse) {
+                                AppBar.busy = false;
+                                // called asynchronously if an error occurs
+                                // or server returns response with an error status.
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                                if (typeof error === "function") {
+                                    error(errorResponse);
+                                }
+                            }, recordId, savedRestriction).then(function () {
+                                return ReportingColumnList.pdfExportParamsView.select(function (json) {
+                                    Log.print(Log.l.trace, "PDFExport.pdfExportParamsView: success!");
+                                    // select returns object already parsed from json file in response
+                                    if (json && json.d && json.d.results) {
+                                        var results = json.d.results;
+                                        /*results.forEach(function (item, index) {
+                                            that.resultConverter(item, index);
+                                        }); */
+                                        that.binding.sampleName = results[0].SampleName;
+                                    }
+                                }, function (errorResponse) {
+                                    // called asynchronously if an error occurs
+                                    // or server returns response with an error status.
+                                    AppData.setErrorMsg(that.binding, errorResponse);
+                                }, {
+
+                                });
+                            });
+                    } else {
+                        Log.print(Log.l.info, "not supported");
+                        ret = WinJS.Promise.as();
+                    }
+
+                } else if (AppBar.busy) {
+                    AppBar.busy = false;
+                    ret = WinJS.Promise.timeout(100).then(function () {
+                        return that.saveData(complete, error);
+                    });
+                } else {
+                    ret = new WinJS.Promise.as().then(function () {
+                        if (typeof complete === "function") {
+                            complete(savedRestriction);
+                        }
+                    });
                 }
                 if (!ret) {
                     ret = new WinJS.Promise.as().then(function () {
@@ -214,9 +303,13 @@
                             listView.winControl.maxTrailingPages = maxTrailingPages;
                         }
                         if (listView.winControl.loadingState === "itemsLoading") {
-                            if (!layout) {
+                            /*if (!layout) {
                                 layout = new WinJS.UI.GridLayout();
                                 layout.orientation = "horizontal";
+                                listView.winControl.layout = { type: layout };
+                            }*/
+                            if (!layout) {
+                                layout = Application.ReportingColumnListLayout.ReportingColumnListLayout;
                                 listView.winControl.layout = { type: layout };
                             }
                         } else if (listView.winControl.loadingState === "complete") {
@@ -301,6 +394,86 @@
                     }, {
                         
                         });
+                }).then(function () {
+                    return ReportingColumnList.pdfExportView.select(function (json) {
+                        Log.print(Log.l.trace, "Mailing.FragebogenzeileView: success!");
+                        // select returns object already parsed from json file in response
+                        if (json && json.d && json.d.results) {
+                            var results = json.d.results;
+                            results.forEach(function (item, index) {
+                                that.resultConverter(item, index);
+                            });
+                            //var savedRestriction = AppData.getRestriction("PdfExportParam");
+                            // Now, we call WinJS.Binding.List to get the bindable list
+                            if (exportFieldList1 && exportFieldList1.winControl) {
+                                exportFieldList1.winControl.data = new WinJS.Binding.List(results);
+                                exportFieldList1.selectedIndex = 0;
+                            }
+                            if (exportFieldList2 && exportFieldList2.winControl) {
+                                exportFieldList2.winControl.data = new WinJS.Binding.List(results);
+                                exportFieldList2.selectedIndex = 0;
+                            }
+                            if (exportFieldList3 && exportFieldList3.winControl) {
+                                exportFieldList3.winControl.data = new WinJS.Binding.List(results);
+                                exportFieldList3.selectedIndex = 0;
+                            }
+                            if (exportFieldList4 && exportFieldList4.winControl) {
+                                exportFieldList4.winControl.data = new WinJS.Binding.List(results);
+                                exportFieldList4.selectedIndex = 0;
+                            }
+                        }
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    }, {
+                        LanguageSpecID: AppData.getLanguageId()
+                    });
+                }).then(function() {
+                    var savedRestriction = AppData.getRestriction("PdfExportParam");
+                    if (typeof savedRestriction === "undefined") {
+                        savedRestriction = ReportingColumnList.pdfExportParamView.defaultValue;
+                    }
+                    that.binding.restriction.NameField1ID = parseInt(savedRestriction.NameField1ID);
+                    that.binding.restriction.NameField2ID = parseInt(savedRestriction.NameField2ID);
+                    that.binding.restriction.NameField3ID = parseInt(savedRestriction.NameField3ID);
+                    that.binding.restriction.NameField4ID = parseInt(savedRestriction.NameField4ID);
+                }).then(function () {
+                    return ReportingColumnList.pdfExportParamsView.select(function (json) {
+                        Log.print(Log.l.trace, "Mailing.FragebogenzeileView: success!");
+                        // select returns object already parsed from json file in response
+                        if (json && json.d && json.d.results) {
+                            var results = json.d.results;
+                            /*results.forEach(function (item, index) {
+                                that.resultConverter(item, index);
+                            }); */
+                            that.binding.sampleName = results[0].SampleName;
+                        }
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    }, {
+
+                    });
+                }).then(function () {
+                    return ReportingColumnList.pdfExportParamView.select(function (json) {
+                        Log.print(Log.l.trace, "Mailing.FragebogenzeileView: success!");
+                        // select returns object already parsed from json file in response
+                        if (json && json.d && json.d.results) {
+                            var results = json.d.results;
+                            results.forEach(function (item, index) {
+                                that.resultConverter(item, index);
+                            }); 
+                            that.binding.restriction = results[0];
+                        }
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    }, {
+
+                    });
                 });
                 Log.ret(Log.l.trace);
                 return ret;
@@ -314,8 +487,6 @@
                 Log.print(Log.l.trace, "Data loaded");
             });
             Log.ret(Log.l.trace);
-        }, {
-                reportingColumn: null
             })
     });
 })();

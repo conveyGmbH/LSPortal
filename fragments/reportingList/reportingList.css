@@ -4,82 +4,21 @@
 #reportingList.listview {
     width: 100%;
     height: 100%;
+    text-align: center;
 }
-#reportingList .tile-navigationcolor {
-    /*
-    border: none;
-    */
+
+.button-container.win-surface.win-itemscontainer {
+    width: 100%;
 }
 
 .reporting-button {
+    margin-left: 10px;
+    margin-right: 10px;
     height: 100%;
-    width: 100%;
     min-height: 60px;
-    min-width: 150px;
-    /*
-    background-color: transparent;
-    */
+    width: 200px;
 }
-/*
-.reporting-button:hover {
-    background-color: rgba(255,255,255,0.2);
-}
-.reporting-button:active {
-    background-color: rgba(255,255,255,0.4);
-}
-*/
 
 .win-nonselectable .reporting-button {
     background-color: rgba(128,128,128,0.4) !important;
 }
-
-
-/*
-.button {
-    height: 100%;
-    width:  100%;
-    min-height: 100px;
-    min-width: 200px;
-    display: inline-block;
-    padding: 0.7em 1.4em;
-    margin: 0 0.3em 0.3em 0;
-    border-radius: 0.15em;
-    box-sizing: border-box;
-    text-decoration: none;
-    text-transform: uppercase;
-    font-weight: bold;
-    color: #FFFFFF;
-    background-color: #d8623e;
-    box-shadow: inset 0 -0.6em 0 -0.35em rgba(0, 0, 0, 0.17);
-    text-align: center;
-    position: relative;
-}
-
-.button:hover {
-    background-color: #ffffff;
-    color: #d8623e;
-    border-color: #d8623e;
-}
-
-@media (max-width: 899px) {
-     .button {
-        display: block;
-        margin: 0.4em auto;
-    }
-}
-
-@media (max-width: 699px) {
-     .button {
-        display: block;
-        margin: 0.4em auto;
-    }
-}
-
-@media (max-width: 499px) {   
-    .button {
-        float: left;
-        display: block;
-        margin: 0.4em auto;
-    }
-}
-*/

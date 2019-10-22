@@ -639,6 +639,95 @@
                 DateName: "",
                 DocContentDOCCNT1: ""
             }
+        },
+        _contactViewFormat: {
+            get: function () {
+                return AppData.getFormatView("DOC3ExportKontaktData", 20554);
+            }
+        },
+        contactView: {
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, "contactView.");
+                var ret = Reporting._contactViewFormat.select(complete, error, restriction);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getNextUrl: function (response) {
+                Log.call(Log.l.trace, "ContactList.");
+                var ret = Reporting._contactViewFormat.getNextUrl(response);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            selectNext: function (complete, error, response, nextUrl) {
+                Log.call(Log.l.trace, "ContactList.");
+                var ret = Reporting._contactViewFormat.selectNext(complete, error, response, nextUrl);
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+        },
+        _pdfExportParamView: {
+            get: function () {
+                return AppData.getFormatView("PDFExportParam", 0);
+            }
+        },
+        _pdfExportParamTable: {
+            get: function () {
+                return AppData.getFormatView("PDFExportParam", 0);
+            }
+        },
+        pdfExportParamView: {
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, "PDFExport.");
+                var ret = Reporting._pdfExportParamView.select(complete, error, restriction);
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            update: function (complete, error, recordId, viewResponse) {
+                Log.call(Log.l.trace, "PDFExport.");
+                var ret = Reporting._pdfExportParamView.update(complete, error, recordId, viewResponse);
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            defaultValue: {
+                Separator: "_"
+            }
+        },
+        _pdfExportParamsView: {
+            get: function () {
+                return AppData.getFormatView("PDFExportParam", 20545);
+            }
+        },
+        pdfExportParamsView: {
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, "PDFExport.");
+                var ret = Reporting._pdfExportParamsView.select(complete, error, restriction);
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            defaultValue: {
+
+            }
+        },
+        _exportKontaktDataView: {
+            get: function () {
+                return AppData.getFormatView("DOC3ExportKontaktData", 20553);
+            }
+        },
+        exportKontaktDataView: {
+            select: function (complete, error, recordId) {
+                Log.call(Log.l.trace, "PDFExport.");
+                var ret = Reporting._exportKontaktDataView.selectById(complete, error, recordId);
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            defaultValue: {
+                Erfassungsdatum: new Date()
+            }
         }
     });
 })();
