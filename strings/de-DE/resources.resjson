@@ -563,6 +563,9 @@
 	"reporting.outOf"       : "von",
     "reporting.audioexport"       : "Export von:",
     "reporting.audiobutton"       : "Audiodaten",
+	"reporting.exportAll"   : "PDF-Export/Alle",
+	"reporting.filterOn"    : "Filter an",
+    "reporting.filterOff"   : "Filter aus",
 
     "employee.title"        : "Benutzerkonten",
     "employee.firstname"    : "Vorname",

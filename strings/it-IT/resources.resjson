@@ -562,6 +562,9 @@
 	"reporting.outOf": "su",
     "reporting.audioexport"       : "Export di:",
     "reporting.audiobutton"       : "I dati audio",
+    "reporting.exportAll"   : "PDF Export/Tutto",
+    "reporting.filterOn"    : "Filtro attivo",
+    "reporting.filterOff"   : "Filtro disattivato",
 
     "employee.title"        : "Utenti",
     "employee.firstname"    : "Nome",

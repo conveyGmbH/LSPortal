@@ -562,6 +562,9 @@
 	"reporting.outOf": "out of",
     "reporting.audioexport"       : "Export of:",
     "reporting.audiobutton"       : "Audiodata",
+    "reporting.exportAll"   : "PDF Export/All",
+    "reporting.filterOn"    : "Filter on",
+    "reporting.filterOff"   : "Filter off",
 
     "employee.title"        : "User accounts",
     "employee.firstname"    : "First name",
