@@ -22,6 +22,8 @@
                 selIdx: 0
             }, commandList, true]);
             this.nextUrl = null;
+            this.loading = false;
+            this.maildocuments = null;
 
             var that = this;
 
@@ -158,24 +160,30 @@
                                 listControl.selection.getItems().done(function (items) {
                                     var item = items[0];
                                     that.binding.selIdx = item.index;
-                                    if (item.data && item.data.MaildokumentVIEWID &&
+                                    if (item.data &&
+                                        item.data.MaildokumentVIEWID &&
                                         item.data.MaildokumentVIEWID !== that.binding.mailingId) {
                                         // called asynchronously if ok
-                                        that.binding.mailingId = item.data.MaildokumentVIEWID;
                                         if (AppBar.scope._element &&
                                             AppBar.scope._element.id === "mailingController") {
-                                            AppBar.scope.binding.saveFlag = true;
                                             if (typeof AppBar.scope.saveData === "function") {
-                                                AppBar.scope.saveData(function() {
+                                                WinJS.Promise.as().then(function () {
+                                                    AppBar.scope.saveData(function (response) {
+                                                        // called asynchronously if ok
+                                                        that.binding.mailingId = item.data.MaildokumentVIEWID;
+                                                        AppData.setRecordId("Maildokument", that.binding.mailingId);
                                             if (typeof AppBar.scope.loadData === "function") {
-                                                AppBar.scope.loadData(that.binding.mailingId);
+                                                            AppBar.scope.loadData();
                                             }
                                                 }, function (errorResponse) {
-                                                    //that.selectRecordId(that.binding.contactId);
+                                                        that.selectRecordId(that.binding.mailingId);
+                                                });
                                                 });
                                             }
+                                            }
                                         } else {
-                                            Application.navigateById("mailing");
+                                        if (typeof AppBar.scope.loadData === "function") {
+                                            AppBar.scope.loadData();
                                         }
                                     }
                                 });
@@ -307,14 +315,20 @@
                                     listView.winControl.itemDataSource = that.maildocuments.dataSource;
                                 }
                                 Log.print(Log.l.trace, "Data loaded");
-                                if (that.binding.selIdx >= json.d.results.length) {
-                                    that.binding.selIdx = json.d.results.length - 1;
-                                }
-                                if (results[that.binding.selIdx] && results[that.binding.selIdx].MaildokumentVIEWID) {
+                            var recordID = AppData.getRecordId("Maildokument");
+                            if (recordID) {
+                                WinJS.Promise.timeout(0).then(function () {
+                                    that.selectRecordId(recordID);
+                                });
+                            } else {
+                                if (results[0] && results[0].MaildokumentVIEWID) {
+                                    recordID = results[0].MaildokumentVIEWID;
+                                    AppData.setRecordId("Maildokument", recordID);
                                     WinJS.Promise.timeout(0).then(function () {
-                                        that.selectRecordId(results[that.binding.selIdx].MaildokumentVIEWID);
+                                        that.selectRecordId(recordID);
                                     });
                                 }
+                            }
                             } else {
                                 that.binding.count = 0;
                                 that.nextUrl = null;
@@ -364,10 +378,6 @@
                 AppBar.notifyModified = true;
             });
             Log.ret(Log.l.trace);
-        }, {
-            nextUrl: null,
-            loading: false,
-            maildocuments: null
         })
     });
 })();

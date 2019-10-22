@@ -25,7 +25,7 @@
                 // Add a CSS class to control the surface level layout
                 WinJS.Utilities.addClass(this._surface, "optQuestionListLayout");
 
-                return WinJS.UI.Orientation.vertical;
+                return WinJS.UI.Orientation.horizontal;
             },
 
             // Reset the layout to its initial state

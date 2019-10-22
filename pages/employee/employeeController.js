@@ -19,7 +19,7 @@
             Application.Controller.apply(this, [pageElement, {
                 dataEmployee: getEmptyDefaultValue(Employee.employeeView.defaultValue),
                 restriction: getEmptyDefaultValue(Employee.employeeView.defaultRestriction),
-                isEmpRolesVisible: AppHeader.controller.binding.userData.SiteAdmin,
+                isEmpRolesVisible: AppHeader.controller.binding.userData.SiteAdmin || AppHeader.controller.binding.userData.HasLocalEvents,
                 noLicence: null,
                 noLicenceText: getResourceText("info.nolicenceemployee")
             }, commandList]);
