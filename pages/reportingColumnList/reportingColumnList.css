@@ -4,8 +4,21 @@
 
 #reportingColumnList.listview {
     width: 100%;
-    /*height: auto;*/
+    height: 496px;
 }
+
+.view-size-bigger #reportingColumnList.listview {
+    height: 744px;
+}
+
+.view-size-medium #reportingColumnList.listview {
+    height: 1116px;
+}
+
+.view-size-small #reportingColumnList.listview {
+    height: 2232px;
+}
+
 
 .list-role-item {
     min-width: 250px;
