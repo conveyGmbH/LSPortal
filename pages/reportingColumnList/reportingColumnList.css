@@ -4,11 +4,11 @@
 
 #reportingColumnList.listview {
     width: 100%;
-    height: 50%;
+    /*height: auto;*/
 }
 
 .list-role-item {
-    min-width: 320px;
+    min-width: 250px;
     height: 48px;
     overflow: hidden;
     display: -ms-flexbox;
@@ -16,8 +16,6 @@
     display: flex;
 }
 
-body {
-}
 #seperator {
     margin-top: 20px;
 }
@@ -40,15 +38,6 @@ body {
     animation: spin 2s linear infinite;
 }
 
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
-}
 #pdfExportListhost {
     height: 100px;
 }
