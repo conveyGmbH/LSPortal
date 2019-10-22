@@ -75,18 +75,59 @@
                 that.inResize = 1;
                 ret = WinJS.Promise.timeout(0).then(function () {
                     // TODO: change variablename
+                    var fieldsContainer = element.querySelector(".list-role-item");
                     var reportingColumnList = element.querySelector("#reportingColumnList.listview");
                     if (reportingColumnList && reportingColumnList.style) {
                         var contentarea = element.querySelector(".contentarea");
                         if (contentarea) {
                             var width = contentarea.clientWidth;
                             //var height = contentarea.clientHeight - 8;
-
+                            /*
+                            WinJS.Utilities.removeClass(element, "view-size-small");
+                            WinJS.Utilities.removeClass(element, "view-size-medium-small");
+                            WinJS.Utilities.removeClass(element, "view-size-medium");
+                            WinJS.Utilities.removeClass(element, "view-size-bigger");
+                            if (width > 499) {
+                                // remove class: view-size-small  
+                                WinJS.Utilities.removeClass(fieldsContainer, "view-size-small");
+                                WinJS.Utilities.removeClass(contentHeader, "view-size-small");
+                            } else {
+                                // add class: view-size-small    
+                                WinJS.Utilities.addClass(fieldsContainer, "view-size-small");
+                                WinJS.Utilities.addClass(contentHeader, "view-size-small");
+                            }
+                            if (width > 699) {
+                                // remove class: view-size-medium-small  
+                                WinJS.Utilities.removeClass(fieldsContainer, "view-size-medium-small");
+                                WinJS.Utilities.removeClass(contentHeader, "view-size-medium-small");
+                            } else {
+                                // add class: view-size-medium-small    
+                                WinJS.Utilities.addClass(fieldsContainer, "view-size-medium-small");
+                                WinJS.Utilities.addClass(contentHeader, "view-size-medium-small");
+                            }
+                            if (width > 899) {
+                                // remove class: view-size-medium    
+                                WinJS.Utilities.removeClass(fieldsContainer, "view-size-medium");
+                                WinJS.Utilities.removeClass(contentHeader, "view-size-medium");
+                            } else {
+                                // add class: view-size-medium
+                                WinJS.Utilities.addClass(fieldsContainer, "view-size-medium");
+                                WinJS.Utilities.addClass(contentHeader, "view-size-medium");
+                            }
+                            if (width > 1099) {
+                                // remove class: view-size-bigger
+                                WinJS.Utilities.removeClass(fieldsContainer, "view-size-bigger");
+                                WinJS.Utilities.removeClass(contentHeader, "view-size-bigger");
+                            } else {
+                                // add class: view-size-bigger
+                                WinJS.Utilities.addClass(fieldsContainer, "view-size-bigger");
+                                WinJS.Utilities.addClass(contentHeader, "view-size-bigger");
+                            }
                             if (width !== that.prevWidth) {
                                 that.prevWidth = width;
                                 reportingColumnList.style.width = width.toString() + "px";
                             }
-                            /*if (height !== that.prevHeight) {
+                            if (height !== that.prevHeight) {
                                 that.prevHeight = height;
                                 reportingColumnList.style.height = height.toString() + "px";
                             }*/
