@@ -103,8 +103,7 @@
 
                 for (var r = 0; r < rowCount; r++) {
                     var newRow, row, c, key, attribTypeId, dateString, milliseconds, date, year, month, day, hour, minute;
-                    row = results[r];
-                    if (typeof row.KontaktVIEWID !== "undefined" && row.KontaktVIEWID === -1 || row.KontaktVIEWID === -2) {
+                    if (r === 0 || r === 1){
                         newRow = new XElement(S.row);
                         row = results[r];
                         for (c = 1; c < colCount; c++) {

@@ -49,13 +49,4 @@
 }
 .button-container {
     text-align: center;
-    height: 120px;
-}
-
-.view-size-medium .button-container {
-    height: 160px;
-}
-
-.view-size-medium-small .button-container {
-    height: 200px;
 }
