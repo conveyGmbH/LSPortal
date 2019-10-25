@@ -566,6 +566,7 @@
     "reporting.exportAll"   : "PDF Export/All",
     "reporting.filterOn"    : "Filtrer sur",
     "reporting.filterOff"   : "Filtrer",
+    "reporting.filter"      : "Filtrer",
 
     "employee.title"        : "Comptes utilisateurs",
     "employee.firstname"    : "Prénom",

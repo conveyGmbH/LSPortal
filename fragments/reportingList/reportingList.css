@@ -12,11 +12,9 @@
 }
 
 .reporting-button {
-    margin-left: 10px;
-    margin-right: 10px;
     height: 100%;
     min-height: 60px;
-    width: 200px;
+    width: 220px;
 }
 
 .win-nonselectable .reporting-button {

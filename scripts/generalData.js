@@ -606,6 +606,8 @@
                     : "");
                 data.on = getResourceText("settings.on");
                 data.off = getResourceText("settings.off");
+                data.filterOn = getResourceText("reporting.filterOn");
+                data.filterOff = getResourceText("reporting.filterOff");
                 data.dark = getResourceText("settings.dark");
                 data.light = getResourceText("settings.light");
                 data.present = getResourceText("userinfo.present");
