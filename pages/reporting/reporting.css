@@ -25,10 +25,10 @@
     font-size: medium;
 }
 .audioexport-button {
-    margin-left: 10px;
-    margin-right: 10px;
-    height: 100%;
-    width: 10%;
+    margin-left: 2.5px;
+    margin-right: 2.5px;
+    height: 60px;
+    width: 220px;
     min-height: 60px;
     min-width: 150px;
     background-color: #D8623E;
@@ -43,10 +43,16 @@
 .audioexport-button:active {
     border-color: black;
 }
-#audio {
-    padding-top: 15px;
-    font-size: medium;
-}
+
 .button-container {
     text-align: center;
+    height: 120px;
+}
+
+.view-size-medium .button-container {
+    height: 160px;
+}
+
+.view-size-medium-small .button-container {
+    height: 200px;
 }

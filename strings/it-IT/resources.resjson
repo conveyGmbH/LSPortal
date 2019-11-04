@@ -566,6 +566,7 @@
     "reporting.exportAll"   : "PDF Export/Tutto",
     "reporting.filterOn"    : "Filtro attivo",
     "reporting.filterOff"   : "Filtro disattivato",
+    "reporting.filter"      : "Filtro",
 
     "employee.title"        : "Utenti",
     "employee.firstname"    : "Nome",

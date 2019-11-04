@@ -364,6 +364,12 @@
                             SpecType: ["NULL",1]
                         }
                     ); 
+                }).then(function() {
+                    if (that.binding.count === 0) {
+                        if (typeof AppBar.scope.insertMailing === "function") {
+                            AppBar.scope.insertMailing();
+                        }
+                    }
                  });
                 Log.ret(Log.l.trace);
                 return ret;

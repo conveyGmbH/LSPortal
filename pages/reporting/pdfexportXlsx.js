@@ -7,7 +7,8 @@
 /// <reference path="~/www/lib/OpenXml/scripts/ltxml-extensions.js" />
 /// <reference path="~/www/lib/jszip/scripts/jszip.js" />
 /// <reference path="~/www/lib/FileSaver/scripts/FileSaver.js" />
-/// <reference path="~/www/lib/OpenXml/scripts/openxml.js" />
+/// <reference path="~/www/lib/OpenXml/scripts/openxml.js" /> 
+/// <reference path="~/www/pages/pdfExport/pdfExportController.js" />
 
 (function (root) {  // root = global
     "use strict";
@@ -34,7 +35,7 @@
 
     var cr = false;
 
-    WinJS.Namespace.define("ExportXlsx", {
+    WinJS.Namespace.define("PDFExportXlsx", {
         ExporterClass: WinJS.Class.define(function exporterClass(progress) {
             Log.call(Log.l.trace, "ExportXlsx.");
             this.progress = progress;
@@ -42,7 +43,7 @@
             this.progressNext = 0;
             //this.progressStep = 40;
             this.xlsx = new openXml.OpenXmlPackage();
-            ExportXlsx.exporter = this;
+            PDFExportXlsx.exporter = this;
             Log.ret(Log.l.trace);
         }, {
             showProgress: function (percent, text) {
@@ -63,9 +64,9 @@
                     Log.call(Log.l.trace, "ExportXlsx.openedSpreadsheet.saveToBlobAsync.", "fileName=" + fileName);
                     that.showProgress(100);
                     try {
-                        saveAs(blob, fileName + ".xlsx");
+                        //addPdfToZip(blob, fileName + ".xlsx");
                         if (typeof complete === "function") {
-                            complete({});
+                            complete(blob);
                         }
                     } catch (exception) {
                         Log.print(Log.l.error, "exception: " + (exception && exception.message));
@@ -104,7 +105,7 @@
                 for (var r = 0; r < rowCount; r++) {
                     var newRow, row, c, key, attribTypeId, dateString, milliseconds, date, year, month, day, hour, minute;
                     row = results[r];
-                    if (typeof row.KontaktVIEWID !== "undefined" && row.KontaktVIEWID === -1 || row.KontaktVIEWID === -2) {
+					if (typeof row.KontaktVIEWID !== "undefined" && row.KontaktVIEWID === -1 || row.KontaktVIEWID === -2) {
                         newRow = new XElement(S.row);
                         row = results[r];
                         for (c = 1; c < colCount; c++) {

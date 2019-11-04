@@ -137,7 +137,9 @@
         },
         _KontaktPDF: {
             get: function () {
-                return AppData.getFormatView("Kontakt", 20572);
+                var ret =  AppData.getFormatView("Kontakt", 20572);
+				ret.maxPageSize = 50;
+				return ret;
             }
         },
         KontaktPDF: {
