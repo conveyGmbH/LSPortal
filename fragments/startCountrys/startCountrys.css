@@ -1,0 +1,26 @@
+﻿.gridtitlecountries {
+    display: flex;
+    height: 30px;
+    padding-left: 5px;
+    padding-top: 3px;
+    border-bottom: 1px solid lightgray;
+    font-weight: bold;
+}
+.worldbutton {
+    display: block;
+    top: 5px;
+    width: 106px;
+    height: 25px;
+    text-align: center;
+    font-weight: 900;
+    float: left;
+}
+.view-size-bigger .worldbutton {
+    width: 77px;
+}
+.view-size-medium .worldbutton {
+    width: 90px;
+}
+.view-size-medium-small .worldbutton {
+    display: none;
+}

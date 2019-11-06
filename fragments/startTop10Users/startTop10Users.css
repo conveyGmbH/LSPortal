@@ -1,0 +1,18 @@
+﻿.gridtitlet10user {
+    max-width: 580px;
+    height: 30px;
+    border-bottom: 1px solid lightgray;
+}
+.gridtitletextt10user {
+    display: flex;
+    padding-left: 5px;
+    padding-top: 3px;
+    font-weight: bolder;
+}
+#employeeChart {
+    max-height: 280px;
+}
+#employeeChart {
+    width: 90%;
+    margin-left: 5%;
+}

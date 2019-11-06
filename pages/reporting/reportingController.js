@@ -66,6 +66,7 @@
             this.landHisto = null;
             this.employeeHisto = null;
             this.employeechart = null;
+            this.xlsxfilename = "PDFExport.xlsx";
 
             var that = this;
 

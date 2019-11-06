@@ -1,0 +1,48 @@
+﻿.gridtitlequestions {
+    max-width: 836px;
+    height: 30px;
+    border-bottom: 1px solid lightgray;
+}
+.gridtitletextquestions {
+    display: flex;
+    padding-left: 5px;
+    padding-top: 3px;
+    font-weight: bolder;
+}
+#questionButtonList {
+    max-height: 60px;
+    max-width: 836px;
+}
+#questionsgridanswers .win-viewport .win-horizontal {
+    max-height: 350px;
+    max-width: 836px;
+}
+.view-size-bigger .contentarea .win-type-body {
+    height: 350px !important;
+    max-width: 836px;
+}
+.listview .win-selectionstylefilled .win-disposable .win-listview .win-element-resize {
+    max-height: 270px;
+}
+#questionsgridanswers {
+    max-height: 264px;
+}
+#questionsgridanswers .win-item {
+        max-width: 836px !important;
+}
+#A1 {
+    width: 435px;
+    float: left;
+}
+.view-size-medium #A1 {
+    width: 685px;
+}
+.view-size-medium #A2 {
+    width: 55px;
+}
+.view-size-small #A1 {
+    width: 335px;
+}
+.view-size-small #A2 {
+    width: 55px;
+}

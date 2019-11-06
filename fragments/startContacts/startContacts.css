@@ -1,0 +1,39 @@
+﻿.gridtitlecontacts {
+    display: flex;
+    height: 30px;
+    padding-left: 5px;
+    padding-top: 3px;
+    border-bottom: 1px solid lightgray;
+    font-weight: bold;
+}
+.startContact-circle-container {
+    margin: auto;
+    margin-top: 7px;
+    background-color: transparent; /*hintergrundfarbe*/
+    width: 240px; /*breite*/
+    height: 250px;
+    border-radius: 50%; /*Abgerundete Ecken, in diesem Beispiel tun die 50% ein Kreis darstellen*/
+    border: 1px solid rgba(0, 0, 0, 0.4); /*rahmenfarbe*/
+    text-align: center;
+}
+.startContact-numbers {
+    margin-top: 7px;
+}
+.contacts-modified {
+    float: left;
+    border-top: 1px solid lightgray;
+    border-right: 1px solid lightgray;
+    width: calc(50% - 1px);
+}
+.contacts-unedited {
+    float: left;
+    border-top: 1px solid lightgray;
+    width: calc(50% - 1px);
+}
+.center {
+    display: block;
+    width: 100px;
+    height: 5px;
+    margin: auto;
+    margin-top: 42px;
+}

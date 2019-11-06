@@ -103,17 +103,7 @@
                             }
                             if (width !== that.prevWidth || height !== that.prevHeight) {
                                 var tileTop = element.querySelector(".tile-top");
-                                //var tileMiddle = element.querySelector(".tile-middle");
                                 var tileBottom = element.querySelector(".tile-bottom");
-                                /*if (tileTop && tileMiddle && tileBottom && tileTop.style) {
-                                    if (tileBottom.clientHeight + tileMiddle.clientHeight + tileTop.clientHeight < height) {
-                                        tileTop.style.height =
-                                            (height - tileBottom.clientHeight - tileMiddle.clientHeight).toString() +
-                                            "px";
-                                    } else {
-                                        tileTop.style.height = "";
-                                    }
-                                }*/
                                 if (tileTop && tileBottom && tileBottom.style) {
                                     if (tileTop.clientHeight + tileBottom.clientHeight < height) {
                                         tileBottom.style.display = "block";
@@ -123,38 +113,6 @@
                                         tileBottom.style.display = "";
                                         tileBottom.style.position = "";
                                         tileBottom.style.bottom = "";
-                                    }
-                                }
-                                var worldContainer = element.querySelector('#worldcontainer');
-                                if (worldContainer && worldContainer.style) {
-                                    var worldContainerWidth = width / 2 - 52;
-                                    if (element.className) {
-                                        if (WinJS.Utilities.hasClass(element, "view-size-small")) {
-                                            worldContainerWidth = width - 20;
-                                        } else if (WinJS.Utilities.hasClass(element, "view-size-medium")) {
-                                            worldContainerWidth = width - 36;
-                                        }
-                                    }
-                                    if (worldContainerWidth > that.controller.worldMapMaxWidth) {
-                                        worldContainer.style.width = that.controller.worldMapMaxWidth.toString() + "px";
-                                        worldContainer.style.marginLeft = ((worldContainerWidth - that.controller.worldMapMaxWidth) / 2).toString() + "px";
-                                    } else {
-                                        worldContainer.style.width = "";
-                                        worldContainer.style.marginLeft = "";
-                                    }
-                                }
-                                if (width !== that.prevWidth) {
-                                    if (typeof that.controller.worldChart === "function") {
-                                        that.controller.worldChart();    
-                                    }
-                                    if (typeof that.controller.showDonutChart === "function") {
-                                        that.controller.showDonutChart("countryPie", false);
-                                    }
-                                    if (typeof that.controller.showPieChart === "function") {
-                                        that.controller.showPieChart("visitorsEditedChart", false);
-                                    }
-                                    if (typeof that.controller.showBarChart === "function") {
-                                        that.controller.showBarChart("visitorsPerDayChart", false);
                                     }
                                 }
                                 that.prevWidth = width;

@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="startCountrys.css" rel="stylesheet" />
+    <script type="text/javascript" src="startCountrysService.js"></script>
+    <script type="text/javascript" src="startCountrysController.js"></script>
+    <script type="text/javascript" src="startCountrys.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="startCountrys fragment">
+        <div id="startCountrysController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="contentarea win-type-body">
+                    <div class="gridtitlecountries">
+                        <span data-win-res="{textContent: 'start.gridtitlecountries'}"></span>
+                    </div>
+                    <div id="worldbuttoncontainer">
+                        <div class="worldbutton"
+                             textcontent="Australia"
+                             onclick="AppBar.handleEvent('click', 'clickGoToNorthAmerica', event)">
+                            Amerika
+                        </div>
+                        <div class="worldbutton"
+                             textcontent="Australia"
+                             onclick="AppBar.handleEvent('click', 'clickGoToEurope', event)">
+                            Europa
+                        </div>
+                        <div class="worldbutton"
+                             textcontent="Australia"
+                             onclick="AppBar.handleEvent('click', 'clickGoToAfrica', event)">
+                            Afrika
+                        </div>
+                        <div class="worldbutton"
+                             textcontent="Australia"
+                             onclick="AppBar.handleEvent('click', 'clickGoToAsia', event)">
+                            Asien
+                        </div>
+                        <div class="worldbutton"
+                             textcontent="Australia"
+                             onclick="AppBar.handleEvent('click', 'clickGoToWorld', event)">
+                            Welt
+                        </div>
+                    </div>
+                    <div id="worldcontainer" class="start-map-chart text-textcolor"></div>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

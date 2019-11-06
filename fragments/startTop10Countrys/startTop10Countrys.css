@@ -1,0 +1,20 @@
+﻿.gridtitlet10countries {
+    max-width: 580px;
+    height: 30px;
+    border-bottom: 1px solid lightgray;
+}
+.gridtitletextt10countries {
+    display: flex;
+    padding-left: 5px;
+    padding-top: 3px;
+    font-weight: bolder;
+}
+#countryPie {
+    max-height: 270px;
+}
+.jqplot-table-legend {
+    height: 80% !important;
+}
+.view-size-medium #countryPie .jqplot-table-legend {
+    margin-left: 0px !important;
+}

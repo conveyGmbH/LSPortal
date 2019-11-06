@@ -151,11 +151,6 @@
     text-align: center;
 }
 
-/*
-.start-map-chart { margin-left: calc(50% - 310px); }
-.view-size-bigger .start-map-chart { margin-left: -100px; }
-*/
-
 .start-donut-chart {
     width: 100%;
 }
@@ -179,7 +174,7 @@
 }
 
 .start-pie-chart { width: 100%; }
-.start-map-chart { width: 100%; height: 100%}
+.start-map-chart { text-align: center; width: 100%} 
 
 .start-bar-chart {
     height: 250px;
@@ -245,3 +240,21 @@
     
 .view-size-small .start-pie-chart { min-width: 96px; }
 
+#startContactshost.fragmenthost {
+    height: 350px;
+}
+#startCountryshost.fragmenthost {
+    height: 350px;
+}
+#startQuestionshost.fragmenthost {
+    height: 350px;
+}
+#startContactspDhost.fragmenthost {
+    height: 350px;
+}
+#startTop10Countryshost.fragmenthost {
+    height: 350px;
+}
+#startTop10Usershost.fragmenthost {
+    height: 350px;
+}

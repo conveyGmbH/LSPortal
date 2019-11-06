@@ -6,10 +6,6 @@
     <script type="text/javascript" src="startService.js"></script>
     <script type="text/javascript" src="startController.js"></script>
     <script type="text/javascript" src="start.js"></script>
-    <script type="text/javascript" src="../../lib/d3/scripts/d3.min.js"></script>
-    <script type="text/javascript" src="../../lib/topojson/scripts/topojson.js"></script>
-    <!--<script type="text/javascript" src="../../lib/datamaps/scripts/datamaps.world.en.js"></script>-->
-    
 </head>
 <body class="win-type-body">
     <div class="start fragment">
@@ -29,36 +25,26 @@
                         <div name="charts" class="tile tile-top">
                             <div class="tile-content-inner">
                                 <div class="field_line field_tile">
-                                    <div id="worldcontainer" class="start-map-chart text-textcolor"></div>
+                                    <div id="startContactshost" class="fragmenthost"></div>
                                 </div>
                                 <div class="field_line field_tile">
-                                    <div id="countryPie" class="start-donut-chart text-textcolor"></div>
+                                    <div id="startCountryshost" class="fragmenthost"></div>
                                 </div>
                                 <div class="field_line field_tile">
-                                    <div id="visitorsEditedChart" class="start-pie-chart text-lightcolor">
+                                    <div id="startQuestionshost" class="fragmenthost"></div>
                                     </div>
+                                <div class="field_line field_tile">
+                                    <div id="startContactspDhost" class="fragmenthost"></div>
                                 </div>
                                 <div class="field_line field_tile">
-                                    <div id="visitorsPerDayChart" class="start-bar-chart text-tile-textcolor">
+                                    <div id="startTop10Countryshost" class="fragmenthost"></div>
                                     </div>
+                                <div class="field_line field_tile">
+                                    <div id="startTop10Usershost" class="fragmenthost"></div>
                                 </div>
                             </div>
                         </div>
-                        <!--
-                        <div name="list" class="tile tile-backgroundcolor tile-middle">
-                            <div class="tile-button-color">
-                                <div class="half-circle half-circle-navigationcolor">&nbsp;</div>
-                                <div class="content-header-line win-type-caption">
-                                    <span class="id-field"></span>
-                                    <span class="caption-field text-tile-textcolor"
-                                          data-win-res="{textContent: 'start.list'}"></span>
-                                    <span class="date-field"></span>
-                                </div>
                             </div>
-                            <div class="tile-content-inner">
-                            </div>
-                        </div>
-                        -->
                         <div name="info" class="tile tile-navigationcolor tile-bottom">
                             <div class="tile-button-color">
                                 <div class="half-circle half-circle-lightcolor">&nbsp;</div>
@@ -94,9 +80,10 @@
                             </div>
                         </div>
                     </div>
-                </div>
+
                 <div class="error-message"
                      data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
+
             </section>
         </div>
     </div>
