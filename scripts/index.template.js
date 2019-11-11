@@ -121,7 +121,8 @@
         { id: "mailingTypes", master: "siteEventsList" },
         { id: "mailingTemplate", master: "siteEventsList" },
         { id: "mailingTracking", master: "siteEventsList" },
-        { id: "siteevents", master: "siteEventsList" }
+        { id: "siteevents", master: "siteEventsList" },
+        { id: "mailingTracking", master: "mailingTrackingList" }
     ];
 
     // init page for app startup
