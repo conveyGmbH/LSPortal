@@ -71,6 +71,12 @@
             this.scopeFromRecordId = scopeFromRecordId;
             */
 
+            var tooltipformater = function(tooltiptext) {
+                Log.call(Log.l.trace, "StartTop10Users.Controller.");
+                return tooltiptext[0] + " , " + tooltiptext[1];
+            }
+            this.tooltipformater = tooltipformater;
+
             this.answerChart = null;
             this.barChartWidth = 0;
             //this.employeetitle = that.title("Start.employeechart");
@@ -145,7 +151,7 @@
                                         },
                                         highlighter: {
                                             tooltipContentEditor: function (series, seriesIndex, pointIndex, plot) {
-                                                return plot.data[seriesIndex][pointIndex];
+                                                return that.tooltipformater(plot.data[seriesIndex][pointIndex]);
                                             },
 
                                             // other options just for completeness
