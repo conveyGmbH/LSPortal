@@ -31,26 +31,7 @@
                              data-win-options="{itemTemplate: select('.questionButtonList-template')}">
                         </div>
                     </div>
-                    <div id="questionsgridanswers">
-                        <div class="list-landscape-only">
-                            <div class="answersList-template"
-                                  data-win-control="WinJS.Binding.Template" style="display: none">
-                                <div class="row-bkg-gray"
-                                      data-win-bind="style.display: index Binding.Converter.oddToDisplay"></div>
-                                <div class="list-field-small-fixed win-type-ellipsis" id="A1"
-                                     data-win-bind="textContent: AntwortText"></div>
-                                <div class="list-field-small-fixed win-type-ellipsis" id="A2"
-                                     data-win-bind="textContent: SumAntwort"></div>
-                            </div>
-                        </div>
-                        <div id="answersList"
-                             class="listview win-selectionstylefilled"
-                             data-win-control="WinJS.UI.ListView"
-                             data-win-options="{
-                             itemTemplate: select('.answersList-template')
-                             }">
-                        </div>
-                    </div>
+                    <div id="answerChart" class="answer-bar-chart"></div>
                 </div>
             </section>
         </div>

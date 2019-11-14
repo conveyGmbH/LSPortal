@@ -6,6 +6,12 @@
 /// <reference path="~/www/lib/convey/scripts/fragmentController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/fragments/startQuestions/startQuestionsService.js" />
+/// <reference path="~/www/lib/jqPlot/scripts/jquery.jqplot.js" />
+/// <reference path="~/www/lib/jqPlot/scripts/plugins/jqplot.barRenderer.js" />
+/// <reference path="~/www/lib/jqPlot/scripts/plugins/jqplot.CategoryAxisRenderer.js" />
+/// <reference path="~/www/lib/jqPlot/scripts/plugins/jqplot.categoryAxisRenderer.min.js" />
+/// <reference path="~/www/lib/jqPlot/scripts/plugins/jqplot.canvasAxisTickRenderer.js" />
+/// <reference path="~/www/lib/jqPlot/scripts/plugins/jqplot.highlighter.min.js" />
 
 (function () {
     "use strict";
@@ -19,9 +25,9 @@
             }, options]);
 
             var that = this;
+            this.answerdata = null;
 
             var questionList = fragmentElement.querySelector("#questionButtonList.listview");
-            var anwsersList = fragmentElement.querySelector("#answersList.listview");
 
             /*var selectRecordId = function (recordId) {
                 Log.call(Log.l.trace, "StartQuestions.Controller.", "recordId=" + recordId);
@@ -64,6 +70,115 @@
             };
             this.scopeFromRecordId = scopeFromRecordId;
             */
+
+            this.answerChart = null;
+            this.barChartWidth = 0;
+            //this.employeetitle = that.title("Start.employeechart");
+            this.answerChartArray = [];
+            this.answerdata = [];
+            this.answerdataID = [];
+            this.answerticks = [];
+            var answerResult = null, ei = 0, el = 0;
+            var showanswerChart = function (barChartId, bAnimated) {
+                Log.call(Log.l.trace, "StartTop10Users.Controller.");
+                WinJS.Promise.timeout(0).then(function () {
+                    if (!that.answerdata || !that.answerdata.length) {
+                        Log.print(Log.l.trace, "extra ignored");
+                    } else {
+                        var answerBarChart = fragmentElement.querySelector("#" + barChartId);
+                        if (answerBarChart) {
+                            var width = answerBarChart.clientWidth;
+                            if (that.barChartWidth !== width) {
+                                that.barChartWidth = width;
+                                var series = [];
+                                var ticks = [];
+                                var tooltip = [];
+                                if (that.answerdata && that.answerdata.length > 0) {
+                                    for (var i = 0; i < that.answerdata.length; i++) {
+                                        var row = that.answerdata[i];
+                                        series[i] = [row.AntwortText, row.SumAntwort];
+                                        tooltip[i] = [row.AntwortText];
+                                        ticks[i] = i;
+                                    }
+                                }
+                                if (answerBarChart.style) {
+                                    answerChart.style.height = (that.answerdata.length * 60 + 48).toString() + "px";
+                                }
+                                var seriesColors = [
+                                    Colors.tileTextColor
+                                ];
+                                try {
+                                    answerBarChart.innerHTML = "";
+                                    var rendererOptions = {
+                                        barDirection: "vertical"
+                                    };
+                                    if (bAnimated) {
+                                        rendererOptions.animation = {
+                                            speed: 500
+                                        };
+                                    }
+                                    $.jqplot.config.enablePlugins = true;
+                                    that.answerChart = $.jqplot(barChartId, [series], {
+                                        title: that.answertitle,
+                                        grid: {
+                                            drawBorder: false,
+                                            drawGridlines: false,
+                                            background: "transparent",
+                                            shadow: false
+                                        },
+                                        animate: bAnimated,
+                                        seriesDefaults: {
+                                            renderer: $.jqplot.BarRenderer,
+                                            rendererOptions: rendererOptions,
+                                            shadow: false,
+                                            pointLabels: {
+                                                show: true
+                                            }
+                                        },
+                                        axes: {
+                                            xaxis: {
+                                                renderer: $.jqplot.CategoryAxisRenderer
+                                            }
+                                        },
+                                        tickOptions: {
+                                            fontSize: '10pt'
+                                        },
+                                        highlighter: {
+                                            tooltipContentEditor: function (series, seriesIndex, pointIndex, plot) {
+                                                return plot.data[seriesIndex][pointIndex];
+                                            },
+
+                                            // other options just for completeness
+                                            show: true,
+                                            showTooltip: true,
+                                            tooltipFade: true,
+                                            sizeAdjust: 10,
+                                            formatString: '%s',
+                                            tooltipLocation: 'n',
+                                            useAxesFormatters: false,
+                                        },
+                                        seriesColors: seriesColors,
+                                        legend: {
+                                            show: false
+                                        }
+                                    });
+                                    $("#" + barChartId).unbind("jqplotDataClick");
+                                    $("#" + barChartId).bind("jqplotDataClick",
+                                        function (ev, seriesIndex, pointIndex, data) {
+                                            that.clickanswerSlice(that.answerdataID, pointIndex);
+                                        }
+                                    );
+                                } catch (ex) {
+                                    Log.print(Log.l.error, "exception occurred: " + ex.message);
+                                }
+                            }
+                        }
+                    }
+                });
+                Log.ret(Log.l.trace);
+            };
+            this.showanswerChart = showanswerChart;
+
             var resultConverter = function (item, index) {
                 item.index = index;
                 that.binding.questions.qbez = item.index + 1;
@@ -136,31 +251,31 @@
                         if (listControl.selection) {
                             var selectionCount = listControl.selection.count();
                             if (selectionCount === 1) {
-                                listControl.selection.getItems().done(function(items) {
+                                listControl.selection.getItems().done(function (items) {
                                     var item = items[0];
                                     if (item.data && item.data.FragebogenVIEWID) {
                                         AppData.setErrorMsg(that.binding);
+                                        that.answerdata = [];
+                                        that.answerticks = [];
+                                        that.answerdataID = [];
                                         AppData.call("PRC_SumAntwort",
                                             {
                                                 pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
                                                 pFragenNr: parseInt(item.data.FragebogenVIEWID)
 
                                             },
-                                            function(json) {
+                                            function (json) {
                                                 Log.print(Log.l.info, "call success! ");
                                                 AppBar.busy = false;
                                                 var results = json.d.results;
-                                                results.forEach(function(item, index) {
+                                                results.forEach(function (item, index) {
                                                     that.resultConverter(item, index);
                                                 });
-                                                that.anwsersList = new WinJS.Binding.List(results);
-                                                if (anwsersList.winControl) {
-                                                    // add ListView dataSource
-                                                    anwsersList.winControl.itemDataSource =
-                                                        that.anwsersList.dataSource;
-                                                }
+                                                that.answerdata = results;
+                                                that.barChartWidth = 0;
+                                                that.showanswerChart("answerChart", true);
                                             },
-                                            function(errorResponse) {
+                                            function (errorResponse) {
                                                 Log.print(Log.l.error, "call error");
                                                 AppBar.busy = false;
                                                 AppData.setErrorMsg(that.binding, errorResponse);
@@ -187,7 +302,8 @@
             });
             Log.ret(Log.l.trace);
         }, {
-
-        })
+            answer: null,
+            answerchart: null
+            })
     });
 })();
