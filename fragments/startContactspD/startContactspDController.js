@@ -119,6 +119,31 @@
                                                 showTickMarks: false
                                             }
                                         },
+                                        highlighter: {
+                                            tooltipContentEditor: function (series, seriesIndex, pointIndex, plot) {
+                                                //return that.tooltipformater(plot.data[seriesIndex][pointIndex]);
+                                                var antwort = plot.data[seriesIndex][pointIndex][0];
+                                                var anzahl = plot.data[seriesIndex][pointIndex][1];
+
+                                                var html = "<div class = 'tooltip'>Datum : ";
+                                                html += antwort;
+                                                html += "  <br>Anzahl : ";
+                                                html += anzahl;
+                                                html += "  </div>";
+
+                                                return html;
+                                            },
+
+                                            // other options just for completeness
+                                            show: true,
+                                            showTooltip: true,
+                                            tooltipFade: true,
+                                            sizeAdjust: 10,
+                                            formatString: '%s',
+                                            tooltipLocation: 'n',
+                                            useAxesFormatters: false,
+                                            tooltipOffset: 14
+                                        },
                                         seriesColors: seriesColors,
                                         legend: {
                                             show: false

@@ -130,7 +130,17 @@
                                         },
                                         highlighter: {
                                             tooltipContentEditor: function (series, seriesIndex, pointIndex, plot) {
-                                                return that.tooltipformater(plot.data[seriesIndex][pointIndex]);
+                                                //return that.tooltipformater(plot.data[seriesIndex][pointIndex]);
+                                                var mitarbeiter = plot.data[seriesIndex][pointIndex][1];
+                                                var anzahl = plot.data[seriesIndex][pointIndex][0];
+
+                                                var html = "<div class = 'tooltip'>Mitarbeiter : ";
+                                                html += mitarbeiter;
+                                                html += "  <br>Kontakte : ";
+                                                html += anzahl;
+                                                html += "  </div>";
+
+                                                return html;
                                             },
 
                                             // other options just for completeness

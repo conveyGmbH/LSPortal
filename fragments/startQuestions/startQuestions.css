@@ -58,3 +58,6 @@
     width: 35px;
     text-align: center;
 }
+.tooltip {
+    background-color: white;
+}
