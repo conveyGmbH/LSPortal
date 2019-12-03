@@ -9,7 +9,7 @@
 .worldbutton {
     display: inline;
     top: 5px;
-    width: 99px;
+    width: calc(15% - 1px);
     height: 25px;
     text-align: center;
     font-weight: 900;
