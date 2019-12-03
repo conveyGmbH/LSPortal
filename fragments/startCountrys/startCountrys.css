@@ -7,9 +7,9 @@
     font-weight: bold;
 }
 .worldbutton {
-    display: block;
+    display: inline;
     top: 5px;
-    width: 106px;
+    width: 99px;
     height: 25px;
     text-align: center;
     font-weight: 900;
@@ -19,8 +19,14 @@
     width: 77px;
 }
 .view-size-medium .worldbutton {
-    width: 90px;
+    width: 70px;
 }
 .view-size-medium-small .worldbutton {
     display: none;
+}
+.start-map-chart {
+    height: 300px !important;
+}
+.datamap {
+    display: initial;
 }

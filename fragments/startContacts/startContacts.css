@@ -7,11 +7,13 @@
     font-weight: bold;
 }
 .startContact-circle-container {
-    margin: auto;
-    margin-top: 7px;
+    float: left;
+    margin-top: 50px;
+    margin-bottom: 29px;
+    margin-left: 15%;
     background-color: transparent; /*hintergrundfarbe*/
-    width: 240px; /*breite*/
-    height: 250px;
+    width: 200px; /*breite*/
+    height: 200px;
     border-radius: 50%; /*Abgerundete Ecken, in diesem Beispiel tun die 50% ein Kreis darstellen*/
     border: 1px solid rgba(0, 0, 0, 0.4); /*rahmenfarbe*/
     text-align: center;
@@ -20,15 +22,8 @@
     margin-top: 7px;
 }
 .contacts-modified {
-    float: left;
-    border-top: 1px solid lightgray;
-    border-right: 1px solid lightgray;
-    width: calc(50% - 1px);
-}
-.contacts-unedited {
-    float: left;
-    border-top: 1px solid lightgray;
-    width: calc(50% - 1px);
+    float: right;
+    width: calc(37% - 1px);
 }
 .center {
     display: block;
@@ -36,4 +31,114 @@
     height: 5px;
     margin: auto;
     margin-top: 42px;
+}
+#anzkontakte {
+    font-weight: bolder;
+    font-size: 40px;
+    margin-top: 1px;
+}
+#summary {
+    margin-top: 50px;
+    font-size: 20px;
+    font-weight: bolder;
+}
+#gridtitlecontacts {
+    margin-top: 15px;
+    font-size: 20px;
+    font-weight: bolder;
+}
+#businesscards {
+    float: left;
+    margin-top: 13px;
+    width: 180px;
+    text-align: center;
+    font-weight: bolder;
+}
+#barcodes {
+    float: left;
+    margin-top: 20px;
+    width: 180px;
+    text-align: center;
+    font-weight: bolder;
+}
+#manually {
+    float: left;
+    margin-top: 20px;
+    width: 180px;
+    text-align: center;
+    font-weight: bolder;
+}
+.view-size-medium {
+    
+}
+.view-size-small .contacts-modified {
+    float: left;
+    width: calc(100% - 1px);
+}
+.view-size-small #businesscards {
+    width: 33.3%;
+    margin-top: 0px;
+}
+.view-size-small #barcodes {
+    width: 33.3%;
+    margin-top: 0px;
+}
+.view-size-small #manually {
+    width: 33.3%;
+    margin-top: 0px;
+}
+.view-size-small .startContact-circle-container {
+    margin-top: 20px;
+    margin-bottom: 15px;
+    margin-left: 25%;
+}
+.view-size-medium .contacts-modified {
+    float: left;
+    width: calc(100% - 1px);
+}
+
+.view-size-medium #businesscards {
+    width: 33.3%;
+    margin-top: 0px;
+}
+
+.view-size-medium #barcodes {
+    width: 33.3%;
+    margin-top: 0px;
+}
+
+.view-size-medium #manually {
+    width: 33.3%;
+    margin-top: 0px;
+}
+
+.view-size-medium .startContact-circle-container {
+    margin-top: 20px;
+    margin-bottom: 15px;
+    margin-left: 25%;
+}
+.view-size-bigger .contacts-modified {
+    float: left;
+    width: calc(100% - 1px);
+}
+
+.view-size-bigger #businesscards {
+    width: 33.3%;
+    margin-top: 0px;
+}
+
+.view-size-bigger #barcodes {
+    width: 33.3%;
+    margin-top: 0px;
+}
+
+.view-size-bigger #manually {
+    width: 33.3%;
+    margin-top: 0px;
+}
+
+.view-size-bigger .startContact-circle-container {
+    margin-top: 20px;
+    margin-bottom: 15px;
+    margin-left: 25%;
 }

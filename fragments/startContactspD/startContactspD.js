@@ -66,7 +66,7 @@
                 ret = WinJS.Promise.timeout(0).then(function () {
                     if (typeof that.controller.showBarChart === "function") {
                         that.controller.showBarChart("visitorsPerDayChart", true);
-                    }
+                            }
                     that.inResize = 0;
                 });
             }

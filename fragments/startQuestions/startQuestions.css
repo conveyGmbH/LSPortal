@@ -10,13 +10,17 @@
     font-weight: bolder;
 }
 #questionButtonList {
-    max-height: 60px;
+    max-height: 60px !important;
     max-width: 836px;
 }
 #answerChart {
     margin-top: 10px;
+    margin-left: 10px;
     max-height: 230px;
 }
+.win-type-ellipsis {
+    max-height: 30px;
+} 
 #questionsgridanswers .win-viewport .win-horizontal {
     max-height: 350px;
     max-width: 836px;
@@ -49,4 +53,8 @@
 }
 .view-size-small #A2 {
     width: 55px;
+}
+.qbutton {
+    width: 35px;
+    text-align: center;
 }

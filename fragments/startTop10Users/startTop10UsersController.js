@@ -58,6 +58,12 @@
             }
             this.clickEmployeeSlice = clickEmployeeSlice;
 
+            var tooltipformater = function (tooltiptext) {
+                Log.call(Log.l.trace, "StartTop10Users.Controller.");
+                return tooltiptext[0] + " , " + tooltiptext[1];
+            }
+            this.tooltipformater = tooltipformater;
+
             this.employeeChart = null;
             this.barChartWidth = 0;
             //this.employeetitle = that.title("Start.employeechart");
@@ -84,12 +90,16 @@
                                     reportingBarChart.innerHTML = "";
                                     var rendererOptions = {
                                         barDirection: "horizontal"
+                                        
                                     };
                                     if (bAnimated) {
                                         rendererOptions.animation = {
                                             speed: 500
                                         };
                                     }
+                                    var seriesColors = [
+                                        Colors.tileTextColor
+                                    ];
                                     that.employeeChart = $.jqplot(barChartId, [that.employeedata], {
                                         title: that.employeetitle,
                                         grid: {
@@ -118,6 +128,22 @@
                                         tickOptions: {
                                             fontSize: '10pt'
                                         },
+                                        highlighter: {
+                                            tooltipContentEditor: function (series, seriesIndex, pointIndex, plot) {
+                                                return that.tooltipformater(plot.data[seriesIndex][pointIndex]);
+                                            },
+
+                                            // other options just for completeness
+                                            show: true,
+                                            showTooltip: true,
+                                            tooltipFade: true,
+                                            sizeAdjust: 10,
+                                            formatString: '%s',
+                                            tooltipLocation: 'n',
+                                            useAxesFormatters: false,
+                                            tooltipOffset : 14
+                                        },
+                                        seriesColors: seriesColors,
                                         legend: {
                                             show: false
                                         }

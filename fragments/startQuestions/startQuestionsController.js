@@ -162,18 +162,13 @@
                                             formatString: '%s',
                                             tooltipLocation: 'n',
                                             useAxesFormatters: false,
+                                            tooltipOffset: 14
                                         },
                                         seriesColors: seriesColors,
                                         legend: {
                                             show: false
                                         }
                                     });
-                                    $("#" + barChartId).unbind("jqplotDataClick");
-                                    $("#" + barChartId).bind("jqplotDataClick",
-                                        function (ev, seriesIndex, pointIndex, data) {
-                                            that.clickanswerSlice(that.answerdataID, pointIndex);
-                                        }
-                                    );
                                 } catch (ex) {
                                     Log.print(Log.l.error, "exception occurred: " + ex.message);
                                 }

@@ -44,7 +44,7 @@
 
             var that = this;
             this.countryColors = [];
-
+            
             var isotoInitlandId = function (isoCode) {
                 var results = AppData.initLandView.getResults();
                 if (results && results.length > 0) {

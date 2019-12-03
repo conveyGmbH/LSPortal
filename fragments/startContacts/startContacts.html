@@ -16,19 +16,27 @@
                     <span data-win-res="{textContent: 'start.gridtitlecontacts'}"></span>
                 </div>
                 <div class="startContact-circle-container">
-                    <span class="label win-type-caption center" data-win-res="{textContent: 'start.summary'}"></span><br/>
-                    <span class="label win-type-caption center" data-win-bind="textContent: startcontactdata.AnzKontakte"></span><br/>
-                    <span class="label win-type-caption center" data-win-res="{textContent: 'start.gridtitlecontacts'}"></span>
+                    <span class="label win-type-caption center" id="summary" data-win-res="{textContent: 'start.summary'}"></span><br/>
+                    <span class="label win-type-caption center" id="anzkontakte" data-win-bind="textContent: startcontactdata.AnzKontakte"></span><br/>
+                    <span class="label win-type-caption center" id="gridtitlecontacts" data-win-res="{textContent: 'start.gridtitlecontacts'}"></span>
                 </div>
                 <div class="startContact-numbers">
                     <div class="contacts-modified">
-                        <span data-win-res="{textContent: 'start.modified'}"></span><br/>
-                        <span data-win-bind="textContent: startcontactdata.AnzEditierteKontakte"></span>
-                    </div>
-                    <div class="contacts-unedited">
-                        <span data-win-res="{textContent: 'start.uneditied'}"></span><br/>
-                        <span data-win-bind="textContent: startcontactdata.AnzNichtEditierteKontakte"></span><br/>
-                    </div>
+                        <div id="businesscards">
+                            <img src="../../images/barcode.svg" alt="Barcode" style="width:50px;height:50px;">
+                            <br />
+                            <span data-win-bind="textContent: startcontactdata.AnzBarcode"></span>
+                        </div>
+                        <div id="barcodes">
+                            <img src="../../images/id_card.svg" alt="Barcode" style="width:50px;height:50px;"><br />
+                            <span data-win-bind="textContent: startcontactdata.AnzVisitenkarte"></span>
+                        </div>
+                        <div id="manually">
+                            <img src="../../images/pencil.svg" alt="Barcode" style="width:50px;height:50px;">
+                            <br />
+                            <span data-win-bind="textContent: startcontactdata.AnzManuell"></span>
+                        </div>
+                        </div>
                 </div>
             </div>
         </section>
