@@ -620,9 +620,11 @@ select {
 }
 .field_tile {
     float: left;
-    width: calc(33.333333% - 54px);
+    width: calc(33.333333% - 10px);
     overflow-y: hidden;
     min-height: 320px;
+    margin-left: 4px;
+    margin-right: 4px;
 }
 /*
 .input_field, .large_field, .input_small_left, .input_small_right {
