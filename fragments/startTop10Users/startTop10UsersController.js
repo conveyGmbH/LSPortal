@@ -199,6 +199,7 @@
                         that.employeeticks.push(ename + "..");
                         that.emplyeevalues.push(item.Anzahl);
                     } else {
+                        that.employeedata.push(item.EmployeeName);
                         that.employeeticks.push(item.EmployeeName);
                         that.emplyeevalues.push(item.Anzahl);
                     }
