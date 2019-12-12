@@ -6,6 +6,10 @@
     border-bottom: 1px solid lightgray;
     font-weight: bold;
 }
+#gridtitlecontactstext {
+    font-size: 18px;
+    margin-left: 10px;
+}
 .startContact-circle-container {
     float: left;
     margin-top: 50px;

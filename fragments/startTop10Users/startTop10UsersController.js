@@ -24,6 +24,8 @@
             }, options]);
 
             var that = this;
+            this.employeeticks = [];
+            this.emplyeevalues = [];
 
             this.employee = "";
             this.res = [];
@@ -100,7 +102,7 @@
                                     var seriesColors = [
                                         Colors.tileTextColor
                                     ];
-                                    that.employeeChart = $.jqplot(barChartId, [that.employeedata], {
+                                    that.employeeChart = $.jqplot(barChartId, [that.emplyeevalues], {
                                         title: that.employeetitle,
                                         grid: {
                                             drawBorder: false,
@@ -115,11 +117,17 @@
                                             shadow: false,
                                             pointLabels: {
                                                 show: true
-                                            }
+                                            },
+                                            type: 'column'
                                         },
                                         axes: {
                                             yaxis: {
-                                                renderer: $.jqplot.CategoryAxisRenderer
+                                                renderer: $.jqplot.CategoryAxisRenderer,
+                                                ticks: that.employeeticks,
+                                                tickOptions: {
+                                                    showGridline: false,
+                                                    markSize: 0
+                                                }
                                             },
                                             xaxis: {
                                                 renderer: $.jqplot.AxisThickRenderer
@@ -131,8 +139,8 @@
                                         highlighter: {
                                             tooltipContentEditor: function (series, seriesIndex, pointIndex, plot) {
                                                 //return that.tooltipformater(plot.data[seriesIndex][pointIndex]);
-                                                var mitarbeiter = plot.data[seriesIndex][pointIndex][1];
-                                                var anzahl = plot.data[seriesIndex][pointIndex][0];
+                                                var mitarbeiter = that.employeedata[pointIndex];
+                                                var anzahl = that.emplyeevalues[pointIndex];
 
                                                 var html = "<div class = 'tooltip'>Mitarbeiter : ";
                                                 html += mitarbeiter;
@@ -182,6 +190,19 @@
 
             var resultConverter = function (item, index) {
                 item.index = index;
+                if (item.EmployeeName) {
+                    var EmployeeName = item.EmployeeName;
+                    var count = EmployeeName.length;
+                    if (count > 8) {
+                        that.employeedata.push(item.EmployeeName);
+                        var ename = item.EmployeeName.slice(0, 6);
+                        that.employeeticks.push(ename + "..");
+                        that.emplyeevalues.push(item.Anzahl);
+                    } else {
+                        that.employeeticks.push(item.EmployeeName);
+                        that.emplyeevalues.push(item.Anzahl);
+                    }
+                }
             }
             this.resultConverter = resultConverter;
 
@@ -195,12 +216,16 @@
                         Log.print(Log.l.trace, "reportMitarbeiter: success!");
                         if (json && json.d && json.d.results) {
                             // store result for next use
+                            var results = json.d.results
                             employeeResult = json.d.results;
+                            results.forEach(function (item, index) {
+                                that.resultConverter(item, index);
+                            });
                             el = json.d.results.length;
                             for (ei; ei < el; ei++) {
                                 // y-axis is ascending to top
                                 var ed = el - ei - 1;
-                                that.employeedata[ed] = [employeeResult[ei].Anzahl, employeeResult[ei].EmployeeName];
+                                //that.employeedata[ed] = [employeeResult[ei].EmployeeName]; //, employeeResult[ei].EmployeeName
                                 that.employeedataID[ed] = [employeeResult[ei].EmployeeID];
                             }
                             that.barChartWidth = 0;

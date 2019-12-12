@@ -6,20 +6,24 @@
     border-bottom: 1px solid lightgray;
     font-weight: bold;
 }
+#gridtitlecountriestext {
+    font-size: 18px;
+    margin-left: 10px;
+}
 .worldbutton {
     display: inline;
     top: 5px;
-    width: calc(15% - 1px);
+    
     height: 25px;
     text-align: center;
     font-weight: 900;
     float: left;
 }
 .view-size-bigger .worldbutton {
-    width: 77px;
+    width: calc(15% - 1px);
 }
 .view-size-medium .worldbutton {
-    width: 70px;
+    width: calc(15% - 1px);
 }
 .view-size-medium-small .worldbutton {
     display: none;

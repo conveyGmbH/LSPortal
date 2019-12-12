@@ -26,6 +26,8 @@
 
             var that = this;
             this.answerdata = null;
+            this.anwsersquestiontext = [];
+            this.anwserssumantwort = [];
 
             var questionList = fragmentElement.querySelector("#questionButtonList.listview");
 
@@ -124,7 +126,7 @@
                                         };
                                     }
                                     $.jqplot.config.enablePlugins = true;
-                                    that.answerChart = $.jqplot(barChartId, [series], {
+                                    that.answerChart = $.jqplot(barChartId, [that.anwserssumantwort], {
                                         title: that.answertitle,
                                         grid: {
                                             drawBorder: false,
@@ -143,7 +145,12 @@
                                         },
                                         axes: {
                                             xaxis: {
-                                                renderer: $.jqplot.CategoryAxisRenderer
+                                                renderer: $.jqplot.CategoryAxisRenderer,
+                                                ticks: that.anwsersquestiontext,
+                                                tickOptions: {
+                                                    showGridline: false,
+                                                    markSize: 0
+                                                }
                                             }
                                         },
                                         tickOptions: {
@@ -152,8 +159,8 @@
                                         highlighter: {
                                             tooltipContentEditor: function (series, seriesIndex, pointIndex, plot) {
                                                 //return that.tooltipformater(plot.data[seriesIndex][pointIndex]);
-                                                var antwort = plot.data[seriesIndex][pointIndex][0];
-                                                var anzahl = plot.data[seriesIndex][pointIndex][1];
+                                                var antwort = that.anwsersquestiontext[pointIndex];
+                                                var anzahl = that.anwserssumantwort[pointIndex];
 
                                                 var html = "<div class = 'tooltip'>Antwort : ";
                                                 html += antwort;
@@ -189,6 +196,29 @@
                 Log.ret(Log.l.trace);
             };
             this.showanswerChart = showanswerChart;
+
+            var resultAnwserConverter = function (item, index) {
+                item.index = index;
+                if (item.FragenText) {
+                    if (item.SumAntwort === null) {
+                        item.SumAntwort = 0;
+                        that.anwserssumantwort.push(item.SumAntwort);
+                    } else {
+                        that.anwserssumantwort.push(item.SumAntwort);
+                    }
+                    if (item.AntwortText) {
+                        var count = item.AntwortText.length;
+                        if (count > 9) {
+                            var ename = item.AntwortText.slice(0, 9);
+                            that.anwsersquestiontext.push(ename + "..");
+                        } else {
+                            that.anwsersquestiontext.push(item.AntwortText);
+                        }
+                    }
+                    
+                }
+            }
+            this.resultAnwserConverter = resultAnwserConverter;
 
             var resultConverter = function (item, index) {
                 item.index = index;
@@ -278,9 +308,11 @@
                                             function (json) {
                                                 Log.print(Log.l.info, "call success! ");
                                                 AppBar.busy = false;
+                                                that.anwsersquestiontext = [];
+                                                that.anwserssumantwort = [];
                                                 var results = json.d.results;
                                                 results.forEach(function (item, index) {
-                                                    that.resultConverter(item, index);
+                                                    that.resultAnwserConverter(item, index);
                                                 });
                                                 that.answerdata = results;
                                                 that.barChartWidth = 0;

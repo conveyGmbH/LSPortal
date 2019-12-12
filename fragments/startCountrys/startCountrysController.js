@@ -57,6 +57,28 @@
             };
             this.isotoInitlandId = isotoInitlandId;
 
+            var setWorldbuttonStyle = function() {
+                Log.call(Log.l.trace, "StartCountrys.Controller.");
+                var worldbutton1 = fragmentElement.querySelector("#worldbutton1");
+                var worldbutton2 = fragmentElement.querySelector("#worldbutton2");
+                var worldbutton3 = fragmentElement.querySelector("#worldbutton3");
+                var worldbutton4 = fragmentElement.querySelector("#worldbutton4");
+                var worldbutton5 = fragmentElement.querySelector("#worldbutton5");
+                var header = fragmentElement.querySelector(".gridtitlecountries").offsetWidth;
+                if (worldbutton1) {
+                    var objwi = header / 5;
+                    var objwi2 = objwi.toString();
+                    worldbutton1.style.width = objwi2 -1 + "px";
+                    worldbutton2.style.width = objwi2 - 1 + "px";
+                    worldbutton3.style.width = objwi2 + "px";
+                    worldbutton4.style.width = objwi2 + "px";
+                    worldbutton5.style.width = objwi2 + "px";
+                    Log.call(Log.l.trace, "StartCountrys.Controller.");
+                }
+
+            }
+            this.setWorldbuttonStyle = setWorldbuttonStyle;
+
             var goToNorthAmerica = function () {
                 that.worldMap.svg.selectAll(".datamaps-subunits").transition().duration(750).attr("transform", "scale(2.0)translate(0, -30)");
             };
@@ -200,6 +222,11 @@
             }
             this.resultConverter = resultConverter;
 
+            // define handlers
+            this.eventHandlers = {
+                
+            };
+
             var loadData = function () {
                 Log.call(Log.l.trace, "StartContacts.");
                 AppData.setErrorMsg(that.binding);
@@ -271,6 +298,7 @@
                 return that.loadData();
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
+                that.setWorldbuttonStyle();
             });
             Log.ret(Log.l.trace);
         }, {
