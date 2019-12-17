@@ -13,3 +13,6 @@
 .tooltip {
     background-color: white;
 }
+#visitorsPerDayChart {
+    margin-top: 45px;
+}

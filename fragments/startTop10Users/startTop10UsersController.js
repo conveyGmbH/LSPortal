@@ -126,11 +126,17 @@
                                                 ticks: that.employeeticks,
                                                 tickOptions: {
                                                     showGridline: false,
-                                                    markSize: 0
+                                                    markSize: 0,
+                                                    formatString: '%d'
                                                 }
                                             },
                                             xaxis: {
-                                                renderer: $.jqplot.AxisThickRenderer
+                                                renderer: $.jqplot.AxisThickRenderer,
+                                                min: 0,
+                                                tickInterval: 1,
+                                                tickOptions: {
+                                                    formatString: '%d'
+                                                }
                                             }
                                         },
                                         tickOptions: {

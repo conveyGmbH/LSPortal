@@ -144,6 +144,13 @@
                                             }
                                         },
                                         axes: {
+                                            yaxis: {
+                                                min: 0,
+                                                tickInterval: 1,
+                                                tickOptions: {
+                                                    formatString: '%d'
+                                                }
+                                            },
                                             xaxis: {
                                                 renderer: $.jqplot.CategoryAxisRenderer,
                                                 ticks: that.anwsersquestiontext,
