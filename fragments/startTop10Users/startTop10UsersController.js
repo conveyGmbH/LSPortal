@@ -189,6 +189,24 @@
             };
             this.showemployeeChart = showemployeeChart;
 
+            var setMarginChart = function(chartlength) {
+                Log.call(Log.l.trace, "StartTop10Users.Controller.");
+                var t10chart = fragmentElement.querySelector("#employeeChart");
+                switch (chartlength) {
+                    case 1:
+                        t10chart.style.marginTop = "170px";
+                        break;
+                    case 2:
+                        t10chart.style.marginTop = "140px";
+                        break;
+                    case 3:
+                        t10chart.style.marginTop = "110px";
+                        break;
+                default:
+                }
+            }
+            this.setMarginChart = setMarginChart;
+
             var setRestriction = function (restriction) {
                 AppData.setRestriction("Kontakt", restriction);
             }
@@ -225,6 +243,8 @@
                             // store result for next use
                             var results = json.d.results
                             employeeResult = json.d.results;
+                            var resultlength = employeeResult.length;
+                            that.setMarginChart(resultlength);
                             results.forEach(function (item, index) {
                                 that.resultConverter(item, index);
                             });

@@ -153,8 +153,8 @@
                                     that.worldMap = new Datamap({
                                         element: worldContainer,
                                         projection: 'mercator',
-                                        height: height,
-                                        width: width,
+                                        height: height - 20,
+                                        width: width - 20,
                                         fills: fills,
                                         // Array --> 'Countrykey' : { fillKey : 'Rate of importance'}
                                         data: that.countryKeyData,
