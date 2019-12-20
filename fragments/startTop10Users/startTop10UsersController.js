@@ -76,6 +76,7 @@
             var employeeResult = null, ei = 0, el = 0;
             var showemployeeChart = function (barChartId, bAnimated) {
                 Log.call(Log.l.trace, "StartTop10Users.Controller.");
+                var employeeWithMostContacts = Math.max.apply(Math, employeeResult.map(function (employee) { return employee.Anzahl; }));
                 WinJS.Promise.timeout(0).then(function () {
                     if (!that.employeedata || !that.employeedata.length) {
                         Log.print(Log.l.trace, "extra ignored");
@@ -133,7 +134,7 @@
                                             xaxis: {
                                                 renderer: $.jqplot.AxisThickRenderer,
                                                 min: 0,
-                                                tickInterval: 1,
+                                                tickInterval: employeeWithMostContacts > 2000 ? 500 : (employeeWithMostContacts > 100 ? 100 : (employeeWithMostContacts > 50 ? 50 : (employeeWithMostContacts > 20 ? 5 : 1))),
                                                 tickOptions: {
                                                     formatString: '%d'
                                                 }
@@ -241,7 +242,7 @@
                         Log.print(Log.l.trace, "reportMitarbeiter: success!");
                         if (json && json.d && json.d.results) {
                             // store result for next use
-                            var results = json.d.results
+                            var results = json.d.results;
                             employeeResult = json.d.results;
                             var resultlength = employeeResult.length;
                             that.setMarginChart(resultlength);
