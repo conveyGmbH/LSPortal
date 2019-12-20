@@ -840,5 +840,22 @@
     "clientmanagementlicenses.newlicenses" : "Lizenzen",
     "clientmanagementlicenses.licensebtnLabel" : "Eintragen",
     "clientmanagementlicenses.licensetext" : "Bestellinfo", 
-    "clientmanagementlicenses.editlicensebtnLabel" : "Ändern"
+    "clientmanagementlicenses.editlicensebtnLabel" : "Ändern",
+
+    "mailingtracking.title" : "Mailverfolgung",
+    "mailingtracking.mailtype" : "Mailtyp",
+    "mailingtracking.fairmandant" : "Veranstaltung",
+    "mailingtracking.status" : "Status",
+    "mailingtracking.usedmailadress" : "E-Mailadresse",
+    "mailingtracking.category" : "Kategorie",
+    "mailingtracking.supportcomment" : "Supportkommentar",
+    "mailingtracking.schedultedsendtsdate" : "Senden am :",
+    "mailingtracking.schedultedsendtstime" : "Senden um :",
+    "mailingtracking.language" : "Sprache",
+    "mailingtracking.sendtxt" : "Gesendet am",
+    "mailingtracking.onlyonetxt" : "Nur diese Mail",
+    "mailingtracking.alltxt" : "Alle Mails dieser Person",
+
+    "mailingtrackinglist.title" : "Mails",
+    "mailingtrackinglist.count" : "Anzahl"
 }			
