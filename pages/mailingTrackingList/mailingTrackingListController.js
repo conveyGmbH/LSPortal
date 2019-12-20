@@ -123,8 +123,9 @@
                     for (var i = 0; i < that.maildocuments.length; i++) {
                         var maildocument = that.maildocuments.getAt(i);
                         if (maildocument && typeof maildocument === "object" &&
-                            maildocument.ExhibitorMailingStatustVIEWID === recordId) {
+                            maildocument.ExhibitorMailingStatusVIEWID === recordId) {
                             listView.winControl.selection.set(i);
+                            AppData.setRestriction("ExhibitorMailingStatus", recordId);
                             break;
                         }
                     }
@@ -155,31 +156,28 @@
                             var selectionCount = listControl.selection.count();
                             if (selectionCount === 1) {
                                 // Only one item is selected, show the page
-                                listControl.selection.getItems().done(function (items) {
+                                listControl.selection.getItems().done(function(items) {
                                     var item = items[0];
                                     var curPageId = Application.getPageId(nav.location);
                                     that.binding.selIdx = item.index;
-                                    if (item.data && item.data.ExhibitorMailingStatustVIEWID &&
-                                        item.data.MaildokumentVIEWID !== that.binding.mailingId) {
+                                    if (item.data &&
+                                        item.data.ExhibitorMailingStatusVIEWID &&
+                                        item.data.ExhibitorMailingStatusVIEWID !== that.binding.mailingId) {
                                         // called asynchronously if ok
-                                        that.binding.mailingId = item.data.ExhibitorMailingStatustVIEWID;
+                                        that.binding.mailingId = item.data.ExhibitorMailingStatusVIEWID;
                                         if (curPageId === "mailingTracking") {
-                                            AppBar.scope.binding.saveFlag = true;
-                                            if (typeof AppBar.scope.saveData === "function") {
-                                                AppBar.scope.saveData(function () {
-                                                    if (typeof AppBar.scope.loadData === "function") {
-                                                        AppBar.scope.loadData(that.binding.mailingId);
-                                                    }
-                                                }, function (errorResponse) {
-                                                    //that.selectRecordId(that.binding.contactId);
-                                                });
+                                            //AppBar.scope.binding.saveFlag = true;
+
+
+                                            if (typeof AppBar.scope.loadData === "function") {
+                                                AppBar.scope.loadData(that.binding.mailingId);
+
+
                                             }
-                                        } else {
-                                            Application.navigateById("mailingTracking");
                                         }
                                     }
                                 });
-                            }
+                            }      
                         }
                     }
                     Log.ret(Log.l.trace);
@@ -277,6 +275,7 @@
 
             var loadData = function () {
                 Log.call(Log.l.trace, "MailingList.Controller.");
+                var veranstid = AppData.getRecordId("ExhibitorMailingStatus");
                 that.loading = true;
                 progress = listView.querySelector(".list-footer .progress");
                 counter = listView.querySelector(".list-footer .counter");
@@ -310,9 +309,9 @@
                             if (that.binding.selIdx >= json.d.results.length) {
                                 that.binding.selIdx = json.d.results.length - 1;
                             }
-                            if (results[that.binding.selIdx] && results[that.binding.selIdx].ExhibitorMailingStatustVIEWID) {
+                            if (results[that.binding.selIdx] && results[that.binding.selIdx].ExhibitorMailingStatusVIEWID) {
                                 WinJS.Promise.timeout(0).then(function () {
-                                    that.selectRecordId(results[that.binding.selIdx].ExhibitorMailingStatustVIEWID);
+                                    that.selectRecordId(results[that.binding.selIdx].ExhibitorMailingStatusVIEWID);
                                 });
                             }
                         } else {
@@ -347,7 +346,7 @@
                         }
                         that.loading = false;
                     }, {
-                            
+                            FairMandantVeranstID: veranstid
                         }
                     );
                 });

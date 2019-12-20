@@ -56,6 +56,23 @@
                 Log.ret(Log.l.trace);
                 return ret;
             }
+        },
+        _FairMandantView: {
+            get: function () {
+                return AppData.getFormatView("FairMandantVeranst", 0);
+            }
+        },
+        FairMandantView: {
+            select: function (complete, error, recordId) {
+                Log.call(Log.l.trace, "MailingTracking.");
+                var ret = MailingTracking._FairMandantView.selectById(complete, error, recordId);
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            defaultValue: {
+                Name: ""
+            }
         }
     });
 })();
