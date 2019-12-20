@@ -80,7 +80,7 @@
             this.setWorldbuttonStyle = setWorldbuttonStyle;
 
             var goToNorthAmerica = function () {
-                that.worldMap.svg.selectAll(".datamaps-subunits").transition().duration(750).attr("transform", "scale(2.0)translate(0, -30)");
+                that.worldMap.svg.selectAll(".datamaps-subunits").transition().duration(750).attr("transform", "scale(1.0)translate(100, 0)");
             };
             this.goToNorthAmerica = goToNorthAmerica;
 

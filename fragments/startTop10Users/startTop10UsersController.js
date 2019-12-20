@@ -35,7 +35,7 @@
                 Log.call(Log.l.trace, "StartTop10Users.Controller.", "index=" + index);
                 if (event && index >= 0) {
                     that.employee = event[index];
-                    that.employee = that.employee[0];
+                    //that.employee = that.employee[0];
                     if (that.employee > "") {
                         return StartTop10Users.employeeView.select(function (json) {
                             // this callback will be called asynchronously
@@ -201,7 +201,7 @@
                         t10chart.style.marginTop = "140px";
                         break;
                     case 3:
-                        t10chart.style.marginTop = "110px";
+                        t10chart.style.marginTop = "70px";
                         break;
                 default:
                 }
@@ -223,10 +223,12 @@
                         var ename = item.EmployeeName.slice(0, 6);
                         that.employeeticks.push(ename + "..");
                         that.emplyeevalues.push(item.Anzahl);
+                        that.employeedataID.push(item.EmployeeID);
                     } else {
                         that.employeedata.push(item.EmployeeName);
                         that.employeeticks.push(item.EmployeeName);
                         that.emplyeevalues.push(item.Anzahl);
+                        that.employeedataID.push(item.EmployeeID);
                     }
                 }
             }
@@ -254,7 +256,7 @@
                                 // y-axis is ascending to top
                                 var ed = el - ei - 1;
                                 //that.employeedata[ed] = [employeeResult[ei].EmployeeName]; //, employeeResult[ei].EmployeeName
-                                that.employeedataID[ed] = [employeeResult[ei].EmployeeID];
+                                //that.employeedataID[ed] = [employeeResult[ei].EmployeeID];
                             }
                             that.barChartWidth = 0;
                             that.showemployeeChart("employeeChart", true);
