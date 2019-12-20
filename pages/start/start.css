@@ -22,7 +22,7 @@
 }
 
 .tile {
-    min-height: 160px;
+    min-height: 180px;
     overflow-x: hidden;
     overflow-y: hidden;
     /*

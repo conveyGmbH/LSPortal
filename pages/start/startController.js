@@ -203,6 +203,9 @@
                                     listView.winControl.itemDataSource = that.dataLicenceUser.dataSource;
                                 }
                             } else {
+                                var tilebottum = pageElement.querySelector(".tile-bottom");
+                                tilebottum.style.minHeight = "0px";
+                                tilebottum.style.height = "90px";
                                 that.nextUrl = null;
                                 that.dataLicenceUser = null;
                                 if (listView.winControl) {

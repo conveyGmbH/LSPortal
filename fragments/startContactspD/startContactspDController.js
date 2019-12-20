@@ -177,6 +177,23 @@
             };
             this.getRecordId = getRecordId;
 
+            var setMarginChart = function (chartlength) {
+                Log.call(Log.l.trace, "StartTop10Users.Controller.");
+                var dchart = fragmentElement.querySelector("#visitorsPerDayChart");
+                switch (chartlength) {
+                case 1:
+                        dchart.style.width = "200px";
+                        dchart.style.marginLeft = "30%";
+                        break;
+                case 2:
+                        dchart.style.width = "400px";
+                        dchart.style.marginLeft = "20%";
+                        break;
+                default:
+                }
+            }
+            this.setMarginChart = setMarginChart;
+
             var resultConverter = function (item, index) {
                 item.index = index;
             }
@@ -193,6 +210,8 @@
                             // kontaktanzahlView returns object already parsed from json file in response
                             if (json && json.d) {
                                 that.kontaktanzahldata = json.d.results;
+                                var chartlength = that.kontaktanzahldata.length;
+                                that.setMarginChart(chartlength);
                                 that.barChartWidth = 0;
                                 that.showBarChart("visitorsPerDayChart", true);
                             }
