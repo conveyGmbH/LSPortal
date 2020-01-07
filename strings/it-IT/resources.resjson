@@ -124,6 +124,7 @@
     "start.info"            : "Informazioni importanti",
     "start.language"        : "Lingua",
 	"start.confirmTextPublish"  : "Il questionario non é stato ancora pubblicato. Per favore premete ok e confermate la pubblicazione del questionario, altrimenti esso non verrá visualizzato correttamente nella APP / questionario dei barcode",
+    "start.confirmIsAppUser" : "Si noti che si è effettuato l'accesso come utente APP. Se desideri configurare il questionario, gestire il tuo evento o esportare i dati, accedi con il tuo account amministratore",
     "start.gridtitlecontacts"        : "Contatti",
     "start.gridtitlecountries"        : "Paesi",
     "start.gridtitlequestions"        : "Domande",

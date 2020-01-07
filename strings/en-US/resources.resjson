@@ -124,6 +124,7 @@
     "start.info"            : "Important informations",
     "start.language"        : "Language",
     "start.confirmTextPublish"  : "The questionnaire has not been published yet. Please press ok and then publish it, otherwise the changes you have done will not appear on the APP / Questionnaire",
+    "start.confirmIsAppUser" : "Please note ou are logged in as APP user. If you wish to set up the questionnaire, manage your event or export the data, please log in with your admin account",
     "start.gridtitlecontacts"        : "Contacts",
     "start.gridtitlecountries"        : "Countrys",
     "start.gridtitlequestions"        : "Questions",

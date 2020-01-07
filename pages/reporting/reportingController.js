@@ -45,7 +45,8 @@
                         max: 0,
                         percent: 0,
                         text: getResourceText("reporting.outOf"),
-                        show: null
+                        show: null,
+                        showOther: null
                     },
                     templatexlsx: "",
                     showExcelExportErfassungsdatum: false, // excel 
@@ -76,6 +77,22 @@
             var pdfErfassungsdatum = pageElement.querySelector("#ReportingPDFErfassungsdatum.win-datepicker");
             var modifiedTs = pageElement.querySelector("#ModifiedTs.win-datepicker");
             
+            //audio
+            var showProgress = function (percent, text, max) {
+                if (that.binding.progress && typeof that.binding.progress === "object") {
+                    if (!percent) {
+                        //this.progressFirst = 0;
+                        //this.progressNext = 0;
+                        //this.progressStep = 40;
+                    }
+                    that.binding.progress.max = max;
+                    that.binding.progress.count++;
+                    that.binding.progress.showOther = percent >= 0 && percent <= max ? 1 : null;
+                    that.binding.progress.text = text ? text : getResourceText("reporting.progressMsg");
+                }
+            }
+            this.showProgress = showProgress;
+
             var resultConverter = function(item, index) {
                 item.index = index;
                 item.fullName = (item.Nachname ? (item.Nachname + ", ") : "") + (item.Vorname ? item.Vorname : "");
@@ -153,26 +170,35 @@
 
             var setRestriction = function () {
                 var reportingRestriction = {};
-                if (that.binding.restriction.InitLandID && that.binding.restriction.InitLandID !== "null") {
+                //if (that.binding.restriction.InitLandID && that.binding.restriction.InitLandID !== null) {
                     if (AppData.getLanguageId() === 1031) {
                         reportingRestriction.Land = that.binding.restriction.InitLandID;
                     } else {
                         reportingRestriction.Land = that.binding.restriction.InitLandID;
                     }
-                }
+                //}
                 if (that.binding.restriction.ErfasserID && that.binding.restriction.ErfasserID !== "undefined") {
                     if (AppData.getLanguageId() === 1031) {
                         reportingRestriction.Mitarbeiter = that.binding.restriction.ErfasserID;
                     } else {
                         reportingRestriction.Mitarbeiter = that.binding.restriction.ErfasserID;
                     }
+                } else {
+                    that.binding.restriction.ErfasserID = null;
+                    reportingRestriction.Mitarbeiter = that.binding.restriction.ErfasserID;
+
                 }
                 if (that.binding.showErfassungsdatum && that.binding.restriction.Erfassungsdatum) {
                     if (AppData.getLanguageId() === 1031) {
-                        reportingRestriction.ErfassungsdatumValue = that.binding.restriction.Erfassungsdatum; //.toISOString().substring(0, 10)
+                        reportingRestriction.Erfassungsdatum = that.binding.restriction.Erfassungsdatum;
+                        reportingRestriction.ErfassungsdatumValue =
+                            that.binding.restriction.Erfassungsdatum; //.toISOString().substring(0, 10)
                     } else {
                         reportingRestriction.RecordDate = that.binding.restriction.Erfassungsdatum;
                     }
+                } else {
+                    reportingRestriction.Erfassungsdatum = null;
+                    reportingRestriction.ErfassungsdatumValue = null;
                 }
                 if (that.binding.showModifiedTS && that.binding.restriction.ModifiedTs) {
                     if (AppData.getLanguageId() === 1031) {
@@ -180,6 +206,9 @@
                     } else {
                         reportingRestriction.ModificationDate = that.binding.restriction.ModifiedTs;
                     }
+                } else {
+                    reportingRestriction.AenderungsDatumValue = null;
+                    reportingRestriction.ModificationDate = null;
                 }
                 return reportingRestriction;
             }
@@ -211,8 +240,13 @@
                 if (filename && docContent) {
                     if (!that.audiozip) {
                         that.audiozip = new JSZip();
+
+                    }
+                    if (!that.pdfzip) {
+                        that.pdfzip = new JSZip();
                     }
                     that.audiozip.file(filename, docContent);
+                    that.pdfzip.file(filename, docContent);
                 }
             }
             this.addAudioToZip = addAudioToZip;
@@ -314,10 +348,33 @@
                 }
                 that.showDateRestrictions();
                 AppData.setErrorMsg(that.binding);
+                if (that.binding.showFilter) {
                 var ret = Reporting.exportAudioDataView.select(function (json) {
                         Log.print(Log.l.trace, "exportTemplate: success!");
                         if (json && json.d && json.d.results && json.d.results.length > 0) {
+                            var results = json.d.results;
+                            that.showProgress(0, "Audiodateien", results.length);
                             // store result for next use
+                            that.nextUrl = Reporting.exportAudioDataView.getNextUrl(json);
+                            that.audioIddata = json.d.results;
+                            that.exportContactAudio(json.d.results);
+                        }
+                        that.getNextAudioData();
+                    },
+                        function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        },
+                        that.binding.restrictionAudio
+                    );
+                } else {
+                    var ret = Reporting.exportAudioDataView.select(function (json) {
+                        Log.print(Log.l.trace, "exportTemplate: success!");
+                        if (json && json.d && json.d.results && json.d.results.length > 0) {
+                            // store result for next use
+                            var results = json.d.results;
+                            //that.showProgress(0, "Audiodateien", results.length);
                             that.nextUrl = Reporting.exportAudioDataView.getNextUrl(json);
                             that.audioIddata = json.d.results;
                             that.exportContactAudio(json.d.results);
@@ -328,8 +385,10 @@
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
                     },
-                    that.binding.restrictionAudio
+                        {}
                 );
+                }
+
                 Log.ret(Log.l.trace);
                 return ret;
             }
@@ -377,7 +436,7 @@
                     }, recordId);
                 } else if (that.audioIddata.length > 0) {
                     Log.print(Log.l.trace, "collected all, audioIddata.length=" + that.audioIddata.length);
-                    that.audiozip.generateAsync({
+                    /*that.audiozip.generateAsync({
                         blob: true,
                         base64: false,
                         compression: "STORE",
@@ -387,10 +446,11 @@
                         //location.href = "data:application/zip;base64," + pdfData;
                         that.disablePdfExportList(false);
                         //that.binding.progress.show = null;
-                    });
+                    });*/
                     ret = WinJS.Promise.as();
                 } else {
                     Log.print(Log.l.trace, "no data");
+                    that.disablePdfExportList(false);
                     ret = WinJS.Promise.as();
                 }
                 Log.ret(Log.l.trace);
@@ -407,7 +467,7 @@
                 var hasRestriction = false;
                 var tempRestriction = null;
                 var prop = null;
-
+                that.binding.progress.showOther = false;
                 // ExportXlsx.restriction = that.getRestriction();
                 var exportselectionId = parseInt(exportselection);
                 switch (exportselectionId) {
@@ -608,11 +668,11 @@
                         Log.print(Log.l.error, "curOLELetterID=" + that.binding.curOLELetterID + "not supported");
                 }
                 if (dbView) {
-                    var exporter = ExportXlsx.exporter;
+                    //var exporter = ExportXlsx.exporter;
                     //if (!exporter) {
-                        exporter = new ExportXlsx.ExporterClass(that.binding.progress);
+                    var exporter = new ExportXlsx.ExporterClass(that.binding.progress);/*that.binding.progress*/
                     //}
-                    exporter.showProgress(0);
+                    //exporter.showProgress(0);
                     that.disableReportingList(true);
                     if (!restriction) {
                         restriction = that.setRestriction();
@@ -819,6 +879,7 @@
 
             var insertExcelFiletoZip = function (event) {
                 Log.call(Log.l.trace, "Reporting.Controller.");
+                that.binding.progress.showOther = true;
                 var exporter = new PDFExportXlsx.ExporterClass();
                 var dbView = Reporting.KontaktPDF;
                 //var dbViewTitle = PDFExport.xLAuswertungViewNoQuestTitle;
@@ -830,11 +891,11 @@
                 that.binding.restrictionPdf = setRestriction();
                 that.binding.restrictionPdf.LandTitle = that.binding.restriction.InitLandID;
                 that.binding.restrictionPdf.Erfasser = that.binding.restriction.ErfasserID; // mögliches Problem?!
-                if (AppData.getLanguageId() === 1031) {
-                    that.binding.restrictionPdf.Erfassungsdatum = null;  //that.binding.restriction.Erfassungsdatum;.toISOString().substring(0, 10)
+                /*if (AppData.getLanguageId() === 1031) {
+                    that.binding.restrictionPdf.Erfassungsdatum = that.binding.restriction.Erfassungsdatum;  //that.binding.restriction.Erfassungsdatum;.toISOString().substring(0, 10)
                 } else {
                     that.binding.restrictionPdf.RecordDate = that.binding.restriction.Erfassungsdatum;
-                }
+                }*/
                 for (var prop in that.binding.restrictionPdf) {
                     if (that.binding.restrictionPdf.hasOwnProperty(prop)) {
                         //hasRestriction = true;
@@ -853,10 +914,14 @@
                             default:
                                 that.binding.restrictionExcel[prop] = [null, that.binding.restrictionPdf[prop]];
                         }
-                        that.binding.restrictionExcel["Land"] = that.binding.restrictionPdf.Land;
+                        //that.binding.restrictionExcel["Land"] = that.binding.restrictionPdf.Land;
+                        that.binding.restrictionExcel["Land"] = [null, that.binding.restrictionPdf.Land];
+                        that.binding.restrictionExcel["Erfasser"] = [null, that.binding.restrictionPdf.Erfasser];
                     }
                 }
-                if (that.binding.restrictionPdf.Erfassungsdatum) {
+                //var hasRestriction = false;
+                if (that.binding.showFilter || that.binding.restrictionPdf.Erfassungsdatum || that.binding.restrictionPdf.AenderugsDatum || that.binding.restrictionPdf.Land || that.binding.restrictionPdf.Erfasser) {
+                    //hasRestriction = true;
                     that.binding.restrictionExcel["KontaktVIEWID"] = ["<0", ">0"];
                     that.binding.restrictionExcel.bAndInEachRow = true;
                     that.binding.restrictionExcel.bExact = true;
@@ -897,6 +962,7 @@
                 that.pdfIddata =[];
                 that.nextUrl = null;
                 that.curPdfIdx = -1;
+                that.binding.progress.showOther = true;
                 Log.call(Log.l.trace, "PDFExport.Controller.");
                 var ret;
                 //that.binding.restrictionPdf = that.binding.; //that.setRestriction();
@@ -909,19 +975,14 @@
                             // store result for next use
                             that.nextUrl = Reporting.contactView.getNextUrl(json);
                             that.pdfIddata = json.d.results;
-                            if (!that.nextUrl) {
                                 that.binding.progress.max = that.pdfIddata.length;
                             }
-                        }
                         that.getNextPdfData();
-                    },
-                        function (errorResponse) {
+                    }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
-                    },
-                    that.binding.restrictionPdf
-                );
+                    }, that.binding.restrictionPdf);
                 } else {
                     ret = Reporting.contactView.select(function (json) {
                         Log.print(Log.l.trace, "exportTemplate: success!");
@@ -929,17 +990,14 @@
                             // store result for next use
                             that.nextUrl = Reporting.contactView.getNextUrl(json);
                             that.pdfIddata = json.d.results;
-                            if (!that.nextUrl) {
                                 that.binding.progress.max = that.pdfIddata.length;
                             }
-                        }
                         that.getNextPdfData();
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
-                    }, {}
-                    );
+                    }, {});
                 }
                 Log.ret(Log.l.trace);
                 return ret;
@@ -948,7 +1006,8 @@
 
             var getNextPdfData = function () {
                 var ret;
-                that.binding.progress.show = true;
+                that.binding.progress.show = false;
+                that.binding.progress.showOther = true;
                 Log.call(Log.l.trace, "PDFExport.Controller.");
                 if (that.nextUrl) {
                     var nextUrl = that.nextUrl;
@@ -961,7 +1020,11 @@
                         // employeeView returns object already parsed from json file in response
                         if (json && json.d && json.d.results && json.d.results.length > 0) {
                             that.nextUrl = Reporting.contactView.getNextUrl(json);
-                            that.pdfIddata = json.d.results;
+                            var results = json.d.results;
+                            results.forEach(function (item, index) {
+                                //that.resultConverter(item, that.binding.count);
+                                that.pdfIddata.push(item);
+                            });
                             that.binding.progress.max = that.pdfIddata.length;
                         }
                         that.getNextPdfData();
@@ -989,9 +1052,12 @@
                         that.disablePdfExportList(false);
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, recordId);
-                } else if (that.pdfIddata.length > 0) {
+                } else if (that.pdfIddata.length >= 0) {
                     Log.print(Log.l.trace, "collected all, pdfIddata.length=" + that.pdfIddata.length);
                     // XLSX Einfügen
+                    if (!that.pdfzip) {
+                        that.pdfzip = new JSZip();
+                    }
                     that.pdfzip.file(that.xlsxfilename, that.xlsxblob);
                     that.pdfzip.generateAsync({
                         blob: true,
@@ -1074,6 +1140,7 @@
                 clickExportAudio: function (event) {
                     Log.call(Log.l.trace, "Reporting.Controller.");
                     that.getAudioIdDaten();
+                    that.disablePdfExportList(true);
                     Log.ret(Log.l.trace);
                 },
                 clickExportAll: function (event) {
@@ -1092,6 +1159,8 @@
                     }
 
                             WinJS.Promise.timeout(1000).then(function () {
+                        that.getAudioIdDaten();
+                    }).then(function () {
                                 that.insertExcelFiletoZip();
                             });
                     Log.ret(Log.l.trace);

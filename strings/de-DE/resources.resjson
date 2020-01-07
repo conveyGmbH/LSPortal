@@ -123,7 +123,8 @@
     "start.event"           : "Ihre Messe",
     "start.info"            : "Wichtige Hinweise",
     "start.language"        : "Sprache",
-	"start.confirmTextPublish"  : "Der Fragebogen wurde noch nicht publiziert. Bitte drücken Sie 'ok' und publizieren ihn, ansonsten werden die Änderungen nicht übernommen und erscheinen nicht auf der App / im Fragebogen",
+	"start.confirmTextPublish"  : "Der Fragebogen wurde noch nicht publiziert. Bitte klicken Sie auf 'ok' und publizieren ihn, ansonsten werden die Änderungen nicht übernommen und erscheinen nicht in der App/im Fragebogen",
+	"start.confirmIsAppUser" : "Bitte beachten Sie, dass Sie als APP-Benutzer angemeldet sind. Wenn Sie den Fragebogen einrichten, Ihre Veranstaltung verwalten oder die Daten exportieren möchten, melden Sie sich bitte mit Ihrem Administratorkonto an",
     "start.gridtitlecontacts"        : "Kontakte",
     "start.gridtitlecountries"        : "Länder",
     "start.gridtitlequestions"        : "Fragen",
@@ -416,7 +417,7 @@
     "infodesk.phone"         : "Telefon",
     "infodesk.mobile"        : "Mobil",
 
-    "infodeskEmpList.title" : "Benutzerkonten",
+    "infodeskEmpList.title" : "Letzte Nachricht",
     "infodeskEmpList.count" : "Anzahl",
 	"infodeskEmpList.name"  : "Name",
 	"infodeskEmpList.firstName" : "Vorname",
@@ -425,6 +426,7 @@
 	"infodeskEmpList.firstNameAsc"  : "Vorname ↑",
 	"infodeskEmpList.nameDesc"  : "Name ↓",
 	"infodeskEmpList.nameAsc"  : "Name ↑",
+	"infodeskEmpList.action"   : "Aktion", 
 
 	"infodeskContactList.title"     : "Produktauswahlliste",
     "infodeskContactList.company"   : "Firma",

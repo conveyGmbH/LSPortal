@@ -50,23 +50,23 @@
                                 <span class="date-field"></span>
                             </div>
                         </div>
-                        <div class="line-separator"
-                             data-win-bind="style.display: progress.show Binding.Converter.toDisplay"></div>
+                        <!--<div class="line-separator"
+                             data-win-bind="style.display: progress.show Binding.Converter.toDisplay"></div>-->
                         <div class="field_line">
                             <span class="label win-type-caption portrait_only" id="exportlist" data-win-res="{textContent: 'reporting.exportAll'}"></span>
                             <span class="label landscape_only" id="exportlist" data-win-res="{textContent: 'reporting.exportAll'}"></span><br />
                             <div class="button-container">
-                                <button id="exportAll" class="audioexport-button win-button"
+                                <button id="exportAll" class="audioexport-button titlearea-bkg win-button"
                                         data-win-res="{textContent: 'reporting.exportAll'}"
                                         onclick="AppBar.handleEvent('click', 'clickExportAll', event)"></button>
-                                <button id="audio" class="audioexport-button win-button"
+                                <button id="audio" class="audioexport-button titlearea-bkg win-button"
                                         data-win-res="{textContent: 'reporting.audiobutton'}"
                                         onclick="AppBar.handleEvent('click', 'clickExportAudio', event)"></button>
                             </div>
                         </div>
                         <div class="line-separator"></div>
                         <div class="field_line"
-                             data-win-bind="style.display: progress.show Binding.Converter.toDisplay">
+                             data-win-bind="style.display: progress.showOther Binding.Converter.toDisplay">
                             <span data-win-res="{textContent: 'reporting.progress'}"></span>
                             <span data-win-bind="textContent: progress.count"></span>
                             <span data-win-res="{textContent: 'label.listContact'}"></span>

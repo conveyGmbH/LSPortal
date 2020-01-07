@@ -8,6 +8,7 @@
 /// <reference path="~/www/lib/jszip/scripts/jszip.js" />
 /// <reference path="~/www/lib/FileSaver/scripts/FileSaver.js" />
 /// <reference path="~/www/lib/OpenXml/scripts/openxml.js" />
+/// <reference path="~/www/pages/reporting/reportingController.js" />
 
 (function (root) {  // root = global
     "use strict";
@@ -46,16 +47,16 @@
             Log.ret(Log.l.trace);
         }, {
             showProgress: function (percent, text) {
-                if (this.progress && typeof this.progress === "object") {
+                //if (this.progress && typeof this.progress === "object") {
                     if (!percent) {
                         this.progressFirst = 0;
                         this.progressNext = 0;
                         //this.progressStep = 40;
                     }
                     this.progress.percent = parseInt(percent);
-                    this.progress.show = percent >= 0 && percent < 100 ? 1 : null;
+                this.progress.show = percent >= 0 && percent <= 100 ? 1 : null;
                     this.progress.text = text ? text : getResourceText("reporting.progressMsg");
-                }
+                //}
             },
             saveSpreadSheet: function (openedSpreadsheet, fileName, complete, error) {
                 var that = this;
@@ -63,7 +64,7 @@
                     Log.call(Log.l.trace, "ExportXlsx.openedSpreadsheet.saveToBlobAsync.", "fileName=" + fileName);
                     that.showProgress(100);
                     try {
-                        saveAs(blob, fileName + ".xlsx");
+                        saveAs(blob, fileName + ".xlsx"); /* + ".xlsx"*/
                         if (typeof complete === "function") {
                             complete({});
                         }
@@ -77,12 +78,11 @@
                 });
             },
             writeResultToSheetData: function (sheetData, results, attribSpecs, colCount) {
-                var that = this;
+                //var that = this;
                 var rowCount = results.length;
                 Log.call(Log.l.trace, "ExportXlsx.", "rowCount=" + rowCount);
-                that.progressFirst = that.progressNext;
-                that.progressStep = rowCount / AppData.generalData.AnzahlKontakte * 100;
-                that.progressNext += that.progressStep;
+                //that.progressFirst = that.progressNext;
+                ExportXlsx.exporter.progressStep = 100 / rowCount;
 
                 var newCell, valueName, type, style, value, extraValue;
                 function isNumber(v) {
@@ -253,8 +253,10 @@
                         }
                     }
                     sheetData.add(newRow);
+                    ExportXlsx.exporter.progressNext = ExportXlsx.exporter.progressNext + ExportXlsx.exporter.progressStep;
+                    ExportXlsx.exporter.showProgress(ExportXlsx.exporter.progressNext);
                 }
-                that.showProgress(that.progressNext);
+
                 Log.ret(Log.l.trace);
             },
             selectNextViewData: function (nextUrl, dbView, attribSpecs, colCount, sheetData, openedSpreadsheet, fileName, complete, error) {

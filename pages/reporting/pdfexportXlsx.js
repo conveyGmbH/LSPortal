@@ -8,7 +8,7 @@
 /// <reference path="~/www/lib/jszip/scripts/jszip.js" />
 /// <reference path="~/www/lib/FileSaver/scripts/FileSaver.js" />
 /// <reference path="~/www/lib/OpenXml/scripts/openxml.js" /> 
-/// <reference path="~/www/pages/pdfExport/pdfExportController.js" />
+/// <reference path="~/www/pages/reporting/reportingController.js" />
 
 (function (root) {  // root = global
     "use strict";
@@ -54,8 +54,8 @@
                         //this.progressStep = 40;
                     }
                     this.progress.percent = parseInt(percent);
-                    this.progress.show = percent >= 0 && percent < 100 ? 1 : null;
-                    this.progress.text = text ? text : getResourceText("reporting.progressMsg");
+                    //this.progress.show = percent >= 0 && percent < 100 ? 1 : null;
+                    this.progress.text = text ? text : getResourceText("reporting.outOf");
                 }
             },
             saveSpreadSheet: function (openedSpreadsheet, fileName, complete, error) {
@@ -104,6 +104,7 @@
 
                 for (var r = 0; r < rowCount; r++) {
                     var newRow, row, c, key, attribTypeId, dateString, milliseconds, date, year, month, day, hour, minute;
+                    //newRow = new XElement(S.row);
                     row = results[r];
 					if (typeof row.KontaktVIEWID !== "undefined" && row.KontaktVIEWID === -1 || row.KontaktVIEWID === -2) {
                         newRow = new XElement(S.row);
@@ -165,12 +166,17 @@
                         newRow = new XElement(S.row);
                         row = results[r];
                         for (c = 1; c < colCount; c++) {
+                            var audioHyperlinkAudio = '';
                             if (!attribSpecs[c].hidden) {
                                 key = attribSpecs[c].ODataAttributeName;
                                 value = row[key];
                                 extraValue = null;
                                 if (key === "Erfassungsdatum" || key === "AenderungsDatum") {
+                                    if (attribSpecs[c].AttribTypeID !== 3) {
                                     attribTypeId = 6;
+                                } else {
+                                    attribTypeId = attribSpecs[c].AttribTypeID;
+                                }
                                 } else {
                                     attribTypeId = attribSpecs[c].AttribTypeID;
                                 }
@@ -184,10 +190,35 @@
                                 } else if (typeof value === "string" && value.substr(0, 10) === "HYPERLINK(") {
                                     type = "str";
                                     valueName = S.f;
+                                    audioHyperlinkAudio = value.split(' ; ');
+                                    if (audioHyperlinkAudio.length > 1) {
+                                        for (var i = 0; i < audioHyperlinkAudio.length; i++) {
+                                            var startPos = audioHyperlinkAudio[i].indexOf('"');
+                                            if (startPos >= 0) {
+                                                var stopPos = audioHyperlinkAudio[i].indexOf('"', startPos + 1);
+                                                var tmp = audioHyperlinkAudio[i].substr(startPos + 1,
+                                                    stopPos - startPos - 1);
+                                                extraValue = new XElement(S.v, tmp);
+                                            }
+                                            if (extraValue) {
+                                                newCell = new XElement(S.c, new XElement(valueName, audioHyperlinkAudio[i]), extraValue);
+                                            } else {
+                                                newCell = new XElement(S.c, new XElement(valueName, audioHyperlinkAudio[i]));
+                                            }
+                                            if (type) {
+                                                newCell.setAttributeValue("t", type);
+                                            }
+                                            if (style) {
+                                                newCell.setAttributeValue("s", style);
+                                            }
+                                            newRow.add(newCell);
+                                        }
+                                    } else {
                                     var startPos = value.indexOf('"');
                                     if (startPos >= 0) {
                                       var stopPos = value.indexOf('"', startPos+1);
                                       extraValue = new XElement(S.v, value.substr(startPos+1, stopPos - startPos - 1));
+                                    }
                                     }
                                 } else if (attribTypeId === 8 || attribTypeId === 6) { // timestamp or date
                                     if (cr === false){
@@ -213,15 +244,36 @@
                                                 "T";
                                         }
                                     } else {
-                                        value = value.substring(0, 16);
-
+                                        value = value.substring(0, 22);
+                                        if (value) {
+                                            dateString = value.replace("\/Date(", "").replace(")\/", "");
+                                            milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
+                                            date = new Date(milliseconds);
+                                            year = date.getFullYear();
+                                            month = date.getMonth() + 1;
+                                            day = date.getDate();
+                                            if (attribTypeId === 8) {
+                                                hour = date.getHours();
+                                                minute = date.getMinutes();
+                                                value = year.toString() +
+                                                    ((month < 10) ? "-0" : "-") + month.toString() +
+                                                    ((day < 10) ? "-0" : "-") + day.toString() +
+                                                    ((hour < 10) ? "T0" : "T") + hour.toString() +
+                                                    ((minute < 10) ? ":0" : ":") + minute.toString() +
+                                                    "Z";
+                                            } else {
+                                                value = year.toString() +
+                                                    ((month < 10) ? "-0" : "-") + month.toString() +
+                                                    ((day < 10) ? "-0" : "-") + day.toString() +
+                                                    "T";
+                                            }
+                                        }
                                         function toDate(value) {
                                             var year = value.substring(0, 4);
                                             var month = value.substring(5, 7);
                                             var day = value.substring(8, 10);
                                             var hour = value.substring(11, 13);
                                             var minute = value.substring(14, 16);
-
                                             return new Date(year, month - 1, day, hour, minute);
                                         };
 
@@ -238,6 +290,7 @@
                                 } else {
                                     type = "n";
                                 }
+                                if (audioHyperlinkAudio.length < 2) {
                                 if (extraValue) {
                                     newCell = new XElement(S.c, new XElement(valueName, value), extraValue);
                                 } else {
@@ -252,6 +305,7 @@
                                 newRow.add(newCell);
                             }
                         }
+                    }
                     }
                     sheetData.add(newRow);
                 }
