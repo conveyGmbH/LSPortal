@@ -859,5 +859,13 @@
     "mailingtracking.alltxt" : "Alle Mails dieser Person",
 
     "mailingtrackinglist.title" : "Mails",
-    "mailingtrackinglist.count" : "Anzahl"
+    "mailingtrackinglist.count" : "Anzahl",
+
+    "startnodata.text1" : "",
+    "startnodata.text2" : "",
+    "startnodata.text3" : "",
+    "startnodata.text4" : "",
+    "startnodata.text5" : "",
+    "startnodata.text6" : ""
+
 }			

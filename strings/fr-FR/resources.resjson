@@ -835,5 +835,30 @@
     "clientmanagementlicenses.newlicenses" : "Licences",
     "clientmanagementlicenses.licensebtnLabel" : "Entrer",
     "clientmanagementlicenses.licensetext" : "Infos commande", 
-    "clientmanagementlicenses.editlicensebtnLabel" : "Changement"	
+    "clientmanagementlicenses.editlicensebtnLabel" : "Changement",
+
+    "mailingtracking.title" : "Suivi du courrier",
+    "mailingtracking.mailtype" : "Type de poste",
+    "mailingtracking.fairmandant" : "événement",
+    "mailingtracking.status" : "Statut",
+    "mailingtracking.usedmailadress" : "Adresse e-mail",
+    "mailingtracking.category" : "Catégorie",
+    "mailingtracking.supportcomment" : "Commentaire de soutien",
+    "mailingtracking.schedultedsendtsdate" : "Envoyer le :",
+    "mailingtracking.schedultedsendtstime" : "Envoyer à :",
+    "mailingtracking.language" : "Langue",
+    "mailingtracking.sendtxt" : "Posté le",
+    "mailingtracking.onlyonetxt" : "Seulement ce mail",
+    "mailingtracking.alltxt" : "Tous les mails de cette personne",
+
+    "mailingtrackinglist.title" : "Mails",
+    "mailingtrackinglist.count" : "Nombre",
+
+    "startnodata.text1" : "",
+    "startnodata.text2" : "",
+    "startnodata.text3" : "",
+    "startnodata.text4" : "",
+    "startnodata.text5" : "",
+    "startnodata.text6" : ""
+	
 }

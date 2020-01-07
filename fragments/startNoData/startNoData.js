@@ -49,9 +49,7 @@
             if (element && !that.inResize) {
                 that.inResize = 1;
                 ret = WinJS.Promise.timeout(0).then(function () {
-                    if (typeof that.controller.worldChart === "function") {
-                        
-                    }
+                    
                     that.inResize = 0;
                 });
             }
