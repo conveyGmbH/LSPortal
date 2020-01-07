@@ -104,7 +104,9 @@
 
                 for (var r = 0; r < rowCount; r++) {
                     var newRow, row, c, key, attribTypeId, dateString, milliseconds, date, year, month, day, hour, minute;
-                    if (r === 0 || r === 1){
+                    newRow = new XElement(S.row);
+                    row = results[r];
+                    if (typeof row.KontaktVIEWID !== "undefined" && row.KontaktVIEWID === -1 || row.KontaktVIEWID === -2) {
                         newRow = new XElement(S.row);
                         row = results[r];
                         for (c = 1; c < colCount; c++) {
@@ -213,7 +215,29 @@
                                         }
                                     } else {
                                         value = value.substring(0, 16);
-
+                                        if (value) {
+                                            dateString = value.replace("\/Date(", "").replace(")\/", "");
+                                            milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
+                                            date = new Date(milliseconds);
+                                            year = date.getFullYear();
+                                            month = date.getMonth() + 1;
+                                            day = date.getDate();
+                                            if (attribTypeId === 8) {
+                                                hour = date.getHours();
+                                                minute = date.getMinutes();
+                                                value = year.toString() +
+                                                    ((month < 10) ? "-0" : "-") + month.toString() +
+                                                    ((day < 10) ? "-0" : "-") + day.toString() +
+                                                    ((hour < 10) ? "T0" : "T") + hour.toString() +
+                                                    ((minute < 10) ? ":0" : ":") + minute.toString() +
+                                                    "Z";
+                                            } else {
+                                                value = year.toString() +
+                                                    ((month < 10) ? "-0" : "-") + month.toString() +
+                                                    ((day < 10) ? "-0" : "-") + day.toString() +
+                                                    "T";
+                                            }
+                                        }
                                         function toDate(value) {
                                             var year = value.substring(0, 4);
                                             var month = value.substring(5, 7);

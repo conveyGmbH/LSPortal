@@ -297,8 +297,7 @@
                             } else {
                                 results = json.d.results;
                             }
-                           // that.progressNext = results.length / AppData.generalData.AnzahlKontakte * 100;
-                           // that.showProgress(that.progressNext); 35 / 36
+                            
                             var attribSpecs = baseDbView.attribSpecs;
                             var colCount = attribSpecs.length;
                             if (baseDbView.relationName === "KontaktReport") {
@@ -339,6 +338,8 @@
                                 }
                             }
                             sheetData.replaceAll(newRow);
+                            that.progressNext = that.progressNext + 1;
+                            that.showProgress(that.progressNext); //35 / 36
                             Log.print(Log.l.trace, colCount + "write row data...");
                             WinJS.Promise.timeout(50).then(function () {
                                 that.writeResultToSheetData(sheetData, results, attribSpecs, colCount);

@@ -48,6 +48,7 @@
             // add page specific commands to AppBar
             var commandList = [
                 { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" },
+                { id: "clickMailTracking", label: getResourceText("command.mailtracking"), tooltip: getResourceText("tooltip.mailtracking"), section: "primary", svg: "mails" },
                 { id: "clickNewTermin", label: getResourceText("command.newTermin"), tooltip: getResourceText("tooltip.newTermin"), section: "primary", svg: "plus" },
                 { id: "clickNew", label: getResourceText("command.new"), tooltip: getResourceText("tooltip.newExhibitor"), section: "primary", svg: "plus" },
                 { id: "clickReorder", label: getResourceText("command.new"), tooltip: getResourceText("tooltip.newNachbestellungen"), section: "primary", svg: "Bestellungen" },

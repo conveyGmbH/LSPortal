@@ -21,6 +21,7 @@
                 dataEvents: getEmptyDefaultValue(SiteEvents.VeranstaltungView.defaultValue),
                 siteeventsdataCombobox: null,
                 siteeventsdata: null,
+                mailingtrackingrestriction: null,
                 count: 0,
                 veranstaltungId: 0,
                 fairmandantId: 0,
@@ -351,6 +352,12 @@
                     that.changeEvent();
                     Log.ret(Log.l.trace);
                 },
+                clickMailTracking: function (event) {
+                    Log.call(Log.l.trace, "SiteEvents.Controller.");
+                    AppData.setRestriction("ExhibitorMailingStatus", that.binding.mailingtrackingrestriction);
+                    Application.navigateById("mailingTracking", event);
+                    Log.ret(Log.l.trace);
+                },
                 clickDelete: function (event) {
                     Log.call(Log.l.trace, "SiteEvents.Controller.");
                     var confirmTitle = getResourceText("siteevents.eventdelete");
@@ -525,6 +532,7 @@
                                     that.actualSelectedItem = item.data;
                                     if (item.data && item.data.VeranstaltungVIEWID) {
                                         var newRecId = item.data.VeranstaltungVIEWID;
+                                        AppData.setRecordId("ExhibitorMailingStatus", item.data.FairMandantVeranstID);
                                         that.binding.veranstaltungId = item.data.VeranstaltungVIEWID;
                                         Log.print(Log.l.trace, "newRecId:" + newRecId + " curRecId:" + that.curRecId);
                                         if (newRecId !== 0 && newRecId !== that.curRecId) {

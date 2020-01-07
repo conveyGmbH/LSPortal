@@ -224,6 +224,10 @@
                         {
                             LizenzFlag : 1
                         });
+                }).then(function() {
+                    Log.print(Log.l.trace, "Start.Controller. getUserData");
+                    AppData.getUserData();
+                    Log.ret(Log.l.trace);
                 });
                 Log.ret(Log.l.trace);
                 return ret;
@@ -415,6 +419,14 @@
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
             }).then(function() {
+                WinJS.Promise.timeout(50).then(function () {
+                    if (AppHeader.controller.binding.userData.IsNoAdminUser) {
+                        var confirmTitle = getResourceText("start.confirmIsAppUser");
+                        alert(confirmTitle);
+                    }
+                });
+                Log.print(Log.l.trace, "IsAppUser: alertbox");
+            }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 return WinJS.Promise.timeout(Application.pageframe.splashScreenDone ? 0 : 1000);
             }).then(function () {
@@ -434,7 +446,21 @@
                     }
                 });
                 Log.print(Log.l.trace, "Splash screen vanished");
+            })/*.then(function() {
+                WinJS.Promise.timeout(50).then(function () {
+                    if (AppHeader.controller.binding.userData.IsNoAdminUser) {
+                        var confirmTitle = getResourceText("start.confirmIsAppUser");
+                        confirm(confirmTitle, function (result) {
+                            if (result) {
+
+                            } else {
+                                Log.print(Log.l.trace, "IsAppUser: user choice CANCEL");
+                            }
             });
+                    }
+                });
+            Log.print(Log.l.trace, "Splash screen vanished");
+        })*/;
             Log.ret(Log.l.trace);
         })
     });
