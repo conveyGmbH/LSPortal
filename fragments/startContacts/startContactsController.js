@@ -46,7 +46,7 @@
                             if (json && json.d) {
                                 that.binding.startcontactdata = json.d;
                                 if (typeof AppBar === "object" && AppBar.scope) {
-                                    if (AppBar.scope.binding && AppBar.scope.binding.countContacts === null) {
+                                    if (AppBar.scope.binding && typeof AppBar.scope.binding.countContacts !== "undefined") {
                                         AppBar.scope.binding.countContacts = that.binding.startcontactdata.AnzKontakte;
                                     }
                                 }
