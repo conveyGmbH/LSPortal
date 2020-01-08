@@ -29,6 +29,7 @@
                 disableEditEvent: NavigationBar.isPageDisabled("event"),
                 comment: getResourceText("info.comment"),
                 dataLicence: null,
+                countContacts: true,
                 dataLicenceUser: getEmptyDefaultValue(Start.licenceUserView.defaultValue),
                 // add dynamic scripts to page element, src is either a file or inline text:
             }, commandList]);

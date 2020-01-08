@@ -861,11 +861,12 @@
     "mailingtrackinglist.title" : "Mails",
     "mailingtrackinglist.count" : "Anzahl",
 
-    "startnodata.text1" : "",
-    "startnodata.text2" : "",
-    "startnodata.text3" : "",
-    "startnodata.text4" : "",
-    "startnodata.text5" : "",
-    "startnodata.text6" : ""
+    "startnodata.text1" : "Es wurde noch kein Kontakt erfasst.",
+    "startnodata.text2" : "Um das Dashboard zu sehen, sammeln Sie neue Kontakte mit LeadSuccess und stellen Sie sicher dass Ihr/e Gerät/e eine aktive Internetverbindung haben, um die Synchronisierung zu starten.",
+    "startnodata.text3" : "Sie können unsere Bedienungsanleitungen hier herunterladen:",
+    "startnodata.text4" : "https://secure.convey.de/publish/LeadSuccess/DocMailing/Benutzeranleitung_LeadSuccess_Portal_DE.pdf",
+    "startnodata.text5" : "https://secure.convey.de/publish/LeadSuccess/DocMailing/Benutzeranleitung_LeadSuccess_App_DE.pdf",
+    "startnodata.text6" : "Benutzeranleitung LeadSuccess Portal",
+    "startnodata.text7" : "Benutzeranleitung LeadSuccess APP"
 
 }			

@@ -854,11 +854,12 @@
     "mailingtrackinglist.title" : "Mails",
     "mailingtrackinglist.count" : "Count",
 
-    "startnodata.text1" : "",
-    "startnodata.text2" : "",
-    "startnodata.text3" : "",
-    "startnodata.text4" : "",
-    "startnodata.text5" : "",
-    "startnodata.text6" : ""
+    "startnodata.text1" : "No contact has been collected yet.",
+    "startnodata.text2" : "To see the dashboard, collect new contacts with LeadSuccess and make sure your device/s have an active internet connection to start the synchronisation.",
+    "startnodata.text3" : "You can download our user guides from here:",
+    "startnodata.text4" : "https://secure.convey.de/publish/LeadSuccess/DocMailing/User_Guide_LeadSuccess_Portal_EN.pdf",
+    "startnodata.text5" : "https://secure.convey.de/publish/LeadSuccess/DocMailing/User_Guide_LeadSuccess_APP_EN.pdf",
+    "startnodata.text6" : "User guide LeadSuccess Portal",
+    "startnodata.text7" : "User guide LeadSuccess APP"
 
 }

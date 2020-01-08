@@ -94,7 +94,7 @@
         { id: "search", group: -7, disabled: false },
         { id: "reporting", group: 8, disabled: false },
         { id: "reportingColumnList", group: 8, disabled: false },
-        { id: "pdfExport", group: 8, disabled: false },
+        //{ id: "pdfExport", group: 8, disabled: false },
         { id: "infodesk", group: -9, disabled: false },
         { id: "info", group: 10, disabled: false },
         { id: "settings", group: 10, disabled: false },

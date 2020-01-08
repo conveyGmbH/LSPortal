@@ -14,7 +14,7 @@
         Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options) {
             Log.call(Log.l.trace, "StartContacts.Controller.");
             Fragments.Controller.apply(this, [fragmentElement, {
-                startcontactdata: {}
+                startcontactdata: getEmptyDefaultValue(StartContacts.mitarbeiterView.defaultValue)
             }, options]);
 
             var that = this;
@@ -45,6 +45,11 @@
                             // mitarbeiterView returns object already parsed from json file in response
                             if (json && json.d) {
                                 that.binding.startcontactdata = json.d;
+                                if (typeof AppBar === "object" && AppBar.scope) {
+                                    if (AppBar.scope.binding && AppBar.scope.binding.countContacts === null) {
+                                        AppBar.scope.binding.countContacts = that.binding.startcontactdata.AnzKontakte;
+                                    }
+                                }
                             }
                             return WinJS.Promise.as();
                         }, function (errorResponse) {
