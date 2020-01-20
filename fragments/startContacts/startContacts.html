@@ -17,7 +17,7 @@
                     </div>
                     <div class="startContact-circle-container">
                     <span class="label win-type-caption center" id="summary" data-win-res="{textContent: 'start.summary'}"></span><br/>
-                    <span class="label win-type-caption center" id="anzkontakte" data-win-bind="textContent: startcontactdata.AnzKontakte"></span><br/>
+                        <span class="label win-type-caption center" id="anzkontakte" data-win-bind="textContent: startcontactdata.AnzKontakte" onclick="AppBar.handleEvent('click', 'clickListAllContacts', event)"></span><br />
                         <span class="label win-type-caption center" id="gridtitlecontacts" data-win-res="{textContent: 'start.gridtitlecontacts'}"></span>
                     </div>
                     <div class="startContact-numbers">
@@ -25,16 +25,18 @@
                             <div id="businesscards">
                                 <img src="../../images/barcode.svg" alt="Barcode" style="width:50px;height:50px;">
                                 <br />
-                                <span data-win-bind="textContent: startcontactdata.AnzBarcode"></span>
+                                <span data-win-bind="textContent: startcontactdata.AnzBarcode" onclick="AppBar.handleEvent('click', 'clickListBarcodeContacts', event)"></span>
                             </div>
                             <div id="barcodes">
                             <img src="../../images/id_card.svg" alt="Barcode" style="width:50px;height:50px;"><br />
-                                <span data-win-bind="textContent: startcontactdata.AnzVisitenkarte"></span>
+                                <span data-win-bind="textContent: startcontactdata.AnzVisitenkarte" onclick="AppBar.handleEvent('click', 'clickListBusinessCardContacts', event)"></span>
+                                <span > / </span>
+                                <span data-win-bind="textContent: startcontactdata.AnzNichtEditierteVK" onclick="AppBar.handleEvent('click', 'clickListBusinessCardNotEditedContacts', event)"></span>
                             </div>
                             <div id="manually">
                                 <img src="../../images/pencil.svg" alt="Barcode" style="width:50px;height:50px;">
                                 <br />
-                                <span data-win-bind="textContent: startcontactdata.AnzManuell"></span>
+                                <span data-win-bind="textContent: startcontactdata.AnzManuell" onclick="AppBar.handleEvent('click', 'clickListManuellContacts', event)"></span>
                             </div>
                         </div>
                     </div>

@@ -71,13 +71,13 @@
                         counter.style.display = "none";
                     }
                     AppData.setErrorMsg(that.binding);
-                    Log.print(Log.l.trace, "calling select LocalEvents.MaildokumentView...");
+                    Log.print(Log.l.trace, "calling select EmployeeGenPWList.employeePWView...");
                     var nextUrl = that.nextUrl;
                     that.nextUrl = null;
                     EmployeeGenPWList.employeePWView.selectNext(function (json) { //json is undefined
                         // this callback will be called asynchronously
                         // when the response is available
-                        Log.print(Log.l.trace, "LocalEvents.MaildokumentView: success!");
+                        Log.print(Log.l.trace, "EmployeeGenPWList.employeePWView: success!");
                         // startContact returns object already parsed from json file in response
                         if (json && json.d && json.d.results && that.employeePWListdata) {
                             that.nextUrl =EmployeeGenPWList.employeePWView.getNextUrl(json);

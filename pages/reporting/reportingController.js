@@ -593,10 +593,10 @@
                         break;
                     case 31:
                         if (AppData.getLanguageId() === 1031) {
-                            dbView = Reporting.KontaktPDF;
+                            //dbView = Reporting.KontaktPDF;
                             fileName = "KontaktemitPDF";
                         } else {
-                            dbView = Reporting.KontaktPDF;
+                            //dbView = Reporting.KontaktPDF;
                             fileName = "ContactswithPDF";
                         }
                         hasRestriction = false;
@@ -681,6 +681,7 @@
                         dbViewTitle = null;
                         restriction = {};
                     }
+                    if (dbView) {
                     if (that.binding.showFilter) {
                         exporter.saveXlsxFromView(dbView,
                             fileName,
@@ -711,6 +712,12 @@
                         }, {}, dbViewTitle, that.templatestr);
                     }
                 } else {
+                    WinJS.Promise.timeout(1000).then(function () {
+                        that.getAudioIdDaten();
+                    }).then(function () {
+                        that.insertExcelFiletoZip();
+                    });
+
                     AppBar.busy = false;
                     AppBar.triggerDisableHandlers();
                 }
@@ -869,10 +876,10 @@
             this.clickEmployeeSlice = clickEmployeeSlice;
 
             var disablePdfExportList = function (disableFlag) {
-                var audioexportbutton = pageElement.querySelector("#audio");
+                //var audioexportbutton = pageElement.querySelector("#audio");
                 var exportbutton = pageElement.querySelector("#exportAll");
 
-                audioexportbutton.disabled = disableFlag;
+                //audioexportbutton.disabled = disableFlag;
                 exportbutton.disabled = disableFlag;
                     }
             this.disablePdfExportList = disablePdfExportList;
@@ -958,7 +965,7 @@
             this.insertExcelFiletoZip = insertExcelFiletoZip;
 
             var getPdfIdDaten = function () {
-                that.pdfzip = null;
+                /*that.pdfzip = null;*/
                 that.pdfIddata =[];
                 that.nextUrl = null;
                 that.curPdfIdx = -1;
@@ -1125,6 +1132,8 @@
                 clickExport: function(event) {
                     Log.call(Log.l.trace, "Reporting.Controller.");
                     if (event && event.currentTarget) {
+                        that.binding.progress.count = 0;
+                        that.binding.progress.max = 0;
                         var exportselection = event.target.value;
                         that.disableFlag = event.target.index;
                         AppBar.busy = true;
@@ -1133,6 +1142,8 @@
                             //return that.templatecall(exportselection);
                         }).then(function() {
                             return that.exportData(exportselection);
+                        }).then(function () {
+                            that.disableReportingList(false);
                         });
                     }
                     Log.ret(Log.l.trace);

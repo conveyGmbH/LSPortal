@@ -18,7 +18,8 @@
             Log.call(Log.l.trace, "UserMessages.Controller.");
             Fragments.Controller.apply(this, [fragmentElement, {
                 recordId: options ? options.recordId : null,
-                newInfo1Flag: 0
+                newInfo1Flag: 0,
+                message: ""
             }]);
             this.messages = null;
 
@@ -123,13 +124,14 @@
             }
             this.resultConverter = resultConverter;
 
-            var loadData = function () {
+            var loadData = function (recordID) {
                 Log.call(Log.l.trace, "UserMessages.");
                 AppData.getMessagesData();
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                     Log.print(Log.l.trace, "calling select Benutzerview...");
-                    return UserMessages.BenutzerView.select(function (json) {
+                    if (recordID) {
+                        return UserMessages.BenutzerNachrichtView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
                         Log.print(Log.l.trace, "Benutzerview: success!");
@@ -142,7 +144,7 @@
                             json.d.results.forEach(function (item, index) {
                                 that.resultConverter(item, index);
                                 // push to that.messages if (item.Info1) is not empty!
-                                if (item.Info1) {
+                                    if (item.InfoText) {
                                     that.messages.push(item);
                                 }
                             });
@@ -152,16 +154,21 @@
                             listView.winControl.itemDataSource = that.messages.dataSource;
                         }
                         Log.print(Log.l.trace, "Infodesk: success!");
-                    }, function (errorResponse) {
+                        },
+                            function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
-                    });
+                            },
+                            { BenutzerID: recordID });
+                    } else {
+                        return WinJS.Promise.as();
+                    }
                 }).then(function () {
                     Log.print(Log.l.trace, "Data loaded");
                     that.cancelPromises();
                     that.refreshPromise = WinJS.Promise.timeout(that.refreshWaitTimeMs).then(function () {
-                        that.loadData();
+                        that.loadData(recordID);
                     });
                 });
                 Log.ret(Log.l.trace);
@@ -169,90 +176,42 @@
             };
             this.loadData = loadData;
 
-
-            var saveData = function (item, complete, error) {
+            var saveData = function (recordId, complete, error) {
                 Log.call(Log.l.trace, "Infodesk.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret;
-                var recordId;
-                if (item && item.data && item.data.BenutzerVIEWID) {
-                    recordId = item.data.BenutzerVIEWID;
-                }
-
                 if (recordId) {
                     AppBar.modified = true;
-                    var dataBenutzer = that.binding.dataBenutzer;
-                    if (item.data) { //!dataBenutzer && 
-                        dataBenutzer = item.data;
-                    }
-                    if (dataBenutzer && AppBar.modified && !AppBar.busy) {
-                        if (dataBenutzer.BenutzerVIEWID || item.data.BenutzerVIEWID) {
-                            ret = UserMessages.BenutzerView.update(function (response) {
+
+                    if (that.binding.message && AppBar.modified && !AppBar.busy) {
+                        /**
+                         * INSERT in BenutzerNachricht_ODataVIEW
+                         * BenutzerID, AbsenderID, EmpfaengerID, evtl. InfoID, InfoText, evtl. SendMAID, SendTS, evtl. ReadMAID, ReadTS
+                         * Beispiel normale Nachricht
+                         * recordID, null, recordID, null, "blabla", null, timestamp von der db, null, null
+                         */
+                        ret = UserMessages.BenutzerNachricht.insert(function (json) {
                                 // called asynchronously if ok
                                 // force reload of userData for Present flag
                                 AppBar.modified = false;
-                                Log.print(Log.l.trace, "benutzerView: update success!");
-                                complete(response);
-                            },
-                            function (errorResponse) {
-                                // called asynchronously if an error occurs
-                                // or server returns response with an error status.
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                                error(errorResponse);
-                            },
-                            item.data.BenutzerVIEWID, dataBenutzer).then(function () {
-                                if (recordId) {
-                                    return that.loadData(recordId);
-                                    /* //load of format relation record data
-                                     AppData.setErrorMsg(that.binding);
-                                     Log.print(Log.l.trace, "calling select benutzerView...");
-                                     return UserMessages.BenutzerView.select(function (json) {
-                                         Log.print(Log.l.trace, "benutzerView: success!");
-                                         if (json && json.d) {
-                                             that.binding.dataBenutzer = json.d.results;
-                                             that.binding.dataBenutzer.forEach(function (item) {
-                                                 that.resultConverter(item);
-                                             });
-                                             var selectedItem = that.messages.getAt(item.index);
-                                             selectedItem.Info1TSRead = that.binding.dataBenutzer[0].Info1TSRead;
-                                             that.messages.setAt(item.index, selectedItem);
-                                         }
+                            /**
+                             * inserttrigger in db für timestamp setzen 
+                             */
+                            Log.print(Log.l.trace, "benutzerView: insert success!");
+                            that.binding.message = "";
                                      }, function (errorResponse) {
-                                         if (errorResponse.status === 404) {
-                                             Log.print(Log.l.trace, "benutzerView: ignore NOT_FOUND error here!");
-                                             //that.setDataBenutzer(getEmptyDefaultValue(Infodesk.benutzerView.defaultValue));
-                                         } else {
-                                             AppData.setErrorMsg(that.binding, errorResponse);
-                                         }
-                                     }, { BenutzerVIEWID: recordId });*/
-                                } else {
-                                    //that.setDataBenutzer(getEmptyDefaultValue(Infodesk.benutzerView.defaultValue));
-                                    return WinJS.Promise.as();
-                                }
-                            });
-                        } /*else if (that.binding.employeeId) {
-                            dataBenutzer.BenutzerVIEWID = that.binding.employeeId;
-                            ret = Infodesk.benutzerView.insert(function (json) {
-                                // called asynchronously if ok
-                                // force reload of userData for Present flag
-                                AppBar.modified = false;
-                                Log.print(Log.l.trace, "benutzerView: insert success!");
-                                if (json && json.d) {
-                                    that.setDataBenutzer(json.d);
-                                }
-                                complete(json);
-                            },
-                            function (errorResponse) {
                                 // called asynchronously if an error occurs
                                 // or server returns response with an error status.
                                 AppData.setErrorMsg(that.binding, errorResponse);
-                                error(errorResponse);
-                            },
-                            dataBenutzer);
-                        }*/
+                            //error(errorResponse);
+                        }, {
+                            BenutzerID: recordId,
+                            EmpfaengerID: recordId,
+                            InfoText: that.binding.message
+                        })/*Lade dann nochmal loaddata die neue nachricht?!*/;
                     } else {
                         ret = new WinJS.Promise.as().then(function () {
-                            complete(dataBenutzer);
+                            //complete(dataBenutzer);
                         });
                     }
                 } else {

@@ -275,6 +275,7 @@
                             var languageID = AppData.getLanguageId();
                             AppData.call("PRC_GetLangText", {
                                 pLanguageID: languageID,
+                                pTextTitle: 'general',
                                 pResourceTypeID: 20004
                             }, function (json) {
                                 Log.print(Log.l.info, "call success! ");

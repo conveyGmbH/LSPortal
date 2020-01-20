@@ -206,7 +206,6 @@
                         pDBSYNCPassword: dataExibitor.DBSYNCPassword,
                         pCustomerID: dataExibitor.CustomerID,
                         pExhibitorCategory: dataExibitor.ExhibitorCategory
-
             }, function (json) {
                         Log.print(Log.l.info, "call success! ");
                         AppBar.busy = false;

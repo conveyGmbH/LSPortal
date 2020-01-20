@@ -395,6 +395,68 @@
                         startCountrysFragmentControl.controller.goToWorld();
                     }
                     Log.ret(Log.l.trace);
+                },
+                clickListAllContacts: function (event) {
+                    Log.call(Log.l.trace, "Start.Controller.");
+                    that.setRestriction({
+                        SHOW_Barcode: null,
+                        SHOW_Visitenkarte: null,
+                        Nachbearbeitet: null
+                    });
+                    AppData.setRecordId("Kontakt", null);
+                    WinJS.Promise.timeout(0).then(function () {
+                        Application.navigateById("contact", event);
+                    });
+                    Log.ret(Log.l.trace);
+                },
+                clickListBusinessCardContacts: function (event) {
+                    Log.call(Log.l.trace, "Start.Controller.");
+                    that.setRestriction({
+                        SHOW_Barcode: null,
+                        SHOW_Visitenkarte: 1
+                    });
+                    AppData.setRecordId("Kontakt", null);
+                    WinJS.Promise.timeout(0).then(function () {
+                        Application.navigateById("contact", event);
+                    });
+                    Log.ret(Log.l.trace);
+                },
+                clickListBusinessCardNotEditedContacts: function (event) {
+                    Log.call(Log.l.trace, "Start.Controller.");
+                    that.setRestriction({
+                        SHOW_Barcode: null,
+                        SHOW_Visitenkarte: 1,
+                        Nachbearbeitet: 1
+                    });
+                    AppData.setRecordId("Kontakt", null);
+                    WinJS.Promise.timeout(0).then(function () {
+                        Application.navigateById("contact", event);
+                    });
+                    Log.ret(Log.l.trace);
+                },
+                clickListBarcodeContacts: function (event) {
+                    Log.call(Log.l.trace, "Start.Controller.");
+                    that.setRestriction({
+                        SHOW_Barcode: 1,
+                        SHOW_Visitenkarte: null
+                    });
+                    AppData.setRecordId("Kontakt", null);
+                    WinJS.Promise.timeout(0).then(function () {
+                        Application.navigateById("contact", event);
+                    });
+                    Log.ret(Log.l.trace);
+                },
+                clickListManuellContacts: function (event) {
+                    Log.call(Log.l.trace, "Start.Controller.");
+                    that.setRestriction({
+                        SHOW_Barcode: "NULL",
+                        SHOW_Visitenkarte: "NULL"
+                    });
+                    AppData.setRecordId("Kontakt", null);
+                    WinJS.Promise.timeout(0).then(function () {
+                        Application.navigateById("contact", event);
+                    });
+                    Log.ret(Log.l.trace);
                 }
             };
 

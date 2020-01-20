@@ -173,10 +173,16 @@
                     var languageID = AppData.getLanguageId();
                     ret = AppData.call("PRC_GetLangText", {
                         pLanguageID: languageID,
+                        pTextTitle: 'login',
                         pResourceTypeID: 20004
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
-                        var myResourceStrings = JSON.parse(json.d.results);
+                        var results = json.d.results;
+                        var myResourceStrings = '';
+                        for (var i = 0; i < results.length; i++) {
+                            myResourceStrings = myResourceStrings + results[i].ResultText + '\n';
+                        }
+                        Log.print(Log.l.trace, "call success! myResourceStrings= " + myResourceStrings);
                     }, function (error) {
                         Log.print(Log.l.error, "call error");
                     }, true);
@@ -275,13 +281,13 @@
                     } else {
                         return WinJS.Promise.as();
                     }
-                }).then(function() {
+                    })/*.then(function () {
                     if (err) {
                         WinJS.Promise.timeout(3000).then(function () {
                             Application.navigateById("login");
                         });
                     }
-                });
+                    })*/;
                 });
                 Log.ret(Log.l.trace);
                 return ret;
