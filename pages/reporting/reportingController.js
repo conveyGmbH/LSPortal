@@ -700,16 +700,23 @@
                             dbViewTitle,
                             that.templatestr);
                     } else {
-                    exporter.saveXlsxFromView(dbView, fileName, function (result) {
+                            exporter.saveXlsxFromView(dbView,
+                                fileName,
+                                function(result) {
                         that.disableReportingList(false);
                         AppBar.busy = false;
                         AppBar.triggerDisableHandlers();
-                    }, function (errorResponse) {
+                                },
+                                function(errorResponse) {
                         that.disableReportingList(false);
                         AppData.setErrorMsg(that.binding, errorResponse);
                         AppBar.busy = false;
                         AppBar.triggerDisableHandlers();
-                        }, {}, dbViewTitle, that.templatestr);
+                                },
+                                {},
+                                dbViewTitle,
+                                that.templatestr);
+                        }
                     }
                 } else {
                     WinJS.Promise.timeout(1000).then(function () {
