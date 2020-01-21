@@ -146,3 +146,6 @@
     margin-bottom: 15px;
     margin-left: 25%;
 }
+.highlight:hover {
+    background-color: #d3d3d3;
+} 
