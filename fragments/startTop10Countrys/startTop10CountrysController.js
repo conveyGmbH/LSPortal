@@ -61,14 +61,12 @@
                     } else {
                         var countryChart = fragmentElement.querySelector("#" + countryChartId);
                         if (countryChart) {
-                            var width = countryChart.clientWidth;
+                            var width = countryChart.clientWidth * 50 / 100;
                             if (that.countryChartWidth !== width) {
                                 that.countryChartWidth = width;
-                                var diameter = width / 2 - 48;
-                                if (diameter < 128) {
-                                    diameter = 128;
-                                } else if (diameter > 250) {
-                                    diameter = 250;
+                                var diameter = width - 48;
+                                if (diameter > 240) {
+                                    diameter = 240;
                                 }
                                 Log.print(Log.l.trace, "diameter=" + diameter);
                                 countryChart.innerHTML = "";
