@@ -111,7 +111,11 @@
                                     }
                                 }
                                 if (answerBarChart.style) {
-                                    answerChart.style.height = (that.answerdata.length * 60 + 48).toString() + "px";
+                                    if (that.answerdata.length === 2) {
+                                        answerChart.style.height = (that.answerdata.length * 60 + 108).toString() + "px";
+                                    } else {
+                                        answerChart.style.height = (that.answerdata.length * 60 + 48).toString() + "px";
+                                    }
                                 }
                                 var seriesColors = [
                                     Colors.tileTextColor
