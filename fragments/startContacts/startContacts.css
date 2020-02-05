@@ -27,7 +27,7 @@
 }
 .contacts-modified {
     float: right;
-    width: calc(37% - 1px);
+    width: calc(30% - 1px);
 }
 .center {
     display: block;
@@ -42,7 +42,7 @@
     margin-top: 1px;
 }
 #summary {
-    margin-top: 50px;
+    margin-top: 38px;
     font-size: 20px;
     font-weight: bolder;
 }
@@ -52,21 +52,21 @@
     font-weight: bolder;
 }
 #businesscards {
-    float: left;
+    float: right;
     margin-top: 13px;
     width: 180px;
     text-align: center;
     font-weight: bolder;
 }
 #barcodes {
-    float: left;
+    float: right;
     margin-top: 20px;
     width: 180px;
     text-align: center;
     font-weight: bolder;
 }
 #manually {
-    float: left;
+    float: right;
     margin-top: 20px;
     width: 180px;
     text-align: center;
