@@ -34,12 +34,6 @@
             this.controller = null;
             Log.ret(Log.l.trace);
         },
-
-        canUnload: function (complete, error) {
-            Log.call(Log.l.trace, fragmentName + ".");
-            
-        },
-
         updateLayout: function (element, viewState, lastViewState) {
 
         }

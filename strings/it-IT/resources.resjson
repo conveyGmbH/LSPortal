@@ -133,7 +133,7 @@
     "start.gridtitlet10user"        : "Primi 10 dipendenti",
     "start.summary"        : "Sondaggio",
     "start.modified"        : "A cura",
-    "start.uneditied"        : "Incompiuto",
+    "start.uneditiedBusinessCards"        : "Incompiuto Biglietto da visita",
     "start.employeechart"        : "Primi 10 dipendenti",
     "start.northamerica"        : "America",
     "start.southamerica"        : "Sudamerica",
@@ -854,11 +854,12 @@
     "mailingtrackinglist.title" : "Mails",
     "mailingtrackinglist.count" : "Numero",
 
-    "startnodata.text1" : "",
-    "startnodata.text2" : "",
-    "startnodata.text3" : "",
-    "startnodata.text4" : "",
-    "startnodata.text5" : "",
-    "startnodata.text6" : ""
+    "startnodata.text1" : "Non è stato ancora raccolto alcun contatto.",
+    "startnodata.text2" : "Per vedere la dashboard, raccogli nuovi contatti con LeadSuccess e/o assicurati che il tuo dispositivo/i abbia una connessione internet attiva per avviare la sincronizzazione.",
+    "startnodata.text3" : "Potete scaricare le nostre guide utente da qui:",
+    "startnodata.text4" : "https://secure.convey.de/publish/LeadSuccess/DocMailing/User_Guide_LeadSuccess_Portal_EN.pdf",
+    "startnodata.text5" : "https://secure.convey.de/publish/LeadSuccess/DocMailing/User_Guide_LeadSuccess_APP_EN.pdf",
+    "startnodata.text6" : "Manuale dell'utente Portale LeadSuccess",
+    "startnodata.text7" : "Manuale dell'utente APP LeadSuccess"
 
 }

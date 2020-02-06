@@ -89,6 +89,7 @@
             var answerResult = null, ei = 0, el = 0;
             var showanswerChart = function (barChartId, bAnimated) {
                 Log.call(Log.l.trace, "StartTop10Users.Controller.");
+                var questionWithMostAnswser = Math.max.apply(Math, answerResult.map(function (answer) { return answer.SumAntwort; }));
                 WinJS.Promise.timeout(0).then(function () {
                     if (!that.answerdata || !that.answerdata.length) {
                         Log.print(Log.l.trace, "extra ignored");
@@ -110,7 +111,11 @@
                                     }
                                 }
                                 if (answerBarChart.style) {
-                                    answerChart.style.height = (that.answerdata.length * 60 + 48).toString() + "px";
+                                    if (that.answerdata.length === 2) {
+                                        answerChart.style.height = (that.answerdata.length * 60 + 108).toString() + "px";
+                                    } else {
+                                        answerChart.style.height = (that.answerdata.length * 60 + 48).toString() + "px";
+                                    }
                                 }
                                 var seriesColors = [
                                     Colors.tileTextColor
@@ -146,7 +151,7 @@
                                         axes: {
                                             yaxis: {
                                                 min: 0,
-                                                tickInterval: 1,
+                                                tickInterval: questionWithMostAnswser > 2000 ? 500 : (questionWithMostAnswser > 100 ? 100 : (questionWithMostAnswser > 50 ? 50 : (questionWithMostAnswser > 20 ? 5 : 1))),
                                                 tickOptions: {
                                                     formatString: '%d'
                                                 }
@@ -166,8 +171,8 @@
                                         highlighter: {
                                             tooltipContentEditor: function (series, seriesIndex, pointIndex, plot) {
                                                 //return that.tooltipformater(plot.data[seriesIndex][pointIndex]);
-                                                var antwort = that.anwsersquestiontext[pointIndex];
-                                                var anzahl = that.anwserssumantwort[pointIndex];
+                                                var antwort = that.answerdata[pointIndex].AntwortText;
+                                                var anzahl = that.answerdata[pointIndex].SumAntwort;
 
                                                 var html = "<div class = 'tooltip'>Antwort : ";
                                                 html += antwort;
@@ -318,6 +323,7 @@
                                                 that.anwsersquestiontext = [];
                                                 that.anwserssumantwort = [];
                                                 var results = json.d.results;
+                                                answerResult = results;
                                                 results.forEach(function (item, index) {
                                                     that.resultAnwserConverter(item, index);
                                                 });

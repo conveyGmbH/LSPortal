@@ -241,22 +241,22 @@
 .view-size-small .start-pie-chart { min-width: 96px; }
 
 #startContactshost.fragmenthost {
-    height: 350px;
+    height: 360px;
 }
 #startCountryshost.fragmenthost {
-    height: 350px;
+    height: 360px;
 }
 #startQuestionshost.fragmenthost {
-    height: 350px;
+    height: 360px;
 }
 #startContactspDhost.fragmenthost {
-    height: 350px;
+    height: 360px;
 }
 #startTop10Countryshost.fragmenthost {
-    height: 350px;
+    height: 360px;
 }
 #startTop10Usershost.fragmenthost {
-    height: 350px;
+    height: 360px;
 }
 .ITbackground {
     margin-top: 4px;

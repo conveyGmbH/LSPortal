@@ -133,7 +133,7 @@
     "start.gridtitlet10user"        : "Top 10 employés",
     "start.summary"        : "Enquête",
     "start.modified"        : "édité",
-    "start.uneditied"        : "Inachevé",
+    "start.uneditiedBusinessCards"        : "Inachevé Carte de visite",
     "start.employeechart"        : "Top 10 employés",
     "start.northamerica"        : "Amérique",
     "start.southamerica"        : "Amérique du Sud",
@@ -854,11 +854,12 @@
     "mailingtrackinglist.title" : "Mails",
     "mailingtrackinglist.count" : "Nombre",
 
-    "startnodata.text1" : "",
-    "startnodata.text2" : "",
-    "startnodata.text3" : "",
-    "startnodata.text4" : "",
-    "startnodata.text5" : "",
-    "startnodata.text6" : ""
+    "startnodata.text1" : "Aucun contact n'a encore été collecté.",
+    "startnodata.text2" : "Pour voir le tableau de bord, collectez les nouveaux contacts avec LeadSuccess et/ou assurez-vous que votre/vos appareil(s) a/ont une connexion internet active pour démarrer la synchronisation.",
+    "startnodata.text3" : "Vous pouvez télécharger nos guides d'utilisation à partir d'ici: ",
+    "startnodata.text4" : "https://secure.convey.de/publish/LeadSuccess/DocMailing/User_Guide_LeadSuccess_Portal_EN.pdf",
+    "startnodata.text5" : "https://secure.convey.de/publish/LeadSuccess/DocMailing/User_Guide_LeadSuccess_APP_EN.pdf",
+    "startnodata.text6" : "Guide de l'utilisateur LeadSuccess Portal",
+    "startnodata.text7" : "Guide de l'utilisateur APP LeadSuccess"
 	
 }

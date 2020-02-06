@@ -72,16 +72,11 @@
                     } else {
                         NavigationBar.disablePage("questionnaire");
                     }
-                    if (AppData._persistentStates.hideSketch) {
-                        NavigationBar.disablePage("sketch");
-                    } else {
-                        // if toggle sketch is on then show sketch even if there is sketch -> Show_KontaktNotiz === null
                         if (contact && contact.SHOW_KontaktNotiz) {
                             NavigationBar.enablePage("sketch");
                         } else {
                             NavigationBar.disablePage("sketch");
                         }
-                    }
                     Log.ret(Log.l.trace);
                 };
 
@@ -829,8 +824,6 @@
             })
     });
 })();
-
-
 
 
 

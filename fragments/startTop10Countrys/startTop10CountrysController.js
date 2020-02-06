@@ -61,14 +61,12 @@
                     } else {
                         var countryChart = fragmentElement.querySelector("#" + countryChartId);
                         if (countryChart) {
-                            var width = countryChart.clientWidth;
+                            var width = countryChart.clientWidth * 50 / 100;
                             if (that.countryChartWidth !== width) {
                                 that.countryChartWidth = width;
-                                var diameter = width / 2 - 48;
-                                if (diameter < 128) {
-                                    diameter = 128;
-                                } else if (diameter > 250) {
-                                    diameter = 250;
+                                var diameter = width - 48;
+                                if (diameter > 240) {
+                                    diameter = 240;
                                 }
                                 Log.print(Log.l.trace, "diameter=" + diameter);
                                 countryChart.innerHTML = "";
@@ -99,6 +97,10 @@
                                             show: true, rendererOptions: {
                                                 numberRows: 10
                                             }, location: 'w', marginLeft: '30px'
+                                        },
+                                        highlighter: {
+                                            formatString: '%s',
+                                            useAxesFormatters: false
                                         }
                                     });
                                     $("#" + countryChartId).unbind("jqplotDataClick");
@@ -159,13 +161,13 @@
                 Log.call(Log.l.trace, "StartTop10Countrys.");
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
-                    return StartTop10Countrys._startTop10CountrysmitarbeiterView.select(function (json) {
+                    return StartTop10Countrys.startTop10CountrysmitarbeiterView.select(function (json) {
                             // this callback will be called asynchronously
                             // when the response is available
                             Log.print(Log.l.trace, "mitarbeiterView: success!");
                             // mitarbeiterView returns object already parsed from json file in response
-                            if (json && json.d && json.d.results && json.d.results.length > 0) {
-                                var results = json.d.results[0];
+                            if (json && json.d) {
+                                var results = json.d;
                                 that.dataCountryTop10Data = results;
                                 }
                             }, function (errorResponse) {

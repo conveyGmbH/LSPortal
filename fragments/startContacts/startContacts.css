@@ -42,7 +42,7 @@
     margin-top: 1px;
 }
 #summary {
-    margin-top: 50px;
+    margin-top: 38px;
     font-size: 20px;
     font-weight: bolder;
 }
@@ -121,6 +121,7 @@
     margin-bottom: 15px;
     margin-left: 25%;
 }
+
 .view-size-bigger .contacts-modified {
     float: left;
     width: calc(100% - 1px);
@@ -145,4 +146,34 @@
     margin-top: 20px;
     margin-bottom: 15px;
     margin-left: 25%;
+}
+.highlight:hover {
+    background-color: #d3d3d3;
+}
+@media only screen and (max-width: 1360px) {
+    .contacts-modified {
+        float: left;
+        width: calc(100% - 1px);
+    }
+
+    #businesscards {
+        width: 33.3%;
+        margin-top: 0px;
+    }
+
+    #barcodes {
+        width: 33.3%;
+        margin-top: 0px;
+    }
+
+    #manually {
+        width: 33.3%;
+        margin-top: 0px;
+    }
+
+    .startContact-circle-container {
+        margin-top: 20px;
+        margin-bottom: 15px;
+        margin-left: 25%;
+    }
 }

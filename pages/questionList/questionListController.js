@@ -463,7 +463,7 @@
                 var ret;
                 AppBar.busy = true;
                 ret = QuestionList.barcodeExportPdfView.select(function (json) {
-                    Log.print(Log.l.trace, "exportKontaktDataView: success!");
+                    Log.print(Log.l.trace, "barcodeExportPdfView: success!");
                     if (json && json.d) {
                         var results = json.d.results[0];
                         var pdfDataraw = results.DocContentDOCCNT1;
@@ -492,7 +492,7 @@
                 var ret;
                 AppBar.busy = true;
                 ret = QuestionList.barcodeExportPdfView.select(function (json) {
-                    Log.print(Log.l.trace, "exportKontaktDataView: success!");
+                    Log.print(Log.l.trace, "barcodeExportPdfView: success!");
                     if (json && json.d && json.d.results) {
                         var results = json.d.results[0];
                         if (!results) {
