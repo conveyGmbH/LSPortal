@@ -28,8 +28,6 @@
 
             var that = this;
 
-            var qrcodeContainer = pageElement.querySelector(".userinfo-qrcode-container");
-
             // ListView control
             var listView = pageElement.querySelector("#employeegenpwlist.listview");
             var progress = null;
@@ -206,10 +204,10 @@
                                                         correctLevel: 0 //QRErrorCorrectLevel.M
                                                     });
                                                     barcodeImage.appendChild(qrcodeViewer);
-                                                    if (qrcodeContainer.childElementCount > 1) {
-                                                        var oldElement = qrcodeContainer.firstElementChild;
+                                                    if (barcodeImage.childElementCount > 1) {
+                                                        var oldElement = barcodeImage.firstElementChild;
                                                         if (oldElement) {
-                                                            qrcodeContainer.removeChild(oldElement);
+                                                            barcodeImage.removeChild(oldElement);
                                                             oldElement.innerHTML = "";
                                                         }
                                                     }
