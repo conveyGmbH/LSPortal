@@ -92,7 +92,7 @@
         },
         _initSpracheView: {
             get: function () {
-                return AppData.getLgntInit("LGNTINITSprache", false, true);
+                return AppData.getLgntInit("LGNTINITSprache", false, false, 20600);
             }
         },
         initSpracheView: {
