@@ -61,14 +61,15 @@
                 var worldmap = fragmentElement.querySelector(".start-map-chart");
                 var contentarea = fragmentElement.querySelector(".contentarea");
                 var worldButtonContainer = fragmentElement.querySelector(".worldbutton");
+
                 if (worldButtonContainer.currentStyle.visibility !== 'hidden') {
                     var heightW = worldmap.clientHeight;
                     var widthW = contentarea.clientHeight - worldButtonContainer.clientHeight;
-                    var marginTop = (widthW - heightW) / 2;
+                    var marginTop = (widthW - heightW) / 2 - 3;
                 } else {
                     var heightW = worldmap.clientHeight;
-                    var widthW = contentarea.clientHeight - worldButtonContainer.clientHeight;
-                    var marginTop = (widthW - heightW) / 2;
+                    var widthW = contentarea.clientHeight + worldButtonContainer.clientHeight;
+                    var marginTop = (widthW - heightW) / 2 - 8;
                 }
                 var marginTopP = marginTop.toString() + "px";
                 worldmap.style.marginTop = marginTopP;
