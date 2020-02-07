@@ -46,6 +46,7 @@
                 ret = WinJS.Promise.timeout(0).then(function () {
                     if (typeof that.controller.worldChart === "function") {
                         that.controller.worldChart(true);
+                        that.controller.marginWorlfmap();
                         that.controller.setWorldbuttonStyle();
                     }
                     that.inResize = 0;

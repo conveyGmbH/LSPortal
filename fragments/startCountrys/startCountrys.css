@@ -25,11 +25,12 @@
 .view-size-medium .worldbutton {
     width: calc(15% - 1px);
 }
-.view-size-medium-small .worldbutton {
+.view-size-medium-small #worldbuttoncontainer {
     display: none;
+    visibility: hidden;
 }
 .start-map-chart {
-    height: 300px !important;
+    height: 250px !important;
 }
 .datamap {
    

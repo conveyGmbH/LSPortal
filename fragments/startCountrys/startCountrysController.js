@@ -57,6 +57,25 @@
             };
             this.isotoInitlandId = isotoInitlandId;
 
+            var marginWorlfmap = function() {
+                var worldmap = fragmentElement.querySelector(".start-map-chart");
+                var contentarea = fragmentElement.querySelector(".contentarea");
+                var worldButtonContainer = fragmentElement.querySelector(".worldbutton");
+                if (worldButtonContainer.currentStyle.visibility !== 'hidden') {
+                    var heightW = worldmap.clientHeight;
+                    var widthW = contentarea.clientHeight - worldButtonContainer.clientHeight;
+                    var marginTop = (widthW - heightW) / 2;
+                } else {
+                    var heightW = worldmap.clientHeight;
+                    var widthW = contentarea.clientHeight - worldButtonContainer.clientHeight;
+                    var marginTop = (widthW - heightW) / 2;
+                }
+                var marginTopP = marginTop.toString() + "px";
+                worldmap.style.marginTop = marginTopP;
+                Log.call(Log.l.trace, "StartCountrys.Controller.");
+            }
+            this.marginWorlfmap = marginWorlfmap;
+
             var setWorldbuttonStyle = function() {
                 Log.call(Log.l.trace, "StartCountrys.Controller.");
                 var worldbutton1 = fragmentElement.querySelector("#worldbutton1");
