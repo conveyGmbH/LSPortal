@@ -61,15 +61,14 @@
                 var worldmap = fragmentElement.querySelector(".start-map-chart");
                 var contentarea = fragmentElement.querySelector(".contentarea");
                 var worldButtonContainer = fragmentElement.querySelector(".worldbutton");
-
                 if (worldButtonContainer.currentStyle.visibility !== 'hidden') {
                     var heightW = worldmap.clientHeight;
                     var widthW = contentarea.clientHeight - worldButtonContainer.clientHeight;
-                    var marginTop = (widthW - heightW) / 2 - 3;
+                    var marginTop = (widthW - heightW) / 2;
                 } else {
                     var heightW = worldmap.clientHeight;
-                    var widthW = contentarea.clientHeight + worldButtonContainer.clientHeight;
-                    var marginTop = (widthW - heightW) / 2 - 8;
+                    var widthW = contentarea.clientHeight - worldButtonContainer.clientHeight;
+                    var marginTop = (widthW - heightW) / 2;
                 }
                 var marginTopP = marginTop.toString() + "px";
                 worldmap.style.marginTop = marginTopP;
@@ -298,14 +297,11 @@
                             that.worldChart(true);
                         }
 
-                    },
-                        function (errorResponse) {
+                    }, function (errorResponse) {
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
                             AppData.setErrorMsg(that.binding, errorResponse);
-                            WinJS.Promise.timeout(5000).then(function () {
-                                Application.navigateById("login");
-                            });
+                        return WinJS.Promise.as();
                     });
                 });
                 Log.ret(Log.l.trace);

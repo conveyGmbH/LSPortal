@@ -77,6 +77,24 @@
             var pdfErfassungsdatum = pageElement.querySelector("#ReportingPDFErfassungsdatum.win-datepicker");
             var modifiedTs = pageElement.querySelector("#ModifiedTs.win-datepicker");
             
+            this.dispose = function () {
+                if (that.audioIddata) {
+                    that.audioIddata = null;
+                }
+                if (that.xlsxblob) {
+                    that.xlsxblob = null;
+                }
+                if (that.templatexlsx) {
+                    that.templatexlsx = null;
+                }
+                if (that.employeedata) {
+                    that.employeedata = null;
+                }
+                if (that.employeedataID) {
+                    that.employeedataID = null;
+                }
+            }
+
             //audio
             var showProgress = function (percent, text, max) {
                 if (that.binding.progress && typeof that.binding.progress === "object") {
@@ -414,7 +432,7 @@
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
-                        that.disablePdfExportList(false);
+                        //that.disablePdfExportList(false);
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, that.pdfIddata, nextUrl);
                 } else if (++that.curAudioIdx < that.audioIddata.length) {
@@ -431,7 +449,7 @@
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
-                        that.disablePdfExportList(false);
+                        //that.disablePdfExportList(false);
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, recordId);
                 } else if (that.audioIddata.length > 0) {
@@ -450,7 +468,7 @@
                     ret = WinJS.Promise.as();
                 } else {
                     Log.print(Log.l.trace, "no data");
-                    that.disablePdfExportList(false);
+                    //that.disablePdfExportList(false);
                     ret = WinJS.Promise.as();
                 }
                 Log.ret(Log.l.trace);
@@ -719,12 +737,13 @@
                         }
                     }
                 } else {
+                    that.disableReportingList(true);
                     WinJS.Promise.timeout(1000).then(function () {
                         that.getAudioIdDaten();
                     }).then(function () {
                         that.insertExcelFiletoZip();
                     });
-
+                    disableReportingList(false);
                     AppBar.busy = false;
                     AppBar.triggerDisableHandlers();
                 }
@@ -882,15 +901,6 @@
             }
             this.clickEmployeeSlice = clickEmployeeSlice;
 
-            var disablePdfExportList = function (disableFlag) {
-                //var audioexportbutton = pageElement.querySelector("#audio");
-                var exportbutton = pageElement.querySelector("#exportAll");
-
-                //audioexportbutton.disabled = disableFlag;
-                exportbutton.disabled = disableFlag;
-                    }
-            this.disablePdfExportList = disablePdfExportList;
-
             var insertExcelFiletoZip = function (event) {
                 Log.call(Log.l.trace, "Reporting.Controller.");
                 that.binding.progress.showOther = true;
@@ -1045,7 +1055,7 @@
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
-                        that.disablePdfExportList(false);
+                        //that.disablePdfExportList(false);
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, null, nextUrl);
                 } else if (++that.curPdfIdx < that.pdfIddata.length) {
@@ -1063,7 +1073,7 @@
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
-                        that.disablePdfExportList(false);
+                        //that.disablePdfExportList(false);
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, recordId);
                 } else if (that.pdfIddata.length >= 0) {
@@ -1081,14 +1091,14 @@
                     }).then(function (blob) {
                         saveAs(blob, "PDFExport.zip");
                         //location.href = "data:application/zip;base64," + pdfData;
-                        that.disablePdfExportList(false);
+                        //that.disablePdfExportList(false);
                         //that.binding.progress.show = null;
                         that.binding.progress.count = that.binding.progress.max;
                     });
                     ret = WinJS.Promise.as();
                 } else {
                     Log.print(Log.l.trace, "no data");
-                    that.disablePdfExportList(false);
+                    //that.disablePdfExportList(false);
                     ret = WinJS.Promise.as();
                 }
                 Log.ret(Log.l.trace);
@@ -1149,8 +1159,6 @@
                             //return that.templatecall(exportselection);
                         }).then(function() {
                             return that.exportData(exportselection);
-                        }).then(function () {
-                            that.disableReportingList(false);
                         });
                     }
                     Log.ret(Log.l.trace);
@@ -1158,7 +1166,7 @@
                 clickExportAudio: function (event) {
                     Log.call(Log.l.trace, "Reporting.Controller.");
                     that.getAudioIdDaten();
-                    that.disablePdfExportList(true);
+                    //that.disablePdfExportList(true);
                     Log.ret(Log.l.trace);
                 },
                 clickExportAll: function (event) {
@@ -1172,7 +1180,7 @@
                         that.disableFlag = event.target.index;
                         AppBar.busy = true;
                         AppBar.triggerDisableHandlers();
-                        that.disablePdfExportList(true);
+                       // that.disablePdfExportList(true);
 
                     }
 
@@ -1180,6 +1188,8 @@
                         that.getAudioIdDaten();
                     }).then(function () {
                                 that.insertExcelFiletoZip();
+                    }).then(function() {
+
                             });
                     Log.ret(Log.l.trace);
                 },

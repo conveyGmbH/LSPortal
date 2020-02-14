@@ -212,9 +212,6 @@
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
                             AppData.setErrorMsg(that.binding, errorResponse);
-                            WinJS.Promise.timeout(5000).then(function () {
-                                Application.navigateById("login");
-                            });
                         });
                 });
                 Log.ret(Log.l.trace);

@@ -100,9 +100,8 @@
                         return false;
                     }
                 };
-
+                var newRow, row, c, key, attribTypeId, dateString, milliseconds, date, year, month, day, hour, minute;
                 for (var r = 0; r < rowCount; r++) {
-                    var newRow, row, c, key, attribTypeId, dateString, milliseconds, date, year, month, day, hour, minute;
                     row = results[r];
                     if (typeof row.KontaktVIEWID !== "undefined" && row.KontaktVIEWID === -1 || row.KontaktVIEWID === -2) {
                         newRow = new XElement(S.row);

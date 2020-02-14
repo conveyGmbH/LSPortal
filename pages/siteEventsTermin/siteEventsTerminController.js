@@ -60,7 +60,7 @@
                         pStartDate: that.binding.dataTermin.StartDatum,
                         pEndDate: that.binding.dataTermin.EndDatum,
                         pFairVeranstalterID: that.binding.dataTermin.FairVeranstalterID,
-                        pFairLocationID: 1,
+                        pFairLocationID: null,
                         pMailBCC: "",
                         pMailFrom: "",
                         pMailReplyTo: ""
