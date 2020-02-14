@@ -58,21 +58,16 @@
             this.isotoInitlandId = isotoInitlandId;
 
             var marginWorlfmap = function() {
+                Log.call(Log.l.trace, "StartCountrys.Controller.");
                 var worldmap = fragmentElement.querySelector(".start-map-chart");
                 var contentarea = fragmentElement.querySelector(".contentarea");
                 var worldButtonContainer = fragmentElement.querySelector(".worldbutton");
-                if (worldButtonContainer.currentStyle.visibility !== 'hidden') {
                     var heightW = worldmap.clientHeight;
                     var widthW = contentarea.clientHeight - worldButtonContainer.clientHeight;
                     var marginTop = (widthW - heightW) / 2;
-                } else {
-                    var heightW = worldmap.clientHeight;
-                    var widthW = contentarea.clientHeight - worldButtonContainer.clientHeight;
-                    var marginTop = (widthW - heightW) / 2;
-                }
                 var marginTopP = marginTop.toString() + "px";
                 worldmap.style.marginTop = marginTopP;
-                Log.call(Log.l.trace, "StartCountrys.Controller.");
+                Log.ret(Log.l.trace);
             }
             this.marginWorlfmap = marginWorlfmap;
 
@@ -92,9 +87,8 @@
                     worldbutton3.style.width = objwi2 + "px";
                     worldbutton4.style.width = objwi2 + "px";
                     worldbutton5.style.width = objwi2 + "px";
-                    Log.call(Log.l.trace, "StartCountrys.Controller.");
                 }
-
+                Log.ret(Log.l.trace);
             }
             this.setWorldbuttonStyle = setWorldbuttonStyle;
 
