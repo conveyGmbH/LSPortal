@@ -6,7 +6,7 @@
 /// <reference path="~/www/lib/convey/scripts/appbar.js" />
 /// <reference path="~/www/lib/convey/scripts/pageController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
-/// <reference path="~/www/pages/mailingList/mailingListService.js" />
+/// <reference path="~/www/pages/mailingTrackingList/mailingTrackingListService.js" />
 
 (function () {
     "use strict";
@@ -75,7 +75,7 @@
                         Log.print(Log.l.trace, "MailingTrackingList.ExhibitorMailingStatusVIView: success!");
                         // startContact returns object already parsed from json file in response
                         if (json && json.d && json.d.results && that.maildocuments) {
-                            that.nextUrl = MailingList.MaildokumentView.getNextUrl(json);
+                            that.nextUrl = MailingTrackingList.ExhibitorMailingStatusVIView.getNextUrl(json);
                             var results = json.d.results;
                             results.forEach(function (item, index) {
                                 that.resultConverter(item, that.binding.count);
