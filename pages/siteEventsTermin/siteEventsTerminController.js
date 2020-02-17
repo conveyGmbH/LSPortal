@@ -6,7 +6,7 @@
 /// <reference path="~/www/lib/convey/scripts/appbar.js" />
 /// <reference path="~/www/lib/convey/scripts/pageController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
-/// <reference path="~/www/pages/info/infoService.js" />
+/// <reference path="~/www/pages/siteEventsTermin/siteEventsTerminService.js" />
 /// <reference path="~/www/lib/jstz/scripts/jstz.js" />
 
 (function () {
@@ -17,11 +17,13 @@
             Application.Controller.apply(this, [pageElement, {
                 restriction: getEmptyDefaultValue(SiteEventsTermin.defaultRestriction),
                 dataTermin: SiteEventsTermin.defaultRestriction,
+                InitFairVeranstalterItem: { FairVeranstalterID: 0, Name: "" },
                 VeranstaltungTerminID: 0,
                 VeranstaltungName: "",
                 VeranstaltungNameDisplay: ""
             }, commandList]);
             
+            var fairVeranstalter = pageElement.querySelector("#FairVeranstalter");
             this.binding.dataTermin.StartDatum = new Date();
             this.binding.dataTermin.EndDatum = new Date();
 
@@ -49,7 +51,7 @@
                 //var dataEvent = that.binding.eventData;
                 that.binding.dataTermin.StartDatum = getDateIsoString(that.binding.dataTermin.StartDatum);
                 that.binding.dataTermin.EndDatum = getDateIsoString(that.binding.dataTermin.EndDatum);
-                that.binding.dataTermin.FairVeranstalterID = 1; // nur auf deimos 
+                //that.binding.dataTermin.FairVeranstalterID = 1; // nur auf deimos 
                 //var dataTermin = getExibitorData();
                 Log.call(Log.l.trace, "SiteEventsTermin.Controller.");
                 AppData.setErrorMsg(that.binding);
@@ -60,7 +62,7 @@
                         pStartDate: that.binding.dataTermin.StartDatum,
                         pEndDate: that.binding.dataTermin.EndDatum,
                         pFairVeranstalterID: that.binding.dataTermin.FairVeranstalterID,
-                        pFairLocationID: null,
+                        pFairLocationID: 0,
                         pMailBCC: "",
                         pMailFrom: "",
                         pMailReplyTo: ""
@@ -133,20 +135,21 @@
                 AppData.setErrorMsg(that.binding);
                 var ret = WinJS.Promise.as().then(function () {
                     Log.print(Log.l.trace, "calling select MaildokumentView...");
-                    return SiteEventsTermin.VeranstaltungTerminView.select(function (json) {
-                        Log.print(Log.l.trace, "MaildokumentView: success!");
+                    return SiteEventsTermin.FairVeranstalterView.select(function (json) {
+                        Log.print(Log.l.trace, "FairVeranstalterView: success!");
+                        /*if (!that.employees || !that.employees.length) {
+                            that.employees = new WinJS.Binding.List([Search.employeeView.defaultValue]);*/
                         if (json && json.d && json.d.results) {
                             // store result for next use
-                            var result = json.d.results[0];
-                            that.binding.VeranstaltungName = "";
-                            that.binding.VeranstaltungNameDisplay = "";
+                            var result = json.d.results;
+                            if (fairVeranstalter && fairVeranstalter.winControl) {
+                                fairVeranstalter.winControl.data = new WinJS.Binding.List(result);
+                            }
                         }
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
-                    }, {
-                         VeranstaltungTerminVIEWID: that.binding.VeranstaltungTerminID
                     });
                 });
                 return ret;
@@ -154,6 +157,9 @@
             this.loadData = loadData;
 
             that.processAll().then(function () {
+                Log.print(Log.l.trace, "Binding wireup page complete");
+                return that.loadData();
+            }).then(function () {
                 AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Binding wireup page complete");
             }).then(function () {

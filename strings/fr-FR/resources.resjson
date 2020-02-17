@@ -44,6 +44,8 @@
 	"command.resetRestriction" : "Supprimer",
     "command.copyQuestionnaire" : "Copie",
     "command.exportAudio" : "Exporter l'audio",
+    "command.newTermin"     : "Créer un rendez-vous",
+    "command.mailTracking"  : "Mailtracking",
 
     "tooltip.backward"      : "Page présédente",
     "tooltip.edit"          : "Modifier le contact en cours",
@@ -96,6 +98,8 @@
     "tooltip.newMandant": "Nouveau client", 
     "tooltip.updateMandant": "Sauver", 
     "tooltip.newLicense": "Nouvelle licence",
+    "tooltip.newTermin"     : "Termin anlegen",
+    "tooltip.mailTracking"  : "Mailtracking",
 
     "start.title"           : "Accueil",
     "start.comment"         : "Utilisez les boutons sur cette page pour accéder à d'autres pages!",
@@ -526,6 +530,7 @@
 	"event.dbSyncLogin"     : "DBSYNCLogin",
 	"event.dbSyncPassword"  : "DBSYNCPassword",
 	"event.serverList"      : "Serverlist",
+    "event.FairVeranstalter" : "Organisateur",
 
 	"optQuestionList.title"   : "En option Questions/Réponses",
     "optQuestionList.count"   : "Nombre",

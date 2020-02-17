@@ -7,6 +7,23 @@
     "use strict";
 
     WinJS.Namespace.define("SiteEventsTermin", {
+        _FairVeranstalterView: {
+            get: function () {
+                return AppData.getFormatView("FairVeranstalter", 20579);
+            }
+        },
+        FairVeranstalterView: {
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, "ServicepartnerEventList.");
+                var ret = SiteEventsTermin._FairVeranstalterView.select(complete,
+                    error,
+                    restriction,
+                    { ordered: true });
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+        },
         _VeranstaltungView: {
             get: function() {
                 return AppData.getFormatView("Veranstaltung", 20564);
