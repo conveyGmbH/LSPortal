@@ -428,7 +428,7 @@
                             that.nextUrl = Reporting.exportAudioDataView.getNextUrl(json);
                             that.audioIddata = json.d.results;
                         }
-                        that.getNextPdfData();
+                        that.getNextAudioData();
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
@@ -691,7 +691,7 @@
                     var exporter = new ExportXlsx.ExporterClass(that.binding.progress);/*that.binding.progress*/
                     //}
                     //exporter.showProgress(0);
-                    that.disableReportingList(true);
+                    //hat.disableReportingList(true);
                     if (!restriction) {
                         restriction = that.setRestriction();
                     }
@@ -737,17 +737,18 @@
                         }
                     }
                 } else {
-                    that.disableReportingList(true);
+                    //that.disableReportingList(true);
                     WinJS.Promise.timeout(1000).then(function () {
                         that.getAudioIdDaten();
                     }).then(function () {
                         that.insertExcelFiletoZip();
                     });
-                    disableReportingList(false);
+                    //disableReportingList(false);
                     AppBar.busy = false;
                     AppBar.triggerDisableHandlers();
                 }
                 Log.ret(Log.l.trace);
+               // return WinJS.Promise.as();
             }
             that.exportData = exportData;
 
@@ -1094,11 +1095,19 @@
                         //that.disablePdfExportList(false);
                         //that.binding.progress.show = null;
                         that.binding.progress.count = that.binding.progress.max;
+                    }).then(function() {
+                        var reportingListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("ReportingList"));
+                        if (reportingListFragmentControl && reportingListFragmentControl.controller) {
+                            reportingListFragmentControl.controller.disableList(false);
+                        }
                     });
                     ret = WinJS.Promise.as();
                 } else {
                     Log.print(Log.l.trace, "no data");
-                    //that.disablePdfExportList(false);
+                    var reportingListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("ReportingList"));
+                    if (reportingListFragmentControl && reportingListFragmentControl.controller) {
+                        reportingListFragmentControl.controller.disableList(false);
+                    }
                     ret = WinJS.Promise.as();
                 }
                 Log.ret(Log.l.trace);
@@ -1155,9 +1164,11 @@
                         that.disableFlag = event.target.index;
                         AppBar.busy = true;
                         AppBar.triggerDisableHandlers();
+                        var reportingListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("ReportingList"));
+                        if (reportingListFragmentControl && reportingListFragmentControl.controller) {
+                            reportingListFragmentControl.controller.disableList(true);
+                        }
                         WinJS.Promise.timeout(0).then(function () {
-                            //return that.templatecall(exportselection);
-                        }).then(function() {
                             return that.exportData(exportselection);
                         });
                     }
