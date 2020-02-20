@@ -60,7 +60,7 @@
         defaultRestriction: {
             VeranstaltungName: "",
             VeranstaltungNameDisplay: "",
-            FairVeranstalterID: 1, //deimos muss dann angepasst werden
+            FairVeranstalterVIEWID: 0, //deimos muss dann angepasst werden
             StartDatum: null,
             EndDatum: null
         }

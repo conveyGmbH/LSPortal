@@ -55,13 +55,13 @@
                 //var dataTermin = getExibitorData();
                 Log.call(Log.l.trace, "SiteEventsTermin.Controller.");
                 AppData.setErrorMsg(that.binding);
-                AppData.call("PRC_CreateVATerminRT",
+                AppData.call("PRC_CreateVATerminPortal",
                     {
                         pShortName: that.binding.VeranstaltungName,
                         pDisplayName: that.binding.VeranstaltungNameDisplay,
                         pStartDate: that.binding.dataTermin.StartDatum,
                         pEndDate: that.binding.dataTermin.EndDatum,
-                        pFairVeranstalterID: that.binding.dataTermin.FairVeranstalterID,
+                        pFairVeranstalterID: parseInt(that.binding.dataTermin.FairVeranstalterVIEWID),
                         pFairLocationID: 0,
                         pMailBCC: "",
                         pMailFrom: "",
@@ -123,7 +123,7 @@
                     }
                 },
                 clickSave: function () {
-                    if (that.binding.VeranstaltungName && that.binding.dataTermin.FairVeranstalterID) {
+                    if (that.binding.VeranstaltungName && parseInt(that.binding.dataTermin.FairVeranstalterVIEWID)) {
                         return false;
                     } else {
                         return true;
@@ -145,6 +145,8 @@
                             if (fairVeranstalter && fairVeranstalter.winControl) {
                                 fairVeranstalter.winControl.data = new WinJS.Binding.List(result);
                             }
+                            that.binding.dataTermin.FairVeranstalterVIEWID =
+                                result[result.length - 1].FairVeranstalterVIEWID;
                         }
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
