@@ -468,7 +468,7 @@
     "label.event"           : "Événement",
     "label.questiongroup"   : "Groupe de questions",
     "label.employee"        : "Comptes utilisateurs",
-    "label.reporting"       : "Excel Exports",
+    "label.reporting"       : "Exports",
     "label.reportingColumnList"       : "Options",
     "label.skills"          : "Capacités",
     "label.skillentry"      : "entrer une capacité",
@@ -564,7 +564,7 @@
     "questionList.off"      : "Off",
     "questionList.textarea" : "S'il vous plaît entrer votre commentaire ici",
 
-    "reporting.titleExcel"  : "Excel Export",
+    "reporting.titleExcel"  : "Exports",
     "reporting.titleOther"  : "Autres exportations",
     "reporting.with"        : "Excel export with title",
     "reporting.without"     : "Excel export without title",

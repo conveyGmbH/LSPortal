@@ -468,7 +468,7 @@
     "label.event"           : "Evento",
     "label.questiongroup"   : "Gruppo domande",
     "label.employee"        : "Utenti",
-    "label.reporting"       : "Excel Exports",
+    "label.reporting"       : "Exports",
     "label.reportingColumnList"       : "Opzioni",
     "label.skills"          : "Ruolo",
     "label.skillentry"      : "Immetti ruolo",
@@ -564,7 +564,7 @@
     "questionList.off"      : "Spento",
     "questionList.textarea" : "Inserite eventuali commenti in questo spazio",
 
-    "reporting.titleExcel"  : "Esportazione Excel",
+    "reporting.titleExcel"  : "Esportazione",
     "reporting.titleOther"  : "Altre esportazioni",
     "reporting.with"        : "Excel export con titolo",
     "reporting.without"     : "Excel export senza titolo",
