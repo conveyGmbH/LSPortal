@@ -225,6 +225,7 @@
                                         if (curPageId === "clientManagement") {
                                                 AppBar.scope.binding.saveFlag = true;
                                                 if (typeof AppBar.scope.loadData === "function") {
+                                                    AppData.setRecordId("FairMandantVIEW_20582", that.binding.clientId);
                                                     AppBar.scope.loadData(that.binding.clientId);
                                                 } else {
                                                     Application.navigateById("clientManagement");
