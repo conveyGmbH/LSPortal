@@ -151,7 +151,7 @@
                 that.binding.restriction.NameField2ID = parseInt(savedRestriction.NameField2ID);
                 that.binding.restriction.NameField3ID = parseInt(savedRestriction.NameField3ID);
                 that.binding.restriction.NameField4ID = parseInt(savedRestriction.NameField4ID);
-                if (savedRestriction && AppBar.modified && !AppBar.busy) {
+                if (savedRestriction && !AppBar.busy) { /*AppBar.modified &&*/
                     var recordId = savedRestriction.PDFExportParamVIEWID;
                     if (recordId) {
                         AppBar.busy = true;
@@ -231,7 +231,11 @@
                 },
                 clickSave: function (event) {
                     Log.call(Log.l.trace, "ReportingColumnList.Controller.");
-                    Application.navigateById("Reporting");
+                    //Application.navigateById("Reporting");
+                    that.saveData(function(response) {},
+                        function (errorResponse) {
+                            Log.print(Log.l.error, "error saving employee");
+                        });
                     Log.ret(Log.l.trace);
                 },
                 onSelectionChanged: function (eventInfo) {
