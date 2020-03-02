@@ -64,6 +64,14 @@
             };
             this.background = background;
 
+            var getRecordId = function () {
+                Log.call(Log.l.trace, "ClientManagement.Controller.");
+                that.binding.recordID = AppData.getRecordId("FairMandantVIEW_20582");
+                Log.ret(Log.l.trace, that.binding.recordID);
+                return that.binding.recordID;
+            }
+            this.getRecordId = getRecordId;
+
             var getDateObject = function (dateData) {
                 var ret;
                 if (dateData) {
@@ -223,7 +231,7 @@
                         Log.print(Log.l.info, "call success! ");
                         that.binding.newLicensesShowFlag = false;
                         that.binding.newLicensesdata = getEmptyDefaultValue(ClientManagementLicenses.mandantTempLizenzView.defaultValue);
-                        that.loadData();
+                        that.loadData(getRecordId());
                         }, function (errorResponse) {
                         Log.print(Log.l.error, "call error");
                         AppData.setErrorMsg(that.binding, errorResponse);
@@ -235,14 +243,14 @@
                     AppData.setErrorMsg(that.binding);
                     AppData.call("PRC_CreateMandantLizenz", {
                         pMandantTempLizenzID: parseInt(that.binding.dataLicense.MandantTempLizenzVIEWID),
-                        pVeranstaltungID: parseInt(that.binding.dataLicense.VeranstaltungID),
+                        //pVeranstaltungID: parseInt(that.binding.dataLicense.VeranstaltungID),
                         pNumLicenses: parseInt(that.binding.dataLicense.NumLicenses),
                         pInfoText: that.binding.dataLicense.InfoText
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
                         that.binding.editLicensesShowFlag = false;
                         that.binding.dataLicense = getEmptyDefaultValue(ClientManagementLicenses.mandantTempLizenzView.defaultValue);
-                        that.loadData();
+                        that.loadData(getRecordId());
                     }, function (errorResponse) {
                         Log.print(Log.l.error, "call error");
                         AppData.setErrorMsg(that.binding, errorResponse);
@@ -459,6 +467,9 @@
             var loadData = function (recordId) {
                 Log.call(Log.l.trace, "EmpList.Controller.");
                 that.loading = true;
+                AppData.setRecordId("FairMandantVIEW_20582", recordId);
+                that.binding.newLicensesShowFlag = false;
+                that.binding.editLicensesShowFlag = false;
                 //progress = listView.querySelector(".list-footer .progress");
                 //counter = listView.querySelector(".list-footer .counter");
                 if (progress && progress.style) {
@@ -558,7 +569,7 @@
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.loadData();
+                return that.loadData(getRecordId());
             }).then(function () {
                 Log.print(Log.l.trace, "Record selected");
             });

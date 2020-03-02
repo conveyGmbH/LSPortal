@@ -11,7 +11,7 @@
     min-width: 200px;
     height: 48px;
     overflow: hidden;
-    display: -ms-flexbox;
+   /* display: -ms-flexbox;
     display: -webkit-flex;
-    display: flex;
+    display: flex;*/
 }

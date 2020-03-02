@@ -1534,3 +1534,11 @@ button.win-button {
 .view-size-split .img-footer-container {
     display: none;
 }
+
+.lightthemeMandatory {
+    background-color: lightyellow;
+}
+
+.darkthemeMandatory {
+    background-color: #8b4513;
+}

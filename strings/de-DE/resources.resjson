@@ -469,7 +469,7 @@
     "label.event"           : "Veranstaltung",
     "label.questiongroup"   : "Fragengruppen",
     "label.employee"        : "Benutzerkonten",
-    "label.reporting"       : "Excel Exporte",
+    "label.reporting"       : "Exporte",
     "label.reportingColumnList"       : "Optionen",
     "label.skills"          : "Fähigkeiten",
     "label.skillentry"      : "Fähigkeit eintragen",
@@ -566,7 +566,7 @@
     "questionList.off"      : "Aus",
     "questionList.textarea" : "Bitte geben Sie hier Ihren Kommentar ein ",
 
-    "reporting.titleExcel"  : "Excel Export",
+    "reporting.titleExcel"  : "Exporte",
     "reporting.titleOther"  : "Andere Exporte",
     "reporting.with"        : "Excel Export mit Überschriften",
     "reporting.without"     : "Excel Export ohne Überschriften",

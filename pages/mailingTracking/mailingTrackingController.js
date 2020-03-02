@@ -5,7 +5,7 @@
 /// <reference path="~/www/lib/convey/scripts/dataService.js" />
 /// <reference path="~/www/lib/convey/scripts/appbar.js" />
 /// <reference path="~/www/scripts/generalData.js" />
-/// <reference path="~/www/pages/mailing/mailingService.js" />
+/// <reference path="~/www/pages/mailingTracking/mailingTrackingService.js" />
 
 
 (function () {
