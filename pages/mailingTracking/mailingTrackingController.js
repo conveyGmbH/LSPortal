@@ -157,28 +157,30 @@
             var saveData = function (complete, error) {
                 Log.call(Log.l.trace, "Mailing.Controller.");
                 AppData.setErrorMsg(that.binding);
-                var mailiingTrackingData = that.binding.mailingtrackingdata;
+                if (typeof that.binding.mailingtrackingdata.LanguageSpecID === "string") {
+                    that.binding.mailingtrackingdata.LanguageSpecID = parseInt(that.binding.mailingtrackingdata.LanguageSpecID);
+                }
                 //var TS = new Date(that.binding.senddate);
                 var TS = new Date(that.binding.mailingtrackingdata.ScheduledSendTS);
                 var isoDate = new Date(TS.getTime() - (TS.getTimezoneOffset() * 60000)).toISOString();
-                mailiingTrackingData.ScheduledSendTS = isoDate; 
+                that.binding.mailingtrackingdata.ScheduledSendTS = isoDate;
                 Log.call(Log.l.trace, "Mailing.Controller.");
                 AppData.call("PRC_UpdateExhibitorMailing",
                     {
-                        pExhibitorMailingStatusID: mailiingTrackingData.ExhibitorMailingStatusVIEWID,
-                        pStatus: mailiingTrackingData.Status,
-                        pMailAddress: mailiingTrackingData.UsedMailAddress,
-                        pScheduledSendTS: mailiingTrackingData.ScheduledSendTS,
-                        pSupportComment: mailiingTrackingData.SupportComment,
-                        pLanguageSpecID: mailiingTrackingData.LanguageSpecID,
-                        pExhibitorCategory: mailiingTrackingData.ExhibitorCategory,
+                        pExhibitorMailingStatusID: that.binding.mailingtrackingdata.ExhibitorMailingStatusVIEWID,
+                        pStatus: that.binding.mailingtrackingdata.Status,
+                        pMailAddress: that.binding.mailingtrackingdata.UsedMailAddress,
+                        pScheduledSendTS: that.binding.mailingtrackingdata.ScheduledSendTS,
+                        pSupportComment: that.binding.mailingtrackingdata.SupportComment,
+                        pLanguageSpecID: that.binding.mailingtrackingdata.LanguageSpecID,
+                        pExhibitorCategory: that.binding.mailingtrackingdata.ExhibitorCategory,
                         pTempOnly: that.binding.mailsendoptdata
 
                     },
                     function (json) {
                         Log.print(Log.l.info, "call success! ");
                         AppBar.busy = false;
-                        that.loadData(mailiingTrackingData.ExhibitorMailingStatusVIEWID);
+                        that.loadData(that.binding.mailingtrackingdata.ExhibitorMailingStatusVIEWID);
                     },
                     function (errorResponse) {
                         Log.print(Log.l.error, "call error");
