@@ -180,6 +180,7 @@
                     function (json) {
                         Log.print(Log.l.info, "call success! ");
                         AppBar.busy = false;
+                        AppBar.modified = false;
                         that.loadData(that.binding.mailingtrackingdata.ExhibitorMailingStatusVIEWID);
                     },
                     function (errorResponse) {
