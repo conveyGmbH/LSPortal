@@ -559,6 +559,13 @@
                 },
                 clickNewTermin: function (event) {
                     Log.call(Log.l.trace, "LocalEvents.Controller.");
+                    AppData.setRecordId("VeranstaltungTermin", that.reorderId);
+                    Application.navigateById("siteEventsTermin", event);
+                    Log.ret(Log.l.trace);
+                },
+                clickEventTerminEdit: function () {
+                    Log.call(Log.l.trace, "SiteEvents.Controller.");
+                    AppData.setRecordId("VeranstaltungTermin", that.binding.restriction.VeranstaltungTerminID);
                     Application.navigateById("siteEventsTermin", event);
                     Log.ret(Log.l.trace);
                 },
