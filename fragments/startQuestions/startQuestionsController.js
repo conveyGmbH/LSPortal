@@ -28,6 +28,7 @@
             this.answerdata = null;
             this.anwsersquestiontext = [];
             this.anwserssumantwort = [];
+            this.anwsercount = 0;
 
             var questionList = fragmentElement.querySelector("#questionButtonList.listview");
 
@@ -220,11 +221,21 @@
                     }
                     if (item.AntwortText) {
                         var count = item.AntwortText.length;
-                        if (count > 9) {
-                            var ename = item.AntwortText.slice(0, 9);
-                            that.anwsersquestiontext.push(ename + "..");
+                        var ename;
+                        if (that.anwsercount <= 4) {
+                            if (count > 15) {
+                                ename = item.AntwortText.slice(0, 15);
+                                that.anwsersquestiontext.push(ename + "..");
+                            } else {
+                                that.anwsersquestiontext.push(item.AntwortText);
+                            }
                         } else {
-                            that.anwsersquestiontext.push(item.AntwortText);
+                            if (count > 9) {
+                                ename = item.AntwortText.slice(0, 9);
+                                that.anwsersquestiontext.push(ename + "..");
+                            } else {
+                                that.anwsersquestiontext.push(item.AntwortText);
+                          }
                         }
                     }
                     
@@ -323,6 +334,7 @@
                                                 that.anwsersquestiontext = [];
                                                 that.anwserssumantwort = [];
                                                 var results = json.d.results;
+                                                that.anwsercount = results.length;
                                                 answerResult = results;
                                                 results.forEach(function (item, index) {
                                                     that.resultAnwserConverter(item, index);
