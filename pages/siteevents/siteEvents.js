@@ -50,7 +50,7 @@
                 { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" },
                 { id: "clickEventTerminEdit", label: getResourceText("command.terminedit"), tooltip: getResourceText("tooltip.terminedit"), section: "primary", svg: "Terminoptions" },
                 { id: "clickMailTracking", label: getResourceText("command.mailTracking"), tooltip: getResourceText("tooltip.mailTracking"), section: "primary", svg: "mails" },
-                { id: "clickNewTermin", label: getResourceText("command.newTermin"), tooltip: getResourceText("tooltip.newTermin"), section: "primary", svg: "plus" },
+                { id: "clickNewTermin", label: getResourceText("command.newTermin"), tooltip: getResourceText("tooltip.newTermin"), section: "primary", svg: "terminAnlegen" },
                 { id: "clickNew", label: getResourceText("command.new"), tooltip: getResourceText("tooltip.newExhibitor"), section: "primary", svg: "plus" },
                 { id: "clickReorder", label: getResourceText("command.new"), tooltip: getResourceText("tooltip.newNachbestellungen"), section: "primary", svg: "Bestellungen" },
                 { id: "clickChange", label: getResourceText("command.ok"), tooltip: getResourceText("tooltip.eventchange"), section: "primary", svg: "VA_wechsel" },

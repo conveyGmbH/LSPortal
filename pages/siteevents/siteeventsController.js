@@ -865,6 +865,7 @@
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
+                            if (listView && typeof listView !== 'undefined') {
                         progress = listView.querySelector(".list-footer .progress");
                         counter = listView.querySelector(".list-footer .counter");
                         if (progress && progress.style) {
@@ -873,9 +874,9 @@
                         if (counter && counter.style) {
                             counter.style.display = "inline";
                         }
+                            }
                         that.loading = false;
-                    }, that.binding.restriction
-                    );
+                        }, that.binding.restriction);
                 });
                 } else {
                     ret = new WinJS.Promise.as();
