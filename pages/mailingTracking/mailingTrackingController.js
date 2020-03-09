@@ -187,6 +187,7 @@
                         AppBar.busy = false;
                         AppData.setErrorMsg(that.binding, errorResponse);
                     });
+				Log.ret(Log.l.trace);
             };
             this.saveData = saveData;
             
