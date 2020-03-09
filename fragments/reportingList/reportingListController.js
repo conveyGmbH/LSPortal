@@ -71,10 +71,10 @@
 
             var resultConverter = function (item, index) {
                 item.index = index;
-                if (item.OLELetterID === 32) {
-                    Log.print(Log.l.trace, "OLELetterID 32 blocked!");
-                } else {
+                if (item.OLELetterID) {
                     that.reportingItem.push(item);
+                } else {
+                    Log.print(Log.l.trace, "OLELetterID 32 blocked!");
                 }
                
             }
