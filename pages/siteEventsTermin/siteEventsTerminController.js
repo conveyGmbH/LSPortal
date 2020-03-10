@@ -18,7 +18,9 @@
                 restriction: getEmptyDefaultValue(SiteEventsTermin.defaultRestriction),
                 dataTermin: SiteEventsTermin.defaultRestriction,
                 InitFairVeranstalterItem: { FairVeranstalterID: 0, Name: "" },
-                VeranstaltungTerminID: 0
+                VeranstaltungTerminID: 0,
+                VeranstaltungName: "",
+                VeranstaltungNameDisplay: ""
             }, commandList]);
             
             var fairVeranstalter = pageElement.querySelector("#FairVeranstalter");
@@ -41,9 +43,6 @@
                 if (dataTermin.VeranstaltungName === "") {
                     dataTermin.VeranstaltungName = null;
                 }
-                if (dataTermin.DisyplayName === "") {
-                    dataTermin.DisyplayName = null;
-                }
                 return dataTermin;
             }
             this.getExibitorData = getExibitorData;
@@ -56,13 +55,13 @@
                 //var dataTermin = getExibitorData();
                 Log.call(Log.l.trace, "SiteEventsTermin.Controller.");
                 AppData.setErrorMsg(that.binding);
-                AppData.call("PRC_CreateVATerminRT",
+                AppData.call("PRC_CreateVATerminPortal",
                     {
-                        pShortName: that.binding.dataTermin.VeranstaltungName,
-                        pDisplayName: that.binding.dataTermin.DisplayName,
+                        pShortName: that.binding.VeranstaltungName,
+                        pDisplayName: that.binding.VeranstaltungNameDisplay,
                         pStartDate: that.binding.dataTermin.StartDatum,
                         pEndDate: that.binding.dataTermin.EndDatum,
-                        pFairVeranstalterID: that.binding.dataTermin.FairVeranstalterID,
+                        pFairVeranstalterID: parseInt(that.binding.dataTermin.FairVeranstalterVIEWID),
                         pFairLocationID: 0,
                         pMailBCC: "",
                         pMailFrom: "",
@@ -124,40 +123,13 @@
                     }
                 },
                 clickSave: function () {
-                    if (that.binding.VeranstaltungName && that.binding.dataTermin.FairVeranstalterID) {
+                    if (that.binding.VeranstaltungName && parseInt(that.binding.dataTermin.FairVeranstalterVIEWID)) {
                         return false;
                     } else {
                         return true;
                     }
                 }
             }
-
-            var getDateObject = function (dateData) {
-                var ret;
-                if (dateData) {
-                    var dateString = dateData.replace("\/Date(", "").replace(")\/", "");
-                    var milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
-                    ret = new Date(milliseconds).toDateString();
-                    //.toLocaleString('de-DE').substr(0, 10);
-                } else {
-                    ret = "";
-                }
-                return ret;
-            };
-            this.getDateObject = getDateObject;
-
-            var setTerminData = function (terminData) {
-                if (terminData.DisplayName === null) {
-                    that.binding.dataTermin.DisplayName = "";
-                }
-                if (terminData.StartDatum) {
-                    that.binding.dataTermin.StartDatum = that.getDateObject(terminData.StartDatum);
-                }
-                if (terminData.EndDatum) {
-                    that.binding.dataTermin.EndDatum = that.getDateObject(terminData.EndDatum);
-                }
-            }
-            this.setTerminData = setTerminData;
 
             var loadData = function (complete, error) {
                 AppData.setErrorMsg(that.binding);
@@ -173,48 +145,28 @@
                             if (fairVeranstalter && fairVeranstalter.winControl) {
                                 fairVeranstalter.winControl.data = new WinJS.Binding.List(result);
                             }
+                            that.binding.dataTermin.FairVeranstalterVIEWID =
+                                result[result.length - 1].FairVeranstalterVIEWID;
                         }
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
                     });
-                }).then(function () {
-                    if (that.binding.VeranstaltungTerminID !== null) {
-                        Log.print(Log.l.trace, "calling select VeranstaltungView...");
-                        //@nedra:25.09.2015: load the list of FragenView for Combobox
-                        return SiteEventsTermin.VeranstaltungView.select(function (json) {
-                            // this callback will be called asynchronously
-                            // when the response is available
-                            Log.print(Log.l.trace, "VeranstaltungView: success!");
-                            if (json && json.d && json.d.results) {
-                                // Now, we call WinJS.Binding.List to get the bindable list
-                                var result = json.d.results[0];
-                                that.binding.dataTermin = result;
-                                that.setTerminData(that.binding.dataTermin);
-                                fairVeranstalter.disabled = true; 
-                                Log.print(Log.l.trace, "VeranstaltungView: success!");
-                            }
-                        }, function (errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                            }, { VeranstaltungTerminVIEWID: that.binding.VeranstaltungTerminID });
-                    }
                 });
                 return ret;
             }
             this.loadData = loadData;
 
             that.processAll().then(function () {
-                Log.print(Log.l.trace, "getRecordId loaded!");
-                return that.getRecordId();
+                Log.print(Log.l.trace, "Binding wireup page complete");
+                return that.loadData();
             }).then(function () {
                 AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Binding wireup page complete");
             }).then(function () {
-                Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.loadData();
+                that.getRecordId();
+                Log.print(Log.l.trace, "getRecordId loaded!");
             })/*.then(function () {
                 that.loadData();
                 Log.print(Log.l.trace, "loadData loaded!");
