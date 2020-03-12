@@ -805,6 +805,7 @@
                 } else {
                     that.binding.restriction.VeranstaltungTerminID = that.vidID;
                 }
+                if (listView) {
                 progress = listView.querySelector(".list-footer .progress");
                 counter = listView.querySelector(".list-footer .counter");
                 if (progress && progress.style) {
@@ -812,6 +813,7 @@
                 }
                 if (counter && counter.style) {
                     counter.style.display = "none";
+                }
                 }
                 AppData.setErrorMsg(that.binding);
                 var ret = null;

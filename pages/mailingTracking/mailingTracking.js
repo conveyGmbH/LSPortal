@@ -6,7 +6,7 @@
 /// <reference path="~/www/lib/convey/scripts/logging.js" />
 /// <reference path="~/www/lib/convey/scripts/navigator.js" />
 /// <reference path="~/www/lib/convey/scripts/appbar.js" />
-/// <reference path="~/www/pages/event/eventController.js" />
+/// <reference path="~/www/pages/mailingTracking/mailingTrackingController.js" />
 
 (function () {
     "use strict";

@@ -183,9 +183,13 @@
                                         if (curPageId === "siteevents" || curPageId === "siteEventsList" || curPageId === "mailingTypes") {
                                             AppBar.scope.binding.saveFlag = true;
                                             //AppBar.scope.saveData();
+                                            if (AppBar.scope._element &&
+                                                AppBar.scope._element.id === "siteeventsController") {
                                             if (typeof AppBar.scope.loadData === "function") {
                                                 AppBar.scope.loadData(item.data.VeranstaltungTerminVIEWID);
-                                                AppData.setRecordId("VeranstaltungTermin", item.data.VeranstaltungTerminVIEWID);
+                                                    AppData.setRecordId("VeranstaltungTermin",
+                                                        item.data.VeranstaltungTerminVIEWID);
+                                                }
                                             }
                                         } else {
                                             Application.navigateById("siteeventsList");

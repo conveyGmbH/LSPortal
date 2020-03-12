@@ -46,7 +46,7 @@
                                         data-win-bind="value: mailingtrackingdata.Status Binding.Mode.twoway">
                                     <option data-win-bind="value: TITLE; textContent: TITLE"></option>
                                 </select>
-                                <input name="Stadt" class="input_small_right win-textbox" type="text" data-win-bind="value: mailingtrackingdata.UsedMailAddress Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" />
+                                <input name="Stadt" class="input_small_right win-textbox" type="text" data-win-bind="value: mailingtrackingdata.UsedMailAddress Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" data-win-bind-onevent="onkeyup" />
                             </div>
                         </div>
                         <div class="field_line field_line_even">
@@ -63,7 +63,7 @@
                             <div class="field_line field_line_odd">
                                 <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingtracking.schedultedsendtsdate'}"></span>
                                  <span class="label landscape_only" data-win-res="{textContent: 'mailingtracking.schedultedsendtsdate'}"></span>
-                                 <input class="input_field win-textbox" type="text" data-win-bind="value: mailingtrackingdata.ScheduledSendTS Binding.Mode.twoway" />
+                                 <input class="input_field win-textbox" type="text" data-win-bind="value: mailingtrackingdata.ScheduledSendTS Binding.Mode.twoway" data-win-bind-onevent="onkeyup"/>
                             </div>
                         </div>
                     <div class="line-separator"></div>
@@ -94,7 +94,7 @@
                             <textarea class="input_field win-textarea input_text_comment" data-win-bind="value: mailingtrackingdata.SupportComment Binding.Mode.twoway"></textarea>
                     </div>
                     <div class="error-message"
-                         data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
+                         data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg" data-win-bind-onevent="onkeyup"></div>
                 </div>
             </section>
         </div>

@@ -101,6 +101,7 @@
     "tooltip.newLicense": "Nuova licenza",
     "tooltip.newTermin"     : "Termin anlegen",
     "tooltip.mailTracking"  : "Mailtracking",
+    "tooltip.terminedit"  : "Modifica appuntamento",
 
     "start.title"           : "Pagina iniziale",
     "start.comment"         : "Utilizzate i pulsanti su questa pagina per muoversi tra le pagine!",

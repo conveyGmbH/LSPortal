@@ -86,6 +86,7 @@
     "tooltip.save"			    : "Speichern",
 	"tooltip.resetRestriction" : "Filter löschen",
 	"tooltip.copyQuestionnaire" : "Fragebogen übernehmen",
+    "tooltip.terminedit"  : "Editar cita",
 
     "start.title"           : "Startseite",
     "start.comment"         : "Verwende die Schaltflächen auf dieser Seite um auf weitere Seiten zu gehen!",
