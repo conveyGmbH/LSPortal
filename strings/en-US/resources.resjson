@@ -46,6 +46,7 @@
     "command.exportAudio" : "Export Audio",
     "command.newTermin"     : "Create appointment",
     "command.mailTracking"  : "Mailtracking",
+    "command.terminedit"  : "Termin edit",
 
     "tooltip.backward"      : "Browse back",
     "tooltip.edit"          : "Edit current record",

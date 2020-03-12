@@ -46,6 +46,7 @@
     "command.exportAudio" : "Exporter l'audio",
     "command.newTermin"     : "Créer un rendez-vous",
     "command.mailTracking"  : "Mailtracking",
+    "command.terminedit"  : "Date de modification",
 
     "tooltip.backward"      : "Page présédente",
     "tooltip.edit"          : "Modifier le contact en cours",
