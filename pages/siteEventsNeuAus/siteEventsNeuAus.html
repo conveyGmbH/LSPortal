@@ -35,71 +35,6 @@
                             <input id="firmenname" class="input_field win-textbox" type="text" data-win-bind="value: dataExhibitor.FirmenName Binding.Mode.twoway" />
                          </div>
                         <div class="field_line field_line_odd">
-                            <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'siteeventsneuaus.ordernumber'}"></span>
-                            <span class="label win-type-caption portrait_only_quarter" data-win-res="{textContent: 'siteeventsneuaus.customerid'}"></span>
-                            <span class="label win-type-caption portrait_only_half" data-win-res="{textContent: 'siteeventsneuaus.exhibitorcategory'}"></span>
-                            <div class="label landscape_only">
-                                <span class="label landscape_only win-type-ellipsis" data-win-res="{textContent: 'siteeventsneuaus.ordernumber'}"></span><span class="label landscape_only win-type-ellipsis" data-win-res="{textContent: 'siteeventsneuaus.customerid'}"></span><span class="label landscape_only win-type-ellipsis" data-win-res="{textContent: 'siteeventsneuaus.exhibitorcategory'}"></span>
-                            </div>
-                            <!--<div class="input_group">
-                                <input class="input_small_left win-textbox" type="text" data-win-bind="value: dataExhibitor.OrderNumber Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" />
-                                <input class="input_small_right win-textbox" type="text" data-win-bind="value: dataExhibitor.CustomerID Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" />
-                                <select id="exibitorcategory"
-                                        class="input_small_left win-dropdown"
-                                        data-win-control="WinJS.UI.Repeater"
-                                        data-win-bind="value: dataExhibitor.ExhibitorCategory Binding.Mode.twoway">
-                                    <option data-win-bind="value: value; textContent: title" id="eco"></option>
-                                </select>
-                                <span class="input_small_left win-type-subtitle" data-win-bind="textContent: dataExhibitor.OrderNumber; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
-                                <span class="input_small_left win-type-subtitle" data-win-bind="textContent: dataExhibitor.CustomerID; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
-                                <span class="input_small_left win-type-subtitle" data-win-bind="textContent: dataExhibitor.ExhibitorCategory; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
-                            </div>-->
-                            <div class="input_group">
-                                <div class="input_half_left">
-                                    <input class="input_half_left win-textbox" type="text" data-win-bind="value: dataExhibitor.OrderNumber Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" />
-                                    <!--<span class="seperator-slash"> / </span>-->
-                                    <input class="input_half_right win-textbox" type="text" data-win-bind="value: dataExhibitor.CustomerID Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" />
-                                </div>
-                                <div class="input_half_right">
-                                    <select id="exibitorcategory"
-                                            class="input_field_noLabel win-dropdown"
-                                            data-win-control="WinJS.UI.Repeater"
-                                            data-win-bind="value: dataExhibitor.ExhibitorCategory Binding.Mode.twoway">
-                                        <option data-win-bind="value: value; textContent: title" id="eco"></option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="line-separator"></div>
-                        <div class="field_line field_line_odd">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'siteeventsneuaus.dbsynclogin'}"></span>
-                            <span class="label landscape_only win-type-ellipsis" data-win-res="{textContent: 'siteeventsneuaus.dbsynclogin'}"></span>
-                            <input id="dbsynclogin" class="input_field win-textbox" type="text" data-win-bind="value: dataExhibitor.DBSYNCLogin Binding.Mode.twoway" />
-                        </div>
-                        <div class="field_line field_line_even">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'siteeventsneuaus.dbsyncpassword'}"></span>
-                            <span class="label landscape_only win-type-ellipsis" data-win-res="{textContent: 'siteeventsneuaus.dbsyncpassword'}"></span>
-                            <input class="input_field win-textbox" id="dbsyncpassword" type="text" data-win-bind="value: dataExhibitor.DBSYNCPassword Binding.Mode.twoway" />
-                        </div>
-                        <div class="line-separator"></div>
-                        <div class="field_line field_line_odd">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'siteeventsneuaus.standhall'}"></span>
-                            <span class="label landscape_only win-type-ellipsis" data-win-res="{textContent: 'siteeventsneuaus.standhall'}"></span>
-                            <input class="input_field win-textbox" type="text" data-win-bind="value: dataExhibitor.StandHall Binding.Mode.twoway" />
-                        </div>
-                        <div class="line-separator"></div>
-                        <div class="field_line">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'siteeventsneuaus.standno'}"></span>
-                            <span class="label landscape_only win-type-ellipsis" data-win-res="{textContent: 'siteeventsneuaus.standno'}"></span>
-                            <input class="input_field win-textbox" id="StandNo" type="text" data-win-bind="value: dataExhibitor.StandNo Binding.Mode.twoway" />
-                        </div>
-                        <div class="line-separator"></div>
-                        <div class="field_line field_line_odd">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'siteeventsneuaus.loginemail'}"></span>
-                            <span class="label landscape_only" data-win-res="{textContent: 'siteeventsneuaus.loginemail'}"></span>
-                            <input id="loginemail" class="input_field win-textbox" type="text" data-win-bind="value: dataExhibitor.LoginEmail Binding.Mode.twoway" />
-                        </div>
-                        <div class="field_line field_line_even">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'siteeventsneuaus.land'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'siteeventsneuaus.land'}"></span>
                             <select id="InitLandReporting"
@@ -108,6 +43,76 @@
                                     data-win-bind="value: dataExhibitor.LandID Binding.Mode.twoway">
                                 <option data-win-bind="value: INITLandID; textContent: TITLE"></option>
                             </select>
+                            
+                        </div>
+                        <div class="line-separator"></div>
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'siteeventsneuaus.loginemail'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'siteeventsneuaus.loginemail'}"></span>
+                            <input id="loginemail" class="input_field win-textbox" type="text" data-win-bind="value: dataExhibitor.LoginEmail Binding.Mode.twoway" />
+                        </div>
+                        <div class="field_line field_line_even">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'siteeventsneuaus.appuser'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'siteeventsneuaus.appuser'}"></span>
+                            <input class="input_field win-textbox" id="AppUser" type="text" data-win-bind="value: dataExhibitor.AppUser Binding.Mode.twoway" />
+                        </div>
+                        <div class="line-separator"></div>
+                        <div class="field_line field_line_odd" style="overflow-y: hidden">
+                            <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'siteeventsneuaus.standhall'}"></span>
+                            <span class="label win-type-caption portrait_only_half" data-win-res="{textContent: 'siteeventsneuaus.standno'}"></span>
+                            <div class="label landscape_only"><span data-win-res="{textContent: 'siteeventsneuaus.standhall'}"></span> / <span data-win-res="{textContent: 'siteeventsneuaus.standno'}"></span></div>
+                            <div class="input_group">
+                                <input name="Vorname" class="input_half_left win-textbox" type="text" data-win-bind="value: dataExhibitor.StandHall Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" />
+                                <span class="input_small_left" data-win-bind="textContent: dataExhibitor.StandHall; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                                <input class="input_half_right win-textbox" type="text" data-win-bind="value: dataExhibitor.StandNo Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" />
+                                <span class="input_field" data-win-bind="textContent: dataExhibitor.StandNo; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                            </div>
+
+                        </div>
+                        <div class="field_line field_line_odd" style="overflow-y: hidden">
+                            <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'siteeventsneuaus.language'}"></span>
+                            <span class="label win-type-caption portrait_only_half" data-win-res="{textContent: 'siteeventsneuaus.exhibitorcategory'}"></span>
+                            <div class="label landscape_only"><span data-win-res="{textContent: 'siteeventsneuaus.language'}"></span> / <span data-win-res="{textContent: 'siteeventsneuaus.exhibitorcategory'}"></span></div>
+                            <div class="input_group">
+                                <select id="InitSprache"
+                                        class="input_half_left win-dropdown"
+                                        data-win-control="WinJS.UI.Repeater"
+                                        data-win-bind="value: dataExhibitor.INITSpracheID Binding.Mode.twoway">
+                                    <option data-win-bind="value: INITSpracheID; textContent: TITLE"></option>
+                                </select>
+                                <select id="exibitorcategory"
+                                        class="input_half_right win-dropdown"
+                                        data-win-control="WinJS.UI.Repeater"
+                                        data-win-bind="value: dataExhibitor.ExhibitorCategory Binding.Mode.twoway">
+                                    <option data-win-bind="value: value; textContent: title" id="eco"></option>
+                                </select>
+                            </div>
+
+                        </div>
+                        <div class="line-separator"></div>
+                        <div class="field_line field_line_odd" style="overflow-y: hidden">
+                            <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'siteeventsneuaus.ordernumber'}"></span>
+                            <span class="label win-type-caption portrait_only_half" data-win-res="{textContent: 'siteeventsneuaus.customerid'}"></span>
+                            <div class="label landscape_only"><span data-win-res="{textContent: 'siteeventsneuaus.ordernumber'}"></span> / <span data-win-res="{textContent: 'siteeventsneuaus.customerid'}"></span></div>
+                            <div class="input_group">
+                                <input name="Vorname" class="input_half_left win-textbox" type="text" data-win-bind="value: dataExhibitor.OrderNumber Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" />
+                                <span class="input_small_left" data-win-bind="textContent: dataExhibitor.OrderNumber; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                                <input class="input_half_right win-textbox" type="text" data-win-bind="value: dataExhibitor.CustomerID Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" />
+                                <span class="input_field" data-win-bind="textContent: dataExhibitor.CustomerID; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                            </div>
+
+                        </div>
+                        <div class="field_line field_line_even" style="overflow-y: hidden">
+                            <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'siteeventsneuaus.dbsynclogin'}"></span>
+                            <span class="label win-type-caption portrait_only_half" data-win-res="{textContent: 'siteeventsneuaus.dbsyncpassword'}"></span>
+                            <div class="label landscape_only"><span data-win-res="{textContent: 'siteeventsneuaus.dbsynclogin'}"></span> / <span data-win-res="{textContent: 'siteeventsneuaus.dbsyncpassword'}"></span></div>
+                            <div class="input_group">
+                                <input name="Vorname" class="input_half_left win-textbox" type="text" data-win-bind="value: dataExhibitor.DBSYNCLogin Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" />
+                                <span class="input_small_left" data-win-bind="textContent: dataExhibitor.DBSYNCLogin; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                                <input class="input_half_right win-textbox" type="text" data-win-bind="value: dataExhibitor.DBSYNCPassword Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" />
+                                <span class="input_field" data-win-bind="textContent: dataExhibitor.DBSYNCPassword; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                            </div>
+                               
                         </div>
                         <div class="line-separator"></div>
                         <div class="field_line">
@@ -116,22 +121,6 @@
                             <textarea id="infotext" class="input_field win-textbox input_text_comment" type="text" data-win-bind="value: dataExhibitor.InfoText Binding.Mode.twoway"></textarea>
                         </div>
                         <div class="line-separator"></div>
-                        <div class="field_line field_line_odd">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailing.language'}"></span>
-                            <span class="label landscape_only" data-win-res="{textContent: 'mailing.language'}"></span>
-                            <select id="InitSprache"
-                                    class="input_field win-dropdown"
-                                    data-win-control="WinJS.UI.Repeater"
-                                    data-win-bind="value: dataExhibitor.INITSpracheID Binding.Mode.twoway">
-                                <option data-win-bind="value: INITSpracheID; textContent: TITLE"></option>
-                            </select>
-                        </div>
-                        <div class="line-separator"></div>
-                        <div class="field_line">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'siteeventsneuaus.appuser'}"></span>
-                            <span class="label landscape_only" data-win-res="{textContent: 'siteeventsneuaus.appuser'}"></span>
-                            <input class="input_field win-textbox" id="AppUser" type="text" data-win-bind="value: dataExhibitor.AppUser Binding.Mode.twoway" />
-                        </div>
                         <div class="field_line field_line_odd">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'siteeventsneuaus.strasse'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'siteeventsneuaus.strasse'}"></span>
