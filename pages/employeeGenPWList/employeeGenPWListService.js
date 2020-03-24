@@ -9,7 +9,9 @@
     WinJS.Namespace.define("EmployeeGenPWList", {
         _employeePWView: {
             get: function () {
-                return AppData.getFormatView("Mitarbeiter", 20544);
+                var ret = AppData.getFormatView("Mitarbeiter", 20544);
+                ret.maxPageSize = 200;
+                return ret;
             }
         },
         employeePWView: {
