@@ -172,7 +172,7 @@
                                         // Array --> 'Countrykey' : { fillKey : 'Rate of importance'}
                                         data: that.countryKeyData,
                                         geographyConfig: {
-                                            popupOnHover: false,
+                                            popupOnHover: true, /*false*/
                                             highlightOnHover: true,
                                             highlightFillColor: Colors.navigationColor,
                                             highlightBorderColor: hiliBorderColor
