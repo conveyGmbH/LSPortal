@@ -10,12 +10,20 @@
     height: 100px;
 }
 
+.view-size-big #reportingListhost.fragmenthost {
+    height: 350px;
+}
+
+.view-size-bigger #reportingListhost.fragmenthost {
+    height: 350px;
+}
+
 .view-size-medium #reportingListhost.fragmenthost {
-    height: 200px;
+    height: 350px;
 }
 
 .view-size-medium-small #reportingListhost.fragmenthost {
-    height: 300px;
+    height: 350px;
 }
 
 .view-size-small .reportingListhost-line {
@@ -24,7 +32,7 @@
 #exportlist {
     font-size: medium;
 }
-.audioexport-button {
+/*.audioexport-button {
     margin-left: 2.5px;
     margin-right: 2.5px;
     height: 60px;
@@ -33,7 +41,7 @@
     min-width: 150px;
     color: white;
     margin-top: 10px;
-}
+}*/
 
 .audioexport-button:hover {
     border-color: black;
@@ -48,10 +56,10 @@
     height: 120px;
 }
 
-.view-size-medium .button-container {
-    height: 160px;
+/*.view-size-medium .button-container {
+    height: 350px;
 }
 
 .view-size-medium-small .button-container {
-    height: 200px;
-}
+    height: 350px;
+}*/

@@ -484,7 +484,7 @@
                             Log.print(Log.l.trace, "initSpracheView: success!");
                             if (json && json.d && json.d.results) {
                                 var results = json.d.results;
-
+                                results = results.concat({ INITSpracheID: 0, TITLE: "DEFAULT" });
                                 // Now, we call WinJS.Binding.List to get the bindable list
                                 if (initSprache && initSprache.winControl) {
                                     initSprache.winControl.data = new WinJS.Binding.List(results);

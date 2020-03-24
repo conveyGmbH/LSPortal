@@ -76,7 +76,9 @@
             var employeeResult = null, ei = 0, el = 0;
             var showemployeeChart = function (barChartId, bAnimated) {
                 Log.call(Log.l.trace, "StartTop10Users.Controller.");
+                if (employeeResult && typeof employeeResult !== "undefined") {
                 var employeeWithMostContacts = Math.max.apply(Math, employeeResult.map(function (employee) { return employee.Anzahl; }));
+                }
                 WinJS.Promise.timeout(0).then(function () {
                     if (!that.employeedata || !that.employeedata.length) {
                         Log.print(Log.l.trace, "extra ignored");

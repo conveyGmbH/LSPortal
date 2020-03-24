@@ -26,10 +26,10 @@
     max-height: 350px;
     max-width: 836px;
 }
-.view-size-bigger .contentarea .win-type-body {
+/*.view-size-bigger .contentarea .win-type-body {
     height: 350px !important;
     max-width: 836px;
-}
+}*/
 .listview .win-selectionstylefilled .win-disposable .win-listview .win-element-resize {
     max-height: 270px;
 }

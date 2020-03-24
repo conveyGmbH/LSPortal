@@ -45,7 +45,7 @@
                 that.inResize = 1;
                 ret = WinJS.Promise.timeout(0).then(function () {
                     var reportingList = element.querySelector("#reportingList.listview");
-                    if (reportingList && reportingList.style) {
+                    /*if (reportingList && reportingList.style) {
                         var contentarea = element.querySelector(".contentarea");
                         if (contentarea) {
                             var width = contentarea.clientWidth;
@@ -59,7 +59,7 @@
                                 reportingList.style.height = height.toString() + "px";
                             }
                         }
-                    }
+                    }*/
                     that.inResize = 0;
                 });
             }

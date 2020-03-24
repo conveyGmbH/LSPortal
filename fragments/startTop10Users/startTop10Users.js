@@ -45,7 +45,7 @@
                 that.inResize = 1;
                 ret = WinJS.Promise.timeout(0).then(function () {
                     that.inResize = 0;
-                    if (typeof that.controller.showemployeeChart === "function") {
+                    if (that.controller && typeof that.controller.showemployeeChart === "function") {
                         that.controller.showemployeeChart("employeeChart", true);
                     }
                     //showemployeeChart

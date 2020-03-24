@@ -62,6 +62,7 @@
             this.barChartWidth = 0;
             var showBarChart = function (barChartId, bAnimated) {
                 Log.call(Log.l.trace, "StartContactspD.Controller.");
+                that.setMarginChart(that.kontaktanzahldata.length);
                 WinJS.Promise.timeout(0).then(function () {
                     if (!that.kontaktanzahldata || !that.kontaktanzahldata.length) {
                         Log.print(Log.l.trace, "extra ignored");
@@ -180,17 +181,19 @@
             var setMarginChart = function (chartlength) {
                 Log.call(Log.l.trace, "StartTop10Users.Controller.");
                 var dchart = fragmentElement.querySelector("#visitorsPerDayChart");
+                if (dchart) {
                 switch (chartlength) {
                 case 1:
-                        dchart.style.width = "200px";
+                        //dchart.style.width = "200px";
                         dchart.style.marginLeft = "30%";
                         break;
-                case 2:
+                    /*case 2:
                         dchart.style.width = "400px";
-                        dchart.style.marginLeft = "20%";
-                        break;
+                            dchart.style.marginLeft = "5%";
+                            break;*/
                 default:
                 }
+            }
             }
             this.setMarginChart = setMarginChart;
 
@@ -211,7 +214,7 @@
                             if (json && json.d) {
                                 that.kontaktanzahldata = json.d.results;
                                 var chartlength = that.kontaktanzahldata.length;
-                                that.setMarginChart(chartlength);
+                                //that.setMarginChart(chartlength);
                                 that.barChartWidth = 0;
                                 that.showBarChart("visitorsPerDayChart", true);
                             }

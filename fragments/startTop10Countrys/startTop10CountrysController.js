@@ -96,9 +96,7 @@
                                         legend: {
                                             show: true, rendererOptions: {
                                                 numberRows: 10
-                                            },
-                                            location: 'w', marginLeft: '30px',
-                                            border: 'none'
+                                            }, location: 'w', marginLeft: '30px'
                                         },
                                         highlighter: {
                                             formatString: '%s',

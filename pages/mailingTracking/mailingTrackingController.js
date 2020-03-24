@@ -83,8 +83,9 @@
                 Log.call(Log.l.trace, "MailingTracking.Controller.");
                 var dateString = rawdate.replace("\/Date(", "").replace(")\/", "");
                 var milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000; //
-                var date = new Date(milliseconds);
-                var year = date.getFullYear(),
+                var date = new Date(milliseconds).toISOString();
+
+                /*var year = date.getFullYear(),
                     month = date.getMonth() + 1,
                     day = date.getDate(),
                     hour = date.getHours(),
@@ -92,9 +93,9 @@
                 month = (month < 10 ? '0' + month : month);
                 day = (day < 10 ? '0' + day : day);
                 hour = (hour < 10 ? '0' + hour : hour); 
-                min = (min < 10 ? '0' + min : min);
+                min = (min < 10 ? '0' + min : min);*/
                 
-                that.binding.mailingtrackingdata.ScheduledSendTS = day + '/' + month + '/' + year + ' ' + hour + ':' + min;
+                that.binding.mailingtrackingdata.ScheduledSendTS = date;
                 //
             }
             this.getTimeToSend = getTimeToSend;
@@ -161,9 +162,9 @@
                     that.binding.mailingtrackingdata.LanguageSpecID = parseInt(that.binding.mailingtrackingdata.LanguageSpecID);
                 }
                 //var TS = new Date(that.binding.senddate);
-                var TS = new Date(that.binding.mailingtrackingdata.ScheduledSendTS);
+                /*var TS = new Date(that.binding.mailingtrackingdata.ScheduledSendTS);
                 var isoDate = new Date(TS.getTime() - (TS.getTimezoneOffset() * 60000)).toISOString();
-                that.binding.mailingtrackingdata.ScheduledSendTS = isoDate;
+                that.binding.mailingtrackingdata.ScheduledSendTS = isoDate;*/
                 Log.call(Log.l.trace, "Mailing.Controller.");
                 AppData.call("PRC_UpdateExhibitorMailing",
                     {

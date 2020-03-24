@@ -78,16 +78,17 @@
                             var contentHeader = element.querySelector(".content-header");
                             if (contentHeader) {
                                 height -= contentHeader.clientHeight;
-                            }
-                            if (width !== that.prevWidth || height !== that.prevHeight) {
-                                /*if (width !== that.prevWidth) {
-                                    if (typeof that.controller.showemployeeChart === "function") {
-                                        that.controller.showemployeeChart("employeeChart", false);
-                                    }
-                                }*/
-                                that.prevWidth = width;
                                 that.prevHeight = height;
                             }
+                            /*if (width !== that.prevWidth || height !== that.prevHeight) {
+                                if (width !== that.prevWidth) {
+                                    if (typeof that.controller.showemployeeChart === "function") {
+                                   //     that.controller.showemployeeChart("employeeChart", false);
+                                    }
+                                    }
+                                that.prevWidth = width;
+                                that.prevHeight = height;
+                            }*/
                         }
                     }
                     that.inResize = 0;

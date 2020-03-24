@@ -44,8 +44,7 @@
             if (element && !that.inResize) {
                 that.inResize = 1;
                 ret = WinJS.Promise.timeout(0).then(function () {
-                    if (that.controller &&
-                        typeof that.controller.showDonutChart === "function") {
+                    if (that.controller && typeof that.controller.showDonutChart === "function") {
                         that.controller.showDonutChart("countryPie", true);
                     }
                     that.inResize = 0;
