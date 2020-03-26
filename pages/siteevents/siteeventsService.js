@@ -336,6 +336,44 @@
             getDbView: function () {
                 return SiteEvents._OIMPImportJobFranzView;
             }
+        },
+        _importfileView: {
+            get: function () {
+                return AppData.getFormatView("Import_File", 0, false);
+            }
+        },
+        importfileView: {
+            insert: function (complete, error, viewResponse) {
+                Log.call(Log.l.trace, "SiteEvents.");
+                var ret = SiteEvents._importfileView.insert(complete, error, viewResponse);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            defaultRestriction: {
+                INITImportFileTypeID: 1,
+                Import_Title: "",
+                EventID: 0
+            }
+        },
+        _doc3import_file: {
+            get: function () {
+                return AppData.getFormatView("DOC3Import_File", 0);
+            }
+        },
+        doc3import_file: {
+            insert: function (complete, error, viewRecord) {
+                Log.call(Log.l.trace, "SiteEvents.");
+                var ret = SiteEvents._doc3import_file.insertWithId(complete, error, viewRecord);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            defaultRestriction: {
+                DOC3Import_FileVIEWID: 0,
+                wFormat: 0,
+                szOriFileNameDOC1: "",
+                DocContentDOCCNT1: "",
+                ContentEncoding: 0
+            }
         }
     });
 })();

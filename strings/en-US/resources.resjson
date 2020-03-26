@@ -779,6 +779,10 @@
     "siteevents.freeolockappuser"   : "unlock. / lock. Devices",
     "siteevents.placeholder"   : "Exhibitor search",
     "siteevents.eventdelete"   : "Do you really want to delete the event?",
+    "siteevents.successmsg"   : "Csv file successfully uploaded",
+    "siteevents.errormsg"   : "Csv file could not be uploaded",
+    "siteevents.uploadbtn"   : "Upload",
+    "siteevents.csvupload"   : "Csv file upload",
 
     "siteeventsneuaus.title" : "New Exhibitor",
     "siteeventsneuaus.veranstaltungsname" : "Event name",

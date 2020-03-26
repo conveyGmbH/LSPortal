@@ -779,6 +779,10 @@
     "siteevents.freeolockappuser"   : "unlock. / lock. appareils",
     "siteevents.placeholder"   : "Recherche exposants",
     "siteevents.eventdelete"   : "Voulez-vous vraiment supprimer l'événement?",
+    "siteevents.successmsg"   : "Fichier Csv téléchargé avec succès",
+    "siteevents.errormsg"   : "Le fichier Csv n'a pas pu être téléchargé",
+    "siteevents.uploadbtn"   : "Télécharger",
+    "siteevents.csvupload"   : "Téléchargement de fichiers csv",
 
     "siteeventsneuaus.title" : "Nouvel exposant",
     "siteeventsneuaus.veranstaltungsname" : "nom de l'événement",

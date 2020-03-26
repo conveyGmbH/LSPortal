@@ -1,7 +1,9 @@
 ﻿.fields-container {
     width: 100%;
 }
-
+.fileinputbox {
+    margin-left: 17px !important;
+} 
 #Hall {
     width: 50px;
     text-align: center;

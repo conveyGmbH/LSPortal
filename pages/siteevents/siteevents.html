@@ -21,11 +21,20 @@
                             <span class="caption-field" data-win-res="{textContent: 'siteevents.title'}"></span>
                         </div>
                     </div>
+                    <div class="fileinputbox">
+                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'siteevents.csvupload'}"></span>
+                        <span class="label landscape_only" data-win-res="{textContent: 'siteevents.csvupload'}"></span><br />
+                        <input type="file" id="myFile">
+                        <button onclick="AppBar.handleEvent('click', 'ondateiupload', this.files)" data-win-res="{textContent: 'siteevents.uploadbtn'}"></button><br />
+                        <span id="inputmsg"></span>
+                    </div>
+                    <br/>
                     <div id="suggestionBox"
                          class="input_half_right win-autosuggestbox"
                          data-win-control="WinJS.UI.AutoSuggestBox"
                          data-win-bind="winControl.placeholderText: eventText; wincontrol.queryText: siteeventsdata.Firmenname" oninput="AppBar.handleEvent('oninput', 'changeSearchField', event)">
                     </div>
+                    <br/>
                     <div class="headerFooterPlaceholder">
                         <div class="list-header">
                             <div class="list-landscape-only">

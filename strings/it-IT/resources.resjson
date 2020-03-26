@@ -779,6 +779,10 @@
     "siteevents.freeolockappuser"   : "unlock. / lock. Dispositivi",
     "siteevents.placeholder"   : "Ricerca Espositori",
     "siteevents.eventdelete"   : "Vuoi veramente cancellare l'evento?",
+    "siteevents.successmsg"   : "File Csv caricato con successo",
+    "siteevents.errormsg"   : "Non è stato possibile caricare il file Csv",
+    "siteevents.uploadbtn"   : "Carica",
+    "siteevents.csvupload"   : "Caricamento file Csv",
 
     "siteeventsneuaus.title" : "Nuovo espositore",
     "siteeventsneuaus.veranstaltungsname" : "nome dell'evento",
