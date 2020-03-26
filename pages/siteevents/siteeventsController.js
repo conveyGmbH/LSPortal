@@ -36,6 +36,7 @@
 
             var suggestionBox = pageElement.querySelector("#suggestionBox");
             var autosuggestbox = pageElement.querySelector(".win-autosuggestbox");
+            var fileinputbox = pageElement.querySelector(".fileinputbox");
             var inputbox = pageElement.querySelector("#myFile");
             var inputmsg = pageElement.querySelector("#inputmsg");
 
@@ -99,6 +100,15 @@
                 Log.ret(Log.l.trace);
             }
             this.selectRecordId = selectRecordId;
+
+            var checkId = function() {
+                if (that.vidID) {
+                    fileinputbox.style.display = "block";
+                } else {
+                    fileinputbox.style.display = "none";
+                }
+            }
+            this.checkId = checkId;
 
             var resetSearchFilter = function () {
                 that.binding.dataEvents = getEmptyDefaultValue(SiteEvents.VeranstaltungView.defaultValue),
@@ -492,23 +502,28 @@
                 ondateiupload: function() {
                     Log.call(Log.l.trace, "SiteEvents.Controller.");
                     var files = pageElement.querySelector("#myFile").files;
-                    var newFileUploadId = that.binding.newFileID;
-                    newFileUploadId.INITImportFileTypeID = 1;
-                    newFileUploadId.Import_Title = files[0].name;
-                    newFileUploadId.EventID = that.vidID;
-                    that.imageName = files[0].name;
-                    that.imageLength = files[0].size;
-                    if (files && files[0]) {
-                        var reader = new FileReader();
-                        reader.addEventListener(
-                            "load",
-                            function() {
-                                that.imageData = reader.result;
-                                Log.call(Log.l.trace, "SiteEvents.Controller.");
-                                that.uploadCsv(newFileUploadId);
-                            });
-                        reader.readAsDataURL(files[0]);
-                        Log.call(Log.l.trace, "SiteEvents.Controller.");
+                    if (files[0].name.match(/\.(csv)/g) != null) {
+                        var newFileUploadId = that.binding.newFileID;
+                        newFileUploadId.INITImportFileTypeID = 1;
+                        newFileUploadId.Import_Title = files[0].name;
+                        newFileUploadId.EventID = that.vidID;
+                        that.imageName = files[0].name;
+                        that.imageLength = files[0].size;
+                        if (files && files[0]) {
+                            var reader = new FileReader();
+                            reader.addEventListener(
+                                "load",
+                                function () {
+                                    that.imageData = reader.result;
+                                    Log.call(Log.l.trace, "SiteEvents.Controller.");
+                                    that.uploadCsv(newFileUploadId);
+                                });
+                            reader.readAsDataURL(files[0]);
+                            Log.call(Log.l.trace, "SiteEvents.Controller.");
+                        }
+                    } else {
+                        alert('Wrong file extension! File input is cleared.');
+                        inputbox.value = null;
                     }
                 },
                 changeSearchField: function (event) {
@@ -922,6 +937,7 @@
             var loadData = function (vid) {
                 Log.call(Log.l.trace, "LocalEvents.Controller.");
                 inputmsg.textContent = " ";
+                inputbox.value = null;
                 that.loading = true;
                 if (vid) {
                     that.binding.restriction.VeranstaltungTerminID = vid;
@@ -1017,6 +1033,9 @@
                 return that.loadData(AppData.getRecordId("VeranstaltungTermin"));
             }).then(function () {
                 AppBar.notifyModified = true;
+                Log.print(Log.l.trace, "Binding wireup page complete");
+            }).then(function () {
+                that.checkId();
                 Log.print(Log.l.trace, "Binding wireup page complete");
             });
             Log.ret(Log.l.trace);
