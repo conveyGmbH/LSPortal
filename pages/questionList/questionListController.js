@@ -407,6 +407,10 @@
                             Log.print(Log.l.trace, "save changes of recordId:" + recordId);
                             ret = QuestionList.questionListView.update(function (response) {
                                 Log.print(Log.l.info, "questionListView update: success!");
+                                if (that.questions) {
+                                    that.resultConverter(curScope.item, curScope.index);
+                                    that.questions.setAt(curScope.index, curScope.item);
+                                }
                                 AppData.getUserData();
                                 AppBar.modified = false;
                                 // called asynchronously if ok
