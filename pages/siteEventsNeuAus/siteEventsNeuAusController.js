@@ -80,6 +80,12 @@
             }
             this.setLangID = setLangID;
 
+            var isEmail = function (emailadress) {
+                var validmailregex = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.([a-z][a-z]+)|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
+                return validmailregex.test(emailadress);
+            }
+            this.isEmail = isEmail;
+
             var getRecordId = function () {
                 Log.call(Log.l.trace, "SiteEventsNeuAus.Controller.");
                 that.binding.VeranstaltungTerminID = AppData.getRecordId("VeranstaltungTermin");
@@ -226,6 +232,15 @@
                         WinJS.Navigation.back(1).done();
                     }
                     Log.ret(Log.l.trace);
+                },
+                isEmailCheck: function (event) {
+                    Log.call(Log.l.trace, "SiteEventsNeuAus.Controller.");
+                    var emailadress = pageElement.querySelector("#loginemail").value;
+                    var validemail = that.isEmail(emailadress);
+                    if (validemail === false) {
+                        alert("Diese Email ist ungültig!");
+                    }
+                    Log.call(Log.l.trace, "SiteEventsNeuAus.Controller.");
                 },
                 clickSave: function (event) {
                     Log.call(Log.l.trace, "SiteEventsNeuAus.Controller.");
