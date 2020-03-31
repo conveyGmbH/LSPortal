@@ -3,6 +3,7 @@
 }
 .fileinputbox {
     margin-left: 17px !important;
+    height: 96px;
 } 
 #Hall {
     width: 50px;
@@ -45,7 +46,7 @@
 
 #siteevents {
     width: 100%;
-    height: calc(100% - 96px);
+    height: calc(100% - 216px);
 }
 
 .list-header {
