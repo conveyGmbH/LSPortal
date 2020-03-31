@@ -208,7 +208,6 @@
                         ret = UserInfo.benutzerView.insert(function(json) {
                             // this callback will be called asynchronously
                             // when the response is available
-                            console.log("dataBenutzer: success!");
                             // dataBenutzer returns object already parsed from json file in response
                             if (json && json.d) {
                                 that.setDataBenutzer(json.d);

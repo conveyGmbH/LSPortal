@@ -272,17 +272,6 @@
                             // or server returns response with an error status.
                             AppData.setErrorMsg(that.binding, errorResponse);
                         }).then(function () {
-                            var languageID = AppData.getLanguageId();
-                            AppData.call("PRC_GetLangText", {
-                                pLanguageID: languageID,
-                                pTextTitle: 'general',
-                                pResourceTypeID: 20004
-                            }, function (json) {
-                                Log.print(Log.l.info, "call success! ");
-                            }, function (error) {
-                                Log.print(Log.l.error, "call error");
-                            }, false);
-                        }).then(function () {
                             Colors.updateColors();
                             return WinJS.Promise.as();
                         });
