@@ -62,11 +62,12 @@
             this.barChartWidth = 0;
             var showBarChart = function (barChartId, bAnimated) {
                 Log.call(Log.l.trace, "StartContactspD.Controller.");
-                that.setMarginChart(that.kontaktanzahldata.length);
+                
                 WinJS.Promise.timeout(0).then(function () {
                     if (!that.kontaktanzahldata || !that.kontaktanzahldata.length) {
                         Log.print(Log.l.trace, "extra ignored");
                     } else {
+                        that.setMarginChart(that.kontaktanzahldata.length);
                         var visitorsPerDayChart = fragmentElement.querySelector("#" + barChartId);
                         if (visitorsPerDayChart) {
                             var width = visitorsPerDayChart.clientWidth;

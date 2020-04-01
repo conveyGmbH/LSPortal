@@ -177,7 +177,7 @@
                                 listView.winControl.layout = { type: layout };
                             }
                         } else if (listView.winControl.loadingState === "complete") {
-                            if (that.employeePWListdata && that.loading) {
+                            if (that.employeePWListdata) {
                                 progress = listView.querySelector(".list-footer .progress");
                                 counter = listView.querySelector(".list-footer .counter");
                                 if (progress && progress.style) {
@@ -186,7 +186,40 @@
                                 if (counter && counter.style) {
                                     counter.style.display = "inline";
                                 }
-                                for (var i = 0; i < that.employeePWListdata.length; i++) {
+                                //if (that.employeePWListdata) {
+                                    var indexOfFirstVisible = listView.winControl.indexOfFirstVisible;
+                                    var indexOfLastVisible = listView.winControl.indexOfLastVisible;
+                                    for (var i = indexOfFirstVisible; i <= indexOfLastVisible; i++) {
+                                        var element = listView.winControl.elementFromIndex(i);
+                                        if (element) {
+                                            var barcodeImage = element.querySelector(".userinfo-qrcode-container");
+                                            if (barcodeImage) { //barcodeImage.barcode
+                                                var value = "#LI:" +
+                                                    that.employeePWListdata.getAt(i).Login +
+                                                    "/" +
+                                                    that.employeePWListdata.getAt(i)
+                                                    .GenPassword; // barcodeImage.barcode.substring(9, 13)
+                                                var qrcodeViewer = document.createElement("div");
+                                                WinJS.Utilities.addClass(qrcodeViewer, "userinfo-qrcode");
+                                                $(qrcodeViewer).qrcode({
+                                                    text: value,
+                                                    width: 50,
+                                                    height: 50,
+                                                    correctLevel: 0 //QRErrorCorrectLevel.M
+                                                });
+                                                barcodeImage.appendChild(qrcodeViewer);
+                                                if (barcodeImage.childElementCount > 1) {
+                                                    var oldElement = barcodeImage.firstElementChild;
+                                                    if (oldElement) {
+                                                        barcodeImage.removeChild(oldElement);
+                                                        oldElement.innerHTML = "";
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                //}
+                                /*for (var i = 0; i < that.employeePWListdata.length; i++) {
                                     var itemElement = listView.winControl.elementFromIndex(i);
                                     if (itemElement) {
                                         var barcodeImages = itemElement.querySelectorAll(".userinfo-qrcode-container");
@@ -215,7 +248,7 @@
                                             }
                                         }
                                     }
-                                }
+                                }*/
                                 that.loading = false;
 
                             // load SVG images

@@ -19,8 +19,7 @@
                     LanguageID: AppData.getLanguageId()
                 }, {
                     ordered: true,
-                    orderAttribute: "OLELetterID",
-                    desc: true
+                    orderAttribute: "RevisionNumber"
                 });
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
