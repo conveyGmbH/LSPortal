@@ -294,7 +294,14 @@
             };
             this.saveData = saveData;
 
-            that.processAll().then(function () {
+            Application.pageframe.loadRemoteResource(AppData.getLanguageId(), function () {
+                //complete({});
+                that.processAll();
+            }, function () {
+                Log.print(Log.l.error, "loadLocalResources failed - ignore error here!");
+                that.processAll();
+                //error();
+            }, ["dbinit"], true).then(function () {
                 AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 // now open the DB
