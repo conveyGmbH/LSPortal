@@ -804,6 +804,7 @@
     "siteeventsneuaus.customerid" : "Registrationnumber",
     "siteeventsneuaus.exhibitorcategory" : "Category",
     "siteeventsneuaus.language" : "Language",
+    "siteeventsneuaus.mailerrortext" : "Invalid email address!",
 
     "siteeventsbennach.title" : "Reorders",
     "siteeventsbennach.eventname" : "Exhibitor",

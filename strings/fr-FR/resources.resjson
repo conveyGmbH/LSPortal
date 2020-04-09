@@ -804,6 +804,7 @@
     "siteeventsneuaus.customerid" : "Numéro d'enregistrement",
     "siteeventsneuaus.exhibitorcategory" : "Catégorie",
     "siteeventsneuaus.language" : "Langue",
+    "siteeventsneuaus.mailerrortext" : "Adresse électronique invalide !",
 
     "siteeventsbennach.title" : "réassorts",
     "siteeventsbennach.eventname" : "exposant",

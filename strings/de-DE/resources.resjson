@@ -806,6 +806,7 @@
     "siteeventsneuaus.customerid" : "Registrierungsnummer",
     "siteeventsneuaus.exhibitorcategory" : "Kategorie",
     "siteeventsneuaus.language" : "Sprache",
+    "siteeventsneuaus.mailerrortext" : "Ungültige Emailadresse!",
 
     "siteeventsbennach.title" : "Nachbestellungen",
     "siteeventsbennach.eventname" : "Aussteller",
