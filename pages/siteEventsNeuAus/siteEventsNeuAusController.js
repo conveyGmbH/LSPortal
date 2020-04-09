@@ -187,40 +187,47 @@
 
             var saveExhibitor = function () {
                 Log.call(Log.l.trace, "SiteEventsNeuAus.Controller.");
-                AppData.setErrorMsg(that.binding);
-                var dataExibitor = getExibitorData();
-                Log.call(Log.l.trace, "SiteEventsNeuAus.Controller.");
-                AppData.setErrorMsg(that.binding);
-                AppData.call("PRC_CreateSiteVeranstaltung",
-                    {
-                        pVeranstaltungTerminID: that.binding.VeranstaltungTerminID,
-                        pVeranstaltungName: that.binding.VeranstaltungName,
-                        pFirmenName: dataExibitor.FirmenName,
-                        pStrasse: dataExibitor.Strasse,
-                        pPLZ: dataExibitor.PLZ,
-                        pStadt: dataExibitor.Stadt,
-                        pLandID: dataExibitor.LandID,
-                        pWebAdresse: dataExibitor.WebAdresse,
-                        pLoginEmail: dataExibitor.LoginEmail,
-                        pAppUser: dataExibitor.AppUser,
-                        pOrderNumber: dataExibitor.OrderNumber,
-                        pStandHall: dataExibitor.StandHall,
-                        pStandNo: dataExibitor.StandNo,
-                        pInfoText: dataExibitor.InfoText,
-                        pSpracheID: dataExibitor.INITSpracheID,
-                        pDBSYNCLogin: dataExibitor.DBSYNCLogin,
-                        pDBSYNCPassword: dataExibitor.DBSYNCPassword,
-                        pCustomerID: dataExibitor.CustomerID,
-                        pExhibitorCategory: dataExibitor.ExhibitorCategory
-            }, function (json) {
-                        Log.print(Log.l.info, "call success! ");
-                        AppBar.busy = false;
-                        Application.navigateById("siteevents", event);
-                    }, function (errorResponse) {
-                        Log.print(Log.l.error, "call error");
-                        AppBar.busy = false;
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                    });
+                var emailadress = pageElement.querySelector("#loginemail").value;
+                var validemail = that.isEmail(emailadress);
+                if (validemail === false) {
+                    var alerttext = getResourceText("siteeventsneuaus.mailerrortext");
+                    alert(alerttext);
+                } else {
+                    AppData.setErrorMsg(that.binding);
+                    var dataExibitor = getExibitorData();
+                    Log.call(Log.l.trace, "SiteEventsNeuAus.Controller.");
+                    AppData.setErrorMsg(that.binding);
+                    AppData.call("PRC_CreateSiteVeranstaltung",
+                        {
+                            pVeranstaltungTerminID: that.binding.VeranstaltungTerminID,
+                            pVeranstaltungName: that.binding.VeranstaltungName,
+                            pFirmenName: dataExibitor.FirmenName,
+                            pStrasse: dataExibitor.Strasse,
+                            pPLZ: dataExibitor.PLZ,
+                            pStadt: dataExibitor.Stadt,
+                            pLandID: dataExibitor.LandID,
+                            pWebAdresse: dataExibitor.WebAdresse,
+                            pLoginEmail: dataExibitor.LoginEmail,
+                            pAppUser: dataExibitor.AppUser,
+                            pOrderNumber: dataExibitor.OrderNumber,
+                            pStandHall: dataExibitor.StandHall,
+                            pStandNo: dataExibitor.StandNo,
+                            pInfoText: dataExibitor.InfoText,
+                            pSpracheID: dataExibitor.INITSpracheID,
+                            pDBSYNCLogin: dataExibitor.DBSYNCLogin,
+                            pDBSYNCPassword: dataExibitor.DBSYNCPassword,
+                            pCustomerID: dataExibitor.CustomerID,
+                            pExhibitorCategory: dataExibitor.ExhibitorCategory
+                        }, function (json) {
+                            Log.print(Log.l.info, "call success! ");
+                            AppBar.busy = false;
+                            Application.navigateById("siteevents", event);
+                        }, function (errorResponse) {
+                            Log.print(Log.l.error, "call error");
+                            AppBar.busy = false;
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        });
+                }
                 Log.ret(Log.l.trace); 
             }
             this.saveExhibitor = saveExhibitor;
@@ -232,15 +239,6 @@
                         WinJS.Navigation.back(1).done();
                     }
                     Log.ret(Log.l.trace);
-                },
-                isEmailCheck: function (event) {
-                    Log.call(Log.l.trace, "SiteEventsNeuAus.Controller.");
-                    var emailadress = pageElement.querySelector("#loginemail").value;
-                    var validemail = that.isEmail(emailadress);
-                    if (validemail === false) {
-                        alert("Diese Email ist ungültig!");
-                    }
-                    Log.call(Log.l.trace, "SiteEventsNeuAus.Controller.");
                 },
                 clickSave: function (event) {
                     Log.call(Log.l.trace, "SiteEventsNeuAus.Controller.");
