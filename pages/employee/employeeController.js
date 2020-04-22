@@ -50,6 +50,51 @@
             }
             this.setDataEmployee = setDataEmployee;
 
+            var getLangSpecErrorMsg = function (resultmessageid, errorMsg) {
+                Log.call(Log.l.trace, "Employee.Controller.");
+                var lang = AppData.getLanguageId();
+                AppData.setErrorMsg(that.binding);
+                AppData.call("PRC_GetLangText", {
+                    pTextID: resultmessageid,
+                    pLanguageID: lang
+            }, function (json) {
+                    Log.print(Log.l.info, "call success! ");
+                    errorMsg.data.error.message.value = json.d.results[0].ResultText;
+                    AppData.setErrorMsg(that.binding, errorMsg);
+                }, function (error) {
+                    Log.print(Log.l.error, "call error");
+
+                });
+                Log.ret(Log.l.trace);
+            }
+            this.getLangSpecErrorMsg = getLangSpecErrorMsg;
+
+            var getErrorMsgFromErrorStack = function (errorMsg) {
+                Log.call(Log.l.trace, "Employee.Controller.");
+                AppData.setErrorMsg(that.binding);
+                AppData.call("PRC_GetErrorStack", {
+                }, function (json) {
+                    Log.print(Log.l.info, "call success! ");
+                    AppBar.modified = false;
+                    if (json.d.results[0].ResultMessageID > 0) {
+                        errorMsg.data.error.code = json.d.results[0].ResultCode;
+                        errorMsg.data.error.message.value = that.getLangSpecErrorMsg(json.d.results[0].ResultMessageID, errorMsg);
+                        Log.print(Log.l.info, "call success! ");
+                    } else {
+                        errorMsg.data.error.message.value = json.d.results[0].ResultMessage;
+                        errorMsg.data.error.code = json.d.results[0].ResultCode;
+                        AppData.setErrorMsg(that.binding, errorMsg);
+                        Log.print(Log.l.info, "call success! ");
+                    }
+                }, function (error) {
+                    Log.print(Log.l.error, "call error");
+                    AppBar.modified = false;
+
+                });
+                Log.ret(Log.l.trace);
+            }
+            this.getErrorMsgFromErrorStack = getErrorMsgFromErrorStack;
+
             var saveRestriction = function () {
                 if (that.binding.restriction.Names && that.binding.restriction.Names.length > 0) {
                     that.binding.restriction.Aktiv = ["X", "X", "X"];
@@ -555,8 +600,10 @@
                                 AppBar.busy = false;
                                 // called asynchronously if an error occurs
                                 // or server returns response with an error status.
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                                error(errorResponse);
+                                that.getErrorMsgFromErrorStack(errorResponse);
+                                //AppData.setErrorMsg(that.binding, errorResponse);
+                                //error(errorResponse);
+                                ;
                             }, recordId, dataEmployee).then(function () {
                                 var recordid = AppData.getRecordId("Mitarbeiter");
                                 if (recordid === dataEmployee.MitarbeiterVIEWID)
