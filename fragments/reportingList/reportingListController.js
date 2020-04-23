@@ -29,9 +29,6 @@
 
             var createEventHandler = function(id) {
                 Log.call(Log.l.trace, "ReportingList.Controller.", "id=" + id);
-                if (id === 32) {
-                    Log.call(Log.l.trace, "ReportingList.Controller.", "blocked id=" + id);
-                } else {
                     eventHandlers["clickOLELetterID" + id] = function (event) {
                         Log.call(Log.l.trace, "ReportingList.Controller.");
                         if (event && event.currentTarget) {
@@ -40,7 +37,6 @@
                         }
                         Log.ret(Log.l.trace);
                     }  
-                }
                 Log.ret(Log.l.trace);
             }
 
@@ -103,9 +99,6 @@
                             var commandList = [];
                             for (var i = 0; i < results.length; i++) {
                                 var id = results[i].OLELetterID;
-                                if (results[i].OLELetterID === 32) {
-                                    Log.print(Log.l.trace, "OLELetterID 32 blocked!");
-                                } else {
                                     commandList.push({
                                         id: "clickOLELetterID" + id,
                                         label: results[i].Text,
@@ -113,7 +106,6 @@
                                     });
                                     createEventHandler(id);
                                 }
-                            }
                             that.eventHandlers = eventHandlers;
                             that.commandList = commandList;
                         } else {
