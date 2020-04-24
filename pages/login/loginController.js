@@ -320,15 +320,7 @@
                     Application.navigateById("start");
                 });
             }
-
-            Application.pageframe.loadRemoteResource(AppData.getLanguageId(), function () {
-                Log.print(Log.l.trace, "loadLocalResources success!");
-            }, function () {
-                Log.print(Log.l.error, "loadLocalResources failed - ignore error here!");
-            }, ["Login"], true).then(function () {
-                Log.print(Log.l.trace, "loadRemoteResource complete");
-                return that.processAll();
-            }).then(function () {
+            that.processAll().then(function () {
                 AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 if (AppHeader && AppHeader.controller) {

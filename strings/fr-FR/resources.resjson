@@ -675,6 +675,9 @@
     "mailingProduct.cc"            : "CC",
     "mailingProduct.bcc"           : "BCC",
     "mailingProduct.mailtext"      : "Texte mail",
+    "mailingProduct.maillanguage"      : "Product mail language",
+    "mailingProduct.combolangbtn"      : "Select",
+    "mailingProduct.mailerrow"      : "Mailerrows",
 	
     "mailingList.title"            : "Envoyer des documents",
     "mailingList.count"            : "Nombre",
