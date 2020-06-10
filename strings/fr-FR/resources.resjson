@@ -501,6 +501,8 @@
 	"label.mailingTracking"	: "MailTracking",
     "label.clientManagement"	: "La gestion des clients",
     "label.clientManagementLicenses"	: "Licences",
+    "label.esStaffAdministration" : "Stand personnel",
+    "label.voucheradministration" : "Voucher Administration",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annuler",
