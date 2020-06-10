@@ -16,6 +16,6 @@
 .voucheradministrationlisthost {
     height: 800px !important;
 }
-.contentarea {
+.voucherAdministration .contentarea {
     height: 100%;
 }

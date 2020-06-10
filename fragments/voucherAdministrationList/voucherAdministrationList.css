@@ -11,18 +11,18 @@
     #voucherAdministrationList .win-listview .win-itembox {
         background-color: transparent;
     }
-.list-header {
+.voucherAdministrationList .list-header {
     padding-left: 27px;
     font-weight: bold;
 }
-.list-field-small-fixed {
+.voucherAdministrationList .list-field-small-fixed {
     width: 200px;
     padding-left: 20px;
 }
-.row-bkg-gray {
+.voucherAdministrationList .row-bkg-gray {
     width: auto;
 }
-.list-role-item {
+.voucherAdministrationList .list-role-item {
     width: 100%;
     min-width: 200px;
     height: 48px;
@@ -44,9 +44,9 @@
     position: static;
 }
 
-    .listView .voucherAdministrationListLayout .win-surface {
-        margin-left: 0;
-    }
+.listView .voucherAdministrationListLayout .win-surface {
+    margin-left: 0;
+}
 
 #voucherAdministrationList .win-container {
     margin: 0;
@@ -120,8 +120,8 @@
     @media (max-width:499px) {
     }
 */
-.win-disposable {
-    width: 100% !important; 
+.view-size-small #voucherAdministrationList .win-disposable {
+    width: 100% !important;
 }
 .view-size-small #voucherAdministrationList .win-item {
     width: calc(100% - 20px);
