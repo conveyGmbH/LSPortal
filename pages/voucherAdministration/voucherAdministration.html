@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="voucherAdministration.css" rel="stylesheet" />
+    <script type="text/javascript" src="voucherAdministrationService.js"></script>
+    <script type="text/javascript" src="voucherAdministrationController.js"></script>
+    <script type="text/javascript" src="voucherAdministration.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="settings fragment">
+        <div id="voucherAdministrationController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="contentarea win-type-body">
+                    <div class="header-separator"></div>
+                    <div class="content-header">
+                        <div class="half-circle half-circle-textcolor">&nbsp;</div>
+                        <div class="content-header-line win-type-caption">
+                            <span class="id-field"></span>
+                            <span class="caption-field" data-win-res="{textContent: 'voucheradministration.title'}"></span>
+                            <span class="date-field"></span>
+                        </div>
+                    </div>
+                    <div class="contentarea">
+                        <div class="field_line">
+                            <div class="field_line field_line_odd">
+                                <div class="input_group">
+                                    <div class="input_half_left" id="categorycombo">
+                                        <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'voucheradministration.catergory'}"></span>
+                                        <select id="voucherCategory"
+                                                class="input_field_noLabel win-dropdown"
+                                                data-win-control="WinJS.UI.Repeater"
+                                                data-win-bind="value: dataVoucherOrderEvent.ArticleTypeID Binding.Mode.twoway">
+                                            <option data-win-bind="value: ESArticleTypeID; textContent: LanguageTitle"></option>
+                                        </select>
+                                    </div>
+                                    <div class="input_half_left" id="categorycomment">
+                                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'voucheradministration.categorycomment'}"></span>
+                                        <span class="label landscape_only" data-win-res="{textContent: 'voucheradministration.categorycomment'}"></span>
+                                        <textarea class="input_field win-textarea input_text_comment" data-win-bind="value: dataVoucherOrderEvent.UserComment Binding.Mode.twoway" data-win-res="{placeholder: 'voucheradministration.categorycommentplaceholder'}"></textarea>
+                                    </div>
+                                    <br />
+                                    <div class="input_half_left" id="categorycount">
+                                        <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'voucheradministration.vouchercount'}"></span>
+                                        <input class="input_small_left win-textbox" id="vouchernumber" type="number" data-win-bind="value: dataVoucherOrderEvent.NumVouchers Binding.Mode.twoway" />
+                                        <button id="voucherbutton" class="voucherorder-button win-button"
+                                                data-win-bind="textContent: orderbtnLabel;"
+                                                onclick="AppBar.handleEvent('click', 'clickOrderNewVoucher', event)"></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="line-separator"></div>
+                        <div class="field_line">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'voucheradministration.roles'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'voucheradministration.bestellungen'}"></span>
+                            <div id="voucheradministrationlisthost" class="input_field fragmenthost"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="error-message"
+                     data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>
