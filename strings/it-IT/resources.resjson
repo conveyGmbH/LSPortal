@@ -501,6 +501,8 @@
     "label.mailingOptions"	: "Impostazioni di invio",
     "label.clientManagement"	: "Gestione dei client",
     "label.clientManagementLicenses"	: "Licenze",
+    "label.esStaffAdministration" : "Personale dello stand",
+    "label.voucherAdministration" : "Buono di amministrazione",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annulla",
