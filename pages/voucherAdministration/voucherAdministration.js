@@ -20,6 +20,8 @@
             Log.call(Log.l.trace, pageName + ".");
             // TODO: Initialize the page here.
             this.inResize = 0;
+            this.prevWidth = 0;
+            this.prevHeight = 0;
 
             // add page specific commands to AppBar
             var commandList = [
@@ -40,8 +42,40 @@
             Log.ret(Log.l.trace);
         },
         updateLayout: function (element, viewState, lastViewState) {
+            var ret = null;
+            var that = this;
             /// <param name="element" domElement="true" />
             // TODO: Respond to changes in viewState.
+            if (element && !that.inResize) {
+                that.inResize = 1;
+                ret = WinJS.Promise.timeout(0).then(function () {
+                    var listHost = element.querySelector("#voucheradministrationlisthost");
+                    if (listHost && listHost.style) {
+                        var contentArea = element.querySelector(".contentarea");
+                        if (contentArea) {
+                            var width = contentArea.clientWidth;
+                            var height = contentArea.clientHeight - 240;
+                            if (WinJS.Utilities.hasClass(element, "view-size-medium")) {
+                                height -= 100;
+                            }
+                            if (WinJS.Utilities.hasClass(element, "view-size-small")) {
+                                height -= 40;
+                            }
+                            if (width !== that.prevWidth) {
+                                that.prevWidth = width;
+                                //listHost.style.width = width.toString() + "px";
+                            }
+                            if (height !== that.prevHeight) {
+                                that.prevHeight = height;
+                                listHost.style.height = height.toString() + "px";
+                            }
+                        }
+                    }
+                    that.inResize = 0;
+                });
+            }
+            Log.ret(Log.l.u1);
+            return ret;
         }
     });
 })();

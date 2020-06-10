@@ -1,4 +1,23 @@
-﻿.voucherorder-button {
+﻿#voucherbutton {
+    max-width: 200px;
+    margin-left: 8px;
+    float: none;
+}
+#voucheradministrationlisthost {
+    height: calc(100% - 200px);
+}
+
+.view-size-medium #voucheradministrationlisthost {
+    height: calc(100% - 400px);
+}
+
+.view-size-small #voucheradministrationlisthost {
+    height: calc(100% - 600px);
+}
+
+
+/*
+.voucherorder-button {
     margin-left: 5px;
 }
 #categorycomment {
@@ -19,3 +38,4 @@
 .voucherAdministration .contentarea {
     height: 100%;
 }
+*/

@@ -162,7 +162,6 @@
                         }
                         if (listView.winControl.loadingState === "itemsLoaded") {
                             Log.call(Log.l.trace, "VoucherAdministrationList.Controller.");
-
                         } else if (listView.winControl.loadingState === "complete") {
                             if (that.loading) {
                                 that.loading = false;

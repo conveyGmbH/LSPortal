@@ -35,8 +35,8 @@
     position: relative;
     left: 0;
     top: 0;
-    width: calc(100% - 300px);
-    height: calc(100% - 300px);
+    width: 100%;
+    height: 100%;
 }
 
 /* Styles used for the custom layout */
@@ -61,7 +61,7 @@
 }
 */
 #voucherAdministrationList .win-item {
-    width: calc(100% - 300px);
+    width: 100%;
     padding-left: 26px;
     padding-right: 26px;
     padding-top: 2px;
