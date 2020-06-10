@@ -7,6 +7,11 @@
     height: 200px;
 }
 */
+
+#staffheader .win-button {
+    min-width: 100px;
+}
+
 #esStaffAdministrationList .win-itemcontainer .win-itembox,
 #esStaffAdministrationList .win-listview .win-itembox {
     background-color: transparent;
@@ -123,8 +128,10 @@
     margin-right: 5px;
     margin-top: -5px
 }
-#konanz {
+.konanz {
     font-size: small;
+    float: left;
+    width: 100%;
 }
 .list-symbol-IDw {
     color: green;
