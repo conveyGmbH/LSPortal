@@ -504,7 +504,7 @@
     "label.clientManagementLicenses"	: "Lizenzen",
 	"label.infodeskMessages" : "Unterhaltung",
     "label.esStaffAdministration" : "Standpersonal",
-    "label.voucheradministration" : "Gutschein Administration",
+    "label.voucherAdministration" : "Gutschein Administration",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Abbrechen",
