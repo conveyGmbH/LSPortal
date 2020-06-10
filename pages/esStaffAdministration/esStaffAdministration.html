@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="esStaffAdministration.css" rel="stylesheet" />
+    <script type="text/javascript" src="esStaffAdministrationService.js"></script>
+    <script type="text/javascript" src="esStaffAdministrationController.js"></script>
+    <script type="text/javascript" src="esStaffAdministration.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="esStaffAdministration fragment">
+        <div id="employeeController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="contentarea win-type-body">
+                    <div class="header-separator"></div>
+                    <div class="content-header">
+                        <div class="half-circle half-circle-textcolor">&nbsp;</div>
+                        <div class="content-header-line win-type-caption">
+                            <span class="id-field"></span>
+                            <span class="caption-field" data-win-res="{textContent: 'esstaffadministration.title'}"></span>
+                            <span class="date-field"></span>
+                        </div>
+                    </div>
+                    <div class="content-record"
+                         data-win-bind="style.display: dataEmployee.MitarbeiterVIEWID Binding.Converter.toDisplay">
+                        <div class="line-separator"></div>
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'esstaffadministration.company'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'esstaffadministration.company'}"></span>
+                            <input class="input_field win-textbox" type="text" data-win-bind="value: dataEmployee.Firma Binding.Mode.twoway" />
+                        </div>
+                        <div class="line-separator"></div>
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'esstaffadministration.formOf'}"></span>
+                            <span class="label win-type-caption portrait_only_right" id="titlecombotext" data-win-res="{textContent: 'esstaffadministration.academicTitle'}"></span>
+                            <div class="label landscape_only">
+                                <span data-win-res="{textContent: 'esstaffadministration.formOf'}"></span> / <span id="titlecombotext" data-win-res="{textContent: 'esstaffadministration.academicTitle'}"></span>
+                            </div>
+                            <div class="input_group">
+                                <select id="InitAnrede"
+                                        class="input_small_left win-dropdown"
+                                        data-win-control="WinJS.UI.Repeater"
+                                        data-win-bind="value: dataEmployee.AnredeID Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone">
+                                    <option data-win-bind="value: INITAnredeID; textContent: TITLE"></option>
+                                </select>
+                                <select id="titlecombo"
+                                        class="input_small_left win-dropdown"
+                                        data-win-control="WinJS.UI.Repeater"
+                                        data-win-bind="value: dataEmployee.AkadTitel Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone">
+                                    <option data-win-bind="value: TITLE; textContent: TITLE"></option>
+                                </select>
+                                <span class="input_field" data-win-bind="textContent: dataContact.Titel; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                                <span class="input_small_left" data-win-bind="textContent: InitAnredeItem.TITLE; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                            </div>
+                        </div>
+                        <div class="line-separator"></div>
+                        <div class="win-type-body text-lightcolorU" data-win-bind="innerHTML: noLicenceText; style.display: noLicence Binding.Converter.toDisplay"></div>
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'esstaffadministration.firstname'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'esstaffadministration.firstname'}"></span>
+                            <input class="input_field win-textbox" type="text" data-win-bind="value: dataEmployee.Vorname Binding.Mode.twoway" />
+                        </div>
+                        <div class="field_line field_line_even">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'esstaffadministration.lastname'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'esstaffadministration.lastname'}"></span>
+                            <input class="input_field win-textbox" type="text" data-win-bind="value: dataEmployee.Nachname Binding.Mode.twoway" />
+                        </div>
+                        <div class="line-separator"></div>
+                        <!--<div class="field_line field_line_odd" data-win-bind="style.display: dataEmployee.LogInNameAfterAtSymbole Binding.Converter.toDisplayNone">
+                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'esstaffadministration.login'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'esstaffadministration.login'}"></span>
+                                <input class="input_field win-textbox" type="text" oninput="AppBar.handleEvent('change', 'changeLogin', event)" data-win-bind="value: dataEmployee.Login Binding.Mode.twoway" />
+                            </div>
+                            <div class="line-separator"></div>
+                        <div class="field_line field_line_odd" data-win-bind="style.display: dataEmployee.LogInNameAfterAtSymbole Binding.Converter.toDisplay">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'esstaffadministration.login'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'esstaffadministration.login'}"></span>
+                            <input id="loginFirstPart" class="input_field win-textbox" oninput="AppBar.handleEvent('change', 'changeLogin', event)" type="text" data-win-bind="value: dataEmployee.LogInNameBeforeAtSymbole Binding.Mode.twoway" />
+                        </div>
+                        <div class="field_line field_line_even" data-win-bind="style.display: dataEmployee.LogInNameAfterAtSymbole Binding.Converter.toDisplay">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'esstaffadministration.domain'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'esstaffadministration.domain'}"></span>
+                            <input id="domain" class="input_field win-textbox" oninput="AppBar.handleEvent('change', 'changeLogin', event)" type="text" data-win-bind="value: dataEmployee.LogInNameAfterAtSymbole Binding.Mode.twoway" />
+                        </div>-->
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'esstaffadministration.email'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'esstaffadministration.email'}"></span>
+                            <input class="input_field win-textbox" type="email" data-win-bind="value: dataEmployee.EMail Binding.Mode.twoway" />
+                        </div>
+                        <div class="line-separator"></div>
+                        <!--<div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'esstaffadministration.password'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'esstaffadministration.password'}"></span>
+                            <input class="input_field win-textbox" id="password" oninput="AppBar.handleEvent('change', 'changePassword', event)" type="password" data-win-bind="value: dataEmployee.Password Binding.Mode.twoway" />
+                        </div>
+                        <div class="field_line field_line_even">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'esstaffadministration.password2'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'esstaffadministration.password2'}"></span>
+                            <input class="input_field win-textbox" id="password2" type="password" data-win-bind="value: dataEmployee.Password2 Binding.Mode.twoway" />
+                        </div>-->
+                        <div class="line-separator"></div>
+
+                        <!-- <div class="line-separator"></div>
+        <div data-win-bind="style.display: isEmpRolesVisible Binding.Converter.toDisplay">
+            <div class="field_line" data-win-bind="style.display: dataEmployee.UserSpecID Binding.Converter.toDisplay">
+                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'employee.roles'}"></span>
+                <span class="label landscape_only" data-win-res="{textContent: 'employee.roles'}"></span>
+                <div id="emproleshost" class="input_field fragmenthost"></div>
+            </div>
+    </div>-->
+                    </div>
+                </div>
+                <div class="error-message"
+                     data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

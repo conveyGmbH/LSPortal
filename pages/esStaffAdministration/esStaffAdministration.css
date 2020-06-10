@@ -1,0 +1,32 @@
+﻿/**
+    employee page styles
+*/
+
+#emproleshost.fragmenthost {
+    height: 120px;
+}
+
+.view-size-medium #emproleshost.fragmenthost {
+    height: 180px;
+}
+
+.view-size-small #emproleshost.fragmenthost {
+    height: 360px;
+}
+.text-lightcolorU {
+    font-weight: bold;
+    color: red;
+    text-align: center
+}
+#titlecombo {
+    margin-left: 5%;
+}
+#titlecombotext {
+    margin-left: 4%;
+}
+input[type="text"]:disabled {
+    background: #dddddd;
+}
+input[type="email"]:disabled {
+    background: #dddddd;
+}
