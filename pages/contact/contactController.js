@@ -689,8 +689,7 @@
                                 master.controller.selectRecordId(that.binding.dataContact.KontaktVIEWID);
                             });
                         }
-                    },
-                        function (errorResponse) {
+                    }, function (errorResponse) {
                             Log.print(Log.l.error, "error saving employee");
                         });
 
