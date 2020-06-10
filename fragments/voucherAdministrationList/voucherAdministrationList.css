@@ -120,7 +120,7 @@
     @media (max-width:499px) {
     }
 */
-.view-size-small #voucherAdministrationList .win-disposable {
+#voucherAdministrationList .win-disposable {
     width: 100% !important;
 }
 .view-size-small #voucherAdministrationList .win-item {
