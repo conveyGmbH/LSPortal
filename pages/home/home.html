@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="home.css" rel="stylesheet" />
+    <script type="text/javascript" src="homeService.js"></script>
+    <script type="text/javascript" src="homeController.js"></script>
+    <script type="text/javascript" src="home.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="home fragment">
+        <div id="homeController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="contentarea win-type-body">
+                    <div class="headerFooterPlaceholder">
+                        <div class="list-header">
+                        </div>
+                    </div>
+                    <div class="content-header">
+                        <div class="half-circle half-circle-textcolor">&nbsp;</div>
+                        <div class="content-header-line win-type-caption">
+                            <span class="id-field"></span>
+                            <span class="caption-field" data-win-res="{textContent: 'home.title'}"></span>
+                            <span class="date-field"></span>
+                        </div>
+                    </div>
+                    <div class="action-list-template"
+                         data-win-control="WinJS.Binding.Template" style="display: none">
+                        <div class="action-item">
+                            <div class="action-image" data-win-bind="name: imageName; style.backgroundColor: imageBkgColor"></div>
+                            <div class="action-detail">
+                                <div class="action-title">
+                                    <span data-win-bind="textContent: title"></span>
+                                </div>
+                                <div class="action-comment">
+                                    <span data-win-bind="textContent: comment"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tiles-container">
+                        <div id="homeActions" 
+                             class="tile tile-top listview win-selectionstylefilled"
+                             data-win-control="WinJS.UI.ListView"
+                             data-win-options="{
+                                itemTemplate: select('.action-list-template'),
+                                selectionMode: 'none',
+                                tapBehavior: 'invokeOnly',
+                                layout: { type: WinJS.UI.GridLayout }
+                            }">
+                        </div>
+                    </div>
+                    <div name="info" class="tile tile-navigationcolor tile-bottom">
+                        <div class="tile-button-color">
+                            <div class="half-circle half-circle-lightcolor">&nbsp;</div>
+                            <div class="content-header-line win-type-caption">
+                                <span class="id-field"></span>
+                                <span class="caption-field text-lightcolor"
+                                      data-win-res="{textContent: 'home.info'}"></span>
+                                <span class="date-field"></span>
+                            </div>
+                        </div>
+                        <div class="field_line field_line_full no-border">
+                            <span class="win-type-body text-lightcolor"
+                                  data-win-bind="innerHTML: comment"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="error-message"
+                     data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
+
+            </section>
+        </div>
+    </div>
+</body>
+</html>
