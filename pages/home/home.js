@@ -12,28 +12,27 @@
     "use strict";
     WinJS.Namespace.define("Application.HomeLayout", {
         HomeLayout: WinJS.Class.define(function (options) {
+            this._site = null;
+            this._surface = null;
+        }, {
+            // This sets up any state and CSS layout on the surface of the custom layout
+            initialize: function (site) {
+                this._site = site;
+                this._surface = this._site.surface;
+
+                // Add a CSS class to control the surface level layout
+                WinJS.Utilities.addClass(this._surface, "homeLayout");
+
+                return WinJS.UI.Orientation.vertical;
+            },
+
+            // Reset the layout to its initial state
+            uninitialize: function () {
+                WinJS.Utilities.removeClass(this._surface, "homeLayout");
                 this._site = null;
                 this._surface = null;
-            },
-            {
-                // This sets up any state and CSS layout on the surface of the custom layout
-                initialize: function (site) {
-                    this._site = site;
-                    this._surface = this._site.surface;
-
-                    // Add a CSS class to control the surface level layout
-                    WinJS.Utilities.addClass(this._surface, "homeLayout");
-
-                    return WinJS.UI.Orientation.vertical;
-                },
-
-                // Reset the layout to its initial state
-                uninitialize: function () {
-                    WinJS.Utilities.removeClass(this._surface, "homeLayout");
-                    this._site = null;
-                    this._surface = null;
-                }
-            })
+            }
+        })
     });
     var pageName = Application.getPagePath("home");
 
@@ -93,10 +92,33 @@
                                 height -= contentHeader.clientHeight;
                             }
                             if (width !== that.prevWidth || height !== that.prevHeight) {
-                                var tileTop = element.querySelector(".tile-top");
+                                var tilesContainer = element.querySelector(".tiles-container");
+                                var listView = element.querySelector("#homeActions.listview");
                                 var tileBottom = element.querySelector(".tile-bottom");
-                                if (tileTop && tileBottom && tileBottom.style) {
-                                    if (tileTop.clientHeight + tileBottom.clientHeight < height) {
+                                if (listView && listView.style && 
+                                    tilesContainer && tilesContainer.style && 
+                                    tileBottom && tileBottom.style) {
+                                    var count = that.controller.binding && that.controller.binding.count;
+                                    if (count > 0) {
+                                        var itemWidth = 410;
+                                        var itemHeight = 110;
+                                        var actionItem = listView.querySelector(".action-item");
+                                        if (actionItem) {
+                                            itemWidth = actionItem.clientWidth + 30;
+                                        }
+                                        var itemsPerLine = Math.max(Math.floor(width / itemWidth),1);
+                                        var itemLines = Math.floor(count / itemsPerLine + 0.99);
+                                        var listHeight = itemLines * itemHeight;
+                                        var listWidth = itemsPerLine * itemWidth;
+                                        if (tilesContainer.clientHeight !== listHeight) {
+                                            tilesContainer.style.height = listHeight + "px";
+                                        }
+                                        if (listView.clientWidth !== listWidth && listWidth < width) {
+                                            listView.style.width = listWidth + "px";
+                                            listView.style.marginLeft = "calc(50% - " + listWidth/2 + "px)";
+                                        }
+                                    }
+                                    if (tilesContainer.clientHeight + tileBottom.clientHeight < height) {
                                         tileBottom.style.display = "block";
                                         tileBottom.style.position = "absolute";
                                         tileBottom.style.bottom = 0;

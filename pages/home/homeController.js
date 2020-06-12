@@ -22,6 +22,7 @@
             Log.call(Log.l.trace, "Home.Controller.");
 
             Application.Controller.apply(this, [pageElement, {
+                count: 0
             }, commandList]);
 
             var that = this;
@@ -86,10 +87,7 @@
                                 if (svgInfo.element && svgInfo.element.parentNode) {
                                     var actionItem = svgInfo.element.parentNode.parentNode;
                                     if (actionItem && actionItem.style && actionItem.style.visibility !== "visible") {
-                                        WinJS.Promise.timeout(Math.floor(Math.random() * 150) + 20).then(function() {
-                                            actionItem.style.visibility = "visible";
-                                            return WinJS.UI.Animation.enterPage(actionItem);
-                                        });
+                                        actionItem.style.visibility = "visible";
                                     }
                                 }
                                 return WinJS.Promise.as();
@@ -131,6 +129,7 @@
                         listView.winControl.tapBehavior = WinJS.UI.TapBehavior.invokeOnly;
                     }
                     // add ListView dataSource
+                    that.binding.count = Home.actionsView.length;
                     listView.winControl.itemDataSource = Home.actionsView.dataSource;
                 }
                 return WinJS.Promise.as();

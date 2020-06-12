@@ -27,7 +27,6 @@
                     Home._actions.forEach(function (item, index) {
                         item.title = getResourceText(item.page + ".title");
                         item.comment = getResourceText(item.page + ".comment");
-                        item.imageBkgColor = Colors.navigationColor;
                         list.push(item);
                     });
                     Home._actionsList = new WinJS.Binding.List(list);
