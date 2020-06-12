@@ -426,6 +426,7 @@
     "infodesk.email"         : "E-Mail",
     "infodesk.phone"         : "Telefon",
     "infodesk.mobile"        : "Mobil",
+    "infodesk.comment"        : "Ihre Kontakte suchen/editieren.",
 
     "infodeskEmpList.title" : "Letzte Nachricht",
     "infodeskEmpList.count" : "Anzahl",
@@ -541,6 +542,7 @@
 	"event.dbSyncPassword"  : "DBSYNCPassword",
 	"event.serverList"      : "Serverlist",
     "event.FairVeranstalter" : "Veranstalter",
+    "event.comment" : "Ihre Veranstaltung vorbereiten.",
 
     "questiongroup.title"   : "Fragengruppen",
     "questiongroup.count"   : "Anzahl",
@@ -573,8 +575,10 @@
     "questionList.on"       : "An",
     "questionList.off"      : "Aus",
     "questionList.textarea" : "Bitte geben Sie hier Ihren Kommentar ein ",
+    "questionList.comment" : "Individualisieren Sie Ihren Fragebogen.",
 
-    "reporting.titleExcel"  : "Exporte",
+    "reporting.title"  : "Exporte",
+	"reporting.titleExcel"  : "Excel Export",
     "reporting.titleOther"  : "Andere Exporte",
     "reporting.with"        : "Excel Export mit Überschriften",
     "reporting.without"     : "Excel Export ohne Überschriften",
@@ -600,6 +604,7 @@
 	"reporting.filterOn"    : "Filter an",
     "reporting.filterOff"   : "Filter aus",
 	"reporting.filter"      : "Filter",
+    "reporting.comment"      : "Exportieren Sie Ihre Kontakte in Excel/PDF",
 
     "employee.title"        : "Benutzerkonten",
     "employee.firstname"    : "Vorname",
@@ -618,6 +623,7 @@
 	"employee.firstNameAsc"  : "Vorname ↑",
 	"employee.nameDesc"     : "Name ↓",
 	"employee.nameAsc"      : "Name ↑",
+    "employee.comment"      : "Verwalten Sie hier Ihre Mitarbeiter Zugangsdaten.",
 
     "empList.title"         : "Benutzerkonten",
     "empList.count"         : "Anzahl",
@@ -673,6 +679,7 @@
     "mailing.email"          : "E-Mail",
     "mailing.send"          : "Senden",
     "mailing.testmailsuccessmsg"          : "Ihre Test-E-Mail wurde erfolgreich versendet",
+    "mailing.comment"          : "Senden Sie Dankes-Emails an ihre Kontakte.",
     
     "mailingProduct.title"         : "Mailing Produkte",
     "mailingProduct.event"         : "Veranstaltung",
@@ -891,12 +898,13 @@
     "startnodata.text6" : "Benutzeranleitung LeadSuccess Portal",
     "startnodata.text7" : "Benutzeranleitung LeadSuccess APP",
 
-    "voucheradministration.title" : "Gutschein Administration",
+    "voucherAdministration.title" : "Gutscheinbestellung",
     "voucheradministration.btnlabelorder" : "Bestellen",
     "voucheradministration.catergory" : "Gutscheinart",
     "voucheradministration.categorycomment" : "Kommentar",
     "voucheradministration.categorycommentplaceholder" : "Optionaler Kommentar - wird bei der Abrechnung mit angegeben",
     "voucheradministration.vouchercount" : "Anzahl",
+    "voucherAdministration.comment" : "Hier bestellen Sie Gutscheine, die Sie an Ihre Besucher weitergeben können.",
 
     "voucheradministrationlist.articlename" : "Besteller",
     "voucheradministrationlist.articlesum" : "Anzahl",
@@ -933,5 +941,9 @@
     "esstaffadministration.companyAsc"      : "Firma ↑",
     "esstaffadministration.formOf"      : "Anrede",
     "esstaffadministration.academicTitle"      : "Titel",
-    "esstaffadministration.email"      : "E-Mail"
+    "esStaffAdministration.email"      : "E-Mail",
+    "esStaffAdministration.comment"      : "Hier registrieren Sie Ihr Standpersonal und erhalten Ihre Ausstellerausweise.",
+
+    "contacts.title"      : "Kontakte",
+    "contacts.comment"      : "Hier finden Sie Ihre Kontakte."
 }			

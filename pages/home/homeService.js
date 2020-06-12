@@ -8,9 +8,15 @@
 
     WinJS.Namespace.define("Home", {
         _actions: [
-            { page: "esStaffAdministration", imageName: "keys" },
+            { page: "esStaffAdministration", imageName: "id_card" },
             { page: "voucherAdministration", imageName: "Gutschein1.1" },
-            { page: "resourcesAdministration", imageName: "user_headset" },
+            { page: "reporting", imageName: "download" },
+            { page: "contacts", imageName: "businesspeople2" },
+            { page: "infodesk", imageName: "magnifying_glass" },
+            { page: "questionList", imageName: "question_and_answer" },
+            { page: "event", imageName: "calendar_1" },
+            { page: "mailing", imageName: "mail" },
+            { page: "employee", imageName: "keys" },
             { page: "start", imageName: "home" }
         ],
         _actionsList: null,
