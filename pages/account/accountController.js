@@ -9,6 +9,7 @@
 /// <reference path="~/www/lib/convey/scripts/pageController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/pages/account/accountService.js" />
+/// <reference path="~/www/pages/home/homeService.js" />
 
 (function () {
     "use strict";
@@ -503,7 +504,6 @@
                                                 AppBar.busy = false;
                                                 AppData._curGetUserDataId = 0;
                                                 AppData.getUserData();
-                                                complete(json);
                                                 return WinJS.Promise.as();
                                             }
                                         } else {
@@ -512,7 +512,6 @@
                                             Application.pageframe.savePersistentStates();
                                             AppData._curGetUserDataId = 0;
                                             AppData.getUserData();
-                                            complete(json);
                                             return WinJS.Promise.as();
                                         }
                                     } else {
@@ -562,6 +561,7 @@
                             }, function (errorResponse) {
                                 // called asynchronously if an error occurs
                                 // or server returns response with an error status.
+                                error(err);
                                 AppData.setErrorMsg(that.binding, errorResponse);
                             }).then(function () {
                                 Colors.updateColors();
@@ -572,6 +572,9 @@
                         }
                     }).then(function () {
                         if (!err) {
+                            if (typeof Home === "object" && Home._actionsList) {
+                                Home._actionsList = null; 
+                            }
                             return Account.appListSpecView.select(function (json) {
                                 // this callback will be called asynchronously
                                 // when the response is available
@@ -582,11 +585,13 @@
                                 } else {
                                     NavigationBar.showGroupsMenu([]);
                                 }
+                                complete(json);
                                 return WinJS.Promise.as();
                             },  function (errorResponse) {
                                 // called asynchronously if an error occurs
                                 // or server returns response with an error status.
                                 AppData.setErrorMsg(that.binding, errorResponse);
+                                error(err);
                                 return WinJS.Promise.as();
                             });
                         } else {

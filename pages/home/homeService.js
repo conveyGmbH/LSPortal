@@ -25,9 +25,14 @@
                 if (!Home._actionsList) {
                     var list = [];
                     Home._actions.forEach(function (item, index) {
-                        item.title = getResourceText(item.page + ".title");
-                        item.comment = getResourceText(item.page + ".comment");
-                        list.push(item);
+                        var curGroups = Application.navigationBarGroups.filter(function(group) {
+                            return (group.id === item.page);
+                        });
+                        if (curGroups && curGroups[0] && !curGroups[0].disabled) {
+                            item.title = getResourceText(item.page + ".title");
+                            item.comment = getResourceText(item.page + ".comment");
+                            list.push(item);
+                        }
                     });
                     Home._actionsList = new WinJS.Binding.List(list);
                 }

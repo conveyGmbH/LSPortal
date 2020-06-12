@@ -9,6 +9,7 @@
 /// <reference path="~/www/lib/convey/scripts/pageController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/pages/dbinit/dbinitService.js" />
+/// <reference path="~/www/pages/home/homeService.js" />
 
 (function () {
     "use strict";
@@ -126,6 +127,9 @@
                         }
                     }).then(function () {
                         if (getStartPage() === "start") {
+                            if (typeof Home === "object" && Home._actionsList) {
+                                Home._actionsList = null; 
+                            }
                             return DBInit.appListSpecView.select(function(json) {
                                 // this callback will be called asynchronously
                                 // when the response is available

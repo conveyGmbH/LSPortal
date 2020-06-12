@@ -9,6 +9,7 @@
 /// <reference path="~/www/lib/convey/scripts/pageController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/pages/login/loginService.js" />
+/// <reference path="~/www/pages/home/homeService.js" />
 
 (function () {
     "use strict";
@@ -219,7 +220,6 @@
                                     AppData._curGetUserDataId = 0;
                                     AppData.getUserData();
                                     AppData.getMessagesData();
-                                    complete(json);
                                     return WinJS.Promise.as();
                                 } else {
                                     AppBar.busy = false;
@@ -270,6 +270,7 @@
                         }, function (errorResponse) {
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
+                            error(errorResponse);
                             AppData.setErrorMsg(that.binding, errorResponse);
                         }).then(function () {
                             Colors.updateColors();
@@ -280,6 +281,9 @@
                     }
                 }).then(function () {
                     if (!err) {
+                        if (typeof Home === "object" && Home._actionsList) {
+                            Home._actionsList = null;
+                        }
                         return Login.appListSpecView.select(function (json) {
                             // this callback will be called asynchronously
                             // when the response is available
@@ -290,14 +294,16 @@
                             } else {
                                 NavigationBar.showGroupsMenu([]);
                             }
+                            complete(json);
                             return WinJS.Promise.as();
                         },
-                            function (errorResponse) {
-                                // called asynchronously if an error occurs
-                                // or server returns response with an error status.
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                                return WinJS.Promise.as();
-                            });
+                        function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                            error(errorResponse);
+                            return WinJS.Promise.as();
+                        });
                     } else {
                         return WinJS.Promise.as();
                     }

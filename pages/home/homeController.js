@@ -59,8 +59,33 @@
                     Application.navigateById("userinfo", event);
                     Log.ret(Log.l.trace);
                 },
+                clickGotoPublish: function (event) {
+                    Log.call(Log.l.trace, "Home.Controller.");
+                    Application.navigateById("publish", event);
+                    Log.ret(Log.l.trace);
+                },
+                clickTopButton: function (event) {
+                    Log.call(Log.l.trace, "Home.Controller.");
+                    var anchor = document.getElementById("menuButton");
+                    var menu = document.getElementById("menu1").winControl;
+                    var placement = "bottom";
+                    menu.show(anchor, placement);
+                    Log.ret(Log.l.trace);
+                },
+                clickLogoff: function (event) {
+                    Log.call(Log.l.trace, "Home.Controller.");
+                    AppData._persistentStates.privacyPolicyFlag = false;
+                    if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
+                        AppHeader.controller.binding.userData = {};
+                        if (!AppHeader.controller.binding.userData.VeranstaltungName) {
+                            AppHeader.controller.binding.userData.VeranstaltungName = "";
+                        }
+                    }
+                    Application.navigateById("login", event);
+                    Log.ret(Log.l.trace);
+                },
                 onItemInvoked: function (eventInfo) {
-                    Log.call(Log.l.trace, "TimeList.Controller.");
+                    Log.call(Log.l.trace, "Home.Controller.");
                     if (eventInfo && eventInfo.detail) {
                         Log.print(Log.l.trace, "itemIndex=" + eventInfo.detail.itemIndex);
                         var item = Home.actionsView.getAt(eventInfo.detail.itemIndex);
