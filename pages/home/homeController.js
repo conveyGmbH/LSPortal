@@ -36,7 +36,6 @@
                     listView.style.visibility = "hidden";
                 }
             }
-            var layout = null;
              */
 
             this.dispose = function() {
@@ -101,12 +100,7 @@
                         var i;
                         Log.print(Log.l.trace, "onLoadingStateChanged called loadingState=" + listView.winControl.loadingState);
                         if (listView.winControl.loadingState === "itemsLoading") {
-                            /*
-                            if (!layout) {
-                                layout = Application.HomeLayout.ActionsLayout;
-                                listView.winControl.layout = { type: layout };
-                            }
-                             */
+                            //
                         } else if (listView.winControl.loadingState === "itemsLoaded") {
                             Colors.loadSVGImageElements(listView, "action-image", 40, "#ffffff", "name", function (svgInfo) {
                                 if (svgInfo.element && svgInfo.element.parentNode) {
@@ -152,6 +146,10 @@
                     // invoke
                     if (listView.winControl.tapBehavior !== WinJS.UI.TapBehavior.invokeOnly) {
                         listView.winControl.tapBehavior = WinJS.UI.TapBehavior.invokeOnly;
+                    }
+                    // set layout orientation!
+                    if (listView.winControl._layout) {
+                        listView.winControl._layout.orientation = WinJS.UI.Orientation.vertical;
                     }
                     // add ListView dataSource
                     that.binding.count = Home.actionsView.length;

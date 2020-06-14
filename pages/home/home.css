@@ -11,8 +11,8 @@
     height: 240px;
 }
 .home .tile-top {
-    margin-left: calc(50% - 400px);
-    width: 800px;
+    margin-left: calc(50% - 430px);
+    width: 840px;
     height: 100%;
 }
 .home .action-item {
@@ -95,8 +95,8 @@
 }
 
 .view-size-medium .home .tile-top {
-    margin-left: calc(50% - 200px);
-    width: 400px;
+    margin-left: calc(50% - 225px);
+    width: 430px;
     height: 100%;
 }
 
