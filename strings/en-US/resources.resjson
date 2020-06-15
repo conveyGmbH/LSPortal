@@ -426,6 +426,7 @@
     "infodesk.email"         : "Email",
     "infodesk.phone"         : "Phone",
     "infodesk.mobile"        : "Mobile",
+    "infodesk.comment"        : "Search / edit your contacts.",
 
     "infodeskEmpList.title" : "User accounts",
     "infodeskEmpList.count" : "Count",
@@ -539,6 +540,7 @@
 	"event.dbSyncPassword"  : "DBSYNCPassword",
 	"event.serverList"      : "Serverlist",
     "event.FairVeranstalter" : "Organizer",
+    "event.comment" : "Prepare your event",
 
 	"optQuestionList.title"   : "Optional Questions/Answers",
     "optQuestionList.count"   : "Count",
@@ -571,8 +573,10 @@
     "questionList.on"       : "On",
     "questionList.off"      : "Off",
     "questionList.textarea" : "Please enter your notes here ",
+	"questionList.comment" : "Customize your questionnaire.",
 
-    "reporting.titleExcel"  : "Exports",
+    "reporting.titleExcel"  : "Excel Export",
+    "reporting.title"  : "Exports",
     "reporting.titleOther"  : "Other exports",
     "reporting.with"        : "Excel export with title",
     "reporting.without"     : "Excel export without title",
@@ -598,6 +602,7 @@
     "reporting.filterOn"    : "Filter on",
     "reporting.filterOff"   : "Filter off",
     "reporting.filter"      : "Filter",
+    "reporting.comment"      : "Manage your employee access data here.",
 
     "employee.title"        : "User accounts",
     "employee.firstname"    : "First name",
@@ -671,6 +676,7 @@
     "mailing.email"          : "EMail",
     "mailing.send"          : "Send",
     "mailing.testmailsuccessmsg"          : "Your testmail has been sent successfullys",
+	"mailing.comment"          : "Send thank you emails to your contacts.",
     
     "mailingProduct.title"    : "Mailing Products",
     "mailingProduct.event"    : "Event",
@@ -884,12 +890,13 @@
     "startnodata.text6" : "User guide LeadSuccess Portal",
     "startnodata.text7" : "User guide LeadSuccess APP",
 
-    "voucheradministration.title" : "Voucher Administration",
+    "voucheradministration.title" : "Order a voucher",
     "voucheradministration.btnlabelorder" : "Order",
     "voucheradministration.catergory" : "Voucher type",
     "voucheradministration.categorycomment" : "Comment",
     "voucheradministration.categorycommentplaceholder" : "Optional comment - is specified in the settlement with",
     "voucheradministration.vouchercount" : "Count",
+    "voucheradministration.comment" : "Here you can order vouchers that you can pass on to your visitors.",
 
     "voucheradministrationlist.articlename" : "Customer",
     "voucheradministrationlist.articlesum" : "Count",
@@ -920,6 +927,9 @@
     "esstaffadministration.companyAsc"      : "Company ↑",
     "esstaffadministration.formOf"      : "Form of",
     "esstaffadministration.academicTitle"      : "Academic title",
-    "esstaffadministration.email"      : "Email"
+    "esstaffadministration.email"      : "Email",
+    "esStaffAdministration.comment"      : "Register your stand personnel here and receive your exhibitor passes.",
 
+    "contacts.title"      : "Contacts",
+    "contacts.comment"      : "You can find your contacts here."
 }

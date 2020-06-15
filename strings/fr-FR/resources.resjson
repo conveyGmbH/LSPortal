@@ -426,6 +426,7 @@
     "infodesk.email"         : "Adresse e-mail",
     "infodesk.phone"         : "Téléphone",
     "infodesk.mobile"        : "Mobile",
+    "infodesk.comment"        : "Recherchez / modifiez vos contacts.",
 
     "infodeskEmpList.title" : "Comptes utilisateurs",
     "infodeskEmpList.count" : "Nombre",
@@ -501,8 +502,8 @@
 	"label.mailingTracking"	: "MailTracking",
     "label.clientManagement"	: "La gestion des clients",
     "label.clientManagementLicenses"	: "Licences",
-    "label.esStaffAdministration" : "Stand personnel",
-    "label.voucheradministration" : "Voucher Administration",
+    "label.esStaffAdministration" : "Personnel de stand",
+    "label.voucherAdministration" : "Bon d'administration",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annuler",
@@ -539,6 +540,7 @@
 	"event.dbSyncPassword"  : "DBSYNCPassword",
 	"event.serverList"      : "Serverlist",
     "event.FairVeranstalter" : "Organisateur",
+    "event.comment" : "Préparez votre événement.",
 
 	"optQuestionList.title"   : "En option Questions/Réponses",
     "optQuestionList.count"   : "Nombre",
@@ -571,9 +573,11 @@
     "questionList.on"       : "On",
     "questionList.off"      : "Off",
     "questionList.textarea" : "S'il vous plaît entrer votre commentaire ici",
+    "questionList.comment" : "Personnalisez votre questionnaire.",
 
-    "reporting.titleExcel"  : "Exports",
-    "reporting.titleOther"  : "Autres exportations",
+    "reporting.titleExcel"  : "Excel Export",
+    "reporting.title"  : "Exports",
+	"reporting.titleOther"  : "Autres exportations",
     "reporting.with"        : "Excel export with title",
     "reporting.without"     : "Excel export without title",
     "reporting.countryst"   : "Statistiques pays",
@@ -598,6 +602,7 @@
     "reporting.filterOn"    : "Filtrer sur",
     "reporting.filterOff"   : "Filtrer",
     "reporting.filter"      : "Filtrer",
+    "reporting.comment"      : "Gérez vos données d'accès des employés ici.",
 
     "employee.title"        : "Comptes utilisateurs",
     "employee.firstname"    : "Prénom",
@@ -671,6 +676,7 @@
     "mailing.email"          : "EMail",
     "mailing.send"          : "Envoyer",
     "mailing.testmailsuccessmsg"          : "Votre testmail a été envoyé avec succès",
+    "mailing.comment"          : "Envoyez des e-mails de remerciement à vos contacts.",
 
     "mailingProduct.title"         : "Mailing Produit",
     "mailingProduct.event"         : "événement",
@@ -884,12 +890,13 @@
     "startnodata.text6" : "Guide de l'utilisateur LeadSuccess Portal",
     "startnodata.text7" : "Guide de l'utilisateur APP LeadSuccess",
 
-    "voucheradministration.title" : "Administration des bons",
+    "voucheradministration.title" : "Commandez un bon",
     "voucheradministration.btnlabelorder" : "Commande",
     "voucheradministration.catergory" : "Type de bon",
     "voucheradministration.categorycomment" : "Commentaire",
     "voucheradministration.categorycommentplaceholder" : "Commentaire facultatif - est spécifié dans le règlement avec",
     "voucheradministration.vouchercount" : "Compter",
+    "voucheradministration.comment" : "Ici, vous pouvez commander des bons que vous pouvez transmettre à vos visiteurs.",
 
     "voucheradministrationlist.articlename" : "Client",
     "voucheradministrationlist.articlesum" : "Compter",
@@ -920,6 +927,9 @@
     "esstaffadministration.companyAsc"      : "Société ↑",
     "esstaffadministration.formOf"      : "Forme de",
     "esstaffadministration.academicTitle"      : "Titre académique",
-    "esstaffadministration.email"      : "Email"
-	
+    "esstaffadministration.email"      : "Email",
+    "esStaffAdministration.comment"      : "Inscrivez ici le personnel de votre stand et recevez vos laissez-passer d'exposant.",
+
+    "contacts.title"      : "Contacts",
+    "contacts.comment"      : "Vous pouvez trouver vos contacts ici."
 }

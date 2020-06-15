@@ -426,6 +426,7 @@
     "infodesk.email"         : "Email",
     "infodesk.phone"         : "Tel",
     "infodesk.mobile"        : "Cell",
+    "infodesk.comment"        : "Cerca / modifica i tuoi contatti.",
 
     "infodeskEmpList.title" : "Utenti",
     "infodeskEmpList.count" : "Numero",
@@ -539,6 +540,7 @@
 	"event.dbSyncPassword"  : "DBSYNCPassword",
 	"event.serverList"      : "Serverlist",
     "event.FairVeranstalter" : "Organizzatore",
+    "event.comment" : "Prepara il tuo evento.",
 
     "optQuestionList.title"   : "opzionale Domande/Risposte",
     "optQuestionList.count"   : "Numero",
@@ -571,8 +573,10 @@
     "questionList.on"       : "Acceso",
     "questionList.off"      : "Spento",
     "questionList.textarea" : "Inserite eventuali commenti in questo spazio",
+    "questionList.comment" : "Personalizza il tuo questionario.",
 
-    "reporting.titleExcel"  : "Esportazione",
+    "reporting.titleExcel"  : "Esportazione Excel",
+    "reporting.title"  : "Esportazione",
     "reporting.titleOther"  : "Altre esportazioni",
     "reporting.with"        : "Excel export con titolo",
     "reporting.without"     : "Excel export senza titolo",
@@ -598,6 +602,7 @@
     "reporting.filterOn"    : "Filtro attivo",
     "reporting.filterOff"   : "Filtro disattivato",
     "reporting.filter"      : "Filtro",
+    "reporting.comment"      : "Gestisci i dati di accesso dei tuoi dipendenti qui.",
 
     "employee.title"        : "Utenti",
     "employee.firstname"    : "Nome",
@@ -671,6 +676,7 @@
     "mailing.email"          : "EMail",
     "mailing.send"          : "Inviare",
     "mailing.testmailsuccessmsg"          : "Il tuo testmail è stato inviato con successo",
+    "mailing.comment"          : "Invia e-mail di ringraziamento ai tuoi contatti.",
 
 	"mailingProduct.title"         : "Mailing Prodotto",
     "mailingProduct.event"         : "Evento",
@@ -884,12 +890,13 @@
     "startnodata.text6" : "Manuale dell'utente Portale LeadSuccess",
     "startnodata.text7" : "Manuale dell'utente APP LeadSuccess",
 
-    "voucheradministration.title" : "Amministrazione voucher",
+    "voucheradministration.title" : "Ordina un buono",
     "voucheradministration.btnlabelorder" : "Ordine",
     "voucheradministration.catergory" : "Tipo di giustificativo",
     "voucheradministration.categorycomment" : "Commento",
     "voucheradministration.categorycommentplaceholder" : "Commento facoltativo - è specificato nella liquidazione con",
     "voucheradministration.vouchercount" : "Conteggio",
+    "voucheradministration.comment" : "Qui puoi ordinare i voucher che puoi trasmettere ai tuoi visitatori.",
 
     "voucheradministrationlist.articlename" : "Cliente",
     "voucheradministrationlist.articlesum" : "Conteggio",
@@ -920,6 +927,9 @@
     "esstaffadministration.companyAsc"      : "Azienda ↑",
     "esstaffadministration.formOf"      : "Forma di",
     "esstaffadministration.academicTitle"      : "Titolo accademico",
-    "esstaffadministration.email"      : "E-mail"
+    "esstaffadministration.email"      : "E-mail",
+    "esStaffAdministration.comment"      : "Registra qui il personale dello stand e ricevi i pass per gli espositori.",
 
+    "contacts.title"      : "Contatti",
+    "contacts.comment"      : "Puoi trovare i tuoi contatti qui."
 }
