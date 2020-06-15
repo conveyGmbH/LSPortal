@@ -23,11 +23,13 @@
         logLevel: 3,
         logGroup: false,
         logNoStack: true,
+        logWinJS: false,
         inputBorder: 1,
         inputBorderRadius: 2,
         inputBorderBottom: true,
         iconStrokeWidth: 150,
         navVertWidth: 300,
+        loadRemoteResource: true,,
         odata: {
             https: true,
             hostName: "leadsuccess.convey.de",
@@ -58,9 +60,13 @@
     // static array of menu groups for the split view pane
     Application.navigationBarGroups = [
         { id: "start", group: 1, svg: "home", disabled: true },
-        { id: "events", group: 2, svg: "office_building", disabled: true },
+        { id: "voucherAdministration", group: 16, svg: "Gutschein1.1", disabled: true },
+        { id: "esStaffAdministration", group: 18, svg: "keys", disabled: true },
+        { id: "resourcesAdministration", group: 17, svg: "user_headset", disabled: true },
+        { id: "events", group: 2, svg: "calendar_1", disabled: true },
         { id: "localevents", group: 12, svg: "office_building", disabled: true },
         { id: "siteevents", group: 13, svg: "office_building", disabled: true },
+        { id: "clientManagement", group: 14, svg: "voodoo_doll", disabled: true },
         { id: "questionList", group: 3, svg: "question_and_answer", disabled: true },
         { id: "mailing", group: 4, svg: "mail", disabled: true },
         { id: "employee", group: 5, svg: "keys", disabled: true },
@@ -75,6 +81,7 @@
     // static array of pages for the navigation bar
     Application.navigationBarPages = [
         { id: "start", group: -1, disabled: false },
+        { id: "home", group: -1, disabled: false },
         { id: "event", group: 2, disabled: false },
         //{ id: "products", group: 2, disabled: false },
         { id: "skills", group: 2, disabled: false },
@@ -104,7 +111,12 @@
         { id: "siteevents", group: 13, disbaled: false },
         { id: "mailingTypes", group: 13, disabled: false },
         { id: "mailingTemplate", group: 13, disabled: false },
+        { id: "clientManagement", group: 14, disabled: false },
+        { id: "clientManagementLicenses", group: 14, disabled: false },
         //{ id: "mailingTracking", group: 13, disabled: false }
+        { id: "voucherAdministration", group: -16, disabled: false },
+        { id: "resourcesAdministration", group: -17, disabled: false },
+        { id: "esStaffAdministration", group: -18, disabled: false }
     ];
 
 
@@ -122,7 +134,10 @@
         { id: "mailingTemplate", master: "siteEventsList" },
         { id: "mailingTracking", master: "siteEventsList" },
         { id: "siteevents", master: "siteEventsList" },
-        { id: "mailingTracking", master: "mailingTrackingList" }
+        { id: "clientManagement", master: "clientManagementList" },
+        { id: "clientManagementLicenses", master: "clientManagementList" },
+        { id: "mailingTracking", master: "mailingTrackingList" },
+        { id: "esStaffAdministration", master: "esStaffAdministrationList" }
     ];
 
     // init page for app startup
@@ -135,7 +150,9 @@
     // some more default page navigation handling
     Application.navigateByIdOverride = function (id, event) {
         Log.call(Log.l.trace, "Application.", "id=" + id);
-        if (id === "events") {
+        if (id === "start" && Application.getPageId(WinJS.Navigation.location) !== "home") {
+            id = "home";
+        } else if (id === "events") {
             id = "event";
         } else if (id === "serviceevents") {
             id = "questionList";
