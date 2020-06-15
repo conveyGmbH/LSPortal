@@ -107,8 +107,8 @@
     "tooltip.newStaff"  : "Add stand personnel",
     "tooltip.deleteStaff"  : "Delete stand personnel",
 
-    "start.title"           : "Start Page",
-    "start.comment"         : "On this page, use the buttons to go to additional pages!",
+    "start.title"           : "LeadSuccess Dashboard",
+    "start.comment"         : "Overview page with statistics.",
     "start.buttonContact"   : "recent contact",
     "start.buttonListLocal" : "local",
     "start.buttonListRemote": "uploaded",
@@ -426,7 +426,7 @@
     "infodesk.email"         : "Email",
     "infodesk.phone"         : "Phone",
     "infodesk.mobile"        : "Mobile",
-    "infodesk.comment"        : "Search / edit your contacts.",
+    "infodesk.comment"        : "Find employees and send or receive messages from them.",
 
     "infodeskEmpList.title" : "User accounts",
     "infodeskEmpList.count" : "Count",

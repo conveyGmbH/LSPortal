@@ -107,8 +107,8 @@
     "tooltip.newStaff"  : "Aggiungi personale dello stand",
     "tooltip.deleteStaff"  : "Elimina il personale dello stand",
 
-    "start.title"           : "Pagina iniziale",
-    "start.comment"         : "Utilizzate i pulsanti su questa pagina per muoversi tra le pagine!",
+    "start.title"           : "LeadSuccess Dashboard",
+    "start.comment"         : "Pagina panoramica con statistiche.",
     "start.buttonContact"   : "Ultimo contatto",
     "start.buttonListLocal" : "Locale",
     "start.buttonListRemote": "Caricato",
@@ -426,7 +426,7 @@
     "infodesk.email"         : "Email",
     "infodesk.phone"         : "Tel",
     "infodesk.mobile"        : "Cell",
-    "infodesk.comment"        : "Cerca / modifica i tuoi contatti.",
+    "infodesk.comment"        : "Trova dipendenti e invia o ricevi messaggi da loro.",
 
     "infodeskEmpList.title" : "Utenti",
     "infodeskEmpList.count" : "Numero",
