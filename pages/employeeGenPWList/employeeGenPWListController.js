@@ -192,8 +192,15 @@
                                     for (var i = indexOfFirstVisible; i <= indexOfLastVisible; i++) {
                                         var element = listView.winControl.elementFromIndex(i);
                                         if (element) {
-                                            var barcodeImage = element.querySelector(".userinfo-qrcode-container");
-                                            if (barcodeImage) { //barcodeImage.barcode
+                                        var barcodeImage = element.querySelectorAll(".userinfo-qrcode-container");
+                                        if (barcodeImage && barcodeImage.length > 0) {
+                                            for (var y = 0; y < barcodeImage.length; y++) {
+                                                if (barcodeImage[y].childElementCount > 0) {
+                                                    var oldElement = barcodeImage[y].firstElementChild;
+                                                    if (oldElement) {
+                                                        barcodeImage[y].removeChild(oldElement);
+                                                    }
+                                                }
                                                 var value = "#LI:" +
                                                     that.employeePWListdata.getAt(i).Login +
                                                     "/" +
@@ -207,50 +214,12 @@
                                                     height: 50,
                                                     correctLevel: 0 //QRErrorCorrectLevel.M
                                                 });
-                                                barcodeImage.appendChild(qrcodeViewer);
-                                                if (barcodeImage.childElementCount > 1) {
-                                                    var oldElement = barcodeImage.firstElementChild;
-                                                    if (oldElement) {
-                                                        barcodeImage.removeChild(oldElement);
-                                                        oldElement.innerHTML = "";
+                                                barcodeImage[y].appendChild(qrcodeViewer);
                                                     }
                                                 }
                                             }
                                         }
-                                    }
-                                //}
-                                /*for (var i = 0; i < that.employeePWListdata.length; i++) {
-                                    var itemElement = listView.winControl.elementFromIndex(i);
-                                    if (itemElement) {
-                                        var barcodeImages = itemElement.querySelectorAll(".userinfo-qrcode-container");
-                                        if (barcodeImages) {
-                                            for (var j = 0; j < barcodeImages.length; j++) {
-                                                var barcodeImage = barcodeImages[j];
-                                                if (barcodeImage) { //barcodeImage.barcode
-                                                    var value = "#LI:" + that.employeePWListdata.getAt(i).Login + "/" + that.employeePWListdata.getAt(i).GenPassword; // barcodeImage.barcode.substring(9, 13)
-                                                    var qrcodeViewer = document.createElement("div");
-                                                    WinJS.Utilities.addClass(qrcodeViewer, "userinfo-qrcode");
-                                                    $(qrcodeViewer).qrcode({
-                                                        text: value,
-                                                        width: 50,
-                                                        height: 50,
-                                                        correctLevel: 0 //QRErrorCorrectLevel.M
-                                                    });
-                                                    barcodeImage.appendChild(qrcodeViewer);
-                                                    if (barcodeImage.childElementCount > 1) {
-                                                        var oldElement = barcodeImage.firstElementChild;
-                                                        if (oldElement) {
-                                                            barcodeImage.removeChild(oldElement);
-                                                            oldElement.innerHTML = "";
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }*/
                                 that.loading = false;
-
                             // load SVG images
                             Colors.loadSVGImageElements(listView, "action-image", 40, Colors.textColor);
                             Colors.loadSVGImageElements(listView, "action-image-flag", 40);

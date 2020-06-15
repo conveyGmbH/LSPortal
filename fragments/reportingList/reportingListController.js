@@ -72,7 +72,13 @@
                 } else {
                     Log.print(Log.l.trace, "OLELetterID 32 blocked!");
                 }
-               
+                if (item.OLELetterID === 31) {
+                    item.exportTypeIcon = "images/audi_pdf_excel.svg";
+                } else if (item.OLELetterID === 32 || item.OLELetterID === 26 || item.OLELetterID === 13 || item.OLELetterID === 8 || item.OLELetterID === 1) {
+                    item.exportTypeIcon = "images/excel.svg";
+                } else {
+                    item.exportTypeIcon = "";
+                }
             }
             this.resultConverter = resultConverter;
 

@@ -7,7 +7,7 @@
 }
 
 #reportingListhost.fragmenthost {
-    height: 100px;
+    height: 150px;
 }
 
 .view-size-big #reportingListhost.fragmenthost {
@@ -53,7 +53,7 @@
 
 .button-container {
     text-align: center;
-    height: 120px;
+    height: 220px;
 }
 
 /*.view-size-medium .button-container {
