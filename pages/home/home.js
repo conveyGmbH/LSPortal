@@ -83,7 +83,7 @@
                                         if (actionItem) {
                                             itemWidth = actionItem.clientWidth + 30;
                                         }
-                                        var itemsPerLine = Math.max(Math.floor(width / itemWidth),1);
+                                        var itemsPerLine = Math.min(Math.max(Math.floor(width / itemWidth),1),2);
                                         var itemLines = Math.floor(count / itemsPerLine + 0.99);
                                         var listHeight = itemLines * itemHeight;
                                         var listWidth = itemsPerLine * itemWidth;
