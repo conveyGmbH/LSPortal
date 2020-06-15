@@ -22,7 +22,7 @@
                             recordID: 0,
                             newdevices: 0,
                             category: null,
-                            orderbtnLabel: getResourceText("voucheradministration.btnlabelorder")
+                            orderbtnLabel: getResourceText("voucherAdministration.btnlabelorder")
                         }, commandList
                     ]);
 
