@@ -11,7 +11,7 @@
             { page: "voucherAdministration", imageName: "Gutschein1.1" },
             { page: "esStaffAdministration", imageName: "id_card" },
             { page: "resourcesAdministration", imageName: "user_headset" },
-            { page: "start", imageName: "home" },
+            { page: "start", imageName: "Dashboard" },
             { page: "event", imageName: "calendar_1" },
             { page: "questionList", imageName: "question_and_answer" },
             { page: "mailing", imageName: "mail" },
