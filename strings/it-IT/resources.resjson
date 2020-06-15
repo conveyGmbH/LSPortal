@@ -621,6 +621,7 @@
 	"employee.firstNameAsc"  : "Nome ↑",
 	"employee.nameDesc"     : "Cognome ↓",
 	"employee.nameAsc"      : "Cognome ↑",
+    "employee.comment"      : "Gestisci i dati di accesso dei tuoi dipendenti qui.",
 
     "empList.title"         : "Utenti",
     "empList.count"         : "Numero",
