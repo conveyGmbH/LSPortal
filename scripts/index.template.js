@@ -29,7 +29,7 @@
         inputBorderBottom: true,
         iconStrokeWidth: 150,
         navVertWidth: 300,
-        loadRemoteResource: true,,
+        loadRemoteResource: true,
         odata: {
             https: true,
             hostName: "leadsuccess.convey.de",
