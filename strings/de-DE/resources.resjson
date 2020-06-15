@@ -107,8 +107,8 @@
     "tooltip.newStaff"  : "Standpersonal hinzufügen",
     "tooltip.deleteStaff"  : "Standpersonal löschen",
 
-    "start.title"           : "LeadSuccess Dashboard",
-    "start.comment"         : "Übersichtsseite mit Statistiken.",
+    "start.title"           : "Dashboard",
+    "start.comment"         : "Übersicht und Statistiken.",
     "start.buttonContact"   : "Letzter Kontakt",
     "start.buttonListLocal" : "Lokal",
     "start.buttonListRemote": "Hochgeladen",
@@ -557,7 +557,7 @@
 	"optQuestionList.selectedQuestion": "Selektierte Frage",
 	"optQuestionList.selectedAnswer": "Selektierte Antwort",
 
-    "questionList.title"    : "Fragen/Antworten",
+    "questionList.title"    : "Messebericht",
     "questionList.count"    : "Anzahl",
     "questionList.answercnt": "Antworten",
     "questionList.labelDelete": "Frage",
@@ -575,7 +575,7 @@
     "questionList.on"       : "An",
     "questionList.off"      : "Aus",
     "questionList.textarea" : "Bitte geben Sie hier Ihren Kommentar ein ",
-    "questionList.comment" : "Individualisieren Sie Ihren Fragebogen.",
+    "questionList.comment" : "Individualisieren Sie Ihre Fragen und Antworten.",
 
     "reporting.title"  : "Exporte",
 	"reporting.titleExcel"  : "Excel Export",
@@ -606,7 +606,7 @@
 	"reporting.filter"      : "Filter",
     "reporting.comment"      : "Exportieren Sie Ihre Kontakte in Excel/PDF",
 
-    "employee.title"        : "Benutzerkonten",
+    "employee.title"        : "Benutzer",
     "employee.firstname"    : "Vorname",
     "employee.lastname"     : "Nachname",
     "employee.login"        : "Anmeldung",
@@ -644,7 +644,7 @@
     "appheader.notpublished": "Nicht publiziert",
     "appheader.portal"      : "Portal",
 
-    "mailing.title"         : "Standard E-Mail",
+    "mailing.title"         : "Mailing",
     "mailing.contactinfo"   : "Wenn Sie ein Mailing wünschen, rufen Sie uns bitte unter der Nummer +49 (0)89 95 45 867 - 55 an oder schreiben Sie uns eine E-Mail",
     "mailing.info"          : "Beschreibung",
     "mailing.event"         : "Veranstaltung",

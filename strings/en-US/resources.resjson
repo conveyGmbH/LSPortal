@@ -107,8 +107,8 @@
     "tooltip.newStaff"  : "Add stand personnel",
     "tooltip.deleteStaff"  : "Delete stand personnel",
 
-    "start.title"           : "LeadSuccess Dashboard",
-    "start.comment"         : "Overview page with statistics.",
+    "start.title"           : "Dashboard",
+    "start.comment"         : "Overview and statistics.",
     "start.buttonContact"   : "recent contact",
     "start.buttonListLocal" : "local",
     "start.buttonListRemote": "uploaded",
@@ -555,7 +555,7 @@
 	"optQuestionList.selectedQuestion": "selected question",
 	"optQuestionList.selectedAnswer": "selected answer",
 
-    "questionList.title"    : "Questions/Answers",
+    "questionList.title"    : "Fair report",
     "questionList.count"    : "Count",
     "questionList.answercnt": "Answers",
     "questionList.labelDelete": "Question",
@@ -573,7 +573,7 @@
     "questionList.on"       : "On",
     "questionList.off"      : "Off",
     "questionList.textarea" : "Please enter your notes here ",
-	"questionList.comment" : "Customize your questionnaire.",
+	"questionList.comment" : "Individualize your questions and answers.",
 
     "reporting.titleExcel"  : "Excel Export",
     "reporting.title"  : "Exports",
@@ -604,7 +604,7 @@
     "reporting.filter"      : "Filter",
     "reporting.comment"      : "Manage your employee access data here.",
 
-    "employee.title"        : "User accounts",
+    "employee.title"        : "Users",
     "employee.firstname"    : "First name",
     "employee.lastname"     : "Last name",
     "employee.login"        : "Login",
@@ -642,7 +642,7 @@
     "appheader.notpublished": "Not published",
     "appheader.portal"      : "Portal",
 
-    "mailing.title"         : "Standard Mail",
+    "mailing.title"         : "Mailing",
     "mailing.contactinfo"   : "If you want a mailing, please call +49 (0)89 95 45 867 - 55 or write us an email ",
   	"mailing.info"          : "Description",
   	"mailing.event"         : "Event",

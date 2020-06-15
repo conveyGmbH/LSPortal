@@ -10,15 +10,15 @@
         _actions: [
             { page: "voucherAdministration", imageName: "Gutschein1.1" },
             { page: "esStaffAdministration", imageName: "id_card" },
-            { page: "resourcesAdministration", imageName: "user_headset" },
+            //{ page: "resourcesAdministration", imageName: "user_headset" },
             { page: "start", imageName: "Dashboard" },
             { page: "event", imageName: "calendar_1" },
             { page: "questionList", imageName: "question_and_answer" },
             { page: "mailing", imageName: "mail" },
             { page: "employee", imageName: "keys" },
             { page: "contacts", imageName: "businesspeople2" },
-            { page: "reporting", imageName: "download" },
-            { page: "infodesk", imageName: "magnifying_glass" }
+            { page: "reporting", imageName: "download" }
+            //{ page: "infodesk", imageName: "magnifying_glass" }
         ],
         _actionsList: null,
         actionsView: {

@@ -107,8 +107,8 @@
     "tooltip.newStaff"  : "Aggiungi personale dello stand",
     "tooltip.deleteStaff"  : "Elimina il personale dello stand",
 
-    "start.title"           : "LeadSuccess Dashboard",
-    "start.comment"         : "Pagina panoramica con statistiche.",
+    "start.title"           : "Dashboard",
+    "start.comment"         : "Panoramica e statistiche.",
     "start.buttonContact"   : "Ultimo contatto",
     "start.buttonListLocal" : "Locale",
     "start.buttonListRemote": "Caricato",
@@ -555,7 +555,7 @@
 	"optQuestionList.selectedQuestion": "Domanda selezionata",
 	"optQuestionList.selectedAnswer": "Risposta selezionata",
 
-    "questionList.title"    : "Domande/Risposte",
+    "questionList.title"    : "Rapporto equo",
     "questionList.count"    : "Numero",
     "questionList.answercnt": "Risposte",
     "questionList.labelDelete": "Domande",
@@ -573,7 +573,7 @@
     "questionList.on"       : "Acceso",
     "questionList.off"      : "Spento",
     "questionList.textarea" : "Inserite eventuali commenti in questo spazio",
-    "questionList.comment" : "Personalizza il tuo questionario.",
+    "questionList.comment" : "Personalizza le tue domande e risposte.",
 
     "reporting.titleExcel"  : "Esportazione Excel",
     "reporting.title"  : "Esportazione",
@@ -604,7 +604,7 @@
     "reporting.filter"      : "Filtro",
     "reporting.comment"      : "Gestisci i dati di accesso dei tuoi dipendenti qui.",
 
-    "employee.title"        : "Utenti",
+    "employee.title"        : "Utente",
     "employee.firstname"    : "Nome",
     "employee.lastname"     : "Cognome",
     "employee.login"        : "Username",
@@ -642,7 +642,7 @@
     "appheader.notpublished": "Non pubblicato",
     "appheader.portal"      : "Portal",
 
-    "mailing.title"         : "Standard Mail",
+    "mailing.title"         : "Mailing",
     "mailing.contactinfo"   : "If you would like a mailing, please call +49 (0)89 95 45 867 - 55 or write us an ",
 	"mailing.info"          : "Descrizione",
     "mailing.event"         : "Evento",
