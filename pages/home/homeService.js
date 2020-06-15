@@ -8,16 +8,17 @@
 
     WinJS.Namespace.define("Home", {
         _actions: [
-            { page: "esStaffAdministration", imageName: "id_card" },
             { page: "voucherAdministration", imageName: "Gutschein1.1" },
-            { page: "reporting", imageName: "download" },
-            { page: "contacts", imageName: "businesspeople2" },
-            { page: "infodesk", imageName: "magnifying_glass" },
-            { page: "questionList", imageName: "question_and_answer" },
+            { page: "esStaffAdministration", imageName: "id_card" },
+            { page: "resourcesAdministration", imageName: "user_headset" },
+            { page: "start", imageName: "home" },
             { page: "event", imageName: "calendar_1" },
+            { page: "questionList", imageName: "question_and_answer" },
             { page: "mailing", imageName: "mail" },
             { page: "employee", imageName: "keys" },
-            { page: "start", imageName: "home" }
+            { page: "contacts", imageName: "businesspeople2" },
+            { page: "reporting", imageName: "download" },
+            { page: "infodesk", imageName: "magnifying_glass" }
         ],
         _actionsList: null,
         actionsView: {
