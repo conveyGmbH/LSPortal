@@ -22,7 +22,8 @@
             Log.call(Log.l.trace, "Home.Controller.");
 
             Application.Controller.apply(this, [pageElement, {
-                count: 0
+                count: 0,
+                comment: getResourceText("info.comment"),
             }, commandList]);
 
             var that = this;
