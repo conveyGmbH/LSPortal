@@ -83,9 +83,14 @@
                                         if (actionItem) {
                                             itemWidth = actionItem.clientWidth + 30;
                                         }
-                                        var itemsPerLine = Math.min(Math.max(Math.floor(width / itemWidth),1),2);
+                                        var itemsPerLine = Math.max(Math.floor(width / itemWidth),1);
                                         var itemLines = Math.floor(count / itemsPerLine + 0.99);
                                         var listHeight = itemLines * itemHeight;
+                                        while (itemsPerLine > 2 && (height - (listHeight + 20 + tileBottom.clientHeight)) > itemHeight) {
+                                            itemsPerLine--;
+                                            itemLines = Math.floor(count / itemsPerLine + 0.99);
+                                            listHeight = itemLines * itemHeight;
+                                        }
                                         var listWidth = itemsPerLine * itemWidth;
                                         if (tilesContainer.clientHeight !== listHeight) {
                                             tilesContainer.style.height = (listHeight + 20) + "px";
@@ -94,15 +99,18 @@
                                             listView.style.width = (listWidth + 20) + "px";
                                             listView.style.marginLeft = "calc(50% - " + (listWidth/2 + 20) + "px)";
                                         }
-                                    } 
-                                    if (tilesContainer.clientHeight + tileBottom.clientHeight < height) {
+                                    }
+                                    var verticalSpace = height - (tilesContainer.clientHeight + tileBottom.clientHeight);
+                                    if (verticalSpace > 0) {
                                         tileBottom.style.display = "block";
                                         tileBottom.style.position = "absolute";
                                         tileBottom.style.bottom = 0;
+                                        tilesContainer.style.marginTop = Math.max(((verticalSpace / 2) - 20),0) + "px";
                                     } else {
                                         tileBottom.style.display = "";
                                         tileBottom.style.position = "";
                                         tileBottom.style.bottom = "";
+                                        tilesContainer.style.marginTop = "";
                                     }
                                 }
                                 that.prevWidth = width;

@@ -107,6 +107,9 @@
     "tooltip.newStaff"  : "Standpersonal hinzufügen",
     "tooltip.deleteStaff"  : "Standpersonal löschen",
 
+    "home.title"            : "Start",
+    "home.info"             : "Wichtige Hinweise",
+
     "start.title"           : "Dashboard",
     "start.comment"         : "Übersicht und Statistiken.",
     "start.buttonContact"   : "Letzter Kontakt",
@@ -505,7 +508,7 @@
     "label.clientManagementLicenses"	: "Lizenzen",
 	"label.infodeskMessages" : "Unterhaltung",
     "label.esStaffAdministration" : "Standpersonal",
-    "label.voucherAdministration" : "Gutschein Administration",
+    "label.voucherAdministration" : "Gutscheinbestellung",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Abbrechen",

@@ -107,6 +107,9 @@
     "tooltip.newStaff"  : "Add stand personnel",
     "tooltip.deleteStaff"  : "Delete stand personnel",
 
+    "home.title"            : "Start",
+    "home.info"             : "Important information",
+
     "start.title"           : "Dashboard",
     "start.comment"         : "Overview and statistics.",
     "start.buttonContact"   : "recent contact",
@@ -503,7 +506,7 @@
     "label.clientManagement"	: "Client management",
     "label.clientManagementLicenses"	: "Licenses",
     "label.esStaffAdministration" : "Stand personnel",
-    "label.voucherAdministration" : "Voucher Administration",
+    "label.voucherAdministration" : "Voucher orders",
     
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Cancel",
@@ -891,7 +894,7 @@
     "startnodata.text6" : "User guide LeadSuccess Portal",
     "startnodata.text7" : "User guide LeadSuccess APP",
 
-    "voucherAdministration.title" : "Order a voucher",
+    "voucherAdministration.title" : "Voucher orders",
     "voucherAdministration.btnlabelorder" : "Order",
     "voucherAdministration.catergory" : "Voucher type",
     "voucherAdministration.categorycomment" : "Comment",

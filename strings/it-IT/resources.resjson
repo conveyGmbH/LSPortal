@@ -107,6 +107,9 @@
     "tooltip.newStaff"  : "Aggiungi personale dello stand",
     "tooltip.deleteStaff"  : "Elimina il personale dello stand",
 
+    "home.title"            : "Start",
+    "home.info"             : "Informazioni importanti",
+
     "start.title"           : "Dashboard",
     "start.comment"         : "Panoramica e statistiche.",
     "start.buttonContact"   : "Ultimo contatto",
@@ -503,7 +506,7 @@
     "label.clientManagement"	: "Gestione dei client",
     "label.clientManagementLicenses"	: "Licenze",
     "label.esStaffAdministration" : "Personale dello stand",
-    "label.voucherAdministration" : "Buono di amministrazione",
+    "label.voucherAdministration" : "Ordine di buoni",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annulla",
@@ -891,7 +894,7 @@
     "startnodata.text6" : "Manuale dell'utente Portale LeadSuccess",
     "startnodata.text7" : "Manuale dell'utente APP LeadSuccess",
 
-    "voucherAdministration.title" : "Ordina un buono",
+    "voucherAdministration.title" : "Ordine di buoni",
     "voucherAdministration.btnlabelorder" : "Ordine",
     "voucherAdministration.catergory" : "Tipo di giustificativo",
     "voucherAdministration.categorycomment" : "Commento",
