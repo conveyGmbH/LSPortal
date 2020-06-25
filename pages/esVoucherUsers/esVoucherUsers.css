@@ -1,0 +1,10 @@
+﻿/**
+    esvoucherUsers page styles
+*/
+input[type="text"]:disabled {
+    background: #dddddd;
+}
+
+input[type="email"]:disabled {
+    background: #dddddd;
+}

@@ -61,8 +61,9 @@
     Application.navigationBarGroups = [
         { id: "start", group: 1, svg: "home", disabled: true },
         { id: "voucherAdministration", group: 16, svg: "Gutschein1.1", disabled: true },
-        { id: "esStaffAdministration", group: 18, svg: "keys", disabled: true },
-        { id: "resourcesAdministration", group: 17, svg: "user_headset", disabled: true },
+        { id: "esStaffAdministration", group: 18, svg: "id_card", disabled: true },
+        { id: "esVoucherUsers", group: 19, svg: "voucher_contact", disabled: true },
+        //{ id: "resourcesAdministration", group: 17, svg: "user_headset", disabled: true },
         { id: "events", group: 2, svg: "calendar_1", disabled: true },
         { id: "localevents", group: 12, svg: "office_building", disabled: true },
         { id: "siteevents", group: 13, svg: "office_building", disabled: true },
@@ -116,7 +117,8 @@
         //{ id: "mailingTracking", group: 13, disabled: false }
         { id: "voucherAdministration", group: -16, disabled: false },
         { id: "resourcesAdministration", group: -17, disabled: false },
-        { id: "esStaffAdministration", group: -18, disabled: false }
+        { id: "esStaffAdministration", group: 18, disabled: false },
+        { id: "esVoucherUsers", group: 19, disabled: false }
     ];
 
 
@@ -137,7 +139,8 @@
         { id: "clientManagement", master: "clientManagementList" },
         { id: "clientManagementLicenses", master: "clientManagementList" },
         { id: "mailingTracking", master: "mailingTrackingList" },
-        { id: "esStaffAdministration", master: "esStaffAdministrationList" }
+        { id: "esStaffAdministration", master: "esStaffAdministrationList" },
+        { id: "esVoucherUsers", master: "esVoucherUsersList" },
     ];
 
     // init page for app startup

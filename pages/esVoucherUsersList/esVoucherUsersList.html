@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="esVoucherUsersList.css" rel="stylesheet" />
+    <script type="text/javascript" src="esVoucherUsersListService.js"></script>
+    <script type="text/javascript" src="esVoucherUsersListController.js"></script>
+    <script type="text/javascript" src="esVoucherUsersList.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="esVoucherUsersList fragment">
+        <div id="emplistController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="contentarea win-type-body">
+                    <div class="content-header">
+                        <div id="staffheader" class="win-type-subtitle master-list-header">
+                            <div>
+                                <button class="list-button-left win-button" id="btn_employee_Name" data-win-res="{textContent: 'esVoucherUsersList.name'}" onclick="AppBar.handleEvent('onclick', 'clickOrderLastname', event)"></button>
+                                <button class="list-button-left win-button" id="btn_employee_firstName" data-win-res="{textContent: 'esVoucherUsersList.firstName'}" onclick="AppBar.handleEvent('onclick', 'clickOrderFirstname', event)"></button>
+                                <button class="list-button-left win-button" id="btn_employee_Company" data-win-res="{textContent: 'esVoucherUsersList.company'}" onclick="AppBar.handleEvent('onclick', 'clickOrderCompany', event)"></button>
+                                <div class="konanz">
+                                    <span data-win-res="{textContent: 'esVoucherUsersList.numberofstafftotal'}"></span><span>: </span><span data-win-bind="textContent: stafftotal"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="esVoucherUsersList-template"
+                         data-win-control="WinJS.Binding.Template" style="display: none">
+                        <div class="list-portrait-only" data-win-bind="disabled: disabled">
+                            <div class="row-separator"></div>
+                            <div class="list-div-left">
+                                <div class="list-symbol-ID" data-win-bind="style.display: NoCheckIn Binding.Converter.toDisplay">
+                                    <div id="user" class="action-image"></div>
+                                </div>
+                                <div class="list-symbol-ID" data-win-bind="style.display: CheckInDate Binding.Converter.toDisplay">
+                                    <div id="id_card" class="action-image"></div>
+                                </div>
+                                <div class="list-compressed">
+                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
+                                          data-win-bind="textContent: fullName"></span>
+                                    <span class="list-compressed-title win-type-ellipsis"
+                                          data-win-bind="textContent: Firmenname"></span>
+                                    <span class="list-compressed-title win-type-ellipsis"
+                                          data-win-bind="textContent: EMail"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="headerFooterPlaceholder">
+                        <div class="list-footer">
+                            <div class="status">
+                                <progress class="win-progress-bar progress"></progress>
+                                <div class="counter">
+                                    <span data-win-res="{textContent: 'empList.count'}"></span><span>: </span><span data-win-bind="textContent: count"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="esVoucherUsersList"
+                         class="listview win-selectionstylefilled"
+                         data-win-control="WinJS.UI.ListView"
+                         data-win-options="{
+                             layout : { type: WinJS.UI.ListLayout },
+                             itemTemplate: select('.esVoucherUsersList-template'),
+                             footer: select('.list-footer')
+                         }">
+                    </div>
+                </div>
+                <div class="error-message"
+                     data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>
