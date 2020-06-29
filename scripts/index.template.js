@@ -73,7 +73,7 @@
         { id: "employee", group: 5, svg: "keys", disabled: true },
         { id: "contacts", group: 6, svg: "businesspeople2", disabled: true },
         { id: "search", group: 7, svg: "magnifying_glass", disabled: true },
-        { id: "reporting", group: 8, svg: "chart_column", disabled: true },
+        { id: "reporting", group: 8, svg: "download", disabled: true },
         { id: "infodesk", group: 9, svg: "about", disabled: true },
         { id: "info", group: 10, svg: "gearwheel", disabled: true },
         { id: "support", group: 11, svg: "user_headset", disabled: true }

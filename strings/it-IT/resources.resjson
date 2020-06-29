@@ -983,11 +983,12 @@
     "esVoucherUsers.requiredField" : "Elemento richiesto",
     "esVoucherUsers.closeImage"    : "Chiudi",
     "esVoucherUsers.ID"            : "ID",
-    "esVoucherUsers.editedOn"      : "Registrato il",
+    "esVoucherUsers.editedOn"      : "Data-di-cambio",
     "esVoucherUsers.mr"            : "Sig.",
     "esVoucherUsers.mrs"           : "Sig.ra",
     "esVoucherUsers.useRestriction": "Utilizza",
     "esVoucherUsers.vouchercode": "Codice coupon",
-    "esVoucherUsers.vouchercomment": "Commento ordine"
+    "esVoucherUsers.vouchercomment": "Commento ordine",
+    "esVoucherUsers.checkindate": "Check-In"
 
 }

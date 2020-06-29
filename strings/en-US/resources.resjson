@@ -983,11 +983,12 @@
     "esVoucherUsers.requiredField" : "Mandatory item",
     "esVoucherUsers.closeImage"    : "Close",
     "esVoucherUsers.ID"            : "ID",
-    "esVoucherUsers.editedOn"      : "Edited",
+    "esVoucherUsers.editedOn"      : "Exchange-date",
     "esVoucherUsers.mr"            : "Mr",
     "esVoucherUsers.mrs"           : "Mrs",
     "esVoucherUsers.useRestriction": "use",
     "esVoucherUsers.vouchercode": "Voucher Code",
-    "esVoucherUsers.vouchercomment": "Order comment"
+    "esVoucherUsers.vouchercomment": "Order comment",
+    "esVoucherUsers.checkindate": "Check-In"
 
 }

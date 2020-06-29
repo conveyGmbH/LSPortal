@@ -984,10 +984,11 @@
     "esVoucherUsers.closeImage"    : "Fermer",
     "esVoucherUsers.ID"            : "ID",
     "esVoucherUsers.editedOn"      : "Créer",
-    "esVoucherUsers.modifiedOn"    : "Modifier",
+    "esVoucherUsers.modifiedOn"    : "Date-d'échange",
     "esVoucherUsers.mr"            : "Monsieur",
     "esVoucherUsers.mrs"           : "Madame",
     "esVoucherUsers.useRestriction": "utiliser",
     "esVoucherUsers.vouchercode": "Code promo",
-    "esVoucherUsers.vouchercomment": "Commentaire de la commande"
+    "esVoucherUsers.vouchercomment": "Commentaire de la commande",
+    "esVoucherUsers.checkindate": "Check-In"
 }

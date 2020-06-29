@@ -992,12 +992,12 @@
     "esVoucherUsers.requiredField" : "Pflichtfeld",
     "esVoucherUsers.closeImage"    : "Schliessen",
     "esVoucherUsers.ID"            : "ID",
-    "esVoucherUsers.editedOn"      : "Erfasst",
+    "esVoucherUsers.editedOn"      : "Umtausch-Datum",
     "esVoucherUsers.mr"            : "Herr",
     "esVoucherUsers.mrs"           : "Frau",
     "esVoucherUsers.useRestriction": "Verwenden",
-    "esVoucherUsers.vouchercode": "Gutscheincode",
+    "esVoucherUsers.vouchercode": "Gutschein-Code",
     "esVoucherUsers.vouchercomment": "Bestell-Kommentar",
-    "esVoucherUsers.checkindate": "Umtauschdatum"
+    "esVoucherUsers.checkindate": "Check-In"
 
 }			
