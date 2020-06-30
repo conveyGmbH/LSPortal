@@ -333,7 +333,7 @@
                             var colCount = attribSpecs.length;
                             if (baseDbView.relationName === "KontaktReport" || baseDbView.relationName === "Kontakt") {
                                 cr = true;
-                                for (var c = 0; c < attribSpecs.length; c++) {
+                                /*for (var c = 0; c < attribSpecs.length; c++) {
                                     var row = results[0];
                                     var key = attribSpecs[c].ODataAttributeName;
                                     var value = row && row[key];
@@ -343,7 +343,18 @@
                                         //attribSpecs[c].hidden = true;
                                         attribSpecs.splice(c, 1);
                                     }
+                                }*/
+                                attribSpecs.forEach(function(item, index) {
+                                    var row = results[0];
+                                    var key = attribSpecs[index].ODataAttributeName;
+                                    var value = row && row[key];
+                                    if (value && value !== "NULL") {
+                                        attribSpecs[index].hidden = false;
+                                    } else {
+                                        //attribSpecs[c].hidden = true;
+                                        attribSpecs.splice(index, 1);
                                 }
+                                });
                             } else {
                                 Log.print(Log.l.trace, attribSpecs.length + " cloumns to export. Write column header...");
                                 cr = false;
