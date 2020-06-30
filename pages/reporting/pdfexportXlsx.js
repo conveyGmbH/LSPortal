@@ -110,7 +110,7 @@
                         newRow = new XElement(S.row);
                         row = results[r];
                         for (c = 1; c < colCount; c++) {
-                            if (!attribSpecs[c].hidden) {
+                            if (typeof attribSpecs[c].hidden !== "undefined" && !attribSpecs[c].hidden) {
                                 key = attribSpecs[c].ODataAttributeName;
                                 value = row[key];
                                 attribTypeId = attribSpecs[c].AttribTypeID;
@@ -167,7 +167,7 @@
                         row = results[r];
                         for (c = 1; c < colCount; c++) {
                             var audioHyperlinkAudio = '';
-                            if (!attribSpecs[c].hidden) {
+                            if (typeof attribSpecs[c].hidden !== "undefined" && !attribSpecs[c].hidden) {
                                 key = attribSpecs[c].ODataAttributeName;
                                 value = row[key];
                                 extraValue = null;
@@ -385,21 +385,22 @@
                             var colCount = attribSpecs.length;
                             if (baseDbView.relationName === "KontaktReport" || baseDbView.relationName === "Kontakt") {
                                 cr = true;
-                                for (var c = 0; c < colCount; c++) {
+                                for (var c = 0; c < attribSpecs.length; c++) {
                                     var row = results[0];
                                     var key = attribSpecs[c].ODataAttributeName;
                                     var value = row && row[key];
                                     if (value && value !== "NULL") {
                                         attribSpecs[c].hidden = false;
                                     } else {
-                                        attribSpecs[c].hidden = true;
+                                        //attribSpecs[c].hidden = true;
+                                        attribSpecs.splice(c, 1);
                                     }
                                 }
                             } else {
-                                Log.print(Log.l.trace, colCount + " cloumns to export. Write column header...");
+                                Log.print(Log.l.trace, attribSpecs.length + " cloumns to export. Write column header...");
                                 cr = false;
                                 var newRow = new XElement(S.row);
-                                for (var c = 1; c < colCount; c++) {
+                                for (var c = 1; c < attribSpecs.length; c++) {
                                     var value = attribSpecs[c].Name;
                                     var type = null;
                                     var valueName = S.v;
@@ -422,15 +423,15 @@
                                 }
                             }
                             sheetData.replaceAll(newRow);
-                            Log.print(Log.l.trace, colCount + "write row data...");
+                            Log.print(Log.l.trace, attribSpecs.length + "write row data...");
                             WinJS.Promise.timeout(50).then(function () {
-                                that.writeResultToSheetData(sheetData, results, attribSpecs, colCount);
+                                that.writeResultToSheetData(sheetData, results, attribSpecs, attribSpecs.length);
                             }).then(function () {
                                 var nextUrl = dbView.getNextUrl(json);
                                 if (nextUrl) {
                                     Log.print(Log.l.trace, "analysisListView: fech more data...");
                                     WinJS.Promise.timeout(0).then(function () {
-                                        that.selectNextViewData(nextUrl, dbView, attribSpecs, colCount, sheetData, openedSpreadsheet, fileName, complete, error);
+                                        that.selectNextViewData(nextUrl, dbView, attribSpecs, attribSpecs.length, sheetData, openedSpreadsheet, fileName, complete, error);
                                     });
                                 } else {
                                     Log.print(Log.l.trace, "analysisListView: export file...");
