@@ -909,6 +909,7 @@
     "voucherAdministration.categorycommentplaceholder" : "Optionaler Kommentar - wird bei der Abrechnung mit angegeben",
     "voucherAdministration.vouchercount" : "Anzahl",
     "voucherAdministration.comment" : "Hier bestellen Sie Gutscheine, die Sie an Ihre Besucher weitergeben können.",
+    "voucherAdministration.waitingMsg" : "Gutschein / Gutscheine werden generiert. Bitte warten!",
 
     "voucheradministrationlist.articlename" : "Besteller",
     "voucheradministrationlist.articlesum" : "Anzahl",

@@ -902,6 +902,7 @@
     "voucherAdministration.categorycommentplaceholder" : "Commento facoltativo - è specificato nella liquidazione con",
     "voucherAdministration.vouchercount" : "Conteggio",
     "voucherAdministration.comment" : "Qui puoi ordinare i voucher che puoi trasmettere ai tuoi visitatori.",
+    "voucherAdministration.waitingMsg" : "Vengono generati buoni / buoni. Attendere prego!",
 
     "voucheradministrationlist.articlename" : "Cliente",
     "voucheradministrationlist.articlesum" : "Conteggio",

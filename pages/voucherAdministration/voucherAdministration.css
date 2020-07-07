@@ -14,6 +14,11 @@
 .view-size-small #voucheradministrationlisthost {
     height: calc(100% - 600px);
 }
+#waitingmsg {
+    font-size: 20px;
+    font-weight: bolder;
+    text-align: center;
+}
 
 
 /*

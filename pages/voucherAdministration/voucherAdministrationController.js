@@ -22,7 +22,8 @@
                             recordID: 0,
                             newdevices: 0,
                             category: null,
-                            orderbtnLabel: getResourceText("voucherAdministration.btnlabelorder")
+                            orderbtnLabel: getResourceText("voucherAdministration.btnlabelorder"),
+                            showMsg: 'none'
                         }, commandList
                     ]);
 
@@ -135,6 +136,16 @@
                     item.Enddatum = that.getDateObject(item.Enddatum);
                 }
                 this.resultConverter = resultConverter;
+            
+                var showWaitingText = function (show) {
+                    var waitingMsg = pageElement.querySelector("#waitingmsg");
+                    if (show === 1) {
+                        waitingMsg.style.display = "block";
+                    } else {
+                        waitingMsg.style.display = "none";
+                    }
+                }
+                this.showWaitingText = showWaitingText;
 
                 // define handlers
                 this.eventHandlers = {
@@ -148,6 +159,7 @@
                     clickOrderNewVoucher: function () {
                         Log.call(Log.l.trace, "VoucherAdministration.Controller.");
                         AppData.setErrorMsg(that.binding);
+                        that.showWaitingText(1);
                         var vid = AppData.getRecordId("Veranstaltung");
                         Log.call(Log.l.trace, "VoucherAdministration.Controller.");
                         AppData.call("PRC_OrderVouchers", {
@@ -158,10 +170,11 @@
                         }, function (json) {
                             Log.print(Log.l.info, "call success! ");
                             that.resetFields();
-                            that.loadData();
+                            that.loadData(1);
                         }, function (error) {
                             Log.print(Log.l.error, "call error");
                             that.resetFields();
+                            that.showWaitingText(0);
                         });
                         Log.ret(Log.l.trace);
                     },
@@ -229,7 +242,7 @@
                     }
                 };
 
-                var loadData = function () {
+                var loadData = function (waitingMsg) {
                     Log.call(Log.l.trace, "VoucherAdministration.Controller.");
                     that.loading = true;
                     var ID = AppData.getRecordId("Veranstaltung");
@@ -280,19 +293,28 @@
                                 return WinJS.Promise.as();
                             }
                         }
+                     }).then(function () {
+                         if (waitingMsg) {
+                             that.showWaitingText(0);
+                         } else {
+                             Log.print(Log.l.trace, "WaitingMsg display not set!");
+                         }
                     });
                     Log.ret(Log.l.trace);
                     return ret;
                 };
                 this.loadData = loadData;
 
-                that.processAll().then(function () {
-                    Log.print(Log.l.trace, "Binding wireup page complete");
-                    return that.loadData();
-                }).then(function () {
-                    AppBar.notifyModified = true;
-                    Log.print(Log.l.trace, "Data loaded");
-                });
+            that.processAll().then(function () {
+                Log.print(Log.l.trace, "WaitingMsg display none");
+                return that.showWaitingText(0);
+            }).then(function () {
+               Log.print(Log.l.trace, "Binding wireup page complete");
+               return that.loadData(); 
+            }).then(function () {
+                AppBar.notifyModified = true;
+                Log.print(Log.l.trace, "Data loaded");
+            });
                 Log.ret(Log.l.trace);
             })
     });

@@ -902,6 +902,7 @@
     "voucherAdministration.categorycommentplaceholder" : "Optional comment - is specified in the settlement with",
     "voucherAdministration.vouchercount" : "Count",
     "voucherAdministration.comment" : "Here you can order vouchers that you can pass on to your visitors.",
+    "voucherAdministration.waitingMsg" : "Voucher / vouchers are generated. Please wait!",
 
     "voucheradministrationlist.articlename" : "Customer",
     "voucheradministrationlist.articlesum" : "Count",

@@ -902,6 +902,7 @@
     "voucherAdministration.categorycommentplaceholder" : "Commentaire facultatif - est spécifié dans le règlement avec",
     "voucherAdministration.vouchercount" : "Compter",
     "voucherAdministration.comment" : "Ici, vous pouvez commander des bons que vous pouvez transmettre à vos visiteurs.",
+    "voucherAdministration.waitingMsg" : "Des bons / bons sont générés. S'il vous plaît, attendez!",
 
     "voucheradministrationlist.articlename" : "Client",
     "voucheradministrationlist.articlesum" : "Compter",
