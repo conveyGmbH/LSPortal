@@ -99,6 +99,29 @@
                             </div>
                         </div>
                         <div class="line-separator"></div>
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'event.visitorFlow'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'event.visitorFlow'}"></span>
+                            <div class="input_field toggle-switch-parent">
+                                <div id="showvisitorFlow" class="input_field"
+                                     data-win-control="WinJS.UI.ToggleSwitch"
+                                     data-win-bind="winControl.checked: isvisitorFlowVisible; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                                     onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field_line field_line_even" data-win-bind="style.display: isvisitorFlowVisible Binding.Converter.toDisplay">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'event.leadSuccess'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'event.leadSuccess'}"></span>
+                            <div class="input_field toggle-switch-parent">
+                                <div id="showvisitorFlowAndLeadSuccess" class="input_field"
+                                     data-win-control="WinJS.UI.ToggleSwitch"
+                                     data-win-bind="winControl.checked: isvisitorFlowVisibleAndLeadSuccess; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                                     onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="line-separator"></div>
                         <div class="field_line field_line_odd" data-win-bind="style.display: isSketchVisible Binding.Converter.toDisplayNone">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'event.showHideCameraQuestionnaire'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'event.showHideCameraQuestionnaire'}"></span>

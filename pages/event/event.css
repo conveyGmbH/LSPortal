@@ -25,6 +25,8 @@
 #showCameraQuestionaire .win-toggleswitch-header,
 #showQuestionnaire .win-toggleswitch-header,
 #showSketch .win-toggleswitch-header,
+#showvisitorFlowAndLeadSuccess .win-toggleswitch-header,
+#showvisitorFlow .win-toggleswitch-header,
 #shopAppBkg .win-toggleswitch-header {
     display: none;
 }

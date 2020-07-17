@@ -22,6 +22,8 @@
                 isDBSyncVisible: AppHeader.controller.binding.userData.SiteAdmin,
                 isPrivacyPolicySVGVisible: AppData._persistentStates.privacyPolicySVGVisible,
                 showQRCode: AppData._persistentStates.showQRCode,
+                isvisitorFlowVisible: AppData._persistentStates.showvisitorFlow,
+                isvisitorFlowVisibleAndLeadSuccess: AppData._persistentStates.showvisitorFlowAndLeadSuccess,
                 showNameInHeader: AppData._persistentStates.showNameInHeader,
                 actualYear: new Date().getFullYear()
             }, commandList]);
@@ -84,6 +86,8 @@
                 var pOptionTypeId = null;
                 var pageProperty = null;
                 var hidePageItem = false;
+                var pValue;
+                var pValueIsSet = false;
                 switch (toggleId) {
                     case "showQuestionnaire":
                         pOptionTypeId = 20;
@@ -138,10 +142,49 @@
                             AppData.getUserData();
                         });
                         break;
+                    case "showvisitorFlow":
+                        pOptionTypeId = 44;
+                        that.binding.isvisitorFlowVisible = checked;
+                        AppData._persistentStates.showvisitorFlow = checked;
+                        //var pValue;
+                        if (that.binding.isvisitorFlowVisible) {
+                            pValue = "1";
+                        } else {
+                            that.binding.isvisitorFlowVisibleAndLeadSuccess = checked;
+                            AppData._persistentStates.showvisitorFlowAndLeadSuccess = checked;
+                            pValue = "0";
+                        }
+                        if (pValue === "1") {
+                            NavigationBar.enablePage("visitorFlowDashboard");
+                            NavigationBar.enablePage("visitorFlowEntExt");
+                            NavigationBar.enablePage("visitorFlowLevelLimits");/*pagename muss wahrscheinlich nochmal geändert werden, jenachdem wie die seite heisst*/
+                        } else {
+                            NavigationBar.disablePage("visitorFlowDashboard");
+                            NavigationBar.disablePage("visitorFlowEntExt");
+                            NavigationBar.disablePage("visitorFlowLevelLimits");
+                        }
+                        //AppData._persistentStates.showvisitorFlowAndLeadSuccess = checked;
+                        break;
+                    case "showvisitorFlowAndLeadSuccess":
+                        pOptionTypeId = 44;
+                        that.binding.isvisitorFlowVisibleAndLeadSuccess = checked;
+                        AppData._persistentStates.showvisitorFlowAndLeadSuccess = checked;
+                        //AppData._persistentStates.showvisitorFlowAndLeadSuccess = checked;
+                        if (that.binding.isvisitorFlowVisibleAndLeadSuccess) {
+                            pValue = "2";
+                        } else {
+                            if (that.binding.isvisitorFlowVisible) {
+                            pValue = "1";
+                            } else {
+                                pValue = "0";
+                        }
+                        }
+                        pValueIsSet = true;
+                        break;
                 }
                 if (pOptionTypeId) {
-                    var pValue;
                     // value: show => pValue: hide!
+                    if (!pValueIsSet) {
                     if (hidePageItem) {
                         if (!checked) {
                             pValue = "1";
@@ -154,6 +197,7 @@
                         } else {
                             pValue = "0";
                         }
+                    }
                     }
                     AppData.call("PRC_SETVERANSTOPTION", {
                         pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
