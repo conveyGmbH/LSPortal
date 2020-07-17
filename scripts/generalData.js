@@ -561,10 +561,14 @@
                     // Enable bzw. disable wird hier behandelt, da umgekehrte Logik mit Anzeigewert
                     if (item.LocalValue === "1" || item.LocalValue === "2") {
                         AppData._persistentStates.visitorFlowActiv = true;
-                        NavigationBar.enablePage("VisitorFlow"); /*pagename muss wahrscheinlich nochmal geändert werden, jenachdem wie die seite heisst*/
+                        NavigationBar.enablePage("visitorFlowDashboard");
+                        NavigationBar.enablePage("visitorFlowEntExt");
+                        NavigationBar.enablePage("visitorFlowLevelLimits");/*pagename muss wahrscheinlich nochmal geändert werden, jenachdem wie die seite heisst*/
                     } else {
                         AppData._persistentStates.visitorFlowActiv = false;
-                        NavigationBar.disablePage("VisitorFlow");
+                        NavigationBar.disablePage("visitorFlowDashboard");
+                        NavigationBar.enablePage("visitorFlowEntExt");
+                        NavigationBar.enablePage("visitorFlowLevelLimits");
                     }
                     break;
                 default:
