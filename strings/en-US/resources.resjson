@@ -508,6 +508,7 @@
     "label.esStaffAdministration" : "Stand personnel",
     "label.voucherAdministration" : "Voucher orders",
     "label.esVoucherUsers" : "Use of vouchers",
+    "label.visitorFlowEntExt" : "Entrance/Exit",
     
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Cancel",

@@ -508,6 +508,7 @@
     "label.esStaffAdministration" : "Personnel de stand",
     "label.voucherAdministration" : "Commande de bons",
     "label.esVoucherUsers" : "Utilisation de bons",
+    "label.visitorFlowEntExt" : "Entrée/Sortie",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annuler",
