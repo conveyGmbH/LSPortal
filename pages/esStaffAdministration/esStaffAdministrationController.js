@@ -273,6 +273,61 @@
                 }
             }
             this.checkIfTicket = checkIfTicket;
+            
+            var saveData = function (complete, error) {
+                Log.call(Log.l.trace, "Mailing.Controller.");
+                AppData.setErrorMsg(that.binding);
+                var ret;
+                var dataEmployee = that.binding.dataEmployee;
+                if (dataEmployee && AppBar.modified && !AppBar.busy) {
+                    AppBar.busy = true;
+                    var recordId = getRecordId();
+                    if (recordId) {
+                        ret = WinJS.Promise.as().then(function () {
+                            AppBar.busy = false;
+                            AppBar.modified = false;
+                            AppData.call("PRC_UpdateMA", {
+                                pMitarbeiterID: that.binding.dataEmployee.MitarbeiterVIEWID,
+                                pCompanyName: that.binding.dataEmployee.Firma,
+                                pFirstName: that.binding.dataEmployee.Vorname,
+                                pLastName: that.binding.dataEmployee.Nachname,
+                                pLogin: null,
+                                pPassword: null,
+                                pEMail: that.binding.dataEmployee.EMail,
+                                pAcadTitle: that.binding.dataEmployee.AkadTitel,
+                                pSalutationID: parseInt(that.binding.dataEmployee.AnredeID)
+                            }, function (json) {
+                                Log.print(Log.l.info, "call success! ");
+                                var master = Application.navigator.masterControl;
+                                if (master && master.controller && master.controller.binding && typeof master.controller.selectRecordId !== "undefined") {
+                                    master.controller.binding.employeeId = that.binding.dataEmployee.MitarbeiterVIEWID;
+                                    master.controller.loadData().then(function () {
+                                        Log.print(Log.l.info, "master.controller.loadData: success!");
+                                        master.controller.selectRecordId(that.binding.dataEmployee.MitarbeiterVIEWID);
+                                    });
+                                }
+                            }, function (error) {
+                                Log.print(Log.l.info, "call error! ");
+                            });
+                        });
+                    } else {
+                        ret = WinJS.Promise.as();
+                    }
+                } else if (AppBar.busy) {
+                    ret = WinJS.Promise.timeout(100).then(function () {
+                        return that.saveData(complete, error);
+                    });
+                } else {
+                    ret = new WinJS.Promise.as().then(function () {
+                        if (typeof complete === "function") {
+                            complete(dataEmployee);
+                        }
+                    });
+                }
+                Log.ret(Log.l.trace);
+                return ret;
+            };
+            this.saveData = saveData;
 
             // define handlers
             this.eventHandlers = {
@@ -343,7 +398,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickOk: function (event) {
-                    Log.call(Log.l.trace, "Employee.Controller.");
+                    Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
                     AppData.setErrorMsg(that.binding);
                     AppData.call("PRC_UpdateMA", {
                         pMitarbeiterID: that.binding.dataEmployee.MitarbeiterVIEWID,
@@ -355,7 +410,7 @@
                         pEMail: that.binding.dataEmployee.EMail,
                         pAcadTitle: that.binding.dataEmployee.AkadTitel,
                         pSalutationID: parseInt(that.binding.dataEmployee.AnredeID)
-                }, function (json) {
+                    }, function (json) {
                         Log.print(Log.l.info, "call success! ");
                         var master = Application.navigator.masterControl;
                         if (master && master.controller && master.controller.binding && typeof master.controller.selectRecordId !== "undefined") {
@@ -367,13 +422,6 @@
                         }
                     }, function (error) {
                         Log.print(Log.l.info, "call error! ");
-                    });
-                    Log.ret(Log.l.trace);
-                    that.saveData(function (response) {
-                        Log.print(Log.l.trace, "employee saved");
-                        
-                    }, function (errorResponse) {
-                        Log.print(Log.l.error, "error saving employee");
                     });
                     Log.ret(Log.l.trace);
                 },
@@ -610,10 +658,10 @@
             var loadData = function (recordId) {
                 Log.call(Log.l.trace, "Employee.Controller.");
                 AppData.setErrorMsg(that.binding);
-                var id = AppData.getRecordId("MitarbeiterVIEW_20609");
+                /*var id = AppData.getRecordId("MitarbeiterVIEW_20609");
                 if (id) {
                     recordId = id;
-                }
+                }*/
                 var ret = new WinJS.Promise.as().then(function () {
                     if (!AppData.initAnredeView.getResults().length) {
                         Log.print(Log.l.trace, "calling select initAnredeData...");

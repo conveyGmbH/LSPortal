@@ -265,7 +265,7 @@
                     }).then(function () {
                         return VoucherAdministration.LangESArticleTypeView.select(function(json) {
                                 Log.print(Log.l.trace, "LangESArticleTypeView: success!");
-                                if (json && json.d && json.d.results && json.d.results.length > 0) {
+                                if (json && json.d && json.d.results) {
                                     var results = json.d.results;
                                     // Now, we call WinJS.Binding.List to get the bindable list
                                     if (vouchercategory && vouchercategory.winControl) {

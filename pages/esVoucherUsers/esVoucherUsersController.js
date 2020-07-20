@@ -7,8 +7,10 @@
 /// <reference path="~/www/lib/convey/scripts/pageController.js" />
 /// <reference path="~/www/lib/convey/scripts/fragmentController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
+/// <reference path="~/www/lib/base64js/scripts/base64js.min.js" />
 /// <reference path="~/www/pages/esVoucherUsers/esVoucherUsersService.js" />
 /// <reference path="~/www/pages/esVoucherUsersList/esVoucherUsersListController.js" />
+/// <reference path="~/www/pages/esVoucherUsers/exportXlsx.js" />
 
 (function () {
     "use strict";
@@ -18,6 +20,7 @@
             Application.Controller.apply(this, [pageElement, {
                 dataContact: getEmptyDefaultValue(EsVoucherUsers.voucherView.defaultValue),
                 restriction: getEmptyDefaultValue(EsVoucherUsers.voucherView.defaultRestriction),
+                restrictionExport: getEmptyDefaultValue(EsVoucherUsers.voucherUsersAllView.defaultRestriction),
                 isEmpRolesVisible: AppHeader.controller.binding.userData.SiteAdmin || AppHeader.controller.binding.userData.HasLocalEvents,
                 noLicence: null,
                 noLicenceText: getResourceText("info.nolicenceemployee"),
@@ -37,6 +40,8 @@
             var prevMasterLoadPromise = null;
             var prevLogin = null;
             var prevPassword;
+
+            
 
             if (titlecombo && titlecombo.winControl) {
                 titlecombo.winControl.data = new WinJS.Binding.List(titlecategorys);
@@ -306,6 +311,37 @@
             };
             this.saveData = saveData;
 
+            var exportData = function () {
+                Log.call(Log.l.trace, "EsVoucherUsers.Controller.");
+                var dbViewTitle = null;
+                that.binding.restrictionExport.VeranstaltungID = AppData.getRecordId("Veranstaltung");
+                that.binding.restrictionExport.LanguageSpecID = AppData.getLanguageId();
+                var dbView = EsVoucherUsers.voucherUsersAllView;
+                var fileName = getResourceText("EsVoucherUsers.excelexportall");
+                if (dbView) {
+                    var exporter = ExportXlsx.exporter;
+                    if (!exporter) {
+                        exporter = new ExportXlsx.ExporterClass();
+                    }
+                    //exporter.showProgress(0);
+                    WinJS.Promise.timeout(50).then(function () {
+                        exporter.saveXlsxFromView(dbView, fileName, function (result) {
+                            AppBar.busy = false;
+                            AppBar.triggerDisableHandlers();
+                        }, function (errorResponse) {
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                            AppBar.busy = false;
+                            AppBar.triggerDisableHandlers();
+                            }, that.binding.restrictionExport, dbViewTitle);
+                    });
+                } else {
+                    AppBar.busy = false;
+                    AppBar.triggerDisableHandlers();
+                }
+                Log.ret(Log.l.trace);
+            }
+            that.exportData = exportData;
+
             // define handlers
             this.eventHandlers = {
                 clickBack: function (event) {
@@ -313,6 +349,15 @@
                     if (!Application.showMaster() && WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done();
                     }
+                    Log.ret(Log.l.trace);
+                },
+                clickExportAllVoucherUsers: function(parameters) {
+                    Log.call(Log.l.trace, "EsVoucherUsers.Controller.");
+                    AppBar.busy = true;
+                    AppBar.triggerDisableHandlers();
+                    WinJS.Promise.timeout(0).then(function () {
+                        that.exportData();
+                    });
                     Log.ret(Log.l.trace);
                 },
                 clickOk: function (event) {
@@ -501,10 +546,10 @@
             var loadData = function (recordId) {
                 Log.call(Log.l.trace, "Employee.Controller.");
                 AppData.setErrorMsg(that.binding);
-                var id = AppData.getRecordId("MitarbeiterVIEW_20609");
+                /*var id = AppData.getRecordId("MitarbeiterVIEW_20609");
                 if (id) {
                     recordId = id;
-                }
+                }*/
                 var ret = new WinJS.Promise.as().then(function () {
                     if (!AppData.initAnredeView.getResults().length) {
                         Log.print(Log.l.trace, "calling select initAnredeData...");

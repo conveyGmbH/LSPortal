@@ -224,9 +224,9 @@
                                     var item = items[0];
                                     if (item.data && item.data.MitarbeiterVIEWID &&
                                         item.data.MitarbeiterVIEWID !== that.binding.employeeId) {
-                                        /* if (AppBar.scope &&
+                                        if (AppBar.scope &&
                                             typeof AppBar.scope.saveData === "function") {
-                                            AppBar.scope.saveData(function (response) {*/
+                                            AppBar.scope.saveData(function (response) {
                                                 // called asynchronously if ok
                                                 that.binding.employeeId = item.data.MitarbeiterVIEWID;
                                                 that.binding.selIdx = item.index;
@@ -238,10 +238,10 @@
                                                 } else {
                                                     Application.navigateById("esStaffAdministration");
                                                 }
-                                             /* }, function (errorResponse) {
+                                              }, function (errorResponse) {
                                                 that.selectRecordId(that.binding.employeeId);
                                             });
-                                      }*/
+                                      }
                                     }
                                 });
                             }

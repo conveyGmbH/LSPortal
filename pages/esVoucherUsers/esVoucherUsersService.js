@@ -50,7 +50,44 @@
                 OrderAttribute: "Name",
                 OrderDesc: true
             }
-        }
+        },
+        _voucherUsersAllView: {
+            get: function () {
+                var ret = AppData.getFormatView("Kontakt", 20612, false);
+                return ret;
+            }
+        },
+        voucherUsersAllView: {
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, "EsStaffAdministration.");
+                var ret = EsVoucherUsers._voucherUsersAllView.select(complete, error, restriction, {
+                    
+                });
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getNextUrl: function (response) {
+                Log.call(Log.l.trace, "EsStaffAdministration.");
+                var ret = EsVoucherUsers._voucherUsersAllView.getNextUrl(response);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            selectNext: function (complete, error, response, nextUrl) {
+                Log.call(Log.l.trace, "EsStaffAdministration.");
+                var ret = EsVoucherUsers._voucherUsersAllView.selectNext(complete, error, response, nextUrl);
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getDbView: function () {
+                return EsVoucherUsers._voucherUsersAllView;
+            },
+            defaultRestriction: {
+                VeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                LanguageSpecID: AppData.getLanguageId()
+            }
+        },
     });
 })();
 
