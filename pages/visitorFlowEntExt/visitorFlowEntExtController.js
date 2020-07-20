@@ -510,9 +510,8 @@
                         }
                         that.loading = false;
                     }, {
-                            VeranstaltungID: AppData.getRecordId("Veranstaltung")
-                        }
-                    );
+                        VeranstaltungID: AppData.getRecordId("Veranstaltung")
+                    });
                 });
                 Log.ret(Log.l.trace);
                 return ret;
