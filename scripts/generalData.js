@@ -215,13 +215,12 @@
                         if (AppData._userRemoteDataPromise) {
                             Log.print(Log.l.info, "Cancelling previous userRemoteDataPromise");
                             AppData._userRemoteDataPromise.cancel();
-                        } else {
+                        } 
                         AppData._userRemoteDataPromise = WinJS.Promise.timeout(timeout * 1000).then(function () {
                             Log.print(Log.l.info, "getUserRemoteData: Now, timeout=" + timeout + "s is over!");
                             AppData._curGetUserRemoteDataId = 0;
                             AppData.getUserData();
                         });
-                        }
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
@@ -247,7 +246,7 @@
                 ret = new WinJS.Promise.as().then(function () {
                     Log.print(Log.l.trace, "calling select generalUserMessageVIEW...");
                     return AppData.generalUserMessageVIEW.select(function (json) {
-                        Log.print(Log.l.trace, "generalUserView: success!");
+                        Log.print(Log.l.trace, "generalUserMessageVIEW: success!");
                         if (json && json.d) {
                             var prevUserMessagesData = AppData._userMessagesData;
                             AppData._userMessagesData.MessagesCounter = json.d.results.length;
@@ -260,22 +259,22 @@
                         }
                         //TEST
                         var timeout = 30;
-                        Log.print(Log.l.info, "getUserRemoteData: Now, wait for timeout=" + timeout + "s");
+                        Log.print(Log.l.info, "getMessagesData: Now, wait for timeout=" + timeout + "s");
                         if (AppData._messagesDataPromise) {
-                            Log.print(Log.l.info, "Cancelling previous userRemoteDataPromise");
+                            Log.print(Log.l.info, "Cancelling previous messagesDataPromise");
                             AppData._messagesDataPromise.cancel();
                         }
                         AppData._messagesDataPromise = WinJS.Promise.timeout(timeout * 1000).then(function () {
-                            Log.print(Log.l.info, "getUserRemoteData: Now, timeout=" + timeout + "s is over!");
+                            Log.print(Log.l.info, "getMessagesData: Now, timeout=" + timeout + "s is over!");
                             //AppData._curGetUserRemoteDataId = 0;
                             AppData.getMessagesData();
                         });
                     }, function (errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            Log.print(Log.l.error,"error in select generalUserView statusText=" + errorResponse.statusText);
-                            //AppData._curGetUserDataId = 0;
-                        });
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        Log.print(Log.l.error,"error in select generalUserMessageVIEW statusText=" + errorResponse.statusText);
+                        //AppData._curGetUserDataId = 0;
+                    });
                 });
             }
             Log.ret(Log.l.trace);
