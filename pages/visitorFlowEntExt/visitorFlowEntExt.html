@@ -24,14 +24,21 @@
                     <div class="visitorflowentext-template"
                          data-win-control="WinJS.Binding.Template" style="display: none">
                         <div class="visitorflowentext-content">
-                            <input class="input_field win-textbox" type="text" data-win-bind="value: TITLE Binding.Mode.twoway;" />
-                            <br /><br />
-                            <input id="eingang" type="checkbox" class="win-checkbox" value="1"
-                                   data-win-bind="checked: Eingang" />
-                            <span data-win-res="{textContent: 'visitorFlowEntExt.entrance'}"></span>
-                            <input id="ausgang" type="checkbox" class="win-checkbox" value="1"
-                                   data-win-bind="checked: Ausgang" />
-                            <span data-win-res="{textContent: 'visitorFlowEntExt.exit'}"></span>
+                            <div class="field_line field_line_odd">
+                                <input class="large_field win-textbox" type="text" data-win-bind="value: TITLE" />
+                            </div>
+                            <div class="field_line field_line_even">
+                                <label class="checkbox input_half_left">
+                                    <input id="eingang" type="checkbox" class="win-checkbox" value="1"
+                                           data-win-bind="checked: Eingang" />
+                                    <span data-win-res="{textContent: 'visitorFlowEntExt.entrance'}"></span>
+                                </label>
+                                <label class="checkbox input_half_right">
+                                    <input id="ausgang" type="checkbox" class="win-checkbox" value="1"
+                                           data-win-bind="checked: Ausgang" />
+                                    <span data-win-res="{textContent: 'visitorFlowEntExt.exit'}"></span>
+                                </label>
+                            </div>
                         </div>
                     </div>
                     <div class="headerFooterPlaceholder">
