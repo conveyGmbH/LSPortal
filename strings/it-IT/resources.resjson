@@ -990,6 +990,13 @@
     "esVoucherUsers.useRestriction": "Utilizza",
     "esVoucherUsers.vouchercode": "Codice coupon",
     "esVoucherUsers.vouchercomment": "Commento ordine",
-    "esVoucherUsers.checkindate": "Check-In"
+    "esVoucherUsers.checkindate": "Check-In",
+
+    "visitorFlowEntExt.title": "Entrata / Uscita",
+    "visitorFlowEntExt.entrance": "Entrata",
+    "visitorFlowEntExt.exit": "Uscita",
+    "visitorFlowEntExt.count": "Contare",
+    "visitorFlowEntExt.labelDelete": "Entrata / Uscita: ",
+    "visitorFlowEntExt.entextDelete": "Vuoi cancellare questa entrata / uscita?"
 
 }

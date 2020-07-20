@@ -991,5 +991,12 @@
     "esVoucherUsers.useRestriction": "utiliser",
     "esVoucherUsers.vouchercode": "Code promo",
     "esVoucherUsers.vouchercomment": "Commentaire de la commande",
-    "esVoucherUsers.checkindate": "Check-In"
+    "esVoucherUsers.checkindate": "Check-In",
+
+    "visitorFlowEntExt.title": "Entrée / Sortie",
+    "visitorFlowEntExt.entrance": "Entrée",
+    "visitorFlowEntExt.exit": "Sortie",
+    "visitorFlowEntExt.count": "Compter",
+    "visitorFlowEntExt.labelDelete": "Entrée / Sortie: ",
+    "visitorFlowEntExt.entextDelete": "Voulez-vous supprimer cette entrée / sortie?"
 }

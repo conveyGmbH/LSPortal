@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="visitorFlowEntExt.css" rel="stylesheet" />
+    <script type="text/javascript" src="visitorFlowEntExtService.js"></script>
+    <script type="text/javascript" src="visitorFlowEntExtController.js"></script>
+    <script type="text/javascript" src="visitorFlowEntExt.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="visitorFlowEntExt fragment">
+        <div id="questiongroupController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="contentarea win-type-body">
+                    <div class="content-header">
+                        <div class="header-separator"></div>
+                        <div class="half-circle half-circle-textcolor">&nbsp;</div>
+                        <div class="content-header-line win-type-caption">
+                            <span class="id-field"></span>
+                            <span class="caption-field" data-win-res="{textContent: 'visitorFlowEntExt.title'}"></span>
+                            <span class="date-field"></span>
+                        </div>
+                    </div>
+                    <div class="visitorflowentext-template"
+                         data-win-control="WinJS.Binding.Template" style="display: none">
+                        <div class="visitorflowentext-content">
+                            <input class="input_field win-textbox" type="text" data-win-bind="value: TITLE Binding.Mode.twoway;" />
+                            <br /><br />
+                            <input id="eingang" type="checkbox" class="win-checkbox" value="1"
+                                   data-win-bind="checked: Eingang" />
+                            <span data-win-res="{textContent: 'visitorFlowEntExt.entrance'}"></span>
+                            <input id="ausgang" type="checkbox" class="win-checkbox" value="1"
+                                   data-win-bind="checked: Ausgang" />
+                            <span data-win-res="{textContent: 'visitorFlowEntExt.exit'}"></span>
+                        </div>
+                    </div>
+                    <div class="headerFooterPlaceholder">
+                        <div class="list-footer">
+                            <div class="status">
+                                <progress class="win-progress-bar progress"></progress>
+                                <div class="counter">
+                                    <span data-win-res="{textContent: 'visitorFlowEntExt.count'}"></span><span>: </span><span data-win-bind="textContent: count"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="visitorflowentext"
+                         class="listview win-selectionstylefilled"
+                         data-win-control="WinJS.UI.ListView"
+                         data-win-options="{
+                             layout : { type: WinJS.UI.ListLayout },
+                             itemTemplate: select('.visitorflowentext-template'),
+                             footer: select('.list-footer')
+                         }">
+                    </div>
+                </div>
+                <div class="error-message"
+                     data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

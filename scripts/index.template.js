@@ -90,6 +90,7 @@
         { id: "questiongroup", group: 3, disabled: false },
         { id: "optQuestionList", group: 3, disabled: false },
         { id: "mandatory", group: 3, disabled: false },
+        { id: "visitorFlowEntExt", group: 3, disabled: false },
         { id: "mailing", group: 4, disabled: false },
         { id: "mailingOptions", group: 4, disabled: false },
         //{ id: "mailingProduct", group: 4, disabled: false },

@@ -999,6 +999,14 @@
     "esVoucherUsers.useRestriction": "Verwenden",
     "esVoucherUsers.vouchercode": "Gutschein-Code",
     "esVoucherUsers.vouchercomment": "Bestell-Kommentar",
-    "esVoucherUsers.checkindate": "Check-In"
+    "esVoucherUsers.checkindate": "Check-In",
+    "esVoucherUsers.excelexportall": "Gutschein-Benutzer",
+
+    "visitorFlowEntExt.title": "Eingänge / Ausgänge",
+    "visitorFlowEntExt.entrance": "Eingang",
+    "visitorFlowEntExt.exit": "Ausgang",
+    "visitorFlowEntExt.count": "Anzahl",
+    "visitorFlowEntExt.labelDelete": "Eingang / Ausgang: ",
+    "visitorFlowEntExt.entextDelete": "Wollen Sie diesen Eingang / Ausgang löschen?"
 
 }			
