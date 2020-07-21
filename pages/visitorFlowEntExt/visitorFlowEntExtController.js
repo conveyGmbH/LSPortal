@@ -18,13 +18,13 @@
 
             Application.RecordsetController.apply(this, [pageElement, {
                 count: 0
-            }, commandList]);
+            }, commandList, false, VisitorFlowEntExt.CR_V_BereichView]);
 
             var that = this;
 
             this.nextUrl = null;
             this.loading = false;
-            this.entext = null;
+            this.listView = listView;
 
             this.dispose = function () {
                 if (listView && listView.winControl) {
@@ -46,8 +46,8 @@
             var getFieldEntries = function (index) {
                 Log.call(Log.l.trace, "VisitorFlowEntExt.Controller.");
                 var ret = {}, i;
-                if (listView && listView.winControl) {
-                    var element = listView.winControl.elementFromIndex(index);
+                if (that.listView && that.listView.winControl) {
+                    var element = that.listView.winControl.elementFromIndex(index);
                     if (element) {
                         var text = element.querySelectorAll('input[type="text"]');
                         if (text) for (i=0; i<text.length; i++) {
@@ -55,7 +55,7 @@
                         }
                         var checkbox = element.querySelectorAll('input[type="checkbox"]');
                         if (checkbox) for (i=0; i<checkbox.length; i++) {
-                            ret[checkbox[i].name] = checkbox[i].checked ? 1 : null;
+                            ret[checkbox[i].name] = checkbox[i].checked ? 1 : 0;
                         }
                     }
                 }
@@ -63,28 +63,6 @@
                 return ret;
             };
             this.getFieldEntries = getFieldEntries;
-
-            var scopeFromRecordId = function (recordId) {
-                var i;
-                Log.call(Log.l.trace, "VisitorFlowEntExt.Controller.", "recordId=" + recordId);
-                var item = null;
-                for (i = 0; i < that.entext.length; i++) {
-                    var role = that.entext.getAt(i);
-                    if (role && typeof role === "object" &&
-                        role.CR_V_BereichVIEWID === recordId) {
-                        item = role;
-                        break;
-                    }
-                }
-                if (item) {
-                    Log.ret(Log.l.trace, "i=" + i);
-                    return { index: i, item: item };
-                } else {
-                    Log.ret(Log.l.trace, "not found");
-                    return null;
-                }
-            };
-            this.scopeFromRecordId = scopeFromRecordId;
 
             // define handlers
             this.eventHandlers = {
@@ -119,43 +97,25 @@
                 },
                 onSelectionChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "VisitorFlowEntExt.Controller.");
-                    if (listView && listView.winControl) {
-                        var listControl = listView.winControl;
-                        if (listControl.selection) {
-                            var selectionCount = listControl.selection.count();
-                            if (selectionCount === 1) {
-                                // Only one item is selected, show the page
-                                listControl.selection.getItems().done(function (items) {
-                                    var item = items[0];
-                                    if (item.data && item.data.CR_V_BereichVIEWID) {
-                                        var newRecId = item.data.CR_V_BereichVIEWID;
-                                        Log.print(Log.l.trace, "newRecId:" + newRecId + " curRecId:" + that.curRecId);
-                                        if (newRecId !== 0 && newRecId !== that.curRecId) {
-                                            AppData.setRecordId('CR_V_Bereich', newRecId);
-                                            if (that.curRecId) {
-                                                that.prevRecId = that.curRecId;
-                                            }
-                                            that.curRecId = newRecId;
-                                            if (that.prevRecId !== 0) {
-                                                that.saveData(function (response) {
-                                                    Log.print(Log.l.trace, "entext saved");
-                                                    AppBar.triggerDisableHandlers();
-                                                }, function (errorResponse) {
-                                                    Log.print(Log.l.error, "error saving entext");
-                                                }).then(function() {
-                                                    if (isAreaModified) {
-                                                        that.loadData();
-                                                    }
-                                                });
-                                            } else {
-                                                AppBar.triggerDisableHandlers();
-                                            }
-                                        }
-                                    }
-                                });
+                    var currentlistIndex = that.currentlistIndex;
+                    that.selectionChanged(function() {
+                        if (isAreaModified) {
+                            isAreaModified = false;
+                            that.loadData();
+                        }
+                    }, function(errorResponse) {
+                        Log.print(Log.l.error, "error saving entext");
+                        that.prevRecId = that.curRecId;
+                        listView.winControl.selection.set(currentlistIndex);
+                        var element = that.listView.winControl.elementFromIndex(currentlistIndex);
+                        if (element) {
+                            var text = element.querySelectorAll('input[type="text"]');
+                            if (text && text[0]) {
+                                text[0].focus();
                             }
                         }
-                    }
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    });
                     Log.ret(Log.l.trace);
                 },
                 clickNew: function (event) {
@@ -172,6 +132,7 @@
                             Log.print(Log.l.info, "MailingTypes insert: success!");
                             // MailingTypes returns object already parsed from json file in response
                             if (json && json.d) {
+                                isAreaModified = false;
                                 that.loadData();
                             }
                         }, function (errorResponse) {
@@ -195,6 +156,7 @@
                         Log.print(Log.l.error, "error saving question");
                     }).then(function() {
                         if (isAreaModified) {
+                            isAreaModified = false;
                             that.loadData();
                         }
                     });
@@ -417,11 +379,15 @@
                 this.addRemovableEventListener(listView, "keydown", function (e) {
                     if (!e.ctrlKey && !e.altKey) {
                         switch (e.keyCode) {
-                        case WinJS.Utilities.Key.end:
-                        case WinJS.Utilities.Key.home:
-                        case WinJS.Utilities.Key.leftArrow:
-                        case WinJS.Utilities.Key.rightArrow:
-                        case WinJS.Utilities.Key.space:
+                            case WinJS.Utilities.Key.backspace:
+                            case WinJS.Utilities.Key.deleteKey:
+                            case WinJS.Utilities.Key.end:
+                            case WinJS.Utilities.Key.home:
+                            case WinJS.Utilities.Key.leftArrow:
+                            case WinJS.Utilities.Key.rightArrow:
+                            case WinJS.Utilities.Key.ctrl:
+                            case WinJS.Utilities.Key.shift:
+                            case WinJS.Utilities.Key.space:
                             e.stopImmediatePropagation();
                             break;
                         }
@@ -453,8 +419,8 @@
                         var limitNew = (typeof newRecord.Limit === "string") ? parseInt(newRecord.Limit) : newRecord.Limit;
                         if (newRecord.TITLE && newRecord.Limit &&
                             (curScope.item.TITLE !== newRecord.TITLE || limitOld !== limitNew)) {
-                            if (that.entext) for (var i=0; i<that.entext.length; i++) {
-                                var item = that.entext.getAt(i);
+                            if (that.records) for (var i=0; i<that.records.length; i++) {
+                                var item = that.records.getAt(i);
                                 if (item.CR_V_BereichVIEWID !== recordId &&
                                     item.TITLE === newRecord.TITLE) {
                                     limitOld = (typeof item.Limit === "string") ? parseInt(item.Limit) : item.Limit;
@@ -465,10 +431,12 @@
                                 }
                             }
                         }
-                        if (that.mergeRecord(curScope.item, newRecord) || AppBar.modified) {
+                        var mergedItem = copyByValue(curScope.item);
+                        if (that.mergeRecord(mergedItem, newRecord) || AppBar.modified) {
                             Log.print(Log.l.trace, "save changes of recordId:" + recordId);
                             ret = VisitorFlowEntExt.CR_V_BereichView.update(function (response) {
                                 Log.print(Log.l.info, "VisitorFlowEntExt.Controller. update: success!");
+                                that.records.setAt(curScope.index, mergedItem);
                                 // called asynchronously if ok
                                 AppBar.modified = false;
                                 if (typeof complete === "function") {
@@ -479,7 +447,7 @@
                                 if (typeof error === "function") {
                                     error(errorResponse);
                                 }
-                            }, recordId, curScope.item);
+                            }, recordId, mergedItem);
                         } else {
                             Log.print(Log.l.trace, "no changes in recordId:" + recordId);
                         }
@@ -496,69 +464,6 @@
                 return ret;
             };
             this.saveData = saveData;
-
-            var loadData = function () {
-                Log.call(Log.l.trace, "MailingList.Controller.");
-                that.loading = true;
-                counter = listView.querySelector(".list-footer .counter");
-                if (counter && counter.style) {
-                    counter.style.display = "none";
-                }
-                isAreaModified = false;
-                AppData.setErrorMsg(that.binding);
-                var ret = new WinJS.Promise.as().then(function () {
-                    return VisitorFlowEntExt.CR_V_BereichView.select(function (json) {
-                        // this callback will be called asynchronously
-                        // when the response is available
-                        AppData.setErrorMsg(that.binding);
-                        Log.print(Log.l.trace, "MailingList: success!");
-                        // employeeView returns object already parsed from json file in response
-                        if (json && json.d && json.d.results && json.d.results.length > 0) {
-                            var results = json.d.results;
-
-                            that.binding.count = results.length;
-
-                            that.entext = new WinJS.Binding.List(results);
-
-                            if (listView.winControl) {
-                                // add ListView dataSource
-                                listView.winControl.itemDataSource = that.entext.dataSource;
-                            }
-                            Log.print(Log.l.trace, "Data loaded");
-                        } else {
-                            that.binding.count = 0;
-                            that.nextUrl = null;
-                            that.entext = null;
-                            if (listView.winControl) {
-                                // add ListView dataSource
-                                listView.winControl.itemDataSource = null;
-                            }
-                            counter = listView.querySelector(".list-footer .counter");
-                            if (counter && counter.style) {
-                                counter.style.display = "inline";
-                            }
-                            that.loading = false;
-                        }
-                    }, function (errorResponse) {
-                        // called asynchronously if an error occurs
-                        // or server returns response with an error status.
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                        counter = listView.querySelector(".list-footer .counter");
-                        if (progress && progress.style) {
-                            progress.style.display = "none";
-                        }
-                        if (counter && counter.style) {
-                            counter.style.display = "inline";
-                        }
-                        that.loading = false;
-                    }, {
-                        VeranstaltungID: AppData.getRecordId("Veranstaltung")
-                    });
-                });
-                Log.ret(Log.l.trace);
-                return ret;
-            };
-            this.loadData = loadData;
 
             that.processAll().then(function() {
                 Log.print(Log.l.trace, "Binding wireup page complete");

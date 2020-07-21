@@ -11,38 +11,67 @@
             get: function () {
                 return AppData.getFormatView("CR_V_Bereich", 0);
             }
-        },
+        }
+    });
+    WinJS.Namespace.define("VisitorFlowEntExt", {
         CR_V_BereichView: {
             select: function (complete, error, recordId) {
-                Log.call(Log.l.trace, "visitorFlowEntExtView.");
+                Log.call(Log.l.trace, "VisitorFlowEntExt.CR_V_BereichView.");
                 var ret = VisitorFlowEntExt._CR_V_BereichView.select(complete, error, recordId);
                 Log.ret(Log.l.trace);
                 return ret;
 
             },
             deleteRecord: function (complete, error, recordId) {
-                Log.call(Log.l.trace, "visitorFlowEntExtView.");
+                Log.call(Log.l.trace, "VisitorFlowEntExt.CR_V_BereichView.");
                 var ret = VisitorFlowEntExt._CR_V_BereichView.deleteRecord(complete, error, recordId);
                 Log.ret(Log.l.trace);
                 return ret;
             },
             update: function (complete, error, recordId, viewResponse) {
-                Log.call(Log.l.trace, "visitorFlowEntExtView.");
+                Log.call(Log.l.trace, "VisitorFlowEntExt.CR_V_BereichView.");
                 var ret = VisitorFlowEntExt._CR_V_BereichView.update(complete, error, recordId, viewResponse);
                 Log.ret(Log.l.trace);
                 return ret;
             },
             insert: function (complete, error, viewResponse) {
-                Log.call(Log.l.trace, "visitorFlowEntExtView.");
+                Log.call(Log.l.trace, "VisitorFlowEntExt.CR_V_BereichView.");
                 var ret = VisitorFlowEntExt._CR_V_BereichView.insert(complete, error, viewResponse);
                 Log.ret(Log.l.trace);
+                return ret;
+            },
+            getNextUrl: function (response) {
+                Log.call(Log.l.trace, "VisitorFlowEntExt.CR_V_BereichView.");
+                var ret = VisitorFlowEntExt._CR_V_BereichView.getNextUrl(response);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            selectNext: function (complete, error, response, nextUrl) {
+                Log.call(Log.l.trace, "VisitorFlowEntExt.CR_V_BereichView.");
+                var ret = VisitorFlowEntExt._CR_V_BereichView.selectNext(complete, error, response, nextUrl);
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            relationName: VisitorFlowEntExt._CR_V_BereichView.relationName,
+            getRecordId: function (record) {
+                var ret = null;
+                if (record) {
+                    if (VisitorFlowEntExt._CR_V_BereichView.oDataPkName) {
+                        ret = record[VisitorFlowEntExt._CR_V_BereichView.oDataPkName];
+                    }
+                    if (!ret && VisitorFlowEntExt._CR_V_FragengruppeView.pkName) {
+                        ret = record[VisitorFlowEntExt._CR_V_BereichView.pkName];
+                    }
+                }
                 return ret;
             },
             defaultValue: {
                 VeranstaltungID: AppData.getRecordId("Veranstaltung"),
                 TITLE : null,
-                Eingang : null,
-                Ausgang : null
+                Limit: null,
+                Eingang : 0,
+                Ausgang : 0
             }
         }
     });
