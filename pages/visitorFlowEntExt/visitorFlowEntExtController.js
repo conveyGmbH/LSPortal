@@ -449,15 +449,19 @@
                     var curScope = that.scopeFromRecordId(recordId);
                     if (curScope && curScope.item) {
                         var newRecord = that.getFieldEntries(curScope.index);
+                        var limitOld = (typeof curScope.item.Limit === "string") ? parseInt(curScope.item.Limit) : curScope.item.Limit;
+                        var limitNew = (typeof newRecord.Limit === "string") ? parseInt(newRecord.Limit) : newRecord.Limit;
                         if (newRecord.TITLE && newRecord.Limit &&
-                            (curScope.item.TITLE !== newRecord.TITLE ||
-                             curScope.item.Limit !== parseInt(newRecord.Limit))) {
+                            (curScope.item.TITLE !== newRecord.TITLE || limitOld !== limitNew)) {
                             if (that.entext) for (var i=0; i<that.entext.length; i++) {
                                 var item = that.entext.getAt(i);
                                 if (item.CR_V_BereichVIEWID !== recordId &&
                                     item.TITLE === newRecord.TITLE) {
-                                    isAreaModified = true;
-                                    break;
+                                    limitOld = (typeof item.Limit === "string") ? parseInt(item.Limit) : item.Limit;
+                                    if (limitOld !== limitNew) {
+                                        isAreaModified = true;
+                                        break;
+                                    }
                                 }
                             }
                         }
