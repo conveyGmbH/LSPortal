@@ -35,6 +35,7 @@
             var progress = null;
             var counter = null;
             var layout = null;
+            var isAreaModified = false;
 
             var maxLeadingPages = 0;
             var maxTrailingPages = 0;
@@ -44,16 +45,18 @@
             // get field entries
             var getFieldEntries = function (index) {
                 Log.call(Log.l.trace, "VisitorFlowEntExt.Controller.");
-                var ret = {};
+                var ret = {}, i;
                 if (listView && listView.winControl) {
                     var element = listView.winControl.elementFromIndex(index);
                     if (element) {
                         var text = element.querySelectorAll('input[type="text"]');
-                        ret["TITLE"] = text[0].value;
-                        var entrance = element.querySelectorAll('#eingang');
-                        ret["Eingang"] = (entrance[0] && entrance[0].checked) ? 1 : null;
-                        var exit = element.querySelectorAll('#ausgang');
-                        ret["Ausgang"] = (exit[0] && exit[0].checked) ? 1 : null;
+                        if (text) for (i=0; i<text.length; i++) {
+                            ret[text[i].name] = text[i].value;
+                        }
+                        var checkbox = element.querySelectorAll('input[type="checkbox"]');
+                        if (checkbox) for (i=0; i<checkbox.length; i++) {
+                            ret[checkbox[i].name] = checkbox[i].checked ? 1 : null;
+                        }
                     }
                 }
                 Log.ret(Log.l.trace, ret);
@@ -139,6 +142,10 @@
                                                     AppBar.triggerDisableHandlers();
                                                 }, function (errorResponse) {
                                                     Log.print(Log.l.error, "error saving entext");
+                                                }).then(function() {
+                                                    if (isAreaModified) {
+                                                        that.loadData();
+                                                    }
                                                 });
                                             } else {
                                                 AppBar.triggerDisableHandlers();
@@ -186,6 +193,10 @@
                     }, function (errorResponse) {
                         AppBar.busy = false;
                         Log.print(Log.l.error, "error saving question");
+                    }).then(function() {
+                        if (isAreaModified) {
+                            that.loadData();
+                        }
                     });
                     Log.ret(Log.l.trace);
                 },
@@ -438,6 +449,18 @@
                     var curScope = that.scopeFromRecordId(recordId);
                     if (curScope && curScope.item) {
                         var newRecord = that.getFieldEntries(curScope.index);
+                        if (newRecord.TITLE && newRecord.Limit &&
+                            (curScope.item.TITLE !== newRecord.TITLE ||
+                             curScope.item.Limit !== parseInt(newRecord.Limit))) {
+                            if (that.entext) for (var i=0; i<that.entext.length; i++) {
+                                var item = that.entext.getAt(i);
+                                if (item.CR_V_BereichVIEWID !== recordId &&
+                                    item.TITLE === newRecord.TITLE) {
+                                    isAreaModified = true;
+                                    break;
+                                }
+                            }
+                        }
                         if (that.mergeRecord(curScope.item, newRecord) || AppBar.modified) {
                             Log.print(Log.l.trace, "save changes of recordId:" + recordId);
                             ret = VisitorFlowEntExt.CR_V_BereichView.update(function (response) {
@@ -477,6 +500,7 @@
                 if (counter && counter.style) {
                     counter.style.display = "none";
                 }
+                isAreaModified = false;
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                     return VisitorFlowEntExt.CR_V_BereichView.select(function (json) {

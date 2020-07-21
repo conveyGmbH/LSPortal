@@ -1004,6 +1004,8 @@
     "esVoucherUsers.excelexportall": "Gutschein-Benutzer",
 
     "visitorFlowEntExt.title": "Eingänge / Ausgänge",
+    "visitorFlowEntExt.areaLimit": "Bereich / Limit",
+    "visitorFlowEntExt.function": "Funktion",
     "visitorFlowEntExt.entrance": "Eingang",
     "visitorFlowEntExt.exit": "Ausgang",
     "visitorFlowEntExt.count": "Anzahl",
