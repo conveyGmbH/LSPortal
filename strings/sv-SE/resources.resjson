@@ -473,6 +473,7 @@
 	"label.mailingTracking"	: "MailTracking",
     "label.clientManagement"	: "Client management",
     "label.clientManagementLicenses"	: "Licenses",
+    "label.employeeVisitorFlow" : "VisitorFlow",
     
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Cancel",
@@ -508,6 +509,8 @@
 	"event.dbSyncLogin"     : "DBSYNCLogin",
 	"event.dbSyncPassword"  : "DBSYNCPassword",
 	"event.serverList"      : "Serverlist",
+    "event.visitorFlow" : "VisitorFlow",
+    "event.leadSuccess" : "LeadSuccess",
 
 	"optQuestionList.title"   : "Optional Questions/Answers",
     "optQuestionList.count"   : "Count",
@@ -812,5 +815,15 @@
     "clientmanagementlicenses.newlicenses" : "Licenses",
     "clientmanagementlicenses.licensebtnLabel" : "Enter",
     "clientmanagementlicenses.licensetext" : "Ordering Info", 
-    "clientmanagementlicenses.editlicensebtnLabel" : "Edit"
+    "clientmanagementlicenses.editlicensebtnLabel" : "Edit",
+
+    "employeeVisitorFlow.area"			: "Bereich",
+    "employeeVisitorFlow.entry"        : "Entrée",
+    "employeeVisitorFlow.exit"         : "Quitter",
+    "employeeVisitorFlow.firstname"			: "Vorname",
+    "employeeVisitorFlow.lastname"			: "Name",
+    "employeeVisitorFlow.street"			: "Strasse",
+    "employeeVisitorFlow.zipCode"			: "Postleitzahl",
+    "employeeVisitorFlow.city"			: "Stadt",
+    "employeeVisitorFlow.country"			: "Land"
 }

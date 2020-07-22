@@ -176,7 +176,7 @@
                                                 that.binding.selIdx = item.index;
                                                 AppData.setRecordId("MitarbeiterVIEW_20471", that.binding.employeeId);
                                                 var curPageId = Application.getPageId(nav.location);
-                                                if ((curPageId === "employee" || curPageId === "skillentry") &&
+                                                if ((curPageId === "employee" || curPageId === "skillentry" || curPageId === "employeeVisitorFlow") &&
                                                     typeof AppBar.scope.loadData === "function") {
                                                     AppBar.scope.loadData(that.binding.employeeId);
                                                 } else {

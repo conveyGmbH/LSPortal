@@ -509,6 +509,7 @@
     "label.voucherAdministration" : "Ordine di buoni",
     "label.esVoucherUsers" : "Uso di buoni",
     "label.visitorFlowEntExt" : "Entrata/Uscita",
+    "label.employeeVisitorFlow" : "VisitorFlow",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annulla",
@@ -546,6 +547,8 @@
 	"event.serverList"      : "Serverlist",
     "event.FairVeranstalter" : "Organizzatore",
     "event.comment" : "Prepara il tuo evento.",
+    "event.visitorFlow" : "VisitorFlow",
+    "event.leadSuccess" : "LeadSuccess",
 
     "optQuestionList.title"   : "opzionale Domande/Risposte",
     "optQuestionList.count"   : "Numero",
@@ -1000,6 +1003,15 @@
     "visitorFlowEntExt.exit": "Uscita",
     "visitorFlowEntExt.count": "Contare",
     "visitorFlowEntExt.labelDelete": "Entrata / Uscita: ",
-    "visitorFlowEntExt.entextDelete": "Vuoi cancellare questa entrata / uscita?"
+    "visitorFlowEntExt.entextDelete": "Vuoi cancellare questa entrata / uscita?",
 
+    "employeeVisitorFlow.area"			: "Area",
+    "employeeVisitorFlow.entry"        : "Entrance",
+    "employeeVisitorFlow.exit"         : "Exit",
+	"employeeVisitorFlow.firstname"    : "Primo nome",
+    "employeeVisitorFlow.lastname"			: "Cognome",
+    "employeeVisitorFlow.street"			: "Strada",
+    "employeeVisitorFlow.zipCode"			: "Codice Postale",
+    "employeeVisitorFlow.city"			: "Città",
+    "employeeVisitorFlow.country"			: "Nazione"
 }

@@ -511,6 +511,7 @@
     "label.voucherAdministration" : "Gutscheinbestellung",
     "label.esVoucherUsers" : "Gutscheinverwendung",
     "label.visitorFlowEntExt" : "Eingänge/Ausgänge",
+	"label.employeeVisitorFlow" : "VisitorFlow",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Abbrechen",
@@ -548,6 +549,8 @@
 	"event.serverList"      : "Serverlist",
     "event.FairVeranstalter" : "Veranstalter",
     "event.comment" : "Ihre Veranstaltung vorbereiten.",
+	"event.visitorFlow" : "VisitorFlow",
+	"event.leadSuccess" : "LeadSuccess",
 
     "questiongroup.title"   : "Fragengruppen",
     "questiongroup.count"   : "Anzahl",
@@ -1010,6 +1013,15 @@
     "visitorFlowEntExt.exit": "Ausgang",
     "visitorFlowEntExt.count": "Anzahl",
     "visitorFlowEntExt.labelDelete": "Eingang / Ausgang: ",
-    "visitorFlowEntExt.entextDelete": "Wollen Sie diesen Eingang / Ausgang löschen?"
+    "visitorFlowEntExt.entextDelete": "Wollen Sie diesen Eingang / Ausgang löschen?",
 
+    "employeeVisitorFlow.area"			: "Bereich",
+	"employeeVisitorFlow.entry"        : "Eingang",
+    "employeeVisitorFlow.exit"        : "Ausgang",
+    "employeeVisitorFlow.firstname"			: "Vorname",
+    "employeeVisitorFlow.lastname"			: "Name",
+    "employeeVisitorFlow.street"			: "Strasse",
+    "employeeVisitorFlow.zipCode"			: "Postleitzahl",
+    "employeeVisitorFlow.city"			: "Stadt",
+    "employeeVisitorFlow.country"			: "Land"
 }			

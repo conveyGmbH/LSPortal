@@ -469,6 +469,8 @@
 	"event.ticketCodeServer" : "Ticketcode-Server",
 	"event.dbSyncLogin"     : "DBSYNCLogin",
 	"event.dbSyncPassword"  : "DBSYNCPassword",
+    "event.visitorFlow" : "VisitorFlow",
+    "event.leadSuccess" : "LeadSuccess",
 
     "questiongroup.title"   : "Fragengruppen",
     "questiongroup.count"   : "Anzahl",
