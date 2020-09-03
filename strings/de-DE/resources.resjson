@@ -47,6 +47,7 @@
     "command.newTermin"     : "Termin anlegen",
     "command.mailTracking"  : "Mailtracking",
     "command.terminedit"  : "Termin ändern",
+    "command.permuser"  : "Zu Dauerkunde ändern",
 
     "tooltip.backward"      : "Zurück blättern",
     "tooltip.edit"          : "Aktuellen Datensatz bearbeiten",
@@ -106,6 +107,7 @@
     "tooltip.orderTicket"  : "Ticket bestellen",
     "tooltip.newStaff"  : "Standpersonal hinzufügen",
     "tooltip.deleteStaff"  : "Standpersonal löschen",
+    "tooltip.permuser"  : "Zu Dauerkunde ändern",
 
     "home.title"            : "Start",
     "home.info"             : "Wichtige Hinweise",
@@ -809,6 +811,7 @@
     "siteevents.errormsg"   : "Csv-Datei konnte nicht hochgeladen werden",
     "siteevents.uploadbtn"   : "Hochladen",
     "siteevents.csvupload"   : "Csv Datei Upload",
+    "siteevents.eventpermuser"   : "Wollen Sie diesen Austeller zu einem Dauerkunden konvertieren?",
 
     "siteeventsneuaus.title" : "Neuer Aussteller",
     "siteeventsneuaus.veranstaltungsname" : "Veranstaltungsname",

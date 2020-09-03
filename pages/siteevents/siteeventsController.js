@@ -143,6 +143,28 @@
             };
             this.deleteData = deleteData;
 
+            var changeToPermanentUser = function (complete, error) {
+                Log.call(Log.l.trace, "SiteEvents.Controller.");
+                AppData.setErrorMsg(that.binding);
+                var recordId = that.binding.veranstaltungId;
+                if (recordId) {
+                    AppData.setErrorMsg(that.binding);
+                    AppData.call("PRC_ConvertExhibitor", {
+                        pVeranstaltungID: recordId
+                    }, function (json) {
+                        Log.print(Log.l.info, "call success! ");
+                        that.loadData(that.binding.restriction.VeranstaltungTerminID);
+                    }, function (error) {
+                        Log.print(Log.l.error, "call error");
+                    });
+                } else {
+                    var err = { status: 0, statusText: "no record selected" };
+                    error(err);
+                }
+                Log.ret(Log.l.trace);
+            };
+            this.changeToPermanentUser = changeToPermanentUser;
+
             var changeEvent = function () {
                 Log.call(Log.l.trace, "LocalEvents.Controller.");
                 AppData.setErrorMsg(that.binding);
@@ -422,6 +444,36 @@
                     }
                     Log.ret(Log.l.trace);
                 },
+                clickCreatePermanentUser: function () {
+                    Log.call(Log.l.trace, "SiteEvents.Controller.");
+                    var confirmTitle = getResourceText("siteevents.eventpermuser");
+                    confirm(confirmTitle, function (result) {
+                        if (result) {
+                            Log.print(Log.l.trace, "clickCreatePermanentUser: user choice OK");
+                            changeToPermanentUser(function (response) {
+                                // delete OK - goto start
+                            }, function (errorResponse) {
+                                // delete ERROR
+                                var message = null;
+                                Log.print(Log.l.error, "error status=" + errorResponse.status + " statusText=" + errorResponse.statusText);
+                                if (errorResponse.data && errorResponse.data.error) {
+                                    Log.print(Log.l.error, "error code=" + errorResponse.data.error.code);
+                                    if (errorResponse.data.error.message) {
+                                        Log.print(Log.l.error, "error message=" + errorResponse.data.error.message.value);
+                                        message = errorResponse.data.error.message.value;
+                                    }
+                                }
+                                if (!message) {
+                                    message = getResourceText("error.delete");
+                                }
+                                alert(message);
+                            });
+                        } else {
+                            Log.print(Log.l.trace, "clickCreatePermanentUser: user choice CANCEL");
+                        }
+                    });
+                    Log.ret(Log.l.trace);
+                },
                 onquerychanged: function (eventInfo) {
                     Log.call(Log.l.trace, "SiteEvents.Controller.");
                     /*var queryText = eventInfo && eventInfo.detail && eventInfo.detail.queryText;
@@ -672,6 +724,7 @@
                                         var newRecId = item.data.VeranstaltungVIEWID;
                                         AppData.setRecordId("ExhibitorMailingStatus", item.data.FairMandantVeranstID);
                                         that.binding.veranstaltungId = item.data.VeranstaltungVIEWID;
+                                        that.isConvertable = item.data.CanConvert;
                                         Log.print(Log.l.trace, "newRecId:" + newRecId + " curRecId:" + that.curRecId);
                                         if (newRecId !== 0 && newRecId !== that.curRecId) {
                                             if (that.curRecId) {
@@ -834,6 +887,13 @@
             this.disableHandlers = {
                 clickBack: function () {
                     if (WinJS.Navigation.canGoBack === true) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                },
+                clickCreatePermanentUser: function(parameters) {
+                    if (that.isConvertable) {
                         return false;
                     } else {
                         return true;
@@ -1049,7 +1109,8 @@
                 deleteEventData: null,
                 suggestionList: null,
                 reorderId: null,
-                imageData: null
+                imageData: null,
+                isConvertable: null
         })
         
     });

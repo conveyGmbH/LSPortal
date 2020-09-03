@@ -47,6 +47,7 @@
     "command.newTermin"     : "Crea un appuntamento",
     "command.mailTracking"  : "Mailtracking",
     "command.terminedit"  : "Modifica data",
+    "command.permuser"  : "Cambia in cliente abituale",
 
     "tooltip.backward"      : "Pagina precedente",
     "tooltip.edit"          : "Modifica Record attuale",
@@ -106,6 +107,7 @@
     "tooltip.orderTicket"  : "Ordina il biglietto",
     "tooltip.newStaff"  : "Aggiungi personale dello stand",
     "tooltip.deleteStaff"  : "Elimina il personale dello stand",
+    "tooltip.permuser"  : "Cambia in cliente abituale",
 
     "home.title"            : "Start",
     "home.info"             : "Informazioni importanti",
@@ -807,6 +809,7 @@
     "siteevents.errormsg"   : "Non è stato possibile caricare il file Csv",
     "siteevents.uploadbtn"   : "Carica",
     "siteevents.csvupload"   : "Caricamento file Csv",
+    "siteevents.eventpermuser"   : "Vuoi convertire questo espositore in un cliente abituale?",
 
     "siteeventsneuaus.title" : "Nuovo espositore",
     "siteeventsneuaus.veranstaltungsname" : "nome dell'evento",

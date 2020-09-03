@@ -47,6 +47,7 @@
     "command.newTermin"     : "Créer un rendez-vous",
     "command.mailTracking"  : "Mailtracking",
     "command.terminedit"  : "Date de modification",
+    "command.permuser"  : "Changer en client régulier",
 
     "tooltip.backward"      : "Page présédente",
     "tooltip.edit"          : "Modifier le contact en cours",
@@ -106,6 +107,7 @@
     "tooltip.orderTicket"  : "Commander un ticket",
     "tooltip.newStaff"  : "Ajouter du personnel sur le stand",
     "tooltip.deleteStaff"  : "Supprimer le personnel du stand",
+    "tooltip.permuser"  : "Changer en client régulier",
 
     "home.title"            : "Start",
     "home.info"             : "Instructions importantes",
@@ -807,6 +809,7 @@
     "siteevents.errormsg"   : "Le fichier Csv n'a pas pu être téléchargé",
     "siteevents.uploadbtn"   : "Télécharger",
     "siteevents.csvupload"   : "Téléchargement de fichiers csv",
+    "siteevents.eventpermuser"   : "Voulez-vous convertir cet exposant en client régulier?",
 
     "siteeventsneuaus.title" : "Nouvel exposant",
     "siteeventsneuaus.veranstaltungsname" : "nom de l'événement",

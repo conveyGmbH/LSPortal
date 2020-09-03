@@ -47,6 +47,7 @@
     "command.newTermin"     : "Create appointment",
     "command.mailTracking"  : "Mailtracking",
     "command.terminedit"  : "Termin edit",
+    "command.permuser"  : "Change to regular customer",
 
     "tooltip.backward"      : "Browse back",
     "tooltip.edit"          : "Edit current record",
@@ -106,6 +107,7 @@
     "tooltip.orderTicket"  : "Order ticket",
     "tooltip.newStaff"  : "Add stand personnel",
     "tooltip.deleteStaff"  : "Delete stand personnel",
+    "tooltip.permuser"  : "Change to regular customer",
 
     "home.title"            : "Start",
     "home.info"             : "Important information",
@@ -807,6 +809,7 @@
     "siteevents.errormsg"   : "Csv file could not be uploaded",
     "siteevents.uploadbtn"   : "Upload",
     "siteevents.csvupload"   : "Csv file upload",
+    "siteevents.eventpermuser"   : "Do you want to convert this exhibitor to a regular customer?",
 
     "siteeventsneuaus.title" : "New Exhibitor",
     "siteeventsneuaus.veranstaltungsname" : "Event name",
