@@ -120,7 +120,8 @@
         { id: "voucherAdministration", group: -16, disabled: false },
         { id: "resourcesAdministration", group: -17, disabled: false },
         { id: "esStaffAdministration", group: 18, disabled: false },
-        { id: "esVoucherUsers", group: 19, disabled: false }
+        { id: "esVoucherUsers", group: 19, disabled: false },
+        { id: "siteEventsTermin", group: -21, disabled: false }
     ];
 
 
