@@ -7,16 +7,28 @@
     text-align: center;
 }
 
-.button-container.win-surface.win-itemscontainer {
-    width: 100%;
+.reporting-button {
+    height: 100px;
+    width: 250px;
+    text-align: center;
+    background-color: #d86141;
 }
 
-.reporting-button {
-    height: 100%;
-    min-height: 100px;
-    width: 220px;
+.button-container {
+    height: 150px;
 }
 
 .win-nonselectable .reporting-button {
     background-color: rgba(128,128,128,0.4) !important;
+}
+
+.action-image-container {
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.action-label-container {
+    margin-top: 4px;
+    width: 100%;
+    text-align: center;
 }

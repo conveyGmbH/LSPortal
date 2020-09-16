@@ -15,12 +15,16 @@
                     <div class="reportingList-template"
                          data-win-control="WinJS.Binding.Template" style="display: none">
                         <div class="button-container win-surface win-itemscontainer">
-                            <button class="win-button reporting-button text-lightcolor titlearea-bkg"
-                                data-win-bind="textContent: Text; value: OLELetterID;"
+                            <button class="reporting-button win-button"
                                     onclick="AppBar.handleEvent('click', 'clickExport', event)">
+                                <div class="action-label-container">
+                                    <span data-win-bind="textContent: Text; value: OLELetterID;"></span>
+                                </div>
+                                <div class="action-image-container">
+                                    <img data-win-bind="src: exportTypeIcon" style="height: 50px;"/>
+                                </div>
                             </button>
                         </div>
-                        <img data-win-bind="src: exportTypeIcon" style="margin-top: -50px;height: 50px;">
                     </div>
                     <div id="reportingList"
                          class="listview win-selectionstylefilled"
