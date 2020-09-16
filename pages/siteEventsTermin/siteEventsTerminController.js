@@ -18,9 +18,7 @@
                 restriction: getEmptyDefaultValue(SiteEventsTermin.defaultRestriction),
                 dataTermin: SiteEventsTermin.defaultRestriction,
                 InitFairVeranstalterItem: { FairVeranstalterID: 0, Name: "" },
-                VeranstaltungTerminID: 0,
-                VeranstaltungName: "",
-                VeranstaltungNameDisplay: ""
+                VeranstaltungTerminID: 0
             }, commandList]);
             
             var fairVeranstalter = pageElement.querySelector("#FairVeranstalter");
@@ -124,7 +122,7 @@
                     }
                 },
                 clickSave: function () {
-                    if (that.binding.VeranstaltungName && parseInt(that.binding.dataTermin.FairVeranstalterVIEWID)) {
+                    if (that.binding.VeranstaltungName && that.binding.dataTermin.FairVeranstalterID) {
                         return false;
                     } else {
                         return false;
