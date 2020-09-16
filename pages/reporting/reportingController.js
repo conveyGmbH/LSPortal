@@ -19,10 +19,10 @@
 (function () {
     "use strict";
     var b64 = window.base64js;
-    WinJS.Namespace.define("Reporting", {
+    /*WinJS.Namespace.define("Reporting", {
         controller: null,
         gesamtZahl: AppData.generalData.AnzahlKontakte
-    });
+    });*/
     WinJS.Namespace.define("Reporting", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement) {
             Log.call(Log.l.trace, "Reporting.Controller.");

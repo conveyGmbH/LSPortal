@@ -7,7 +7,7 @@
 }
 
 #reportingListhost.fragmenthost {
-    height: 150px;
+    height: 200px;
 }
 
 .view-size-big #reportingListhost.fragmenthost {
@@ -49,11 +49,6 @@
 
 .audioexport-button:active {
     border-color: black;
-}
-
-.button-container {
-    text-align: center;
-    height: 220px;
 }
 
 /*.view-size-medium .button-container {
