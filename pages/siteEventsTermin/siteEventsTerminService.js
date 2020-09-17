@@ -26,7 +26,7 @@
         },
         _VeranstaltungView: {
             get: function() {
-                return AppData.getFormatView("Veranstaltung", 20564);
+                return AppData.getFormatView("VeranstaltungTermin", 20568);
             }
         },
         VeranstaltungView: {
@@ -59,8 +59,8 @@
         },
         defaultRestriction: {
             VeranstaltungName: "",
-            VeranstaltungNameDisplay: "",
-            FairVeranstalterVIEWID: 0, //deimos muss dann angepasst werden
+            DisplayName: "",
+            FairVeranstalterID: 1, //deimos muss dann angepasst werden
             StartDatum: null,
             EndDatum: null
         }
