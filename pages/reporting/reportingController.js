@@ -1160,8 +1160,8 @@
                     if (event && event.currentTarget) {
                         that.binding.progress.count = 0;
                         that.binding.progress.max = 0;
-                        var exportselection = event.target.value;
-                        that.disableFlag = event.target.index;
+                        var exportselection = event.currentTarget.value;
+                        that.disableFlag = event.currentTarget.index;
                         AppBar.busy = true;
                         AppBar.triggerDisableHandlers();
                         var reportingListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("ReportingList"));
@@ -1187,8 +1187,8 @@
                     that.binding.progress.max = 0;
                     //that.binding.showErfassungsdatum = 1;
                     if (event && event.currentTarget) {
-                        var exportselection = event.target.value;
-                        that.disableFlag = event.target.index;
+                        var exportselection = event.currentTarget.value;
+                        that.disableFlag = event.currentTarget.index;
                         AppBar.busy = true;
                         AppBar.triggerDisableHandlers();
                        // that.disablePdfExportList(true);
