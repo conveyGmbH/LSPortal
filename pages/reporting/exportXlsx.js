@@ -109,7 +109,7 @@
                         newRow = new XElement(S.row);
                         row = results[r];
                         for (c = 1; c < colCount; c++) {
-                            if (typeof attribSpecs[c].hidden !== "undefined" && !attribSpecs[c].hidden) {
+                            if (!attribSpecs[c].hidden) {
                                 key = attribSpecs[c].ODataAttributeName;
                                 value = row[key];
                                 attribTypeId = attribSpecs[c].AttribTypeID;
@@ -165,7 +165,7 @@
                         newRow = new XElement(S.row);
                         row = results[r];
                         for (c = 1; c < colCount; c++) {
-                            if (typeof attribSpecs[c].hidden !== "undefined" && !attribSpecs[c].hidden) {
+                            if (!attribSpecs[c].hidden) {
                                 key = attribSpecs[c].ODataAttributeName;
                                 value = row[key];
                                 extraValue = null;
@@ -340,22 +340,11 @@
                                     if (value && value !== "NULL") {
                                         attribSpecs[c].hidden = false;
                                     } else {
-                                        //attribSpecs[c].hidden = true;
-                                        attribSpecs.splice(c, 1);
-                                        c--;
+                                        attribSpecs[c].hidden = true;
+                                        //attribSpecs.splice(c, 1);
+                                        //c--;
                                     }
                                 }
-                                /*attribSpecs.forEach(function(item, index) {
-                                    var row = results[0];
-                                    var key = attribSpecs[index].ODataAttributeName;
-                                    var value = row && row[key];
-                                    if (value && value !== "NULL") {
-                                        attribSpecs[index].hidden = false;
-                                    } else {
-                                        //attribSpecs[c].hidden = true;
-                                        attribSpecs.splice(index, 1);
-                                }
-                                });*/
                             } else {
                                 Log.print(Log.l.trace, attribSpecs.length + " cloumns to export. Write column header...");
                                 cr = false;
