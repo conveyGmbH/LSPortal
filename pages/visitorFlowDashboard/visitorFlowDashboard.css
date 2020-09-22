@@ -1,0 +1,161 @@
+/*
+    margins/paddings for all screens
+*/
+.tile-button-color,
+.tile-header,
+.tile-content-wide,
+.tile-content,
+.tile-content-flat
+.tile-content-inner {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.tile-template { display: none; }
+
+#dataLicenceUserList  {
+    width: 100%;
+    height: 60px;
+}
+.dataLicenceUser-button {
+    width: 180px;
+}
+
+.tile {
+    min-height: 180px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    /*
+    width: 200px;
+    display: table;
+    */
+    width: 100%;
+}
+
+.tile-header {
+    text-align: center;
+    height: 42px;
+    /*
+    width: calc(100% - 4px);
+    */
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    /*
+    border-style: solid;
+    border-width: 2px;
+    border-color: transparent;
+    */
+    border: none;
+    display: table-caption;
+}
+
+.start table.jqplot-table-legend, 
+.start table.jqplot-cursor-legend {
+    background-color: rgba(255,255,255,0.2);
+}
+
+.start-header-field {
+    height: 20px;
+    padding-top: 10px;
+    width: 100%;
+    height: 100%;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.start .field_line { border: none; }
+
+.tiles-container {
+    
+}
+
+.tile-top {
+    
+}
+
+.tile-middle {
+    
+}
+
+.tile-bottom {
+    
+}
+
+.tile-row {
+    display: table-row;
+    height: 96px;
+    width: 100%;
+}
+
+.tile-content-wide {
+    min-height: 96px;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    border: none;
+    display: table-cell;
+}
+
+.tile-content {
+    min-height: 96px;
+    width: 33.333333%;
+    padding: 0;
+    margin: 0;
+    border: none;
+    display: table-cell;    
+}
+
+.tile-content-flat {
+    min-height: 48px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    vertical-align: bottom;
+    border: none;
+    display: table-cell;
+}
+
+.tile-content-inner {
+    width: 100%;
+    border: none;
+}
+
+.action-image-recent { padding-left: 6px; }
+
+.tile-button {
+    width: 100%;
+    min-height: 94px;
+    margin: 0;
+}
+
+:disabled.win-button-primary.win-button.tile-button, :disabled.win-button.tile-button { background-color: transparent; }
+
+.tile-button-wide {
+    width: 100%;
+    min-height: 94px;
+    margin: 0;
+    text-align: left;
+}
+
+.tile-button-wide-flat {
+    width: 100%;
+    min-height: 46px;
+    margin: 0;
+    text-align: left;
+}
+
+.action-label {
+    margin-top: 4px;
+    width: 100%;
+    text-align: center;
+}
+#visitorFlowOverviewhost.fragmenthost {
+    height: 800px;
+}
+#visitorFlowLevelIndicatorhost.fragmenthost {
+    height: 800px;
+}
+#visitorFlowDeviceshost.fragmenthost {
+    height: 800px;
+}

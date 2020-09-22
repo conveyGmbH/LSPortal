@@ -29,11 +29,11 @@
                                 <span class="label landscape_only" data-win-res="{textContent: 'visitorFlowEntExt.areaLimit'}"></span>
                                 <div class="input_group">
                                     <div class="input_threequarter_left">
-                                        <input name="TITLE" class="large_field win-textbox" type="text" 
+                                        <input name="TITLE" class="large_field win-textbox" type="text"
                                                data-win-bind="value: TITLE" />
                                     </div>
                                     <div class="input_quarter_right">
-                                        <input name="Limit" class="large_field win-textbox" type="text" 
+                                        <input name="Limit" class="large_field win-textbox" type="text"
                                                data-win-bind="value: Limit" />
                                     </div>
                                 </div>
@@ -43,11 +43,16 @@
                                 <span class="label landscape_only" data-win-res="{textContent: 'visitorFlowEntExt.function'}"></span>
                                 <div class="input_group">
                                     <label class="checkbox input_half_left">
-                                        <input name="Eingang" type="checkbox" class="win-checkbox" value="1"
+                                        <div class="input_quarter_left">
+                                            <input name="WarnLimit" class="large_field win-textbox" type="text"
+                                                   data-win-bind="value: WarnLimit" />
+                                        </div>
+                                        <input id="eingang" name="Eingang" type="checkbox" class="win-checkbox" value="1"
                                                data-win-bind="checked: Eingang" />
                                         <span data-win-res="{textContent: 'visitorFlowEntExt.entrance'}"></span>
                                     </label>
                                     <label class="checkbox input_half_right">
+                                        
                                         <input name="Ausgang" type="checkbox" class="win-checkbox" value="1"
                                                data-win-bind="checked: Ausgang" />
                                         <span data-win-res="{textContent: 'visitorFlowEntExt.exit'}"></span>

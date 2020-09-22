@@ -1,0 +1,45 @@
+﻿.visitorFlowOverview-circle-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 0px !important;
+}
+.dot {
+    height: 250px;
+    width: 250px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-top: 50px;
+}
+.visitorFlowOverview-numbers {
+    margin-top: 50px;
+    text-align: center;
+}
+#zutrittealle {
+    font-size: 90px;
+    font-weight: bold;
+}
+#limit {
+    font-size: 75px;
+    font-weight: bold;
+}
+.gridtitleoverview {
+    max-width: 100%;
+    height: 35px;
+    border-bottom: 1px solid lightgray;
+}
+
+.gridtitlevisitorflowoverviewtext {
+    display: flex;
+    padding-left: 15px;
+    padding-top: 3px;
+    font-weight: bolder;
+    font-size: 18px;
+}
+#trennsym {
+    font-size: 30px;
+}
+#entextSelect {
+    float: left;
+    min-width: 100%;
+}

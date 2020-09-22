@@ -511,7 +511,8 @@
     "label.voucherAdministration" : "Voucher orders",
     "label.esVoucherUsers" : "Use of vouchers",
     "label.visitorFlowEntExt" : "Entrance/Exit",
-    "label.employeeVisitorFlow" : "VisitorFlow",
+    "label.employeeVisitorFlow" : "VisitorFlow",	
+    "label.visitorFlowDashboard" : "Visitor Flow Dashboard",
     
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Cancel",
@@ -1016,5 +1017,24 @@
     "employeeVisitorFlow.street"			: "Street",
     "employeeVisitorFlow.zipCode"			: "Zip",
     "employeeVisitorFlow.city"			: "City",
-    "employeeVisitorFlow.country"			: "Country"
+    "employeeVisitorFlow.country"			: "Country",
+
+    "visitorFlowDevices.title"			: "Devices",
+    "visitorFlowDevices.device"			: "Area",
+    "visitorFlowDevices.entext"			: "Entrance / Exit",
+    "visitorFlowDevices.lastmsg"			: "Last Announcement",
+    "visitorFlowDevices.entrance"			: "Entrance",
+    "visitorFlowDevices.exit"			: "Exit",
+    "visitorFlowDevices.deviceno"			: "Device No.",
+	
+    "visitorFlowLevelIndicator.title"			: "Level Display",
+    "visitorFlowLevelIndicator.hour"			: "Hour",
+    "visitorFlowLevelIndicator.halfhour"			: "Half Hour",
+    "visitorFlowLevelIndicator.timeselect"			: "Time Interval",
+    "visitorFlowLevelIndicator.time"			: "Time",
+    "visitorFlowLevelIndicator.visitors"			: "Number of Visitors",
+
+    "visitorflowoverview.title"			: "Overview",
+    "visitorflowoverview.bottomtext"			: "People currently at the booth",
+    "visitorflowoverview.areacombo"			: "Choose area"
 }

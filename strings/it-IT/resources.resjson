@@ -512,6 +512,7 @@
     "label.esVoucherUsers" : "Uso di buoni",
     "label.visitorFlowEntExt" : "Entrata/Uscita",
     "label.employeeVisitorFlow" : "VisitorFlow",
+    "label.visitorFlowDashboard" : "Visitor Flow Dashboard",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annulla",
@@ -1016,5 +1017,24 @@
     "employeeVisitorFlow.street"			: "Strada",
     "employeeVisitorFlow.zipCode"			: "Codice Postale",
     "employeeVisitorFlow.city"			: "Città",
-    "employeeVisitorFlow.country"			: "Nazione"
+    "employeeVisitorFlow.country"			: "Nazione",
+
+    "visitorFlowDevices.title"			: "Attrezzature",
+    "visitorFlowDevices.device"			: "Area",
+    "visitorFlowDevices.entext"			: "Entrata / Exit",
+    "visitorFlowDevices.lastmsg"			: "Ultimo annuncio",
+    "visitorFlowDevices.entrance"			: "Entrata",
+    "visitorFlowDevices.exit"			: "Exit",
+    "visitorFlowDevices.deviceno"			: "Dispositivo n.",
+	
+    "visitorFlowLevelIndicator.title"			: "Visualizzazione del livello",
+    "visitorFlowLevelIndicator.hour"			: "Ora",
+    "visitorFlowLevelIndicator.halfhour"			: "Mezz'ora",
+    "visitorFlowLevelIndicator.timeselect"			: "Intervallo di tempo",
+    "visitorFlowLevelIndicator.time"			: "Tempo",
+    "visitorFlowLevelIndicator.visitors"			: "Numero di visitatori",
+
+    "visitorflowoverview.title"			: "Panoramica",
+    "visitorflowoverview.bottomtext"			: "Persone attualmente allo stand",
+    "visitorflowoverview.areacombo"			: "scegli l'area"
 }

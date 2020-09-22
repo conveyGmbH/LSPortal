@@ -512,6 +512,7 @@
     "label.esVoucherUsers" : "Utilisation de bons",
     "label.visitorFlowEntExt" : "Entrée/Sortie",
     "label.employeeVisitorFlow" : "VisitorFlow",
+    "label.visitorFlowDashboard" : "Visitor Flow Dashboard",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annuler",
@@ -1017,5 +1018,24 @@
     "employeeVisitorFlow.street"			: "Rue",
     "employeeVisitorFlow.zipCode"			: "Code postal",
     "employeeVisitorFlow.city"			: "Ville",
-    "employeeVisitorFlow.country"			: "Pays"
+    "employeeVisitorFlow.country"			: "Pays",
+
+    "visitorFlowDevices.title"			: "équipement",
+    "visitorFlowDevices.device"			: "Zone",
+    "visitorFlowDevices.entext"			: "entrée / production",
+    "visitorFlowDevices.lastmsg"			: "Dernière annonce",
+    "visitorFlowDevices.entrance"			: "entrée",
+    "visitorFlowDevices.exit"			: "production",
+    "visitorFlowDevices.deviceno"			: "Appareil non.",
+	
+    "visitorFlowLevelIndicator.title"			: "Affichage du niveau",
+    "visitorFlowLevelIndicator.hour"			: "heure",
+    "visitorFlowLevelIndicator.halfhour"			: "Une demi-heure",
+    "visitorFlowLevelIndicator.timeselect"			: "Intervalle de temps",
+    "visitorFlowLevelIndicator.time"			: "Temps",
+    "visitorFlowLevelIndicator.visitors"			: "Nombre de visiteurs",
+
+    "visitorflowoverview.title"			: "Aperçu",
+    "visitorflowoverview.bottomtext"			: "Personnes actuellement présentes sur le stand",
+    "visitorflowoverview.areacombo"			: "choisir la zone"
 }

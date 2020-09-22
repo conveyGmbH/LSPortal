@@ -417,14 +417,21 @@
                         var newRecord = that.getFieldEntries(curScope.index);
                         var limitOld = (typeof curScope.item.Limit === "string") ? parseInt(curScope.item.Limit) : curScope.item.Limit;
                         var limitNew = (typeof newRecord.Limit === "string") ? parseInt(newRecord.Limit) : newRecord.Limit;
+                        var warnlimitOld = (typeof curScope.item.WarnLimit === "string") ? parseInt(curScope.item.WarnLimit) : curScope.item.WarnLimit;
+                        var warnlimitNew = (typeof newRecord.WarnLimit === "string") ? parseInt(newRecord.WarnLimit) : newRecord.WarnLimit;
                         if (newRecord.TITLE && newRecord.Limit &&
-                            (curScope.item.TITLE !== newRecord.TITLE || limitOld !== limitNew)) {
+                            (curScope.item.TITLE !== newRecord.TITLE || limitOld !== limitNew || warnlimitOld !== warnlimitNew)) {
                             if (that.records) for (var i=0; i<that.records.length; i++) {
                                 var item = that.records.getAt(i);
                                 if (item.CR_V_BereichVIEWID !== recordId &&
                                     item.TITLE === newRecord.TITLE) {
                                     limitOld = (typeof item.Limit === "string") ? parseInt(item.Limit) : item.Limit;
                                     if (limitOld !== limitNew) {
+                                        isAreaModified = true;
+                                        break;
+                                    }
+                                    warnlimitOld = (typeof item.WarnLimit === "string") ? parseInt(item.WarnLimit) : item.WarnLimit;
+                                    if (warnlimitOld !== warnlimitNew) {
                                         isAreaModified = true;
                                         break;
                                     }
