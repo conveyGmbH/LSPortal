@@ -95,6 +95,9 @@
                 } else {
                     item.entextdev = getResourceText("visitorFlowDevices.exit");
                 }
+                if (item.LastCallTS) {
+                    item.LastCallTS = that.getDateObject(item.LastCallTS, null);
+                }
             }
             this.resultConverter = resultConverter;
 
@@ -136,7 +139,7 @@
                                     var dotdev = element.querySelectorAll(".dotdev");
                                     if (dotdev && dotdev.length > 0) {
                                         for (var y = 0; y < dotdev.length; y++) {
-                                            that.setcolordotdevices(y, that.getDateObject(null, that.deviceItem.getAt(y).LastCallTS), dotdev[y]);
+                                            that.setcolordotdevices(y, that.getDateObject(null, that.binding.devicetime[y].LastCallTS), dotdev[y]);
                                         }
                                     }
                                 }
@@ -169,6 +172,7 @@
                             // mitarbeiterView returns object already parsed from json file in response
                             if (json && json.d && json.d.results && json.d.results.length > 0) {
                                 var results = json.d.results;
+                                that.binding.devicetime = results;
                                 results.forEach(function (item, index) {
                                     that.resultConverter(item, index);
                                 });
