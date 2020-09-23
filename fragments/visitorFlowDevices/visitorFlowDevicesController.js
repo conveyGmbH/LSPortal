@@ -31,7 +31,7 @@
             var listView = fragmentElement.querySelector("#visitorFlowDevicesList.listview");
             var dotdevice = fragmentElement.querySelectorAll(".dotdev");
 
-            var setcolordotdevices = function (index, time) {
+            var setcolordotdevices = function (index, time, element) {
                 var dateact = new Date();
                 var dateacthours = dateact.getHours();
                 var dateactminutes = dateact.getMinutes();
@@ -42,15 +42,15 @@
                 var datecomp = dateactminsum - datedataminsum;
                 if (dateactminsum > datedataminsum) {
                     if (datecomp >= 60) {
-                        dotdevice[index].style.backgroundColor = "red";
+                        element.style.backgroundColor = "red";
                     }
                     else if (datecomp >= 30 && datecomp < 60) {
-                        dotdevice[index].style.backgroundColor = "orange";
+                        element.style.backgroundColor = "orange";
                     } else {
-                        dotdevice[index].style.backgroundColor = "green";
+                        element.style.backgroundColor = "green";
                     }
                 } else {
-                    dotdevice[index].style.backgroundColor = "red";
+                    element.style.backgroundColor = "red";
                 }
                 
                 Log.call(Log.l.trace, "VisitorFlowDevices.Controller.");
@@ -95,11 +95,6 @@
                 } else {
                     item.entextdev = getResourceText("visitorFlowDevices.exit");
                 }
-                if (item.LastCallTS) {
-                    var time =  item.LastCallTS;
-                    item.LastCallTS = that.getDateObject(item.LastCallTS, null);
-                    //that.setcolordotdevices(index, that.getDateObject(null , time));
-                }
             }
             this.resultConverter = resultConverter;
 
@@ -133,12 +128,34 @@
                             }
                         } else if (listView.winControl.loadingState === "complete") {
                             // load SVG images
-                            
+                            var indexOfFirstVisible = listView.winControl.indexOfFirstVisible;
+                            var indexOfLastVisible = listView.winControl.indexOfLastVisible;
+                            for (var i = indexOfFirstVisible; i <= indexOfLastVisible; i++) {
+                                var element = listView.winControl.elementFromIndex(i);
+                                if (element) {
+                                    var dotdev = element.querySelectorAll(".dotdev");
+                                    if (dotdev && dotdev.length > 0) {
+                                        for (var y = 0; y < dotdev.length; y++) {
+                                            that.setcolordotdevices(y, that.getDateObject(null, that.deviceItem.getAt(y).LastCallTS), dotdev[y]);
+                                        }
+                                    }
+                                }
+                            }
+                            //that.loading = false;
+                            //that.loadNextUrl();
                         }
                     }
                     Log.ret(Log.l.trace);
                 }
             };
+
+            // register ListView event handler
+            if (listView) {
+                //this.addRemovableEventListener(listView, "iteminvoked", this.eventHandlers.onItemInvoked.bind(this));
+                this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
+                //this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
+                //this.addRemovableEventListener(listView, "headervisibilitychanged", this.eventHandlers.onHeaderVisibilityChanged.bind(this));
+            }
 
             var loadData = function () {
                 Log.call(Log.l.trace, "VisitorFlowDevices.");
