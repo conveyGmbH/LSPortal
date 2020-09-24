@@ -419,8 +419,11 @@
                         var limitNew = (typeof newRecord.Limit === "string") ? parseInt(newRecord.Limit) : newRecord.Limit;
                         var warnlimitOld = (typeof curScope.item.WarnLimit === "string") ? parseInt(curScope.item.WarnLimit) : curScope.item.WarnLimit;
                         var warnlimitNew = (typeof newRecord.WarnLimit === "string") ? parseInt(newRecord.WarnLimit) : newRecord.WarnLimit;
+                        if (curScope.item.Eingang === 0 && curScope.item.Ausgang === 0) {
+                            curScope.item.Eingang = 1;
+                        }
                         if (newRecord.TITLE && newRecord.Limit &&
-                            (curScope.item.TITLE !== newRecord.TITLE || limitOld !== limitNew || warnlimitOld !== warnlimitNew)) {
+                            (curScope.item.TITLE !== newRecord.TITLE || limitOld !== limitNew || warnlimitOld !== warnlimitNew || curScope.item.Eingang !== newRecord.Eingang)) {
                             if (that.records) for (var i=0; i<that.records.length; i++) {
                                 var item = that.records.getAt(i);
                                 if (item.CR_V_BereichVIEWID !== recordId &&
@@ -436,6 +439,7 @@
                                         break;
                                     }
                                 }
+                                newRecord.Eingang = curScope.item.Eingang;
                             }
                         }
                         var mergedItem = copyByValue(curScope.item);
