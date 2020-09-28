@@ -15,7 +15,12 @@
         visitorDeviceView: {
             select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, "visitorDeviceView.", "recordId=" + restriction);
-                var ret = VisitorFlowDevices._visitorDeviceView.select(complete, error, restriction);
+                var ret = VisitorFlowDevices._visitorDeviceView.select(complete, error, restriction,
+                    {
+                        ordered: true,
+                        orderAttribute: "LastCallTS",
+                        asc: true
+                    });
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;

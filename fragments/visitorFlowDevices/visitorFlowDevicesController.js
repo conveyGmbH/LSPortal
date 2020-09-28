@@ -35,14 +35,16 @@
 
             var setcolordotdevices = function (index, time, element) {
                 var dateact = new Date();
+                var dateactdate = dateact.getDate();
                 var dateacthours = dateact.getHours();
                 var dateactminutes = dateact.getMinutes();
+                var datedataday = time.getDate();
                 var datedatahours = time.getHours();
                 var datedataminutes = time.getMinutes();
                 var dateactminsum = (dateacthours * 60) + dateactminutes;
                 var datedataminsum = (datedatahours * 60) + datedataminutes;
                 var datecomp = dateactminsum - datedataminsum;
-                if (dateactminsum > datedataminsum) {
+                if (dateactdate === datedataday && dateactminsum >= datedataminsum) {
                     if (datecomp >= 60) {
                         element.style.backgroundColor = "red";
                     }
@@ -61,7 +63,10 @@
             this.setcolordotdevices = setcolordotdevices;
 
             var msToTime = function(s) {
-                return new Date(s).toTimeString().substring(0, 5);// .slice(11, -8)
+                var actDate = new Date(s);
+                var day = actDate.getDate();
+                var month = actDate.getMonth() + 1;
+                return day+"."+month+ " " + new Date(s).toTimeString().substring(0, 5);// .slice(11, -8)
             }
             this.msToTime = msToTime;
 
@@ -73,14 +78,14 @@
                 if (dateData) {
                     dateString = dateData.replace("\/Date(", "").replace(")\/", "");
                     milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
-                    ret = that.msToTime(milliseconds);
-                    //ret = new Date(milliseconds).toLocaleDateString();
+                    //ret = that.msToTime(milliseconds);
+                    ret = new Date(milliseconds); /*.toLocaleDateString()*/
                     //.toLocaleString('de-DE').substr(0, 10);
                 }
                 else if (timeData) {
                     dateString = timeData.replace("\/Date(", "").replace(")\/", "");
                     milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
-                    ret = new Date(milliseconds);
+                    ret = that.msToTime(milliseconds);
                     //.toLocaleString('de-DE').substr(0, 10);
                 }
                 else {
@@ -97,9 +102,11 @@
                 } else {
                     item.entextdev = getResourceText("visitorFlowDevices.exit");
                 }
+                item.LastCallTimeStamp = that.getDateObject(null, item.LastCallTS);
                 if (item.LastCallTS) {
                     item.LastCallTS = that.getDateObject(item.LastCallTS, null);
                 }
+
             }
             this.resultConverter = resultConverter;
 
@@ -138,11 +145,9 @@
                             for (var i = indexOfFirstVisible; i <= indexOfLastVisible; i++) {
                                 var element = listView.winControl.elementFromIndex(i);
                                 if (element) {
-                                    var dotdev = element.querySelectorAll(".dotdev");
-                                    if (dotdev && dotdev.length > 0) {
-                                        for (var y = 0; y < dotdev.length; y++) {
-                                            that.setcolordotdevices(y, that.getDateObject(null, that.binding.devicetime[y].LastCallTS), dotdev[y]);
-                                        }
+                                    var dotdev = element.querySelector(".dotdev");
+                                    if (dotdev) {
+                                        that.setcolordotdevices(i, that.binding.devicetime[i].LastCallTS, dotdev);
                                     }
                                 }
                             }

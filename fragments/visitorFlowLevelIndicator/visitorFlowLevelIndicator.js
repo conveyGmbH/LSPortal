@@ -78,13 +78,13 @@
                             var height = contentarea.clientHeight;
                             if (width !== that.prevWidth) {
                                 that.prevWidth = width;
-                                that.controller.reloadData();
+                                //that.controller.reloadData();
                             }
                             if (height !== that.prevHeight) {
                                 that.prevHeight = height;
                                 height = height - 110;
                                 empList.style.height = height.toString() + "px";
-                                that.controller.reloadData();
+                                //that.controller.reloadData();
                             }
                         }
                     }
