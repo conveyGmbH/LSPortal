@@ -80,6 +80,10 @@
     /*width: 100%;*/
     float: right;
 }
+.view-size-bigger #visitorFlowLevelIndicatorList .win-itemscontainer {
+    overflow: auto !important;
+    height: 675px !important;
+}
 
 /*
     margins/paddings for middle sized screens 
@@ -99,6 +103,10 @@
     padding-top: 8px;
     padding-bottom: 8px;
 }
+.view-size-medium #visitorFlowLevelIndicatorList .win-itemscontainer {
+    overflow: auto !important;
+    height: 675px !important;
+}
  #timeCategory {
     float: none;
      min-width: 100%;
@@ -112,6 +120,10 @@
     @media (max-width:499px) {
     }
 */
+.view-size-small #visitorFlowLevelIndicatorList .win-itemscontainer {
+    overflow: auto !important;
+    height: 675px !important;
+}
 progress {
     margin-bottom: 5px;
 }
@@ -147,4 +159,12 @@ progress {
 }
 #viscou {
     width: 28%;
+}
+#visitorFlowLevelIndicatorList .win-itemscontainer {
+    overflow: auto !important;
+    height: 6350px !important;
+}
+
+#visitorFlowLevelIndicatorList .win-viewport.win-vertical {
+    overflow: hidden !important;
 }
