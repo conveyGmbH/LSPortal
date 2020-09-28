@@ -64,7 +64,7 @@
                 that.binding.ZutritteAlle = item.ZutritteBereichHeute - item.AustritteBereichHeute;
                 if (that.binding.ZutritteAlle === item.Limit) {
                     dot.style.backgroundColor = "red";
-                } else if (that.binding.ZutritteAlle >= item.WarnLimit && that.binding.ZutritteAlle < item.Limit) {
+                } else if (item.WarnLimit !== null && item.WarnLimit > 0 && that.binding.ZutritteAlle >= item.WarnLimit && that.binding.ZutritteAlle < item.Limit) {
                     dot.style.backgroundColor = "orange";
                 } else {
                     dot.style.backgroundColor = "lawngreen";
