@@ -69,7 +69,10 @@
     padding-top: 8px;
     padding-bottom: 8px;
 }
-
+.view-size-bigger #visitorFlowDevicesList .win-itemscontainer {
+    overflow: auto !important;
+    height: 760px !important;
+}
 /*
     margins/paddings for middle sized screens 
 
@@ -88,7 +91,10 @@
     padding-top: 8px;
     padding-bottom: 8px;
 }
-
+.view-size-medium #visitorFlowDevicesList .win-itemscontainer {
+    overflow: auto !important;
+    height: 760px !important;
+}
 /*
     margins/paddings for small sized screens 
 
@@ -108,6 +114,10 @@
     padding-right: 10px;
     padding-top: 4px;
     padding-bottom: 4px;
+}
+.view-size-small #visitorFlowDevicesList .win-itemscontainer {
+    overflow: auto !important;
+    height: 760px !important;
 }
 .list-field-small-relative {
     width: 25%;
@@ -185,4 +195,12 @@
     border-bottom: 1px solid grey;
     height: 40px;
     font-weight: bold;
+}
+#visitorFlowDevicesList .win-itemscontainer {
+    overflow: auto !important;
+    height: 720px !important;
+}
+
+#visitorFlowDevicesList .win-viewport.win-vertical {
+    overflow: hidden !important;
 }
