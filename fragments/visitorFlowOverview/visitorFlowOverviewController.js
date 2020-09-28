@@ -62,9 +62,9 @@
             var resultConverter = function (item, index) {
                 item.index = index;
                 that.binding.ZutritteAlle = item.ZutritteBereichHeute - item.AustritteBereichHeute;
-                if (that.binding.ZutritteAlle === index.Limit) {
+                if (that.binding.ZutritteAlle === item.Limit) {
                     dot.style.backgroundColor = "red";
-                } else if (that.binding.ZutritteAlle >= index.WarnLimit && that.binding.ZutritteAlle < index.Limit) {
+                } else if (that.binding.ZutritteAlle >= item.WarnLimit && that.binding.ZutritteAlle < item.Limit) {
                     dot.style.backgroundColor = "orange";
                 } else {
                     dot.style.backgroundColor = "lawngreen";
