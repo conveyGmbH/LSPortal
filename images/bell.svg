@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="580px" height="580px" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="nonzero" clip-rule="nonzero" viewBox="0 0 5800 5800" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>bell icon</title>
+	<desc>bell icon from the IconExperience.com I-Collection. Copyright by INCORS GmbH (www.incors.com).</desc>
+		<path id="curve28" fill="#000000" d="M2900 300c276,0 500,224 500,500 0,134 -53,255 -138,345 358,84 686,356 879,663 466,741 -47,1794 626,2327 102,81 127,242 90,362 -35,118 -127,203 -257,203l-3400 0c-128,0 -222,-84 -257,-203 -37,-120 -12,-281 90,-362 201,-159 302,-389 353,-656 54,-277 54,-598 54,-919 0,-279 81,-533 219,-752 193,-307 521,-579 879,-663 -85,-90 -138,-211 -138,-345 0,-276 224,-500 500,-500zm693 4600c-49,339 -340,600 -693,600 -353,0 -644,-261 -693,-600l203 0c46,228 248,400 490,400 242,0 444,-172 490,-400l203 0zm-693 -4400c-166,0 -300,134 -300,300 0,166 134,300 300,300 166,0 300,-134 300,-300 0,-166 -134,-300 -300,-300zm1072 1414c-243,-386 -615,-610 -1072,-610 -457,0 -829,224 -1072,610 -118,188 -188,406 -188,646 0,330 0,659 -57,957 -60,309 -182,580 -427,774 -19,16 -29,53 -29,95 0,47 15,114 73,114l3400 0c58,0 73,-67 73,-114 0,-42 -10,-79 -29,-95 -790,-625 -223,-1663 -672,-2377z"/>
+</svg>

@@ -18,6 +18,8 @@
                 ZutritteAlle: 0
             }, options]);
 
+            this.refreshWaitTimeMs = 10000;
+
             var that = this;
             
             var entextcategory = fragmentElement.querySelector("#entextSelect");
@@ -95,7 +97,8 @@
                         });
                 }).then(function () {
                     if (!entextId) {
-                        return VisitorFlowOverview.visitorView.select(function (json) {
+                        var cr_V_BereichSelectPromise = VisitorFlowOverview.visitorView.select(function (json) {
+                            that.removeDisposablePromise(cr_V_BereichSelectPromise);
                                 Log.print(Log.l.trace, "VisitorFlowOverview: success!");
                                 if (json && json.d && json.d.results) {
                                     var results = json.d.results;
@@ -105,14 +108,19 @@
                                     that.binding.visitordata = results[0];
                                     Log.print(Log.l.trace, "VisitorFlowOverview: success!");
                                 }
+                                that.refreshPromise = WinJS.Promise.timeout(that.refreshWaitTimeMs).then(function () {
+                                    that.loadData(entextId);
+                                });
                             },
                             function (errorResponse) {
                                 // called asynchronously if an error occurs
                                 // or server returns response with an error status.
                                 AppData.setErrorMsg(that.binding, errorResponse);
                             });
+                        return that.addDisposablePromise(cr_V_BereichSelectPromise);
                     } else {
-                        return VisitorFlowOverview.visitorView.select(function (json) {
+                        var cr_V_BereichSelectPromise = VisitorFlowOverview.visitorView.select(function (json) {
+                                that.removeDisposablePromise(cr_V_BereichSelectPromise);
                                 Log.print(Log.l.trace, "VisitorFlowOverview: success!");
                                 if (json && json.d && json.d.results) {
                                     var results = json.d.results;
@@ -122,6 +130,9 @@
                                     that.binding.visitordata = results[0];
                                     Log.print(Log.l.trace, "VisitorFlowOverview: success!");
                                 }
+                                that.refreshPromise = WinJS.Promise.timeout(that.refreshWaitTimeMs).then(function () {
+                                    that.loadData(entextId);
+                                });
                             },
                             function (errorResponse) {
                                 // called asynchronously if an error occurs
@@ -131,6 +142,7 @@
                             {
                                 CR_V_BereichVIEWID: entextId
                             });
+                        return that.addDisposablePromise(cr_V_BereichSelectPromise);
                     }
                 });
                 Log.ret(Log.l.trace);
