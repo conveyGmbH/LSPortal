@@ -199,8 +199,10 @@
             that.processAll().then(function() {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
-            })/*.then(function() {
-                WinJS.Promise.timeout(50).then(function () {
+            }).then(function() {
+                Log.print(Log.l.trace, "Data loaded");
+                AppBar.notifyModified = true;
+                /*WinJS.Promise.timeout(50).then(function () {
                     if (AppHeader.controller.binding.userData.IsNoAdminUser) {
                         var confirmTitle = getResourceText("start.confirmIsAppUser");
                         confirm(confirmTitle, function (result) {
@@ -209,11 +211,10 @@
                             } else {
                                 Log.print(Log.l.trace, "IsAppUser: user choice CANCEL");
                             }
-            });
+                        });
                     }
-                });
-            Log.print(Log.l.trace, "Splash screen vanished");
-        })*/;
+                });*/
+            });
             Log.ret(Log.l.trace);
         })
     });
