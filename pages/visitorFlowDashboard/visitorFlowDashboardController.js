@@ -39,38 +39,6 @@
                 }
             }
 
-            /*var handleComboChange = function () {
-                Log.call(Log.l.trace, "VisitorFlowDashboard.Controller.");
-                var ret = new WinJS.Promise.as().then(function () {
-                    var visitorFlowOverviewFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("visitorFlowOverview"));
-                    if (visitorFlowOverviewFragmentControl && visitorFlowOverviewFragmentControl.controller) {
-                        visitorFlowOverviewFragmentControl.controller.getVtitle();
-                        return visitorFlowOverviewFragmentControl.controller.loadData();
-                    } else {
-                        return WinJS.Promise.as();
-                    }
-                }).then(function () {
-                    var visitorFlowLevelIndicatorFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("visitorFlowLevelIndicator"));
-                    if (visitorFlowLevelIndicatorFragmentControl && visitorFlowLevelIndicatorFragmentControl.controller) {
-                        return visitorFlowLevelIndicatorFragmentControl.controller.loadData();
-                    } else {
-                        return WinJS.Promise.as();
-                    }
-                });
-                Log.ret(Log.l.trace);
-                return ret;
-            }
-            this.handleComboChange = handleComboChange;
-
-            var handleTimeChange = function () {
-                Log.call(Log.l.trace, "VisitorFlowDashboard.Controller.");
-                var visitorFlowLevelIndicatorFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("visitorFlowLevelIndicator"));
-                    if (visitorFlowLevelIndicatorFragmentControl && visitorFlowLevelIndicatorFragmentControl.controller) {
-                        return visitorFlowLevelIndicatorFragmentControl.controller.loadData();
-                    }
-            }
-            this.handleTimeChange = handleTimeChange;*/
-
             var resultConverter = function (item, index) {
                 item.index = index;
                 item.buttonColor = Colors.tileBackgroundColor;
@@ -118,6 +86,13 @@
                                         }
                                             }
                 });
+                var refreshMs = 10000;
+                var refreshResultsPromise = WinJS.Promise.timeout(refreshMs).then(function () {
+                    refreshResultsPromise.cancel();
+                    that.removeDisposablePromise(refreshResultsPromise);
+                    that.loadData();
+                });
+                that.addDisposablePromise(refreshResultsPromise);
                 Log.ret(Log.l.trace);
                 return ret;
             };
@@ -136,12 +111,14 @@
                     Log.call(Log.l.trace, "SiteEvents.Controller.");
                     //var name = event.currentTarget.value;
                     //that.handleComboChange(name, null);
+                    that.loadData();
                     Log.ret(Log.l.trace);
                 },
                 changeTime : function(event) {
                     Log.call(Log.l.trace, "SiteEvents.Controller.");
                     //var id = parseInt(event.currentTarget.value);
                     //that.handleTimeChange(id);
+                    that.loadData();
                     Log.ret(Log.l.trace);
                 },
                 clickEditEvent: function (event) {
@@ -200,20 +177,16 @@
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
             }).then(function() {
-                Log.print(Log.l.trace, "Data loaded");
                 AppBar.notifyModified = true;
-                /*WinJS.Promise.timeout(50).then(function () {
-                    if (AppHeader.controller.binding.userData.IsNoAdminUser) {
-                        var confirmTitle = getResourceText("start.confirmIsAppUser");
-                        confirm(confirmTitle, function (result) {
-                            if (result) {
-
-                            } else {
-                                Log.print(Log.l.trace, "IsAppUser: user choice CANCEL");
-                            }
+                Log.print(Log.l.trace, "Data loaded");
+                /*var refreshMs = 10000;
+                    var refreshResultsPromise = WinJS.Promise.timeout(refreshMs).then(function () {
+                        refreshResultsPromise.cancel();
+                        that.removeDisposablePromise(refreshResultsPromise);
+                        that.loadData();
                         });
-                    }
-                });*/
+                    that.addDisposablePromise(refreshResultsPromise);
+                */
             });
             Log.ret(Log.l.trace);
         })

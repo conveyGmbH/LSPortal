@@ -30,35 +30,6 @@
             };
             this.getRecordId = getRecordId;
 
-            /*var getVtitle = function () {
-                Log.call(Log.l.trace, "VisitorFlowOverview.Controller.");
-                AppData.setErrorMsg(that.binding);
-                var id = parseInt(entextcategory.value);
-                var ret = new WinJS.Promise.as().then(function() {
-                    return VisitorFlowOverview.visitorView.select(function(json) {
-                            Log.print(Log.l.trace, "VisitorFlowOverview: success!");
-                            if (json && json.d && json.d.results) {
-                                var results = json.d.results[0];
-                                var visitorFlowLevelIndicatorFragmentControl =
-                                    Application.navigator.getFragmentControlFromLocation(
-                                        Application.getFragmentPath("visitorFlowLevelIndicator"));
-                                if (visitorFlowLevelIndicatorFragmentControl &&
-                                    visitorFlowLevelIndicatorFragmentControl.controller) {
-                                    visitorFlowLevelIndicatorFragmentControl.controller.binding.vtitle = results.TITLE;
-                                }
-                            }
-                        },
-                        function(errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        }, { CR_V_BereichVIEWID: id});
-                });
-                Log.ret(Log.l.trace);
-                return ret;
-            }
-            this.getVtitle = getVtitle;*/
-
             var resultConverter = function (item, index) {
                 item.index = index;
                 that.binding.ZutritteAlle = item.ZutritteBereichHeute - item.AustritteBereichHeute;
@@ -77,8 +48,7 @@
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                     if (!that.binding.visitordata.CR_V_BereichVIEWID) {
-                        var cr_V_BereichSelectPromise = VisitorFlowOverview.visitorView.select(function (json) {
-                            that.removeDisposablePromise(cr_V_BereichSelectPromise);
+                        VisitorFlowOverview.visitorView.select(function (json) {
                         Log.print(Log.l.trace, "VisitorFlowOverview: success!");
                         if (json && json.d && json.d.results) {
                             var results = json.d.results;
@@ -91,22 +61,18 @@
                         }
                                     Log.print(Log.l.trace, "VisitorFlowOverview: success!");
                                 }
-                                that.refreshPromise = WinJS.Promise.timeout(that.refreshWaitTimeMs).then(function () {
-                                that.loadData();
-                                });
                             },
                             function (errorResponse) {
                                 // called asynchronously if an error occurs
                                 // or server returns response with an error status.
                                 AppData.setErrorMsg(that.binding, errorResponse);
                             });
-                        return that.addDisposablePromise(cr_V_BereichSelectPromise);
+                        return WinJS.Promise.as();
                     } else {
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
-                        var cr_V_BereichSelectPromise = VisitorFlowOverview.visitorView.select(function (json) {
-                                that.removeDisposablePromise(cr_V_BereichSelectPromise);
+                    VisitorFlowOverview.visitorView.select(function (json) {
                                 Log.print(Log.l.trace, "VisitorFlowOverview: success!");
                                 if (json && json.d && json.d.results) {
                                     var results = json.d.results;
@@ -116,15 +82,11 @@
                                     that.binding.visitordata = results[0];
                                     Log.print(Log.l.trace, "VisitorFlowOverview: success!");
                                 }
-                                that.refreshPromise = WinJS.Promise.timeout(that.refreshWaitTimeMs).then(function () {
-                            that.loadData();
-                                });
                     }, function (errorResponse) {
                                 // called asynchronously if an error occurs
                                 // or server returns response with an error status.
                                 AppData.setErrorMsg(that.binding, errorResponse);
                     }, { CR_V_BereichVIEWID: that.binding.visitordata.CR_V_BereichVIEWID });
-                        return that.addDisposablePromise(cr_V_BereichSelectPromise);
                 });
                 Log.ret(Log.l.trace);
                 return ret;

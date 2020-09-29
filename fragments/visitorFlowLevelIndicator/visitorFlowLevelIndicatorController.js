@@ -50,21 +50,6 @@
             }
             this.creatingTimeCategory = creatingTimeCategory;
 
-            /*var getVeranstTitle = function() {
-                Log.call(Log.l.trace, "VisitorFlowLevelIndicator.Controller.");
-                var visitorFlowOverviewFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("visitorFlowOverview"));
-                if (visitorFlowOverviewFragmentControl && visitorFlowOverviewFragmentControl.controller) {
-                    return visitorFlowOverviewFragmentControl.controller.getVtitle();
-                }
-            }
-            this.getVeranstTitle = getVeranstTitle;*/
-
-           /* var reloadData = function(parameters) {
-                Log.call(Log.l.trace, "VisitorFlowLevelIndicator.Controller.");
-                that.loadData(that.binding.timeselectupdate);
-            }
-            this.reloadData = reloadData;*/
-
             this.eventHandlers = {
                 onLoadingStateChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "LocalEvents.Controller.");
@@ -116,7 +101,6 @@
 
             var loadData = function () {
                 Log.call(Log.l.trace, "VisitorFlowLevelIndicator.");
-                //that.binding.vtitle = "'" + that.binding.vtitle + "'";
                 var visitorFlowOverviewFragmentControl =
                     Application.navigator.getFragmentControlFromLocation(
                         Application.getFragmentPath("visitorFlowOverview"));
@@ -129,10 +113,9 @@
                 var ret = new WinJS.Promise.as().then(function () {
                         Log.print(Log.l.trace, "calling timebereichView...");
                         if (that.binding.timeselectupdate === 60) {
-                            var cr_V_BereichSelectPromise = VisitorFlowLevelIndicator.bereichhourView.select(function (json) {
+                            VisitorFlowLevelIndicator.bereichhourView.select(function (json) {
                                 // this callback will be called asynchronously
                                 // when the response is available
-                                that.removeDisposablePromise(cr_V_BereichSelectPromise);
                                 Log.print(Log.l.trace, "bereichhourView: success!");
                                 // mitarbeiterView returns object already parsed from json file in response
                                 if (json && json.d) {
@@ -153,10 +136,7 @@
                                         listView.winControl.itemDataSource = null;
                                     }
                                 }
-                                that.refreshPromise = WinJS.Promise.timeout(that.refreshWaitTimeMs).then(function () {
-                                    that.loadData();
-                                });
-                                //return WinJS.Promise.as();
+                                return WinJS.Promise.as();
                             }, function (errorResponse) {
                                 // called asynchronously if an error occurs
                                 // or server returns response with an error status.
@@ -166,13 +146,12 @@
                                 });
                                 return WinJS.Promise.as();
                             }, { TITLE: "'" + visitorFlowOverviewFragmentControl.controller.binding.visitordata.TITLE + "'"  });
-                            return that.addDisposablePromise(cr_V_BereichSelectPromise);
                         }
                         else if (that.binding.timeselectupdate === 30) {
-                            var cr_V_BereichSelectPromise = VisitorFlowLevelIndicator.bereichhalfhour.select(function (json) {
+                            VisitorFlowLevelIndicator.bereichhalfhour.select(function (json) {
                                 // this callback will be called asynchronously
                                 // when the response is available
-                                that.removeDisposablePromise(cr_V_BereichSelectPromise);
+                                //that.removeDisposablePromise(cr_V_BereichSelectPromise);
                                 Log.print(Log.l.trace, "bereichhalfhour: success!");
                                 // mitarbeiterView returns object already parsed from json file in response
                                 if (json && json.d) {
@@ -194,10 +173,7 @@
                                         listView.winControl.itemDataSource = null;
                                     }
                                 }
-                                that.refreshPromise = WinJS.Promise.timeout(that.refreshWaitTimeMs).then(function () {
-                                    that.loadData();
-                                });
-                                //return WinJS.Promise.as();
+                                return WinJS.Promise.as();
                             }, function (errorResponse) {
                                 // called asynchronously if an error occurs
                                 // or server returns response with an error status.
@@ -207,12 +183,10 @@
                                 });
                                 return WinJS.Promise.as();
                             }, { TITLE: visitorFlowOverviewFragmentControl.controller.binding.visitordata.TITLE });
-                            return that.addDisposablePromise(cr_V_BereichSelectPromise);
                         } else {
-                            var cr_V_BereichSelectPromise = VisitorFlowLevelIndicator.bereichhourView.select(function (json) {
+                            VisitorFlowLevelIndicator.bereichhourView.select(function (json) {
                                 // this callback will be called asynchronously
                                 // when the response is available
-                                that.removeDisposablePromise(cr_V_BereichSelectPromise);
                                 Log.print(Log.l.trace, "bereichhourView: success!");
                                 // mitarbeiterView returns object already parsed from json file in response
                                 if (json && json.d) {
@@ -233,10 +207,7 @@
                                         listView.winControl.itemDataSource = null;
                                     }
                                 }
-                                that.refreshPromise = WinJS.Promise.timeout(that.refreshWaitTimeMs).then(function () {
-                                    that.loadData();
-                                });
-                                //return WinJS.Promise.as();
+                                return WinJS.Promise.as();
                             }, function (errorResponse) {
                                 // called asynchronously if an error occurs
                                 // or server returns response with an error status.
@@ -246,7 +217,6 @@
                                 });
                                 return WinJS.Promise.as();
                             }, { TITLE: "'" + visitorFlowOverviewFragmentControl.controller.binding.visitordata.TITLE  + "'" });
-                            return that.addDisposablePromise(cr_V_BereichSelectPromise);
                         }
                 });
                 Log.ret(Log.l.trace);
@@ -257,10 +227,7 @@
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.creatingTimeCategory();
-            })/*.then(function () {
-                Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.getVeranstTitle();
-            })*/.then(function () {
+            }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
             }).then(function () {

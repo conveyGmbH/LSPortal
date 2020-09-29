@@ -172,7 +172,7 @@
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                         Log.print(Log.l.trace, "calling selectvisitorView...");
-                        var cr_V_BereichSelectPromise = VisitorFlowDevices.visitorDeviceView.select(function (json) {
+                    VisitorFlowDevices.visitorDeviceView.select(function (json) {
                             // this callback will be called asynchronously
                             // when the response is available
                             Log.print(Log.l.trace, "mitarbeiterView: success!");
@@ -195,9 +195,7 @@
                                     listView.winControl.itemDataSource = null;
                                 }
                             }
-                            that.refreshPromise = WinJS.Promise.timeout(that.refreshWaitTimeMs).then(function () {
-                                that.loadData();
-                            });
+                        return WinJS.Promise.as();
                         }, function (errorResponse) {
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
@@ -207,7 +205,6 @@
                             });
                             return WinJS.Promise.as();
                         });
-                        return that.addDisposablePromise(cr_V_BereichSelectPromise);
                 });
                 Log.ret(Log.l.trace);
                 return ret;
