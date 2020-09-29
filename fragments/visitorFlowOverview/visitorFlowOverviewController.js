@@ -30,7 +30,7 @@
             };
             this.getRecordId = getRecordId;
 
-            var getVtitle = function () {
+            /*var getVtitle = function () {
                 Log.call(Log.l.trace, "VisitorFlowOverview.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var id = parseInt(entextcategory.value);
@@ -57,7 +57,7 @@
                 Log.ret(Log.l.trace);
                 return ret;
             }
-            this.getVtitle = getVtitle;
+            this.getVtitle = getVtitle;*/
 
             var resultConverter = function (item, index) {
                 item.index = index;
@@ -86,7 +86,7 @@
                                 entextcategory.winControl.data = new WinJS.Binding.List(results);
                                 entextcategory.selectedIndex = 0;
                                     if (!that.binding.visitordata.CR_V_BereichVIEWID) {
-                                        that.binding.visitordata.CR_V_BereichVIEWID = results[0].CR_V_BereichVIEWID;
+                                        that.binding.visitordata = results[0];
                             }
                         }
                                     Log.print(Log.l.trace, "VisitorFlowOverview: success!");

@@ -50,20 +50,20 @@
             }
             this.creatingTimeCategory = creatingTimeCategory;
 
-            var getVeranstTitle = function() {
+            /*var getVeranstTitle = function() {
                 Log.call(Log.l.trace, "VisitorFlowLevelIndicator.Controller.");
                 var visitorFlowOverviewFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("visitorFlowOverview"));
                 if (visitorFlowOverviewFragmentControl && visitorFlowOverviewFragmentControl.controller) {
                     return visitorFlowOverviewFragmentControl.controller.getVtitle();
                 }
             }
-            this.getVeranstTitle = getVeranstTitle;
+            this.getVeranstTitle = getVeranstTitle;*/
 
-            var reloadData = function(parameters) {
+           /* var reloadData = function(parameters) {
                 Log.call(Log.l.trace, "VisitorFlowLevelIndicator.Controller.");
                 that.loadData(that.binding.timeselectupdate);
             }
-            this.reloadData = reloadData;
+            this.reloadData = reloadData;*/
 
             this.eventHandlers = {
                 onLoadingStateChanged: function (eventInfo) {
@@ -117,6 +117,13 @@
             var loadData = function () {
                 Log.call(Log.l.trace, "VisitorFlowLevelIndicator.");
                 //that.binding.vtitle = "'" + that.binding.vtitle + "'";
+                var visitorFlowOverviewFragmentControl =
+                    Application.navigator.getFragmentControlFromLocation(
+                        Application.getFragmentPath("visitorFlowOverview"));
+                if (visitorFlowOverviewFragmentControl &&
+                    visitorFlowOverviewFragmentControl.controller) {
+                    console.log(visitorFlowOverviewFragmentControl.controller.binding.visitordata.TITLE);
+                }
                 that.binding.timeselectupdate = parseInt(timecategory.value);
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
@@ -158,7 +165,7 @@
 
                                 });
                                 return WinJS.Promise.as();
-                                }, { TITLE: "'" + that.binding.vtitle + "'" });
+                            }, { TITLE: "'" + visitorFlowOverviewFragmentControl.controller.binding.visitordata.TITLE + "'"  });
                             return that.addDisposablePromise(cr_V_BereichSelectPromise);
                         }
                         else if (that.binding.timeselectupdate === 30) {
@@ -199,7 +206,7 @@
 
                                 });
                                 return WinJS.Promise.as();
-                                }, { TITLE:  that.binding.vtitle});
+                            }, { TITLE: visitorFlowOverviewFragmentControl.controller.binding.visitordata.TITLE });
                             return that.addDisposablePromise(cr_V_BereichSelectPromise);
                         } else {
                             var cr_V_BereichSelectPromise = VisitorFlowLevelIndicator.bereichhourView.select(function (json) {
@@ -238,7 +245,7 @@
 
                                 });
                                 return WinJS.Promise.as();
-                                }, { TITLE: "'" + that.binding.vtitle + "'" });
+                            }, { TITLE: "'" + visitorFlowOverviewFragmentControl.controller.binding.visitordata.TITLE  + "'" });
                             return that.addDisposablePromise(cr_V_BereichSelectPromise);
                         }
                 });
@@ -250,10 +257,10 @@
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.creatingTimeCategory();
-            }).then(function () {
+            })/*.then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.getVeranstTitle();
-            }).then(function () {
+            })*/.then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
             }).then(function () {

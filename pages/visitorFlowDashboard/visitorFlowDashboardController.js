@@ -29,6 +29,8 @@
             }, commandList]);
             this.applist = null;
 
+            this.refreshWaitTimeMs = 5000;
+
             var that = this;
             
             this.dispose = function () {
@@ -37,18 +39,22 @@
                 }
             }
 
-            var handleComboChange = function (visitorflowoverviewid) {
+            /*var handleComboChange = function () {
                 Log.call(Log.l.trace, "VisitorFlowDashboard.Controller.");
                 var ret = new WinJS.Promise.as().then(function () {
                     var visitorFlowOverviewFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("visitorFlowOverview"));
                     if (visitorFlowOverviewFragmentControl && visitorFlowOverviewFragmentControl.controller) {
                         visitorFlowOverviewFragmentControl.controller.getVtitle();
-                        return visitorFlowOverviewFragmentControl.controller.loadData(visitorflowoverviewid);
+                        return visitorFlowOverviewFragmentControl.controller.loadData();
+                    } else {
+                        return WinJS.Promise.as();
                     }
                 }).then(function () {
                     var visitorFlowLevelIndicatorFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("visitorFlowLevelIndicator"));
                     if (visitorFlowLevelIndicatorFragmentControl && visitorFlowLevelIndicatorFragmentControl.controller) {
-                       return visitorFlowLevelIndicatorFragmentControl.controller.loadData(visitorflowoverviewid);
+                        return visitorFlowLevelIndicatorFragmentControl.controller.loadData();
+                    } else {
+                        return WinJS.Promise.as();
                     }
                 });
                 Log.ret(Log.l.trace);
@@ -56,14 +62,14 @@
             }
             this.handleComboChange = handleComboChange;
 
-            var handleTimeChange = function (visitorflowlevelindicatorid) {
+            var handleTimeChange = function () {
                 Log.call(Log.l.trace, "VisitorFlowDashboard.Controller.");
                 var visitorFlowLevelIndicatorFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("visitorFlowLevelIndicator"));
                     if (visitorFlowLevelIndicatorFragmentControl && visitorFlowLevelIndicatorFragmentControl.controller) {
                         return visitorFlowLevelIndicatorFragmentControl.controller.loadData();
                     }
             }
-            this.handleTimeChange = handleTimeChange;
+            this.handleTimeChange = handleTimeChange;*/
 
             var resultConverter = function (item, index) {
                 item.index = index;
@@ -128,14 +134,14 @@
                 },
                 changeEntExt: function (event) {
                     Log.call(Log.l.trace, "SiteEvents.Controller.");
-                    var name = event.currentTarget.value;
-                    that.handleComboChange(name, null);
+                    //var name = event.currentTarget.value;
+                    //that.handleComboChange(name, null);
                     Log.ret(Log.l.trace);
                 },
                 changeTime : function(event) {
                     Log.call(Log.l.trace, "SiteEvents.Controller.");
-                    var id = parseInt(event.currentTarget.value);
-                    that.handleTimeChange(id);
+                    //var id = parseInt(event.currentTarget.value);
+                    //that.handleTimeChange(id);
                     Log.ret(Log.l.trace);
                 },
                 clickEditEvent: function (event) {
