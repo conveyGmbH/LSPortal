@@ -30,6 +30,7 @@
             this.applist = null;
 
             this.refreshWaitTimeMs = 5000;
+            this.refreshResultsPromise = null;
 
             var that = this;
             
@@ -86,13 +87,14 @@
                                         }
                                             }
                 });
-                var refreshMs = 10000;
-                var refreshResultsPromise = WinJS.Promise.timeout(refreshMs).then(function () {
-                    refreshResultsPromise.cancel();
-                    that.removeDisposablePromise(refreshResultsPromise);
+                if (that.refreshResultsPromise) {
+                    that.refreshResultsPromise.cancel();
+                    that.removeDisposablePromise(that.refreshResultsPromise);
+                }
+                that.refreshResultsPromise = WinJS.Promise.timeout(that.refreshWaitTimeMs).then(function () {
                     that.loadData();
                 });
-                that.addDisposablePromise(refreshResultsPromise);
+                that.addDisposablePromise(that.refreshResultsPromise);
                 Log.ret(Log.l.trace);
                 return ret;
             };
@@ -169,6 +171,12 @@
                     } else {
                         return true;
                     }
+                },
+                changeEntExt: function() {
+                    WinJS.Promise.timeout(50).then(function() {
+                        that.eventHandlers.changeEntExt();
+                    });
+                    return false;
                 }
             };
             
