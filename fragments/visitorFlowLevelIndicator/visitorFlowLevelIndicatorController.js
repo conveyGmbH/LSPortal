@@ -113,7 +113,7 @@
                 var ret = new WinJS.Promise.as().then(function () {
                         Log.print(Log.l.trace, "calling timebereichView...");
                         if (that.binding.timeselectupdate === 60) {
-                            VisitorFlowLevelIndicator.bereichhourView.select(function (json) {
+                        return VisitorFlowLevelIndicator.bereichhourView.select(function (json) {
                                 // this callback will be called asynchronously
                                 // when the response is available
                                 Log.print(Log.l.trace, "bereichhourView: success!");
@@ -145,10 +145,10 @@
 
                                 });
                                 return WinJS.Promise.as();
-                            }, { TITLE: "'" + visitorFlowOverviewFragmentControl.controller.binding.visitordata.TITLE + "'"  });
+                            }, { TITLE: visitorFlowOverviewFragmentControl.controller.binding.visitordata.TITLE  });
                         }
                         else if (that.binding.timeselectupdate === 30) {
-                            VisitorFlowLevelIndicator.bereichhalfhour.select(function (json) {
+                        return VisitorFlowLevelIndicator.bereichhalfhour.select(function (json) {
                                 // this callback will be called asynchronously
                                 // when the response is available
                                 //that.removeDisposablePromise(cr_V_BereichSelectPromise);
@@ -184,7 +184,7 @@
                                 return WinJS.Promise.as();
                             }, { TITLE: visitorFlowOverviewFragmentControl.controller.binding.visitordata.TITLE });
                         } else {
-                            VisitorFlowLevelIndicator.bereichhourView.select(function (json) {
+                        return VisitorFlowLevelIndicator.bereichhourView.select(function (json) {
                                 // this callback will be called asynchronously
                                 // when the response is available
                                 Log.print(Log.l.trace, "bereichhourView: success!");
@@ -216,7 +216,7 @@
 
                                 });
                                 return WinJS.Promise.as();
-                            }, { TITLE: "'" + visitorFlowOverviewFragmentControl.controller.binding.visitordata.TITLE  + "'" });
+                            }, { TITLE: visitorFlowOverviewFragmentControl.controller.binding.visitordata.TITLE });
                         }
                 });
                 Log.ret(Log.l.trace);

@@ -48,7 +48,7 @@
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                     if (!that.binding.visitordata.CR_V_BereichVIEWID) {
-                        VisitorFlowOverview.visitorView.select(function (json) {
+                        return VisitorFlowOverview.visitorView.select(function (json) {
                         Log.print(Log.l.trace, "VisitorFlowOverview: success!");
                         if (json && json.d && json.d.results) {
                             var results = json.d.results;
@@ -72,7 +72,7 @@
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
-                    VisitorFlowOverview.visitorView.select(function (json) {
+                    return VisitorFlowOverview.visitorView.select(function (json) {
                                 Log.print(Log.l.trace, "VisitorFlowOverview: success!");
                                 if (json && json.d && json.d.results) {
                                     var results = json.d.results;
