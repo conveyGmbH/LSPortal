@@ -106,7 +106,7 @@
                         Application.getFragmentPath("visitorFlowOverview"));
                 if (visitorFlowOverviewFragmentControl &&
                     visitorFlowOverviewFragmentControl.controller) {
-                    console.log(visitorFlowOverviewFragmentControl.controller.binding.visitordata.TITLE);
+                    //console.log(visitorFlowOverviewFragmentControl.controller.binding.visitordata.TITLE);
                 }
                 that.binding.timeselectupdate = parseInt(timecategory.value);
                 AppData.setErrorMsg(that.binding);
