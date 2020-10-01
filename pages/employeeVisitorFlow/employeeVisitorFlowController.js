@@ -34,7 +34,7 @@
                 AppBar.triggerDisableHandlers();
             }
             this.setDataEmployee = setDataEmployee;
-
+            
             var setInitLandItem = function (newInitLandItem) {
                 var prevNotifyModified = AppBar.notifyModified;
                 AppBar.notifyModified = false;
@@ -79,6 +79,29 @@
             }
             this.getRecordId = getRecordId;
 
+            var popReminder = function(data) {
+                if (data) {
+                    var confirmTitle = getResourceText("employeeVisitorFlow.reminder");
+                    confirm(confirmTitle,
+                        function(result) {
+                            if (result) {
+                                Log.print(Log.l.trace, "clickDelete: mail choice OK");
+                                var master = Application.navigator.masterControl;
+                                if (master && master.controller && master.controller.binding) {
+                                    return master.controller.selectRecordId(that.binding.dataEmployee.BenutzerVIEWID);
+                                }
+                            }
+                        });
+                            } else {
+                                Log.print(Log.l.trace, "clickDelete: mail choice CANCEL");
+                                var master = Application.navigator.masterControl;
+                                if (master && master.controller && master.controller.binding) {
+                                    return master.controller.selectRecordId(that.binding.dataEmployee.BenutzerVIEWID);
+                                }
+                            }
+            }
+            this.popReminder = popReminder;
+
             // define handlers
             this.eventHandlers = {
                 clickBack: function (event) {
@@ -94,10 +117,10 @@
                         Log.print(Log.l.trace, "employee saved");
                         var master = Application.navigator.masterControl;
                         if (master && master.controller && master.controller.binding && typeof master.controller.selectRecordId !== "undefined") {
-                            master.controller.binding.employeeId = that.binding.dataEmployee.MitarbeiterVIEWID;
+                            master.controller.binding.employeeId = that.binding.dataEmployee.BenutzerVIEWID;
                             master.controller.loadData().then(function () {
                                 Log.print(Log.l.info, "master.controller.loadData: success!");
-                                master.controller.selectRecordId(that.binding.dataEmployee.MitarbeiterVIEWID);
+                                master.controller.selectRecordId(that.binding.dataEmployee.BenutzerVIEWID);
                             });
                         }
                     }, function (errorResponse) {
@@ -259,6 +282,21 @@
                     }
                 }
                 var dataEmployee = that.binding.dataEmployee;
+                if (dataEmployee.CR_V_BereichID && !dataEmployee.Eingang && !dataEmployee.Ausgang) {
+                    return that.popReminder(1);
+                }
+                if (dataEmployee.Eingang === true) {
+                    dataEmployee.Eingang = 1;
+                }
+                if (dataEmployee.Ausgang === true) {
+                    dataEmployee.Ausgang = 1;
+                }
+                if (dataEmployee.Eingang === false) {
+                    dataEmployee.Eingang = null;
+                }
+                if (dataEmployee.Ausgang === false) {
+                    dataEmployee.Ausgang = null;
+                }
                 if (dataEmployee && AppBar.modified && !AppBar.busy) {
                     var recordId = getRecordId();
                     if (recordId) {

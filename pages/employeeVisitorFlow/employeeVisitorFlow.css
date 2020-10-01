@@ -1,1 +1,15 @@
-﻿
+﻿#empvisflowentext {
+    margin-top: 20px;
+    margin-right: 45px;
+}
+.view-size-medium #empvisflowentext {
+    margin-top: 0px;
+    margin-right: 20px;
+}
+.view-size-small #empvisflowentext {
+    margin-top: 10px;
+    margin-right: 45px;
+}
+#Ausgang {
+    margin-left: 20px;
+}

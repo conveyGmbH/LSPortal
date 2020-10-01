@@ -1018,6 +1018,7 @@
     "employeeVisitorFlow.zipCode"			: "Codice Postale",
     "employeeVisitorFlow.city"			: "Città",
     "employeeVisitorFlow.country"			: "Nazione",
+    "employeeVisitorFlow.reminder"			: "Veuillez sélectionner l'entrée, la sortie ou l'entrée et la sortie!",
 
     "visitorFlowDevices.title"			: "Attrezzature",
     "visitorFlowDevices.device"			: "Area",

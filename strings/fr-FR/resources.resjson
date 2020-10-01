@@ -1019,6 +1019,7 @@
     "employeeVisitorFlow.zipCode"			: "Code postal",
     "employeeVisitorFlow.city"			: "Ville",
     "employeeVisitorFlow.country"			: "Pays",
+    "employeeVisitorFlow.reminder"			: "Veuillez sélectionner l'entrée, la sortie ou l'entrée et la sortie!",
 
     "visitorFlowDevices.title"			: "équipement",
     "visitorFlowDevices.device"			: "Zone",

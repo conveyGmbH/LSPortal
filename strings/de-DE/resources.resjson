@@ -1012,7 +1012,7 @@
 
     "visitorFlowEntExt.title": "Eingänge / Ausgänge",
     "visitorFlowEntExt.areaLimit": "Bereich / Limit",
-    "visitorFlowEntExt.function": "Funktion",
+    "visitorFlowEntExt.function": "Warn-Grenze / Funktion",
     "visitorFlowEntExt.entrance": "Eingang",
     "visitorFlowEntExt.exit": "Ausgang",
     "visitorFlowEntExt.count": "Anzahl",
@@ -1028,6 +1028,7 @@
     "employeeVisitorFlow.zipCode"			: "Postleitzahl",
     "employeeVisitorFlow.city"			: "Stadt",
     "employeeVisitorFlow.country"			: "Land",
+    "employeeVisitorFlow.reminder"			: "Bitte wählen Sie Eingang, Ausgang oder Eingang und Ausgang aus!",
 
     "visitorFlowDevices.title"			: "Geräte",
     "visitorFlowDevices.device"			: "Bereich",

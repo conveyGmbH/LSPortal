@@ -1018,6 +1018,7 @@
     "employeeVisitorFlow.zipCode"			: "Zip",
     "employeeVisitorFlow.city"			: "City",
     "employeeVisitorFlow.country"			: "Country",
+    "employeeVisitorFlow.reminder"			: "Please select entrance, exit or entrance and exit!",
 
     "visitorFlowDevices.title"			: "Devices",
     "visitorFlowDevices.device"			: "Area",

@@ -10,7 +10,7 @@
     WinJS.Namespace.define("EmployeeVisitorFlow", {
         _employeeView: {
             get: function () {
-                return AppData.getFormatView("Mitarbeiter", 0, false);
+                return AppData.getFormatView("Benutzer", 0, false);
             }
         },
         employeeView: {
