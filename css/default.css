@@ -586,6 +586,7 @@ select {
     left: 108px;
     top: -16px;
     height: 4px;
+    width: 110px;
 }
 .landscape_only {
     display: none;

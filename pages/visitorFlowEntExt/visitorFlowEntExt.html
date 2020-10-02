@@ -26,7 +26,7 @@
                         <div class="visitorflowentext-content">
                             <div class="field_line field_line_odd">
                                <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'visitorFlowEntExt.area'}"></span>
-                                <span class="label win-type-caption portrait_only_right" data-win-res="{textContent: 'visitorFlowEntExt.limit'}"></span>
+                                <span class="label win-type-caption portrait_only_right smallLabel" data-win-res="{textContent: 'visitorFlowEntExt.limit'}"></span>
                                 <div class="label landscape_only">
                                     <span data-win-res="{textContent: 'visitorFlowEntExt.area'}"></span> / <span data-win-res="{textContent: 'visitorFlowEntExt.limit'}"></span>
                                 </div>
@@ -36,7 +36,7 @@
                                                data-win-bind="value: TITLE" />
                                     </div>
                                     <div class="input_quarter_right">
-                                        <input name="Limit" class="large_field win-textbox" type="text"
+                                        <input name="Limit" class="large_field win-textbox" type="number"
                                                data-win-bind="value: Limit" />
                                     </div>
                                 </div>
@@ -48,8 +48,8 @@
                                     <span data-win-res="{textContent: 'visitorFlowEntExt.warninglimit'}"></span> / <span data-win-res="{textContent: 'visitorFlowEntExt.offset'}"></span>
                                 </div>
                                 <div class="input_group">
-                                        <input id="WarnLimit" class="input_small_left win-textbox" type="text" data-win-bind="value: WarnLimit" />
-                                        <input id="OffsetEntExt" class="input_small_right win-textbox" type="text" data-win-bind="value: Offset" />
+                                    <input name="WarnLimit" class="input_small_left win-textbox" type="number" data-win-bind="value: WarnLimit" />
+                                    <input name="Offset" class="input_small_right smallwidthfix win-textbox" type="number" data-win-bind="value: Offset" />
                                 </div>
                             </div>
                         </div>

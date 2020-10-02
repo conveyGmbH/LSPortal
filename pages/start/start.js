@@ -102,6 +102,8 @@
                                 height -= contentHeader.clientHeight;
                             }
                             if (width !== that.prevWidth || height !== that.prevHeight) {
+                                var fragmenthost = element.querySelector(".fragmenthost");
+                                var tilesContainer = element.querySelector(".tile-content-inner");
                                 var tileTop = element.querySelector(".tile-top");
                                 var tileBottom = element.querySelector(".tile-bottom");
                                 if (tileTop && tileBottom && tileBottom.style) {
@@ -115,6 +117,20 @@
                                         tileBottom.style.bottom = "";
                                     }
                                 }
+
+                                var horizontalSpace = width - (fragmenthost.clientWidth * 2);
+                                if (horizontalSpace > 120 && horizontalSpace < 140) {
+                                    /*tileBottom.style.display = "block";
+                                    tileBottom.style.position = "absolute";
+                                    tileBottom.style.bottom = 0;*/
+                                    tilesContainer.style.marginLeft = Math.max(((horizontalSpace / 2) - 10), 0) + "px";
+                                } else {
+                                    /*tileBottom.style.display = "";
+                                    tileBottom.style.position = "";
+                                    tileBottom.style.bottom = "";*/
+                                    tilesContainer.style.marginLeft = "";
+                                }
+
                                 that.prevWidth = width;
                                 that.prevHeight = height;
                             }

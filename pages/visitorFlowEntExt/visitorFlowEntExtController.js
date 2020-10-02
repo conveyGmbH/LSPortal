@@ -49,7 +49,7 @@
                 if (that.listView && that.listView.winControl) {
                     var element = that.listView.winControl.elementFromIndex(index);
                     if (element) {
-                        var text = element.querySelectorAll('input[type="text"]');
+                        var text = element.querySelectorAll('input');
                         if (text) for (i=0; i<text.length; i++) {
                             ret[text[i].name] = text[i].value;
                         }
@@ -401,7 +401,7 @@
                 this.addRemovableEventListener(listView, "iteminvoked", this.eventHandlers.onItemInvoked.bind(this));
             }
 
-            var saveData = function (complete, error) {
+           /* var saveData = function (complete, error) {
                 var ret = null;
                 Log.call(Log.l.trace, "VisitorFlowEntExt.Controller.");
                 AppData.setErrorMsg(that.binding);
@@ -478,7 +478,7 @@
                 Log.ret(Log.l.trace, ret);
                 return ret;
             };
-            this.saveData = saveData;
+            this.saveData = saveData;*/
 
             that.processAll().then(function() {
                 Log.print(Log.l.trace, "Binding wireup page complete");
