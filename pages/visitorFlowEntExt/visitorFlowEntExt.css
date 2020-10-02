@@ -108,6 +108,15 @@
     padding-top: 4px;
     padding-bottom: 4px;
 }
-#eingang {
-    margin-left: 35px;
+#OffsetEntExt {
+    width: 150px !important;
+    height: 40px !important;
+    float: left;
+    margin-left: 10px;
+}
+#WarnLimit {
+    height: 40px !important;
+}
+#offsetlabel {
+    width: 150px !important;
 }

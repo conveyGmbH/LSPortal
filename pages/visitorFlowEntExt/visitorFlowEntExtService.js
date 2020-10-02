@@ -69,9 +69,7 @@
             defaultValue: {
                 VeranstaltungID: AppData.getRecordId("Veranstaltung"),
                 TITLE : null,
-                Limit: null,
-                Eingang : 0,
-                Ausgang : 0
+                Limit: null
             }
         }
     });

@@ -25,8 +25,11 @@
                          data-win-control="WinJS.Binding.Template" style="display: none">
                         <div class="visitorflowentext-content">
                             <div class="field_line field_line_odd">
-                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'visitorFlowEntExt.areaLimit'}"></span>
-                                <span class="label landscape_only" data-win-res="{textContent: 'visitorFlowEntExt.areaLimit'}"></span>
+                               <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'visitorFlowEntExt.area'}"></span>
+                                <span class="label win-type-caption portrait_only_right" data-win-res="{textContent: 'visitorFlowEntExt.limit'}"></span>
+                                <div class="label landscape_only">
+                                    <span data-win-res="{textContent: 'visitorFlowEntExt.area'}"></span> / <span data-win-res="{textContent: 'visitorFlowEntExt.limit'}"></span>
+                                </div>
                                 <div class="input_group">
                                     <div class="input_threequarter_left">
                                         <input name="TITLE" class="large_field win-textbox" type="text"
@@ -39,24 +42,14 @@
                                 </div>
                             </div>
                             <div class="field_line field_line_even">
-                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'visitorFlowEntExt.function'}"></span>
-                                <span class="label landscape_only" data-win-res="{textContent: 'visitorFlowEntExt.function'}"></span>
+                                <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'visitorFlowEntExt.warninglimit'}"></span>
+                                <span id="offsetlabel" class="label win-type-caption portrait_only_right" data-win-res="{textContent: 'visitorFlowEntExt.offset'}"></span>
+                                <div class="label landscape_only">
+                                    <span data-win-res="{textContent: 'visitorFlowEntExt.warninglimit'}"></span> / <span data-win-res="{textContent: 'visitorFlowEntExt.offset'}"></span>
+                                </div>
                                 <div class="input_group">
-                                    <label class="checkbox input_half_left">
-                                        <div class="input_quarter_left">
-                                            <input name="WarnLimit" class="large_field win-textbox" type="text"
-                                                   data-win-bind="value: WarnLimit" />
-                                        </div>
-                                        <input id="eingang" name="Eingang" type="checkbox" class="win-checkbox" value="1"
-                                               data-win-bind="checked: Eingang" />
-                                        <span data-win-res="{textContent: 'visitorFlowEntExt.entrance'}"></span>
-                                    </label>
-                                    <label class="checkbox input_half_right">
-                                        
-                                        <input name="Ausgang" type="checkbox" class="win-checkbox" value="1"
-                                               data-win-bind="checked: Ausgang" />
-                                        <span data-win-res="{textContent: 'visitorFlowEntExt.exit'}"></span>
-                                    </label>
+                                        <input id="WarnLimit" class="input_small_left win-textbox" type="text" data-win-bind="value: WarnLimit" />
+                                        <input id="OffsetEntExt" class="input_small_right win-textbox" type="text" data-win-bind="value: Offset" />
                                 </div>
                             </div>
                         </div>

@@ -1001,8 +1001,10 @@
     "esVoucherUsers.checkindate": "Check-In",
 
     "visitorFlowEntExt.title": "Entrance / Exit",
-    "visitorFlowEntExt.areaLimit": "Area / Limit",
-    "visitorFlowEntExt.function": "Function",
+    "visitorFlowEntExt.area": "Area",
+    "visitorFlowEntExt.limit": "Limit",
+    "visitorFlowEntExt.warninglimit": "Warning limit",
+    "visitorFlowEntExt.offset": "Adjust the fill level",
     "visitorFlowEntExt.entrance": "Entrance",
     "visitorFlowEntExt.exit": "Exit",
     "visitorFlowEntExt.count": "Count",
