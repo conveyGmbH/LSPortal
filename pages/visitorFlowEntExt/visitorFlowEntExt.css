@@ -114,13 +114,14 @@
     float: left;
     margin-left: 10px;
 }
-#WarnLimit {
+.fixheight {
     height: 40px !important;
 }
 .smallwidthfix {
     width: 150px !important;
     float: left;
     margin-left: 10px;
+    height: 40px;
 }
 .smallLabel {
     left: 75%;
