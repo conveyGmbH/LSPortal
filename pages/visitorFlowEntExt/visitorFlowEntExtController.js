@@ -363,11 +363,7 @@
                     return AppBar.busy;
                 },
                 clickOk: function () {
-                    if (that.curRecId || AppBar.busy) {
-                        return false;
-                    } else {
-                        return true;
-                    }
+                    return !that.curRecId || AppBar.busy || !AppBar.modified;
                 },
                 clickDelete: function () {
                     return !that.curRecId || AppBar.busy;

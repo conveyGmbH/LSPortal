@@ -33,11 +33,13 @@
                                 <div class="input_group">
                                     <div class="input_threequarter_left">
                                         <input name="TITLE" class="large_field win-textbox" type="text"
-                                               data-win-bind="value: TITLE" />
+                                               data-win-bind="value: TITLE Binding.Mode.twoway" 
+                                               data-win-bind-onevent="oninput"/>
                                     </div>
                                     <div class="input_quarter_right">
                                         <input name="Limit" class="large_field win-textbox" type="number"
-                                               data-win-bind="value: Limit" />
+                                               data-win-bind="value: Limit Binding.Mode.twoway" 
+                                               data-win-bind-onevent="oninput"/>
                                     </div>
                                 </div>
                             </div>
@@ -48,8 +50,8 @@
                                     <span data-win-res="{textContent: 'visitorFlowEntExt.warninglimit'}"></span> / <span data-win-res="{textContent: 'visitorFlowEntExt.offset'}"></span>
                                 </div>
                                 <div class="input_group">
-                                    <input name="WarnLimit" class="input_small_left fixheight win-textbox" type="number" data-win-bind="value: WarnLimit" />
-                                    <input name="Offset" class="input_small_right smallwidthfix win-textbox" type="number" data-win-bind="value: Offset" />
+                                    <input name="WarnLimit" class="input_small_left fixheight win-textbox" type="number" data-win-bind="value: WarnLimit Binding.Mode.twoway" data-win-bind-onevent="oninput"/>
+                                    <input name="Offset" class="input_small_right smallwidthfix win-textbox" type="number" data-win-bind="value: Offset Binding.Mode.twoway" data-win-bind-onevent="oninput"/>
                                 </div>
                             </div>
                         </div>
