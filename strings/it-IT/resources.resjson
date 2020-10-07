@@ -1010,6 +1010,7 @@
     "visitorFlowEntExt.count": "Contare",
     "visitorFlowEntExt.labelDelete": "Entrata / Uscita: ",
     "visitorFlowEntExt.entextDelete": "Vuoi cancellare questa entrata / uscita?",
+    "visitorFlowEntExt.comment"     : "Gestisci le tue aree",
 
     "employeeVisitorFlow.area"			: "Area",
     "employeeVisitorFlow.entry"        : "Entrance",
@@ -1039,5 +1040,8 @@
 
     "visitorflowoverview.title"			: "Panoramica",
     "visitorflowoverview.bottomtext"			: "Persone attualmente allo stand",
-    "visitorflowoverview.areacombo"			: "scegli l'area"
+    "visitorflowoverview.areacombo"			: "scegli l'area",
+
+    "visitorFlowDashboard.title"	: "VisitorFlow Overview",
+    "visitorFlowDashboard.comment"  : "Qui troverai una panoramica del numero di visitatori del tuo stand"
 }

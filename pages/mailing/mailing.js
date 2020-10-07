@@ -25,7 +25,7 @@
                 { id: "clickTestMailOpen", label: getResourceText("command.testmailopen"), tooltip: getResourceText("tooltip.testmailopen"), section: "primary", svg: "mail_forward" },
                 { id: "clickDelete", label: getResourceText("command.delete"), tooltip: getResourceText("tooltip.deletemail"), section: "primary", svg: "garbage_can" },
                 { id: "clickNew", label: getResourceText("command.new"), tooltip: getResourceText("tooltip.newmail"), section: "primary", svg: "plus" },
-                { id: "clickSave", label: getResourceText("command.save"), tooltip: getResourceText("tooltip.save"), section: "primary", svg: "navigate_check", key: WinJS.Utilities.Key.enter },
+                { id: "clickSave", label: getResourceText("command.save"), tooltip: getResourceText("tooltip.save"), section: "primary", svg: "navigate_check" }//, key: WinJS.Utilities.Key.enter
             ];
 
             this.controller = new Mailing.Controller(element, commandList);

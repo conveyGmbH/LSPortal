@@ -203,7 +203,8 @@
                         }, function (errorResponse) {
                             Log.print(Log.l.error, "error inserting mail");
                             AppBar.busy = false;
-                            AppData.setErrorMsg(that.binding, errorResponse);
+                            that.getErrorMsgFromErrorStack(errorResponse);
+                           // AppData.setErrorMsg(that.binding, errorResponse);
                         }, dataMail);
                     }
             this.insertMailing = insertMailing;
@@ -558,6 +559,51 @@
                 return ret;
             };
             this.loadData = loadData;
+
+            var getErrorMsgFromErrorStack = function (errorMsg) {
+                Log.call(Log.l.trace, "Employee.Controller.");
+                AppData.setErrorMsg(that.binding);
+                AppData.call("PRC_GetErrorStack", {
+                }, function (json) {
+                    Log.print(Log.l.info, "call success! ");
+                    AppBar.modified = false;
+                    if (json.d.results[0].ResultMessageID > 0) {
+                        errorMsg.data.error.code = json.d.results[0].ResultCode;
+                        errorMsg.data.error.message.value = that.getLangSpecErrorMsg(json.d.results[0].ResultMessageID, errorMsg);
+                        Log.print(Log.l.info, "call success! ");
+                    } else {
+                        errorMsg.data.error.message.value = json.d.results[0].ResultMessage;
+                        errorMsg.data.error.code = json.d.results[0].ResultCode;
+                        AppData.setErrorMsg(that.binding, errorMsg);
+                        Log.print(Log.l.info, "call success! ");
+                    }
+                }, function (error) {
+                    Log.print(Log.l.error, "call error");
+                    AppBar.modified = false;
+
+                });
+                Log.ret(Log.l.trace);
+            }
+            this.getErrorMsgFromErrorStack = getErrorMsgFromErrorStack;
+
+            var getLangSpecErrorMsg = function (resultmessageid, errorMsg) {
+                Log.call(Log.l.trace, "Employee.Controller.");
+                var lang = AppData.getLanguageId();
+                AppData.setErrorMsg(that.binding);
+                AppData.call("PRC_GetLangText", {
+                    pTextID: resultmessageid,
+                    pLanguageID: lang
+                }, function (json) {
+                    Log.print(Log.l.info, "call success! ");
+                    errorMsg.data.error.message.value = json.d.results[0].ResultText;
+                    AppData.setErrorMsg(that.binding, errorMsg);
+                }, function (error) {
+                    Log.print(Log.l.error, "call error");
+
+                });
+                Log.ret(Log.l.trace);
+            }
+            this.getLangSpecErrorMsg = getLangSpecErrorMsg;
 
             // Finally, wire up binding
             that.processAll().then(function () {

@@ -825,5 +825,39 @@
     "employeeVisitorFlow.street"			: "Strasse",
     "employeeVisitorFlow.zipCode"			: "Postleitzahl",
     "employeeVisitorFlow.city"			: "Stadt",
-    "employeeVisitorFlow.country"			: "Land"
+    "employeeVisitorFlow.country"			: "Land",
+
+    "visitorFlowEntExt.title": "Entrata / Uscita",
+    "visitorFlowEntExt.area": "Area",
+    "visitorFlowEntExt.limit": "Limite",
+    "visitorFlowEntExt.warninglimit": "Limite di avviso",
+    "visitorFlowEntExt.offset": "Regola il livello di riempimento",
+    "visitorFlowEntExt.entrance": "Entrata",
+    "visitorFlowEntExt.exit": "Uscita",
+    "visitorFlowEntExt.count": "Contare",
+    "visitorFlowEntExt.labelDelete": "Entrata / Uscita: ",
+    "visitorFlowEntExt.entextDelete": "Vuoi cancellare questa entrata / uscita?",
+    "visitorFlowEntExt.comment"     : "Manage your areas",
+
+    "visitorFlowDevices.title"			: "Geräte",
+    "visitorFlowDevices.device"			: "Bereich",
+    "visitorFlowDevices.entext"			: "Ein-/ Ausgang",
+    "visitorFlowDevices.lastmsg"			: "Letzte Meldung",
+    "visitorFlowDevices.entrance"			: "Eingang",
+    "visitorFlowDevices.exit"			: "Ausgang",
+    "visitorFlowDevices.deviceno"			: "Gerätenr.",
+	
+    "visitorFlowLevelIndicator.title"			: "Füllstand-Anzeige",
+    "visitorFlowLevelIndicator.hour"			: "Stunde",
+    "visitorFlowLevelIndicator.halfhour"			: "Halbe Stunde",
+    "visitorFlowLevelIndicator.timeselect"			: "Zeitintervall",
+    "visitorFlowLevelIndicator.time"			: "Uhrzeit",
+    "visitorFlowLevelIndicator.visitors"			: "Besucher-Anzahl",
+
+    "visitorflowoverview.title"			: "Übersicht",
+    "visitorflowoverview.bottomtext"			: "Personen aktuell am Stand",
+    "visitorflowoverview.areacombo"			: "Bereich auswählen",
+
+    "visitorFlowDashboard.title"	: "VisitorFlow Übersicht",
+    "visitorFlowDashboard.comment"  : "Here you will find an overview of the number of visitors to your stand"
 }

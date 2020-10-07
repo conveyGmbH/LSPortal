@@ -351,13 +351,16 @@
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
                             AppData.setErrorMsg(that.binding, errorResponse);
+                            if (listView) {
                             progress = listView.querySelector(".list-footer .progress");
                             counter = listView.querySelector(".list-footer .counter");
+
                             if (progress && progress.style) {
                                 progress.style.display = "none";
                             }
                             if (counter && counter.style) {
                                 counter.style.display = "inline";
+                            }
                             }
                             that.loading = false;
                         }, {

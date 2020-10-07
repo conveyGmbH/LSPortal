@@ -66,7 +66,13 @@
                 var actDate = new Date(s);
                 var day = actDate.getDate();
                 var month = actDate.getMonth() + 1;
-                return day+"."+month+ " " + new Date(s).toTimeString().substring(0, 5);// .slice(11, -8)
+                if (day < 10) {
+                    day = "0" + day;
+                }
+                if (month < 10) {
+                    month = "0" + month;
+                }
+                return "" + new Date(s).toTimeString().substring(0, 5) + " " + day + "." + month;// .slice(11, -8)
             }
             this.msToTime = msToTime;
 

@@ -1011,6 +1011,7 @@
     "visitorFlowEntExt.count": "Compter",
     "visitorFlowEntExt.labelDelete": "Entrée / Sortie: ",
     "visitorFlowEntExt.entextDelete": "Voulez-vous supprimer cette entrée / sortie?",
+    "visitorFlowEntExt.comment"     : "Gérez vos espaces",
 
     "employeeVisitorFlow.area"			: "Zone",
     "employeeVisitorFlow.entry"        : "Entrée",
@@ -1040,5 +1041,8 @@
 
     "visitorflowoverview.title"			: "Aperçu",
     "visitorflowoverview.bottomtext"			: "Personnes actuellement présentes sur le stand",
-    "visitorflowoverview.areacombo"			: "choisir la zone"
+    "visitorflowoverview.areacombo"			: "choisir la zone",
+
+    "visitorFlowDashboard.title"	: "VisitorFlow Overview",
+    "visitorFlowDashboard.comment"  : "Vous trouverez ici un aperçu du nombre de visiteurs de votre stand"
 }

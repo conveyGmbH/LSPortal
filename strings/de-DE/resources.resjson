@@ -1020,6 +1020,7 @@
     "visitorFlowEntExt.count": "Anzahl",
     "visitorFlowEntExt.labelDelete": "Eingang / Ausgang: ",
     "visitorFlowEntExt.entextDelete": "Wollen Sie diesen Eingang / Ausgang löschen?",
+    "visitorFlowEntExt.comment"     : "Verwalten Sie Ihre Bereiche",
 
     "employeeVisitorFlow.area"			: "Bereich",
 	"employeeVisitorFlow.entry"        : "Eingang",
@@ -1049,5 +1050,8 @@
 
     "visitorflowoverview.title"			: "Übersicht",
     "visitorflowoverview.bottomtext"			: "Personen aktuell am Stand",
-    "visitorflowoverview.areacombo"			: "Bereich auswählen"
+    "visitorflowoverview.areacombo"			: "Bereich auswählen",
+
+	"visitorFlowDashboard.title"	: "VisitorFlow Übersicht",
+    "visitorFlowDashboard.comment"  : "Hier finden Sie eine Übersicht über die Anzahl Besucher an Ihrem Stand"
 }			
