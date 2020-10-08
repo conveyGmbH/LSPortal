@@ -28,7 +28,8 @@
                 visitorFlowOverviewFragmentControl.controller.binding &&
                 visitorFlowOverviewFragmentControl.controller.binding.visitordata) {
                 ret = {
-                    TITLE: visitorFlowOverviewFragmentControl.controller.binding.visitordata.TITLE
+                    TITLE: visitorFlowOverviewFragmentControl.controller.binding.visitordata.TITLE,
+                    bExact: true
                 };
             }    
             return ret;

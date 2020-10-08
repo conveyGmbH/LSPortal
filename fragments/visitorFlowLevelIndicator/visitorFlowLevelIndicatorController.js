@@ -117,7 +117,8 @@
             }
             this.resultConverterhalfhour = resultConverterhalfhour;
             var resultConverter = function(item, index) {
-                if (that.binding.timeselectupdate === 60) {
+                var timeselectupdate = (typeof that.binding.timeselectupdate === "number") ? that.binding.timeselectupdate : parseInt(that.binding.timeselectupdate);
+                if (timeselectupdate === 60) {
                     return that.resultConverterhour(item, index);
                 } else {
                     return that.resultConverterhalfhour(item, index);

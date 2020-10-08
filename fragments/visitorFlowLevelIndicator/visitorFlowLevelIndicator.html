@@ -42,7 +42,9 @@
                         <div class="list-landscape-only">
                             <div id="vflitime" class="list-field-small-fixed win-type-ellipsis"
                                  data-win-bind="textContent: Zeitraum"></div>
-                                <progress id="vflibalk" class="list-field-small-fixed win-type-ellipsis" data-win-bind="textContent: Zeitraum; value: EintritteGesamt; max: Limit"></progress>
+                                <progress id="vflibalk" 
+                                          class="list-field-small-fixed win-progress-bar" 
+                                          data-win-bind="textContent: Zeitraum; value: EintritteGesamt; max: Limit"></progress>
                                 <div id="vflitime" class="list-field-small-fixed win-type-ellipsis"
                                 data-win-bind="textContent: EintritteGesamt"></div>
                         </div>
@@ -53,7 +55,9 @@
                                     <!--list-localeventsList-->
                                     <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
                                           data-win-bind="textContent: Zeitraum"></span>
-                                    <progress data-win-bind="textContent: Zeitraum; value: EintritteGesamt; max: Limit"></progress>
+                                    <progress id="vflibalk" 
+                                              class="list-field-small-fixed win-progress-bar" 
+                                              data-win-bind="textContent: Zeitraum; value: EintritteGesamt; max: Limit"></progress>
                                     <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
                                           data-win-bind="textContent: EintritteGesamt"></span>
                                 </div>
