@@ -55,6 +55,49 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
+            relationName: {
+                get: function() {
+                    var curView;
+                    var timeselectupdate = (typeof VisitorFlowLevelIndicator.timeselectupdate === "number") ? VisitorFlowLevelIndicator.timeselectupdate : parseInt(VisitorFlowLevelIndicator.timeselectupdate);
+                    if (timeselectupdate === 30) {
+                        curView = VisitorFlowLevelIndicator._bereichhalfhourView;
+                    } else {
+                        curView = VisitorFlowLevelIndicator._bereichhourView;
+                    }
+                    return curView.relationName;
+                }
+            },
+            pkName: {
+                get: function() {
+                    var curView;
+                    var timeselectupdate = (typeof VisitorFlowLevelIndicator.timeselectupdate === "number") ? VisitorFlowLevelIndicator.timeselectupdate : parseInt(VisitorFlowLevelIndicator.timeselectupdate);
+                    if (timeselectupdate === 30) {
+                        curView = VisitorFlowLevelIndicator._bereichhalfhourView;
+                    } else {
+                        curView = VisitorFlowLevelIndicator._bereichhourView;
+                    }
+                    return curView.oDataPkName;
+                }
+            },
+            getRecordId: function (record) {
+                var ret = null;
+                if (record) {
+                    var curView;
+                    var timeselectupdate = (typeof VisitorFlowLevelIndicator.timeselectupdate === "number") ? VisitorFlowLevelIndicator.timeselectupdate : parseInt(VisitorFlowLevelIndicator.timeselectupdate);
+                    if (timeselectupdate === 30) {
+                        curView = VisitorFlowLevelIndicator._bereichhalfhourView;
+                    } else {
+                        curView = VisitorFlowLevelIndicator._bereichhourView;
+                    }
+                    if (curView.oDataPkName) {
+                        ret = record[curView.oDataPkName];
+                    }
+                    if (!ret && curView.pkName) {
+                        ret = record[curView.pkName];
+                    }
+                }
+                return ret;
+            },
             defaultValue: {
 
             }
