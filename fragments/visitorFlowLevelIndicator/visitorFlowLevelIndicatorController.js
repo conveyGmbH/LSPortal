@@ -11,13 +11,17 @@
     "use strict";
 
     WinJS.Namespace.define("VisitorFlowLevelIndicator", {
-        Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options) {
+        Controller: WinJS.Class.derive(Fragments.RecordsetController, function Controller(fragmentElement, options) {
             Log.call(Log.l.trace, "VisitorFlowLevelIndicator.Controller.");
-            Fragments.Controller.apply(this, [fragmentElement, {
+            var listView = fragmentElement.querySelector("#visitorFlowLevelIndicatorList.listview");
+
+
+
+            Fragments.RecordsetController.apply(this, [fragmentElement, {
                 bereichdata: {},
                 timeselectupdate: null,
                 vtitle : null
-            }]);
+            }, [], VisitorFlowLevelIndicator.visitorFlowLevelView, null, listView]);
 
             this.refreshWaitTimeMs = 10000;
 
@@ -29,7 +33,6 @@
             var maxTrailingPages = 0;
 
             var timecategory = fragmentElement.querySelector("#timeCategory");
-            var listView = fragmentElement.querySelector("#visitorFlowLevelIndicatorList");
             
             var creatingTimeCategory = function () {
                 Log.call(Log.l.trace, "VisitorFlowLevelIndicator.Controller.");
@@ -51,8 +54,23 @@
             this.creatingTimeCategory = creatingTimeCategory;
 
             this.eventHandlers = {
+                changeTime: function (event) {
+                    Log.call(Log.l.trace, "VisitorFlowLevelIndicator.Controller.");
+                    if (event.currentTarget && AppBar.notifyModified) {
+                        var value = event.currentTarget.value;
+                        that.binding.timeselectupdate = value;
+                        VisitorFlowLevelIndicator.timeselectupdate = value;
+                        if (that.records) {
+                            that.records.length = 0;
+                        }
+                        WinJS.Promise.timeout(50).then(function() {
+                            that.loadData();
+                        });
+                    }
+                    Log.ret(Log.l.trace);
+                },
                 onLoadingStateChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "LocalEvents.Controller.");
+                    Log.call(Log.l.trace, "VisitorFlowLevelIndicator.Controller.");
                     if (listView && listView.winControl) {
                         Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
                         // single list selection
@@ -98,8 +116,16 @@
                 item.EintritteGesamt = item.EintritteBereich - item.AustritteBereich;
             }
             this.resultConverterhalfhour = resultConverterhalfhour;
+            var resultConverter = function(item, index) {
+                if (that.binding.timeselectupdate === 60) {
+                    return that.resultConverterhour(item, index);
+                } else {
+                    return that.resultConverterhalfhour(item, index);
+                }
+            }
+            this.resultConverter = resultConverter;
 
-            var loadData = function () {
+            /*var loadData = function () {
                 Log.call(Log.l.trace, "VisitorFlowLevelIndicator.");
                 var visitorFlowOverviewFragmentControl =
                     Application.navigator.getFragmentControlFromLocation(
@@ -141,9 +167,6 @@
                                 // called asynchronously if an error occurs
                                 // or server returns response with an error status.
                                 AppData.setErrorMsg(that.binding, errorResponse);
-                            /*WinJS.Promise.timeout(3000).then(function () {
-
-                            });*/
                                 return WinJS.Promise.as();
                             }, { TITLE: visitorFlowOverviewFragmentControl.controller.binding.visitordata.TITLE  });
                         }
@@ -178,9 +201,6 @@
                                 // called asynchronously if an error occurs
                                 // or server returns response with an error status.
                                 AppData.setErrorMsg(that.binding, errorResponse);
-                            /*WinJS.Promise.timeout(3000).then(function () {
-
-                            });*/
                                 return WinJS.Promise.as();
                             }, { TITLE: visitorFlowOverviewFragmentControl.controller.binding.visitordata.TITLE });
                         } else {
@@ -212,9 +232,6 @@
                                 // called asynchronously if an error occurs
                                 // or server returns response with an error status.
                                 AppData.setErrorMsg(that.binding, errorResponse);
-                            /*WinJS.Promise.timeout(3000).then(function () {
-
-                            });*/
                                 return WinJS.Promise.as();
                             }, { TITLE: visitorFlowOverviewFragmentControl.controller.binding.visitordata.TITLE });
                         }
@@ -222,13 +239,13 @@
                 Log.ret(Log.l.trace);
                 return ret;
             };
-            this.loadData = loadData;
+            this.loadData = loadData;*/
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.creatingTimeCategory();
             }).then(function () {
-                Log.print(Log.l.trace, "Binding wireup page complete");
+                Log.print(Log.l.trace, "creatingTimeCategory returned");
                 return that.loadData();
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
@@ -236,6 +253,6 @@
             Log.ret(Log.l.trace);
         }, {
             timeItem: null
-            })
+        })
     });
 })();

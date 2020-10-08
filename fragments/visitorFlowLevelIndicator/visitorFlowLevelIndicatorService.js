@@ -12,27 +12,45 @@
                 return AppData.getFormatView("CR_V_Bereich", 20614);
             }
         },
-        bereichhourView: {
-            select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "mitarbeiterView.", "recordId=" + restriction);
-                var ret = VisitorFlowLevelIndicator._bereichhourView.select(complete, error, restriction);
-                // this will return a promise to controller
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            defaultValue: {
-                
-            }
-        },
         _bereichhalfhourView: {
             get: function () {
                 return AppData.getFormatView("CR_V_Bereich", 20615);
             }
         },
-        bereichhalfhour: {
+        timeselectupdate: 60,
+        getRestriction: function() {
+            var ret = null;
+            var visitorFlowOverviewFragmentControl =
+                Application.navigator.getFragmentControlFromLocation(
+                    Application.getFragmentPath("visitorFlowOverview"));
+            if (visitorFlowOverviewFragmentControl &&
+                visitorFlowOverviewFragmentControl.controller &&
+                visitorFlowOverviewFragmentControl.controller.binding &&
+                visitorFlowOverviewFragmentControl.controller.binding.visitordata) {
+                ret = {
+                    TITLE: visitorFlowOverviewFragmentControl.controller.binding.visitordata.TITLE
+                };
+            }    
+            return ret;
+        }
+    });
+
+    WinJS.Namespace.define("VisitorFlowLevelIndicator", {
+        visitorFlowLevelView: {
             select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "mitarbeiterView.", "recordId=" + restriction);
-                var ret = VisitorFlowLevelIndicator._bereichhalfhourView.select(complete, error, restriction);
+                if (!restriction) {
+                    restriction = VisitorFlowLevelIndicator.getRestriction();
+                }
+                Log.call(Log.l.trace, "visitorFlowLevelView.", "restriction=" + restriction);
+                var curView;
+                var timeselectupdate = (typeof VisitorFlowLevelIndicator.timeselectupdate === "number") ? VisitorFlowLevelIndicator.timeselectupdate : parseInt(VisitorFlowLevelIndicator.timeselectupdate);
+                if (timeselectupdate === 30) {
+                    curView = VisitorFlowLevelIndicator._bereichhalfhourView;
+                } else {
+                    curView = VisitorFlowLevelIndicator._bereichhourView;
+                }
+
+                var ret = curView.select(complete, error, restriction);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;

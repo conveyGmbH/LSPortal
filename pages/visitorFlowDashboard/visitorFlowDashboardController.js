@@ -29,8 +29,9 @@
             }, commandList]);
             this.applist = null;
 
-            this.refreshWaitTimeMs = 5000;
+            this.refreshWaitTimeMs = 10000;
             this.refreshResultsPromise = null;
+            this.inLoadData = false;
 
             var that = this;
             
@@ -49,6 +50,15 @@
             
             var loadData = function() {
                 Log.call(Log.l.trace, "VisitorFlowDashboard.Controller.");
+                if (that.inLoadData) {
+                    Log.ret(Log.l.trace, "extra ignored");
+                    return WinJS.Promise.as();
+                }
+                that.inLoadData = true;
+                if (that.refreshResultsPromise) {
+                    that.refreshResultsPromise.cancel();
+                    that.removeDisposablePromise(that.refreshResultsPromise);
+                }
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                     var visitorFlowOverviewFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("visitorFlowOverview"));
@@ -58,10 +68,10 @@
                         var parentElement = pageElement.querySelector("#visitorFlowOverviewhost");
                         if (parentElement) {
                             return Application.loadFragmentById(parentElement, "visitorFlowOverview", {});
-                    } else {
+                        } else {
                             return WinJS.Promise.as();
-                                }
-                                    }
+                        }
+                    }
                 }).then(function () {
                     var visitorFlowLevelIndicatorFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("visitorFlowLevelIndicator"));
                     if (visitorFlowLevelIndicatorFragmentControl && visitorFlowLevelIndicatorFragmentControl.controller) {
@@ -72,8 +82,8 @@
                             return Application.loadFragmentById(parentElement, "visitorFlowLevelIndicator", {});
                         } else {
                             return WinJS.Promise.as();
-                                }
-                                        }
+                        }
+                    }
                 }).then(function () {
                     var visitorFlowDevicesFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("visitorFlowDevices"));
                     if (visitorFlowDevicesFragmentControl && visitorFlowDevicesFragmentControl.controller) {
@@ -84,17 +94,15 @@
                             return Application.loadFragmentById(parentElement, "visitorFlowDevices", {});
                         } else {
                             return WinJS.Promise.as();
-                                        }
-                                            }
+                        }
+                    }
+                }).then(function () {
+                    that.inLoadData = false;
+                    that.refreshResultsPromise = WinJS.Promise.timeout(that.refreshWaitTimeMs).then(function () {
+                        that.loadData();
+                    });
+                    that.addDisposablePromise(that.refreshResultsPromise);
                 });
-                if (that.refreshResultsPromise) {
-                    that.refreshResultsPromise.cancel();
-                    that.removeDisposablePromise(that.refreshResultsPromise);
-                }
-                that.refreshResultsPromise = WinJS.Promise.timeout(that.refreshWaitTimeMs).then(function () {
-                    that.loadData();
-                });
-                that.addDisposablePromise(that.refreshResultsPromise);
                 Log.ret(Log.l.trace);
                 return ret;
             };
@@ -113,16 +121,20 @@
                     Log.call(Log.l.trace, "SiteEvents.Controller.");
                     //var name = event.currentTarget.value;
                     //that.handleComboChange(name, null);
-                    that.loadData();
+                    if (!that.inLoadData) {
+                        WinJS.Promise.timeout(50).then(function() {
+                            that.loadData();
+                        });
+                    }
                     Log.ret(Log.l.trace);
                 },
-                changeTime : function(event) {
+                /*changeTime : function(event) {
                     Log.call(Log.l.trace, "SiteEvents.Controller.");
                     //var id = parseInt(event.currentTarget.value);
                     //that.handleTimeChange(id);
                     that.loadData();
                     Log.ret(Log.l.trace);
-                },
+                },*/
                 clickEditEvent: function (event) {
                     Log.call(Log.l.trace, "Start.Controller.");
                     var command = event.currentTarget;
@@ -173,9 +185,7 @@
                     }
                 },
                 changeEntExt: function() {
-                    WinJS.Promise.timeout(50).then(function() {
-                        that.eventHandlers.changeEntExt();
-                    });
+                    that.eventHandlers.changeEntExt();
                     return false;
                 }
             };
@@ -185,8 +195,8 @@
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
             }).then(function() {
-                AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Data loaded");
+                AppBar.notifyModified = true;
                 /*var refreshMs = 10000;
                     var refreshResultsPromise = WinJS.Promise.timeout(refreshMs).then(function () {
                         refreshResultsPromise.cancel();

@@ -29,7 +29,8 @@
                             <select id="timeCategory"
                                     class="input_field win-dropdown"
                                     data-win-control="WinJS.UI.Repeater"
-                                    data-win-bind="value: value Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" onchange="AppBar.handleEvent('onchange', 'changeTime', event)">
+                                    data-win-bind="value: value; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" 
+                                    onchange="AppBar.handleEvent('onchange', 'changeTime', event)">
                                 <option data-win-bind="value: value; textContent: title"></option>
                             </select>
                     </div>
