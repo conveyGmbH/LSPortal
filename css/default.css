@@ -513,8 +513,11 @@ select {
     display: inline;
 }
 */
+.win-progress-bar {
+    border-radius: 0;
+}
 .progress_field {
-    float:left;
+    float: left;
     width: calc(100% - 4px);
     min-width: calc(100% - 4px);
 }
