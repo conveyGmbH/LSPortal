@@ -19,7 +19,7 @@
 
             Fragments.RecordsetController.apply(this, [fragmentElement, {
                 bereichdata: {},
-                timeselectupdate: null,
+                timeselectupdate: 60,
                 vtitle : null
             }, [], VisitorFlowLevelIndicator.visitorFlowLevelView, null, listView]);
 
