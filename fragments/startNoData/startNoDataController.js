@@ -15,7 +15,7 @@
             Log.call(Log.l.trace, "StartNoData.Controller.");
             Fragments.Controller.apply(this, [fragmentElement, {
 
-            }, options]);
+            }]);
 
             var that = this;
             

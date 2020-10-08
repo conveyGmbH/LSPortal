@@ -18,7 +18,7 @@
                 devicedata: null,
                 devicetime: null,
                 entextdev: null
-        }, options]);
+            }]);
 
             this.refreshWaitTimeMs = 30000;
 

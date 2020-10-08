@@ -16,7 +16,7 @@
             Fragments.Controller.apply(this, [fragmentElement, {
                 visitordata: {CR_V_BereichVIEWID: null},
                 ZutritteAlle: 0
-            }, options]);
+            }]);
 
             this.refreshWaitTimeMs = 5000;
 

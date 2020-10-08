@@ -17,7 +17,7 @@
                 bereichdata: {},
                 timeselectupdate: null,
                 vtitle : null
-        }, options]);
+            }]);
 
             this.refreshWaitTimeMs = 10000;
 

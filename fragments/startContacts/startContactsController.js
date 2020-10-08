@@ -15,7 +15,7 @@
             Log.call(Log.l.trace, "StartContacts.Controller.");
             Fragments.Controller.apply(this, [fragmentElement, {
                 startcontactdata: getEmptyDefaultValue(StartContacts.mitarbeiterView.defaultValue)
-            }, options]);
+            }]);
 
             var that = this;
 

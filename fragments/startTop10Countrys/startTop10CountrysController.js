@@ -19,7 +19,7 @@
             Log.call(Log.l.trace, "StartTop10Countrys.Controller.");
             Fragments.Controller.apply(this, [fragmentElement, {
                 
-            }, options]);
+            }]);
 
             var that = this;
             this.countrydata = null;

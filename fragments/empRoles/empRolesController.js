@@ -13,7 +13,9 @@
     WinJS.Namespace.define("EmpRoles", {
         Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options) {
             Log.call(Log.l.trace, "EmpRoles.Controller.");
-            Fragments.Controller.apply(this, [fragmentElement, options]);
+            Fragments.Controller.apply(this, [fragmentElement, {
+
+            }]);
             var that = this;
             this.curRecId = 0;
             this.prevRecId = 0;

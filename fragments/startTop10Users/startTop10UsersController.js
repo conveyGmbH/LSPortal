@@ -21,7 +21,7 @@
             Log.call(Log.l.trace, "StartTop10Users.Controller.");
             Fragments.Controller.apply(this, [fragmentElement, {
                 
-            }, options]);
+            }]);
 
             var that = this;
             this.employeeticks = [];

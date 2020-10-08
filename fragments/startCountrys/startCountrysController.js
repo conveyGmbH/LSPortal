@@ -34,7 +34,7 @@
             }
             Fragments.Controller.apply(this, [fragmentElement, {
                 scripts: [{ src: srcDatamaps, type: "text/javascript" }]
-            }, options]);
+            }]);
 
 
             this.worldMapMaxWidth = 600;

@@ -16,7 +16,9 @@
     WinJS.Namespace.define("PdfExportList", {
         Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options) {
             Log.call(Log.l.trace, "PdfExportList.Controller.");
-            Fragments.Controller.apply(this, [fragmentElement, options]);
+            Fragments.Controller.apply(this, [fragmentElement, {
+
+            }]);
             var that = this;
 
             // now do anything...

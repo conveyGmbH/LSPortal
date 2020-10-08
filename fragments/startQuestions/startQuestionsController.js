@@ -22,7 +22,7 @@
             Fragments.Controller.apply(this, [fragmentElement, {
                 questions: getEmptyDefaultValue(StartQuestions.questionView.defaultValue),
                 anwsers: null
-            }, options]);
+            }]);
 
             var that = this;
             this.answerdata = null;

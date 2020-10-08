@@ -22,7 +22,7 @@
             Log.call(Log.l.trace, "StartContactspD.Controller.");
             Fragments.Controller.apply(this, [fragmentElement, {
                 
-            }, options]);
+            }]);
 
             var that = this;
             this.kontaktanzahldata = null;
