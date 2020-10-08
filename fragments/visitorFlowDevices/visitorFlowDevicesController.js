@@ -11,14 +11,16 @@
     "use strict";
 
     WinJS.Namespace.define("VisitorFlowDevices", {
-        Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options) {
+        Controller: WinJS.Class.derive(Fragments.RecordsetController, function Controller(fragmentElement, options) {
             Log.call(Log.l.trace, "VisitorFlowDevices.Controller.");
-            Fragments.Controller.apply(this, [fragmentElement, {
+            var listView = fragmentElement.querySelector("#visitorFlowDevicesList.listview");
+
+            Fragments.RecordsetController.apply(this, [fragmentElement, {
                 visitordata: null,
                 devicedata: null,
                 devicetime: null,
                 entextdev: null
-            }]);
+            }, [], VisitorFlowDevices.visitorDeviceView, null, listView]);
 
             this.refreshWaitTimeMs = 30000;
 
@@ -30,8 +32,7 @@
             var maxTrailingPages = 0;
 
             // now do anything...
-            var listView = fragmentElement.querySelector("#visitorFlowDevicesList.listview");
-            var dotdevice = fragmentElement.querySelectorAll(".dotdev");
+            /*var dotdevice = fragmentElement.querySelectorAll(".dotdev");
 
             var setcolordotdevices = function (index, time, element) {
                 var dateact = new Date();
@@ -60,7 +61,7 @@
                 Log.call(Log.l.trace, "VisitorFlowDevices.Controller.");
 
             }
-            this.setcolordotdevices = setcolordotdevices;
+            this.setcolordotdevices = setcolordotdevices;*/
 
             var msToTime = function(s) {
                 var actDate = new Date(s);
@@ -110,9 +111,32 @@
                 }
                 item.LastCallTimeStamp = that.getDateObject(null, item.LastCallTS);
                 if (item.LastCallTS) {
-                    item.LastCallTS = that.getDateObject(item.LastCallTS, null);
+                    item.LastCallDate = that.getDateObject(item.LastCallTS, null);
+                    var dateact = new Date();
+                    var dateactdate = dateact.getDate();
+                    var dateacthours = dateact.getHours();
+                    var dateactminutes = dateact.getMinutes();
+                    var datedataday = item.LastCallDate.getDate();
+                    var datedatahours = item.LastCallDate.getHours();
+                    var datedataminutes = item.LastCallDate.getMinutes();
+                    var dateactminsum = (dateacthours * 60) + dateactminutes;
+                    var datedataminsum = (datedatahours * 60) + datedataminutes;
+                    var datecomp = dateactminsum - datedataminsum;
+                    if (dateactdate === datedataday && dateactminsum >= datedataminsum) {
+                        if (datecomp >= 60) {
+                            item.dotdevColor = "red";
+                        }
+                        else if (datecomp >= 30 && datecomp < 60) {
+                            item.dotdevColor = "orange";
+                        } else {
+                            item.dotdevColor = "green";
+                        }
+                    } else {
+                        item.dotdevColor = "red";
+                    }
+                } else {
+                    item.dotdevColor = "red";
                 }
-
             }
             this.resultConverter = resultConverter;
 
@@ -146,19 +170,18 @@
                             }
                         } else if (listView.winControl.loadingState === "complete") {
                             // load SVG images
-                            var indexOfFirstVisible = listView.winControl.indexOfFirstVisible;
+                            /*var indexOfFirstVisible = listView.winControl.indexOfFirstVisible;
                             var indexOfLastVisible = listView.winControl.indexOfLastVisible;
                             for (var i = indexOfFirstVisible; i <= indexOfLastVisible; i++) {
                                 var element = listView.winControl.elementFromIndex(i);
-                                if (element) {
+                                if (element && that.records) {
                                     var dotdev = element.querySelector(".dotdev");
                                     if (dotdev) {
-                                        that.setcolordotdevices(i, that.binding.devicetime[i].LastCallTS, dotdev);
+                                        var item = that.records.getAt(i);
+                                        that.setcolordotdevices(i, item.LastCallDate, dotdev);
                                     }
                                 }
-                            }
-                            //that.loading = false;
-                            //that.loadNextUrl();
+                            }*/
                         }
                     }
                     Log.ret(Log.l.trace);
@@ -173,7 +196,7 @@
                 //this.addRemovableEventListener(listView, "headervisibilitychanged", this.eventHandlers.onHeaderVisibilityChanged.bind(this));
             }
 
-            var loadData = function () {
+            /*var loadData = function () {
                 Log.call(Log.l.trace, "VisitorFlowDevices.");
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
@@ -215,7 +238,7 @@
                 Log.ret(Log.l.trace);
                 return ret;
             };
-            this.loadData = loadData;
+            this.loadData = loadData;*/
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
