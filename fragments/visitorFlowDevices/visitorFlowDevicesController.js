@@ -143,7 +143,7 @@
             // define handlers
             this.eventHandlers = {
                 onLoadingStateChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "LocalEvents.Controller.");
+                    Log.call(Log.l.trace, "VisitorFlowDevices.Controller.");
                     if (listView && listView.winControl) {
                         Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
                         // single list selection
@@ -185,6 +185,47 @@
                         }
                     }
                     Log.ret(Log.l.trace);
+                },
+                onFooterVisibilityChanged: function (eventInfo) {
+                    Log.call(Log.l.trace, "VisitorFlowDevices.Controller.");
+                    if (eventInfo && eventInfo.detail) {
+                        progress = listView.querySelector(".list-footer .progress");
+                        counter = listView.querySelector(".list-footer .counter");
+                        var visible = eventInfo.detail.visible;
+                        if (visible && that.nextUrl) {
+                            that.loading = true;
+                            if (progress && progress.style) {
+                                progress.style.display = "inline";
+                            }
+                            if (counter && counter.style) {
+                                counter.style.display = "none";
+                            }
+                            that.loadNext(function (json) {
+                                // this callback will be called asynchronously
+                                // when the response is available
+                                Log.print(Log.l.trace, "VisitorFlowDevices.visitorDeviceView: success!");
+                            }, function (errorResponse) {
+                                // called asynchronously if an error occurs
+                                // or server returns response with an error status.
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                                if (progress && progress.style) {
+                                    progress.style.display = "none";
+                                }
+                                if (counter && counter.style) {
+                                    counter.style.display = "inline";
+                                }
+                            });
+                        } else {
+                            if (progress && progress.style) {
+                                progress.style.display = "none";
+                            }
+                            if (counter && counter.style) {
+                                counter.style.display = "inline";
+                            }
+                            that.loading = false;
+                        }
+                    }
+                    Log.ret(Log.l.trace);
                 }
             };
 
@@ -192,7 +233,7 @@
             if (listView) {
                 //this.addRemovableEventListener(listView, "iteminvoked", this.eventHandlers.onItemInvoked.bind(this));
                 this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
-                //this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
+                this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
                 //this.addRemovableEventListener(listView, "headervisibilitychanged", this.eventHandlers.onHeaderVisibilityChanged.bind(this));
             }
 
