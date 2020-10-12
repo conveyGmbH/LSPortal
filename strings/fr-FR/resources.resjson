@@ -1030,7 +1030,7 @@
     "visitorFlowDevices.lastmsg"			: "Dernière annonce",
     "visitorFlowDevices.entrance"			: "entrée",
     "visitorFlowDevices.exit"			: "production",
-    "visitorFlowDevices.deviceno"			: "Appareil non.",
+    "visitorFlowDevices.user"			: "Utilisateur",
 	
     "visitorFlowLevelIndicator.title"			: "Affichage du niveau",
     "visitorFlowLevelIndicator.hour"			: "heure",
@@ -1038,6 +1038,7 @@
     "visitorFlowLevelIndicator.timeselect"			: "Intervalle de temps",
     "visitorFlowLevelIndicator.time"			: "Temps",
     "visitorFlowLevelIndicator.visitors"			: "Nombre de visiteurs",
+    "visitorFlowLevelIndicator.entryleaving"			: "Entrées / Sorties",
 
     "visitorflowoverview.title"			: "Aperçu",
     "visitorflowoverview.bottomtext"			: "Personnes actuellement présentes sur le stand",

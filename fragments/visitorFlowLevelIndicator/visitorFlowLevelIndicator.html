@@ -19,8 +19,10 @@
                         <div class="list-header">
                             <div class="list-landscape-only list-header-columns">
                                 <div id="vflitimeh" class="list-field-small-relative" data-win-res="{textContent: 'visitorFlowLevelIndicator.time'}"></div>
+                                <div id="hlsep" class="list-field-small-relative"></div>
                                 <div id="viscou" class="list-field-small-relative" data-win-res="{textContent: 'visitorFlowLevelIndicator.visitors'}"></div>
-                                <div id="vflitimeh" class="list-field-small-relative" data-win-res="{textContent: 'visitorFlowLevelIndicator.visitorsall'}"></div>
+                                <div id="hltotal" class="list-field-small-relative"></div>
+                                <div id="hlent" class="list-field-small-relative" data-win-res="{textContent: 'visitorFlowLevelIndicator.entryleaving'}"></div>
                             </div>
                         </div>
                     </div>
@@ -45,8 +47,11 @@
                                 <progress id="vflibalk" 
                                           class="win-progress-bar" 
                                           data-win-bind="textContent: Zeitraum; value: EintritteGesamt; max: Limit"></progress>
-                                <div id="vflitime" class="list-field-small-fixed win-type-ellipsis"
-                                data-win-bind="textContent: EintritteGesamt"></div>
+                                <div id="vflivisall" class="list-field-small-fixed win-type-ellipsis"
+                                     data-win-bind="textContent: EintritteGesamt"></div>
+                                <div id="vflient" class="list-field-small-fixed win-type-ellipsis"
+                                     data-win-bind="textContent: EintritteAustritteBereich">
+                                </div>
                         </div>
                         <div class="list-portrait-only">
                             <div class="row-separator"></div>
@@ -55,11 +60,13 @@
                                     <!--list-localeventsList-->
                                     <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
                                           data-win-bind="textContent: Zeitraum"></span>
-                                    <progress id="vflibalk" 
-                                              class="win-progress-bar" 
+                                    <progress id="vflibalk"
+                                              class="win-progress-bar"
                                               data-win-bind="textContent: Zeitraum; value: EintritteGesamt; max: Limit"></progress>
                                     <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
                                           data-win-bind="textContent: EintritteGesamt"></span>
+                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
+                                          data-win-bind="textContent: EintritteAustritteBereich"></span>
                                 </div>
                             </div>
                         </div>

@@ -108,12 +108,14 @@
                 item.index = index;
                 item.EintritteGesamt = item.EintritteBereich - item.AustritteBereich;
                 item.Zeitraum = item.Zeitraum + ":00";
+                item.EintritteAustritteBereich = item.EintritteBereich + " / " + item.AustritteBereich;
             }
             this.resultConverterhour = resultConverterhour;
 
             var resultConverterhalfhour = function (item, index) {
                 item.index = index;
                 item.EintritteGesamt = item.EintritteBereich - item.AustritteBereich;
+                item.EintritteAustritteBereich = item.EintritteBereich + " / " + item.AustritteBereich;
             }
             this.resultConverterhalfhour = resultConverterhalfhour;
             var resultConverter = function(item, index) {

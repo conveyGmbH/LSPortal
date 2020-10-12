@@ -1039,7 +1039,7 @@
     "visitorFlowDevices.lastmsg"			: "Letzte Meldung",
     "visitorFlowDevices.entrance"			: "Eingang",
     "visitorFlowDevices.exit"			: "Ausgang",
-    "visitorFlowDevices.deviceno"			: "Gerätenr.",
+    "visitorFlowDevices.user"			: "Benutzer",
 	
     "visitorFlowLevelIndicator.title"			: "Füllstand-Anzeige",
 	"visitorFlowLevelIndicator.hour"			: "Stunde",
@@ -1047,11 +1047,13 @@
     "visitorFlowLevelIndicator.timeselect"			: "Zeitintervall",
     "visitorFlowLevelIndicator.time"			: "Uhrzeit",
     "visitorFlowLevelIndicator.visitors"			: "Besucher-Anzahl",
+    "visitorFlowLevelIndicator.entryleaving"			: "Eintritte / Austritte",
 
     "visitorflowoverview.title"			: "Übersicht",
     "visitorflowoverview.bottomtext"			: "Personen aktuell am Stand",
     "visitorflowoverview.areacombo"			: "Bereich auswählen",
+    "visitorflowoverview.offsettext"			: "Bei einem Offset von: ",
 
-	"visitorFlowDashboard.title"	: "VisitorFlow Übersicht",
+	 "visitorFlowDashboard.title"	: "VisitorFlow Übersicht",
     "visitorFlowDashboard.comment"  : "Hier finden Sie eine Übersicht über die Anzahl Besucher an Ihrem Stand"
 }			

@@ -1029,7 +1029,7 @@
     "visitorFlowDevices.lastmsg"			: "Last Announcement",
     "visitorFlowDevices.entrance"			: "Entrance",
     "visitorFlowDevices.exit"			: "Exit",
-    "visitorFlowDevices.deviceno"			: "Device No.",
+    "visitorFlowDevices.user"			: "User",
 	
     "visitorFlowLevelIndicator.title"			: "Level Display",
     "visitorFlowLevelIndicator.hour"			: "Hour",
@@ -1037,6 +1037,7 @@
     "visitorFlowLevelIndicator.timeselect"			: "Time Interval",
     "visitorFlowLevelIndicator.time"			: "Time",
     "visitorFlowLevelIndicator.visitors"			: "Number of Visitors",
+    "visitorFlowLevelIndicator.entryleaving"			: "Entries / Exits",
 
     "visitorflowoverview.title"			: "Overview",
     "visitorflowoverview.bottomtext"			: "People currently at the booth",
