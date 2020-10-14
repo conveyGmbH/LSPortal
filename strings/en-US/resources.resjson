@@ -510,7 +510,7 @@
     "label.esStaffAdministration" : "Stand personnel",
     "label.voucherAdministration" : "Voucher orders",
     "label.esVoucherUsers" : "Use of vouchers",
-    "label.visitorFlowEntExt" : "Entrance/Exit",
+    "label.visitorFlowEntExt" : "Visitor Flow Areas",
     "label.employeeVisitorFlow" : "VisitorFlow",	
     "label.visitorFlowDashboard" : "Visitor Flow Dashboard",
     

@@ -512,7 +512,7 @@
     "label.esStaffAdministration" : "Standpersonal",
     "label.voucherAdministration" : "Gutscheinbestellung",
     "label.esVoucherUsers" : "Gutscheinverwendung",
-    "label.visitorFlowEntExt" : "Eingänge/Ausgänge",
+    "label.visitorFlowEntExt" : "Visitor Flow Bereiche",
 	"label.employeeVisitorFlow" : "VisitorFlow",
     "label.visitorFlowDashboard" : "Visitor Flow Dashboard",
 

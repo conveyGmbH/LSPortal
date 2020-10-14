@@ -510,7 +510,7 @@
     "label.esStaffAdministration" : "Personale dello stand",
     "label.voucherAdministration" : "Ordine di buoni",
     "label.esVoucherUsers" : "Uso di buoni",
-    "label.visitorFlowEntExt" : "Entrata/Uscita",
+    "label.visitorFlowEntExt" : "Visitor Flow Settori",
     "label.employeeVisitorFlow" : "VisitorFlow",
     "label.visitorFlowDashboard" : "Visitor Flow Dashboard",
 
