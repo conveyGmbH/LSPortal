@@ -170,6 +170,15 @@
                                 if (result) {
                                     AppBar.busy = true;
                                     Log.print(Log.l.trace, "clickDelete: user choice OK");
+                                    var record;
+                                    if (curScope.index > 0) {
+                                        record = that.records.getAt(curScope.index - 1);
+                                    } else {
+                                        record = that.records.getAt(1);
+                                    }
+                                    if (record) {
+                                        that.binding.cr_v_bereichId = record.CR_V_BereichVIEWID;
+                                    }
                                     that.deleteData();
                                 } else {
                                     Log.print(Log.l.trace, "clickDelete: user choice CANCEL");

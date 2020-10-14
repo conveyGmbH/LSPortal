@@ -166,7 +166,7 @@
             };
 
             var resultCrVBereichConverter = function (item, index) {
-                item.TITLE = item.TITLE + (!!item.Eingang ? " " + getResourceText("employeeVisitorFlow.entry") : "") + (!!item.Ausgang ? " " + getResourceText("employeeVisitorFlow.exit") : "");
+               // item.TITLE = item.TITLE + (!!item.Eingang ? " " + getResourceText("employeeVisitorFlow.entry") : "") + (!!item.Ausgang ? " " + getResourceText("employeeVisitorFlow.exit") : "");
             };
             this.resultCrVBereichConverter = resultCrVBereichConverter;
 

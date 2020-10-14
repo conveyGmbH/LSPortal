@@ -41,7 +41,11 @@
         },
         CR_MA_APUSERRoleView: {
             select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "employeeView.");
+                if (!restriction) {
+                    restriction = EmpRoles.getRestriction();
+                }
+               // Log.call(Log.l.trace, "visitorFlowLevelView.", "restriction=" + restriction);
+                Log.call(Log.l.trace, "employeeView.", "restriction=" + restriction);
                 var ret = EmpRoles._CR_MA_APUSERRoleView.select(complete, error, restriction, {
                     ordered: true,
                     orderAttribute: "INITAPUserRoleID"
@@ -56,6 +60,26 @@
                 Log.ret(Log.l.trace);
                 return ret;
             }
+        },
+        getRestriction: function () {
+            var ret = null;
+           /* var empRolesFragmentControl =
+                Application.navigator.getFragmentControlFromLocation(
+                    Application.getFragmentPath("empRoles"));
+            if (empRolesFragmentControl &&
+                empRolesFragmentControl.controller &&
+                empRolesFragmentControl.controller.binding ) {
+                ret = {
+                    MitarbeiterID: empRolesFragmentControl.controller.binding.employeeId,
+                };
+            }*/
+            var master = Application.navigator.masterControl;
+            if (master && master.controller && master.controller.binding) {
+                ret = {
+                    MitarbeiterID: master.controller.binding.employeeId
+                };
+            }
+            return ret;
         }
     });
 })();

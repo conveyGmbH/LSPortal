@@ -257,7 +257,7 @@
                     });
                 }).then(function () {
                     return EmpRoles.CR_MA_APUSERRoleView.select(function (json) {
-                        that.binding.employeeId = curRecordId;
+                        //that.binding.employeeId = curRecordId;
                         // this callback will be called asynchronously
                         // when the response is available
                         Log.print(Log.l.trace, "CR_MA_APUSERRoleView: success!");
@@ -284,9 +284,9 @@
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
-                    }, {
+                    }, /*{
                         MitarbeiterID: curRecordId
-                    });
+                    }*/null);
                 });
                 Log.ret(Log.l.trace);
                 return ret;

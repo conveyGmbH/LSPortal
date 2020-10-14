@@ -148,25 +148,20 @@
                         that.binding.isvisitorFlowVisible = checked;
                         AppData._persistentStates.showvisitorFlow = checked;
                         //var pValue;
-                        if (that.binding.isvisitorFlowVisible) {
-                            pValue = "1";
-                            that.changeAppSetting("showQuestionnaire", false);
-                            that.changeAppSetting("showSketch", false);
-                            that.changeAppSetting("showPrivacyPolicySVG", false);
-                        } else {
+                        if (!that.binding.isvisitorFlowVisible) {
                             that.binding.isvisitorFlowVisibleAndLeadSuccess = checked;
                             AppData._persistentStates.showvisitorFlowAndLeadSuccess = checked;
                             pValue = "0";
+                        } else {
+                            pValue = "1";
                         }
                         if (pValue === "1") {
                             NavigationBar.enablePage("visitorFlowDashboard");
-                            NavigationBar.enablePage("visitorFlowEntExt");
-                            NavigationBar.enablePage("visitorFlowLevelLimits");/*pagename muss wahrscheinlich nochmal geändert werden, jenachdem wie die seite heisst*/
+                            NavigationBar.enablePage("visitorFlowEntExt"); /*pagename muss wahrscheinlich nochmal geändert werden, jenachdem wie die seite heisst*/
                             NavigationBar.enablePage("employeeVisitorFlow");
                         } else {
                             NavigationBar.disablePage("visitorFlowDashboard");
                             NavigationBar.disablePage("visitorFlowEntExt");
-                            NavigationBar.disablePage("visitorFlowLevelLimits");
                             NavigationBar.disablePage("employeeVisitorFlow");
                         }
                         //AppData._persistentStates.showvisitorFlowAndLeadSuccess = checked;
