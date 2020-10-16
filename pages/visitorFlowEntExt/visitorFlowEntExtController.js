@@ -90,15 +90,23 @@
                     Log.call(Log.l.trace, "Questiongroup.Controller.");
                     mouseDown = false;
                     Log.ret(Log.l.trace);
-                },
+                }/*,
                 onSelectionChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "VisitorFlowEntExt.Controller.");
                     var currentlistIndex = that.currentlistIndex;
                     that.selectionChanged(function() {
-                        if (isAreaModified) {
+                       /* if (isAreaModified) {
                             isAreaModified = false;
                             that.loadData();
                         }
+                       listView.winControl.selection.set(currentlistIndex);
+                       var element = that.listView.winControl.elementFromIndex(currentlistIndex);
+                       if (element) {
+                           var text = element.querySelectorAll('input[type="text"]');
+                           if (text && text[0]) {
+                               text[0].focus();
+                           }
+                       }
                     }, function(errorResponse) {
                         Log.print(Log.l.error, "error saving entext");
                         that.prevRecId = that.curRecId;
@@ -111,6 +119,15 @@
                             }
                         }
                         AppData.setErrorMsg(that.binding, errorResponse);
+                    }).then(function () {
+                        AppBar.triggerDisableHandlers();
+                    });;
+                    Log.ret(Log.l.trace);
+                }*/,
+                onSelectionChanged: function(eventInfo) {
+                    Log.call(Log.l.trace, "OptQuestionList.Controller.");
+                    that.selectionChanged().then(function () {
+                        AppBar.triggerDisableHandlers();
                     });
                     Log.ret(Log.l.trace);
                 },
@@ -128,8 +145,10 @@
                             Log.print(Log.l.info, "MailingTypes insert: success!");
                             // MailingTypes returns object already parsed from json file in response
                             if (json && json.d) {
-                                isAreaModified = false;
-                                that.loadData();
+                                //isAreaModified = false;
+                                that.loadData().then(function () {
+                                    that.selectRecordId(json.d.CR_V_BereichVIEWID);
+                                });
                             }
                         }, function (errorResponse) {
                             Log.print(Log.l.error, "error inserting employee");
@@ -150,12 +169,12 @@
                     }, function (errorResponse) {
                         AppBar.busy = false;
                         Log.print(Log.l.error, "error saving question");
-                    }).then(function() {
+                    })/*.then(function () {
                         if (isAreaModified) {
                             isAreaModified = false;
                             that.loadData();
                         }
-                    });
+                    })*/;
                     Log.ret(Log.l.trace);
                 },
                 clickDelete: function (event) {
@@ -179,7 +198,11 @@
                                     if (record) {
                                         that.binding.cr_v_bereichId = record.CR_V_BereichVIEWID;
                                     }
-                                    that.deleteData();
+                                    that.deleteData().then(function () {
+                                        if (that.binding.cr_v_bereichId) {
+                                            that.selectRecordId(that.binding.cr_v_bereichId);
+                                        }
+                                    });;
                                 } else {
                                     Log.print(Log.l.trace, "clickDelete: user choice CANCEL");
                                 }
