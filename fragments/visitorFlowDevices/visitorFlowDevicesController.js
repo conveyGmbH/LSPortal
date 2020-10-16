@@ -104,10 +104,17 @@
             
             var resultConverter = function (item, index) {
                 item.index = index;
-                if (item.Eingang === 1) {
+                if (item.Eingang === 1 && item.Ausgang === 0) {
                     item.entextdev = getResourceText("visitorFlowDevices.entrance");
-                } else {
+                }
+                if (item.Ausgang === 1 && item.Eingang === 0) {
                     item.entextdev = getResourceText("visitorFlowDevices.exit");
+                }
+                if (item.Eingang === 1 && item.Ausgang === 1) {
+                    item.entextdev = getResourceText("visitorFlowDevices.entrance") + " + " + getResourceText("visitorFlowDevices.exit");
+                }
+                if (item.Eingang === 0 && item.Ausgang === 0) {
+                    item.entextdev = "none";
                 }
                 item.LastCallTimeStamp = that.getDateObject(null, item.LastCallTS);
                 if (item.LastCallTS) {
