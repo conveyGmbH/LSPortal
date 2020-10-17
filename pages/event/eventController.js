@@ -155,15 +155,15 @@
                         } else {
                             pValue = "1";
                         }
-                        if (pValue === "1") {
+                        /*if (pValue === "1") {
                             NavigationBar.enablePage("visitorFlowDashboard");
-                            NavigationBar.enablePage("visitorFlowEntExt"); /*pagename muss wahrscheinlich nochmal geändert werden, jenachdem wie die seite heisst*/
+                            NavigationBar.enablePage("visitorFlowEntExt"); 
                             NavigationBar.enablePage("employeeVisitorFlow");
                         } else {
                             NavigationBar.disablePage("visitorFlowDashboard");
                             NavigationBar.disablePage("visitorFlowEntExt");
                             NavigationBar.disablePage("employeeVisitorFlow");
-                        }
+                        }*/
                         //AppData._persistentStates.showvisitorFlowAndLeadSuccess = checked;
                         break;
                     case "showvisitorFlowAndLeadSuccess":
