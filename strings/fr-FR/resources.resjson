@@ -1001,7 +1001,7 @@
     "esVoucherUsers.vouchercomment": "Commentaire de la commande",
     "esVoucherUsers.checkindate": "Check-In",
 
-    "visitorFlowEntExt.title": "Entrée / Sortie",
+    "visitorFlowEntExt.title": "Visitor Flow Secteurs",
     "visitorFlowEntExt.area": "Zone",
     "visitorFlowEntExt.limit": "Limite",
     "visitorFlowEntExt.warninglimit": "Limite d'avertissement",
@@ -1009,8 +1009,8 @@
     "visitorFlowEntExt.entrance": "Entrée",
     "visitorFlowEntExt.exit": "Sortie",
     "visitorFlowEntExt.count": "Compter",
-    "visitorFlowEntExt.labelDelete": "Entrée / Sortie: ",
-    "visitorFlowEntExt.entextDelete": "Voulez-vous supprimer cette entrée / sortie?",
+    "visitorFlowEntExt.labelDelete": "Visitor Flow Secteur: ",
+    "visitorFlowEntExt.entextDelete": "Voulez-vous supprimer cette Visitor Flow Secteur?",
     "visitorFlowEntExt.comment"     : "Gérez vos espaces",
 
     "employeeVisitorFlow.area"			: "Zone",

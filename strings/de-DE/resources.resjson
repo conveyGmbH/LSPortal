@@ -1010,7 +1010,7 @@
     "esVoucherUsers.checkindate": "Check-In",
     "esVoucherUsers.excelexportall": "Gutschein-Benutzer",
 
-    "visitorFlowEntExt.title": "Eingänge / Ausgänge",
+    "visitorFlowEntExt.title": "Visitor Flow Bereiche",
     "visitorFlowEntExt.area": "Bereich",
     "visitorFlowEntExt.limit": "Limit",
     "visitorFlowEntExt.warninglimit": "Warn-Grenze",
@@ -1018,8 +1018,8 @@
     "visitorFlowEntExt.entrance": "Eingang",
     "visitorFlowEntExt.exit": "Ausgang",
     "visitorFlowEntExt.count": "Anzahl",
-    "visitorFlowEntExt.labelDelete": "Eingang / Ausgang: ",
-    "visitorFlowEntExt.entextDelete": "Wollen Sie diesen Eingang / Ausgang löschen?",
+    "visitorFlowEntExt.labelDelete": "Visitor Flow Bereich: ",
+    "visitorFlowEntExt.entextDelete": "Wollen Sie diesen Visitor Flow Bereich löschen?",
     "visitorFlowEntExt.comment"     : "Verwalten Sie Ihre Bereiche",
 
     "employeeVisitorFlow.area"			: "Bereich",
