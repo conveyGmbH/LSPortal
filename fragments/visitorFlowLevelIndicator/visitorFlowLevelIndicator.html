@@ -58,15 +58,29 @@
                             <div class="list-div-left">
                                 <div class="list-compressed">
                                     <!--list-localeventsList-->
-                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
-                                          data-win-bind="textContent: Zeitraum"></span>
-                                    <progress id="vflibalk"
-                                              class="win-progress-bar"
-                                              data-win-bind="textContent: Zeitraum; value: EintritteGesamt; max: Limit"></progress>
-                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
-                                          data-win-bind="textContent: EintritteGesamt"></span>
-                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
-                                          data-win-bind="textContent: EintritteAustritteBereich"></span>
+                                    <div class="list-compressed-title win-type-subtitle win-type-ellipsis">
+                                        <span id="left"
+                                              data-win-res="{textContent: 'visitorFlowLevelIndicator.time', title: 'visitorFlowLevelIndicator.time'}"></span>
+                                        <span id="right"
+                                              data-win-bind="textContent: Zeitraum"></span>
+                                    </div>
+                                    <div class="list-compressed-title win-type-subtitle win-type-ellipsis">
+                                        <span id="left"
+                                              data-win-res="{textContent: 'visitorFlowLevelIndicator.visitors', title: 'visitorFlowLevelIndicator.visitors'}"></span>
+                                        <div>
+                                            <progress id="vflibalk"
+                                                      class="win-progress-bar"
+                                                      data-win-bind="textContent: Zeitraum; value: EintritteGesamt; max: Limit"></progress>
+                                            <span id="subright"
+                                                  data-win-bind="textContent: EintritteGesamt"></span>
+                                        </div>
+                                    </div>
+                                    <div class="list-compressed-title win-type-subtitle win-type-ellipsis">
+                                        <span id="left"
+                                              data-win-res="{textContent: 'visitorFlowLevelIndicator.entryleaving', title: 'visitorFlowLevelIndicator.entryleaving'}"></span>
+                                        <span id="right"
+                                              data-win-bind="textContent: EintritteAustritteBereich"></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
