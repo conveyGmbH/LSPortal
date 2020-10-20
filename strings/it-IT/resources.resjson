@@ -1000,7 +1000,7 @@
     "esVoucherUsers.vouchercomment": "Commento ordine",
     "esVoucherUsers.checkindate": "Check-In",
 
-    "visitorFlowEntExt.title": "Entrata / Uscita",
+    "visitorFlowEntExt.title": "Visitor Flow Settori",
     "visitorFlowEntExt.area": "Area",
     "visitorFlowEntExt.limit": "Limite",
     "visitorFlowEntExt.warninglimit": "Limite di avviso",
@@ -1008,8 +1008,8 @@
     "visitorFlowEntExt.entrance": "Entrata",
     "visitorFlowEntExt.exit": "Uscita",
     "visitorFlowEntExt.count": "Contare",
-    "visitorFlowEntExt.labelDelete": "Entrata / Uscita: ",
-    "visitorFlowEntExt.entextDelete": "Vuoi cancellare questa entrata / uscita?",
+    "visitorFlowEntExt.labelDelete": "Visitor Flow Settore: ",
+    "visitorFlowEntExt.entextDelete": "Vuoi cancellare questa Visitor Flow Settore?",
     "visitorFlowEntExt.comment"     : "Gestisci le tue aree",
 
     "employeeVisitorFlow.area"			: "Area",
