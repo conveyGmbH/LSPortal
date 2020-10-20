@@ -199,12 +199,12 @@ progress {
 }
 
 #vflitime {
-    width: 13%;
+    width: 16%;
     margin-left: 17px;
 }
 
 #vflibalk {
-    width: 23%;
+    width: 27%;
 }
 
 #hlent {
@@ -224,7 +224,7 @@ progress {
 }
 
 #hlsep {
-    width: 2%;
+    width: 5%;
 }
 
 #vflisep {
@@ -263,7 +263,7 @@ progress {
 }
 
 #viscou {
-    width: 25%;
+    width: 30%;
 }
 
 #visitorFlowLevelIndicatorList .win-itemscontainer {

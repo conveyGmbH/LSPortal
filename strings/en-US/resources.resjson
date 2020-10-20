@@ -1025,9 +1025,9 @@
 
     "visitorFlowDevices.title"			: "Devices",
     "visitorFlowDevices.device"			: "Area",
-    "visitorFlowDevices.entexttitle"			: "Entrance / Exit",
+    "visitorFlowDevices.entexttitle"			: "Entrance/Exit",
     "visitorFlowDevices.entext"			: "Entrance / Exit",
-    "visitorFlowDevices.lastmsg"			: "Last Announcement",
+    "visitorFlowDevices.lastmsg"			: "Last update",
     "visitorFlowDevices.entrance"			: "Entrance",
     "visitorFlowDevices.exit"			: "Exit",
     "visitorFlowDevices.user"			: "User",
@@ -1041,8 +1041,9 @@
     "visitorFlowLevelIndicator.entryleaving"			: "Entries / Exits",
 
     "visitorflowoverview.title"			: "Overview",
-    "visitorflowoverview.bottomtext"			: "People currently at the booth",
+    "visitorflowoverview.bottomtext"			: "People currently in the booth",
     "visitorflowoverview.areacombo"			: "Choose area",
+    "visitorflowoverview.offsettext"			: "With an offset of: ",
 
     "visitorFlowDashboard.title"	: "VisitorFlow Overview",
 	"visitorFlowDashboard.comment"  : "Here you will find an overview of the number of visitors to your stand"

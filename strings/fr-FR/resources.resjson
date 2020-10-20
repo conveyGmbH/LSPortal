@@ -1044,6 +1044,7 @@
     "visitorflowoverview.title"			: "Aperçu",
     "visitorflowoverview.bottomtext"			: "Personnes actuellement présentes sur le stand",
     "visitorflowoverview.areacombo"			: "choisir la zone",
+    "visitorflowoverview.offsettext"			: "Avec un décalage de: ",
 
     "visitorFlowDashboard.title"	: "VisitorFlow Overview",
     "visitorFlowDashboard.comment"  : "Vous trouverez ici un aperçu du nombre de visiteurs de votre stand"
