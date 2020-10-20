@@ -159,3 +159,7 @@
 #visitorFlowDeviceshost.fragmenthost {
     height: 800px;
 }
+
+.view-size-bigger .visitorFlowDashboard .field_tile {
+    width: calc(100% - 10px);
+}
