@@ -1025,6 +1025,7 @@
 
     "visitorFlowDevices.title"			: "Devices",
     "visitorFlowDevices.device"			: "Area",
+    "visitorFlowDevices.entexttitle"			: "Entrance / Exit",
     "visitorFlowDevices.entext"			: "Entrance / Exit",
     "visitorFlowDevices.lastmsg"			: "Last Announcement",
     "visitorFlowDevices.entrance"			: "Entrance",

@@ -1026,14 +1026,15 @@
 
     "visitorFlowDevices.title"			: "équipement",
     "visitorFlowDevices.device"			: "Zone",
-    "visitorFlowDevices.entext"			: "entrée / production",
+    "visitorFlowDevices.entexttitle"			: "Entrée / Sortie",
+    "visitorFlowDevices.entext"			: "Entrée / Sortie",
     "visitorFlowDevices.lastmsg"			: "Dernière annonce",
-    "visitorFlowDevices.entrance"			: "entrée",
+    "visitorFlowDevices.entrance"			: "Entrée",
     "visitorFlowDevices.exit"			: "production",
     "visitorFlowDevices.user"			: "Utilisateur",
 	
     "visitorFlowLevelIndicator.title"			: "Affichage du niveau",
-    "visitorFlowLevelIndicator.hour"			: "heure",
+    "visitorFlowLevelIndicator.hour"			: "Heure",
     "visitorFlowLevelIndicator.halfhour"			: "Une demi-heure",
     "visitorFlowLevelIndicator.timeselect"			: "Intervalle de temps",
     "visitorFlowLevelIndicator.time"			: "Temps",
