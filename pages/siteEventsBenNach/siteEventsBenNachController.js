@@ -50,12 +50,8 @@
                             title: "SERVICE"
                         },
                         {
-                            value: "RTW",
-                            title: "RTW"
-                        },
-                        {
-                            value: "IPAD",
-                            title: "IPAD"
+                            value: "FLOW",
+                            title: "FLOW"
                         }
                     ];
                     if (exibitorcategory && exibitorcategory.winControl) {

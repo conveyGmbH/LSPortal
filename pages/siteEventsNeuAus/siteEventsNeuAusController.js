@@ -52,6 +52,10 @@
                     {
                         value: "IPAD",
                         title: "IPAD"
+                    },
+                    {
+                        value: "FLOW",
+                        title: "FLOW"
                     }
                 ];
                 if (exibitorcategory && exibitorcategory.winControl) {
