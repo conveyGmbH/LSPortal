@@ -1028,7 +1028,7 @@ button.win-button {
     display:block;
 }
 .view-size-bigger .field_tile {
-    width: calc(50% - 66px);
+    width: calc(50% - 10px);
 }
 
   
