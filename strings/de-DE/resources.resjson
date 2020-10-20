@@ -843,7 +843,7 @@
     "siteeventsbennach.bestellungen" : "Bestellungen",
     "siteeventsbennach.newdevices" : "Neue Geräte",
     "siteeventsbennach.btnlabelorder" : "Bestellen",
-	"siteeventsbennach.catergory" : "Katergory",
+	"siteeventsbennach.catergory" : "Katergorie",
 	
 	"siteeventsTermin.title" : "Veranstaltungstermin anlegen",
 	"siteeventsTermin.veranstaltungsname" : "Terminname",
@@ -1035,7 +1035,8 @@
 
     "visitorFlowDevices.title"			: "Geräte",
     "visitorFlowDevices.device"			: "Bereich",
-    "visitorFlowDevices.entext"			: "Ein-/ Ausgang",
+    "visitorFlowDevices.entexttitle"			: "Ein-/ Ausgang",
+    "visitorFlowDevices.entext"			: "Ein- + Ausgang",
     "visitorFlowDevices.lastmsg"			: "Letzte Meldung",
     "visitorFlowDevices.entrance"			: "Eingang",
     "visitorFlowDevices.exit"			: "Ausgang",
