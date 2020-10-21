@@ -1047,6 +1047,6 @@
     "visitorflowoverview.areacombo"			: "choisir la zone",
     "visitorflowoverview.offsettext"			: "Avec un décalage de: ",
 
-    "visitorFlowDashboard.title"	: "VisitorFlow Overview",
+    "visitorFlowDashboard.title"	: "Visitor Flow Dashboard",
     "visitorFlowDashboard.comment"  : "Vous trouverez ici un aperçu du nombre de visiteurs de votre stand"
 }

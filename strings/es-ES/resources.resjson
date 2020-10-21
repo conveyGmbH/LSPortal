@@ -891,6 +891,6 @@
     "visitorflowoverview.bottomtext"			: "People currently at the booth",
     "visitorflowoverview.areacombo"			: "Choose area",
 
-    "visitorFlowDashboard.title"	: "VisitorFlow Overview",
+    "visitorFlowDashboard.title"	: "VisitorFlow Dashboard",
     "visitorFlowDashboard.comment"  : "Here you will find an overview of the number of visitors to your stand"
 }			

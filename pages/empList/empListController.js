@@ -98,7 +98,8 @@
                             employee.MitarbeiterVIEWID === recordId) {
                             listView.winControl.selection.set(i);
                             that.binding.hasContacts = employee.HatKontakte;
-                            setSelIndex(i);
+                            //setSelIndex(i);
+                            break;
                             break;
                         } /*else {
                             var firstEmployee = that.employees.getAt(0);
@@ -429,7 +430,7 @@
                                     // add ListView dataSource
                                     listView.winControl.itemDataSource = that.employees.dataSource;
                                 }
-                                //that.selectRecordId(json.d.results[0].MitarbeiterVIEWID);
+                                that.selectRecordId(json.d.results[0].MitarbeiterVIEWID);
                             } else {
                                 that.binding.count = 0;
                                 that.nextUrl = null;

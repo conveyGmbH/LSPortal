@@ -1056,6 +1056,6 @@
     "visitorflowoverview.areacombo"			: "Bereich auswählen",
     "visitorflowoverview.offsettext"			: "Bei einem Offset von: ",
 
-	 "visitorFlowDashboard.title"	: "VisitorFlow Übersicht",
+	"visitorFlowDashboard.title"	: "Visitor Flow Dashboard",
     "visitorFlowDashboard.comment"  : "Hier finden Sie eine Übersicht über die Anzahl Besucher an Ihrem Stand"
 }			
