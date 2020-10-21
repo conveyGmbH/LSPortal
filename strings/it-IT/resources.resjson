@@ -1012,6 +1012,7 @@
     "visitorFlowEntExt.entextDelete": "Vuoi cancellare questa Visitor Flow Settore?",
     "visitorFlowEntExt.comment"     : "Gestisci le tue aree",
 
+    "employeeVisitorFlow.title"	        : "Visitor Flow",
     "employeeVisitorFlow.area"			: "Area",
     "employeeVisitorFlow.entry"        : "Entrance",
     "employeeVisitorFlow.exit"         : "Exit",

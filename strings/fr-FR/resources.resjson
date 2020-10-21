@@ -1013,6 +1013,7 @@
     "visitorFlowEntExt.entextDelete": "Voulez-vous supprimer cette Visitor Flow Secteur?",
     "visitorFlowEntExt.comment"     : "Gérez vos espaces",
 
+    "employeeVisitorFlow.title"	        : "Visitor Flow",
     "employeeVisitorFlow.area"			: "Zone",
     "employeeVisitorFlow.entry"        : "Entrée",
     "employeeVisitorFlow.exit"         : "Quitter",

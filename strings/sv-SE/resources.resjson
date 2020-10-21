@@ -817,6 +817,7 @@
     "clientmanagementlicenses.licensetext" : "Ordering Info", 
     "clientmanagementlicenses.editlicensebtnLabel" : "Edit",
 
+    "employeeVisitorFlow.title"	        : "Visitor Flow",
     "employeeVisitorFlow.area"			: "Bereich",
     "employeeVisitorFlow.entry"        : "Entrée",
     "employeeVisitorFlow.exit"         : "Quitter",
