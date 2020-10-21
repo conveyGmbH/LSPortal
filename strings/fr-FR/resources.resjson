@@ -550,8 +550,7 @@
 	"event.serverList"      : "Serverlist",
     "event.FairVeranstalter" : "Organisateur",
     "event.comment" : "Préparez votre événement.",
-    "event.visitorFlow" : "VisitorFlow",
-    "event.leadSuccess" : "LeadSuccess",
+    "event.activeApplications": "Applications actives",
 
 	"optQuestionList.title"   : "En option Questions/Réponses",
     "optQuestionList.count"   : "Nombre",

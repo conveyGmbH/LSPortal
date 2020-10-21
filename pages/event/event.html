@@ -99,7 +99,7 @@
                             </div>
                         </div>
                         <div class="line-separator"></div>
-                    <div data-win-bind="style.display: visitorFlowFeature Binding.Converter.toDisplay">
+                        <!--<div data-win-bind="style.display: visitorFlowFeature Binding.Converter.toDisplay">
                         <div class="field_line field_line_odd">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'event.visitorFlow'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'event.visitorFlow'}"></span>
@@ -122,6 +122,21 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="line-separator"></div>
+                        </div>-->
+                        <div data-win-bind="style.display: visitorFlowFeature Binding.Converter.toDisplay">
+                        <div class="field_line field_line_odd">
+                                <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'event.activeApplications'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'event.activeApplications'}"></span>
+                            <select id="showvisitorFlowCombo"
+                                    class="input_field input_half_left win-dropdown"
+                                    data-win-control="WinJS.UI.Repeater"
+                                    data-win-bind="value: isvisitorFlowVisible"
+                                        onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
+                                    <!---->
+                                <option data-win-bind="value: value; textContent: TITLE"></option>
+                            </select>
+                    </div>
                         <div class="line-separator"></div>
                     </div>
                         <div class="field_line field_line_odd" data-win-bind="style.display: isSketchVisible Binding.Converter.toDisplayNone">

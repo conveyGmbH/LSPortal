@@ -7,6 +7,7 @@
 /// <reference path="~/www/lib/convey/scripts/pageController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/pages/event/eventService.js" />
+/// <reference path="~/www/pages/home/homeService.js" />
 
 (function () {
     "use strict";
@@ -34,6 +35,7 @@
             //select combo
             var initLand = pageElement.querySelector("#InitLand");
             var initServer = pageElement.querySelector("#InitServer");
+            var visitorFlow = pageElement.querySelector("#showvisitorFlowCombo");
             var textComment = pageElement.querySelector(".input_text_comment");
 
             this.dispose = function () {
@@ -43,7 +45,33 @@
                 if (initServer && initServer.winControl) {
                     initServer.winControl.data = null;
                 }
+                if (visitorFlow && visitorFlow.winControl) {
+                    visitorFlow.winControl.data = null;
             }
+            }
+
+            var creatingVisitorFlowCategory = function () {
+                Log.call(Log.l.trace, "SiteEventsNeuAus.Controller.");
+                var exhibitorCategory = [
+                    {
+                        value: 0,
+                        TITLE: "LeadSuccess"
+                    },
+                    {
+                        value: 1,
+                        TITLE: "VisitorFlow"
+                    },
+                    {
+                        value: 2,
+                        TITLE: "LeadSuccess/VisitorFlow"
+                    }
+                ];
+                if (visitorFlow && visitorFlow.winControl) {
+                    visitorFlow.winControl.data = new WinJS.Binding.List(exhibitorCategory);
+                    visitorFlow.selectedIndex = AppData._persistentStates.showvisitorFlow;
+                }
+            };
+            this.creatingVisitorFlowCategory = creatingVisitorFlowCategory;
 
             var setDataEvent = function (newDataEvent) {
                 var prevNotifyModified = AppBar.notifyModified;
@@ -182,6 +210,18 @@
                         }
                         pValueIsSet = true;
                         break;
+                    case "showvisitorFlowCombo":
+                        pOptionTypeId = 44;
+                        that.binding.isvisitorFlowVisible = checked;
+                        /*if (that.binding.isvisitorFlowVisible === "0") {
+                            //that.binding.isvisitorFlowVisibleAndLeadSuccess = checked;
+                            //AppData._persistentStates.showvisitorFlowAndLeadSuccess = checked;
+                            pValue = that.binding.isvisitorFlowVisible;
+                        } else {
+                            pValue = that.binding.isvisitorFlowVisible;
+                        }*/
+                        pValue = that.binding.isvisitorFlowVisible;
+                        pValueIsSet = true;
                 }
                 if (pOptionTypeId) {
                     // value: show => pValue: hide!
@@ -253,7 +293,8 @@
                     if (event.currentTarget) {
                         var toggle = event.currentTarget.winControl;
                         if (toggle) {
-                            that.changeAppSetting(event.currentTarget.id, toggle.checked);
+                            var value = toggle.checked || event.currentTarget.value;
+                            that.changeAppSetting(event.currentTarget.id, value);
                         }
                     }
                     Log.ret(Log.l.trace);
@@ -458,6 +499,33 @@
                         } else {
                             return WinJS.Promise.as();
                         }
+                    }).then(function () {
+                        if (!err) {
+                        if (typeof Home === "object" && Home._actionsList) {
+                            Home._actionsList = null;
+                        }
+                        return Event.appListSpecView.select(function (json) {
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            Log.print(Log.l.trace, "appListSpecView: success!");
+                            // kontaktanzahlView returns object already parsed from json file in response
+                            if (json && json.d && json.d.results) {
+                                NavigationBar.showGroupsMenu(json.d.results, true);
+                            } else {
+                                NavigationBar.showGroupsMenu([]);
+                            }
+                            complete(json);
+                            return WinJS.Promise.as();
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                            error(errorResponse);
+                            return WinJS.Promise.as();
+                        });
+                        } else {
+                            return WinJS.Promise.as();
+                        }
                     });
                 }
                 Log.ret(Log.l.trace);
@@ -471,6 +539,8 @@
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
+            }).then(function () {
+                that.creatingVisitorFlowCategory();
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 AppBar.notifyModified = true;

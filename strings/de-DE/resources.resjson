@@ -552,8 +552,7 @@
 	"event.serverList"      : "Serverlist",
     "event.FairVeranstalter" : "Veranstalter",
     "event.comment" : "Ihre Veranstaltung vorbereiten.",
-	"event.visitorFlow" : "VisitorFlow",
-	"event.leadSuccess" : "LeadSuccess",
+	"event.activeApplications" : "Aktive Anwendungen",
 
     "questiongroup.title"   : "Fragengruppen",
     "questiongroup.count"   : "Anzahl",

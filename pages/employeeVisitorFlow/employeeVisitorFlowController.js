@@ -23,7 +23,7 @@
             var that = this;
 
             var cr_V_bereich = pageElement.querySelector("#cr_V_bereich");
-            var initLand = pageElement.querySelector("#InitLand");
+            //var initLand = pageElement.querySelector("#InitLand");
 
             var setDataEmployee = function (newDataEmployee) {
                 var prevNotifyModified = AppBar.notifyModified;
@@ -35,7 +35,7 @@
             }
             this.setDataEmployee = setDataEmployee;
             
-            var setInitLandItem = function (newInitLandItem) {
+            /*var setInitLandItem = function (newInitLandItem) {
                 var prevNotifyModified = AppBar.notifyModified;
                 AppBar.notifyModified = false;
                 that.binding.InitLandItem = newInitLandItem;
@@ -63,7 +63,7 @@
                 Log.ret(Log.l.trace);
                 return WinJS.Promise.as();
             }
-            this.loadInitSelection = loadInitSelection;
+            this.loadInitSelection = loadInitSelection;*/
 
             var getRecordId = function () {
                 Log.call(Log.l.trace, "Employee.Controller.");
@@ -214,7 +214,7 @@
                         // ignore that
                         AppData.setErrorMsg(that.binding, errorResponse);
                     });
-                }).then(function () {
+                })/*.then(function () {
                     if (!AppData.initLandView.getResults().length) {
                         Log.print(Log.l.trace, "calling select initLandData...");
                         //@nedra:25.09.2015: load the list of INITLand for Combobox
@@ -240,7 +240,7 @@
                         }
                         return WinJS.Promise.as();
                     }
-                }).then(function () {
+                })*/.then(function () {
                     if (recordId) {
                         //load of format relation record data
                         Log.print(Log.l.trace, "calling select employeeView...");
@@ -253,7 +253,7 @@
                                 if (that.binding.dataEmployee.Login) {
                                     AppBar.busy = false;
                                 }
-                                loadInitSelection();
+                                //loadInitSelection();
                             }
                         }, function (errorResponse) {
                             AppData.setErrorMsg(that.binding, errorResponse);
