@@ -851,7 +851,7 @@
     "reorderlist.btnlabelB" : "ordinato",
     "reorderlist.btnlabelO" : "ordine",
 
-    "clientmanagement.title" : "Espositore",
+    "clientmanagement.title" : "Cliente",
     "clientmanagement.companyname" : "Nome azienda",
     "clientmanagement.contactperson" : "Contatto",
     "clientmanagement.email" : "E-mail",
@@ -864,7 +864,7 @@
     "clientmanagement.telefon" : "Telefono",
 
 
-    "clientmanagementlist.title" : "Espositore",
+    "clientmanagementlist.title" : "Cliente",
     "clientmanagementlist.count" : "Numero",
 
     "clientmanagementlicenses.title" : "Licenze",

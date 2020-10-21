@@ -858,7 +858,7 @@
     "reorderlist.btnlabelB" : "freigeschalten",
     "reorderlist.btnlabelO" : "freischalten",
 
-    "clientmanagement.title" : "Aussteller",
+    "clientmanagement.title" : "Mandant",
     "clientmanagement.companyname" : "Firmenname",
     "clientmanagement.contactperson" : "Kontaktperson",
     "clientmanagement.email" : "E-Mail",
@@ -871,7 +871,7 @@
     "clientmanagement.telefon" : "Telefon",
 
 
-    "clientmanagementlist.title" : "Aussteller",
+    "clientmanagementlist.title" : "Mandant",
     "clientmanagementlist.count" : "Anzahl",
 
     "clientmanagementlicenses.title" : "Lizenzen",
