@@ -559,12 +559,12 @@
                 case 44:
                     // Enable bzw. disable wird hier behandelt, da umgekehrte Logik mit Anzeigewert
                     if (parseInt(item.LocalValue) === 1 || parseInt(item.LocalValue) === 2) {
-                        AppData._persistentStates.showvisitorFlow = true;
+                        AppData._persistentStates.showvisitorFlow = parseInt(item.LocalValue);
                        /* NavigationBar.enablePage("visitorFlowDashboard");
                         NavigationBar.enablePage("visitorFlowEntExt");
                         NavigationBar.enablePage("employeeVisitorFlow");/*pagename muss wahrscheinlich nochmal geändert werden, jenachdem wie die seite heisst*/
                     } else {
-                        AppData._persistentStates.showvisitorFlow = false;
+                        AppData._persistentStates.showvisitorFlow = 0;
                         /*NavigationBar.disablePage("visitorFlowDashboard");
                         NavigationBar.disablePage("visitorFlowEntExt");
                         NavigationBar.disablePage("employeeVisitorFlow");*/

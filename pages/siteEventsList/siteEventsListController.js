@@ -152,6 +152,10 @@
             
             var resultConverter = function (item, index) {
                 item.index = index;
+                item.recordIcon = Binding.Converter.getIconFromID(item.IconID, "SiteEventsList");
+                if (!item.recordIcon) {
+                    item.recordIcon = "";
+                }
                 item.StartDatum = that.getDateObject(item.StartDatum);
                 item.EndDatum = that.getDateObject(item.EndDatum);
             }
@@ -235,7 +239,7 @@
                             }
                         } else if (listView.winControl.loadingState === "complete") {
                             // load SVG images
-                            Colors.loadSVGImageElements(listView, "action-image", 40, Colors.textColor);
+                            Colors.loadSVGImageElements(listView, "action-image", 40, Colors.textColor, "name");
                             that.loadNextUrl();
                         }
                     }

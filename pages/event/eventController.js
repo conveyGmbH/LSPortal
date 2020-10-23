@@ -213,13 +213,6 @@
                     case "showvisitorFlowCombo":
                         pOptionTypeId = 44;
                         that.binding.isvisitorFlowVisible = checked;
-                        /*if (that.binding.isvisitorFlowVisible === "0") {
-                            //that.binding.isvisitorFlowVisibleAndLeadSuccess = checked;
-                            //AppData._persistentStates.showvisitorFlowAndLeadSuccess = checked;
-                            pValue = that.binding.isvisitorFlowVisible;
-                        } else {
-                            pValue = that.binding.isvisitorFlowVisible;
-                        }*/
                         pValue = that.binding.isvisitorFlowVisible;
                         pValueIsSet = true;
                 }
@@ -470,7 +463,7 @@
                     });
                 } else {
                     ret = new WinJS.Promise.as().then(function () {
-                        complete(dataEvent);
+                        //complete(dataEvent);
                     }).then(function () {
                         if (!err) {
                             // load color settings

@@ -151,6 +151,10 @@
                     }
                     item.disabled = true;
                 }
+                item.recordIcon = Binding.Converter.getIconFromID(item.IconID, "EmpList");
+                if (!item.recordIcon) {
+                    item.recordIcon = "user";
+                }
             }
             this.resultConverter = resultConverter;
 
@@ -256,7 +260,7 @@
                             }
                         } else if (listView.winControl.loadingState === "complete") {
                             // load SVG images
-                            Colors.loadSVGImageElements(listView, "action-image", 40, Colors.textColor);
+                            Colors.loadSVGImageElements(listView, "action-image", 40, Colors.textColor, "name");
                             Colors.loadSVGImageElements(listView, "warning-image", 40, "red");
                             if (that.loading) {
                                 progress = listView.querySelector(".list-footer .progress");
