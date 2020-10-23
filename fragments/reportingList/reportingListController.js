@@ -25,7 +25,6 @@
             var listView = fragmentElement.querySelector("#reportingList.listview");
             
             var eventHandlers = {
-
             }
             this.eventHandlers = eventHandlers;
 
@@ -75,9 +74,13 @@
                     Log.print(Log.l.trace, "OLELetterID 32 blocked!");
                 }
                 if (item.OLELetterID === 31) {
-                    item.exportTypeIcon = "images/audi_pdf_excel.svg";
-                } else if (item.OLELetterID === 32 || item.OLELetterID === 26 || item.OLELetterID === 13 || item.OLELetterID === 8 || item.OLELetterID === 1) {
-                    item.exportTypeIcon = "images/excel.svg";
+                    item.exportTypeIcon = "audi_pdf_excel";
+                } else if (item.OLELetterID === 32 ||
+                    item.OLELetterID === 26 ||
+                    item.OLELetterID === 13 ||
+                    item.OLELetterID === 8 ||
+                    item.OLELetterID === 1) {
+                    item.exportTypeIcon = "excel";
                 } else {
                     item.exportTypeIcon = "";
                 }
@@ -103,7 +106,13 @@
                                 // add ListView dataSource
                                 listView.winControl.itemDataSource = that.reportingItem.dataSource;
                             }
-                            var blup = { id: "clickZoomIn", label: getResourceText("command.zoomin"), tooltip: getResourceText("tooltip.zoomin"), section: "primary", svg: "zoom_in" }
+                            var blup = {
+                                id: "clickZoomIn",
+                                label: getResourceText("command.zoomin"),
+                                tooltip: getResourceText("tooltip.zoomin"),
+                                section: "primary",
+                                svg: "zoom_in"
+                            }
                             var commandList = [];
                             for (var i = 0; i < results.length; i++) {
                                 var id = results[i].OLELetterID;
@@ -138,6 +147,56 @@
                 return ret;
             };
             this.loadData = loadData;
+
+            this.eventHandlers = {
+                onLoadingStateChanged: function (eventInfo) {
+                    var i;
+                    Log.call(Log.l.trace, "EmpList.Controller.");
+                    if (listView && listView.winControl) {
+                        Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
+                        // single list selection
+                        if (listView.winControl.selectionMode !== WinJS.UI.SelectionMode.single) {
+                            listView.winControl.selectionMode = WinJS.UI.SelectionMode.single;
+                        }
+                        // direct selection on each tap
+                        if (listView.winControl.tapBehavior !== WinJS.UI.TapBehavior.directSelect) {
+                            listView.winControl.tapBehavior = WinJS.UI.TapBehavior.directSelect;
+                        }
+                        // Double the size of the buffers on both sides
+                        /*if (!maxLeadingPages) {
+                            maxLeadingPages = listView.winControl.maxLeadingPages * 4;
+                            listView.winControl.maxLeadingPages = maxLeadingPages;
+                        }
+                        if (!maxTrailingPages) {
+                            maxTrailingPages = listView.winControl.maxTrailingPages * 4;
+                            listView.winControl.maxTrailingPages = maxTrailingPages;
+                        }
+                        if (listView.winControl.loadingState === "itemsLoading") {
+                            /*if (!layout) {
+                                layout = Application.EmpListLayout.EmployeesLayout;
+                                listView.winControl.layout = { type: layout };
+                            }*/
+                        Colors.loadSVGImageElements(listView, "action-image", null, "#ffffff", "name");
+                    } else if (listView.winControl.loadingState === "itemsLoaded") {
+
+                    } else if (listView.winControl.loadingState === "complete") {
+                        // load SVG images
+                        //Colors.loadSVGImageElements(listView, "action-image", 40, Colors.textColor, "name");
+                    }
+                    Log.ret(Log.l.trace);
+                }
+            };
+
+            this.disableHandlers = null;
+
+            // register ListView event handler
+            if (listView) {
+                //this.addRemovableEventListener(listView, "iteminvoked", this.eventHandlers.onItemInvoked.bind(this));
+                //this.addRemovableEventListener(listView, "selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
+                this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
+                //this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
+            }
+
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
