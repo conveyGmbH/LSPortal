@@ -42,6 +42,8 @@
 
             var mouseDown = false;
 
+            this.newEntry = false;
+
             // get field entries
             var getFieldEntries = function (index) {
                 Log.call(Log.l.trace, "VisitorFlowEntExt.Controller.");
@@ -60,6 +62,31 @@
             };
             this.getFieldEntries = getFieldEntries;
 
+            var selectEntry = function (index) {
+                Log.call(Log.l.trace, "VisitorFlowEntExt.Controller.");
+                if (that.listView && that.listView.winControl) {
+                    var entryIndex = index;
+                    var element = that.listView;
+                    if (element) {
+                        if (entryIndex === 0) {
+                            that.getFieldEntries(0);
+                            element.winControl.selection.set(0);
+                        }
+                        if (entryIndex > 0) {
+                            that.getFieldEntries(entryIndex);
+                            element.winControl.selection.set(entryIndex);
+                        }
+                        if (entryIndex > 0 && that.newEntry === true) {
+                            var lenght = element.winControl._cachedCount;
+                            that.getFieldEntries(lenght);
+                            element.winControl.selection.set(lenght);
+                            that.newEntry = false;
+                        }
+                    }
+                }
+            }
+            this.selectEntry = selectEntry;
+            
             // define handlers
             this.eventHandlers = {
                 clickBack: function (event) {
@@ -134,6 +161,7 @@
                 clickNew: function (event) {
                     Log.call(Log.l.trace, "MailingTypes.Controller.");
                     that.saveData(function (response) {
+                        that.newEntry = true;
                         AppBar.busy = true;
                         Log.print(Log.l.trace, "MailingTypes saved");
                         var newEntExt = getEmptyDefaultValue(VisitorFlowEntExt.CR_V_BereichView.defaultValue);
@@ -248,6 +276,7 @@
                                 listView.winControl.layout = { type: layout };
                             }
                         } else if (listView.winControl.loadingState === "complete") {
+                            var count = listView.winControl.selection._focused.index;
                             if (that.loading) {
                                 progress = listView.querySelector(".list-footer .progress");
                                 counter = listView.querySelector(".list-footer .counter");
@@ -257,8 +286,8 @@
                                 if (counter && counter.style) {
                                     counter.style.display = "inline";
                                 }
-                                
-                                that.loading = false;
+                                that.selectEntry(count);
+                                that.loading = false
                             }
                         }
                     }
@@ -516,6 +545,7 @@
                 Log.print(Log.l.trace, "Data loaded");
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
+                that.selectEntry(0);
             });
             Log.ret(Log.l.trace);
         }, {

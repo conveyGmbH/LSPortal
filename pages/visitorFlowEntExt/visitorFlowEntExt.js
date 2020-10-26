@@ -97,6 +97,7 @@
         updateLayout: function (element, viewState, lastViewState) {
             var ret = null;
             var that = this;
+            that.controller.loading = true;
             /// <param name="element" domElement="true" />
             Log.call(Log.l.u1, pageName + ".");
             // TODO: Respond to changes in viewState.
