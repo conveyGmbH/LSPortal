@@ -54,9 +54,17 @@
 #root-split-view-pane {
     overflow-y: auto;
 }
+#root-split-view.rootsplitview-full:not(.win-splitview-pane-opened) .win-splitview-panewrapper,
+#root-split-view.rootsplitview-tablet:not(.win-splitview-pane-opened) .win-splitview-panewrapper {
+    width: 48px;
+}
+#root-split-view.rootsplitview-full:not(.win-splitview-pane-opened) .win-splitview-pane,
+#root-split-view.rootsplitview-tablet:not(.win-splitview-pane-opened) .win-splitview-pane {
+    width: 64px;
+}
 #root-split-view.win-splitview-pane-opened.rootsplitview-mobile .win-splitview-panewrapper,
 #root-split-view.win-splitview-pane-opened.rootsplitview-mobile .win-splitview-pane {
-    width:100%;
+    width: 100%;
 }
 #root-split-view.win-splitview-pane-opened.rootsplitview-tablet .win-splitview-pane,
 #root-split-view.win-splitview-pane-opened.rootsplitview-full .win-splitview-pane {
