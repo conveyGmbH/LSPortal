@@ -45,7 +45,16 @@
             // TODO: Initialize the page here.
             var contentarea = element.querySelector(".contentarea");
             if (contentarea && contentarea.style) {
-                contentarea.style.backgroundColor = Colors.tileBackgroundColor;
+                if (Colors.isDarkTheme) {
+                    var bkg = Colors.hex2rgb(Colors.tileBackgroundColor);
+                    var bkgHsv = Colors.rgb2hsv(bkg);
+                    bkgHsv.s = Math.min(255, bkgHsv.s * 4);
+                    bkgHsv.v /= 4;
+                    var darkBkg = Colors.hsv2rgb(bkgHsv);
+                    contentarea.style.backgroundColor = Colors.rgb2hex(darkBkg);
+                } else {
+                    contentarea.style.backgroundColor = Colors.tileBackgroundColor;
+                }
             }
             var fieldTiles = element.querySelectorAll(".field_tile");
             if (fieldTiles && fieldTiles.length > 0) {
