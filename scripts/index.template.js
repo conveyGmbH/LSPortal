@@ -60,9 +60,10 @@
     // static array of menu groups for the split view pane
     Application.navigationBarGroups = [
         { id: "start", group: 1, svg: "home", disabled: true },
-        { id: "voucherAdministration", group: 16, svg: "Gutschein1.1", disabled: true },
-        { id: "esStaffAdministration", group: 18, svg: "id_card", disabled: true },
-        { id: "esVoucherUsers", group: 19, svg: "voucher_contact", disabled: true },
+        { id: "eventsuccess", group: 15, svg: "tags", disabled: true, popup: true },
+        { id: "voucherAdministration", group: 16, svg: "Gutschein1.1", disabled: true, predecGroup: 15 },
+        { id: "esStaffAdministration", group: 18, svg: "id_card", disabled: true, predecGroup: 15 },
+        { id: "esVoucherUsers", group: 19, svg: "voucher_contact", disabled: true, predecGroup: 15 },
         //{ id: "resourcesAdministration", group: 17, svg: "user_headset", disabled: true },
         { id: "events", group: 2, svg: "calendar_1", disabled: true },
         { id: "localevents", group: 12, svg: "office_building", disabled: true },
@@ -75,10 +76,10 @@
         { id: "search", group: 7, svg: "magnifying_glass", disabled: true },
         { id: "reporting", group: 8, svg: "download", disabled: true },
         { id: "infodesk", group: 9, svg: "about", disabled: true },
-        { id: "visitorFlowDashboard", group: 20, svg: "counter", disabled: true },
-        { id: "visitorFlowEntExt", group: 22, svg: "window_gear", disabled: true },
         { id: "info", group: 10, svg: "gearwheel", disabled: true },
-        { id: "support", group: 11, svg: "user_headset", disabled: true }
+        { id: "support", group: 11, svg: "user_headset", disabled: true },
+        { id: "visitorFlowDashboard", group: 20, svg: "bell", disabled: true },
+        { id: "visitorFlowEntExt", group: 22, svg: "window_gear", disabled: true }
     ];
 
     // static array of pages for the navigation bar
@@ -92,7 +93,7 @@
         { id: "questiongroup", group: 3, disabled: false },
         { id: "optQuestionList", group: 3, disabled: false },
         { id: "mandatory", group: 3, disabled: false },
-        //{ id: "visitorFlowEntExt", group: 3, disabled: false },
+        { id: "visitorFlowEntExt", group: 3, disabled: false },
         { id: "mailing", group: 4, disabled: false },
         { id: "mailingOptions", group: 4, disabled: false },
         //{ id: "mailingProduct", group: 4, disabled: false },
@@ -121,8 +122,8 @@
         //{ id: "mailingTracking", group: 13, disabled: false }
         { id: "voucherAdministration", group: -16, disabled: false },
         { id: "resourcesAdministration", group: -17, disabled: false },
-        { id: "esStaffAdministration", group: 18, disabled: false },
-        { id: "esVoucherUsers", group: 19, disabled: false },
+        { id: "esStaffAdministration", group: -18, disabled: false },
+        { id: "esVoucherUsers", group: -19, disabled: false },
         { id: "visitorFlowDashboard", group: -20, disabled: true },
         { id: "visitorFlowEntExt", group: -22, disabled: true }
     ];
@@ -147,7 +148,7 @@
         { id: "clientManagementLicenses", master: "clientManagementList" },
         { id: "mailingTracking", master: "mailingTrackingList" },
         { id: "esStaffAdministration", master: "esStaffAdministrationList" },
-        { id: "esVoucherUsers", master: "esVoucherUsersList" }
+        { id: "esVoucherUsers", master: "esVoucherUsersList" },
     ];
 
     // init page for app startup

@@ -436,7 +436,8 @@
     "label.sketchRemote"    : "Notizen",
     "label.pdfExport"     : "PDF Export",
     "label.employeeGenPWList"     : "Vorgeneriert",
-	  "label.optQuestionList" : "optional FRA/ANTW",
+    "label.optQuestionList" : "optional FRA/ANTW",
+    "label.eventsuccess" : "EventSuccess",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Abbrechen",

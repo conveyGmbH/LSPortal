@@ -474,6 +474,7 @@
     "label.clientManagement"	: "Client management",
     "label.clientManagementLicenses"	: "Licenses",
     "label.employeeVisitorFlow" : "VisitorFlow",
+    "label.eventsuccess" : "EventSuccess",
     
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Cancel",

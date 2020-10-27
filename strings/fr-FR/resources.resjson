@@ -513,6 +513,7 @@
     "label.visitorFlowEntExt" : "Visitor Flow Secteurs",
     "label.employeeVisitorFlow" : "VisitorFlow",
     "label.visitorFlowDashboard" : "Visitor Flow Dashboard",
+    "label.eventsuccess" : "EventSuccess",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annuler",

@@ -138,6 +138,39 @@
             </div>
         </div>
     </div>
+    <div class="headerFooterPlaceholder">
+        <div class="pane-submenu-header">
+            <div class="pane-submenu-header-text win-splitviewcommand-label">
+            </div>
+        </div>
+    </div>
+    <div class="pane-submenu-template"
+     data-win-control="WinJS.Binding.Template" style="display: none">
+        <div class="win-splitviewcommand-label pane-submenu-item">
+            <div data-win-bind="style.display: disabled Binding.Converter.toDisplayNone">
+                <div class="win-splitviewcommand-icon pane-submenu-icon-container"
+                     data-win-bind="style.display: svg Binding.Converter.toDisplay">
+                    <div class="pane-submenu-icon"
+                         data-win-bind="name: svg"></div>
+                </div>
+                <div class="pane-submenu-text">
+                    <span class="pane-submenu-inner-text win-type-body"
+                          data-win-bind="textContent: label"></span>
+                </div>
+            </div>
+            <div data-win-bind="style.display: disabled Binding.Converter.toDisplay">
+                <div class="win-splitviewcommand-icon pane-submenu-icon-container"
+                     data-win-bind="style.display: svg Binding.Converter.toDisplay">
+                    <div class="pane-submenu-icon-gray"
+                         data-win-bind="name: svg"></div>
+                </div>
+                <div class="pane-submenu-text pane-submenu-text-gray">
+                    <span class="pane-submenu-inner-text win-type-body"
+                          data-win-bind="textContent: label"></span>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- App Header -->
     <div id="headerhost" class="headerhost-container">
     </div>
@@ -209,6 +242,21 @@
         <button id="dummyButton"
                 data-win-control="WinJS.UI.AppBarCommand"
                 style="display: none"></button>
+    </div>
+    <!-- Flyout for sub menu -->
+    <div id="root-split-view-submenu">
+        <div id="root-split-view-submenu-list"
+             class="win-selectionstylefilled win-splitview-pane pane-submenu-list"
+             data-win-control="WinJS.UI.ListView"
+             data-win-options="{
+                             itemDataSource: NavigationBar.submenu.dataSource,
+                             itemTemplate: select('.pane-submenu-template'),
+                             header: select('.pane-submenu-header'),
+                             selectionMode: WinJS.UI.SelectionMode.none,
+                             tapBehavior: WinJS.UI.TapBehavior.invokeOnly,
+                             layout : { type: WinJS.UI.ListLayout }
+                         }">
+        </div>
     </div>
     <!-- Flyout for Alert / Confirm Boxes -->
     <div id="alertFlyout"
