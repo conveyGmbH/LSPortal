@@ -1026,11 +1026,11 @@
 
     "visitorFlowDevices.title"			: "Devices",
     "visitorFlowDevices.device"			: "Area",
-    "visitorFlowDevices.entexttitle"			: "Entrance/Exit",
-    "visitorFlowDevices.entext"			: "Entrance / Exit",
+    "visitorFlowDevices.entexttitle"			: "IN / OUT",
+    "visitorFlowDevices.entext"			: "IN / OUT",
     "visitorFlowDevices.lastmsg"			: "Last update",
-    "visitorFlowDevices.entrance"			: "Entrance",
-    "visitorFlowDevices.exit"			: "Exit",
+    "visitorFlowDevices.entrance"			: "IN",
+    "visitorFlowDevices.exit"			: "OUT",
     "visitorFlowDevices.user"			: "User",
 	
     "visitorFlowLevelIndicator.title"			: "Level Display",
@@ -1039,7 +1039,7 @@
     "visitorFlowLevelIndicator.timeselect"			: "Time Interval",
     "visitorFlowLevelIndicator.time"			: "Time",
     "visitorFlowLevelIndicator.visitors"			: "Number of Visitors",
-    "visitorFlowLevelIndicator.entryleaving"			: "Entries / Exits",
+    "visitorFlowLevelIndicator.entryleaving"			: "IN / OUT",
 
     "visitorflowoverview.title"			: "Overview",
     "visitorflowoverview.bottomtext"			: "People currently in the booth",
