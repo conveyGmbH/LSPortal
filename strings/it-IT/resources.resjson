@@ -1026,11 +1026,11 @@
 
     "visitorFlowDevices.title"			: "Attrezzature",
     "visitorFlowDevices.device"			: "Area",
-    "visitorFlowDevices.entexttitle"			: "Entrata / Exit",
-    "visitorFlowDevices.entext"			: "Entrata / Exit",
+    "visitorFlowDevices.entexttitle"			: "IN / OUT",
+    "visitorFlowDevices.entext"			: "IN / OUT",
     "visitorFlowDevices.lastmsg"			: "Ultimo annuncio",
-    "visitorFlowDevices.entrance"			: "Entrata",
-    "visitorFlowDevices.exit"			: "Exit",
+    "visitorFlowDevices.entrance"			: "IN",
+    "visitorFlowDevices.exit"			: "OUT",
     "visitorFlowDevices.user"			: "Utente",
 	
     "visitorFlowLevelIndicator.title"			: "Visualizzazione del livello",
@@ -1039,7 +1039,7 @@
     "visitorFlowLevelIndicator.timeselect"			: "Intervallo di tempo",
     "visitorFlowLevelIndicator.time"			: "Tempo",
     "visitorFlowLevelIndicator.visitors"			: "Numero di visitatori",
-    "visitorFlowLevelIndicator.entryleaving"			: "Entrate / Uscite",
+    "visitorFlowLevelIndicator.entryleaving"			: "IN / OUT",
 
     "visitorflowoverview.title"			: "Panoramica",
     "visitorflowoverview.bottomtext"			: "Persone attualmente allo stand",
