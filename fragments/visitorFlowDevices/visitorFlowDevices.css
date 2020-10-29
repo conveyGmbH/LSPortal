@@ -45,7 +45,15 @@
     padding-top: 2px;
     padding-bottom: 2px;
 }
+#visitorFlowDevicesList .list-header {
+    padding-left: 0px;
+}
 
+#visitorFlowDevicesList .win-itemscontainer {
+    overflow: auto !important;
+    height: 760px !important;
+    padding-left: 0px !important;
+}
 
 /*
     margins/paddings for bigger size screens 
@@ -104,7 +112,7 @@
     @media (max-width:499px) {
     }
 */
-.win-template .win-disposable {
+#visitorFlowDevicesList .win-template .win-disposable {
     width: 100%;
 }
 
@@ -119,46 +127,45 @@
     overflow: auto !important;
     height: 760px !important;
 }
-.list-field-small-relative {
+#visitorFlowDevicesList .list-field-small-relative {
     width: 25%;
-    
 }
-#devtitleh {
+#visitorFlowDevicesList #devtitleh {
     width: 19%;
 }
 
-#deventexth {
+#visitorFlowDevicesList #deventexth {
     width: 19%;
 }
 
-#devltsh {
+#visitorFlowDevicesList #devltsh {
     width: 21%;
 }
 
-#devnrh {
+#visitorFlowDevicesList #devnrh {
     width: 19%;
 }
 
-#devstatush {
+#visitorFlowDevicesList #devstatush {
     width: 5%;
 }
-#devtitle {
+#visitorFlowDevicesList #devtitle {
     width: 19%;
     padding-left: 9px !important;
 }
-#deventext {
+#visitorFlowDevicesList #deventext {
     width: 19%;
     margin-left: 0px;
 }
-#devlts {
+#visitorFlowDevicesList #devlts {
     width: 19%;
     margin-left: 0px;
 }
-#devnr {
+#visitorFlowDevicesList #devnr {
     width: 19%;
     margin-left: 0px;
 }
-#devstatus {
+#visitorFlowDevicesList #devstatus {
     width: 7%;
 }
 .gridtitlevisitorflowdevices {
@@ -174,14 +181,14 @@
     font-weight: bolder;
     font-size: 18px;
 }
-.devstatuscircle {
+#visitorFlowDevicesList .devstatuscircle {
     display: inline;
     justify-content: center;
     align-items: center;
     margin-left: 0px !important;
 }
 
-.dotdev {
+#visitorFlowDevicesList .dotdev {
     height: 20px;
     width: 20px;
     background-color: black;
@@ -196,15 +203,10 @@
     height: 40px;
     font-weight: bold;
 }
-#visitorFlowDevicesList .win-itemscontainer {
-    overflow: auto !important;
-    height: 720px !important;
-}
-
 #visitorFlowDevicesList .win-viewport.win-vertical {
     overflow: hidden !important;
 }
-.view-size-medium .dotdev {
+.view-size-medium #visitorFlowDevicesList .dotdev {
     height: 20px;
     width: 20px;
     background-color: black;
@@ -213,7 +215,7 @@
     margin-bottom: 9px;
     margin-left: 0px;
 }
-.view-size-small .dotdev {
+.view-size-small #visitorFlowDevicesList .dotdev {
     height: 20px;
     width: 20px;
     background-color: black;
