@@ -570,6 +570,13 @@
                         NavigationBar.disablePage("employeeVisitorFlow");*/
                     }
                     break;
+                case 45:
+                    if (item.LocalValue === "1") {
+                        AppData._persistentStates.visitorFlowPremium = true;
+                    } else {
+                        AppData._persistentStates.visitorFlowPremium = false;
+                    }
+                    break;
                 default:
                     // defaultvalues
             }

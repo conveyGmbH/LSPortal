@@ -27,6 +27,7 @@
 #showSketch .win-toggleswitch-header,
 #showvisitorFlowAndLeadSuccess .win-toggleswitch-header,
 #showvisitorFlow .win-toggleswitch-header,
+#visitorFlowPremium .win-toggleswitch-header,
 #shopAppBkg .win-toggleswitch-header {
     display: none;
 }

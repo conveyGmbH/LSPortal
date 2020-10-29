@@ -19,7 +19,7 @@
             { page: "employee", imageName: "keys" },
             { page: "contacts", imageName: "businesspeople2" },
             { page: "reporting", imageName: "download" }, 
-            { page: "visitorFlowDashboard", imageName: "counter" },
+            { page: "visitorFlowDashboard", imageName: "lsvFlow" },
             { page: "visitorFlowEntExt", imageName: "window_gear" }
             //{ page: "infodesk", imageName: "magnifying_glass" }
         ],

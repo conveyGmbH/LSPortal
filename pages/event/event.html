@@ -137,6 +137,17 @@
                                 <option data-win-bind="value: value; textContent: TITLE"></option>
                             </select>
                     </div>
+                            <div class="field_line field_line_even">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'event.visitorFlowPremium'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'event.visitorFlowPremium'}"></span>
+                                <div class="input_field toggle-switch-parent">
+                                    <div id="visitorFlowPremium" class="input_field"
+                                         data-win-control="WinJS.UI.ToggleSwitch"
+                                         data-win-bind="winControl.checked: visitorFlowPremium; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                                         onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
+                                    </div>
+                                </div>
+                            </div>
                         <div class="line-separator"></div>
                     </div>
                         <div class="field_line field_line_odd" data-win-bind="style.display: isSketchVisible Binding.Converter.toDisplayNone">

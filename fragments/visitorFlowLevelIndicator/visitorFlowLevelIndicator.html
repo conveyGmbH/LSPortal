@@ -38,6 +38,9 @@
                                 <div class="list-header-column hlent">
                                     <span data-win-res="{textContent: 'visitorFlowLevelIndicator.entryleaving', title: 'visitorFlowLevelIndicator.entryleaving'}"></span>
                                 </div>
+                                <div class="list-header-column hlent">
+                                    <span class="win-type-ellipsis" data-win-res="{textContent: 'visitorFlowLevelIndicator.peak', title: 'visitorFlowLevelIndicator.peak'}"></span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -50,10 +53,13 @@
                             <div class="list-column viscou">
                                 <progress class="win-progress-bar"
                                           data-win-bind="textContent: Zeitraum; value: EintritteGesamt; max: Limit"></progress>
-                                <span data-win-bind="textContent: EintritteGesamt"></span>
+                                <span data-win-bind="textContent: Inside"></span>
                             </div>
                             <div class="list-column hlent">
                                 <span data-win-bind="textContent: EintritteAustritteBereich"></span>
+                            </div>
+                            <div class="list-column hlent">
+                                <span data-win-bind="textContent: MaxInside"></span>
                             </div>
                         </div>
                     </div>

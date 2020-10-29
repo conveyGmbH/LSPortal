@@ -76,10 +76,10 @@
         { id: "search", group: 7, svg: "magnifying_glass", disabled: true },
         { id: "reporting", group: 8, svg: "download", disabled: true },
         { id: "infodesk", group: 9, svg: "about", disabled: true },
+        { id: "visitorFlowDashboard", group: 20, svg: "lsvFlow", disabled: true },
+        { id: "visitorFlowEntExt", group: 22, svg: "window_gear", disabled: true },
         { id: "info", group: 10, svg: "gearwheel", disabled: true },
-        { id: "support", group: 11, svg: "user_headset", disabled: true },
-        { id: "visitorFlowDashboard", group: 20, svg: "bell", disabled: true },
-        { id: "visitorFlowEntExt", group: 22, svg: "window_gear", disabled: true }
+        { id: "support", group: 11, svg: "user_headset", disabled: true }
     ];
 
     // static array of pages for the navigation bar
@@ -93,7 +93,7 @@
         { id: "questiongroup", group: 3, disabled: false },
         { id: "optQuestionList", group: 3, disabled: false },
         { id: "mandatory", group: 3, disabled: false },
-        { id: "visitorFlowEntExt", group: 3, disabled: false },
+        //{ id: "visitorFlowEntExt", group: 3, disabled: false },
         { id: "mailing", group: 4, disabled: false },
         { id: "mailingOptions", group: 4, disabled: false },
         //{ id: "mailingProduct", group: 4, disabled: false },
@@ -148,7 +148,7 @@
         { id: "clientManagementLicenses", master: "clientManagementList" },
         { id: "mailingTracking", master: "mailingTrackingList" },
         { id: "esStaffAdministration", master: "esStaffAdministrationList" },
-        { id: "esVoucherUsers", master: "esVoucherUsersList" },
+        { id: "esVoucherUsers", master: "esVoucherUsersList" }
     ];
 
     // init page for app startup

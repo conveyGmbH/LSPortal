@@ -27,6 +27,7 @@
                 isvisitorFlowVisibleAndLeadSuccess: AppData._persistentStates.showvisitorFlowAndLeadSuccess,
                 showNameInHeader: AppData._persistentStates.showNameInHeader,
                 visitorFlowFeature: AppHeader.controller.binding.userData.SiteAdmin,
+                visitorFlowPremium: AppData._persistentStates.visitorFlowPremium,
                 actualYear: new Date().getFullYear()
             }, commandList]);
 
@@ -171,7 +172,7 @@
                             AppData.getUserData();
                         });
                         break;
-                    case "showvisitorFlow":
+                    /*case "showvisitorFlow":
                         pOptionTypeId = 44;
                         that.binding.isvisitorFlowVisible = checked;
                         AppData._persistentStates.showvisitorFlow = checked;
@@ -191,7 +192,7 @@
                             NavigationBar.disablePage("visitorFlowDashboard");
                             NavigationBar.disablePage("visitorFlowEntExt");
                             NavigationBar.disablePage("employeeVisitorFlow");
-                        }*/
+                        }
                         //AppData._persistentStates.showvisitorFlowAndLeadSuccess = checked;
                         break;
                     case "showvisitorFlowAndLeadSuccess":
@@ -209,12 +210,19 @@
                         }
                         }
                         pValueIsSet = true;
-                        break;
+                        break;*/
                     case "showvisitorFlowCombo":
                         pOptionTypeId = 44;
                         that.binding.isvisitorFlowVisible = checked;
+                        AppData._persistentStates.showvisitorFlowAndLeadSuccess = checked;
                         pValue = that.binding.isvisitorFlowVisible;
                         pValueIsSet = true;
+                        break;
+                    case "visitorFlowPremium":
+                        pOptionTypeId = 45;
+                        that.binding.visitorFlowPremium = checked;
+                        AppData._persistentStates.visitorFlowPremium = checked;
+                        break;
                 }
                 if (pOptionTypeId) {
                     // value: show => pValue: hide!

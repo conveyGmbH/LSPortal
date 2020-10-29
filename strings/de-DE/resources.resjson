@@ -554,6 +554,7 @@
     "event.FairVeranstalter" : "Veranstalter",
     "event.comment" : "Ihre Veranstaltung vorbereiten.",
 	"event.activeApplications" : "Aktive Anwendungen",
+    "event.visitorFlowPremium" : "Visitor Flow Premium",
 
     "questiongroup.title"   : "Fragengruppen",
     "questiongroup.count"   : "Anzahl",
@@ -1022,7 +1023,7 @@
     "visitorFlowEntExt.entextDelete": "Wollen Sie diesen Visitor Flow Bereich löschen?",
     "visitorFlowEntExt.comment"     : "Verwalten Sie Ihre Bereiche",
     "visitorFlowEntExt.mailactive"     : "EMail aktiv",
-    "visitorFlowEntExt.warnemailadress"     : "Warn-Email an:",
+    "visitorFlowEntExt.warnemailadress"     : "Warn-Email an",
 
 	"employeeVisitorFlow.title"	        : "Visitor Flow",
     "employeeVisitorFlow.area"			: "Bereich",
@@ -1052,6 +1053,7 @@
     "visitorFlowLevelIndicator.time"			: "Uhrzeit",
     "visitorFlowLevelIndicator.visitors"			: "Besucher-Anzahl",
     "visitorFlowLevelIndicator.entryleaving"			: "IN / OUT",
+    "visitorFlowLevelIndicator.peak"    : "Peak",
 
     "visitorflowoverview.title"			: "Übersicht",
     "visitorflowoverview.bottomtext"			: "Personen aktuell am Stand",

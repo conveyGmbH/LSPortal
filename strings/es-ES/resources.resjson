@@ -471,6 +471,7 @@
 	"event.dbSyncLogin"     : "DBSYNCLogin",
 	"event.dbSyncPassword"  : "DBSYNCPassword",
     "event.activeApplications" : "Active Applications",
+    "event.visitorFlowPremium" : "Visitor Flow Premium",
 
     "questiongroup.title"   : "Fragengruppen",
     "questiongroup.count"   : "Anzahl",
@@ -886,6 +887,7 @@
     "visitorFlowLevelIndicator.timeselect"			: "Time Interval",
     "visitorFlowLevelIndicator.time"			: "Time",
     "visitorFlowLevelIndicator.visitors"			: "Number of Visitors",
+    "visitorFlowLevelIndicator.peak"    : "Peak",
 
     "visitorflowoverview.title"			: "Overview",
     "visitorflowoverview.bottomtext"			: "People currently at the booth",

@@ -511,6 +511,7 @@
 	"event.dbSyncPassword"  : "DBSYNCPassword",
 	"event.serverList"      : "Serverlist",
     "event.activeApplications" : "Active Applications",
+    "event.visitorFlowPremium" : "Visitor Flow Premium",
 
 	"optQuestionList.title"   : "Optional Questions/Answers",
     "optQuestionList.count"   : "Count",
@@ -854,6 +855,7 @@
     "visitorFlowLevelIndicator.timeselect"			: "Zeitintervall",
     "visitorFlowLevelIndicator.time"			: "Uhrzeit",
     "visitorFlowLevelIndicator.visitors"			: "Besucher-Anzahl",
+    "visitorFlowLevelIndicator.peak"    : "Peak",
 
     "visitorflowoverview.title"			: "Übersicht",
     "visitorflowoverview.bottomtext"			: "Personen aktuell am Stand",

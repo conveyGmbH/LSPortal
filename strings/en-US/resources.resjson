@@ -552,6 +552,7 @@
     "event.FairVeranstalter" : "Organizer",
     "event.comment" : "Prepare your event",
     "event.activeApplications" : "Active Applications",
+    "event.visitorFlowPremium" : "Visitor Flow Premium",
 
 	"optQuestionList.title"   : "Optional Questions/Answers",
     "optQuestionList.count"   : "Count",
@@ -1012,7 +1013,7 @@
     "visitorFlowEntExt.entextDelete": "Do you want to delete this Visitor Flow Area?",
 	"visitorFlowEntExt.comment"     : "Manage your areas",
     "visitorFlowEntExt.mailactive"     : "Email active",
-    "visitorFlowEntExt.warnemailadress"     : "Warning email to:",
+    "visitorFlowEntExt.warnemailadress"     : "Warning email to",
 
     "employeeVisitorFlow.title"	        : "Visitor Flow",
     "employeeVisitorFlow.area"			: "Area",
@@ -1042,6 +1043,7 @@
     "visitorFlowLevelIndicator.time"			: "Time",
     "visitorFlowLevelIndicator.visitors"			: "Number of Visitors",
     "visitorFlowLevelIndicator.entryleaving"			: "IN / OUT",
+    "visitorFlowLevelIndicator.peak"    : "Peak",
 
     "visitorflowoverview.title"			: "Overview",
     "visitorflowoverview.bottomtext"			: "People currently in the booth",
