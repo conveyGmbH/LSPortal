@@ -82,7 +82,7 @@
                             }
                             if (height !== that.prevHeight) {
                                 that.prevHeight = height;
-                                height = height - 40;
+                                height = height - 48;
                                 empList.style.height = height.toString() + "px";
                                 //that.controller.loadData();
                             }

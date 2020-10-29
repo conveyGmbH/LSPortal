@@ -53,11 +53,12 @@
 }
 
 #visitorFlowLevelIndicatorList .viscou {
-    width: calc(100% - 180px);
+    width: calc(100% - 190px);
 }
 
 #visitorFlowLevelIndicatorList .hlent {
     width: 80px;
+    text-align: right;
 }
 
 #visitorFlowLevelIndicatorList .list-row {

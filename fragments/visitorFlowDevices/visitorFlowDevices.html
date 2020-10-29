@@ -17,53 +17,47 @@
                     </div>
                     <div class="headerFooterPlaceholder">
                         <div class="list-header">
-                            <div class="list-landscape-only list-header-columns">
-                                <div id="devstatush" class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'visitorFlowDevices.status', title: 'visitorFlowDevices.status'}"></div>
-                                <div id="devtitleh" class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'visitorFlowDevices.device', title: 'visitorFlowDevices.device'}"></div>
-                                <div id="devnrh" class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'visitorFlowDevices.user', title: 'visitorFlowDevices.user'}"></div>
-                                <div id="deventexth" class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'visitorFlowDevices.entexttitle', title: 'visitorFlowDevices.entexttitle'}"></div>
-                                <div id="devltsh" class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'visitorFlowDevices.lastmsg', title: 'visitorFlowDevices.lastmsg'}"></div>
+                            <div class="list-header-columns">
+                                <div class="list-header-column devstatus">
+                                    <span>&nbsp;</span>
+                                </div>
+                                <div class="list-header-column devtitle win-type-ellipsis">
+                                    <span data-win-res="{textContent: 'visitorFlowDevices.device', title: 'visitorFlowDevices.device'}"></span>
+                                </div>
+                                <div class="list-header-column devnr win-type-ellipsis">
+                                    <span data-win-res="{textContent: 'visitorFlowDevices.user', title: 'visitorFlowDevices.user'}"></span>
+                                </div>
+                                <div class="list-header-column deventext">
+                                    <span data-win-res="{textContent: 'visitorFlowDevices.entexttitle', title: 'visitorFlowDevices.entexttitle'}"></span>
+                                </div>
+                                <div class="list-header-column devlts">
+                                    <span data-win-res="{textContent: 'visitorFlowDevices.lastmsg', title: 'visitorFlowDevices.lastmsg'}"></span>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="visitorFlowDevicesList-template"
                          data-win-control="WinJS.Binding.Template" style="display: none">
-                        <div class="list-landscape-only">
+                        <div class="list-row">
                             <div class="row-bkg-gray"
                                  data-win-bind="style.display: index Binding.Converter.oddToDisplay"></div>
-                            <div class="devstatuscircle">
-                                <span class="dotdev"
-                                      data-win-bind="style.backgroundColor: dotdevColor"></span>
-                            </div>
-                            <div id="devtitle" class="list-field-small-fixed win-type-ellipsis"
-                                 data-win-bind="textContent: TITLE; title: TITLE"></div>
-                            <div id="devnr" class="list-field-small-fixed win-type-ellipsis"
-                                 data-win-bind="textContent: Login; title: Login"></div>
-                            <div id="deventext" class="list-field-small-fixed win-type-ellipsis"
-                                 data-win-bind="textContent: entextdev; title: entextdev"></div>
-                            <div id="devlts" class="list-field-small-fixed win-type-ellipsis"
-                                 data-win-bind="textContent: LastCallTimeStamp"></div>
-                        </div>
-                        <div class="list-portrait-only">
-                            <div class="row-separator"></div>
-                            <div class="list-div-left">
-                                <div class="list-compressed">
-                                    <!--list-localeventsList-->
-                                    <div class="list-compressed-title win-type-subtitle win-type-ellipsis">
-                                        <div class="devstatuscircle">
-                                            <span class="dotdev"
-                                                  data-win-bind="style.backgroundColor: dotdevColor"></span>
-                                        </div>
-                                    </div>
-                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
-                                          data-win-bind="textContent: TITLE"></span>
-                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
-                                          data-win-bind="textContent: Login"></span>
-                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
-                                          data-win-bind="textContent: entextdev"></span>
-                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
-                                          data-win-bind="textContent: LastCallTimeStamp"></span>
+                            <div class="list-column devstatus">
+                                <div class="devstatuscircle">
+                                    <span class="dotdev"
+                                          data-win-bind="style.backgroundColor: dotdevColor"></span>
                                 </div>
+                            </div>
+                            <div class="list-column devtitle win-type-ellipsis">
+                                <span data-win-bind="textContent: TITLE; title: TITLE"></span>
+                            </div>
+                            <div class="list-column devnr win-type-ellipsis">
+                                <span data-win-bind="textContent: Login; title: Login"></span>
+                            </div>
+                            <div class="list-column deventext">
+                                <span data-win-bind="textContent: entextdev; title: entextdev"></span>
+                            </div>
+                            <div class="list-column devlts">
+                                <span data-win-bind="textContent: LastCallTimeStamp"></span>
                             </div>
                         </div>
                     </div>
