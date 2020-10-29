@@ -1012,6 +1012,8 @@
     "visitorFlowEntExt.labelDelete": "Visitor Flow Secteur: ",
     "visitorFlowEntExt.entextDelete": "Voulez-vous supprimer cette Visitor Flow Secteur?",
     "visitorFlowEntExt.comment"     : "Gérez vos espaces",
+    "visitorFlowEntExt.mailactive"     : "Courriel actif",
+    "visitorFlowEntExt.warnemailadress"     : "Courriel d'avertissement activé :",
 
     "employeeVisitorFlow.title"	        : "Visitor Flow",
     "employeeVisitorFlow.area"			: "Zone",
