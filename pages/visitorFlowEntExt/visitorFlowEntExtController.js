@@ -55,6 +55,8 @@
                         if (text) for (i=0; i<text.length; i++) {
                             ret[text[i].name] = text[i].value;
                         }
+                        var fields = element.querySelectorAll('input[type="checkbox"]');
+                        ret["WarningMailActive"] = (fields[0] && fields[0].checked) ? 1 : null;
                     }
                 }
                 Log.ret(Log.l.trace, ret);

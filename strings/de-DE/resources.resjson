@@ -1021,6 +1021,8 @@
     "visitorFlowEntExt.labelDelete": "Visitor Flow Bereich: ",
     "visitorFlowEntExt.entextDelete": "Wollen Sie diesen Visitor Flow Bereich löschen?",
     "visitorFlowEntExt.comment"     : "Verwalten Sie Ihre Bereiche",
+    "visitorFlowEntExt.mailactive"     : "EMail aktiv",
+    "visitorFlowEntExt.warnemailadress"     : "Warn-Email an:",
 
 	"employeeVisitorFlow.title"	        : "Visitor Flow",
     "employeeVisitorFlow.area"			: "Bereich",

@@ -54,6 +54,30 @@
                                     <input name="Offset" class="input_small_right smallwidthfix win-textbox" type="number" data-win-bind="value: Offset Binding.Mode.twoway" data-win-bind-onevent="oninput"/>
                                 </div>
                             </div>
+                           
+                            <div class="field_line field_line_odd">
+                                <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'visitorFlowEntExt.warnemailadress'}"></span>
+                                <div class="label landscape_only">
+                                    <span data-win-res="{textContent: 'visitorFlowEntExt.area'}"></span>
+                                </div>
+                                <div class="input_group">
+                                    <div class="input_threequarter_left">
+                                        <input name="MailTargetWarning" class="large_field win-textbox" type="text"
+                                               data-win-bind="value: MailTargetWarning Binding.Mode.twoway" 
+                                               data-win-bind-onevent="oninput" autofocus="autofocus"/>
+                                    </div>
+                                    <div class="input_quarter_right">
+                                        <div class="list-role-item">
+                                            <label class="list-role-field">
+                                                <input type="checkbox" class="win-checkbox" value="1"
+                                                       data-win-bind="checked: WarningMailActive"
+                                                       data-win-bind-onevent="oninput"/>
+                                                <span data-win-res="{textContent: 'visitorFlowEntExt.mailactive'}"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="headerFooterPlaceholder">
