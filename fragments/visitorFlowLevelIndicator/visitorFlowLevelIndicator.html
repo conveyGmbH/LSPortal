@@ -17,71 +17,47 @@
                     </div>
                     <div class="headerFooterPlaceholder">
                         <div class="list-header">
-                            <div class="list-landscape-only list-header-columns">
-                                <div id="vflitimeh" class="list-field-small-relative" data-win-res="{textContent: 'visitorFlowLevelIndicator.time', title: 'visitorFlowLevelIndicator.time'}"></div>
-                                <div id="hlsep" class="list-field-small-relative"></div>
-                                <div id="viscou" class="list-field-small-relative" data-win-res="{textContent: 'visitorFlowLevelIndicator.visitors', title: 'visitorFlowLevelIndicator.visitors'}"></div>
-                                <div id="hltotal" class="list-field-small-relative"></div>
-                                <div id="hlent" class="list-field-small-relative" data-win-res="{textContent: 'visitorFlowLevelIndicator.entryleaving', title: 'visitorFlowLevelIndicator.entryleaving'}"></div>
+                            <div class="field_line">
+                                <span class="label win-type-caption" data-win-res="{textContent: 'visitorFlowLevelIndicator.timeselect'}"></span>
+                                <select id="timeCategory"
+                                        class="input_field win-dropdown"
+                                        data-win-control="WinJS.UI.Repeater"
+                                        data-win-bind="value: timeselectupdate; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone"
+                                        onchange="AppBar.handleEvent('onchange', 'changeTime', event)">
+                                    <option data-win-bind="value: value; textContent: title"></option>
+                                </select>
+                            </div>
+                            <div class="line-separator"></div>
+                            <div class="list-header-columns">
+                                <div class="list-header-column vflitime">
+                                    <span class="win-type-ellipsis"
+                                          data-win-res="{textContent: 'visitorFlowLevelIndicator.time', title: 'visitorFlowLevelIndicator.time'}"></span>
+                                </div>
+                                <div class="list-header-column viscou">
+                                    <span class="win-type-ellipsis"
+                                          data-win-res="{textContent: 'visitorFlowLevelIndicator.visitors', title: 'visitorFlowLevelIndicator.visitors'}"></span>
+                                </div>
+                                <div class="list-header-column hlent">
+                                    <span class="win-type-ellipsis"
+                                          data-win-res="{textContent: 'visitorFlowLevelIndicator.entryleaving', title: 'visitorFlowLevelIndicator.entryleaving'}"></span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="field_line field_line_odd">
-                            <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'visitorFlowLevelIndicator.timeselect'}"></span>
-                            <select id="timeCategory"
-                                    class="input_field win-dropdown"
-                                    data-win-control="WinJS.UI.Repeater"
-                                data-win-bind="value: timeselectupdate; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone"
-                                    onchange="AppBar.handleEvent('onchange', 'changeTime', event)">
-                                <option data-win-bind="value: value; textContent: title"></option>
-                            </select>
-                    </div>
-                    <br />
-                    <br />
-                    <br />
                     <div class="visitorFlowLevelIndicatorList-template"
                          data-win-control="WinJS.Binding.Template" style="display: none">
-                        <div class="list-landscape-only">
-                            <div id="vflitime" class="list-field-small-fixed win-type-ellipsis"
-                                 data-win-bind="textContent: Zeitraum"></div>
-                                <progress id="vflibalk" 
-                                          class="win-progress-bar" 
+                        <div class="list-row">
+                            <div class="list-column vflitime">
+                                <span class="win-type-ellipsis"
+                                      data-win-bind="textContent: Zeitraum"></span>
+                            </div>
+                            <div class="list-column viscou">
+                                <progress class="win-progress-bar"
                                           data-win-bind="textContent: Zeitraum; value: EintritteGesamt; max: Limit"></progress>
-                                <div id="vflivisall" class="list-field-small-fixed win-type-ellipsis"
-                                     data-win-bind="textContent: EintritteGesamt"></div>
-                                <div id="vflient" class="list-field-small-fixed win-type-ellipsis"
-                                     data-win-bind="textContent: EintritteAustritteBereich">
-                                </div>
-                        </div>
-                        <div class="list-portrait-only">
-                            <div class="row-separator"></div>
-                            <div class="list-div-left">
-                                <div class="list-compressed">
-                                    <!--list-localeventsList-->
-                                    <div class="list-compressed-title win-type-subtitle win-type-ellipsis">
-                                        <span id="left"
-                                              data-win-res="{textContent: 'visitorFlowLevelIndicator.time', title: 'visitorFlowLevelIndicator.time'}"></span>
-                                        <span id="right"
-                                              data-win-bind="textContent: Zeitraum"></span>
-                                    </div>
-                                    <div class="list-compressed-title win-type-subtitle win-type-ellipsis">
-                                        <span id="left"
-                                              data-win-res="{textContent: 'visitorFlowLevelIndicator.visitors', title: 'visitorFlowLevelIndicator.visitors'}"></span>
-                                        <div>
-                                            <progress id="vflibalk"
-                                                      class="win-progress-bar"
-                                                      data-win-bind="textContent: Zeitraum; value: EintritteGesamt; max: Limit"></progress>
-                                            <span id="subright"
-                                                  data-win-bind="textContent: EintritteGesamt"></span>
-                                        </div>
-                                    </div>
-                                    <div class="list-compressed-title win-type-subtitle win-type-ellipsis">
-                                        <span id="left"
-                                              data-win-res="{textContent: 'visitorFlowLevelIndicator.entryleaving', title: 'visitorFlowLevelIndicator.entryleaving'}"></span>
-                                        <span id="right"
-                                              data-win-bind="textContent: EintritteAustritteBereich"></span>
-                                    </div>
-                                </div>
+                                <span data-win-bind="textContent: EintritteGesamt"></span>
+                            </div>
+                            <div class="list-column hlent">
+                                <span data-win-bind="textContent: EintritteAustritteBereich"></span>
                             </div>
                         </div>
                     </div>

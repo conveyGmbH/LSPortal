@@ -23,8 +23,6 @@
                 vtitle : null
             }, [], VisitorFlowLevelIndicator.visitorFlowLevelView, null, listView]);
 
-            this.refreshWaitTimeMs = 10000;
-
             var that = this;
 
             var layout = null;
