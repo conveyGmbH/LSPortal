@@ -71,7 +71,7 @@
 }
 #root-split-view.rootsplitview-full:not(.win-splitview-pane-opened) .win-splitview-pane,
 #root-split-view.rootsplitview-tablet:not(.win-splitview-pane-opened) .win-splitview-pane {
-    width: 64px;
+    width: 65px;
 }
 #root-split-view.win-splitview-pane-opened.rootsplitview-mobile .win-splitview-panewrapper,
 #root-split-view.win-splitview-pane-opened.rootsplitview-mobile .win-splitview-pane {
