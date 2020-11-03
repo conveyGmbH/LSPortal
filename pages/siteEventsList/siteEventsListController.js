@@ -340,6 +340,12 @@
                                 WinJS.Promise.timeout(0).then(function () {
                                     that.selectRecordId(recordId);
                                 });
+                            } else {
+                                AppData.setRecordId("VeranstaltungTermin", json.d.results[0].VeranstaltungTerminID);
+                                recordId = AppData.getRecordId("VeranstaltungTermin");
+                                WinJS.Promise.timeout(0).then(function () {
+                                    that.selectRecordId(recordId);
+                                });
                             }
                         } else {
                             that.binding.count = 0;
