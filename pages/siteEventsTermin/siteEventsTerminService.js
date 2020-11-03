@@ -62,7 +62,9 @@
             DisplayName: "",
             FairVeranstalterID: 1, //deimos muss dann angepasst werden
             StartDatum: null,
-            EndDatum: null
+            EndDatum: null,
+            VeranstaltungTerminVIEWID: 0
+
         }
     });
 })();

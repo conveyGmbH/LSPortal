@@ -191,7 +191,7 @@
                                 AppHeader.controller.binding.userData = AppData._userData;
                                 AppHeader.controller.binding.userMessagesDataCount = AppData._userMessagesData.MessagesCounter;
                                 AppHeader.controller.binding.showNameInHeader = AppData._persistentStates.showNameInHeader;
-                                AppHeader.controller.loadData();
+                                //AppHeader.controller.loadData();
                             }
                             if (typeof AppBar === "object" && AppBar.scope) {
                                 if (typeof AppBar.scope.updateActions === "function" &&
@@ -254,11 +254,11 @@
                             if (typeof AppHeader === "object" &&
                                 AppHeader.controller && AppHeader.controller.binding) {
                                 AppHeader.controller.binding.userMessagesDataCount = AppData._userMessagesData.MessagesCounter;
-                                AppHeader.controller.loadData();
+                                //AppHeader.controller.loadData();
                             }
                         }
                         //TEST
-                        var timeout = 30;
+                        /*var timeout = 30;
                         Log.print(Log.l.info, "getMessagesData: Now, wait for timeout=" + timeout + "s");
                         if (AppData._messagesDataPromise) {
                             Log.print(Log.l.info, "Cancelling previous messagesDataPromise");
@@ -268,7 +268,7 @@
                             Log.print(Log.l.info, "getMessagesData: Now, timeout=" + timeout + "s is over!");
                             //AppData._curGetUserRemoteDataId = 0;
                             AppData.getMessagesData();
-                        });
+                        });*/
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.

@@ -289,7 +289,7 @@
                                     counter.style.display = "inline";
                                 }
                                 that.selectEntry(count);
-                                that.loading = false
+                                that.loading = false;
                             }
                         }
                     }

@@ -178,7 +178,7 @@
                         AppData.setErrorMsg(that.binding, errorResponse);
                     });
                 }).then(function () {
-                    if (that.binding.VeranstaltungTerminID !== null) {
+                    if (that.binding.VeranstaltungTerminID !== 0) {
                         Log.print(Log.l.trace, "calling select VeranstaltungView...");
                         //@nedra:25.09.2015: load the list of FragenView for Combobox
                         return SiteEventsTermin.VeranstaltungView.select(function (json) {
