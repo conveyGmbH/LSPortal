@@ -52,6 +52,8 @@
                 //var dataEvent = that.binding.eventData;
                 that.binding.dataTermin.StartDatum = new Date(that.binding.dataTermin.StartDatum).toISOString();
                 that.binding.dataTermin.EndDatum = new Date(that.binding.dataTermin.EndDatum).toISOString();
+                that.binding.dataTermin.FairVeranstalterVIEWID =
+                    parseInt(that.binding.dataTermin.FairVeranstalterVIEWID);
                 //that.binding.dataTermin.FairVeranstalterID = 1; // nur auf deimos 
                 //var dataTermin = getExibitorData();
                 Log.call(Log.l.trace, "SiteEventsTermin.Controller.");
@@ -62,7 +64,7 @@
                         pDisplayName: that.binding.dataTermin.DisplayName,
                         pStartDate: that.binding.dataTermin.StartDatum,
                         pEndDate: that.binding.dataTermin.EndDatum,
-                        pFairVeranstalterID: that.binding.dataTermin.FairVeranstalterID,
+                        pFairVeranstalterID: that.binding.dataTermin.FairVeranstalterVIEWID,
                         pFairLocationID: 0,
                         pVeranstaltungTerminID: that.binding.dataTermin.VeranstaltungTerminVIEWID
                     }, function (json) {
@@ -165,11 +167,12 @@
                         Log.print(Log.l.trace, "FairVeranstalterView: success!");
                         /*if (!that.employees || !that.employees.length) {
                             that.employees = new WinJS.Binding.List([Search.employeeView.defaultValue]);*/
-                        if (json && json.d && json.d.results) {
+                        if (json && json.d && json.d.results && json.d.results.length > 0) {
                             // store result for next use
                             var result = json.d.results;
                             if (fairVeranstalter && fairVeranstalter.winControl) {
                                 fairVeranstalter.winControl.data = new WinJS.Binding.List(result);
+                                that.binding.dataTermin.FairVeranstalterVIEWID = result[json.d.results.length - 1].FairVeranstalterVIEWID;
                             }
                         }
                     }, function (errorResponse) {
@@ -178,7 +181,7 @@
                         AppData.setErrorMsg(that.binding, errorResponse);
                     });
                 }).then(function () {
-                    if (that.binding.VeranstaltungTerminID !== null) {
+                    if (that.binding.VeranstaltungTerminID !== 0) {
                         Log.print(Log.l.trace, "calling select VeranstaltungView...");
                         //@nedra:25.09.2015: load the list of FragenView for Combobox
                         return SiteEventsTermin.VeranstaltungView.select(function (json) {
