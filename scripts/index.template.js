@@ -129,6 +129,96 @@
     ];
 
 
+     // static array of menu groups for the split view pane
+    Application.navigationBarGroups = [
+        { id: "start", group: 1, svg: "home", disabled: true },
+        { id: "voucherAdministration", group: 16, svg: "Gutschein1.1", disabled: true},
+        { id: "esStaffAdministration", group: 18, svg: "id_card", disabled: true},
+        { id: "esVoucherUsers", group: 19, svg: "voucher_contact", disabled: true },
+        { id: "dashBoard", group: 19, svg: "Dashboard", disabled: true },
+        { id: "masterDataGrp", group: 23, svg: "Stammdaten", disabled: true, popup: true },
+        { id: "skills", group: 24, svg: "Skills", disabled: true, predecGroup: 23 },
+        { id: "employeeGrp", group: 25, svg: "Benutzerkonten", disabled: true, popup: true },
+        { id: "employee", group: 5, svg: "keys", disabled: true, predecGroup: 25 },
+        { id: "myEvents", group: 26, svg: "keys", disabled: true },
+        { id: "settingLeadsuccessGrp", group: 27, svg: "LeadSuccess", disabled: true, popup: true },
+        { id: "events", group: 2, svg: "calendar_1", disabled: true, predecGroup: 27 },
+        { id: "questionList", group: 3, svg: "question_and_answer", disabled: true, predecGroup: 27 },
+        { id: "visitorFlowGrp", group: 28, svg: "lsvFlow", disabled: true, popup: true },
+        { id: "visitorFlowDashboard", group: 20, svg: "DashboardVisitorFlow", disabled: true, predecGroup: 28 },
+        { id: "visitorFlowEntExt", group: 22, svg: "window_gear", disabled: true, predecGroup: 28 },
+        { id: "contactsEventsGrp", group: 29, svg: "Contact_Ereignis", disabled: true, popup: true },
+        { id: "contacts", group: 6, svg: "businesspeople2", disabled: true, predecGroup: 29 },
+        { id: "mandatory", group: 30, svg: "PflichtFelder", disabled: true, predecGroup: 29 },
+        { id: "mailingGrp", group: 31, svg: "mailing", disabled: true, popup: true },
+        { id: "mailing", group: 4, svg: "standardmail", disabled: true, predecGroup: 31 },
+        { id: "mailingProduct", group: 32, svg: "Productmail", disabled: true, predecGroup: 31 },
+        { id: "mailingOptions", group: 33, svg: "Mailsettings", disabled: true, predecGroup: 31 },
+        { id: "exportGrp", group: 34, svg: "Export", disabled: true, popup: true },
+        { id: "reporting", group: 8, svg: "download", disabled: true, predecGroup: 34 },
+        { id: "reportingColumnList", group: 35, svg: "Export_settings", disabled: true, predecGroup: 34 },
+        { id: "infodesk", group: 9, svg: "about", disabled: true },
+        { id: "optionsGrp", group: 36, svg: "Options", disabled: true, popup: true },
+        { id: "info", group: 37, svg: "gearwheel", disabled: true, predecGroup: 36 },
+        { id: "settings", group: 38, svg: "Design", disabled: true, predecGroup: 36 },
+        { id: "account", group: 39, svg: "Konto", disabled: true, predecGroup: 36 },
+        { id: "support", group: 40, svg: "user_headset", disabled: true },
+        { id: "administrationGrp", group: 41, svg: "Administration", disabled: true, popup: true },
+        { id: "localevents", group: 12, svg: "MandantVerwaltung", disabled: true, predecGroup: 41 },
+        { id: "siteevents", group: 13, svg: "mandant", disabled: true, predecGroup: 41 },
+        { id: "clientManagement", group: 14, svg: "Standpersonal", disabled: true, predecGroup: 41 }
+        //{ id: "resourcesAdministration", group: 17, svg: "user_headset", disabled: true },
+        //{ id: "search", group: 7, svg: "magnifying_glass", disabled: true },
+        //{ id: "info", group: 10, svg: "gearwheel", disabled: true }
+    ];
+
+    // static array of pages for the navigation bar
+    Application.navigationBarPages = [
+        { id: "start", group: -1, disabled: false },
+        { id: "home", group: -1, disabled: false },
+        { id: "event", group: 2, disabled: false },
+        //{ id: "products", group: 2, disabled: false },
+        { id: "skills", group: 2, disabled: false },
+        { id: "questionList", group: 3, disabled: false },
+        { id: "questiongroup", group: 3, disabled: false },
+        { id: "optQuestionList", group: 3, disabled: false },
+        { id: "mandatory", group: -30, disabled: false },
+        //{ id: "visitorFlowEntExt", group: 3, disabled: false },
+        { id: "mailing", group: 4, disabled: false },
+        { id: "mailingOptions", group: 4, disabled: false },
+        //{ id: "mailingProduct", group: 4, disabled: false },
+        { id: "employee", group: 5, disabled: false },
+        { id: "skillentry", group: 5, disabled: false },
+        { id: "employeeVisitorFlow", group: 5, disabled: false },
+        { id: "employeeGenPWList", group: 5, disabled: false },
+        { id: "contact", group: 6, disabled: false },
+        { id: "questionnaire", group: 6, disabled: false },
+        { id: "sketch", group: 6, disabled: false },
+        { id: "search", group: -7, disabled: false },
+        { id: "reporting", group: 8, disabled: false },
+        { id: "reportingColumnList", group: 8, disabled: false },
+        //{ id: "pdfExport", group: 8, disabled: false },
+        { id: "infodesk", group: -9, disabled: false },
+        { id: "info", group: 10, disabled: false },
+        { id: "settings", group: 10, disabled: false },
+        { id: "account", group: 10, disabled: false },
+        { id: "support", group: -11, disabled: false },
+        { id: "localevents", group: -12, disabled: false },
+        { id: "siteevents", group: 13, disbaled: false },
+        { id: "mailingTypes", group: 13, disabled: false },
+        { id: "mailingTemplate", group: 13, disabled: false },
+        { id: "clientManagement", group: 14, disabled: false },
+        { id: "clientManagementLicenses", group: 14, disabled: false },
+        //{ id: "mailingTracking", group: 13, disabled: false }
+        { id: "voucherAdministration", group: -16, disabled: false },
+        { id: "resourcesAdministration", group: -17, disabled: false },
+        { id: "esStaffAdministration", group: -18, disabled: false },
+        { id: "esVoucherUsers", group: -19, disabled: false },
+        { id: "visitorFlowDashboard", group: -20, disabled: true },
+        { id: "visitorFlowEntExt", group: -22, disabled: true }
+    ];
+
+
     // static array of pages master/detail relations
     Application.navigationMasterDetail = [
         { id: "contact", master: "contactList" },
@@ -151,6 +241,7 @@
         { id: "esVoucherUsers", master: "esVoucherUsersList" }
     ];
 
+
     // init page for app startup
     Application.initPage = Application.getPagePath("dbinit");
     // home page of app
@@ -161,8 +252,10 @@
     // some more default page navigation handling
     Application.navigateByIdOverride = function (id, event) {
         Log.call(Log.l.trace, "Application.", "id=" + id);
-        if (id === "start" && Application.getPageId(WinJS.Navigation.location) !== "home") {
+        if (id === "start") {
             id = "home";
+        } else if (id === "dashBoard") {
+            id = "start";
         } else if (id === "events") {
             id = "event";
         } else if (id === "serviceevents") {
