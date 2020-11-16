@@ -520,7 +520,7 @@
     "label.masterDataGrp" : "Stammdaten",
     "label.employeeGrp" : "Benutzer",
     "label.myEvents" : "Meine Veranstaltung",
-    "label.settingLeadsuccessGrp" : "Einstellungen für LeadSuccess APP",
+    "label.settingLeadsuccessGrp" : "LeadSuccess APP",
     "label.visitorFlowGrp" : "Visitor Flow",
     "label.contactsEventsGrp" : "Kontakte und Ereignisse",
     "label.mailingGrp" : "Mailings",
