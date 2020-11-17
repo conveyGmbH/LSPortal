@@ -741,7 +741,7 @@
     "mailingTypes.ccplaceholder"           : "Geben Sie hier die CC E-Mail Adresse ein. Beispiel: Firmenname@Firmenname.de",
     "mailingTypes.bccplaceholder"           : "Geben Sie hier die BCC E-Mail Adresse ein. Beispiel: Firmenname@Firmenname.de",
 	"mailingTypes.sendDayplaceholder"   : "Geben Sie hier eine Zahl zwischen -14 und 14 ein",
-	"mailingTypes.sendStartTimeplaceholder" : "Geben Sie eine Uhrzeit an",
+	"mailingTypes.sendStartTimeplaceholder" : "Mailversand erst nach dieser Uhrzeit",
 
 	"mailingTemplate.title" : "E-Mailvorlage",
 	"mailingTemplate.subject" : "Betreff",

@@ -141,7 +141,7 @@
         { id: "employeeGrp", group: 25, svg: "Benutzerkonten", disabled: true, popup: true },
         { id: "employee", group: 5, svg: "keys", disabled: true, predecGroup: 25 },
         { id: "myEvents", group: 26, svg: "keys", disabled: true },
-        { id: "settingLeadsuccessGrp", group: 27, svg: "LeadSuccess", disabled: true, popup: true },
+        { id: "settingLeadsuccessGrp", group: 27, svg: "handshake", disabled: true, popup: true },
         { id: "events", group: 2, svg: "calendar_1", disabled: true, predecGroup: 27 },
         { id: "questionList", group: 3, svg: "question_and_answer", disabled: true, predecGroup: 27 },
         { id: "visitorFlowGrp", group: 28, svg: "lsvFlow", disabled: true, popup: true },

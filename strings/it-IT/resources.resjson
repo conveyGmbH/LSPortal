@@ -739,7 +739,7 @@
     "mailingTypes.ccplaceholder"           : "Inserire qui l'indirizzo per il CC. Per esemio: Ditta@ditta.it",
     "mailingTypes.bccplaceholder"           : "Inserire qui l'indirizzo per il BCC. Per esemio: Ditta@ditta.it",
 	"mailingTypes.sendDayplaceholder"   : "Inserire qui un numero compreso tra -14 e 14",
-	"mailingTypes.sendStartTimeplaceholder" : "Inserire qui un orario",
+	"mailingTypes.sendStartTimeplaceholder" : "La posta verrà inviata solo dopo questo orario",
 
 	"mailingTemplate.title" : "Mailtemplate",
 	"mailingTemplate.subject" : "Riguardo",
