@@ -1,0 +1,24 @@
+﻿body {
+}
+* {
+    box-sizing: border-box;
+}
+
+table {
+    border-collapse: collapse;
+    width: 90%;
+    margin-left: 5%;
+    margin-bottom: 5%;
+}
+
+td, th {
+    padding: 5px 15px;
+    text-align: left;
+}
+
+table, th, td {
+    border: 1px solid #000;
+}
+columnSelector : hover {
+    border-right: 2px solid #0000f;
+}
