@@ -22,11 +22,13 @@
             }, commandList]);
             this.nextUrl = null;
 
+            this.contacts = null;
+
             var that = this;
             
             var tableheader = pageElement.querySelector(".table-header");
-            var tablebody = pageElement.querySelector(".table-body");
-
+            var tablebody = pageElement.querySelector("#table-body");
+            var listView = pageElement.querySelector("#listLocalContacts.listview");
             var resizableGrid = function () {
                 var table = pageElement.querySelector("#tableId");
                 var row = table.querySelectorAll('tr')[0],
@@ -194,15 +196,27 @@
                             var headerdata = results.slice(0, 2);
                             var bodydata = results.slice(2);
                           
-                            that.binding.dataContactHeader = headerdata;
-                            that.binding.dataContactBody = bodydata;
-
+                            //that.binding.dataContactHeader = headerdata;
+                            that.binding.dataContactBody = results;
+                            // Now, we call WinJS.Binding.List to get the bindable list
+                            that.contacts = new WinJS.Binding.List(bodydata);
+                            that.binding.count = that.contacts.length;
                             /*if (tableheader && tableheader.winControl) {
                                 tableheader.winControl.data = new WinJS.Binding.List(that.binding.dataContactHeader);
-                            }
-                            if (tablebody && tablebody.winControl) {
-                                tablebody.winControl.data = new WinJS.Binding.List(that.binding.dataContactBody);
                             }*/
+                            //that.contacts = new WinJS.Binding.List(bodydata);
+                           /* if (tablebody && tablebody.winControl) {
+                                tablebody.winControl.data = bodydata;
+                            }*/
+                            /*if (listView && listView.winControl) {
+                                // add ListView dataSource
+                                listView.winControl.itemDataSource = that.contacts.dataSource;
+                            }*/
+                            if (listView.winControl) {
+                                // add ListView dataSource
+                                listView.winControl.itemDataSource = that.contacts.dataSource;
+                            }
+                            Log.print(Log.l.trace, "Data loaded");
                         } else {
                            
                         }
