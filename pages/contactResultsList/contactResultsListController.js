@@ -26,6 +26,7 @@
             var table = pageElement.querySelector("#tableId");
             var tableHeader = pageElement.querySelector(".table-header");
             var tableBody = pageElement.querySelector(".table-body");
+            var contentArea = pageElement.querySelector(".contentarea");
 
             this.dispose = function () {
                 if (tableBody && tableBody.winControl) {
@@ -216,6 +217,17 @@
                     that.addHeaderRowHandlers();
                     that.addBodyRowHandlers();
                     Log.ret(Log.l.trace);
+                },
+                onContentScroll: function(eventInfo) {
+                    Log.call(Log.l.trace, "ContactResultList.Controller.");
+                    if (contentArea && that.nextUrl) {
+                        var scrollMax = contentArea.scrollHeight - contentArea.clientHeight;
+                        var scrollPos = contentArea.scrollTop;
+                        if (scrollPos === scrollMax) {
+                            that.loadNextUrl();
+                        }
+                    }
+                    Log.ret(Log.l.trace);
                 }
             };
 
@@ -231,6 +243,10 @@
                     return true;
                 }
             };
+
+            if (contentArea) {
+                this.addRemovableEventListener(contentArea, "scroll", this.eventHandlers.onContentScroll.bind(this));
+            }
 
             var resultConverter = function (item, index) {
                 item.index = index;
@@ -256,9 +272,9 @@
             }
             this.resultConverter = resultConverter;
 
-            var loadNextUrl = function (recordId) {
+            var loadNextUrl = function () {
                 var ret = null;
-                Log.call(Log.l.trace, "ContactResultsList.Controller.", "recordId=" + recordId);
+                Log.call(Log.l.trace, "ContactResultsList.Controller.");
                 if (that.contacts && that.nextUrl && listView) {
                     AppData.setErrorMsg(that.binding);
                     Log.print(Log.l.trace, "calling select ContactResultsList.contactView...");
