@@ -46,7 +46,7 @@
                 Login: "",
                 Names: "",
                 OrderAttribute: ["NichtLizenzierteApp", "Nachname"],
-                OrderDesc: true
+                OrderDesc: false
             },
             defaultContactHeader: {
                 Name: "",
