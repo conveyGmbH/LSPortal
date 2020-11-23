@@ -14,6 +14,7 @@ table {
 td, th {
     padding: 5px 15px;
     text-align: left;
+    height: 35px;
 }
 
 table, th, td {
@@ -21,4 +22,10 @@ table, th, td {
 }
 columnSelector : hover {
     border-right: 2px solid #0000f;
+}
+.table-body tr:hover {
+    background: #d8613e;
+}
+.counter {
+    margin-left: 5%;
 }

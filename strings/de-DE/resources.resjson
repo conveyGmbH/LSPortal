@@ -1072,5 +1072,8 @@
     "visitorflowoverview.offsettext"			: "Bei einem Offset von: ",
 
 	"visitorFlowDashboard.title"	: "Visitor Flow Dashboard",
-    "visitorFlowDashboard.comment"  : "Hier finden Sie eine Übersicht über die Anzahl Besucher an Ihrem Stand"
+    "visitorFlowDashboard.comment"  : "Hier finden Sie eine Übersicht über die Anzahl Besucher an Ihrem Stand",
+
+    "contactResultsList.title"			: "Kontakte",
+    "contactResultsList.count"			: "Anzahl der Kontakte"
 }			

@@ -20,51 +20,15 @@
                             <span class="date-field"></span>
                         </div>
                     </div>
-                    <table id="products">
-                        <tbody>
-                            <tr>
-                            </tr>
-                        <tr data-win-control="WinJS.Binding.Template" id="productsRowTemplate">
-                            <td class="win-type-ellipsis" style="min-height: 24px; float: left; width: 100px; padding: 12px; border: 1px solid #ddd"
-                                data-win-bind="textContent: Erfassungsdatum Binding.Converter.toDateString"></td>
-                            <td class="win-type-ellipsis" style="min-height: 24px; float: left; width: 100px; padding: 12px; border: 1px solid #ddd"
-                                data-win-bind="textContent: fullName"></td>
-                            <td class="win-type-ellipsis" style="min-height: 24px; float: left; width: 100px; padding: 12px; border: 1px solid #ddd"
-                                data-win-bind="textContent: Firmenname"></td>
-                            <td class="win-type-ellipsis" style="min-height: 24px; float: left; width: 100px; padding: 12px; border: 1px solid #ddd"
-                                data-win-bind="textContent: Name"></td>
-                            <td class="win-type-ellipsis" style="min-height: 24px; float: left; width: 100px; padding: 12px; border: 1px solid #ddd"
-                                data-win-bind="textContent: Vorname"></td>
-                            <td class="win-type-ellipsis" style="min-height: 24px; float: left; width: 100px; padding: 12px; border: 1px solid #ddd"
-                                data-win-bind="textContent: Strasse"></td>
-                            <td class="win-type-ellipsis" style="min-height: 24px; float: left; width: 100px; padding: 12px; border: 1px solid #ddd"
-                                data-win-bind="textContent: PLZ"></td>
-                            <td class="win-type-ellipsis" style="min-height: 24px; float: left; width: 100px; padding: 12px; border: 1px solid #ddd"
-                                data-win-bind="textContent: Stadt"></td>
-                            <td class="win-type-ellipsis" style="min-height: 24px; float: left; width: 100px; padding: 12px; border: 1px solid #ddd"
-                                data-win-bind="textContent: Land"></td>
-                            <td class="win-type-ellipsis" style="min-height: 24px; float: left; width: 100px; padding: 12px; border: 1px solid #ddd"
-                                data-win-bind="textContent: TelefonFestnetz"></td>
-                            <td class="win-type-ellipsis" style="min-height: 24px; float: left; width: 100px; padding: 12px; border: 1px solid #ddd"
-                                data-win-bind="textContent: TelefonMobil"></td>
-                            <td class="win-type-ellipsis" style="min-height: 24px; float: left; width: 100px; padding: 12px; border: 1px solid #ddd"
-                                data-win-bind="textContent: EMail"></td>
-                            <td class="win-type-ellipsis" style="min-height: 24px; float: left; width: 100px; padding: 12px; border: 1px solid #ddd"
-                                data-win-bind="textContent: globalContactId"></td>
-                            </tr>
+                    <div class="counter">
+                        <span data-win-res="{textContent: 'contactResultsList.count'}"></span><span>: </span><span data-win-bind="textContent: count"></span>
+                    </div>
+                    <table id="tableId">
+                        <thead class="table-header">
+                        </thead>
+                        <tbody class="table-body">
                         </tbody>
                     </table>
-                    <div id="listLocalContacts"
-                         class="listview"
-                         data-win-control="WinJS.UI.ListView"
-                         
-                         data-win-options="{
-                             layout : { type: WinJS.UI.ListLayout },
-                             itemTemplate: select('#productsRowTemplate'),
-                             header: select('.list-header'),
-                             footer: select('.list-footer')
-                         }">
-                    </div>
                 </div>
                 <div class="error-message"
                      data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>

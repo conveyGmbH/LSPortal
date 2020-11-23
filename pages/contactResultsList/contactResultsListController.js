@@ -17,18 +17,17 @@
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "ContactResultsList.Controller.");
             Application.Controller.apply(this, [pageElement, {
+                count: 0,
                 dataContactHeader: null,
                 dataContactBody: null
             }, commandList]);
             this.nextUrl = null;
 
-            this.contacts = null;
-
             var that = this;
-            
+            var tablefull = pageElement.querySelector("#tableId");
             var tableheader = pageElement.querySelector(".table-header");
-            var tablebody = pageElement.querySelector("#table-body");
-            var listView = pageElement.querySelector("#listLocalContacts.listview");
+            var tablebody = pageElement.querySelector(".table-body");
+
             var resizableGrid = function () {
                 var table = pageElement.querySelector("#tableId");
                 var row = table.querySelectorAll('tr')[0],
@@ -176,54 +175,165 @@
                 }
             };
 
+            var addHeaderRow = function (item) {
+                var tableheader = pageElement.querySelector(".table-header");
+                var row = tableheader.appendChild(document.createElement('tr'));
+                var col1 = row.appendChild(document.createElement('th'));
+                var col2 = row.appendChild(document.createElement('th'));
+                var col3 = row.appendChild(document.createElement('th'));
+                var col4 = row.appendChild(document.createElement('th'));
+                var col5 = row.appendChild(document.createElement('th'));
+                var col6 = row.appendChild(document.createElement('th'));
+                var col7 = row.appendChild(document.createElement('th'));
+                var col8 = row.appendChild(document.createElement('th'));
+                var col9 = row.appendChild(document.createElement('th'));
+                
+                col1.textContent = item.Name;
+                col2.textContent = item.Vorname;
+                col3.textContent = item.Firmenname;
+                col4.textContent = item.EMail;
+                col5.textContent = item.Stadt;
+                col6.textContent = item.Land;
+                col7.textContent = item.Prio;
+                col8.textContent = item.Typ;
+                col9.textContent = "Status";
+            }
+            this.addHeaderRow = addHeaderRow;
+
+            var addBodyRow = function (item) {
+                var tableheader = pageElement.querySelector(".table-body");
+                var row = tableheader.appendChild(document.createElement('tr'));
+                var col1 = row.appendChild(document.createElement('td'));
+                var col2 = row.appendChild(document.createElement('td'));
+                var col3 = row.appendChild(document.createElement('td'));
+                var col4 = row.appendChild(document.createElement('td'));
+                var col5 = row.appendChild(document.createElement('td'));
+                var col6 = row.appendChild(document.createElement('td'));
+                var col7 = row.appendChild(document.createElement('td'));
+                var col8 = row.appendChild(document.createElement('td'));
+                var col9 = row.appendChild(document.createElement('td'));
+
+                row.value = item.KontaktVIEWID;
+
+                col1.textContent = item.Name;
+                col2.textContent = item.Vorname;
+                col3.textContent = item.Firmenname;
+                col4.textContent = item.EMail;
+                col5.textContent = item.Stadt;
+                col6.textContent = item.Land;
+                col7.textContent = item.Prio;
+                col8.textContent = item.Typ;
+                col9.textContent = item.Status;
+            }
+            this.addBodyRow = addBodyRow;
+
+            var addHeaderRowHandlers = function () {
+                var tableheader = pageElement.querySelector(".table-header tr");
+                var cells = tableheader.getElementsByTagName("th");
+                for (var i = 0; i < cells.length; i++) {
+                    var cell = tableheader.cells[i];
+                    cell.onclick = function (myrow) {
+                        return function () {
+                            var restriction = ContactResultsList.KontaktReport.defaultRestriction;
+                            var sortname = myrow.textContent;
+                            restriction.OrderAttribute = sortname;
+                            pageElement.querySelectorAll(".table-header tr").forEach(function (e) { e.remove() });
+                            pageElement.querySelectorAll(".table-body tr").forEach(function (e) { e.remove() });
+                            that.loadData(restriction);
+                        };
+                    }(cell);
+                }
+            }
+            this.addHeaderRowHandlers = addHeaderRowHandlers;
+
+            var addBodyRowHandlers = function () {
+                var table = pageElement.querySelector(".table-body");
+                var rows = table.getElementsByTagName("tr");
+                for (var i = 0; i < rows.length; i++) {
+                    var row = table.rows[i];
+                    row.onclick = function (myrow) {
+                        return function () {
+                            var id = myrow.value;
+                            AppData.setRecordId("Kontakt", id);
+                            Application.navigateById("contactResultsEdit");
+                        };
+                    }(row);
+                }
+            }
+            this.addBodyRowHandlers = addBodyRowHandlers;
+
             var resultConverter = function (item, index) {
                 item.index = index;
+                if (!item.Name && !item.Vorname && !item.Firmenname) {
+                    item.Status = "Unvollständig";
+                } else if (!item.EMail) {
+                    item.Status = "Teilweise unvollständig";
+                } else {
+                    item.Status = "Vollständig";
+                }
+                if (item.KontaktVIEWID === -2) {
+                    that.addHeaderRow(item);
+                } else if (item.KontaktVIEWID === -1) {
+                    
+                } else {
+                    that.addBodyRow(item);
+                }
             }
             this.resultConverter = resultConverter;
 
 
-            var loadData = function () {
+            var loadData = function (restr) {
                 Log.call(Log.l.trace, "MailingTypes.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                     Log.print(Log.l.trace, "calling select MailingTypes...");
-                    return ContactResultsList.KontaktReport.select(function (json) {
-                        AppData.setErrorMsg(that.binding);
-                        Log.print(Log.l.trace, "MailingTypes: success!");
-                        if (json && json.d && json.d.results.length > 0) {
-                            // now always edit!
-                            var results = json.d.results;
-                            var headerdata = results.slice(0, 2);
-                            var bodydata = results.slice(2);
-                          
-                            //that.binding.dataContactHeader = headerdata;
-                            that.binding.dataContactBody = results;
-                            // Now, we call WinJS.Binding.List to get the bindable list
-                            that.contacts = new WinJS.Binding.List(bodydata);
-                            that.binding.count = that.contacts.length;
-                            /*if (tableheader && tableheader.winControl) {
-                                tableheader.winControl.data = new WinJS.Binding.List(that.binding.dataContactHeader);
-                            }*/
-                            //that.contacts = new WinJS.Binding.List(bodydata);
-                           /* if (tablebody && tablebody.winControl) {
-                                tablebody.winControl.data = bodydata;
-                            }*/
-                            /*if (listView && listView.winControl) {
-                                // add ListView dataSource
-                                listView.winControl.itemDataSource = that.contacts.dataSource;
-                            }*/
-                            if (listView.winControl) {
-                                // add ListView dataSource
-                                listView.winControl.itemDataSource = that.contacts.dataSource;
-                            }
-                            Log.print(Log.l.trace, "Data loaded");
-                        } else {
-                           
-                        }
-                    },
-                    function (errorResponse) {
-                    AppData.setErrorMsg(that.binding, errorResponse);
-                        });
+                    if (restr) {
+                        return ContactResultsList.KontaktReport.select(function (json) {
+                                AppData.setErrorMsg(that.binding);
+                                Log.print(Log.l.trace, "MailingTypes: success!");
+                                if (json && json.d && json.d.results.length > 0) {
+                                    // now always edit!
+                                    var results = json.d.results;
+
+                                    results.forEach(function (item, index) {
+                                        that.resultConverter(item, index);
+                                    });
+                                    that.resizableGrid();
+                                    that.addHeaderRowHandlers();
+                                    that.addBodyRowHandlers();
+                                    that.binding.count = results.length - 2;
+                                    
+                                } else {
+
+                                }
+                            },
+                            function (errorResponse) {
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                            }, restr);
+                    } else {
+                        return ContactResultsList.KontaktReport.select(function (json) {
+                                AppData.setErrorMsg(that.binding);
+                                Log.print(Log.l.trace, "MailingTypes: success!");
+                                if (json && json.d && json.d.results.length > 0) {
+                                    // now always edit!
+                                    var results = json.d.results;
+
+                                    results.forEach(function (item, index) {
+                                        that.resultConverter(item, index);
+                                    });
+
+                                    that.binding.count = results.length - 2;
+                                    
+                                } else {
+
+                                }
+                            },
+                            function (errorResponse) {
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                            }, {
+                                
+                            });
+                    }
                 }).then(function () {
                     AppBar.notifyModified = true;
                     return WinJS.Promise.as();
@@ -240,12 +350,19 @@
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.resizableGrid();
             }).then(function () {
+                Log.print(Log.l.trace, "Binding wireup page complete");
+                return that.addHeaderRowHandlers();
+            }).then(function () {
+                Log.print(Log.l.trace, "Binding wireup page complete");
+                return that.addBodyRowHandlers();
+            }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 AppBar.notifyModified = true;
             });
             Log.ret(Log.l.trace);
         }, {
-          
+                headerdata: null,
+                bodydata: null
         })
     });
-})();
+})(); 

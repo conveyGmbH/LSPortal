@@ -17,7 +17,8 @@
                 Log.call(Log.l.trace, "ContactResultsList.");
                 var ret = ContactResultsList._KontaktReport.select(complete, error, restriction, {
                     ordered: true,
-                    orderAttribute: "KontaktVIEWID"
+                    desc: restriction.OrderDesc,
+                    orderAttribute: restriction.OrderAttribute
                 });
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
@@ -38,6 +39,14 @@
             },
             getDbView: function () {
                 return ContactResultsList._KontaktReport;
+            },
+            defaultRestriction: {
+                Vorname: "",
+                Nachname: "",
+                Login: "",
+                Names: "",
+                OrderAttribute: ["NichtLizenzierteApp", "Nachname"],
+                OrderDesc: true
             }
         }
     });
