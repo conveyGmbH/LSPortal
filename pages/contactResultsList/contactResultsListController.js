@@ -18,31 +18,52 @@
             Log.call(Log.l.trace, "ContactResultsList.Controller.");
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
-                dataContactHeader: null,
-                dataContactBody: null
+                dataContactHeader: getEmptyDefaultValue(ContactResultsList.KontaktReport.defaultContactHeader)
             }, commandList]);
             this.nextUrl = null;
 
             var that = this;
-            var tablefull = pageElement.querySelector("#tableId");
-            var tableheader = pageElement.querySelector(".table-header");
-            var tablebody = pageElement.querySelector(".table-body");
+            var table = pageElement.querySelector("#tableId");
+            var tableHeader = pageElement.querySelector(".table-header");
+            var tableBody = pageElement.querySelector(".table-body");
+
+            this.dispose = function () {
+                if (tableBody && tableBody.winControl) {
+                    tableBody.winControl.data = null;
+                }
+            }
 
             var resizableGrid = function () {
-                var table = pageElement.querySelector("#tableId");
-                var row = table.querySelectorAll('tr')[0],
-                    cols = row ? row.children : undefined;
+                var row = table ? table.querySelectorAll('tr')[0] : null,
+                    cols = row ? row.children : null;
                 if (!cols) return;
-
-                table.style.overflow = "hidden";
 
                 var tableHeight = table.offsetHeight;
                 
-                for (var i = 0; i < cols.length; i++) {
-                    var div = createDiv(tableHeight);
-                    cols[i].appendChild(div);
-                    cols[i].style.position = "relative";
-                    setListeners(div);
+                function createDiv(height) {
+                    var div = document.createElement("div");
+                    div.style.top = 0;
+                    div.style.right = 0;
+                    div.style.width = "5px";
+                    div.style.position = "absolute";
+                    div.style.cursor = "col-resize";
+                    div.style.userSelect = "none";
+                    div.style.height = height + "px";
+                    return div;
+                }
+
+                function getStyleVal(elm, css) {
+                    return (window.getComputedStyle(elm, null).getPropertyValue(css));
+                }
+
+                function paddingDiff(col) {
+                    if (getStyleVal(col, "box-sizing") === "border-box") {
+                        return 0;
+                    }
+                    var padLeft = getStyleVal(col, "padding-left");
+                    var padRight = getStyleVal(col, "padding-right");
+                    return (parseInt(padLeft) + parseInt(padRight));
+
                 }
 
                 function setListeners(div) {
@@ -91,32 +112,11 @@
 
                 }
 
-                function createDiv(height) {
-                    var div = document.createElement("div");
-                    div.style.top = 0;
-                    div.style.right = 0;
-                    div.style.width = "5px";
-                    div.style.position = "absolute";
-                    div.style.cursor = "col-resize";
-                    div.style.userSelect = "none";
-                    div.style.height = height + "px";
-                    return div;
-                }
-
-                function paddingDiff(col) {
-
-                    if (getStyleVal(col, "box-sizing") === "border-box") {
-                        return 0;
-                    }
-
-                    var padLeft = getStyleVal(col, "padding-left");
-                    var padRight = getStyleVal(col, "padding-right");
-                    return (parseInt(padLeft) + parseInt(padRight));
-
-                }
-
-                function getStyleVal(elm, css) {
-                    return (window.getComputedStyle(elm, null).getPropertyValue(css));
+                for (var i = 0; i < cols.length; i++) {
+                    var div = createDiv(tableHeight);
+                    cols[i].appendChild(div);
+                    cols[i].style.position = "relative";
+                    setListeners(div);
                 }
             }
             this.resizableGrid = resizableGrid;
@@ -175,116 +175,77 @@
                 }
             };
 
-            var addHeaderRow = function (item) {
-                var tableheader = pageElement.querySelector(".table-header");
-                var row = tableheader.appendChild(document.createElement('tr'));
-                var col1 = row.appendChild(document.createElement('th'));
-                var col2 = row.appendChild(document.createElement('th'));
-                var col3 = row.appendChild(document.createElement('th'));
-                var col4 = row.appendChild(document.createElement('th'));
-                var col5 = row.appendChild(document.createElement('th'));
-                var col6 = row.appendChild(document.createElement('th'));
-                var col7 = row.appendChild(document.createElement('th'));
-                var col8 = row.appendChild(document.createElement('th'));
-                var col9 = row.appendChild(document.createElement('th'));
-                
-                col1.textContent = item.Name;
-                col2.textContent = item.Vorname;
-                col3.textContent = item.Firmenname;
-                col4.textContent = item.EMail;
-                col5.textContent = item.Stadt;
-                col6.textContent = item.Land;
-                col7.textContent = item.Prio;
-                col8.textContent = item.Typ;
-                col9.textContent = "Status";
-            }
-            this.addHeaderRow = addHeaderRow;
-
-            var addBodyRow = function (item) {
-                var tableheader = pageElement.querySelector(".table-body");
-                var row = tableheader.appendChild(document.createElement('tr'));
-                var col1 = row.appendChild(document.createElement('td'));
-                var col2 = row.appendChild(document.createElement('td'));
-                var col3 = row.appendChild(document.createElement('td'));
-                var col4 = row.appendChild(document.createElement('td'));
-                var col5 = row.appendChild(document.createElement('td'));
-                var col6 = row.appendChild(document.createElement('td'));
-                var col7 = row.appendChild(document.createElement('td'));
-                var col8 = row.appendChild(document.createElement('td'));
-                var col9 = row.appendChild(document.createElement('td'));
-
-                row.value = item.KontaktVIEWID;
-
-                col1.textContent = item.Name;
-                col2.textContent = item.Vorname;
-                col3.textContent = item.Firmenname;
-                col4.textContent = item.EMail;
-                col5.textContent = item.Stadt;
-                col6.textContent = item.Land;
-                col7.textContent = item.Prio;
-                col8.textContent = item.Typ;
-                col9.textContent = item.Status;
-            }
-            this.addBodyRow = addBodyRow;
-
             var addHeaderRowHandlers = function () {
-                var tableheader = pageElement.querySelector(".table-header tr");
-                var cells = tableheader.getElementsByTagName("th");
-                for (var i = 0; i < cells.length; i++) {
-                    var cell = tableheader.cells[i];
-                    cell.onclick = function (myrow) {
-                        return function () {
-                            var restriction = ContactResultsList.KontaktReport.defaultRestriction;
-                            var sortname = myrow.textContent;
-                            restriction.OrderAttribute = sortname;
-                            pageElement.querySelectorAll(".table-header tr").forEach(function (e) { e.remove() });
-                            pageElement.querySelectorAll(".table-body tr").forEach(function (e) { e.remove() });
-                            that.loadData(restriction);
-                        };
-                    }(cell);
+                if (tableHeader) {
+                    var cells = tableHeader.getElementsByTagName("th");
+                    for (var i = 0; i < cells.length; i++) {
+                        var cell = tableHeader.cells[i];
+                        cell.onclick = function (myrow) {
+                            return function () {
+                                var restriction = ContactResultsList.KontaktReport.defaultRestriction;
+                                var sortname = myrow.textContent;
+                                restriction.OrderAttribute = sortname;
+                                pageElement.querySelectorAll(".table-header tr").forEach(function (e) { e.remove() });
+                                pageElement.querySelectorAll(".table-body tr").forEach(function (e) { e.remove() });
+                                that.loadData(restriction);
+                            };
+                        }(cell);
+                    }
                 }
             }
             this.addHeaderRowHandlers = addHeaderRowHandlers;
 
             var addBodyRowHandlers = function () {
-                var table = pageElement.querySelector(".table-body");
-                var rows = table.getElementsByTagName("tr");
-                for (var i = 0; i < rows.length; i++) {
-                    var row = table.rows[i];
-                    row.onclick = function (myrow) {
-                        return function () {
-                            var id = myrow.value;
-                            AppData.setRecordId("Kontakt", id);
-                            Application.navigateById("contactResultsEdit");
-                        };
-                    }(row);
+                if (tableBody) {
+                    var rows = tableBody.getElementsByTagName("tr");
+                    for (var i = 0; i < rows.length; i++) {
+                        var row = table.rows[i];
+                        row.onclick = function (myrow) {
+                            return function () {
+                                var id = myrow.value;
+                                AppData.setRecordId("Kontakt", id);
+                                Application.navigateById("contactResultsEdit");
+                            };
+                        }(row);
+                    }
                 }
             }
             this.addBodyRowHandlers = addBodyRowHandlers;
 
             var resultConverter = function (item, index) {
                 item.index = index;
-                if (!item.Name && !item.Vorname && !item.Firmenname) {
-                    item.Status = "Unvollständig";
-                } else if (!item.EMail) {
-                    item.Status = "Teilweise unvollständig";
-                } else {
-                    item.Status = "Vollständig";
-                }
                 if (item.KontaktVIEWID === -2) {
-                    that.addHeaderRow(item);
+                    that.binding.dataContactHeader = item;
+                    that.binding.dataContactHeader.Status = "Status";
                 } else if (item.KontaktVIEWID === -1) {
                     
                 } else {
-                    that.addBodyRow(item);
+                    if (!item.Name && !item.Vorname && !item.Firmenname) {
+                        item.Status = "Unvollständig";
+                    } else if (!item.EMail) {
+                        item.Status = "Teilweise unvollständig";
+                    } else {
+                        item.Status = "Vollständig";
+                    }
+                    if (tableBody &&
+                        tableBody.winControl &&
+                        tableBody.winControl.data) {
+                        tableBody.winControl.data.push(item);
+                    }
                 }
             }
             this.resultConverter = resultConverter;
 
-
             var loadData = function (restr) {
                 Log.call(Log.l.trace, "MailingTypes.Controller.");
                 AppData.setErrorMsg(that.binding);
+                if (tableBody && tableBody.winControl) {
+                    if (tableBody.winControl.data) {
+                        tableBody.winControl.data.length = 0;
+                    } else {
+                        tableBody.winControl.data = WinJS.Binding.List([]);
+                    }
+                }
                 var ret = new WinJS.Promise.as().then(function () {
                     Log.print(Log.l.trace, "calling select MailingTypes...");
                     if (restr) {

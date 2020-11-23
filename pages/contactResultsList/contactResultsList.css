@@ -1,31 +1,39 @@
-﻿body {
+﻿
+.contactResultsList .scroll-line {
+    overflow-x: auto;
+    overflow-y: hidden;
 }
-* {
+
+.contactResultsList * {
     box-sizing: border-box;
 }
 
-table {
+.contactResultsList table {
     border-collapse: collapse;
-    width: 90%;
-    margin-left: 5%;
-    margin-bottom: 5%;
+    width: 100%;
+    overflow: hidden;
 }
 
-td, th {
+.contactResultsList td, 
+.contactResultsList th {
     padding: 5px 15px;
     text-align: left;
     height: 35px;
 }
 
-table, th, td {
+.contactResultsList table,
+.contactResultsList th,
+.contactResultsList td {
     border: 1px solid #000;
 }
-columnSelector : hover {
-    border-right: 2px solid #0000f;
+
+.contactResultsList .table-header {
+
 }
-.table-body tr:hover {
+
+.contactResultsList .table-body tr:hover {
     background: #d8613e;
 }
-.counter {
+.contactResultsList .counter {
     margin-left: 5%;
 }

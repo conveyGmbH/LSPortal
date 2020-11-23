@@ -20,15 +20,39 @@
                             <span class="date-field"></span>
                         </div>
                     </div>
-                    <div class="counter">
+                    <div class="field_line counter">
                         <span data-win-res="{textContent: 'contactResultsList.count'}"></span><span>: </span><span data-win-bind="textContent: count"></span>
                     </div>
-                    <table id="tableId">
-                        <thead class="table-header">
-                        </thead>
-                        <tbody class="table-body">
-                        </tbody>
-                    </table>
+                    <div class="field_line scroll-line">
+                        <table id="tableId">
+                            <thead class="table-header">
+                                <tr>
+                                    <th data-win-bind="textContent: dataContactHeader.Name"></th>
+                                    <th data-win-bind="textContent: dataContactHeader.Vorname"></th>
+                                    <th data-win-bind="textContent: dataContactHeader.Firmenname"></th>
+                                    <th data-win-bind="textContent: dataContactHeader.EMail"></th>
+                                    <th data-win-bind="textContent: dataContactHeader.Stadt"></th>
+                                    <th data-win-bind="textContent: dataContactHeader.Land"></th>
+                                    <th data-win-bind="textContent: dataContactHeader.Prio"></th>
+                                    <th data-win-bind="textContent: dataContactHeader.Typ"></th>
+                                    <th data-win-bind="textContent: dataContactHeader.Status"></th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-body" data-win-control="WinJS.UI.Repeater">
+                                <tr data-win-bind="value: KontaktVIEWID">
+                                    <td data-win-bind="textContent: Name"></td>
+                                    <td data-win-bind="textContent: Vorname"></td>
+                                    <td data-win-bind="textContent: Firmenname"></td>
+                                    <td data-win-bind="textContent: EMail"></td>
+                                    <td data-win-bind="textContent: Stadt"></td>
+                                    <td data-win-bind="textContent: Land"></td>
+                                    <td data-win-bind="textContent: Prio"></td>
+                                    <td data-win-bind="textContent: Typ"></td>
+                                    <td data-win-bind="textContent: Status"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <div class="error-message"
                      data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>

@@ -47,6 +47,17 @@
                 Names: "",
                 OrderAttribute: ["NichtLizenzierteApp", "Nachname"],
                 OrderDesc: true
+            },
+            defaultContactHeader: {
+                Name: "",
+                Vorname: "",
+                Firmenname: "",
+                EMail: "",
+                Stadt: "",
+                Land: "",
+                Prio: "", 
+                Typ: "", 
+                Status: ""
             }
         }
     });
