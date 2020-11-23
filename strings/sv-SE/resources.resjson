@@ -674,7 +674,7 @@
     "mailingTypes.ccplaceholder"           : "Enter here the CC email address. Example: MyCompany@Company.com",
     "mailingTypes.bccplaceholder"           : "Enter here the BCC email address. Example: MyCompany@Company.com",
 	"mailingTypes.sendDayplaceholder"   : "Enter a number between -14 and 14",
-	"mailingTypes.sendStartTimeplaceholder" : "Enter here a time",
+	"mailingTypes.sendStartTimeplaceholder" : "Mail will only be sent after this time",
 
 	"mailingTemplate.title" : "Mailtemplate",
 	"mailingTemplate.subject" : "Subject",
