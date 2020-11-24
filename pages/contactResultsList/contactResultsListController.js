@@ -68,12 +68,13 @@
                 }
 
                 function setListeners(div) {
-                    var pageX, curCol, nxtCol, curColWidth, nxtColWidth;
+                    var curCol, nxtCol, curColWidth, nxtColWidth;
 
                     div.addEventListener("mousedown", function (e) {
                         curCol = e.target.parentElement;
                         nxtCol = curCol.nextElementSibling;
-                        pageX = e.pageX;
+                        that.cursorPos.x = e.pageX;
+                        that.cursorPos.y = e.pageY;
 
                         var padding = paddingDiff(curCol);
 
@@ -94,7 +95,7 @@
 
                     pageElement.addEventListener("mousemove", function (e) {
                         if (curCol) {
-                            var diffX = e.pageX - pageX;
+                            var diffX = e.pageX - that.cursorPos.x;
 
                             if (nxtCol)
                                 nxtCol.style.width = (nxtColWidth - (diffX)) + "px";
@@ -106,7 +107,6 @@
                     pageElement.addEventListener("mouseup", function (e) {
                         curCol = undefined;
                         nxtCol = undefined;
-                        pageX = undefined;
                         nxtColWidth = undefined;
                         curColWidth = undefined;
                     });
@@ -135,15 +135,27 @@
                         if (!cell.onclick) {
                             cell.onclick = function (myrow) {
                                 return function () {
-                                    var restriction = ContactResultsList.KontaktReport.defaultRestriction;
-                                    var sortname = myrow.textContent;
-                                    if (restriction.OrderAttribute !== sortname) {
-                                        restriction.OrderAttribute = sortname;
-                                        restriction.OrderDesc = false;
-                                    } else {
-                                        restriction.OrderDesc = !restriction.OrderDesc;
+                                    var position = WinJS.Utilities.getPosition(myrow);
+                                    if (position) {
+                                        var left = position.left;
+                                        var top = position.top;
+                                        var width = position.width;
+                                        var height = position.height;
+                                        if (that.cursorPos.x >= left &&
+                                            that.cursorPos.x <= left + width - 8 &&
+                                            that.cursorPos.y >= top &&
+                                            that.cursorPos.y <= top + height) {
+                                            var restriction = ContactResultsList.KontaktReport.defaultRestriction;
+                                            var sortname = myrow.textContent;
+                                            if (restriction.OrderAttribute !== sortname) {
+                                                restriction.OrderAttribute = sortname;
+                                                restriction.OrderDesc = false;
+                                            } else {
+                                                restriction.OrderDesc = !restriction.OrderDesc;
+                                            }
+                                            that.loadData(restriction);
+                                        }
                                     }
-                                    that.loadData(restriction);
                                 };
                             }(cell);
                         }
