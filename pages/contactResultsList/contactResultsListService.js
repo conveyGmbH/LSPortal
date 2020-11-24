@@ -9,7 +9,9 @@
     WinJS.Namespace.define("ContactResultsList", {
         _KontaktReport: {
             get: function () {
-                return AppData.getFormatView("KontaktReport", 0);
+                var ret = AppData.getFormatView("KontaktReport", 0);
+                ret.maxPageSize = 50;
+                return ret;
             }
         },
         KontaktReport: {

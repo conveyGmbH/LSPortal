@@ -287,7 +287,7 @@
             var loadNextUrl = function () {
                 var ret = null;
                 Log.call(Log.l.trace, "ContactResultsList.Controller.");
-                if (that.contacts && that.nextUrl && listView) {
+                if (that.nextUrl) {
                     AppData.setErrorMsg(that.binding);
                     Log.print(Log.l.trace, "calling select ContactResultsList.contactView...");
                     var nextUrl = that.nextUrl;
