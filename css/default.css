@@ -265,7 +265,7 @@ textarea:-ms-input-placeholder {
 }
 
 .win-command[disabled] .win-commandicon {
-    opacity: 0.2;
+    opacity: 0.3;
 }
 
 .headerFooterPlaceholder {
