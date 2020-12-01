@@ -1063,5 +1063,8 @@
     "visitorflowoverview.offsettext"			: "Avec un décalage de: ",
 
     "visitorFlowDashboard.title"	: "Visitor Flow Dashboard",
-    "visitorFlowDashboard.comment"  : "Vous trouverez ici un aperçu du nombre de visiteurs de votre stand"
+    "visitorFlowDashboard.comment"  : "Vous trouverez ici un aperçu du nombre de visiteurs de votre stand",
+	
+	"contactResultsList.title": "Contacts",
+    "contactResultsList.count": "Nombre de contacts"
 }
