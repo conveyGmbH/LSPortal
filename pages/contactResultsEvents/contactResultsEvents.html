@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="contactResultsEvents.css" rel="stylesheet" />
+    <script type="text/javascript" src="contactResultsEventsService.js"></script>
+    <script type="text/javascript" src="contactResultsEventsController.js"></script>
+    <script type="text/javascript" src="contactResultsEvents.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="contactResultsEvents fragment">
+        <div id="contactResultsEventsController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="contentarea win-type-body">
+                    <div class="content-header">
+                        <div class="half-circle half-circle-textcolor">&nbsp;</div>
+                        <div class="content-header-line win-type-caption">
+                            <span class="id-field"></span>
+                            <span class="caption-field" data-win-res="{textContent: 'contactResultsEvents.title'}"></span>
+                            <span class="date-field"></span>
+                        </div>
+                    </div>
+                        <div class="topcontainerevent" data-win-bind="style.display: dataContact.KontaktVIEWID Binding.Converter.toDisplay">
+                            <div id="fieldlinetop" class="field_line">
+                                <div class="field_line field_line_odd">
+                                    <span id="fullname" data-win-bind="textContent: dataContact.fullName"></span><br />
+                                    <span data-win-bind="textContent: dataContact.Firmenname"></span><br />
+                                    <span data-win-bind="textContent: dataContact.Land"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <table id="tableId">
+                            <thead class="table-header">
+                                <tr>
+                                    <th id="icon"></th>
+                                    <th data-win-res="{textContent: 'contactResultsEvents.date'}"></th>
+                                    <th data-win-res="{textContent: 'contactResultsEvents.ereignistyp'}"></th>
+                                    <th data-win-res="{textContent: 'contactResultsEvents.ereignisdetails'}"></th>
+                                    <th data-win-res="{textContent: 'contactResultsEvents.creator'}"></th>
+                                    <th data-win-res="{textContent: 'contactResultsEvents.event'}"></th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-body" data-win-control="WinJS.UI.Repeater">
+                                <tr data-win-bind="value: KontaktID">
+                                    <td id="icon">
+                                        <div class="list-symbol-ID">
+                                            <div data-win-bind="name: IconName" class="action-image"></div>
+                                        </div>
+                                    </td>
+                                    <td data-win-bind="textContent: IncidentTSUTC"></td>
+                                    <td data-win-bind="textContent: IncidentName"></td>
+                                    <td id="textinfo" data-win-bind="textContent: TextInfo"></td>
+                                    <td data-win-bind="textContent: CreatorName"></td>
+                                    <td data-win-bind="textContent: Veranstaltung"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                </div>
+                <div class="error-message"
+                     data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

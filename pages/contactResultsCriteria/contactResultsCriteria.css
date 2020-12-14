@@ -1,0 +1,22 @@
+﻿.topcontainer {
+    width: 100%;
+    border-bottom: 2px solid grey;
+}
+#InitPrio {
+    width: 250px !important;
+}
+#InitTyp {
+    width: 250px !important;
+}
+#InitPrioLine {
+    width: 250px !important;
+    margin-left: 50px;
+}
+
+#InitTypLine {
+    width: 250px !important;
+    margin-left: 50px;
+}
+#fullname {
+    font-size: 20px;
+}

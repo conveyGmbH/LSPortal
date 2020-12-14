@@ -1,0 +1,65 @@
+﻿.contactResultsEvents .scroll-line {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.contactResultsEvents * {
+    box-sizing: border-box;
+}
+
+.contactResultsEvents #fullname {
+    font-weight: bolder;
+}
+
+.topcontainer {
+    width: 100%;
+    border-bottom: 2px solid grey;
+}
+
+.contactResultsEvents table {
+    border-collapse: collapse;
+    width: 95%;
+    margin-left: 20px;
+    overflow: hidden;
+}
+
+.contactResultsEvents td,
+.contactResultsEvents th {
+    padding: 5px 15px;
+    text-align: justify;
+    height: 35px;
+}
+
+.contactResultsEvents table {
+    border: 1px solid grey;
+}
+
+.contactResultsEvents td {
+    border-bottom: 1px solid grey;
+    border-top: 1px solid grey;
+}
+.contactResultsEvents th {
+    border-bottom: 1px solid grey;
+}
+.contactResultsEvents .table-body tr:hover {
+        background: #f8f9fb;
+}
+
+.contactResultsEvents #counter {
+    margin-left: 25px;
+}
+
+.contactResultsEvents table,
+.contactResultsEvents tr,
+.contactResultsEvents #status {
+    border-right: 0px !important;
+}
+
+.contactResultsEvents table,
+.contactResultsEvents tr,
+.contactResultsEvents #datacheckbox {
+    border-left: 0px !important;
+}
+.contactResultsEvents #textinfo {
+    max-width: 600px;
+}

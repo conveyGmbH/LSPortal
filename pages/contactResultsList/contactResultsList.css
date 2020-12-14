@@ -21,19 +21,27 @@
     height: 35px;
 }
 
-.contactResultsList table,
-.contactResultsList th,
-.contactResultsList td {
-    border: 1px solid #000;
+.contactResultsList table {
+    border: 1px solid grey;
 }
-
-.contactResultsList .table-header {
-
+.contactResultsList td,
+.contactResultsList th {
+    border-bottom: 1px solid grey;
+    border-top: 1px solid grey;
 }
-
 .contactResultsList .table-body tr:hover {
-    background: #d8613e;
+    background: #f8f9fb;
 }
-.contactResultsList .counter {
-    margin-left: 5%;
+.contactResultsList #counter {
+    margin-left: 25px;
+}
+.contactResultsList table,
+.contactResultsList tr,
+.contactResultsList #status {
+    border-right: 0px !important;
+}
+.contactResultsList table,
+.contactResultsList tr,
+.contactResultsList #datacheckbox {
+    border-left: 0px !important;
 }

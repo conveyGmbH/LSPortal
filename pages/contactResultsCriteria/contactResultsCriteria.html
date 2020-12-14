@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="contactResultsCriteria.css" rel="stylesheet" />
+    <script type="text/javascript" src="contactResultsCriteriaService.js"></script>
+    <script type="text/javascript" src="contactResultsCriteriaController.js"></script>
+    <script type="text/javascript" src="contactResultsCriteria.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="contactResultsCriteria fragment">
+        <div id="contactResultsCriteriaController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="contentarea win-type-body">
+                    <div class="content-header">
+                        <div class="half-circle half-circle-textcolor">&nbsp;</div>
+                        <div class="content-header-line win-type-caption">
+                            <span class="id-field"></span>
+                            <span class="caption-field" data-win-res="{textContent: 'contactResultsCriteria.title'}"></span>
+                            <span class="date-field"></span>
+                        </div>
+                    </div>
+                    <div class="contentarea"
+                         data-win-bind="style.display: dataContact.KontaktVIEWID Binding.Converter.toDisplay">
+                        <div class="topcontainer">
+                            <div id="fieldlinetop" class="field_line">
+                                <div class="field_line field_line_odd">
+                                    <span id="fullname" data-win-bind="textContent: dataContact.fullName"></span><br />
+                                    <span data-win-bind="textContent: dataContact.Firmenname"></span><br />
+                                    <span data-win-bind="textContent: dataContact.Land"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div id="InitPrioLine" class="field_line field_line_odd">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'contactResultsCriteria.prio'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'contactResultsCriteria.prio'}"></span>
+                                <select id="InitPrio"
+                                        class="input_field win-dropdown"
+                                        data-win-control="WinJS.UI.Repeater"
+                                        data-win-bind="value: dataContactCriteria.INKontaktPrioID Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone">
+                                    <option data-win-bind="value: INKontaktPrioID; textContent: Title"></option>
+                                </select>
+                                <span class="input_field" data-win-bind="textContent: InitLandItem.TITLE; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                            </div>
+                            <div class="line-separator"></div>
+                            <div id="InitTypLine" class="field_line field_line_odd">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'contactResultsCriteria.typ'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'contactResultsCriteria.typ'}"></span>
+                                <select id="InitTyp"
+                                        class="input_field win-dropdown"
+                                        data-win-control="WinJS.UI.Repeater"
+                                        data-win-bind="value: dataContactCriteria.INKontaktTypID Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone">
+                                    <option data-win-bind="value: INKontaktTypID; textContent: Title"></option>
+                                </select>
+                                <span class="input_field" data-win-bind="textContent: InitLandItem.TITLE; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="error-message"
+                     data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

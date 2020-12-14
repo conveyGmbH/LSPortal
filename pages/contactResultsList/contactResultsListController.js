@@ -18,7 +18,8 @@
             Log.call(Log.l.trace, "ContactResultsList.Controller.");
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
-                dataContactHeader: getEmptyDefaultValue(ContactResultsList.KontaktReport.defaultContactHeader)
+                dataContactHeaderValue: getEmptyDefaultValue(ContactResultsList.KontaktReport.defaultContactHeader),
+                dataContactHeaderText: getEmptyDefaultValue(ContactResultsList.KontaktReport.defaultContactHeader)
             }, commandList]);
             this.nextUrl = null;
 
@@ -27,12 +28,27 @@
             var tableHeader = pageElement.querySelector(".table-header");
             var tableBody = pageElement.querySelector(".table-body");
             var contentArea = pageElement.querySelector(".contentarea");
-
+            var selectAll = pageElement.querySelector("#selectAll");
+            
             this.dispose = function () {
                 if (tableBody && tableBody.winControl) {
                     tableBody.winControl.data = null;
                 }
             }
+
+            var colorStatus = function() {
+                var statusrow = pageElement.querySelectorAll("#status");
+                for (var i = 1; i < statusrow.length; i++) {
+                    if (statusrow[i].textContent === getResourceText("contactResultsCriteria.incomplete")) {
+                        statusrow[i].style.color = "red";
+                    } else if (statusrow[i].textContent === getResourceText("contactResultsCriteria.partialcomplete")) {
+                        statusrow[i].style.color = "orange";
+                    } else {
+                        statusrow[i].style.color = "green";
+                    }
+                }
+            }
+            this.colorStatus = colorStatus;
 
             var resizableGrid = function () {
                 var row = tableHeader ? tableHeader.querySelector("tr") : null,
@@ -68,13 +84,12 @@
                 }
 
                 function setListeners(div) {
-                    var curCol, nxtCol, curColWidth, nxtColWidth;
+                    var pageX, curCol, nxtCol, curColWidth, nxtColWidth;
 
                     div.addEventListener("mousedown", function (e) {
                         curCol = e.target.parentElement;
                         nxtCol = curCol.nextElementSibling;
-                        that.cursorPos.x = e.pageX;
-                        that.cursorPos.y = e.pageY;
+                        pageX = e.pageX;
 
                         var padding = paddingDiff(curCol);
 
@@ -95,7 +110,7 @@
 
                     pageElement.addEventListener("mousemove", function (e) {
                         if (curCol) {
-                            var diffX = e.pageX - that.cursorPos.x;
+                            var diffX = e.pageX - pageX;
 
                             if (nxtCol)
                                 nxtCol.style.width = (nxtColWidth - (diffX)) + "px";
@@ -107,6 +122,7 @@
                     pageElement.addEventListener("mouseup", function (e) {
                         curCol = undefined;
                         nxtCol = undefined;
+                        pageX = undefined;
                         nxtColWidth = undefined;
                         curColWidth = undefined;
                     });
@@ -126,35 +142,108 @@
                 }
             }
             this.resizableGrid = resizableGrid;
-            
+
+            var setHeaderText = function (headervalue, headertext) {
+                var up = " ↑";
+                var down = " ↓";
+                var headervalueup = headervalue.concat(up);
+                var headervaluedown = headervalue.concat(down);
+                if (headervalue === "Name") {
+                    if (headertext === headervalueup) {
+                        that.binding.dataContactHeaderText.Name = headervaluedown;
+                    } else if (headertext === headervaluedown) {
+                        that.binding.dataContactHeaderText.Name = headervalueup;
+                    } else {
+                        that.binding.dataContactHeaderText.Name = headervaluedown;
+                    }
+                }
+                if (headervalue === "Vorname") {
+                    if (headertext === headervalue + " ↓") {
+
+                    } else if (headertext === headervalue + " ↑") {
+
+                    } else {
+
+                    }
+                }
+                if (headervalue === "Firmenname") {
+                    if (headertext === headervalue + " ↓") {
+
+                    } else if (headertext === headervalue + " ↑") {
+
+                    } else {
+
+                    }
+                }
+                if (headervalue === "EMail") {
+                    if (headertext === headervalue + " ↓") {
+
+                    } else if (headertext === headervalue + " ↑") {
+
+                    } else {
+
+                    }
+                }
+                if (headervalue === "Stadt") {
+                    if (headertext === headervalue + " ↓") {
+
+                    } else if (headertext === headervalue + " ↑") {
+
+                    } else {
+
+                    }
+                }
+                if (headervalue === "Land") {
+                    if (headertext === headervalue + " ↓") {
+
+                    } else if (headertext === headervalue + " ↑") {
+
+                    } else {
+
+                    }
+                }
+                if (headervalue === "KontaktPrio") {
+                    if (headertext === headervalue + " ↓") {
+
+                    } else if (headertext === headervalue + " ↑") {
+
+                    } else {
+
+                    }
+                }
+                if (headervalue === "KontaktTyp") {
+                    if (headertext === headervalue + " ↓") {
+
+                    } else if (headertext === headervalue + " ↑") {
+
+                    } else {
+
+                    }
+                }
+            }
+            this.setHeaderText = setHeaderText;
+
             var addHeaderRowHandlers = function () {
                 if (tableHeader) {
                     var cells = tableHeader.getElementsByTagName("th");
-                    for (var i = 0; i < cells.length; i++) {
+                    for (var i = 1; i < cells.length; i++) {
                         var cell = cells[i];
                         if (!cell.onclick) {
                             cell.onclick = function (myrow) {
                                 return function () {
-                                    var position = WinJS.Utilities.getPosition(myrow);
-                                    if (position) {
-                                        var left = position.left;
-                                        var top = position.top;
-                                        var width = position.width;
-                                        var height = position.height;
-                                        if (that.cursorPos.x >= left &&
-                                            that.cursorPos.x <= left + width - 8 &&
-                                            that.cursorPos.y >= top &&
-                                            that.cursorPos.y <= top + height) {
-                                            var restriction = ContactResultsList.KontaktReport.defaultRestriction;
-                                            var sortname = myrow.textContent;
-                                            if (restriction.OrderAttribute !== sortname) {
-                                                restriction.OrderAttribute = sortname;
-                                                restriction.OrderDesc = false;
-                                            } else {
-                                                restriction.OrderDesc = !restriction.OrderDesc;
-                                            }
-                                            that.loadData(restriction);
-                                        }
+                                    var restriction = ContactResultsList.KontaktReport.defaultRestriction;
+                                    var sortname = myrow.value;
+                                    if (restriction.OrderAttribute !== sortname) {
+                                        restriction.OrderAttribute = sortname;
+                                        restriction.OrderDesc = false;
+                                        that.loadData(restriction);
+                                        that.setHeaderText(myrow.value);
+                                        Log.call(Log.l.trace, "ContactResultsList.Controller.");
+                                    } else {
+                                        restriction.OrderDesc = !restriction.OrderDesc;
+                                        that.loadData(restriction);
+                                        that.setHeaderText(myrow.value);
+                                        Log.call(Log.l.trace, "ContactResultsList.Controller.");
                                     }
                                 };
                             }(cell);
@@ -170,7 +259,7 @@
                     for (var i = 0; i < rows.length; i++) {
                         var row = rows[i];
                         if (!row.onclick) {
-                            row.onclick = function (myrow) {
+                            row.ondblclick = function (myrow) {
                                 return function () {
                                     var id = myrow.value;
                                     AppData.setRecordId("Kontakt", id);
@@ -191,6 +280,21 @@
                         WinJS.Navigation.back(1).done();
                     }
                     Log.ret(Log.l.trace);
+                },
+                onSelectAll: function(event) {
+                    Log.call(Log.l.trace, "ContactResultsList.Controller.");
+                    var selectBoxData = pageElement.querySelectorAll(".checkbox");
+                    if (selectAll.checked) {
+                        Log.call(Log.l.trace, "ContactResultsList.Controller.");
+                        for (var i = 0; i < selectBoxData.length; i++) {
+                            selectBoxData[i].checked = true;
+                        }
+                    } else {
+                        Log.call(Log.l.trace, "ContactResultsList.Controller.");
+                        for (var i = 0; i < selectBoxData.length; i++) {
+                            selectBoxData[i].checked = false;
+                        }
+                    }
                 },
                 clickChangeUserState: function (event) {
                     Log.call(Log.l.trace, "ContactResultsList.Controller.");
@@ -260,20 +364,26 @@
                 this.addRemovableEventListener(contentArea, "scroll", this.eventHandlers.onContentScroll.bind(this));
             }
 
+            if (selectAll) {
+                this.addRemovableEventListener(selectAll, "change", this.eventHandlers.onSelectAll.bind(this));
+            }
+
             var resultConverter = function (item, index) {
                 item.index = index;
                 if (item.KontaktVIEWID === -2) {
-                    that.binding.dataContactHeader = item;
-                    that.binding.dataContactHeader.Status = "Status";
+                    that.binding.dataContactHeaderValue = item;
+                    that.binding.dataContactHeaderValue.Status = "Status";
+                    that.binding.dataContactHeaderText = item;
+                    that.binding.dataContactHeaderText.Status = "Status";
                 } else if (item.KontaktVIEWID === -1) {
                     
                 } else {
                     if (!item.Name && !item.Vorname && !item.Firmenname) {
-                        item.Status = "Unvollständig";
+                        item.Status = getResourceText("contactResultsCriteria.incomplete");
                     } else if (!item.EMail) {
-                        item.Status = "Teilweise unvollständig";
+                        item.Status = getResourceText("contactResultsCriteria.partialcomplete");
                     } else {
-                        item.Status = "Vollständig";
+                        item.Status = getResourceText("contactResultsCriteria.complete");
                     }
                     if (tableBody &&
                         tableBody.winControl &&
@@ -397,6 +507,9 @@
             }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.addBodyRowHandlers();
+            }).then(function () {
+                Log.print(Log.l.trace, "Binding wireup page complete");
+                return that.colorStatus();
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 AppBar.notifyModified = true;
