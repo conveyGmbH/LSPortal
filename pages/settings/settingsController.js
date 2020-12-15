@@ -96,6 +96,9 @@
                         case "tileBackgroundColor":
                             pOptionTypeId = 17;
                             break;
+                        case "dashboardColor":
+                            pOptionTypeId = 46;
+                            break;
                         default:
                             // defaultvalues
                     }
@@ -118,6 +121,7 @@
                                     that.createColorPicker("tileTextColor");
                                     that.createColorPicker("tileBackgroundColor");
                                     that.createColorPicker("navigationColor");
+                                    that.createColorPicker("dashboardColor");
                                 }
                             });
                         },
@@ -139,6 +143,7 @@
             this.createColorPicker("tileTextColor");
             this.createColorPicker("tileBackgroundColor");
             this.createColorPicker("navigationColor");
+            this.createColorPicker("dashboardColor");
 
             // define handlers
             this.eventHandlers = {
@@ -184,6 +189,7 @@
                                 that.createColorPicker("tileTextColor");
                                 that.createColorPicker("tileBackgroundColor");
                                 that.createColorPicker("navigationColor");
+                                that.createColorPicker("dashboardColor");
                                 AppBar.loadIcons();
                                 NavigationBar.groups = Application.navigationBarGroups;
                             });
@@ -224,6 +230,7 @@
                                     that.createColorPicker("tileTextColor");
                                     that.createColorPicker("tileBackgroundColor");
                                     that.createColorPicker("navigationColor");
+                                    that.createColorPicker("dashboardColor");
                                     AppBar.loadIcons();
                                     NavigationBar.groups = Application.navigationBarGroups;
                                 });
@@ -420,6 +427,7 @@
                             that.createColorPicker("tileTextColor");
                             that.createColorPicker("tileBackgroundColor");
                             that.createColorPicker("navigationColor");
+                            that.createColorPicker("dashboardColor");
                         });
                     }
                 } else if (property === "individualColors") {
@@ -436,6 +444,7 @@
                                 that.createColorPicker("tileTextColor");
                                 that.createColorPicker("tileBackgroundColor");
                                 that.createColorPicker("navigationColor");
+                                that.createColorPicker("dashboardColor");
                                 AppBar.loadIcons();
                                 NavigationBar.groups = Application.navigationBarGroups;
                             });

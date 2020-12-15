@@ -99,6 +99,18 @@
                                        onchange="AppBar.handleEvent('change', 'ChangeColorPicker', event)" />
                             </div>
                         </div>
+                        <div class="field_line field_line_even"
+                             data-win-bind="style.display: generalData.individualColors Binding.Converter.toDisplay">
+                            <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'settings.dashboardcolor'}"></span>
+                            <span class="label win-type-caption portrait_only_half"></span>
+                            <div class="label landscape_only"><span data-win-res="{textContent: 'settings.dashboardcolor'}"></span></div>
+                            <div class="input_group">
+                                <div id="dashboardColor_picker" class="input_small_right color-picker-parent"></div>
+                                <input id="dashboardColor" class="input_small_left win-textbox" type="text" 
+                                       data-win-bind="value: generalData.colorSettings.dashboardColor"
+                                       onchange="AppBar.handleEvent('change', 'ChangeColorPicker', event)" />
+                            </div>
+                        </div>
                         <div class="line-separator"
                              data-win-bind="style.display: generalData.individualColors Binding.Converter.toDisplay"></div>
                         <div class="field_line field_line_odd"
@@ -121,7 +133,7 @@
                             <div class="input_group">
                                 <div id="labelColor_picker" class="input_small_right color-picker-parent"></div>
                                 <input id="labelColor" class="input_small_left win-textbox" type="text" 
-                                       data-win-bind="value: generalData.colorSettings.labelColor" #
+                                       data-win-bind="value: generalData.colorSettings.labelColor" 
                                        onchange="AppBar.handleEvent('change', 'ChangeColorPicker', event)" />
                             </div>
                         </div>

@@ -285,6 +285,7 @@
     "settings.textcolor"    : "Text color",
     "settings.labelcolor"   : "Label color",
     "settings.navigationcol": "Navigation color",
+    "settings.dashboardcolor" : "Dashboard",
     "settings.backgroundcol": "Background color",
     "settings.tiletextcolor": "Start symbol color",
     "settings.tilebkgcolor" : "Start background",

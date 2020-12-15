@@ -285,6 +285,7 @@
     "settings.textcolor"    : "Couleur du texte",
     "settings.labelcolor"   : "Identificateur",
     "settings.navigationcol": "Navigation",
+    "settings.dashboardcolor" : "Dashboard",
     "settings.backgroundcol": "Fond",
     "settings.tiletextcolor": "Icône de départ",
     "settings.tilebkgcolor" : "Fond de départ",

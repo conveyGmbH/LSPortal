@@ -285,6 +285,7 @@
     "settings.textcolor"    : "Colore testo",
     "settings.labelcolor"   : "Colore etichetta",
     "settings.navigationcol": "Navigazione",
+    "settings.dashboardcolor" : "Dashboard",
     "settings.backgroundcol": "Sfondo",
     "settings.tiletextcolor": "Simboli pagina iniziale",
     "settings.tilebkgcolor" : "Sfondo pagina iniziale",

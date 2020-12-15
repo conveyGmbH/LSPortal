@@ -238,6 +238,7 @@
     "settings.textcolor"    : "Textfarbe",
     "settings.labelcolor"   : "Bezeichner",
     "settings.navigationcol": "Navigation",
+    "settings.dashboardcolor" : "Dashboard",
     "settings.backgroundcol": "Hintergrund",
     "settings.tiletextcolor": "Start Symbole",
     "settings.tilebkgcolor" : "Start Hintergrund",
