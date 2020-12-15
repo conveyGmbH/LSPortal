@@ -493,7 +493,7 @@
     "label.barcodeAdministration" : "Code barre",
     "label.eventcreation"   : "Créer un événement",
     "label.products"        : "Produits",
-    "label.localevents"     : "Créer un événement",
+    "label.localevents"     : "Mes événements",
     "label.contactRemote"   : "Contact",
     "label.questionnaireRemote" : "Quoitionnaire",
     "label.sketchRemote"    : "Notes",

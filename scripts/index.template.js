@@ -57,7 +57,7 @@
         }
     };
 
-    // static array of menu groups for the split view pane
+     // static array of menu groups for the split view pane
     Application.navigationBarGroups = [
         { id: "start", group: 1, svg: "home", disabled: true },
         { id: "eventsuccess", group: 15, svg: "tags", disabled: true, popup: true },
@@ -100,7 +100,7 @@
         //{ id: "mailingProduct", group: 4, disabled: false },
         { id: "employee", group: 5, disabled: false },
         { id: "skillentry", group: 5, disabled: false },
-		{ id: "employeeVisitorFlow", group: 5, disabled: false },
+        { id: "employeeVisitorFlow", group: 5, disabled: false },
         { id: "employeeGenPWList", group: 5, disabled: false },
         { id: "contact", group: 6, disabled: false },
         { id: "questionnaire", group: 6, disabled: false },
@@ -130,27 +130,27 @@
     ];
 
 
-     // static array of menu groups for the split view pane
+    // static array of menu groups for the split view pane
     Application.navigationBarGroups = [
         { id: "start", group: 1, svg: "home", disabled: true },
-        { id: "voucherAdministration", group: 16, svg: "Gutschein1.1", disabled: true},
-        { id: "esStaffAdministration", group: 18, svg: "id_card", disabled: true},
+        { id: "voucherAdministration", group: 16, svg: "Gutschein1.1", disabled: true },
+        { id: "esStaffAdministration", group: 18, svg: "id_card", disabled: true },
         { id: "esVoucherUsers", group: 19, svg: "voucher_contact", disabled: true },
         { id: "dashBoard", group: 19, svg: "Dashboard", disabled: true },
         { id: "masterDataGrp", group: 23, svg: "Stammdaten", disabled: true, popup: true },
         { id: "skills", group: 24, svg: "Skills", disabled: true, predecGroup: 23 },
         { id: "employeeGrp", group: 25, svg: "Benutzerkonten", disabled: true, popup: true },
         { id: "employee", group: 5, svg: "keys", disabled: true, predecGroup: 25 },
-        { id: "myEvents", group: 26, svg: "keys", disabled: true },
+        { id: "localevents", group: 12, svg: "keys", disabled: true },
         { id: "settingLeadsuccessGrp", group: 27, svg: "handshake", disabled: true, popup: true },
         { id: "events", group: 2, svg: "calendar_1", disabled: true, predecGroup: 27 },
         { id: "questionList", group: 3, svg: "question_and_answer", disabled: true, predecGroup: 27 },
+        { id: "mandatory", group: 30, svg: "PflichtFelder", disabled: true, predecGroup: 27 },
         { id: "visitorFlowGrp", group: 28, svg: "lsvFlow", disabled: true, popup: true },
         { id: "visitorFlowDashboard", group: 20, svg: "DashboardVisitorFlow", disabled: true, predecGroup: 28 },
         { id: "visitorFlowEntExt", group: 22, svg: "window_gear", disabled: true, predecGroup: 28 },
         { id: "contactsEventsGrp", group: 29, svg: "Contact_Ereignis", disabled: true, popup: true },
         { id: "contacts", group: 6, svg: "businesspeople2", disabled: true, predecGroup: 29 },
-        { id: "mandatory", group: 30, svg: "PflichtFelder", disabled: true, predecGroup: 29 },
         { id: "mailingGrp", group: 31, svg: "mailing", disabled: true, popup: true },
         { id: "mailing", group: 4, svg: "standardmail", disabled: true, predecGroup: 31 },
         { id: "mailingProduct", group: 32, svg: "Productmail", disabled: true, predecGroup: 31 },
@@ -165,10 +165,9 @@
         { id: "account", group: 39, svg: "Konto", disabled: false, predecGroup: 36 },
         { id: "support", group: 40, svg: "user_headset", disabled: true },
         { id: "administrationGrp", group: 41, svg: "Administration", disabled: true, popup: true },
-        { id: "localevents", group: 12, svg: "MandantVerwaltung", disabled: true, predecGroup: 41 },
         { id: "siteevents", group: 13, svg: "mandant", disabled: true, predecGroup: 41 },
         { id: "clientManagement", group: 14, svg: "Standpersonal", disabled: true, predecGroup: 41 },
-		{ id: "contactResultsList", group: 42, svg: "calendar_1", disabled: true, predecGroup: 29 },
+        { id: "contactResultsList", group: 42, svg: "calendar_1", disabled: true, predecGroup: 29 },
         //{ id: "resourcesAdministration", group: 17, svg: "user_headset", disabled: true },
         //{ id: "search", group: 7, svg: "magnifying_glass", disabled: true },
         //{ id: "info", group: 10, svg: "gearwheel", disabled: true }
@@ -218,8 +217,8 @@
         { id: "esVoucherUsers", group: -19, disabled: false },
         { id: "visitorFlowDashboard", group: -20, disabled: true },
         { id: "visitorFlowEntExt", group: -22, disabled: true },
-		{ id: "contactResultsList", group: -29, disabled: true },
-        { id: "contactResultsEdit", group: 43, disabled: false }, 
+        { id: "contactResultsList", group: -29, disabled: true },
+        { id: "contactResultsEdit", group: 43, disabled: false },
         { id: "contactResultsCriteria", group: 43, disabled: false },
         { id: "contactResultsQuestion", group: 43, disabled: false },
         { id: "contactResultsAttach", group: 43, disabled: false },

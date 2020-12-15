@@ -494,7 +494,7 @@
 	"label.barcodeAdministration" : "Barcode",
     "label.eventcreation"   : "Veranstaltung erstellen",
     "label.products"        : "Produkte",
-    "label.localevents"     : "Veranstaltung erstellen",
+    "label.localevents"     : "Meine Veranstaltungen",
     "label.contactRemote"   : "Kontakt",
     "label.questionnaireRemote" : "Fragebogen",
     "label.sketchRemote"    : "Anhänge",
