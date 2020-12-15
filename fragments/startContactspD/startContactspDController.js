@@ -83,7 +83,7 @@
                                     }
                                 }
                                 var seriesColors = [
-                                    Colors.tileTextColor
+                                    Colors.dashboardColor
                                 ];
                                 visitorsPerDayChart.innerHTML = "";
                                 try {

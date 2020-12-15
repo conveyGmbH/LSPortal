@@ -174,7 +174,7 @@
                                         geographyConfig: {
                                             popupOnHover: true, /*false*/
                                             highlightOnHover: true,
-                                            highlightFillColor: Colors.navigationColor,
+                                            highlightFillColor: Colors.dashboardColor,
                                             highlightBorderColor: hiliBorderColor
                                         },
                                         done: function (datamap) {

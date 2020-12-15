@@ -103,7 +103,7 @@
                                         };
                                     }
                                     var seriesColors = [
-                                        Colors.tileTextColor
+                                        Colors.dashboardColor
                                     ];
                                     that.employeeChart = $.jqplot(barChartId, [that.emplyeevalues], {
                                         title: that.employeetitle,

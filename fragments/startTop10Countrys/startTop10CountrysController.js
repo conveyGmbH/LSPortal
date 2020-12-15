@@ -181,7 +181,7 @@
                     return StartTop10Countrys.reportLand.select(function (json) {
                         Log.print(Log.l.trace, "reportLand: success!");
                         if (json && json.d && json.d.results && json.d.results.length > 0) {
-                            var color = Colors.navigationColor;
+                            var color = Colors.dashboardColor;
                             that.countryKeyData = {};
                             // store result for next use
                             var countryresult = json.d.results;

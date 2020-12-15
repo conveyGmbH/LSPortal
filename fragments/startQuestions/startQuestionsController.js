@@ -119,7 +119,7 @@
                                     }
                                 }
                                 var seriesColors = [
-                                    Colors.tileTextColor
+                                    Colors.dashboardColor
                                 ];
                                 try {
                                     answerBarChart.innerHTML = "";
