@@ -245,6 +245,8 @@
 
             var resultConverter = function (item, index) {
                 item.index = index;
+                item.buttonColor = Colors.dashboardColor;
+                item.buttonTitle = Colors.tileTextColor;
                 that.binding.questions.qbez = item.index + 1;
                 if (item.SumAntwort === null) {
                     item.SumAntwort = 0;
