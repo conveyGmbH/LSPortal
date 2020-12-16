@@ -159,7 +159,7 @@
                     if (WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done( /* Your success and error handlers */);
                     } else {
-                        Application.navigateById("start", event);
+                        Application.navigateById(Application.startPageId, event);
                     }
                     Log.ret(Log.l.trace);
                 },
@@ -341,7 +341,7 @@
                         if (childElement) {
                             var colorPicker = null;
                             var color = childElement.value || "";
-                            // HIER -> überprüfe ob Farbzahl gültig ist 
+                            // HIER -> überprüfe ob Farbzahl gültig ist
                             // hier raus und in den resultconverter
                             function isHexaColor(sNum) {
                                 return (typeof sNum === "string") && (sNum.length === 6 || sNum.length === 3)
@@ -400,7 +400,7 @@
             }
             var resultConverter = function (item, index) {
                 var property = AppData.getPropertyFromInitoptionTypeID(item);
-                
+
                 if (property && property !== "individualColors" && (!item.pageProperty) && item.LocalValue) {
                     item.colorValue = "#" + item.LocalValue;
                     if (that.binding && that.binding.generalData &&

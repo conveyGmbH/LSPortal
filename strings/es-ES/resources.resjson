@@ -400,7 +400,7 @@
     "userinfo.state"        : "Status",
     "userinfo.presence"     : "Anwesenheit",
 
-    "label.start"           : "Start",
+    "label.home"            : "Start",
     "label.contact"         : "Kontakt",
     "label.questionnaire"   : "Fragebogen",
     "label.sketch"          : "Notizen",

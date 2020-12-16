@@ -203,7 +203,7 @@
                     if (WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done( /* Your success and error handlers */);
                     } else {
-                        Application.navigateById("start", event);
+                        Application.navigateById(Application.startPageId, event);
                     }
                     Log.ret(Log.l.trace);
                 },
@@ -232,7 +232,7 @@
                     printSurface.innerHTML = "";
                 }
             },*/
-            
+
             clickChangeUserState: function (event) {
                 Log.call(Log.l.trace, "BarcodeAdministration.Controller.");
                 Application.navigateById("userinfo", event);

@@ -15,7 +15,7 @@
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             var timezone = jstz && jstz.determine();
             if (timezone) {
-                timezone.name(); 
+                timezone.name();
             }
 
             Log.call(Log.l.trace, "Info.Controller.");
@@ -92,7 +92,7 @@
                     if (WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done( /* Your success and error handlers */);
                     } else {
-                        Application.navigateById("start", event);
+                        Application.navigateById(Application.startPageId, event);
                     }
                     Log.ret(Log.l.trace);
                 },

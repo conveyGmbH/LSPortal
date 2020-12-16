@@ -460,7 +460,7 @@
     "userinfo.state"        : "State",
     "userinfo.presence"     : "Presence",
 
-    "label.start"           : "Start",
+    "label.home"            : "Start",
     "label.contact"         : "Contact",
     "label.questionnaire"   : "Questionnaire",
     "label.sketch"          : "Attachments",

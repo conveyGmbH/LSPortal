@@ -19,7 +19,7 @@
         ready: function(element, options) {
             Log.call(Log.l.trace, pageName + ".");
             // TODO: Initialize the page here.
-            NavigationBar.enablePage("start");
+            NavigationBar.enablePage("home");
             NavigationBar.disablePage("localevents");
             NavigationBar.disablePage("siteevents");
             NavigationBar.disablePage("events");

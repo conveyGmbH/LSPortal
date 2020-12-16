@@ -41,7 +41,7 @@
                     !that.binding.appSettings.odata.dbSiteId*/) {
                     startPage = "login";
                 } else {
-                    startPage = "start";
+                    startPage = Application.startPageId;
                 }
                 return startPage;
             }
@@ -100,7 +100,7 @@
                         AppData._persistentStates.hideSketch = false;
                         AppData._persistentStates.productMailOn = true;
                         AppData._persistentStates.thankMailOn = true;
-                        if (getStartPage() === "start") {
+                        if (getStartPage() === Application.startPageId) {
                             // load color settings
                             return DBInit.CR_VERANSTOPTION_ODataView.select(function (json) {
                                 // this callback will be called asynchronously
@@ -126,9 +126,9 @@
                             return WinJS.Promise.as();
                         }
                     }).then(function () {
-                        if (getStartPage() === "start") {
+                        if (getStartPage() === Application.startPageId) {
                             if (typeof Home === "object" && Home._actionsList) {
-                                Home._actionsList = null; 
+                                Home._actionsList = null;
                             }
                             return DBInit.appListSpecView.select(function(json) {
                                 // this callback will be called asynchronously

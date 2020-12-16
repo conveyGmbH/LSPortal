@@ -94,7 +94,7 @@
                             pNewLocationID: parseInt(that.binding.dataLogin.LocationID)
                         }, function (json) {
                             Log.print(Log.l.info, "call success! json=" + json);
-                            Application.navigateById("start", event);
+                            Application.navigateById(Application.startPageId, event);
                         }, function (error) {
                             Log.print(Log.l.error, "call error=" + error);
                             AppData.setErrorMsg(that.binding, error);
@@ -103,7 +103,7 @@
                     if (!that.binding.doEdit && WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done();
                     } else {
-                        Application.navigateById("start", event);
+                        Application.navigateById(Application.startPageId, event);
                     }
                     }
                     Log.ret(Log.l.trace);
@@ -127,7 +127,7 @@
                         pNewLocationID: parseInt(that.binding.dataLogin.LocationID)
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
-                        Application.navigateById("start", event);
+                        Application.navigateById("sthomeart", event);
                     }, function (error) {
                         Log.print(Log.l.error, "call error");
                         AppData.setErrorMsg(that.binding, error);
@@ -220,9 +220,9 @@
                     if (!that.binding.dataLogin.Login || !that.binding.dataLogin.Password) {
                         that.binding.dataLogin.PrivacyPolicyFlag = false;
                         that.binding.dataLogin.PrivacyPolicydisabled = false;
-                    } 
+                    }
                     if (AppBar.busy || (!that.binding.dataLogin.Login || !that.binding.dataLogin.Password || !that.binding.dataLogin.PrivacyPolicyFlag)) {
-                        NavigationBar.disablePage("start");
+                        NavigationBar.disablePage("home");
                         NavigationBar.disablePage("localevents");
                         NavigationBar.disablePage("events");
                         NavigationBar.disablePage("mailing");
@@ -234,7 +234,7 @@
                         NavigationBar.disablePage("info");
                         NavigationBar.disablePage("search");
                     } else {
-                        NavigationBar.enablePage("start");
+                        NavigationBar.enablePage("home");
                     }
                     return AppBar.busy || !that.binding.dataLogin.Login || !that.binding.dataLogin.Password || !that.binding.dataLogin.PrivacyPolicyFlag;
                 },
@@ -577,7 +577,7 @@
                     }).then(function () {
                         if (!err) {
                             if (typeof Home === "object" && Home._actionsList) {
-                                Home._actionsList = null; 
+                                Home._actionsList = null;
                             }
                             return Account.appListSpecView.select(function (json) {
                                 // this callback will be called asynchronously

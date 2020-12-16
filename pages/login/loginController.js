@@ -58,7 +58,7 @@
             this.eventHandlers = {
                 clickOk: function (event) {
                     Log.call(Log.l.trace, "Login.Controller.");
-                    Application.navigateById("start", event);
+                    Application.navigateById(Application.startPageId, event);
                     Log.ret(Log.l.trace);
                 },
                 clickAccount: function (event) {
@@ -80,7 +80,7 @@
             this.disableHandlers = {
                 clickOk: function () {
                     if (AppBar.busy || (that.binding.dataLogin.Login.length === 0 || that.binding.dataLogin.Password.length === 0 || !that.binding.isPrivacyPolicyFlag)) {
-                        NavigationBar.disablePage("start");
+                        NavigationBar.disablePage("home");
                         NavigationBar.disablePage("localevents");
                         NavigationBar.disablePage("events");
                         NavigationBar.disablePage("mailing");
@@ -92,7 +92,7 @@
                         NavigationBar.disablePage("info");
                         NavigationBar.disablePage("search");
                     } else {
-                        NavigationBar.enablePage("start");
+                        NavigationBar.enablePage("home");
                     }
                     if (!that.binding.dataLogin.Login || !that.binding.dataLogin.Password) {
                         that.binding.dataLogin.privacyPolicyFlag = false;
@@ -323,7 +323,7 @@
                 AppData.prevLogin = null;
                 AppData.prevPassword = null;
                 WinJS.Promise.timeout(0).then(function () {
-                    Application.navigateById("start");
+                    Application.navigateById(Application.startPageId);
                 });
             }
             that.processAll().then(function () {

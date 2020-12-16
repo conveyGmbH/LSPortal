@@ -35,7 +35,7 @@
                         if (WinJS.Navigation.canGoBack === true) {
                             WinJS.Navigation.back(1).done();
                         } else {
-                            Navigator.navigateById("start");
+                            Navigator.navigateById(Application.startPageId);
                         }
                     }, function(errorResponse) {
                         // error already shown
@@ -144,7 +144,7 @@
                 return ret;
             };
             this.loadData = loadData;
-            
+
             that.processAll().then(function() {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
