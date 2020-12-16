@@ -16,3 +16,6 @@
 #visitorsPerDayChart {
     margin-top: 45px;
 }
+.jqplot-target {
+    color: black !important;
+}
