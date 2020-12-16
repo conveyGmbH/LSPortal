@@ -3,6 +3,7 @@
 #logGroup .win-toggleswitch-header,
 #cameraUseGrayscale .win-toggleswitch-header,
 #replActive .win-toggleswitch-header,
-#logNoStack .win-toggleswitch-header {
+#logNoStack .win-toggleswitch-header,
+#showBackButton .win-toggleswitch-header {
     display: none;
 }

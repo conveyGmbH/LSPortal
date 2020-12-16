@@ -357,6 +357,7 @@
     "info.useAudioNote"     : "Tonaufnahme",
     "info.autoShutterTime"  : "Selbstauslöser [ms]",
     "info.turnThumbsLeft"   : "Turn thumbs left",
+    "info.showBackButton"   : "Show back button",
 
     "infodesk.actualEmployee"     : "Aktueller Mitarbeiter",
     "infodesk.employee"     : "Mitarbeiter",

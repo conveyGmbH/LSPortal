@@ -409,6 +409,7 @@
     "info.nolicence"        : "L'accès suivant est déjà utilisé sur un ou plusieurs appareils. Seulement le dernier périphérique connecté peut fonctionner :",
     "info.nolicenceemployee"        : "L'accès suivant est déjà utilisé sur un ou plusieurs appareils. Seulement le dernier périphérique connecté peut fonctionner!",
     "info.turnThumbsLeft"   : "Tourner l'aperçu à gauche",
+    "info.showBackButton"   : "Bouton Retour en arrière",
 
     "infodesk.actualEmployee"     : "Personnel actuel",
     "infodesk.employee"     : "Personnel",

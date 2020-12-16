@@ -409,6 +409,7 @@
     "info.nolicence"        : "Il seguente utente é stato giá utilizzato su piú di un telefono. Solo l´ultimo su cui é stato utilizzato funzionerá :",
     "info.nolicenceemployee"        : "Il seguente utente é stato giá utilizzato su piú di un telefono. Solo l´ultimo su cui é stato utilizzato funzionerá!",
     "info.turnThumbsLeft"   : "Girare l'anteprima a sinistra",
+    "info.showBackButton"   : "Mostra pulsante indietro",
 
     "infodesk.actualEmployee"     : "Employee attuale",
     "infodesk.employee"     : "Employee",
