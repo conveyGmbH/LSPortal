@@ -486,6 +486,8 @@
                 }).then(function () {
                     return WinJS.Promise.timeout(100);
                 }).then(function () {
+                    return that.colorStatus();
+                }).then(function () {
                     that.eventHandlers.onItemInserted();
                     AppBar.notifyModified = true;
                     return WinJS.Promise.as();
