@@ -427,6 +427,16 @@
                         }
                     }
                     break;
+                case 46:
+                    if (AppData._persistentStates.individualColors) {
+                        item.colorPickerId = "dashboardColor";
+                        property = "dashboardColor";
+                        if (!item.LocalValue && AppData.persistentStatesDefaults.colorSettings) {
+                            color = AppData.persistentStatesDefaults.colorSettings[property];
+                            item.LocalValue = color && color.replace("#", "");
+                        }
+                    }
+                    break;
                 case 14:
                     if (AppData._persistentStates.individualColors) {
                         item.colorPickerId = "textColor";

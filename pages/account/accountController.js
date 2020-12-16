@@ -369,6 +369,7 @@
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
+                    if (that.binding.dataLogin.Login && that.binding.dataLogin.Password) {
                     return Account.GlobalUserServersVIEW.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
@@ -387,12 +388,15 @@
                         } else {
                             Log.print(Log.l.trace, "GlobalUserServersVIEW: no data found!");
                         }
-                    }, function (errorResponse) {
+                            }, function(errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         Log.print(Log.l.error, "Account.GlobalUserServersVIEW: error!");
                         AppData.setErrorMsg(that.binding, errorResponse);
-                    }, null);
+                            }, null);
+                    } else {
+                        return WinJS.Promise.as();
+                    }
                 });
                 Log.ret(Log.l.trace);
                 return ret;
