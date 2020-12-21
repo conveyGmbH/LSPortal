@@ -127,7 +127,7 @@
                         pNewLocationID: parseInt(that.binding.dataLogin.LocationID)
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
-                        Application.navigateById("sthomeart", event);
+                        Application.navigateById("home", event);
                     }, function (error) {
                         Log.print(Log.l.error, "call error");
                         AppData.setErrorMsg(that.binding, error);
