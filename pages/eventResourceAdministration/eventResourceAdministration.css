@@ -1,0 +1,78 @@
+﻿.headercircle {
+    float: left;
+    margin-top: 5px;
+    margin-left: 10px;
+
+}
+.headercircletext {
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    padding: 8px;
+
+    background: #fff;
+    border: 2px solid #666;
+    color: #666;
+    text-align: center;
+
+    font: 32px Arial, sans-serif;
+}
+.headertitletextcontainer {
+    float: left;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+.mailingeditboxhead {
+    width: 90%;
+    min-height: 100px;
+    margin-left: 5%;
+    margin-right: 5%;
+    border: 1px solid darkgray;
+    margin-top: 2px;
+}
+.mailingeditboxbottom {
+    width: 90%;
+    min-height: 100px;
+    margin-left: 5%;
+    border: 1px solid darkgray;
+    margin-top: 10px;
+    /*margin-bottom: 10px;*/
+}
+/**
+    reportingList fragment styles
+*/
+#reportingList.listview {
+    width: 100%;
+    height: 80px;
+}
+
+#listQuestionList {
+    height: auto;
+}
+
+.reporting-button {
+    width: 315px; /*300px;*/
+    text-align: center;
+    /*background-color: #d86141;*/
+}
+
+.button-container {
+    /*height: 150px;*/
+}
+
+.win-nonselectable .reporting-button {
+    background-color: rgba(128,128,128,0.4) !important;
+}
+
+.action-label-container {
+    margin-top: 4px;
+    width: 100%;
+    text-align: center;
+}
+#listQuestionList .win-container {
+    /*width: 160px;*/
+    height: 100%;
+}
+/*.win-listview > .win-horizontal .win-container {
+    margin: 0px;
+}*/

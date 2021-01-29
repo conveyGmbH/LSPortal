@@ -535,6 +535,7 @@
     "label.contactResultsAttach" : "Anhänge",
     "label.contactResultsQuestion" : "Fragebogen",
     "label.contactResultsEvents" : "Ereignisse",
+	"label.eventResourceAdministration" : "Event Text Administration",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Abbrechen",
@@ -1133,5 +1134,7 @@
     "contactResultsEvents.ereignistyp"			: "Ereignis-Typ",
     "contactResultsEvents.ereignisdetails"			: "Ereignis-Details",
     "contactResultsEvents.creator"			: "Erfasser",
-    "contactResultsEvents.event"			: "Veranstaltung"
+    "contactResultsEvents.event"			: "Veranstaltung",
+
+	"eventResourceAdministration.eventTitleholder"  : "Geben Sie hier ein"
 }		

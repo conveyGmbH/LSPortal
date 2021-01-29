@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="eventsList.css" rel="stylesheet" />
+    <script type="text/javascript" src="eventsListService.js"></script>
+    <script type="text/javascript" src="eventsListController.js"></script>
+    <script type="text/javascript" src="eventsList.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="eventsList fragment">
+        <div id="localeventsController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="contentarea win-type-body">
+                    <div class="content-header">
+                        <div class="win-type-subtitle master-list-header">
+                            <span data-win-res="{textContent: 'localevents.title'}"></span>
+                        </div>
+                    </div>
+                    <div class="headerFooterPlaceholder">
+                        <div class="list-header">
+                            <div class="row-separator"></div>
+                            <div class="list-landscape-only">
+                                <div class="localEvents-big win-type-ellipsis" data-win-res="{textContent: 'localevents.event'}"></div>
+                                <div class="localEvents-big win-type-ellipsis" data-win-res="{textContent: 'localevents.begin'}"></div>
+                                <div class="localEvents-big win-type-ellipsis" data-win-res="{textContent: 'localevents.end'}"></div>
+                            </div>
+                            <div class="row-separator"></div>
+                        </div>
+                    </div>
+                    <div class="localevents-template"
+                         data-win-control="WinJS.Binding.Template" style="display: none">
+                        <div class="list-landscape-only">
+                            <div class="row-bkg-gray"
+                                 data-win-bind="style.display: index Binding.Converter.oddToDisplay"></div>
+                            <div class="localEvents-big win-type-ellipsis"
+                                 data-win-bind="textContent: Name"></div>
+                            <div class="localEvents-big win-type-ellipsis"
+                                 data-win-bind="textContent: Startdatum"></div>
+                            <div class="localEvents-big win-type-ellipsis"
+                                 data-win-bind="textContent: Enddatum"></div>
+                        </div>
+                        <div class="list-portrait-only">
+                            <div class="row-separator"></div>
+                            <div class="list-div-left">
+                                <div class="list-symbol-ID">
+                                    <div id="drop_down_list" class="action-image"></div>
+                                </div>
+                                <div class="list-compressed">
+                                    <!--list-localeventsList-->
+                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
+                                          data-win-bind="textContent: Name"></span>
+                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
+                                          data-win-bind="textContent: Startdatum"></span>
+                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
+                                          data-win-bind="textContent: Enddatum"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="headerFooterPlaceholder">
+                        <div class="list-footer">
+                            <div class="status">
+                                <progress class="win-progress-bar progress"></progress>
+                                <div class="counter">
+                                    <span data-win-res="{textContent: 'mailingList.count'}"></span><span>: </span><span data-win-bind="textContent: count"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="localevents"
+                         class="listview win-selectionstylefilled"
+                         data-win-control="WinJS.UI.ListView"
+                         data-win-options="{
+                                header : select('.list-header'),
+                                itemTemplate: select('.localevents-template'),
+                                footer: select('.list-footer')
+                         }">
+                    </div>
+                </div>
+                <div class="error-message"
+                     data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>
