@@ -27,7 +27,7 @@
                                 </button>
                             </div>
                         </div>
-                        <div id="reportingList"
+                        <div id="dokVerwendungList"
                              class="listview win-selectionstylefilled"
                              data-win-control="WinJS.UI.ListView"
                              data-win-options="{
@@ -36,7 +36,7 @@
                          }">
                         </div>
                     </div>
-                    <div class="questionList-multi-template"
+                    <div class="langMandantDokument-template"
                          data-win-control="WinJS.Binding.Template" style="display: none">
                         <!--<div class="questionnaire-content">-->
                             <div class="mailingeditboxbottom" name="Title" data-win-bind="style.display: LabelTitle Binding.Converter.toDisplay">
@@ -48,7 +48,7 @@
                         </div>
                         </div>
                             <div class="mailingeditboxbottom" name="Description" data-win-bind="style.display: LabelDescription Binding.Converter.toDisplay">
-                                <div class="field_line field_line_even">
+                            <div class="field_line field_line_odd">
                                     <span id="headertitletext" class="headertitletext" data-win-bind="textContent: NameDescription"></span><br />
                                     <input class="input_field win-textbox" type="text" data-win-bind="value: Description" data-win-res="{placeholder: 'eventResourceAdministration.eventTitleholder'}"/>
                                     <span class="label win-type-caption portrait_only" data-win-bind="textContent: LabelDescription"></span>
@@ -65,7 +65,7 @@
                         </div>
                             </div>
                             <div class="mailingeditboxbottom" name="SubTitle" data-win-bind="style.display: LabelSubTitle Binding.Converter.toDisplay">
-                                <div class="field_line field_line_even">
+                            <div class="field_line field_line_odd">
                                     <span id="headertitletext" class="headertitletext" data-win-bind="textContent: NameSubTitle"></span><br />
                                     <input class="input_field win-textbox" type="text" data-win-bind="value: SubTitle" data-win-res="{placeholder: 'eventResourceAdministration.eventTitleholder'}"/>
                                     <span class="label win-type-caption portrait_only" data-win-bind="textContent: LabelSubTitle"></span>
@@ -82,7 +82,7 @@
                                 </div>
                             </div>
                             <div class="mailingeditboxbottom" name="Body" data-win-bind="style.display: LabelBody Binding.Converter.toDisplay">
-                                <div class="field_line field_line_even">
+                            <div class="field_line field_line_odd">
                                     <span id="headertitletext" class="headertitletext" data-win-bind="textContent: NameBody"></span><br />
                                     <input class="input_field win-textbox" type="text" data-win-bind="value: Body" data-win-res="{placeholder: 'eventResourceAdministration.eventTitleholder'}"/>
                                     <span class="label win-type-caption portrait_only" data-win-bind="textContent: LabelBody"></span>
@@ -91,12 +91,12 @@
                         </div>
                         <!--</div>-->
                     </div>
-                    <div id="listQuestionList"
+                    <div id="listLangMandantDokumentList"
                          class="listview"
                          data-win-control="WinJS.UI.ListView"
                          data-win-options="{
                              layout : { type: WinJS.UI.ListLayout },
-                             itemTemplate: select('.questionList-multi-template')
+                             itemTemplate: select('.langMandantDokument-template')
                          }">
                     </div>
                     <div class="error-message"

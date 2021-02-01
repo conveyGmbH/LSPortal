@@ -32,8 +32,9 @@
 
             var that = this;
 
-            var listView = pageElement.querySelector("#reportingList.listview");
-            var listQuestionList = pageElement.querySelector("#listQuestionList.listview");
+            var dokVerwendungList = pageElement.querySelector("#dokVerwendungList.listview");
+
+            var listLangMandantDokumentList = pageElement.querySelector("#listLangMandantDokumentList.listview");
 
             var singleRatingTemplate = null, multiRatingTemplate = null, comboTemplate = null, singleTemplate = null, multiTemplate = null;
             // Conditional renderer that chooses between templates
@@ -106,9 +107,9 @@
                                     //that.resultConverter(item, index);
                                     that.reportingItem.push(item);
                                 });
-                                if (listView && listView.winControl) {
+                                if (dokVerwendungList && dokVerwendungList.winControl) {
                                     // add ListView dataSource
-                                    listView.winControl.itemDataSource = that.reportingItem.dataSource;
+                                    dokVerwendungList.winControl.itemDataSource = that.reportingItem.dataSource;
                                 }
                                 Log.print(Log.l.trace, "Data loaded");
                             }
@@ -135,9 +136,8 @@
                             } else {
                                 that.eventResources = new WinJS.Binding.List([]);
                             }
-                            if (listQuestionList && listQuestionList.winControl) {
-                                // add ListView dataSource
-                                listQuestionList.winControl.itemDataSource = that.eventResources.dataSource;
+                            if (listLangMandantDokumentList && listLangMandantDokumentList.winControl) {
+                                listLangMandantDokumentList.winControl.itemDataSource = that.eventResources.dataSource;
                             }
                         }, function (errorResponse) {
                             // called asynchronously if an error occurs
@@ -160,8 +160,51 @@
 
             var saveData = function (complete, error) {
                 Log.call(Log.l.trace, "EventResourceAdministration.Controller.");
+                var ret = null;
+                AppData.setErrorMsg(that.binding);
+                // standard call via modify
+                var recordId = that.prevRecId;
+                if (!recordId) {
+                    // called via canUnload
+                    recordId = that.curRecId;
+                }
+                that.prevRecId = 0;
+                if (recordId) {
+                    var curScope = that.scopeFromRecordId(recordId);
+                    if (curScope && curScope.item) {
+                        var newRecord = that.getFieldEntries(curScope.index, curScope.item);
+                        if (that.mergeRecord(curScope.item, newRecord) || AppBar.modified) {
+                            Log.print(Log.l.trace, "save changes of recordId:" + recordId);
+                            ret = EventResourceAdministration.LangMandantDokumentVIEW.update(function (response) {
+                                Log.print(Log.l.info, "questionListView update: success!");
+                                if (that.eventResources) {
+                                    that.resultConverter(curScope.item, curScope.index);
+                                    that.eventResources.setAt(curScope.index, curScope.item);
+                                }
+                                //AppData.getUserData();
+                                AppBar.modified = false;
+                                // called asynchronously if ok
+                                if (typeof complete === "function") {
+                                    complete(response);
+                                }
+                            }, function (errorResponse) {
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                                if (typeof error === "function") {
+                                    error(errorResponse);
+                                }
+                            }, recordId, curScope.item);
+                        } else {
+                            Log.print(Log.l.trace, "no changes in recordId:" + recordId);
+                        }
+                    }
+                }
+                if (!ret) {
+                    ret = new WinJS.Promise.as().then(function () {
                 complete({});
-                Log.ret(Log.l.trace);
+                    });
+                }
+                Log.ret(Log.l.trace, ret);
+                return ret;
             };
             this.saveData = saveData;
 
@@ -235,8 +278,8 @@
                 },
                 onSelectionChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "ContactList.Controller.");
-                    if (listView && listView.winControl) {
-                        var listControl = listView.winControl;
+                    if (dokVerwendungList && dokVerwendungList.winControl) {
+                        var listControl = dokVerwendungList.winControl;
                         if (listControl.selection) {
                             var selectionCount = listControl.selection.count();
                             if (selectionCount === 1) {
@@ -321,35 +364,35 @@
                 },
                 onLoadingStateChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "ContactList.Controller.");
-                    if (listView && listView.winControl) {
-                        Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
+                    if (dokVerwendungList && dokVerwendungList.winControl) {
+                        Log.print(Log.l.trace, "loadingState=" + dokVerwendungList.winControl.loadingState);
                         // single list selection
-                        if (listView.winControl.selectionMode !== WinJS.UI.SelectionMode.single) {
-                            listView.winControl.selectionMode = WinJS.UI.SelectionMode.single;
+                        if (dokVerwendungList.winControl.selectionMode !== WinJS.UI.SelectionMode.single) {
+                            dokVerwendungList.winControl.selectionMode = WinJS.UI.SelectionMode.single;
                         }
                         // direct selection on each tap
-                        if (listView.winControl.tapBehavior !== WinJS.UI.TapBehavior.directSelect) {
-                            listView.winControl.tapBehavior = WinJS.UI.TapBehavior.directSelect;
+                        if (dokVerwendungList.winControl.tapBehavior !== WinJS.UI.TapBehavior.directSelect) {
+                            dokVerwendungList.winControl.tapBehavior = WinJS.UI.TapBehavior.directSelect;
                         }
                         // Double the size of the buffers on both sides
                         if (!maxLeadingPages) {
-                            maxLeadingPages = listView.winControl.maxLeadingPages * 4;
-                            listView.winControl.maxLeadingPages = maxLeadingPages;
+                            maxLeadingPages = dokVerwendungList.winControl.maxLeadingPages * 4;
+                            dokVerwendungList.winControl.maxLeadingPages = maxLeadingPages;
                         }
                         if (!maxTrailingPages) {
-                            maxTrailingPages = listView.winControl.maxTrailingPages * 4;
-                            listView.winControl.maxTrailingPages = maxTrailingPages;
+                            maxTrailingPages = dokVerwendungList.winControl.maxTrailingPages * 4;
+                            dokVerwendungList.winControl.maxTrailingPages = maxTrailingPages;
                         }
-                        if (listView.winControl.loadingState === "itemsLoading") {
+                        if (dokVerwendungList.winControl.loadingState === "itemsLoading") {
                             if (!layout) {
                                 layout = Application.ContactListLayout.ContactsLayout;
-                                listView.winControl.layout = { type: layout };
+                                dokVerwendungList.winControl.layout = { type: layout };
                             }
-                        } else if (listView.winControl.loadingState === "itemsLoaded") {
-                            var indexOfFirstVisible = listView.winControl.indexOfFirstVisible;
-                            var indexOfLastVisible = listView.winControl.indexOfLastVisible;
+                        } else if (dokVerwendungList.winControl.loadingState === "itemsLoaded") {
+                            var indexOfFirstVisible = dokVerwendungList.winControl.indexOfFirstVisible;
+                            var indexOfLastVisible = dokVerwendungList.winControl.indexOfLastVisible;
                             for (var i = indexOfFirstVisible; i <= indexOfLastVisible; i++) {
-                                var element = listView.winControl.elementFromIndex(i);
+                                var element = dokVerwendungList.winControl.elementFromIndex(i);
                                 if (element) {
                                     var img = element.querySelector(".list-compressed-doc");
                                     if (img && img.src) {
@@ -357,14 +400,14 @@
                                     }
                                 }
                             }
-                        } else if (listView.winControl.loadingState === "complete") {
+                        } else if (dokVerwendungList.winControl.loadingState === "complete") {
                             // load SVG images
-                            Colors.loadSVGImageElements(listView, "action-image-right", 40, Colors.textColor, "name", null, {
+                            Colors.loadSVGImageElements(dokVerwendungList, "action-image-right", 40, Colors.textColor, "name", null, {
                                 "barcode-qr": { useStrokeColor: false }
                             });
                             if (that.loading) {
-                                progress = listView.querySelector(".list-footer .progress");
-                                counter = listView.querySelector(".list-footer .counter");
+                                progress = dokVerwendungList.querySelector(".list-footer .progress");
+                                counter = dokVerwendungList.querySelector(".list-footer .counter");
                                 if (progress && progress.style) {
                                     progress.style.display = "none";
                                 }
@@ -379,10 +422,10 @@
                 },
                 onHeaderVisibilityChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "ContactList.Controller.");
-                    if (eventInfo && eventInfo.detail && listView) {
+                    if (eventInfo && eventInfo.detail && dokVerwendungList) {
                         var visible = eventInfo.detail.visible;
                         if (visible) {
-                            var contentHeader = listView.querySelector(".content-header");
+                            var contentHeader = dokVerwendungList.querySelector(".content-header");
                             if (contentHeader) {
                                 var halfCircle = contentHeader.querySelector(".half-circle");
                                 if (halfCircle && halfCircle.style) {
@@ -398,9 +441,9 @@
                 },
                 onFooterVisibilityChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "ContactList.Controller.");
-                    if (listView) {
-                        progress = listView.querySelector(".list-footer .progress");
-                        counter = listView.querySelector(".list-footer .counter");
+                    if (dokVerwendungList) {
+                        progress = dokVerwendungList.querySelector(".list-footer .progress");
+                        counter = dokVerwendungList.querySelector(".list-footer .counter");
                         var visible = eventInfo.detail.visible;
 
                         if (visible && that.contacts && that.nextUrl) {
@@ -426,8 +469,8 @@
                 }
             }
 
-            if (listQuestionList) {
-                this.addRemovableEventListener(listQuestionList, "iteminvoked", this.eventHandlers.onItemInvoked.bind(this));
+            if (listLangMandantDokumentList) {
+                this.addRemovableEventListener(listLangMandantDokumentList, "iteminvoked", this.eventHandlers.onItemInvoked.bind(this));
             }
             AppData.setErrorMsg(this.binding);
 
