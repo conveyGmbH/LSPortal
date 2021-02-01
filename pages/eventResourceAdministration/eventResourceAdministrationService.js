@@ -17,15 +17,27 @@
         },
         LGNTINITDokVerwendungView: {
             select: function (complete, error) {
-                Log.call(Log.l.trace, "appInfoSpecView.");
+                Log.call(Log.l.trace, "EventResourceAdministration.LGNTINITDokVerwendungView.");
                 var ret = EventResourceAdministration._LGNTINITDokVerwendungView.select(complete, error);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getResults: function () {
+                Log.call(Log.l.trace, "EventResourceAdministration.LGNTINITDokVerwendungView.");
+                var ret = EventResourceAdministration._LGNTINITDokVerwendungView.results;
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getMap: function () {
+                Log.call(Log.l.trace, "EventResourceAdministration.LGNTINITDokVerwendungView.");
+                var ret = EventResourceAdministration._LGNTINITDokVerwendungView.map;
                 Log.ret(Log.l.trace);
                 return ret;
             }
         },
         _LangMandantDokumentVIEW: {
             get: function () {
-                return AppData.getLgntInit("LangMandantDokument");
+                return AppData.getFormatView("LangMandantDokument", 0);
             }
         },
         _LangMandantDokumentVIEWFormat: {
@@ -35,13 +47,13 @@
         },
         LangMandantDokumentVIEW: {
             select: function (complete, error) {
-                Log.call(Log.l.trace, "appInfoSpecView.");
+                Log.call(Log.l.trace, "EventResourceAdministration.LangMandantDokumentVIEW.");
                 var ret = EventResourceAdministration._LangMandantDokumentVIEW.select(complete, error);
                 Log.ret(Log.l.trace);
                 return ret;
             },
             update: function (complete, error, recordId, viewResponse) {
-                Log.call(Log.l.trace, "contactView.");
+                Log.call(Log.l.trace, "EventResourceAdministration.LangMandantDokumentVIEW.");
                 var ret = EventResourceAdministration._LangMandantDokumentVIEW.update(complete, error, recordId, viewResponse);
                 Log.ret(Log.l.trace);
                 return ret;
@@ -49,7 +61,7 @@
         },
         LangMandantDokumentVIEWFormat: {
             select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "appInfoSpecView.");
+                Log.call(Log.l.trace, "EventResourceAdministration.LangMandantDokumentVIEW.");
                 var ret = EventResourceAdministration._LangMandantDokumentVIEWFormat.select(complete, error, restriction, {
                     ordered: true,
                     orderAttribute: "Sortierung",

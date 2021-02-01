@@ -8,85 +8,81 @@
     <script type="text/javascript" src="eventResourceAdministration.js"></script>
 </head>
 <body class="win-type-body">
-    <div class="settings fragment">
+    <div class="eventResourceAdministration fragment">
         <div id="eventResourceAdministrationController" class="data-container">
             <section aria-label="Main content" role="main" class="animationElement">
                 <div class="contentarea win-type-body">
-                    <div class="header-separator"></div>
-                    <div class="content-header">
-                        <div class="reportingList-template"
-                             data-win-control="WinJS.Binding.Template" style="display: none">
-                            <div class="button-container win-itemscontainer">
-                                <!-- win-surface win-itemscontainer titlearea-bkg-->
-                                <button class="reporting-button"
-                                        onclick="AppBar.handleEvent('click', 'clickChangeDokVerwendung', event)"
-                                        data-win-bind="value: INITDokVerwendungID">
-                                    <div class="action-label-container">
-                                        <span data-win-bind="textContent: TITLE"></span>
-                                    </div>
-                                </button>
+                    <div class="textselection-navigationbar-template"
+                         data-win-control="WinJS.Binding.Template" style="display: none">
+                        <div class="navigationbar-item navigationbar-horizontal-item">
+                            <div class="navigationbar-text navigationbar-horizontal-text">
+                                <span class="navigationbar-inner-text"
+                                      data-win-bind="textContent: TITLE"></span>
                             </div>
                         </div>
+                    </div>
+                    <div class="navigationbar-container navigationbar-container-horizontal">
                         <div id="dokVerwendungList"
-                             class="listview win-selectionstylefilled"
+                             class="win-selectionstylefilled listview"
                              data-win-control="WinJS.UI.ListView"
                              data-win-options="{
-                             itemTemplate: select('.reportingList-template'),
-                             layout: {type: WinJS.UI.GridLayout}
-                         }">
-                        </div>
+                                     itemTemplate: select('.textselection-navigationbar-template'),
+                                     selectionMode: WinJS.UI.SelectionMode.single,
+                                     tapBehavior: WinJS.UI.TapBehavior.directSelect,
+                                     layout: {type: WinJS.UI.GridLayout}
+                                 }"></div>
                     </div>
                     <div class="langMandantDokument-template"
                          data-win-control="WinJS.Binding.Template" style="display: none">
                         <!--<div class="questionnaire-content">-->
-                            <div class="mailingeditboxbottom" name="Title" data-win-bind="style.display: LabelTitle Binding.Converter.toDisplay">
-                                <div class="field_line field_line_odd">
-                                    <span id="headertitletext" class="headertitletext" data-win-bind="textContent: NameTitle"></span><br />
-                                    <input class="input_field win-textbox" type="text" data-win-bind="value: Title" data-win-res="{placeholder: 'eventResourceAdministration.eventTitleholder'}"/>
-                                    <span class="label win-type-caption portrait_only" data-win-bind="textContent: LabelTitle"></span>
-                                    <span class="label landscape_only" data-win-bind="textContent: LabelTitle"></span>
-                        </div>
-                        </div>
-                            <div class="mailingeditboxbottom" name="Description" data-win-bind="style.display: LabelDescription Binding.Converter.toDisplay">
+                        <div class="mailingeditboxbottom" name="Title" data-win-bind="style.display: LabelTitle Binding.Converter.toDisplay">
                             <div class="field_line field_line_odd">
-                                    <span id="headertitletext" class="headertitletext" data-win-bind="textContent: NameDescription"></span><br />
-                                    <input class="input_field win-textbox" type="text" data-win-bind="value: Description" data-win-res="{placeholder: 'eventResourceAdministration.eventTitleholder'}"/>
-                                    <span class="label win-type-caption portrait_only" data-win-bind="textContent: LabelDescription"></span>
-                                    <span class="label landscape_only" data-win-bind="textContent: LabelDescription"></span>
+                                <span id="headertitletext" class="headertitletext" data-win-bind="textContent: NameTitle"></span><br />
+                                <input class="input_field win-textbox" type="text" data-win-bind="value: Title" data-win-res="{placeholder: 'eventResourceAdministration.eventTitleholder'}" />
+                                <span class="label win-type-caption portrait_only" data-win-bind="textContent: LabelTitle"></span>
+                                <span class="label landscape_only" data-win-bind="textContent: LabelTitle"></span>
+                            </div>
                         </div>
-                    </div>
-                            <div class="field-separator"></div>
-                            <div class="mailingeditboxbottom" name="MainTitle" data-win-bind="style.display: LabelMainTitle Binding.Converter.toDisplay">
-                        <div class="field_line field_line_odd">
-                                    <span id="headertitletext" class="headertitletext" data-win-bind="textContent: NameMainTitle"></span><br />
-                                    <input class="input_field win-textbox" type="text" data-win-bind="value: MainTitle" data-win-res="{placeholder: 'eventResourceAdministration.eventTitleholder'}"/>
-                                    <span class="label win-type-caption portrait_only" data-win-bind="textContent: LabelMainTitle"></span>
-                                    <span class="label landscape_only" data-win-bind="textContent: LabelMainTitle"></span>
+                        <div class="mailingeditboxbottom" name="Description" data-win-bind="style.display: LabelDescription Binding.Converter.toDisplay">
+                            <div class="field_line field_line_odd">
+                                <span id="headertitletext" class="headertitletext" data-win-bind="textContent: NameDescription"></span><br />
+                                <input class="input_field win-textbox" type="text" data-win-bind="value: Description" data-win-res="{placeholder: 'eventResourceAdministration.eventTitleholder'}" />
+                                <span class="label win-type-caption portrait_only" data-win-bind="textContent: LabelDescription"></span>
+                                <span class="label landscape_only" data-win-bind="textContent: LabelDescription"></span>
+                            </div>
                         </div>
-                            </div>
-                            <div class="mailingeditboxbottom" name="SubTitle" data-win-bind="style.display: LabelSubTitle Binding.Converter.toDisplay">
+                        <div class="field-separator"></div>
+                        <div class="mailingeditboxbottom" name="MainTitle" data-win-bind="style.display: LabelMainTitle Binding.Converter.toDisplay">
                             <div class="field_line field_line_odd">
-                                    <span id="headertitletext" class="headertitletext" data-win-bind="textContent: NameSubTitle"></span><br />
-                                    <input class="input_field win-textbox" type="text" data-win-bind="value: SubTitle" data-win-res="{placeholder: 'eventResourceAdministration.eventTitleholder'}"/>
-                                    <span class="label win-type-caption portrait_only" data-win-bind="textContent: LabelSubTitle"></span>
-                                    <span class="label landscape_only" data-win-bind="textContent: LabelSubTitle"></span>
+                                <span id="headertitletext" class="headertitletext" data-win-bind="textContent: NameMainTitle"></span><br />
+                                <input class="input_field win-textbox" type="text" data-win-bind="value: MainTitle" data-win-res="{placeholder: 'eventResourceAdministration.eventTitleholder'}" />
+                                <span class="label win-type-caption portrait_only" data-win-bind="textContent: LabelMainTitle"></span>
+                                <span class="label landscape_only" data-win-bind="textContent: LabelMainTitle"></span>
                             </div>
-                            </div>
-                            <div class="field-separator"></div>
-                            <div class="mailingeditboxbottom" name="Summary" data-win-bind="style.display: LabelSummary Binding.Converter.toDisplay">
-                                <div class="field_line field_line_odd">
-                                    <span id="headertitletext" class="headertitletext" data-win-bind="textContent: NameSummary"></span><br />
-                                    <input class="input_field win-textbox" type="text" data-win-bind="value: Summary" data-win-res="{placeholder: 'eventResourceAdministration.eventTitleholder'}"/>
-                                    <span class="label win-type-caption portrait_only" data-win-bind="textContent: LabelSummary"></span>
-                                    <span class="label landscape_only" data-win-bind="textContent: LabelSummary"></span>
-                                </div>
-                            </div>
-                            <div class="mailingeditboxbottom" name="Body" data-win-bind="style.display: LabelBody Binding.Converter.toDisplay">
+                        </div>
+                        <div class="mailingeditboxbottom" name="SubTitle" data-win-bind="style.display: LabelSubTitle Binding.Converter.toDisplay">
                             <div class="field_line field_line_odd">
-                                    <span id="headertitletext" class="headertitletext" data-win-bind="textContent: NameBody"></span><br />
-                                    <input class="input_field win-textbox" type="text" data-win-bind="value: Body" data-win-res="{placeholder: 'eventResourceAdministration.eventTitleholder'}"/>
-                                    <span class="label win-type-caption portrait_only" data-win-bind="textContent: LabelBody"></span>
-                                    <span class="label landscape_only" data-win-bind="textContent: LabelBody"></span>
+                                <span id="headertitletext" class="headertitletext" data-win-bind="textContent: NameSubTitle"></span><br />
+                                <input class="input_field win-textbox" type="text" data-win-bind="value: SubTitle" data-win-res="{placeholder: 'eventResourceAdministration.eventTitleholder'}" />
+                                <span class="label win-type-caption portrait_only" data-win-bind="textContent: LabelSubTitle"></span>
+                                <span class="label landscape_only" data-win-bind="textContent: LabelSubTitle"></span>
+                            </div>
+                        </div>
+                        <div class="field-separator"></div>
+                        <div class="mailingeditboxbottom" name="Summary" data-win-bind="style.display: LabelSummary Binding.Converter.toDisplay">
+                            <div class="field_line field_line_odd">
+                                <span id="headertitletext" class="headertitletext" data-win-bind="textContent: NameSummary"></span><br />
+                                <input class="input_field win-textbox" type="text" data-win-bind="value: Summary" data-win-res="{placeholder: 'eventResourceAdministration.eventTitleholder'}" />
+                                <span class="label win-type-caption portrait_only" data-win-bind="textContent: LabelSummary"></span>
+                                <span class="label landscape_only" data-win-bind="textContent: LabelSummary"></span>
+                            </div>
+                        </div>
+                        <div class="mailingeditboxbottom" name="Body" data-win-bind="style.display: LabelBody Binding.Converter.toDisplay">
+                            <div class="field_line field_line_odd">
+                                <span id="headertitletext" class="headertitletext" data-win-bind="textContent: NameBody"></span><br />
+                                <input class="input_field win-textbox" type="text" data-win-bind="value: Body" data-win-res="{placeholder: 'eventResourceAdministration.eventTitleholder'}" />
+                                <span class="label win-type-caption portrait_only" data-win-bind="textContent: LabelBody"></span>
+                                <span class="label landscape_only" data-win-bind="textContent: LabelBody"></span>
                             </div>
                         </div>
                         <!--</div>-->
