@@ -135,6 +135,18 @@
                 }).then(function () {
                     return WinJS.Promise.timeout(150);
                 }).then(function () {
+                    var eventTextUsageControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("eventTextUsage"));
+                    if (eventTextUsageControl && eventTextUsageControl.controller) {
+                        return eventTextUsageControl.controller.loadData();
+                    } else {
+                        var parentElement = pageElement.querySelector("#eventTextUsagehost");
+                        if (parentElement) {
+                            return Application.loadFragmentById(parentElement, "eventTextUsage", {});
+                        } else {
+                            return WinJS.Promise.as();
+                        }
+                    }
+                }).then(function () {
                     var pageControl = pageElement.winControl;
                     if (pageControl && pageControl.updateLayout) {
                         pageControl.prevWidth = 0;

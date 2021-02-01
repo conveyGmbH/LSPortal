@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="eventTextUsage.css" rel="stylesheet" />
+    <script type="text/javascript" src="eventTextUsageService.js"></script>
+    <script type="text/javascript" src="eventTextUsageController.js"></script>
+    <script type="text/javascript" src="eventTextUsage.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="eventTextUsage fragment">
+        <div id="eventTextUsageController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="contentarea win-type-body">
+                    <div class="textselection-navigationbar-template"
+                         data-win-control="WinJS.Binding.Template" style="display: none">
+                        <div class="navigationbar-item navigationbar-horizontal-item">
+                            <div class="navigationbar-text navigationbar-horizontal-text">
+                                <span class="navigationbar-inner-text"
+                                      data-win-bind="textContent: TITLE"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="navigationbar-container navigationbar-container-horizontal">
+                        <div id="dokVerwendungList"
+                             class="win-selectionstylefilled listview"
+                             data-win-control="WinJS.UI.ListView"
+                             data-win-options="{
+                                     itemTemplate: select('.textselection-navigationbar-template'),
+                                     selectionMode: WinJS.UI.SelectionMode.single,
+                                     tapBehavior: WinJS.UI.TapBehavior.directSelect,
+                             layout: {type: WinJS.UI.GridLayout}
+                                 }"></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

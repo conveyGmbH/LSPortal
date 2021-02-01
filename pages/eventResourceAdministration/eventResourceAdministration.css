@@ -96,3 +96,7 @@
     height: 100%;
     width: 350px;
 }
+
+#eventTextUsagehost.fragmenthost {
+    height: 120px;
+}
