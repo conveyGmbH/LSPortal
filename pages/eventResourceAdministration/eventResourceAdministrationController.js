@@ -53,8 +53,13 @@
                 if (listView && listView.winControl) {
                     var element = listView.winControl.elementFromIndex(index);
                     if (element) {
-                        var fields = element.querySelectorAll('input[type="text"]');
-                        //ret["TITLE"] = fields[0].value;
+                        var fields = element.querySelectorAll('input[type="text"], textarea');
+                        fields.forEach(function(field) {
+                            var fieldEntry = field.dataset && field.dataset.fieldEntry;
+                            if (fieldEntry) {
+                                ret[fieldEntry] = field.value;
+                            }
+                        });
                     }
                 }
                 Log.ret(Log.l.trace, ret);

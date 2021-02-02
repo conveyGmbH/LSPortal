@@ -25,26 +25,31 @@
     });
     WinJS.Namespace.define("EventResourceAdministration", {
         eventTextView: {
-            select: function (complete, error) {
-                var restriction = {
-                    LanguageSpecID: AppData.getLanguageId()
-                };
-                if (EventResourceAdministration._eventTextUsageId && EventResourceAdministration._eventTextUsageId <= 2 ||
-                    EventResourceAdministration._eventTextUsageId > 2 && EventResourceAdministration._eventId) {
-                    restriction.DokVerwendungID = EventResourceAdministration._eventTextUsageId;
-                    if (EventResourceAdministration._eventTextUsageId > 2) {
-                        restriction.VeranstaltungID = EventResourceAdministration._eventId;
+            select: function (complete, error, restriction, options) {
+                if (!restriction) {
+                    restriction = {
+                        LanguageSpecID: AppData.getLanguageId()
+                    };
+                    if (EventResourceAdministration._eventTextUsageId && EventResourceAdministration._eventTextUsageId <= 2 ||
+                        EventResourceAdministration._eventTextUsageId > 2 && EventResourceAdministration._eventId) {
+                        restriction.DokVerwendungID = EventResourceAdministration._eventTextUsageId;
+                        if (EventResourceAdministration._eventTextUsageId > 2) {
+                            restriction.VeranstaltungID = EventResourceAdministration._eventId;
+                        }
                     }
+                }
+                if (!options) {
+                    options = {
+                        ordered: true,
+                        orderAttribute: "Sortierung",
+                        desc: false
+                    };
                 }
                 Log.call(Log.l.trace, "EventResourceAdministration.eventView.",
                     "LanguageSpecID=" + restriction.LanguageSpecID,
                     "DokVerwendungID=" + restriction.DokVerwendungID,
                     "VeranstaltungID=" + restriction.VeranstaltungID);
-                var ret = EventResourceAdministration._eventTextView.select(complete, error, restriction, {
-                    ordered: true,
-                    orderAttribute: "Sortierung",
-                    desc: false
-                });
+                var ret = EventResourceAdministration._eventTextView.select(complete, error, restriction, options);
                 Log.ret(Log.l.trace);
                 return ret;
             },
