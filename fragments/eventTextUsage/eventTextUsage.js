@@ -52,14 +52,14 @@
                             if (width !== that.prevWidth) {
                                 that.prevWidth = width;
                                 if (width > 0) {
-                                    var dokVerwendungList = element.querySelector("#dokVerwendungList.listview");
-                                    var listControl = dokVerwendungList && dokVerwendungList.winControl;
+                                    var listView = element.querySelector("#eventTextUsageList.listview");
+                                    var listControl = listView && listView.winControl;
                                     var textUsage = that.controller.textUsage;
-                                    if (dokVerwendungList && listControl && textUsage && textUsage.length > 0) {
+                                    if (listView && listControl && textUsage && textUsage.length > 0) {
                                         var container, i, selectionBkg, itemWidth;
                                         if (listControl.loadingState === "complete") {
                                             // calculate width for each cell
-                                            var containers = dokVerwendungList.querySelectorAll(".win-container");
+                                            var containers = listView.querySelectorAll(".win-container");
                                             if (containers && containers.length === textUsage.length) {
                                                 var fontWidth = width > 499 ? 7 : 5;
                                                 var totalLen = 0;
@@ -80,12 +80,12 @@
                                                     width = maxLen * textUsage.length * fontWidth;
                                                     strWidth = width.toString() + "px";
                                                 }
-                                                var surface = dokVerwendungList.querySelector(".win-surface");
+                                                var surface = listView.querySelector(".win-surface");
                                                 if (surface && surface.style) {
                                                     surface.style.width = strWidth;
                                                 }
                                                 // ListView container elements used in filled ListView
-                                                var itemsContainer = dokVerwendungList.querySelector(".win-itemscontainer");
+                                                var itemsContainer = listView.querySelector(".win-itemscontainer");
                                                 if (itemsContainer && itemsContainer.style) {
                                                     itemsContainer.style.width = strWidth;
                                                 }

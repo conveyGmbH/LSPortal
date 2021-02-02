@@ -233,22 +233,25 @@
                                                 AppBar.scope.saveData(function (response) {
                                                     // called asynchronously if ok
                                                     if (curPageId === "eventResourceAdministration" &&
-                                                        typeof AppBar.scope.loadData === "function") {
-                                                        AppBar.scope.binding.eventId = item.data.VeranstaltungVIEWID;
+                                                        typeof AppBar.scope.loadData === "function" &&
+                                                        typeof AppBar.scope.setEventId === "function") {
+                                                        AppBar.scope.setEventId(item.data.VeranstaltungVIEWID);
                                                         AppBar.scope.loadData();
                                                     } else {
                                                         Application.navigateById("eventResourceAdministration");
                                                     }
                                                 }, function (errorResponse) {
-                                                    if (curPageId === "eventResourceAdministration") {
-                                                        that.selectRecordId(AppBar.scope.binding.eventId);
+                                                    if (curPageId === "eventResourceAdministration" && 
+                                                        typeof AppBar.scope.getEventId === "function") {
+                                                        that.selectRecordId(AppBar.scope.getEventId());
                                                     }
                                                 });
                                             } else {
                                                 // current detail view has NO saveData() function - is list
                                                 if (curPageId === "eventResourceAdministration" &&
-                                                    typeof AppBar.scope.loadData === "function") {
-                                                    AppBar.scope.binding.eventId = item.data.VeranstaltungVIEWID;
+                                                    typeof AppBar.scope.loadData === "function" &&
+                                                    typeof AppBar.scope.setEventId === "function") {
+                                                    AppBar.scope.setEventId(item.data.VeranstaltungVIEWID);
                                                     AppBar.scope.loadData();
                                                 } else {
                                                     Application.navigateById("eventResourceAdministration");

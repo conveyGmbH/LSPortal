@@ -19,7 +19,7 @@
     padding-left: 20px;
 }
 #localevents {
-    height: 100%;
+    height: calc(100% - 74px);
 }
 .list-header {
     padding-left: 27px;

@@ -35,8 +35,6 @@
             var maxLeadingPages = 0;
             var maxTrailingPages = 0;
 
-            var mouseDown = false;
-
             // get field entries
             var getFieldEntries = function (index) {
                 Log.call(Log.l.trace, "Questiongroup.Controller.");
@@ -108,28 +106,6 @@
                 clickGotoPublish: function (event) {
                     Log.call(Log.l.trace, "Questiongroup.Controller.");
                     Application.navigateById("publish", event);
-                    Log.ret(Log.l.trace);
-                },
-                onPointerDown: function (e) {
-                    Log.call(Log.l.trace, "Questiongroup.Controller.");
-                    that.cursorPos = { x: e.pageX, y: e.pageY };
-                    mouseDown = true;
-                    Log.ret(Log.l.trace);
-                },
-                onMouseDown: function (e) {
-                    Log.call(Log.l.trace, "Questiongroup.Controller.");
-                    that.cursorPos = { x: e.pageX, y: e.pageY };
-                    mouseDown = true;
-                    Log.ret(Log.l.trace);
-                },
-                onPointerUp: function (e) {
-                    Log.call(Log.l.trace, "Questiongroup.Controller.");
-                    mouseDown = false;
-                    Log.ret(Log.l.trace);
-                },
-                onMouseUp: function (e) {
-                    Log.call(Log.l.trace, "Questiongroup.Controller.");
-                    mouseDown = false;
                     Log.ret(Log.l.trace);
                 },
                 onSelectionChanged: function (eventInfo) {
@@ -243,38 +219,7 @@
                 },
                 onItemInvoked: function (eventInfo) {
                     Log.call(Log.l.trace, "Questiongroup.Controller.");
-                    if (eventInfo && eventInfo.target) {
-                        var comboInputFocus = eventInfo.target.querySelector(".win-dropdown:focus");
-                        if (comboInputFocus) {
-                            eventInfo.preventDefault();
-                        } else {
-                            // set focus into textarea if current mouse cursor is inside of element position
-                            var setFocusOnElement = function (element) {
-                                WinJS.Promise.timeout(0).then(function () {
-                                    // set focus async!
-                                    element.focus();
-                                });
-                            };
-                            var textInputs = eventInfo.target.querySelectorAll(".win-textbox");
-                            if (textInputs && textInputs.length > 0) {
-                                for (var i = 0; i < textInputs.length; i++) {
-                                    var textInput = textInputs[i];
-                                    var position = WinJS.Utilities.getPosition(textInput);
-                                    if (position) {
-                                        var left = position.left;
-                                        var top = position.top;
-                                        var width = position.width;
-                                        var height = position.height;
-                                        if (that.cursorPos.x >= left && that.cursorPos.x <= left + width &&
-                                            that.cursorPos.y >= top && that.cursorPos.y <= top + height) {
-                                            setFocusOnElement(textInput);
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    that.setFocusOnItemInvoked(eventInfo);
                     Log.ret(Log.l.trace);
                 },
                 clickTopButton: function (event) {

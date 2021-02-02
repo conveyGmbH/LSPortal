@@ -1,11 +1,11 @@
-﻿#eventTextUsagehost.fragmenthost {
+﻿#eventTextUsageHost.fragmenthost {
     width: 100%;
     height: 48px;
 }
 /**
-    listLangMandantDokumentList styles
+    eventTextList styles
 */
-#listLangMandantDokumentList {
+#eventTextList {
     height: auto;
 }
 

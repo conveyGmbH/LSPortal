@@ -7,27 +7,27 @@
     "use strict";
 
     WinJS.Namespace.define("EventTextUsage", {
-            _LGNTINITDokVerwendungView: {
+            _eventTextUsageView: {
                 get: function() {
                     return AppData.getLgntInit("LGNTINITDokVerwendung");
                 }
             },
-            LGNTINITDokVerwendungView: {
+            eventTextUsageView: {
                 select: function (complete, error) {
-                    Log.call(Log.l.trace, "EventTextUsage.LGNTINITDokVerwendungView.");
-                    var ret = EventTextUsage._LGNTINITDokVerwendungView.select(complete, error);
+                    Log.call(Log.l.trace, "EventTextUsage.eventTextUsageView.");
+                    var ret = EventTextUsage._eventTextUsageView.select(complete, error);
                     Log.ret(Log.l.trace);
                     return ret;
                 },
                 getResults: function () {
-                    Log.call(Log.l.trace, "EventTextUsage.LGNTINITDokVerwendungView.");
-                    var ret = EventTextUsage._LGNTINITDokVerwendungView.results;
+                    Log.call(Log.l.trace, "EventTextUsage.eventTextUsageView.");
+                    var ret = EventTextUsage._eventTextUsageView.results;
                     Log.ret(Log.l.trace);
                     return ret;
                 },
                 getMap: function () {
-                    Log.call(Log.l.trace, "EventTextUsage.LGNTINITDokVerwendungView.");
-                    var ret = EventTextUsage._LGNTINITDokVerwendungView.map;
+                    Log.call(Log.l.trace, "EventTextUsage.eventTextUsageView.");
+                    var ret = EventTextUsage._eventTextUsageView.map;
                     Log.ret(Log.l.trace);
                     return ret;
                 }

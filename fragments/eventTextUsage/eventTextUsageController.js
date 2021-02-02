@@ -20,7 +20,7 @@
             var that = this;
 
             // now do anything...
-            var listView = fragmentElement.querySelector("#dokVerwendungList.listview");
+            var listView = fragmentElement.querySelector("#eventTextUsageList.listview");
 
             var eventHandlers = {
                 onSelectionChanged: function (eventInfo) {
@@ -33,12 +33,14 @@
                                 // Only one item is selected, show the page
                                 listControl.selection.getItems().done(function (items) {
                                     var item = items[0];
-                                    Log.print(Log.l.trace, "item.data.INITDokVerwendungID=" + (item.data && item.data.INITDokVerwendungID) +
-                                        " (eventUsageId=" + that.binding.eventUsageId + ")");
+                                    Log.print(Log.l.trace, "item.data.INITDokVerwendungID=" + (item.data && item.data.INITDokVerwendungID));
                                     if (item.data && item.data.INITDokVerwendungID &&
-                                        AppBar.scope && AppBar.scope.binding && typeof AppBar.scope.loadData === "function" &&
-                                        AppBar.scope.binding.eventUsageId !== item.data.INITDokVerwendungID) {
-                                        AppBar.scope.binding.eventUsageId = item.data.INITDokVerwendungID;
+                                        AppBar.scope && 
+                                        typeof AppBar.scope.loadData === "function" &&
+                                        typeof AppBar.scope.getEventTextUsageId === "function" &&
+                                        typeof AppBar.scope.setEventTextUsageId === "function" &&
+                                        AppBar.scope.getEventTextUsageId() !== item.data.INITDokVerwendungID) {
+                                        AppBar.scope.setEventTextUsageId(item.data.INITDokVerwendungID);
                                         WinJS.Promise.timeout(50).then(function() {
                                             return AppBar.scope.loadData();
                                         }).then(function () {
@@ -135,7 +137,7 @@
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                     if (that.textUsage.length === 0) {
-                        var results = EventTextUsage.LGNTINITDokVerwendungView.getResults();
+                        var results = EventTextUsage.eventTextUsageView.getResults();
                         if (results && results.length > 0) {
                             results.forEach(function (item, index) {
                                 //that.resultConverter(item, index);
@@ -148,7 +150,7 @@
                             Log.print(Log.l.trace, "Data loaded");
                             return WinJS.Promise.as();
                         } else {
-                            return EventTextUsage.LGNTINITDokVerwendungView.select(function (json) {
+                            return EventTextUsage.eventTextUsageView.select(function (json) {
                                 Log.print(Log.l.trace, "appInfoSpecView: success!");
                                 if (json && json.d && json.d.results && json.d.results.length > 0) {
                                     results = json.d.results;

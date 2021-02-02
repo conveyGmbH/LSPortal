@@ -12,7 +12,7 @@
         <div id="eventTextUsageController" class="data-container">
             <section aria-label="Main content" role="main" class="animationElement">
                 <div class="contentarea win-type-body">
-                    <div class="textselection-navigationbar-template"
+                    <div class="eventTextUsage-template"
                          data-win-control="WinJS.Binding.Template" style="display: none">
                         <div class="navigationbar-item navigationbar-horizontal-item">
                             <div class="navigationbar-text navigationbar-horizontal-text">
@@ -22,11 +22,11 @@
                         </div>
                     </div>
                     <div class="navigationbar-container navigationbar-container-horizontal">
-                        <div id="dokVerwendungList"
+                        <div id="eventTextUsageList"
                              class="win-selectionstylefilled listview"
                              data-win-control="WinJS.UI.ListView"
                              data-win-options="{
-                                 itemTemplate: select('.textselection-navigationbar-template'),
+                                 itemTemplate: select('.eventTextUsage-template'),
                                  selectionMode: WinJS.UI.SelectionMode.single,
                                  tapBehavior: WinJS.UI.TapBehavior.directSelect,
                                  layout: {type: WinJS.UI.GridLayout}

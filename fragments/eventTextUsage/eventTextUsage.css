@@ -2,12 +2,12 @@
     width: 100%;
 }
 /**
-    dokVerwendungList styles
+    eventTextUsageList styles
 */
-#dokVerwendungList .win-selected {
+#eventTextUsageList .win-selected {
     color: WindowText;
 }
-#dokVerwendungList.win-listview {
+#eventTextUsageList.win-listview {
     margin: 0;
     padding: 0;
     width: 100%;
@@ -16,34 +16,34 @@
     border-bottom-width: 1px;
     border-bottom-color: gray;
 }
-#dokVerwendungList .win-viewport {
+#eventTextUsageList .win-viewport {
     margin-bottom: -50px;
     padding-bottom: 50px;
     -ms-overflow-style: none;
 }
 
-#dokVerwendungList .win-viewport::-webkit-scrollbar {
-    height: 0 !important;
-}
+    #eventTextUsageList .win-viewport::-webkit-scrollbar {
+        height: 0 !important;
+    }
 
-#dokVerwendungList .win-selectionbackground {
+#eventTextUsageList .win-selectionbackground {
     height: 4px;
     top: 43px;
     left: 0;
     width: 0;
 }
 
-#dokVerwendungList .win-itemscontainer {
+#eventTextUsageList .win-itemscontainer {
     width: 100%;
 }
 
-#dokVerwendungList .win-container {
+#eventTextUsageList .win-container {
     margin: 0;
     padding: 0;
     width: 1px;
 }
 
-#dokVerwendungList .navigationbar-text {
+#eventTextUsageList .navigationbar-text {
     text-transform: none;
 }
 

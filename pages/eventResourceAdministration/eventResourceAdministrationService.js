@@ -10,45 +10,37 @@
      * LangMandantDokument_odataView darauf update
      */
     WinJS.Namespace.define("EventResourceAdministration", {
-        _LGNTINITDokVerwendungView: {
-            get: function() {
-                return AppData.getLgntInit("LGNTINITDokVerwendung");
-            }
-        },
-        LGNTINITDokVerwendungView: {
-            select: function (complete, error) {
-                Log.call(Log.l.trace, "EventResourceAdministration.LGNTINITDokVerwendungView.");
-                var ret = EventResourceAdministration._LGNTINITDokVerwendungView.select(complete, error);
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            getResults: function () {
-                Log.call(Log.l.trace, "EventResourceAdministration.LGNTINITDokVerwendungView.");
-                var ret = EventResourceAdministration._LGNTINITDokVerwendungView.results;
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            getMap: function () {
-                Log.call(Log.l.trace, "EventResourceAdministration.LGNTINITDokVerwendungView.");
-                var ret = EventResourceAdministration._LGNTINITDokVerwendungView.map;
-                Log.ret(Log.l.trace);
-                return ret;
-            }
-        },
-        _LangMandantDokumentTable: {
-            get: function () {
-                return AppData.getFormatView("LangMandantDokument", 0);
-            }
-        },
-        _LangMandantDokumentView: {
+        _eventTextView: {
             get: function () {
                 return AppData.getFormatView("LangMandantDokument", 20628);
             }
         },
-        LangMandantDokumentView: {
-            select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "EventResourceAdministration.LangMandantDokumentView.");
-                var ret = EventResourceAdministration._LangMandantDokumentView.select(complete, error, restriction, {
+        _eventTextTable: {
+            get: function () {
+                return AppData.getFormatView("LangMandantDokument", 0);
+            }
+        },
+        _eventTextUsageId: 0,
+        _eventId: 0
+    });
+    WinJS.Namespace.define("EventResourceAdministration", {
+        eventTextView: {
+            select: function (complete, error) {
+                var restriction = {
+                    LanguageSpecID: AppData.getLanguageId()
+                };
+                if (EventResourceAdministration._eventTextUsageId && EventResourceAdministration._eventTextUsageId <= 2 ||
+                    EventResourceAdministration._eventTextUsageId > 2 && EventResourceAdministration._eventId) {
+                    restriction.DokVerwendungID = EventResourceAdministration._eventTextUsageId;
+                    if (EventResourceAdministration._eventTextUsageId > 2) {
+                        restriction.VeranstaltungID = EventResourceAdministration._eventId;
+                    }
+                }
+                Log.call(Log.l.trace, "EventResourceAdministration.eventView.",
+                    "LanguageSpecID=" + restriction.LanguageSpecID,
+                    "DokVerwendungID=" + restriction.DokVerwendungID,
+                    "VeranstaltungID=" + restriction.VeranstaltungID);
+                var ret = EventResourceAdministration._eventTextView.select(complete, error, restriction, {
                     ordered: true,
                     orderAttribute: "Sortierung",
                     desc: false
@@ -56,10 +48,53 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            update: function (complete, error, recordId, viewResponse) {
-                Log.call(Log.l.trace, "EventResourceAdministration.LangMandantDokumentView.");
-                var ret = EventResourceAdministration._LangMandantDokumentTable.update(complete, error, recordId, viewResponse);
+            getNextUrl: function (response) {
+                Log.call(Log.l.trace, "Events.eventView.");
+                var ret = EventResourceAdministration._eventTextView.getNextUrl(response);
                 Log.ret(Log.l.trace);
+                return ret;
+            },
+            selectNext: function (complete, error, response, nextUrl) {
+                Log.call(Log.l.trace, "Events.eventView.");
+                var ret = EventResourceAdministration._eventTextView.selectNext(complete, error, response, nextUrl);
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            relationName: EventResourceAdministration._eventTextView.relationName,
+            pkName: EventResourceAdministration._eventTextView.oDataPkName,
+            getRecordId: function (record) {
+                var ret = null;
+                if (record) {
+                    if (EventResourceAdministration._eventTextView.oDataPkName) {
+                        ret = record[EventResourceAdministration._eventTextView.oDataPkName];
+                    }
+                    if (!ret && EventResourceAdministration._eventTextView.pkName) {
+                        ret = record[EventResourceAdministration._eventTextView.pkName];
+                    }
+                }
+                return ret;
+            }
+        },
+        eventTextTable: {
+            update: function (complete, error, recordId, viewResponse) {
+                Log.call(Log.l.trace, "EventResourceAdministration.eventTable.");
+                var ret = EventResourceAdministration._eventTextTable.update(complete, error, recordId, viewResponse);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            relationName: EventResourceAdministration._eventTextTable.relationName,
+            pkName: EventResourceAdministration._eventTextTable.oDataPkName,
+            getRecordId: function (record) {
+                var ret = null;
+                if (record) {
+                    if (EventResourceAdministration._eventTextTable.oDataPkName) {
+                        ret = record[EventResourceAdministration._eventTextTable.oDataPkName];
+                    }
+                    if (!ret && EventResourceAdministration._eventTextTable.pkName) {
+                        ret = record[EventResourceAdministration._eventTextTable.pkName];
+                    }
+                }
                 return ret;
             }
         }

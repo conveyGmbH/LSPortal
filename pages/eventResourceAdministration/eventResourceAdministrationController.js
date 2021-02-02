@@ -14,7 +14,12 @@
     WinJS.Namespace.define("EventResourceAdministration", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "EventResourceAdministration.Controller.");
-            Application.Controller.apply(this, [pageElement, {
+
+            // ListView control
+            var listView = pageElement.querySelector("#eventTextList.listview");
+
+            Application.RecordsetController.apply(this, [pageElement, {
+                count: 0,
                 eventResource: {
                     LabelTitle: "",
                     LabelDescription: "",
@@ -23,19 +28,42 @@
                     LabelSummary: "",
                     LabelBody: ""
                 },
-                eventUsageId: 0,
-                eventId: 0,
-                overView: { Email: "" }
-            }, commandList]);
-
+                overView: {
+                     Email: ""
+                }
+            }, commandList, false, 
+                EventResourceAdministration.eventTextTable, 
+                EventResourceAdministration.eventTextView, listView]);
+            
             this.eventTextUsageControl = null;
-            this.eventResources = new WinJS.Binding.List([]);
 
             var that = this;
 
-            var listLangMandantDokumentList = pageElement.querySelector("#listLangMandantDokumentList.listview");
+            var progress = null;
+            var counter = null;
+            var layout = null;
+
+            var maxLeadingPages = 0;
+            var maxTrailingPages = 0;
+
+            // get field entries
+            var getFieldEntries = function (index) {
+                Log.call(Log.l.trace, "Questiongroup.Controller.");
+                var ret = {};
+                if (listView && listView.winControl) {
+                    var element = listView.winControl.elementFromIndex(index);
+                    if (element) {
+                        var fields = element.querySelectorAll('input[type="text"]');
+                        //ret["TITLE"] = fields[0].value;
+                    }
+                }
+                Log.ret(Log.l.trace, ret);
+                return ret;
+            };
+            this.getFieldEntries = getFieldEntries;
 
             var resultConverter = function(item, index) {
+                Log.call(Log.l.trace, "EventResourceAdministration.Controller.");
                 if (!item.NameTitle) {
                     item.NameTitle = "";
                 }
@@ -54,140 +82,152 @@
                 if (!item.NameBody) {
                     item.NameBody = "";
                 }
+                Log.ret(Log.l.trace);
             }
             this.resultConverter = resultConverter;
 
-            var loadData = function () {
-                Log.call(Log.l.trace, "EventResourceAdministration.Controller.");
-                AppData.setErrorMsg(that.binding);
-                var restriction = {
-                    LanguageSpecID: AppData.getLanguageId()
-                };
-                var ret = new WinJS.Promise.as().then(function () {
-                    that.eventTextUsageControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("eventTextUsage"));
-                    if (!that.eventTextUsageControl) {
-                        var parentElement = pageElement.querySelector("#eventTextUsagehost");
-                        if (parentElement) {
-                            return Application.loadFragmentById(parentElement, "eventTextUsage", {});
-                        } else {
-                            return WinJS.Promise.as();
-                        }
-                    } else {
-                        return WinJS.Promise.as();
-                    }
-                }).then(function () {
-                    if (that.binding.eventUsageId && that.binding.eventUsageId <= 2 ||
-                        that.binding.eventUsageId > 2 && that.binding.eventId) {
-                        restriction.DokVerwendungID = that.binding.eventUsageId;
-                        if (that.binding.eventUsageId > 2) {
-                            restriction.VeranstaltungID = that.binding.eventId;
-                        }
-                        return EventResourceAdministration.LangMandantDokumentView.select(function (json) {
-                            Log.print(Log.l.trace, "appInfoSpecView: success!");
-                            if (json && json.d && json.d.results && json.d.results.length > 0) {
-                                var results = json.d.results;
-                                that.eventResources.length = 0;
-                                results.forEach(function(item, index) {
-                                    that.resultConverter(item, index);
-                                    that.eventResources.push(item);
-                                });
-                                Log.print(Log.l.trace, "Data loaded");
-                            } else {
-                                that.eventResources.length = 0;
-                            }
-                            if (listLangMandantDokumentList && listLangMandantDokumentList.winControl) {
-                                listLangMandantDokumentList.winControl.itemDataSource = that.eventResources.dataSource;
-                            }
-                        }, function (errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        }, restriction); 
-                    } else {
-                        that.eventResources.length = 0;
-                        return WinJS.Promise.as();
-                    }
-                });
-                Log.ret(Log.l.trace);
-                return ret;
-            };
-            this.loadData = loadData;
-
-            var saveData = function (complete, error) {
-                Log.call(Log.l.trace, "EventResourceAdministration.Controller.");
-                var ret = null;
-                AppData.setErrorMsg(that.binding);
-                // standard call via modify
-                var recordId = that.prevRecId;
-                if (!recordId) {
-                    // called via canUnload
-                    recordId = that.curRecId;
-                }
-                that.prevRecId = 0;
-                if (recordId) {
-                    var curScope = that.scopeFromRecordId(recordId);
-                    if (curScope && curScope.item) {
-                        var newRecord = that.getFieldEntries(curScope.index, curScope.item);
-                        if (that.mergeRecord(curScope.item, newRecord) || AppBar.modified) {
-                            Log.print(Log.l.trace, "save changes of recordId:" + recordId);
-                            ret = EventResourceAdministration.LangMandantDokumentView.update(function (response) {
-                                Log.print(Log.l.info, "questionListView update: success!");
-                                if (that.eventResources) {
-                                    that.resultConverter(curScope.item, curScope.index);
-                                    that.eventResources.setAt(curScope.index, curScope.item);
-                                }
-                                //AppData.getUserData();
-                                AppBar.modified = false;
-                                // called asynchronously if ok
-                                if (typeof complete === "function") {
-                                    complete(response);
-                                }
-                            }, function (errorResponse) {
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                                if (typeof error === "function") {
-                                    error(errorResponse);
-                                }
-                            }, recordId, curScope.item);
-                        } else {
-                            Log.print(Log.l.trace, "no changes in recordId:" + recordId);
-                        }
-                    }
-                }
-                if (!ret) {
-                    ret = new WinJS.Promise.as().then(function () {
-                complete({});
-                    });
-                }
-                Log.ret(Log.l.trace, ret);
-                return ret;
-            };
-            this.saveData = saveData;
-
             this.eventHandlers = {
                 clickBack: function (event) {
-                    Log.call(Log.l.trace, "Contact.Controller.");
+                    Log.call(Log.l.trace, "EventResourceAdministration.Controller.");
                     if (WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done();
                     }
                     Log.ret(Log.l.trace);
                 },
                 clickOk: function (event) {
-                    Log.call(Log.l.trace, "Info.Controller.");
-                    if (WinJS.Navigation.canGoBack === true) {
-                        WinJS.Navigation.back(1).done( /* Your success and error handlers */);
-                    } else {
-                        Application.navigateById(Application.startPageId, event);
-                    }
+                    Log.call(Log.l.trace, "EventResourceAdministration.Controller.");
+                    AppBar.busy = true;
+                    that.saveData(function (response) {
+                        AppBar.busy = false;
+                        Log.print(Log.l.trace, "question saved");
+                    }, function (errorResponse) {
+                        AppBar.busy = false;
+                        Log.print(Log.l.error, "error saving question");
+                    });
                     Log.ret(Log.l.trace);
                 },
                 clickChangeUserState: function (event) {
-                    Log.call(Log.l.trace, "Info.Controller.");
+                    Log.call(Log.l.trace, "EventResourceAdministration.Controller.");
                     Application.navigateById("userinfo", event);
                     Log.ret(Log.l.trace);
                 },
                 clickGotoPublish: function (event) {
-                    Log.call(Log.l.trace, "Info.Controller.");
+                    Log.call(Log.l.trace, "EventResourceAdministration.Controller.");
                     Application.navigateById("publish", event);
+                    Log.ret(Log.l.trace);
+                },
+                onSelectionChanged: function (eventInfo) {
+                    Log.call(Log.l.trace, "Questiongroup.Controller.");
+                    that.selectionChanged().then(function() {
+                        AppBar.triggerDisableHandlers();
+                    });
+                    Log.ret(Log.l.trace);
+                },
+                onLoadingStateChanged: function (eventInfo) {
+                    Log.call(Log.l.trace, "EventResourceAdministration.Controller.");
+                    if (listView && listView.winControl) {
+                        Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
+                        // single list selection
+                        if (listView.winControl.selectionMode !== WinJS.UI.SelectionMode.single) {
+                            listView.winControl.selectionMode = WinJS.UI.SelectionMode.single;
+                        }
+                        // direct selection on each tap
+                        if (listView.winControl.tapBehavior !== WinJS.UI.TapBehavior.directSelect) {
+                            listView.winControl.tapBehavior = WinJS.UI.TapBehavior.directSelect;
+                        }
+                        // Double the size of the buffers on both sides
+                        if (!maxLeadingPages) {
+                            maxLeadingPages = listView.winControl.maxLeadingPages * 4;
+                            listView.winControl.maxLeadingPages = maxLeadingPages;
+                        }
+                        if (!maxTrailingPages) {
+                            maxTrailingPages = listView.winControl.maxTrailingPages * 4;
+                            listView.winControl.maxTrailingPages = maxTrailingPages;
+                        }
+                        if (listView.winControl.loadingState === "itemsLoading") {
+                            if (!layout) {
+                                layout = Application.eventResourceAdministrationLayout.EventTextLayout;
+                                listView.winControl.layout = { type: layout };
+                            }
+                        } else if (listView.winControl.loadingState === "complete") {
+                            if (that.loading) {
+                                progress = listView.querySelector(".list-footer .progress");
+                                counter = listView.querySelector(".list-footer .counter");
+                                if (progress && progress.style) {
+                                    progress.style.display = "none";
+                                }
+                                if (counter && counter.style) {
+                                    counter.style.display = "inline";
+                                }
+                                that.loading = false;
+                            }
+                        }
+                    }
+                    Log.ret(Log.l.trace);
+                },
+                onHeaderVisibilityChanged: function (eventInfo) {
+                    Log.call(Log.l.trace, "Questiongroup.Controller.");
+                    /*if (eventInfo && eventInfo.detail) {
+                        var visible = eventInfo.detail.visible;
+                        if (visible) {
+                            var contentHeader = listView.querySelector(".content-header");
+                            if (contentHeader) {
+                                var halfCircle = contentHeader.querySelector(".half-circle");
+                                if (halfCircle && halfCircle.style) {
+                                    if (halfCircle.style.visibility === "hidden") {
+                                        halfCircle.style.visibility = "";
+                                        WinJS.UI.Animation.enterPage(halfCircle);
+                                    }
+                                }
+                            }
+                        }
+                    }*/
+                    Log.ret(Log.l.trace);
+                },
+                onFooterVisibilityChanged: function (eventInfo) {
+                    Log.call(Log.l.trace, "Questiongroup.Controller.");
+                    if (eventInfo && eventInfo.detail) {
+                        progress = listView.querySelector(".list-footer .progress");
+                        counter = listView.querySelector(".list-footer .counter");
+                        var visible = eventInfo.detail.visible;
+                        if (visible && that.nextUrl) {
+                            that.loading = true;
+                            if (progress && progress.style) {
+                                progress.style.display = "inline";
+                            }
+                            if (counter && counter.style) {
+                                counter.style.display = "none";
+                            }
+                            that.loadNext(function (json) {
+                                // this callback will be called asynchronously
+                                // when the response is available
+                                Log.print(Log.l.trace, "Questiongroup.CR_V_FragengruppeView: success!");
+                            }, function (errorResponse) {
+                                // called asynchronously if an error occurs
+                                // or server returns response with an error status.
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                                if (progress && progress.style) {
+                                    progress.style.display = "none";
+                                }
+                                if (counter && counter.style) {
+                                    counter.style.display = "inline";
+                                }
+                            });
+                        } else {
+                            if (progress && progress.style) {
+                                progress.style.display = "none";
+                            }
+                            if (counter && counter.style) {
+                                counter.style.display = "inline";
+                            }
+                            that.loading = false;
+                        }
+                    }
+                    Log.ret(Log.l.trace);
+                },
+                onItemInvoked: function (eventInfo) {
+                    Log.call(Log.l.trace, "Questiongroup.Controller.");
+                    that.setFocusOnItemInvoked(eventInfo);
                     Log.ret(Log.l.trace);
                 },
                 clickTopButton: function (event) {
@@ -199,7 +239,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickLogoff: function (event) {
-                    Log.call(Log.l.trace, "Account.Controller.");
+                    Log.call(Log.l.trace, "EventResourceAdministration.Controller.");
                     AppData._persistentStates.privacyPolicyFlag = false;
                     if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
                         AppHeader.controller.binding.userData = {};
@@ -209,8 +249,8 @@
                     }
                     Application.navigateById("login", event);
                     Log.ret(Log.l.trace);
-                },
-                /*clickOpenEdit: function (event) {
+                }/*,
+                clickOpenEdit: function (event) {
                     Log.call(Log.l.trace, "Account.Controller.");
                     //nameheader 
                     //namebottom
@@ -223,43 +263,7 @@
                         }
                     }
                     Log.ret(Log.l.trace);
-                },*/
-                onItemInvoked: function (eventInfo) {
-                    Log.call(Log.l.trace, "QuestionList.Controller.");
-                    if (eventInfo && eventInfo.target) {
-                        var comboInputFocus = eventInfo.target.querySelector(".win-dropdown:focus");
-                        if (comboInputFocus) {
-                            eventInfo.preventDefault();
-                        } else {
-                            // set focus into textarea if current mouse cursor is inside of element position
-                            var setFocusOnElement = function (element) {
-                                WinJS.Promise.timeout(0).then(function () {
-                                    // set focus async!
-                                    element.focus();
-                                });
-                            };
-                            var textInputs = eventInfo.target.querySelectorAll(".win-textbox");
-                            if (textInputs && textInputs.length > 0) {
-                                for (var i = 0; i < textInputs.length; i++) {
-                                    var textInput = textInputs[i];
-                                    var position = WinJS.Utilities.getPosition(textInput);
-                                    if (position) {
-                                        var left = position.left;
-                                        var top = position.top;
-                                        var width = position.width;
-                                        var height = position.height;
-                                        if (that.cursorPos.x >= left && that.cursorPos.x <= left + width &&
-                                            that.cursorPos.y >= top && that.cursorPos.y <= top + height) {
-                                            setFocusOnElement(textInput);
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    Log.ret(Log.l.trace);
-                }
+                }*/
             }
 
             this.disableHandlers = {
@@ -268,17 +272,67 @@
                     return false;
                 }
             }
-            if (listLangMandantDokumentList) {
-                this.addRemovableEventListener(listLangMandantDokumentList, "iteminvoked", this.eventHandlers.onItemInvoked.bind(this));
+            // register ListView event handler
+            if (listView) {
+                // prevent some keyboard actions from listview to navigate within controls!
+                this.addRemovableEventListener(listView, "keydown", function (e) {
+                    if (!e.ctrlKey && !e.altKey) {
+                        switch (e.keyCode) {
+                        case WinJS.Utilities.Key.end:
+                        case WinJS.Utilities.Key.home:
+                        case WinJS.Utilities.Key.leftArrow:
+                        case WinJS.Utilities.Key.rightArrow:
+                        case WinJS.Utilities.Key.space:
+                            e.stopImmediatePropagation();
+                            break;
+                        }
+                    }
+                }.bind(this), true);
+                this.addRemovableEventListener(listView, "selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
+                this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
+                this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
+                this.addRemovableEventListener(listView, "headervisibilitychanged", this.eventHandlers.onHeaderVisibilityChanged.bind(this));
+                this.addRemovableEventListener(listView, "iteminvoked", this.eventHandlers.onItemInvoked.bind(this));
             }
+
+            var getEventTextUsageId = function() {
+                return EventResourceAdministration._eventTextUsageId;
+            }
+            that.getEventTextUsageId = getEventTextUsageId;
+            
+            var setEventTextUsageId = function(value) {
+                Log.print(Log.l.trace, "eventTextUsageId=" + value);
+                EventResourceAdministration._eventTextUsageId = value;
+            }
+            that.setEventTextUsageId = setEventTextUsageId;
+
+            var getEventId = function() {
+                return EventResourceAdministration._eventId;
+            }
+            that.getEventId = getEventId;
+
+            var setEventId = function(value) {
+                Log.print(Log.l.trace, "eventId=" + value);
+                EventResourceAdministration._eventId = value;
+            }
+            that.setEventId = setEventId;
+
             AppData.setErrorMsg(this.binding);
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
+                var eventTextUsageHost = pageElement.querySelector("#eventTextUsageHost.fragmenthost");
+                if (eventTextUsageHost) {
+                    return Application.loadFragmentById(eventTextUsageHost, "eventTextUsage", {});
+                } else {
+                    return WinJS.Promise.as();
+                }
+            }).then(function () {
+                Log.print(Log.l.trace, "loadFragmentById complete");
                 return that.loadData();
             }).then(function () {
                 AppBar.notifyModified = true;
-                Log.print(Log.l.trace, "Binding wireup page complete");
+                Log.print(Log.l.trace, "loadData complete");
             });
             Log.ret(Log.l.trace);
         })

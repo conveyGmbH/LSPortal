@@ -12,8 +12,8 @@
         <div id="eventResourceAdministrationController" class="data-container">
             <section aria-label="Main content" role="main" class="animationElement">
                 <div class="contentarea win-type-body">
-                    <div id="eventTextUsagehost" class="fragmenthost"></div>
-                    <div class="langMandantDokument-template"
+                    <div id="eventTextUsageHost" class="fragmenthost"></div>
+                    <div class="eventText-template"
                          data-win-control="WinJS.Binding.Template" style="display: none">
                         <!--<div class="questionnaire-content">-->
                         <div class="mailingeditboxbottom" name="Title" data-win-bind="style.display: LabelTitle Binding.Converter.toDisplay">
@@ -68,12 +68,12 @@
                         </div>
                         <!--</div>-->
                     </div>
-                    <div id="listLangMandantDokumentList"
+                    <div id="eventTextList"
                          class="listview"
                          data-win-control="WinJS.UI.ListView"
                          data-win-options="{
                              layout : { type: WinJS.UI.ListLayout },
-                             itemTemplate: select('.langMandantDokument-template')
+                             itemTemplate: select('.eventText-template')
                          }">
                     </div>
                     <div class="error-message"
