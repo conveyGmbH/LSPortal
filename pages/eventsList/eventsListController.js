@@ -17,10 +17,8 @@
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList, isMaster) {
             Log.call(Log.l.trace, "EventsList.Controller.");
             Application.Controller.apply(this, [pageElement, {
+                eventId: 0,
                 count: 0,
-                veranstaltungId: 0,
-                fairmandantId: 0,
-                firstentry: 0,
                 active: null
             }, commandList, isMaster]);
             this.nextUrl = null;
@@ -234,26 +232,23 @@
                                                 // current detail view has saveData() function
                                                 AppBar.scope.saveData(function (response) {
                                                     // called asynchronously if ok
-                                                    //that.binding.veranstaltungId = item.data.VeranstaltungVIEWID;
-                                                    //AppData.setRecordId("Kontakt", that.binding.veranstaltungId);
                                                     if (curPageId === "eventResourceAdministration" &&
                                                         typeof AppBar.scope.loadData === "function") {
-                                                        AppBar.scope.binding.VeranstaltungID =
-                                                            item.data.VeranstaltungVIEWID;
+                                                        AppBar.scope.binding.eventId = item.data.VeranstaltungVIEWID;
                                                         AppBar.scope.loadData();
                                                     } else {
                                                         Application.navigateById("eventResourceAdministration");
                                                     }
                                                 }, function (errorResponse) {
-                                                    that.selectRecordId(that.binding.contactId);
+                                                    if (curPageId === "eventResourceAdministration") {
+                                                        that.selectRecordId(AppBar.scope.binding.eventId);
+                                                    }
                                                 });
                                             } else {
                                                 // current detail view has NO saveData() function - is list
-                                                that.binding.veranstaltungId = item.data.VeranstaltungVIEWID;
-                                                AppData.setRecordId("Kontakt", that.binding.veranstaltungId);
-                                                //handlePageEnable(item.data);
                                                 if (curPageId === "eventResourceAdministration" &&
                                                     typeof AppBar.scope.loadData === "function") {
+                                                    AppBar.scope.binding.eventId = item.data.VeranstaltungVIEWID;
                                                     AppBar.scope.loadData();
                                                 } else {
                                                     Application.navigateById("eventResourceAdministration");
@@ -332,38 +327,6 @@
             this.disableHandlers = {
                 clickBack: function () {
                     if (WinJS.Navigation.canGoBack === true) {
-                        return false;
-                    } else {
-                        return true;
-                    }
-                },
-                clickDelete: function () {
-                    if (that.curRecId) {
-                        if (that.curRecId !== AppData.getRecordId("Veranstaltung") && !that.binding.active && !AppBar.busy) {
-                            return false;
-                        } else {
-                        return true;
-                        }
-                    } else {
-                        return true;
-                    }
-                },
-                clickNew: function () {
-                    if (that.binding.fairmandantId) {
-                        return false;
-                    } else {
-                        return true;
-                    }
-                },
-                clickChange: function () {
-                    if (that.curRecId && AppData.generalData.eventId !== that.curRecId) {
-                        return false;
-                    } else {
-                        return true;
-                    }
-                },
-                copyQuestionnaire: function () {
-                    if (that.curRecId && AppData.generalData.eventId !== that.curRecId) {
                         return false;
                     } else {
                         return true;
@@ -449,8 +412,13 @@
                         that.loading = false;
                     }, {
 
+                    });
+                }).then(function () {
+                    if (listView && listView.winControl) {
+                        return listView.winControl.selection.set(0);
+                    } else {
+                        return WinJS.Promise.as();
                     }
-                    );
                 });
                 Log.ret(Log.l.trace);
                 return ret;

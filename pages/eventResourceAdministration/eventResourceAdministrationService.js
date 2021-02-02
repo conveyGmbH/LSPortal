@@ -35,43 +35,34 @@
                 return ret;
             }
         },
-        _LangMandantDokumentVIEW: {
+        _LangMandantDokumentTable: {
             get: function () {
                 return AppData.getFormatView("LangMandantDokument", 0);
             }
         },
-        _LangMandantDokumentVIEWFormat: {
+        _LangMandantDokumentView: {
             get: function () {
                 return AppData.getFormatView("LangMandantDokument", 20628);
             }
         },
-        LangMandantDokumentVIEW: {
-            select: function (complete, error) {
-                Log.call(Log.l.trace, "EventResourceAdministration.LangMandantDokumentVIEW.");
-                var ret = EventResourceAdministration._LangMandantDokumentVIEW.select(complete, error);
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            update: function (complete, error, recordId, viewResponse) {
-                Log.call(Log.l.trace, "EventResourceAdministration.LangMandantDokumentVIEW.");
-                var ret = EventResourceAdministration._LangMandantDokumentVIEW.update(complete, error, recordId, viewResponse);
-                Log.ret(Log.l.trace);
-                return ret;
-            }
-        },
-        LangMandantDokumentVIEWFormat: {
+        LangMandantDokumentView: {
             select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "EventResourceAdministration.LangMandantDokumentVIEW.");
-                var ret = EventResourceAdministration._LangMandantDokumentVIEWFormat.select(complete, error, restriction, {
+                Log.call(Log.l.trace, "EventResourceAdministration.LangMandantDokumentView.");
+                var ret = EventResourceAdministration._LangMandantDokumentView.select(complete, error, restriction, {
                     ordered: true,
                     orderAttribute: "Sortierung",
                     desc: false
                 });
                 Log.ret(Log.l.trace);
                 return ret;
+            },
+            update: function (complete, error, recordId, viewResponse) {
+                Log.call(Log.l.trace, "EventResourceAdministration.LangMandantDokumentView.");
+                var ret = EventResourceAdministration._LangMandantDokumentTable.update(complete, error, recordId, viewResponse);
+                Log.ret(Log.l.trace);
+                return ret;
             }
         }
-
     });
 })();
 

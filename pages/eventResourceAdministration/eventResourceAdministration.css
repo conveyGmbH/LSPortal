@@ -1,27 +1,38 @@
-﻿.headercircle {
+﻿#eventTextUsagehost.fragmenthost {
+    width: 100%;
+    height: 48px;
+}
+/**
+    listLangMandantDokumentList styles
+*/
+#listLangMandantDokumentList {
+    height: auto;
+}
+
+.headercircle {
     float: left;
     margin-top: 5px;
     margin-left: 10px;
-
 }
+
 .headercircletext {
     border-radius: 50%;
     width: 36px;
     height: 36px;
     padding: 8px;
-
     background: #fff;
     border: 2px solid #666;
     color: #666;
     text-align: center;
-
     font: 32px Arial, sans-serif;
 }
+
 .headertitletextcontainer {
     float: left;
     margin-top: 10px;
     margin-left: 10px;
 }
+
 .mailingeditboxhead {
     width: 90%;
     min-height: 100px;
@@ -30,6 +41,7 @@
     border: 1px solid darkgray;
     margin-top: 2px;
 }
+
 .mailingeditboxbottom {
     width: 90%;
     min-height: 100px;
@@ -38,65 +50,3 @@
     margin-top: 10px;
 }
 
-/**
-    dokVerwendungList styles
-*/
-
-#dokVerwendungList .win-selected {
-    color: WindowText;
-}
-#dokVerwendungList.win-listview {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 47px;
-    border-bottom-style: solid;
-    border-bottom-width: 1px;
-    border-bottom-color: gray;
-}
-#dokVerwendungList .win-viewport {
-    margin-bottom: -50px;
-    padding-bottom: 50px;
-    -ms-overflow-style: none;
-}
-
-#dokVerwendungList .win-viewport::-webkit-scrollbar {
-    height: 0 !important;
-}
-
-#dokVerwendungList .win-selectionbackground {
-    height: 4px;
-    top: 43px;
-    left: 0;
-    width: 0;
-}
-
-#dokVerwendungList .win-itemscontainer {
-    width: 100%;
-}
-
-#dokVerwendungList .win-container {
-    margin: 0;
-    padding: 0;
-    width: 1px;
-}
-
-#dokVerwendungList .navigationbar-text {
-    text-transform: none;
-}
-
-/**
-    listLangMandantDokumentList styles
-*/
-
-#listLangMandantDokumentList {
-    height: auto;
-}
-#dokVerwendungList .win-container {
-    height: 100%;
-    width: 350px;
-}
-
-#eventTextUsagehost.fragmenthost {
-    height: 120px;
-}

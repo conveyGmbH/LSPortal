@@ -14,19 +14,17 @@
         Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options) {
             Log.call(Log.l.trace, "EventTextUsage.Controller.");
             Fragments.Controller.apply(this, [fragmentElement, {
-
             }]);
 
             this.textUsage = new WinJS.Binding.List([]);
             var that = this;
-
 
             // now do anything...
             var listView = fragmentElement.querySelector("#dokVerwendungList.listview");
 
             var eventHandlers = {
                 onSelectionChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "EmpRoles.Controller.");
+                    Log.call(Log.l.trace, "EventTextUsage.Controller.");
                     if (listView && listView.winControl) {
                         var listControl = listView.winControl;
                         if (listControl.selection) {
@@ -35,26 +33,24 @@
                                 // Only one item is selected, show the page
                                 listControl.selection.getItems().done(function (items) {
                                     var item = items[0];
-                                    if (item.data && item.data.CR_MA_APUSERRoleVIEWID) {
-                                        var newRecId = item.data.CR_MA_APUSERRoleVIEWID;
-                                        Log.print(Log.l.trace, "newRecId:" + newRecId + " curRecId:" + that.curRecId);
-                                        if (newRecId !== 0 && newRecId !== that.curRecId) {
-                                            AppData.setRecordId('CR_MA_APUSERRole', newRecId);
-                                            if (that.curRecId) {
-                                                that.prevRecId = that.curRecId;
-                                            }
-                                            that.curRecId = newRecId;
-                                            if (that.prevRecId !== 0) {
-                                                that.saveData(function (response) {
-                                                    Log.print(Log.l.trace, "question saved");
-                                                    AppBar.triggerDisableHandlers();
-                                                }, function (errorResponse) {
-                                                    Log.print(Log.l.error, "error saving question");
-                                                });
+                                    Log.print(Log.l.trace, "item.data.INITDokVerwendungID=" + (item.data && item.data.INITDokVerwendungID) +
+                                        " (eventUsageId=" + that.binding.eventUsageId + ")");
+                                    if (item.data && item.data.INITDokVerwendungID &&
+                                        AppBar.scope && AppBar.scope.binding && typeof AppBar.scope.loadData === "function" &&
+                                        AppBar.scope.binding.eventUsageId !== item.data.INITDokVerwendungID) {
+                                        AppBar.scope.binding.eventUsageId = item.data.INITDokVerwendungID;
+                                        WinJS.Promise.timeout(50).then(function() {
+                                            return AppBar.scope.loadData();
+                                        }).then(function () {
+                                            var pageControl = fragmentElement.winControl;
+                                            if (pageControl && pageControl.updateLayout) {
+                                                pageControl.prevWidth = 0;
+                                                pageControl.prevHeight = 0;
+                                                return pageControl.updateLayout.call(pageControl, fragmentElement);
                                             } else {
-                                                AppBar.triggerDisableHandlers();
+                                                return WinJS.Promise.as();
                                             }
-                                        }
+                                        });
                                     }
                                 });
                             }
@@ -63,35 +59,25 @@
                     Log.ret(Log.l.trace);
                 },
                 onLoadingStateChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "EmpRoles.Controller.");
+                    Log.call(Log.l.trace, "EventTextUsage.Controller.");
                     if (listView && listView.winControl) {
                         Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
-                        // single list selection
-                        if (listView.winControl.selectionMode !== WinJS.UI.SelectionMode.single) {
-                            listView.winControl.selectionMode = WinJS.UI.SelectionMode.single;
-                        }
-                        // direct selection on each tap
-                        if (listView.winControl.tapBehavior !== WinJS.UI.TapBehavior.directSelect) {
-                            listView.winControl.tapBehavior = WinJS.UI.TapBehavior.directSelect;
-                        }
-                        // Double the size of the buffers on both sides
-                        /*if (!maxLeadingPages) {
-                            maxLeadingPages = listView.winControl.maxLeadingPages * 4;
-                            listView.winControl.maxLeadingPages = maxLeadingPages;
-                        }
-                        if (!maxTrailingPages) {
-                            maxTrailingPages = listView.winControl.maxTrailingPages * 4;
-                            listView.winControl.maxTrailingPages = maxTrailingPages;
-                        }*/
                         if (listView.winControl.loadingState === "itemsLoading") {
-                           /* if (!layout) {
-                                layout = new WinJS.UI.GridLayout();
-                                layout.orientation = "horizontal";
-                                listView.winControl.layout = { type: layout };
-                            }*/
                         } else if (listView.winControl.loadingState === "complete") {
-                            if (that.loading) {
-                                that.loading = false;
+                            var surface = listView.querySelector(".win-surface");
+                            if (surface) {
+                                if (surface.clientWidth < listView.clientWidth) {
+                                    WinJS.Promise.timeout(50).then(function() {
+                                        var pageControl = fragmentElement.winControl;
+                                        if (pageControl && pageControl.updateLayout) {
+                                            pageControl.prevWidth = 0;
+                                            pageControl.prevHeight = 0;
+                                            return pageControl.updateLayout.call(pageControl, fragmentElement);
+                                        } else {
+                                            return WinJS.Promise.as();
+                                        }
+                                    });
+                                }
                             }
                         }
                     }
@@ -100,18 +86,52 @@
             }
             this.eventHandlers = eventHandlers;
 
+            var scrollIntoView = function (curIndex) {
+                Log.call(Log.l.u1, "EventTextUsage.Controller.");
+                if (listView && listView.winControl) {
+                    var listControl = listView.winControl;
+                    var containers = listView.querySelectorAll(".win-container");
+                    if (containers && containers.length === that.textUsage.length && containers[0]) {
+                        var surface = listView.querySelector(".win-surface");
+                        if (surface) {
+                            var overflow = surface.clientWidth - listView.clientWidth;
+                            if (overflow > 0) {
+                                var containersWidth = 0;
+                                for (var i = 0; i < curIndex; i++) {
+                                    containersWidth += containers[i].clientWidth;
+                                    if (i === curIndex - 1) {
+                                        containersWidth -= containers[i].clientWidth / 4;
+                                    }
+                                }
+                                var scrollPosition = Math.floor(containersWidth);
+                                if (scrollPosition < 0) {
+                                    scrollPosition = 0;
+                                } else if (scrollPosition > overflow) {
+                                    scrollPosition = overflow;
+                                }
+                                if (listControl.scrollPosition !== scrollPosition) {
+                                    var prevScrollPosition = listControl.scrollPosition;
+                                    var animationDistanceX = (scrollPosition - prevScrollPosition) / 2;
+                                    var animationOptions = { top: "0px", left: animationDistanceX.toString() + "px" };
+                                    listControl.scrollPosition = scrollPosition;
+                                    WinJS.UI.Animation.enterContent(surface, animationOptions);
+                                }
+                            }
+                        }
+                    }
+                }
+                Log.ret(Log.l.u1);
+            }
+            that.scrollIntoView = scrollIntoView;
+
             // register ListView event handler
             if (listView) {
-                this.addRemovableEventListener(listView,
-                    "selectionchanged",
-                    this.eventHandlers.onSelectionChanged.bind(this));
-                this.addRemovableEventListener(listView,
-                    "loadingstatechanged",
-                    this.eventHandlers.onLoadingStateChanged.bind(this));
+                this.addRemovableEventListener(listView, "selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
+                this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
             }
 
             var loadData = function () {
-                Log.call(Log.l.trace, "EmpRoles.");
+                Log.call(Log.l.trace, "EventTextUsage.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                     if (that.textUsage.length === 0) {
@@ -146,9 +166,14 @@
                                 // called asynchronously if an error occurs
                                 // or server returns response with an error status.
                                 AppData.setErrorMsg(that.binding, errorResponse);
-                                that.loading = false;
                             });
                         }
+                    } else {
+                        return WinJS.Promise.as();
+                    }
+                }).then(function () {
+                    if (listView && listView.winControl) {
+                        return listView.winControl.selection.set(0);
                     } else {
                         return WinJS.Promise.as();
                     }
@@ -166,7 +191,7 @@
             });
             Log.ret(Log.l.trace);
         }, {
-            apuserRole: null
+            textUsage: null
         })
     });
 })();

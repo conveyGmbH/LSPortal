@@ -15,7 +15,11 @@
         VeranstaltungView: {
             select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, "LocalEvents.");
-                var ret = LocalEvents._VeranstaltungView.select(complete, error, restriction);
+                var ret = LocalEvents._VeranstaltungView.select(complete, error, restriction, {
+                    ordered: true,
+                    orderAttribute: "Startdatum",
+                    desc: true
+                });
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;

@@ -1,7 +1,9 @@
-﻿/**
+﻿.eventTextUsage .navigationbar-container {
+    width: 100%;
+}
+/**
     dokVerwendungList styles
 */
-
 #dokVerwendungList .win-selected {
     color: WindowText;
 }
