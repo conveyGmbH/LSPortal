@@ -8,6 +8,23 @@
 #eventTextList {
     height: auto;
 }
+#eventTextList .win-selectionborder {
+    border-color: transparent;
+}
+#eventTextList .win-itembox:hover::before {
+    border-color: transparent;
+}
+#eventTextList .label-right {
+    float: right;
+    opacity: 0.6;
+}
+#eventTextList .input_field {
+    margin-bottom: 0;
+}
+.view-size-medium #eventTextList .input_field {
+    float: left;
+    width: 100%;
+}
 
 .headercircle {
     float: left;

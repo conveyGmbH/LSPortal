@@ -1136,5 +1136,5 @@
     "contactResultsEvents.creator"			: "Erfasser",
     "contactResultsEvents.event"			: "Veranstaltung",
 
-	"eventResourceAdministration.eventTitleholder"  : "Geben Sie hier ein"
+	"eventResourceAdministration.eventTextPlaceholder"  : "Geben Sie hier ein: "
 }		

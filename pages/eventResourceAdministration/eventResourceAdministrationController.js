@@ -29,9 +29,9 @@
                     LabelBody: ""
                 },
                 overView: {
-                     Email: ""
+                    Email: ""
                 }
-            }, commandList, false, 
+        }, commandList, false, 
                 EventResourceAdministration.eventTextTable, 
                 EventResourceAdministration.eventTextView, listView]);
             
@@ -67,6 +67,7 @@
             };
             this.getFieldEntries = getFieldEntries;
 
+            var eventTextPlaceholder = getResourceText("eventResourceAdministration.eventTextPlaceholder");
             var resultConverter = function(item, index) {
                 Log.call(Log.l.trace, "EventResourceAdministration.Controller.");
                 if (!item.NameTitle) {
@@ -87,6 +88,15 @@
                 if (!item.NameBody) {
                     item.NameBody = "";
                 }
+                item.placeholderTitle = eventTextPlaceholder + item.NameTitle;
+                item.placeholderDescription = eventTextPlaceholder + item.NameDescription;
+                item.placeholderMainTitle = eventTextPlaceholder + item.NameMainTitle;
+                item.placeholderSubTitle = eventTextPlaceholder + item.NameSubTitle;
+                item.placeholderSummary = eventTextPlaceholder + item.NameSummary;
+                item.placeholderBody = eventTextPlaceholder + item.NameBody;
+
+                item.heightSummary = item.Summary ? "196px" : "";
+                item.heightBody = item.Body ? "196px" : "";
                 Log.ret(Log.l.trace);
             }
             this.resultConverter = resultConverter;
@@ -99,7 +109,7 @@
                     }
                     Log.ret(Log.l.trace);
                 },
-                clickOk: function (event) {
+                clickForward: function (event) {
                     Log.call(Log.l.trace, "EventResourceAdministration.Controller.");
                     AppBar.busy = true;
                     that.saveData(function (response) {
@@ -119,6 +129,39 @@
                 clickGotoPublish: function (event) {
                     Log.call(Log.l.trace, "EventResourceAdministration.Controller.");
                     Application.navigateById("publish", event);
+                    Log.ret(Log.l.trace);
+                },
+                pressEnterKey: function (event) {
+                    Log.call(Log.l.trace, "Questionnaire.Controller.");
+                    if (event && event.keyCode === WinJS.Utilities.Key.enter &&
+                        event.target && event.target.tagName &&
+                        event.target.tagName.toLowerCase() === "textarea") {
+                        if (event.stopPropagation) {
+                            event.stopPropagation();
+                        } else {
+                            event.cancelBubble = true;
+                        }
+                    }
+                    Log.ret(Log.l.trace);
+                },
+                activateEnterKey: function (event) {
+                    Log.call(Log.l.trace, "Questionnaire.Controller.");
+                    for (var i = 0; i < AppBar.commandList.length; i++) {
+                        if (AppBar.commandList[i].id === "clickForward") {
+                            AppBar.commandList[i].key = WinJS.Utilities.Key.enter;
+                            break;
+                        }
+                    }
+                    Log.ret(Log.l.trace);
+                },
+                deactivateEnterKey: function (event) {
+                    Log.call(Log.l.trace, "Questionnaire.Controller.");
+                    for (var i = 0; i < AppBar.commandList.length; i++) {
+                        if (AppBar.commandList[i].id === "clickForward") {
+                            AppBar.commandList[i].key = null;
+                            break;
+                        }
+                    }
                     Log.ret(Log.l.trace);
                 },
                 onSelectionChanged: function (eventInfo) {
