@@ -533,6 +533,7 @@
     "label.contactResultsAttach" : "Allegati",
     "label.contactResultsQuestion" : "Questionario",
     "label.contactResultsEvents" : "Eventi",
+    "label.eventResourceAdministration" : "Event Administration",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annulla",

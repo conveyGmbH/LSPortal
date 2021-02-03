@@ -477,6 +477,7 @@
     "label.clientManagementLicenses"	: "Licenses",
     "label.employeeVisitorFlow" : "VisitorFlow",
     "label.eventsuccess" : "EventSuccess",
+    "label.eventResourceAdministration" : "Event Administration",
     
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Cancel",

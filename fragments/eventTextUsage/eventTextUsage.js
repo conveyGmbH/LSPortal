@@ -22,6 +22,8 @@
             this.prevWidth = 0;
             this.prevHeight = 0;
 
+            Colors.changeCSS("#eventTextUsageList .win-selected", "color", Colors.navigationColor);
+
             this.controller = new EventTextUsage.Controller(element, options);
 
             Log.ret(Log.l.trace);

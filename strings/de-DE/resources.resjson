@@ -535,7 +535,7 @@
     "label.contactResultsAttach" : "Anhänge",
     "label.contactResultsQuestion" : "Fragebogen",
     "label.contactResultsEvents" : "Ereignisse",
-	"label.eventResourceAdministration" : "Event Text Administration",
+	"label.eventResourceAdministration" : "Event Administration",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Abbrechen",
