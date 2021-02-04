@@ -1,0 +1,46 @@
+﻿.mailingeditboxhead {
+    width: 90%;
+    height: 70px;
+    margin-left: 5%;
+    margin-right: 5%;
+    border: 1px solid darkgray;
+    margin-top: 2px;
+}
+.mailingeditboxbottom {
+    width: 86%;
+    min-height: 100px;
+    margin-left: 7%;
+    border: 1px solid darkgray;
+    margin-top: 2px;
+}
+.headercircle {
+    height: 45px;
+    width: 45px;
+    border: 2px solid darkgray;
+    border-radius: 50%;
+    display: inline-block;
+    margin-top: 11px;
+    margin-left: 5px;
+    text-align: center;
+    float: left;
+}
+.headercircletext {
+    font-size: 30px ;
+}
+.headertitletextcontainer {
+    float: left;
+    max-height: 70px;
+    max-width: 600px;
+    margin-left: 15px;
+    margin-top: 2px;
+}
+.headertitletext {
+    max-height: 25px !important;
+}
+#headertitletext {
+    font-size: 25px;
+    font-weight: bold;
+}
+#headertitletextcomment {
+    
+}

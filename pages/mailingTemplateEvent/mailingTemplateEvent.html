@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="mailingTemplateEvent.css" rel="stylesheet" />
+    <script type="text/javascript" src="mailingTemplateEventService.js"></script>
+    <script type="text/javascript" src="mailingTemplateEventController.js"></script>
+    <script type="text/javascript" src="mailingTemplateEvent.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="mailingTemplateEvent fragment">
+        <div id="mailingListController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="contentarea win-type-body">
+                    <div class="content-header">
+                        <div class="win-type-subtitle master-list-header">
+                            <span data-win-res="{textContent: 'mailingTemplateEvent.title'}"></span>
+                        </div>
+                    </div>
+                    <div id="inserttemplate" class="field_line field_line_odd" style="overflow-y: hidden; display: none;">
+                        <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'mailingTemplateEvent.directory'}"></span>
+                        <span class="label win-type-caption portrait_only_half" data-win-res="{textContent: 'mailingTemplateEvent.layoutname'}"></span>
+                        <div class="label landscape_only">
+                            <span data-win-res="{textContent: 'mailingTemplateEvent.director'}"></span> / <span data-win-res="{textContent: 'mailingTemplateEvent.layoutname'}"></span>
+                        </div>
+                        <div class="input_group">
+                            <select id="directorydropdown"
+                                    class="input_half_left win-dropdown"
+                                    data-win-control="WinJS.UI.Repeater"
+                                    data-win-bind="value: newDataTemplate.VAMailTypeID Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone">
+                                <option data-win-bind="value: VAMailTypeID; textContent: TITLE"></option>
+                            </select>
+                            <span class="input_small_left" data-win-bind="textContent: mailingTemplateEvent.directory; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                            <input class="input_half_right win-textbox" type="text" data-win-bind="value: newDataTemplate.TextName Binding.Mode.twoway" /> <br /><br />
+                            <span class="input_field" data-win-bind="textContent: mailingTemplateEvent.layoutname; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                        </div>
+                        <button class="templatesearch-button win-button" data-win-bind="textContent: templateinsertbtnlabel;" onclick="AppBar.handleEvent('click', 'clickInsertLayout', event)" autofocus="autofocus"></button>
+                    </div>
+                    <!--<div id="templatesearch" class="field_line field_line_odd">
+                        <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'mailingTemplateEvent.directory'}"></span>
+                        <span class="label landscape_only" data-win-res="{textContent: 'mailingTemplateEvent.directory'}"></span>
+                        <select id="firstdirectorydropdown"
+                                class="input_half_left win-dropdown"
+                                data-win-control="WinJS.UI.Repeater"
+                                data-win-bind="value: VAMailTypeID Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone">
+                            <option data-win-bind="value: VAMailTypeID; textContent: TITLE"></option>
+                        </select>
+                        <button class="templatesearch-button win-button" data-win-bind="textContent: templatesearchlabel; value: TemplateName" onclick="AppBar.handleEvent('click', 'clickTemplateSearch', event)" autofocus="autofocus"></button>
+                    </div>-->
+                    <div class="field_line scroll-line">
+                        <table id="tableId">
+                            <thead class="table-header">
+                                <tr>
+                                    <th></th>
+                                    <th data-win-bind="value: dataTemplateEventHeaderValue.TemplateName; textContent: dataTemplateEventHeaderText.TemplateName"></th>
+                                    <th data-win-bind="value: dataTemplateEventHeaderValue.MailTypeTitle; textContent: dataTemplateEventHeaderText.MailTypeTitle"></th>
+                                    <th data-win-bind="value: dataTemplateEventHeaderValue.UsedVeranstaltung; textContent: dataTemplateEventHeaderText.UsedVeranstaltung"></th>
+                                    <th data-win-bind="value: dataTemplateEventHeaderValue.LangsAvailable; textContent: dataTemplateEventHeaderText.LangsAvailable"></th>
+                                    <th data-win-bind="value: dataTemplateEventHeaderValue.Erfassungsdatum; textContent: dataTemplateEventHeaderText.Erfassungsdatum"></th>
+                                    <th data-win-bind="value: dataTemplateEventHeaderValue.IsActive; textContent: dataTemplateEventHeaderText.IsActive"></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-body" data-win-control="WinJS.UI.Repeater">
+                                <tr data-win-bind="value: VAMailLayoutVIEWID">
+                                    <td id="datacheckbox"><input type="checkbox" class="win-checkbox checkbox" data-win-bind="value: VAMailLayoutVIEWID" onchange="AppBar.handleEvent('click', 'setDeleteID', event)" /> </td>
+                                    <td>
+                                        <span data-win-bind="textContent: TextName"></span><br />
+                                        <span id="lmuser" data-win-bind="textContent: Modifier"></span>
+                                        <span id="lmutc" data-win-bind="textContent: ModifiedTS"></span>
+                                    </td>
+                                    <td data-win-bind="textContent: MailTypeTitle"></td>
+                                    <td data-win-bind="textContent: UsedVeranstaltung"></td>
+                                    <td data-win-bind="textContent: LangsAvailable"></td>
+                                    <td data-win-bind="textContent: CreateTS"></td>
+                                    <td>
+                                        <span id="templateactivestatus" data-win-bind="textContent: IsActive"></span>
+                                    </td>
+                                    <td id="edit">
+                                        <button class="mailedit-button win-button" data-win-bind="textContent: maileditlabel; value: VAMailLayoutVIEWID" onclick="AppBar.handleEvent('click', 'clickMailEdit', event)" autofocus="autofocus"></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+                    <div class="error-message"
+                         data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
+</section>
+        </div>
+    </div>
+</body>
+</html>

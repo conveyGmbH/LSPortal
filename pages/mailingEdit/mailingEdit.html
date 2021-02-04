@@ -1,0 +1,237 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="mailingEdit.css" rel="stylesheet" />
+    <script type="text/javascript" src="mailingEditService.js"></script>
+    <script type="text/javascript" src="mailingEditController.js"></script>
+    <script type="text/javascript" src="mailingEdit.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="mailingEdit fragment">
+        <div id="mailingEditController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="contentarea win-type-body">
+                    <div class="header-separator"></div>
+                    <div class="content-header">
+                        <div class="half-circle half-circle-textcolor">&nbsp;</div>
+                        <div class="content-header-line win-type-caption">
+                            <span class="id-field"></span>
+                            <span class="caption-field" data-win-res="{textContent: 'mailingEdit.title'}"></span>
+                            <span class="date-field"></span>
+                        </div>
+                    </div>
+                    <div class="row-separator"></div>
+                    <div class="contentarea">
+                        <div id="nameheader" class="mailingeditboxhead" onclick="AppBar.handleEvent('onclick', 'clickOpenEdit', event)">
+                            <span class="headercircle">
+                                <div class="headercircletext">1</div>
+                            </span>
+                            <div class="headertitletextcontainer">
+                                <span id="headertitletext" class="headertitletext" data-win-res="{textContent: 'mailingEdit.nametitleheader'}"></span><br/>
+                                <span id="headertitletextcomment" class="headertitletext" data-win-res="{textContent: 'mailingEdit.nametitlecomment'}"></span>
+                            </div>
+                            <div class="list-symbol-ID">
+                                <div data-win-bind="name: nav_down" class="action-image"></div>
+                            </div>
+                        </div>
+                        <div id="namebottom" class="mailingeditboxbottom">
+                            <div class="field_line field_line_odd">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingEdit.mailname'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'mailingEdit.mailname'}"></span>
+                                <input class="input_field win-textbox" type="text" data-win-bind="value: mailName.MailTypeName Binding.Mode.twoway" data-win-bind-onevent="onkeyup" data-win-res="{placeholder: 'mailingEdit.eventnameholder'}"/>
+                            </div>
+                        </div>
+                        
+                        <div id="headerfielsheader" class="mailingeditboxhead" onclick="AppBar.handleEvent('onclick', 'clickOpenEdit', event)">
+                            <span class="headercircle">
+                                <div class="headercircletext">2</div>
+                            </span>
+                            <div class="headertitletextcontainer">
+                                <span id="headertitletext" class="headertitletext" data-win-res="{textContent: 'mailingEdit.headerfieldstitleheader'}"></span><br />
+                                <span id="headertitletextcomment" class="headertitletext" data-win-res="{textContent: 'mailingEdit.headerfieldstitlecomment'}"></span>
+                            </div>
+                            <div class="list-symbol-ID">
+                                <div data-win-bind="name: nav_down" class="action-image"></div>
+                            </div>
+                        </div>
+                        <div id="headerfielsbottom" class="mailingeditboxbottom">
+                            <div class="field_line">
+                                <div class="field_line field_line_odd" style="overflow-y: hidden">
+                                    <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'mailingEdit.sender'}"></span>
+                                    <span class="label win-type-caption portrait_only_half" data-win-res="{textContent: 'mailingEdit.reply'}"></span>
+                                    <div class="label landscape_only">
+                                        <span data-win-res="{textContent: 'mailingEdit.sender'}"></span> / <span data-win-res="{textContent: 'mailingEdit.reply'}"></span>
+                                    </div>
+                                    <div class="input_group">
+                                        <input name="Vorname" class="input_half_left win-textbox" type="text" data-win-bind="value: dataMail.SenderAddr Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" />
+                                        <span class="input_small_left" data-win-bind="textContent: dataContact.Sender; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                                        <input class="input_half_right win-textbox" type="text" data-win-bind="value: dataMail.ReplyToAddr Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" />
+                                        <span class="input_field" data-win-bind="textContent: dataContact.BCC; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field_line">
+                                <div class="field_line field_line_odd" style="overflow-y: hidden">
+                                    <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'mailingEdit.cc'}"></span>
+                                    <span class="label win-type-caption portrait_only_half" data-win-res="{textContent: 'mailingEdit.bcc'}"></span>
+                                    <div class="label landscape_only">
+                                        <span data-win-res="{textContent: 'mailingEdit.cc'}"></span> / <span data-win-res="{textContent: 'mailingEdit.bcc'}"></span>
+                                    </div>
+                                    <div class="input_group">
+                                        <input name="Vorname" class="input_half_left win-textbox" type="text" data-win-bind="value: dataMail.CCAddr Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" />
+                                        <span class="input_small_left" data-win-bind="textContent: dataContact.CC; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                                        <input class="input_half_right win-textbox" type="text" data-win-bind="value: dataMail.BCCAddr Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" />
+                                        <span class="input_field" data-win-bind="textContent: dataContact.BCC; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="emailtextheader" class="mailingeditboxhead" onclick="AppBar.handleEvent('onclick', 'clickOpenEdit', event)">
+                            <span class="headercircle">
+                                <div class="headercircletext">3</div>
+                            </span>
+                            <div class="headertitletextcontainer">
+                                <span id="headertitletext" class="headertitletext" data-win-res="{textContent: 'mailingEdit.emailtexttitleheader'}"></span><br />
+                                <span id="headertitletextcomment" class="headertitletext" data-win-res="{textContent: 'mailingEdit.emailtexttitlecomment'}"></span>
+                            </div>
+                            <div class="list-symbol-ID">
+                                <div data-win-bind="name: nav_down" class="action-image"></div>
+                            </div>
+                        </div>
+                        <div id="emailtextbottom" class="mailingeditboxbottom">
+                            <div class="field_line field_line_even">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingEdit.template'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'mailingEdit.template'}"></span>
+                                <select id="templatedropdown"
+                                        class="input_field win-dropdown"
+                                        data-win-control="WinJS.UI.Repeater"
+                                        data-win-bind="value: dataMail.LayoutID Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone">
+                                    <option data-win-bind="value: VAMailLayoutVIEWID; textContent: TextName"></option>
+                                </select>
+                                <span class="input_field" data-win-bind="textContent: InitLandItem.TITLE; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                            </div>
+                        </div>
+                        
+                        <div id="dispatchoptionsheader" class="mailingeditboxhead" onclick="AppBar.handleEvent('onclick', 'clickOpenEdit', event)">
+                            <span class="headercircle">
+                                <div class="headercircletext">4</div>
+                            </span>
+                            <div class="headertitletextcontainer">
+                                <span id="headertitletext" class="headertitletext" data-win-res="{textContent: 'mailingEdit.dispatchoptionstitleheader'}"></span><br />
+                                <span id="headertitletextcomment" class="headertitletext" data-win-res="{textContent: 'mailingEdit.dispatchoptionstitlecomment'}"></span>
+                            </div>
+                            <div class="list-symbol-ID">
+                                <div data-win-bind="name: nav_down" class="action-image"></div>
+                            </div>
+                        </div>
+                        <div id="dispatchoptionsbottom" class="mailingeditboxbottom">
+                            <div class="field_line">
+                                <!--  <div class="field_line field_line_odd">
+                                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingEdit.shippingdelay'}"></span>
+                                        <span class="label landscape_only" data-win-res="{textContent: 'mailingEdit.shippingdelay'}"></span>
+                                        <select id="InitLand"
+                                                class="input_field win-dropdown"
+                                                data-win-control="WinJS.UI.Repeater"
+                                                data-win-bind="value: dataContact.INITLandID Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone">
+                                            <option data-win-bind="value: INITLandID; textContent: TITLE"></option>
+                                        </select>
+                                        <span class="input_field" data-win-bind="textContent: InitLandItem.TITLE; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                                    </div>
+                                </div>
+                                <div class="field_line">
+                                    <div class="field_line field_line_odd">
+                                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingEdit.confirmation'}"></span>
+                                        <span class="label landscape_only" data-win-res="{textContent: 'mailingEdit.confirmation'}"></span>
+                                        <div class="input_field toggle-switch-parent">
+                                            <div id="turnThumbsLeft" class="input_field"
+                                                 data-win-control="WinJS.UI.ToggleSwitch"
+                                                 data-win-bind="winControl.checked: generalData.on Binding.Mode.twoway; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off">
+                                            </div>
+                                        </div>
+                                    </div>-->
+                            </div>
+                            </div>
+
+                            <div id="enableheader" class="mailingeditboxhead" onclick="AppBar.handleEvent('onclick', 'clickOpenEdit', event)">
+                                <span class="headercircle">
+                                    <div class="headercircletext">5</div>
+                                </span>
+                                <div class="headertitletextcontainer">
+                                    <span id="headertitletext" class="headertitletext" data-win-res="{textContent: 'mailingEdit.enabletitleheader'}"></span><br />
+                                    <span id="headertitletextcomment" class="headertitletext" data-win-res="{textContent: 'mailingEdit.enabletitlecomment'}"></span>
+                                </div>
+                                <div class="list-symbol-ID">
+                                    <div data-win-bind="name: nav_down" class="action-image"></div>
+                                </div>
+                            </div>
+                            <div id="enablebottom" class="mailingeditboxbottom">
+                                <div class="field_line">
+                                    <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'mailing.foa'}"></span>
+                                    <select id="InitMailingAnrede"
+                                            class="input_small_left win-dropdown"
+                                            data-win-control="WinJS.UI.Repeater"
+                                            data-win-bind="value: dataTestMail.AnredeID Binding.Mode.twoway; style.display: dataTestMail.Flag_NoEdit Binding.Converter.toDisplayNone">
+                                        <option data-win-bind="value: INITAnredeID; textContent: TITLE"></option>
+                                    </select>
+                                </div>
+                                <div class="field_line field_line_odd" style="overflow-y: hidden">
+                                    <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'mailing.firstname'}"></span>
+                                    <span class="label win-type-caption portrait_only_half" data-win-res="{textContent: 'mailing.surname'}"></span>
+                                    <div class="label landscape_only">
+                                        <span data-win-res="{textContent: 'mailing.firstname'}"></span> / <span data-win-res="{textContent: 'mailing.surname'}"></span>
+                                    </div>
+                                    <div class="input_group">
+                                        <input name="Vorname" class="input_half_left win-textbox" type="text" data-win-bind="value: dataTestMail.Vorname Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" />
+                                        <span class="input_small_left" data-win-bind="textContent: mailing.firstname; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                                        <input class="input_half_right win-textbox" type="text" data-win-bind="value: dataTestMail.Nachname Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" />
+                                        <span class="input_field" data-win-bind="textContent: mailing.surname; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                                    </div>
+                                </div> <br /> <br /> <br /> <br />
+                                <div class="field_line field_line_odd" style="overflow-y: hidden">
+                                    <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'mailing.email'}"></span>
+                                    <span class="label win-type-caption portrait_only_half" data-win-res="{textContent: 'mailing.language'}"></span>
+                                    <div class="label landscape_only">
+                                        <span data-win-res="{textContent: 'mailing.email'}"></span> / <span data-win-res="{textContent: 'mailing.language'}"></span>
+                                    </div>
+                                    <div class="input_group">
+                                        <input class="input_half_left win-textbox" type="text" data-win-bind="value: dataTestMail.TargetAddr Binding.Mode.twoway" data-win-bind-onevent="onkeyup" />
+                                        <span class="input_small_left" data-win-bind="textContent: mailing.email; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                                        <select id="InitSprache"
+                                                class="input_half_right win-dropdown"
+                                                data-win-control="WinJS.UI.Repeater"
+                                                data-win-bind="value: dataTestMail.LanguageID Binding.Mode.twoway">
+                                            <option data-win-bind="value: LanguageID; textContent: TITLE"></option>
+                                        </select>
+                                        <span class="input_field" data-win-bind="textContent: mailing.language; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                                    </div>
+                                </div>
+                                <div class="field_line">
+                                    <button class="sendtestmail-button win-button"
+                                            data-win-bind="textContent: sendtstmailLabel;"
+                                            onclick="AppBar.handleEvent('click', 'clickSendTestMail', event)" autofocus="autofocus"></button>
+                                </div>
+                                <div class="field_line">
+                                    <div class="mail-message"></div>
+                                </div>
+                                <div class="field_line">
+                                    <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingEdit.mailactive'}"></span>
+                                    <span class="label landscape_only" data-win-res="{textContent: 'mailingEdit.mailactive'}"></span>
+                                    <div class="input_field toggle-switch-parent">
+                                        <div id="turnThumbsLeft" class="input_field"
+                                             data-win-control="WinJS.UI.ToggleSwitch"
+                                             data-win-bind="winControl.checked: dataMail.IsActive Binding.Mode.twoway; winControl.labelOn: generalData.active; winControl.labelOff: generalData.inactive">
+                                        </div>
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                </div>
+                <div class="error-message"
+                     data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

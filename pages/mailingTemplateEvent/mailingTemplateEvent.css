@@ -1,0 +1,65 @@
+﻿.mailingTemplateEvent .scroll-line {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.mailingTemplateEvent * {
+    box-sizing: border-box;
+}
+
+.mailingTemplateEvent table {
+    border-collapse: collapse;
+    width: 100%;
+    overflow: hidden;
+}
+
+.mailingTemplateEvent td,
+.mailingTemplateEvent th {
+    padding: 5px 15px;
+    text-align: left;
+    height: 35px;
+}
+
+.mailingTemplateEvent table {
+    border: 1px solid grey;
+}
+
+.mailingTemplateEvent td,
+.mailingTemplateEvent th {
+    border-bottom: 1px solid grey;
+    border-top: 1px solid grey;
+}
+
+.mailingTemplateEvent .table-body tr:hover {
+    background: #f8f9fb;
+}
+
+.mailingTemplateEvent #counter {
+    margin-left: 25px;
+}
+
+.mailingTemplateEvent table,
+.mailingTemplateEvent tr,
+.mailingTemplateEvent #status {
+    border-right: 0px !important;
+}
+
+.mailingTemplateEvent table,
+.mailingTemplateEvent tr,
+.mailingTemplateEvent #datacheckbox {
+    border-left: 0px !important;
+}
+.templatesearch-button {
+    background-color: #e7e7e7 !important;
+    color: black !important;
+    margin-left: 5px;
+}
+#templatesearch {
+    float: left;
+}
+#inserttemplate {
+    float: none !important;
+}
+.mailingTemplateEvent #lmuser, .mailingTemplateEvent #lmutc {
+    font-style: italic !important;
+}

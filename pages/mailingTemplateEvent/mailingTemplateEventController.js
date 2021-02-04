@@ -6,21 +6,24 @@
 /// <reference path="~/www/lib/convey/scripts/appbar.js" />
 /// <reference path="~/www/lib/convey/scripts/pageController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
-/// <reference path="~/www/pages/mailingList/mailingListService.js" />
+/// <reference path="~/www/pages/mailingTemplateEvent/mailingTemplateEventService.js" />
 
 (function () {
     "use strict";
 
     var nav = WinJS.Navigation;
 
-    WinJS.Namespace.define("MailingList", {
+    WinJS.Namespace.define("MailingTemplateEvent", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
-            Log.call(Log.l.trace, "MailingList.Controller.");
+            Log.call(Log.l.trace, "MailingTemplateEvent.Controller.");
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
-                dataMailingHeaderValue: getEmptyDefaultValue(MailingList.VAMail.defaultContactHeader),
-                dataMailingHeaderText: getEmptyDefaultValue(MailingList.VAMail.defaultContactHeader),
-                maileditlabel: getResourceText("mailingList.maileditlabel")
+                dataTemplateEventHeaderValue: getEmptyDefaultValue(MailingTemplateEvent.VAMailLayout.defaultRestriction),
+                dataTemplateEventHeaderText: getEmptyDefaultValue(MailingTemplateEvent.VAMailLayout.defaultRestriction),
+                newDataTemplate: getEmptyDefaultValue(MailingTemplateEvent.VAMailLayout.insertRestriction),
+                templatesearchlabel: getResourceText("mailingTemplateEvent.templatesearchbtn"),
+                templateinsertbtnlabel: getResourceText("mailingTemplateEvent.templateinserthbtn"),
+                deleteID : null
             }, commandList]);
             this.nextUrl = null;
 
@@ -28,108 +31,16 @@
             var table = pageElement.querySelector("#tableId");
             var tableHeader = pageElement.querySelector(".table-header");
             var tableBody = pageElement.querySelector(".table-body");
-            var contentArea = pageElement.querySelector(".contentarea"); 
-
+            var contentArea = pageElement.querySelector(".contentarea");
+            var directory = pageElement.querySelector("#directorydropdown"); 
+            //var firstdirectory = pageElement.querySelector("#firstdirectorydropdown");
+            
             this.dispose = function () {
                 if (tableBody && tableBody.winControl) {
                     tableBody.winControl.data = null;
                 }
             }
-
-            var loadIcons = function () {
-                var icons = pageElement.querySelectorAll("#icons .action-image");
-                for (var i = 0; i < icons.length; i++) {
-                    icons[i].name = "mail_open2";
-                }
-                Colors.loadSVGImageElements(tableBody, "action-image", 40, Colors.textColor, "name");
-            }
-            this.loadIcons = loadIcons;
-
-            var initializeTemplates = function (complete, error) {
-                Log.call(Log.l.trace, "Contact.Controller.");
-                AppData.setErrorMsg(that.binding);
-                var recordId = AppData.getRecordId("Veranstaltung");
-                if (recordId) {
-                    AppData.setErrorMsg(that.binding);
-                    AppData.call("PRC_INITVAMails", {
-                        pVeranstaltungID: recordId
-                    }, function (json) {
-                        Log.print(Log.l.info, "call success! ");
-                    }, function (error) {
-                        Log.print(Log.l.error, "call error");
-                    });
-                } else {
-                    var err = { status: 0, statusText: "no event" };
-                    error(err);
-                }
-                Log.ret(Log.l.trace);
-            };
-            this.initializeTemplates = initializeTemplates;
-
-            var loadFlags = function() {
-                var flagde = pageElement.querySelectorAll("#flags #flagde");
-                for (var i = 0; i < flagde.length; i++) {
-                    flagde[i].name = "de";
-                }
-                var flaggb = pageElement.querySelectorAll("#flags #flaggb");
-                for (var i = 0; i < flaggb.length; i++) {
-                    flaggb[i].name = "gb";
-                }
-                var flagit = pageElement.querySelectorAll("#flags #flagit");
-                for (var i = 0; i < flagit.length; i++) {
-                    flagit[i].name = "it";
-                }
-                var flagfr = pageElement.querySelectorAll("#flags #flagfr");
-                for (var i = 0; i < flagfr.length; i++) {
-                    flagfr[i].name = "fr";
-                }
-                var flages = pageElement.querySelectorAll("#flags #flages");
-                for (var i = 0; i < flages.length; i++) {
-                    flages[i].name = "es";
-                }
-                Colors.loadSVGImageElements(tableBody, "flag-image", 20, null , "name");
-            }
-            this.loadFlags = loadFlags;
-
-            var setFlags = function(flagdata) {
-                Log.call(Log.l.trace, "ContactResultsList.Controller.");
-
-                var flaggb = pageElement.querySelectorAll("#flags #flaggb");
-                var flagde = pageElement.querySelectorAll("#flags #flagde");
-                var flagfr = pageElement.querySelectorAll("#flags #flagfr");
-                var flages = pageElement.querySelectorAll("#flags #flages");
-                var flagit = pageElement.querySelectorAll("#flags #flagit");
-
-                for (var i = 0; i < flagdata.length; i++) {
-                    if (flagdata[i].EN_OK) {
-                        flaggb[i].style.display = "block";
-                    } else {
-                        flaggb[i].style.display = "none";
-                    }
-                    if (flagdata[i].DE_OK) {
-                        flagde[i].style.display = "block";
-                    } else {
-                        flagde[i].style.display = "none";
-                    }
-                    if (flagdata[i].FR_OK) {
-                        flagfr[i].style.display = "block";
-                    } else {
-                        flagfr[i].style.display = "none";
-                    }
-                    if (flagdata[i].ES_OK) {
-                        flages[i].style.display = "block";
-                    } else {
-                        flages[i].style.display = "none";
-                    }
-                    if (flagdata[i].IT_OK) {
-                        flagit[i].style.display = "block";
-                    } else {
-                        flagit[i].style.display = "none";
-                    }
-                }
-            }
-            this.setFlags = setFlags;
-
+            
             var editButton = function() {
                 var editbutton = pageElement.querySelectorAll(".mailedit-button");
                 for (var i = 0; i < editbutton.length; i++) {
@@ -140,34 +51,32 @@
 
             var createHeaderData = function() {
                 Log.call(Log.l.trace, "ContactResultsList.Controller.");
-                that.binding.dataMailingHeaderValue.VAMailTypeID = "VAMailTypeID";
-                that.binding.dataMailingHeaderValue.MailTypeName = "MailTypeName";
-                that.binding.dataMailingHeaderValue.VeranstaltungName ="VeranstaltungName" ;
-                that.binding.dataMailingHeaderValue.Serie = "Serie";
-                that.binding.dataMailingHeaderValue.TemplateName = "TemplateName";
-                that.binding.dataMailingHeaderValue.LastModUTC = "LastModUTC";
-                that.binding.dataMailingHeaderValue.Language = "Language";
-                that.binding.dataMailingHeaderValue.IsActive = "IsActive";
-                that.binding.dataMailingHeaderText.VAMailTypeID = getResourceText("mailingList.headerMailTyp");
-                that.binding.dataMailingHeaderText.MailTypeName = getResourceText("mailingList.headermailtypename");
-                that.binding.dataMailingHeaderText.VeranstaltungName = getResourceText("mailingList.headerveranstaltungname");
-                that.binding.dataMailingHeaderText.Serie = getResourceText("mailingList.headerserie");
-                that.binding.dataMailingHeaderText.TemplateName = getResourceText("mailingList.headertemplatename");
-                that.binding.dataMailingHeaderText.LastModUTC = getResourceText("mailingList.headerlastmodutc");
-                that.binding.dataMailingHeaderText.Language = getResourceText("mailingList.headerlanguage");
-                that.binding.dataMailingHeaderText.IsActive = getResourceText("mailingList.headeractive");
+                that.binding.dataTemplateEventHeaderValue.TemplateName = "TemplateName";
+                that.binding.dataTemplateEventHeaderValue.MailTypeTitle = "MailTypeTitle";
+                that.binding.dataTemplateEventHeaderValue.VeranstaltungName ="VeranstaltungName" ;
+                that.binding.dataTemplateEventHeaderValue.UsedVeranstaltung = "UsedVeranstaltung";
+                that.binding.dataTemplateEventHeaderValue.LangsAvailable = "LangsAvailable";
+                that.binding.dataTemplateEventHeaderValue.Erfassungsdatum = "Erfassungsdatum";
+                that.binding.dataTemplateEventHeaderValue.IsActive = "IsActive";
+                that.binding.dataTemplateEventHeaderText.TemplateName = getResourceText("mailingTemplateEvent.headertemplatename");
+                that.binding.dataTemplateEventHeaderText.MailTypeTitle = getResourceText("mailingTemplateEvent.headermailtypetitle");
+                that.binding.dataTemplateEventHeaderText.VeranstaltungName = getResourceText("mailingTemplateEvent.headerveranstaltungname");
+                that.binding.dataTemplateEventHeaderText.UsedVeranstaltung = getResourceText("mailingTemplateEvent.headerusedveranstaltung");
+                that.binding.dataTemplateEventHeaderText.LangsAvailable = getResourceText("mailingTemplateEvent.headerlangsavailable");
+                that.binding.dataTemplateEventHeaderText.Erfassungsdatum = getResourceText("mailingTemplateEvent.headererfassungsdatum");
+                that.binding.dataTemplateEventHeaderText.IsActive = getResourceText("mailingTemplateEvent.headerisactive");
                 Log.call(Log.l.trace, "ContactResultsList.Controller.");
             }
             this.createHeaderData = createHeaderData;
 
             var setMailStatusColor = function() {
-                var mailActiveStatus = pageElement.querySelectorAll("#mailactivestatus");
+                var templateActiveStatus = pageElement.querySelectorAll("#templateactivestatus");
                 var active = getResourceText("mailingList.active");
-                for (var i = 0; i < mailActiveStatus.length; i++) {
-                    if (mailActiveStatus[i].textContent === active) {
-                        mailActiveStatus[i].style.backgroundColor = "green";
+                for (var i = 0; i <= templateActiveStatus.length; i++) {
+                    if (templateActiveStatus[i].textContent === active) {
+                        templateActiveStatus[i].style.backgroundColor = "green";
                     } else {
-                        mailActiveStatus[i].style.backgroundColor = "orange";
+                        templateActiveStatus[i].style.backgroundColor = "orange";
                     }
                 }
             }
@@ -191,7 +100,7 @@
                 return formdate;
             };
             this.getDateObject = getDateObject;
-
+            
             var resizableGrid = function () {
                 var row = tableHeader ? tableHeader.querySelector("tr") : null,
                     cols = row ? row.children : null;
@@ -284,87 +193,7 @@
                 }
             }
             this.resizableGrid = resizableGrid;
-
-            var setHeaderText = function (headervalue, headertext) {
-                var up = " ↑";
-                var down = " ↓";
-                var headervalueup = headervalue.concat(up);
-                var headervaluedown = headervalue.concat(down);
-                if (headervalue === "Name") {
-                    if (headertext === headervalueup) {
-                        that.binding.dataContactHeaderText.Name = headervaluedown;
-                    } else if (headertext === headervaluedown) {
-                        that.binding.dataContactHeaderText.Name = headervalueup;
-                    } else {
-                        that.binding.dataContactHeaderText.Name = headervaluedown;
-                    }
-                }
-                if (headervalue === "Vorname") {
-                    if (headertext === headervalue + " ↓") {
-
-                    } else if (headertext === headervalue + " ↑") {
-
-                    } else {
-
-                    }
-                }
-                if (headervalue === "Firmenname") {
-                    if (headertext === headervalue + " ↓") {
-
-                    } else if (headertext === headervalue + " ↑") {
-
-                    } else {
-
-                    }
-                }
-                if (headervalue === "EMail") {
-                    if (headertext === headervalue + " ↓") {
-
-                    } else if (headertext === headervalue + " ↑") {
-
-                    } else {
-
-                    }
-                }
-                if (headervalue === "Stadt") {
-                    if (headertext === headervalue + " ↓") {
-
-                    } else if (headertext === headervalue + " ↑") {
-
-                    } else {
-
-                    }
-                }
-                if (headervalue === "Land") {
-                    if (headertext === headervalue + " ↓") {
-
-                    } else if (headertext === headervalue + " ↑") {
-
-                    } else {
-
-                    }
-                }
-                if (headervalue === "KontaktPrio") {
-                    if (headertext === headervalue + " ↓") {
-
-                    } else if (headertext === headervalue + " ↑") {
-
-                    } else {
-
-                    }
-                }
-                if (headervalue === "KontaktTyp") {
-                    if (headertext === headervalue + " ↓") {
-
-                    } else if (headertext === headervalue + " ↑") {
-
-                    } else {
-
-                    }
-                }
-            }
-            this.setHeaderText = setHeaderText;
-
+            
             var addHeaderRowHandlers = function () {
                 if (tableHeader) {
                     var cells = tableHeader.getElementsByTagName("th");
@@ -373,7 +202,7 @@
                         if (!cell.onclick) {
                             cell.onclick = function (myrow) {
                                 return function () {
-                                    var restriction = ContactResultsList.KontaktReport.defaultRestriction;
+                                    var restriction = MailingTemplateEvent.VAMailLayout.defaultRestriction;
                                     var sortname = myrow.value;
                                     if (restriction.OrderAttribute !== sortname) {
                                         restriction.OrderAttribute = sortname;
@@ -405,7 +234,7 @@
                                 return function () {
                                     var id = myrow.value;
                                     AppData.setRecordId("VAMail", id);
-                                    Application.navigateById("mailingEdit");
+                                    Application.navigateById("MailingTemplateEventEdit");
                                 };
                             }(row);
                         }
@@ -413,6 +242,92 @@
                 }
             }
             this.addBodyRowHandlers = addBodyRowHandlers;
+
+            var insertBtn = function() {
+                var insertTemplate = pageElement.querySelector("#inserttemplate");
+                if (insertTemplate.style.display === "none") {
+                    insertTemplate.style.display = "block";
+                } else {
+                    that.binding.newDataTemplate = getEmptyDefaultValue(MailingTemplateEvent.VAMailLayout.insertRestriction);
+                    insertTemplate.style.display = "none";
+                }
+            }
+            this.insertBtn = insertBtn;
+
+            var processAllData = function() {
+                Log.call(Log.l.trace, "Employee.Controller.");
+                that.processAll().then(function () {
+                    Log.print(Log.l.trace, "Binding wireup page complete");
+                    return that.createHeaderData();
+                }).then(function () {
+                    Log.print(Log.l.trace, "Binding wireup page complete");
+                    return that.loadData();
+                }).then(function () {
+                    Log.print(Log.l.trace, "Binding wireup page complete");
+                    return that.resizableGrid();
+                }).then(function () {
+                    Log.print(Log.l.trace, "Binding wireup page complete");
+                    return that.addHeaderRowHandlers();
+                }).then(function () {
+                    Log.print(Log.l.trace, "Binding wireup page complete");
+                    return that.addBodyRowHandlers();
+                }).then(function () {
+                    Log.print(Log.l.trace, "Binding wireup page complete");
+                    return that.editButton();
+                }).then(function () {
+                    Log.print(Log.l.trace, "Binding wireup page complete");
+                    return that.setMailStatusColor();
+                }).then(function () {
+                    Log.print(Log.l.trace, "Data loaded");
+                    AppBar.notifyModified = true;
+                });
+            }
+            this.processAllData = processAllData;
+
+            var getLangSpecErrorMsg = function (resultmessageid, errorMsg) {
+                Log.call(Log.l.trace, "Employee.Controller.");
+                var lang = AppData.getLanguageId();
+                AppData.setErrorMsg(that.binding);
+                AppData.call("PRC_GetLangText", {
+                    pTextID: resultmessageid,
+                    pLanguageID: lang
+                }, function (json) {
+                    Log.print(Log.l.info, "call success! ");
+                    errorMsg.data.error.message.value = json.d.results[0].ResultText;
+                    AppData.setErrorMsg(that.binding, errorMsg);
+                }, function (error) {
+                    Log.print(Log.l.error, "call error");
+
+                });
+                Log.ret(Log.l.trace);
+            }
+            this.getLangSpecErrorMsg = getLangSpecErrorMsg;
+
+            var getErrorMsgFromErrorStack = function (errorMsg) {
+                Log.call(Log.l.trace, "Employee.Controller.");
+                AppData.setErrorMsg(that.binding);
+                AppData.call("PRC_GetErrorStack", {
+                }, function (json) {
+                    Log.print(Log.l.info, "call success! ");
+                    AppBar.modified = false;
+                    if (json.d.results[0].ResultMessageID > 0) {
+                        errorMsg.data.error.code = json.d.results[0].ResultCode;
+                        errorMsg.data.error.message.value = that.getLangSpecErrorMsg(json.d.results[0].ResultMessageID, errorMsg);
+                        Log.print(Log.l.info, "call success! ");
+                    } else {
+                        errorMsg.data.error.message.value = json.d.results[0].ResultMessage;
+                        errorMsg.data.error.code = json.d.results[0].ResultCode;
+                        AppData.setErrorMsg(that.binding, errorMsg);
+                        Log.print(Log.l.info, "call success! ");
+                    }
+                }, function (error) {
+                    Log.print(Log.l.error, "call error");
+                    AppBar.modified = false;
+
+                });
+                Log.ret(Log.l.trace);
+            }
+            this.getErrorMsgFromErrorStack = getErrorMsgFromErrorStack;
 
             // define handlers
             this.eventHandlers = {
@@ -423,6 +338,66 @@
                     }
                     Log.ret(Log.l.trace);
                 },
+                clickNew: function (event) {
+                    Log.call(Log.l.trace, "LocalEvents.Controller.");
+                    that.insertBtn();
+                    Log.ret(Log.l.trace);
+                },
+                clickInsertLayout: function(event) {
+                    Log.call(Log.l.trace, "LocalEvents.Controller.");
+                    AppBar.busy = true;
+                    Log.print(Log.l.trace, "eployee saved");
+                    var newLayoutData = that.binding.newDataTemplate;
+                    newLayoutData.VAMailTypeID = parseInt(newLayoutData.VAMailTypeID);
+                    MailingTemplateEvent.VAMailLayout.insert(function(json) {
+                            AppBar.busy = false;
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            Log.print(Log.l.info, "employeeView insert: success!");
+                            // employeeView returns object already parsed from json file in response
+                            if (json && json.d) {
+                                Log.print(Log.l.error, "error inserting employee");
+                                that.insertBtn();
+                                that.processAll().then(function () {
+                                    Log.print(Log.l.trace, "Binding wireup page complete");
+                                    return that.createHeaderData();
+                                }).then(function () {
+                                    Log.print(Log.l.trace, "Binding wireup page complete");
+                                    return that.loadData();
+                                }).then(function () {
+                                    Log.print(Log.l.trace, "Binding wireup page complete");
+                                    return that.resizableGrid();
+                                }).then(function () {
+                                    Log.print(Log.l.trace, "Binding wireup page complete");
+                                    return that.addHeaderRowHandlers();
+                                }).then(function () {
+                                    Log.print(Log.l.trace, "Binding wireup page complete");
+                                    return that.addBodyRowHandlers();
+                                }).then(function () {
+                                    Log.print(Log.l.trace, "Binding wireup page complete");
+                                    return that.editButton();
+                                }).then(function () {
+                                    Log.print(Log.l.trace, "Binding wireup page complete");
+                                    return that.setMailStatusColor();
+                                }).then(function () {
+                                    Log.print(Log.l.trace, "Data loaded");
+                                    AppBar.notifyModified = true;
+                                });
+                            }
+                            AppBar.modified = true;
+                        },
+                        function(errorResponse) {
+                            Log.print(Log.l.error, "error inserting employee");
+                            AppBar.busy = false;
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        },
+                        newLayoutData);
+                    Log.ret(Log.l.trace);
+                },
+                clickTemplateSearch: function(event) {
+                    Log.call(Log.l.trace, "ContactResultsList.Controller.");
+                  
+                },
                 clickMailEdit: function (event) {
                     Log.call(Log.l.trace, "ContactResultsList.Controller.");
                     var id = parseInt(event.currentTarget.value);
@@ -430,6 +405,41 @@
                     AppData.setRecordId("VAMail", id);
                     AppData.setRecordId("VAMailVIEW_20623", langid);
                     Application.navigateById("mailingEdit");
+                },
+                setDeleteID: function (event) {
+                    var tar = event.currentTarget.value;
+                    Log.call(Log.l.trace, "Mailing.Controller.");
+                    var checkbox = pageElement.querySelectorAll(".checkbox");
+                    for (var i = 0; i < checkbox.length; i++) {
+                        if (checkbox[i].value === tar && checkbox[i].checked === false) {
+                            checkbox[i].checked = false;
+                            that.binding.deleteID = null;
+                            Log.call(Log.l.trace, "Mailing.Controller.");
+                        } else if (checkbox[i].value === tar) {
+                            that.binding.deleteID = parseInt(checkbox[i].value);
+                           Log.call(Log.l.trace, "Mailing.Controller."); 
+                        } else {
+                            checkbox[i].checked = false;
+                            Log.call(Log.l.trace, "Mailing.Controller.");
+                        }
+                    }
+                    Log.call(Log.l.trace, "Mailing.Controller.");
+                },
+                clickDelete: function (event) {
+                    Log.call(Log.l.trace, "Mailing.Controller.");
+                    AppData.setErrorMsg(that.binding);
+                    var recordId = that.binding.deleteID;
+                    if (recordId) {
+                        AppBar.busy = true;
+                        MailingTemplateEvent.VAMailLayout.deleteRecord(function (response) {
+                            AppBar.busy = false;
+                            that.processAllData();
+                        }, function (errorResponse) {
+                            AppBar.busy = false;
+                            that.getErrorMsgFromErrorStack(errorResponse);
+                        }, recordId);
+                    }
+                    Log.ret(Log.l.trace);
                 },
                 clickChangeUserState: function (event) {
                     Log.call(Log.l.trace, "ContactResultsList.Controller.");
@@ -499,6 +509,14 @@
                 this.addRemovableEventListener(contentArea, "scroll", this.eventHandlers.onContentScroll.bind(this));
             }
 
+            var resultCategoryConverter = function (item, index) {
+                item.index = index;
+                if (item.LanguageTitle) {
+                    that.templateData.push({ VAMailTypeID: item.VAMailTypeID, TITLE: item.LanguageTitle });
+                }
+            }
+            this.resultCategoryConverter = resultCategoryConverter;
+
             var resultConverter = function (item, index) {
                 item.index = index;
                 if (item.IsActive) {
@@ -506,11 +524,14 @@
                 } else {
                     item.IsActive = getResourceText("mailingList.pending");
                 }
-                if (item.LastModUTC) {
-                    item.LastModUTC = that.getDateObject(item.LastModUTC);
+                if (item.ModifiedTS) {
+                    item.ModifiedTS = that.getDateObject(item.ModifiedTS);
                 }
-                if (item.SendMailTSUTC) {
-                    item.SendMailTSUTC = that.getDateObject(item.SendMailTSUTC);
+                if (item.CreateTS) {
+                    item.CreateTS = that.getDateObject(item.CreateTS);
+                }
+                if (item.LanguageTitle) {
+                    that.templateData.push({ VAMailTypeID: item.VAMailTypeID, TITLE: item.LanguageTitle });
                 }
                 if (tableBody &&
                     tableBody.winControl &&
@@ -528,13 +549,13 @@
                     Log.print(Log.l.trace, "calling select ContactResultsList.contactView...");
                     var nextUrl = that.nextUrl;
                     that.nextUrl = null;
-                    ret = ContactResultsList.KontaktReport.selectNext(function (json) { //json is undefined
+                    ret = MailingTemplateEvent.VAMailLayout.selectNext(function (json) { //json is undefined
                         // this callback will be called asynchronously
                         // when the response is available
                         Log.print(Log.l.trace, "ContactResultsList.KontaktReport: success!");
                         // startContact returns object already parsed from json file in response
                         if (json && json.d && json.d.results.length > 0) {
-                            that.nextUrl = ContactResultsList.KontaktReport.getNextUrl(json);
+                            that.nextUrl = MailingTemplateEvent.VAMailLayout.getNextUrl(json);
                             var results = json.d.results;
                             results.forEach(function (item, index) {
                                 that.resultConverter(item, index);
@@ -573,16 +594,43 @@
                     }
                 }
                 var ret = new WinJS.Promise.as().then(function () {
-                    Log.print(Log.l.trace, "calling select MailingTypes...");
+                    Log.print(Log.l.trace, "calling select initSpracheView...");
+                    //@nedra:25.09.2015: load the list of INITAnrede for Combobox
+                    return MailingTemplateEvent.LangVAMailTypeView.select(function (json) {
+                            Log.print(Log.l.trace, "initSpracheView: success!");
+                            if (json && json.d && json.d.results) {
+                                var results = json.d.results;
+                                that.templateData = that.templateData.concat({ INITSpracheID: 0, TITLE: "" });
+                                // Now, we call WinJS.Binding.List to get the bindable list
+                                results.forEach(function (item, index) {
+                                    that.resultCategoryConverter(item, index);
+                                });
+                                if (directory && directory.winControl) {
+                                    directory.winControl.data = new WinJS.Binding.List(that.templateData);
+                                    directory.selectedIndex = 0;
+                                }
+                                /*if (firstdirectory && firstdirectory.winControl) {
+                                    firstdirectory.winControl.data = new WinJS.Binding.List(that.templateData);
+                                    firstdirectory.selectedIndex = 0;
+                                }*/
+                        } 
+                        },
+                        function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        }, { LanguageSpecID : AppData.getLanguageId() });
+
+                }).then(function () {
+                    Log.print(Log.l.trace, "calling select VAMailLayout...");
                     if (restr) {
-                        return MailingList.VAMail.select(function (json) {
+                        return MailingTemplateEvent.VAMailLayout.select(function (json) {
                             AppData.setErrorMsg(that.binding);
-                            Log.print(Log.l.trace, "MailingTypes: success!");
+                            Log.print(Log.l.trace, "VAMailLayout: success!");
                             if (json && json.d && json.d.results.length > 0) {
-                                that.nextUrl = MailingList.VAMail.getNextUrl(json);
+                                that.nextUrl = MailingTemplateEvent.VAMailLayout.getNextUrl(json);
                                 // now always edit!
                                 var results = json.d.results;
-                                that.flagdata = results;
                                 results.forEach(function (item, index) {
                                     that.resultConverter(item, index);
                                 });
@@ -592,14 +640,13 @@
                                 AppData.setErrorMsg(that.binding, errorResponse);
                             }, restr);
                     } else {
-                        return MailingList.VAMail.select(function (json) {
+                        return MailingTemplateEvent.VAMailLayout.select(function (json) {
                             AppData.setErrorMsg(that.binding);
-                            Log.print(Log.l.trace, "MailingTypes: success!");
+                            Log.print(Log.l.trace, "VAMailLayout: success!");
                             if (json && json.d && json.d.results.length > 0) {
-                                that.nextUrl = MailingList.VAMail.getNextUrl(json);
+                                that.nextUrl = MailingTemplateEvent.VAMailLayout.getNextUrl(json);
                                 // now always edit!
                                 var results = json.d.results;
-                                that.flagdata = results;
                                 results.forEach(function (item, index) {
                                     that.resultConverter(item, index);
                                 });
@@ -625,9 +672,6 @@
             
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.initializeTemplates();
-            }).then(function () {
-                Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.createHeaderData();
             }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
@@ -643,15 +687,6 @@
                 return that.addBodyRowHandlers();
             }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.loadIcons();
-            }).then(function () {
-                Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.loadFlags();
-            }).then(function () {
-                Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.setFlags(that.flagdata);
-            }).then(function () {
-                Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.editButton();
             }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
@@ -664,7 +699,7 @@
         }, {
                 headerdata: null,
                 bodydata: null,
-                flagdata: null
+                templateData: []
             })
     });
 })(); 

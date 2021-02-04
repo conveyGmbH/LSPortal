@@ -17,51 +17,63 @@
                             <span data-win-res="{textContent: 'mailingList.title'}"></span>
                         </div>
                     </div>
-                    <div class="mailingList-template"
-                         data-win-control="WinJS.Binding.Template" style="display: none">
-                        <div class="list-landscape-only">
-                            <div class="row-bkg-gray"
-                                 data-win-bind="style.display: index Binding.Converter.oddToDisplay"></div>
-                            <div class="list-field-small-fixed win-type-ellipsis"
-                                 data-win-bind="textContent: Beschreibung"></div>
-                            <div class="list-field-small-fixed win-type-ellipsis"
-                                 data-win-bind="textContent: Subject"></div>
-                            
-                        </div>
-                        <div class="list-portrait-only">
-                            <div class="row-separator"></div>
-                            <div class="list-div-left">
-                                <div class="list-symbol-ID">
-                                    <div id="mail" class="action-image"></div>
-                                </div>
-                                <div class="list-compressed">
-                                    <!--list-mailingList-->
-                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
-                                          data-win-bind="textContent: Beschreibung"></span>
-                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
-                                          data-win-bind="textContent: Subject"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="headerFooterPlaceholder">
-                        <div class="list-footer">
-                            <div class="status">
-                                <progress class="win-progress-bar progress"></progress>
-                                <div class="counter">
-                                    <span data-win-res="{textContent: 'mailingList.count'}"></span><span>: </span><span data-win-bind="textContent: count"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="mailingList"
-                         class="listview win-selectionstylefilled"
-                         data-win-control="WinJS.UI.ListView"
-                         data-win-options="{
-                             layout : { type: WinJS.UI.ListLayout },
-                             itemTemplate: select('.mailingList-template'),
-                             footer: select('.list-footer')
-                         }">
+                    <div class="field_line scroll-line">
+                        <table id="tableId">
+                            <thead class="table-header">
+                                <tr>
+                                    <th data-win-bind="value: dataMailingHeaderValue.VAMailTypeID; textContent: dataMailingHeaderText.VAMailTypeID"></th>
+                                    <th data-win-bind="value: dataMailingHeaderValue.MailTypeName; textContent: dataMailingHeaderText.MailTypeName"></th>
+                                    <th data-win-bind="value: dataMailingHeaderValue.VeranstaltungName; textContent: dataMailingHeaderText.VeranstaltungName"></th>
+                                    <th data-win-bind="value: dataMailingHeaderValue.Serie; textContent: dataMailingHeaderText.Serie"></th>
+                                    <th data-win-bind="value: dataMailingHeaderValue.TemplateName; textContent: dataMailingHeaderText.TemplateName"></th>
+                                    <th data-win-bind="value: dataMailingHeaderValue.LastModUTC; textContent: dataMailingHeaderText.LastModUTC"></th>
+                                    <th data-win-bind="value: dataMailingHeaderValue.Language; textContent: dataMailingHeaderText.Language"></th>
+                                    <th data-win-bind="value: dataMailingHeaderValue.IsActive; textContent: dataMailingHeaderText.IsActive"></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-body" data-win-control="WinJS.UI.Repeater">
+                                <tr data-win-bind="value: VAMailVIEWID">
+                                    <td id="icons">
+                                        <div class="list-symbol-ID">
+                                            <div data-win-bind="name: mail_open2" class="action-image"></div>
+                                        </div>
+                                    </td>
+                                    <td >
+                                        <span data-win-bind="textContent: MailTypeName"></span><br/>
+                                        <span id="lmuser" data-win-bind="textContent: LastModUser"></span>
+                                        <span id="lmutc" data-win-bind="textContent: LastModUTC"></span>
+                                    </td>
+                                    <td data-win-bind="textContent: VeranstaltungName"></td>
+                                    <td data-win-bind="textContent: Serie"></td>
+                                    <td data-win-bind="textContent: TemplateName"></td>
+                                    <td data-win-bind="textContent: SendMailTSUTC"></td>
+                                    <td id="flags">
+                                        <div class="list-symbol-ID">
+                                            <div id="flagde" data-win-bind="name: de" class="flag-image"></div>
+                                        </div>
+                                        <div class="list-symbol-ID">
+                                            <div id="flaggb" data-win-bind="name: gb" class="flag-image"></div>
+                                        </div>
+                                        <div class="list-symbol-ID">
+                                            <div id="flagit" data-win-bind="name: it" class="flag-image"></div>
+                                        </div>
+                                        <div class="list-symbol-ID">
+                                            <div id="flagfr" data-win-bind="name: fr" class="flag-image"></div>
+                                        </div>
+                                        <div class="list-symbol-ID">
+                                            <div id="flages" data-win-bind="name: es" class="flag-image"></div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span id="mailactivestatus" data-win-bind="textContent: IsActive"></span>
+                                    </td>
+                                    <td id="edit">
+                                        <button class="mailedit-button win-button" data-win-bind="textContent: maileditlabel; value: VAMailVIEWID" onclick="AppBar.handleEvent('click', 'clickMailEdit', event)" autofocus="autofocus"></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 <div class="error-message"

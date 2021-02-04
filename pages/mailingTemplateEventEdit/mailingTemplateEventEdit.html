@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="mailingTemplateEventEdit.css" rel="stylesheet" />
+    <script type="text/javascript" src="mailingTemplateEventEditService.js"></script>
+    <script type="text/javascript" src="mailingTemplateEventEditController.js"></script>
+    <script type="text/javascript" src="mailingTemplateEventEdit.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="mailingTemplateEventEdit fragment">
+        <div id="mailingTemplateEventEditController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="contentarea win-type-body">
+                    <div class="content-header">
+                        <div class="win-type-subtitle master-list-header">
+                            <span data-win-res="{textContent: 'mailingTemplateEventEdit.title'}"></span>
+                        </div>
+                    </div>
+                    <div class="field_line">
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingTemplateEventEdit.language'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'mailingTemplateEventEdit.language'}"></span>
+                            <select id="InitSprache"
+                                    class="input_field win-dropdown"
+                                    data-win-control="WinJS.UI.Repeater"
+                                    data-win-bind="value: LanguageID Binding.Mode.twoway">
+                                <option data-win-bind="value: LanguageID; textContent: TITLE"></option>
+                            </select>
+                        </div>
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingTemplateEventEdit.type'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'mailingTemplateEventEdit.type'}"></span>
+                            <select id="mailType"
+                                    class="input_field win-dropdown"
+                                    data-win-control="WinJS.UI.Repeater"
+                                    disabled="disabled"
+                                    data-win-bind="value: dataMail.VAMailTypeID Binding.Mode.twoway">
+                                <option data-win-bind="value: VAMailTypeID; textContent: LanguageTitle"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="line-separator"></div>
+                    <div class="field_line">
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingTemplateEventEdit.subject'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'mailingTemplateEventEdit.subject'}"></span>
+                            <input class="input_field win-textbox" type="text" data-win-bind="value: dataLayoutValue.Subject Binding.Mode.twoway" data-win-bind-onevent="onkeyup" data-win-res="{placeholder: 'mailing.senderplaceholder'}" />
+                        </div>
+                        <div class="line-separator"></div>
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingTemplateEventEdit.notice'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'mailingTemplateEventEdit.notice'}"></span>
+                            <textarea class="input_field win-textarea input_text_comment" data-win-bind="value: dataLayoutValue.LayoutText Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" onfocusin="AppBar.handleEvent('focusin', 'blockEnterKey', event)" onfocusout="AppBar.handleEvent('focusout', 'releaseEnterKey', event)"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="error-message"
+                     data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>
