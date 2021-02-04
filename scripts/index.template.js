@@ -82,6 +82,7 @@
         { id: "contacts", group: 6, svg: "businesspeople2", disabled: true, predecGroup: 29 },
         { id: "mailingGrp", group: 31, svg: "mailing", disabled: true, popup: true },
         { id: "mailing", group: 4, svg: "standardmail", disabled: true, predecGroup: 31 },
+        { id: "mailingTemplateEvent", group: 44, svg: "standardmail", disabled: true, predecGroup: 31 },
         { id: "mailingProduct", group: 32, svg: "Productmail", disabled: true, predecGroup: 31 },
         { id: "mailingOptions", group: 33, svg: "Mailsettings", disabled: true, predecGroup: 31 },
         { id: "exportGrp", group: 34, svg: "Export", disabled: true, popup: true },
