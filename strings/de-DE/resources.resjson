@@ -537,6 +537,7 @@
     "label.contactResultsAttach" : "Anhänge",
     "label.contactResultsQuestion" : "Fragebogen",
     "label.contactResultsEvents" : "Ereignisse",
+    "label.mailingTemplateEvent"			: "Vorlagen",
 	"label.eventResourceAdministration" : "Event Administration",
 
     "flyout.ok"             : "OK",

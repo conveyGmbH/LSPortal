@@ -440,6 +440,7 @@
     "label.employeeGenPWList"     : "Vorgeneriert",
     "label.optQuestionList" : "optional FRA/ANTW",
     "label.eventsuccess" : "EventSuccess",
+    "label.mailingTemplateEvent"			: "Vorlagen",
     "label.eventResourceAdministration" : "Event Administration",
 
     "flyout.ok"             : "OK",
