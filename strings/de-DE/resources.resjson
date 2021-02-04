@@ -1149,7 +1149,7 @@
     "contactResultsEvents.creator"			: "Erfasser",
     "contactResultsEvents.event"			: "Veranstaltung",
 
-    "eventResourceAdministration.eventTextPlaceholder"  : "Geben Sie hier ein: "
+	"eventResourceAdministration.eventTextPlaceholder"  : "Geben Sie hier ein: ",
 
     "mailingEdit.title"			: "Bearbeiten",
     "mailingEdit.nametitleheader"			: "Name",
