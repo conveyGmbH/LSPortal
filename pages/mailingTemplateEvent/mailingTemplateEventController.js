@@ -398,13 +398,11 @@
                     Log.call(Log.l.trace, "ContactResultsList.Controller.");
                   
                 },
-                clickMailEdit: function (event) {
+                clickLayoutEdit: function (event) {
                     Log.call(Log.l.trace, "ContactResultsList.Controller.");
                     var id = parseInt(event.currentTarget.value);
-                    var langid = parseInt(AppData.getLanguageId());
                     AppData.setRecordId("VAMail", id);
-                    AppData.setRecordId("VAMailVIEW_20623", langid);
-                    Application.navigateById("mailingEdit");
+                    Application.navigateById("MailingTemplateEventEdit");
                 },
                 setDeleteID: function (event) {
                     var tar = event.currentTarget.value;
