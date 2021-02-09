@@ -261,9 +261,6 @@
                     return that.createHeaderData();
                 }).then(function () {
                     Log.print(Log.l.trace, "Binding wireup page complete");
-                    return that.loadData();
-                }).then(function () {
-                    Log.print(Log.l.trace, "Binding wireup page complete");
                     return that.resizableGrid();
                 }).then(function () {
                     Log.print(Log.l.trace, "Binding wireup page complete");
@@ -591,6 +588,10 @@
                         tableBody.winControl.data = WinJS.Binding.List([]);
                     }
                 }
+                if (directory && directory.winControl) {
+                    directory.winControl.data.length = 0;
+                    that.templateData = [];
+                }
                 var ret = new WinJS.Promise.as().then(function () {
                     Log.print(Log.l.trace, "calling select initSpracheView...");
                     //@nedra:25.09.2015: load the list of INITAnrede for Combobox
@@ -632,6 +633,7 @@
                                 results.forEach(function (item, index) {
                                     that.resultConverter(item, index);
                                 });
+                                that.processAllData();
                             }
                         },
                             function (errorResponse) {

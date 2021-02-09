@@ -64,9 +64,12 @@
                                         <div class="list-symbol-ID">
                                             <div id="flages" data-win-bind="name: es" class="flag-image"></div>
                                         </div>
+                                        <div class="list-symbol-ID">
+                                            <div id="flagelse" data-win-bind="name: threedots" class="flag-image"></div>
+                                        </div>
                                     </td>
                                     <td>
-                                        <span id="mailactivestatus" data-win-bind="textContent: IsActive"></span>
+                                        <div id="mailactivestatus" data-win-bind="textContent: IsActive"></div>
                                     </td>
                                     <td id="edit">
                                         <button class="mailedit-button win-button" data-win-bind="textContent: maileditlabel; value: VAMailVIEWID" onclick="AppBar.handleEvent('click', 'clickMailEdit', event)" autofocus="autofocus"></button>

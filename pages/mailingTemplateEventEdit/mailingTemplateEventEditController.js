@@ -78,26 +78,32 @@
             var insertData = function (complete, error) {
                 Log.call(Log.l.trace, "Contact.Controller.");
                 AppData.setErrorMsg(that.binding);
+                var ret;
                 var recordId = getRecordId();
-                if (recordId) {
+                if (recordId && initSprache.value !== "null") {
                     AppData.setErrorMsg(that.binding);
-                    AppData.call("PRC_SetVAMailText", {
+                    ret = AppData.call("PRC_SetVAMailText", {
                         pVAMailLayoutID: recordId,
                         pLanguageSpecID: parseInt(initSprache.value),
                         pSubject: that.binding.dataLayoutValue.Subject,
                         pMailText: that.binding.dataLayoutValue.LayoutText
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
-                        
+                        complete(json.d.results[0]);
                         Log.call(Log.l.trace, "Contact.Controller.");
                     }, function (error) {
                         Log.print(Log.l.error, "call error");
+                        error(error);
                     });
                 } else {
-                    var err = { status: 0, statusText: "no record selected" };
-                    error(err);
+                    ret = new WinJS.Promise.as().then(function () {
+                        if (typeof complete === "function") {
+                            complete(recordId);
+                        }
+                    });
                 }
                 Log.ret(Log.l.trace);
+                return ret;
             };
             this.insertData = insertData;
 

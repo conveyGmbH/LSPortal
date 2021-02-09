@@ -87,18 +87,22 @@
                 for (var i = 0; i < flages.length; i++) {
                     flages[i].name = "es";
                 }
+                var flagelse = pageElement.querySelectorAll("#flags #flagelse");
+                for (var i = 0; i < flagelse.length; i++) {
+                    flagelse[i].name = "threedots";
+                }
                 Colors.loadSVGImageElements(tableBody, "flag-image", 20, null , "name");
             }
             this.loadFlags = loadFlags;
 
             var setFlags = function(flagdata) {
                 Log.call(Log.l.trace, "ContactResultsList.Controller.");
-
                 var flaggb = pageElement.querySelectorAll("#flags #flaggb");
                 var flagde = pageElement.querySelectorAll("#flags #flagde");
                 var flagfr = pageElement.querySelectorAll("#flags #flagfr");
                 var flages = pageElement.querySelectorAll("#flags #flages");
                 var flagit = pageElement.querySelectorAll("#flags #flagit");
+                var flagelse = pageElement.querySelectorAll("#flags #flagelse");
 
                 for (var i = 0; i < flagdata.length; i++) {
                     if (flagdata[i].EN_OK) {
@@ -125,6 +129,11 @@
                         flagit[i].style.display = "block";
                     } else {
                         flagit[i].style.display = "none";
+                    }
+                    if (flagdata[i].ELSE_OK) {
+                        flagelse[i].style.display = "block";
+                    } else {
+                        flagelse[i].style.display = "none";
                     }
                 }
             }
@@ -400,11 +409,13 @@
                     var rows = tableBody.getElementsByTagName("tr");
                     for (var i = 0; i < rows.length; i++) {
                         var row = rows[i];
+                       
                         if (!row.onclick) {
                             row.ondblclick = function (myrow) {
                                 return function () {
                                     var id = myrow.value;
                                     AppData.setRecordId("VAMail", id);
+                                    AppData.setRecordId("VAMailVIEW_20632", id);
                                     Application.navigateById("mailingEdit");
                                 };
                             }(row);
@@ -561,6 +572,41 @@
             }
             this.loadNextUrl = loadNextUrl;
 
+            var processAllData = function() {
+                that.processAll().then(function () {
+                    Log.print(Log.l.trace, "Binding wireup page complete");
+                    return that.createHeaderData();
+                }).then(function () {
+                    Log.print(Log.l.trace, "Binding wireup page complete");
+                    return that.resizableGrid();
+                }).then(function () {
+                    Log.print(Log.l.trace, "Binding wireup page complete");
+                    return that.addHeaderRowHandlers();
+                }).then(function () {
+                    Log.print(Log.l.trace, "Binding wireup page complete");
+                    return that.addBodyRowHandlers();
+                }).then(function () {
+                    Log.print(Log.l.trace, "Binding wireup page complete");
+                    return that.loadIcons();
+                }).then(function () {
+                    Log.print(Log.l.trace, "Binding wireup page complete");
+                    return that.loadFlags();
+                }).then(function () {
+                    Log.print(Log.l.trace, "Binding wireup page complete");
+                    return that.setFlags(that.flagdata);
+                }).then(function () {
+                    Log.print(Log.l.trace, "Binding wireup page complete");
+                    return that.editButton();
+                }).then(function () {
+                    Log.print(Log.l.trace, "Binding wireup page complete");
+                    return that.setMailStatusColor();
+                }).then(function () {
+                    Log.print(Log.l.trace, "Data loaded");
+                    AppBar.notifyModified = true;
+                }); 
+            }
+            this.processAllData = processAllData;
+
             var loadData = function (restr) {
                 Log.call(Log.l.trace, "MailingTypes.Controller.");
                 AppData.setErrorMsg(that.binding);
@@ -586,6 +632,7 @@
                                 results.forEach(function (item, index) {
                                     that.resultConverter(item, index);
                                 });
+                                that.processAllData();
                             }
                         },
                             function (errorResponse) {
@@ -622,7 +669,7 @@
                 return ret;
             }
             this.loadData = loadData;
-            
+
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.initializeTemplates();
@@ -659,7 +706,7 @@
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 AppBar.notifyModified = true;
-                }); 
+            }); 
             Log.ret(Log.l.trace);
         }, {
                 headerdata: null,

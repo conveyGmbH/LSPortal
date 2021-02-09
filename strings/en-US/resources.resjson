@@ -1175,9 +1175,9 @@
     "mailingTemplateEvent.headerlangsavailable"			: "Ready languages",
     "mailingTemplateEvent.headererfassungsdatum"			: "Date of entry",
     "mailingTemplateEvent.headerisactive"			: "Status",
-    "mailingTemplateEvent.directory"			: "Directory",
+    "mailingTemplateEvent.directory"			: "Typ",
     "mailingTemplateEvent.templatesearchbtn"			: "Search",
-    "mailingTemplateEvent.layoutname"			: "Layoutname",
+    "mailingTemplateEvent.layoutname"			: "Name of Layout",
     "mailingTemplateEvent.templateinserthbtn"			: "Create",
 
 	"mailingTemplateEventEdit.title"			: "Edit template",

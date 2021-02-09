@@ -63,3 +63,6 @@
 .mailingTemplateEvent #lmuser, .mailingTemplateEvent #lmutc {
     font-style: italic !important;
 }
+.mailingTemplateEvent .portrait_only_half {
+    width: 150px !important;
+}

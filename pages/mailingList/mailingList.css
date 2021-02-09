@@ -61,3 +61,10 @@
 .mailingList #lmuser, .mailingList #lmutc {
     font-style: italic !important;
 }
+.mailingList #mailactivestatus {
+    height: 30px !important;
+    width: 100px !important;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
