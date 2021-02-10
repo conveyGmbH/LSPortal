@@ -31,7 +31,7 @@
                                 <option data-win-bind="value: VAMailTypeID; textContent: TITLE"></option>
                             </select>
                             <span class="input_small_left" data-win-bind="textContent: mailingTemplateEvent.directory; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
-                            <input class="input_half_right win-textbox" type="text" data-win-bind="value: newDataTemplate.TextName Binding.Mode.twoway" /> <br /><br />
+                            <input id="layouttextname" class="input_half_right win-textbox" type="text" data-win-bind="value: newDataTemplate.TextName Binding.Mode.twoway" /> <br /><br />
                             <span class="input_field" data-win-bind="textContent: mailingTemplateEvent.layoutname; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
                         </div>
                         <button class="templatesearch-button win-button" data-win-bind="textContent: templateinsertbtnlabel;" onclick="AppBar.handleEvent('click', 'clickInsertLayout', event)" autofocus="autofocus"></button>

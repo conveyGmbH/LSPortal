@@ -736,7 +736,7 @@
     "mailingList.headerveranstaltungname"            : "Veranstaltung",
     "mailingList.headerserie"            : "Serie",
     "mailingList.headertemplatename"            : "Name der Vorlage",
-    "mailingList.headerlastmodutc"            : "Datum",
+    "mailingList.headerlastmodutc"            : "Versanddatum",
     "mailingList.headerlanguage"            : "Fertige Sprachen",
     "mailingList.headeractive"            : "Status",
     "mailingList.active"            : "Aktiv",

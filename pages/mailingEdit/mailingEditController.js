@@ -180,7 +180,6 @@
                 clickSendTestMail: function() {
                     Log.call(Log.l.trace, "Mailing.Controller.clickSendTestMail");
                     AppData.setErrorMsg(that.binding);
-
                     AppData.call("PRC_ScheduleTestMail", {
                         pRecordID: that.binding.dataMail.VAMailVIEWID,
                         pTableName: "VAMail",

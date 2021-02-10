@@ -33,7 +33,7 @@
             var tableBody = pageElement.querySelector(".table-body");
             var contentArea = pageElement.querySelector(".contentarea");
             var directory = pageElement.querySelector("#directorydropdown"); 
-            //var firstdirectory = pageElement.querySelector("#firstdirectorydropdown");
+            var textName = pageElement.querySelector("#layouttextname");
             
             this.dispose = function () {
                 if (tableBody && tableBody.winControl) {
@@ -264,7 +264,7 @@
                     return that.resizableGrid();
                 }).then(function () {
                     Log.print(Log.l.trace, "Binding wireup page complete");
-                    return that.addHeaderRowHandlers();
+                    //return that.addHeaderRowHandlers();
                 }).then(function () {
                     Log.print(Log.l.trace, "Binding wireup page complete");
                     return that.addBodyRowHandlers();
@@ -337,6 +337,11 @@
                 },
                 clickNew: function (event) {
                     Log.call(Log.l.trace, "LocalEvents.Controller.");
+                    directory.style.border = "1px solid black";
+                    textName.style.borderBottom = "1px solid black";
+                    textName.style.borderLeft = "none";
+                    textName.style.borderRight = "none";
+                    textName.style.borderTop = "none";
                     that.insertBtn();
                     Log.ret(Log.l.trace);
                 },
@@ -345,8 +350,16 @@
                     AppBar.busy = true;
                     Log.print(Log.l.trace, "eployee saved");
                     var newLayoutData = that.binding.newDataTemplate;
-                    newLayoutData.VAMailTypeID = parseInt(newLayoutData.VAMailTypeID);
-                    MailingTemplateEvent.VAMailLayout.insert(function(json) {
+                    if (newLayoutData.VAMailTypeID === 0 || newLayoutData.TextName === "") {
+                        if (newLayoutData.VAMailTypeID === 0) {
+                            directory.style.border = "5px solid red";
+                        }
+                        if (newLayoutData.TextName === "") {
+                            textName.style.border = "5px solid red";
+                        }
+                    } else {
+                        newLayoutData.VAMailTypeID = parseInt(newLayoutData.VAMailTypeID);
+                        MailingTemplateEvent.VAMailLayout.insert(function (json) {
                             AppBar.busy = false;
                             // this callback will be called asynchronously
                             // when the response is available
@@ -366,7 +379,7 @@
                                     return that.resizableGrid();
                                 }).then(function () {
                                     Log.print(Log.l.trace, "Binding wireup page complete");
-                                    return that.addHeaderRowHandlers();
+                                    //return that.addHeaderRowHandlers();
                                 }).then(function () {
                                     Log.print(Log.l.trace, "Binding wireup page complete");
                                     return that.addBodyRowHandlers();
@@ -383,12 +396,13 @@
                             }
                             AppBar.modified = true;
                         },
-                        function(errorResponse) {
-                            Log.print(Log.l.error, "error inserting employee");
-                            AppBar.busy = false;
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        },
-                        newLayoutData);
+                            function (errorResponse) {
+                                Log.print(Log.l.error, "error inserting employee");
+                                AppBar.busy = false;
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                            },
+                            newLayoutData);
+                    }
                     Log.ret(Log.l.trace);
                 },
                 clickTemplateSearch: function(event) {
@@ -428,7 +442,13 @@
                         AppBar.busy = true;
                         MailingTemplateEvent.VAMailLayout.deleteRecord(function (response) {
                             AppBar.busy = false;
-                            that.processAllData();
+                            that.processAll().then(function() {
+                                Log.print(Log.l.trace, "Binding wireup page complete");
+                                return that.loadData();
+                            }).then(function() {
+                                Log.print(Log.l.trace, "Binding wireup page complete");
+                                return that.processAllData();
+                            });
                         }, function (errorResponse) {
                             AppBar.busy = false;
                             that.getErrorMsgFromErrorStack(errorResponse);
@@ -681,7 +701,7 @@
                 return that.resizableGrid();
             }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.addHeaderRowHandlers();
+                //return that.addHeaderRowHandlers();
             }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.addBodyRowHandlers();

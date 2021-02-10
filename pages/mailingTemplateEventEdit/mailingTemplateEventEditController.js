@@ -50,6 +50,16 @@
             }
             this.setLayoutData = setLayoutData;
 
+            var setPrevData = function() {
+                Log.call(Log.l.trace, "Contact.Controller.");
+                var lang = parseInt(initSprache.value);
+                if (lang !== "null") {
+                    Log.call(Log.l.trace, "Contact.Controller.");
+                    that.insertData();
+                }
+            }
+            this.setPrevData = setPrevData;
+
             var selectData = function (complete, error) {
                 Log.call(Log.l.trace, "Contact.Controller.");
                 AppData.setErrorMsg(that.binding);
@@ -121,6 +131,11 @@
                     that.selectData();
                     Log.ret(Log.l.trace);
                 },
+                setPrevData: function(parameters) {
+                    Log.call(Log.l.trace, "ContactResultsList.Controller.");
+                    that.setPrevData();
+                    Log.ret(Log.l.trace);
+                },
                 clickSave: function(event) {
                     Log.call(Log.l.trace, "ContactResultsList.Controller.");
                     that.insertData();
@@ -160,6 +175,7 @@
 
             if (initSprache) {
                 this.addRemovableEventListener(initSprache, "change", this.eventHandlers.selectionChange.bind(this));
+                this.addRemovableEventListener(initSprache, "click", this.eventHandlers.setPrevData.bind(this));
             }
             
             this.disableHandlers = {
@@ -250,7 +266,7 @@
                 }); 
             Log.ret(Log.l.trace);
         }, {
-                
+               preId: 0 
             })
     });
 })(); 

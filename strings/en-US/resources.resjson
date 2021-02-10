@@ -733,7 +733,7 @@
     "mailingList.headerveranstaltungname"            : "Event",
     "mailingList.headerserie"            : "Series",
     "mailingList.headertemplatename"            : "Name of the template",
-    "mailingList.headerlastmodutc"            : "Date",
+    "mailingList.headerlastmodutc"            : "Dispatch date",
     "mailingList.headerlanguage"            : "Ready languages",
     "mailingList.headeractive"            : "Status",
     "mailingList.active"            : "Aktive",

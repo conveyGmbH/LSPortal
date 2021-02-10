@@ -439,6 +439,7 @@
                     var id = parseInt(event.currentTarget.value);
                     var langid = parseInt(AppData.getLanguageId());
                     AppData.setRecordId("VAMail", id);
+                    AppData.setRecordId("VAMailVIEW_20632", id);
                     AppData.setRecordId("VAMailVIEW_20623", langid);
                     Application.navigateById("mailingEdit");
                 },
