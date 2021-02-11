@@ -393,6 +393,7 @@
                             // select returns object already parsed from json file in response
                             if (json && json.d && json.d.results) {
                                 var result = json.d.results[0];
+                                that.tempid = result.VAMailTypeID;
                                 that.binding.mailName = result;
                             }
                         }, function (errorResponse) {
@@ -402,7 +403,6 @@
                             }, { VAMailVIEWID: recordId, LanguageSpecID: langRecordId});
                 }).then(function () {
                     Log.print(Log.l.trace, "calling select initSpracheView...");
-                    var templateId = AppData.getRecordId("VAMailVIEW_20632");
                     //@nedra:25.09.2015: load the list of INITAnrede for Combobox
                     return MailingEdit.vAMailTemplateView.select(function (json) {
                         Log.print(Log.l.trace, "initSpracheView: success!");
@@ -418,7 +418,7 @@
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
-                        }, { VAMailTypeID: templateId });
+                        }, { VAMailTypeID: that.tempid });
 
                 }).then(function () {
                     if (recordId) {
@@ -509,7 +509,8 @@
             Log.ret(Log.l.trace);
         }, {
                 mailLang: [],
-                mailTempID: 0
+                mailTempID: 0,
+                tempid: 0
         })
     });
 })();
