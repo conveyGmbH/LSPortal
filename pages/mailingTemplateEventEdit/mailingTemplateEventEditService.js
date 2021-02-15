@@ -68,6 +68,9 @@
             setRestriction: {
                 TextName: "",
                 VAMailTypeID: 0
+            },
+            getLayoutActive: {
+                IsActive: null
             }
         },
         _initSpracheView: {
@@ -111,6 +114,34 @@
             defaultValue: {
 
             }
-        }
+        },
+        _VAMailTextOVIEW: {
+            get: function () {
+                return AppData.getFormatView("VAMailText", 0);
+            }
+        },
+        VAMailTextView: {
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, "MailingTemplateEvent.");
+                var ret = MailingTemplateEventEdit._VAMailTextOVIEW.select(complete, error, restriction);
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            update: function (complete, error, recordId, viewResponse) {
+                Log.call(Log.l.trace, "MailingTemplateEvent.");
+                var ret = MailingTemplateEventEdit._VAMailTextOVIEW.update(complete, error, recordId, viewResponse);
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getDbView: function () {
+                return MailingTemplateEventEdit._VAMailLayoutVIEW;
+            },
+            getRestriction: {
+                Subject: "",
+                MailText: ""
+            }
+        },
     });
 })();

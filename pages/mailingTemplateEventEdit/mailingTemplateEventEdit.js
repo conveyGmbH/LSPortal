@@ -45,7 +45,7 @@
             Log.call(Log.l.trace, pageName + ".");
             var ret;
             if (this.controller) {
-                ret = this.controller.insertData(function (response) {
+                ret = this.controller.saveData(function (response) {
                     // called asynchronously if ok
                     complete(response);
                 }, function (errorResponse) {

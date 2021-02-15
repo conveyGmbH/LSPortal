@@ -19,13 +19,15 @@
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
                 dataLayoutValue: getEmptyDefaultValue(MailingTemplateEventEdit.VAMailLayout.getRestriction),
-                dataLayoutLang: 0
+                dataLayoutLang: 0,
+                dataLayoutActive: getEmptyDefaultValue(MailingTemplateEventEdit.VAMailLayout.getLayoutActive)
             }, commandList]);
             
 
             var that = this;
             var initSprache = pageElement.querySelector("#InitSprache"); 
-            var mailType = pageElement.querySelector("#mailType"); 
+            var mailType = pageElement.querySelector("#mailType");
+            var layoutActiveToggle = pageElement.querySelector("#layoutActiveToggle"); 
 
             var getRecordId = function () {
                 Log.call(Log.l.trace, "Contact.Controller.");
@@ -55,7 +57,7 @@
                 var lang = parseInt(initSprache.value);
                 if (lang !== "null") {
                     Log.call(Log.l.trace, "Contact.Controller.");
-                    that.insertData();
+                    
                 }
             }
             this.setPrevData = setPrevData;
@@ -72,8 +74,8 @@
                         pLanguageSpecID: lang
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
-                        that.setLayoutData(json.d.results[0]);
-                        Log.call(Log.l.trace, "Contact.Controller.");
+                        that.layoutData = json.d.results[0].VAMailTextID;
+                        return that.loadData();
                     }, function (error) {
                         Log.print(Log.l.error, "call error");
                     });
@@ -85,37 +87,83 @@
             };
             this.selectData = selectData;
 
-            var insertData = function (complete, error) {
-                Log.call(Log.l.trace, "Contact.Controller.");
+            var setToggleData = function(event) {
+                Log.call(Log.l.trace, "Products.Controller.");
+                var stat = event.currentTarget.winControl.checked;
+                if (stat === false) {
+                    that.binding.dataLayoutActive.IsActive = null;
+                }
+                if (stat === true) {
+                    that.binding.dataLayoutActive.IsActive = parseInt(1);
+                }
+                Log.ret(Log.l.trace);
+            }
+            this.setToggleData = setToggleData;
+
+            var saveToggleData = function() {
+                Log.call(Log.l.trace, "Products.Controller.");
+                var ret = null;
+                Log.call(Log.l.trace, "Product.Controller.");
                 AppData.setErrorMsg(that.binding);
-                var ret;
+                var layoutActiveData = that.binding.dataLayoutActive;
                 var recordId = getRecordId();
-                if (recordId && initSprache.value !== "null") {
-                    AppData.setErrorMsg(that.binding);
-                    ret = AppData.call("PRC_SetVAMailText", {
-                        pVAMailLayoutID: recordId,
-                        pLanguageSpecID: parseInt(initSprache.value),
-                        pSubject: that.binding.dataLayoutValue.Subject,
-                        pMailText: that.binding.dataLayoutValue.LayoutText
-                    }, function (json) {
-                        Log.print(Log.l.info, "call success! ");
-                        complete(json.d.results[0]);
-                        Log.call(Log.l.trace, "Contact.Controller.");
-                    }, function (error) {
-                        Log.print(Log.l.error, "call error");
-                        error(error);
-                    });
-                } else {
+                if (recordId) {
+                    Log.print(Log.l.trace, "save changes of recordId:" + recordId);
+                    ret = MailingTemplateEventEdit.VAMailLayout.update(function (response) {
+                        Log.print(Log.l.info, "Products.Controller. update: success!");
+                        // called asynchronously if ok
+                        AppBar.modified = false;
+                    }, function (errorResponse) {
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                        }, recordId, layoutActiveData);
+                }
+                if (!ret) {
                     ret = new WinJS.Promise.as().then(function () {
                         if (typeof complete === "function") {
-                            complete(recordId);
+                            complete({});
                         }
                     });
                 }
                 Log.ret(Log.l.trace);
                 return ret;
-            };
-            this.insertData = insertData;
+            }
+            this.saveToggleData = saveToggleData;
+
+            var saveData = function (complete, error) {
+                Log.call(Log.l.trace, "Products.Controller.");
+                var ret = null;
+                Log.call(Log.l.trace, "Product.Controller.");
+                AppData.setErrorMsg(that.binding);
+                var layoutUpdateData = that.binding.dataLayoutValue;
+                var recordId = that.binding.dataLayoutValue.VAMailTextVIEWID;
+                if (recordId && layoutUpdateData.LanguageSpecID) {
+                    Log.print(Log.l.trace, "save changes of recordId:" + recordId);
+                    ret = MailingTemplateEventEdit.VAMailTextView.update(function (response) {
+                        Log.print(Log.l.info, "Products.Controller. update: success!");
+                        // called asynchronously if ok
+                        AppBar.modified = false;
+                        if (typeof complete === "function") {
+                            complete(response);
+                        }
+                    }, function (errorResponse) {
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                        if (typeof error === "function") {
+                            error(errorResponse);
+                        }
+                        }, recordId, layoutUpdateData);
+                }
+                if (!ret) {
+                    ret = new WinJS.Promise.as().then(function () {
+                        if (typeof complete === "function") {
+                            complete({});
+                        }
+                    });
+                }
+                Log.ret(Log.l.trace, ret);
+                return ret;
+
+            }
+            this.saveData = saveData;
 
             // define handlers
             this.eventHandlers = {
@@ -131,14 +179,29 @@
                     that.selectData();
                     Log.ret(Log.l.trace);
                 },
+                onLayoutActiveToggle: function(event) {
+                    Log.call(Log.l.trace, "ContactResultsList.Controller.");
+                    var stat = event.currentTarget.winControl.checked;
+                    that.setToggleData(event);
+                    that.saveToggleData();
+                    Log.ret(Log.l.trace);
+                },
                 setPrevData: function(parameters) {
                     Log.call(Log.l.trace, "ContactResultsList.Controller.");
-                    that.setPrevData();
+                    that.saveData(function (response) {
+                        Log.print(Log.l.trace, "layout saved");
+                    }, function (errorResponse) {
+                        Log.print(Log.l.error, "error saving layout");
+                    });
                     Log.ret(Log.l.trace);
                 },
                 clickSave: function(event) {
                     Log.call(Log.l.trace, "ContactResultsList.Controller.");
-                    that.insertData();
+                    that.saveData(function (response) {
+                        Log.print(Log.l.trace, "layout saved");
+                    }, function (errorResponse) {
+                        Log.print(Log.l.error, "error saving layout");
+                    });
                     Log.ret(Log.l.trace);
                 },
                 clickChangeUserState: function (event) {
@@ -177,6 +240,9 @@
                 this.addRemovableEventListener(initSprache, "change", this.eventHandlers.selectionChange.bind(this));
                 this.addRemovableEventListener(initSprache, "click", this.eventHandlers.setPrevData.bind(this));
             }
+            if (layoutActiveToggle) {
+                this.addRemovableEventListener(layoutActiveToggle, "change", this.eventHandlers.onLayoutActiveToggle.bind(this));
+            }
             
             this.disableHandlers = {
                 clickBack: function () {
@@ -208,7 +274,6 @@
                             Log.print(Log.l.trace, "initSpracheView: success!");
                             if (json && json.d && json.d.results) {
                                 var results = json.d.results;
-                                results = results.concat({ INITSpracheID: 0, TITLE: "DEFAULT" });
                                 // Now, we call WinJS.Binding.List to get the bindable list
                                 if (initSprache && initSprache.winControl) {
                                     initSprache.winControl.data = new WinJS.Binding.List(results);
@@ -247,6 +312,37 @@
                             AppData.setErrorMsg(that.binding, errorResponse);
                             }, { LanguageSpecID: AppData.getLanguageId() });
                 }).then(function () {
+                    if (that.layoutData) {
+                        Log.print(Log.l.trace, "calling select VAMailTextView...");
+                        //@nedra:25.09.2015: load the list of INITAnrede for Combobox
+                        return MailingTemplateEventEdit.VAMailTextView.select(function (json) {
+                            Log.print(Log.l.trace, "initAnredeView: success!");
+                            if (json && json.d && json.d.results) {
+                                // Now, we call WinJS.Binding.List to get the bindable list
+                                that.binding.dataLayoutValue = json.d.results[0];
+                            }
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                            }, { VAMailTextVIEWID: that.layoutData, LanguageSpecID: parseInt(initSprache.value) });
+                    }
+                   
+                }).then(function () {
+                    Log.print(Log.l.trace, "calling select VAMailTextView...");
+                    var layoutid = getRecordId(); 
+                    return MailingTemplateEventEdit.VAMailLayout.select(function (json) {
+                            Log.print(Log.l.trace, "initAnredeView: success!");
+                            if (json && json.d && json.d.results) {
+                                // Now, we call WinJS.Binding.List to get the bindable list
+                                that.binding.dataLayoutActive = json.d.results[0];
+                            }
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        }, { VAMailLayoutVIEWID: layoutid});
+                }).then(function () {
                     return WinJS.Promise.timeout(100);
                 }).then(function () {
                     AppBar.notifyModified = true;
@@ -266,7 +362,8 @@
                 }); 
             Log.ret(Log.l.trace);
         }, {
-               preId: 0 
+                preId: 0,
+                layoutData: 0
             })
     });
 })(); 

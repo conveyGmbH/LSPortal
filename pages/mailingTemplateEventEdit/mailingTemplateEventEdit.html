@@ -49,11 +49,24 @@
                         </div>
                         <div class="line-separator"></div>
                         <div class="field_line field_line_odd">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingTemplateEventEdit.notice'}"></span>
-                            <span class="label landscape_only" data-win-res="{textContent: 'mailingTemplateEventEdit.notice'}"></span>
-                            <textarea class="input_field win-textarea input_text_comment" data-win-bind="value: dataLayoutValue.LayoutText Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" onfocusin="AppBar.handleEvent('focusin', 'blockEnterKey', event)" onfocusout="AppBar.handleEvent('focusout', 'releaseEnterKey', event)"></textarea>
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingTemplateEventEdit.mailtext'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'mailingTemplateEventEdit.mailtext'}"></span>
+                            <textarea class="input_field win-textarea input_text_comment" data-win-bind="value: dataLayoutValue.MailText Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" onfocusin="AppBar.handleEvent('focusin', 'blockEnterKey', event)" onfocusout="AppBar.handleEvent('focusout', 'releaseEnterKey', event)"></textarea>
                         </div>
                     </div>
+                    <div class="line-separator"></div>
+                    <div class="field_line">
+                    <div class="field_line field_line_odd">
+                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingTemplateEventEdit.layoutactive'}"></span>
+                        <span class="label landscape_only" data-win-res="{textContent: 'mailingTemplateEventEdit.layoutactive'}"></span>
+                        <div class="input_field toggle-switch-parent">
+                            <div id="layoutActiveToggle" class="input_field"
+                                 data-win-control="WinJS.UI.ToggleSwitch"
+                                 data-win-bind="winControl.checked: dataLayoutActive.IsActive Binding.Mode.twoway; winControl.labelOn: generalData.active; winControl.labelOff: generalData.inactive">
+                            </div>
+                        </div>
+                    </div>
+                   </div>
                 </div>
                 <div class="error-message"
                      data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>

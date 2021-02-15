@@ -1196,6 +1196,8 @@
 	"mailingTemplateEventEdit.title"			: "Vorlage bearbeiten",
 	"mailingTemplateEventEdit.language"			: "Sprache",
 	"mailingTemplateEventEdit.type"				: "Typ",
-	"mailingTemplateEventEdit.subject"			: "Betreff"
+	"mailingTemplateEventEdit.subject"			: "Betreff",
+    "mailingTemplateEventEdit.mailtext"			: "Mailtext",
+    "mailingTemplateEventEdit.layoutactive"			: "Schalten Sie aus, um diesen E-Mail-Entwurf (in allen Sprachen) als veraltet zu kennzeichnen. Wenn ein Entwurf veraltet ist, wird er in der Anwendung Mailing nicht als Option angezeigt."
     
 }		
