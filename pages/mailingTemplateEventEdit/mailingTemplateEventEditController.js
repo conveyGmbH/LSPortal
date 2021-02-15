@@ -181,7 +181,7 @@
                 },
                 onLayoutActiveToggle: function(event) {
                     Log.call(Log.l.trace, "ContactResultsList.Controller.");
-                    var stat = event.currentTarget.winControl.checked;
+                    AppBar.modified = true;
                     that.setToggleData(event);
                     that.saveToggleData();
                     Log.ret(Log.l.trace);
@@ -241,7 +241,7 @@
                 this.addRemovableEventListener(initSprache, "click", this.eventHandlers.setPrevData.bind(this));
             }
             if (layoutActiveToggle) {
-                this.addRemovableEventListener(layoutActiveToggle, "change", this.eventHandlers.onLayoutActiveToggle.bind(this));
+                this.addRemovableEventListener(layoutActiveToggle, "click", this.eventHandlers.onLayoutActiveToggle.bind(this));
             }
             
             this.disableHandlers = {

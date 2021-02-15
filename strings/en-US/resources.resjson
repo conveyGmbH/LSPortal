@@ -1183,5 +1183,7 @@
 	"mailingTemplateEventEdit.title"			: "Edit template",
 	"mailingTemplateEventEdit.language"			: "Language",
 	"mailingTemplateEventEdit.type"				: "Typ",
-	"mailingTemplateEventEdit.subject"			: "Subject"
+	"mailingTemplateEventEdit.subject"			: "Subject",
+    "mailingTemplateEventEdit.mailtext"			: "Mailtext",
+    "mailingTemplateEventEdit.layoutactive"			: "Turn off to set this E-Mail draft (in all languages) as outdated. If a draft is outdated it will not be shown as option in the Mailing application."
 }

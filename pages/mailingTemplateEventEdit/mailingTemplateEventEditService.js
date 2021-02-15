@@ -63,7 +63,7 @@
             },
             getRestriction: {
                 Subject: "",
-                LayoutText: ""
+                MailText: ""
             },    
             setRestriction: {
                 TextName: "",

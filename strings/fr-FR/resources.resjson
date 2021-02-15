@@ -1184,5 +1184,7 @@
 	"mailingTemplateEventEdit.title"			: "Modifier le modèle",
 	"mailingTemplateEventEdit.language"			: "Langue",
 	"mailingTemplateEventEdit.type"				: "Type",
-	"mailingTemplateEventEdit.subject"			: "Matière"
+	"mailingTemplateEventEdit.subject"			: "Matière",
+    "mailingTemplateEventEdit.mailtext"			: "Texte du courrier",
+    "mailingTemplateEventEdit.layoutactive"			: "Désactivez cette option pour que ce projet de courriel (dans toutes les langues) soit dépassé. Si un brouillon est obsolète, il ne sera pas affiché comme option dans l'application d'envoi."
 }

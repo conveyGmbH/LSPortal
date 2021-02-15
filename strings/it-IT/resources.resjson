@@ -1183,5 +1183,7 @@
 	"mailingTemplateEventEdit.title"			: "Modifica modello",
 	"mailingTemplateEventEdit.language"			: "Linguaggio",
 	"mailingTemplateEventEdit.type"				: "Genere",
-	"mailingTemplateEventEdit.subject"			: "Soggetto"
+	"mailingTemplateEventEdit.subject"			: "Soggetto",
+    "mailingTemplateEventEdit.mailtext"			: "Testo della posta",
+    "mailingTemplateEventEdit.layoutactive"			: "Disattivare per impostare questa bozza di e-mail (in tutte le lingue) come obsoleta. Se una bozza è obsoleta non sarà mostrata come opzione nell'applicazione Mailing."
 }
