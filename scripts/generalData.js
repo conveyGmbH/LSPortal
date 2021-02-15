@@ -643,6 +643,8 @@
                 data.light = getResourceText("settings.light");
                 data.present = getResourceText("userinfo.present");
                 data.absend = getResourceText("userinfo.absend");
+                data.active = getResourceText("settings.active");
+                data.inactive = getResourceText("settings.inactive");
                 return data;
             }
         },
