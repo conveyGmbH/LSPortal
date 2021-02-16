@@ -64,9 +64,9 @@
                                         <span data-win-res="{textContent: 'mailingEdit.sender'}"></span> / <span data-win-res="{textContent: 'mailingEdit.reply'}"></span>
                                     </div>
                                     <div class="input_group">
-                                        <input name="Vorname" class="input_half_left win-textbox" type="text" data-win-bind="value: dataMail.SenderAddr Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" />
+                                        <input name="Vorname" class="input_half_left win-textbox" type="text" data-win-bind="value: dataMail.SenderAddr Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" onfocusout="AppBar.handleEvent('focusout', 'autoSave', event)" />
                                         <span class="input_small_left" data-win-bind="textContent: dataContact.Sender; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
-                                        <input class="input_half_right win-textbox" type="text" data-win-bind="value: dataMail.ReplyToAddr Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" />
+                                        <input class="input_half_right win-textbox" type="text" data-win-bind="value: dataMail.ReplyToAddr Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" onfocusout="AppBar.handleEvent('focusout', 'autoSave', event)"/>
                                         <span class="input_field" data-win-bind="textContent: dataContact.BCC; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
                                     </div>
                                 </div>
@@ -79,9 +79,9 @@
                                         <span data-win-res="{textContent: 'mailingEdit.cc'}"></span> / <span data-win-res="{textContent: 'mailingEdit.bcc'}"></span>
                                     </div>
                                     <div class="input_group">
-                                        <input name="Vorname" class="input_half_left win-textbox" type="text" data-win-bind="value: dataMail.CCAddr Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" />
+                                        <input name="Vorname" class="input_half_left win-textbox" type="text" data-win-bind="value: dataMail.CCAddr Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" onfocusout="AppBar.handleEvent('focusout', 'autoSave', event)"/>
                                         <span class="input_small_left" data-win-bind="textContent: dataContact.CC; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
-                                        <input class="input_half_right win-textbox" type="text" data-win-bind="value: dataMail.BCCAddr Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" />
+                                        <input class="input_half_right win-textbox" type="text" data-win-bind="value: dataMail.BCCAddr Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" onfocusout="AppBar.handleEvent('focusout', 'autoSave', event)"/>
                                         <span class="input_field" data-win-bind="textContent: dataContact.BCC; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
                                     </div>
                                 </div>
@@ -107,6 +107,7 @@
                                 <select id="templatedropdown"
                                         class="input_field win-dropdown"
                                         data-win-control="WinJS.UI.Repeater"
+                                        onfocusout="AppBar.handleEvent('focusout', 'clickSave', event)"
                                         data-win-bind="value: dataMail.LayoutID Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone">
                                     <option data-win-bind="value: VAMailLayoutVIEWID; textContent: TextName"></option>
                                 </select>

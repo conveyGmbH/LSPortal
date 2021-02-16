@@ -264,6 +264,19 @@
                     Application.navigateById("userinfo", event);
                     Log.ret(Log.l.trace);
                 },
+                autoSave : function(event) {
+                    Log.call(Log.l.trace, "Mailing.Controller.");
+                    WinJS.Promise.as().then(function() {
+                        that.saveData(function(response) {
+                                Log.print(Log.l.trace, "prev Mail saved");
+                                //AppBar.modified = true;
+                            },
+                            function(errorResponse) {
+                                Log.print(Log.l.error, "error saving mail");
+                            });
+                    });
+                    Log.ret(Log.l.trace);
+                },
                 clickGotoPublish: function(event) {
                     Log.call(Log.l.trace, "Mailing.Controller.");
                     Application.navigateById("publish", event);
