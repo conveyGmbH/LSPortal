@@ -54,7 +54,7 @@
             this.background = background;
             
             var loadNextUrl = function () {
-                Log.call(Log.l.trace, "LocalEvents.Controller.");
+                Log.call(Log.l.trace, "EventsList.Controller.");
                 progress = listView.querySelector(".list-footer .progress");
                 counter = listView.querySelector(".list-footer .counter");
                 if (that.localeventsdata && that.nextUrl && listView) {
@@ -66,16 +66,16 @@
                         counter.style.display = "none";
                     }
                     AppData.setErrorMsg(that.binding);
-                    Log.print(Log.l.trace, "calling select LocalEvents.VeranstaltungView...");
+                    Log.print(Log.l.trace, "calling select EventsList.VeranstaltungView...");
                     var nextUrl = that.nextUrl;
                     that.nextUrl = null;
-                    LocalEvents.VeranstaltungView.selectNext(function (json) { //json is undefined
+                    EventsList.VeranstaltungView.selectNext(function (json) { //json is undefined
                         // this callback will be called asynchronously
                         // when the response is available
-                        Log.print(Log.l.trace, "LocalEvents.VeranstaltungView: success!");
+                        Log.print(Log.l.trace, "EventsList.VeranstaltungView: success!");
                         // startContact returns object already parsed from json file in response
                         if (json && json.d && json.d.results && that.localeventsdata) {
-                            that.nextUrl = LocalEvents.VeranstaltungView.getNextUrl(json);
+                            that.nextUrl = EventsList.VeranstaltungView.getNextUrl(json);
                             var results = json.d.results;
                             results.forEach(function (item, index) {
                                 that.resultConverter(item, that.binding.count);
@@ -131,7 +131,7 @@
             this.getDateObject = getDateObject;
 
             var selectRecordId = function (recordId) {
-                Log.call(Log.l.trace, "LocalEvents.Controller.", "recordId=" + recordId);
+                Log.call(Log.l.trace, "EventsList.Controller.", "recordId=" + recordId);
                 if (recordId && listView && listView.winControl && listView.winControl.selection) {
                     for (var i = 0; i < that.localeventsdata.length; i++) {
                         var localevents = that.localeventsdata.getAt(i);
@@ -156,19 +156,19 @@
             // define handlers
             this.eventHandlers = {
                 clickBack: function (event) {
-                    Log.call(Log.l.trace, "LocalEvents.Controller.");
+                    Log.call(Log.l.trace, "EventsList.Controller.");
                     if (WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done();
                     }
                     Log.ret(Log.l.trace);
                 },
                 onItemInvoked: function (eventInfo) {
-                    Log.call(Log.l.trace, "LocalEvents.Controller.");
+                    Log.call(Log.l.trace, "EventsList.Controller.");
                     Application.showDetail();
                     Log.ret(Log.l.trace);
                 },
                 onLoadingStateChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "LocalEvents.Controller.");
+                    Log.call(Log.l.trace, "EventsList.Controller.");
                     if (listView && listView.winControl) {
                         Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
                         // single list selection
@@ -203,7 +203,7 @@
                     Log.ret(Log.l.trace);
                 },
                 onSelectionChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "LocalEvents.Controller.");
+                    Log.call(Log.l.trace, "EventsList.Controller.");
                     if (listView && listView.winControl) {
                         var listControl = listView.winControl;
                         if (listControl.selection) {
@@ -267,7 +267,7 @@
                     Log.ret(Log.l.trace);
                 },
                 onHeaderVisibilityChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "LocalEvents.Controller.");
+                    Log.call(Log.l.trace, "EventsList.Controller.");
                     if (eventInfo && eventInfo.detail) {
                         var visible = eventInfo.detail.visible;
                         if (visible) {
@@ -286,7 +286,7 @@
                     Log.ret(Log.l.trace);
                 },
                 onFooterVisibilityChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "LocalEvents.Controller.");
+                    Log.call(Log.l.trace, "EventsList.Controller.");
                     if (eventInfo && eventInfo.detail) {
                         progress = listView.querySelector(".list-footer .progress");
                         counter = listView.querySelector(".list-footer .counter");
@@ -307,7 +307,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickTopButton: function (event) {
-                    Log.call(Log.l.trace, "Contact.Controller.");
+                    Log.call(Log.l.trace, "EventsList.Controller.");
                     var anchor = document.getElementById("menuButton");
                     var menu = document.getElementById("menu1").winControl;
                     var placement = "bottom";
@@ -315,7 +315,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickLogoff: function (event) {
-                    Log.call(Log.l.trace, "Account.Controller.");
+                    Log.call(Log.l.trace, "EventsList.Controller.");
                     AppData._persistentStates.privacyPolicyFlag = false;
                     if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
                         AppHeader.controller.binding.userData = {};
@@ -346,7 +346,7 @@
             }
 
             var loadData = function () {
-                Log.call(Log.l.trace, "LocalEvents.Controller.");
+                Log.call(Log.l.trace, "EventsList.Controller.");
                 that.loading = true;
                 progress = listView.querySelector(".list-footer .progress");
                 counter = listView.querySelector(".list-footer .counter");
@@ -358,14 +358,14 @@
                 }
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
-                    return LocalEvents.VeranstaltungView.select(function (json) {
+                    return EventsList.VeranstaltungView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
                         AppData.setErrorMsg(that.binding);
                         Log.print(Log.l.trace, "LocalEvent: success!");
                         // employeeView returns object already parsed from json file in response
                         if (json && json.d && json.d.results && json.d.results.length) {
-                            that.nextUrl = LocalEvents.VeranstaltungView.getNextUrl(json);
+                            that.nextUrl = EventsList.VeranstaltungView.getNextUrl(json);
                             var results = json.d.results;
                             results.forEach(function (item, index) {
                                 that.resultConverter(item, index);

@@ -536,6 +536,7 @@
     "label.mailingList" : "Mailings",
     "label.mailingTemplateEvent" : "Modelli",
     "label.eventResourceAdministration" : "Event Administration",
+    "label.eventMediaAdministration" : "Media Administration",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annulla",

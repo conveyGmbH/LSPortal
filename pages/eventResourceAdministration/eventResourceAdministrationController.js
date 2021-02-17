@@ -54,12 +54,18 @@
                     var element = listView.winControl.elementFromIndex(index);
                     if (element) {
                         var fields = element.querySelectorAll('input[type="text"], textarea');
-                        fields.forEach(function(field) {
+                        /*fields.forEach(function (field) {
                             var fieldEntry = field.dataset && field.dataset.fieldEntry;
                             if (fieldEntry) {
                                 ret[fieldEntry] = field.value;
                             }
-                        });
+                        });*/
+                        for (var i = 0; i < fields.length; i++) {
+                            var fieldEntry = fields[i].dataset && fields[i].dataset.fieldEntry;
+                            if (fieldEntry) {
+                                ret[fieldEntry] = fields[i].value;
+                            }
+                        }
                     }
                 }
                 Log.ret(Log.l.trace, ret);

@@ -56,7 +56,7 @@
             this.controller = new EventResourceAdministration.Controller(element, commandList);
             if (this.controller.eventHandlers) {
                 // general event listener for hardware back button, too!
-                this.controller.addRemovableEventListener(document, "backbutton", this.controller.eventHandlers.clickOk.bind(this.controller));
+                this.controller.addRemovableEventListener(document, "backbutton", this.controller.eventHandlers.clickForward.bind(this.controller));
             }
             Log.ret(Log.l.trace);
         },

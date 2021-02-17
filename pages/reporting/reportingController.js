@@ -691,7 +691,7 @@
                     var exporter = new ExportXlsx.ExporterClass(that.binding.progress);/*that.binding.progress*/
                     //}
                     //exporter.showProgress(0);
-                    //hat.disableReportingList(true);
+                    //that.disableReportingList(true);
                     if (!restriction) {
                         restriction = that.setRestriction();
                     }

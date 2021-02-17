@@ -539,7 +539,8 @@
     "label.contactResultsEvents" : "Ereignisse",
 	"label.mailingList" : "Mailings",
     "label.mailingTemplateEvent"			: "Vorlagen",
-	"label.eventResourceAdministration" : "Event Administration",
+	"label.eventResourceAdministration" : "Texte",
+	"label.eventMediaAdministration" : "Medien",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Abbrechen",
@@ -1152,6 +1153,8 @@
     "contactResultsEvents.event"			: "Veranstaltung",
 
 	"eventResourceAdministration.eventTextPlaceholder"  : "Geben Sie hier ein: ",
+
+	"eventMediaAdministration.title": "Medien Administration",
 
     "mailingEdit.title"			: "Bearbeiten",
     "mailingEdit.nametitleheader"			: "Name",

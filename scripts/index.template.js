@@ -66,11 +66,13 @@
         { id: "esVoucherUsers", group: 19, svg: "voucher_contact", disabled: true },
         { id: "dashBoard", group: 19, svg: "Dashboard", disabled: true },
         { id: "masterDataGrp", group: 23, svg: "Stammdaten", disabled: true, popup: true },
-        { id: "eventResourceAdministration", group: 44, svg: "calendar_1", disabled: true, predecGroup: 23 },
         { id: "skills", group: 24, svg: "Skills", disabled: true, predecGroup: 23 },
         { id: "employeeGrp", group: 25, svg: "Benutzerkonten", disabled: true, popup: true },
         { id: "employee", group: 5, svg: "keys", disabled: true, predecGroup: 25 },
-        { id: "localevents", group: 12, svg: "keys", disabled: true },
+        { id: "myEvents", group: 53, svg: "keys", disabled: true, popup: true },
+        { id: "localevents", group: 12, svg: "keys", disabled: true, predecGroup: 53 },
+        { id: "eventResourceAdministration", group: 44, svg: "calendar_1", disabled: true, predecGroup: 53 },
+        { id: "eventMediaAdministration", group: 44, svg: "calendar_1", disabled: true, predecGroup: 53 },
         { id: "settingLeadsuccessGrp", group: 27, svg: "handshake", disabled: true, popup: true },
         { id: "events", group: 2, svg: "calendar_1", disabled: true, predecGroup: 27 },
         { id: "questionList", group: 3, svg: "question_and_answer", disabled: true, predecGroup: 27 },
@@ -81,8 +83,8 @@
         { id: "contactsEventsGrp", group: 29, svg: "Contact_Ereignis", disabled: true, popup: true },
         { id: "contacts", group: 6, svg: "businesspeople2", disabled: true, predecGroup: 29 },
         { id: "mailingGrp", group: 31, svg: "mailing", disabled: true, popup: true },
-        { id: "mailingList", group: 4, svg: "standardmail", disabled: true, predecGroup: 31 },
-        { id: "mailingTemplateEvent", group: 45, svg: "standardmail", disabled: true, predecGroup: 31 },
+        { id: "mailingList", group: -50, svg: "standardmail", disabled: true, predecGroup: 31 },
+        { id: "mailingTemplateEvent", group: -51, svg: "standardmail", disabled: true, predecGroup: 31 },
         { id: "mailingProduct", group: 32, svg: "Productmail", disabled: true, predecGroup: 31 },
         { id: "mailingOptions", group: 33, svg: "Mailsettings", disabled: true, predecGroup: 31 },
         { id: "exportGrp", group: 34, svg: "Export", disabled: true, popup: true },
@@ -111,6 +113,7 @@
         //{ id: "products", group: 2, disabled: false },
         { id: "skills", group: 24, disabled: false },
         { id: "eventResourceAdministration", group: 44, disabled: false},
+        { id: "eventMediaAdministration", group: 44, disabled: false },
         { id: "questionList", group: 3, disabled: false },
         { id: "questiongroup", group: 3, disabled: false },
         { id: "optQuestionList", group: 3, disabled: false },
@@ -118,6 +121,8 @@
         //{ id: "visitorFlowEntExt", group: 3, disabled: false },
         { id: "mailing", group: 4, disabled: false },
         { id: "mailingOptions", group: 4, disabled: false },
+		{ id: "mailingList", group: -50, disabled: false },
+        { id: "mailingTemplateEvent", group: -51, disabled: false },
         //{ id: "mailingProduct", group: 4, disabled: false },
         { id: "employee", group: 5, disabled: false },
         { id: "skillentry", group: 5, disabled: false },
@@ -176,7 +181,8 @@
         { id: "mailingTracking", master: "mailingTrackingList" },
         { id: "esStaffAdministration", master: "esStaffAdministrationList" },
         { id: "esVoucherUsers", master: "esVoucherUsersList" },
-        { id: "eventResourceAdministration", master: "eventsList" }
+        { id: "eventResourceAdministration", master: "eventsList" },
+        { id: "eventMediaAdministration", master: "eventsList" }
     ];
 
 

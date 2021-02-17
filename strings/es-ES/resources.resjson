@@ -442,6 +442,7 @@
     "label.eventsuccess" : "EventSuccess",
     "label.mailingTemplateEvent"			: "Vorlagen",
     "label.eventResourceAdministration" : "Event Administration",
+    "label.eventMediaAdministration" : "Media Administration",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Abbrechen",
