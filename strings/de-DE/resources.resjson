@@ -541,6 +541,7 @@
     "label.mailingTemplateEvent"			: "Vorlagen",
 	"label.eventResourceAdministration" : "Texte",
 	"label.eventMediaAdministration" : "Medien",
+	"label.eventSeriesAdministration" : "Serien",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Abbrechen",
@@ -1155,6 +1156,8 @@
 	"eventResourceAdministration.eventTextPlaceholder"  : "Geben Sie hier ein: ",
 
 	"eventMediaAdministration.title": "Medien Administration",
+
+	"eventSeriesAdministration.title" : "Serien Titel",
 
     "mailingEdit.title"			: "Bearbeiten",
     "mailingEdit.nametitleheader"			: "Name",

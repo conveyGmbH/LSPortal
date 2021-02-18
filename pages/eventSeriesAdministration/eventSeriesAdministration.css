@@ -1,0 +1,65 @@
+﻿/**
+    eventSerieList styles
+*/
+#eventSerieList {
+    height: auto;
+}
+#eventSerieList .win-selectionborder {
+    border-color: transparent;
+}
+#eventSerieList .win-itembox:hover::before {
+    border-color: transparent;
+}
+#eventSerieList .label-right {
+    float: right;
+    opacity: 0.6;
+}
+#eventSerieList .input_field {
+    margin-bottom: 0;
+}
+.view-size-medium #eventSerieList .input_field {
+    float: left;
+    width: 100%;
+}
+
+.headercircle {
+    float: left;
+    margin-top: 5px;
+    margin-left: 10px;
+}
+
+.headercircletext {
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    padding: 8px;
+    background: #fff;
+    border: 2px solid #666;
+    color: #666;
+    text-align: center;
+    font: 32px Arial, sans-serif;
+}
+
+.headertitletextcontainer {
+    float: left;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.mailingeditboxhead {
+    width: 90%;
+    min-height: 100px;
+    margin-left: 5%;
+    margin-right: 5%;
+    border: 1px solid darkgray;
+    margin-top: 2px;
+}
+
+.mailingeditboxbottom {
+    width: 90%;
+    min-height: 100px;
+    margin-left: 5%;
+    border: 1px solid darkgray;
+    margin-top: 10px;
+}
+

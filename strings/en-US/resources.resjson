@@ -1140,6 +1140,11 @@
     "contactResultsEvents.creator"			: "Creator",
     "contactResultsEvents.event"			: "Event",
 
+	"eventResourceAdministration.eventTextPlaceholder"  : "Geben Sie hier ein: ",
+
+	"eventMediaAdministration.title": "Medien Administration",
+
+	"eventSeriesAdministration.title" : "Serien Titel",
     "mailingEdit.title"			: "To edit",
     "mailingEdit.nametitleheader"			: "Name",
     "mailingEdit.nametitlecomment"			: "Please enter the name of your mailing campaign here",

@@ -201,12 +201,11 @@
                     WinJS.Promise.as().then(function () {
                         that.saveData(function (response) {
                             Log.print(Log.l.trace, "prev Mail saved");
+							that.loadData();
                             //AppBar.modified = true;
                         }, function (errorResponse) {
                             Log.print(Log.l.error, "error saving mail");
                         });
-                    }).then(function () {
-                        that.loadData();
                     });
                     Log.ret(Log.l.trace);
                 },
@@ -270,8 +269,7 @@
                         that.saveData(function(response) {
                                 Log.print(Log.l.trace, "prev Mail saved");
                                 //AppBar.modified = true;
-                            },
-                            function(errorResponse) {
+                        }, function (errorResponse) {
                                 Log.print(Log.l.error, "error saving mail");
                             });
                     });

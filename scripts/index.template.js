@@ -72,7 +72,8 @@
         { id: "myEvents", group: 53, svg: "keys", disabled: true, popup: true },
         { id: "localevents", group: 12, svg: "keys", disabled: true, predecGroup: 53 },
         { id: "eventResourceAdministration", group: 44, svg: "calendar_1", disabled: true, predecGroup: 53 },
-        { id: "eventMediaAdministration", group: 44, svg: "calendar_1", disabled: true, predecGroup: 53 },
+        //{ id: "eventMediaAdministration", group: 44, svg: "calendar_1", disabled: true, predecGroup: 53 },
+		//{ id: "eventSeriesAdministration", group: 44, svg: "calendar_1", disabled: true, predecGroup: 53 },
         { id: "settingLeadsuccessGrp", group: 27, svg: "handshake", disabled: true, popup: true },
         { id: "events", group: 2, svg: "calendar_1", disabled: true, predecGroup: 27 },
         { id: "questionList", group: 3, svg: "question_and_answer", disabled: true, predecGroup: 27 },
@@ -114,6 +115,7 @@
         { id: "skills", group: 24, disabled: false },
         { id: "eventResourceAdministration", group: 44, disabled: false},
         { id: "eventMediaAdministration", group: 44, disabled: false },
+		{ id: "eventSeriesAdministration", group: 44, disabled: false },
         { id: "questionList", group: 3, disabled: false },
         { id: "questiongroup", group: 3, disabled: false },
         { id: "optQuestionList", group: 3, disabled: false },
@@ -182,7 +184,8 @@
         { id: "esStaffAdministration", master: "esStaffAdministrationList" },
         { id: "esVoucherUsers", master: "esVoucherUsersList" },
         { id: "eventResourceAdministration", master: "eventsList" },
-        { id: "eventMediaAdministration", master: "eventsList" }
+        { id: "eventMediaAdministration", master: "eventsList" },
+		{ id: "eventSeriesAdministration", master: "eventsList" }
     ];
 
 

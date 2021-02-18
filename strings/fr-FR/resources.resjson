@@ -1141,6 +1141,11 @@
     "contactResultsEvents.creator"			: "Entrez",
     "contactResultsEvents.event"			: "Événement",
 
+	"eventResourceAdministration.eventTextPlaceholder"  : "Geben Sie hier ein: ",
+
+	"eventMediaAdministration.title": "Medien Administration",
+
+	"eventSeriesAdministration.title" : "Serien Titel",
     "mailingEdit.title"			: "Éditer",
     "mailingEdit.nametitleheader"			: "Nom",
     "mailingEdit.nametitlecomment"			: "Veuillez entrer le nom de votre campagne de diffusion ici",
