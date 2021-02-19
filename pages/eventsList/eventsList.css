@@ -1,31 +1,47 @@
-﻿body {
+﻿.eventslist .list-div-left,
+.eventslist .list-div-right {
+    width: calc(100% - 32px);
+    margin: 0 16px;
 }
-/*.win-itemscontainer {
-    padding-left: 20px;
-}*/
-.localEvents-big {
-    text-align: left;
-    width: 80px;
-    display: inline-block;
+
+.eventslist .grayed-out {
+    opacity: 0.6;
+}
+
+.eventslist .semibold {
+    font-weight: 600;
+}
+
+#eventslist .win-item {
+    width: 100%;
+    padding: 0;
+}
+
+#eventslist .win-itemsblock {
+    width: 100%;
+    height: auto;
+    padding: 0;
+}
+
+#eventslist .win-container {
+    width: 100%;
+    height: auto;
+    min-height: 60px;
+    margin: 0;
+    margin-bottom: 0;
+    border-radius: 0;
+    background-color: transparent;
+}
+
+#eventslist .win-surface {
+    margin-top: 0;
+    margin-left: 0;
+}
+
+#eventslist.listview {
     position: relative;
+    left: 0;
     top: 0;
-    min-height: 32px;
-    padding-top: 8px;
-    padding-left: 8px;
-    width: 300px;
-    padding-left: 20px;
-}
-.status {
-    padding-left: 20px;
-}
-#localevents {
-    height: calc(100% - 74px);
-}
-.list-header {
-    padding-left: 27px;
-    font-weight: bold;
-}
-.confirm-button {
-    position: absolute;
-    height: 100%;
+    width: 100%;
+    height: calc(100% - 72px);
 }

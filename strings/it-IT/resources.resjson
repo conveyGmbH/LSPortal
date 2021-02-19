@@ -813,6 +813,9 @@
     "localevents.labelDelete"   : "Dovrebbe l'evento ",
     "localevents.eventDelete"   : "davvero essere cancellato?",
 
+    "eventslist.title" : "Eventi",
+    "eventslist.count"       : "Totale",
+
     "employeegenpwlist.title" : "Password dei dipendenti pre-generate",
     "employeegenpwlist.login" : "nome di accesso",
     "employeegenpwlist.password" : "password",

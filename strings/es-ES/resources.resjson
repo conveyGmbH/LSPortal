@@ -632,9 +632,12 @@
 	"localevents.confirmCopyQuestionnaire1" : "Fragebogen von ",
 	"localevents.confirmCopyQuestionnaire2" : "wird unwiederruflich ersetzt durch Fragebogen ",
 
+    "eventslist.title" : "Veranstaltungen",
+    "eventslist.count"       : "Anzahl",
+
 	"employeegenpwlist.title" : "Mitarbeiter generierte Passwörter",
-		"employeegenpwlist.login" : "Loginname",
-		"employeegenpwlist.password" : "Passwort",
+	"employeegenpwlist.login" : "Loginname",
+	"employeegenpwlist.password" : "Passwort",
     "employeegenpwlist.passwordchanged" : "Passwort wurde geändert",
     "employeegenpwlist.name" : "Name",
 

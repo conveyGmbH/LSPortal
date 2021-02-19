@@ -7,6 +7,7 @@
 /// <reference path="~/www/lib/convey/scripts/pageController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/pages/eventsList/eventsListService.js" />
+/// <reference path="~/www/lib/moment/scripts/moment-with-locales.min.js" />
 
 (function () {
     "use strict";
@@ -22,11 +23,12 @@
                 active: null
             }, commandList, isMaster]);
             this.nextUrl = null;
+            this.eventsdata = null;
 
             var that = this;
 
             // ListView control
-            var listView = pageElement.querySelector("#localevents.listview");
+            var listView = pageElement.querySelector("#eventslist.listview");
             var progress = null;
             var counter = null;
             var layout = null;
@@ -38,8 +40,8 @@
                 if (listView && listView.winControl) {
                     listView.winControl.itemDataSource = null;
                 }
-                if (that.localeventsdata) {
-                    that.localeventstdata = null;
+                if (that.eventsdata) {
+                    that.eventstdata = null;
                 }
                 listView = null;
             }
@@ -57,7 +59,7 @@
                 Log.call(Log.l.trace, "EventsList.Controller.");
                 progress = listView.querySelector(".list-footer .progress");
                 counter = listView.querySelector(".list-footer .counter");
-                if (that.localeventsdata && that.nextUrl && listView) {
+                if (that.eventsdata && that.nextUrl && listView) {
                     that.loading = true;
                     if (progress && progress.style) {
                         progress.style.display = "inline";
@@ -74,12 +76,12 @@
                         // when the response is available
                         Log.print(Log.l.trace, "EventsList.VeranstaltungView: success!");
                         // startContact returns object already parsed from json file in response
-                        if (json && json.d && json.d.results && that.localeventsdata) {
+                        if (json && json.d && json.d.results && that.eventsdata) {
                             that.nextUrl = EventsList.VeranstaltungView.getNextUrl(json);
                             var results = json.d.results;
                             results.forEach(function (item, index) {
                                 that.resultConverter(item, that.binding.count);
-                                that.binding.count = that.localeventsdata.push(item);
+                                that.binding.count = that.eventsdata.push(item);
                             });
                         }
                         if (progress && progress.style) {
@@ -117,26 +119,26 @@
             }
             this.loadNextUrl = loadNextUrl;
 
-            var getDateObject = function (dateData) {
+            /*var getDateObject = function (dateData) {
                 var ret;
                 if (dateData) {
                     var dateString = dateData.replace("\/Date(", "").replace(")\/", "");
                     var milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
-                    ret = new Date(milliseconds).toDateString();
+                    ret = new Date(milliseconds);
                 } else {
                     ret = new Date();
                 }
                 return ret;
             };
-            this.getDateObject = getDateObject;
+            this.getDateObject = getDateObject;*/
 
             var selectRecordId = function (recordId) {
                 Log.call(Log.l.trace, "EventsList.Controller.", "recordId=" + recordId);
                 if (recordId && listView && listView.winControl && listView.winControl.selection) {
-                    for (var i = 0; i < that.localeventsdata.length; i++) {
-                        var localevents = that.localeventsdata.getAt(i);
-                        if (localevents && typeof localevents === "object" &&
-                            localevents.VeranstaltungVIEWID === recordId) {
+                    for (var i = 0; i < that.eventsdata.length; i++) {
+                        var events = that.eventsdata.getAt(i);
+                        if (events && typeof events === "object" &&
+                            events.VeranstaltungVIEWID === recordId) {
                             listView.winControl.selection.set(i);
                             break;
                         }
@@ -148,8 +150,13 @@
 
             var resultConverter = function (item, index) {
                 item.index = index;
-                item.Startdatum = that.getDateObject(item.Startdatum);
-                item.Enddatum = that.getDateObject(item.Enddatum);
+                // convert Erfassungsdatum 
+                item.currentDate = getDateObject(item.Startdatum);
+                var curMoment = moment(item.currentDate);
+                if (curMoment) {
+                    curMoment.locale(Application.language);
+                    item.currentDateString = curMoment.format("ll");
+                }
             }
             this.resultConverter = resultConverter;
 
@@ -190,7 +197,7 @@
                         }
                         if (listView.winControl.loadingState === "itemsLoading") {
                             if (!layout) {
-                                layout = Application.LocalEventsLayout.LocalEventsLayout;
+                                layout = Application.EventsListLayout.EventsListLayout;
                                 listView.winControl.layout = { type: layout };
                             }
                         } else if (listView.winControl.loadingState === "complete") {
@@ -291,7 +298,7 @@
                         progress = listView.querySelector(".list-footer .progress");
                         counter = listView.querySelector(".list-footer .counter");
                         var visible = eventInfo.detail.visible;
-                        if (visible && that.localeventsdata && that.nextUrl) {
+                        if (visible && that.eventsdata && that.nextUrl) {
                             that.loading = true;
                             that.loadNextUrl();
                         } else {
@@ -362,7 +369,7 @@
                         // this callback will be called asynchronously
                         // when the response is available
                         AppData.setErrorMsg(that.binding);
-                        Log.print(Log.l.trace, "LocalEvent: success!");
+                        Log.print(Log.l.trace, "Events: success!");
                         // employeeView returns object already parsed from json file in response
                         if (json && json.d && json.d.results && json.d.results.length) {
                             that.nextUrl = EventsList.VeranstaltungView.getNextUrl(json);
@@ -374,18 +381,18 @@
                             that.binding.fairmandantId = results[0].FairMandantID;
                             that.binding.firstentry = results[0].VeranstaltungVIEWID;
 
-                            that.localeventsdata = new WinJS.Binding.List(results);
+                            that.eventsdata = new WinJS.Binding.List(results);
 
                             if (listView.winControl) {
                                 // add ListView dataSource
-                                listView.winControl.itemDataSource = that.localeventsdata.dataSource;
+                                listView.winControl.itemDataSource = that.eventsdata.dataSource;
                             }
                             Log.print(Log.l.trace, "Data loaded");
 
                         } else {
                             that.binding.count = 0;
                             that.nextUrl = null;
-                            that.localeventsdata = null;
+                            that.eventsdata = null;
                             if (listView.winControl) {
                                 // add ListView dataSource
                                 listView.winControl.itemDataSource = null;

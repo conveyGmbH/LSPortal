@@ -818,6 +818,9 @@
     "localevents.labelDelete"   : "Soll die Veranstaltung ",
     "localevents.eventDelete"   : "wirklich gelöscht werden?",
 
+    "eventslist.title" : "Veranstaltungen",
+    "eventslist.count"       : "Anzahl",
+    
 	"employeegenpwlist.title" : "Generierte Passwörter",
 	"employeegenpwlist.login" : "Loginname",
 	"employeegenpwlist.password" : "Passwort",
