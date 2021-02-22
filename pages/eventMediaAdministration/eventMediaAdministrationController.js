@@ -449,6 +449,14 @@
             // finally, load the data
             that.processAll().then(function() {
                 Log.print(Log.l.trace, "Binding wireup page complete");
+                var eventTextUsageHost = pageElement.querySelector("#eventTextUsageHost.fragmenthost");
+                if (eventTextUsageHost) {
+                    return Application.loadFragmentById(eventTextUsageHost, "eventTextUsage", {});
+                } else {
+                    return WinJS.Promise.as();
+                }
+            }).then(function () {
+                Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
             }).then(function () {
                 AppBar.notifyModified = true;
