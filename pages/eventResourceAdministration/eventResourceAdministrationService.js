@@ -28,7 +28,8 @@
             select: function (complete, error, restriction, options) {
                 if (!restriction) {
                     restriction = {
-                        LanguageSpecID: AppData.getLanguageId()
+                        LanguageSpecID: AppData.getLanguageId(),
+                        NameLanguageID: AppData.getLanguageId(),
                     };
                     if (EventResourceAdministration._eventTextUsageId && EventResourceAdministration._eventTextUsageId <= 2 ||
                         EventResourceAdministration._eventTextUsageId > 2 && EventResourceAdministration._eventId) {
@@ -47,6 +48,7 @@
                 }
                 Log.call(Log.l.trace, "EventResourceAdministration.eventView.",
                     "LanguageSpecID=" + restriction.LanguageSpecID,
+                    "NameLanguageID=" + restriction.NameLanguageID,
                     "DokVerwendungID=" + restriction.DokVerwendungID,
                     "VeranstaltungID=" + restriction.VeranstaltungID);
                 var ret = EventResourceAdministration._eventTextView.select(complete, error, restriction, options);
