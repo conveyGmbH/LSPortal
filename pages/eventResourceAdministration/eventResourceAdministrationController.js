@@ -127,6 +127,11 @@
                     });
                     Log.ret(Log.l.trace);
                 },
+                clickNew: function (event) {
+                    Log.call(Log.l.trace, "EventResourceAdministration.Controller.");
+                    that.insertData();
+                    Log.ret(Log.l.trace);
+                },
                 clickChangeUserState: function (event) {
                     Log.call(Log.l.trace, "EventResourceAdministration.Controller.");
                     Application.navigateById("userinfo", event);
@@ -321,8 +326,11 @@
             }
 
             this.disableHandlers = {
-                clickOk: function () {
+                clickForward: function () {
                     // always enabled!
+                    return false;
+                },
+                clickNew: function () {
                     return false;
                 }
             }

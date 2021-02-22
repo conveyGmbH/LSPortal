@@ -6,9 +6,12 @@
 /// <reference path="~/www/lib/convey/scripts/appbar.js" />
 /// <reference path="~/www/lib/convey/scripts/pageController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
+/// <reference path="~/www/pages/eventMediaAdministration/eventMediaAdministrationService.js" />
 
 (function () {
     "use strict";
+
+    var b64 = window.base64js;
 
     WinJS.Namespace.define("EventMediaAdministration", {
         getClassNameOffline: function (useOffline) {
@@ -20,6 +23,7 @@
             var that = this;
             
             Application.Controller.apply(this, [pageElement, {
+                dataEventMedia: EventMediaAdministration.eventTextView.defaultMediaAdministrationData,
                 showSvg: false,
                 showPhoto: false,
                 showAudio: false,
@@ -31,6 +35,85 @@
 
             this.pageElement = pageElement;
             this.docViewer = null;
+
+
+            var base64ToBlob = function (base64Data, contentType) {
+                contentType = contentType || '';
+                var sliceSize = 1024;
+                var base64result = base64Data.split(',')[1];
+                var byteCharacters = atob(base64result);
+                var bytesLength = byteCharacters.length;
+                var slicesCount = Math.ceil(bytesLength / sliceSize);
+                var byteArrays = new Array(slicesCount);
+
+                for (var sliceIndex = 0; sliceIndex < slicesCount; ++sliceIndex) {
+                    var begin = sliceIndex * sliceSize;
+                    var end = Math.min(begin + sliceSize, bytesLength);
+
+                    var bytes = new Array(end - begin);
+                    for (var offset = begin, i = 0; offset < end; ++i, ++offset) {
+                        bytes[i] = byteCharacters[offset].charCodeAt(0);
+                    }
+                    byteArrays[sliceIndex] = new Uint8Array(bytes);
+                }
+                return new Blob(byteArrays, { type: contentType });
+            }
+            this.base64ToBlob = base64ToBlob;
+
+            var output = [];
+
+            function getBase64 (file, type) {
+                var reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = function () {
+                    // reader.result
+                    var base64String = reader.result;
+                    output.push('<li><strong>', file.name, '</strong> (', file.type || 'n/a', ') - ',
+                        file.size, ' bytes</li>');
+                    document.getElementById('dateiListe').innerHTML = '<ul>' + output.join('') + '</ul>';
+                    // test wandle base64 to blob bzw. file und dann speicher
+                    /*var blob = that.base64ToBlob(base64String, type);
+                    saveAs(blob, "Test.txt");*/
+                };
+                reader.onerror = function (error) {
+                    AppData.setErrorMsg(that.binding, error);
+                };
+            }
+
+            function fileChoose(evt) {
+                // FileList-Objekt des input-Elements auslesen, auf dem 
+                // das change-Event ausgelöst wurde (event.target)
+                var files = evt.target.files;
+                for (var i = 0; i < files.length; i++) {
+                    getBase64(files[i], files[i].type);
+                }
+                //evt.target.value = "";
+            }
+
+            function fileDragAndDrop(evt) {
+                evt.stopPropagation();
+                evt.preventDefault();
+
+                var files = evt.dataTransfer.files; // FileList Objekt
+                for (var i = 0; i < files.length; i++) {
+                    getBase64(files[i], files[i].type);
+                }
+            }
+
+            function handleDragOver(evt) {
+                evt.stopPropagation();
+                evt.preventDefault();
+                evt.dataTransfer.dropEffect = 'copy';
+            }
+
+            // Initialisiere Drag&Drop EventListener
+            var dropZone = document.getElementById('dropzone');
+            dropZone.addEventListener('dragover', handleDragOver, false);
+            dropZone.addEventListener('drop', fileDragAndDrop, false);
+
+            //Initialisiere fileChooser           
+            var fileChooser = document.getElementById('fileChooser');
+            fileChooser.addEventListener('change', fileChoose, false);
 
             var setNotesCount = function(count) {
                 Log.call(Log.l.trace, "EventMediaAdministration.Controller.", "count=" + count);
@@ -235,6 +318,11 @@
                     // savedate..
                     Log.ret(Log.l.trace);
                 },
+                clickNew: function (event) {
+                    Log.call(Log.l.trace, "EventResourceAdministration.Controller.");
+                    that.insertData();
+                    Log.ret(Log.l.trace);
+                },
                 clickShowList: function (event) {
                     Log.call(Log.l.trace, "EventMediaAdministration.Controller.");
                     var mySketchList = pageElement.querySelector(".listfragmenthost");
@@ -340,6 +428,9 @@
                     // never disable!
                     return false;
                 },
+                clickNew: function () {
+                    return false;
+                },
                 clickShowList: function () {
                     if (that.binding.moreNotes) {
                         return false;
@@ -348,6 +439,12 @@
                     }
                 }
             }
+
+            var setEventId = function (value) {
+                Log.print(Log.l.trace, "eventId=" + value);
+                EventMediaAdministration._eventId = value;
+            }
+            that.setEventId = setEventId;
 
             // finally, load the data
             that.processAll().then(function() {

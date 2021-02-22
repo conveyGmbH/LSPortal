@@ -1143,9 +1143,18 @@
     "contactResultsEvents.creator"			: "Entra in",
     "contactResultsEvents.event"			: "Evento",
 
-	"eventResourceAdministration.eventTextPlaceholder"  : "Geben Sie hier ein: ",
+	"eventResourceAdministration.eventTextPlaceholder"  : "Entra qui: ",
 
-	"eventMediaAdministration.title": "Medien Administration",
+    "eventMediaAdministration.title": "Media Administration",
+    "eventMediaAdministration.info1": "Trascina i tuoi file qui: (premendo il tasto [ctrl], puoi selezionare più volte!)",
+    "eventMediaAdministration.info2": "Un campo di output per visualizzare i file selezionati:",
+    "eventMediaAdministration.File": "File",
+    "eventMediaAdministration.MediaMetaTitle": "Media Meta Title",
+    "eventMediaAdministration.MediaAltText": "Media ALT Text",
+    "eventMediaAdministration.MediaFreitextKommentar": "Commento a testo libero per i media",
+    "eventMediaAdministration.MediaName": "Media Name",
+    "eventMediaAdministration.LinkToFile": "Link al file",
+    "eventMediaAdministration.Categorie": "Categoria:",
 
 	"eventSeriesAdministration.title" : "Serien Titel",
 
