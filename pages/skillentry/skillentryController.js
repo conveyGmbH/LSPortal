@@ -188,7 +188,7 @@
             this.eventHandlers = {
                 clickBack: function (event) {
                     Log.call(Log.l.trace, "Skillentry.Controller.");
-                    if (WinJS.Navigation.canGoBack === true) {
+                    if (!Application.showMaster() && WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done( /* Your success and error handlers */);
                     }
                     Log.ret(Log.l.trace);
