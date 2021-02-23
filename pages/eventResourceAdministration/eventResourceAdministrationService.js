@@ -7,12 +7,38 @@
     "use strict";
     /**
      * LangMandantDokumentVIEW_20628 darauf nur select
+     * neue view LangMandantDokumentVIEW_20634 
      * LangMandantDokument_odataView darauf update
      */
     WinJS.Namespace.define("EventResourceAdministration", {
+        _initSpracheView: {
+            get: function () {
+                return AppData.getLgntInit("LGNTINITSprache", false, true);
+            }
+        },
+        initSpracheView: {
+            select: function (complete, error, recordId) {
+                Log.call(Log.l.trace, "AppData._initSpracheView.");
+                var ret = EventResourceAdministration._initSpracheView.select(complete, error, recordId, { ordered: true });
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getResults: function () {
+                Log.call(Log.l.trace, "AppData._initSpracheView.");
+                var ret = EventResourceAdministration._initSpracheView.results;
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getMap: function () {
+                Log.call(Log.l.trace, "AppData._initSpracheView.");
+                var ret = EventResourceAdministration._initSpracheView.map;
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+        },
         _eventTextView: {
             get: function () {
-                return AppData.getFormatView("LangMandantDokument", 20628);
+                return AppData.getFormatView("LangMandantDokument", 20634);
             }
         },
         _eventTextTable: {
@@ -21,14 +47,16 @@
             }
         },
         _eventTextUsageId: 0,
-        _eventId: 0
+        _eventId: 0,
+        _languageId: null
     });
     WinJS.Namespace.define("EventResourceAdministration", {
         eventTextView: {
             select: function (complete, error, restriction, options) {
                 if (!restriction) {
                     restriction = {
-                        LanguageSpecID: AppData.getLanguageId()
+                        NameLanguageID: AppData.getLanguageId(),
+                        LanguageSpecID: EventResourceAdministration._languageId
                     };
                     if (EventResourceAdministration._eventTextUsageId && EventResourceAdministration._eventTextUsageId <= 2 ||
                         EventResourceAdministration._eventTextUsageId > 2 && EventResourceAdministration._eventId) {
@@ -46,6 +74,7 @@
                     };
                 }
                 Log.call(Log.l.trace, "EventResourceAdministration.eventView.",
+                    "NameLanguageID=" + restriction.NameLanguageID,
                     "LanguageSpecID=" + restriction.LanguageSpecID,
                     "DokVerwendungID=" + restriction.DokVerwendungID,
                     "VeranstaltungID=" + restriction.VeranstaltungID);

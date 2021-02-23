@@ -449,7 +449,7 @@
             // finally, load the data
             that.processAll().then(function() {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                var eventTextUsageHost = pageElement.querySelector("#eventTextUsageHost.fragmenthost");
+                var eventTextUsageHost = pageElement.querySelector("#eventTextUsageHostMedia.fragmenthost");
                 if (eventTextUsageHost) {
                     return Application.loadFragmentById(eventTextUsageHost, "eventTextUsage", {});
                 } else {

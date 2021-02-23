@@ -26,7 +26,8 @@
                     LabelMainTitle: "",
                     LabelSubTitle: "",
                     LabelSummary: "",
-                    LabelBody: ""
+                    LabelBody: "",
+                    LanguageID: 0
                 },
                 overView: {
                     Email: ""
@@ -36,6 +37,8 @@
                 EventResourceAdministration.eventTextView, listView]);
             
             this.eventTextUsageControl = null;
+
+            var initEventTextSprache = pageElement.querySelector("#InitEventTextSprache");
 
             var that = this;
 
@@ -118,6 +121,9 @@
                 clickForward: function (event) {
                     Log.call(Log.l.trace, "EventResourceAdministration.Controller.");
                     AppBar.busy = true;
+                   /* that.binding.eventResource.LanguageID = parseInt(that.binding.eventResource.LanguageID);
+                    if (that.binding.eventResource.LanguageID)
+                        EventResourceAdministration._languageId = that.binding.eventResource.LanguageID;*/
                     that.saveData(function (response) {
                         AppBar.busy = false;
                         Log.print(Log.l.trace, "question saved");
@@ -308,21 +314,17 @@
                     }
                     Application.navigateById("login", event);
                     Log.ret(Log.l.trace);
-                }/*,
-                clickOpenEdit: function (event) {
-                    Log.call(Log.l.trace, "Account.Controller.");
-                    //nameheader 
-                    //namebottom
-                    var namebottom = pageElement.querySelector("#namebottom");
-                    if (event.currentTarget.id === "nameheader" && namebottom) {
-                        if (namebottom.style.display === "") {
-                            namebottom.style.display = "none";
-                        } else {
-                            namebottom.style.display = "";
-                        }
+                },
+                changedLanguage: function (event) {
+                    Log.call(Log.l.trace, "EventResourceAdministration.Controller.");
+                    if (event.currentTarget && AppBar.notifyModified) {
+                        var combobox = event.currentTarget;
+                        that.binding.eventResource.LanguageID = parseInt(combobox.value);
+                        EventResourceAdministration._languageId = that.binding.eventResource.LanguageID;
                     }
+                    that.loadData();
                     Log.ret(Log.l.trace);
-                }*/
+                }
             }
 
             this.disableHandlers = {
@@ -379,11 +381,59 @@
             }
             that.setEventId = setEventId;
 
-            AppData.setErrorMsg(this.binding);
+            var loadInitLanguageData = function () {
+                Log.call(Log.l.trace, "EventResourceAdministration.Controller.");
+                AppData.setErrorMsg(that.binding);
+                var ret = new WinJS.Promise.as().then(function () {
+                    if (!EventResourceAdministration.initSpracheView.getResults().length) {
+                        Log.print(Log.l.trace, "calling select initSpracheView...");
+                        //@nedra:25.09.2015: load the list of INITAnrede for Combobox
+                        return EventResourceAdministration.initSpracheView.select(function (json) {
+                            Log.print(Log.l.trace, "initSpracheView: success!");
+                            var languages = [{ LanguageID: 0, TITLE: "" }];
+                            if (json && json.d) {
+                                var results = json.d.results;
+                                languages = languages.concat(results);
+                                // Now, we call WinJS.Binding.List to get the bindable list
+                                if (initEventTextSprache && initEventTextSprache.winControl) {
+                                    initEventTextSprache.winControl.data = new WinJS.Binding.List(languages); //setLanguage(results);
+                                    if (EventResourceAdministration._languageId)
+                                        that.binding.eventResource.LanguageID = EventResourceAdministration._languageId;
+                                    else 
+                                        initEventTextSprache.selectedIndex = 0;
+                                }
+                            }
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        });
+                    } else {
+                        if (initEventTextSprache && initEventTextSprache.winControl) {
+                            var languages = [{ LanguageID: 0, TITLE: "" }];
+                            var results = EventResourceAdministration.initSpracheView.getResults();
+                            languages = languages.concat(results);
+                            initEventTextSprache.winControl.data = new WinJS.Binding.List(languages);
+                            if (EventResourceAdministration._languageId)
+                                that.binding.eventResource.LanguageID = EventResourceAdministration._languageId;
+                            else
+                                initEventTextSprache.selectedIndex = 0;
+                            //setLanguage(results);
+                        }
+                        return WinJS.Promise.as();
+                    }
+                });
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+            that.loadInitLanguageData = loadInitLanguageData;
 
             that.processAll().then(function () {
+                Log.print(Log.l.trace, "loadInitLanguageData");
+                return that.loadInitLanguageData();
+            }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                var eventTextUsageHost = pageElement.querySelector("#eventTextUsageHost.fragmenthost");
+                var eventTextUsageHost = pageElement.querySelector("#eventTextUsageHostResource.fragmenthost");
                 if (eventTextUsageHost) {
                     return Application.loadFragmentById(eventTextUsageHost, "eventTextUsage", {});
                 } else {

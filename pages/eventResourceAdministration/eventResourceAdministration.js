@@ -67,8 +67,6 @@
             var that = this;
             Log.call(Log.l.trace, pageName + ".");
             var ret = WinJS.Promise.as().then(function (response) {
-                //that.controller.setupLog();
-                Application.pageframe.savePersistentStates();
                 complete(response);
             });
             Log.ret(Log.l.trace);

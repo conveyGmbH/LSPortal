@@ -12,7 +12,21 @@
         <div id="eventResourceAdministrationController" class="data-container">
             <section aria-label="Main content" role="main" class="animationElement">
                 <div class="contentarea win-type-body">
-                    <div id="eventTextUsageHost" class="fragmenthost"></div>
+                    <div class="line-separator"
+                         data-win-bind="style.display: showLanguages Binding.Converter.toDisplay"></div>
+                    <div class="field_line field_line_odd">
+                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'account.language'}"></span>
+                        <span class="label landscape_only" data-win-res="{textContent: 'account.language'}"></span>
+                        <select id="InitEventTextSprache"
+                                class="input_field win-dropdown"
+                                data-win-control="WinJS.UI.Repeater"
+                                data-win-bind="value: eventResource.LanguageID"
+                                onchange="AppBar.handleEvent('change', 'changedLanguage', event)">
+                            <option data-win-bind="value: LanguageID; textContent: TITLE"></option>
+                        </select>
+                    </div>
+                    <div class="line-separator"></div>
+                    <div id="eventTextUsageHostResource" class="fragmenthost"></div>
                     <div class="eventText-template"
                          data-win-control="WinJS.Binding.Template" style="display: none">
                         <div class="field_line field_line_odd" data-win-bind="style.display: LabelTitle Binding.Converter.toDisplay">

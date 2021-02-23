@@ -537,6 +537,7 @@
     "label.mailingTemplateEvent" : "Modèles",
     "label.eventResourceAdministration" : "Event Administration",
     "label.eventMediaAdministration" : "Media Administration",
+    "label.eventSeriesAdministration": "Série",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annuler",
