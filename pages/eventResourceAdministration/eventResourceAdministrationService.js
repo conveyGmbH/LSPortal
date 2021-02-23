@@ -48,7 +48,7 @@
         },
         _eventTextUsageId: 0,
         _eventId: 0,
-        _languageId: null
+        _languageId: 1031
     });
     WinJS.Namespace.define("EventResourceAdministration", {
         eventTextView: {

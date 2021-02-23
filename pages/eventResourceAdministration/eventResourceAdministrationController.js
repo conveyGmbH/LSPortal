@@ -390,13 +390,11 @@
                         //@nedra:25.09.2015: load the list of INITAnrede for Combobox
                         return EventResourceAdministration.initSpracheView.select(function (json) {
                             Log.print(Log.l.trace, "initSpracheView: success!");
-                            var languages = [{ LanguageID: 0, TITLE: "" }];
                             if (json && json.d) {
                                 var results = json.d.results;
-                                languages = languages.concat(results);
                                 // Now, we call WinJS.Binding.List to get the bindable list
                                 if (initEventTextSprache && initEventTextSprache.winControl) {
-                                    initEventTextSprache.winControl.data = new WinJS.Binding.List(languages); //setLanguage(results);
+                                    initEventTextSprache.winControl.data = new WinJS.Binding.List(results); //setLanguage(results);
                                     if (EventResourceAdministration._languageId)
                                         that.binding.eventResource.LanguageID = EventResourceAdministration._languageId;
                                     else 
@@ -410,15 +408,12 @@
                         });
                     } else {
                         if (initEventTextSprache && initEventTextSprache.winControl) {
-                            var languages = [{ LanguageID: 0, TITLE: "" }];
                             var results = EventResourceAdministration.initSpracheView.getResults();
-                            languages = languages.concat(results);
-                            initEventTextSprache.winControl.data = new WinJS.Binding.List(languages);
+                            initEventTextSprache.winControl.data = new WinJS.Binding.List(results);
                             if (EventResourceAdministration._languageId)
                                 that.binding.eventResource.LanguageID = EventResourceAdministration._languageId;
                             else
                                 initEventTextSprache.selectedIndex = 0;
-                            //setLanguage(results);
                         }
                         return WinJS.Promise.as();
                     }
