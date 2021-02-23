@@ -12,27 +12,28 @@
         <div id="eventResourceAdministrationController" class="data-container">
             <section aria-label="Main content" role="main" class="animationElement">
                 <div class="contentarea win-type-body">
-                    <div class="line-separator"
-                         data-win-bind="style.display: showLanguages Binding.Converter.toDisplay"></div>
-                    <div class="field_line field_line_odd">
-                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'account.language'}"></span>
-                        <span class="label landscape_only" data-win-res="{textContent: 'account.language'}"></span>
-                        <select id="InitEventTextSprache"
-                                class="input_field win-dropdown"
-                                data-win-control="WinJS.UI.Repeater"
-                                data-win-bind="value: eventResource.LanguageID"
-                                onchange="AppBar.handleEvent('change', 'changedLanguage', event)">
-                            <option data-win-bind="value: LanguageID; textContent: TITLE"></option>
-                        </select>
-                    </div>
-                    <div class="line-separator"></div>
                     <div id="eventTextUsageHostResource" class="fragmenthost"></div>
+                    <div class="headerFooterPlaceholder">
+                        <div class="list-header">
+                            <div class="field_line field_line_odd">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'account.language'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'account.language'}"></span>
+                                <select id="InitEventTextSprache"
+                                        class="input_field win-dropdown"
+                                        data-win-control="WinJS.UI.Repeater"
+                                        data-win-bind="value: eventResource.LanguageID"
+                                        onchange="AppBar.handleEvent('change', 'changedLanguage', event)">
+                                    <option data-win-bind="value: LanguageID; textContent: TITLE"></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                     <div class="eventText-template"
                          data-win-control="WinJS.Binding.Template" style="display: none">
                         <div class="field_line field_line_odd" data-win-bind="style.display: LabelTitle Binding.Converter.toDisplay">
                             <span class="label win-type-caption" data-win-bind="textContent: NameTitle"></span>
-                            <input class="input_field win-textbox" type="text" 
-                                   data-win-bind="value: Title; placeholder: placeholderTitle" 
+                            <input class="input_field win-textbox" type="text"
+                                   data-win-bind="value: Title; placeholder: placeholderTitle"
                                    data-field-entry="Title" />
                             <div class="label-right">
                                 <span class="label win-type-caption" data-win-bind="textContent: LabelTitle"></span>
@@ -40,7 +41,7 @@
                         </div>
                         <div class="field_line field_line_even" data-win-bind="style.display: LabelDescription Binding.Converter.toDisplay">
                             <span class="label win-type-caption" data-win-bind="textContent: NameDescription"></span>
-                            <input class="input_field win-textbox" type="text" 
+                            <input class="input_field win-textbox" type="text"
                                    data-win-bind="value: Description; placeholder: placeholderDescription"
                                    data-field-entry="Description" />
                             <div class="label-right">
@@ -50,7 +51,7 @@
                         <div class="field-separator"></div>
                         <div class="field_line field_line_odd" data-win-bind="style.display: LabelMainTitle Binding.Converter.toDisplay">
                             <span class="label win-type-caption" data-win-bind="textContent: NameMainTitle"></span>
-                            <input class="input_field win-textbox" type="text" 
+                            <input class="input_field win-textbox" type="text"
                                    data-win-bind="value: MainTitle; placeholder: placeholderMainTitle"
                                    data-field-entry="MainTitle" />
                             <div class="label-right">
@@ -59,7 +60,7 @@
                         </div>
                         <div class="field_line field_line_even" data-win-bind="style.display: LabelSubTitle Binding.Converter.toDisplay">
                             <span class="label win-type-caption" data-win-bind="textContent: NameSubTitle"></span>
-                            <input class="input_field win-textbox" type="text" 
+                            <input class="input_field win-textbox" type="text"
                                    data-win-bind="value: SubTitle; placeholder: placeholderSubTitle"
                                    data-field-entry="SubTitle" />
                             <div class="label-right">
@@ -84,8 +85,8 @@
                             <textarea class="input_field win-textarea input_text_comment"
                                       data-win-bind="value: Body; placeholder: placeholderBody; style.height: heightBody"
                                       data-field-entry="Body"
-                                      onblur="AppBar.handleEvent('blur', 'activateEnterKey', event)" 
-                                      onfocus="AppBar.handleEvent('focus', 'deactivateEnterKey', event)" 
+                                      onblur="AppBar.handleEvent('blur', 'activateEnterKey', event)"
+                                      onfocus="AppBar.handleEvent('focus', 'deactivateEnterKey', event)"
                                       onkeydown="AppBar.handleEvent('keydown', 'pressEnterKey', event)"></textarea>
                             <div class="label-right">
                                 <span class="label win-type-caption" data-win-bind="textContent: LabelBody"></span>
@@ -97,7 +98,8 @@
                          data-win-control="WinJS.UI.ListView"
                          data-win-options="{
                              layout : { type: WinJS.UI.ListLayout },
-                             itemTemplate: select('.eventText-template')
+                             itemTemplate: select('.eventText-template'),
+                             header: select('.list-header')
                          }">
                     </div>
                     <div class="error-message"
