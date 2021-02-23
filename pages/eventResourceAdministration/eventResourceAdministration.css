@@ -22,6 +22,11 @@
     float: right;
     opacity: 0.6;
 }
+#eventTextList .label-left {
+    float: left;
+    width: 50%;
+    opacity: 0.6;
+}
 #eventTextList .input_field {
     margin-bottom: 0;
 }
