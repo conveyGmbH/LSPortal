@@ -440,6 +440,17 @@
                 }
             }
 
+            var getEventTextUsageId = function () {
+                return EventMediaAdministration._eventTextUsageId;
+            }
+            that.getEventTextUsageId = getEventTextUsageId;
+
+            var setEventTextUsageId = function (value) {
+                Log.print(Log.l.trace, "eventTextUsageId=" + value);
+                EventMediaAdministration._eventTextUsageId = value;
+            }
+            that.setEventTextUsageId = setEventTextUsageId;
+
             var setEventId = function (value) {
                 Log.print(Log.l.trace, "eventId=" + value);
                 EventMediaAdministration._eventId = value;
