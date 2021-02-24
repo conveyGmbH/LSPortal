@@ -17,7 +17,7 @@
         Controller: WinJS.Class.derive(Application.RecordsetController, function Controller(pageElement, commandList, isMaster) {
             Log.call(Log.l.trace, "EventSeriesList.Controller.");
             this.nextUrl = null;
-            this.eventsdata = null;
+            this.seriesdata = null;
 
             var that = this;
 
@@ -39,8 +39,8 @@
                 if (listView && listView.winControl) {
                     listView.winControl.itemDataSource = null;
                 }
-                if (that.eventsdata) {
-                    that.eventstdata = null;
+                if (that.seriesdata) {
+                    that.seriesdata = null;
                 }
                 listView = null;
             }
@@ -58,7 +58,7 @@
                 Log.call(Log.l.trace, "EventSeriesList.Controller.");
                 progress = listView.querySelector(".list-footer .progress");
                 counter = listView.querySelector(".list-footer .counter");
-                if (that.eventsdata && that.nextUrl && listView) {
+                if (that.seriesdata && that.nextUrl && listView) {
                     that.loading = true;
                     if (progress && progress.style) {
                         progress.style.display = "inline";
@@ -75,12 +75,12 @@
                         // when the response is available
                         Log.print(Log.l.trace, "EventSeriesList.SerienView: success!");
                         // startContact returns object already parsed from json file in response
-                        if (json && json.d && json.d.results && that.eventsdata) {
+                        if (json && json.d && json.d.results && that.seriesdata) {
                             that.nextUrl = EventSeriesList.SerienView.getNextUrl(json);
                             var results = json.d.results;
                             results.forEach(function (item, index) {
                                 that.resultConverter(item, that.binding.count);
-                                that.binding.count = that.eventsdata.push(item);
+                                that.binding.count = that.seriesdata.push(item);
                             });
                         }
                         if (progress && progress.style) {
@@ -121,10 +121,10 @@
             var selectRecordId = function (recordId) {
                 Log.call(Log.l.trace, "EventSeriesList.Controller.", "recordId=" + recordId);
                 if (recordId && listView && listView.winControl && listView.winControl.selection) {
-                    for (var i = 0; i < that.eventsdata.length; i++) {
-                        var events = that.eventsdata.getAt(i);
-                        if (events && typeof events === "object" &&
-                            events.VeranstaltungVIEWID === recordId) {
+                    for (var i = 0; i < that.seriesdata.length; i++) {
+                        var serie = that.seriesdata.getAt(i);
+                        if (serie && typeof serie === "object" &&
+                            serie.VeranstaltungVIEWID === recordId) {
                             listView.winControl.selection.set(i);
                             break;
                         }
@@ -277,7 +277,7 @@
                         progress = listView.querySelector(".list-footer .progress");
                         counter = listView.querySelector(".list-footer .counter");
                         var visible = eventInfo.detail.visible;
-                        if (visible && that.eventsdata && that.nextUrl) {
+                        if (visible && that.seriesdata && that.nextUrl) {
                             that.loading = true;
                             that.loadNextUrl();
                         } else {
