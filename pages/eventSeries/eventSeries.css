@@ -8,12 +8,6 @@
 #eventSeriesList {
     height: auto;
 }
-#eventSeriesList .win-selectionborder {
-    border-color: transparent;
-}
-#eventSeriesList .win-itembox:hover::before {
-    border-color: transparent;
-}
 #eventSeriesList .label-right {
     float: right;
     opacity: 0.6;

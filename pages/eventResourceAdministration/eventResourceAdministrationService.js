@@ -111,18 +111,6 @@
             }
         },
         eventTextTable: {
-            /*insert: function (complete, error) {
-                Log.call(Log.l.trace, "EventResourceAdministration.eventTable.");
-                var ret = EventResourceAdministration._eventTextTable.insert(function () {
-                    if (typeof complete === "function") {
-                        complete();
-                    }
-                }, error, {
-                    insertFlag: 0
-                });
-                Log.ret(Log.l.trace);
-                return ret;
-            },*/
             update: function (complete, error, recordId, viewResponse) {
                 Log.call(Log.l.trace, "EventResourceAdministration.eventTable.");
                 var ret = EventResourceAdministration._eventTextTable.update(complete, error, recordId, viewResponse);

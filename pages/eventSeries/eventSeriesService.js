@@ -37,46 +37,68 @@
                 return AppData.getFormatView("MandantSerie", 0);
             }
         },
-        _seriesView: {
+        _langSeriesTable: {
+            get: function () {
+                return AppData.getFormatView("LangMandantSerie", 0);
+            }
+        },
+        _langSeriesView: {
             get: function () {
                 return AppData.getFormatView("LangMandantSerie", 20629);
             }
         }
     });
     WinJS.Namespace.define("EventSeries", {
-        seriesTable: {
+        seriesView: {
             select: function (complete, error, restriction, options) {
-                Log.call(Log.l.trace, "EventSeries.seriesTable.");
-                var ret = EventSeries._seriesTable.select(complete, error, restriction, options);
+                Log.call(Log.l.trace, "EventSeries.seriesView.");
+                if (!restriction) {
+                    restriction = {
+                        NameLanguageID: AppData.getLanguageId(),
+                        LanguageSpecID: EventSeries._languageId
+                    };
+                }
+                if (!options) {
+                    options = {
+                        ordered: true
+                    };
+                }
+                var ret = EventSeries._langSeriesView.select(complete, error, restriction, options);
                 Log.ret(Log.l.trace);
                 return ret;
             },
             getNextUrl: function (response) {
-                Log.call(Log.l.trace, "EventSeries.seriesTable.");
-                var ret = EventSeries._seriesTable.getNextUrl(response);
+                Log.call(Log.l.trace, "EventSeries.seriesView.");
+                var ret = EventSeries._langSeriesView.getNextUrl(response);
                 Log.ret(Log.l.trace);
                 return ret;
             },
             selectNext: function (complete, error, response, nextUrl) {
-                Log.call(Log.l.trace, "EventSeries.seriesTable.");
-                var ret = EventSeries._seriesTable.selectNext(complete, error, response, nextUrl);
+                Log.call(Log.l.trace, "EventSeries.seriesView.");
+                var ret = EventSeries._langSeriesView.selectNext(complete, error, response, nextUrl);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            deleteRecord: function (complete, error, recordId) {
-                Log.call(Log.l.trace, "EventSeries.seriesTable.");
-                var ret = EventSeries._seriesTable.deleteRecord(function () {
-                    if (typeof complete === "function") {
-                        complete();
+            relationName: EventSeries._langSeriesView.relationName,
+            pkName: EventSeries._langSeriesView.oDataPkName,
+            getRecordId: function (record) {
+                var ret = null;
+                if (record) {
+                    if (EventSeries._langSeriesView.oDataPkName) {
+                        ret = record[EventSeries._langSeriesView.oDataPkName];
                     }
-                }, error, recordId);
-                Log.ret(Log.l.trace);
+                    if (!ret && EventSeries._langSeriesView.pkName) {
+                        ret = record[EventSeries._langSeriesView.pkName];
+                    }
+                }
                 return ret;
-            },
+            }
+        },
+        seriesTable: {
             update: function (complete, error, recordId, viewResponse) {
                 Log.call(Log.l.trace, "EventSeries.seriesTable.");
-                var ret = EventSeries._seriesTable.update(function () {
+                var ret = EventSeries._langSeriesTable.update(function () {
                     if (typeof complete === "function") {
                         complete();
                     }
@@ -96,58 +118,48 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            relationName: EventSeries._seriesTable.relationName
-        },
-        seriesView: {
-            select: function (complete, error, restriction, options) {
-                Log.call(Log.l.trace, "EventSeries.seriesView.");
-                if (!restriction) {
-                    restriction = {
-                        MandantSerieID: EventSeries._eventId,
-                        NameLanguageID: AppData.getLanguageId(),
-                        LanguageSpecID: EventSeries._languageId
-                    };
+            deleteRecord: function (complete, error, recordId) {
+                var ret;
+                Log.call(Log.l.trace, "EventSeries.seriesTable.");
+                if (AppBar.scope && typeof AppBar.scope.scopeFromRecordId === "function") {
+                    var record = AppBar.scope.scopeFromRecordId(recordId);
+                    if (record && record.item) {
+                        var pkName = EventSeries._seriesTable.relationName + "ID";
+                        recordId = record.item[pkName];
+                    } else {
+                        recordId = 0;
+                    }
+                } else {
+                    recordId = 0;
                 }
-                /*if (!options) {
-                    options = {
-                        ordered: true,
-                        orderAttribute: "Sortierung",
-                        desc: false
-                    };
-                }*/
-                var ret = EventSeries._seriesView.select(complete, error, restriction, options);
+                if (recordId) {
+                    ret = EventSeries._seriesTable.deleteRecord(function () {
+                        if (typeof complete === "function") {
+                            complete();
+                        }
+                    }, error, recordId);
+                } else {
+                    ret = WinJS.Promise.as();
+                }
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            getNextUrl: function (response) {
-                Log.call(Log.l.trace, "EventSeries.seriesView.");
-                var ret = EventSeries._seriesView.getNextUrl(response);
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            selectNext: function (complete, error, response, nextUrl) {
-                Log.call(Log.l.trace, "EventSeries.seriesView.");
-                var ret = EventSeries._seriesView.selectNext(complete, error, response, nextUrl);
-                // this will return a promise to controller
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            relationName: EventSeries._seriesView.relationName,
-            pkName: EventSeries._seriesView.oDataPkName,
+            relationName: EventSeries._langSeriesTable.relationName,
+            pkName: EventSeries._langSeriesTable.oDataPkName,
+            _pkName: EventSeries._langSeriesTable.pkName,
             getRecordId: function (record) {
                 var ret = null;
                 if (record) {
-                    if (EventSeries._seriesView.oDataPkName) {
-                        ret = record[EventSeries._seriesView.oDataPkName];
+                    if (EventSeries.seriesTable.pkName) {
+                        ret = record[EventSeries.seriesTable.pkName];
                     }
-                    if (!ret && EventSeries._seriesView.pkName) {
-                        ret = record[EventSeries._seriesView.pkName];
+                    if (!ret && EventSeries.seriesTable._pkName) {
+                        ret = record[EventSeries.seriesTable._pkName];
                     }
                 }
                 return ret;
             }
         },
-        _eventId: 0,
         _languageId: 1031
     });
 })();

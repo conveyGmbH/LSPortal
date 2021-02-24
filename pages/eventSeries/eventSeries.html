@@ -29,33 +29,18 @@
                     <div class="eventSeries-template"
                          data-win-control="WinJS.Binding.Template" style="display: none">
                         <div class="field_line field_line_odd">
-                            <span class="label win-type-caption" data-win-res="{textContent: 'eventSeries.title'}"></span>
+                            <span class="label win-type-caption" data-win-bind="textContent: MandantSerieTitel"></span>
                             <input class="input_field win-textbox" type="text"
                                    data-win-bind="value: Titel"
                                    data-field-entry="Titel" />
                             <div class="label-left">
                                 <span class="label win-type-caption" data-win-bind="textContent: LGNTINITSpracheTitle"></span>
                             </div>
-                            <!--<div class="label-right">
-                                <span class="label win-type-caption" data-win-bind="textContent: LabelTitle"></span>
-                            </div>-->
                         </div>
-                        <!--<div class="field_line field_line_even">
-                            <span class="label win-type-caption" data-win-res="{textContent: 'eventSeries.languageTitle'}"></span>
-                            <input class="input_field win-textbox" type="text"
-                                   data-win-bind="value: MandantSerieTitel"
-                                   data-field-entry="MandantSerieTitel" />
-                            <div class="label-left">
-                                <span class="label win-type-caption" data-win-bind="textContent: LGNTINITSpracheTitle"></span>
-                            </div>
-                            <!--<div class="label-right">
-                                <span class="label win-type-caption" data-win-bind="textContent: LabelDescription"></span>
-                            </div>
-                        </div>-->
                         <div class="field-separator"></div>
                     </div>
                     <div id="eventSeriesList"
-                         class="listview"
+                         class="listview win-selectionstylefilled"
                          data-win-control="WinJS.UI.ListView"
                          data-win-options="{
                              layout : { type: WinJS.UI.ListLayout },

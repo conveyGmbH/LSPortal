@@ -187,8 +187,7 @@
         { id: "esVoucherUsers", master: "esVoucherUsersList" },
         { id: "eventResourceAdministration", master: "eventsList" },
         { id: "eventMediaAdministration", master: "eventsList" },
-		{ id: "eventSeriesAdministration", master: "eventsList" },
-        { id: "eventSeries", master: "eventSeriesList" }
+		{ id: "eventSeriesAdministration", master: "eventsList" }
     ];
 
 

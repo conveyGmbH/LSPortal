@@ -70,7 +70,7 @@
             this.eventHandlers = {
                 clickBack: function (event) {
                     Log.call(Log.l.trace, "EventSeries.Controller.");
-                    if (!Application.showMaster() && WinJS.Navigation.canGoBack === true) {
+                    if (WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done();
                     }
                     Log.ret(Log.l.trace);
@@ -333,17 +333,6 @@
                 this.addRemovableEventListener(listView, "headervisibilitychanged", this.eventHandlers.onHeaderVisibilityChanged.bind(this));
                 this.addRemovableEventListener(listView, "iteminvoked", this.eventHandlers.onItemInvoked.bind(this));
             }
-
-            var getSeriesId = function () {
-                return EventSeries._eventId;
-            }
-            that.getSeriesId = getSeriesId;
-
-            var setSeriesId = function (value) {
-                Log.print(Log.l.trace, "eventId=" + value);
-                EventSeries._eventId = value;
-            }
-            that.setSeriesId = setSeriesId;
 
             var loadInitLanguageData = function () {
                 Log.call(Log.l.trace, "EventSeries.Controller.");
