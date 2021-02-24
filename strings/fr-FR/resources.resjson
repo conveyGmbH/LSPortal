@@ -537,7 +537,8 @@
     "label.mailingTemplateEvent" : "Modèles",
     "label.eventResourceAdministration" : "Event Administration",
     "label.eventMediaAdministration" : "Media Administration",
-    "label.eventSeriesAdministration": "Série",
+    "label.eventSeriesAdministration": "Assignation de série",
+    "label.eventSeries": "Série",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annuler",
@@ -1205,5 +1206,11 @@
 	"mailingTemplateEventEdit.type"				: "Type",
 	"mailingTemplateEventEdit.subject"			: "Matière",
     "mailingTemplateEventEdit.mailtext"			: "Texte du courrier",
-    "mailingTemplateEventEdit.layoutactive"			: "Désactivez cette option pour que ce projet de courriel (dans toutes les langues) soit dépassé. Si un brouillon est obsolète, il ne sera pas affiché comme option dans l'application d'envoi."
+    "mailingTemplateEventEdit.layoutactive"			: "Désactivez cette option pour que ce projet de courriel (dans toutes les langues) soit dépassé. Si un brouillon est obsolète, il ne sera pas affiché comme option dans l'application d'envoi.",
+
+    "eventsSeries.title" : "Série",
+    "eventSeries.labelDelete": "Série",
+    "eventSeries.serieDelete": "Voulez-vous supprimer cette série?",
+
+    "eventSeriesList.count" : "Anzahl"
 }

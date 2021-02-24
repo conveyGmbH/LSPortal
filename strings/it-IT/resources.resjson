@@ -537,7 +537,8 @@
     "label.mailingTemplateEvent" : "Modelli",
     "label.eventResourceAdministration" : "Event Administration",
     "label.eventMediaAdministration" : "Media Administration",
-    "label.eventSeriesAdministration": "Serie",
+    "label.eventSeriesAdministration": "Assignation de série",
+    "label.eventSeries": "Série",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annulla",
@@ -1205,5 +1206,11 @@
 	"mailingTemplateEventEdit.type"				: "Genere",
 	"mailingTemplateEventEdit.subject"			: "Soggetto",
     "mailingTemplateEventEdit.mailtext"			: "Testo della posta",
-    "mailingTemplateEventEdit.layoutactive"			: "Disattivare per impostare questa bozza di e-mail (in tutte le lingue) come obsoleta. Se una bozza è obsoleta non sarà mostrata come opzione nell'applicazione Mailing."
+    "mailingTemplateEventEdit.layoutactive"			: "Disattivare per impostare questa bozza di e-mail (in tutte le lingue) come obsoleta. Se una bozza è obsoleta non sarà mostrata come opzione nell'applicazione Mailing.",
+
+    "eventsSeries.title" : "Series",
+    "eventSeries.labelDelete": "Series",
+    "eventSeries.serieDelete": "Vuoi eliminare questa serie?",
+
+    "eventSeriesList.count" : "Anzahl"
 }

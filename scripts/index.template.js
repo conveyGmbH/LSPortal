@@ -66,6 +66,7 @@
         { id: "esVoucherUsers", group: 19, svg: "voucher_contact", disabled: true },
         { id: "dashBoard", group: 19, svg: "Dashboard", disabled: true },
         { id: "masterDataGrp", group: 23, svg: "Stammdaten", disabled: true, popup: true },
+        { id: "eventSeries", group: 52, svg: "Skills", disabled: true, predecGroup: 23 },
         { id: "skills", group: 24, svg: "Skills", disabled: true, predecGroup: 23 },
         { id: "employeeGrp", group: 25, svg: "Benutzerkonten", disabled: true, popup: true },
         { id: "employee", group: 5, svg: "keys", disabled: true, predecGroup: 25 },
@@ -112,6 +113,7 @@
         { id: "start", group: -1, disabled: false },
         { id: "event", group: 2, disabled: false },
         //{ id: "products", group: 2, disabled: false },
+        { id: "eventSeries", group: 52, disabled: false },
         { id: "skills", group: 24, disabled: false },
         { id: "eventResourceAdministration", group: 44, disabled: false},
         { id: "eventMediaAdministration", group: 44, disabled: false },
@@ -185,7 +187,8 @@
         { id: "esVoucherUsers", master: "esVoucherUsersList" },
         { id: "eventResourceAdministration", master: "eventsList" },
         { id: "eventMediaAdministration", master: "eventsList" },
-		{ id: "eventSeriesAdministration", master: "eventsList" }
+		{ id: "eventSeriesAdministration", master: "eventsList" },
+        { id: "eventSeries", master: "eventSeriesList" }
     ];
 
 

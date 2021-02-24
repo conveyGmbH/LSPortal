@@ -537,7 +537,8 @@
     "label.mailingTemplateEvent" : "Templates",
     "label.eventResourceAdministration" : "Event Administration",
     "label.eventMediaAdministration" : "Media Administration",
-    "label.eventSeriesAdministration": "Series",
+    "label.eventSeriesAdministration": "Series assignment",
+    "label.eventSeries": "Series",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Cancel",
@@ -1204,5 +1205,11 @@
 	"mailingTemplateEventEdit.type"				: "Typ",
 	"mailingTemplateEventEdit.subject"			: "Subject",
     "mailingTemplateEventEdit.mailtext"			: "Mailtext",
-    "mailingTemplateEventEdit.layoutactive"			: "Turn off to set this E-Mail draft (in all languages) as outdated. If a draft is outdated it will not be shown as option in the Mailing application."
+    "mailingTemplateEventEdit.layoutactive"			: "Turn off to set this E-Mail draft (in all languages) as outdated. If a draft is outdated it will not be shown as option in the Mailing application.",
+
+    "eventsSeries.title" : "Series",
+    "eventSeries.labelDelete": "Series",
+    "eventSeries.serieDelete": "Do you want to delete this series?",
+
+    "eventSeriesList.count" : "Anzahl"
 }

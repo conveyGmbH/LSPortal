@@ -541,7 +541,8 @@
     "label.mailingTemplateEvent"			: "Vorlagen",
 	"label.eventResourceAdministration" : "Texte",
 	"label.eventMediaAdministration" : "Medien",
-	"label.eventSeriesAdministration" : "Serien",
+	"label.eventSeriesAdministration" : "Serien Zuordnung",
+	"label.eventSeries"          : "Serien",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Abbrechen",
@@ -1217,6 +1218,13 @@
 	"mailingTemplateEventEdit.type"				: "Typ",
 	"mailingTemplateEventEdit.subject"			: "Betreff",
     "mailingTemplateEventEdit.mailtext"			: "Mailtext",
-    "mailingTemplateEventEdit.layoutactive"			: "Schalten Sie aus, um diesen E-Mail-Entwurf (in allen Sprachen) als veraltet zu kennzeichnen. Wenn ein Entwurf veraltet ist, wird er in der Anwendung Mailing nicht als Option angezeigt."
+    "mailingTemplateEventEdit.layoutactive"			: "Schalten Sie aus, um diesen E-Mail-Entwurf (in allen Sprachen) als veraltet zu kennzeichnen. Wenn ein Entwurf veraltet ist, wird er in der Anwendung Mailing nicht als Option angezeigt.",
     
+	"eventSeries.title" : "Titel",
+    "eventSeries.language" : "Sprache",
+    "eventSeries.languageTitle" : "Sprache Titel",
+	"eventSeries.labelDelete" : "Serie",
+	"eventSeries.serieDelete" : "Möchten Sie diese Serie löschen?",
+
+	"eventSeriesList.count" : "Anzahl"
 }		
