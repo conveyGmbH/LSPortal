@@ -5,34 +5,45 @@
 
 (function () {
     "use strict";
-    /**
-     * LangMandantDokumentVIEW_20628 darauf nur select
-     * LangMandantDokument_odataView darauf update
-     */
     WinJS.Namespace.define("EventSeriesAdministration", {
-        _eventSerieTable: {
+        //MandantSerie_ODataVIEW
+        _mandantSerie: {
             get: function () {
                 return AppData.getFormatView("MandantSerie", 0);
+            }
+        },
+        _eventSerieTable: {
+            get: function () {
+                return AppData.getFormatView("CR_VeranstaltungSerie", 0);
             }
         },
         _eventSerieUsageId: 0,
         _eventId: 0
     });
     WinJS.Namespace.define("EventSeriesAdministration", {
+        mandantSerie: {
+            select: function (complete, error, restriction, options) {
+                Log.call(Log.l.trace, "EventSeriesAdministration.mandantSerie.");
+                if (!options) {
+                    options = {
+                        //ordered: true,
+                        //orderAttribute: "Sortierung",
+                        desc: true
+                    };
+                }
+                var ret = EventSeriesAdministration._mandantSerie.select(complete, error, restriction, options);
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+        },
         eventSerieTable: {
             select: function (complete, error, restriction, options) {
                 if (!restriction) {
                     restriction = {
                         LanguageSpecID: AppData.getLanguageId()
                     };
-                    if (EventSeriesAdministration._eventSerieUsageId && EventSeriesAdministration._eventSerieUsageId <= 2 ||
-                        EventSeriesAdministration._eventSerieUsageId > 2 && EventSeriesAdministration._eventId) {
-                        restriction.DokVerwendungID = EventSeriesAdministration._eventSerieUsageId;
-                        if (EventSeriesAdministration._eventSerieUsageId > 2) {
                             restriction.VeranstaltungID = EventSeriesAdministration._eventId;
                         }
-                    }
-                }
                 if (!options) {
                     options = {
                         //ordered: true,
@@ -42,7 +53,6 @@
                 }
                 Log.call(Log.l.trace, "EventSeriesAdministration.eventView.",
                     "LanguageSpecID=" + restriction.LanguageSpecID,
-                    "DokVerwendungID=" + restriction.DokVerwendungID,
                     "VeranstaltungID=" + restriction.VeranstaltungID);
                 var ret = EventSeriesAdministration._eventSerieTable.select(complete, error, restriction, options);
                 Log.ret(Log.l.trace);
@@ -74,7 +84,6 @@
                     }
                 }
                 return ret;
-            }
         },
         insert: function (complete, error) {
             Log.call(Log.l.trace, "EventSeriesAdministration.eventTable.");
@@ -83,7 +92,9 @@
                     complete();
                 }
             }, error, {
-                insertFlag: 0
+                    VeranstaltungID: EventSeriesAdministration._eventId,
+                    MandantSerieID: 1,
+                    SerieAnzeige: null
             });
             Log.ret(Log.l.trace);
             return ret;
@@ -93,6 +104,17 @@
             var ret = EventSeriesAdministration._eventSerieTable.update(complete, error, recordId, viewResponse);
             Log.ret(Log.l.trace);
             return ret;
+        },
+            deleteRecord: function(complete, error, recordId) {
+                Log.call(Log.l.trace, "EventSeriesAdministration.eventTable.");
+                var ret = EventSeriesAdministration._eventSerieTable.deleteRecord(function () {
+                    if (typeof complete === "function") {
+                        complete();
+                    }
+                }, error, recordId);
+                Log.ret(Log.l.trace);
+                return ret;
+            }
         },
         relationName: EventSeriesAdministration._eventSerieTable.relationName,
         pkName: EventSeriesAdministration._eventSerieTable.oDataPkName,

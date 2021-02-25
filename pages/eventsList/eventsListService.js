@@ -9,7 +9,7 @@
     WinJS.Namespace.define("EventsList", {
         _VeranstaltungView: {
             get: function () {
-                return AppData.getFormatView("Veranstaltung", 20542); //20620
+                return AppData.getFormatView("Veranstaltung", 20620);
             }
         },
         VeranstaltungView: {

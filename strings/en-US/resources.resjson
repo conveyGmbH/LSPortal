@@ -1158,7 +1158,9 @@
     "eventMediaAdministration.LinkToFile": "Link to file",
     "eventMediaAdministration.Categorie": "Category:",
 
-	"eventSeriesAdministration.title" : "Serien Titel",
+    "eventSeriesAdministration.title": "Series Title",
+    "eventSeriesAdministration.serien": "Series",
+
     "mailingEdit.title"			: "To edit",
     "mailingEdit.nametitleheader"			: "Name",
     "mailingEdit.nametitlecomment"			: "Please enter the name of your mailing campaign here",

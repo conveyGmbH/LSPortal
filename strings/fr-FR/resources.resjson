@@ -1159,7 +1159,9 @@
     "eventMediaAdministration.LinkToFile": "Lien vers le fichier",
     "eventMediaAdministration.Categorie": "Catégorie:",
 
-	"eventSeriesAdministration.title" : "Serien Titel",
+    "eventSeriesAdministration.title": "Titre de la série",
+    "eventSeriesAdministration.serien": "Série",
+
     "mailingEdit.title"			: "Éditer",
     "mailingEdit.nametitleheader"			: "Nom",
     "mailingEdit.nametitlecomment"			: "Veuillez entrer le nom de votre campagne de diffusion ici",

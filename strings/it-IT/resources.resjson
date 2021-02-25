@@ -1158,7 +1158,8 @@
     "eventMediaAdministration.LinkToFile": "Link al file",
     "eventMediaAdministration.Categorie": "Categoria:",
 
-	"eventSeriesAdministration.title" : "Serien Titel",
+    "eventSeriesAdministration.title": "Titolo serie",
+    "eventSeriesAdministration.serien": "Series",
 
     "mailingEdit.title"			: "Modificare",
     "mailingEdit.nametitleheader"			: "Nome",

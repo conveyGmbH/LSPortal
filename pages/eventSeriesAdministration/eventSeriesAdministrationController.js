@@ -20,6 +20,9 @@
 
             Application.RecordsetController.apply(this, [pageElement, {
                 count: 0,
+                eventSerie: {
+                    MandantSerieVIEWID: 0
+                },
                 overView: {
                     Email: ""
                 }
@@ -27,7 +30,9 @@
                 EventSeriesAdministration.eventSerieTable,
                 EventSeriesAdministration.eventSerieTable, listView]);
 
-            this.eventTextUsageControl = null;
+            this.mandantSerie = null;
+
+            var mandantSerie = pageElement.querySelector("#MandantSerie");
 
             var that = this;
 
@@ -45,7 +50,7 @@
                 if (listView && listView.winControl) {
                     var element = listView.winControl.elementFromIndex(index);
                     if (element) {
-                        var fields = element.querySelectorAll('input[type="text"], textarea');
+                        var fields = element.querySelectorAll('.win-dropdown');
                         /*fields.forEach(function (field) {
                             var fieldEntry = field.dataset && field.dataset.fieldEntry;
                             if (fieldEntry) {
@@ -54,8 +59,9 @@
                         });*/
                         for (var i = 0; i < fields.length; i++) {
                             var fieldEntry = fields[i].dataset && fields[i].dataset.fieldEntry;
+                            var value = parseInt(fields[i].value);
                             if (fieldEntry) {
-                                ret[fieldEntry] = fields[i].value;
+                                ret[fieldEntry] = value;
                             }
                         }
                     }
@@ -188,6 +194,35 @@
                                 }
                                 that.loading = false;
                             }
+                            if (that.records) {
+                                for (var i = 0; i < that.records.length; i++) {
+                                    var item = that.records.getAt(i);
+                                    if (item) {
+                                        var element;
+                                        //if (item.SSITEMS && item.SSITEMS.length > 0) {
+                                            element = listView.winControl.elementFromIndex(i);
+                                            if (element) {
+                                                var combo = element.querySelector(".win-dropdown");
+                                                if (combo && combo.winControl) {
+                                                    if (!combo.winControl.data ||
+                                                        combo.winControl.data && combo.winControl.data.length !== that.MandantSerie.length) {
+                                                        combo.winControl.data = new WinJS.Binding.List(that.MandantSerie);
+                                                        combo.value = item.MandantSerieID;
+                                                    }
+                                                }
+                                            }
+                                        //}
+                                    }
+                                }
+                            }
+                            // Now, we call WinJS.Binding.List to get the bindable list
+                            if (mandantSerie && mandantSerie.winControl) {
+                                mandantSerie.winControl.data = new WinJS.Binding.List(results); //setLanguage(results);
+                                /*if (mandantSerie._languageId)
+                                    that.binding.eventResource.LanguageID = mandantSerie._languageId;
+                                else*/
+                                mandantSerie.selectedIndex = 0;
+                            }
                         }
                     }
                     Log.ret(Log.l.trace);
@@ -297,31 +332,46 @@
                 this.addRemovableEventListener(listView, "iteminvoked", this.eventHandlers.onItemInvoked.bind(this));
             }
 
-            /*var getEventTextUsageId = function () {
-                return EventSeriesAdministration._eventTextUsageId;
-            }
-            that.getEventTextUsageId = getEventTextUsageId;
-
-            var setEventTextUsageId = function (value) {
-                Log.print(Log.l.trace, "eventTextUsageId=" + value);
-                EventSeriesAdministration._eventTextUsageId = value;
-            }
-            that.setEventTextUsageId = setEventTextUsageId;
-
             var getEventId = function () {
                 return EventSeriesAdministration._eventId;
             }
-            that.getEventId = getEventId;*/
+            that.getEventId = getEventId;
 
-            /*var setEventId = function (value) {
+            var setEventId = function (value) {
                 Log.print(Log.l.trace, "eventId=" + value);
-                EventSeriesAdministrations._eventId = value;
+                EventSeriesAdministration._eventId = value;
             }
-            that.setEventId = setEventId;*/
+            that.setEventId = setEventId;
+
+            var loadMandantSerieData = function () {
+                Log.call(Log.l.trace, "EventResourceAdministration.Controller.");
+                AppData.setErrorMsg(that.binding);
+                var ret = new WinJS.Promise.as().then(function () {
+                    Log.print(Log.l.trace, "calling select mandantSerie...");
+                    return EventSeriesAdministration.mandantSerie.select(function (json) {
+                        Log.print(Log.l.trace, "mandantSerieView: success!");
+                        if (json && json.d) {
+                            var results = json.d.results;
+                            that.MandantSerie = results;
+            }
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    });
+
+                });
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+            that.loadMandantSerieData = loadMandantSerieData;
 
             AppData.setErrorMsg(this.binding);
 
             that.processAll().then(function () {
+                Log.print(Log.l.trace, "loadInitLanguageData");
+                return that.loadMandantSerieData();
+            }).then(function () {
                 Log.print(Log.l.trace, "loadFragmentById complete");
                 return that.loadData();
             }).then(function () {

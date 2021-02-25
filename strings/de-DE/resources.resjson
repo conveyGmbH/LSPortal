@@ -1162,7 +1162,6 @@
 	"eventMediaAdministration.title": "Medien Administration",
 	"eventMediaAdministration.info1": "Ziehen Sie Ihre Dateien mit Drag & Drop hier herein:(Durch Drücken der [strg]-Taste können Sie mehrfach auswählen!)",
     "eventMediaAdministration.info2": "Ein Ausgabefeld zur Anzeige der ausgewählten Dateien: ",
-	"eventSeriesAdministration.title" : "Serien Titel",
     "eventMediaAdministration.File"   : "Datei",
 	"eventMediaAdministration.MediaMetaTitle" : "Media Meta Titel",
     "eventMediaAdministration.MediaAltText" : "Media ALT Text",
@@ -1171,6 +1170,8 @@
     "eventMediaAdministration.LinkToFile" : "Link zu Datei",
     "eventMediaAdministration.Categorie" : "Kategorie:",
 
+    "eventSeriesAdministration.title" : "Serien Titel",
+	"eventSeriesAdministration.serien" : "Serien",
 
     "mailingEdit.title"			: "Bearbeiten",
     "mailingEdit.nametitleheader"			: "Name",

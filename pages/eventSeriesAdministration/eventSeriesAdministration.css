@@ -17,6 +17,10 @@
 #eventSerieList .input_field {
     margin-bottom: 0;
 }
+#eventSerieList .list-header {
+    width: calc(100% - 31px);
+    margin: 10px 24px 0 7px;
+}
 .view-size-medium #eventSerieList .input_field {
     float: left;
     width: 100%;

@@ -47,7 +47,6 @@
             this.inResize = 0;
             this.prevWidth = 0;
             this.prevHeight = 0;
-            // TODO: Initialize the page here.
             // add page specific commands to AppBar
             var commandList = [
                 { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" },
@@ -64,13 +63,18 @@
         },
 
         canUnload: function (complete, error) {
-            var that = this;
+            var ret;
             Log.call(Log.l.trace, pageName + ".");
-            var ret = WinJS.Promise.as().then(function (response) {
-                //that.controller.setupLog();
-                Application.pageframe.savePersistentStates();
+            if (this.controller) {
+                ret = this.controller.saveData(function (response) {
+                    // called asynchronously if ok
                 complete(response);
+                }, function (errorResponse) {
+                    error(errorResponse);
             });
+            } else {
+                ret = WinJS.Promise.as();
+            }
             Log.ret(Log.l.trace);
             return ret;
         },

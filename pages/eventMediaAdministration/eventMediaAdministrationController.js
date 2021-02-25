@@ -314,8 +314,13 @@
                 },
                 clickForward: function (event) {
                     Log.call(Log.l.trace, "EventMediaAdministration.Controller.");
-                    //Application.navigateById("contact", event);
-                    // savedate..
+                    that.saveData(function (response) {
+                        AppBar.busy = false;
+                        Log.print(Log.l.trace, "question saved");
+                    }, function (errorResponse) {
+                        AppBar.busy = false;
+                        Log.print(Log.l.error, "error saving question");
+                    });
                     Log.ret(Log.l.trace);
                 },
                 clickNew: function (event) {
