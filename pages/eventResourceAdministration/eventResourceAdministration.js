@@ -64,11 +64,18 @@
         },
 
         canUnload: function (complete, error) {
-            var that = this;
+            var ret;
             Log.call(Log.l.trace, pageName + ".");
-            var ret = WinJS.Promise.as().then(function (response) {
-                complete(response);
-            });
+            if (this.controller) {
+                ret = this.controller.saveData(function (response) {
+                    // called asynchronously if ok
+                    complete(response);
+                }, function (errorResponse) {
+                    error(errorResponse);
+                });
+            } else {
+                ret = WinJS.Promise.as();
+            }
             Log.ret(Log.l.trace);
             return ret;
         },
