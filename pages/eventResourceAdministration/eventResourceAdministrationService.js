@@ -46,8 +46,8 @@
                 return AppData.getFormatView("LangMandantDokument", 0);
             }
         },
-        _eventTextUsageId: 0,
-        _eventId: 0,
+        _eventTextUsageId: -1,
+        _eventId: -1,
         _languageId: 1031
     });
     WinJS.Namespace.define("EventResourceAdministration", {
@@ -61,6 +61,9 @@
                     };
                     if (EventResourceAdministration._eventTextUsageId > 2) {
                         restriction.VeranstaltungID = EventResourceAdministration._eventId;
+                        if (!restriction.VeranstaltungID) {
+                            restriction.DokVerwendungID = -1;
+                        }
                     }
                 }
                 if (!options) {

@@ -23,7 +23,7 @@
                 active: null
             }, commandList, isMaster]);
             this.nextUrl = null;
-            this.eventsdata = null;
+            this.records = null;
 
             var that = this;
 
@@ -40,8 +40,8 @@
                 if (listView && listView.winControl) {
                     listView.winControl.itemDataSource = null;
                 }
-                if (that.eventsdata) {
-                    that.eventstdata = null;
+                if (that.records) {
+                    that.records = null;
                 }
                 listView = null;
             }
@@ -59,7 +59,7 @@
                 Log.call(Log.l.trace, "EventsList.Controller.");
                 progress = listView.querySelector(".list-footer .progress");
                 counter = listView.querySelector(".list-footer .counter");
-                if (that.eventsdata && that.nextUrl && listView) {
+                if (that.records && that.nextUrl && listView) {
                     that.loading = true;
                     if (progress && progress.style) {
                         progress.style.display = "inline";
@@ -76,12 +76,12 @@
                         // when the response is available
                         Log.print(Log.l.trace, "EventsList.VeranstaltungView: success!");
                         // startContact returns object already parsed from json file in response
-                        if (json && json.d && json.d.results && that.eventsdata) {
+                        if (json && json.d && json.d.results && that.records) {
                             that.nextUrl = EventsList.VeranstaltungView.getNextUrl(json);
                             var results = json.d.results;
                             results.forEach(function (item, index) {
                                 that.resultConverter(item, that.binding.count);
-                                that.binding.count = that.eventsdata.push(item);
+                                that.binding.count = that.records.push(item);
                             });
                         }
                         if (progress && progress.style) {
@@ -122,8 +122,8 @@
             var selectRecordId = function (recordId) {
                 Log.call(Log.l.trace, "EventsList.Controller.", "recordId=" + recordId);
                 if (recordId && listView && listView.winControl && listView.winControl.selection) {
-                    for (var i = 0; i < that.eventsdata.length; i++) {
-                        var events = that.eventsdata.getAt(i);
+                    for (var i = 0; i < that.records.length; i++) {
+                        var events = that.records.getAt(i);
                         if (events && typeof events === "object" &&
                             events.VeranstaltungVIEWID === recordId) {
                             listView.winControl.selection.set(i);
@@ -208,11 +208,10 @@
                                     var item = items[0];
                                     var curPageId = Application.getPageId(nav.location);
                                     that.binding.active = null;
-                                    if (item.data.Aktiv) {
-                                        that.binding.active = 1;
-                                    }
-                                    that.actualSelectedItem = item.data;
                                     if (item.data && item.data.VeranstaltungVIEWID) {
+                                        if (item.data.Aktiv) {
+                                            that.binding.active = 1;
+                                        }
                                         var newRecId = item.data.VeranstaltungVIEWID;
                                         Log.print(Log.l.trace, "newRecId:" + newRecId + " curRecId:" + that.curRecId);
                                         if (newRecId !== 0 && newRecId !== that.curRecId) {
@@ -220,6 +219,7 @@
                                                 that.prevRecId = that.curRecId;
                                             }
                                             that.curRecId = newRecId;
+                                            that.binding.eventId = newRecId;
 
                                             if (AppBar.scope && typeof AppBar.scope.saveData === "function") {
                                                 //=== "function" save wird nicht aufgerufen wenn selectionchange
@@ -235,7 +235,7 @@
                                                         Application.navigateById("eventResourceAdministration");
                                                     }
                                                 }, function (errorResponse) {
-                                                    if (curPageId === "eventResourceAdministration" && 
+                                                    if ((curPageId === "eventResourceAdministration" || curPageId === "eventMediaAdministration" || curPageId === "eventSeriesAdministration") && 
                                                         typeof AppBar.scope.getEventId === "function") {
                                                         that.selectRecordId(AppBar.scope.getEventId());
                                                     }
@@ -285,7 +285,7 @@
                         progress = listView.querySelector(".list-footer .progress");
                         counter = listView.querySelector(".list-footer .counter");
                         var visible = eventInfo.detail.visible;
-                        if (visible && that.eventsdata && that.nextUrl) {
+                        if (visible && that.records && that.nextUrl) {
                             that.loading = true;
                             that.loadNextUrl();
                         } else {
@@ -368,18 +368,18 @@
                             that.binding.fairmandantId = results[0].FairMandantID;
                             that.binding.firstentry = results[0].VeranstaltungVIEWID;
 
-                            that.eventsdata = new WinJS.Binding.List(results);
+                            that.records = new WinJS.Binding.List(results);
 
                             if (listView.winControl) {
                                 // add ListView dataSource
-                                listView.winControl.itemDataSource = that.eventsdata.dataSource;
+                                listView.winControl.itemDataSource = that.records.dataSource;
                             }
                             Log.print(Log.l.trace, "Data loaded");
 
                         } else {
                             that.binding.count = 0;
                             that.nextUrl = null;
-                            that.eventsdata = null;
+                            that.records = null;
                             if (listView.winControl) {
                                 // add ListView dataSource
                                 listView.winControl.itemDataSource = null;
@@ -432,9 +432,7 @@
             Log.ret(Log.l.trace);
         }, {
             nextUrl: null,
-            loading: false,
-            localeventsdata: null,
-            deleteEventData: null
+            loading: false
         })
     });
 })();

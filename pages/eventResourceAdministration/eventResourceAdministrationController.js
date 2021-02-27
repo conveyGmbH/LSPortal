@@ -359,28 +359,6 @@
                 this.addRemovableEventListener(listView, "iteminvoked", this.eventHandlers.onItemInvoked.bind(this));
             }
 
-            var getEventTextUsageId = function() {
-                return EventResourceAdministration._eventTextUsageId;
-            }
-            that.getEventTextUsageId = getEventTextUsageId;
-            
-            var setEventTextUsageId = function(value) {
-                Log.print(Log.l.trace, "eventTextUsageId=" + value);
-                EventResourceAdministration._eventTextUsageId = value;
-            }
-            that.setEventTextUsageId = setEventTextUsageId;
-
-            var getEventId = function() {
-                return EventResourceAdministration._eventId;
-            }
-            that.getEventId = getEventId;
-
-            var setEventId = function(value) {
-                Log.print(Log.l.trace, "eventId=" + value);
-                EventResourceAdministration._eventId = value;
-            }
-            that.setEventId = setEventId;
-
             var loadInitLanguageData = function () {
                 Log.call(Log.l.trace, "EventResourceAdministration.Controller.");
                 AppData.setErrorMsg(that.binding);
@@ -422,6 +400,33 @@
                 return ret;
             }
             that.loadInitLanguageData = loadInitLanguageData;
+
+            var getEventTextUsageId = function() {
+                return EventResourceAdministration._eventTextUsageId;
+            }
+            that.getEventTextUsageId = getEventTextUsageId;
+            
+            var setEventTextUsageId = function(value) {
+                Log.print(Log.l.trace, "eventTextUsageId=" + value);
+                EventResourceAdministration._eventTextUsageId = value;
+            }
+            that.setEventTextUsageId = setEventTextUsageId;
+
+            var getEventId = function() {
+                return EventResourceAdministration._eventId;
+            }
+            that.getEventId = getEventId;
+
+            var setEventId = function(value) {
+                Log.print(Log.l.trace, "eventId=" + value);
+                EventResourceAdministration._eventId = value;
+            }
+            that.setEventId = setEventId;
+
+            var master = Application.navigator.masterControl;
+            if (master && master.controller && master.controller.binding) {
+                that.setEventId(master.controller.binding.eventId);
+            }
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "loadInitLanguageData");
