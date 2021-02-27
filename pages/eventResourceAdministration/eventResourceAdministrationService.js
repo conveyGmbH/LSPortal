@@ -38,7 +38,7 @@
         },
         _eventTextView: {
             get: function () {
-                return AppData.getFormatView("LangMandantDokument", 20634);
+                return AppData.getFormatView("LangMandantDokument", 20628);
             }
         },
         _eventTextTable: {
@@ -56,14 +56,11 @@
                 if (!restriction) {
                     restriction = {
                         NameLanguageID: AppData.getLanguageId(),
-                        LanguageSpecID: EventResourceAdministration._languageId
+                        LanguageSpecID: EventResourceAdministration._languageId,
+                        DokVerwendungID: EventResourceAdministration._eventTextUsageId
                     };
-                    if (EventResourceAdministration._eventTextUsageId && EventResourceAdministration._eventTextUsageId <= 2 ||
-                        EventResourceAdministration._eventTextUsageId > 2 && EventResourceAdministration._eventId) {
-                        restriction.DokVerwendungID = EventResourceAdministration._eventTextUsageId;
-                        if (EventResourceAdministration._eventTextUsageId > 2) {
-                            restriction.VeranstaltungID = EventResourceAdministration._eventId;
-                        }
+                    if (EventResourceAdministration._eventTextUsageId > 2) {
+                        restriction.VeranstaltungID = EventResourceAdministration._eventId;
                     }
                 }
                 if (!options) {
