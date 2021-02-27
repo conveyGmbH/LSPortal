@@ -281,23 +281,20 @@
                         if (json && json.d && json.d.results && json.d.results.length > 0) {
                             that.nextUrl = SketchList.sketchlistView.getNextUrl(json, that.binding.isLocal);
                             var results = json.d.results;
-                            if (that.sketches) {
-                                // reload the bindable list
-                                results.forEach(function(item, index) {
-                                    that.resultConverter(item, index);
-                                    that.sketches.push(item);
-                                });
-                            } else {
-                                results.forEach(function(item, index) {
-                                    that.resultConverter(item, index);
-                                });
-                                // Now, we call WinJS.Binding.List to get the bindable list
-                                that.sketches = new WinJS.Binding.List(results);
-                            }
-                            //as default, show first sketchnote in sketch page
-                            if (listView.winControl) {
-                                // add ListView dataSource
-                                listView.winControl.itemDataSource = that.sketches.dataSource;
+                            if (results && results.length > 0) {
+                                if (that.sketches) {
+                                    // reload the bindable list
+                                    results.forEach(function(item, index) {
+                                        that.resultConverter(item, index);
+                                        that.sketches.push(item);
+                                    });
+                                } else {
+                                    results.forEach(function(item, index) {
+                                        that.resultConverter(item, index);
+                                    });
+                                    // Now, we call WinJS.Binding.List to get the bindable list
+                                    that.sketches = new WinJS.Binding.List(results);
+                                }
                                 // find selection index
                                 selIdx = 0;
                                 if (noteId) {
@@ -308,6 +305,11 @@
                                         }
                                     }
                                 }
+                            }
+                            //as default, show first sketchnote in sketch page
+                            if (listView.winControl) {
+                                // add ListView dataSource
+                                listView.winControl.itemDataSource = that.sketches.dataSource;
                                 if (results && results.length > 0) {
                                     Log.print(Log.l.trace, "SketchList.sketchlistView: selIdx=" + selIdx);
                                     if (listView.winControl.selection && results[selIdx]) {
