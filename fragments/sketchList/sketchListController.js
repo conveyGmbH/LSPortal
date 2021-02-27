@@ -25,7 +25,7 @@
             var layout = null;
 
             this.nextUrl = null;
-            this.sketches = null;
+            this.records = null;
 
             // now do anything...
             var listView = fragmentElement.querySelector("#sketchList.listview");
@@ -237,7 +237,7 @@
 
 
             var loadData = function (contactId, noteId) {
-                var i, selIdx = -1, ret;
+                var i, selIdx = -1, ret, reloadDocView = false, row;
                
                 Log.call(Log.l.trace, "SketchList.", "contactId=" + contactId + " noteId=" + noteId);
                 if (contactId) {
@@ -245,10 +245,10 @@
                 }
                 AppData.setErrorMsg(that.binding);
                 // find index of noteId
-                if (noteId && that.sketches) {
-                    for (i = 0; i < that.sketches.length; i++) {
-                        var item = that.sketches.getAt(i);
-                        if (item && item.KontaktNotizVIEWID === noteId) {
+                if (noteId && that.records) {
+                    for (i = 0; i < that.records.length; i++) {
+                        row = that.records.getAt(i);
+                        if (row && row.KontaktNotizVIEWID === noteId) {
                             selIdx = i;
                             break;
                         }
@@ -262,7 +262,7 @@
                         // select returns object already parsed from json file in response
                         if (json && json.d) {
                             that.resultConverter(json.d, selIdx);
-                            that.sketches.setAt(selIdx, json.d);
+                            that.records.setAt(selIdx, json.d);
                         }
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
@@ -270,8 +270,8 @@
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, noteId, that.binding.isLocal);
                 } else {
-                    if (that.sketches) {
-                        that.sketches.length = 0;
+                    if (that.records) {
+                        that.records.length = 0;
                     }
                     ret = SketchList.sketchlistView.select(function (json) {
                         // this callback will be called asynchronously
@@ -282,20 +282,21 @@
                             that.nextUrl = SketchList.sketchlistView.getNextUrl(json, that.binding.isLocal);
                             var results = json.d.results;
                             if (results && results.length > 0) {
-                                if (that.sketches) {
+                                if (that.records) {
                                     // reload the bindable list
                                     results.forEach(function(item, index) {
                                         that.resultConverter(item, index);
-                                        that.sketches.push(item);
+                                        that.records.push(item);
                                     });
                                 } else {
                                     results.forEach(function(item, index) {
                                         that.resultConverter(item, index);
                                     });
                                     // Now, we call WinJS.Binding.List to get the bindable list
-                                    that.sketches = new WinJS.Binding.List(results);
+                                    that.records = new WinJS.Binding.List(results);
                                 }
                                 // find selection index
+                                //as default, show first sketchnote in sketch page
                                 selIdx = 0;
                                 if (noteId) {
                                     for (i = 0; i < results.length; i++) {
@@ -305,35 +306,14 @@
                                         }
                                     }
                                 }
-                            }
-                            //as default, show first sketchnote in sketch page
-                            if (listView.winControl) {
-                                // add ListView dataSource
-                                listView.winControl.itemDataSource = that.sketches.dataSource;
-                                if (results && results.length > 0) {
-                                    Log.print(Log.l.trace, "SketchList.sketchlistView: selIdx=" + selIdx);
-                                    if (listView.winControl.selection && results[selIdx]) {
-                                        listView.winControl.selection.set(selIdx).then(function () {
-                                            //load sketch with new recordId
-                                            that.binding.noteId = results[selIdx].KontaktNotizVIEWID;
-                                            that.binding.DocGroup = results[selIdx].DocGroup;
-                                            that.binding.DocFormat = results[selIdx].DocFormat;
-                                        });
-                                    }
-                                }
+                                Log.print(Log.l.trace, "SketchList.sketchlistView: selIdx=" + selIdx);
                             }
                         } else {
                             that.binding.noteId = null;
                             that.binding.DocGroup = null;
                             that.binding.DocFormat = null;
                         }
-                        that.binding.count = that.sketches ? that.sketches.length : 0;
-                        if (AppBar.scope && typeof AppBar.scope.setNotesCount === "function") {
-                            AppBar.scope.setNotesCount(that.binding.count);
-                        }
-                        if (AppBar.scope && typeof AppBar.scope.loadDoc === "function" && that.binding.noteId) {
-                            AppBar.scope.loadDoc(that.binding.noteId, that.binding.DocGroup, that.binding.DocFormat);
-                        }
+                        reloadDocView = true;
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
@@ -343,6 +323,43 @@
                     }, that.binding.isLocal);
                 }
                 ret = ret.then(function() {
+                    if (reloadDocView) {
+                        // show/hide this fragment, so use timeout!
+                        that.binding.count = that.records ? that.records.length : 0;
+                        if (AppBar.scope && typeof AppBar.scope.setNotesCount === "function") {
+                            AppBar.scope.setNotesCount(that.binding.count);
+                        }
+                        return WinJS.Promise.timeout(50);
+                    } else {
+                        return WinJS.Promise.as();
+                    }
+                }).then(function () {
+                    if (reloadDocView) {
+                        if (listView.winControl) {
+                            // add ListView dataSource
+                            listView.winControl.itemDataSource = that.records.dataSource;
+                        }
+                        if (that.records && that.records.length > 0 && listView.winControl.selection) {
+                            return listView.winControl.selection.set(selIdx).then(function() {
+                                //load doc with new recordId
+                                row = that.records.getAt(selIdx);
+                                if (row) {
+                                    that.binding.docId = row.KontaktNotizVIEWID;
+                                    that.binding.DocGroup = row.DocGroup;
+                                    that.binding.DocFormat = row.DocFormat;
+                                }
+                            });
+                        } else {
+                            return WinJS.Promise.as();
+                        }
+                    } else {
+                        return WinJS.Promise.as();
+                    }
+                }).then(function () {
+                    if (reloadDocView &&
+                        AppBar.scope && typeof AppBar.scope.loadDoc === "function" && that.binding.noteId) {
+                        AppBar.scope.loadDoc(that.binding.noteId, that.binding.DocGroup, that.binding.DocFormat);
+                    }
                     AppBar.notifyModified = true;
                     AppBar.triggerDisableHandlers();
                     return WinJS.Promise.as();
