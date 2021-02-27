@@ -19,19 +19,7 @@
             var listView = pageElement.querySelector("#eventTextList.listview");
 
             Application.RecordsetController.apply(this, [pageElement, {
-                count: 0,
-                eventResource: {
-                    LabelTitle: "",
-                    LabelDescription: "",
-                    LabelMainTitle: "",
-                    LabelSubTitle: "",
-                    LabelSummary: "",
-                    LabelBody: "",
-                    LanguageID: 0
-                },
-                overView: {
-                    Email: ""
-                }
+                count: 0
         }, commandList, false, 
                 EventResourceAdministration.eventTextTable, 
                 EventResourceAdministration.eventTextView, listView]);
@@ -121,9 +109,6 @@
                 clickForward: function (event) {
                     Log.call(Log.l.trace, "EventResourceAdministration.Controller.");
                     AppBar.busy = true;
-                   /* that.binding.eventResource.LanguageID = parseInt(that.binding.eventResource.LanguageID);
-                    if (that.binding.eventResource.LanguageID)
-                        EventResourceAdministration._languageId = that.binding.eventResource.LanguageID;*/
                     that.saveData(function (response) {
                         AppBar.busy = false;
                         Log.print(Log.l.trace, "question saved");
@@ -319,10 +304,9 @@
                     Log.call(Log.l.trace, "EventResourceAdministration.Controller.");
                     if (event.currentTarget && AppBar.notifyModified) {
                         var combobox = event.currentTarget;
-                        that.binding.eventResource.LanguageID = parseInt(combobox.value);
-                        EventResourceAdministration._languageId = that.binding.eventResource.LanguageID;
+                        EventResourceAdministration._languageId = parseInt(combobox.value);
+                        that.loadData();
                     }
-                    that.loadData();
                     Log.ret(Log.l.trace);
                 }
             }
@@ -359,25 +343,39 @@
                 this.addRemovableEventListener(listView, "iteminvoked", this.eventHandlers.onItemInvoked.bind(this));
             }
 
+            var setComboResults = function(results) {
+                var i;
+                Log.call(Log.l.trace, "EventResourceAdministration.Controller.");
+                if (initEventTextSprache && initEventTextSprache.winControl) {
+                    initEventTextSprache.winControl.data = new WinJS.Binding.List(results); 
+                    if (results.length > 0) {
+                        for (i=0;i<results.length;i++) {
+                            if (results[i] && results[i].LanguageID === EventResourceAdministration._languageId) {
+                                initEventTextSprache.selectedIndex = i;
+                                break;
+                            }
+                        }
+                        if (i === results.length) {
+                            initEventTextSprache.selectedIndex = 0;
+                            EventResourceAdministration._languageId = results[0].LanguageID;
+                        }
+                    }
+                }
+                Log.ret(Log.l.trace);
+            }
             var loadInitLanguageData = function () {
                 Log.call(Log.l.trace, "EventResourceAdministration.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
-                    if (!EventResourceAdministration.initSpracheView.getResults().length) {
+                    var results = EventResourceAdministration.initSpracheView.getResults();
+                    if (results || !results.length) {
                         Log.print(Log.l.trace, "calling select initSpracheView...");
-                        //@nedra:25.09.2015: load the list of INITAnrede for Combobox
+                        //load the list of INITSprache for Combobox
                         return EventResourceAdministration.initSpracheView.select(function (json) {
                             Log.print(Log.l.trace, "initSpracheView: success!");
                             if (json && json.d) {
-                                var results = json.d.results;
                                 // Now, we call WinJS.Binding.List to get the bindable list
-                                if (initEventTextSprache && initEventTextSprache.winControl) {
-                                    initEventTextSprache.winControl.data = new WinJS.Binding.List(results); //setLanguage(results);
-                                    if (EventResourceAdministration._languageId)
-                                        that.binding.eventResource.LanguageID = EventResourceAdministration._languageId;
-                                    else 
-                                        initEventTextSprache.selectedIndex = 0;
-                                }
+                                setComboResults(json.d.results);
                             }
                         }, function (errorResponse) {
                             // called asynchronously if an error occurs
@@ -385,14 +383,7 @@
                             AppData.setErrorMsg(that.binding, errorResponse);
                         });
                     } else {
-                        if (initEventTextSprache && initEventTextSprache.winControl) {
-                            var results = EventResourceAdministration.initSpracheView.getResults();
-                            initEventTextSprache.winControl.data = new WinJS.Binding.List(results);
-                            if (EventResourceAdministration._languageId)
-                                that.binding.eventResource.LanguageID = EventResourceAdministration._languageId;
-                            else
-                                initEventTextSprache.selectedIndex = 0;
-                        }
+                        setComboResults(results);
                         return WinJS.Promise.as();
                     }
                 });
