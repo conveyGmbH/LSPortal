@@ -119,19 +119,6 @@
             }
             this.loadNextUrl = loadNextUrl;
 
-            /*var getDateObject = function (dateData) {
-                var ret;
-                if (dateData) {
-                    var dateString = dateData.replace("\/Date(", "").replace(")\/", "");
-                    var milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
-                    ret = new Date(milliseconds);
-                } else {
-                    ret = new Date();
-                }
-                return ret;
-            };
-            this.getDateObject = getDateObject;*/
-
             var selectRecordId = function (recordId) {
                 Log.call(Log.l.trace, "EventsList.Controller.", "recordId=" + recordId);
                 if (recordId && listView && listView.winControl && listView.winControl.selection) {
@@ -150,7 +137,7 @@
 
             var resultConverter = function (item, index) {
                 item.index = index;
-                // convert Erfassungsdatum 
+                // convert Startdatum 
                 item.currentDate = getDateObject(item.Startdatum);
                 var curMoment = moment(item.currentDate);
                 if (curMoment) {

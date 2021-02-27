@@ -6,6 +6,7 @@
 /// <reference path="~/www/lib/convey/scripts/fragmentController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/fragments/sketchList/sketchListService.js" />
+/// <reference path="~/www/lib/moment/scripts/moment-with-locales.min.js" />
 
 (function () {
     "use strict";
@@ -125,10 +126,13 @@
                         item.showIcon = true;
                     }
                     if (item.ErfasstAm) {
-                        var msString = item.ErfasstAm.replace("\/Date(", "").replace(")\/", "");
-                        var milliseconds = parseInt(msString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
-                        var date = new Date(milliseconds);
-                        item.date = date.toLocaleDateString() + " " + date.toLocaleTimeString();
+                        // convert ErfasstAm 
+                        var date = getDateObject(item.ErfasstAm);
+                        var curMoment = moment(date);
+                        if (curMoment) {
+                            curMoment.locale(Application.language);
+                            item.date = curMoment.format("ll HH:mm");
+                        }
                     } else {
                         item.date = "";
                     }
