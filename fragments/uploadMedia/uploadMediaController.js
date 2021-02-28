@@ -49,21 +49,6 @@
             }
             this.base64ToBlob = base64ToBlob;*/
 
-            var resultConverter = function (item, index) {
-                Log.call(Log.l.trace, "UploadMedia.Controller.");
-                if (item) {
-                    if (item.DocContentDOCCNT1 && item.DocGroup === AppData.DocGroup.Image && item.DocFormat === 3) {
-                        var sub = item.DocContentDOCCNT1.search("\r\n\r\n");
-                        item.photoData = "data:image/jpeg;base64," + item.DocContentDOCCNT1.substr(sub + 4);
-                    } else {
-                        item.photoData = "";
-                    }
-                    item.DocContentDOCCNT1 = "";
-                }
-                Log.ret(Log.l.trace);
-            }
-            this.resultConverter = resultConverter;
-
             var insertImage = function (wFormat, mimeType, fileName, result) {
                 var cameraQuality = 80;
                 var ovwEdge = 256;
@@ -166,18 +151,14 @@
                         // this callback will be called asynchronously
                         // when the response is available
                         AppBar.busy = false;
-                        Log.print(Log.l.trace, "sketchData insert: success!");
+                        Log.print(Log.l.trace, "docView insert: success!");
                         // select returns object already parsed from json file in response
                         if (json && json.d) {
-                            that.resultConverter(json.d);
                             that.binding.dataDoc = json.d;
-                            //that.binding.docId = json.d.DOC1MandantDokumentVIEWID;
+                            that.binding.docId = json.d.DOC1MandantDokumentVIEWID;
                             WinJS.Promise.timeout(0).then(function () {
-                                //showPhotoAfterResize();
-                            //}).then(function () {
-                                // reload list
                                 if (AppBar.scope && typeof AppBar.scope.loadList === "function") {
-                                    AppBar.scope.loadList(that.binding.noteId);
+                                    AppBar.scope.loadList(that.binding.docId);
                                 }
                             });
                         }
@@ -200,7 +181,7 @@
                 Log.call(Log.l.trace, "UploadMedia.Controller.", "name=" + name + " ext=" + ext + " type=" + type + " size=" + size);
                 that.binding.fileInfo = name + " (" + type + ") - " + size + " bytes";
 
-                var docFormat = UploadMedia.docFormatList.find(function (item) {
+                var docFormat = UploadMedia.docFormatInfoList.find(function (item) {
                     return item.mimeType === type;
                 });
                 if (docFormat) {

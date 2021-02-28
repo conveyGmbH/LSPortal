@@ -7,48 +7,30 @@
     "use strict";
 
     WinJS.Namespace.define("UploadMedia", {
-        docFormatList: [
-            //{fileExtension: ".bmp", mimeType: "image/bmp", docGroup: 1, docFormat: 1},
-            //{fileExtension: ".tif", mimeType: "image/tiff", docGroup: 1, docFormat: 2},
-            //{fileExtension: ".tiff", mimeType: "image/tiff", docGroup: 1, docFormat: 2},
-            {fileExtension: ".jpg", mimeType: "image/jpeg", docGroup: 1, docFormat: 3},
-            {fileExtension: ".jpeg", mimeType: "image/jpeg", docGroup: 1, docFormat: 3},
-            {fileExtension: ".jpe", mimeType: "image/jpeg", docGroup: 1, docFormat: 3},
-            {fileExtension: ".gif", mimeType: "image/gif", docGroup: 1, docFormat: 5},
-            {fileExtension: ".png", mimeType: "image/png", docGroup: 1, docFormat: 53},
-            {fileExtension: ".svg", mimeType: "image/svg+xml", docGroup: 3, docFormat: 75},
-            {fileExtension: ".svgz", mimeType: "image/svg+xml", docGroup: 3, docFormat: 76},
-            {fileExtension: ".pdf", mimeType: "application/pdf", docGroup: 3, docFormat: 1557},
-            {fileExtension: ".txt", mimeType: "text/plain", docGroup: 3, docFormat: 1009},
-            {fileExtension: ".htm", mimeType: "text/html", docGroup: 3, docFormat: 1101},
-            {fileExtension: ".html", mimeType: "text/html", docGroup: 3, docFormat: 1101},
-            {fileExtension: ".mpg", mimeType: "video/mpeg", docGroup: 5, docFormat: 72},
-            {fileExtension: ".mpeg", mimeType: "video/mpeg", docGroup: 5, docFormat: 72},
-            {fileExtension: ".m1v", mimeType: "video/mpeg", docGroup: 5, docFormat: 72},
-            {fileExtension: ".mp2", mimeType: "video/mpeg", docGroup: 5, docFormat: 72},
-            {fileExtension: ".mpa", mimeType: "video/mpeg", docGroup: 5, docFormat: 72},
-            {fileExtension: ".mpe", mimeType: "video/mpeg", docGroup: 5, docFormat: 72},
-            {fileExtension: ".mpv2", mimeType: "video/mpeg", docGroup: 5, docFormat: 72},
-            {fileExtension: ".mp4", mimeType: "video/mp4", docGroup: 5, docFormat: 72},
-            {fileExtension: ".m4v", mimeType: "video/mp4", docGroup: 5, docFormat: 72},
-            {fileExtension: ".mp4v", mimeType: "video/mp4", docGroup: 5, docFormat: 72},
-            {fileExtension: ".ogg", mimeType: "video/ogg", docGroup: 5, docFormat: 72},
-            {fileExtension: ".ogv", mimeType: "video/ogg", docGroup: 5, docFormat: 72},
-            {fileExtension: ".asf", mimeType: "video/x-ms-asf", docGroup: 5, docFormat: 81},
-            {fileExtension: ".avi", mimeType: "video/avi", docGroup: 5, docFormat: 13},
-            {fileExtension: ".mov", mimeType: "video/quicktime", docGroup: 5, docFormat: 68},
-            {fileExtension: ".wmv", mimeType: "video/x-ms-wmv", docGroup: 5, docFormat: 83},
-            {fileExtension: ".mp3", mimeType: "audio/mpeg", docGroup: 6, docFormat: 67},
-            {fileExtension: ".m4a", mimeType: "audio/mp4", docGroup: 6, docFormat: 67},
-            {fileExtension: ".oga", mimeType: "audio/ogg", docGroup: 6, docFormat: 67},
-            {fileExtension: ".wav", mimeType: "audio/wav", docGroup: 6, docFormat: 14},
-            {fileExtension: ".wma", mimeType: "audio/x-ms-wma", docGroup: 6, docFormat: 82},
-            {fileExtension: ".aiff", mimeType: "audio/aiff", docGroup: 6, docFormat: 71},
-            {fileExtension: ".aifc", mimeType: "audio/aiff", docGroup: 6, docFormat: 71},
-            {fileExtension: ".au", mimeType: "audio/basic", docGroup: 6, docFormat: 69},
-            {fileExtension: ".mid", mimeType: "audio/mid", docGroup: 7, docFormat: 60},
-            {fileExtension: ".midi", mimeType: "audio/mid", docGroup: 7, docFormat: 60}
+        docExtList: [
+            "jpg", "jpeg", "jpe", "gif", "png", "svg", "svgz", "pdf", "txt", "htm",
+            "html", "mpg", "mpeg", "m1v", "mp2", "mpa", "mpe", "mpv2", "mp4", "m4v",
+            "mp4v", "ogg", "ogv", "asf", "avi", "mov", "wmv", "mp3", "m4a", "oga",
+            "wav", "wma", "aiff", "aifc", "au", "mid", "midi"
         ],
+        _docFormatInfoList: [],
+        docFormatInfoList: {
+            get: function() {
+                if (!UploadMedia._docFormatInfoList.length) {
+                    UploadMedia.docExtList.forEach(function(fileExtension) {
+                        var wFormat = AppData.getDocFormatFromExt(fileExtension);
+                        if (wFormat) {
+                            var docFormat = AppData.getDocFormatInfo(wFormat);
+                            if (docFormat) {
+                                docFormat.docFormat = wFormat;
+                                UploadMedia.docExtList._docFormatInfoList.push(docFormat);
+                            }
+                        }
+                    });
+                }
+                return UploadMedia._docFormatInfoList;
+            }
+        },
         getDocView: function (docGroup) {
             var tableName = "DOC" + docGroup + "MandantDokument";
             return AppData.getFormatView(tableName, 0);

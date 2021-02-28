@@ -7,32 +7,16 @@
     "use strict";
 
     WinJS.Namespace.define("ImgMedia", {
-        getSketchDocView: function (isLocal) {
-                return AppData.getFormatView("KontaktNotiz", 20505, isLocal);
-        },
-        sketchDocView: {
-            select: function (complete, error, recordId, isLocal) {
-                Log.call(Log.l.trace, "imgMediaView.");
-                var ret = ImgMedia.getSketchDocView(isLocal).selectById(complete, error, recordId);
-                // this will return a promise to controller
-                Log.ret(Log.l.trace);
-                return ret;
+        _docView: {
+            get: function () {
+                return AppData.getFormatView("MandantDokument", 20635);
             }
         },
-
-        getSketchView: function (isLocal) {
-            return AppData.getFormatView("KontaktNotiz", 0, isLocal);
-        },
-        sketchView: {
-            insert: function (complete, error, viewResponse, isLocal) {
+        docView: {
+            select: function (complete, error, recordId) {
                 Log.call(Log.l.trace, "imgMediaView.");
-                var ret = ImgMedia.getSketchView(isLocal).insert(complete, error, viewResponse);
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            deleteRecord: function (complete, error, recordId, isLocal) {
-                Log.call(Log.l.trace, "imgMediaView.");
-                var ret = ImgMedia.getSketchView(isLocal).deleteRecord(complete, error, recordId);
+                var ret = ImgMedia._docView.selectById(complete, error, recordId);
+                // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
             }
