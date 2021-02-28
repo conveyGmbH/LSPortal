@@ -41,13 +41,16 @@
                     if (!count) {
                         that.binding.showSvg = false;
                         that.binding.showPhoto = false;
+                        that.binding.showAudio = false;
                     }
                 }
-                if (!that.binding.userHidesList) {
+                if (that.binding.userHidesList) {
+                    that.binding.showList = false;
+                } else {
                     that.binding.showList = that.binding.moreNotes;
                 }
                 AppBar.replaceCommands([
-                    { id: 'clickShowList', label: getResourceText('sketch.showList'), tooltip: getResourceText('sketch.showList'), section: 'primary', svg: that.binding.showList ? 'document_height' : 'elements3' }
+                    { id: 'clickShowList', label: !that.binding.showList ? getResourceText('sketch.showList') : getResourceText('sketch.hideList'), tooltip: !that.binding.showList ? getResourceText('sketch.showList') : getResourceText('sketch.hideList'), section: 'primary', svg: that.binding.showList ? 'document_height' : 'elements3' }
                 ]);
                 Log.ret(Log.l.trace);
             }
@@ -236,72 +239,74 @@
                 },
                 clickShowList: function (event) {
                     Log.call(Log.l.trace, "Sketch.Controller.");
-                    var mySketchList = pageElement.querySelector(".listfragmenthost");
-                    var pageControl = pageElement.winControl;
-                    var newShowList = !that.binding.showList;
-                    var replaceCommands = function () {
-                        if (!newShowList && mySketchList && mySketchList.style) {
-                            mySketchList.style.display = "none";
-                        }
-                        if (pageControl) {
-                            pageControl.prevHeight = 0;
-                            pageControl.prevWidth = 0;
-                        }
-                        AppBar.replaceCommands([
-                            { id: 'clickShowList', label: !that.binding.showList ? getResourceText('sketch.showList') : getResourceText('sketch.hideList'), tooltip: !that.binding.showList ? getResourceText('sketch.showList') : getResourceText('sketch.hideList'), section: 'primary', svg: that.binding.showList ? 'document_height' : 'elements3' }
-                        ]);
-                        WinJS.Promise.timeout(50).then(function () {
-                            mySketchList = pageElement.querySelector(".listfragmenthost");
-                            if (mySketchList && mySketchList.style) {
-                                mySketchList.style.position = "";
-                                mySketchList.style.top = "";
-                                if (newShowList) {
-                                    mySketchList.style.display = "";
-                                }
+                    if (that.binding.moreNotes) {
+                        var mySketchList = pageElement.querySelector(".listfragmenthost");
+                        var pageControl = pageElement.winControl;
+                        var newShowList = !that.binding.showList;
+                        var replaceCommands = function () {
+                            if (!newShowList && mySketchList && mySketchList.style) {
+                                mySketchList.style.display = "none";
                             }
-                        });
-                    };
-                    that.binding.userHidesList = !newShowList;
-                    if (mySketchList && mySketchList.style) {
-                        mySketchList.style.display = "block";
-                        mySketchList.style.position = "absolute";
-                        var contentarea = pageElement.querySelector(".contentarea");
-                        if (contentarea) {
-                            var contentHeader = pageElement.querySelector(".content-header");
-                            var height = contentarea.clientHeight;
-                            mySketchList.style.top = (height - 178).toString() + "px";
-                            if (contentHeader) {
-                                height -= contentHeader.clientHeight;
-                            }
-                            if (newShowList) {
-                                that.binding.showList = true;
-                                WinJS.UI.Animation.slideUp(mySketchList).done(function () {
-                                    replaceCommands(newShowList);
-                                });
-                            } else {
-                                var mySketchViewers = pageElement.querySelectorAll(".sketchfragmenthost");
-                                if (mySketchViewers) {
-                                    var mySketch, i;
-                                    for (i = 0; i < mySketchViewers.length; i++) {
-                                        mySketch = mySketchViewers[i];
-                                        if (mySketch && mySketch.style) {
-                                            mySketch.style.height = height.toString() + "px";
-                                        }
+                            AppBar.replaceCommands([
+                                { id: 'clickShowList', label: !that.binding.showList ? getResourceText('sketch.showList') : getResourceText('sketch.hideList'), tooltip: !that.binding.showList ? getResourceText('sketch.showList') : getResourceText('sketch.hideList'), section: 'primary', svg: that.binding.showList ? 'document_height' : 'elements3' }
+                            ]);
+                            WinJS.Promise.timeout(50).then(function () {
+                                mySketchList = pageElement.querySelector(".listfragmenthost");
+                                if (mySketchList && mySketchList.style) {
+                                    mySketchList.style.position = "";
+                                    mySketchList.style.top = "";
+                                    if (newShowList) {
+                                        mySketchList.style.display = "";
                                     }
                                 }
-                                if (Application.navigator) {
-                                    Application.navigator._updateFragmentsLayout();
+                            });
+                        };
+                        that.binding.userHidesList = !newShowList;
+                        if (mySketchList && mySketchList.style) {
+                            mySketchList.style.display = "block";
+                            mySketchList.style.position = "absolute";
+                            if (pageControl) {
+                                pageControl.prevWidth = 0;
+                                pageControl.prevHeight = 0;
+                            }
+                            var contentarea = pageElement.querySelector(".contentarea");
+                            if (contentarea) {
+                                var contentHeader = pageElement.querySelector(".content-header");
+                                var height = contentarea.clientHeight;
+                                mySketchList.style.top = (height - 178).toString() + "px";
+                                if (contentHeader) {
+                                    height -= contentHeader.clientHeight;
                                 }
-                                WinJS.Promise.timeout(0).then(function () {
-                                    WinJS.UI.Animation.slideDown(mySketchList).done(function () {
-                                        that.binding.showList = false;
+                                if (newShowList) {
+                                    that.binding.showList = true;
+                                    WinJS.UI.Animation.slideUp(mySketchList).done(function () {
                                         replaceCommands(newShowList);
                                     });
-                                });
+                                } else {
+                                    var mySketchViewers = pageElement.querySelectorAll(".sketchfragmenthost");
+                                    if (mySketchViewers) {
+                                        var mySketch, i;
+                                        for (i = 0; i < mySketchViewers.length; i++) {
+                                            mySketch = mySketchViewers[i];
+                                            if (mySketch && mySketch.style) {
+                                                mySketch.style.height = height.toString() + "px";
+                                            }
+                                        }
+                                    }
+                                    if (Application.navigator) {
+                                        Application.navigator._updateFragmentsLayout();
+                                    }
+                                    WinJS.Promise.timeout(0).then(function () {
+                                        WinJS.UI.Animation.slideDown(mySketchList).done(function () {
+                                            that.binding.showList = false;
+                                            replaceCommands(newShowList);
+                                        });
+                                    });
+                                }
                             }
+                        } else {
+                            replaceCommands(newShowList);
                         }
-                    } else {
-                        replaceCommands(newShowList);
                     }
                     Log.ret(Log.l.trace);
                 },

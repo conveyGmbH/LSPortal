@@ -32,7 +32,7 @@
 
             var scaleItemsAfterResize = function() {
                 Log.call(Log.l.trace, "SketchList.Controller.");
-                if (fragmentElement &&
+                if (listView && fragmentElement &&
                     fragmentElement.winControl &&
                     fragmentElement.winControl.prevWidth &&
                     fragmentElement.winControl.prevHeight) {
@@ -215,12 +215,8 @@
 
             // register ListView event handler
             if (listView) {
-                this.addRemovableEventListener(listView,
-                    "selectionchanged",
-                    this.eventHandlers.onSelectionChanged.bind(this));
-                this.addRemovableEventListener(listView,
-                    "loadingstatechanged",
-                    this.eventHandlers.onLoadingStateChanged.bind(this));
+                this.addRemovableEventListener(listView, "selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
+                this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
             }
 
             var saveData = function (complete, error) {
@@ -335,20 +331,20 @@
                     }
                 }).then(function () {
                     if (reloadDocView) {
-                        if (listView.winControl) {
+                        if (listView && listView.winControl) {
                             // add ListView dataSource
                             listView.winControl.itemDataSource = that.records.dataSource;
-                        }
-                        if (that.records && that.records.length > 0 && listView.winControl.selection) {
-                            return listView.winControl.selection.set(selIdx).then(function() {
-                                //load doc with new recordId
-                                row = that.records.getAt(selIdx);
-                                if (row) {
-                                    that.binding.docId = row.KontaktNotizVIEWID;
-                                    that.binding.DocGroup = row.DocGroup;
-                                    that.binding.DocFormat = row.DocFormat;
-                                }
-                            });
+                            if (that.records && that.records.length > 0 && listView.winControl.selection) {
+                                return listView.winControl.selection.set(selIdx).then(function() {
+                                    //load doc with new recordId
+                                    row = that.records.getAt(selIdx);
+                                    if (row) {
+                                        that.binding.docId = row.KontaktNotizVIEWID;
+                                        that.binding.DocGroup = row.DocGroup;
+                                        that.binding.DocFormat = row.DocFormat;
+                                    }
+                                });
+                            }
                         } else {
                             return WinJS.Promise.as();
                         }
@@ -368,6 +364,15 @@
                 return ret;
             };
             this.loadData = loadData;
+
+            var forceLayout = function() {
+                Log.call(Log.l.trace, "MediaList.");
+                if (listView && listView.winControl) {
+                    listView.winControl.forceLayout();
+                }
+                Log.ret(Log.l.trace);
+            }
+            that.forceLayout = forceLayout;
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
