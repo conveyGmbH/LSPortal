@@ -44,11 +44,12 @@
                                         WinJS.Promise.timeout(50).then(function() {
                                             return AppBar.scope.loadData();
                                         }).then(function () {
-                                            var pageControl = fragmentElement.winControl;
-                                            if (pageControl && pageControl.updateLayout) {
-                                                pageControl.prevWidth = 0;
-                                                pageControl.prevHeight = 0;
-                                                return pageControl.updateLayout.call(pageControl, fragmentElement);
+                                            Log.print(Log.l.trace, "now update layout...");
+                                            var fragmentControl = fragmentElement.winControl;
+                                            if (fragmentControl && fragmentControl.updateLayout) {
+                                                fragmentControl.prevWidth = 0;
+                                                fragmentControl.prevHeight = 0;
+                                                return fragmentControl.updateLayout.call(fragmentControl, fragmentElement);
                                             } else {
                                                 return WinJS.Promise.as();
                                             }

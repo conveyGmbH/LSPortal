@@ -48,6 +48,7 @@
     "command.mailTracking"  : "Mailtracking",
     "command.terminedit"  : "Termin ändern",
     "command.permuser"  : "Zu Dauerkunde ändern",
+    "command.upload"  : "Hochladen",
 
     "tooltip.backward"      : "Zurück blättern",
     "tooltip.edit"          : "Aktuellen Datensatz bearbeiten",
@@ -1160,10 +1161,11 @@
 	"eventResourceAdministration.eventTextPlaceholder"  : "Geben Sie hier ein: ",
 
 	"eventMediaAdministration.title": "Medien Administration",
-	"eventMediaAdministration.info1": "Ziehen Sie Ihre Dateien mit Drag & Drop hier herein:(Durch Drücken der [strg]-Taste können Sie mehrfach auswählen!)",
+	"eventMediaAdministration.info1": "Ziehen Sie Ihre Datei hierher und legen Sie sie ab.",
     "eventMediaAdministration.info2": "Ein Ausgabefeld zur Anzeige der ausgewählten Dateien: ",
     "eventMediaAdministration.File"   : "Datei",
-	"eventMediaAdministration.MediaMetaTitle" : "Media Meta Titel",
+    "eventMediaAdministration.FileUpload": "Eine Datei zum Hochladen auswählen",
+    "eventMediaAdministration.MediaMetaTitle" : "Media Meta Titel",
     "eventMediaAdministration.MediaAltText" : "Media ALT Text",
     "eventMediaAdministration.MediaFreitextKommentar" : "Media Freitext Kommentar",
     "eventMediaAdministration.MediaName" : "Media Name",

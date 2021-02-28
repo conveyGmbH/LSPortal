@@ -1,34 +1,29 @@
-#eventTextUsageHostMedia.fragmenthost {
+.eventTextUsagefragmenthost {
+    position: absolute;
+    top: 0;
     width: 100%;
     height: 48px;
 }
+.eventMediaTextfragmenthost {
+    z-index: 4;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: calc(100% - 220px);
+}
 .eventMediaAdministrationfragmenthost {
-    width: 100%;
-    height: calc(100% - 170px);
     z-index: 4;
-}
-
-.dropzone-container {
+    position: absolute;
+    left: 0;
     width: 100%;
-    height: 200px;
-    margin-top: 20px;
-    border-style: solid;
-    z-index: 4;
+    height: calc(100% - 220px);
 }
-
-#fileChooser {
-    width: 75%
-}
-.file-input-container {
-    width: 100%;
-    border-style: solid;
-    z-index: 4;
-}
-
 .listfragmenthost {
     width: 100%;
     height: 170px;
-    position: relative;
+    position: absolute;
     bottom: 0;
     z-index: 5;
 }
+ 

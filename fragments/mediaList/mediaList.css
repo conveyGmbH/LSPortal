@@ -1,5 +1,4 @@
-﻿
-#mediaList .win-container {
+﻿#mediaList .win-container {
     width: 160px;
     height: 160px;
 }
@@ -7,41 +6,43 @@
 #mediaListController .contentarea .win-type-body {
     height: 170px;
 }
-.contentarea .win-type-body .win-listview {
+.mediaList .contentarea .win-type-body .win-listview {
     height: 170px;
 }
 
-.list-img {
+.mediaList .list-img {
     width: 150px;
     height: 150px;
     display: block;
 }
 
-.list-svg {
+.mediaList .list-svg {
     width: 150px;
     height: 150px;
     display: block;
 }
 
-.list-icon {
+.mediaList .list-icon {
     width: 150px;
     height: 115px;
     display: block;
 }
 
-.list-img-item {
-    width: 100%;
+.mediaList .list-img-item {
+    width: auto;
     height: auto;
+    max-width: 150px;
     max-height: 150px;
 }
 
-.list-svg-item {
-    width: 100%;
+.mediaList .list-svg-item {
+    width: auto;
     height: auto;
+    max-width: 150px;
     max-height: 150px;
 }
 
-.list-icon-item {
+.mediaList .list-icon-item {
     margin-left: calc(50% - 40px);
     margin-top: calc(50% - 40px);
     width: 80px;
@@ -49,8 +50,8 @@
     display: block !important;
 }
 
-.list-caption-container {
-    height: 20px;
+.mediaList .list-caption-container {
+    height: 40px;
     bottom: 0;
     position: absolute;
     display: block;
@@ -58,6 +59,8 @@
     width: 100%;
     text-align: center;
 }
-.list-caption {
+.mediaList .list-caption {
+    width: 100%;
+    text-align: center;
     color: #101010;
 }

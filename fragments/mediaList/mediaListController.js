@@ -6,6 +6,7 @@
 /// <reference path="~/www/lib/convey/scripts/fragmentController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/fragments/mediaList/mediaListService.js" />
+/// <reference path="~/www/lib/moment/scripts/moment-with-locales.min.js" />
 
 (function () {
     "use strict";
@@ -13,25 +14,26 @@
     WinJS.Namespace.define("MediaList", {
         Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options) {
             Log.call(Log.l.trace, "MediaList.Controller.");
+            if (options) {
+                MediaList._eventTextUsageId = options.eventTextUsageId;
+                MediaList._eventId = options.eventId;
+            }
             Fragments.Controller.apply(this, [fragmentElement, {
-                contactId: options.contactId,
-                isLocal: options.isLocal,
-                noteId: null,
+                docId: null,
                 DocGroup: null,
                 DocFormat: null
             }]);
             var that = this;
-            var layout = null;
 
             this.nextUrl = null;
-            this.sketches = null;
+            this.records = null;
 
             // now do anything...
             var listView = fragmentElement.querySelector("#mediaList.listview");
 
             var scaleItemsAfterResize = function() {
                 Log.call(Log.l.trace, "MediaList.Controller.");
-                if (fragmentElement &&
+                if (listView && fragmentElement && 
                     fragmentElement.winControl &&
                     fragmentElement.winControl.prevWidth &&
                     fragmentElement.winControl.prevHeight) {
@@ -64,7 +66,7 @@
                             }
                         }
                     }
-                    WinJS.Promise.timeout(50).then(function () {
+                    /*WinJS.Promise.timeout(50).then(function () {
                         if (AppBar.scope) {
                             var pageElement = AppBar.scope.pageElement;
                             if (pageElement) {
@@ -76,7 +78,7 @@
                                 }
                             }
                         }
-                    });
+                    });*/
                 } else if (that.binding.count > 1) {
                     WinJS.Promise.timeout(50).then(function () {
                         scaleItemsAfterResize();
@@ -96,6 +98,8 @@
                     item.showVideo = AppData.isVideo(doc.DocGroup, doc.DocFormat);
                     item.showIcon = false;
                     item.nameIcon = "";
+                    item.srcImg = "";
+                    item.srcSvg = "";
                     if (item.showImg) {
                         var docContent = doc.OvwContentDOCCNT3;
                         if (docContent) {
@@ -104,18 +108,10 @@
                                 var data = docContent.substr(sub + 4);
                                 if (data && data !== "null") {
                                     item.srcImg = "data:image/jpeg;base64," + data;
-                                } else {
-                                    item.srcImg = "";
                                 }
-                            } else {
-                                item.srcImg = "";
                             }
-                        } else {
-                            item.srcImg = "";
                         }
-                        item.srcSvg = "";
                     } else if (item.showSvg) {
-                        item.srcImg = "";
                         item.srcSvg = doc.OvwContentDOCCNT3;
                     } else if (item.showAudio) {
                         item.nameIcon = "music";
@@ -123,15 +119,22 @@
                     } else if (item.showVideo) {
                         item.nameIcon = "movie";
                         item.showIcon = true;
-                    }
-                    if (item.ErfasstAm) {
-                        var msString = item.ErfasstAm.replace("\/Date(", "").replace(")\/", "");
-                        var milliseconds = parseInt(msString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
-                        var date = new Date(milliseconds);
-                        item.date = date.toLocaleDateString() + " " + date.toLocaleTimeString();
                     } else {
-                        item.date = "";
+                        item.nameIcon = "document_empty";
+                        item.showIcon = true;
                     }
+                    if (item.ModifiedTS) {
+                        // convert ModifiedTS 
+                        item.currentDate = getDateObject(item.ModifiedTS);
+                        var curMoment = moment(item.currentDate);
+                        if (curMoment) {
+                            curMoment.locale(Application.language);
+                            item.currentDateString = curMoment.format("ll HH:mm");
+                        }
+                    } else {
+                        item.currentDateString = "";
+                    }
+                    item.currentTitle = item.Titel || item.LabelTitle;
                 }
                 Log.ret(Log.l.trace);
             }
@@ -140,7 +143,7 @@
             var eventHandlers = {
                 onSelectionChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "MediaList.Controller.");
-                    //if current sketch is saved successfully, change selection
+                    //if current doc is saved successfully, change selection
                     if (listView && listView.winControl) {
                         var listControl = listView.winControl;
                         if (listControl.selection) {
@@ -150,7 +153,7 @@
                                 listControl.selection.getItems().done(function (items) {
                                     var item = items[0];
                                     if (item.data) {
-                                        that.binding.noteId = item.data.KontaktNotizVIEWID;
+                                        that.binding.docId = item.data.MandantDokumentVIEWID;
                                         that.binding.DocGroup = item.data.DocGroup;
                                         that.binding.DocFormat = item.data.DocFormat;
                                         if (AppBar.scope &&
@@ -159,17 +162,17 @@
                                             typeof AppBar.scope.pageElement.winControl.canUnload === "function") {
                                                 AppBar.scope.pageElement.winControl.canUnload(function(response) {
                                                 // called asynchronously if ok
-                                                //load sketch with new recordId
-                                                if (AppBar.scope && typeof AppBar.scope.loadData === "function") {
-                                                    AppBar.scope.loadData(that.binding.noteId, that.binding.DocGroup, that.binding.DocFormat);
+                                                //load doc with new recordId
+                                                if (AppBar.scope && typeof AppBar.scope.loadDoc === "function") {
+                                                    AppBar.scope.loadDoc(that.binding.docId, that.binding.DocGroup, that.binding.DocFormat);
                                                 }
                                             }, function(errorResponse) {
                                                 // error handled in saveData!
                                             });
                                         } else {
-                                            //load sketch with new recordId
-                                            if (AppBar.scope && typeof AppBar.scope.loadData === "function") {
-                                                AppBar.scope.loadData(that.binding.noteId, that.binding.DocGroup, that.binding.DocFormat);
+                                            //load doc with new recordId
+                                            if (AppBar.scope && typeof AppBar.scope.loadDoc === "function") {
+                                                AppBar.scope.loadDoc(that.binding.docId, that.binding.DocGroup, that.binding.DocFormat);
                                             }
                                         }
                                     }
@@ -183,23 +186,7 @@
                     Log.call(Log.l.trace, "MediaList.Controller.");
                     if (listView && listView.winControl) {
                         Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
-                        // single list selection
-                        if (listView.winControl.selectionMode !== WinJS.UI.SelectionMode.single) {
-                            listView.winControl.selectionMode = WinJS.UI.SelectionMode.single;
-                        }
-                        // direct selection on each tap
-                        if (listView.winControl.tapBehavior !== WinJS.UI.TapBehavior.directSelect) {
-                            listView.winControl.tapBehavior = WinJS.UI.TapBehavior.directSelect;
-                        }
-                        
-                        
-                        if (listView.winControl.loadingState === "itemsLoading") {
-                            if (!layout) {
-                                layout = new WinJS.UI.GridLayout();
-                                layout.orientation = "horizontal";
-                                listView.winControl.layout = { type: layout };
-                            }
-                        } else if (listView.winControl.loadingState === "complete") {
+                        if (listView.winControl.loadingState === "complete") {
                             Colors.loadSVGImageElements(listView, "list-icon-item", 80, Colors.navigationColor, "name");
                             scaleItemsAfterResize();
                         }
@@ -211,12 +198,8 @@
 
             // register ListView event handler
             if (listView) {
-                this.addRemovableEventListener(listView,
-                    "selectionchanged",
-                    this.eventHandlers.onSelectionChanged.bind(this));
-                this.addRemovableEventListener(listView,
-                    "loadingstatechanged",
-                    this.eventHandlers.onLoadingStateChanged.bind(this));
+                this.addRemovableEventListener(listView, "selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
+                this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
             }
 
             var saveData = function (complete, error) {
@@ -232,111 +215,132 @@
             this.saveData = saveData;
 
 
-            var loadData = function (contactId, noteId) {
-                var i, selIdx = -1, ret;
+            var loadData = function (docId, curOptions) {
+                var i, selIdx = -1, ret, reloadDocView = false, row;
                
-                Log.call(Log.l.trace, "MediaList.", "contactId=" + contactId + " noteId=" + noteId);
-                if (contactId) {
-                    that.binding.contactId = contactId;
+                Log.call(Log.l.trace, "MediaList.", "docId=" + docId);
+                if (curOptions) {
+                    MediaList._eventTextUsageId = curOptions.eventTextUsageId;
+                    MediaList._eventId = curOptions.eventId;
+                }
+                if (docId) {
+                    that.binding.docId = docId;
                 }
                 AppData.setErrorMsg(that.binding);
-                // find index of noteId
-                if (noteId && that.sketches) {
-                    for (i = 0; i < that.sketches.length; i++) {
-                        var item = that.sketches.getAt(i);
-                        if (item && item.KontaktNotizVIEWID === noteId) {
+                // find index of docId
+                if (docId && that.records) {
+                    for (i = 0; i < that.records.length; i++) {
+                        row = that.records.getAt(i);
+                        if (row && row.MandantDokumentVIEWID === docId) {
                             selIdx = i;
                             break;
                         }
                     }
                 }
                 if (selIdx >= 0) {
-                    ret = MediaList.sketchlistView.select(function (json) {
+                    ret = MediaList.eventDocView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
-                        Log.print(Log.l.trace, "MediaList.sketchlistView: success!");
+                        Log.print(Log.l.trace, "MediaList.eventDocView: success!");
                         // select returns object already parsed from json file in response
                         if (json && json.d) {
                             that.resultConverter(json.d, selIdx);
-                            that.sketches.setAt(selIdx, json.d);
+                            that.records.setAt(selIdx, json.d);
                         }
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
-                    }, noteId, that.binding.isLocal);
+                        }, docId);
                 } else {
-                    if (that.sketches) {
-                        that.sketches.length = 0;
+                    if (that.records) {
+                        that.records.length = 0;
                     }
-                    ret = MediaList.sketchlistView.select(function (json) {
+                    ret = MediaList.eventDocView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
-                        Log.print(Log.l.trace, "MediaList.sketchlistView: success!");
+                        Log.print(Log.l.trace, "MediaList.eventDocView: success!");
                         // select returns object already parsed from json file in response
-                        if (json && json.d && json.d.results && json.d.results.length > 0) {
-                            that.nextUrl = SketchList.sketchlistView.getNextUrl(json, that.binding.isLocal);
+                        if (json && json.d) {
+                            that.nextUrl = MediaList.eventDocView.getNextUrl(json, that.binding.isLocal);
                             var results = json.d.results;
-                            if (that.sketches) {
-                                // reload the bindable list
-                                results.forEach(function(item, index) {
-                                    that.resultConverter(item, index);
-                                    that.sketches.push(item);
-                                });
-                            } else {
-                                results.forEach(function(item, index) {
-                                    that.resultConverter(item, index);
-                                });
-                                // Now, we call WinJS.Binding.List to get the bindable list
-                                that.sketches = new WinJS.Binding.List(results);
-                            }
-                            //as default, show first sketchnote in sketch page
-                            if (listView.winControl) {
-                                // add ListView dataSource
-                                listView.winControl.itemDataSource = that.sketches.dataSource;
+                            if (results && results.length > 0) {
+                                if (that.records) {
+                                    // reload the bindable list
+                                    results.forEach(function(item, index) {
+                                        that.resultConverter(item, index);
+                                        that.records.push(item);
+                                    });
+                                } else {
+                                    results.forEach(function(item, index) {
+                                        that.resultConverter(item, index);
+                                    });
+                                    // Now, we call WinJS.Binding.List to get the bindable list
+                                    that.records = new WinJS.Binding.List(results);
+                                }
                                 // find selection index
+                                //as default, show first doc in doc page
                                 selIdx = 0;
-                                if (noteId) {
+                                if (docId) {
                                     for (i = 0; i < results.length; i++) {
-                                        if (results[i].KontaktNotizVIEWID === noteId) {
+                                        if (results[i].MandantDokumentVIEWID === docId) {
                                             selIdx = i;
                                             break;
                                         }
                                     }
                                 }
-                                if (results && results.length > 0) {
-                                    Log.print(Log.l.trace, "MediaList.sketchlistView: selIdx=" + selIdx);
-                                    if (listView.winControl.selection && results[selIdx]) {
-                                        listView.winControl.selection.set(selIdx).then(function () {
-                                            //load sketch with new recordId
-                                            that.binding.noteId = results[selIdx].KontaktNotizVIEWID;
-                                            that.binding.DocGroup = results[selIdx].DocGroup;
-                                            that.binding.DocFormat = results[selIdx].DocFormat;
-                                        });
-                                    }
-                                }
+                                Log.print(Log.l.trace, "MediaList.eventDocView: selIdx=" + selIdx);
                             }
                         } else {
-                            that.binding.noteId = null;
+                            that.binding.docId = null;
                             that.binding.DocGroup = null;
                             that.binding.DocFormat = null;
                         }
-                        that.binding.count = that.sketches ? that.sketches.length : 0;
-                        if (AppBar.scope && typeof AppBar.scope.setNotesCount === "function") {
-                            AppBar.scope.setNotesCount(that.binding.count);
-                        }
-                        if (AppBar.scope && typeof AppBar.scope.loadDoc === "function" && that.binding.noteId) {
-                            AppBar.scope.loadDoc(that.binding.noteId, that.binding.DocGroup, that.binding.DocFormat);
-                        }
+                        reloadDocView = true;
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
-                    }, {
-                        KontaktID: that.binding.contactId
-                    }, that.binding.isLocal);
+                    });
                 }
                 ret = ret.then(function() {
+                    if (reloadDocView) {
+                        // show/hide this fragment, so use timeout!
+                        that.binding.count = that.records ? that.records.length : 0;
+                        if (AppBar.scope && typeof AppBar.scope.setDocCount === "function") {
+                            AppBar.scope.setDocCount(that.binding.count);
+                        }
+                        return WinJS.Promise.timeout(50);
+                    } else {
+                        return WinJS.Promise.as();
+                    }
+                }).then(function () {
+                    if (reloadDocView) {
+                        if (listView && listView.winControl) {
+                            // add ListView dataSource
+                            listView.winControl.itemDataSource = that.records.dataSource;
+                            if (that.records && that.records.length > 0 && listView.winControl.selection) {
+                                return listView.winControl.selection.set(selIdx).then(function() {
+                                    //load doc with new recordId
+                                    row = that.records.getAt(selIdx);
+                                    if (row) {
+                                        that.binding.docId = row.MandantDokumentVIEWID;
+                                        that.binding.DocGroup = row.DocGroup;
+                                        that.binding.DocFormat = row.DocFormat;
+                                    }
+                                });
+                            }
+                        } else {
+                            return WinJS.Promise.as();
+                        }
+                    } else {
+                        return WinJS.Promise.as();
+                    }
+                }).then(function () {
+                    if (reloadDocView &&
+                        AppBar.scope && typeof AppBar.scope.loadDoc === "function" && that.binding.docId) {
+                        AppBar.scope.loadDoc(that.binding.docId, that.binding.DocGroup, that.binding.DocFormat);
+                    }
                     AppBar.notifyModified = true;
                     AppBar.triggerDisableHandlers();
                     return WinJS.Promise.as();
@@ -346,9 +350,18 @@
             };
             this.loadData = loadData;
 
+            var forceLayout = function() {
+                Log.call(Log.l.trace, "MediaList.");
+                if (listView && listView.winControl) {
+                    listView.winControl.forceLayout();
+                }
+                Log.ret(Log.l.trace);
+            }
+            that.forceLayout = forceLayout;
+
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.loadData(that.binding.contactId);
+                return that.loadData();
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
             });

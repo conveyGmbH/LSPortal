@@ -12,6 +12,7 @@
         <div id="mediaListController" class="data-container">
             <section aria-label="Main content" role="main" class="animationElement">
                 <div class="contentarea win-type-body">
+                    <div class="row-bkg-gray"></div>
                     <div class="mediaList-template" data-win-control="WinJS.Binding.Template">
                         <div class="list-container">
                             <div class="list-img" data-win-bind="style.display: showImg Binding.Converter.toDisplay">
@@ -24,16 +25,19 @@
                             </div>
                         </div>
                         <div class="list-caption-container win-type-ellipsis">
-                            <span class="win-type-caption list-caption" data-win-bind="textContent: date"></span>
+                            <div class="win-type-caption list-caption" data-win-bind="textContent: currentTitle"></div>
+                            <div class="win-type-caption list-caption" data-win-bind="textContent: currentDateString"></div>
                         </div>
                     </div>
                     <div id="mediaList"
                          class="listview win-selectionstylefilled"
                          data-win-control="WinJS.UI.ListView"
                          data-win-options="{
-                        itemTemplate: select('.mediaList-template')
-                     }">
-                    </div>
+                            itemTemplate: select('.mediaList-template'),
+                            selectionMode: WinJS.UI.SelectionMode.single,
+                            tapBehavior: WinJS.UI.TapBehavior.directSelect,
+                            layout: {type: WinJS.UI.GridLayout}
+                         }"></div>
                 </div>
             </section>
         </div>

@@ -29,7 +29,6 @@
                 { id: 'clickBack', label: getResourceText('command.backward'), tooltip: getResourceText('tooltip.backward'), section: 'primary', svg: 'navigate_left' },
                 { id: "clickNew", label: getResourceText("command.new"), tooltip: getResourceText("tooltip.newQuestiongroup"), section: "primary", svg: "plus" },
                 { id: "clickDelete", label: getResourceText("command.delete"), tooltip: getResourceText("tooltip.delete"), section: "primary", svg: "garbage_can" },
-                { id: 'clickForward', label: getResourceText('command.ok'), tooltip: getResourceText('tooltip.ok'), section: 'primary', svg: 'navigate_check', key: WinJS.Utilities.Key.enter },
                 { id: 'clickShowList', label: getResourceText('sketch.showList'), tooltip: getResourceText('sketch.showList'), section: 'primary', svg: 'elements3' }
             ];
 
@@ -73,35 +72,50 @@
             if (element && !that.inResize) {
                 that.inResize = 1;
                 ret = WinJS.Promise.timeout(0).then(function () {
-                    var mySketchViewers = element.querySelectorAll(".eventMediaAdministrationfragmenthost");
-                    var mySketchList = element.querySelector(".listfragmenthost");
-                    if (mySketchViewers) {
+                    var myTextUsage = element.querySelector(".eventTextUsagefragmenthost");
+                    var myMediaViewers = element.querySelectorAll(".eventMediaAdministrationfragmenthost, .eventMediaTextfragmenthost");
+                    var myMediaList = element.querySelector(".listfragmenthost");
+                    if (myMediaViewers && myTextUsage && myMediaList) {
                         var contentarea = element.querySelector(".contentarea");
                         if (contentarea) {
-                            var mySketch, i;
+                            var myViewer, i, bHalfWidth = false;
                             var contentHeader = element.querySelector(".content-header");
                             var width = contentarea.clientWidth;
                             var height = contentarea.clientHeight - (contentHeader ? contentHeader.clientHeight : 0);
 
-                            if (that.controller && that.controller.binding && that.controller.binding.showList) {
-                                height -= mySketchList.clientHeight;
+                            if (WinJS.Utilities.hasClass(element, "view-size-bigger")) {
+                                bHalfWidth = true;
                             }
-                            if (width !== that.prevWidth) {
-                                for (i = 0; i < mySketchViewers.length; i++) {
-                                    mySketch = mySketchViewers[i];
-                                    if (mySketch && mySketch.style) {
-                                        mySketch.style.width = width.toString() + "px";
+                            height -= myTextUsage.clientHeight;
+                            if (that.controller && that.controller.binding && that.controller.binding.showList) {
+                                height -= myMediaList.clientHeight;
+                            }
+                            if (width !== that.prevWidth || height !== that.prevHeight) {
+                                for (i = 0; i < myMediaViewers.length; i++) {
+                                    myViewer = myMediaViewers[i];
+                                    if (myViewer && myViewer.style) {
+                                        if (bHalfWidth) {
+                                            myViewer.style.left = 0;
+                                            if (WinJS.Utilities.hasClass(myViewer, "eventMediaTextfragmenthost")) {
+                                                myViewer.style.top = (myTextUsage.clientHeight + height/2).toString() + "px";
+                                            } else {
+                                                myViewer.style.top = myTextUsage.clientHeight.toString() + "px";
+                                            }
+                                            myViewer.style.width = width.toString() + "px";
+                                            myViewer.style.height = (height/2).toString() + "px";
+                                        } else {
+                                            if (WinJS.Utilities.hasClass(myViewer, "eventMediaTextfragmenthost")) {
+                                                myViewer.style.left = 0;
+                                            } else {
+                                                myViewer.style.left = (width/2).toString() + "px";
+                                            }
+                                            myViewer.style.top = myTextUsage.clientHeight.toString() + "px";
+                                            myViewer.style.width = (width/2).toString() + "px";
+                                            myViewer.style.height = height.toString() + "px";
+                                        }
                                     }
                                 }
                                 that.prevWidth = width;
-                            }
-                            if (height !== that.prevHeight) {
-                                for (i = 0; i < mySketchViewers.length; i++) {
-                                    mySketch = mySketchViewers[i];
-                                    if (mySketch && mySketch.style) {
-                                        mySketch.style.height = height.toString() + "px";
-                                    }
-                                }
                                 that.prevHeight = height;
                             }
                         }

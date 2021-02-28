@@ -48,6 +48,7 @@
     "command.mailTracking"  : "Mailtracking",
     "command.terminedit"  : "Termin edit",
     "command.permuser"  : "Change to regular customer",
+    "command.upload"  : "Upload",
 
     "tooltip.backward"      : "Browse back",
     "tooltip.edit"          : "Edit current record",
@@ -1148,9 +1149,10 @@
 	"eventResourceAdministration.eventTextPlaceholder"  : "Enter here: ",
 
     "eventMediaAdministration.title": "Media Administration",
-    "eventMediaAdministration.info1": "Drag and drop your files here: (By pressing the [ctrl] key, you can select multiple times!)",
+    "eventMediaAdministration.info1": "Drag and drop your file here",
     "eventMediaAdministration.info2": "An output field to display the selected files:",
     "eventMediaAdministration.File"   : "File",
+    "eventMediaAdministration.FileUpload": "Select a file to upload",
     "eventMediaAdministration.MediaMetaTitle": "Media Meta Title",
     "eventMediaAdministration.MediaAltText": "Media ALT Text",
     "eventMediaAdministration.MediaFreitextKommentar": "Media free text comment",

@@ -48,6 +48,7 @@
     "command.mailTracking"  : "Mailtracking",
     "command.terminedit"  : "Date de modification",
     "command.permuser"  : "Changer en client régulier",
+    "command.upload"  : "Télécharger",
 
     "tooltip.backward"      : "Page présédente",
     "tooltip.edit"          : "Modifier le contact en cours",
@@ -1149,9 +1150,10 @@
 	"eventResourceAdministration.eventTextPlaceholder"  : "Entrer ici: ",
 
     "eventMediaAdministration.title": "Administration des médias",
-    "eventMediaAdministration.info1": "Glissez et déposez vos fichiers ici: (En appuyant sur la touche [ctrl], vous pouvez sélectionner plusieurs fois!)",
+    "eventMediaAdministration.info1": "Glissez et déposez votre fichier ici",
     "eventMediaAdministration.info2": "Un champ de sortie pour afficher les fichiers sélectionnés:",
     "eventMediaAdministration.File": "Fichier",
+    "eventMediaAdministration.FileUpload": "Sélectionnez un fichier à télécharger",
     "eventMediaAdministration.MediaMetaTitle": "Media Meta Title",
     "eventMediaAdministration.MediaAltText": "Texte ALT Média",
     "eventMediaAdministration.MediaFreitextKommentar": "Commentaire en texte libre du média",

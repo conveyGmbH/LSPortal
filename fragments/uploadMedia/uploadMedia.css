@@ -1,0 +1,13 @@
+﻿.uploadMedia .dropzone-container {
+    z-index: 4;
+    height: 100px;
+    width: calc(100% - 16px);
+    min-width: calc(100% - 16px);
+    text-align: center;
+    padding-top: 40px;
+}
+
+.uploadMedia .zero-sized {
+    width: 0;
+    height: 0;
+}

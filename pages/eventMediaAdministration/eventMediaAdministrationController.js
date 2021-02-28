@@ -21,120 +21,44 @@
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "EventMediaAdministration.Controller.");
             var that = this;
-            
+                        
             Application.Controller.apply(this, [pageElement, {
-                dataEventMedia: EventMediaAdministration.eventTextView.defaultMediaAdministrationData,
+                docId: 0,
                 showSvg: false,
                 showPhoto: false,
                 showAudio: false,
-                showList: false,
-                moreNotes: false,
+                showUpload: false,
+                moreDocs: false,
                 userHidesList: false,
-                contactId: AppData.getRecordId("Kontakt")
+                showList: false
             }, commandList]);
 
             this.pageElement = pageElement;
             this.docViewer = null;
 
-
-            var base64ToBlob = function (base64Data, contentType) {
-                contentType = contentType || '';
-                var sliceSize = 1024;
-                var base64result = base64Data.split(',')[1];
-                var byteCharacters = atob(base64result);
-                var bytesLength = byteCharacters.length;
-                var slicesCount = Math.ceil(bytesLength / sliceSize);
-                var byteArrays = new Array(slicesCount);
-
-                for (var sliceIndex = 0; sliceIndex < slicesCount; ++sliceIndex) {
-                    var begin = sliceIndex * sliceSize;
-                    var end = Math.min(begin + sliceSize, bytesLength);
-
-                    var bytes = new Array(end - begin);
-                    for (var offset = begin, i = 0; offset < end; ++i, ++offset) {
-                        bytes[i] = byteCharacters[offset].charCodeAt(0);
-                    }
-                    byteArrays[sliceIndex] = new Uint8Array(bytes);
-                }
-                return new Blob(byteArrays, { type: contentType });
-            }
-            this.base64ToBlob = base64ToBlob;
-
-            var output = [];
-
-            function getBase64 (file, type) {
-                var reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = function () {
-                    // reader.result
-                    var base64String = reader.result;
-                    output.push('<li><strong>', file.name, '</strong> (', file.type || 'n/a', ') - ',
-                        file.size, ' bytes</li>');
-                    document.getElementById('dateiListe').innerHTML = '<ul>' + output.join('') + '</ul>';
-                    // test wandle base64 to blob bzw. file und dann speicher
-                    /*var blob = that.base64ToBlob(base64String, type);
-                    saveAs(blob, "Test.txt");*/
-                };
-                reader.onerror = function (error) {
-                    AppData.setErrorMsg(that.binding, error);
-                };
-            }
-
-            function fileChoose(evt) {
-                // FileList-Objekt des input-Elements auslesen, auf dem 
-                // das change-Event ausgelöst wurde (event.target)
-                var files = evt.target.files;
-                for (var i = 0; i < files.length; i++) {
-                    getBase64(files[i], files[i].type);
-                }
-                //evt.target.value = "";
-            }
-
-            function fileDragAndDrop(evt) {
-                evt.stopPropagation();
-                evt.preventDefault();
-
-                var files = evt.dataTransfer.files; // FileList Objekt
-                for (var i = 0; i < files.length; i++) {
-                    getBase64(files[i], files[i].type);
-                }
-            }
-
-            function handleDragOver(evt) {
-                evt.stopPropagation();
-                evt.preventDefault();
-                evt.dataTransfer.dropEffect = 'copy';
-            }
-
-            // Initialisiere Drag&Drop EventListener
-            var dropZone = document.getElementById('dropzone');
-            dropZone.addEventListener('dragover', handleDragOver, false);
-            dropZone.addEventListener('drop', fileDragAndDrop, false);
-
-            //Initialisiere fileChooser           
-            var fileChooser = document.getElementById('fileChooser');
-            fileChooser.addEventListener('change', fileChoose, false);
-
-            var setNotesCount = function(count) {
+            var setDocCount = function(count) {
                 Log.call(Log.l.trace, "EventMediaAdministration.Controller.", "count=" + count);
                 if (count > 1) {
-                    that.binding.moreNotes = true;
+                    that.binding.moreDocs = true;
                 } else {
-                    that.binding.moreNotes = false;
+                    that.binding.moreDocs = false;
                     if (!count) {
                         that.binding.showSvg = false;
                         that.binding.showPhoto = false;
+                        that.binding.showAudio = false;
                     }
                 }
-                if (!that.binding.userHidesList) {
-                    that.binding.showList = that.binding.moreNotes;
+                if (that.binding.userHidesList) {
+                    that.binding.showList = false;
+                } else {
+                    that.binding.showList = that.binding.moreDocs;
                 }
                 AppBar.replaceCommands([
-                    { id: 'clickShowList', label: getResourceText('sketch.showList'), tooltip: getResourceText('sketch.showList'), section: 'primary', svg: that.binding.showList ? 'document_height' : 'elements3' }
+                    { id: 'clickShowList', label: !that.binding.showList ? getResourceText('sketch.showList') : getResourceText('sketch.hideList'), tooltip: !that.binding.showList ? getResourceText('sketch.showList') : getResourceText('sketch.hideList'), section: 'primary', svg: that.binding.showList ? 'document_height' : 'elements3' }
                 ]);
                 Log.ret(Log.l.trace);
             }
-            that.setNotesCount = setNotesCount;
+            that.setDocCount = setDocCount;
 
             var getDocViewer = function (docGroup, docFormat) {
                 var docViewer;
@@ -161,81 +85,86 @@
                 return docViewer;
             }
 
-            var prevNoteId;
+            var prevDocId;
             var inLoadDoc = false;
-            var loadDoc = function (noteId, docGroup, docFormat) {
-                var ret;
+            var loadDoc = function (docId, docGroup, docFormat) {
+                var ret = null;
                 var parentElement;
-                Log.call(Log.l.trace, "EventMediaAdministration.Controller.", "noteId=" + noteId + " docGroup=" + docGroup + " docFormat=" + docFormat);
+                Log.call(Log.l.trace, "EventMediaAdministration.Controller.", "docId=" + docId + " docGroup=" + docGroup + " docFormat=" + docFormat);
                 // prevent recursive calls here!
                 if (inLoadDoc) {
-                    if (noteId === prevNoteId) {
+                    if (docId === prevDocId) {
                         Log.print(Log.l.trace, "extra ignored");
-                        ret = WinJS.Promise.as();
                     } else {
                         Log.print(Log.l.trace, "busy - try later again");
                         ret = WinJS.Promise.timeout(50).then(function () {
-                            return loadDoc(noteId, docGroup, docFormat);
+                            return loadDoc(docId, docGroup, docFormat);
                         });
                     }
                 } else {
                     // set semaphore
                     inLoadDoc = true;
-                    prevNoteId = noteId;
+                    prevDocId = docId;
                     // check for need of command update in AppBar
                     var bGetNewDocViewer = false;
                     var bUpdateCommands = false;
                     var prevDocViewer = that.docViewer;
-                    var newDocViewer = getDocViewer(docGroup, docFormat);
-                    if (newDocViewer && newDocViewer.controller) {
-                        Log.print(Log.l.trace, "found docViewer!");
-                        that.docViewer = newDocViewer;
-                        bUpdateCommands = true;
-                        ret = that.docViewer.controller.loadData(noteId);
-                    } else if (AppData.isSvg(docGroup, docFormat)) {
-                        that.binding.showSvg = true;
-                        that.binding.showPhoto = false;
-                        that.binding.showAudio = false;
-                        Log.print(Log.l.trace, "load new svgSketch!");
-                        parentElement = pageElement.querySelector("#svgMediahost");
-                        if (parentElement) {
-                            bGetNewDocViewer = true;
+                    var newDocViewer = null;
+                    if (docGroup && docFormat) {
+                        that.binding.showUpload = false;
+                        newDocViewer = getDocViewer(docGroup, docFormat);
+                        if (newDocViewer && newDocViewer.controller) {
+                            Log.print(Log.l.trace, "found docViewer!");
+                            that.docViewer = newDocViewer;
                             bUpdateCommands = true;
-                            ret = Application.loadFragmentById(parentElement, "svgMedia", { noteId: noteId, isLocal: false });
-                        } else {
-                            ret = WinJS.Promise.as();
-                        }
-                    } else if (AppData.isImg(docGroup, docFormat)) {
-                        that.binding.showPhoto = true;
-                        that.binding.showSvg = false;
-                        that.binding.showAudio = false;
-                        Log.print(Log.l.trace, "load new imgSketch!");
-                        parentElement = pageElement.querySelector("#imgMediahost");
-                        if (parentElement) {
-                            bGetNewDocViewer = true;
-                            bUpdateCommands = true;
-                            ret = Application.loadFragmentById(parentElement, "imgMedia", { noteId: noteId, isLocal: false });
-                        } else {
-                            ret = WinJS.Promise.as();
-                        }
-                    } else if (AppData.isAudio(docGroup, docFormat)) {
-                        that.binding.showAudio = true;
-                        that.binding.showSvg = false;
-                        that.binding.showPhoto = false;
-                        Log.print(Log.l.trace, "load new videoMedia!");
-                        parentElement = pageElement.querySelector("#videoMediahost");
-                        if (parentElement) {
-                            bGetNewDocViewer = true;
-                            bUpdateCommands = true;
-                            ret = Application.loadFragmentById(parentElement, "videoMedia", { noteId: noteId, isLocal: false });
-                        } else {
-                            ret = WinJS.Promise.as();
+                            ret = that.docViewer.controller.loadData(docId);
+                        } else if (AppData.isSvg(docGroup, docFormat)) {
+                            that.binding.showSvg = true;
+                            that.binding.showPhoto = false;
+                            that.binding.showAudio = false;
+                            Log.print(Log.l.trace, "load new svgSketch!");
+                            parentElement = pageElement.querySelector("#svgMediahost");
+                            if (parentElement) {
+                                bGetNewDocViewer = true;
+                                bUpdateCommands = true;
+                                ret = Application.loadFragmentById(parentElement, "svgMedia", { docId: docId });
+                            }
+                        } else if (AppData.isImg(docGroup, docFormat)) {
+                            that.binding.showPhoto = true;
+                            that.binding.showSvg = false;
+                            that.binding.showAudio = false;
+                            Log.print(Log.l.trace, "load new imgSketch!");
+                            parentElement = pageElement.querySelector("#imgMediahost");
+                            if (parentElement) {
+                                bGetNewDocViewer = true;
+                                bUpdateCommands = true;
+                                ret = Application.loadFragmentById(parentElement, "imgMedia", { docId: docId });
+                            }
+                        } else if (AppData.isAudio(docGroup, docFormat)) {
+                            that.binding.showAudio = true;
+                            that.binding.showSvg = false;
+                            that.binding.showPhoto = false;
+                            Log.print(Log.l.trace, "load new videoMedia!");
+                            parentElement = pageElement.querySelector("#videoMediahost");
+                            if (parentElement) {
+                                bGetNewDocViewer = true;
+                                bUpdateCommands = true;
+                                ret = Application.loadFragmentById(parentElement, "videoMedia", { docId: docId });
+                            }
                         }
                     } else {
-                        ret = WinJS.Promise.as();
+                        that.binding.showUpload = true;
+                        that.binding.showSvg = false;
+                        that.binding.showPhoto = false;
+                        that.binding.showAudio = false;
+                        ret = that.loadUpload(docId);
                     }
                     // do command update if needed
-                    ret = ret.then(function () {
+                    var js = {
+                        doc: ret || WinJS.Promise.as(),
+                        text: that.loadText(docId)
+                    }
+                    ret = WinJS.Promise.join(js).then(function () {
                         if (bUpdateCommands) {
                             if (bGetNewDocViewer) {
                                 that.docViewer = getDocViewer(docGroup, docFormat);
@@ -257,16 +186,16 @@
             }
             this.loadDoc = loadDoc;
 
-            var loadData = function (noteId, docGroup, docFormat) {
-                Log.call(Log.l.trace, "Sketch.Controller.", "noteId=" + noteId + " docGroup=" + docGroup + " docFormat=" + docFormat);
+            var loadData = function (docId, docGroup, docFormat) {
+                Log.call(Log.l.trace, "EventMediaAdministration.Controller.", "docId=" + docId + " docGroup=" + docGroup + " docFormat=" + docFormat);
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
-                    if (!noteId) {
-                        //load list first -> noteId, showSvg, showPhoto, moreNotes set
-                        return that.loadList(noteId);
+                    if (!docId) {
+                        //load list first -> docId, showSvg, showPhoto, moreDocs set
+                        return that.loadList();
                     } else {
-                        //load doc then if noteId is set
-                        return loadDoc(noteId, docGroup, docFormat);
+                        //load doc then if docId is set
+                        return that.loadDoc(docId, docGroup, docFormat);
                     }
                 });
                 Log.ret(Log.l.trace);
@@ -274,16 +203,22 @@
             }
             this.loadData = loadData;
 
-            var loadList = function (noteId) {
-                Log.call(Log.l.trace, "Sketch.", "noteId=" + noteId);
+            var loadList = function (docId) {
+                Log.call(Log.l.trace, "EventMediaAdministration.", "docId=" + docId);
                 var ret;
                 var mediaListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("mediaList"));
                 if (mediaListFragmentControl && mediaListFragmentControl.controller) {
-                    ret = mediaListFragmentControl.controller.loadData(that.binding.contactId, noteId);
+                    ret = mediaListFragmentControl.controller.loadData(docId, {
+                        eventTextUsageId: EventMediaAdministration._eventTextUsageId,
+                        eventId: EventMediaAdministration._eventId
+                    });
                 } else {
                     var parentElement = pageElement.querySelector("#mediaListhost");
                     if (parentElement) {
-                        ret = Application.loadFragmentById(parentElement, "mediaList", { contactId: that.binding.contactId, isLocal: false });
+                        ret = Application.loadFragmentById(parentElement, "mediaList", {
+                            eventTextUsageId: EventMediaAdministration._eventTextUsageId,
+                            eventId: EventMediaAdministration._eventId
+                        });
                     } else {
                         ret = WinJS.Promise.as();
                     }
@@ -292,6 +227,52 @@
                 return ret;
             }
             this.loadList = loadList;
+
+            var loadText = function (docId) {
+                Log.call(Log.l.trace, "EventMediaAdministration.", "docId=" + docId);
+                var ret;
+                var mediaTextFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("mediaText"));
+                if (mediaTextFragmentControl && mediaTextFragmentControl.controller &&
+                    typeof mediaTextFragmentControl.controller.setDocId === "function" &&
+                    typeof mediaTextFragmentControl.controller.loadData === "function") {
+                    mediaTextFragmentControl.controller.setDocId(docId);
+                    ret = mediaTextFragmentControl.controller.loadData();
+                } else {
+                    var parentElement = pageElement.querySelector("#mediaTexthost");
+                    if (parentElement) {
+                        ret = Application.loadFragmentById(parentElement, "mediaText", {
+                            docId: docId
+                        });
+                    } else {
+                        ret = WinJS.Promise.as();
+                    }
+                }
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+            this.loadText = loadText;
+
+            var loadUpload = function (docId) {
+                Log.call(Log.l.trace, "EventMediaAdministration.", "docId=" + docId);
+                var ret;
+                var uploadMediaFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("uploadMedia"));
+                if (uploadMediaFragmentControl && uploadMediaFragmentControl.controller &&
+                    typeof uploadMediaFragmentControl.controller.setDocId === "function") {
+                    uploadMediaFragmentControl.controller.setDocId(docId);
+                } else {
+                    var parentElement = pageElement.querySelector("#uploadMediahost");
+                    if (parentElement) {
+                        ret = Application.loadFragmentById(parentElement, "uploadMedia", {
+                            docId: docId
+                        });
+                    } else {
+                        ret = WinJS.Promise.as();
+                    }
+                }
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+            this.loadUpload = loadUpload;
 
             // define handlers
             this.eventHandlers = {
@@ -312,17 +293,6 @@
                     Application.navigateById("publish", event);
                     Log.ret(Log.l.trace);
                 },
-                clickForward: function (event) {
-                    Log.call(Log.l.trace, "EventMediaAdministration.Controller.");
-                    that.saveData(function (response) {
-                        AppBar.busy = false;
-                        Log.print(Log.l.trace, "question saved");
-                    }, function (errorResponse) {
-                        AppBar.busy = false;
-                        Log.print(Log.l.error, "error saving question");
-                    });
-                    Log.ret(Log.l.trace);
-                },
                 clickNew: function (event) {
                     Log.call(Log.l.trace, "EventResourceAdministration.Controller.");
                     that.insertData();
@@ -330,72 +300,70 @@
                 },
                 clickShowList: function (event) {
                     Log.call(Log.l.trace, "EventMediaAdministration.Controller.");
-                    var mySketchList = pageElement.querySelector(".listfragmenthost");
-                    var pageControl = pageElement.winControl;
-                    var newShowList = !that.binding.showList;
-                    var replaceCommands = function () {
-                        if (!newShowList && mySketchList && mySketchList.style) {
-                            mySketchList.style.display = "none";
-                        }
-                        if (pageControl) {
-                            pageControl.prevHeight = 0;
-                            pageControl.prevWidth = 0;
-                        }
-                        AppBar.replaceCommands([
-                            { id: 'clickShowList', label: !that.binding.showList ? getResourceText('sketch.showList') : getResourceText('sketch.hideList'), tooltip: !that.binding.showList ? getResourceText('sketch.showList') : getResourceText('sketch.hideList'), section: 'primary', svg: that.binding.showList ? 'document_height' : 'elements3' }
-                        ]);
-                        WinJS.Promise.timeout(50).then(function () {
-                            mySketchList = pageElement.querySelector(".listfragmenthost");
-                            if (mySketchList && mySketchList.style) {
-                                mySketchList.style.position = "";
-                                mySketchList.style.top = "";
-                                if (newShowList) {
-                                    mySketchList.style.display = "";
-                                }
+                    if (that.binding.moreDocs) {
+                        var mySketchList = pageElement.querySelector(".listfragmenthost");
+                        var pageControl = pageElement.winControl;
+                        var newShowList = !that.binding.showList;
+                        var replaceCommands = function () {
+                            if (!newShowList && mySketchList && mySketchList.style) {
+                                mySketchList.style.display = "none";
                             }
-                        });
-                    };
-                    that.binding.userHidesList = !newShowList;
-                    if (mySketchList && mySketchList.style) {
-                        mySketchList.style.display = "block";
-                        mySketchList.style.position = "absolute";
-                        var contentarea = pageElement.querySelector(".contentarea");
-                        if (contentarea) {
-                            var contentHeader = pageElement.querySelector(".content-header");
-                            var height = contentarea.clientHeight;
-                            mySketchList.style.top = (height - 178).toString() + "px";
-                            if (contentHeader) {
-                                height -= contentHeader.clientHeight;
-                            }
-                            if (newShowList) {
-                                that.binding.showList = true;
-                                WinJS.UI.Animation.slideUp(mySketchList).done(function () {
-                                    replaceCommands(newShowList);
-                                });
-                            } else {
-                                var mySketchViewers = pageElement.querySelectorAll(".eventMediaAdministrationfragmenthost");
-                                if (mySketchViewers) {
-                                    var mySketch, i;
-                                    for (i = 0; i < mySketchViewers.length; i++) {
-                                        mySketch = mySketchViewers[i];
-                                        if (mySketch && mySketch.style) {
-                                            mySketch.style.height = height.toString() + "px";
-                                        }
+                            AppBar.replaceCommands([
+                                { id: 'clickShowList', label: !that.binding.showList ? getResourceText('sketch.showList') : getResourceText('sketch.hideList'), tooltip: !that.binding.showList ? getResourceText('sketch.showList') : getResourceText('sketch.hideList'), section: 'primary', svg: that.binding.showList ? 'document_height' : 'elements3' }
+                            ]);
+                            WinJS.Promise.timeout(50).then(function () {
+                                mySketchList = pageElement.querySelector(".listfragmenthost");
+                                if (mySketchList && mySketchList.style) {
+                                    mySketchList.style.position = "";
+                                    mySketchList.style.top = "";
+                                    if (newShowList) {
+                                        mySketchList.style.display = "";
                                     }
                                 }
-                                if (Application.navigator) {
-                                    Application.navigator._updateFragmentsLayout();
+                            });
+                        };
+                        that.binding.userHidesList = !newShowList;
+                        if (mySketchList && mySketchList.style) {
+                            mySketchList.style.display = "block";
+                            mySketchList.style.position = "absolute";
+                            if (newShowList) {
+                                that.binding.showList = true;
+                                WinJS.Promise.timeout(0).then(function() {
+                                    var mediaListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("mediaList"));
+                                    if (mediaListFragmentControl && mediaListFragmentControl.controller &&
+                                        typeof mediaListFragmentControl.controller.forceLayout === "function") {
+                                        mediaListFragmentControl.controller.forceLayout();
+                                    }
+                                    return WinJS.UI.Animation.slideUp(mySketchList);
+                                }).then(function() {
+                                    replaceCommands(newShowList);
+                                    if (pageControl && pageControl.updateLayout) {
+                                        pageControl.prevWidth = 0;
+                                        pageControl.prevHeight = 0;
+                                        return pageControl.updateLayout.call(pageControl, pageElement) || WinJS.Promise.as();
+                                    } else {
+                                        return WinJS.Promise.as();
+                                    }
+                                });
+                            } else {
+                                var promise;
+                                if (pageControl && pageControl.updateLayout) {
+                                    pageControl.prevWidth = 0;
+                                    pageControl.prevHeight = 0;
+                                    promise = pageControl.updateLayout.call(pageControl, pageElement) || WinJS.Promise.timeout(0);
+                                } else {
+                                    promise = WinJS.Promise.timeout(0);
                                 }
-                                WinJS.Promise.timeout(0).then(function () {
-                                    WinJS.UI.Animation.slideDown(mySketchList).done(function () {
-                                        that.binding.showList = false;
-                                        replaceCommands(newShowList);
-                                    });
+                                promise.then(function () {
+                                    return WinJS.UI.Animation.slideDown(mySketchList);
+                                }).then(function() {
+                                    that.binding.showList = false;
+                                    replaceCommands(newShowList);
                                 });
                             }
+                        } else {
+                            replaceCommands(newShowList);
                         }
-                    } else {
-                        replaceCommands(newShowList);
                     }
                     Log.ret(Log.l.trace);
                 },
@@ -429,21 +397,35 @@
                         return true;
                     }
                 },
-                clickForward: function () {
-                    // never disable!
-                    return false;
-                },
                 clickNew: function () {
                     return false;
                 },
                 clickShowList: function () {
-                    if (that.binding.moreNotes) {
+                    if (that.binding.moreDocs) {
                         return false;
                     } else {
                         return true;
                     }
                 }
             }
+
+            /*var saveData = function(complete, error) {
+                var ret;
+                Log.call(Log.l.trace, "EventMediaAdministration.Controller.");
+                var mediaTextFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("mediaText"));
+                if (mediaTextFragmentControl && mediaTextFragmentControl.controller) {
+                    mediaTextFragmentControl.controller.setDocId(docId);
+                    ret = mediaTextFragmentControl.controller.saveData(complete, error);
+                } else {
+                    if (typeof complete === "function") {
+                        complete({});
+                    }
+                    ret = WinJS.Promise.as();
+                }
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+            this.saveData = saveData;*/
 
             var getEventTextUsageId = function () {
                 return EventMediaAdministration._eventTextUsageId;
@@ -462,17 +444,22 @@
             }
             that.setEventId = setEventId;
 
+            var master = Application.navigator.masterControl;
+            if (master && master.controller && master.controller.binding) {
+                that.setEventId(master.controller.binding.eventId);
+            }
+
             // finally, load the data
             that.processAll().then(function() {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                var eventTextUsageHost = pageElement.querySelector("#eventTextUsageHostMedia.fragmenthost");
+                var eventTextUsageHost = pageElement.querySelector("#eventTextUsageHostMedia");
                 if (eventTextUsageHost) {
                     return Application.loadFragmentById(eventTextUsageHost, "eventTextUsage", {});
                 } else {
                     return WinJS.Promise.as();
                 }
             }).then(function () {
-                Log.print(Log.l.trace, "Binding wireup page complete");
+                Log.print(Log.l.trace, "eventTextUsage loaded");
                 return that.loadData();
             }).then(function () {
                 AppBar.notifyModified = true;

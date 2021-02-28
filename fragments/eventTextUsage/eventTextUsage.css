@@ -1,4 +1,5 @@
-﻿.eventTextUsage .navigationbar-container {
+﻿.eventTextUsage .navigationbar-container.navigationbar-container-horizontal {
+    z-index: 4;
     width: 100%;
 }
 /**

@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="mediaText.css" rel="stylesheet" />
+    <script type="text/javascript" src="mediaTextService.js"></script>
+    <script type="text/javascript" src="mediaTextController.js"></script>
+    <script type="text/javascript" src="mediaText.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="mediaText fragment">
+        <div id="mediaTextController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="contentarea win-type-body">
+                    <div class="headerFooterPlaceholder" style="display: none">
+                        <div class="list-header">
+                            <div class="field_line field_line_odd">
+                                <span class="label win-type-caption" data-win-res="{textContent: 'account.language'}"></span>
+                                <select id="InitEventTextSprache"
+                                        class="input_field win-dropdown"
+                                        data-win-control="WinJS.UI.Repeater"
+                                        data-win-bind="value: eventResource.LanguageID"
+                                        onchange="AppBar.handleEvent('change', 'changedLanguage', event)">
+                                    <option data-win-bind="value: LanguageID; textContent: TITLE"></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mediaText-template"
+                         data-win-control="WinJS.Binding.Template" style="display: none">
+                        <div class="field_line field_line_odd" data-win-bind="style.display: LabelTitle Binding.Converter.toDisplay">
+                            <span class="label win-type-caption" data-win-bind="textContent: NameTitle"></span>
+                            <input class="input_field win-textbox" type="text"
+                                   data-win-bind="value: Title; placeholder: placeholderTitle"
+                                   data-field-entry="Title" />
+                            <div class="label-left">
+                                <span class="label win-type-caption" data-win-bind="textContent: LGNTINITSpracheTitle"></span>
+                            </div>
+                            <div class="label-right">
+                                <span class="label win-type-caption" data-win-bind="textContent: LabelTitle"></span>
+                            </div>
+                        </div>
+                        <div class="field_line field_line_even" data-win-bind="style.display: LabelDescription Binding.Converter.toDisplay">
+                            <span class="label win-type-caption" data-win-bind="textContent: NameDescription"></span>
+                            <input class="input_field win-textbox" type="text"
+                                   data-win-bind="value: Description; placeholder: placeholderDescription"
+                                   data-field-entry="Description" />
+                            <div class="label-left">
+                                <span class="label win-type-caption" data-win-bind="textContent: LGNTINITSpracheTitle"></span>
+                            </div>
+                            <div class="label-right">
+                                <span class="label win-type-caption" data-win-bind="textContent: LabelDescription"></span>
+                            </div>
+                        </div>
+                        <div class="field-separator"></div>
+                        <div class="field_line field_line_odd" data-win-bind="style.display: LabelMainTitle Binding.Converter.toDisplay">
+                            <span class="label win-type-caption" data-win-bind="textContent: NameMainTitle"></span>
+                            <input class="input_field win-textbox" type="text"
+                                   data-win-bind="value: MainTitle; placeholder: placeholderMainTitle"
+                                   data-field-entry="MainTitle" />
+                            <div class="label-left">
+                                <span class="label win-type-caption" data-win-bind="textContent: LGNTINITSpracheTitle"></span>
+                            </div>
+                            <div class="label-right">
+                                <span class="label win-type-caption" data-win-bind="textContent: LabelMainTitle"></span>
+                            </div>
+                        </div>
+                        <div class="field_line field_line_even" data-win-bind="style.display: LabelSubTitle Binding.Converter.toDisplay">
+                            <span class="label win-type-caption" data-win-bind="textContent: NameSubTitle"></span>
+                            <input class="input_field win-textbox" type="text"
+                                   data-win-bind="value: SubTitle; placeholder: placeholderSubTitle"
+                                   data-field-entry="SubTitle" />
+                            <div class="label-left">
+                                <span class="label win-type-caption" data-win-bind="textContent: LGNTINITSpracheTitle"></span>
+                            </div>
+                            <div class="label-right">
+                                <span class="label win-type-caption" data-win-bind="textContent: LabelSubTitle"></span>
+                            </div>
+                        </div>
+                        <div class="field-separator"></div>
+                        <div class="field_line field_line_odd" data-win-bind="style.display: LabelSummary Binding.Converter.toDisplay">
+                            <span class="label win-type-caption" data-win-bind="textContent: NameSummary"></span>
+                            <textarea class="input_field win-textarea input_text_comment"
+                                      data-win-bind="value: Summary; placeholder: placeholderSummary; style.height: heightSummary"
+                                      data-field-entry="Body"
+                                      onblur="AppBar.handleEvent('blur', 'activateEnterKey', event)"
+                                      onfocus="AppBar.handleEvent('focus', 'deactivateEnterKey', event)"
+                                      onkeydown="AppBar.handleEvent('keydown', 'pressEnterKey', event)"></textarea>
+                            <div class="label-left">
+                                <span class="label win-type-caption" data-win-bind="textContent: LGNTINITSpracheTitle"></span>
+                            </div>
+                            <div class="label-right">
+                                <span class="label win-type-caption" data-win-bind="textContent: LabelSummary"></span>
+                            </div>
+                        </div>
+                        <div class="field_line field_line_odd" data-win-bind="style.display: LabelBody Binding.Converter.toDisplay">
+                            <span class="label win-type-caption" data-win-bind="textContent: NameBody"></span>
+                            <textarea class="input_field win-textarea input_text_comment"
+                                      data-win-bind="value: Body; placeholder: placeholderBody; style.height: heightBody"
+                                      data-field-entry="Body"
+                                      onblur="AppBar.handleEvent('blur', 'activateEnterKey', event)"
+                                      onfocus="AppBar.handleEvent('focus', 'deactivateEnterKey', event)"
+                                      onkeydown="AppBar.handleEvent('keydown', 'pressEnterKey', event)"></textarea>
+                            <div class="label-left">
+                                <span class="label win-type-caption" data-win-bind="textContent: LGNTINITSpracheTitle"></span>
+                            </div>
+                            <div class="label-right">
+                                <span class="label win-type-caption" data-win-bind="textContent: LabelBody"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="mediaTextList"
+                         class="listview"
+                         data-win-control="WinJS.UI.ListView"
+                         data-win-options="{
+                             layout : { type: WinJS.UI.ListLayout },
+                             itemTemplate: select('.mediaText-template'),
+                             header: select('.list-header')
+                         }">
+                    </div>
+                    <div class="error-message"
+                         data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

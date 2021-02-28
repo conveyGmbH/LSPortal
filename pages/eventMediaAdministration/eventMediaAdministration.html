@@ -12,68 +12,13 @@
         <div id="eventMediaAdministrationController" class="data-container">
             <section aria-label="Main content" role="main" class="animationElement">
                 <div class="contentarea content-noscroll win-type-body">
-                    <div id="eventTextUsageHostMedia" class="fragmenthost"></div>
-                    <div class="content-record">
-                        <div class="line-separator"></div>
-                        <div class="field_line field_line_odd">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventMediaAdministration.File'}"></span>
-                            <span class="label landscape_only" data-win-res="{textContent: 'eventMediaAdministration.File'}"></span>
-                            <input class="input_field" type="file" id="fileChooser" name="files[]" multiple/>
-                        </div>
-                        <div class="field_line field_line_even">
-                            <div class="field_line_full">
-                    <div id="dropzone" class="dropzone-container">
-                                    <div class="action-label" data-win-res="{textContent: 'eventMediaAdministration.info1'}">
-                        </div>
-                    </div>
-                        </div>
-                    </div>
-                        <div class="line-separator"></div>
-                        <div class="field_line field_line_odd">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventMediaAdministration.MediaMetaTitle'}"></span>
-                            <span class="label landscape_only" data-win-res="{textContent: 'eventMediaAdministration.MediaTitle'}"></span>
-                            <input class="input_field win-textbox" type="text" data-win-bind="value: dataEventMedia.MediaMetaTitle Binding.Mode.twoway; style.display: dataEventMedia.Flag_NoEdit Binding.Converter.toDisplayNone"/>
-                            <span class="input_field" data-win-bind="textContent: dataEventMedia.Position; style.display: dataEventMedia.Flag_NoEdit Binding.Converter.toDisplay"></span>
-                        </div>
-                        <div class="field_line field_line_even">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventMediaAdministration.MediaAltText'}"></span>
-                            <span class="label landscape_only" data-win-res="{textContent: 'eventMediaAdministration.MediaAltText'}"></span>
-                            <input name="EMail" class="input_field win-textbox" type="text" data-win-bind="value: dataEventMedia.MediaAltText Binding.Mode.twoway; style.display: dataEventMedia.Flag_NoEdit Binding.Converter.toDisplayNone"/>
-                            <span class="input_field" data-win-bind="textContent: dataEventMedia.EMail; style.display: dataEventMedia.Flag_NoEdit Binding.Converter.toDisplay"></span>
-                        </div>
-                        <div class="line-separator"></div>
-                        <div class="field_line field_line_odd">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventMediaAdministration.MediaFreitextKommentar'}"></span>
-                            <span class="label landscape_only" data-win-res="{textContent: 'eventMediaAdministration.MediaFreitextKommentar'}"></span>
-                            <input class="input_field win-textbox" type="text" data-win-bind="value: dataEventMedia.MediaFreitextKommentar Binding.Mode.twoway; style.display: dataEventMedia.Flag_NoEdit Binding.Converter.toDisplayNone"/>
-                            <span class="input_field" data-win-bind="textContent: dataEventMedia.Position; style.display: dataEventMedia.Flag_NoEdit Binding.Converter.toDisplay"></span>
-                        </div>
-                        <div class="field_line field_line_even">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventMediaAdministration.MediaName'}"></span>
-                            <span class="label landscape_only" data-win-res="{textContent: 'eventMediaAdministration.MediaName'}"></span>
-                            <input name="EMail" class="input_field win-textbox" type="text" data-win-bind="value: dataEventMedia.MediaName Binding.Mode.twoway; style.display: dataEventMedia.Flag_NoEdit Binding.Converter.toDisplayNone"/>
-                            <span class="input_field" data-win-bind="textContent: dataEventMedia.EMail; style.display: dataEventMedia.Flag_NoEdit Binding.Converter.toDisplay"></span>
-                        </div>
-                        <div class="line-separator"></div>
-                        <div class="field_line field_line_odd">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventMediaAdministration.LinkToFile'}"></span>
-                            <span class="label landscape_only" data-win-res="{textContent: 'eventMediaAdministration.MediaFreitextKommentar'}"></span>
-                            <input class="input_field win-textbox" type="text" data-win-bind="value: dataEventMedia.LinkToFile Binding.Mode.twoway; style.display: dataEventMedia.Flag_NoEdit Binding.Converter.toDisplayNone"/>
-                            <span class="input_field" data-win-bind="textContent: dataEventMedia.Position; style.display: dataEventMedia.Flag_NoEdit Binding.Converter.toDisplay"></span>
-                        </div>
-                        <div class="field_line field_line_even">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventMediaAdministration.Categorie'}"></span>
-                            <span class="label landscape_only" data-win-res="{textContent: 'eventMediaAdministration.MediaName'}"></span>
-                            <input name="EMail" class="input_field win-textbox" type="text" data-win-bind="value: dataEventMedia.Categorie Binding.Mode.twoway; style.display: dataEventMedia.Flag_NoEdit Binding.Converter.toDisplayNone"/>
-                            <span class="input_field" data-win-bind="textContent: dataEventMedia.EMail; style.display: dataEventMedia.Flag_NoEdit Binding.Converter.toDisplay"></span>
-                        </div>
-                    </div>
-                    <div id="dateiListe" class="field_line field_line_full" data-win-res="{textContent: 'eventMediaAdministration.info2'}">
-                    </div>
+                    <div id="eventTextUsageHostMedia" class="eventTextUsagefragmenthost"></div>
+                    <div id="mediaTexthost" class="eventMediaTextfragmenthost"></div>
                     <div id="svgMediahost" class="eventMediaAdministrationfragmenthost" data-win-bind="style.display: showSvg Binding.Converter.toDisplay"></div>
                     <div id="imgMediahost" class="eventMediaAdministrationfragmenthost" data-win-bind="style.display: showPhoto Binding.Converter.toDisplay"></div>
                     <div id="videoMediahost" class="eventMediaAdministrationfragmenthost" data-win-bind="style.display: showAudio Binding.Converter.toDisplay"></div>
-                    <div id="mediaListhost" class="row-bkg listfragmenthost" data-win-bind="style.display: showList Binding.Converter.toDisplay"></div>
+                    <div id="uploadMediahost" class="eventMediaAdministrationfragmenthost" data-win-bind="style.display: showUpload Binding.Converter.toDisplay"></div>
+                    <div id="mediaListhost" class="listfragmenthost" data-win-bind="style.display: showList Binding.Converter.toDisplay"></div>
                 </div>
                 <div class="error-message"
                      data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
