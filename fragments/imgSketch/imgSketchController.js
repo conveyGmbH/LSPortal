@@ -55,9 +55,22 @@
             var resultConverter = function (item, index) {
                 Log.call(Log.l.trace, "ImgSketch.Controller.");
                 if (item) {
-                    if (item.DocContentDOCCNT1 && item.DocGroup === AppData.DocGroup.Image && item.DocFormat === 3) {
+                    if (item.DocContentDOCCNT1 && item.DocGroup === AppData.DocGroup.Image) {
+                        item.ContentType = item.DocContentDOCCNT1.split("Accept-Ranges")[0].split("Content-Type:")[1];
+                        var key1 = "Content-Type:";
+                        var key2 = "Accept-Ranges:";
+                        var pos1 = item.DocContentDOCCNT1.indexOf(key1);
+                        var pos2 = item.DocContentDOCCNT1.indexOf(key2);
                         var sub = item.DocContentDOCCNT1.search("\r\n\r\n");
-                        item.photoData = "data:image/jpeg;base64," + item.DocContentDOCCNT1.substr(sub + 4);
+                        if (pos1 >= 0 && pos2 > pos1 && sub > pos2) {
+                            item.ContentType = item.DocContentDOCCNT1.substring(pos1 + key1.length, pos2).trim();
+                            item.photoData = "data:" +
+                                item.ContentType +
+                                ";base64," +
+                                item.DocContentDOCCNT1.substr(sub + 4);
+                        } else {
+                            item.photoData = "";
+                        }
                     } else {
                         item.photoData = "";
                     }
@@ -93,6 +106,7 @@
                 if (fragmentElement && that.img) {
                     var containerWidth = fragmentElement.clientWidth;
                     var containerHeight = fragmentElement.clientHeight;
+                    var scrollbarSize = 18;
 
                     if (newScale) {
                         imgScale = newScale;
@@ -110,6 +124,13 @@
                                     imgHeight = that.img.naturalHeight;
                                 }
                                 imgWidth = that.img.naturalWidth * imgScale;
+                                // recalculate with scrollbars
+                                if (imgWidth > containerHeight) {
+                                    containerWidth -= scrollbarSize;
+                                    imgHeight = containerWidth;
+                                    imgScale = containerWidth / that.img.naturalHeight;
+                                    imgWidth = that.img.naturalWidth * imgScale;
+                                }
                                 break;
                             case 180:
                             default:
@@ -121,6 +142,13 @@
                                     imgWidth = that.img.naturalWidth;
                                 }
                                 imgHeight = that.img.naturalHeight * imgScale;
+                                // recalculate with scrollbars
+                                if (imgHeight > containerHeight) {
+                                    containerWidth -= scrollbarSize;
+                                    imgScale = containerWidth / that.img.naturalWidth;
+                                    imgWidth = containerWidth;
+                                    imgHeight = that.img.naturalHeight * imgScale;
+                                }
                         }
                     }
                     var photoItemBox = fragmentElement.querySelector("#notePhoto .win-itembox");
