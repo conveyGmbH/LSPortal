@@ -144,6 +144,16 @@
                     curMoment.locale(Application.language);
                     item.currentDateString = curMoment.format("ll");
                 }
+                if (item.LiveStartDatum) {
+                    item.startTimestamp = getDateObject(item.LiveStartDatum);
+                    curMoment = moment(item.startTimestamp);
+                    item.timeRangeString = curMoment.format("HH:mm");
+                    if (item.LiveEndDatum) {
+                        item.endTimestamp = getDateObject(item.LiveEndDatum);
+                        curMoment = moment(item.endTimestamp);
+                        item.timeRangeString += " - " + curMoment.format("HH:mm");
+                    }
+                }
             }
             this.resultConverter = resultConverter;
 
@@ -365,8 +375,6 @@
                                 that.resultConverter(item, index);
                             });
                             that.binding.count = results.length;
-                            that.binding.fairmandantId = results[0].FairMandantID;
-                            that.binding.firstentry = results[0].VeranstaltungVIEWID;
 
                             that.records = new WinJS.Binding.List(results);
 

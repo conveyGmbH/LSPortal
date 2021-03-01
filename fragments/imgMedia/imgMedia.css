@@ -15,3 +15,8 @@
     -webkit-overflow-scrolling: touch;
     -webkit-transform: translateZ(0);
 }
+
+#imgDoc.imgview .win-itembox > img {
+    -webkit-filter: drop-shadow(5px 5px 5px #666666);
+    filter: drop-shadow(5px 5px 5px #666666);
+}
