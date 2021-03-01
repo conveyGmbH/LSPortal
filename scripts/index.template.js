@@ -101,9 +101,9 @@
         { id: "administrationGrp", group: 41, svg: "Administration", disabled: true, popup: true },
         { id: "siteevents", group: 13, svg: "mandant", disabled: true, predecGroup: 41 },
         { id: "clientManagement", group: 14, svg: "Standpersonal", disabled: true, predecGroup: 41 },
+        { id: "search", group: 7, svg: "magnifying_glass", disabled: true, predecGroup: 29 },
 		{ id: "contactResultsList", group: 42, svg: "calendar_1", disabled: true, predecGroup: 29 },
         //{ id: "resourcesAdministration", group: 17, svg: "user_headset", disabled: true },
-        //{ id: "search", group: 7, svg: "magnifying_glass", disabled: true },
         //{ id: "info", group: 10, svg: "gearwheel", disabled: true }
     ];
 
