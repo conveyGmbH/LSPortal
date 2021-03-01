@@ -41,9 +41,8 @@
                                         typeof AppBar.scope.setEventTextUsageId === "function" &&
                                         AppBar.scope.getEventTextUsageId() !== item.data.INITDokVerwendungID) {
                                         AppBar.scope.setEventTextUsageId(item.data.INITDokVerwendungID);
+                                        AppBar.scope.loadData();
                                         WinJS.Promise.timeout(50).then(function() {
-                                            return AppBar.scope.loadData();
-                                        }).then(function () {
                                             Log.print(Log.l.trace, "now update layout...");
                                             var fragmentControl = fragmentElement.winControl;
                                             if (fragmentControl && fragmentControl.updateLayout) {

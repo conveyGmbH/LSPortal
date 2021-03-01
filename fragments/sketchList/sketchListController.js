@@ -38,10 +38,10 @@
                     fragmentElement.winControl.prevHeight) {
                     var i;
                     // scale SVG images
-                    var svglist = listView.querySelectorAll(".list-svg");
-                    if (svglist) {
-                        for (i = 0; i < svglist.length; i++) {
-                            var svg = svglist[i].firstElementChild;
+                    var svgList = listView.querySelectorAll(".list-svg");
+                    if (svgList) {
+                        for (i = 0; i < svgList.length; i++) {
+                            var svg = svgList[i].firstElementChild;
                             if(svg) {
                                 WinJS.Utilities.addClass(svg, "list-svg-item");
                                 svg.viewBox.baseVal.height = svg.height && svg.height.baseVal && svg.height.baseVal.value;
@@ -54,14 +54,19 @@
                         }
                     }
                     // scale photo images
-                    var imglist = listView.querySelectorAll(".list-img");
-                    if (imglist) {
-                        for (i = 0; i < imglist.length; i++) {
-                            var img = imglist[i].querySelector(".list-img-item");
+                    var imgList = listView.querySelectorAll(".list-img");
+                    if (imgList) {
+                        for (i = 0; i < imgList.length; i++) {
+                            var img = imgList[i].querySelector(".list-img-item");
                             if (img && img.src && img.naturalWidth && img.naturalHeight && img.style) {
-                                var offset = (imglist[i].clientHeight -
-                                    (imglist[i].clientWidth * img.naturalHeight) / img.naturalWidth) / 2;
-                                img.style.marginTop = offset.toString() + "px";
+                                if (imgList[i].clientHeight > img.clientHeight) {
+                                    var offsetY = (imgList[i].clientHeight - img.clientHeight) / 2;
+                                    img.style.marginTop = offsetY.toString() + "px";
+                                }
+                                if (imgList[i].clientWidth > img.clientWidth) {
+                                    var offsetX = (imgList[i].clientWidth - img.clientWidth) / 2;
+                                    img.style.marginLeft = offsetX.toString() + "px";
+                                }
                             }
                         }
                     }

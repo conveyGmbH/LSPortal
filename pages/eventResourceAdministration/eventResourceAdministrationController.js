@@ -111,10 +111,10 @@
                     AppBar.busy = true;
                     that.saveData(function (response) {
                         AppBar.busy = false;
-                        Log.print(Log.l.trace, "question saved");
+                        Log.print(Log.l.trace, "event text saved");
                     }, function (errorResponse) {
                         AppBar.busy = false;
-                        Log.print(Log.l.error, "error saving question");
+                        Log.print(Log.l.error, "error saving event text");
                     });
                     Log.ret(Log.l.trace);
                 },

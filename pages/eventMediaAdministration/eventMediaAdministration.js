@@ -29,7 +29,8 @@
                 { id: 'clickBack', label: getResourceText('command.backward'), tooltip: getResourceText('tooltip.backward'), section: 'primary', svg: 'navigate_left' },
                 { id: "clickNew", label: getResourceText("command.new"), tooltip: getResourceText("tooltip.newQuestiongroup"), section: "primary", svg: "plus" },
                 { id: "clickDelete", label: getResourceText("command.delete"), tooltip: getResourceText("tooltip.delete"), section: "primary", svg: "garbage_can" },
-                { id: 'clickShowList', label: getResourceText('sketch.showList'), tooltip: getResourceText('sketch.showList'), section: 'primary', svg: 'elements3' }
+                { id: 'clickShowList', label: getResourceText('sketch.showList'), tooltip: getResourceText('sketch.showList'), section: 'primary', svg: 'elements3' },
+                { id: 'clickForward', label: getResourceText('command.ok'), tooltip: getResourceText('tooltip.ok'), section: 'primary', svg: 'navigate_check', key: WinJS.Utilities.Key.enter }
             ];
 
             this.controller = new EventMediaAdministration.Controller(element, commandList);
@@ -40,7 +41,7 @@
             Log.ret(Log.l.trace);
         },
 
-        /*canUnload: function (complete, error) {
+        canUnload: function (complete, error) {
             var ret;
             Log.call(Log.l.trace, pageName + ".");
             if (this.controller) {
@@ -55,7 +56,7 @@
             }
             Log.ret(Log.l.trace);
             return ret;
-        },*/
+        },
 
         unload: function () {
             Log.call(Log.l.trace, pageName + ".");

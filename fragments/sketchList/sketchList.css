@@ -4,8 +4,13 @@
     height: 160px;
 }
 
+#sketchList .win-surface {
+    overflow-y: hidden;
+}
+
 #sketchListController .contentarea .win-type-body {
     height: 170px;
+    overflow-y: hidden;
 }
 .sketchList .contentarea .win-type-body .win-listview {
     height: 170px;
@@ -63,3 +68,5 @@
 .sketchList .list-caption {
     color: #101010;
 }
+
+

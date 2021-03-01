@@ -13,22 +13,22 @@
             "mp4v", "ogg", "ogv", "asf", "avi", "mov", "wmv", "mp3", "m4a", "oga",
             "wav", "wma", "aiff", "aifc", "au", "mid", "midi"
         ],
-        _docFormatInfoList: [],
-        docFormatInfoList: {
+        _docFormatList: [],
+        docFormatList: {
             get: function() {
-                if (!UploadMedia._docFormatInfoList.length) {
+                if (!UploadMedia._docFormatList.length) {
                     UploadMedia.docExtList.forEach(function(fileExtension) {
                         var wFormat = AppData.getDocFormatFromExt(fileExtension);
                         if (wFormat) {
                             var docFormat = AppData.getDocFormatInfo(wFormat);
                             if (docFormat) {
                                 docFormat.docFormat = wFormat;
-                                UploadMedia.docExtList._docFormatInfoList.push(docFormat);
+                                UploadMedia._docFormatList.push(docFormat);
                             }
                         }
                     });
                 }
-                return UploadMedia._docFormatInfoList;
+                return UploadMedia._docFormatList;
             }
         },
         getDocView: function (docGroup) {

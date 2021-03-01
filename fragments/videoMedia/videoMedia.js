@@ -22,10 +22,7 @@
             this.prevWidth = 0;
             this.prevHeight = 0;
 
-            // add page specific commands to AppBar
-            var commandList = [
-            ];
-            this.controller = new VideoMedia.Controller(element, options, commandList);
+            this.controller = new VideoMedia.Controller(element, options);
 
             Log.ret(Log.l.trace);
         },

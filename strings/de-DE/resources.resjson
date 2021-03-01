@@ -1171,6 +1171,8 @@
     "eventMediaAdministration.MediaName" : "Media Name",
     "eventMediaAdministration.LinkToFile" : "Link zu Datei",
     "eventMediaAdministration.Categorie" : "Kategorie:",
+    "eventMediaAdministration.questionDelete"	: "Möchten Sie das aktuelle Dokument löschen?",
+
 
     "eventSeriesAdministration.title" : "Serien Titel",
 	"eventSeriesAdministration.serien" : "Serien",

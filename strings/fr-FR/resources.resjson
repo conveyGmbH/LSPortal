@@ -1160,6 +1160,7 @@
     "eventMediaAdministration.MediaName": "Nom du média",
     "eventMediaAdministration.LinkToFile": "Lien vers le fichier",
     "eventMediaAdministration.Categorie": "Catégorie:",
+    "eventMediaAdministration.questionDelete"	: "Voulez-vous supprimer cette document?",
 
     "eventSeriesAdministration.title": "Titre de la série",
     "eventSeriesAdministration.serien": "Série",

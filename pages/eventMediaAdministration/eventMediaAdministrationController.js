@@ -30,11 +30,28 @@
                 showUpload: false,
                 moreDocs: false,
                 userHidesList: false,
-                showList: false
+                showList: false,
+                flagInsert: null,
+                addIndex: null
             }, commandList]);
 
             this.pageElement = pageElement;
             this.docViewer = null;
+
+            var resultConverter = function(item) {
+                Log.call(Log.l.trace, "EventMediaAdministration.Controller.");
+                if (item) {
+                    that.binding.docId = item.MandantDokumentVIEWID;
+                    that.binding.showSvg = false;
+                    that.binding.showPhoto = false;
+                    that.binding.showAudio = false;
+                    that.binding.showUpload = false;
+                    that.binding.flagInsert = null;
+                    that.binding.addIndex = null;
+                }
+                Log.ret(Log.l.trace);
+            }
+            this.resultConverter = resultConverter;
 
             var setDocCount = function(count) {
                 Log.call(Log.l.trace, "EventMediaAdministration.Controller.", "count=" + count);
@@ -58,7 +75,21 @@
                 ]);
                 Log.ret(Log.l.trace);
             }
-            that.setDocCount = setDocCount;
+            this.setDocCount = setDocCount;
+
+            var setFlagInsert = function(flagInsert) {
+                Log.call(Log.l.trace, "EventMediaAdministration.Controller.", "flagInsert=" + flagInsert);
+                that.binding.flagInsert = flagInsert;
+                Log.ret(Log.l.trace);
+            }
+            this.setFlagInsert = setFlagInsert;
+
+            var setAddIndex = function(addIndex) {
+                Log.call(Log.l.trace, "EventMediaAdministration.Controller.", "addIndex=" + addIndex);
+                that.binding.addIndex = addIndex;
+                Log.ret(Log.l.trace);
+            }
+            this.setAddIndex = setAddIndex;
 
             var getDocViewer = function (docGroup, docFormat) {
                 var docViewer;
@@ -105,6 +136,7 @@
                     // set semaphore
                     inLoadDoc = true;
                     prevDocId = docId;
+                    that.binding.docId = docId;
                     // check for need of command update in AppBar
                     var bGetNewDocViewer = false;
                     var bUpdateCommands = false;
@@ -186,17 +218,12 @@
             }
             this.loadDoc = loadDoc;
 
-            var loadData = function (docId, docGroup, docFormat) {
-                Log.call(Log.l.trace, "EventMediaAdministration.Controller.", "docId=" + docId + " docGroup=" + docGroup + " docFormat=" + docFormat);
-                AppData.setErrorMsg(that.binding);
-                var ret = new WinJS.Promise.as().then(function () {
-                    if (!docId) {
-                        //load list first -> docId, showSvg, showPhoto, moreDocs set
-                        return that.loadList();
-                    } else {
-                        //load doc then if docId is set
-                        return that.loadDoc(docId, docGroup, docFormat);
-                    }
+            var loadData = function () {
+                Log.call(Log.l.trace, "EventMediaAdministration.Controller.");
+                var ret = new WinJS.Promise.as().then(function() {
+                    return that.saveData();
+                }).then(function () {
+                    return that.loadList();
                 });
                 Log.ret(Log.l.trace);
                 return ret;
@@ -205,7 +232,7 @@
 
             var loadList = function (docId) {
                 Log.call(Log.l.trace, "EventMediaAdministration.", "docId=" + docId);
-                var ret;
+                var ret = null;
                 var mediaListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("mediaList"));
                 if (mediaListFragmentControl && mediaListFragmentControl.controller) {
                     ret = mediaListFragmentControl.controller.loadData(docId, {
@@ -219,18 +246,16 @@
                             eventTextUsageId: EventMediaAdministration._eventTextUsageId,
                             eventId: EventMediaAdministration._eventId
                         });
-                    } else {
-                        ret = WinJS.Promise.as();
                     }
                 }
                 Log.ret(Log.l.trace);
-                return ret;
+                return ret || WinJS.Promise.as();
             }
             this.loadList = loadList;
 
             var loadText = function (docId) {
                 Log.call(Log.l.trace, "EventMediaAdministration.", "docId=" + docId);
-                var ret;
+                var ret = null;
                 var mediaTextFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("mediaText"));
                 if (mediaTextFragmentControl && mediaTextFragmentControl.controller &&
                     typeof mediaTextFragmentControl.controller.setDocId === "function" &&
@@ -243,18 +268,16 @@
                         ret = Application.loadFragmentById(parentElement, "mediaText", {
                             docId: docId
                         });
-                    } else {
-                        ret = WinJS.Promise.as();
                     }
                 }
                 Log.ret(Log.l.trace);
-                return ret;
+                return ret ||  WinJS.Promise.as();
             }
             this.loadText = loadText;
 
             var loadUpload = function (docId) {
                 Log.call(Log.l.trace, "EventMediaAdministration.", "docId=" + docId);
-                var ret;
+                var ret = null;
                 var uploadMediaFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("uploadMedia"));
                 if (uploadMediaFragmentControl && uploadMediaFragmentControl.controller &&
                     typeof uploadMediaFragmentControl.controller.setDocId === "function") {
@@ -265,12 +288,10 @@
                         ret = Application.loadFragmentById(parentElement, "uploadMedia", {
                             docId: docId
                         });
-                    } else {
-                        ret = WinJS.Promise.as();
                     }
                 }
                 Log.ret(Log.l.trace);
-                return ret;
+                return ret ||  WinJS.Promise.as();
             }
             this.loadUpload = loadUpload;
 
@@ -291,11 +312,6 @@
                 clickGotoPublish: function (event) {
                     Log.call(Log.l.trace, "EventMediaAdministration.Controller.");
                     Application.navigateById("publish", event);
-                    Log.ret(Log.l.trace);
-                },
-                clickNew: function (event) {
-                    Log.call(Log.l.trace, "EventResourceAdministration.Controller.");
-                    that.insertData();
                     Log.ret(Log.l.trace);
                 },
                 clickShowList: function (event) {
@@ -386,6 +402,41 @@
                     }
                     Application.navigateById("login", event);
                     Log.ret(Log.l.trace);
+                },
+                clickForward: function (event) {
+                    Log.call(Log.l.trace, "EventMediaAdministration.Controller.");
+                    AppBar.busy = true;
+                    that.saveData(function (response) {
+                        AppBar.busy = false;
+                        Log.print(Log.l.trace, "media text saved");
+                    }, function (errorResponse) {
+                        AppBar.busy = false;
+                        Log.print(Log.l.error, "error saving media text");
+                    });
+                    Log.ret(Log.l.trace);
+                },
+                clickDelete: function(event) {
+                    Log.call(Log.l.trace, "EventMediaAdministration.Controller.");
+                    if (that.binding.docId && that.binding.addIndex && that.binding.flagInsert) {
+                        var confirmTitle = getResourceText("eventMediaAdministration.questionDelete");
+                        confirm(confirmTitle, function (result) {
+                            if (result) {
+                                Log.print(Log.l.trace,"clickDelete: user choice OK");
+                                that.deleteData();
+                            } else {
+                                Log.print(Log.l.trace, "clickDelete: user choice CANCEL");
+                            }
+                        });
+                    } else {
+                        Log.print(Log.l.info, "not allowed to delete docId=" + that.binding.docId +
+                            " addIndex=" + that.binding.addIndex + " flagInsert=" + that.binding.flagInsert);
+                    }
+                    Log.ret(Log.l.trace);
+                },
+                clickNew: function(event) {
+                    Log.call(Log.l.trace, "EventMediaAdministration.Controller.");
+                    that.insertData();
+                    Log.ret(Log.l.trace);
                 }
             };
 
@@ -397,11 +448,29 @@
                         return true;
                     }
                 },
-                clickNew: function () {
-                    return false;
-                },
                 clickShowList: function () {
                     if (that.binding.moreDocs) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                },
+                clickDelete: function() {
+                    if (!AppBar.busy && that.binding.docId && that.binding.addIndex && that.binding.flagInsert) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                },
+                clickNew: function() {
+                    if (!AppBar.busy && that.binding.docId && that.binding.flagInsert) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                },
+                clickForward: function () {
+                    if (!AppBar.busy) {
                         return false;
                     } else {
                         return true;
@@ -409,13 +478,22 @@
                 }
             }
 
-            /*var saveData = function(complete, error) {
+            var saveData = function(complete, error) {
                 var ret;
                 Log.call(Log.l.trace, "EventMediaAdministration.Controller.");
                 var mediaTextFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("mediaText"));
                 if (mediaTextFragmentControl && mediaTextFragmentControl.controller) {
-                    mediaTextFragmentControl.controller.setDocId(docId);
-                    ret = mediaTextFragmentControl.controller.saveData(complete, error);
+                    ret = mediaTextFragmentControl.controller.saveData(function (response) {
+                        Log.print(Log.l.trace, "media saved");
+                        if (typeof complete === "function") {
+                            complete(response);
+                        }
+                    }, function (errorResponse) {
+                        Log.print(Log.l.error, "error saving media");
+                        if (typeof error === "function") {
+                            error(errorResponse);
+                        }
+                    });
                 } else {
                     if (typeof complete === "function") {
                         complete({});
@@ -425,24 +503,84 @@
                 Log.ret(Log.l.trace);
                 return ret;
             }
-            this.saveData = saveData;*/
+            this.saveData = saveData;
+
+            var insertData = function() {
+                Log.call(Log.l.trace, "EventMediaAdministration.Controller.");
+                AppData.setErrorMsg(that.binding);
+                var ret = new WinJS.Promise.as().then(function() {
+                    if (that.binding.docId && that.binding.flagInsert) {
+                        AppBar.busy = true;
+                        return AppData.call("Prc_CopyFromMandantDokument", {
+                            pPrevMandantDokumentID: that.binding.docId,
+                            pLanguageSpecID: 0
+                        }, function (json) {
+                            AppBar.busy = false;
+                            Log.print(Log.l.info, "call PRC_CopyFromMandantDokument: success!");
+                            if (json && json.d) {
+                                // Now, we call WinJS.Binding.List to get the bindable list
+                                that.resultConverter(json.d);
+                            }
+                        }, function (errorResponse) {
+                            AppBar.busy = false;
+                            Log.print(Log.l.error, "call PRC_CopyFromMandantDokument: error");
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        });
+                    } else {
+                        Log.print(Log.l.info, "not allowed to call PRC_CopyFromMandantDokument on docId=" + that.binding.docId +
+                            " addIndex=" + that.binding.addIndex + " flagInsert=" + that.binding.flagInsert);
+                        return WinJS.Promise.as();
+                    }
+                }).then(function () {
+                    return that.loadList(that.binding.docId);
+                });
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+            this.insertData = insertData;
+
+            var deleteData = function() {
+                Log.call(Log.l.trace, "EventMediaAdministration.Controller.");
+                AppData.setErrorMsg(that.binding);
+                var ret = new WinJS.Promise.as().then(function() {
+                    AppBar.busy = true;
+                    return EventMediaAdministration.mediaTable.deleteRecord(function (json) {
+                        AppBar.busy = false;
+                        Log.print(Log.l.info, "deleteRecord: success!");
+                        that.binding.docId = null;
+                    }, function (errorResponse) {
+                        AppBar.busy = false;
+                        Log.print(Log.l.error, "deleteRecord: error");
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    }, that.binding.docId);
+                }).then(function () {
+                    return that.loadList();
+                });
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+            this.deleteData = deleteData;
 
             var getEventTextUsageId = function () {
                 return EventMediaAdministration._eventTextUsageId;
             }
-            that.getEventTextUsageId = getEventTextUsageId;
+            this.getEventTextUsageId = getEventTextUsageId;
 
             var setEventTextUsageId = function (value) {
                 Log.print(Log.l.trace, "eventTextUsageId=" + value);
                 EventMediaAdministration._eventTextUsageId = value;
             }
-            that.setEventTextUsageId = setEventTextUsageId;
+            this.setEventTextUsageId = setEventTextUsageId;
 
             var setEventId = function (value) {
                 Log.print(Log.l.trace, "eventId=" + value);
                 EventMediaAdministration._eventId = value;
             }
-            that.setEventId = setEventId;
+            this.setEventId = setEventId;
 
             var master = Application.navigator.masterControl;
             if (master && master.controller && master.controller.binding) {
@@ -450,7 +588,7 @@
             }
 
             // finally, load the data
-            that.processAll().then(function() {
+            this.processAll().then(function() {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 var eventTextUsageHost = pageElement.querySelector("#eventTextUsageHostMedia");
                 if (eventTextUsageHost) {

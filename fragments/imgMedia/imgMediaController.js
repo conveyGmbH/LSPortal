@@ -53,18 +53,14 @@
                 if (item) {
                     that.binding.docId = item.MandantDokumentVIEWID;
                     if (item.DocContentDOCCNT1 && item.DocGroup === AppData.DocGroup.Image && item.ContentEncoding === 4096) {
-                        item.ContentType = item.DocContentDOCCNT1.split("Accept-Ranges")[0].split("Content-Type:")[1];
                         var key1 = "Content-Type:";
                         var key2 = "Accept-Ranges:";
                         var pos1 = item.DocContentDOCCNT1.indexOf(key1);
                         var pos2 = item.DocContentDOCCNT1.indexOf(key2);
                         var sub = item.DocContentDOCCNT1.search("\r\n\r\n");
                         if (pos1 >= 0 && pos2 > pos1 && sub > pos2) {
-                            item.ContentType = item.DocContentDOCCNT1.substring(pos1 + key1.length, pos2).trim();
-                            item.imgData = "data:" +
-                                item.ContentType +
-                                ";base64," +
-                                item.DocContentDOCCNT1.substr(sub + 4);
+                            item.ContentType = item.DocContentDOCCNT1.substring(pos1 + key1.length, pos2).trim().replace("\r\n","");
+                            item.imgData = "data:" + item.ContentType + ";base64," + item.DocContentDOCCNT1.substr(sub + 4);
                         } else {
                             item.imgData = "";
                         }
@@ -123,7 +119,7 @@
                                 }
                                 imgWidth = that.img.naturalWidth * imgScale;
                                 // recalculate with scrollbars
-                                if (imgWidth > containerHeight) {
+                                if (imgWidth > containerHeight-(scrollbarSize*that.img.naturalWidth/that.img.naturalHeight)) {
                                     containerWidth -= scrollbarSize;
                                     imgHeight = containerWidth;
                                     imgScale = containerWidth / that.img.naturalHeight;
@@ -141,7 +137,7 @@
                                 }
                                 imgHeight = that.img.naturalHeight * imgScale;
                                 // recalculate with scrollbars
-                                if (imgHeight > containerHeight) {
+                                if (imgHeight > containerHeight-(scrollbarSize*that.img.naturalHeight/that.img.naturalWidth)) {
                                     containerWidth -= scrollbarSize;
                                     imgScale = containerWidth / that.img.naturalWidth;
                                     imgWidth = containerWidth;
@@ -383,6 +379,7 @@
                                 imgRotation = 0;
                                 imgScale = 1;
                                 calcImagePosition();
+                                var lastElement = imageItemBox.lastElementChild || imageItemBox.lastChild;
                                 var oldElement = imageItemBox.firstElementChild || imageItemBox.firstChild;
                                 if (oldElement && oldElement.style) {
                                     oldElement.style.display = "block";
@@ -396,7 +393,7 @@
                                 }
                                 imageItemBox.appendChild(that.img);
 
-                                var animationDistanceX = imgWidth / 4;
+                                /*var animationDistanceX = imgWidth / 4;
                                 var animationOptions = { top: "0px", left: animationDistanceX.toString() + "px" };
                                 if (that.img.style) {
                                     that.img.style.visibility = "";
@@ -414,12 +411,29 @@
                                         }
                                     }
                                 });
-                                if (imageItemBox.childElementCount > 1) {
-                                    WinJS.Promise.timeout(50).then(function () {
-                                        oldElement = imageItemBox.firstElementChild || imageItemBox.firstChild;
-                                        if (oldElement) {
-                                            animationOptions.left = (-animationDistanceX).toString() + "px";
-                                            WinJS.UI.Animation.exitContent(oldElement, animationOptions);
+                                */
+                                if (that.img.style) {
+                                    that.img.style.visibility = "";
+                                }
+                                if (lastElement) {
+                                    WinJS.UI.Animation.crossFade(that.img, lastElement).then(function() {
+                                        if (that.img.style) {
+                                            that.img.style.display = "";
+                                            that.img.style.position = "";
+                                        }
+                                        while (imageItemBox.childElementCount > 1) {
+                                            oldElement = imageItemBox.firstElementChild || imageItemBox.firstChild;
+                                            if (oldElement) {
+                                                imageItemBox.removeChild(oldElement);
+                                                oldElement.innerHTML = "";
+                                            }
+                                        }
+                                    });
+                                } else {
+                                    WinJS.UI.Animation.fadeIn(that.img).then(function() {
+                                        if (that.img.style) {
+                                            that.img.style.display = "";
+                                            that.img.style.position = "";
                                         }
                                     });
                                 }

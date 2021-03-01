@@ -20,8 +20,10 @@
             }
             Fragments.Controller.apply(this, [fragmentElement, {
                 docId: null,
-                DocGroup: null,
-                DocFormat: null
+                docGroup: null,
+                docFormat: null,
+                flagInsert: null,
+                addIndex: null
             }]);
             var that = this;
 
@@ -31,6 +33,8 @@
             // now do anything...
             var listView = fragmentElement.querySelector("#mediaList.listview");
 
+            var waitingForMouseScroll = false;
+
             var scaleItemsAfterResize = function() {
                 Log.call(Log.l.trace, "MediaList.Controller.");
                 if (listView && fragmentElement && 
@@ -39,10 +43,10 @@
                     fragmentElement.winControl.prevHeight) {
                     var i;
                     // scale SVG images
-                    var svglist = listView.querySelectorAll(".list-svg");
-                    if (svglist) {
-                        for (i = 0; i < svglist.length; i++) {
-                            var svg = svglist[i].firstElementChild;
+                    var svgList = listView.querySelectorAll(".list-svg");
+                    if (svgList) {
+                        for (i = 0; i < svgList.length; i++) {
+                            var svg = svgList[i].firstElementChild;
                             if(svg) {
                                 WinJS.Utilities.addClass(svg, "list-svg-item");
                                 svg.viewBox.baseVal.height = svg.height && svg.height.baseVal && svg.height.baseVal.value;
@@ -55,14 +59,44 @@
                         }
                     }
                     // scale photo images
-                    var imglist = listView.querySelectorAll(".list-img");
-                    if (imglist) {
-                        for (i = 0; i < imglist.length; i++) {
-                            var img = imglist[i].querySelector(".list-img-item");
+                    var imgList = listView.querySelectorAll(".list-img");
+                    if (imgList) {
+                        for (i = 0; i < imgList.length; i++) {
+                            var img = imgList[i].querySelector(".list-img-item");
                             if (img && img.src && img.naturalWidth && img.naturalHeight && img.style) {
-                                var offset = (imglist[i].clientHeight -
-                                    (imglist[i].clientWidth * img.naturalHeight) / img.naturalWidth) / 2;
-                                img.style.marginTop = offset.toString() + "px";
+                                var imgScale = 1;
+                                var imgWidth = 0;
+                                var imgHeight = 0;
+                                var marginLeft = 0;
+                                var marginTop = 0;
+                                if (imgList[i].clientWidth < img.naturalWidth) {
+                                    imgScale = imgList[i].clientWidth / img.naturalWidth;
+                                    imgWidth = imgList[i].clientWidth;
+                                } else {
+                                    imgScale = 1;
+                                    imgWidth = img.naturalWidth;
+                                }
+                                imgHeight = img.naturalHeight * imgScale;
+                                if (imgList[i].clientHeight < imgHeight) {
+                                    imgScale *= imgList[i].clientHeight / imgHeight;
+                                    imgHeight = imgList[i].clientHeight;
+                                }
+                                imgWidth = img.naturalWidth * imgScale;
+
+                                if (imgWidth < imgList[i].clientWidth) {
+                                    marginLeft = (imgList[i].clientWidth - imgWidth) / 2;
+                                } else {
+                                    marginLeft = 0;
+                                }
+                                if (imgHeight < imgList[i].clientHeight) {
+                                    marginTop = (imgList[i].clientHeight - imgHeight) / 2;
+                                } else {
+                                    marginTop = 0;
+                                }
+                                img.style.marginLeft = marginLeft + "px";
+                                img.style.marginTop = marginTop + "px";
+                                img.style.width = imgWidth + "px";
+                                img.style.height = imgHeight + "px";
                             }
                         }
                     }
@@ -154,25 +188,42 @@
                                     var item = items[0];
                                     if (item.data) {
                                         that.binding.docId = item.data.MandantDokumentVIEWID;
-                                        that.binding.DocGroup = item.data.DocGroup;
-                                        that.binding.DocFormat = item.data.DocFormat;
-                                        if (AppBar.scope &&
-                                            AppBar.scope.pageElement &&
-                                            AppBar.scope.pageElement.winControl &&
-                                            typeof AppBar.scope.pageElement.winControl.canUnload === "function") {
+                                        that.binding.docGroup = item.data.DocGroup;
+                                        that.binding.docFormat = item.data.DocFormat;
+                                        that.binding.flagInsert = item.data.FlagInsert;
+                                        that.binding.addIndex = item.data.AddIndex;
+                                        if (AppBar.scope) {
+                                            if (AppBar.scope.pageElement &&
+                                                AppBar.scope.pageElement.winControl &&
+                                                typeof AppBar.scope.pageElement.winControl.canUnload === "function") {
                                                 AppBar.scope.pageElement.winControl.canUnload(function(response) {
-                                                // called asynchronously if ok
-                                                //load doc with new recordId
-                                                if (AppBar.scope && typeof AppBar.scope.loadDoc === "function") {
-                                                    AppBar.scope.loadDoc(that.binding.docId, that.binding.DocGroup, that.binding.DocFormat);
+                                                    // called asynchronously if ok
+                                                    //load doc with new recordId
+                                                    if (AppBar.scope) {
+                                                        if (typeof AppBar.scope.setFlagInsert === "function") {
+                                                            AppBar.scope.setFlagInsert(that.binding.flagInsert);
+                                                        }
+                                                        if (typeof AppBar.scope.setAddIndex === "function") {
+                                                            AppBar.scope.setAddIndex(that.binding.addIndex);
+                                                        }
+                                                        if (typeof AppBar.scope.loadDoc === "function") {
+                                                            AppBar.scope.loadDoc(that.binding.docId, that.binding.docGroup, that.binding.docFormat);
+                                                        }
+                                                    }
+                                                }, function(errorResponse) {
+                                                    // error handled in saveData!
+                                                });
+                                            } else {
+                                                if (typeof AppBar.scope.setFlagInsert === "function") {
+                                                    AppBar.scope.setFlagInsert(that.binding.flagInsert);
                                                 }
-                                            }, function(errorResponse) {
-                                                // error handled in saveData!
-                                            });
-                                        } else {
-                                            //load doc with new recordId
-                                            if (AppBar.scope && typeof AppBar.scope.loadDoc === "function") {
-                                                AppBar.scope.loadDoc(that.binding.docId, that.binding.DocGroup, that.binding.DocFormat);
+                                                if (typeof AppBar.scope.setAddIndex === "function") {
+                                                    AppBar.scope.setAddIndex(that.binding.addIndex);
+                                                }
+                                                //load doc with new recordId
+                                                if (typeof AppBar.scope.loadDoc === "function") {
+                                                    AppBar.scope.loadDoc(that.binding.docId, that.binding.docGroup, that.binding.docFormat);
+                                                }
                                             }
                                         }
                                     }
@@ -192,6 +243,35 @@
                         }
                     }
                     Log.ret(Log.l.trace);
+                },
+                wheelHandler: function(eventInfo) {
+                    Log.call(Log.l.u1, "MediaList.Controller.");
+                    if (waitingForMouseScroll) {
+                        Log.ret(Log.l.u1, "extra ignored");
+                        return;
+                    }
+                    
+                    if (eventInfo && listView && listView.winControl) {
+                        var wheelWithinListView = eventInfo.target && (listView.contains(eventInfo.target) || listView === eventInfo.target);
+                        if (wheelWithinListView) {
+                            var wheelValue;
+                            var wheelingForward;
+
+                            if (typeof eventInfo.deltaY === 'number') {
+                                wheelingForward = (eventInfo.deltaX || eventInfo.deltaY) > 0;
+                                wheelValue = Math.abs(eventInfo.deltaX || eventInfo.deltaY || 0);
+                            } else {
+                                wheelingForward = eventInfo.wheelDelta < 0;
+                                wheelValue = Math.abs(eventInfo.wheelDelta || 0);
+                            }
+                            waitingForMouseScroll = true;
+                            listView.winControl.scrollPosition += wheelingForward*wheelValue;
+                            WinJS.Promise.timeout(100).then(function() {
+                                waitingForMouseScroll = false;
+                            });
+                        }
+                    }
+                    Log.ret(Log.l.u1);
                 }
             }
             this.eventHandlers = eventHandlers;
@@ -200,6 +280,8 @@
             if (listView) {
                 this.addRemovableEventListener(listView, "selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
                 this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
+                this.addRemovableEventListener(listView, "wheel", this.eventHandlers.wheelHandler.bind(this));
+                this.addRemovableEventListener(listView, "mousewheel", this.eventHandlers.wheelHandler.bind(this));
             }
 
             var saveData = function (complete, error) {
@@ -222,9 +304,6 @@
                 if (curOptions) {
                     MediaList._eventTextUsageId = curOptions.eventTextUsageId;
                     MediaList._eventId = curOptions.eventId;
-                }
-                if (docId) {
-                    that.binding.docId = docId;
                 }
                 AppData.setErrorMsg(that.binding);
                 // find index of docId
@@ -293,8 +372,10 @@
                             }
                         } else {
                             that.binding.docId = null;
-                            that.binding.DocGroup = null;
-                            that.binding.DocFormat = null;
+                            that.binding.docGroup = null;
+                            that.binding.docFormat = null;
+                            that.binding.flagInsert = null;
+                            that.binding.addIndex = null;
                         }
                         reloadDocView = true;
                     }, function (errorResponse) {
@@ -325,10 +406,14 @@
                                     row = that.records.getAt(selIdx);
                                     if (row) {
                                         that.binding.docId = row.MandantDokumentVIEWID;
-                                        that.binding.DocGroup = row.DocGroup;
-                                        that.binding.DocFormat = row.DocFormat;
+                                        that.binding.docGroup = row.DocGroup;
+                                        that.binding.docFormat = row.DocFormat;
+                                        that.binding.flagInsert = row.FlagInsert;
+                                        that.binding.addIndex = row.AddIndex;
                                     }
                                 });
+                            } else {
+                                return WinJS.Promise.as();
                             }
                         } else {
                             return WinJS.Promise.as();
@@ -337,9 +422,16 @@
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
-                    if (reloadDocView &&
-                        AppBar.scope && typeof AppBar.scope.loadDoc === "function" && that.binding.docId) {
-                        AppBar.scope.loadDoc(that.binding.docId, that.binding.DocGroup, that.binding.DocFormat);
+                    if (reloadDocView && AppBar.scope && that.binding.docId) {
+                        if (typeof AppBar.scope.setFlagInsert === "function") {
+                            AppBar.scope.setFlagInsert(that.binding.flagInsert);
+                        }
+                        if (typeof AppBar.scope.setAddIndex === "function") {
+                            AppBar.scope.setAddIndex(that.binding.addIndex);
+                        }
+                        if (typeof AppBar.scope.loadDoc === "function") {
+                            AppBar.scope.loadDoc(that.binding.docId, that.binding.docGroup, that.binding.docFormat);
+                        }
                     }
                     AppBar.notifyModified = true;
                     AppBar.triggerDisableHandlers();

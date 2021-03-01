@@ -55,19 +55,16 @@
             var resultConverter = function (item, index) {
                 Log.call(Log.l.trace, "ImgSketch.Controller.");
                 if (item) {
+                    that.binding.noteId = json.d.KontaktNotizVIEWID;
                     if (item.DocContentDOCCNT1 && item.DocGroup === AppData.DocGroup.Image) {
-                        item.ContentType = item.DocContentDOCCNT1.split("Accept-Ranges")[0].split("Content-Type:")[1];
                         var key1 = "Content-Type:";
                         var key2 = "Accept-Ranges:";
                         var pos1 = item.DocContentDOCCNT1.indexOf(key1);
                         var pos2 = item.DocContentDOCCNT1.indexOf(key2);
                         var sub = item.DocContentDOCCNT1.search("\r\n\r\n");
                         if (pos1 >= 0 && pos2 > pos1 && sub > pos2) {
-                            item.ContentType = item.DocContentDOCCNT1.substring(pos1 + key1.length, pos2).trim();
-                            item.photoData = "data:" +
-                                item.ContentType +
-                                ";base64," +
-                                item.DocContentDOCCNT1.substr(sub + 4);
+                            item.ContentType = item.DocContentDOCCNT1.substring(pos1 + key1.length, pos2).trim().replace("\r\n","");
+                            item.photoData = "data:" + item.ContentType + ";base64," + item.DocContentDOCCNT1.substr(sub + 4);
                         } else {
                             item.photoData = "";
                         }
@@ -125,7 +122,7 @@
                                 }
                                 imgWidth = that.img.naturalWidth * imgScale;
                                 // recalculate with scrollbars
-                                if (imgWidth > containerHeight) {
+                                if (imgWidth > containerHeight-(scrollbarSize*that.img.naturalWidth/that.img.naturalHeight)) {
                                     containerWidth -= scrollbarSize;
                                     imgHeight = containerWidth;
                                     imgScale = containerWidth / that.img.naturalHeight;
@@ -143,7 +140,7 @@
                                 }
                                 imgHeight = that.img.naturalHeight * imgScale;
                                 // recalculate with scrollbars
-                                if (imgHeight > containerHeight) {
+                                if (imgHeight > containerHeight-(scrollbarSize*that.img.naturalHeight/that.img.naturalWidth)) {
                                     containerWidth -= scrollbarSize;
                                     imgScale = containerWidth / that.img.naturalWidth;
                                     imgWidth = containerWidth;
@@ -384,6 +381,7 @@
                                 imgRotation = 0;
                                 imgScale = 1;
                                 calcImagePosition();
+                                //var lastElement = photoItemBox.lastElementChild || photoItemBox.lastChild;
                                 var oldElement = photoItemBox.firstElementChild || photoItemBox.firstChild;
                                 if (oldElement && oldElement.style) {
                                     oldElement.style.display = "block";
@@ -424,6 +422,31 @@
                                         }
                                     });
                                 }
+                                /*if (that.img.style) {
+                                    that.img.style.visibility = "";
+                                }
+                                if (lastElement) {
+                                    WinJS.UI.Animation.crossFade(that.img, lastElement).then(function() {
+                                        if (that.img.style) {
+                                            that.img.style.display = "";
+                                            that.img.style.position = "";
+                                        }
+                                        while (photoItemBox.childElementCount > 1) {
+                                            oldElement = photoItemBox.firstElementChild || photoItemBox.firstChild;
+                                            if (oldElement) {
+                                                photoItemBox.removeChild(oldElement);
+                                                oldElement.innerHTML = "";
+                                            }
+                                        }
+                                    });
+                                } else {
+                                    WinJS.UI.Animation.fadeIn(that.img).then(function() {
+                                        if (that.img.style) {
+                                            that.img.style.display = "";
+                                            that.img.style.position = "";
+                                        }
+                                    });
+                                }*/
                             });
                         } else {
                             that.removePhoto();
@@ -519,7 +542,6 @@
                             if (json && json.d) {
                                 that.resultConverter(json.d);
                                 that.binding.dataSketch = json.d;
-                                that.binding.noteId = json.d.KontaktNotizVIEWID;
                                 WinJS.Promise.timeout(0).then(function () {
                                     showPhotoAfterResize();
                                 }).then(function () {

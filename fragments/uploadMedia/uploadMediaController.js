@@ -147,6 +147,7 @@
                             "\x0D\x0A\x0D\x0A" +
                             ovwData;
                     }
+                    AppBar.busy = true;
                     return UploadMedia.docView.insert(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
@@ -156,11 +157,6 @@
                         if (json && json.d) {
                             that.binding.dataDoc = json.d;
                             that.binding.docId = json.d.DOC1MandantDokumentVIEWID;
-                            WinJS.Promise.timeout(0).then(function () {
-                                if (AppBar.scope && typeof AppBar.scope.loadList === "function") {
-                                    AppBar.scope.loadList(that.binding.docId);
-                                }
-                            });
                         }
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
@@ -169,6 +165,18 @@
                         AppData.setErrorMsg(that.binding, errorResponse);
                     },
                     dataDoc, that.binding.docId, 1);
+                }).then(function () {
+                    if (AppBar.scope && typeof AppBar.scope.loadList === "function") {
+                        return AppBar.scope.loadList(that.binding.docId);
+                    } else {
+                        return WinJS.Promise.as();
+                    }
+                }).then(function () {
+                    if (AppBar.scope && typeof AppBar.scope.loadDoc === "function") {
+                        return AppBar.scope.loadDoc(that.binding.docId, 1, wFormat);
+                    } else {
+                        return WinJS.Promise.as();
+                    }
                 });
                 Log.ret(Log.l.trace);
                 return ret;
@@ -177,13 +185,21 @@
 
             function getFileData(file, name, type, size) {
                 var posExt = name.lastIndexOf(".");
-                var ext = (posExt >= 0) ? name.substr(posExt) : "";
+                var ext = (posExt >= 0) ? name.substr(posExt + 1) : "";
                 Log.call(Log.l.trace, "UploadMedia.Controller.", "name=" + name + " ext=" + ext + " type=" + type + " size=" + size);
                 that.binding.fileInfo = name + " (" + type + ") - " + size + " bytes";
 
-                var docFormat = UploadMedia.docFormatInfoList.find(function (item) {
-                    return item.mimeType === type;
+                var fileExtensions = UploadMedia.docFormatList.map(function(item) {
+                    return item.fileExtension;
                 });
+                var index = fileExtensions.indexOf(type);
+                if (index < 0 || UploadMedia.docFormatList[index].mimeType !== type) {
+                    var mimeTypes = UploadMedia.docFormatList.map(function(item) {
+                        return item.mimeType;
+                    });
+                    index = mimeTypes.indexOf(type);
+                }
+                var docFormat = (index >= 0) ? UploadMedia.docFormatList[index] : null;
                 if (docFormat) {
                     var reader = new FileReader();
                     reader.onload = function() {
@@ -193,7 +209,7 @@
 
                             switch (docFormat.docGroup) {
                                 case 1: {
-                                    that.insertImage(docFormat.docFormat, docFormat.mimeType, name, reader.result);
+                                    that.insertImage(docFormat.docFormat, type, name, reader.result);
                                 }
                                 break;
                             }

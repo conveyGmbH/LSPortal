@@ -99,18 +99,6 @@
             this.resultConverter = resultConverter;
 
             this.eventHandlers = {
-                clickForward: function (event) {
-                    Log.call(Log.l.trace, "MediaText.Controller.");
-                    AppBar.busy = true;
-                    that.saveData(function (response) {
-                        AppBar.busy = false;
-                        Log.print(Log.l.trace, "question saved");
-                    }, function (errorResponse) {
-                        AppBar.busy = false;
-                        Log.print(Log.l.error, "error saving question");
-                    });
-                    Log.ret(Log.l.trace);
-                },
                 pressEnterKey: function (event) {
                     Log.call(Log.l.trace, "MediaText.Controller.");
                     if (event && event.keyCode === WinJS.Utilities.Key.enter &&
@@ -270,11 +258,8 @@
             }
 
             this.disableHandlers = {
-                clickForward: function () {
-                    // always enabled!
-                    return false;
-                }
             }
+
             // register ListView event handler
             if (listView) {
                 // prevent some keyboard actions from listview to navigate within controls!
@@ -301,24 +286,24 @@
             var getDocId = function() {
                 return MediaText._docId;
             }
-            that.getDocId = getDocId;
+            this.getDocId = getDocId;
             
             var setDocId = function(value) {
                 Log.print(Log.l.trace, "docId=" + value);
                 MediaText._docId = value;
             }
-            that.setDocId = setDocId;
+            this.setDocId = setDocId;
 
             var getLanguageId = function() {
                 return MediaText._languageId;
             }
-            that.getLanguageId = getLanguageId;
+            this.getLanguageId = getLanguageId;
 
             var setLanguageId = function(value) {
                 Log.print(Log.l.trace, "languageId=" + value);
                 MediaText._languageId = value;
             }
-            that.setLanguageId = setLanguageId;
+            this.setLanguageId = setLanguageId;
 
             var setComboResults = function(results) {
                 var i;
@@ -367,9 +352,9 @@
                 Log.ret(Log.l.trace);
                 return ret;
             }
-            that.loadInitLanguageData = loadInitLanguageData;
+            this.loadInitLanguageData = loadInitLanguageData;
 
-            that.processAll().then(function () {
+            this.processAll().then(function () {
                 Log.print(Log.l.trace, "loadInitLanguageData");
                 return that.loadInitLanguageData();
             }).then(function () {
