@@ -18,6 +18,19 @@
         ready: function (element, options) {
             Log.call(Log.l.trace, fragmentName + ".");
             // TODO: Initialize the fragment here.
+            var contentarea = element.querySelector(".contentarea");
+            if (contentarea && contentarea.style) {
+                if (Colors.isDarkTheme) {
+                    var bkg = Colors.hex2rgb(Colors.tileBackgroundColor);
+                    var bkgHsv = Colors.rgb2hsv(bkg);
+                    bkgHsv.s = Math.min(255, bkgHsv.s * 4);
+                    bkgHsv.v /= 4;
+                    var darkBkg = Colors.hsv2rgb(bkgHsv);
+                    contentarea.style.backgroundColor = Colors.rgb2hex(darkBkg);
+                } else {
+                    contentarea.style.backgroundColor = Colors.tileBackgroundColor;
+                }
+            }
 
             var commandList = [
                 { id: "clickUpload", label: getResourceText("command.upload"), tooltip: getResourceText("eventMediaAdministration.FileUpload"), section: "primary", svg: "cloud_upload" }

@@ -16,7 +16,12 @@
     -webkit-transform: translateZ(0);
 }
 
-#imgDoc.imgview .win-itembox > img {
-    -webkit-filter: drop-shadow(5px 5px 5px #666666);
-    filter: drop-shadow(5px 5px 5px #666666);
+#imgDoc.imgview .win-itembox img {
+    -webkit-filter: drop-shadow(4px 8px 12px rgba(0, 0, 0, 0.6));
+    filter: drop-shadow(4px 8px 12px rgba(0, 0, 0, 0.6));
+}
+
+#imgDoc.imgview .win-itembox img.win-ui-dark {
+    -webkit-filter: drop-shadow(4px 8px 12px #000000);
+    filter: drop-shadow(4px 8px 12px #000000);
 }

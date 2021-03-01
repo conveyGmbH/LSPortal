@@ -205,6 +205,10 @@
                         that.img.style.marginTop = -marginTop + "px";
                         that.img.style.width = imgWidth + "px";
                         that.img.style.height = imgHeight + "px";
+                        if (Colors.isDarkTheme &&
+                            !WinJS.Utilities.hasClass(that.img, "win-ui-dark")) {
+                            WinJS.Utilities.addClass(that.img, "win-ui-dark");
+                        }
                     }
                 }
             }

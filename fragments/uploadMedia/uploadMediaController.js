@@ -274,6 +274,7 @@
             if (dropZone) {
                 this.addRemovableEventListener(dropZone, "dragover", this.eventHandlers.onDragOver.bind(this));
                 this.addRemovableEventListener(dropZone, "drop", this.eventHandlers.onDrop.bind(this));
+                this.addRemovableEventListener(dropZone, "click", this.eventHandlers.clickUpload.bind(this));
             }
 
             //Initialisiere fileOpener           
