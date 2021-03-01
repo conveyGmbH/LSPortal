@@ -34,6 +34,7 @@
             var listView = fragmentElement.querySelector("#mediaList.listview");
 
             var waitingForMouseScroll = false;
+            var wheelScrollAdd = 0;
 
             var scaleItemsAfterResize = function() {
                 Log.call(Log.l.trace, "MediaList.Controller.");
@@ -246,10 +247,6 @@
                 },
                 wheelHandler: function(eventInfo) {
                     Log.call(Log.l.u1, "MediaList.Controller.");
-                    if (waitingForMouseScroll) {
-                        Log.ret(Log.l.u1, "extra ignored");
-                        return;
-                    }
                     
                     if (eventInfo && listView && listView.winControl) {
                         var wheelWithinListView = eventInfo.target && (listView.contains(eventInfo.target) || listView === eventInfo.target);
@@ -264,9 +261,15 @@
                                 wheelingForward = eventInfo.wheelDelta < 0;
                                 wheelValue = Math.abs(eventInfo.wheelDelta || 0);
                             }
+                            wheelScrollAdd += wheelingForward ? wheelValue : -wheelValue;
+                            if (waitingForMouseScroll) {
+                                Log.ret(Log.l.u1, "extra ignored");
+                                return;
+                            }
                             waitingForMouseScroll = true;
-                            listView.winControl.scrollPosition += wheelingForward*wheelValue;
-                            WinJS.Promise.timeout(100).then(function() {
+                            listView.winControl.scrollPosition += wheelScrollAdd;
+                            wheelScrollAdd = 0;
+                            WinJS.Promise.timeout(20).then(function() {
                                 waitingForMouseScroll = false;
                             });
                         }
