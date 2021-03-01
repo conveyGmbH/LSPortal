@@ -304,6 +304,8 @@
     "settings.on"           : "On",
     "settings.off"          : "Off",
     "settings.individual"   : "Individual colors",
+    "settings.active": "Actif",
+    "settings.inactive": "Inactive",
 
     "dbinit.title"          : "Ouvrir la base de donnée",
     "dbinit.progress"       : "Suivant",
@@ -445,6 +447,7 @@
 	"infodeskEmpList.firstNameAsc"  : "Prénom ↑",
 	"infodeskEmpList.nameDesc"  : "Nom ↓",
 	"infodeskEmpList.nameAsc"  : "Nom ↑",
+	"infodeskEmpList.action"   : "Action", 
 
 	"infodeskContactList.title"     : "Liste de sélection des produits",
     "infodeskContactList.company"   : "Société",
@@ -503,13 +506,14 @@
     "label.employeeGenPWList"     : "Prégénérée",
     "label.optQuestionList" : "quest. / répo. facultatives",
     "label.support"     : "Support",
-    "label.mailingOptions"	: "Paramètres de diffusion",
 	"label.siteevents"	: "Liste des exposants",
 	"label.mailingTypes"	: "MailTypes",
 	"label.mailingTemplate"	: "Modèle de mailing",
 	"label.mailingTracking"	: "MailTracking",
+    "label.mailingOptions"	: "Paramètres de diffusion",
     "label.clientManagement"	: "La gestion des clients",
     "label.clientManagementLicenses"	: "Licences",
+    "label.infodeskMessages": "Divertissement",
     "label.esStaffAdministration" : "Personnel de stand",
     "label.voucherAdministration" : "Commande de bons",
     "label.esVoucherUsers" : "Utilisation de bons",
@@ -613,8 +617,8 @@
     "questionList.textarea" : "S'il vous plaît entrer votre commentaire ici",
     "questionList.comment" : "Personnalisez vos questions et réponses.",
 
-    "reporting.titleExcel"  : "Excel Export",
     "reporting.title"  : "Exports",
+    "reporting.titleExcel"  : "Excel Export",
 	"reporting.titleOther"  : "Autres exportations",
     "reporting.with"        : "Excel export with title",
     "reporting.without"     : "Excel export without title",
@@ -882,6 +886,11 @@
     "siteeventsbennach.bestellungen" : "ordres",
     "siteeventsbennach.newdevices" : "Nouveaux appareils",
     "siteeventsbennach.btnlabelorder" : "ordre",
+    "siteeventsbennach.catergory": "Catégorie",
+
+    "siteeventsTermin.title": "Create event date",
+    "siteeventsTermin.veranstaltungsname": "Date name",
+    "siteeventsTermin.veranstaltungsnameDisplay": "Display name",
 	
     "reorderlist.posno" : "PosNo.",
     "reorderlist.eventname" : "événement",
@@ -903,7 +912,6 @@
     "clientmanagement.city" : "Ville",
     "clientmanagement.country" : "Pays",
     "clientmanagement.telefon" : "Téléphone",
-
 
     "clientmanagementlist.title" : "Client",
     "clientmanagementlist.count" : "Nombre",
@@ -1006,7 +1014,9 @@
     "esVoucherUsersList.numberofstafftotal" : "Personnel total du stand",
 	
     "esVoucherUsers.title"         : "Données utilisateur importées",
+    "esVoucherUsers.titlePage": "Données utilisateur importées",
     "esVoucherUsers.comment"       : "Utilisez le bouton Retour sur cette page pour y retourner!",
+    "esVoucherUsers.questionDelete": "Souhaitez-vous supprimer le contact actuel?",
     "esVoucherUsers.name"          : "Nom",
     "esVoucherUsers.editer"        : "Auteur",
     "esVoucherUsers.firstName"     : "Prénom",
@@ -1034,13 +1044,13 @@
     "esVoucherUsers.closeImage"    : "Fermer",
     "esVoucherUsers.ID"            : "ID",
     "esVoucherUsers.editedOn"      : "Créer",
-    "esVoucherUsers.modifiedOn"    : "Date-d'échange",
     "esVoucherUsers.mr"            : "Monsieur",
     "esVoucherUsers.mrs"           : "Madame",
     "esVoucherUsers.useRestriction": "utiliser",
     "esVoucherUsers.vouchercode": "Code promo",
     "esVoucherUsers.vouchercomment": "Commentaire de la commande",
     "esVoucherUsers.checkindate": "Check-In",
+    "esVoucherUsers.excelexportall": "Utilisateurs du bon",
 
     "visitorFlowEntExt.title": "Visitor Flow Secteurs",
     "visitorFlowEntExt.area": "Zone",
@@ -1214,8 +1224,10 @@
     "mailingTemplateEventEdit.layoutactive"			: "Désactivez cette option pour que ce projet de courriel (dans toutes les langues) soit dépassé. Si un brouillon est obsolète, il ne sera pas affiché comme option dans l'application d'envoi.",
 
     "eventsSeries.title" : "Série",
+    "eventSeries.language": "Langue",
+    "eventSeries.languageTitle": "Titre de la langue",
     "eventSeries.labelDelete": "Série",
     "eventSeries.serieDelete": "Voulez-vous supprimer cette série?",
 
-    "eventSeriesList.count" : "Anzahl"
+    "eventSeriesList.count"         : "Nombre",
 }

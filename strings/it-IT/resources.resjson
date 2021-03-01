@@ -304,6 +304,8 @@
     "settings.on"           : "Acceso",
     "settings.off"          : "Spento",
     "settings.individual"   : "Colori personali",
+    "settings.active": "Aktiv",
+    "settings.inactive": "Inaktiv",
 
     "dbinit.title"          : "Apri database",
     "dbinit.progress"       : "Progresso",
@@ -445,6 +447,7 @@
 	"infodeskEmpList.firstNameAsc"  : "Primo nome ↑",
 	"infodeskEmpList.nameDesc"  : "Cognome ↓",
 	"infodeskEmpList.nameAsc"  : "Cognome ↑",
+    "infodeskEmpList.action": "Azione",
 
 	"infodeskContactList.title"     : "Elenco di selezione",
     "infodeskContactList.company"   : "Azienda",
@@ -510,6 +513,7 @@
     "label.mailingOptions"	: "Impostazioni di invio",
     "label.clientManagement"	: "Gestione dei client",
     "label.clientManagementLicenses"	: "Licenze",
+    "label.infodeskMessages": "Entertainment",
     "label.esStaffAdministration" : "Personale dello stand",
     "label.voucherAdministration" : "Ordine di buoni",
     "label.esVoucherUsers" : "Uso di buoni",
@@ -882,6 +886,11 @@
     "siteeventsbennach.bestellungen" : "ordini",
     "siteeventsbennach.newdevices" : "Nuovi dispositivi",
     "siteeventsbennach.btnlabelorder" : "ordine",
+    "siteeventsbennach.catergory": "Categoria",
+	
+    "siteeventsTermin.title": "Create event date",
+    "siteeventsTermin.veranstaltungsname": "Date name",
+    "siteeventsTermin.veranstaltungsnameDisplay": "Display name",
 	
     "reorderlist.posno" : "PosNo.",
     "reorderlist.eventname" : "evento",
@@ -903,7 +912,6 @@
     "clientmanagement.city" : "Città",
     "clientmanagement.country" : "Paese",
     "clientmanagement.telefon" : "Telefono",
-
 
     "clientmanagementlist.title" : "Cliente",
     "clientmanagementlist.count" : "Numero",
@@ -1006,7 +1014,9 @@
     "esVoucherUsersList.numberofstafftotal" : "Personale totale dello stand",
 
 	"esVoucherUsers.title"         : "Dati utente importati",
+    "esVoucherUsers.titlePage": "Dati utente importati",
     "esVoucherUsers.comment"       : "Utilizzate il pulsante \"indietro\" su questa pagina per tornare alla pagina precedente!",
+    "esVoucherUsers.questionDelete": "Vuoi eliminare il contatto corrente?",
     "esVoucherUsers.name"          : "Cognome",
     "esVoucherUsers.editer"        : "Autore",
     "esVoucherUsers.firstName"     : "Primo nome",
@@ -1040,6 +1050,7 @@
     "esVoucherUsers.vouchercode": "Codice coupon",
     "esVoucherUsers.vouchercomment": "Commento ordine",
     "esVoucherUsers.checkindate": "Check-In",
+    "esVoucherUsers.excelexportall": "Utenti voucher",
 
     "visitorFlowEntExt.title": "Visitor Flow Settori",
     "visitorFlowEntExt.area": "Area",
@@ -1213,8 +1224,10 @@
     "mailingTemplateEventEdit.layoutactive"			: "Disattivare per impostare questa bozza di e-mail (in tutte le lingue) come obsoleta. Se una bozza è obsoleta non sarà mostrata come opzione nell'applicazione Mailing.",
 
     "eventsSeries.title" : "Series",
+    "eventSeries.language": "Lingua",
+    "eventSeries.languageTitle": "Titolo lingua",
     "eventSeries.labelDelete": "Series",
     "eventSeries.serieDelete": "Vuoi eliminare questa serie?",
 
-    "eventSeriesList.count" : "Anzahl"
+    "eventSeriesList.count": "Numero"
 }

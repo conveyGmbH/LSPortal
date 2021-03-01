@@ -304,6 +304,8 @@
     "settings.on"           : "On",
     "settings.off"          : "Off",
     "settings.individual"   : "Individual colors",
+    "settings.active"   : "Aktiv",
+    "settings.inactive"   : "Inaktiv",
 
     "dbinit.title"          : "Open database",
     "dbinit.progress"       : "Progress",
@@ -445,6 +447,7 @@
 	"infodeskEmpList.firstNameAsc"  : "First name ↑",
 	"infodeskEmpList.nameDesc"  : "Name ↓",
 	"infodeskEmpList.nameAsc"  : "Name ↑",
+	"infodeskEmpList.action"   : "Action", 
 
 	"infodeskContactList.title"     : "Productselectionlist",
     "infodeskContactList.company"   : "Company",
@@ -503,13 +506,14 @@
     "label.employeeGenPWList"     : "Pre-generated",
     "label.optQuestionList" : "optional QUEST./ANSW.",
     "label.support"     : "Support",
-    "label.mailingOptions"	: "Mailingoptions",
 	"label.siteevents"	: "ExhibitorList",
 	"label.mailingTypes"	: "MailTypes",
 	"label.mailingTemplate"	: "MailingTemplate",
 	"label.mailingTracking"	: "MailTracking",
+    "label.mailingOptions"	: "Mailingoptions",
     "label.clientManagement"	: "Client management",
     "label.clientManagementLicenses"	: "Licenses",
+	"label.infodeskMessages" : "Unterhaltung",
     "label.esStaffAdministration" : "Stand personnel",
     "label.voucherAdministration" : "Voucher orders",
     "label.esVoucherUsers" : "Use of vouchers",
@@ -613,8 +617,8 @@
     "questionList.textarea" : "Please enter your notes here ",
 	"questionList.comment" : "Individualize your questions and answers.",
 
-    "reporting.titleExcel"  : "Excel Export",
     "reporting.title"  : "Exports",
+    "reporting.titleExcel"  : "Excel Export",
     "reporting.titleOther"  : "Other exports",
     "reporting.with"        : "Excel export with title",
     "reporting.without"     : "Excel export without title",
@@ -882,6 +886,11 @@
     "siteeventsbennach.bestellungen" : "Orders",
     "siteeventsbennach.newdevices" : "New device",
     "siteeventsbennach.btnlabelorder" : "Order",
+	"siteeventsbennach.catergory" : "Category",
+	
+    "siteeventsTermin.title": "Create event date",
+    "siteeventsTermin.veranstaltungsname": "Date name",
+    "siteeventsTermin.veranstaltungsnameDisplay": "Display name",
 	
     "reorderlist.posno" : "PosNo.",
     "reorderlist.eventname" : "Event",
@@ -903,7 +912,6 @@
     "clientmanagement.city" : "City",
     "clientmanagement.country" : "Country",
     "clientmanagement.telefon" : "Phone",
-
 
     "clientmanagementlist.title" : "Client",
     "clientmanagementlist.count" : "Count",
@@ -973,7 +981,7 @@
     "esStaffAdministration.login"        : "Login",
     "esStaffAdministration.domain"		: "Domain",
     "esStaffAdministration.password"     : "Password",
-    "esStaffAdministration.password2"    : "Bestätigung",
+    "esStaffAdministration.password2"    : "Confirmation",
     "esStaffAdministration.count"        : "Count",
     "esStaffAdministration.questionDelete": "Do you want to delete the current employee?",
     "esStaffAdministration.alertPassword": "The password was not confirmed correctly!",
@@ -1006,7 +1014,9 @@
     "esVoucherUsersList.numberofstafftotal" : "Staff total",
 
     "esVoucherUsers.title"         : "Imported Voucher User",
+    "esVoucherUsers.titlePage"     : "Imported user data",
     "esVoucherUsers.comment"       : "On this page, use the Back button to go back!",
+    "esVoucherUsers.questionDelete": "Would you like to delete the current contact?",
     "esVoucherUsers.name"          : "Last name",
     "esVoucherUsers.editer"        : "Author",
     "esVoucherUsers.firstName"     : "First name",
@@ -1040,6 +1050,7 @@
     "esVoucherUsers.vouchercode": "Voucher Code",
     "esVoucherUsers.vouchercomment": "Order comment",
     "esVoucherUsers.checkindate": "Check-In",
+    "esVoucherUsers.excelexportall": "Voucher users",
 
     "visitorFlowEntExt.title": "Visitor Flow Areas",
     "visitorFlowEntExt.area": "Area",
@@ -1190,8 +1201,8 @@
     "mailingEdit.mailsuccess"			: "Your test mail has been sent!",
     "mailingEdit.mailerror"			: "An error occurred while sending your test mail!",
     "mailingEdit.mailactive"			: "Are all settings correct? Then activate this mail here.",
-    "mailingEdit.active"			: "Aktive",
-    "mailingEdit.deactive"			: "Inaktive",
+    "mailingEdit.active"			: "Active",
+    "mailingEdit.deactive"			: "Inactive",
 
     "mailingTemplateEvent.title"			: "Templates",
     "mailingTemplateEvent.headertemplatename"			: "Name",
@@ -1207,14 +1218,16 @@
 
 	"mailingTemplateEventEdit.title"			: "Edit template",
 	"mailingTemplateEventEdit.language"			: "Language",
-	"mailingTemplateEventEdit.type"				: "Typ",
+	"mailingTemplateEventEdit.type"				: "Type",
 	"mailingTemplateEventEdit.subject"			: "Subject",
     "mailingTemplateEventEdit.mailtext"			: "Mailtext",
     "mailingTemplateEventEdit.layoutactive"			: "Turn off to set this E-Mail draft (in all languages) as outdated. If a draft is outdated it will not be shown as option in the Mailing application.",
 
     "eventsSeries.title" : "Series",
+    "eventSeries.language": "Language",
+    "eventSeries.languageTitle": "Language Title",
     "eventSeries.labelDelete": "Series",
     "eventSeries.serieDelete": "Do you want to delete this series?",
 
-    "eventSeriesList.count" : "Anzahl"
+    "eventSeriesList.count" : "Count"
 }
