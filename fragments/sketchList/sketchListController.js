@@ -27,12 +27,15 @@
             this.nextUrl = null;
             this.records = null;
 
+            var waitingForMouseScroll = false;
+            var wheelScrollAdd = 0;
+
             // now do anything...
             var listView = fragmentElement.querySelector("#sketchList.listview");
 
             var scaleItemsAfterResize = function() {
                 Log.call(Log.l.trace, "SketchList.Controller.");
-                if (listView && fragmentElement &&
+                if (listView && fragmentElement && 
                     fragmentElement.winControl &&
                     fragmentElement.winControl.prevWidth &&
                     fragmentElement.winControl.prevHeight) {
@@ -59,14 +62,39 @@
                         for (i = 0; i < imgList.length; i++) {
                             var img = imgList[i].querySelector(".list-img-item");
                             if (img && img.src && img.naturalWidth && img.naturalHeight && img.style) {
-                                if (imgList[i].clientHeight > img.clientHeight) {
-                                    var offsetY = (imgList[i].clientHeight - img.clientHeight) / 2;
-                                    img.style.marginTop = offsetY.toString() + "px";
+                                var imgScale = 1;
+                                var imgWidth = 0;
+                                var imgHeight = 0;
+                                var marginLeft = 0;
+                                var marginTop = 0;
+                                if (imgList[i].clientWidth < img.naturalWidth) {
+                                    imgScale = imgList[i].clientWidth / img.naturalWidth;
+                                    imgWidth = imgList[i].clientWidth;
+                                } else {
+                                    imgScale = 1;
+                                    imgWidth = img.naturalWidth;
                                 }
-                                if (imgList[i].clientWidth > img.clientWidth) {
-                                    var offsetX = (imgList[i].clientWidth - img.clientWidth) / 2;
-                                    img.style.marginLeft = offsetX.toString() + "px";
+                                imgHeight = img.naturalHeight * imgScale;
+                                if (imgList[i].clientHeight < imgHeight) {
+                                    imgScale *= imgList[i].clientHeight / imgHeight;
+                                    imgHeight = imgList[i].clientHeight;
                                 }
+                                imgWidth = img.naturalWidth * imgScale;
+
+                                if (imgWidth < imgList[i].clientWidth) {
+                                    marginLeft = (imgList[i].clientWidth - imgWidth) / 2;
+                                } else {
+                                    marginLeft = 0;
+                                }
+                                if (imgHeight < imgList[i].clientHeight) {
+                                    marginTop = (imgList[i].clientHeight - imgHeight) / 2;
+                                } else {
+                                    marginTop = 0;
+                                }
+                                img.style.marginLeft = marginLeft + "px";
+                                img.style.marginTop = marginTop + "px";
+                                img.style.width = imgWidth + "px";
+                                img.style.height = imgHeight + "px";
                             }
                         }
                     }
@@ -214,6 +242,37 @@
                         }
                     }
                     Log.ret(Log.l.trace);
+                },
+                wheelHandler: function(eventInfo) {
+                    Log.call(Log.l.u1, "SketchList.Controller.");
+                    
+                    if (eventInfo && listView && listView.winControl) {
+                        var wheelWithinListView = eventInfo.target && (listView.contains(eventInfo.target) || listView === eventInfo.target);
+                        if (wheelWithinListView) {
+                            var wheelValue;
+                            var wheelingForward;
+
+                            if (typeof eventInfo.deltaY === 'number') {
+                                wheelingForward = (eventInfo.deltaX || eventInfo.deltaY) > 0;
+                                wheelValue = Math.abs(eventInfo.deltaX || eventInfo.deltaY || 0);
+                            } else {
+                                wheelingForward = eventInfo.wheelDelta < 0;
+                                wheelValue = Math.abs(eventInfo.wheelDelta || 0);
+                            }
+                            wheelScrollAdd += wheelingForward ? wheelValue : -wheelValue;
+                            if (waitingForMouseScroll) {
+                                Log.ret(Log.l.u1, "extra ignored");
+                                return;
+                            }
+                            waitingForMouseScroll = true;
+                            listView.winControl.scrollPosition += wheelScrollAdd;
+                            wheelScrollAdd = 0;
+                            WinJS.Promise.timeout(20).then(function() {
+                                waitingForMouseScroll = false;
+                            });
+                        }
+                    }
+                    Log.ret(Log.l.u1);
                 }
             }
             this.eventHandlers = eventHandlers;
@@ -222,6 +281,8 @@
             if (listView) {
                 this.addRemovableEventListener(listView, "selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
                 this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
+                this.addRemovableEventListener(listView, "wheel", this.eventHandlers.wheelHandler.bind(this));
+                this.addRemovableEventListener(listView, "mousewheel", this.eventHandlers.wheelHandler.bind(this));
             }
 
             var saveData = function (complete, error) {
