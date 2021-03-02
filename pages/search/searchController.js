@@ -350,7 +350,10 @@
                             // or server returns response with an error status.
                             AppData.setErrorMsg(that.binding, errorResponse);
                         }, {
-                            VeranstaltungID: AppData.getRecordId("Veranstaltung")
+                            VeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                            bAndInEachRow: true,
+                            bUseOr: false,
+                            INITAPUserRoleID: [5, 2]
                         });
                     } /*else {
                         if (erfasserID && erfasserID.winControl) {
