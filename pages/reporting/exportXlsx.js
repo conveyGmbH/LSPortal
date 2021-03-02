@@ -53,8 +53,8 @@
                         this.progressNext = 0;
                         //this.progressStep = 40;
                     }
-                    ExportXlsx.exporter.progress.percent = parseInt(percent);
-                    this.progress.show = ExportXlsx.exporter.progress.percent >= 0 && ExportXlsx.exporter.progress.percent <= 100 ? 1 : null;
+                this.progress.percent = parseInt(percent);
+                this.progress.show = percent >= 0 && percent <= 100 ? 1 : null;
                     this.progress.text = text ? text : getResourceText("reporting.progressMsg");
                 //}
             },
@@ -79,14 +79,13 @@
                 });
             },
             writeResultToSheetData: function (sheetData, results, attribSpecs, colCount) {
-                var that = this;
+                //var that = this;
                 var rowCount = results.length;
                 Log.call(Log.l.trace, "ExportXlsx.", "rowCount=" + rowCount);
                 //that.progressFirst = that.progressNext;
                 // that.progressNext = results.length / AppData.generalData.AnzahlKontakte * 100;
                 // that.showProgress(that.progressNext); 35 / 36
-                ExportXlsx.exporter.progressStep = 100 / results.length;
-                var newCell, valueName, type, style, value, extraValue;
+                ExportXlsx.exporter.progressStep = results.length / AppData.generalData.AnzahlKontakte * 100; var newCell, valueName, type, style, value, extraValue;
                 function isNumber(v) {
                     if (typeof v === "number") {
                         return true;
@@ -254,6 +253,8 @@
                         }
                     }
                     sheetData.add(newRow);
+                    ExportXlsx.exporter.progressNext = ExportXlsx.exporter.progressNext + ExportXlsx.exporter.progressStep;
+                    ExportXlsx.exporter.showProgress(ExportXlsx.exporter.progressNext);
                     //this.showProgress(parseInt(ExportXlsx.exporter.progressNext));
                     //this.progress.percent = ExportXlsx.exporter.progressNext;
                 }
@@ -316,10 +317,10 @@
                     promise = WinJS.Promise.as();
                 }
                 if (restriction) {
-                        that.progressNext = 0;
-                        that.showProgress(that.progressNext);
                     dbView.select(function (json) {
                         Log.print(Log.l.trace, "analysisListView: success!");
+                        that.progressNext = 0;
+                        that.showProgress(that.progressNext);
                         if (json && json.d && json.d.results) {
                             var results;
                             if (dbViewTitle) {
@@ -377,9 +378,9 @@
                                 that.writeResultToSheetData(sheetData, results, attribSpecs, attribSpecs.length);
                             }).then(function () {
                                 var nextUrl = dbView.getNextUrl(json);
-                                WinJS.Promise.timeout(50).then(function () {
+                                /*WinJS.Promise.timeout(50).then(function () {
                                     that.showProgress(33);
-                                });
+                                });*/
                                 if (nextUrl) {
                                     Log.print(Log.l.trace, "analysisListView: fech more data...");
                                     WinJS.Promise.timeout(0).then(function () {
