@@ -236,7 +236,10 @@
                                                 // current detail view has saveData() function
                                                 AppBar.scope.saveData(function (response) {
                                                     // called asynchronously if ok
-                                                    if ((curPageId === "eventGenSettings" || curPageId === "eventResourceAdministration" || curPageId === "eventMediaAdministration" || curPageId === "eventSeriesAdministration") &&
+                                                    if ((curPageId === "eventGenSettings" ||
+                                                         curPageId === "eventResourceAdministration" || 
+                                                         curPageId === "eventMediaAdministration" || 
+                                                         curPageId === "eventSeriesAdministration") &&
                                                         typeof AppBar.scope.loadData === "function" &&
                                                         typeof AppBar.scope.setEventId === "function") {
                                                         if (curPageId === "eventGenSettings") {
@@ -247,23 +250,29 @@
                                                             AppBar.scope.loadData();
                                                         }
                                                     } else {
-                                                        Application.navigateById("eventResourceAdministration");
+                                                        Application.navigateById("eventGenSettings");
                                                     }
                                                 }, function (errorResponse) {
-                                                    if ((curPageId === "eventResourceAdministration" || curPageId === "eventMediaAdministration" || curPageId === "eventSeriesAdministration") && 
+                                                    if ((curPageId === "eventGenSettings" ||
+                                                         curPageId === "eventResourceAdministration" ||
+                                                         curPageId === "eventMediaAdministration" || 
+                                                         curPageId === "eventSeriesAdministration") && 
                                                         typeof AppBar.scope.getEventId === "function") {
                                                         that.selectRecordId(AppBar.scope.getEventId());
                                                     }
                                                 });
                                             } else {
                                                 // current detail view has NO saveData() function - is list
-                                                if ((curPageId === "eventResourceAdministration"  || curPageId === "eventMediaAdministration" || curPageId === "eventSeriesAdministration")&&
+                                                if ((curPageId === "eventGenSettings" ||
+                                                     curPageId === "eventResourceAdministration"  || 
+                                                     curPageId === "eventMediaAdministration" || 
+                                                     curPageId === "eventSeriesAdministration")&&
                                                     typeof AppBar.scope.loadData === "function" &&
                                                     typeof AppBar.scope.setEventId === "function") {
                                                     AppBar.scope.setEventId(item.data.VeranstaltungVIEWID);
                                                     AppBar.scope.loadData();
                                                 } else {
-                                                    Application.navigateById("eventResourceAdministration");
+                                                    Application.navigateById("eventGenSettings");
                                                 }
                                             }
                                             AppBar.triggerDisableHandlers();

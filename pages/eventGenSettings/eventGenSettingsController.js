@@ -556,7 +556,7 @@
                     });
                 } else {
                     var err = { status: 0, statusText: "no record selected" };
-                    error(err);
+                    AppData.setErrorMsg(that.binding, err);
                 }
                 Log.ret(Log.l.trace);
             };
