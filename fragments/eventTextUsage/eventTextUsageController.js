@@ -22,6 +22,9 @@
             // now do anything...
             var listView = fragmentElement.querySelector("#eventTextUsageList.listview");
 
+            var waitingForMouseScroll = false;
+            var wheelScrollAdd = 0;
+
             var eventHandlers = {
                 onSelectionChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "EventTextUsage.Controller.");
@@ -66,7 +69,7 @@
                         Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
                         if (listView.winControl.loadingState === "itemsLoading") {
                         } else if (listView.winControl.loadingState === "complete") {
-                            var surface = listView.querySelector(".win-surface");
+                            /*var surface = listView.querySelector(".win-surface");
                             if (surface) {
                                 if (surface.clientWidth < listView.clientWidth) {
                                     WinJS.Promise.timeout(50).then(function() {
@@ -80,10 +83,44 @@
                                         }
                                     });
                                 }
-                            }
+                            }*/
                         }
                     }
                     Log.ret(Log.l.trace);
+                },
+                wheelHandler: function(eventInfo) {
+                    Log.call(Log.l.u1, "MediaList.Controller.");
+                    
+                    if (eventInfo && listView && listView.winControl) {
+                        var wheelWithinListView = eventInfo.target && (listView.contains(eventInfo.target) || listView === eventInfo.target);
+                        if (wheelWithinListView) {
+                            eventInfo.stopPropagation();
+                            eventInfo.preventDefault();
+
+                            var wheelValue;
+                            var wheelingForward;
+
+                            if (typeof eventInfo.deltaY === 'number') {
+                                wheelingForward = (eventInfo.deltaX || eventInfo.deltaY) > 0;
+                                wheelValue = Math.abs(eventInfo.deltaX || eventInfo.deltaY || 0);
+                            } else {
+                                wheelingForward = eventInfo.wheelDelta < 0;
+                                wheelValue = Math.abs(eventInfo.wheelDelta || 0);
+                            }
+                            wheelScrollAdd += wheelingForward ? wheelValue : -wheelValue;
+                            if (waitingForMouseScroll) {
+                                Log.ret(Log.l.u1, "extra ignored");
+                                return;
+                            }
+                            waitingForMouseScroll = true;
+                            listView.winControl.scrollPosition += wheelScrollAdd/2;
+                            wheelScrollAdd = 0;
+                            WinJS.Promise.timeout(20).then(function() {
+                                waitingForMouseScroll = false;
+                            });
+                        }
+                    }
+                    Log.ret(Log.l.u1);
                 }
             }
             this.eventHandlers = eventHandlers;
@@ -130,6 +167,8 @@
             if (listView) {
                 this.addRemovableEventListener(listView, "selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
                 this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
+                this.addRemovableEventListener(listView, "wheel", this.eventHandlers.wheelHandler.bind(this));
+                this.addRemovableEventListener(listView, "mousewheel", this.eventHandlers.wheelHandler.bind(this));
             }
 
             var loadData = function () {
