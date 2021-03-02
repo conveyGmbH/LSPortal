@@ -109,6 +109,8 @@
     "tooltip.newStaff"  : "Standpersonal hinzufügen",
     "tooltip.deleteStaff"  : "Standpersonal löschen",
     "tooltip.permuser"  : "Zu Dauerkunde ändern",
+    "tooltip.newEventSeries" : "Add to new series",
+    "tooltip.deleteEventSeries" : "Delete from series",
 
     "home.title"            : "Start",
     "home.info"             : "Wichtige Hinweise",
@@ -543,7 +545,7 @@
 	"label.eventResourceAdministration" : "Texte",
 	"label.eventMediaAdministration" : "Medien",
 	"label.eventSeriesAdministration" : "Serien Zuordnung",
-	"label.eventSeries"          : "Serien",
+	"label.eventSeries"          : "Serie",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Abbrechen",
@@ -1229,5 +1231,8 @@
 	"eventSeries.labelDelete" : "Serie",
 	"eventSeries.serieDelete" : "Möchten Sie diese Serie löschen?",
 
+	"eventSeriesAdministration.serie" : "Series",
+    "eventSeriesAdministration.questionDelete" : "Do you want to remove the event from this series?",
+    
 	"eventSeriesList.count" : "Anzahl"
 }			

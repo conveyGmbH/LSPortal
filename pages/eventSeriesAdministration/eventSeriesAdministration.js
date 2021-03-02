@@ -23,14 +23,14 @@
                     this._surface = this._site.surface;
 
                     // Add a CSS class to control the surface level layout
-                    WinJS.Utilities.addClass(this._surface, "eventTextLayout");
+                    WinJS.Utilities.addClass(this._surface, "eventSeriesLayout");
 
                     return WinJS.UI.Orientation.vertical;
                 },
 
                 // Reset the layout to its initial state
                 uninitialize: function () {
-                    WinJS.Utilities.removeClass(this._surface, "eventTextLayout");
+                    WinJS.Utilities.removeClass(this._surface, "eventSeriesLayout");
                     this._site = null;
                     this._surface = null;
                 }
@@ -50,8 +50,8 @@
             // add page specific commands to AppBar
             var commandList = [
                 { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" },
-                { id: "clickNew", label: getResourceText("command.new"), tooltip: getResourceText("tooltip.newQuestiongroup"), section: "primary", svg: "plus" },
-                { id: "clickDelete", label: getResourceText("command.delete"), tooltip: getResourceText("tooltip.deleteQuestiongroup"), section: "primary", svg: "garbage_can" },
+                { id: "clickNew", label: getResourceText("command.new"), tooltip: getResourceText("tooltip.newEventSeries"), section: "primary", svg: "plus" },
+                { id: "clickDelete", label: getResourceText("command.delete"), tooltip: getResourceText("tooltip.deleteEventSeries"), section: "primary", svg: "garbage_can" },
                 { id: "clickForward", label: getResourceText("command.ok"), tooltip: getResourceText("tooltip.ok"), section: "primary", svg: "navigate_check", key: WinJS.Utilities.Key.enter }
             ];
             this.controller = new EventSeriesAdministration.Controller(element, commandList);

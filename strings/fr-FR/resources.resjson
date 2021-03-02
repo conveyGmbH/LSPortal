@@ -109,6 +109,8 @@
     "tooltip.newStaff"  : "Ajouter du personnel sur le stand",
     "tooltip.deleteStaff"  : "Supprimer le personnel du stand",
     "tooltip.permuser"  : "Changer en client régulier",
+    "tooltip.newEventSeries" : "Ajouter à une nouvelle série",
+    "tooltip.deleteEventSeries" : "Supprimer de la série",
 
     "home.title"            : "Start",
     "home.info"             : "Instructions importantes",
@@ -1228,6 +1230,9 @@
     "eventSeries.languageTitle": "Titre de la langue",
     "eventSeries.labelDelete": "Série",
     "eventSeries.serieDelete": "Voulez-vous supprimer cette série?",
+
+    "eventSeriesAdministration.serie" : "Série",
+    "eventSeriesAdministration.questionDelete" : "Souhaitez-vous retirer l'événement de cette série?",
 
     "eventSeriesList.count"         : "Nombre",
 }
