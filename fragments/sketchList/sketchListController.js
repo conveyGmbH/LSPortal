@@ -265,7 +265,7 @@
                                 return;
                             }
                             waitingForMouseScroll = true;
-                            listView.winControl.scrollPosition += wheelScrollAdd;
+                            listView.winControl.scrollPosition += wheelScrollAdd / 2;
                             wheelScrollAdd = 0;
                             WinJS.Promise.timeout(20).then(function() {
                                 waitingForMouseScroll = false;

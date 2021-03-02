@@ -22,6 +22,7 @@
             // now do anything...
             var listView = fragmentElement.querySelector("#eventTextUsageList.listview");
 
+            var doScrollIntoViewAnimation = false;
             var waitingForMouseScroll = false;
             var wheelScrollAdd = 0;
 
@@ -43,6 +44,7 @@
                                         typeof AppBar.scope.getEventTextUsageId === "function" &&
                                         typeof AppBar.scope.setEventTextUsageId === "function" &&
                                         AppBar.scope.getEventTextUsageId() !== item.data.INITDokVerwendungID) {
+                                        doScrollIntoViewAnimation = true;
                                         AppBar.scope.setEventTextUsageId(item.data.INITDokVerwendungID);
                                         AppBar.scope.loadData();
                                         WinJS.Promise.timeout(50).then(function() {
@@ -69,7 +71,7 @@
                         Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
                         if (listView.winControl.loadingState === "itemsLoading") {
                         } else if (listView.winControl.loadingState === "complete") {
-                            /*var surface = listView.querySelector(".win-surface");
+                            var surface = listView.querySelector(".win-surface");
                             if (surface) {
                                 if (surface.clientWidth < listView.clientWidth) {
                                     WinJS.Promise.timeout(50).then(function() {
@@ -83,7 +85,7 @@
                                         }
                                     });
                                 }
-                            }*/
+                            }
                         }
                     }
                     Log.ret(Log.l.trace);
@@ -113,7 +115,7 @@
                                 return;
                             }
                             waitingForMouseScroll = true;
-                            listView.winControl.scrollPosition += wheelScrollAdd/2;
+                            listView.winControl.scrollPosition += wheelScrollAdd / 2;
                             wheelScrollAdd = 0;
                             WinJS.Promise.timeout(20).then(function() {
                                 waitingForMouseScroll = false;
@@ -150,10 +152,14 @@
                                 }
                                 if (listControl.scrollPosition !== scrollPosition) {
                                     var prevScrollPosition = listControl.scrollPosition;
-                                    var animationDistanceX = (scrollPosition - prevScrollPosition) / 2;
-                                    var animationOptions = { top: "0px", left: animationDistanceX.toString() + "px" };
                                     listControl.scrollPosition = scrollPosition;
-                                    WinJS.UI.Animation.enterContent(surface, animationOptions);
+                                    if (doScrollIntoViewAnimation) {
+                                        var animationDistanceX = (scrollPosition - prevScrollPosition) / 2;
+                                        var animationOptions = { top: "0px", left: animationDistanceX.toString() + "px" };
+                                        WinJS.UI.Animation.enterContent(surface, animationOptions).done(function() {
+                                            doScrollIntoViewAnimation = false;
+                                        });
+                                    }
                                 }
                             }
                         }

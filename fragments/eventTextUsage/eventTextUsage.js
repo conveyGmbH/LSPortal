@@ -58,8 +58,8 @@
                                     var listControl = listView && listView.winControl;
                                     var textUsage = that.controller.textUsage;
                                     if (listView && listControl && textUsage && textUsage.length > 0) {
-                                        var container, i, selectionBkg, itemWidth;
                                         if (listControl.loadingState === "complete") {
+                                            var container, i, selectionBkg, itemWidth;
                                             // calculate width for each cell
                                             var containers = listView.querySelectorAll(".win-container");
                                             if (containers && containers.length === textUsage.length) {
