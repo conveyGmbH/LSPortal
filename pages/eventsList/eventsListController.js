@@ -236,11 +236,16 @@
                                                 // current detail view has saveData() function
                                                 AppBar.scope.saveData(function (response) {
                                                     // called asynchronously if ok
-                                                    if ((curPageId === "eventResourceAdministration" || curPageId === "eventMediaAdministration" || curPageId === "eventSeriesAdministration") &&
+                                                    if ((curPageId === "eventGenSettings" || curPageId === "eventResourceAdministration" || curPageId === "eventMediaAdministration" || curPageId === "eventSeriesAdministration") &&
                                                         typeof AppBar.scope.loadData === "function" &&
                                                         typeof AppBar.scope.setEventId === "function") {
-                                                        AppBar.scope.setEventId(item.data.VeranstaltungVIEWID);
-                                                        AppBar.scope.loadData();
+                                                        if (curPageId === "eventGenSettings") {
+                                                            AppBar.scope.setEventId(item.data.VeranstaltungVIEWID);
+                                                            AppBar.scope.selectConfExhibitorId();
+                                                        } else {
+                                                            AppBar.scope.setEventId(item.data.VeranstaltungVIEWID);
+                                                            AppBar.scope.loadData();
+                                                        }
                                                     } else {
                                                         Application.navigateById("eventResourceAdministration");
                                                     }
