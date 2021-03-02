@@ -1256,7 +1256,7 @@
     "eventGenSettings.speakerimage"			: "Speaker Bild zeigen",
     "eventGenSettings.speakertitle"			: "Speaker Titel zeigen",
 	"eventGenSettings.speakercv"			: "Speaker CV zeigen",
-    "eventGenSettings.newevent"			: "Neuer Veranstaltungname"
+    "eventGenSettings.newevent"			: "Neuer Veranstaltungname",
      
 	"eventSeries.title" : "Titel",
     "eventSeries.language" : "Sprache",
