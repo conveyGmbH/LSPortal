@@ -38,21 +38,6 @@
             this.pageElement = pageElement;
             this.docViewer = null;
 
-            var resultConverter = function(item) {
-                Log.call(Log.l.trace, "EventMediaAdministration.Controller.");
-                if (item) {
-                    that.binding.docId = item.MandantDokumentVIEWID;
-                    that.binding.showSvg = false;
-                    that.binding.showPhoto = false;
-                    that.binding.showAudio = false;
-                    that.binding.showUpload = false;
-                    that.binding.flagInsert = null;
-                    that.binding.addIndex = null;
-                }
-                Log.ret(Log.l.trace);
-            }
-            this.resultConverter = resultConverter;
-
             var setDocCount = function(count) {
                 Log.call(Log.l.trace, "EventMediaAdministration.Controller.", "count=" + count);
                 if (count > 1) {
@@ -60,9 +45,18 @@
                 } else {
                     that.binding.moreDocs = false;
                     if (!count) {
+                        that.binding.docId = 0;
                         that.binding.showSvg = false;
                         that.binding.showPhoto = false;
                         that.binding.showAudio = false;
+                        that.binding.showUpload = false;
+                        that.binding.flagInsert = null;
+                        that.binding.addIndex = null;
+                        var uploadMediaFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("uploadMedia"));
+                        if (uploadMediaFragmentControl && uploadMediaFragmentControl.controller &&
+                            typeof uploadMediaFragmentControl.controller.setDocId === "function") {
+                            uploadMediaFragmentControl.controller.setDocId(that.binding.docId);
+                        } 
                     }
                 }
                 if (that.binding.userHidesList) {
@@ -142,7 +136,7 @@
                     var bUpdateCommands = false;
                     var prevDocViewer = that.docViewer;
                     var newDocViewer = null;
-                    var prevShowUpdate = that.binding.showUpload;
+                    var prevShowUpload = that.binding.showUpload;
                     if (docGroup && docFormat) {
                         that.binding.showUpload = false;
                         newDocViewer = getDocViewer(docGroup, docFormat);
@@ -186,23 +180,27 @@
                             }
                         }
                     } else {
-                        that.binding.showUpload = true;
+                        that.binding.showUpload = !!docId;
                         that.binding.showSvg = false;
                         that.binding.showPhoto = false;
                         that.binding.showAudio = false;
                         bUpdateCommands = true;
-                        ret = that.loadUpload(docId);
+                        if (that.binding.showUpload) {
+                            ret = that.loadUpload(docId);
+                        } else {
+                            ret = WinJS.Promise.as();
+                        }
                     }
                     // do command update if needed
                     var js = {
                         doc: ret || WinJS.Promise.as(),
                         text: that.loadText(docId)
-                    }
+                }
                     ret = WinJS.Promise.join(js).then(function () {
                         if (bUpdateCommands) {
                             var uploadMediaFragmentControl;
                             if (that.binding.showUpload) {
-                                if (prevShowUpdate !== that.binding.showUpload) {
+                                if (prevShowUpload !== that.binding.showUpload) {
                                     uploadMediaFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("uploadMedia"));
                                     if (uploadMediaFragmentControl && uploadMediaFragmentControl.controller) {
                                         uploadMediaFragmentControl.controller.updateCommands(prevDocViewer && prevDocViewer.controller);
@@ -212,7 +210,7 @@
                                 if (bGetNewDocViewer) {
                                     that.docViewer = getDocViewer(docGroup, docFormat);
                                 }
-                                if (prevShowUpdate !== that.binding.showUpload) {
+                                if (prevShowUpload !== that.binding.showUpload) {
                                     uploadMediaFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("uploadMedia"));
                                     that.docViewer.controller.updateCommands(uploadMediaFragmentControl && uploadMediaFragmentControl.controller);
                                 } else if (prevDocViewer !== that.docViewer && that.docViewer && that.docViewer.controller) {

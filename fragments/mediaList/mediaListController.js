@@ -19,7 +19,7 @@
                 MediaList._eventId = options.eventId;
             }
             Fragments.Controller.apply(this, [fragmentElement, {
-                docId: null,
+                docId: 0,
                 docGroup: null,
                 docFormat: null,
                 flagInsert: null,
@@ -372,9 +372,15 @@
                                     }
                                 }
                                 Log.print(Log.l.trace, "MediaList.eventDocView: selIdx=" + selIdx);
+                            } else {
+                                that.binding.docId = 0;
+                                that.binding.docGroup = null;
+                                that.binding.docFormat = null;
+                                that.binding.flagInsert = null;
+                                that.binding.addIndex = null;
                             }
                         } else {
-                            that.binding.docId = null;
+                            that.binding.docId = 0;
                             that.binding.docGroup = null;
                             that.binding.docFormat = null;
                             that.binding.flagInsert = null;
@@ -425,7 +431,7 @@
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
-                    if (reloadDocView && AppBar.scope && that.binding.docId) {
+                    if (reloadDocView && AppBar.scope) {
                         if (typeof AppBar.scope.setFlagInsert === "function") {
                             AppBar.scope.setFlagInsert(that.binding.flagInsert);
                         }

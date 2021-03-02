@@ -269,6 +269,13 @@
                 }
             };
             this.eventHandlers = eventHandlers;
+
+            var disableHandlers = {
+                clickUpload: function() {
+                    return AppBar.busy || !that.binding.docId;
+                }
+            }
+            this.disableHandlers = disableHandlers;
             
             // Initialisiere Drag&Drop EventListener
             if (dropZone) {
