@@ -11,13 +11,16 @@
     height: 100px;
     width: 250px;
     text-align: center;
-    /*background-color: #d86141;*/
+    background-color: #d86141;
 }
 
 .button-container {
     height: 150px;
 }
 
+.titlearea-bkg-white {
+    color: #ffffff;
+}
 .win-nonselectable .reporting-button {
     background-color: rgba(128,128,128,0.4) !important;
 }

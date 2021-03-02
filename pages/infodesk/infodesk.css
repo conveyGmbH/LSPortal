@@ -203,3 +203,8 @@ textarea {
 .view-size-small .landscape_only_small {
     display: none;
 }
+.userMessage-title {
+    width: 90%;
+    margin-left: 13px;
+    min-height: 12px;
+}
