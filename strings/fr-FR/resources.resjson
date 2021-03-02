@@ -544,7 +544,7 @@
     "label.mailingTemplateEvent" : "Modèles",
     "label.eventResourceAdministration" : "Event Administration",
     "label.eventMediaAdministration" : "Media Administration",
-    "label.eventSeries": "Série",General Settings
+    "label.eventSeries": "Série",
     "label.eventSeriesAdministration": "Assignation de série",
 	"label.eventGenSettings" : "Paramètres généraux",
 
