@@ -205,7 +205,7 @@
                                     var prevScrollPosition = listControl.scrollPosition;
                                     listControl.scrollPosition = scrollPosition;
                                     if (doScrollIntoViewAnimation) {
-                                        var animationDistanceX = (scrollPosition - prevScrollPosition) / 2;
+                                        var animationDistanceX = (scrollPosition - prevScrollPosition) / 3;
                                         var animationOptions = { top: "0px", left: animationDistanceX.toString() + "px" };
                                         WinJS.UI.Animation.enterContent(surface, animationOptions).done(function() {
                                             doScrollIntoViewAnimation = false;
