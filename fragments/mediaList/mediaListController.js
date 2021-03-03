@@ -33,6 +33,7 @@
             // now do anything...
             var listView = fragmentElement.querySelector("#mediaList.listview");
 
+            var doScrollIntoViewAnimation = false;
             var initialScrollPosition = 0;
             var wheelValueFactor = 100;
             var waitingForMouseScroll = false;
@@ -216,6 +217,7 @@
                                         that.binding.flagInsert = item.data.FlagInsert;
                                         that.binding.addIndex = item.data.AddIndex;
                                         if (AppBar.scope) {
+                                            doScrollIntoViewAnimation = true;
                                             if (AppBar.scope.pageElement &&
                                                 AppBar.scope.pageElement.winControl &&
                                                 typeof AppBar.scope.pageElement.winControl.canUnload === "function") {
@@ -248,6 +250,17 @@
                                                     AppBar.scope.loadDoc(that.binding.docId, that.binding.docGroup, that.binding.docFormat);
                                                 }
                                             }
+                                            WinJS.Promise.timeout(50).then(function() {
+                                                Log.print(Log.l.trace, "now update layout...");
+                                                var fragmentControl = fragmentElement.winControl;
+                                                if (fragmentControl && fragmentControl.updateLayout) {
+                                                    fragmentControl.prevWidth = 0;
+                                                    fragmentControl.prevHeight = 0;
+                                                    return fragmentControl.updateLayout.call(fragmentControl, fragmentElement);
+                                                } else {
+                                                    return WinJS.Promise.as();
+                                                }
+                                            });
                                         }
                                     }
                                 });
@@ -321,6 +334,59 @@
                 }
             }
             this.eventHandlers = eventHandlers;
+
+            var scrollIntoView = function (curIndex) {
+                Log.call(Log.l.u1, "MediaList.Controller.");
+                if (listView && listView.winControl) {
+                    var listControl = listView.winControl;
+                    var containers = listView.querySelectorAll(".win-container");
+                    if (containers && containers.length === that.records.length && containers[0]) {
+                        var surface = listView.querySelector(".win-surface");
+                        if (surface) {
+                            var overflow = surface.clientWidth - listView.clientWidth;
+                            if (overflow > 0) {
+                                var containersWidth = 0;
+                                for (var i = 0; i < curIndex; i++) {
+                                    containersWidth += containers[i].clientWidth;
+                                    if (i === curIndex - 1) {
+                                        if (containersWidth - Math.max(60, containers[i].clientWidth / 4) < listControl.scrollPosition) {
+                                            containersWidth -= Math.max(60, containers[i].clientWidth / 4);
+                                        } else if (containersWidth + containers[curIndex].clientWidth +
+                                            ((curIndex + 1 < containers.length) ? Math.max(60, containers[curIndex + 1].clientWidth / 4) : 0) -
+                                            listView.clientWidth > listControl.scrollPosition) {
+                                            containersWidth += containers[curIndex].clientWidth +
+                                                ((curIndex + 1 < containers.length) ? Math.max(60, containers[curIndex + 1].clientWidth / 4) : 0) -
+                                                listView.clientWidth;
+                                        } else {
+                                            Log.ret(Log.l.u1, "extra ignored");
+                                            return;
+                                        }
+                                    }
+                                }
+                                var scrollPosition = Math.floor(containersWidth);
+                                if (scrollPosition < 0) {
+                                    scrollPosition = 0;
+                                } else if (scrollPosition > overflow) {
+                                    scrollPosition = overflow;
+                                }
+                                if (listControl.scrollPosition !== scrollPosition) {
+                                    var prevScrollPosition = listControl.scrollPosition;
+                                    listControl.scrollPosition = scrollPosition;
+                                    if (doScrollIntoViewAnimation) {
+                                        var animationDistanceX = (scrollPosition - prevScrollPosition) / 3;
+                                        var animationOptions = { top: "0px", left: animationDistanceX.toString() + "px" };
+                                        WinJS.UI.Animation.enterContent(surface, animationOptions).done(function() {
+                                            doScrollIntoViewAnimation = false;
+                                        });
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                Log.ret(Log.l.u1);
+            }
+            that.scrollIntoView = scrollIntoView;
 
             // register ListView event handler
             if (listView) {
