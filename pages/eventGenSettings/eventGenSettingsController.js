@@ -562,6 +562,11 @@
             };
             this.selectConfExhibitorId = selectConfExhibitorId;
 
+            var master = Application.navigator.masterControl;
+            if (master && master.controller && master.controller.binding) {
+                that.setEventId(master.controller.binding.eventId);
+            }
+
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.selectConfExhibitorId();
