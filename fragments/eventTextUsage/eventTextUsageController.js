@@ -23,8 +23,29 @@
             var listView = fragmentElement.querySelector("#eventTextUsageList.listview");
 
             var doScrollIntoViewAnimation = false;
+            var initialScrollPosition = 0;
             var waitingForMouseScroll = false;
             var wheelScrollAdd = 0;
+            var checkForWheelEndPromise = null;
+
+            var onTouch = function(eventId, x, y) {
+                if (listView && listView.winControl) {
+                    listView.winControl.scrollPosition = initialScrollPosition + x/4;
+                }
+            };
+            var touchPhysics = new TouchPhysics.TouchPhysics(onTouch);
+            var checkForWheelEnd = function(eventInfo) {
+                if (checkForWheelEndPromise) {
+                    checkForWheelEndPromise.cancel();
+                }
+                checkForWheelEndPromise = WinJS.Promise.timeout(TouchPhysics.wheelEndTimerMs).then(function() {
+                    waitingForMouseScroll = false;
+                    checkForWheelEndPromise = null;
+                    touchPhysics.processUp(MANIPULATION_PROCESSOR_MANIPULATIONS.MANIPULATION_TRANSLATE_X, wheelScrollAdd*100, 0);
+                    wheelScrollAdd = 0;
+                });
+            }
+            this.checkForWheelEnd = checkForWheelEnd;
 
             var eventHandlers = {
                 onSelectionChanged: function (eventInfo) {
@@ -91,14 +112,21 @@
                     Log.ret(Log.l.trace);
                 },
                 wheelHandler: function(eventInfo) {
-                    Log.call(Log.l.u1, "MediaList.Controller.");
-                    
                     if (eventInfo && listView && listView.winControl) {
                         var wheelWithinListView = eventInfo.target && (listView.contains(eventInfo.target) || listView === eventInfo.target);
                         if (wheelWithinListView) {
                             eventInfo.stopPropagation();
                             eventInfo.preventDefault();
 
+                            if (!waitingForMouseScroll) {
+                                waitingForMouseScroll = true;
+                                initialScrollPosition = listView.winControl.scrollPosition;
+                                touchPhysics.processDown(MANIPULATION_PROCESSOR_MANIPULATIONS.MANIPULATION_TRANSLATE_X, 0, 0);
+                                WinJS.Promise.timeout(TouchPhysics.wheelStartTimerMs).then(function() {
+                                    that.eventHandlers.wheelHandler(eventInfo);
+                                });
+                                return;
+                            }
                             var wheelValue;
                             var wheelingForward;
 
@@ -110,8 +138,11 @@
                                 wheelValue = Math.abs(eventInfo.wheelDelta || 0);
                             }
                             wheelScrollAdd += wheelingForward ? wheelValue : -wheelValue;
+
+                            touchPhysics.processMove(MANIPULATION_PROCESSOR_MANIPULATIONS.MANIPULATION_TRANSLATE_X, wheelScrollAdd*100, 0);
+                            that.checkForWheelEnd(eventInfo);
+                            /*
                             if (waitingForMouseScroll) {
-                                Log.ret(Log.l.u1, "extra ignored");
                                 return;
                             }
                             waitingForMouseScroll = true;
@@ -120,9 +151,9 @@
                             WinJS.Promise.timeout(20).then(function() {
                                 waitingForMouseScroll = false;
                             });
+                            */
                         }
                     }
-                    Log.ret(Log.l.u1);
                 }
             }
             this.eventHandlers = eventHandlers;

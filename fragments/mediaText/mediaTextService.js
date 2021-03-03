@@ -19,19 +19,19 @@
         initSpracheView: {
             select: function (complete, error, recordId) {
                 Log.call(Log.l.trace, "AppData._initSpracheView.");
-                var ret = EventResourceAdministration._initSpracheView.select(complete, error, recordId, { ordered: true });
+                var ret = MediaText._initSpracheView.select(complete, error, recordId, { ordered: true });
                 Log.ret(Log.l.trace);
                 return ret;
             },
             getResults: function () {
                 Log.call(Log.l.trace, "AppData._initSpracheView.");
-                var ret = EventResourceAdministration._initSpracheView.results;
+                var ret = MediaText._initSpracheView.results;
                 Log.ret(Log.l.trace);
                 return ret;
             },
             getMap: function () {
                 Log.call(Log.l.trace, "AppData._initSpracheView.");
-                var ret = EventResourceAdministration._initSpracheView.map;
+                var ret = MediaText._initSpracheView.map;
                 Log.ret(Log.l.trace);
                 return ret;
             }
