@@ -181,7 +181,18 @@
                                 for (var i = 0; i < curIndex; i++) {
                                     containersWidth += containers[i].clientWidth;
                                     if (i === curIndex - 1) {
-                                        containersWidth -= containers[i].clientWidth / 4;
+                                        if (containersWidth - Math.max(60, containers[i].clientWidth / 4) < listControl.scrollPosition) {
+                                            containersWidth -= Math.max(60, containers[i].clientWidth / 4);
+                                        } else if (containersWidth + containers[curIndex].clientWidth +
+                                            ((curIndex + 1 < containers.length) ? Math.max(60, containers[curIndex + 1].clientWidth / 4) : 0) -
+                                            listView.clientWidth > listControl.scrollPosition) {
+                                            containersWidth += containers[curIndex].clientWidth +
+                                                ((curIndex + 1 < containers.length) ? Math.max(60, containers[curIndex + 1].clientWidth / 4) : 0) -
+                                                listView.clientWidth;
+                                        } else {
+                                            Log.ret(Log.l.u1, "extra ignored");
+                                            return;
+                                        }
                                     }
                                 }
                                 var scrollPosition = Math.floor(containersWidth);
