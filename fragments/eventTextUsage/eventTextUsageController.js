@@ -24,6 +24,7 @@
 
             var doScrollIntoViewAnimation = false;
             var initialScrollPosition = 0;
+            var wheelValueFactor = 100;
             var waitingForMouseScroll = false;
             var wheelScrollAdd = 0;
             var checkForWheelEndPromise = null;
@@ -41,7 +42,7 @@
                 checkForWheelEndPromise = WinJS.Promise.timeout(TouchPhysics.wheelEndTimerMs).then(function() {
                     waitingForMouseScroll = false;
                     checkForWheelEndPromise = null;
-                    touchPhysics.processUp(MANIPULATION_PROCESSOR_MANIPULATIONS.MANIPULATION_TRANSLATE_X, wheelScrollAdd*100, 0);
+                    touchPhysics.processUp(MANIPULATION_PROCESSOR_MANIPULATIONS.MANIPULATION_TRANSLATE_X, wheelScrollAdd*wheelValueFactor, 0);
                     wheelScrollAdd = 0;
                 });
             }
@@ -118,16 +119,24 @@
                             eventInfo.stopPropagation();
                             eventInfo.preventDefault();
 
+                            var wheelValue;
                             if (!waitingForMouseScroll) {
                                 waitingForMouseScroll = true;
                                 initialScrollPosition = listView.winControl.scrollPosition;
+                                if (typeof eventInfo.deltaY === 'number') {
+                                    wheelValue = Math.abs(eventInfo.deltaX || eventInfo.deltaY || 0);
+                                } else {
+                                    wheelValue = Math.abs(eventInfo.wheelDelta || 0);
+                                }
+                                if (wheelValue) {
+                                    wheelValueFactor = 10000 / wheelValue;
+                                }
                                 touchPhysics.processDown(MANIPULATION_PROCESSOR_MANIPULATIONS.MANIPULATION_TRANSLATE_X, 0, 0);
                                 WinJS.Promise.timeout(TouchPhysics.wheelStartTimerMs).then(function() {
                                     that.eventHandlers.wheelHandler(eventInfo);
                                 });
                                 return;
                             }
-                            var wheelValue;
                             var wheelingForward;
 
                             if (typeof eventInfo.deltaY === 'number') {
@@ -139,7 +148,7 @@
                             }
                             wheelScrollAdd += wheelingForward ? wheelValue : -wheelValue;
 
-                            touchPhysics.processMove(MANIPULATION_PROCESSOR_MANIPULATIONS.MANIPULATION_TRANSLATE_X, wheelScrollAdd*100, 0);
+                            touchPhysics.processMove(MANIPULATION_PROCESSOR_MANIPULATIONS.MANIPULATION_TRANSLATE_X, wheelScrollAdd*wheelValueFactor, 0);
                             that.checkForWheelEnd(eventInfo);
                             /*
                             if (waitingForMouseScroll) {
