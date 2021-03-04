@@ -14,44 +14,52 @@
                 <div class="contentarea win-type-body">
                     <div class="content-header">
                         <div class="win-type-subtitle master-list-header">
-                            <span data-win-res="{textContent: 'contactList.title'}"></span><br/>
-                            <span id="konanz" data-win-res="{textContent: 'contactList.numberofcontactstotal'}"></span><span>: </span><span data-win-bind="textContent: noctcount"></span><br />
-                            <span id="konanz" data-win-res="{textContent: 'contactList.davon'}"></span>
-                            <span data-win-bind="textContent: noeccount"></span><span> </span><span id="konanz" data-win-res="{textContent: 'contactList.numberofeditedcontacts'}"></span>
-                            <span> / </span>
-                            <span data-win-bind="textContent: nouccount"></span><span> </span><span id="konanz" data-win-res="{textContent: 'contactList.numberofunprocessedcontacts'}"></span>
+                            <div class="master-list-header-title">
+                                <span data-win-res="{textContent: 'contactList.title'}"></span>
+                            </div>
+                            <div class="master-list-header-line win-type-caption">
+                                <span data-win-res="{textContent: 'contactList.numberofcontactstotal'}"></span><span>: </span>
+                                <span data-win-bind="textContent: noctcount"></span><span>&nbsp;</span>
+                            </div>
+                            <div class="master-list-header-line win-type-caption">
+                                <span data-win-res="{textContent: 'contactList.davon'}"></span>
+                                <span data-win-bind="textContent: noeccount"></span>
+                                <span data-win-res="{textContent: 'contactList.numberofeditedcontacts'}"></span><span> / </span>
+                                <span data-win-bind="textContent: nouccount"></span><span>&nbsp;</span>
+                                <span data-win-res="{textContent: 'contactList.numberofunprocessedcontacts'}"></span>
+                            </div>
                         </div>
                     </div>
                     <div class="headerFooterPlaceholder">
-                        <div class="list-header">
+                        <div class="list-header box-bkg">
                             <div class="list-landscape-only list-header-columns">
                                 <div class="list-field-small-fixed"
                                      data-win-res="{textContent: 'contactList.editedOn'}"></div>
-                                <div class="list-field-small-fixed"
-                                      data-win-res="{textContent: 'contactList.company'}"></div>
-                                <div class="list-field-small-fixed"
+                                <div class="list-field-small-relative-20"
+                                     data-win-res="{textContent: 'contactList.company'}"></div>
+                                <div class="list-field-small-relative-10"
                                      data-win-res="{textContent: 'contactList.name'}"></div>
-                                <div class="list-field-small-fixed"
+                                <div class="list-field-small-relative-10"
                                      data-win-res="{textContent: 'contactList.firstName'}"></div>
-                                <div class="list-field-small-fixed"
+                                <div class="list-field-small-relative-20"
                                      data-win-res="{textContent: 'contactList.address'}"></div>
                                 <div class="list-field-small-fixed"
                                      data-win-res="{textContent: 'contactList.zip'}"></div>
-                                <div class="list-field-small-fixed"
+                                <div class="list-field-small-relative-10"
                                      data-win-res="{textContent: 'contactList.city'}"></div>
-                                <div class="list-field-small-fixed"
+                                <div class="list-field-small-relative-10"
                                      data-win-res="{textContent: 'contactList.country'}"></div>
-                                <div class="list-field-small-fixed"
+                                <div class="list-field-small-relative-10"
                                      data-win-res="{textContent: 'contactList.phone'}"></div>
-                              <!--<div class="list-field-small-relative"
-                                     data-win-res="{textContent: 'contactList.mobile'}"></div>
+                                <!--<div class="list-field-small-relative"
+                                   data-win-res="{textContent: 'contactList.mobile'}"></div>
                                 <div class="list-field-small-relative"
-                                     data-win-res="{textContent: 'contactList.email'}"></div>-->
+                                   data-win-res="{textContent: 'contactList.email'}"></div>-->
                                 <div class="list-field-small-fixed"
                                      data-win-res="{textContent: 'contactList.ID'}"></div>
                                 <div class="list-field-small-fixed"
                                      data-win-res="{textContent: 'contactList.captureType'}"></div>
-                                <div class="list-field-small-fixed"
+                                <div class="list-field-small-relative-10"
                                      data-win-res="{textContent: 'contactList.editer'}"></div>
                             </div>
                         </div>
@@ -61,36 +69,36 @@
                         <div class="list-landscape-only">
                             <div class="row-bkg-gray"
                                  data-win-bind="style.display: index Binding.Converter.oddToDisplay"></div>
-                            <div class="list-field-small-fixed win-type-ellipsis"
+                            <div class="list-field-small-fixed-right"
                                  data-win-bind="textContent: Erfassungsdatum Binding.Converter.toDateString"></div>
-                            <div class="list-field-small-fixed win-type-ellipsis"
+                            <div class="list-field-small-relative-20 win-type-ellipsis"
                                  data-win-bind="textContent: Firmenname"></div>
-                            <div class="list-field-small-fixed win-type-ellipsis"
+                            <div class="list-field-small-relative-10 win-type-ellipsis"
                                  data-win-bind="textContent: Name"></div>
-                            <div class="list-field-small-fixed win-type-ellipsis"
+                            <div class="list-field-small-relative-10 win-type-ellipsis"
                                  data-win-bind="textContent: Vorname"></div>
-                            <div class="list-field-small-fixed win-type-ellipsis"
+                            <div class="list-field-small-relative-20 win-type-ellipsis"
                                  data-win-bind="textContent: Strasse"></div>
-                            <div class="list-field-small-fixed win-type-ellipsis"
+                            <div class="list-field-small-fixed"
                                  data-win-bind="textContent: PLZ"></div>
-                            <div class="list-field-small-fixed win-type-ellipsis"
+                            <div class="list-field-small-relative-10 win-type-ellipsis"
                                  data-win-bind="textContent: Stadt"></div>
-                            <div class="list-field-small-fixed win-type-ellipsis"
+                            <div class="list-field-small-relative-10 win-type-ellipsis"
                                  data-win-bind="textContent: Land"></div>
-                            <div class="list-field-small-fixed win-type-ellipsis"
+                            <div class="list-field-small-relative-10 win-type-ellipsis"
                                  data-win-bind="textContent: TelefonFestnetz"></div>
                             <!--<div class="list-field-small-relative win-type-ellipsis"
                                  data-win-bind="textContent: TelefonMobil"></div>
                             <div class="list-field-small-relative win-type-ellipsis"
                                  data-win-bind="textContent: EMail"></div>-->
-                            <div class="list-field-small-fixed win-type-ellipsis"
+                            <div class="list-field-small-fixed"
                                  data-win-bind="textContent: globalContactId"></div>
                             <!-- Spalte für Erfassungsart -->
-                            <div class="list-field-small-fixed win-type-ellipsis">
+                            <div class="list-field-small-fixed">
                                 <div data-win-bind="name: svgSource; style.display: svgSource Binding.Converter.toDisplay"
                                      class="action-image"></div>
                             </div>
-                            <div class="list-field-small-fixed win-type-ellipsis"
+                            <div class="list-field-small-relative-10 win-type-ellipsis"
                                  data-win-bind="textContent: mitarbeiterFullName"></div>
                         </div>
                         <div class="list-portrait-only">

@@ -146,7 +146,8 @@
                                     that.binding.count = that.contacts.push(item);
                                 });
                             }
-                            if (recordId) {
+                            var curPageId = Application.getPageId(nav.location);
+                            if (recordId && curPageId !== "contactList") {
                                 that.selectRecordId(recordId);
                             }
                             if (that.nextDocUrl) {
@@ -459,7 +460,9 @@
                                                         Application.navigateById("contact");
                                                     }
                                                 },  function (errorResponse) {
-                                                    that.selectRecordId(that.binding.contactId);
+                                                    if (that.binding.contactId) {
+                                                        that.selectRecordId(that.binding.contactId);
+                                                    }
                                                 });
                                             } else {
                                                 // current detail view has NO saveData() function - is list
@@ -659,17 +662,20 @@
                                         listView.winControl.itemDataSource = that.contacts.dataSource;
                                     }
                                     Log.print(Log.l.trace, "Data loaded");
-                                    var recordID = AppData.getRecordId("Kontakt");
-                                    if (recordID) {
-                                        WinJS.Promise.timeout(0).then(function() {
-                                            that.selectRecordId(recordID);
-                                        });
-                                    } else {
-                                    if (results[0] && results[0].KontaktVIEWID) {
-                                        WinJS.Promise.timeout(0).then(function() {
-                                            that.selectRecordId(results[0].KontaktVIEWID);
-                                        });
-                                    }
+                                    var curPageId = Application.getPageId(nav.location);
+                                    if (curPageId !== "contactList") {
+                                        var recordID = AppData.getRecordId("Kontakt");
+                                        if (recordID) {
+                                            WinJS.Promise.timeout(0).then(function() {
+                                                that.selectRecordId(recordID);
+                                            });
+                                        } else {
+                                            if (results[0] && results[0].KontaktVIEWID) {
+                                                WinJS.Promise.timeout(0).then(function() {
+                                                    that.selectRecordId(results[0].KontaktVIEWID);
+                                                });
+                                            }
+                                        }
                                     }
                                 } else {
                                     that.binding.count = 0;
