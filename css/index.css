@@ -87,7 +87,7 @@
     padding: 0;
     left: 48px;
     top: 48px;
-    width: 232px;
+    width: 280px;
     height: calc(100% - 48px);
     display: none;
     position: absolute;
@@ -115,15 +115,23 @@
     background-color: transparent !important;
 }
 
+.win-splitviewcommand-button {
+    width: calc(100% - 40px);
+}
+
 .win-splitviewcommand-button-content {
     padding-left: 12px;
     padding-right: 12px;
+    width: calc(100% - 16px);
 }
 .win-splitviewcommand-label {
     color: WindowText;
     font-size: 20px;
     margin-top: 12px;
     margin-bottom: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .win-splitviewcommand.win-disabled {
@@ -190,6 +198,7 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
 }
 .pane-submenu .win-splitviewcommand-button-content {
     padding-left: 56px;
+    width: calc(100% - 68px);
 }
 
 .pane-submenu .win-splitviewcommand-icon {
