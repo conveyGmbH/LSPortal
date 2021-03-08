@@ -547,6 +547,7 @@
 	"label.eventSeriesAdministration" : "Serien Zuordnung",
 	"label.eventSeries"          : "Serie",
     "label.eventGenSettings" : "Allgemeine Einstellungen",
+    "label.genDataModList" : "Moderatoren",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Abbrechen",
@@ -1267,5 +1268,16 @@
 	"eventSeriesAdministration.serie" : "Serie",
     "eventSeriesAdministration.questionDelete" : "Möchten Sie die Veranstaltung aus dieser Serie entfernen?",
 
-	"eventSeriesList.count" : "Anzahl"
+	"eventSeriesList.count" : "Anzahl",
+
+    "genDataModList.title" : "Moderatoren",
+    "genDataModList.name" : "Name",
+    "genDataModList.firstname" : "Vorname",
+    "genDataModList.email" : "E-Mail",
+    "genDataModList.expertise" : "Fachkompetenz",
+    "genDataModList.events" : "Zugeordnete Events",
+    "genDataModList.lastpost" : "Letzter Beitrag",
+    "genDataModList.lastrating" : "Letzte Bewertung",
+    "genDataModList.lastrole" : "Letzte Rolle",
+    "genDataModList.status" : "Status"
 }		

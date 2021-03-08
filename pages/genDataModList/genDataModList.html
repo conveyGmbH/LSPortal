@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="genDataModList.css" rel="stylesheet" />
+    <script type="text/javascript" src="genDataModListService.js"></script>
+    <script type="text/javascript" src="genDataModListController.js"></script>
+    <script type="text/javascript" src="genDataModList.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="genDataModList fragment">
+        <div id="genDataModListController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="contentarea win-type-body">
+                    <div class="content-header">
+                        <div class="win-type-subtitle master-list-header">
+                            <span data-win-res="{textContent: 'genDataModList.title'}"></span><br/>
+                          
+                        </div>
+                    </div>
+                    <div class="headerFooterPlaceholder">
+                        <div class="list-header">
+                            <div class="list-landscape-only list-header-columns">
+                                <div class="list-field-small-fixed"
+                                     data-win-res="{textContent: 'genDataModList.name'}"></div>
+                                <div class="list-field-small-fixed"
+                                     data-win-res="{textContent: 'genDataModList.firstname'}"></div>
+                                <div class="list-field-small-fixed"
+                                     data-win-res="{textContent: 'genDataModList.email'}"></div>
+                                <div class="list-field-small-fixed"
+                                     data-win-res="{textContent: 'genDataModList.expertise'}"></div>
+                                <div class="list-field-small-fixed"
+                                     data-win-res="{textContent: 'genDataModList.events'}"></div>
+                                <div class="list-field-small-fixed"
+                                     data-win-res="{textContent: 'genDataModList.lastpost'}"></div>
+                                <div class="list-field-small-fixed"
+                                     data-win-res="{textContent: 'genDataModList.lastrating'}"></div>
+                                <div class="list-field-small-fixed"
+                                     data-win-res="{textContent: 'genDataModList.lastrole'}"></div>
+                                <div class="list-field-small-fixed"
+                                     data-win-res="{textContent: 'genDataModList.status'}"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="genDataModList-template"
+                         data-win-control="WinJS.Binding.Template">
+                        <div class="list-landscape-only">
+                            <div class="row-bkg-gray"
+                                 data-win-bind="style.display: index Binding.Converter.oddToDisplay"></div>
+                            <div class="list-field-small-fixed win-type-ellipsis"
+                                 data-win-bind="textContent: PersonLastName"></div>
+                            <div class="list-field-small-fixed win-type-ellipsis"
+                                 data-win-bind="textContent: PersonFirstName"></div>
+                            <div class="list-field-small-fixed win-type-ellipsis"
+                                 data-win-bind="textContent: PersonEMail"></div>
+                            <div class="list-field-small-fixed win-type-ellipsis"
+                                 data-win-bind="textContent: Bezeichnung"></div>
+                            <div class="list-field-small-fixed win-type-ellipsis"
+                                 data-win-bind="textContent: Kommentar"></div>
+                            <div class="list-field-small-fixed win-type-ellipsis"
+                                 data-win-bind="textContent: "></div>
+                            <div class="list-field-small-fixed win-type-ellipsis"
+                                 data-win-bind="textContent: "></div>
+                            <div class="list-field-small-fixed win-type-ellipsis"
+                                 data-win-bind="textContent: PersonKategorieText"></div>
+                            <div class="list-field-small-fixed win-type-ellipsis"
+                                 data-win-bind="textContent: "></div>
+                        </div>
+                        <div class="list-portrait-only">
+                            <div class="row-separator"></div>
+                            <div class="list-compressed-content-container">
+                                <span class="list-compressed-title"
+                                      data-win-bind="textContent: PersonFirstName"></span>
+                                <span class="list-compressed-title win-type-subtitle"
+                                      data-win-bind="textContent: PersonLastName">
+                                </span>
+                                <span class="list-compressed-content"
+                                      data-win-bind="textContent: PersonKategorieText"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="headerFooterPlaceholder">
+                        <div class="list-footer">
+                            <div class="status">
+                                <progress class="win-progress-bar progress"></progress>
+                                <div class="counter">
+                                    <span data-win-res="{textContent: 'contactList.count'}"></span><span>: </span><span data-win-bind="textContent: count"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="genDataModList"
+                         class="listview win-selectionstylefilled"
+                         data-win-control="WinJS.UI.ListView"
+                         data-win-options="{
+                             layout : { type: WinJS.UI.ListLayout },
+                             itemTemplate: select('.genDataModList-template'),
+                             header: select('.list-header'),
+                             footer: select('.list-footer')
+                         }">
+                    </div>
+                </div>
+                <div class="error-message"
+                     data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>
