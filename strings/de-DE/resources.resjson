@@ -49,6 +49,8 @@
     "command.terminedit"  : "Termin ändern",
     "command.permuser"  : "Zu Dauerkunde ändern",
     "command.upload"  : "Hochladen",
+	"command.windowMaximized" : "Maximiert",
+    "command.windowRestored" : "Aufgeteilt",
 
     "tooltip.backward"      : "Zurück blättern",
     "tooltip.edit"          : "Aktuellen Datensatz bearbeiten",
@@ -111,6 +113,8 @@
     "tooltip.permuser"  : "Zu Dauerkunde ändern",
 	"tooltip.newEventSeries" : "Zu neuer Serie zufügen",
     "tooltip.deleteEventSeries" : "Aus Serie entfernen",
+    "tooltip.windowMaximized" : "Diesen Bereich maximiert anzeigen",
+    "tooltip.windowRestored" : "Bereiche aufgeteilt anzeigen",
 
     "home.title"            : "Start",
     "home.info"             : "Wichtige Hinweise",

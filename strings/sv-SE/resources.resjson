@@ -49,6 +49,8 @@
     "command.terminedit"  : "Termin edit",
     "command.permuser"  : "Change to regular customer",
     "command.upload"  : "Upload",
+    "command.windowMaximized" : "Maximized",
+    "command.windowRestored" : "Split",
 
     "tooltip.backward"      : "Browse back",
     "tooltip.edit"          : "Edit current record",
@@ -111,6 +113,8 @@
     "tooltip.permuser"  : "Change to regular customer",
     "tooltip.newEventSeries" : "Zu neuer Serie zufügen",
     "tooltip.deleteEventSeries" : "Aus Serie entfernen",
+    "tooltip.windowMaximized" : "View this area maximized",
+    "tooltip.windowRestored" : "Show areas split",
 
     "home.title"            : "Start",
     "home.info"             : "Important information",

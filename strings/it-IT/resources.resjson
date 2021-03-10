@@ -49,6 +49,8 @@
     "command.terminedit"  : "Modifica data",
     "command.permuser"  : "Cambia in cliente abituale",
     "command.upload"  : "Caricare ",
+    "command.windowMaximized" : "Ingrandita",
+    "command.windowRestored" : "Diviso",
 
     "tooltip.backward"      : "Pagina precedente",
     "tooltip.edit"          : "Modifica Record attuale",
@@ -111,6 +113,8 @@
     "tooltip.permuser"  : "Cambia in cliente abituale",
     "tooltip.newEventSeries" : "Aggiungi alla nuova serie",
     "tooltip.deleteEventSeries" : "Elimina dalla serie",
+    "tooltip.windowMaximized" : "Visualizza quest'area ingrandita",
+    "tooltip.windowRestored" : "Mostra aree divise",
 
     "home.title"            : "Start",
     "home.info"             : "Informazioni importanti",

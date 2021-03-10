@@ -1590,3 +1590,48 @@ button.win-button {
 .use-border-radius {
     border-radius: 0;
 }
+
+.resize-helper-gripper {
+    display: block;
+    position: absolute;
+    user-select: none;
+    z-index: 20000;
+    background-color: #6e6e6e;
+    opacity: 0;
+    touch-action: none;
+}
+.resize-helper-vertical {
+    bottom: 0;
+    left: 0;
+    height: 6px;
+    cursor: s-resize;
+    width: 100%;
+}
+.resize-helper-horizontal {
+    top: 0;
+    right: 0;
+    width: 6px;
+    cursor: e-resize;
+    height: 100%;
+}
+
+.resize-helper-command-container {
+    display: block;
+    position: absolute !important;
+    right: 6px;
+    z-index: 20000 !important;
+}
+
+.resize-helper-command-container.win-commandingsurface .win-commandingsurface-actionarea {
+    background-color: transparent;
+}
+
+.resize-helper-command-container .win-commandicon {
+    width: 24px;
+    height: 24px;
+}
+
+.resize-helper-command-container button.win-command:disabled {
+    display: none
+}
+

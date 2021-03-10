@@ -49,6 +49,8 @@
     "command.terminedit"  : "Date de modification",
     "command.permuser"  : "Changer en client régulier",
     "command.upload"  : "Télécharger",
+    "command.windowMaximized" : "Maximisé",
+    "command.windowRestored" : "Partagé",
 
     "tooltip.backward"      : "Page présédente",
     "tooltip.edit"          : "Modifier le contact en cours",
@@ -111,6 +113,8 @@
     "tooltip.permuser"  : "Changer en client régulier",
     "tooltip.newEventSeries" : "Ajouter à une nouvelle série",
     "tooltip.deleteEventSeries" : "Supprimer de la série",
+    "tooltip.windowMaximized" : "View this area maximized",
+    "tooltip.windowRestored" : "Afficher les zones partagées",
 
     "home.title"            : "Start",
     "home.info"             : "Instructions importantes",
