@@ -33,7 +33,19 @@
     padding: 20px;
 }
 
-.home .action-detail.box-bkg:hover {
+.win-ui-dark .home .action-item:hover .action-image.titlearea-bkg {
+    box-shadow: inset 0 0 70px rgba(255,255,255,0.2);
+}
+.win-ui-dark .home .action-item:hover:active .action-image.titlearea-bkg {
+    box-shadow: inset 0 0 70px rgba(255,255,255,0.4);
+}
+.win-ui-light .home .action-item:hover .action-image.titlearea-bkg {
+    box-shadow: inset 0 0 70px rgba(0,0,0,0.2);
+}
+.win-ui-light .home .action-item:hover:active .action-image.titlearea-bkg {
+    box-shadow: inset 0 0 70px rgba(0,0,0,0.4);
+}
+.home .action-item:hover .action-detail.box-bkg {
     background-color: transparent;
 }
 
