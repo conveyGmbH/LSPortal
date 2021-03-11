@@ -87,7 +87,7 @@
                             WinJS.Utilities.removeClass(element, "view-size-medium-small");
                             WinJS.Utilities.removeClass(element, "view-size-medium");
                             WinJS.Utilities.removeClass(element, "view-size-bigger");
-                            if (width > 499) {
+                            if (width > Application.maxViewSize.small) {
                                 // remove class: view-size-small  
                                 WinJS.Utilities.removeClass(fieldsContainer, "view-size-small");
                                 WinJS.Utilities.removeClass(contentHeader, "view-size-small");
@@ -96,7 +96,7 @@
                                 WinJS.Utilities.addClass(fieldsContainer, "view-size-small");
                                 WinJS.Utilities.addClass(contentHeader, "view-size-small");
                             }
-                            if (width > 699) {
+                            if (width > Application.maxViewSize.mediumSmall) {
                                 // remove class: view-size-medium-small  
                                 WinJS.Utilities.removeClass(fieldsContainer, "view-size-medium-small");
                                 WinJS.Utilities.removeClass(contentHeader, "view-size-medium-small");
@@ -105,7 +105,7 @@
                                 WinJS.Utilities.addClass(fieldsContainer, "view-size-medium-small");
                                 WinJS.Utilities.addClass(contentHeader, "view-size-medium-small");
                             }
-                            if (width > 899) {
+                            if (width > Application.maxViewSize.medium) {
                                 // remove class: view-size-medium    
                                 WinJS.Utilities.removeClass(fieldsContainer, "view-size-medium");
                                 WinJS.Utilities.removeClass(contentHeader, "view-size-medium");
@@ -114,7 +114,7 @@
                                 WinJS.Utilities.addClass(fieldsContainer, "view-size-medium");
                                 WinJS.Utilities.addClass(contentHeader, "view-size-medium");
                             }
-                            if (width > 1099) {
+                            if (width > Application.maxViewSize.bigger) {
                                 // remove class: view-size-bigger
                                 WinJS.Utilities.removeClass(fieldsContainer, "view-size-bigger");
                                 WinJS.Utilities.removeClass(contentHeader, "view-size-bigger");

@@ -106,7 +106,7 @@
                             if (width !== that.prevWidth) {
                                 var mandatoryListHost = empList.querySelector("#mandatorylisthost.fragmenthost");
                                 if (mandatoryListHost) {
-                                    if (width > 1299) {
+                                    if (width > Application.maxViewSize.biggest) {
                                         // remove class: view-size-bigger
                                         WinJS.Utilities.removeClass(mandatoryListHost.parentElement, "view-size-bigger");
                                     } else {

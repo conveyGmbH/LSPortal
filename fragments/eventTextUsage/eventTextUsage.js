@@ -63,7 +63,7 @@
                                             // calculate width for each cell
                                             var containers = listView.querySelectorAll(".win-container");
                                             if (containers && containers.length === textUsage.length) {
-                                                var fontWidth = width > 499 ? 7 : 5;
+                                                var fontWidth = width > Application.maxViewSize.small ? 7 : 5;
                                                 var totalLen = 0;
                                                 var maxLen = 0;
                                                 var item;

@@ -124,7 +124,7 @@
                                 height -= contentheader.clientHeight;
                             }
                             if (that.controller.hasDoc()) {
-                                if (width > 699) {
+                                if (width > Application.maxViewSize.mediumSmall) {
                                     fieldWidth = width / 2;
                                     var maxDocContainerWidth = height / Math.sqrt(2) - 16;
                                     if (fieldWidth > maxDocContainerWidth) {
@@ -208,28 +208,28 @@
                             WinJS.Utilities.removeClass(element, "view-size-medium-small");
                             WinJS.Utilities.removeClass(element, "view-size-medium");
                             WinJS.Utilities.removeClass(element, "view-size-bigger");
-                            if (fieldWidth > 499) {
+                            if (fieldWidth > Application.maxViewSize.small) {
                                 // remove class: view-size-small  
                                 WinJS.Utilities.removeClass(fieldsContainer, "view-size-small");
                             } else {
                                 // add class: view-size-small    
                                 WinJS.Utilities.addClass(fieldsContainer, "view-size-small");
                             }
-                            if (fieldWidth > 699) {
+                            if (fieldWidth > Application.maxViewSize.mediumSmall) {
                                 // remove class: view-size-medium-small  
                                 WinJS.Utilities.removeClass(fieldsContainer, "view-size-medium-small");
                             } else {
                                 // add class: view-size-medium-small    
                                 WinJS.Utilities.addClass(fieldsContainer, "view-size-medium-small");
                             }
-                            if (fieldWidth > 899) {
+                            if (fieldWidth > Application.maxViewSize.medium) {
                                 // remove class: view-size-medium    
                                 WinJS.Utilities.removeClass(fieldsContainer, "view-size-medium");
                             } else {
                                 // add class: view-size-medium
                                 WinJS.Utilities.addClass(fieldsContainer, "view-size-medium");
                             }
-                            if (fieldWidth > 1099) {
+                            if (fieldWidth > Application.maxViewSize.bigger) {
                                 // remove class: view-size-bigger
                                 WinJS.Utilities.removeClass(fieldsContainer, "view-size-bigger");
                             } else {

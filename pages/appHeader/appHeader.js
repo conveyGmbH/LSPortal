@@ -69,7 +69,7 @@
                 ret = WinJS.Promise.timeout(0).then(function () {
                     var strStyleWidth;
                     var strStyleFloat;
-                    if (document.body.clientWidth <= 899) {
+                    if (document.body.clientWidth <= Application.maxViewSize.medium) {
                         strStyleWidth = "100%";
                         strStyleFloat = "left";
                     } else {
