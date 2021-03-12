@@ -1623,12 +1623,16 @@ button.win-button {
 }
 
 .resize-helper-command-container.win-commandingsurface .win-commandingsurface-actionarea {
-    background-color: transparent;
+    background-color: transparent !important;
 }
 
 .resize-helper-command-container .win-commandicon {
     width: 24px;
     height: 24px;
+}
+
+.resize-helper-command-container button.win-command {
+    border: none;
 }
 
 .resize-helper-command-container button.win-command:disabled {

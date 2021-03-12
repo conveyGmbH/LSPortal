@@ -105,13 +105,13 @@
     */
 }
 
-.pane-submenu-list .win-item.win-disabled {
+.pane-submenu-list .win-disabled .win-item {
     background-color: transparent;
     border-color: transparent;
-    opacity: 0.3;
+    opacity: 0.6;
 }
 
-.pane-submenu-list .win-itembox:hover {
+.pane-submenu-list .win-container:hover .win-itembox.win-disabled {
     background-color: transparent !important;
 }
 
@@ -134,10 +134,20 @@
     white-space: nowrap;
 }
 
+.win-disabled .win-splitviewcommand-label {
+    color: #808080 !important;
+}
+.win-disabled .win-splitviewcommand-icon svg > line {
+    stroke: #808080 !important;
+}
+.win-disabled .win-splitviewcommand-icon svg > path {
+    fill: #808080 !important;
+    stroke: #808080 !important;
+}
 .win-splitviewcommand.win-disabled {
     background-color: transparent;
     border-color: transparent;
-    opacity: 0.3;
+    opacity: 0.6;
 }
 html.win-hoverable .win-disabled .win-splitviewcommand-button:hover {
     background-color: transparent;
