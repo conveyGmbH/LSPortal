@@ -1626,16 +1626,19 @@ button.win-button {
     background-color: transparent !important;
 }
 
-.resize-helper-command-container .win-commandicon {
-    width: 24px;
-    height: 24px;
-}
-
 .resize-helper-command-container button.win-command {
     border: none;
+    width: 32px;
+    min-width: 32px;
 }
 
 .resize-helper-command-container button.win-command:disabled {
     display: none
 }
 
+.resize-helper-command-container .win-commandicon {
+    width: 24px;
+    height: 24px;
+    margin-left: 4px;
+    margin-right: 4px;
+}
