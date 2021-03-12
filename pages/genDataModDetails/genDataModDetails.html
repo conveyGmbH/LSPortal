@@ -1,0 +1,213 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="genDataModDetails.css" rel="stylesheet" />
+    <script type="text/javascript" src="genDataModDetailsService.js"></script>
+    <script type="text/javascript" src="genDataModDetailsController.js"></script>
+    <script type="text/javascript" src="genDataModDetails.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="genDataModDetails fragment">
+        <div id="genDataModDetailsController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="contentarea win-type-body">
+                    <div class="content-header">
+                        <div class="win-type-subtitle master-list-header">
+                            <span data-win-res="{textContent: 'genDataModDetails.title'}"></span>
+                        </div>
+                    </div>
+                    <div id="newmod" class="field_line" style="display : none">
+                        <div class="field_line field_line_odd" style="overflow-y: hidden">
+                            <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'contact.firstName'}"></span>
+                            <span class="label win-type-caption portrait_only_half" data-win-res="{textContent: 'contact.name'}"></span>
+                            <div class="label landscape_only">
+                                <span data-win-res="{textContent: 'contact.firstName'}"></span> / <span data-win-res="{textContent: 'contact.name'}"></span>
+                            </div>
+                            <div class="input_group">
+                                <input id="firstname" name="Vorname" class="input_half_left win-textbox" type="text" data-win-bind="value: newmodData.Firstname Binding.Mode.twoway; style.display: modData.Flag_NoEdit Binding.Converter.toDisplayNone" />
+                                <span class="input_small_left" data-win-bind="textContent: modData.Firstname; style.display: newmodData.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                                <input id="name" class="input_half_right win-textbox" type="text" data-win-bind="value: newmodData.Lastname Binding.Mode.twoway; style.display: modData.Flag_NoEdit Binding.Converter.toDisplayNone" />
+                                <span class="input_field" data-win-bind="textContent: newmodData.Lastname; style.display: modData.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                            </div>
+                        </div>
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'contact.email'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'contact.email'}"></span>
+                            <input id="email" name="EMail" class="input_field win-textbox" type="text" data-win-bind="value: newmodData.EMail Binding.Mode.twoway; style.display: modData.Flag_NoEdit Binding.Converter.toDisplayNone" />
+                        </div>
+                        <div class="line-separator"></div>
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'genDataModDetails.category'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'genDataModDetails.category'}"></span>
+                            <select id="InitKategorieNew"
+                                    class="input_field win-dropdown"
+                                    data-win-control="WinJS.UI.Repeater"
+                                    data-win-bind="value: newmodData.PersonCategoryID Binding.Mode.twoway; style.display: modData.Flag_NoEdit Binding.Converter.toDisplayNone">
+                                <option data-win-bind="value: INITPersonKategorieID; textContent: TITLE"></option>
+                            </select>
+                            <span class="input_field" data-win-bind="textContent: InitLandItem.TITLE; style.display: modData.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                        </div>
+                        <div class="line-separator"></div>
+                        <div class="field_line field_line_odd">
+                            <button class="newmod-button win-button" data-win-bind="textContent: newmodlabel;" onclick="AppBar.handleEvent('click', 'clickAddMod', event)" autofocus="autofocus"></button>
+                        </div>
+                    </div>
+                    <div class="line-separator"></div>
+                    <div class="content-record"
+                         data-win-bind="style.display: modData.AdresseVIEWID Binding.Converter.toDisplay">
+                        <div class="fields-container">
+                            <div class="line-separator"></div>
+                            <div class="field_line field_line_odd">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'genDataModDetails.category'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'genDataModDetails.category'}"></span>
+                                <select id="InitKategorie"
+                                        class="input_field win-dropdown"
+                                        data-win-control="WinJS.UI.Repeater"
+                                        data-win-bind="value: modData.PersonCategoryID Binding.Mode.twoway; style.display: modData.Flag_NoEdit Binding.Converter.toDisplayNone">
+                                    <option data-win-bind="value: INITPersonKategorieID; textContent: TITLE"></option>
+                                </select>
+                                <span class="input_field" data-win-bind="textContent: InitLandItem.TITLE; style.display: modData.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                            </div>
+                            <div class="line-separator"></div>
+                            <div class="field_line field_line_odd">
+                                <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'contact.formOf'}"></span>
+                                <span class="label win-type-caption portrait_only_right" data-win-res="{textContent: 'contact.firstName'}"></span>
+                                <div class="label landscape_only">
+                                    <span data-win-res="{textContent: 'contact.formOf'}"></span> / <span data-win-res="{textContent: 'contact.firstName'}"></span>
+                                </div>
+                                <div class="input_group">
+                                    <select id="InitAnrede"
+                                            class="input_small_left win-dropdown"
+                                            data-win-control="WinJS.UI.Repeater"
+                                            data-win-bind="value: modData.INITAnredeID Binding.Mode.twoway; style.display: modData.Flag_NoEdit Binding.Converter.toDisplayNone">
+                                        <option data-win-bind="value: INITAnredeID; textContent: TITLE"></option>
+                                    </select>
+                                    <input class="input_small_right win-textbox" type="text" data-win-bind="value: modData.FirstName Binding.Mode.twoway; style.display: modData.Flag_NoEdit Binding.Converter.toDisplayNone" />
+                                    <span class="input_field" data-win-bind="textContent: modData.FirstName; style.display: modData.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                                    <span class="input_small_left" data-win-bind="textContent: InitAnredeItem.TITLE; style.display: modData.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                                </div>
+                            </div>
+                            <div class="field_line field_line_even">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'contact.name'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'contact.name'}"></span>
+                                <input name="Firmenname" class="input_field win-textbox" type="text" data-win-bind="value: modData.LastName Binding.Mode.twoway; style.display: modData.Flag_NoEdit Binding.Converter.toDisplayNone" />
+                                <span class="input_field" data-win-bind="textContent: modData.LastName; style.display: modData.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                            </div>
+                            <div class="line-separator"></div>
+                            <div class="field_line field_line_odd" style="overflow-y: hidden">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'contact.company'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'contact.company'}"></span>
+                                <input name="Name" class="input_field win-textbox" type="text" data-win-bind="value: modData.CompanyName Binding.Mode.twoway; style.display: modData.Flag_NoEdit Binding.Converter.toDisplayNone" />
+                                <span class="input_field" data-win-bind="textContent: modData.CompanyName; style.display: modData.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                            </div>
+                            <div class="field_line field_line_even">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'contact.position'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'contact.position'}"></span>
+                                <input class="input_field win-textbox" type="text" data-win-bind="value: modData.Position Binding.Mode.twoway; style.display: modData.Flag_NoEdit Binding.Converter.toDisplayNone" />
+                                <span class="input_field" data-win-bind="textContent: modData.Position; style.display: modData.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                            </div>
+                            <div class="line-separator"></div>
+                            <div class="field_line field_line_odd">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'contact.email'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'contact.email'}"></span>
+                                <input name="EMail" class="input_field win-textbox" type="text" data-win-bind="value: modData.EMail Binding.Mode.twoway; style.display: modData.Flag_NoEdit Binding.Converter.toDisplayNone" />
+                                <span class="input_field" data-win-bind="textContent: modData.EMail; style.display: modData.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                            </div>
+                            <div class="field_line field_line_even">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'contact.academicTitle'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'contact.academicTitle'}"></span>
+                                <input name="TelefonFestnetz" class="input_field win-textbox" type="text" data-win-bind="value: modData.AcadTitle Binding.Mode.twoway; style.display: modData.Flag_NoEdit Binding.Converter.toDisplayNone" />
+                                <span class="input_field" data-win-bind="textContent: modData.AcadTitle; style.display: modData.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                            </div>
+                            <div class="line-separator"></div>
+                            <div class="field_line field_line_odd">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'contact.address'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'contact.address'}"></span>
+                                <input name="Strasse" class="input_field win-textbox" type="text" data-win-bind="value: modData.StreetAddress Binding.Mode.twoway; style.display: modData.Flag_NoEdit Binding.Converter.toDisplayNone" />
+                                <span class="input_field" data-win-bind="textContent: modData.StreetAddress; style.display: modData.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                            </div>
+                            <div class="field_line field_line_even">
+                                <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'contact.zip'}"></span>
+                                <span class="label win-type-caption portrait_only_right" data-win-res="{textContent: 'contact.city'}"></span>
+                                <div class="label landscape_only">
+                                    <span data-win-res="{textContent: 'contact.zip'}"></span> / <span data-win-res="{textContent: 'contact.city'}"></span>
+                                </div>
+                                <div class="input_group">
+                                    <input name="PLZ" class="input_small_left win-textbox" type="text" data-win-bind="value: modData.ZIPCode Binding.Mode.twoway; style.display: modData.Flag_NoEdit Binding.Converter.toDisplayNone" />
+                                    <input name="Stadt" class="input_small_right win-textbox" type="text" data-win-bind="value: modData.City Binding.Mode.twoway; style.display: modData.Flag_NoEdit Binding.Converter.toDisplayNone" />
+                                    <span class="input_small_left" data-win-bind="textContent: modData.ZIPCode; style.display: modData.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                                    <span class="input_small_right" data-win-bind="textContent: modData.City; style.display: modData.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                                </div>
+                            </div>
+                            <div class="line-separator"></div>
+                            <div class="field_line field_line_even">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'contact.country'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'contact.country'}"></span>
+                                <select id="InitLand"
+                                        class="input_field win-dropdown"
+                                        data-win-control="WinJS.UI.Repeater"
+                                        data-win-bind="value: modData.LandName Binding.Mode.twoway; style.display: modData.Flag_NoEdit Binding.Converter.toDisplayNone">
+                                    <option data-win-bind="value: INITLandID; textContent: TITLE"></option>
+                                </select>
+                                <span class="input_field" data-win-bind="textContent: InitLandItem.TITLE; style.display: modData.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                            </div>
+                            <div class="line-separator"></div>
+                            <div class="field_line field_line_odd">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'contact.phone'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'contact.phone'}"></span>
+                                <input name="TelefonFestnetz" class="input_field win-textbox" type="text" data-win-bind="value: modData.PhoneNumbers Binding.Mode.twoway; style.display: modData.Flag_NoEdit Binding.Converter.toDisplayNone" />
+                                <span class="input_field" data-win-bind="textContent: modData.PhoneNumbers; style.display: modData.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                            </div>
+                            <div class="field_line field_line_even">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'contact.fax'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'contact.fax'}"></span>
+                                <input class="input_field win-textbox" type="text" data-win-bind="value: modData.FaxNumber Binding.Mode.twoway; style.display: modData.Flag_NoEdit Binding.Converter.toDisplayNone" />
+                                <span class="input_field" data-win-bind="textContent: modData.FaxNumber; style.display: modData.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                            </div>
+                            <div class="line-separator"></div>
+                            <div class="field_line field_line_odd">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'contact.url'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'contact.url'}"></span>
+                                <input class="input_field win-textbox" type="text" data-win-bind="value: modData.WebAddress Binding.Mode.twoway; style.display: modData.Flag_NoEdit Binding.Converter.toDisplayNone" />
+                                <span class="input_field" data-win-bind="textContent: modData.WebAddress; style.display: modData.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                            </div>
+                            <div class="field_line field_line_even">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'contact.memo'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'contact.memo'}"></span>
+                                <input class="input_field win-textbox" type="text" data-win-bind="value: modData.Memo Binding.Mode.twoway; style.display: modData.Flag_NoEdit Binding.Converter.toDisplayNone" />
+                                <span class="input_field" data-win-bind="textContent: modData.Memo; style.display: modData.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                            </div>
+                            <div class="line-separator"></div>
+                            <div class="field_line">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'contact.notice'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'contact.notice'}"></span>
+                                <textarea class="input_field win-textarea input_text_comment" data-win-bind="value: modData.Remark Binding.Mode.twoway; style.display: modData.Flag_NoEdit Binding.Converter.toDisplayNone" onfocusin="AppBar.handleEvent('focusin', 'blockEnterKey', event)" onfocusout="AppBar.handleEvent('focusout', 'releaseEnterKey', event)"></textarea>
+                                <span class="input_field" data-win-bind="textContent: modData.Remark; style.display: modData.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                            </div>
+                            <div class="line-separator"></div>
+                        </div>
+                        <div class="doc-container">
+                            <div id="contactPhoto" class="photoview">
+                                <div tabindex="0" aria-hidden="true"></div>
+                                <div tabindex="-1" class="win-viewport win-horizontal pinch" role="group" aria-label="Scrolling Container">
+                                    <div class="win-surface">
+                                        <div class="_win-proxy"></div>
+                                        <div class="win-itemscontainer">
+                                            <div class="win-container">
+                                                <div class="win-itembox"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="error-message"
+                     data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

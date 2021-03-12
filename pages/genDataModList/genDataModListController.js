@@ -14,7 +14,7 @@
     var nav = WinJS.Navigation;
     
     WinJS.Namespace.define("GenDataModList", {
-          Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
+        Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList, isMaster) {
                 Log.call(Log.l.trace, "GenDataModList.Controller.");
 
                 // ListView control
@@ -22,7 +22,7 @@
 
                 Application.RecordsetController.apply(this, [pageElement, {
                       count: 0
-                }, commandList, false,
+                }, commandList, isMaster,
                     GenDataModList.personAdresseTable,
                     GenDataModList.personAdresseView, listView]);
 
@@ -226,28 +226,22 @@
                                             if (AppBar.scope && typeof AppBar.scope.saveData === "function") {
                                                 //=== "function" save wird nicht aufgerufen wenn selectionchange
                                                 // current detail view has saveData() function
-                                                AppBar.scope.saveData(function (response) {
-                                                    // called asynchronously if ok
-                                                    that.binding.contactId = item.data.PersonAdresseVIEWID;
-                                                    AppData.setRecordId("Kontakt", that.binding.contactId);
-                                                    if (curPageId === "contact" &&
-                                                        typeof AppBar.scope.loadData === "function") {
+                                                if ((curPageId === "genDataModDetails") &&
+                                                    typeof AppBar.scope.loadData === "function" &&
+                                                    typeof AppBar.scope.setAdresseId === "function") {
+                                                        AppBar.scope.setAdresseId(item.data.AdresseID);
+                                                        AppBar.scope.setPersonAdresseId(item.data.PersonAdresseVIEWID);
                                                         AppBar.scope.loadData();
-                                                    } else {
-                                                        Application.navigateById("contact");
-                                                    }
-                                                },  function (errorResponse) {
-                                                    that.selectRecordId(that.binding.contactId);
-                                                });
+                                                } else {
+                                                    Application.navigateById("genDataModDetails");
+                                                }
                                             } else {
                                                 // current detail view has NO saveData() function - is list
-                                                that.binding.contactId = item.data.PersonAdresseVIEWID;
-                                                AppData.setRecordId("Kontakt", that.binding.contactId);
-                                                if (curPageId === "contact" &&
+                                                if (curPageId === "genDataModDetails" &&
                                                     typeof AppBar.scope.loadData === "function") {
                                                     AppBar.scope.loadData();
                                                 } else {
-                                                    Application.navigateById("contact");
+                                                    Application.navigateById("genDataModDetails");
                                                 }
                                             }
                                         }
@@ -285,12 +279,11 @@
                             }
                             if (listView.winControl.loadingState === "itemsLoading") {
                                 if (!layout) {
-                                    layout = Application.GenDataModListLayout.genDataModListLayout;
+                                    layout = Application.GenDataModListLayout.GenDataModListLayout;
                                     listView.winControl.layout = { type: layout };
                                 }
                             } else if (listView.winControl.loadingState === "itemsLoaded") {
-                                var indexOfFirstVisible = listView.winControl.indexOfFirstVisible;
-                                var indexOfLastVisible = listView.winControl.indexOfLastVisible;
+                               
                                 
                             } else if (listView.winControl.loadingState === "complete") {
                                 if (that.loading) {
@@ -412,6 +405,7 @@
 
                 that.processAll().then(function () {
                     Log.print(Log.l.trace, "Binding wireup page complete");
+                    that.loading = true;
                     return that.loadData();
                 }).then(function () {
                     AppBar.notifyModified = true;
