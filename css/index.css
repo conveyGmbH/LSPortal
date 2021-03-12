@@ -108,7 +108,7 @@
 .pane-submenu-list .win-disabled .win-item {
     background-color: transparent;
     border-color: transparent;
-    opacity: 0.6;
+    opacity: 0.4;
 }
 
 .pane-submenu-list .win-container:hover .win-itembox.win-disabled {
@@ -147,7 +147,7 @@
 .win-splitviewcommand.win-disabled {
     background-color: transparent;
     border-color: transparent;
-    opacity: 0.6;
+    opacity: 0.4;
 }
 html.win-hoverable .win-disabled .win-splitviewcommand-button:hover {
     background-color: transparent;
