@@ -27,7 +27,7 @@
             select: function (complete, error, restriction, options) {
                 if (!restriction) {
                     restriction = {
-                        
+                        LanguageID: AppData.getLanguageId()
                     };
                 }
                 if (!options) {

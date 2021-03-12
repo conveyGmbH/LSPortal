@@ -46,10 +46,7 @@
             this.inResize = 0;
             this.prevWidth = 0;
             this.prevHeight = 0;
-
-            NavigationBar.disablePage("questionnaire");
-            NavigationBar.disablePage("sketch");
-
+            
             // add page specific commands to AppBar
             var commandList = [
                 { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" }
@@ -74,7 +71,7 @@
             if (element && !that.inResize) {
                 that.inResize = 1;
                 ret =  WinJS.Promise.timeout(0).then(function () {
-                    var contactList = element.querySelector("#contactList.listview");
+                    var contactList = element.querySelector("#genDataModList.listview");
                     if (contactList && contactList.style) {
                         var contentarea = element.querySelector(".contentarea");
                         if (contentarea) {
