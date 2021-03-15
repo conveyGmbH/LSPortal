@@ -549,6 +549,7 @@
     "label.eventResourceAdministration" : "Event Administration",
     "label.eventMediaAdministration" : "Media Administration",
     "label.eventSeriesAdministration": "Series assignment",
+    "label.eventSpeakerAdministration" : "Team assignment",
     "label.eventSeries": "Series",
     
     "flyout.ok"             : "OK",

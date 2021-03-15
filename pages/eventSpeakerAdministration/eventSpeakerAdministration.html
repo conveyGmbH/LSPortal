@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="eventSeriesAdministration.css" rel="stylesheet" />
+    <script type="text/javascript" src="eventSpeakerAdministrationService.js"></script>
+    <script type="text/javascript" src="eventSpeakerAdministrationController.js"></script>
+    <script type="text/javascript" src="eventSpeakerAdministration.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="eventSpeakerAdministration fragment">
+        <div id="eventSpeakerAdministrationController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="contentarea win-type-body">
+                    <div class="eventSerie-template"
+                         data-win-control="WinJS.Binding.Template" style="display: none">
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption" data-win-res="{textContent: 'eventSeriesAdministration.serie'}"></span>
+                            <select class="input_field win-dropdown"
+                                    data-win-control="WinJS.UI.Repeater"
+                                    data-field-entry="PersonAdresseID">
+                                <option data-win-bind="value: PersonAdresseVIEWID; textContent: PersonAdresseText"></option>
+                            </select>
+                        </div>
+                        <div class="field-separator"></div>
+                    </div>
+                    <div id="eventSpeakerList"
+                         class="listview win-selectionstylefilled"
+                         data-win-control="WinJS.UI.ListView"
+                         data-win-options="{
+                             layout : { type: WinJS.UI.ListLayout },
+                             itemTemplate: select('.eventSerie-template')
+                         }">
+                    </div>
+                    <div class="error-message"
+                         data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

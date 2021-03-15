@@ -67,6 +67,7 @@
         { id: "dashBoard", group: 19, svg: "Dashboard", disabled: true },
         { id: "masterDataGrp", group: 23, svg: "Stammdaten", disabled: true, popup: true },
         { id: "eventSeries", group: 52, svg: "Skills", disabled: true, predecGroup: 23 },
+        { id: "genDataModDetails", group: 54, svg: "Skills", disabled: true, predecGroup: 23},
         { id: "skills", group: 24, svg: "Skills", disabled: true, predecGroup: 23 },
         { id: "employeeGrp", group: 25, svg: "Benutzerkonten", disabled: true, popup: true },
         { id: "employee", group: 5, svg: "keys", disabled: true, predecGroup: 25 },
@@ -120,6 +121,7 @@
         { id: "eventResourceAdministration", group: 44, disabled: false},
         { id: "eventMediaAdministration", group: 44, disabled: false },
 		{ id: "eventSeriesAdministration", group: 44, disabled: false },
+        { id: "eventSpeakerAdministration", group: 44, disabled: false },
         { id: "questionList", group: 3, disabled: false },
         { id: "questiongroup", group: 3, disabled: false },
         { id: "optQuestionList", group: 3, disabled: false },
@@ -190,7 +192,9 @@
         { id: "eventGenSettings", master: "eventsList" },
         { id: "eventResourceAdministration", master: "eventsList" },
         { id: "eventMediaAdministration", master: "eventsList" },
-		{ id: "eventSeriesAdministration", master: "eventsList" }
+		{ id: "eventSeriesAdministration", master: "eventsList" },
+        { id: "eventSpeakerAdministration", master: "eventsList"},
+        { id: "genDataModDetails", master: "genDataModList" }
     ];
 
 

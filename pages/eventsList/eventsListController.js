@@ -239,7 +239,8 @@
                                                     if ((curPageId === "eventGenSettings" ||
                                                          curPageId === "eventResourceAdministration" || 
                                                          curPageId === "eventMediaAdministration" || 
-                                                         curPageId === "eventSeriesAdministration") &&
+                                                         curPageId === "eventSeriesAdministration" ||
+                                                         curPageId === "eventSpeakerAdministration") &&
                                                         typeof AppBar.scope.loadData === "function" &&
                                                         typeof AppBar.scope.setEventId === "function") {
                                                         if (curPageId === "eventGenSettings") {
@@ -256,7 +257,8 @@
                                                     if ((curPageId === "eventGenSettings" ||
                                                          curPageId === "eventResourceAdministration" ||
                                                          curPageId === "eventMediaAdministration" || 
-                                                         curPageId === "eventSeriesAdministration") && 
+                                                         curPageId === "eventSeriesAdministration" ||
+                                                         curPageId === "eventSpeakerAdministration") &&
                                                         typeof AppBar.scope.getEventId === "function") {
                                                         that.selectRecordId(AppBar.scope.getEventId());
                                                     }
@@ -266,7 +268,8 @@
                                                 if ((curPageId === "eventGenSettings" ||
                                                      curPageId === "eventResourceAdministration"  || 
                                                      curPageId === "eventMediaAdministration" || 
-                                                     curPageId === "eventSeriesAdministration")&&
+                                                     curPageId === "eventSeriesAdministration" ||
+                                                     curPageId === "eventSpeakerAdministration") &&
                                                     typeof AppBar.scope.loadData === "function" &&
                                                     typeof AppBar.scope.setEventId === "function") {
                                                     AppBar.scope.setEventId(item.data.VeranstaltungVIEWID);

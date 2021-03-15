@@ -548,7 +548,8 @@
     "label.mailingTemplateEvent" : "Modelli",
     "label.eventResourceAdministration" : "Event Administration",
     "label.eventMediaAdministration" : "Media Administration",
-    "label.eventSeriesAdministration": "Assignation de série",
+    "label.eventSeriesAdministration": "Assegnazione seriale",
+    "label.eventSpeakerAdministration": "Assegnazione del team",
     "label.eventSeries": "Série",
 	 "label.eventGenSettings" : "Impostazioni generali",
 

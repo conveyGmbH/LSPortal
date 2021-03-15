@@ -550,6 +550,7 @@
     "label.eventMediaAdministration" : "Media Administration",
     "label.eventSeries": "Série",
     "label.eventSeriesAdministration": "Assignation de série",
+    "label.eventSpeakerAdministration": "Affectation d'équipe",
 	"label.eventGenSettings" : "Paramètres généraux",
 
     "flyout.ok"             : "OK",
