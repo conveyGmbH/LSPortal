@@ -29,8 +29,9 @@
                 var that = this;
 
                 var initLand = pageElement.querySelector("#InitLand"); 
+                var apiToggle = pageElement.querySelector("#createApiUser"); 
 
-                var createApiUserValue = 1;
+                var createApiUserValue = 0;
 
                 var getRecordId = function () {
                     Log.call(Log.l.trace, "ClientManagement.Controller.");
@@ -140,7 +141,7 @@
                             if (checked) {
                                 createApiUserValue = 1;
                             } else {
-                                createApiUserValue = null;
+                                createApiUserValue = 0;
                             }
                             break;
                     }
@@ -224,6 +225,10 @@
                     that.loading = true;
                     AppData.setErrorMsg(that.binding);
                     var ret = new WinJS.Promise.as().then(function () {
+                        if (apiToggle) {
+                            apiToggle.winControl.checked = false;
+                        }
+                    }).then(function () {
                         if (!AppData.initLandView.getResults().length) {
                             Log.print(Log.l.trace, "calling select initLandData...");
                             //@nedra:25.09.2015: load the list of INITLand for Combobox
