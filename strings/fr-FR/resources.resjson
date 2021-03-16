@@ -920,7 +920,9 @@
     "clientmanagement.city" : "Ville",
     "clientmanagement.country" : "Pays",
     "clientmanagement.telefon" : "Téléphone",
-
+    "clientmanagement.createapiuser" : "Créer un Api-User",
+    "clientmanagement.apidata" : "Données Api-User",
+	
     "clientmanagementlist.title" : "Client",
     "clientmanagementlist.count" : "Nombre",
 

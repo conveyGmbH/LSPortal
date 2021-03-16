@@ -20,13 +20,17 @@
                         pageElement, {
                             dataClientManagement: getEmptyDefaultValue(ClientManagement.fairMandantView.defaultValue),
                             recordID : 0,
-                            InitLandItem: { InitLandID: 0, TITLE: "" }
+                            InitLandItem: { InitLandID: 0, TITLE: "" },
+                            showapiUserCreate: null,
+                            apiUserCreate: null
                         }, commandList
                     ]);
 
                 var that = this;
 
-                var initLand = pageElement.querySelector("#InitLand");
+                var initLand = pageElement.querySelector("#InitLand"); 
+
+                var createApiUserValue = 1;
 
                 var getRecordId = function () {
                     Log.call(Log.l.trace, "ClientManagement.Controller.");
@@ -69,11 +73,14 @@
                                 pPLZ: dataClientManagement.PLZ,
                                 pStadt: dataClientManagement.Stadt,
                                 pLandID: parseInt(dataClientManagement.LandID),
-                                pTelefonFestnetz: dataClientManagement.TelefonFestnetz
+                                pTelefonFestnetz: dataClientManagement.TelefonFestnetz,
+                                pCreateEventUser: createApiUserValue
 
                             }, function (json) {
                                 Log.print(Log.l.info, "call success! ");
                                 AppBar.busy = false;
+                                createApiUserValue = null;
+                                that.loadData(dataClientManagement.FairMandantVIEWID);
                                 //Application.navigateById("localevents");
                             }, function (errorResponse) {
                                 Log.print(Log.l.error, "call error");
@@ -116,6 +123,30 @@
                 }
                 this.newMandant = newMandant;
 
+                var showApiUser = function(apiUser) {
+                    Log.call(Log.l.trace, "ClientManagement.Controller.");
+                    if (apiUser) {
+                        that.binding.showapiUserCreate = null;
+                    } else {
+                        that.binding.showapiUserCreate = 1;
+                    }
+                }
+                this.showApiUser = showApiUser;
+
+                var createApiUserValueToggle = function (toggleId, checked) {
+                    Log.call(Log.l.trace, "Settings.Controller.", "toggleId=" + toggleId + " checked=" + checked);
+                    switch (toggleId) {
+                        case "createApiUser":
+                            if (checked) {
+                                createApiUserValue = 1;
+                            } else {
+                                createApiUserValue = null;
+                            }
+                            break;
+                    }
+                };
+                this.createApiUserValueToggle = createApiUserValueToggle;
+
                 // define handlers
                 this.eventHandlers = {
                     clickBack: function (event) {
@@ -133,6 +164,17 @@
                     clickUpdate: function (event) {
                         Log.call(Log.l.trace, "ClientManagement.Controller.");
                         that.updateMandant();
+                        Log.ret(Log.l.trace);
+                    },
+                    clickCreateApiUser: function(event) {
+                        Log.call(Log.l.trace, "Event.Controller.");
+                        if (event.currentTarget) {
+                            var toggle = event.currentTarget.winControl;
+                            if (toggle) {
+                                var value = toggle.checked || event.currentTarget.value;
+                                that.createApiUserValueToggle(event.currentTarget.id, value);
+                            }
+                        }
                         Log.ret(Log.l.trace);
                     },
                     clickChangeUserState: function (event) {
@@ -218,6 +260,7 @@
                                 if (json && json.d) {
                                     //that.nextUrl = MandatoryList.mandatoryView.getNextUrl(json);
                                     var results = json.d;
+                                    that.showApiUser(results.APIUser);
                                     that.binding.dataClientManagement = results;
                                 }
                             }, function (errorResponse) {

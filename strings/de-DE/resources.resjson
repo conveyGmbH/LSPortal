@@ -553,6 +553,7 @@
 	"label.eventSeries"          : "Serie",
     "label.eventGenSettings" : "Allgemeine Einstellungen",
     "label.genDataModList" : "Moderatoren",
+    "label.genDataModDetails" : "Moderatoren",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Abbrechen",
@@ -921,6 +922,9 @@
     "clientmanagement.city" : "Stadt",
     "clientmanagement.country" : "Land",
     "clientmanagement.telefon" : "Telefon",
+    "clientmanagement.createapiuser" : "Erstelle Api-User",
+    "clientmanagement.apidata" : "Api-User Daten",
+
 
     "clientmanagementlist.title" : "Mandant",
     "clientmanagementlist.count" : "Anzahl",
@@ -1263,7 +1267,7 @@
     "eventGenSettings.speakertitle"			: "Speaker Titel zeigen",
 	"eventGenSettings.speakercv"			: "Speaker CV zeigen",
     "eventGenSettings.newevent"			: "Neuer Veranstaltungname",
-     
+    
 	"eventSeries.title" : "Titel",
     "eventSeries.language" : "Sprache",
     "eventSeries.languageTitle" : "Sprache Titel",
@@ -1278,6 +1282,7 @@
     "genDataModList.title" : "Moderatoren",
     "genDataModList.name" : "Name",
     "genDataModList.firstname" : "Vorname",
+    "genDataModList.company" : "Firmenname",
     "genDataModList.email" : "E-Mail",
     "genDataModList.expertise" : "Fachkompetenz",
     "genDataModList.events" : "Zugeordnete Events",

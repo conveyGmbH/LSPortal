@@ -90,6 +90,24 @@
                             <span class="label landscape_only" data-win-res="{textContent: 'clientmanagement.telefon'}"></span>
                             <input class="input_field win-textbox" type="text" data-win-bind="value: dataClientManagement.TelefonFestnetz  Binding.Mode.twoway" />
                         </div>
+                        <div class="line-separator"></div>
+                        <div class="field_line field_line_odd" data-win-bind="style.display: showapiUserCreate Binding.Converter.toDisplay">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'clientmanagement.createapiuser'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'clientmanagement.createapiuser'}"></span>
+                            <div class="input_field toggle-switch-parent">
+                                <div id="createApiUser" class="input_field"
+                                     data-win-control="WinJS.UI.ToggleSwitch"
+                                     data-win-bind="winControl.checked: apiUserCreate; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                                     onchange="AppBar.handleEvent('change', 'clickCreateApiUser', event)">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field_line field_line_odd" data-win-bind="style.display: dataClientManagement.APIUser Binding.Converter.toDisplay">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'clientmanagement.apidata'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'clientmanagement.apidata'}"></span>
+                            <input class="input_field win-textbox" type="text" data-win-bind="value: dataClientManagement.APIUser" readonly="readonly"/>
+                            <input class="input_field win-textbox" type="text" data-win-bind="value: dataClientManagement.APIPassword" readonly="readonly"/>
+                        </div>
                     </div>
                 </div>
                 <div class="error-message"
