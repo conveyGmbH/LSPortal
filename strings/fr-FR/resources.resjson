@@ -1273,5 +1273,7 @@
     "eventGenSettings.speakerfn"			: "Afficher le nom de l'orateur",
     "eventGenSettings.speakerimage"			: "Afficher la photo de l'orateur",
     "eventGenSettings.speakertitle"			: "Afficher le titre de l'orateur",
-    "eventGenSettings.speakercv"			: "Afficher le CV de l'orateur"
+    "eventGenSettings.speakercv"			: "Afficher le CV de l'orateur",
+
+    "eventSpeakerAdministration.speaker"    : "Membre"
 }

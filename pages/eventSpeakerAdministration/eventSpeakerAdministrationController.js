@@ -22,12 +22,12 @@
                 count: 0
             }, commandList, false,
                 EventSpeakerAdministration.eventSpeakerTable,
-                EventSpeakerAdministration.eventSpeakerTable, listView]);
+                EventSpeakerAdministration.eventSpeakerVIEW, listView]);
 
             var that = this;
 
-            // superset of series entries in combobox
-            this.series = null;
+            // superset of speaker entries in combobox
+            this.speaker = null;
 
             var progress = null;
             var counter = null;
@@ -40,8 +40,8 @@
             var forceReload = false;
 
             this.dispose = function () {
-                if (that.series) {
-                    that.series = null;
+                if (that.speaker) {
+                    that.speaker = null;
                 }
             }
 
@@ -76,34 +76,34 @@
             var resultConverter = function (item, index) {
                 Log.call(Log.l.trace, "EventSpeakerAdministration.Controller.", "index=", index);
                 var ret = item;
-                // reset mapped series on any result received
+                // reset mapped speaker on any result received
                 Log.ret(Log.l.trace, ret);
             }
             this.resultConverter = resultConverter;
 
-            var fillSeriesCombo = function(combo, item, index) {
+            var fillSpeakerCombo = function(combo, item, index) {
                 Log.call(Log.l.u1, "EventSpeakerAdministration.Controller.");
                 if (combo && combo.winControl) {
-                    var eventSeriesMap = that.records &&
+                    var eventSpeakerMap = that.records &&
                         that.records.map(function(recordsItem) {
                             return recordsItem.MandantSerieID || 0;
                         }) || [];
-                    var curSeries = (that.series || []).filter(function(seriesItem) {
-                        return (seriesItem.MandantSerieVIEWID === item.MandantSerieID ||
-                            eventSeriesMap.indexOf(seriesItem.MandantSerieVIEWID) < 0);
+                    var curSpeaker = (that.speaker || []).filter(function(speakerItem) {
+                        return (speakerItem.PersonAdresseVIEWID === item.PersonAdresseID ||
+                            eventSpeakerMap.indexOf(speakerItem.PersonAdresseVIEWID) < 0);
                     });
-                    if (curSeries) {
-                        curSeries.push({
+                    if (curSpeaker) {
+                        curSpeaker.push({
                             PersonAdresseVIEWID: 0,
                             PersonAdresseText: ""
                         });
                     }
-                    combo.winControl.data = new WinJS.Binding.List(curSeries);
-                    combo.value = item.MandantSerieID || 0;
+                    combo.winControl.data = new WinJS.Binding.List(curSpeaker);
+                    combo.value = item.PersonAdresseID || 0;
                 }
                 Log.ret(Log.l.u1);
             }
-            this.fillSeriesCombo = fillSeriesCombo;
+            this.fillSpeakerCombo = fillSpeakerCombo;
 
             this.eventHandlers = {
                 clickBack: function (event) {
@@ -142,7 +142,10 @@
                         pVariant: ""
                     }, function (json) {
                         Log.print(Log.l.info, "call success! json=" + json);
+                        //Mitarbeiterid - Personaddressviewid
+                        // update auf oData 
                         //Application.navigateById(Application.startPageId, event);
+                        // rufe update und dann loaddata auf
                     }, function (error) {
                         Log.print(Log.l.error, "call error=" + error);
                         AppData.setErrorMsg(that.binding, error);
@@ -155,7 +158,7 @@
                 },
                 clickDelete: function (event) {
                     Log.call(Log.l.trace, "EventSpeakerAdministration.Controller.");
-                    var confirmTitle = getResourceText("eventSeriesAdministration.questionDelete");
+                    var confirmTitle = getResourceText("eventSpeakerAdministration.questionDelete");
                     confirm(confirmTitle, function (result) {
                         if (result) {
                             AppData.setErrorMsg(that.binding);
@@ -271,7 +274,7 @@
                                         var element = listView.winControl.elementFromIndex(i);
                                         if (element) {
                                             var combo = element.querySelector('select[data-field-entry="PersonAdresseID"]');
-                                            that.fillSeriesCombo(combo, item, i);
+                                            that.fillSpeakerCombo(combo, item, i);
                                         }
                                     }
                                 }
@@ -355,7 +358,7 @@
 
             this.disableHandlers = {
                 clickNew: function () {
-                    return AppBar.busy || !((that.series && that.series.length || 0) > (that.records && that.records.length || 0));
+                    return AppBar.busy || !((that.speaker && that.speaker.length || 0) > (that.records && that.records.length || 0));
                 },
                 clickForward: function () {
                     // always enabled!
@@ -389,14 +392,14 @@
                 this.addRemovableEventListener(listView, "iteminvoked", this.eventHandlers.onItemInvoked.bind(this));
             }
 
-            var loadSeriesData = function () {
+            var loadSpeakerData = function () {
                 Log.call(Log.l.trace, "EventSpeakerAdministration.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
-                    Log.print(Log.l.trace, "calling select seriesView...");
-                    return EventSpeakerAdministration.seriesView.select(function (json) {
-                        Log.print(Log.l.trace, "seriesView: success!");
-                        that.series = (json && json.d && json.d.results) || [];
+                    Log.print(Log.l.trace, "calling select speakerView...");
+                    return EventSpeakerAdministration.speakerView.select(function (json) {
+                        Log.print(Log.l.trace, "speakerView: success!");
+                        that.speaker = (json && json.d && json.d.results) || [];
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
@@ -407,7 +410,7 @@
                 Log.ret(Log.l.trace);
                 return ret;
             }
-            that.loadSeriesData = loadSeriesData;
+            that.loadSpeakerData = loadSpeakerData;
 
             var getEventId = function () {
                 return EventSpeakerAdministration._eventId;
@@ -426,8 +429,8 @@
             }
 
             that.processAll().then(function () {
-                Log.print(Log.l.trace, "loadSeriesData");
-                return that.loadSeriesData();
+                Log.print(Log.l.trace, "loadSpeakerData");
+                return that.loadSpeakerData();
             }).then(function () {
                 Log.print(Log.l.trace, "loadFragmentById complete");
                 return that.loadData();

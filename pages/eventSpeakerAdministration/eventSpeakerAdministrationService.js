@@ -6,6 +6,9 @@
 (function () {
     "use strict";
     WinJS.Namespace.define("EventSpeakerAdministration", {
+        /**
+         * Combobox
+         */
         _speakerView: {
             get: function () {
                 return AppData.getFormatView("PersonAdresse", 20639); /*PersonAdresse*/
@@ -16,10 +19,15 @@
                 return AppData.getFormatView("Benutzer", 0); /*neue andere CR-Tabelle*/
             }
         },
+        _eventSpeakerVIEW: {
+            get: function () {
+                return AppData.getFormatView("Benutzer", 20642); /*neue andere CR-Tabelle*/
+            }
+        },
         _eventId: 0
     });
     WinJS.Namespace.define("EventSpeakerAdministration", {
-        seriesView: {
+        speakerView: {
             select: function (complete, error, restriction, options) {
                 Log.call(Log.l.trace, "EventSpeakerAdministration.seriesView.");
                 if (!restriction) {
@@ -39,11 +47,19 @@
                 return ret;
             }
         },
-        eventSpeakerTable: {
+        eventSpeakerVIEW: {
             select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, "EventSpeakerAdministration.eventView.",
                     "VeranstaltungID=" + EventSpeakerAdministration._eventId);
-                var ret = EventSpeakerAdministration._eventSpeakerTable.select(complete, error, restriction, {
+                if (!restriction) {
+                    restriction = {
+                        VeranstaltungID: EventSpeakerAdministration._eventId,
+                        Name: "NULL",
+                        /*Vorname: "NULL",*/
+                        LanguageSpecID: AppData.getLanguageId()
+                    };
+                }
+                var ret = EventSpeakerAdministration._eventSpeakerVIEW.select(complete, error, restriction, {
                     ordered: true,
                     orderAttribute: "BenutzerVIEWID"
                 });
@@ -52,17 +68,17 @@
             },
             getNextUrl: function (response) {
                 Log.call(Log.l.trace, "EventSpeakerAdministration.eventView.");
-                var ret = EventSpeakerAdministration._eventSpeakerTable.getNextUrl(response);
+                var ret = EventSpeakerAdministration._eventSpeakerVIEW.getNextUrl(response);
                 Log.ret(Log.l.trace);
                 return ret;
             },
             selectNext: function (complete, error, response, nextUrl) {
                 Log.call(Log.l.trace, "EventSpeakerAdministration.eventView.");
-                var ret = EventSpeakerAdministration._eventSpeakerTable.selectNext(complete, error, response, nextUrl);
+                var ret = EventSpeakerAdministration._eventSpeakerVIEW.selectNext(complete, error, response, nextUrl);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
-            },
+            }/*,
             insert: function (complete, error) {
                 Log.call(Log.l.trace, "EventSpeakerAdministration.eventTable.");
                 var ret = EventSpeakerAdministration._eventSpeakerTable.insert(complete, error, {
@@ -99,6 +115,24 @@
                         ret = record[EventSpeakerAdministration._eventSpeakerTable.pkName];
                     }
                 }
+                return ret;
+            }*/
+        },
+        eventSpeakerTable: {
+            update: function (complete, error, recordId, viewResponse) {
+                Log.call(Log.l.trace, "EventSpeakerAdministration.eventTable.");
+                var ret = EventSpeakerAdministration._eventSpeakerTable.update(complete, error, recordId, viewResponse);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            deleteRecord: function (complete, error, recordId) {
+                Log.call(Log.l.trace, "EventSpeakerAdministration.eventTable.");
+                var ret = EventSpeakerAdministration._eventSpeakerTable.deleteRecord(function () {
+                    if (typeof complete === "function") {
+                        complete();
+                    }
+                }, error, recordId);
+                Log.ret(Log.l.trace);
                 return ret;
             }
         }

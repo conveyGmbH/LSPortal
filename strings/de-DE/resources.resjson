@@ -1289,5 +1289,9 @@
     "genDataModList.lastpost" : "Letzter Beitrag",
     "genDataModList.lastrating" : "Letzte Bewertung",
     "genDataModList.lastrole" : "Letzte Rolle",
-    "genDataModList.status" : "Status"
+    "genDataModList.status" : "Status",
+
+	"eventSpeakerAdministration.speaker" : "Mitglied"
+
+
 }		

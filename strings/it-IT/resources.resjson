@@ -1273,5 +1273,7 @@
     "eventGenSettings.speakerfn"			: "Mostra nome speaker",
     "eventGenSettings.speakerimage"			: "Mostra immagine speaker",
     "eventGenSettings.speakertitle"			: "Mostra titolo speaker",
-    "eventGenSettings.speakercv"			: "Mostra CV speaker"
+    "eventGenSettings.speakercv"			: "Mostra CV speaker",
+
+    "eventSpeakerAdministration.speaker": "Membro"
 }
