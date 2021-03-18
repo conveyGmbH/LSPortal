@@ -16,7 +16,7 @@
         },
         _eventSpeakerTable: {
             get: function () {
-                return AppData.getFormatView("Benutzer", 0); /*benötigt um update */
+                return AppData.getFormatView("Benutzer", 0); /*neue andere CR-Tabelle, benötigt aber noch Mitarbeiter, da Fremd-Primär!*/
             }
         },
         _eventSpeakerVIEW: {
@@ -53,8 +53,9 @@
                     "VeranstaltungID=" + EventSpeakerAdministration._eventId);
                 if (!restriction) {
                     restriction = {
-                        Vorname: "NULL",
-                        Name: "NULL",
+                        // Wäre eine Kategorie nicht besser???
+                        Vorname: "NULL", //???
+                        Name: "NULL", //???
                         VeranstaltungID: EventSpeakerAdministration._eventId,
                         LanguageSpecID: AppData.getLanguageId()
                     };
@@ -78,23 +79,73 @@
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
-            }/*,
+            },
+            relationName: EventSpeakerAdministration._eventSpeakerVIEW.relationName,
+            pkName: EventSpeakerAdministration._eventSpeakerVIEW.oDataPkName,
+            getRecordId: function (record) {
+                var ret = null;
+                if (record) {
+                    if (EventSpeakerAdministration._eventSpeakerVIEW.oDataPkName) {
+                        ret = record[EventSpeakerAdministration._eventSpeakerVIEW.oDataPkName];
+                    }
+                    if (!ret && EventSpeakerAdministration._eventSpeakerVIEW.pkName) {
+                        ret = record[EventSpeakerAdministration._eventSpeakerVIEW.pkName];
+                    }
+                }
+                return ret;
+            }
+        },
+        eventSpeakerTable: {
             insert: function (complete, error) {
-                Log.call(Log.l.trace, "EventSpeakerAdministration.eventTable.");
-                var ret = EventSpeakerAdministration._eventSpeakerTable.insert(complete, error, {
-                    VeranstaltungID: EventSpeakerAdministration._eventId
+                Log.call(Log.l.trace, "EventSpeakerAdministration.eventSpeakerTable.");
+                var recordId = 0;
+                var err = { status: 0, statusText: "no record returned from insert!" };
+                var ret = AppData.call("PRC_CreateEmptyMA", {
+                    pVeranstaltungID: EventSpeakerAdministration._eventId
+                },
+                function(json) {
+                    if (json && json.d && json.d.results && json.d.results[0]) {
+                        recordId = json.d.results[0].NewMitarbeiterID;
+                        Log.print(Log.l.trace, "call success! recordId=" + recordId);
+                        if (!recordId) {
+                            err.status = json.d.results[0].ResultCode;
+                            err.statusText = json.d.results[0].ResultMessage;
+                        }
+                    }
+                },
+                function(errorResponse) {
+                    Log.print(Log.l.error, "call error");
+                    if (typeof error === "function") {
+                        error(errorResponse);
+                    }
+                }).then(function() {
+                    if (recordId) {
+                        var newRecord = {
+                            BenutzerVIEWID: recordId,
+                            INITBenAnwID: 0,
+                            AnredeID: 0,
+                            LandID
+                        }
+                        return EventSpeakerAdministration._eventSpeakerVIEW.insertWithId(complete, error, newRecord);
+                    } else {
+                        if (typeof error === "function") {
+                            error(err);
+                        }
+                        return WinJS.Promise.as();
+                    }
                 });
                 Log.ret(Log.l.trace);
                 return ret;
             },
             update: function (complete, error, recordId, viewResponse) {
-                Log.call(Log.l.trace, "EventSpeakerAdministration.eventTable.");
+                Log.call(Log.l.trace, "EventSpeakerAdministration.eventSpeakerTable.");
                 var ret = EventSpeakerAdministration._eventSpeakerTable.update(complete, error, recordId, viewResponse);
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            deleteRecord: function(complete, error, recordId) {
-                Log.call(Log.l.trace, "EventSpeakerAdministration.eventTable.");
+            deleteRecord: function (complete, error, recordId) {
+                Log.call(Log.l.trace, "EventSpeakerAdministration.eventSpeakerTable.");
+                // Mitarbeiter need to be deleted via DELETE Trigger!
                 var ret = EventSpeakerAdministration._eventSpeakerTable.deleteRecord(function () {
                     if (typeof complete === "function") {
                         complete();
@@ -102,7 +153,7 @@
                 }, error, recordId);
                 Log.ret(Log.l.trace);
                 return ret;
-            }*/,
+            },
             relationName: EventSpeakerAdministration._eventSpeakerTable.relationName,
             pkName: EventSpeakerAdministration._eventSpeakerTable.pkName,
             getRecordId: function (record) {
@@ -115,24 +166,6 @@
                         ret = record[EventSpeakerAdministration._eventSpeakerTable.pkName];
                     }
                 }
-                return ret;
-            }
-        },
-        eventSpeakerTable: {
-            update: function (complete, error, recordId, viewResponse) {
-                Log.call(Log.l.trace, "EventSpeakerAdministration.eventTable.");
-                var ret = EventSpeakerAdministration._eventSpeakerTable.update(complete, error, recordId, viewResponse);
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            deleteRecord: function (complete, error, recordId) {
-                Log.call(Log.l.trace, "EventSpeakerAdministration.eventTable.");
-                var ret = EventSpeakerAdministration._eventSpeakerTable.deleteRecord(function () {
-                    if (typeof complete === "function") {
-                        complete();
-                    }
-                }, error, recordId);
-                Log.ret(Log.l.trace);
                 return ret;
             }
         }

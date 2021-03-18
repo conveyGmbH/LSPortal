@@ -224,6 +224,12 @@ img .field_line {
 .accent-background-color {
     background-color: rgb(0, 120, 215);
 }
+.accent-color {
+    background-color: rgb(0, 120, 215);
+}
+.navigation-background-color {
+    background-color: #c66145;
+}
 
 .win-textbox:focus,
 .win-textarea:focus {

@@ -29,6 +29,12 @@
     border-right-color: transparent;
     */
 }
+.masterhost-background {
+    background-color: transparent;
+}
+.contenthost-background {
+    background-color: transparent;
+}
 /*
 .win-selectionstylefilled.win-listview .win-selected {
     background-color: #e0e0e0;
@@ -490,6 +496,9 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
     width: 100%;
 }
 
+.appHeader .win-button {
+    z-index: 9900;
+}
 .publish-button {
     background-color: #f2f2f2;
     /*color: #ed3330;*/
@@ -558,25 +567,22 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
     border-radius: 50%;
     padding: 0;
     overflow: hidden;
-    z-index: 9900;
 }
 
 .user-image {
-    display: inline-block;
+    display: block;
     position: relative;
     left: 0;
     top: 6px;
-    z-index: 9900;
 }
 
 .user-photo {
-    display: inline-block;
+    display: block;
     position: relative;
     left: 0px;
     top: -32px;
     width: auto;
     height: 40px;
-    z-index: 9900;
 }
 
 .onsite-offsite {
