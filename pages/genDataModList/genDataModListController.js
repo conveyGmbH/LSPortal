@@ -29,7 +29,6 @@
                 this.nextUrl = null;
                 this.nextDocUrl = null;
                 this.loading = false;
-                this.modData = null;
               
                 this.firstmodDataIndex = 0;
 
@@ -38,9 +37,6 @@
                 this.dispose = function () {
                     if (listView && listView.winControl) {
                         listView.winControl.itemDataSource = null;
-                    }
-                    if (that.modData) {
-                        that.modData = null;
                     }
                     listView = null;
                 }
@@ -68,131 +64,7 @@
                     }
                     return restriction;
                 }
-                this.getRestriction = getRestriction;
-
-                var loadNextUrl = function (recordId) {
-                    Log.call(Log.l.trace, "QuestionList.Controller.", "recordId=" + recordId);
-                    if (that.modData && that.nextUrl && listView) {
-                        progress = listView.querySelector(".list-footer .progress");
-                        counter = listView.querySelector(".list-footer .counter");
-                        that.loading = true;
-                        if (progress && progress.style) {
-                            progress.style.display = "inline";
-                        }
-                        if (counter && counter.style) {
-                            counter.style.display = "none";
-                        }
-                        AppData.setErrorMsg(that.binding);
-                        Log.print(Log.l.trace, "calling select GenDataModList.personAdresseView...");
-                        var nextUrl = that.nextUrl;
-                        that.nextUrl = null;
-                        GenDataModList.personAdresseView.selectNext(function (json) { //json is undefined
-                            // this callback will be called asynchronously
-                            // when the response is available
-                            Log.print(Log.l.trace, "GenDataModList.personAdresseView: success!");
-                            // startContact returns object already parsed from json file in response
-                            if (json && json.d && that.modData) {
-                                that.nextUrl = GenDataModList.personAdresseView.getNextUrl(json);
-                                var results = json.d.results;
-                                results.forEach(function (item, index) {
-                                    that.resultConverter(item, that.binding.count);
-                                    that.binding.count = that.modData.push(item);
-                                });
-                            }
-                            if (recordId) {
-                                that.selectRecordId(recordId);
-                            }
-                        }, function (errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            Log.print(Log.l.error, "GenDataModList.personAdresseView: error!");
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                            if (progress && progress.style) {
-                                progress.style.display = "none";
-                            }
-                            if (counter && counter.style) {
-                                counter.style.display = "inline";
-                            }
-                            that.loading = false;
-                        }, null, nextUrl);
-                    }
-                    Log.ret(Log.l.trace);
-                }
-                this.loadNextUrl = loadNextUrl;
-
-                var scopeFromRecordId = function (recordId) {
-                    var i;
-                    Log.call(Log.l.trace, "Questiongroup.Controller.", "recordId=" + recordId);
-                    var item = null;
-                    if (that.modData) {
-                        for (i = 0; i < that.modData.length; i++) {
-                            var mod = that.modData.getAt(i);
-                            if (mod && typeof mod === "object" &&
-                                mod.PersonAdresseVIEWID === recordId) {
-                                item = mod;
-                                break;
-                            }
-                        }
-                    }
-                    if (item) {
-                        Log.ret(Log.l.trace, "i=" + i);
-                        return { index: i, item: item };
-                    } else {
-                        Log.ret(Log.l.trace, "not found");
-                        return null;
-                    }
-                };
-                this.scopeFromRecordId = scopeFromRecordId;
-
-                var scrollToRecordId = function (recordId) {
-                    Log.call(Log.l.trace, "QuestionList.Controller.", "recordId=" + recordId);
-                    if (that.loading) {
-                        WinJS.Promise.timeout(50).then(function () {
-                            that.scrollToRecordId(recordId);
-                        });
-                    } else {
-                        if (recordId && listView && listView.winControl && that.modData) {
-                            for (var i = 0; i < that.modData.length; i++) {
-                                var mod = that.modData.getAt(i);
-                                if (mod && typeof mod === "object" &&
-                                    mod.PersonAdresseVIEWID === recordId) {
-                                    listView.winControl.indexOfFirstVisible = i - 1;
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    Log.ret(Log.l.trace);
-                }
-                this.scrollToRecordId = scrollToRecordId;
-
-                var selectRecordId = function (recordId) {
-                    var mod;
-                    Log.call(Log.l.trace, "GenDataModList.Controller.", "recordId=" + recordId);
-                    var recordIdNotFound = true;
-                    if (recordId && listView && listView.winControl && listView.winControl.selection && that.modData) {
-                        for (var i = 0; i < that.modData.length; i++) {
-                            mod = that.modData.getAt(i);
-                            if (mod &&
-                                typeof mod === "object" &&
-                                mod.PersonAdresseVIEWID === recordId) {
-                                AppData.setRecordId("Kontakt", recordId);
-                                listView.winControl.selection.set(i).done(function() {
-                                    WinJS.Promise.timeout(50).then(function() {
-                                        that.scrollToRecordId(recordId);
-                                    });
-                                });
-                                recordIdNotFound = false;
-                                break;
-                            }
-                        }
-                        if (recordIdNotFound) {
-                            that.loadNextUrl(recordId);
-                        }
-                    }
-                    Log.ret(Log.l.trace);
-                }
-                this.selectRecordId = selectRecordId;
+            this.getRestriction = getRestriction;
 
                 var resultConverter = function (item, index) {
                     item.index = index;
@@ -321,14 +193,34 @@
                         Log.ret(Log.l.trace);
                     },
                     onFooterVisibilityChanged: function (eventInfo) {
-                        Log.call(Log.l.trace, "GenDataModList.Controller.");
-                        if (listView) {
+                        Log.call(Log.l.trace, "EventSeriesAdministration.Controller.");
+                        if (eventInfo && eventInfo.detail) {
                             progress = listView.querySelector(".list-footer .progress");
                             counter = listView.querySelector(".list-footer .counter");
                             var visible = eventInfo.detail.visible;
-
-                            if (visible && that.modData && that.nextUrl) {
-                                that.loadNextUrl();
+                            if (visible && that.nextUrl) {
+                                that.loading = true;
+                                if (progress && progress.style) {
+                                    progress.style.display = "inline";
+                                }
+                                if (counter && counter.style) {
+                                    counter.style.display = "none";
+                                }
+                                that.loadNext(function (json) {
+                                    // this callback will be called asynchronously
+                                    // when the response is available
+                                    Log.print(Log.l.trace, "EventSeriesAdministration.CR_V_FragengruppeView: success!");
+                                }, function (errorResponse) {
+                                    // called asynchronously if an error occurs
+                                    // or server returns response with an error status.
+                                    AppData.setErrorMsg(that.binding, errorResponse);
+                                    if (progress && progress.style) {
+                                        progress.style.display = "none";
+                                    }
+                                    if (counter && counter.style) {
+                                        counter.style.display = "inline";
+                                    }
+                                });
                             } else {
                                 if (progress && progress.style) {
                                     progress.style.display = "none";
@@ -341,7 +233,6 @@
                         }
                         Log.ret(Log.l.trace);
                     }
-
                 };
 
                 this.disableHandlers = {
@@ -364,45 +255,6 @@
 
                 Log.print(Log.l.trace, "calling select GenDataModList.personAdresseView...");
                 
-                var deleteContactLineInList = function () {
-                    var selectedItem = listView.winControl.currentItem;
-                    var index = selectedItem.index;
-                    var recordId;
-                    var prevItem;
-                    var prevIndex;
-                    if (index > 0) {
-                        prevItem = that.modData.getAt(index - 1);
-                        prevIndex = index - 1;
-                        recordId = prevItem.PersonAdresseVIEWID;
-                    } else {
-                        //that.binding.dataContact.KontaktVIEWID = 0;
-                        recordId = 0;
-                        index = 0;
-                        prevIndex = 0;
-                    }
-                    AppData.setRecordId("Kontakt", recordId);
-
-                    if (that.modData.length !== 1) {
-                        that.modData.splice(index, 1);
-                    } else {
-                        that.modData.length = 0;
-                        AppData.setRecordId("Kontakt", 0);
-                        // "leeren" Kontakt laden
-                        AppBar.scope.loadData();
-                    }
-                    if (recordId) {
-                        listView.winControl.selection.set(prevIndex).done(function() {
-                            WinJS.Promise.timeout(50).then(function() {
-                                that.scrollToRecordId(recordId);
-                            });
-                        });
-                    } else {
-                        // Liste neu laden bei leer
-                        that.loadData();
-                    }
-                }
-                this.deleteContactLineInList = deleteContactLineInList;
-
                 that.processAll().then(function () {
                     Log.print(Log.l.trace, "Binding wireup page complete");
                     that.loading = true;
