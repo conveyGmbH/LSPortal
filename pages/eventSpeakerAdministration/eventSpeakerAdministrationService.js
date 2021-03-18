@@ -120,14 +120,7 @@
                     }
                 }).then(function() {
                     if (recordId) {
-                        var newRecord = {
-                            BenutzerVIEWID: recordId,
-                            TagID: "TAGID"+recordId,
-                            INITBenAnwID: 0,
-                            AnredeID: 0,
-                            LandID: 0
-                        }
-                        return EventSpeakerAdministration._eventSpeakerVIEW.insertWithId(complete, error, newRecord);
+                        return EventSpeakerAdministration._eventSpeakerTable.selectById(complete, error, recordId);
                     } else {
                         if (typeof error === "function") {
                             error(err);
