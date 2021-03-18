@@ -64,7 +64,7 @@
                                 <select id="InitKategorie"
                                         class="input_field win-dropdown"
                                         data-win-control="WinJS.UI.Repeater"
-                                        data-win-bind="value: modData.PersonCategoryID Binding.Mode.twoway; style.display: modData.Flag_NoEdit Binding.Converter.toDisplayNone">
+                                        data-win-bind="value: modpaData.INITPersonKategorieID Binding.Mode.twoway; style.display: modData.Flag_NoEdit Binding.Converter.toDisplayNone">
                                     <option data-win-bind="value: INITPersonKategorieID; textContent: TITLE"></option>
                                 </select>
                                 <span class="input_field" data-win-bind="textContent: InitLandItem.TITLE; style.display: modData.Flag_NoEdit Binding.Converter.toDisplay"></span>
@@ -121,13 +121,14 @@
                                 <span class="input_field" data-win-bind="textContent: modData.AcadTitle; style.display: modData.Flag_NoEdit Binding.Converter.toDisplay"></span>
                             </div>
                             <div class="line-separator"></div>
-                            <div class="field_line field_line_odd">
+                            <div class="field_line">
                                 <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'contact.address'}"></span>
                                 <span class="label landscape_only" data-win-res="{textContent: 'contact.address'}"></span>
                                 <input name="Strasse" class="input_field win-textbox" type="text" data-win-bind="value: modData.StreetAddress Binding.Mode.twoway; style.display: modData.Flag_NoEdit Binding.Converter.toDisplayNone" />
                                 <span class="input_field" data-win-bind="textContent: modData.StreetAddress; style.display: modData.Flag_NoEdit Binding.Converter.toDisplay"></span>
                             </div>
-                            <div class="field_line field_line_even">
+                            <div class="line-separator"></div>
+                            <div class="field_line field_line_odd">
                                 <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'contact.zip'}"></span>
                                 <span class="label win-type-caption portrait_only_right" data-win-res="{textContent: 'contact.city'}"></span>
                                 <div class="label landscape_only">
@@ -140,7 +141,6 @@
                                     <span class="input_small_right" data-win-bind="textContent: modData.City; style.display: modData.Flag_NoEdit Binding.Converter.toDisplay"></span>
                                 </div>
                             </div>
-                            <div class="line-separator"></div>
                             <div class="field_line field_line_even">
                                 <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'contact.country'}"></span>
                                 <span class="label landscape_only" data-win-res="{textContent: 'contact.country'}"></span>
@@ -172,18 +172,26 @@
                                 <input class="input_field win-textbox" type="text" data-win-bind="value: modData.WebAddress Binding.Mode.twoway; style.display: modData.Flag_NoEdit Binding.Converter.toDisplayNone" />
                                 <span class="input_field" data-win-bind="textContent: modData.WebAddress; style.display: modData.Flag_NoEdit Binding.Converter.toDisplay"></span>
                             </div>
-                            <div class="field_line field_line_even">
-                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'contact.memo'}"></span>
-                                <span class="label landscape_only" data-win-res="{textContent: 'contact.memo'}"></span>
-                                <input class="input_field win-textbox" type="text" data-win-bind="value: modData.Memo Binding.Mode.twoway; style.display: modData.Flag_NoEdit Binding.Converter.toDisplayNone" />
-                                <span class="input_field" data-win-bind="textContent: modData.Memo; style.display: modData.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                            <div class="line-separator"></div>
+                            <div class="field_line">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'genDataModDetails.expertise'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'genDataModDetails.expertise'}"></span>
+                                <textarea class="input_field win-textarea input_text_comment" data-win-bind="value: modData.SkillsList Binding.Mode.twoway; style.display: modData.Flag_NoEdit Binding.Converter.toDisplayNone" onfocusin="AppBar.handleEvent('focusin', 'blockEnterKey', event)" onfocusout="AppBar.handleEvent('focusout', 'releaseEnterKey', event)"></textarea>
+                                <span class="input_field" data-win-bind="textContent: modData.SkillsList; style.display: modData.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                            </div>
+                            <div class="line-separator"></div>
+                            <div class="field_line">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'genDataModDetails.cv'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'genDataModDetails.cv'}"></span>
+                                <textarea class="input_field win-textarea input_text_comment" data-win-bind="value: modData.Memo Binding.Mode.twoway; style.display: modData.Flag_NoEdit Binding.Converter.toDisplayNone" onfocusin="AppBar.handleEvent('focusin', 'blockEnterKey', event)" onfocusout="AppBar.handleEvent('focusout', 'releaseEnterKey', event)"></textarea>
+                                <span class="input_field" data-win-bind="textContent: modData.Remark; style.display: modData.Flag_NoEdit Binding.Converter.toDisplay"></span>
                             </div>
                             <div class="line-separator"></div>
                             <div class="field_line">
                                 <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'contact.notice'}"></span>
                                 <span class="label landscape_only" data-win-res="{textContent: 'contact.notice'}"></span>
                                 <textarea class="input_field win-textarea input_text_comment" data-win-bind="value: modData.Remark Binding.Mode.twoway; style.display: modData.Flag_NoEdit Binding.Converter.toDisplayNone" onfocusin="AppBar.handleEvent('focusin', 'blockEnterKey', event)" onfocusout="AppBar.handleEvent('focusout', 'releaseEnterKey', event)"></textarea>
-                                <span class="input_field" data-win-bind="textContent: modData.Remark; style.display: modData.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                                <span class="input_field" data-win-bind="textContent: modData.memo; style.display: modData.Flag_NoEdit Binding.Converter.toDisplay"></span>
                             </div>
                             <div class="line-separator"></div>
                         </div>

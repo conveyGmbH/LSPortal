@@ -130,12 +130,18 @@
             select: function (complete, error, restriction) {
                 if (!restriction) {
                     restriction = {
-                        PersonAdresseVIEWID: _personAdresseId
+                        PersonAdresseVIEWID: GenDataModDetails._personAdresseId
                     };
                 }
                 Log.call(Log.l.trace, "EventResourceAdministration.eventView.");
                    
-                var ret = GenDataModDetails._adresseView.select(complete, error, restriction);
+                var ret = GenDataModDetails._adressePersonTable.select(complete, error, restriction);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            update: function (complete, error, recordId, viewResponse) {
+                Log.call(Log.l.trace, "EventResourceAdministration.eventTable.");
+                var ret = GenDataModDetails._adressePersonTable.update(complete, error, recordId, viewResponse);
                 Log.ret(Log.l.trace);
                 return ret;
             },

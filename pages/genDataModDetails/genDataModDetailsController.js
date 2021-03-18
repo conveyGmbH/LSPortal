@@ -19,7 +19,7 @@
                 Application.RecordsetController.apply(this, [pageElement, {
                     modData: null,
                     modpaData: null,
-                    newmodData: getEmptyDefaultValue(GenDataModDetails.personAdresseView.defaultValue),
+                    newmodData: getEmptyDefaultValue(GenDataModDetails.adresseView.defaultValue),
                     newmodlabel: getResourceText("genDataModDetails.newmodlabel")
                 }, commandList]);
             
@@ -90,13 +90,17 @@
                             AppData.call("PRC_CreatePerson", {
                                 pPersonEMailID : newMod.EMail,
                                 pPersonFirstname: newMod.Firstname,
-                                pPersonLastname: newMod.Lastname
+                                pPersonLastname: newMod.Lastname,
+                                pPersonCategoryID: parseInt(newMod.PersonCategoryID)
                             }, function (json) {
                                 Log.print(Log.l.info, "call success!");
                                 var master = Application.navigator.masterControl;
                                 if (master && master.controller && master.controller.binding) {
                                     master.controller.loadData().then(function () {
                                         master.controller.selectRecordId(json.d.results[0].NewPersonAdresseID);
+                                    }).then(function () {
+                                        that.binding.newmodData = getEmptyDefaultValue(GenDataModDetails.adresseView.defaultValue);
+                                        newmod.style.display = "none";
                                     });
                                 }
                             }, function (error) {
@@ -110,9 +114,12 @@
                         Log.call(Log.l.trace, "GenDataModDetails.Controller.");
                         if (newmod.style.display === "none") {
                             newmod.style.display = "block";
+                            that.binding.modData.AdresseVIEWID = null;
                         } else {
                             newmod.style.display = "none";
+                            that.loadData();
                             that.binding.newmodData = getEmptyDefaultValue(GenDataModDetails.personAdresseView.defaultValue);
+                            
                         }
                     },
                     onHeaderVisibilityChanged: function (eventInfo) {
@@ -281,7 +288,7 @@
                                     that.binding.modpaData = results[0];
                                 }
                             }, function (errorResponse) {
-
+                                Log.print(Log.l.trace, "calling select contactView...");
                             });
                         }
                     }).then(function () {
@@ -318,8 +325,27 @@
                                 error(errorResponse);
                                 }, recordId, dataMod).then(function () {
                                 //load of format relation record data
+                                var datapaMod = that.binding.modpaData;
+                                datapaMod.INITPersonKategorieID = parseInt(datapaMod.INITPersonKategorieID);
+                                var recordId = getPersonAdresseId();
                                 Log.print(Log.l.trace, "calling select contactView...");
-                                
+                                ret = GenDataModDetails.personAdresseTable.update(function(response) {
+                                        AppBar.busy = false;
+                                        // called asynchronously if ok
+                                        Log.print(Log.l.info, "dataMod update: success!");
+                                        AppBar.modified = false;
+                                        that.loadData();
+                                        complete(response);
+                                    },
+                                    function(errorResponse) {
+                                        AppBar.busy = false;
+                                        // called asynchronously if an error occurs
+                                        // or server returns response with an error status.
+                                        AppData.setErrorMsg(that.binding, errorResponse);
+                                        error(errorResponse);
+                                    },
+                                    recordId,
+                                    datapaMod);
                             });
                         }
                     } else if (AppBar.busy) {
