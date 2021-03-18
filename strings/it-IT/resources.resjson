@@ -551,7 +551,9 @@
     "label.eventSeriesAdministration": "Assegnazione seriale",
     "label.eventSpeakerAdministration": "Assegnazione del team",
     "label.eventSeries": "Série",
-	 "label.eventGenSettings" : "Impostazioni generali",
+	  "label.eventGenSettings" : "Impostazioni generali",
+    "label.genDataModList" : "Moderatore",
+    "label.genDataModDetails" : "Moderatore",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annulla",
@@ -1274,7 +1276,26 @@
     "eventGenSettings.speakerimage"			: "Mostra immagine speaker",
     "eventGenSettings.speakertitle"			: "Mostra titolo speaker",
     "eventGenSettings.speakercv"			: "Mostra CV speaker",
+    "eventGenSettings.newevent"			: "Nuovo nome dell'evento",
 
     "eventSpeakerAdministration.speaker": "Membro",
-    "eventSpeakerAdministration.speakerDelete": "Vuoi eliminare il compito"
+    "eventSpeakerAdministration.speakerDelete": "Vuoi eliminare il compito",
+	
+    "genDataModList.title" : "Moderatore",
+    "genDataModList.name" : "Nome",
+    "genDataModList.firstname" : "Il nome",
+    "genDataModList.company" : "Nome della società",
+    "genDataModList.email" : "E-Mail",
+    "genDataModList.expertise" : "Competenza",
+    "genDataModList.events" : "Eventi assegnati",
+    "genDataModList.lastpost" : "Ultimo messaggio",
+    "genDataModList.lastrating" : "Ultima valutazione",
+    "genDataModList.lastrole" : "Ultimo rotolo",
+    "genDataModList.status" : "Stato",
+	
+    "genDataModDetails.title" : "Dettagli del moderatore",
+    "genDataModDetails.newmodlabel" : "Aggiungi",
+    "genDataModDetails.category" : "Categoria",
+    "genDataModDetails.expertise" : "Expertise",
+    "genDataModDetails.cv" : "Curriculum Vitae"
 }

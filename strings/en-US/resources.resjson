@@ -552,6 +552,8 @@
     "label.eventSpeakerAdministration" : "Team assignment",
     "label.eventSeries": "Series",
     "label.eventGenSettings" : "General Settings",
+    "label.genDataModList" : "Speaker",
+    "label.genDataModDetails" : "Speaker",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Cancel",
@@ -1275,8 +1277,27 @@
     "eventGenSettings.speakerimage"			: "Show speaker picture",
     "eventGenSettings.speakertitle"			: "Show speaker title",
     "eventGenSettings.speakercv"			: "Show speaker CV",
+    "eventGenSettings.newevent"			: "New Eventname",
 
 	"eventSpeakerAdministration.speaker"    : "Member",
-    "eventSpeakerAdministration.speakerDelete": "Would you like to delete the assignment"
+	"eventSpeakerAdministration.speakerDelete": "Would you like to delete the assignment",
+    
+	"genDataModList.title" : "Speaker",
+    "genDataModList.name" : "Name",
+    "genDataModList.firstname" : "Firstname",
+    "genDataModList.company" : "Companyname",
+    "genDataModList.email" : "E-Mail",
+    "genDataModList.expertise" : "Expertise",
+    "genDataModList.events" : "Assigned events",
+    "genDataModList.lastpost" : "Last post",
+    "genDataModList.lastrating" : "Last rating",
+    "genDataModList.lastrole" : "Last Role",
+    "genDataModList.status" : "Status",
+
+    "genDataModDetails.title" : "Speaker Details",
+    "genDataModDetails.newmodlabel" : "Add",
+    "genDataModDetails.category" : "Category",
+    "genDataModDetails.expertise" : "Expertise",
+    "genDataModDetails.cv" : "Curriculum Vitae"
 
 }

@@ -1292,7 +1292,12 @@
     "genDataModList.status" : "Status",
 
 	"eventSpeakerAdministration.speaker" : "Mitglied",
-	"eventSpeakerAdministration.speakerDelete" : "Möchten Sie die Zuordnung löschen"
+	"eventSpeakerAdministration.speakerDelete" : "Möchten Sie die Zuordnung löschen",
 
 
+    "genDataModDetails.title" : "Moderator Details",
+    "genDataModDetails.newmodlabel" : "Hinzufügen",
+    "genDataModDetails.category" : "Kategorie",
+    "genDataModDetails.expertise" : "Expertise",
+    "genDataModDetails.cv" : "Curriculum Vitae"
 }		

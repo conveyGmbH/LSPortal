@@ -551,7 +551,9 @@
     "label.eventSeries": "Série",
     "label.eventSeriesAdministration": "Assignation de série",
     "label.eventSpeakerAdministration": "Affectation d'équipe",
-	"label.eventGenSettings" : "Paramètres généraux",
+	  "label.eventGenSettings" : "Paramètres généraux",
+    "label.genDataModList" : "Modérateur",
+    "label.genDataModDetails" : "Modérateur",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annuler",
@@ -1274,7 +1276,26 @@
     "eventGenSettings.speakerimage"			: "Afficher la photo de l'orateur",
     "eventGenSettings.speakertitle"			: "Afficher le titre de l'orateur",
     "eventGenSettings.speakercv"			: "Afficher le CV de l'orateur",
+    "eventGenSettings.newevent"			: "Nouveau nom de l'événement",
 
     "eventSpeakerAdministration.speaker"    : "Membre",
-    "eventSpeakerAdministration.speakerDelete": "Souhaitez-vous supprimer le devoir"
+    "eventSpeakerAdministration.speakerDelete": "Souhaitez-vous supprimer le devoir",
+    
+    "genDataModList.title" : "Modérateur",
+    "genDataModList.name" : "Nom",
+    "genDataModList.firstname" : "Prénom",
+    "genDataModList.company" : "Nom de la société",
+    "genDataModList.email" : "E-Mail",
+    "genDataModList.expertise" : "Expertise",
+    "genDataModList.events" : "Événements au cours de l'année",
+    "genDataModList.lastpost" : "Dernier message",
+    "genDataModList.lastrating" : "Dernière note",
+    "genDataModList.lastrole" : "Dernier rouleau",
+    "genDataModList.status" : "Statut",
+
+    "genDataModDetails.title" : "Détails du conférencier",
+    "genDataModDetails.newmodlabel" : "Ajouter",
+    "genDataModDetails.category" : "Catégorie",
+    "genDataModDetails.expertise" : "Expertise",
+    "genDataModDetails.cv" : "Curriculum Vitae"
 }
