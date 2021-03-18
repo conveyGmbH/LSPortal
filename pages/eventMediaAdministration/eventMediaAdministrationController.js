@@ -530,9 +530,15 @@
                         }, function (json) {
                             AppBar.busy = false;
                             Log.print(Log.l.info, "call PRC_CopyFromMandantDokument: success!");
-                            if (json && json.d) {
-                                // Now, we call WinJS.Binding.List to get the bindable list
-                                that.resultConverter(json.d);
+                            if (json &&
+                                json.d &&
+                                json.d.results &&
+                                json.d.results[0] &&
+                                json.d.results[0].MandantDokumentVIEWID) {
+                                that.binding.docId = json.d.results[0].MandantDokumentVIEWID;
+                            } else {
+                                var err = { status: 0, statusText: "no record returned from insert!" };
+                                AppData.setErrorMsg(that.binding, err);
                             }
                         }, function (errorResponse) {
                             AppBar.busy = false;
