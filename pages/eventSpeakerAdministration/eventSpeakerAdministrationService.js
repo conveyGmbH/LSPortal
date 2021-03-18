@@ -122,6 +122,7 @@
                     if (recordId) {
                         var newRecord = {
                             BenutzerVIEWID: recordId,
+                            TagID: "TAGID"+recordId,
                             INITBenAnwID: 0,
                             AnredeID: 0,
                             LandID: 0
