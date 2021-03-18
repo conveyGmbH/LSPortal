@@ -143,7 +143,7 @@
                 },
                 clickDelete: function (event) {
                     Log.call(Log.l.trace, "EventSpeakerAdministration.Controller.");
-                    var confirmTitle = getResourceText("eventSpeakerAdministration.questionDelete");
+                    var confirmTitle = getResourceText("eventSpeakerAdministration.speakerDelete");
                     confirm(confirmTitle, function (result) {
                         if (result) {
                             AppData.setErrorMsg(that.binding);
