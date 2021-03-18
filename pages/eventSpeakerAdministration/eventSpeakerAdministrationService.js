@@ -16,7 +16,7 @@
         },
         _eventSpeakerTable: {
             get: function () {
-                return AppData.getFormatView("Benutzer", 0); /*neue andere CR-Tabelle*/
+                return AppData.getFormatView("Benutzer", 0); /*benötigt um update */
             }
         },
         _eventSpeakerVIEW: {
@@ -104,7 +104,7 @@
                 return ret;
             }*/,
             relationName: EventSpeakerAdministration._eventSpeakerTable.relationName,
-            pkName: EventSpeakerAdministration._eventSpeakerTable.oDataPkName,
+            pkName: EventSpeakerAdministration._eventSpeakerTable.pkName,
             getRecordId: function (record) {
                 var ret = null;
                 if (record) {
