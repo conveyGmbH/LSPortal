@@ -161,7 +161,7 @@
                         pVeranstaltungName: that.binding.newEventData.VeranstaltungName
                     }, function (json) {
                         Log.print(Log.l.info, "call success!");
-                        that.createMandantVaText(json.d.results[0].NewVeranstaltungID);
+                        //that.createMandantVaText(json.d.results[0].NewVeranstaltungID);
                         neweventbox.style.display = "none";
                         var master = Application.navigator.masterControl;
                         master.controller.loadData();
@@ -370,6 +370,7 @@
                 },
                 clickChangeAppSetting: function(event) {
                     Log.call(Log.l.trace, "Event.Controller.");
+                    AppBar.modified = true;
                     if (event.currentTarget) {
                         var toggle = event.currentTarget.winControl;
                         if (toggle) {
@@ -416,8 +417,11 @@
 
             this.disableHandlers = {
                 clickOk: function() {
-                    // always enabled!
-                    return false;
+                    if (that.binding.dataEvent && AppBar.modified && !AppBar.busy) {
+                        return false;
+                    } else {
+                        return true;
+                    }
                 }
             };
 

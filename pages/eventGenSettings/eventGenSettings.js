@@ -39,7 +39,24 @@
             // TODO: Respond to navigations away from this page.
             Log.ret(Log.l.trace);
         },
-        
+
+        canUnload: function (complete, error) {
+            var ret;
+            Log.call(Log.l.trace, pageName + ".");
+            if (this.controller) {
+                ret = this.controller.saveData(function (response) {
+                    // called asynchronously if ok
+                    complete(response);
+                }, function (errorResponse) {
+                    error(errorResponse);
+                });
+            } else {
+                ret = WinJS.Promise.as();
+            }
+            Log.ret(Log.l.trace);
+            return ret;
+        },
+
         updateLayout: function (element, viewState, lastViewState) {
             /// <param name="element" domElement="true" />
             // TODO: Respond to changes in viewState.
