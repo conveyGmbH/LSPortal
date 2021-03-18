@@ -1275,5 +1275,6 @@
     "eventGenSettings.speakertitle"			: "Mostra titolo speaker",
     "eventGenSettings.speakercv"			: "Mostra CV speaker",
 
-    "eventSpeakerAdministration.speaker": "Membro"
+    "eventSpeakerAdministration.speaker": "Membro",
+    "eventSpeakerAdministration.speakerDelete": "Vuoi eliminare il compito"
 }

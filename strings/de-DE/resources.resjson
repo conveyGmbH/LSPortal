@@ -1291,7 +1291,8 @@
     "genDataModList.lastrole" : "Letzte Rolle",
     "genDataModList.status" : "Status",
 
-	"eventSpeakerAdministration.speaker" : "Mitglied"
+	"eventSpeakerAdministration.speaker" : "Mitglied",
+	"eventSpeakerAdministration.speakerDelete" : "Möchten Sie die Zuordnung löschen"
 
 
 }		

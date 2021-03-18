@@ -1239,5 +1239,9 @@
 	"eventSeriesAdministration.serie" : "Series",
     "eventSeriesAdministration.questionDelete" : "Do you want to remove the event from this series?",
     
-	"eventSeriesList.count" : "Anzahl"
+	"eventSeriesList.count" : "Anzahl",
+
+    "eventSpeakerAdministration.speaker" : "Mitglied",
+    "eventSpeakerAdministration.speakerDelete" : "Möchten Sie die Zuordnung löschen"
+
 }			

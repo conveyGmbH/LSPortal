@@ -86,7 +86,7 @@
                 if (combo && combo.winControl) {
                     var eventSpeakerMap = that.records &&
                         that.records.map(function(recordsItem) {
-                            return recordsItem.MandantSerieID || 0;
+                        return recordsItem.PersonAdresseID || 0;
                         }) || [];
                     var curSpeaker = (that.speaker || []).filter(function(speakerItem) {
                         return (speakerItem.PersonAdresseVIEWID === item.PersonAdresseID ||

@@ -1241,5 +1241,6 @@
 
     "eventSeriesList.count" : "Count",
 
-    "eventSpeakerAdministration.speaker"    : "Member"
+    "eventSpeakerAdministration.speaker"    : "Member",
+    "eventSpeakerAdministration.speakerDelete": "Would you like to delete the assignment"
 }

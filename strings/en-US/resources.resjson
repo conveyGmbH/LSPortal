@@ -1276,5 +1276,7 @@
     "eventGenSettings.speakertitle"			: "Show speaker title",
     "eventGenSettings.speakercv"			: "Show speaker CV",
 
-	"eventSpeakerAdministration.speaker"    : "Member"
+	"eventSpeakerAdministration.speaker"    : "Member",
+    "eventSpeakerAdministration.speakerDelete": "Would you like to delete the assignment"
+
 }

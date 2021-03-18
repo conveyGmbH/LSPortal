@@ -1275,5 +1275,6 @@
     "eventGenSettings.speakertitle"			: "Afficher le titre de l'orateur",
     "eventGenSettings.speakercv"			: "Afficher le CV de l'orateur",
 
-    "eventSpeakerAdministration.speaker"    : "Membre"
+    "eventSpeakerAdministration.speaker"    : "Membre",
+    "eventSpeakerAdministration.speakerDelete": "Souhaitez-vous supprimer le devoir"
 }
