@@ -124,7 +124,7 @@
                             BenutzerVIEWID: recordId,
                             INITBenAnwID: 0,
                             AnredeID: 0,
-                            LandID
+                            LandID: 0
                         }
                         return EventSpeakerAdministration._eventSpeakerVIEW.insertWithId(complete, error, newRecord);
                     } else {
