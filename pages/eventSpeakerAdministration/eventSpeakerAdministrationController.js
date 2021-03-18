@@ -137,6 +137,8 @@
                     Log.call(Log.l.trace, "EventSpeakerAdministration.Controller.");
                     AppData.setErrorMsg(that.binding);
                     // PRC_CreateEmptyMA
+                    that.saveData(function (response) {
+                        AppBar.busy = false;
                     AppData.call("PRC_CreateEmptyMA", {
                         pVeranstaltungID: that.getEventId(),
                         pVariant: ""
@@ -146,9 +148,19 @@
                         // update auf oData 
                         //Application.navigateById(Application.startPageId, event);
                         // rufe update und dann loaddata auf
+                            that.curRecId = json.d;
+                            Log.print(Log.l.trace, "inserted recordId=" + that.curRecIdd);
+                            AppData.setRecordId(that.tableView.relationName, that.curRecId);
                     }, function (error) {
                         Log.print(Log.l.error, "call error=" + error);
                         AppData.setErrorMsg(that.binding, error);
+                    });
+                        Log.print(Log.l.trace, "question saved");
+                    }, function (errorResponse) {
+                        AppBar.busy = false;
+                        Log.print(Log.l.error, "error saving question");
+                    }).then(function () {
+                        that.loadData();
                     });
                     /*that.insertData().then(function() {
                         AppBar.triggerDisableHandlers();

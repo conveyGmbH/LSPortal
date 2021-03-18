@@ -53,9 +53,9 @@
                     "VeranstaltungID=" + EventSpeakerAdministration._eventId);
                 if (!restriction) {
                     restriction = {
-                        VeranstaltungID: EventSpeakerAdministration._eventId,
+                        Vorname: "NULL",
                         Name: "NULL",
-                        /*Vorname: "NULL",*/
+                        VeranstaltungID: EventSpeakerAdministration._eventId,
                         LanguageSpecID: AppData.getLanguageId()
                     };
                 }
@@ -102,7 +102,7 @@
                 }, error, recordId);
                 Log.ret(Log.l.trace);
                 return ret;
-            },
+            }*/,
             relationName: EventSpeakerAdministration._eventSpeakerTable.relationName,
             pkName: EventSpeakerAdministration._eventSpeakerTable.oDataPkName,
             getRecordId: function (record) {
@@ -116,7 +116,7 @@
                     }
                 }
                 return ret;
-            }*/
+            }
         },
         eventSpeakerTable: {
             update: function (complete, error, recordId, viewResponse) {
