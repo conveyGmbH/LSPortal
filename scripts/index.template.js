@@ -116,6 +116,7 @@
         { id: "event", group: 2, disabled: false },
         //{ id: "products", group: 2, disabled: false },
         { id: "eventSeries", group: 52, disabled: false },
+		{ id: "genDataModDetails", group: 54, disabled: false },
         { id: "skills", group: 24, disabled: false },
         { id: "eventGenSettings", group: 44, disabled: false },
         { id: "eventResourceAdministration", group: 44, disabled: false},
