@@ -10,7 +10,7 @@
     eventTextList styles
 */
 #eventTextList {
-    height: auto;
+    height: calc(100% - 48px);
 }
 #eventTextList .win-selectionborder {
     border-color: transparent;
