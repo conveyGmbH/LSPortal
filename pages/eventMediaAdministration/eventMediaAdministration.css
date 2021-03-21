@@ -1,29 +1,47 @@
-.eventTextUsagefragmenthost {
+.eventMediaAdministration .eventTextUsagefragmenthost {
     position: absolute;
     top: 0;
     width: 100%;
     height: 48px;
 }
-.eventMediaTextfragmenthost {
+.eventMediaAdministration .media-container {
     z-index: 4;
     position: absolute;
     left: 0;
-    top: 0;
+    top: 48px;
     width: 100%;
     height: calc(100% - 220px);
+    overflow-y: hidden;
 }
-.eventMediaAdministrationfragmenthost {
-    z-index: 4;
+.eventMediaAdministration .textfragmenthost {
+    display: inline-block;
     position: absolute;
+    width: 50%;
+    height: 100%;
     left: 0;
-    width: 100%;
-    height: calc(100% - 220px);
 }
-.listfragmenthost {
+.eventMediaAdministration .docfragmenthost {
+    display: inline-block;
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    right: 0;
+}
+.eventMediaAdministration .listfragmenthost {
+    position: absolute;
     width: 100%;
     height: 170px;
-    position: absolute;
     bottom: 0;
     z-index: 5;
 }
- 
+
+.view-size-bigger .media-container {
+    overflow-y: auto;
+}
+.view-size-bigger .eventMediaAdministration .textfragmenthost,
+.view-size-bigger .eventMediaAdministration .docfragmenthost {
+    display: inline;
+    position: relative;
+    width: 100%;
+    height: auto;
+}

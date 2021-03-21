@@ -74,47 +74,23 @@
                 that.inResize = 1;
                 ret = WinJS.Promise.timeout(0).then(function () {
                     var myTextUsage = element.querySelector(".eventTextUsagefragmenthost");
-                    var myMediaViewers = element.querySelectorAll(".eventMediaAdministrationfragmenthost, .eventMediaTextfragmenthost");
+                    var myMediaContainer = element.querySelector(".media-container");
                     var myMediaList = element.querySelector(".listfragmenthost");
-                    if (myMediaViewers && myTextUsage && myMediaList) {
+                    if (myMediaContainer && myTextUsage && myMediaList) {
                         var contentarea = element.querySelector(".contentarea");
                         if (contentarea) {
-                            var myViewer, i, bHalfWidth = false;
                             var contentHeader = element.querySelector(".content-header");
                             var width = contentarea.clientWidth;
                             var height = contentarea.clientHeight - (contentHeader ? contentHeader.clientHeight : 0);
 
-                            if (WinJS.Utilities.hasClass(element, "view-size-bigger")) {
-                                bHalfWidth = true;
-                            }
                             height -= myTextUsage.clientHeight;
                             if (that.controller && that.controller.binding && that.controller.binding.showList) {
                                 height -= myMediaList.clientHeight;
                             }
                             if (width !== that.prevWidth || height !== that.prevHeight) {
-                                for (i = 0; i < myMediaViewers.length; i++) {
-                                    myViewer = myMediaViewers[i];
-                                    if (myViewer && myViewer.style) {
-                                        if (bHalfWidth) {
-                                            myViewer.style.left = 0;
-                                            if (WinJS.Utilities.hasClass(myViewer, "eventMediaTextfragmenthost")) {
-                                                myViewer.style.top = (myTextUsage.clientHeight + height/2).toString() + "px";
-                                            } else {
-                                                myViewer.style.top = myTextUsage.clientHeight.toString() + "px";
-                                            }
-                                            myViewer.style.width = width.toString() + "px";
-                                            myViewer.style.height = (height/2).toString() + "px";
-                                        } else {
-                                            if (WinJS.Utilities.hasClass(myViewer, "eventMediaTextfragmenthost")) {
-                                                myViewer.style.left = 0;
-                                            } else {
-                                                myViewer.style.left = (width/2).toString() + "px";
-                                            }
-                                            myViewer.style.top = myTextUsage.clientHeight.toString() + "px";
-                                            myViewer.style.width = (width/2).toString() + "px";
-                                            myViewer.style.height = height.toString() + "px";
-                                        }
-                                    }
+                                if (myMediaContainer.style) {
+                                    myMediaContainer.style.width = width.toString() + "px";
+                                    myMediaContainer.style.height = height.toString() + "px";
                                 }
                                 that.prevWidth = width;
                                 that.prevHeight = height;

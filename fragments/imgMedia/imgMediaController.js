@@ -110,38 +110,78 @@
                         switch (imgRotation) {
                             case 90:
                             case 270:
-                                if (containerWidth < that.img.naturalHeight) {
-                                    imgHeight = containerWidth;
-                                    imgScale = containerWidth / that.img.naturalHeight;
+                                if (containerWidth / containerHeight > that.img.naturalHeight / that.img.naturalWidth) {
+                                    imgWidth = containerHeight;
+                                    imgScale = containerHeight / that.img.naturalWidth;
+                                    imgHeight = Math.floor(that.img.naturalHeight * imgScale);
+                                    // recalculate with scrollbars
+                                    if (imgHeight >= containerWidth - scrollbarSize - 2) {
+                                        containerWidth -= scrollbarSize;
+                                        imgHeight = containerWidth;
+                                        imgScale = containerWidth / that.img.naturalHeight;
+                                        imgWidth = Math.floor(that.img.naturalWidth * imgScale);
+                                        if (imgWidth >= containerHeight - scrollbarSize) {
+                                            containerHeight -= scrollbarSize;
+                                            imgHeight = containerWidth - scrollbarSize * that.img.naturalHeight/that.img.naturalWidth;
+                                            imgScale = (containerWidth - scrollbarSize * that.img.naturalHeight/that.img.naturalWidth) / that.img.naturalHeight;
+                                            imgWidth = Math.floor(that.img.naturalHeight * imgScale);
+                                        }
+                                    }
                                 } else {
-                                    imgScale = 1;
-                                    imgHeight = that.img.naturalHeight;
-                                }
-                                imgWidth = that.img.naturalWidth * imgScale;
-                                // recalculate with scrollbars
-                                if (imgWidth > containerHeight-(scrollbarSize*that.img.naturalWidth/that.img.naturalHeight)) {
-                                    containerWidth -= scrollbarSize;
                                     imgHeight = containerWidth;
                                     imgScale = containerWidth / that.img.naturalHeight;
-                                    imgWidth = that.img.naturalWidth * imgScale;
+                                    imgWidth = Math.floor(that.img.naturalWidth * imgScale);
+                                    // recalculate with scrollbars
+                                    if (imgWidth >= containerHeight - scrollbarSize - 2) {
+                                        containerHeight -= scrollbarSize;
+                                        imgWidth = containerHeight;
+                                        imgScale = containerHeight / that.img.naturalWidth;
+                                        imgHeight = Math.floor(that.img.naturalHeight * imgScale);
+                                        if (imgHeight >= containerWidth - scrollbarSize) {
+                                            containerWidth -= scrollbarSize;
+                                            imgWidth = containerHeight - scrollbarSize * that.img.naturalWidth/that.img.naturalHeight;
+                                            imgScale = (containerHeight - scrollbarSize * that.img.naturalWidth/that.img.naturalHeight) / that.img.naturalWidth;
+                                            imgHeight = Math.floor(that.img.naturalHeight * imgScale);
+                                        }
+                                    }
                                 }
                                 break;
                             case 180:
                             default:
-                                if (containerWidth < that.img.naturalWidth) {
-                                    imgWidth = containerWidth;
-                                    imgScale = containerWidth / that.img.naturalWidth;
+                                if (containerWidth / containerHeight > that.img.naturalWidth / that.img.naturalHeight) {
+                                    imgHeight = containerHeight;
+                                    imgScale = containerHeight / that.img.naturalHeight;
+                                    imgWidth = Math.floor(that.img.naturalWidth * imgScale);
+                                    // recalculate with scrollbars
+                                    if (imgWidth >= containerWidth - scrollbarSize - 2) {
+                                        containerWidth -= scrollbarSize;
+                                        imgWidth = containerWidth;
+                                        imgScale = containerWidth / that.img.naturalWidth;
+                                        imgHeight = Math.floor(that.img.naturalHeight * imgScale);
+                                        if (imgHeight >= containerHeight - scrollbarSize) {
+                                            containerHeight -= scrollbarSize;
+                                            imgWidth = containerWidth - scrollbarSize * that.img.naturalWidth/that.img.naturalHeight;
+                                            imgScale = (containerWidth - scrollbarSize * that.img.naturalWidth/that.img.naturalHeight) / that.img.naturalWidth;
+                                            imgHeight = Math.floor(that.img.naturalHeight * imgScale);
+                                        }
+                                    }
                                 } else {
-                                    imgScale = 1;
-                                    imgWidth = that.img.naturalWidth;
-                                }
-                                imgHeight = that.img.naturalHeight * imgScale;
-                                // recalculate with scrollbars
-                                if (imgHeight > containerHeight-(scrollbarSize*that.img.naturalHeight/that.img.naturalWidth)) {
-                                    containerWidth -= scrollbarSize;
-                                    imgScale = containerWidth / that.img.naturalWidth;
                                     imgWidth = containerWidth;
-                                    imgHeight = that.img.naturalHeight * imgScale;
+                                    imgScale = containerWidth / that.img.naturalWidth;
+                                    imgHeight = Math.floor(that.img.naturalHeight * imgScale);
+                                    // recalculate with scrollbars
+                                    if (imgHeight >= containerHeight - scrollbarSize) {
+                                        containerHeight -= scrollbarSize;
+                                        imgHeight = containerHeight;
+                                        imgScale = containerHeight / that.img.naturalHeight;
+                                        imgWidth = Math.floor(that.img.naturalWidth * imgScale);
+                                        if (imgWidth >= containerWidth - scrollbarSize) {
+                                            containerWidth -= scrollbarSize;
+                                            imgHeight = containerHeight - scrollbarSize * that.img.naturalHeight/that.img.naturalWidth;
+                                            imgScale = (containerHeight - scrollbarSize * that.img.naturalHeight/that.img.naturalWidth) / that.img.naturalHeight;
+                                            imgWidth = Math.floor(that.img.naturalWidth * imgScale);
+                                        }
+                                    }
                                 }
                         }
                     }
@@ -177,22 +217,22 @@
                     }
 
                     if (imgRotation === 90 || imgRotation === 270) {
-                        marginTop = (imgHeight - imgWidth) / 2;
-                        marginLeft = (imgWidth - imgHeight) / 2;
+                        marginTop = Math.floor((imgHeight - imgWidth) / 2);
+                        marginLeft = Math.floor((imgWidth - imgHeight) / 2);
                         if (imgHeight < containerWidth) {
-                            marginLeft += (imgHeight - containerWidth) / 2;
+                            marginLeft += Math.floor((containerWidth - imgHeight) / 2);
                         }
                         if (imgWidth < containerHeight) {
-                            marginTop += (imgWidth - containerHeight) / 2;
+                            marginTop += Math.floor((containerHeight - imgWidth) / 2);
                         }
                     } else {
                         if (imgWidth < containerWidth) {
-                            marginLeft = (imgWidth - containerWidth) / 2;
+                            marginLeft = Math.floor((containerWidth - imgWidth) / 2);
                         } else {
                             marginLeft = 0;
                         }
                         if (imgHeight < containerHeight) {
-                            marginTop = (imgHeight - containerHeight) / 2;
+                            marginTop = Math.floor((containerHeight - imgHeight) / 2);
                         } else {
                             marginTop = 0;
                         }
@@ -201,14 +241,10 @@
                         if (typeof newRotate !== "undefined") {
                             that.img.style.transform = "rotate( " + imgRotation + "deg)";
                         }
-                        that.img.style.marginLeft = -marginLeft + "px";
-                        that.img.style.marginTop = -marginTop + "px";
+                        that.img.style.marginLeft = marginLeft + "px";
+                        that.img.style.marginTop = marginTop + "px";
                         that.img.style.width = imgWidth + "px";
                         that.img.style.height = imgHeight + "px";
-                        if (Colors.isDarkTheme &&
-                            !WinJS.Utilities.hasClass(that.img, "win-ui-dark")) {
-                            WinJS.Utilities.addClass(that.img, "win-ui-dark");
-                        }
                     }
                 }
             }
