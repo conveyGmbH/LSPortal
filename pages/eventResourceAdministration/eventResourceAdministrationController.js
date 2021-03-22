@@ -19,6 +19,17 @@
             var listView = pageElement.querySelector("#eventTextList.listview");
 
             Application.RecordsetController.apply(this, [pageElement, {
+                eventLanguageItem: {
+                    TITLE: "",
+                    LanguageID: -1
+                },
+                eventSeriesItem: {
+                    Titel: "",
+                    MandantSerieID: -1
+                },
+                multipleLanguages: false,
+                multipleSeries: false,
+                showSeries: false,
                 count: 0
         }, commandList, false, 
                 EventResourceAdministration.eventTextTable, 
@@ -27,6 +38,7 @@
             this.eventTextUsageControl = null;
 
             var initEventTextSprache = pageElement.querySelector("#InitEventTextSprache");
+            var eventSeries = pageElement.querySelector("#eventSeries");
 
             var that = this;
 
@@ -308,6 +320,15 @@
                         that.loadData();
                     }
                     Log.ret(Log.l.trace);
+                },
+                changedSeries: function (event) {
+                    Log.call(Log.l.trace, "EventResourceAdministration.Controller.");
+                    if (event.currentTarget && AppBar.notifyModified) {
+                        var combobox = event.currentTarget;
+                        EventResourceAdministration._eventSeriesId = parseInt(combobox.value);
+                        that.loadData();
+                    }
+                    Log.ret(Log.l.trace);
                 }
             }
 
@@ -343,22 +364,24 @@
                 this.addRemovableEventListener(listView, "iteminvoked", this.eventHandlers.onItemInvoked.bind(this));
             }
 
-            var setComboResults = function(results) {
+            var setLanguageComboResults = function(results) {
                 var i;
                 Log.call(Log.l.trace, "EventResourceAdministration.Controller.");
-                if (initEventTextSprache && initEventTextSprache.winControl) {
+                that.binding.multipleLanguages = results && results.length > 1;
+                if (results && initEventTextSprache && initEventTextSprache.winControl) {
                     initEventTextSprache.winControl.data = new WinJS.Binding.List(results); 
                     if (results.length > 0) {
                         for (i=0;i<results.length;i++) {
                             if (results[i] && results[i].LanguageID === EventResourceAdministration._languageId) {
-                                initEventTextSprache.selectedIndex = i;
                                 break;
                             }
                         }
                         if (i === results.length) {
-                            initEventTextSprache.selectedIndex = 0;
                             EventResourceAdministration._languageId = results[0].LanguageID;
+                            i = 0;
                         }
+                        initEventTextSprache.selectedIndex = i;
+                        that.binding.eventLanguageItem = results[i];
                     }
                 }
                 Log.ret(Log.l.trace);
@@ -375,7 +398,7 @@
                             Log.print(Log.l.trace, "initSpracheView: success!");
                             if (json && json.d) {
                                 // Now, we call WinJS.Binding.List to get the bindable list
-                                setComboResults(json.d.results);
+                                setLanguageComboResults(json.d.results);
                             }
                         }, function (errorResponse) {
                             // called asynchronously if an error occurs
@@ -383,7 +406,7 @@
                             AppData.setErrorMsg(that.binding, errorResponse);
                         });
                     } else {
-                        setComboResults(results);
+                        setLanguageComboResults(results);
                         return WinJS.Promise.as();
                     }
                 });
@@ -391,6 +414,52 @@
                 return ret;
             }
             that.loadInitLanguageData = loadInitLanguageData;
+
+            var setSeriesComboResults = function(results) {
+                var i;
+                Log.call(Log.l.trace, "EventResourceAdministration.Controller.");
+                that.binding.multipleSeries = results && results.length > 1;
+                if (results && eventSeries && eventSeries.winControl) {
+                    that.binding.multipleLanguages = true;
+                    eventSeries.winControl.data = new WinJS.Binding.List(results); 
+                    if (results.length > 0) {
+                        for (i=0;i<results.length;i++) {
+                            if (results[i] && results[i].MandantSerieID === EventResourceAdministration._eventSeriesId) {
+                                break;
+                            }
+                        }
+                        if (i === results.length) {
+                            EventResourceAdministration._eventSeriesId = results[0].MandantSerieID;
+                            i = 0;
+                        }
+                        eventSeries.selectedIndex = i;
+                        that.binding.eventSeriesItem = results[i];
+                    }
+                }
+                Log.ret(Log.l.trace);
+            }
+            var loadSeriesData = function () {
+                Log.call(Log.l.trace, "EventResourceAdministration.Controller.");
+                AppData.setErrorMsg(that.binding);
+                var ret = new WinJS.Promise.as().then(function () {
+                    Log.print(Log.l.trace, "calling select eventSeriesView...");
+                    //load the list of eventSeries for Combobox
+                    return EventResourceAdministration.eventSeriesView.select(function (json) {
+                        Log.print(Log.l.trace, "eventSeriesView: success!");
+                        if (json && json.d) {
+                            // Now, we call WinJS.Binding.List to get the bindable list
+                            setSeriesComboResults(json.d.results);
+                        }
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    });
+                });
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+            that.loadSeriesData = loadSeriesData;
 
             var getEventTextUsageId = function() {
                 return EventResourceAdministration._eventTextUsageId;
@@ -400,6 +469,7 @@
             var setEventTextUsageId = function(value) {
                 Log.print(Log.l.trace, "eventTextUsageId=" + value);
                 EventResourceAdministration._eventTextUsageId = value;
+                that.binding.showSeries = (value === 2);
             }
             that.setEventTextUsageId = setEventTextUsageId;
 
@@ -411,6 +481,9 @@
             var setEventId = function(value) {
                 Log.print(Log.l.trace, "eventId=" + value);
                 EventResourceAdministration._eventId = value;
+                WinJS.Promise.timeout(0).then(function() {
+                    that.loadSeriesData();
+                });
             }
             that.setEventId = setEventId;
 
@@ -420,10 +493,13 @@
             }
 
             that.processAll().then(function () {
-                Log.print(Log.l.trace, "loadInitLanguageData");
+                Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadInitLanguageData();
             }).then(function () {
-                Log.print(Log.l.trace, "Binding wireup page complete");
+                Log.print(Log.l.trace, "loadInitLanguageData complete");
+                return that.loadSeriesData();
+            }).then(function () {
+                Log.print(Log.l.trace, "loadSeriesData complete");
                 var eventTextUsageHost = pageElement.querySelector("#eventTextUsageHostResource.fragmenthost");
                 if (eventTextUsageHost) {
                     return Application.loadFragmentById(eventTextUsageHost, "eventTextUsage", {});
@@ -431,7 +507,7 @@
                     return WinJS.Promise.as();
                 }
             }).then(function () {
-                Log.print(Log.l.trace, "loadFragmentById complete");
+                Log.print(Log.l.trace, "eventTextUsage complete");
                 return that.loadData();
             }).then(function () {
                 AppBar.notifyModified = true;

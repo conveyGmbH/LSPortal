@@ -36,6 +36,11 @@
                 return ret;
             }
         },
+        _eventSeriesView: {
+            get: function () {
+                return AppData.getFormatView("CR_VeranstaltungSerie", 20643);
+            }
+        },
         _eventTextView: {
             get: function () {
                 return AppData.getFormatView("LangMandantDokument", 20628);
@@ -48,9 +53,28 @@
         },
         _eventTextUsageId: -1,
         _eventId: -1,
+        _eventSeriesId: -1,
         _languageId: 1031
     });
     WinJS.Namespace.define("EventResourceAdministration", {
+        eventSeriesView: {
+            select: function(complete, error) {
+                var restriction = {
+                    LanguageSpecID: EventResourceAdministration._languageId,
+                    VeranstaltungID: EventResourceAdministration._eventId
+                };
+                Log.call(Log.l.trace, "EventResourceAdministration.eventSeriesView.",
+                    "LanguageSpecID=" + restriction.LanguageSpecID,
+                    "VeranstaltungID=" + restriction.VeranstaltungID);
+                var ret = EventResourceAdministration._eventSeriesView.select(complete, error, restriction, {
+                    ordered: true,
+                    orderAttribute: "Titel",
+                    desc: false
+                });
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+        },
         eventTextView: {
             select: function (complete, error, restriction, options) {
                 if (!restriction) {
@@ -62,6 +86,11 @@
                     if (EventResourceAdministration._eventTextUsageId > 2) {
                         restriction.VeranstaltungID = EventResourceAdministration._eventId;
                         if (!restriction.VeranstaltungID) {
+                            restriction.DokVerwendungID = -1;
+                        }
+                    } else if (EventResourceAdministration._eventTextUsageId === 2) {
+                        restriction.MandantSerieID = EventResourceAdministration._eventSeriesId;
+                        if (!restriction.MandantSerieID) {
                             restriction.DokVerwendungID = -1;
                         }
                     }
