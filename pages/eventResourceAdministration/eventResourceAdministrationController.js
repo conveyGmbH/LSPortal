@@ -367,10 +367,10 @@
             var setLanguageComboResults = function(results) {
                 var i;
                 Log.call(Log.l.trace, "EventResourceAdministration.Controller.");
-                that.binding.multipleLanguages = results && results.length > 1;
-                if (results && initEventTextSprache && initEventTextSprache.winControl) {
-                    initEventTextSprache.winControl.data = new WinJS.Binding.List(results); 
-                    if (results.length > 0) {
+                that.binding.multipleLanguages = (results && results.length > 1);
+                if (initEventTextSprache && initEventTextSprache.winControl) {
+                    initEventTextSprache.winControl.data = new WinJS.Binding.List(results ? results : []);
+                    if (results && results.length > 0) {
                         for (i=0;i<results.length;i++) {
                             if (results[i] && results[i].LanguageID === EventResourceAdministration._languageId) {
                                 break;
@@ -418,11 +418,10 @@
             var setSeriesComboResults = function(results) {
                 var i;
                 Log.call(Log.l.trace, "EventResourceAdministration.Controller.");
-                that.binding.multipleSeries = results && results.length > 1;
-                if (results && eventSeries && eventSeries.winControl) {
-                    that.binding.multipleLanguages = true;
-                    eventSeries.winControl.data = new WinJS.Binding.List(results); 
-                    if (results.length > 0) {
+                that.binding.multipleSeries = (results && results.length > 1);
+                if (eventSeries && eventSeries.winControl) {
+                    eventSeries.winControl.data = new WinJS.Binding.List(results ? results : []);
+                    if (results && results.length > 0) {
                         for (i=0;i<results.length;i++) {
                             if (results[i] && results[i].MandantSerieID === EventResourceAdministration._eventSeriesId) {
                                 break;
