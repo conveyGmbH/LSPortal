@@ -107,82 +107,51 @@
                         imgWidth = that.img.naturalWidth * imgScale;
                         imgHeight = that.img.naturalHeight * imgScale;
                     } else {
+                        imgWidth = that.img.naturalWidth;
+                        imgHeight = that.img.naturalHeight;
+                        imgScale = 1;
                         switch (imgRotation) {
                             case 90:
                             case 270:
                                 if (containerWidth / containerHeight > that.img.naturalHeight / that.img.naturalWidth) {
-                                    imgWidth = containerHeight;
-                                    imgScale = containerHeight / that.img.naturalWidth;
-                                    imgHeight = Math.floor(that.img.naturalHeight * imgScale);
-                                    // recalculate with scrollbars
-                                    if (imgHeight >= containerWidth - scrollbarSize - 2) {
-                                        containerWidth -= scrollbarSize;
-                                        imgHeight = containerWidth;
-                                        imgScale = containerWidth / that.img.naturalHeight;
-                                        imgWidth = Math.floor(that.img.naturalWidth * imgScale);
-                                        if (imgWidth >= containerHeight - scrollbarSize) {
-                                            containerHeight -= scrollbarSize;
-                                            imgHeight = containerWidth - scrollbarSize * that.img.naturalHeight/that.img.naturalWidth;
-                                            imgScale = (containerWidth - scrollbarSize * that.img.naturalHeight/that.img.naturalWidth) / that.img.naturalHeight;
-                                            imgWidth = Math.floor(that.img.naturalHeight * imgScale);
-                                        }
-                                    }
-                                } else {
-                                    imgHeight = containerWidth;
-                                    imgScale = containerWidth / that.img.naturalHeight;
-                                    imgWidth = Math.floor(that.img.naturalWidth * imgScale);
-                                    // recalculate with scrollbars
-                                    if (imgWidth >= containerHeight - scrollbarSize - 2) {
-                                        containerHeight -= scrollbarSize;
+                                    if (containerHeight < that.img.naturalWidth) {
                                         imgWidth = containerHeight;
                                         imgScale = containerHeight / that.img.naturalWidth;
-                                        imgHeight = Math.floor(that.img.naturalHeight * imgScale);
-                                        if (imgHeight >= containerWidth - scrollbarSize) {
-                                            containerWidth -= scrollbarSize;
-                                            imgWidth = containerHeight - scrollbarSize * that.img.naturalWidth/that.img.naturalHeight;
-                                            imgScale = (containerHeight - scrollbarSize * that.img.naturalWidth/that.img.naturalHeight) / that.img.naturalWidth;
-                                            imgHeight = Math.floor(that.img.naturalHeight * imgScale);
-                                        }
+                                        imgHeight = that.img.naturalHeight * imgScale;
+                                    }
+                                } else {
+                                    if (containerWidth < that.img.naturalHeight) {
+                                        imgHeight = containerWidth;
+                                        imgScale = containerWidth / that.img.naturalHeight;
+                                        imgWidth = that.img.naturalWidth * imgScale;
                                     }
                                 }
                                 break;
                             case 180:
                             default:
                                 if (containerWidth / containerHeight > that.img.naturalWidth / that.img.naturalHeight) {
-                                    imgHeight = containerHeight;
-                                    imgScale = containerHeight / that.img.naturalHeight;
-                                    imgWidth = Math.floor(that.img.naturalWidth * imgScale);
-                                    // recalculate with scrollbars
-                                    if (imgWidth >= containerWidth - scrollbarSize - 2) {
-                                        containerWidth -= scrollbarSize;
-                                        imgWidth = containerWidth;
-                                        imgScale = containerWidth / that.img.naturalWidth;
-                                        imgHeight = Math.floor(that.img.naturalHeight * imgScale);
-                                        if (imgHeight >= containerHeight - scrollbarSize) {
-                                            containerHeight -= scrollbarSize;
-                                            imgWidth = containerWidth - scrollbarSize * that.img.naturalWidth/that.img.naturalHeight;
-                                            imgScale = (containerWidth - scrollbarSize * that.img.naturalWidth/that.img.naturalHeight) / that.img.naturalWidth;
-                                            imgHeight = Math.floor(that.img.naturalHeight * imgScale);
-                                        }
-                                    }
-                                } else {
-                                    imgWidth = containerWidth;
-                                    imgScale = containerWidth / that.img.naturalWidth;
-                                    imgHeight = Math.floor(that.img.naturalHeight * imgScale);
-                                    // recalculate with scrollbars
-                                    if (imgHeight >= containerHeight - scrollbarSize) {
-                                        containerHeight -= scrollbarSize;
+                                    if (containerHeight < that.img.naturalHeight) {
                                         imgHeight = containerHeight;
                                         imgScale = containerHeight / that.img.naturalHeight;
-                                        imgWidth = Math.floor(that.img.naturalWidth * imgScale);
-                                        if (imgWidth >= containerWidth - scrollbarSize) {
-                                            containerWidth -= scrollbarSize;
-                                            imgHeight = containerHeight - scrollbarSize * that.img.naturalHeight/that.img.naturalWidth;
-                                            imgScale = (containerHeight - scrollbarSize * that.img.naturalHeight/that.img.naturalWidth) / that.img.naturalHeight;
-                                            imgWidth = Math.floor(that.img.naturalWidth * imgScale);
-                                        }
+                                        imgWidth = that.img.naturalWidth * imgScale;
+                                    }
+                                } else {
+                                    if (containerWidth < that.img.naturalWidth) {
+                                        imgWidth = containerWidth;
+                                        imgScale = containerWidth / that.img.naturalWidth;
+                                        imgHeight = that.img.naturalHeight * imgScale;
                                     }
                                 }
+                        }
+                    }
+                    var viewPort = fragmentElement.querySelector("#imgDoc.imgview > .win-viewport");
+                    if (viewPort && viewPort.style) {
+                        if (newScale) {
+                            viewPort.style.overflowX = "auto";
+                            viewPort.style.overflowY = "auto";
+                        } else {
+                            viewPort.style.overflowX = "hidden";
+                            viewPort.style.overflowY = "hidden";
                         }
                     }
                     var imageItemBox = fragmentElement.querySelector("#imgDoc .win-itembox");
@@ -217,22 +186,22 @@
                     }
 
                     if (imgRotation === 90 || imgRotation === 270) {
-                        marginTop = Math.floor((imgHeight - imgWidth) / 2);
-                        marginLeft = Math.floor((imgWidth - imgHeight) / 2);
+                        marginTop = (imgHeight - imgWidth) / 2;
+                        marginLeft = (imgWidth - imgHeight) / 2;
                         if (imgHeight < containerWidth) {
-                            marginLeft += Math.floor((containerWidth - imgHeight) / 2);
+                            marginLeft += (containerWidth - imgHeight) / 2;
                         }
                         if (imgWidth < containerHeight) {
-                            marginTop += Math.floor((containerHeight - imgWidth) / 2);
+                            marginTop += (containerHeight - imgWidth) / 2;
                         }
                     } else {
                         if (imgWidth < containerWidth) {
-                            marginLeft = Math.floor((containerWidth - imgWidth) / 2);
+                            marginLeft = (containerWidth - imgWidth) / 2;
                         } else {
                             marginLeft = 0;
                         }
                         if (imgHeight < containerHeight) {
-                            marginTop = Math.floor((containerHeight - imgHeight) / 2);
+                            marginTop = (containerHeight - imgHeight) / 2;
                         } else {
                             marginTop = 0;
                         }

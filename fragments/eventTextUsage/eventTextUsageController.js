@@ -68,7 +68,6 @@
                                         AppBar.scope.getEventTextUsageId() !== item.data.INITDokVerwendungID) {
                                         doScrollIntoViewAnimation = true;
                                         AppBar.scope.setEventTextUsageId(item.data.INITDokVerwendungID);
-                                        AppBar.scope.loadData();
                                         WinJS.Promise.timeout(50).then(function() {
                                             Log.print(Log.l.trace, "now update layout...");
                                             var fragmentControl = fragmentElement.winControl;

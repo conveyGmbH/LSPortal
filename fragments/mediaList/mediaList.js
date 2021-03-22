@@ -79,7 +79,10 @@
                                     if (selectionCount === 1 && typeof that.controller.scrollIntoView === "function") {
                                         // Only one item is selected, show the page
                                         listControl.selection.getItems().done(function(items) {
-                                            that.controller.scrollIntoView(items[0].index);
+                                            var item = items[0];
+                                            if (item) {
+                                                that.controller.scrollIntoView(item);
+                                            }
                                         });
                                     }
                                 }

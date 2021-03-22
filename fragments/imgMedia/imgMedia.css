@@ -22,7 +22,7 @@
     background-color: transparent;
 }
 
-#imgDoc.imgview .win-itembox img.win-ui-dark {
+#imgDoc.imgview .win-itembox img.cnv-ui-dark {
     -webkit-filter: drop-shadow(4px 8px 12px #000000);
     filter: drop-shadow(4px 8px 12px #000000);
     background-color: transparent;

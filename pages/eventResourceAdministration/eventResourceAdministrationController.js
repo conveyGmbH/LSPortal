@@ -469,6 +469,7 @@
                 Log.print(Log.l.trace, "eventTextUsageId=" + value);
                 EventResourceAdministration._eventTextUsageId = value;
                 that.binding.showSeries = (value === 2);
+                that.loadData();
             }
             that.setEventTextUsageId = setEventTextUsageId;
 
@@ -480,9 +481,10 @@
             var setEventId = function(value) {
                 Log.print(Log.l.trace, "eventId=" + value);
                 EventResourceAdministration._eventId = value;
-                WinJS.Promise.timeout(0).then(function() {
-                    that.loadSeriesData();
+                var ret = WinJS.Promise.timeout(0).then(function() {
+                    return that.loadSeriesData();
                 });
+                return ret;
             }
             that.setEventId = setEventId;
 

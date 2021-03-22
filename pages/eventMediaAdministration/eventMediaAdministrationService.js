@@ -13,6 +13,7 @@
             }
         },
         _eventTextUsageId: -1,
+        _eventSeriesId: -1,
         _eventId: -1
     });
     WinJS.Namespace.define("EventMediaAdministration", {

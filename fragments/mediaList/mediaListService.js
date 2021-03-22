@@ -13,7 +13,22 @@
             }
         },
         _eventTextUsageId: -1,
-        _eventId: -1
+        _eventId: -1,
+        _eventSeriesId: -1,
+        eventSeriesId: {
+            get: function() {
+                if (AppBar.scope && typeof AppBar.scope.getEventSeriesId === "function") {
+                    MediaList._eventSeriesId = AppBar.scope.getEventSeriesId();
+                }
+                return MediaList._eventSeriesId;
+            },
+            set: function(value) {
+                MediaList._eventSeriesId = value;
+                if (AppBar.scope && typeof AppBar.scope.setEventSeriesId === "function") {
+                    MediaList._eventSeriesId = AppBar.scope.setEventSeriesId(value);
+                }
+            }
+        }
     });
 
     WinJS.Namespace.define("MediaList", {
@@ -32,12 +47,17 @@
                             if (!restriction.VeranstaltungID) {
                                 restriction.DokVerwendungID = -1;
                             }
+                        } else if (MediaList._eventTextUsageId === 2) {
+                            restriction.MandantSerieID = MediaList.eventSeriesId;
+                            if (!restriction.MandantSerieID) {
+                                restriction.DokVerwendungID = -1;
+                            }
                         }
                     }
                     if (!options) {
                         options = {
                             ordered: true,
-                            orderAttribute: "ModifiedTS",
+                            orderAttribute: "AddIndex",
                             desc: true
                         };
                     }

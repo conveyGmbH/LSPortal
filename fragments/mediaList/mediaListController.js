@@ -210,7 +210,7 @@
                                 // Only one item is selected, show the page
                                 listControl.selection.getItems().done(function (items) {
                                     var item = items[0];
-                                    if (item.data) {
+                                    if (item && item.data) {
                                         that.binding.docId = item.data.MandantDokumentVIEWID;
                                         that.binding.docGroup = item.data.DocGroup;
                                         that.binding.docFormat = item.data.DocFormat;
@@ -444,9 +444,6 @@
                         AppData.setErrorMsg(that.binding, errorResponse);
                         }, docId);
                 } else {
-                    if (that.records) {
-                        that.records.length = 0;
-                    }
                     ret = MediaList.eventDocView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
@@ -458,6 +455,7 @@
                             if (results && results.length > 0) {
                                 if (that.records) {
                                     // reload the bindable list
+                                    that.records.length = 0;
                                     results.forEach(function(item, index) {
                                         that.resultConverter(item, index);
                                         that.records.push(item);

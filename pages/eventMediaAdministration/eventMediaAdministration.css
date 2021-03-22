@@ -9,23 +9,14 @@
     position: absolute;
     left: 0;
     top: 48px;
-    width: 100%;
-    height: calc(100% - 220px);
-    overflow-y: hidden;
 }
 .eventMediaAdministration .textfragmenthost {
     display: inline-block;
     position: absolute;
-    width: 50%;
-    height: 100%;
-    left: 0;
 }
 .eventMediaAdministration .docfragmenthost {
     display: inline-block;
     position: absolute;
-    width: 50%;
-    height: 100%;
-    right: 0;
 }
 .eventMediaAdministration .listfragmenthost {
     position: absolute;
@@ -35,13 +26,4 @@
     z-index: 5;
 }
 
-.view-size-bigger .media-container {
-    overflow-y: auto;
-}
-.view-size-bigger .eventMediaAdministration .textfragmenthost,
-.view-size-bigger .eventMediaAdministration .docfragmenthost {
-    display: inline;
-    position: relative;
-    width: 100%;
-    height: auto;
-}
+

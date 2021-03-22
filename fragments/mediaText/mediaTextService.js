@@ -36,6 +36,11 @@
                 return ret;
             }
         },
+        _eventSeriesView: {
+            get: function () {
+                return AppData.getFormatView("CR_VeranstaltungSerie", 20643);
+            }
+        },
         _eventTextView: {
             get: function () {
                 return AppData.getFormatView("LangMandantDokument", 20634);
@@ -46,10 +51,45 @@
                 return AppData.getFormatView("LangMandantDokument", 0);
             }
         },
+        _eventTextUsageId: -1,
+        _eventId: -1,
         _docId: 0,
-        _languageId: AppData.getLanguageId()
+        _languageId: AppData.getLanguageId(),
+        _eventSeriesId: -1,
+        eventSeriesId: {
+            get: function() {
+                if (AppBar.scope && typeof AppBar.scope.getEventSeriesId === "function") {
+                    MediaText._eventSeriesId = AppBar.scope.getEventSeriesId();
+                }
+                return MediaText._eventSeriesId;
+            },
+            set: function(value) {
+                MediaText._eventSeriesId = value;
+                if (AppBar.scope && typeof AppBar.scope.setEventSeriesId === "function") {
+                    MediaText._eventSeriesId = AppBar.scope.setEventSeriesId(value);
+                }
+            }
+        }
     });
     WinJS.Namespace.define("MediaText", {
+        eventSeriesView: {
+            select: function(complete, error) {
+                var restriction = {
+                    LanguageSpecID: MediaText._languageId,
+                    VeranstaltungID: MediaText._eventId
+                };
+                Log.call(Log.l.trace, "EventResourceAdministration.eventSeriesView.",
+                    "LanguageSpecID=" + restriction.LanguageSpecID,
+                    "VeranstaltungID=" + restriction.VeranstaltungID);
+                var ret = MediaText._eventSeriesView.select(complete, error, restriction, {
+                    ordered: true,
+                    orderAttribute: "Titel",
+                    desc: false
+                });
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+        },
         eventTextView: {
             select: function (complete, error, restriction, options) {
                 if (!restriction) {
