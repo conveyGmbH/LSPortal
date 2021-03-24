@@ -1298,6 +1298,7 @@
     "genDataModDetails.newmodlabel" : "Add",
     "genDataModDetails.category" : "Category",
     "genDataModDetails.expertise" : "Expertise",
-    "genDataModDetails.cv" : "Curriculum Vitae"
+    "genDataModDetails.cv" : "Curriculum Vitae",
+    "genDataModDetails.socialmedia" : "Social Media"
 
 }
