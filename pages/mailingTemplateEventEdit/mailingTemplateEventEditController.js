@@ -135,29 +135,33 @@
                 Log.call(Log.l.trace, "Product.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var layoutUpdateData = that.binding.dataLayoutValue;
-                var recordId = that.binding.dataLayoutValue.VAMailTextVIEWID;
-                if (recordId && layoutUpdateData.LanguageSpecID) {
-                    Log.print(Log.l.trace, "save changes of recordId:" + recordId);
-                    ret = MailingTemplateEventEdit.VAMailTextView.update(function (response) {
-                        Log.print(Log.l.info, "Products.Controller. update: success!");
-                        // called asynchronously if ok
-                        AppBar.modified = false;
-                        if (typeof complete === "function") {
-                            complete(response);
-                        }
-                    }, function (errorResponse) {
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                        if (typeof error === "function") {
-                            error(errorResponse);
-                        }
+                if (layoutUpdateData.Subject === "" && layoutUpdateData.MailText === "") {
+                    Log.print(Log.l.trace, "layoutUpdateData.Subject and layoutUpdateData.MailText empty!");
+                } else {
+                    var recordId = that.binding.dataLayoutValue.VAMailTextVIEWID;
+                    if (recordId && layoutUpdateData.LanguageSpecID) {
+                        Log.print(Log.l.trace, "save changes of recordId:" + recordId);
+                        ret = MailingTemplateEventEdit.VAMailTextView.update(function (response) {
+                            Log.print(Log.l.info, "Products.Controller. update: success!");
+                            // called asynchronously if ok
+                            AppBar.modified = false;
+                            if (typeof complete === "function") {
+                                complete(response);
+                            }
+                        }, function (errorResponse) {
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                            if (typeof error === "function") {
+                                error(errorResponse);
+                            }
                         }, recordId, layoutUpdateData);
-                }
-                if (!ret) {
-                    ret = new WinJS.Promise.as().then(function () {
-                        if (typeof complete === "function") {
-                            complete({});
-                        }
-                    });
+                    }
+                    if (!ret) {
+                        ret = new WinJS.Promise.as().then(function () {
+                            if (typeof complete === "function") {
+                                complete({});
+                            }
+                        });
+                    }
                 }
                 Log.ret(Log.l.trace, ret);
                 return ret;
