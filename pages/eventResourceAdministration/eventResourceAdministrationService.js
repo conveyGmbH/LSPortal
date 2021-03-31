@@ -79,7 +79,6 @@
             select: function (complete, error, restriction, options) {
                 if (!restriction) {
                     restriction = {
-                        NameLanguageID: AppData.getLanguageId(),
                         LanguageSpecID: EventResourceAdministration._languageId,
                         DokVerwendungID: EventResourceAdministration._eventTextUsageId
                     };
@@ -94,6 +93,15 @@
                             restriction.DokVerwendungID = -1;
                         }
                     }
+                }
+                if (typeof restriction === "number") {
+                    restriction = {
+                        LangMandantDokumentVIEWID: restriction
+                    };
+                }
+                if (typeof restriction === "object" &&
+                    !restriction.NameLanguageID) {
+                    restriction.NameLanguageID = AppData.getLanguageId();
                 }
                 if (!options) {
                     options = {
