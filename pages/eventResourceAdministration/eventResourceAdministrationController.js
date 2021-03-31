@@ -317,7 +317,16 @@
                     if (event.currentTarget && AppBar.notifyModified) {
                         var combobox = event.currentTarget;
                         EventResourceAdministration._languageId = parseInt(combobox.value);
+                        AppBar.busy = true;
+                        that.saveData(function (response) {
+                            AppBar.busy = false;
+                            // erst savedata und dann loaddata
                         that.loadData();
+                            Log.print(Log.l.trace, "event text saved");
+                        }, function (errorResponse) {
+                            AppBar.busy = false;
+                            Log.print(Log.l.error, "error saving event text");
+                        });
                     }
                     Log.ret(Log.l.trace);
                 },
