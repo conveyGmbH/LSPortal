@@ -209,48 +209,6 @@
                         }
                         Log.ret(Log.l.trace);
                     },
-                    onSelectionChanged: function (eventInfo) {
-                        Log.call(Log.l.trace, "GenDataModHisto.Controller.");
-                        if (listView && listView.winControl) {
-                            var listControl = listView.winControl;
-                            if (listControl.selection) {
-                                var selectionCount = listControl.selection.count();
-                                if (selectionCount === 1) {
-                                    // Only one item is selected, show the page
-                                    listControl.selection.getItems().done(function (items) {
-                                        var item = items[0];
-                                        var curPageId = Application.getPageId(nav.location);
-                                        if (item.data &&
-                                            item.data.PersonAdresseVIEWID &&
-                                            item.data.PersonAdresseVIEWID !== that.binding.contactId) {
-                                            if (AppBar.scope && typeof AppBar.scope.saveData === "function") {
-                                                //=== "function" save wird nicht aufgerufen wenn selectionchange
-                                                // current detail view has saveData() function
-                                                if ((curPageId === "genDataModDetails") &&
-                                                    typeof AppBar.scope.loadData === "function" &&
-                                                    typeof AppBar.scope.setAdresseId === "function") {
-                                                        AppBar.scope.setAdresseId(item.data.AdresseID);
-                                                        AppBar.scope.setPersonAdresseId(item.data.PersonAdresseVIEWID);
-                                                        AppBar.scope.loadData();
-                                                } else {
-                                                    Application.navigateById("genDataModDetails");
-                                                }
-                                            } else {
-                                                // current detail view has NO saveData() function - is list
-                                                if (curPageId === "genDataModDetails" &&
-                                                    typeof AppBar.scope.loadData === "function") {
-                                                    AppBar.scope.loadData();
-                                                } else {
-                                                    Application.navigateById("genDataModDetails");
-                                                }
-                                            }
-                                        }
-                                    });
-                                }
-                            }
-                        }
-                        Log.ret(Log.l.trace);
-                    },
                     onPointerDown: function (e) {
                         Log.call(Log.l.trace, "Questiongroup.Controller.");
                         that.cursorPos = { x: e.pageX, y: e.pageY };
@@ -490,7 +448,6 @@
                 // register ListView event handler
                 if (listView) {
                     this.addRemovableEventListener(listView, "iteminvoked", this.eventHandlers.onItemInvoked.bind(this));
-                    this.addRemovableEventListener(listView, "selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
                     this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
                     this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
                 }

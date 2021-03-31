@@ -71,7 +71,28 @@
                     
                 }
                 this.resultConverter = resultConverter;
-              
+
+                var setPersonId = function() {
+                    Log.call(Log.l.trace, "GenDataModList.Controller.");
+                    if (listView && listView.winControl) {
+                        var listControl = listView.winControl;
+                        if (listControl.selection) {
+                            listControl.selection.getItems().done(function(items) {
+                                var item = items[0];
+                                var curPageId = Application.getPageId(nav.location);
+                                if (AppBar.scope && typeof AppBar.scope.saveData === "function") {
+                                    if ((curPageId === "genDataModHisto") &&
+                                        typeof AppBar.scope.loadData === "function" &&
+                                        typeof AppBar.scope.setPersonId === "function") {
+                                        AppBar.scope.setPersonId(item.data.PersonID);
+                                    }
+                                }
+                            });
+                        }
+                    }
+                }
+                this.setPersonId = setPersonId;
+
                 // define handlers
                 this.eventHandlers = {
                     clickBack: function (event) {
@@ -104,8 +125,12 @@
                                                         AppBar.scope.setAdresseId(item.data.AdresseID);
                                                         AppBar.scope.setPersonAdresseId(item.data.PersonAdresseVIEWID);
                                                         AppBar.scope.loadData();
-                                                } else {
-                                                    Application.navigateById("genDataModDetails");
+                                                }
+                                                if ((curPageId === "genDataModHisto") &&
+                                                    typeof AppBar.scope.loadData === "function" &&
+                                                    typeof AppBar.scope.setPersonId === "function") {
+                                                    AppBar.scope.setPersonId(item.data.PersonID);
+                                                    AppBar.scope.loadData();
                                                 }
                                             } else {
                                                 // current detail view has NO saveData() function - is list
