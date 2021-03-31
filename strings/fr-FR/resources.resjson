@@ -554,6 +554,7 @@
 	  "label.eventGenSettings" : "Paramètres généraux",
     "label.genDataModList" : "Modérateur",
     "label.genDataModDetails" : "Modérateur",
+    "label.genDataModHisto" : "Histoire",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annuler",
@@ -1298,5 +1299,12 @@
     "genDataModDetails.category" : "Catégorie",
     "genDataModDetails.expertise" : "Expertise",
     "genDataModDetails.cv" : "Curriculum Vitae",
-    "genDataModDetails.socialmedia" : "Social Media"
+    "genDataModDetails.socialmedia" : "Social Media",
+
+    "genDataModHisto.title" : "Histoire",
+    "genDataModHisto.eventname" : "Événement",
+    "genDataModHisto.eventdate" : "Date",
+    "genDataModHisto.role" : "Rouleau",
+    "genDataModHisto.rating" : "Évaluation",
+    "genDataModHisto.ratingdetails" : "Texte d'évaluation"
 }

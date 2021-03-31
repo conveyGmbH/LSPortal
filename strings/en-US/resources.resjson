@@ -554,6 +554,7 @@
     "label.eventGenSettings" : "General Settings",
     "label.genDataModList" : "Speaker",
     "label.genDataModDetails" : "Speaker",
+    "label.genDataModHisto" : "History",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Cancel",
@@ -1299,6 +1300,13 @@
     "genDataModDetails.category" : "Category",
     "genDataModDetails.expertise" : "Expertise",
     "genDataModDetails.cv" : "Curriculum Vitae",
-    "genDataModDetails.socialmedia" : "Social Media"
+    "genDataModDetails.socialmedia" : "Social Media",
+
+    "genDataModHisto.title" : "History",
+    "genDataModHisto.eventname" : "Event",
+    "genDataModHisto.eventdate" : "Date",
+    "genDataModHisto.role" : "Role",
+    "genDataModHisto.rating" : "Rating",
+    "genDataModHisto.ratingdetails" : "Ratingtext"
 
 }
