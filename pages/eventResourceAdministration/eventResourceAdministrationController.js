@@ -478,7 +478,16 @@
                 Log.print(Log.l.trace, "eventTextUsageId=" + value);
                 EventResourceAdministration._eventTextUsageId = value;
                 that.binding.showSeries = (value === 2);
+                AppBar.busy = true;
+                that.saveData(function (response) {
+                    AppBar.busy = false;
+                    // erst savedata und dann loaddata
                 that.loadData();
+                    Log.print(Log.l.trace, "event text saved");
+                }, function (errorResponse) {
+                    AppBar.busy = false;
+                    Log.print(Log.l.error, "error saving event text");
+                });
             }
             that.setEventTextUsageId = setEventTextUsageId;
 

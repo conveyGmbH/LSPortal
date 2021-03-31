@@ -443,7 +443,15 @@
                 MediaText._eventTextUsageId = value;
                 that.binding.showSeries = (value === 2);
                 var ret = WinJS.Promise.timeout(0).then(function() {
-                    return that.loadSeriesData();
+                    that.saveData(function (response) {
+                        AppBar.busy = false;
+                        // erst savedata und dann loaddata
+                        that.loadSeriesData();
+                        Log.print(Log.l.trace, "event text saved");
+                    }, function (errorResponse) {
+                        AppBar.busy = false;
+                        Log.print(Log.l.error, "error saving event text");
+                    });s
                 });
                 return ret;
             }
