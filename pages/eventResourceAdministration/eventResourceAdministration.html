@@ -11,9 +11,7 @@
     <div class="eventResourceAdministration fragment">
         <div id="eventResourceAdministrationController" class="data-container">
             <section aria-label="Main content" role="main" class="animationElement">
-                <div class="contentarea win-type-body">
                     <div id="eventTextUsageHostResource" class="fragmenthost"></div>
-                    <div class="headerFooterPlaceholder" style="display: none">
                         <div class="list-header">
                             <div class="field_line field_line_odd">
                                 <span class="label win-type-caption" data-win-res="{textContent: 'account.language'}"></span>
@@ -45,6 +43,8 @@
                                 </div>
                             </div>
                         </div>
+                <div class="contentarea win-type-body">
+                    <div class="headerFooterPlaceholder" style="display: none">
                     </div>
                     <div class="eventText-template"
                          data-win-control="WinJS.Binding.Template" style="display: none">
@@ -129,13 +129,13 @@
                             </div>
                         </div>
                     </div>
+                    <!-- header: select('.list-header')-->
                     <div id="eventTextList"
                          class="listview"
                          data-win-control="WinJS.UI.ListView"
                          data-win-options="{
                              layout : { type: WinJS.UI.ListLayout },
                              itemTemplate: select('.eventText-template'),
-                             header: select('.list-header')
                          }">
                     </div>
                     <div class="error-message"

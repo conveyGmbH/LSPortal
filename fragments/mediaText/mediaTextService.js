@@ -94,10 +94,18 @@
             select: function (complete, error, restriction, options) {
                 if (!restriction) {
                     restriction = {
-                        NameLanguageID: AppData.getLanguageId(),
                         LanguageSpecID: MediaText._languageId,
                         MandantDokumentID: MediaText._docId ? MediaText._docId : -1
                     };
+                }
+                if (typeof restriction === "number") {
+                    restriction = {
+                        LangMandantDokumentVIEWID: restriction
+                    };
+                }
+                if (typeof restriction === "object" &&
+                    !restriction.NameLanguageID) {
+                    restriction.NameLanguageID = AppData.getLanguageId();
                 }
                 if (!options) {
                     options = {
