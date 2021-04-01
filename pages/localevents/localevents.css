@@ -1,8 +1,8 @@
 ﻿body {
 }
-/*.win-itemscontainer {
+#localevents .win-itemscontainer {
     padding-left: 20px;
-}*/
+}
 .localEvents-big {
     text-align: left;
     width: 80px;
@@ -21,11 +21,11 @@
 #localevents {
     height: 100%;
 }
-.list-header {
-    padding-left: 27px;
-    font-weight: bold;
-}
-.confirm-button {
-    position: absolute;
-    height: 100%;
+#localevents .list-header {
+        padding-left: 27px;
+        font-weight: bold;
+    }
+#localevents .confirm-button {
+        position: absolute;
+        height: 100%;
 }
