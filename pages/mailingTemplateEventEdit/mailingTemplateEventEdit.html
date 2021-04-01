@@ -17,6 +17,9 @@
                             <span data-win-res="{textContent: 'mailingTemplateEventEdit.title'}"></span>
                         </div>
                     </div>
+                    <div class="line-separator"></div>
+                    <span id="vorlagetextname" data-win-bind="textContent: dataLayoutActive.TextName"></span>
+                    <div class="line-separator"></div>
                     <div class="field_line">
                         <div class="field_line field_line_odd">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingTemplateEventEdit.language'}"></span>
@@ -56,17 +59,17 @@
                     </div>
                     <div class="line-separator"></div>
                     <div class="field_line">
-                    <div class="field_line field_line_odd">
-                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingTemplateEventEdit.layoutactive'}"></span>
-                        <span class="label landscape_only" data-win-res="{textContent: 'mailingTemplateEventEdit.layoutactive'}"></span>
-                        <div class="input_field toggle-switch-parent">
-                            <div id="layoutActiveToggle" class="input_field"
-                                 data-win-control="WinJS.UI.ToggleSwitch"
-                                 data-win-bind="winControl.checked: dataLayoutActive.IsActive; winControl.labelOn: generalData.active; winControl.labelOff: generalData.inactive">
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingTemplateEventEdit.layoutactive'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'mailingTemplateEventEdit.layoutactive'}"></span>
+                            <div class="input_field toggle-switch-parent">
+                                <div id="layoutActiveToggle" class="input_field"
+                                     data-win-control="WinJS.UI.ToggleSwitch"
+                                     data-win-bind="winControl.checked: dataLayoutActive.IsActive; winControl.labelOn: generalData.active; winControl.labelOff: generalData.inactive">
+                                </div>
                             </div>
                         </div>
                     </div>
-                   </div>
                 </div>
                 <div class="error-message"
                      data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>

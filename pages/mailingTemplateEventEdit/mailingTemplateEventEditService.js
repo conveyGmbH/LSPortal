@@ -63,7 +63,8 @@
             },
             getRestriction: {
                 Subject: "",
-                MailText: ""
+                MailText: "",
+                TextName: ""
             },    
             setRestriction: {
                 TextName: "",
