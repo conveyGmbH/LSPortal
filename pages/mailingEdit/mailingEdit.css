@@ -41,6 +41,6 @@
     font-size: 25px;
     font-weight: bold;
 }
-#headertitletextcomment {
-    
+#turnThumbsLeft .win-toggleswitch-header {
+    display: none;
 }
