@@ -17,7 +17,8 @@
 }*/
 #isDarkTheme .win-toggleswitch-header,
 #individualColors .win-toggleswitch-header,
-#shopAppBkg .win-toggleswitch-header {
+#shopAppBkg .win-toggleswitch-header,
+#inputBorderBottom .win-toggleswitch-header {
     display: none;
 }
 
