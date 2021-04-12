@@ -1302,6 +1302,8 @@
     "genDataModDetails.expertise" : "Expertise",
     "genDataModDetails.cv" : "Curriculum Vitae",
     "genDataModDetails.socialmedia" : "Soziale Netzwerke",
+    "genDataModDetails.picture" : "Bild",
+    "genDataModDetails.info1" : "Moderatorenbild hier herein ziehen",
 
     "genDataModHisto.title" : "Historie",
     "genDataModHisto.eventname" : "Veranstaltung",

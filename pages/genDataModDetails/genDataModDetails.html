@@ -202,20 +202,15 @@
                             </div>
                             <div class="line-separator"></div>
                         </div>
-                        <div class="doc-container">
-                            <div id="contactPhoto" class="photoview">
-                                <div tabindex="0" aria-hidden="true"></div>
-                                <div tabindex="-1" class="win-viewport win-horizontal pinch" role="group" aria-label="Scrolling Container">
-                                    <div class="win-surface">
-                                        <div class="_win-proxy"></div>
-                                        <div class="win-itemscontainer">
-                                            <div class="win-container">
-                                                <div class="win-itembox"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="field_line field_line_even">
+                            <span class="label win-type-caption" data-win-res="{textContent: 'genDataModDetails.picture'}"></span><br />
+                            <div id="dropzone" class="dropzone-container input_field win-textbox use-border-radius bkgcolor-activatable bkgcolor-hoverable">
+                                <div class="action-label" data-win-res="{textContent: 'genDataModDetails.info1'}"></div>
                             </div>
+                            <br /><br /><br /><br /><br />
+                            <img id="modpicture" alt="Picture" />
+                            <input class="zero-sized" type="file" />
+                            <span class="input_field" data-win-bind="textContent: fileInfo"></span>
                         </div>
                     </div>
                 </div>

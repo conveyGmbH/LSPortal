@@ -20,7 +20,11 @@
                     modData: null,
                     modpaData: null,
                     newmodData: getEmptyDefaultValue(GenDataModDetails.adresseView.defaultValue),
-                    newmodlabel: getResourceText("genDataModDetails.newmodlabel")
+                    newmodlabel: getResourceText("genDataModDetails.newmodlabel"),
+                    fileInfo: "",
+                    docId: 0,
+                    dataDoc: {},
+                    pExist: 0
                 }, commandList]);
             
                 var that = this;
@@ -31,9 +35,11 @@
                 var newmod = pageElement.querySelector("#newmod");
                 var kategorie = pageElement.querySelector("#InitKategorie");
                 var kategorienew = pageElement.querySelector("#InitKategorieNew");
+                var dropZone = pageElement.querySelector("#dropzone");
+                var fileOpener = pageElement.querySelector("input[type=file]");
+                var modPicture = pageElement.querySelector("#modpicture");
 
                 var firstname = pageElement.querySelector("#firstname");
-                var name = pageElement.querySelector("#name");
                 var email = pageElement.querySelector("#email");
 
                 var checkAddModFields = function() {
@@ -51,12 +57,301 @@
                 }
                 this.checkAddModFields = checkAddModFields;
 
+                var updateImage = function (wFormat, mimeType, fileName, result) {
+                    var cameraQuality = 80;
+                    var ovwEdge = 256;
+                    var prevEdge = 1920;
+                    var prevLength = 0;
+                    var err = null;
+                    Log.call(Log.l.trace, "UploadMedia.Controller.");
+                    AppData.setErrorMsg(that.binding);
+
+                    var img = new Image();
+                    img.src = result;
+
+                    var imageData = result.split(',')[1];
+
+                    var dataDoc = {
+                        wFormat: wFormat,
+                        ColorType: 11,
+                        ulDpm: 0,
+                        szOriFileNameDOC1: fileName,
+                        ulOvwEdge: ovwEdge,
+                        ulPrevEdge: prevEdge,
+                        ContentEncoding: 4096
+                    }
+                    // UTC-Zeit in Klartext
+                    var now = new Date();
+                    var dateStringUtc = now.toUTCString();
+
+                    var ret = new WinJS.Promise.as().then(function () {
+                        return WinJS.Promise.timeout(50);
+                    }).then(function () {
+                        var width = img.width;
+                        var height = img.height;
+                        Log.print(Log.l.trace, "width=" + width + " height=" + height);
+                        if (width && height && (width < 3840 || height < 3840) || imageData.length < 1000000) {
+                            dataDoc.ulWidth = width;
+                            dataDoc.ulHeight = height;
+                            // keep original 
+                            return WinJS.Promise.as();
+                        }
+                        return Colors.resizeImageBase64(imageData, "image/jpeg", 3840, cameraQuality, 0.25);
+                    }).then(function (resizeData) {
+                        if (resizeData) {
+                            Log.print(Log.l.trace, "resized");
+                            imageData = resizeData;
+                            mimeType = "image/jpeg";
+                            var posExt = fileName.lastIndexOf(".");
+                            if (posExt >= 0) {
+                                fileName = fileName.substr(0, posExt) + ".jpg";
+                            } else {
+                                fileName += ".jpg";
+                            }
+                            dataDoc.wFormat = 3;
+                            img.src = "data:image/jpeg;base64," + imageData;
+                            return WinJS.Promise.timeout(50);
+                        } else {
+                            return WinJS.Promise.as();
+                        }
+                    }).then(function () {
+                        return Colors.resizeImageBase64(imageData, "image/jpeg", prevEdge, cameraQuality);
+                    }).then(function (prevData) {
+                        if (prevData && prevData.length < imageData.length) {
+                            var contentLengthPrev = Math.floor(prevData.length * 3 / 4);
+                            dataDoc.PrevContentDOCCNT2 =
+                                "Content-Type: image/jpegAccept-Ranges: bytes\x0D\x0ALast-Modified: " +
+                                dateStringUtc +
+                                "\x0D\x0AContent-Length: " +
+                                contentLengthPrev +
+                                "\x0D\x0A\x0D\x0A" +
+                                prevData;
+                            prevLength = prevData.length;
+                        } else {
+                            prevLength = imageData.length;
+                        }
+                        return Colors.resizeImageBase64(prevData || imageData, "image/jpeg", ovwEdge, cameraQuality);
+                    }).then(function (ovwData) {
+                        dataDoc.ulWidth = img.width;
+                        dataDoc.ulHeight = img.height;
+
+                        // decodierte Dateigröße
+                        var contentLength = Math.floor(imageData.length * 3 / 4);
+
+                        dataDoc.DocContentDOCCNT1 = "Content-Type: " + mimeType + "Accept-Ranges: bytes\x0D\x0ALast-Modified: " +
+                            dateStringUtc +
+                            "\x0D\x0AContent-Length: " +
+                            contentLength +
+                            "\x0D\x0A\x0D\x0A" +
+                            imageData;
+
+                        if (ovwData && ovwData.length < prevLength) {
+                            var contentLengthOvw = Math.floor(ovwData.length * 3 / 4);
+                            dataDoc.OvwContentDOCCNT3 =
+                                "Content-Type: image/jpegAccept-Ranges: bytes\x0D\x0ALast-Modified: " +
+                                dateStringUtc +
+                                "\x0D\x0AContent-Length: " +
+                                contentLengthOvw +
+                                "\x0D\x0A\x0D\x0A" +
+                                ovwData;
+                        }
+                        AppBar.busy = true;
+                        var recordId = that.getAdresseId();
+                        return GenDataModDetails.adresseDOC.update(function (response) {
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            AppBar.busy = false;
+                            AppBar.modified = false;
+                            Log.print(Log.l.trace, "adresseDOC update: success!");
+                            that.loadData();
+                            complete(response);
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppBar.busy = false;
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                            }, recordId, dataDoc);
+                    });
+                    Log.ret(Log.l.trace);
+                    return ret;
+                };
+                this.updateImage = updateImage;
+
+                var insertImage = function (wFormat, mimeType, fileName, result) {
+                    var cameraQuality = 80;
+                    var ovwEdge = 256;
+                    var prevEdge = 1920;
+                    var prevLength = 0;
+                    var err = null;
+                    Log.call(Log.l.trace, "UploadMedia.Controller.");
+                    AppData.setErrorMsg(that.binding);
+
+                    var img = new Image();
+                    img.src = result;
+
+                    var imageData = result.split(',')[1];
+
+                    var dataDoc = {
+                        DOC1AdresseVIEWID: that.binding.docId,
+                        wFormat: wFormat,
+                        ColorType: 11,
+                        ulDpm: 0,
+                        szOriFileNameDOC1: fileName,
+                        ulOvwEdge: ovwEdge,
+                        ulPrevEdge: prevEdge,
+                        ContentEncoding: 4096
+                    }
+                    // UTC-Zeit in Klartext
+                    var now = new Date();
+                    var dateStringUtc = now.toUTCString();
+
+                    var ret = new WinJS.Promise.as().then(function () {
+                        return WinJS.Promise.timeout(50);
+                    }).then(function () {
+                        var width = img.width;
+                        var height = img.height;
+                        Log.print(Log.l.trace, "width=" + width + " height=" + height);
+                        if (width && height && (width < 3840 || height < 3840) || imageData.length < 1000000) {
+                            dataDoc.ulWidth = width;
+                            dataDoc.ulHeight = height;
+                            // keep original 
+                            return WinJS.Promise.as();
+                        }
+                        return Colors.resizeImageBase64(imageData, "image/jpeg", 3840, cameraQuality, 0.25);
+                    }).then(function (resizeData) {
+                        if (resizeData) {
+                            Log.print(Log.l.trace, "resized");
+                            imageData = resizeData;
+                            mimeType = "image/jpeg";
+                            var posExt = fileName.lastIndexOf(".");
+                            if (posExt >= 0) {
+                                fileName = fileName.substr(0, posExt) + ".jpg";
+                            } else {
+                                fileName += ".jpg";
+                            }
+                            dataDoc.wFormat = 3;
+                            img.src = "data:image/jpeg;base64," + imageData;
+                            return WinJS.Promise.timeout(50);
+                        } else {
+                            return WinJS.Promise.as();
+                        }
+                    }).then(function () {
+                        return Colors.resizeImageBase64(imageData, "image/jpeg", prevEdge, cameraQuality);
+                    }).then(function (prevData) {
+                        if (prevData && prevData.length < imageData.length) {
+                            var contentLengthPrev = Math.floor(prevData.length * 3 / 4);
+                            dataDoc.PrevContentDOCCNT2 =
+                                "Content-Type: image/jpegAccept-Ranges: bytes\x0D\x0ALast-Modified: " +
+                                dateStringUtc +
+                                "\x0D\x0AContent-Length: " +
+                                contentLengthPrev +
+                                "\x0D\x0A\x0D\x0A" +
+                                prevData;
+                            prevLength = prevData.length;
+                        } else {
+                            prevLength = imageData.length;
+                        }
+                        return Colors.resizeImageBase64(prevData || imageData, "image/jpeg", ovwEdge, cameraQuality);
+                    }).then(function (ovwData) {
+                        dataDoc.ulWidth = img.width;
+                        dataDoc.ulHeight = img.height;
+
+                        // decodierte Dateigröße
+                        var contentLength = Math.floor(imageData.length * 3 / 4);
+
+                        dataDoc.DocContentDOCCNT1 = "Content-Type: " + mimeType + "Accept-Ranges: bytes\x0D\x0ALast-Modified: " +
+                            dateStringUtc +
+                            "\x0D\x0AContent-Length: " +
+                            contentLength +
+                            "\x0D\x0A\x0D\x0A" +
+                            imageData;
+
+                        if (ovwData && ovwData.length < prevLength) {
+                            var contentLengthOvw = Math.floor(ovwData.length * 3 / 4);
+                            dataDoc.OvwContentDOCCNT3 =
+                                "Content-Type: image/jpegAccept-Ranges: bytes\x0D\x0ALast-Modified: " +
+                                dateStringUtc +
+                                "\x0D\x0AContent-Length: " +
+                                contentLengthOvw +
+                                "\x0D\x0A\x0D\x0A" +
+                                ovwData;
+                        }
+                        AppBar.busy = true;
+                        return GenDataModDetails.adresseDOC.insert(function (json) {
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            AppBar.busy = false;
+                            Log.print(Log.l.trace, "adresseDOC insert: success!");
+                            // select returns object already parsed from json file in response
+                            that.loadData();
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppBar.busy = false;
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        }, dataDoc);
+                    });
+                    Log.ret(Log.l.trace);
+                    return ret;
+                };
+                this.insertImage = insertImage;
+
                 var resultConverter = function (item, index) {
                     item.index = index;
                     
                 }
                 this.resultConverter = resultConverter;
-              
+
+                function getFileData(file, name, type, size) {
+                    var posExt = name.lastIndexOf(".");
+                    var ext = (posExt >= 0) ? name.substr(posExt + 1) : "";
+                    Log.call(Log.l.trace, "UploadMedia.Controller.", "name=" + name + " ext=" + ext + " type=" + type + " size=" + size);
+                    that.binding.fileInfo = name + " (" + type + ") - " + size + " bytes";
+
+                    var fileExtensions = GenDataModDetails.docFormatList.map(function (item) {
+                        return item.fileExtension;
+                    });
+                    var index = fileExtensions.indexOf(type);
+                    if (index < 0 || GenDataModDetails.docFormatList[index].mimeType !== type) {
+                        var mimeTypes = GenDataModDetails.docFormatList.map(function (item) {
+                            return item.mimeType;
+                        });
+                        index = mimeTypes.indexOf(type);
+                    }
+                    var docFormat = (index >= 0) ? GenDataModDetails.docFormatList[index] : null;
+                    if (docFormat) {
+                        var reader = new FileReader();
+                        reader.onload = function () {
+                            // reader.result
+                            if (reader.result) {
+                                Log.print(Log.l.u1, "result=" + reader.result.substr(0, 64) + "...");
+
+                                switch (docFormat.docGroup) {
+                                    case 1: {
+                                        if (that.binding.pExist > 0) {
+                                           that.updateImage(docFormat.docFormat, type, name, reader.result);
+                                        } else {
+                                           that.insertImage(docFormat.docFormat, type, name, reader.result); 
+                                        }
+                                    }
+                                        break;
+                                }
+                                // test wandle base64 to blob bzw. file und dann speicher
+                                /*var blob = that.base64ToBlob(base64String, type);
+                                saveAs(blob, "Test.txt");*/
+                            }
+                        };
+                        reader.onerror = function (error) {
+                            AppData.setErrorMsg(that.binding, error);
+                        };
+                        reader.readAsDataURL(file);
+                    } else {
+                        AppData.setErrorMsg(that.binding, "unknown file type: " + type);
+                    }
+                    Log.ret(Log.l.trace);
+                }
+                that.getFileData = getFileData;
+
                 // define handlers
                 this.eventHandlers = {
                     clickBack: function (event) {
@@ -80,6 +375,42 @@
                         });
 
                         Log.ret(Log.l.trace);
+                    },
+                    handleFileChoose: function (event) {
+                        if (event && event.target) {
+                            // FileList-Objekt des input-Elements auslesen, auf dem 
+                            // das change-Event ausgelöst wurde (event.target)
+                            var files = event.target.files;
+                            for (var i = 0; i < files.length; i++) {
+                                getFileData(files[i], files[i].name, files[i].type, files[i].size);
+                            }
+                        }
+                    },
+                    onDragOver: function (event) {
+                        if (event) {
+                            event.stopPropagation();
+                            event.preventDefault();
+                            if (event.dataTransfer) {
+                                event.dataTransfer.dropEffect = "copy";
+                            }
+                        }
+                    },
+                    onDrop: function (event) {
+                        if (event) {
+                            event.stopPropagation();
+                            event.preventDefault();
+                            if (event.dataTransfer) {
+                                var files = event.dataTransfer.files; // FileList Objekt
+                                for (var i = 0; i < files.length; i++) {
+                                    getFileData(files[i], files[i].name, files[i].type, files[i].size);
+                                }
+                            }
+                        }
+                    },
+                    clickUpload: function (event) {
+                        if (fileOpener) {
+                            fileOpener.click();
+                        }
                     },
                     clickAddMod: function(event) {
                         Log.call(Log.l.trace, "GenDataModDetails.Controller.");
@@ -118,7 +449,7 @@
                         } else {
                             newmod.style.display = "none";
                             that.loadData();
-                            that.binding.newmodData = getEmptyDefaultValue(GenDataModDetails.personAdresseView.defaultValue);
+                            that.binding.newmodData = getEmptyDefaultValue(GenDataModDetails.adresseView.defaultValue);
                             
                         }
                     },
@@ -142,6 +473,33 @@
                         Log.ret(Log.l.trace);
                     }
                 };
+
+         
+                // Initialisiere Drag&Drop EventListener
+                if (dropZone) {
+                    this.addRemovableEventListener(dropZone, "dragover", this.eventHandlers.onDragOver.bind(this));
+                    this.addRemovableEventListener(dropZone, "drop", this.eventHandlers.onDrop.bind(this));
+                    this.addRemovableEventListener(dropZone, "click", this.eventHandlers.clickUpload.bind(this));
+                }
+
+                //Initialisiere fileOpener           
+                if (fileOpener) {
+                    var accept = "";
+                    var mimeTypes = GenDataModDetails.docFormatList.map(function (item) {
+                        return item.mimeType;
+                    });
+                    var uniqueMimeTypes = mimeTypes.filter(function (item, index) {
+                        return mimeTypes.indexOf(item) === index;
+                    });
+                    for (var i = 0; i < uniqueMimeTypes.length; i++) {
+                        if (accept) {
+                            accept += ",";
+                        }
+                        accept += uniqueMimeTypes[i];
+                    }
+                    fileOpener.setAttribute("accept", accept);
+                    this.addRemovableEventListener(fileOpener, "change", this.eventHandlers.handleFileChoose.bind(this));
+                }
 
                 this.disableHandlers = {
                     clickBack: function() {
@@ -259,6 +617,7 @@
                         });
                     }).then(function () {
                         var recordId = getAdresseId();
+                        that.binding.docId = getAdresseId();
                         if (recordId) {
                             //load of format relation record data
                             Log.print(Log.l.trace, "calling select contactView...");
@@ -290,6 +649,35 @@
                             }, function (errorResponse) {
                                 Log.print(Log.l.trace, "calling select contactView...");
                             });
+                        }
+                    }).then(function () {
+                        var recordId = getAdresseId();
+                        if (recordId) {
+                            //load of format relation record data
+                            Log.print(Log.l.trace, "calling select contactView...");
+                            return GenDataModDetails.adresseDOC.select(function (json) {
+                                AppData.setErrorMsg(that.binding);
+                                Log.print(Log.l.trace, "contactView: success!");
+                                if (json && json.d && json.d.results && json.d.results.length > 0) {
+                                    // now always edit!
+                                    var results = json.d.results;
+                                    var key1 = "Content-Type:";
+                                    var key2 = "Accept-Ranges:";
+                                    var pos1 = json.d.results[0].DocContentDOCCNT1.indexOf(key1);
+                                    var pos2 = json.d.results[0].DocContentDOCCNT1.indexOf(key2);
+                                    var ContentType = json.d.results[0].DocContentDOCCNT1.substring(pos1 + key1.length, pos2).trim().replace("\r\n", "");
+                                    var sub = results[0].DocContentDOCCNT1.search("\r\n\r\n");
+                                    var data = results[0].DocContentDOCCNT1.substr(sub + 4);
+                                    modPicture.src = "data: " + ContentType + ";base64," + data;
+                                    that.binding.pExist = 1;
+                                } else {
+                                    that.binding.pExist = 0;
+                                    modPicture.src = "";
+                                    that.binding.fileInfo = "";
+                                }
+                            }, function (errorResponse) {
+                                Log.print(Log.l.trace, "calling select contactView...");
+                                }, { DOC1AdresseVIEWID: recordId});
                         }
                     }).then(function () {
                         AppBar.notifyModified = true;

@@ -7,6 +7,30 @@
 (function () {
     "use strict";
     WinJS.Namespace.define("GenDataModDetails", {
+        docExtList: [
+            "jpg", "jpeg", "jpe", "gif", "png", "svg", "svgz", "pdf", "txt", "htm",
+            "html", "mpg", "mpeg", "m1v", "mp2", "mpa", "mpe", "mpv2", "mp4", "m4v",
+            "mp4v", "ogg", "ogv", "asf", "avi", "mov", "wmv", "mp3", "m4a", "oga",
+            "wav", "wma", "aiff", "aifc", "au", "mid", "midi"
+        ],
+        _docFormatList: [],
+        docFormatList: {
+            get: function () {
+                if (!GenDataModDetails._docFormatList.length) {
+                    GenDataModDetails.docExtList.forEach(function (fileExtension) {
+                        var wFormat = AppData.getDocFormatFromExt(fileExtension);
+                        if (wFormat) {
+                            var docFormat = AppData.getDocFormatInfo(wFormat);
+                            if (docFormat) {
+                                docFormat.docFormat = wFormat;
+                                GenDataModDetails._docFormatList.push(docFormat);
+                            }
+                        }
+                    });
+                }
+                return GenDataModDetails._docFormatList;
+            }
+        },
         _adresseView: {
             get: function () {
                 return AppData.getFormatView("Adresse", 20637);
@@ -155,6 +179,55 @@
                     }
                     if (!ret && GenDataModDetails._adressePersonTable.pkName) {
                         ret = record[GenDataModDetails._adressePersonTable.pkName];
+                    }
+                }
+                return ret;
+            }
+        }
+    });
+    WinJS.Namespace.define("GenDataModDetails", {
+        _adresseDOC: {
+            get: function () {
+                return AppData.getFormatView("DOC1Adresse", 0);
+            }
+        }
+    });
+    WinJS.Namespace.define("GenDataModDetails", {
+        adresseDOC: {
+            select: function (complete, error, restriction) {
+                if (!restriction) {
+                    restriction = {
+                        DOC1AdresseVIEWID: GenDataModDetails._adresseId
+                    };
+                }
+                Log.call(Log.l.trace, "GenDataModDetails.adresseDOC.");
+
+                var ret = GenDataModDetails._adresseDOC.select(complete, error, restriction);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            update: function (complete, error, recordId, viewResponse) {
+                Log.call(Log.l.trace, "GenDataModDetails.adresseDOC.");
+                var ret = GenDataModDetails._adresseDOC.update(complete, error, recordId, viewResponse);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            insert: function (complete, error, viewResponse) {
+                Log.call(Log.l.trace, "GenDataModDetails.adresseDOC");
+                var ret = GenDataModDetails._adresseDOC.insertWithId(complete, error, viewResponse);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            relationName: GenDataModDetails._adresseDOC.relationName,
+            pkName: GenDataModDetails._adresseDOC.oDataPkName,
+            getRecordId: function (record) {
+                var ret = null;
+                if (record) {
+                    if (GenDataModDetails._adresseDOC.oDataPkName) {
+                        ret = record[GenDataModDetails._adresseDOC.oDataPkName];
+                    }
+                    if (!ret && GenDataModDetails._adresseDOC.pkName) {
+                        ret = record[GenDataModDetails._adresseDOC.pkName];
                     }
                 }
                 return ret;
