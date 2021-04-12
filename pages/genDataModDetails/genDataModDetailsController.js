@@ -38,6 +38,7 @@
                 var dropZone = pageElement.querySelector("#dropzone");
                 var fileOpener = pageElement.querySelector("input[type=file]");
                 var modPicture = pageElement.querySelector("#modpicture");
+                var picChangeButton = pageElement.querySelector("#picchange");
 
                 var firstname = pageElement.querySelector("#firstname");
                 var email = pageElement.querySelector("#email");
@@ -670,10 +671,16 @@
                                     var data = results[0].DocContentDOCCNT1.substr(sub + 4);
                                     modPicture.src = "data: " + ContentType + ";base64," + data;
                                     that.binding.pExist = 1;
+                                    dropZone.style.display = "none";
+                                    modPicture.style.display = "block";
+                                    picChangeButton.style.display = "block";
                                 } else {
                                     that.binding.pExist = 0;
                                     modPicture.src = "";
+                                    modPicture.style.display = "none";
                                     that.binding.fileInfo = "";
+                                    dropZone.style.display = "block";
+                                    picChangeButton.style.display = "none";
                                 }
                             }, function (errorResponse) {
                                 Log.print(Log.l.trace, "calling select contactView...");

@@ -1302,6 +1302,7 @@
     "genDataModDetails.socialmedia" : "Social Media",
     "genDataModDetails.picture" : "Immagine",
     "genDataModDetails.info1" : "Trascina qui l'immagine del moderatore",
+    "genDataModDetails.picchanghebutton" : "Cambia immagine",
 
     "genDataModHisto.title" : "Storia",
     "genDataModHisto.eventname" : "Evento",

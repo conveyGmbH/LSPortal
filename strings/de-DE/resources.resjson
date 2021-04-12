@@ -1304,6 +1304,7 @@
     "genDataModDetails.socialmedia" : "Soziale Netzwerke",
     "genDataModDetails.picture" : "Bild",
     "genDataModDetails.info1" : "Moderatorenbild hier herein ziehen",
+    "genDataModDetails.picchanghebutton" : "Bild ändern",
 
     "genDataModHisto.title" : "Historie",
     "genDataModHisto.eventname" : "Veranstaltung",

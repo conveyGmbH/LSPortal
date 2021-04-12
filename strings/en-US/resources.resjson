@@ -1303,6 +1303,7 @@
     "genDataModDetails.socialmedia" : "Social Media",
     "genDataModDetails.picture" : "Image",
     "genDataModDetails.info1" : "Drag moderator image in here",
+    "genDataModDetails.picchanghebutton" : "Change image",
 
     "genDataModHisto.title" : "History",
     "genDataModHisto.eventname" : "Event",
