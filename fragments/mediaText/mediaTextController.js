@@ -451,7 +451,7 @@
                     }, function (errorResponse) {
                         AppBar.busy = false;
                         Log.print(Log.l.error, "error saving event text");
-                    });s
+                    });
                 });
                 return ret;
             }
@@ -490,6 +490,3 @@
         })
     });
 })();
-
-
-
