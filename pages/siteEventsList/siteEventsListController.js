@@ -194,7 +194,7 @@
                                                     AppData.setRecordId("VeranstaltungTermin",
                                                         item.data.VeranstaltungTerminVIEWID);
                                                 }
-                                                that.checkId();
+                                                AppBar.scope.checkId();
                                             }
                                         } else {
                                             Application.navigateById("siteeventsList");
