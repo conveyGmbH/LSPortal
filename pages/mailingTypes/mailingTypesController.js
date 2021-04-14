@@ -373,6 +373,7 @@
                                 },
                                 function (error) {
                                     Log.print(Log.l.error, "call error");
+                                    AppData.setErrorMsg(that.binding, error);
                                 });
                         }
                     },
@@ -404,6 +405,7 @@
                                         },
                                         function(error) {
                                             Log.print(Log.l.error, "call error");
+                                            AppData.setErrorMsg(that.binding, error);
                                         });
                                 }
 
