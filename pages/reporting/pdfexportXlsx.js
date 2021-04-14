@@ -63,6 +63,7 @@
                 openedSpreadsheet.saveToBlobAsync(function (blob) {
                     Log.call(Log.l.trace, "ExportXlsx.openedSpreadsheet.saveToBlobAsync.", "fileName=" + fileName);
                     that.showProgress(100);
+                    blob = blob.slice(0, blob.size, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
                     try {
                         //addPdfToZip(blob, fileName + ".xlsx");
                         if (typeof complete === "function") {
