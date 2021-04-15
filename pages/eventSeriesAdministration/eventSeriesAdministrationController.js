@@ -66,11 +66,18 @@
                                 }
                             }
                         }
-                        var toggles = element.querySelectorAll('.toggle-switch-parent');
+                        var toggles = element.querySelectorAll('.input_field.toggle-switch-parent');
                         for (var i = 0; i < toggles.length; i++) {
                             var fieldEntry = toggles[i].dataset && toggles[i].dataset.fieldEntry;
                             if (fieldEntry) {
-                                ret[fieldEntry] = toggles[i].value;
+                                ret[fieldEntry] = toggles[i].checked;
+                            }
+                        }
+                        var fields = element.querySelectorAll('input[type="text"]');
+                        for (var i = 0; i < fields.length; i++) {
+                            var fieldEntry = fields[i].dataset && fields[i].dataset.fieldEntry;
+                            if (fieldEntry) {
+                                ret[fieldEntry] = fields[i].value;
                             }
                         }
                     }

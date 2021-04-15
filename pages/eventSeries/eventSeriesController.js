@@ -53,11 +53,11 @@
                                 ret[fieldEntry] = fields[i].value;
                             }
                         }
-                        var toggles = element.querySelectorAll('.toggle-switch-parent');
+                        var toggles = element.querySelectorAll('.input_field.toggle-switch-parent');
                         for (var i = 0; i < toggles.length; i++) {
                             var fieldEntry = toggles[i].dataset && toggles[i].dataset.fieldEntry;
                             if (fieldEntry) {
-                                ret[fieldEntry] = toggles[i].value;
+                                ret[fieldEntry] = toggles[i].checked;
                             }
                         }
                     }
