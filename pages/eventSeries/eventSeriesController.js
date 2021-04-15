@@ -46,7 +46,7 @@
                 if (listView && listView.winControl) {
                     var element = listView.winControl.elementFromIndex(index);
                     if (element) {
-                        var fields = element.querySelectorAll('input[type="text"], textarea');
+                        var fields = element.querySelectorAll('input[type="number"]');
                         for (var i = 0; i < fields.length; i++) {
                             var fieldEntry = fields[i].dataset && fields[i].dataset.fieldEntry;
                             if (fieldEntry) {
@@ -56,8 +56,16 @@
                         var toggles = element.querySelectorAll('.input_field.toggle-switch-parent');
                         for (var i = 0; i < toggles.length; i++) {
                             var fieldEntry = toggles[i].dataset && toggles[i].dataset.fieldEntry;
+                            var item = that.records.getAt(index);
                             if (fieldEntry) {
-                                ret[fieldEntry] = toggles[i].checked;
+                                ret[fieldEntry] = item[fieldEntry] ? 1 : 0;
+                            }
+                        }
+                        var fields = element.querySelectorAll('input[type="number"]');
+                        for (var i = 0; i < fields.length; i++) {
+                            var fieldEntry = fields[i].dataset && fields[i].dataset.fieldEntry;
+                            if (fieldEntry) {
+                                ret[fieldEntry] = fields[i].value;
                             }
                         }
                     }

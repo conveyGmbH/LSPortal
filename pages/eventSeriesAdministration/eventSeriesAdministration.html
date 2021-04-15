@@ -31,9 +31,9 @@
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventSeriesAdministration.startAnzeige'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'eveneventSeriesAdministrationtSeries.startAnzeige'}"></span>
                             <div class="input_field toggle-switch-parent" data-field-entry="StartAnzeige">
-                                <div id="startAnzeige" class="input_field"
+                                <div class="input_field"
                                      data-win-control="WinJS.UI.ToggleSwitch"
-                                     data-win-bind="winControl.checked: StartAnzeige"
+                                     data-win-bind="winControl.checked: StartAnzeige Binding.Mode.twoway"
                                      data-field-entry="StartAnzeige">
                                     <!--onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)"-->
                                 </div>
@@ -42,16 +42,16 @@
                         <div class="field_line field_line_even" data-win-bind="style.display: StartAnzeige Binding.Converter.toDisplay">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventSeriesAdministration.startSortierung'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'eventSeriesAdministration.startSortierung'}"></span>
-                            <input name="startSortierung" class="input_field win-textbox" type="text" data-win-bind="value: StartSortierung Binding.Mode.twoway" data-field-entry="StartSortierung"/>
+                            <input name="startSortierung" class="input_field win-textbox" type="number" data-win-bind="value: StartSortierung Binding.Mode.twoway" data-field-entry="StartSortierung"/>
                         </div>
                         <div class="field-separator"></div>
                         <div class="field_line field_line_odd">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventSeriesAdministration.serieAnzeige'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'eventSeriesAdministration.serieAnzeige'}"></span>
                             <div class="input_field toggle-switch-parent" data-field-entry="SerieAnzeige">
-                                <div id="serieAnzeige" class="input_field"
+                                <div class="input_field"
                                      data-win-control="WinJS.UI.ToggleSwitch"
-                                     data-win-bind="winControl.checked: SerieAnzeige"
+                                     data-win-bind="winControl.checked: SerieAnzeige Binding.Mode.twoway"
                                      data-field-entry="SerieAnzeige">
                                     <!--onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)"-->
                                 </div>
@@ -60,7 +60,7 @@
                         <div class="field_line field_line_even" data-win-bind="style.display: SerieAnzeige Binding.Converter.toDisplay">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventSeriesAdministration.serieSortierung'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'eventSeriesAdministration.serieSortierung'}"></span>
-                            <input name="serieSortierung" class="input_field win-textbox" type="text" data-win-bind="value: SerieSortierung Binding.Mode.twoway" data-field-entry="SerieSortierung"/>
+                            <input name="serieSortierung" class="input_field win-textbox" type="number" data-win-bind="value: SerieSortierung Binding.Mode.twoway" data-field-entry="SerieSortierung"/>
                         </div>
                         <div class="field-separator"></div>
                     </div>

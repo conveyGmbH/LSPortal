@@ -69,15 +69,18 @@
                         var toggles = element.querySelectorAll('.input_field.toggle-switch-parent');
                         for (var i = 0; i < toggles.length; i++) {
                             var fieldEntry = toggles[i].dataset && toggles[i].dataset.fieldEntry;
+                            var item = that.records.getAt(index);
                             if (fieldEntry) {
-                                ret[fieldEntry] = toggles[i].checked;
+                                ret[fieldEntry] = item[fieldEntry] ?  1 : 0;
+                                forceReload = true;
                             }
                         }
-                        var fields = element.querySelectorAll('input[type="text"]');
+                        var fields = element.querySelectorAll('input[type="number"]');
                         for (var i = 0; i < fields.length; i++) {
                             var fieldEntry = fields[i].dataset && fields[i].dataset.fieldEntry;
                             if (fieldEntry) {
                                 ret[fieldEntry] = fields[i].value;
+                                forceReload = true;
                             }
                         }
                     }

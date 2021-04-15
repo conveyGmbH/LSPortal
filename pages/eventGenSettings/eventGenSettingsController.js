@@ -560,7 +560,8 @@
                     });
                 } else {
                     var err = { status: 0, statusText: "no record selected" };
-                    AppData.setErrorMsg(that.binding, err);
+                    //AppData.setErrorMsg(that.binding, err);
+                    Log.print(Log.l.error, "call error" + err.status + ": " + err.statusText);
                 }
                 Log.ret(Log.l.trace);
             };
