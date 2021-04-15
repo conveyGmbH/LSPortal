@@ -66,6 +66,10 @@
                                 }
                             }
                         }
+                        var toggle = element.querySelector('.toggle-switch-parent');
+                        if (toggle) {
+
+                        }
                     }
                 }
                 Log.ret(Log.l.trace, ret);
@@ -198,6 +202,18 @@
                             break;
                         }
                     }
+                    Log.ret(Log.l.trace);
+                },
+                clickChangeAppSetting: function (event) {
+                    Log.call(Log.l.trace, "Event.Controller.");
+                    AppBar.modified = true;
+                   /* if (event.currentTarget) {
+                        var toggle = event.currentTarget.winControl;
+                        if (toggle) {
+                            var value = toggle.checked || event.currentTarget.value;
+                            that.changeAppSetting(event.currentTarget.id, value);
+                        }
+                    }*/
                     Log.ret(Log.l.trace);
                 },
                 onSelectionChanged: function (eventInfo) {

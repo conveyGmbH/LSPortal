@@ -33,13 +33,12 @@
                             <div class="input_field toggle-switch-parent">
                                 <div id="startAnzeige" class="input_field"
                                      data-win-control="WinJS.UI.ToggleSwitch"
-                                     data-win-bind="winControl.checked: StartAnzeige; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                     >
+                                     data-win-bind="winControl.checked: StartAnzeige">
+                                    <!--onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)"-->
                                 </div>
                             </div>
                         </div>
-                        <!--data-win-bind="style.display: StartAnzeige Binding.Converter.toDisplay"-->
-                        <div class="field_line field_line_even">
+                        <div class="field_line field_line_even" data-win-bind="style.display: StartAnzeige Binding.Converter.toDisplay">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventSeriesAdministration.startSortierung'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'eventSeriesAdministration.startSortierung'}"></span>
                             <input name="startSortierung" class="input_field win-textbox" type="text" data-win-bind="value: StartSortierung Binding.Mode.twoway" />
@@ -51,12 +50,12 @@
                             <div class="input_field toggle-switch-parent">
                                 <div id="serieAnzeige" class="input_field"
                                      data-win-control="WinJS.UI.ToggleSwitch"
-                                     data-win-bind="winControl.checked: SerieAnzeige; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                     >
+                                     data-win-bind="winControl.checked: SerieAnzeige">
+                                    <!--onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)"-->
                                 </div>
                             </div>
                         </div>
-                        <div class="field_line field_line_even">
+                        <div class="field_line field_line_even" data-win-bind="style.display: SerieAnzeige Binding.Converter.toDisplay">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventSeriesAdministration.serieSortierung'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'eventSeriesAdministration.serieSortierung'}"></span>
                             <input name="serieSortierung" class="input_field win-textbox" type="text" data-win-bind="value: SerieSortierung Binding.Mode.twoway" />
