@@ -5,3 +5,9 @@
     width: 100%;
     height: 100%;
 }
+#startAnzeige .win-toggleswitch-header,
+#startSortierung .win-toggleswitch-header,
+#serieAnzeige .win-toggleswitch-header,
+#serieSortierung .win-toggleswitch-header{
+    display: none;
+}

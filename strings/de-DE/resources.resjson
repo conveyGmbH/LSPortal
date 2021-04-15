@@ -1188,6 +1188,12 @@
 
     "eventSeriesAdministration.title" : "Serien Titel",
 	"eventSeriesAdministration.serien" : "Serien",
+    "eventSeriesAdministration.on"           : "An",
+    "eventSeriesAdministration.off"          : "Aus",
+	"eventSeriesAdministration.startSortierung" : "StartSortierung",
+    "eventSeriesAdministration.startAnzeige" : "StartAnzeige",
+    "eventSeriesAdministration.serieSortierung" : "SerieSortierung",
+    "eventSeriesAdministration.serieAnzeige" : "SerieAnzeige",
 
     "mailingEdit.title"			: "Bearbeiten",
     "mailingEdit.nametitleheader"			: "Name",

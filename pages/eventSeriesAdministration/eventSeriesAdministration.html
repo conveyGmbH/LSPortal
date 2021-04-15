@@ -22,6 +22,45 @@
                                 <option data-win-bind="value: MandantSerieVIEWID; textContent: Titel"></option>
                             </select>
                         </div>
+                        <div class="field_line field_line_even">
+                            <span class="label win-type-caption portrait_only"></span>
+                            <span class="label landscape_only"></span>
+                        </div>
+                        <div class="line-separator"></div>
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventSeriesAdministration.startAnzeige'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'eveneventSeriesAdministrationtSeries.startAnzeige'}"></span>
+                            <div class="input_field toggle-switch-parent">
+                                <div id="startAnzeige" class="input_field"
+                                     data-win-control="WinJS.UI.ToggleSwitch"
+                                     data-win-bind="winControl.checked: StartAnzeige; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                                     >
+                                </div>
+                            </div>
+                        </div>
+                        <!--data-win-bind="style.display: StartAnzeige Binding.Converter.toDisplay"-->
+                        <div class="field_line field_line_even">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventSeriesAdministration.startSortierung'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'eventSeriesAdministration.startSortierung'}"></span>
+                            <input name="startSortierung" class="input_field win-textbox" type="text" data-win-bind="value: StartSortierung Binding.Mode.twoway" />
+                        </div>
+                        <div class="field-separator"></div>
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventSeriesAdministration.serieAnzeige'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'eventSeriesAdministration.serieAnzeige'}"></span>
+                            <div class="input_field toggle-switch-parent">
+                                <div id="serieAnzeige" class="input_field"
+                                     data-win-control="WinJS.UI.ToggleSwitch"
+                                     data-win-bind="winControl.checked: SerieAnzeige; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                                     >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field_line field_line_even">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventSeriesAdministration.serieSortierung'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'eventSeriesAdministration.serieSortierung'}"></span>
+                            <input name="serieSortierung" class="input_field win-textbox" type="text" data-win-bind="value: SerieSortierung Binding.Mode.twoway" />
+                        </div>
                         <div class="field-separator"></div>
                     </div>
                     <div id="eventSerieList"
