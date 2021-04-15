@@ -1179,9 +1179,6 @@
     "eventMediaAdministration.Categorie" : "Kategorie:",
     "eventMediaAdministration.questionDelete"	: "Möchten Sie das aktuelle Dokument löschen?",
 
-    "eventSeriesAdministration.title" : "Serien Titel",
-	"eventSeriesAdministration.serien" : "Serien",
-
     "mailingEdit.title"			: "Bearbeiten",
     "mailingEdit.nametitleheader"			: "Name",
     "mailingEdit.nametitlecomment"			: "Bitte geben Sie hier den Namen Ihrer Mailing Kampagne ein",
@@ -1235,9 +1232,23 @@
     "eventSeries.languageTitle" : "Sprache Titel",
 	"eventSeries.labelDelete" : "Serie",
 	"eventSeries.serieDelete" : "Möchten Sie diese Serie löschen?",
+    "eventSeries.on"           : "An",
+    "eventSeries.off"          : "Aus",
+    "eventSeries.startSortierung" : "Start Sortierung",
+    "eventSeries.startAnzeige" : "Start Anzeige",
+    "eventSeries.serieSortierung" : "Serie Sortierung",
+    "eventSeries.serieAnzeige" : "Serie Anzeige",
 
-	"eventSeriesAdministration.serie" : "Series",
-    "eventSeriesAdministration.questionDelete" : "Do you want to remove the event from this series?",
+    "eventSeriesAdministration.title" : "Serien Titel",
+    "eventSeriesAdministration.serien" : "Serien",
+    "eventSeriesAdministration.on"           : "An",
+    "eventSeriesAdministration.off"          : "Aus",
+    "eventSeriesAdministration.startSortierung" : "Start Sortierung",
+    "eventSeriesAdministration.startAnzeige" : "Start Anzeige",
+    "eventSeriesAdministration.serieSortierung" : "Serie Sortierung",
+    "eventSeriesAdministration.serieAnzeige" : "Serie Anzeige",
+    "eventSeriesAdministration.serie" : "Serie",
+    "eventSeriesAdministration.questionDelete" : "Möchten Sie die Veranstaltung aus dieser Serie entfernen?",
     
 	"eventSeriesList.count" : "Anzahl",
 

@@ -1185,9 +1185,6 @@
     "eventMediaAdministration.Categorie": "Catégorie:",
     "eventMediaAdministration.questionDelete"	: "Voulez-vous supprimer cette document?",
 
-    "eventSeriesAdministration.title": "Titre de la série",
-    "eventSeriesAdministration.serien": "Série",
-
     "mailingEdit.title"			: "Éditer",
     "mailingEdit.nametitleheader"			: "Nom",
     "mailingEdit.nametitlecomment"			: "Veuillez entrer le nom de votre campagne de diffusion ici",
@@ -1241,9 +1238,25 @@
     "eventSeries.languageTitle": "Titre de la langue",
     "eventSeries.labelDelete": "Série",
     "eventSeries.serieDelete": "Voulez-vous supprimer cette série?",
+    "eventSeries.title" : "Titel",
+    "eventSeries.on"           : "À",
+    "eventSeries.off"          : "Off",
+    "eventSeries.startSortierung" : "Démarrer le tri",
+    "eventSeries.startAnzeige" : "démarrer l'affichage",
+    "eventSeries.serieSortierung" : "Serie tri",
+    "eventSeries.serieAnzeige" : "Série affichage",
 
+    "eventSeriesAdministration.title": "Titre de la série",
+    "eventSeriesAdministration.serien": "Série",
+    "eventSeriesAdministration.on": "À",
+    "eventSeriesAdministration.off": "Off",
+    "eventSeriesAdministration.startSortierung": "Démarrer le tri",
+    "eventSeriesAdministration.startAnzeige": "démarrer l'affichage",
+    "eventSeriesAdministration.serieSortierung": "Série tri",
+    "eventSeriesAdministration. seriesAnzeige": "Série affichage",
     "eventSeriesAdministration.serie" : "Série",
     "eventSeriesAdministration.questionDelete" : "Souhaitez-vous retirer l'événement de cette série?",
+
 
     "eventSeriesList.count"         : "Nombre",
 	

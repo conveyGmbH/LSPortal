@@ -1185,9 +1185,6 @@
     "eventMediaAdministration.Categorie": "Categoria:",
     "eventMediaAdministration.questionDelete"	: "Vuoi eliminare questo documento?",
 
-    "eventSeriesAdministration.title": "Titolo serie",
-    "eventSeriesAdministration.serien": "Series",
-
     "mailingEdit.title"			: "Modificare",
     "mailingEdit.nametitleheader"			: "Nome",
     "mailingEdit.nametitlecomment"			: "Inserisci qui il nome della tua campagna di mailing",
@@ -1241,9 +1238,23 @@
     "eventSeries.languageTitle": "Titolo lingua",
     "eventSeries.labelDelete": "Series",
     "eventSeries.serieDelete": "Vuoi eliminare questa serie?",
+    "eventSeries.on": "On",
+    "eventSeries.off": "Off",
+    "eventSeries.startSortierung": "Avvia ordinamento",
+    "eventSeries.startAnzeige": "inizio spettacolo",
+    "eventSeries.serieSortierung": "ordinamento in serie",
+    "eventSeries.seriesAnzeige": "serie di spettacoli",
 	
-    "eventSeriesAdministration.serie" : "Serie",
+    "eventSeriesAdministration.title": "Titolo serie",
+    "eventSeriesAdministration.serien": "Serien",
+    "eventSeriesAdministration.serie": "Series",
     "eventSeriesAdministration.questionDelete" : "Vuoi rimuovere l'evento da questa serie?",
+    "eventSeriesAdministration.on": "A",
+    "eventSeriesAdministration.off": "Off",
+    "eventSeriesAdministration.startSortierung": "Avvia ordinamento",
+    "eventSeriesAdministration.startAnzeige": "inizio spettacolo",
+    "eventSeriesAdministration.serieSortierung": "ordinamento in serie",
+    "eventSeriesAdministration.seriesAnzeige": "serie di spettacoli",
 
     "eventSeriesList.count": "Numero",
 
