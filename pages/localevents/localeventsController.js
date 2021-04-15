@@ -119,16 +119,26 @@
             }
             this.loadNextUrl = loadNextUrl;
 
-            var getDateObject = function (dateData) {
-                var ret;
-                if (dateData) {
-                    var dateString = dateData.replace("\/Date(", "").replace(")\/", "");
-                    var milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
-                    ret = new Date(milliseconds).toDateString();
-                } else {
-                    ret = new Date();
+            var addZero = function (i) {
+                if (i < 10) {
+                    i = "0" + i;
                 }
-                return ret;
+                return i;
+            }
+            this.addZero = addZero;
+
+            var getDateObject = function (date) {
+                Log.call(Log.l.trace, "ContactResultsEvents.Controller.");
+                if (date === null) {
+                    Log.call(Log.l.trace, "No Date!");
+                } else {
+                    var dateString = date.replace("\/Date(", "").replace(")\/", "");
+                    var milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
+                    var time = new Date(milliseconds);
+                    var formdate = ("0" + time.getDate()).slice(-2) + "." + ("0" + (time.getMonth() + 1)).slice(-2) + "." + time.getFullYear() + " " + that.addZero(time.getUTCHours()) + ":" + that.addZero(time.getMinutes());
+                    Log.call(Log.l.trace, "ContactResultsEvents.Controller.");
+                    return formdate;
+                }
             };
             this.getDateObject = getDateObject;
 
