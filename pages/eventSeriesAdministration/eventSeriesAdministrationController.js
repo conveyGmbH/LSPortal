@@ -66,9 +66,12 @@
                                 }
                             }
                         }
-                        var toggle = element.querySelector('.toggle-switch-parent');
-                        if (toggle) {
-
+                        var toggles = element.querySelectorAll('.toggle-switch-parent');
+                        for (var i = 0; i < toggles.length; i++) {
+                            var fieldEntry = toggles[i].dataset && toggles[i].dataset.fieldEntry;
+                            if (fieldEntry) {
+                                ret[fieldEntry] = toggles[i].value;
+                            }
                         }
                     }
                 }
