@@ -51,6 +51,7 @@
     "command.upload"  : "Caricare ",
     "command.windowMaximized" : "Ingrandita",
     "command.windowRestored" : "Diviso",
+    "command.newmod": "Nuovo",
 
     "tooltip.backward"      : "Pagina precedente",
     "tooltip.edit"          : "Modifica Record attuale",
@@ -60,6 +61,7 @@
     "tooltip.undo"          : "Annulla ultima azione",
     "tooltip.delete"        : "Elimina record attuale",
     "tooltip.new"           : "Aggiungi nuovo contatto",
+    "tooltip.newEmployee": "Crea nuovo dipendente",
     "tooltip.deleteEmployee": "Elimina Employee",
     "tooltip.deleteSkill"   : "Elimina Ruolo",
     "tooltip.deleteQuestiongroup": "Elimina Gruppo domande",
@@ -71,6 +73,8 @@
     "tooltip.newQuestions/Answers" : "Aggiungere nuova Domande/Risposte",
     "tooltip.newQuestiongroup" : "Aggiungere nuova Gruppo domande",
     "tooltip.rotate"        : "Ruota biglietto da visita",
+    "tooltip.newEventText"  : "Nuovo testo",
+    "tooltip.newEventMedien": "Nuova immagine",
     "tooltip.rotateLeft"    : "Ruotare il biglietto da visita a sinistra",
     "tooltip.rotateRight"   : "Ruotare il biglietto da visita a destra",
     "tooltip.zoomin"        : "Zoom in biglietto da visita",
@@ -115,6 +119,10 @@
     "tooltip.deleteEventSeries" : "Elimina dalla serie",
     "tooltip.windowMaximized" : "Visualizza quest'area ingrandita",
     "tooltip.windowRestored" : "Mostra aree divise",
+    "tooltip.pictureZoomin": "Ingrandisci immagine",
+    "tooltip.pictureZoomout": "Riduci immagine",
+    "tooltip.deleteevent": "Elimina evento",
+    "tooltip.newmod": "Nuovo moderatore",
 
     "home.title"            : "Start",
     "home.info"             : "Informazioni importanti",
@@ -1237,6 +1245,7 @@
     "eventSeries.language": "Lingua",
     "eventSeries.languageTitle": "Titolo lingua",
     "eventSeries.labelDelete": "Series",
+    "eventSeries.newSerie": "Aggiungi serie",
     "eventSeries.serieDelete": "Vuoi eliminare questa serie?",
 	
     "eventSeriesAdministration.title": "Titolo serie",

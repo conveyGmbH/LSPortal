@@ -37,8 +37,8 @@
 
             // add page specific commands to AppBar
             var commandList = [
-                { id: "clickZoomIn", label: getResourceText("command.zoomin"), tooltip: getResourceText("tooltip.zoomin"), section: "primary", svg: "zoom_in" },
-                { id: "clickZoomOut", label: getResourceText("command.zoomout"), tooltip: getResourceText("tooltip.zoomout"), section: "primary", svg: "zoom_out" }
+                { id: "clickZoomIn", label: getResourceText("command.zoomin"), tooltip: getResourceText("tooltip.pictureZoomin"), section: "primary", svg: "zoom_in" },
+                { id: "clickZoomOut", label: getResourceText("command.zoomout"), tooltip: getResourceText("tooltip.pictureZoomout"), section: "primary", svg: "zoom_out" }
             ];
             this.controller = new ImgMedia.Controller(element, options, commandList);
 

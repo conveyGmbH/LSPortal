@@ -51,6 +51,7 @@
     "command.upload"  : "Hochladen",
     "command.windowMaximized" : "Maximized",
     "command.windowRestored" : "Split",
+    "command.newmod"        : "Neuer Moderator",
 
     "tooltip.backward"      : "Zurück blättern",
     "tooltip.edit"          : "Aktuellen Datensatz bearbeiten",
@@ -60,6 +61,7 @@
     "tooltip.undo"          : "Letzte Aktion rückgängig machen",
     "tooltip.delete"        : "Aktuellen Datensatz Löschen",
     "tooltip.new"           : "Neuen Kontakt erfassen",
+    "tooltip.newEmployee"   : "Neuen Mitarbeiter erfassen",
     "tooltip.deleteEmployee": "Mitarbeiter löschen",
     "tooltip.deleteSkill"   : "Fähigkeit löschen",
     "tooltip.deleteQuestiongroup": "Fragengruppe löschen",
@@ -70,6 +72,8 @@
     "tooltip.newSkill"      : "Neue Fähigkeit hinzufügen",
     "tooltip.newQuestionsAnswers" : "Neue Fragen/Antworten",
     "tooltip.newQuestiongroup" : "Neue Fragengruppe",
+    "tooltip.newEventText"  : "Neuer Text",
+    "tooltip.newEventMedien"  : "Neues Bild",
     "tooltip.rotate"        : "Visitenkarte drehen",
     "tooltip.rotateLeft"    : "Visitenkarte nach links drehen",
     "tooltip.rotateRight"   : "Visitenkarte nach rechts drehen",
@@ -115,6 +119,10 @@
     "tooltip.deleteEventSeries" : "Delete from series",
     "tooltip.windowMaximized" : "View this area maximized",
     "tooltip.windowRestored" : "Show areas split",
+    "tooltip.pictureZoomin"        : "Visitenkarte vergrößern",
+    "tooltip.pictureZoomout"       : "Visitenkarte verkleinern",
+    "tooltip.deleteevent"   : "Veranstaltung löschen",
+    "tooltip.newmod"        : "Neuer Moderator",
 
     "home.title"            : "Start",
     "home.info"             : "Wichtige Hinweise",
@@ -1231,6 +1239,7 @@
     "eventSeries.language" : "Sprache",
     "eventSeries.languageTitle" : "Sprache Titel",
 	"eventSeries.labelDelete" : "Serie",
+    "eventSeries.newSerie" : "Serie hinzufügen",
 	"eventSeries.serieDelete" : "Möchten Sie diese Serie löschen?",
 
     "eventSeriesAdministration.title" : "Serien Titel",

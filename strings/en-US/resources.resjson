@@ -51,6 +51,7 @@
     "command.upload"  : "Upload",
     "command.windowMaximized" : "Maximized",
     "command.windowRestored" : "Split",
+    "command.newmod": "New",
 
     "tooltip.backward"      : "Browse back",
     "tooltip.edit"          : "Edit current record",
@@ -60,6 +61,7 @@
     "tooltip.undo"          : "Undo last action",
     "tooltip.delete"        : "Delete current record",
     "tooltip.new"           : "Add new contact",
+    "tooltip.newEmployee": "Create new employee",
     "tooltip.deleteEmployee": "Delete Employee",
     "tooltip.deleteSkill"   : "Delete Skill",
     "tooltip.deleteQuestiongroup": "Delete Questiongroup",
@@ -70,6 +72,8 @@
     "tooltip.newSkill"      : "Add new skill",
     "tooltip.newQuestions/Answers" : "Add new Questions/Answers",
     "tooltip.newQuestiongroup" : "Add new Questiongroup",
+    "tooltip.newEventText": "New text",
+    "tooltip.newEventMedien": "New picture",
     "tooltip.rotate"        : "Rotate Business card",
     "tooltip.rotateLeft"    : "Rotate Business card to the left",
     "tooltip.rotateRight"   : "Rotate Business card to the right",
@@ -115,6 +119,10 @@
     "tooltip.deleteEventSeries" : "Delete from series",
     "tooltip.windowMaximized" : "View this area maximized",
     "tooltip.windowRestored" : "Show areas split",
+    "tooltip.pictureZoomin"        : "Zoom in picture",
+    "tooltip.pictureZoomout"       : "Zoom out picture",
+    "tooltip.deleteevent": "Delete event",
+    "tooltip.newmod": "New moderator",
 
     "home.title"            : "Start",
     "home.info"             : "Important information",
@@ -1238,6 +1246,7 @@
     "eventSeries.language": "Language",
     "eventSeries.languageTitle": "Language Title",
     "eventSeries.labelDelete": "Series",
+    "eventSeries.newSerie": "Add series",
     "eventSeries.serieDelete": "Do you want to delete this series?",
 
     "eventSeriesAdministration.title": "Series Title",
