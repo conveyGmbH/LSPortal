@@ -75,6 +75,14 @@
                                 forceReload = true;
                             }
                         }
+                        var checkboxes = element.querySelectorAll('input[type="checkbox"]');
+                        for (var i = 0; i < checkboxes.length; i++) {
+                            var fieldEntry = checkboxes[i].dataset && checkboxes[i].dataset.fieldEntry;
+                            if (fieldEntry) {
+                                ret[fieldEntry] = checkboxes[i].checked ? 1 : 0;
+                                forceReload = true;
+                            }
+                        }
                         var fields = element.querySelectorAll('input[type="number"]');
                         for (var i = 0; i < fields.length; i++) {
                             var fieldEntry = fields[i].dataset && fields[i].dataset.fieldEntry;
@@ -215,18 +223,6 @@
                             break;
                         }
                     }
-                    Log.ret(Log.l.trace);
-                },
-                clickChangeAppSetting: function (event) {
-                    Log.call(Log.l.trace, "Event.Controller.");
-                    AppBar.modified = true;
-                   /* if (event.currentTarget) {
-                        var toggle = event.currentTarget.winControl;
-                        if (toggle) {
-                            var value = toggle.checked || event.currentTarget.value;
-                            that.changeAppSetting(event.currentTarget.id, value);
-                        }
-                    }*/
                     Log.ret(Log.l.trace);
                 },
                 onSelectionChanged: function (eventInfo) {

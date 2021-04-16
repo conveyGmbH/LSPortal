@@ -27,16 +27,27 @@
                             <span class="label landscape_only"></span>
                         </div>
                         <div class="line-separator"></div>
-                        <div class="field_line field_line_odd">
+                        <!--<div class="field_line field_line_odd">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventSeriesAdministration.startAnzeige'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'eveneventSeriesAdministrationtSeries.startAnzeige'}"></span>
                             <div class="input_field toggle-switch-parent" data-field-entry="StartAnzeige">
                                 <div class="input_field"
                                      data-win-control="WinJS.UI.ToggleSwitch"
                                      data-win-bind="winControl.checked: StartAnzeige Binding.Mode.twoway"
-                                     data-field-entry="StartAnzeige">
-                                    <!--onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)"-->
+                                     data-field-entry="StartAnzeige"
+                                     onclick="AppBar.handleEvent('click', 'clickForward', event)">
                                 </div>
+                            </div>
+                        </div>-->
+                        <div class="field_line field_line_odd">
+                            <div class="list-serieFlagcon-item">
+                                <label class="list-serieFlagcon-field">
+                                    <input type="checkbox" class="win-checkbox" value="1"
+                                           data-win-bind="checked: StartAnzeige Binding.Mode.twoway"
+                                           onclick="AppBar.handleEvent('click', 'clickForward', event)"
+                                           data-field-entry="StartAnzeige" />
+                                    <span data-win-res="{textContent: 'eventSeriesAdministration.startAnzeige'}"></span>
+                                </label>
                             </div>
                         </div>
                         <div class="field_line field_line_even" data-win-bind="style.visibility: StartAnzeige Binding.Converter.toVisibility">
@@ -45,16 +56,27 @@
                             <input name="startSortierung" class="input_field win-textbox" type="number" data-win-bind="value: StartSortierung Binding.Mode.twoway" data-field-entry="StartSortierung"/>
                         </div>
                         <div class="field-separator"></div>
-                        <div class="field_line field_line_odd">
+                        <!--<div class="field_line field_line_odd">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventSeriesAdministration.serieAnzeige'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'eventSeriesAdministration.serieAnzeige'}"></span>
                             <div class="input_field toggle-switch-parent" data-field-entry="SerieAnzeige">
                                 <div class="input_field"
                                      data-win-control="WinJS.UI.ToggleSwitch"
                                      data-win-bind="winControl.checked: SerieAnzeige Binding.Mode.twoway"
-                                     data-field-entry="SerieAnzeige">
-                                    <!--onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)"-->
+                                     data-field-entry="SerieAnzeige"
+                                     onclick="AppBar.handleEvent('click', 'clickForward', event)">
                                 </div>
+                            </div>
+                        </div>-->
+                        <div class="field_line field_line_odd">
+                            <div class="list-serieFlagcon-item">
+                                <label class="list-mandcon-field">
+                                    <input type="checkbox" class="win-checkbox" value="1"
+                                           data-win-bind="checked: SerieAnzeige Binding.Mode.twoway"
+                                           onclick="AppBar.handleEvent('click', 'clickForward', event)"
+                                           data-field-entry="SerieAnzeige" />
+                                    <span data-win-res="{textContent: 'eventSeriesAdministration.serieAnzeige'}"></span>
+                                </label>
                             </div>
                         </div>
                         <div class="field_line field_line_even" data-win-bind="style.visibility: SerieAnzeige Binding.Converter.toVisibility">
