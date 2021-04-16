@@ -1271,12 +1271,6 @@
     "eventSeries.languageTitle" : "Sprache Titel",
 	"eventSeries.labelDelete" : "Serie",
 	"eventSeries.serieDelete" : "Möchten Sie diese Serie löschen?",
-    "eventSeries.on"           : "An",
-    "eventSeries.off"          : "Aus",
-    "eventSeries.startSortierung" : "Start Sortierung",
-    "eventSeries.startAnzeige" : "Start Anzeige",
-    "eventSeries.serieSortierung" : "Serie Sortierung",
-    "eventSeries.serieAnzeige" : "Serie Anzeige",
 
     "eventSeriesAdministration.title" : "Serien Titel",
     "eventSeriesAdministration.serien" : "Serien",

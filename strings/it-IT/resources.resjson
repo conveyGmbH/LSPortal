@@ -1238,12 +1238,6 @@
     "eventSeries.languageTitle": "Titolo lingua",
     "eventSeries.labelDelete": "Series",
     "eventSeries.serieDelete": "Vuoi eliminare questa serie?",
-    "eventSeries.on": "On",
-    "eventSeries.off": "Off",
-    "eventSeries.startSortierung": "Avvia ordinamento",
-    "eventSeries.startAnzeige": "inizio spettacolo",
-    "eventSeries.serieSortierung": "ordinamento in serie",
-    "eventSeries.seriesAnzeige": "serie di spettacoli",
 	
     "eventSeriesAdministration.title": "Titolo serie",
     "eventSeriesAdministration.serien": "Serien",

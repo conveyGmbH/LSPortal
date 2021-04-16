@@ -1232,12 +1232,6 @@
     "eventSeries.languageTitle": "Language Title",
     "eventSeries.labelDelete": "Series",
     "eventSeries.serieDelete": "Do you want to delete this series?",
-    "eventSeries.on": "On",
-    "eventSeries.off": "Off",
-    "eventSeries.startSortierung": "Start sorting",
-    "eventSeries.startAnzeige": "start display",
-    "eventSeries.serieSortierung": "Serie sorting",
-    "eventSeries.seriesAnzeige": "Serie Anzeige",
 
     "eventSeriesAdministration.title": "Series Title",
     "eventSeriesAdministration.serien": "Serien",
