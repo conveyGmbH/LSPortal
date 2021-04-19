@@ -98,14 +98,29 @@
                 that.inResize = 1;
                 ret = WinJS.Promise.timeout(0).then(function () {
                     if (that.controller) {
-                        var contentarea = element.querySelector(".contentarea");
-                        if (contentarea) {
-                            var width = contentarea.clientWidth;
-                            var height = contentarea.clientHeight;
+                        var contentArea = element.querySelector(".contentarea");
+                        if (contentArea) {
+                            var fragmentHost = element.querySelector(".contentarea > .fragmenthost");
+                            var listHeader = element.querySelector(".contentarea > .list-header");
+                            var listView = element.querySelector(".contentarea > .listview");
+                            var width = contentArea.clientWidth;
+                            var height = contentArea.clientHeight - 18;
+                            if (fragmentHost) {
+                                height -= fragmentHost.clientHeight;
+                            }
+                            if (listHeader) {
+                                height -= listHeader.clientHeight;
+                            }
                             if (width !== that.prevWidth) {
+                                if (listView && listView.style) {
+                                    listView.style.width = width.toString() + "px";
+                                }
                                 that.prevWidth = width;
                             }
                             if (height !== that.prevHeight) {
+                                if (listView && listView.style) {
+                                    listView.style.height = height.toString() + "px";
+                                }
                                 that.prevHeight = height;
                             }
                         }

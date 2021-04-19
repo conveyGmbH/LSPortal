@@ -477,17 +477,28 @@
             var setEventTextUsageId = function(value) {
                 Log.print(Log.l.trace, "eventTextUsageId=" + value);
                 EventResourceAdministration._eventTextUsageId = value;
+                var prevShowSeries = that.binding.showSeries;
                 that.binding.showSeries = (value === 2);
                 AppBar.busy = true;
                 that.saveData(function (response) {
                     AppBar.busy = false;
                     // erst savedata und dann loaddata
-                that.loadData();
+                    that.loadData();
                     Log.print(Log.l.trace, "event text saved");
                 }, function (errorResponse) {
                     AppBar.busy = false;
                     Log.print(Log.l.error, "error saving event text");
                 });
+                if (prevShowSeries !== that.binding.showSeries) {
+                    WinJS.Promise.timeout(50).then(function() {
+                        var pageControl = pageElement.winControl;
+                        if (pageControl && pageControl.updateLayout) {
+                            pageControl.prevWidth = 0;
+                            pageControl.prevHeight = 0;
+                            pageControl.updateLayout.call(pageControl, pageElement);
+                        }
+                    });
+                }
             }
             that.setEventTextUsageId = setEventTextUsageId;
 

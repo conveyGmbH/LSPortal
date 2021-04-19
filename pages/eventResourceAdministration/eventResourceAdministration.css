@@ -1,16 +1,28 @@
 ﻿#eventTextUsageHostResource.fragmenthost {
     width: 100%;
     height: 48px;
+    display: inline-block;
 }
-#eventTextList .list-header {
+.eventResourceAdministration .contentarea {
+    overflow: hidden;
+}
+.eventResourceAdministration .list-header {
     width: calc(100% - 31px);
-    margin: 10px 24px 0 7px;
+    padding: 10px 24px 0 7px;
+    margin: 0;
+    display: inline-block;
+}
+.eventResourceAdministration .list-header .field_line {
+    height: 60px;
+    display: inline-block;
 }
 /**
     eventTextList styles
 */
 #eventTextList {
-    height: calc(100% - 160px);
+    width: 100%;
+    height: calc(100%-206px);
+    display: inline-block;
 }
 #eventTextList .win-selectionborder {
     border-color: transparent;
@@ -18,19 +30,19 @@
 #eventTextList .win-itembox:hover::before {
     border-color: transparent;
 }
-#eventTextList .label-right {
+.eventResourceAdministration .label-right {
     float: right;
     opacity: 0.6;
 }
-#eventTextList .label-left {
+.eventResourceAdministration .label-left {
     float: left;
     width: 50%;
     opacity: 0.6;
 }
-#eventTextList .input_field {
+.eventResourceAdministration .input_field {
     margin-bottom: 0;
 }
-.view-size-medium #eventTextList .input_field {
+.view-size-medium .eventResourceAdministration .input_field {
     float: left;
     width: 100%;
     min-width: 100%;
