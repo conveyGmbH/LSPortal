@@ -1,3 +1,52 @@
 ﻿#livestartdate {
     width: 145px !important;
 }
+
+#requireReg .win-toggleswitch-header {
+    display: none;
+}
+#acceptRec .win-toggleswitch-header {
+    display: none;
+}
+#showAllowAudio .win-toggleswitch-header {
+    display: none;
+}
+#showAllowVideo .win-toggleswitch-header {
+    display: none;
+}
+#showNoMemberList .win-toggleswitch-header {
+    display: none;
+}
+#showShowNames .win-toggleswitch-header {
+    display: none;
+}
+#showRecordSession .win-toggleswitch-header {
+    display: none;
+}
+#showQuestions .win-toggleswitch-header {
+    display: none;
+}
+#publishRecording .win-toggleswitch-header {
+    display: none;
+}
+#showType .win-toggleswitch-header {
+    display: none;
+}
+#showReg .win-toggleswitch-header {
+    display: none;
+}
+#speakerName .win-toggleswitch-header {
+    display: none;
+}
+#speakerFN .win-toggleswitch-header {
+    display: none;
+}
+#speakerImage .win-toggleswitch-header {
+    display: none;
+}
+#speakerTitle .win-toggleswitch-header {
+    display: none;
+}
+#speakerCV .win-toggleswitch-header {
+    display: none;
+}

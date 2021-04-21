@@ -453,7 +453,6 @@
                     item.colorValue = "#" + item.LocalValue;
                     AppData.applyColorSetting(property, item.colorValue);
                 }*/
-
             }
             this.resultConverter = resultConverter;
 
