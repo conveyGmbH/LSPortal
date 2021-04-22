@@ -89,7 +89,7 @@
                     restriction = {
                         LanguageSpecID: MediaText._languageId,
                         VeranstaltungID: MediaText._eventId,
-                        MandantSerieID: MediaText.__eventSeriesId
+                        MandantSerieID: MediaText._eventSeriesId
                     };
                 }
                 Log.call(Log.l.trace, "EventResourceAdministration.eventSeriesView.",
