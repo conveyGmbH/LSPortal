@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="seriesMediaAdministration.css" rel="stylesheet" />
+    <script type="text/javascript" src="seriesMediaAdministrationService.js"></script>
+    <script type="text/javascript" src="seriesMediaAdministrationController.js"></script>
+    <script type="text/javascript" src="seriesMediaAdministration.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="seriesMediaAdministration fragment">
+        <div id="seriesMediaAdministrationController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="contentarea content-noscroll win-type-body">
+                    <div id="seriesTextUsageHostMedia" class="seriesTextUsagefragmenthost"></div>
+                    <div class="media-container">
+                        <div id="svgMediahost" class="docfragmenthost" data-win-bind="style.display: showSvg Binding.Converter.toDisplay"></div>
+                        <div id="imgMediahost" class="docfragmenthost" data-win-bind="style.display: showPhoto Binding.Converter.toDisplay"></div>
+                        <div id="videoMediahost" class="docfragmenthost" data-win-bind="style.display: showAudio Binding.Converter.toDisplay"></div>
+                        <div id="uploadMediahost" class="docfragmenthost" data-win-bind="style.display: showUpload Binding.Converter.toDisplay"></div>
+                        <div id="mediaTexthost" class="textfragmenthost" data-win-bind="style.display: docId Binding.Converter.toDisplay"></div>
+                    </div>
+                    <div id="mediaListhost" class="listfragmenthost" data-win-bind="style.display: showList Binding.Converter.toDisplay"></div>
+                </div>
+                <div class="error-message"
+                     data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

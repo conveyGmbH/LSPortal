@@ -1,0 +1,29 @@
+.seriesMediaAdministration .seriesTextUsagefragmenthost {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 48px;
+}
+.seriesMediaAdministration .media-container {
+    z-index: 4;
+    position: absolute;
+    left: 0;
+    top: 48px;
+}
+.seriesMediaAdministration .textfragmenthost {
+    display: inline-block;
+    position: absolute;
+}
+.seriesMediaAdministration .docfragmenthost {
+    display: inline-block;
+    position: absolute;
+}
+.seriesMediaAdministration .listfragmenthost {
+    position: absolute;
+    width: 100%;
+    height: 170px;
+    bottom: 0;
+    z-index: 5;
+}
+ 
+

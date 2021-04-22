@@ -563,6 +563,8 @@
     "label.genDataModList" : "Moderatore",
     "label.genDataModDetails" : "Moderatore",
     "label.genDataModHisto" : "Storia",
+    "label.seriesResourceAdministration" : "Texte",
+    "label.seriesMediaAdministration" : "Medien",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annulla",
@@ -1247,6 +1249,7 @@
     "eventSeries.labelDelete": "Series",
     "eventSeries.newSerie": "Aggiungi serie",
     "eventSeries.serieDelete": "Vuoi eliminare questa serie?",
+    "eventSeries.sortierung": "Ordinamento",
 	
     "eventSeriesAdministration.title": "Titolo serie",
     "eventSeriesAdministration.serien": "Serien",
@@ -1323,5 +1326,7 @@
     "genDataModHisto.eventdate" : "Data",
     "genDataModHisto.role" : "Rotolo",
     "genDataModHisto.rating" : "Valutazione",
-    "genDataModHisto.ratingdetails" : "Testo di valutazione"
+    "genDataModHisto.ratingdetails" : "Testo di valutazione",
+
+    "serieslist.title" : "Serien"
 }

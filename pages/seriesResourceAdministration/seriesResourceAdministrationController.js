@@ -1,4 +1,4 @@
-// controller for page: eventSeries
+// controller for page: seriesResourceAdministration
 /// <reference path="~/www/lib/WinJS/scripts/base.js" />
 /// <reference path="~/www/lib/WinJS/scripts/ui.js" />
 /// <reference path="~/www/lib/convey/scripts/appSettings.js" />
@@ -6,29 +6,35 @@
 /// <reference path="~/www/lib/convey/scripts/appbar.js" />
 /// <reference path="~/www/lib/convey/scripts/pageController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
-/// <reference path="~/www/pages/eventSeries/eventSeriesService.js" />
+/// <reference path="~/www/pages/seriesResourceAdministration/seriesResourceAdministrationService.js" />
 /// <reference path="~/www/lib/jstz/scripts/jstz.js" />
 
 (function () {
     "use strict";
-    WinJS.Namespace.define("EventSeries", {
+    WinJS.Namespace.define("SeriesResourceAdministration", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
-            Log.call(Log.l.trace, "EventSeries.Controller.");
+            Log.call(Log.l.trace, "SeriesResourceAdministration.Controller.");
 
             // ListView control
-            var listView = pageElement.querySelector("#eventSeriesList.listview");
+            var listView = pageElement.querySelector("#eventTextList.listview");
 
             Application.RecordsetController.apply(this, [pageElement, {
-                count: 0,
-                eventSerie: {
-                    Titel: "",
-                    LanguageID: 0
-                }
+                seriesLanguageItem: {
+                    TITLE: "",
+                    LanguageID: -1
+                },
+                multipleLanguages: false,
+                /*multipleSeries: false,
+                showSeries: false,*/
+                count: 0
             }, commandList, false,
-                EventSeries.seriesTable,
-                EventSeries.seriesView, listView]);
+                SeriesResourceAdministration.eventTextTable,
+                SeriesResourceAdministration.eventTextView, listView]);
 
-            var initEventSerieSprache = pageElement.querySelector("#InitEventSerieSprache");
+            this.eventTextUsageControl = null;
+
+            var initEventTextSprache = pageElement.querySelector("#InitEventTextSprache");
+            //var eventSeries = pageElement.querySelector("#eventSeries");
 
             var that = this;
 
@@ -41,19 +47,12 @@
 
             // get field entries
             var getFieldEntries = function (index) {
-                Log.call(Log.l.trace, "EventSeries.Controller.");
+                Log.call(Log.l.trace, "SeriesResourceAdministration.Controller.");
                 var ret = {};
                 if (listView && listView.winControl) {
                     var element = listView.winControl.elementFromIndex(index);
                     if (element) {
                         var fields = element.querySelectorAll('input[type="text"], textarea');
-                        for (var i = 0; i < fields.length; i++) {
-                            var fieldEntry = fields[i].dataset && fields[i].dataset.fieldEntry;
-                            if (fieldEntry) {
-                                ret[fieldEntry] = fields[i].value;
-                            }
-                        }
-                        var fields = element.querySelectorAll('input[type="number"]');
                         for (var i = 0; i < fields.length; i++) {
                             var fieldEntry = fields[i].dataset && fields[i].dataset.fieldEntry;
                             if (fieldEntry) {
@@ -67,71 +66,77 @@
             };
             this.getFieldEntries = getFieldEntries;
 
-            //var eventTextPlaceholder = getResourceText("eventResourceAdministration.eventTextPlaceholder");
+            var eventTextPlaceholder = getResourceText("eventResourceAdministration.eventTextPlaceholder");
             var resultConverter = function (item, index) {
-                Log.call(Log.l.trace, "EventSeries.Controller.");
+                Log.call(Log.l.trace, "SeriesResourceAdministration.Controller.");
+                if (!item.NameTitle) {
+                    item.NameTitle = "";
+                }
+                if (!item.NameDescription) {
+                    item.NameDescription = "";
+                }
+                if (!item.NameMainTitle) {
+                    item.NameMainTitle = "";
+                }
+                if (!item.NameSubTitle) {
+                    item.NameSubTitle = "";
+                }
+                if (!item.NameSummary) {
+                    item.NameSummary = "";
+                }
+                if (!item.NameBody) {
+                    item.NameBody = "";
+                }
+                item.placeholderTitle = eventTextPlaceholder + item.NameTitle;
+                item.placeholderDescription = eventTextPlaceholder + item.NameDescription;
+                item.placeholderMainTitle = eventTextPlaceholder + item.NameMainTitle;
+                item.placeholderSubTitle = eventTextPlaceholder + item.NameSubTitle;
+                item.placeholderSummary = eventTextPlaceholder + item.NameSummary;
+                item.placeholderBody = eventTextPlaceholder + item.NameBody;
+
+                item.heightSummary = item.Summary ? "196px" : "";
+                item.heightBody = item.Body ? "196px" : "";
                 Log.ret(Log.l.trace);
             }
             this.resultConverter = resultConverter;
 
             this.eventHandlers = {
                 clickBack: function (event) {
-                    Log.call(Log.l.trace, "EventSeries.Controller.");
+                    Log.call(Log.l.trace, "SeriesResourceAdministration.Controller.");
                     if (!Application.showMaster() && WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done();
                     }
                     Log.ret(Log.l.trace);
                 },
                 clickForward: function (event) {
-                    Log.call(Log.l.trace, "EventSeries.Controller.");
+                    Log.call(Log.l.trace, "SeriesResourceAdministration.Controller.");
                     AppBar.busy = true;
                     that.saveData(function (response) {
                         AppBar.busy = false;
-                        Log.print(Log.l.trace, "serie saved");
+                        Log.print(Log.l.trace, "event text saved");
                     }, function (errorResponse) {
                         AppBar.busy = false;
-                        Log.print(Log.l.error, "error saving serror");
+                        Log.print(Log.l.error, "error saving event text");
                     });
                     Log.ret(Log.l.trace);
                 },
                 clickNew: function (event) {
-                    Log.call(Log.l.trace, "EventSeries.Controller.");
+                    Log.call(Log.l.trace, "SeriesResourceAdministration.Controller.");
                     that.insertData();
                     Log.ret(Log.l.trace);
                 },
-                clickDelete: function (event) {
-                    Log.call(Log.l.trace, "EventSeries.Controller.");
-                    var recordId = that.curRecId;
-                    if (recordId) {
-                        var curScope = that.scopeFromRecordId(that.curRecId);
-                        if (curScope && curScope.item) {
-                            var confirmTitle = getResourceText("eventSeries.labelDelete") + ": " + curScope.item.Titel +
-                                "\r\n" + getResourceText("eventSeries.serieDelete");
-                            confirm(confirmTitle, function (result) {
-                                if (result) {
-                                    AppBar.busy = true;
-                                    Log.print(Log.l.trace, "clickDelete: user choice OK");
-                                    that.deleteData();
-                                } else {
-                                    Log.print(Log.l.trace, "clickDelete: user choice CANCEL");
-                                }
-                            });
-                        }
-                    }
-                    Log.ret(Log.l.trace);
-                },
                 clickChangeUserState: function (event) {
-                    Log.call(Log.l.trace, "EventSeries.Controller.");
+                    Log.call(Log.l.trace, "SeriesResourceAdministration.Controller.");
                     Application.navigateById("userinfo", event);
                     Log.ret(Log.l.trace);
                 },
                 clickGotoPublish: function (event) {
-                    Log.call(Log.l.trace, "EventSeries.Controller.");
+                    Log.call(Log.l.trace, "SeriesResourceAdministration.Controller.");
                     Application.navigateById("publish", event);
                     Log.ret(Log.l.trace);
-                }/*,
+                },
                 pressEnterKey: function (event) {
-                    Log.call(Log.l.trace, "EventSeries.Controller.");
+                    Log.call(Log.l.trace, "SeriesResourceAdministration.Controller.");
                     if (event && event.keyCode === WinJS.Utilities.Key.enter &&
                         event.target && event.target.tagName &&
                         event.target.tagName.toLowerCase() === "textarea") {
@@ -144,7 +149,7 @@
                     Log.ret(Log.l.trace);
                 },
                 activateEnterKey: function (event) {
-                    Log.call(Log.l.trace, "EventSeries.Controller.");
+                    Log.call(Log.l.trace, "SeriesResourceAdministration.Controller.");
                     for (var i = 0; i < AppBar.commandList.length; i++) {
                         if (AppBar.commandList[i].id === "clickForward") {
                             AppBar.commandList[i].key = WinJS.Utilities.Key.enter;
@@ -154,7 +159,7 @@
                     Log.ret(Log.l.trace);
                 },
                 deactivateEnterKey: function (event) {
-                    Log.call(Log.l.trace, "EventSeries.Controller.");
+                    Log.call(Log.l.trace, "SeriesResourceAdministration.Controller.");
                     for (var i = 0; i < AppBar.commandList.length; i++) {
                         if (AppBar.commandList[i].id === "clickForward") {
                             AppBar.commandList[i].key = null;
@@ -162,16 +167,16 @@
                         }
                     }
                     Log.ret(Log.l.trace);
-                }*/,
+                },
                 onSelectionChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "EventSeries.Controller.");
+                    Log.call(Log.l.trace, "SeriesResourceAdministration.Controller.");
                     that.selectionChanged().then(function () {
                         AppBar.triggerDisableHandlers();
                     });
                     Log.ret(Log.l.trace);
                 },
                 onLoadingStateChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "EventSeries.Controller.");
+                    Log.call(Log.l.trace, "SeriesResourceAdministration.Controller.");
                     if (listView && listView.winControl) {
                         Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
                         // single list selection
@@ -193,7 +198,7 @@
                         }
                         if (listView.winControl.loadingState === "itemsLoading") {
                             if (!layout) {
-                                layout = Application.eventSeriesLayout.EventSeriesLayout;
+                                layout = Application.seriesResourceAdministrationLayout.EventTextLayout;
                                 listView.winControl.layout = { type: layout };
                             }
                         } else if (listView.winControl.loadingState === "complete") {
@@ -213,26 +218,11 @@
                     Log.ret(Log.l.trace);
                 },
                 onHeaderVisibilityChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "EventSeries.Controller.");
-                    /*if (eventInfo && eventInfo.detail) {
-                        var visible = eventInfo.detail.visible;
-                        if (visible) {
-                            var contentHeader = listView.querySelector(".content-header");
-                            if (contentHeader) {
-                                var halfCircle = contentHeader.querySelector(".half-circle");
-                                if (halfCircle && halfCircle.style) {
-                                    if (halfCircle.style.visibility === "hidden") {
-                                        halfCircle.style.visibility = "";
-                                        WinJS.UI.Animation.enterPage(halfCircle);
-                                    }
-                                }
-                            }
-                        }
-                    }*/
+                    Log.call(Log.l.trace, "SeriesResourceAdministration.Controller.");
                     Log.ret(Log.l.trace);
                 },
                 onFooterVisibilityChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "EventSeries.Controller.");
+                    Log.call(Log.l.trace, "SeriesResourceAdministration.Controller.");
                     if (eventInfo && eventInfo.detail) {
                         progress = listView.querySelector(".list-footer .progress");
                         counter = listView.querySelector(".list-footer .counter");
@@ -248,7 +238,7 @@
                             that.loadNext(function (json) {
                                 // this callback will be called asynchronously
                                 // when the response is available
-                                Log.print(Log.l.trace, "EventSeries.CR_V_FragengruppeView: success!");
+                                Log.print(Log.l.trace, "Questiongroup.CR_V_FragengruppeView: success!");
                             }, function (errorResponse) {
                                 // called asynchronously if an error occurs
                                 // or server returns response with an error status.
@@ -273,12 +263,12 @@
                     Log.ret(Log.l.trace);
                 },
                 onItemInvoked: function (eventInfo) {
-                    Log.call(Log.l.trace, "EventSeries.Controller.");
+                    Log.call(Log.l.trace, "SeriesResourceAdministration.Controller.");
                     that.setFocusOnItemInvoked(eventInfo);
                     Log.ret(Log.l.trace);
                 },
                 clickTopButton: function (event) {
-                    Log.call(Log.l.trace, "EventSeries.Controller.");
+                    Log.call(Log.l.trace, "SeriesResourceAdministration.Controller.");
                     var anchor = document.getElementById("menuButton");
                     var menu = document.getElementById("menu1").winControl;
                     var placement = "bottom";
@@ -286,7 +276,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickLogoff: function (event) {
-                    Log.call(Log.l.trace, "EventSeries.Controller.");
+                    Log.call(Log.l.trace, "SeriesResourceAdministration.Controller.");
                     AppData._persistentStates.privacyPolicyFlag = false;
                     if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
                         AppHeader.controller.binding.userData = {};
@@ -298,13 +288,30 @@
                     Log.ret(Log.l.trace);
                 },
                 changedLanguage: function (event) {
-                    Log.call(Log.l.trace, "EventSeries.Controller.");
+                    Log.call(Log.l.trace, "SeriesResourceAdministration.Controller.");
                     if (event.currentTarget && AppBar.notifyModified) {
                         var combobox = event.currentTarget;
-                        that.binding.eventSerie.LanguageID = parseInt(combobox.value);
-                        EventSeries._languageId = that.binding.eventSerie.LanguageID;
+                        SeriesResourceAdministration._languageId = parseInt(combobox.value);
+                        AppBar.busy = true;
+                        that.saveData(function (response) {
+                            AppBar.busy = false;
+                            // erst savedata und dann loaddata
+                            that.loadData();
+                            Log.print(Log.l.trace, "event text saved");
+                        }, function (errorResponse) {
+                            AppBar.busy = false;
+                            Log.print(Log.l.error, "error saving event text");
+                        });
                     }
-                    that.loadData();
+                    Log.ret(Log.l.trace);
+                },
+                changedSeries: function (event) {
+                    Log.call(Log.l.trace, "SeriesResourceAdministration.Controller.");
+                    if (event.currentTarget && AppBar.notifyModified) {
+                        var combobox = event.currentTarget;
+                        SeriesResourceAdministration._eventSeriesId = parseInt(combobox.value);
+                        that.loadData();
+                    }
                     Log.ret(Log.l.trace);
                 }
             }
@@ -341,25 +348,41 @@
                 this.addRemovableEventListener(listView, "iteminvoked", this.eventHandlers.onItemInvoked.bind(this));
             }
 
+            var setLanguageComboResults = function (results) {
+                var i;
+                Log.call(Log.l.trace, "SeriesResourceAdministration.Controller.");
+                that.binding.multipleLanguages = (results && results.length > 1);
+                if (initEventTextSprache && initEventTextSprache.winControl) {
+                    initEventTextSprache.winControl.data = new WinJS.Binding.List(results ? results : []);
+                    if (results && results.length > 0) {
+                        for (i = 0; i < results.length; i++) {
+                            if (results[i] && results[i].LanguageID === SeriesResourceAdministration._languageId) {
+                                break;
+                            }
+                        }
+                        if (i === results.length) {
+                            SeriesResourceAdministration._languageId = results[0].LanguageID;
+                            i = 0;
+                        }
+                        initEventTextSprache.selectedIndex = i;
+                        that.binding.seriesLanguageItem = results[i];
+                    }
+                }
+                Log.ret(Log.l.trace);
+            }
             var loadInitLanguageData = function () {
-                Log.call(Log.l.trace, "EventSeries.Controller.");
+                Log.call(Log.l.trace, "SeriesResourceAdministration.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
-                    if (!EventSeries.initSpracheView.getResults().length) {
+                    var results = SeriesResourceAdministration.initSpracheView.getResults();
+                    if (results || !results.length) {
                         Log.print(Log.l.trace, "calling select initSpracheView...");
-                        //@nedra:25.09.2015: load the list of INITAnrede for Combobox
-                        return EventSeries.initSpracheView.select(function (json) {
+                        //load the list of INITSprache for Combobox
+                        return SeriesResourceAdministration.initSpracheView.select(function (json) {
                             Log.print(Log.l.trace, "initSpracheView: success!");
                             if (json && json.d) {
-                                var results = json.d.results;
                                 // Now, we call WinJS.Binding.List to get the bindable list
-                                if (initEventSerieSprache && initEventSerieSprache.winControl) {
-                                    initEventSerieSprache.winControl.data = new WinJS.Binding.List(results); //setLanguage(results);
-                                    if (EventSeries._languageId)
-                                        that.binding.eventSerie.LanguageID = EventSeries._languageId;
-                                    else
-                                        initEventSerieSprache.selectedIndex = 0;
-                                }
+                                setLanguageComboResults(json.d.results);
                             }
                         }, function (errorResponse) {
                             // called asynchronously if an error occurs
@@ -367,14 +390,7 @@
                             AppData.setErrorMsg(that.binding, errorResponse);
                         });
                     } else {
-                        if (initEventSerieSprache && initEventSerieSprache.winControl) {
-                            var results = EventSeries.initSpracheView.getResults();
-                            initEventSerieSprache.winControl.data = new WinJS.Binding.List(results);
-                            if (EventSeries._languageId)
-                                that.binding.eventSerie.LanguageID = EventSeries._languageId;
-                            else
-                                initEventSerieSprache.selectedIndex = 0;
-                        }
+                        setLanguageComboResults(results);
                         return WinJS.Promise.as();
                     }
                 });
@@ -383,11 +399,38 @@
             }
             that.loadInitLanguageData = loadInitLanguageData;
 
+            /*var getEventId = function () {
+                return SeriesResourceAdministration._eventId;
+            }
+            that.getEventId = getEventId;
+
+            var setSeriesId = function (value) {
+                Log.print(Log.l.trace, "eventId=" + value);
+                SeriesResourceAdministration._eventId = value;
+            }
+            that.setSeriesId = setSeriesId;
+            */
+            var getEventSeriesId = function () {
+                return SeriesResourceAdministration._eventSeriesId;
+            }
+            that.getEventSeriesId = getEventSeriesId;
+
+            var setEventSeriesId = function (value) {
+                Log.print(Log.l.trace, "eventSeriesId=" + value);
+                SeriesResourceAdministration._eventSeriesId = value;
+                return that.loadData();
+            }
+            that.setEventSeriesId = setEventSeriesId;
+            var master = Application.navigator.masterControl;
+            if (master && master.controller && master.controller.binding) {
+                that.setEventSeriesId(master.controller.binding.eventId);
+            }
+
             that.processAll().then(function () {
-                Log.print(Log.l.trace, "loadInitLanguageData");
+                Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadInitLanguageData();
             }).then(function () {
-                Log.print(Log.l.trace, "loadInitLanguageData complete");
+                Log.print(Log.l.trace, "eventTextUsage complete");
                 return that.loadData();
             }).then(function () {
                 AppBar.notifyModified = true;

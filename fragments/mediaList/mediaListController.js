@@ -514,9 +514,9 @@
                 }).then(function () {
                     if (reloadDocView) {
                         if (listView && listView.winControl) {
+                            if (that.records && that.records.length > 0 && listView.winControl.selection) {
                             // add ListView dataSource
                             listView.winControl.itemDataSource = that.records.dataSource;
-                            if (that.records && that.records.length > 0 && listView.winControl.selection) {
                                 return listView.winControl.selection.set(selIdx).then(function() {
                                     //load doc with new recordId
                                     row = that.records.getAt(selIdx);

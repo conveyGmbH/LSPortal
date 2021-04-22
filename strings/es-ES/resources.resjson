@@ -559,6 +559,8 @@
 	"label.eventSeriesAdministration" : "Serien Zuordnung",
     "label.eventSpeakerAdministration" : "Team Zuordnung",
 	"label.eventSeries"          : "Serie",
+    "label.seriesResourceAdministration" : "Texte",
+    "label.seriesMediaAdministration" : "Medien",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Abbrechen",
@@ -1241,6 +1243,7 @@
 	"eventSeries.labelDelete" : "Serie",
     "eventSeries.newSerie" : "Serie hinzufügen",
 	"eventSeries.serieDelete" : "Möchten Sie diese Serie löschen?",
+    "eventSeries.sortierung" : "Sortierung",
 
     "eventSeriesAdministration.title" : "Serien Titel",
     "eventSeriesAdministration.serien" : "Serien",
@@ -1256,6 +1259,7 @@
 	"eventSeriesList.count" : "Anzahl",
 
     "eventSpeakerAdministration.speaker" : "Mitglied",
-    "eventSpeakerAdministration.speakerDelete" : "Möchten Sie die Zuordnung löschen"
+    "eventSpeakerAdministration.speakerDelete" : "Möchten Sie die Zuordnung löschen",
 
+    "serieslist.title" : "Serien"
 }			

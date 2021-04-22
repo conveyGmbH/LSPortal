@@ -74,13 +74,28 @@
     WinJS.Namespace.define("MediaText", {
         eventSeriesView: {
             select: function(complete, error) {
-                var restriction = {
+                var restriction;
+                if (MediaText._eventId > 0) {
+                    restriction = {
                     LanguageSpecID: MediaText._languageId,
                     VeranstaltungID: MediaText._eventId
                 };
+                } else if (MediaText._eventSeriesId > 0) {
+                    restriction = {
+                        LanguageSpecID: MediaText._languageId,
+                        MandantSerieID: 1
+                    };
+                } else {
+                    restriction = {
+                        LanguageSpecID: MediaText._languageId,
+                        VeranstaltungID: MediaText._eventId,
+                        MandantSerieID: MediaText.__eventSeriesId
+                    };
+                }
                 Log.call(Log.l.trace, "EventResourceAdministration.eventSeriesView.",
                     "LanguageSpecID=" + restriction.LanguageSpecID,
-                    "VeranstaltungID=" + restriction.VeranstaltungID);
+                    "VeranstaltungID=" + MediaText._eventId,
+                    "MandantSerieID=" + restriction.MandantSerieID);
                 var ret = MediaText._eventSeriesView.select(complete, error, restriction, {
                     ordered: true,
                     orderAttribute: "Titel",
