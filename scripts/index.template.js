@@ -116,6 +116,8 @@
         { id: "event", group: 2, disabled: false },
         //{ id: "products", group: 2, disabled: false },
         { id: "eventSeries", group: 52, disabled: false },
+        { id: "seriesResourceAdministration", group: 52, disabled: false },
+        { id: "seriesMediaAdministration", group: 52, disabled: false },
 		{ id: "genDataModDetails", group: 54, disabled: false },
 	    { id: "genDataModHisto", group: 54, disabled: false },
         { id: "skills", group: 24, disabled: false },
@@ -197,7 +199,9 @@
 		{ id: "eventSeriesAdministration", master: "eventsList" },
         { id: "eventSpeakerAdministration", master: "eventsList"},
         { id: "genDataModDetails", master: "genDataModList" },
-		{ id: "genDataModHisto", master: "genDataModList" }
+		{ id: "genDataModHisto", master: "genDataModList" },
+        { id: "seriesResourceAdministration", master: "seriesList" },
+        { id: "seriesMediaAdministration", master: "seriesList" }
     ];
 
 
