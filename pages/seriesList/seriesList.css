@@ -1,0 +1,40 @@
+﻿.seriesList .list-div-left,
+.seriesList .list-div-right {
+    width: calc(100% - 32px);
+    margin: 0 16px;
+}
+
+.seriesList .grayed-out {
+    opacity: 0.6;
+}
+
+.seriesList .semibold {
+    font-weight: 600;
+}
+
+#seriesList .win-itembox {
+    width: 100%;
+    min-height: 60px;
+}
+
+#seriesList .win-container {
+    width: 100%;
+    height: auto;
+    margin: 0;
+    margin-bottom: 0;
+    border-radius: 0;
+    background-color: transparent;
+}
+
+#seriesList .win-surface {
+    margin-top: 0;
+    margin-left: 0;
+}
+
+#seriesList.listview {
+    position: relative;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: calc(100% - 72px);
+}
