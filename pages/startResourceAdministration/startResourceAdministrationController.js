@@ -374,11 +374,11 @@
                 Log.call(Log.l.trace, "StartResourceAdministration.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
-                    var results = SeriesResourceAdministration.initSpracheView.getResults();
+                    var results = StartResourceAdministration.initSpracheView.getResults();
                     if (results || !results.length) {
                         Log.print(Log.l.trace, "calling select initSpracheView...");
                         //load the list of INITSprache for Combobox
-                        return SeriesResourceAdministration.initSpracheView.select(function (json) {
+                        return StartResourceAdministration.initSpracheView.select(function (json) {
                             Log.print(Log.l.trace, "initSpracheView: success!");
                             if (json && json.d) {
                                 // Now, we call WinJS.Binding.List to get the bindable list

@@ -80,12 +80,12 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            relationName: EventStarts._langSeriesView.relationName,
+            relationName: EventStarts._langStartsView.relationName,
             pkName: EventStarts._langStartsView.oDataPkName,
             getRecordId: function (record) {
                 var ret = null;
                 if (record) {
-                    if (EventStarts._langSeriesView.oDataPkName) {
+                    if (EventStarts._langStartsView.oDataPkName) {
                         ret = record[EventStarts._langStartsView.oDataPkName];
                     }
                     if (!ret && EventStarts._langStartsView.pkName) {

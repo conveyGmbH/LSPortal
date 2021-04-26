@@ -51,7 +51,7 @@
                 return AppData.getFormatView("LangMandantDokument", 0);
             }
         },
-        _eventTextUsageId: 2,
+        _eventTextUsageId: 1,
         _eventStartId: 1, /*muss von der Liste gesetzt werden*/
         _languageId: 1031
     });
