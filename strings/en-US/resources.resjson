@@ -568,6 +568,7 @@
     "label.eventStarts": "Overview",
     "label.startResourceAdministration": "Text overview",
     "label.startMediaAdministration": "Media overview",
+    "label.genDataAnswers" : "Questions",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Cancel",
@@ -1336,5 +1337,13 @@
     "seriesList.count": "Number",
 
     "startList.title": "Overview",
-    "startList.count": "Number"
+    "startList.count": "Number",
+
+    "genDataQuestions.title" : "Questions",
+    "genDataQuestions.question" : "Question",
+    "genDataQuestions.questiongroup" : "Questiongroup",
+
+    "genDataAnswers.title" : "Question / Answers",
+    "genDataAnswers.question" : "Questiontext", 
+    "genDataAnswers.questiongroup" : "Questiongroup"
 }

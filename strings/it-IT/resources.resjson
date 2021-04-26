@@ -568,6 +568,7 @@
     "label.eventStarts": "Panoramica",
     "label.startResourceAdministration": "Panoramica del testo",
     "label.startMediaAdministration": "Panoramica dei media",
+    "label.genDataAnswers" : "Domande",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annulla",
@@ -1335,5 +1336,13 @@
     "seriesList.count": "Number",
 
     "startList.title": "Panoramica",
-    "startList.count": "Numero"
+    "startList.count": "Numero",
+
+    "genDataQuestions.title" : "Domande",
+    "genDataQuestions.question" : "Domanda",
+    "genDataQuestions.questiongroup" : "Gruppo di domande",
+
+    "genDataAnswers.title" : "Domanda / Rispondi",
+    "genDataAnswers.question" : "Testo della domanda", 
+    "genDataAnswers.questiongroup" : "Gruppo di domande"
 }

@@ -568,6 +568,7 @@
     "label.eventStarts": "Présentation",
     "label.startResourceAdministration": "Aperçu du texte",
     "label.startMediaAdministration": "Présentation des médias",
+    "label.genDataAnswers" : "Questions",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annuler",
@@ -1337,4 +1338,12 @@
 
     "startList.title": "Présentation",
     "startList.count": "Numéro"
+
+    "genDataQuestions.title" : "Questions",
+    "genDataQuestions.question" : "Question",
+    "genDataQuestions.questiongroup" : "Groupe de questions",
+
+    "genDataAnswers.title" : "Question / Réponse",
+    "genDataAnswers.question" : "Texte de la question", 
+    "genDataAnswers.questiongroup" : "Groupe de questions"
 }
