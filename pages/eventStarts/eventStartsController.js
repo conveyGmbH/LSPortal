@@ -28,7 +28,7 @@
                 EventStarts.startsTable,
                 EventStarts.startsView, listView]);
 
-            var initEventSerieSprache = pageElement.querySelector("#InitEventSerieSprache");
+            var initEventStartSprache = pageElement.querySelector("#InitEventStartSprache");
 
             var that = this;
 
@@ -353,12 +353,12 @@
                             if (json && json.d) {
                                 var results = json.d.results;
                                 // Now, we call WinJS.Binding.List to get the bindable list
-                                if (initEventSerieSprache && initEventSerieSprache.winControl) {
-                                    initEventSerieSprache.winControl.data = new WinJS.Binding.List(results); //setLanguage(results);
+                                if (initEventStartSprache && initEventStartSprache.winControl) {
+                                    initEventStartSprache.winControl.data = new WinJS.Binding.List(results); //setLanguage(results);
                                     if (EventStarts._languageId)
                                         that.binding.eventStart.LanguageID = EventStarts._languageId;
                                     else
-                                        initEventSerieSprache.selectedIndex = 0;
+                                        initEventStartSprache.selectedIndex = 0;
                                 }
                             }
                         }, function (errorResponse) {
@@ -367,13 +367,13 @@
                             AppData.setErrorMsg(that.binding, errorResponse);
                         });
                     } else {
-                        if (initEventSerieSprache && initEventSerieSprache.winControl) {
+                        if (initEventStartSprache && initEventStartSprache.winControl) {
                             var results = EventStarts.initSpracheView.getResults();
-                            initEventSerieSprache.winControl.data = new WinJS.Binding.List(results);
+                            initEventStartSprache.winControl.data = new WinJS.Binding.List(results);
                             if (EventStarts._languageId)
                                 that.binding.eventStart.LanguageID = EventStarts._languageId;
                             else
-                                initEventSerieSprache.selectedIndex = 0;
+                                initEventStartSprache.selectedIndex = 0;
                         }
                         return WinJS.Promise.as();
                     }

@@ -16,10 +16,10 @@
                         <div class="list-header">
                             <div class="field_line field_line_odd">
                                 <span class="label win-type-caption" data-win-res="{textContent: 'eventSeries.language'}"></span>
-                                <select id="InitEventSerieSprache"
+                                <select id="InitEventStartSprache"
                                         class="input_field win-dropdown"
                                         data-win-control="WinJS.UI.Repeater"
-                                        data-win-bind="value: eventSerie.LanguageID"
+                                        data-win-bind="value: eventStart.LanguageID"
                                         onchange="AppBar.handleEvent('change', 'changedLanguage', event)">
                                     <option data-win-bind="value: LanguageID; textContent: TITLE"></option>
                                 </select>
@@ -29,7 +29,8 @@
                     <div class="eventStarts-template"
                          data-win-control="WinJS.Binding.Template" style="display: none">
                         <div class="field_line field_line_odd">
-                            <span class="label win-type-caption" data-win-bind="textContent: MandantStartTitel"></span>
+                            <!--MandantStartTitel-->
+                            <span class="label win-type-caption" data-win-bind="textContent: MandantSerieTitel"></span>
                             <input class="input_field win-textbox" type="text"
                                    data-win-bind="value: Titel"
                                    data-field-entry="Titel" />
