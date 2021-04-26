@@ -2,22 +2,22 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <link href="seriesList.css" rel="stylesheet" />
-    <script type="text/javascript" src="seriesListService.js"></script>
-    <script type="text/javascript" src="seriesListController.js"></script>
-    <script type="text/javascript" src="seriesList.js"></script>
+    <link href="startList.css" rel="stylesheet" />
+    <script type="text/javascript" src="startListService.js"></script>
+    <script type="text/javascript" src="startListController.js"></script>
+    <script type="text/javascript" src="startList.js"></script>
 </head>
 <body class="win-type-body">
-    <div class="seriesList fragment">
-        <div id="seriesListController" class="data-container">
+    <div class="startList fragment">
+        <div id="startListController" class="data-container">
             <section aria-label="Main content" role="main" class="animationElement">
                 <div class="contentarea win-type-body">
                     <div class="content-header">
                         <div class="win-type-subtitle master-list-header">
-                            <span data-win-res="{textContent: 'seriesList.title'}"></span>
+                            <span data-win-res="{textContent: 'startList.title'}"></span>
                         </div>
                     </div>
-                    <div class="seriesList-template"
+                    <div class="startList-template"
                          data-win-control="WinJS.Binding.Template" style="display: none">
                         <div class="list-div-right grayed-out">
                             <!--<span class="win-type-body"
@@ -35,16 +35,16 @@
                             <div class="status">
                                 <progress class="win-progress-bar progress"></progress>
                                 <div class="counter">
-                                    <span data-win-res="{textContent: 'seriesList.count'}"></span><span>: </span><span data-win-bind="textContent: count"></span>
+                                    <span data-win-res="{textContent: 'startList.count'}"></span><span>: </span><span data-win-bind="textContent: count"></span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div id="seriesList"
+                    <div id="startList"
                          class="listview win-selectionstylefilled"
                          data-win-control="WinJS.UI.ListView"
                          data-win-options="{
-                                itemTemplate: select('.seriesList-template'),
+                                itemTemplate: select('.startList-template'),
                                 footer: select('.list-footer')
                          }">
                     </div>

@@ -563,8 +563,11 @@
     "label.genDataModList" : "Speaker",
     "label.genDataModDetails" : "Speaker",
     "label.genDataModHisto" : "History",
-    "label.seriesResourceAdministration" : "Texte",
-    "label.seriesMediaAdministration" : "Medien",
+    "label.seriesResourceAdministration": "Texts",
+    "label.seriesMediaAdministration": "Media",
+    "label.eventStarts": "Overview",
+    "label.startResourceAdministration": "Text overview",
+    "label.startMediaAdministration": "Media overview",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Cancel",
@@ -1329,6 +1332,9 @@
     "genDataModHisto.rating" : "Rating",
     "genDataModHisto.ratingdetails" : "Ratingtext",
 
-    "serieslist.title" : "Serien"
+    "seriesList.title": "Series",
+    "seriesList.count": "Number",
 
+    "startList.title": "Overview",
+    "startList.count": "Number"
 }

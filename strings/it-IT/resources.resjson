@@ -563,8 +563,11 @@
     "label.genDataModList" : "Moderatore",
     "label.genDataModDetails" : "Moderatore",
     "label.genDataModHisto" : "Storia",
-    "label.seriesResourceAdministration" : "Texte",
-    "label.seriesMediaAdministration" : "Medien",
+    "label.seriesResourceAdministration": "Testi",
+    "label.seriesMediaAdministration": "Media",
+    "label.eventStarts": "Panoramica",
+    "label.startResourceAdministration": "Panoramica del testo",
+    "label.startMediaAdministration": "Panoramica dei media",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annulla",
@@ -1328,5 +1331,9 @@
     "genDataModHisto.rating" : "Valutazione",
     "genDataModHisto.ratingdetails" : "Testo di valutazione",
 
-    "serieslist.title" : "Serien"
+    "seriesList.title": "Series",
+    "seriesList.count": "Number",
+
+    "startList.title": "Panoramica",
+    "startList.count": "Numero"
 }

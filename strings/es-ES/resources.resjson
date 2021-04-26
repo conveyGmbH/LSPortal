@@ -561,6 +561,9 @@
 	"label.eventSeries"          : "Serie",
     "label.seriesResourceAdministration" : "Texte",
     "label.seriesMediaAdministration" : "Medien",
+    "label.eventStarts"          : "Überblick",
+    "label.startResourceAdministration" : "Überblick Texte",
+    "label.startMediaAdministration" : "Überblick Medien",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Abbrechen",
@@ -1261,5 +1264,9 @@
     "eventSpeakerAdministration.speaker" : "Mitglied",
     "eventSpeakerAdministration.speakerDelete" : "Möchten Sie die Zuordnung löschen",
 
-    "serieslist.title" : "Serien"
+    "seriesList.title" : "Serien",
+    "seriesList.count" : "Anzahl",
+
+    "startList.title" : "Überblick",
+    "startList.count"  : "Anzahl"
 }			

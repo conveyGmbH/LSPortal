@@ -66,6 +66,9 @@
         { id: "esVoucherUsers", group: 19, svg: "voucher_contact", disabled: true },
         { id: "dashBoard", group: 19, svg: "Dashboard", disabled: true },
         { id: "masterDataGrp", group: 23, svg: "Stammdaten", disabled: true, popup: true },
+		{ id: "eventStarts", group: 55, svg: "Skills", disabled: true, predecGroup: 23 },
+        //{ id: "startResourceAdministration", group: 55, svg: "Skills", disabled: true, predecGroup: 23 },
+        //{ id: "startMediaAdministration", group: 55, svg: "Skills", disabled: true, predecGroup: 23 },
         { id: "eventSeries", group: 52, svg: "Skills", disabled: true, predecGroup: 23 },
         { id: "genDataModDetails", group: 54, svg: "Skills", disabled: true, predecGroup: 23},
         { id: "skills", group: 24, svg: "Skills", disabled: true, predecGroup: 23 },
@@ -116,7 +119,10 @@
         { id: "event", group: 2, disabled: false },
         //{ id: "products", group: 2, disabled: false },
         { id: "eventSeries", group: 52, disabled: false },
+		{ id: "eventStarts", group: 55, disabled: false },
         { id: "seriesResourceAdministration", group: 52, disabled: false },
+        { id: "startResourceAdministration", group: 55, disabled: false },
+        { id: "startMediaAdministration", group: 55, disabled: false },
         { id: "seriesMediaAdministration", group: 52, disabled: false },
 		{ id: "genDataModDetails", group: 54, disabled: false },
 	    { id: "genDataModHisto", group: 54, disabled: false },
@@ -201,7 +207,9 @@
         { id: "genDataModDetails", master: "genDataModList" },
 		{ id: "genDataModHisto", master: "genDataModList" },
         { id: "seriesResourceAdministration", master: "seriesList" },
-        { id: "seriesMediaAdministration", master: "seriesList" }
+        { id: "seriesMediaAdministration", master: "seriesList" },
+        { id: "startResourceAdministration", master: "startList" },
+        { id: "startMediaAdministration", master: "startList" }
     ];
 
 

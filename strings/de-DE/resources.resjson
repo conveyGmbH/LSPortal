@@ -565,6 +565,9 @@
     "label.genDataModHisto" : "Historie",
     "label.seriesResourceAdministration" : "Serie Texte",
     "label.seriesMediaAdministration" : "Serie Medien",
+    "label.eventStarts"          : "Überblick",
+    "label.startResourceAdministration" : "Überblick Texte",
+    "label.startMediaAdministration" : "Überblick Medien",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Abbrechen",
@@ -1330,5 +1333,9 @@
     "genDataModHisto.rating" : "Bewertung",
     "genDataModHisto.ratingdetails" : "Bewertungstext",
 
-    "serieslist.title" : "Serien"
+    "seriesList.title" : "Serien",
+    "seriesList.count" : "Anzahl",
+
+    "startList.title" : "Überblick",
+	"startList.count"  : "Anzahl"
 }		

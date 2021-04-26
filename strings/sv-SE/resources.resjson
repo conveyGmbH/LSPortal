@@ -559,8 +559,11 @@
     "label.eventSeriesAdministration": "Series assignment",
     "label.eventSpeakerAdministration" : "Team assignment",
     "label.eventSeries": "Series",
-    "label.seriesResourceAdministration" : "Texte",
-    "label.seriesMediaAdministration" : "Medien",
+    "label.seriesResourceAdministration": "Texts",
+    "label.seriesMediaAdministration": "Media",
+    "label.eventStarts": "Overview",
+    "label.startResourceAdministration": "Text overview",
+    "label.startMediaAdministration": "Media overview",
     
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Cancel",
@@ -1261,5 +1264,9 @@
     "eventSpeakerAdministration.speaker"    : "Member",
     "eventSpeakerAdministration.speakerDelete": "Would you like to delete the assignment",
 
-    "serieslist.title" : "Serien"
+    "seriesList.title": "Series",
+    "seriesList.count": "Number",
+
+    "startList.title": "Overview",
+    "startList.count": "Number"
 }
