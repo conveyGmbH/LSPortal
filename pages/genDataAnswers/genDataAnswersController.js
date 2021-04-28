@@ -326,7 +326,6 @@
                                 that.binding.Anzahl = 0;
                                 that.nextUrl = null;
                                 that.records = null;
-                                that.binding.lang = 0;
                                 if (listView.winControl) {
                                     // add ListView dataSource
                                     listView.winControl.itemDataSource = null;
@@ -719,7 +718,8 @@
                                 if (initSprache && initSprache.winControl) {
                                     initSprache.winControl.data = new WinJS.Binding.List(results);
                                 }
-                                initSprache.selectedIndex = 0;
+                                initSprache.selectedIndex = 2;
+                                that.binding.lang = 1031;
                             }
                         }, function (errorResponse) {
                             // called asynchronously if an error occurs
@@ -731,11 +731,13 @@
                             (!initSprache.winControl.data || !initSprache.winControl.data.length)) {
                             var results = GenDataAnswers.initSpracheView.getResults();
                             initSprache.winControl.data = new WinJS.Binding.List(results);
-                            initSprache.selectedIndex = 0;
+                            initSprache.selectedIndex = 2;
+                            that.binding.lang = 1031;
                         }
                         if (initSprache && initSprache.winControl &&
                             (initSprache.winControl.data || initSprache.winControl.data.length)) {
-                            initSprache.selectedIndex = 0;
+                            initSprache.selectedIndex = 2;
+                            that.binding.lang = 1031;
                         }
                         return WinJS.Promise.as();
                     }
