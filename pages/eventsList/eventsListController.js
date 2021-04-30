@@ -239,14 +239,19 @@
                                                     if ((curPageId === "eventGenSettings" ||
                                                          curPageId === "eventResourceAdministration" || 
                                                          curPageId === "eventMediaAdministration" || 
-                                                         curPageId === "eventSeriesAdministration" ||
-                                                         curPageId === "eventSpeakerAdministration") &&
+                                                         curPageId === "eventSeriesAdministration" || 
+                                                         curPageId === "eventQuestionnaire") &&
                                                         typeof AppBar.scope.loadData === "function" &&
                                                         typeof AppBar.scope.setEventId === "function") {
                                                         if (curPageId === "eventGenSettings") {
                                                             AppBar.scope.setEventId(item.data.VeranstaltungVIEWID);
                                                             AppBar.scope.selectConfExhibitorId();
-                                                        } else {
+                                                        }
+                                                        if (curPageId === "eventQuestionnaire") {
+                                                            AppBar.scope.setEventId(item.data.VeranstaltungVIEWID);
+                                                            AppBar.scope.loadData();
+                                                        }
+                                                        else {
                                                             AppBar.scope.setEventId(item.data.VeranstaltungVIEWID);
                                                             AppBar.scope.loadData();
                                                         }
@@ -269,6 +274,7 @@
                                                      curPageId === "eventResourceAdministration"  || 
                                                      curPageId === "eventMediaAdministration" || 
                                                      curPageId === "eventSeriesAdministration" ||
+                                                     curPageId === "eventQuestionnaire" ||
                                                      curPageId === "eventSpeakerAdministration") &&
                                                     typeof AppBar.scope.loadData === "function" &&
                                                     typeof AppBar.scope.setEventId === "function") {
