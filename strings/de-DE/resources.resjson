@@ -569,6 +569,7 @@
     "label.startResourceAdministration" : "Überblick Texte",
     "label.startMediaAdministration" : "Überblick Medien",
     "label.genDataAnswers" : "Fragen",
+    "label.eventQuestionnaire" : "Fragebogen",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Abbrechen",
@@ -1346,5 +1347,9 @@
 
     "genDataAnswers.title" : "Fragen / Antworten",
     "genDataAnswers.question" : "Fragentext", 
-    "genDataAnswers.questiongroup" : "Fragengruppe"
+    "genDataAnswers.questiongroup" : "Fragengruppe",
+    
+	"eventQuestionnaire.question" : "Frage", 
+    "eventQuestionnaire.questiontyp" : "Fragetyp",
+    "eventQuestionnaire.deleteassignment" : "Wollen Sie die Zuordnung löschen?"
 }		

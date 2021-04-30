@@ -569,6 +569,7 @@
     "label.startResourceAdministration": "Text overview",
     "label.startMediaAdministration": "Media overview",
     "label.genDataAnswers" : "Questions",
+    "label.eventQuestionnaire" : "Questionnaire",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Cancel",
@@ -1345,5 +1346,9 @@
 
     "genDataAnswers.title" : "Question / Answers",
     "genDataAnswers.question" : "Questiontext", 
-    "genDataAnswers.questiongroup" : "Questiongroup"
+    "genDataAnswers.questiongroup" : "Questiongroup",
+    
+    "eventQuestionnaire.question" : "Question", 
+    "eventQuestionnaire.questiontyp" : "Question type",
+    "eventQuestionnaire.deleteassignment" : "Do you want to delete the assignment?"
 }

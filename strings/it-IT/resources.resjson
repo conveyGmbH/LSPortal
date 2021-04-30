@@ -569,6 +569,7 @@
     "label.startResourceAdministration": "Panoramica del testo",
     "label.startMediaAdministration": "Panoramica dei media",
     "label.genDataAnswers" : "Domande",
+    "label.eventQuestionnaire" : "Questionario",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annulla",
@@ -1344,5 +1345,9 @@
 
     "genDataAnswers.title" : "Domanda / Rispondi",
     "genDataAnswers.question" : "Testo della domanda", 
-    "genDataAnswers.questiongroup" : "Gruppo di domande"
+    "genDataAnswers.questiongroup" : "Gruppo di domande",
+    
+    "eventQuestionnaire.question" : "Domanda", 
+    "eventQuestionnaire.questiontyp" : "Tipo di domanda",
+    "eventQuestionnaire.deleteassignment" : "Vuoi cancellare l'incarico?"
 }

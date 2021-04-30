@@ -569,6 +569,7 @@
     "label.startResourceAdministration": "Aperçu du texte",
     "label.startMediaAdministration": "Présentation des médias",
     "label.genDataAnswers" : "Questions",
+    "label.eventQuestionnaire" : "Questionnaire",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annuler",
@@ -1337,7 +1338,7 @@
     "seriesList.count": "Number",
 
     "startList.title": "Présentation",
-    "startList.count": "Numéro"
+    "startList.count": "Numéro",
 
     "genDataQuestions.title" : "Questions",
     "genDataQuestions.question" : "Question",
@@ -1345,5 +1346,9 @@
 
     "genDataAnswers.title" : "Question / Réponse",
     "genDataAnswers.question" : "Texte de la question", 
-    "genDataAnswers.questiongroup" : "Groupe de questions"
+    "genDataAnswers.questiongroup" : "Groupe de questions",
+    
+    "eventQuestionnaire.question" : "Question", 
+    "eventQuestionnaire.questiontyp" : "Type de question",
+    "eventQuestionnaire.deleteassignment" : "Voulez-vous supprimer l'affectation?"
 }
