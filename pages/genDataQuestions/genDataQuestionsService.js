@@ -96,17 +96,6 @@
             deleteRecord: function (complete, error, recordId) {
                 var ret;
                 Log.call(Log.l.trace, "EventSeries.seriesTable.");
-                if (AppBar.scope && typeof AppBar.scope.scopeFromRecordId === "function") {
-                    var record = AppBar.scope.scopeFromRecordId(recordId);
-                    if (record && record.item) {
-                        var pkName = GenDataQuestions._questionTable.relationName + "ID";
-                        recordId = record.item[pkName];
-                    } else {
-                        recordId = 0;
-                    }
-                } else {
-                    recordId = 0;
-                }
                 if (recordId) {
                     ret = GenDataQuestions._questionTable.deleteRecord(function () {
                         if (typeof complete === "function") {

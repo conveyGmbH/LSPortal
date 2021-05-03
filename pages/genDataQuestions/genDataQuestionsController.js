@@ -56,7 +56,46 @@
                 Log.ret(Log.l.trace);
             }
             this.selectRecordId = selectRecordId;
-            
+
+            var scopeFromRecordId = function (recordId) {
+                var i;
+                Log.call(Log.l.trace, "Questiongroup.Controller.", "recordId=" + recordId);
+                var item = null;
+                for (i = 0; i < that.records.length; i++) {
+                    var question = that.records.getAt(i);
+                    if (question && typeof question === "object" &&
+                        question.QuestionVIEWID === recordId) {
+                        item = question;
+                        break;
+                    }
+                }
+                if (item) {
+                    Log.ret(Log.l.trace, "i=" + i);
+                    return { index: i, item: item };
+                } else {
+                    Log.ret(Log.l.trace, "not found");
+                    return null;
+                }
+            };
+            this.scopeFromRecordId = scopeFromRecordId;
+
+            var deleteQuestion = function(recordId) {
+                Log.call(Log.l.trace, "EventsList.Controller.", "recordId=" + recordId);
+                AppData.setErrorMsg(that.binding);
+                if (recordId) {
+                    AppBar.busy = true;
+                    GenDataQuestions.questionTable.deleteRecord(function (response) {
+                        AppBar.busy = false;
+                        that.loadData();
+                    }, function (errorResponse) {
+                        AppBar.busy = false;
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    }, recordId);
+                }
+                Log.ret(Log.l.trace);
+            }
+            this.deleteQuestion = deleteQuestion;
+
             var resultConverter = function (item, index) {
                 Log.call(Log.l.trace, "EventSeries.Controller.");
                 Log.ret(Log.l.trace);

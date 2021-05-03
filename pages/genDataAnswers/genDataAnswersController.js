@@ -467,6 +467,25 @@
                         }
                         Log.ret(Log.l.trace);
                     },
+                    clickDelete: function (event) {
+                        Log.call(Log.l.trace, "GenDataAnswers.Controller.");
+                        var confirmTitle = getResourceText("genDataAnswers.questionDelete");
+                        confirm(confirmTitle, function (result) {
+                            if (result) {
+                                AppData.setErrorMsg(that.binding);
+                                Log.print(Log.l.trace, "clickDelete: user choice OK");
+                                var questionId = that.getQuestionId();
+                                var master = Application.navigator.masterControl;
+                                if (master && master.controller && master.controller.binding) {
+                                    master.controller.binding.questionId = that.binding.dataQuestion.QuestionVIEWID;
+                                    master.controller.deleteQuestion(questionId);
+                                }
+                            } else {
+                                Log.print(Log.l.trace, "clickDelete: user choice CANCEL");
+                            }
+                        });
+                        Log.ret(Log.l.trace);
+                    },
                     clickNewQuestion: function (event) {
                         Log.call(Log.l.trace, "GenDataanswerHisto.Controller.");
                         AppBar.busy = true;
