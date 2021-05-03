@@ -1348,6 +1348,7 @@
     "genDataAnswers.title" : "Fragen / Antworten",
     "genDataAnswers.question" : "Fragentext", 
     "genDataAnswers.questiongroup" : "Fragengruppe",
+    "genDataAnswers.questionDelete" : "Wollen Sie diese Frage löschen?",
     
 	"eventQuestionnaire.question" : "Frage", 
     "eventQuestionnaire.questiontyp" : "Fragetyp",

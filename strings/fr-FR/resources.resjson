@@ -1347,6 +1347,7 @@
     "genDataAnswers.title" : "Question / Réponse",
     "genDataAnswers.question" : "Texte de la question", 
     "genDataAnswers.questiongroup" : "Groupe de questions",
+    "genDataAnswers.questionDelete" : "Voulez-vous supprimer cette question ?",
     
     "eventQuestionnaire.question" : "Question", 
     "eventQuestionnaire.questiontyp" : "Type de question",

@@ -1346,6 +1346,7 @@
     "genDataAnswers.title" : "Domanda / Rispondi",
     "genDataAnswers.question" : "Testo della domanda", 
     "genDataAnswers.questiongroup" : "Gruppo di domande",
+    "genDataAnswers.questionDelete" : "Vuoi cancellare questa domanda?",
     
     "eventQuestionnaire.question" : "Domanda", 
     "eventQuestionnaire.questiontyp" : "Tipo di domanda",
