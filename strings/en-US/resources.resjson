@@ -566,8 +566,9 @@
     "label.seriesResourceAdministration": "Texts",
     "label.seriesMediaAdministration": "Media",
     "label.eventStarts": "Overview",
-    "label.startResourceAdministration": "Text overview",
-    "label.startMediaAdministration": "Media overview",
+    "label.startResourceAdministration": "Texts",
+    "label.startMediaAdministration": "Media",
+    "label.eventStartLang" : "Sprache",
     "label.genDataAnswers" : "Questions",
     "label.eventQuestionnaire" : "Questionnaire",
 

@@ -562,8 +562,9 @@
     "label.seriesResourceAdministration" : "Texte",
     "label.seriesMediaAdministration" : "Medien",
     "label.eventStarts"          : "Überblick",
-    "label.startResourceAdministration" : "Überblick Texte",
-    "label.startMediaAdministration" : "Überblick Medien",
+    "label.startResourceAdministration" : "Texte",
+    "label.startMediaAdministration" : "Medien",
+    "label.eventStartLang" : "Sprache",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Abbrechen",

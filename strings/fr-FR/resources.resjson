@@ -568,6 +568,7 @@
     "label.eventStarts": "Présentation",
     "label.startResourceAdministration": "Aperçu du texte",
     "label.startMediaAdministration": "Présentation des médias",
+    "label.eventStartLang" : "Langue",
     "label.genDataAnswers" : "Questions",
     "label.eventQuestionnaire" : "Questionnaire",
 

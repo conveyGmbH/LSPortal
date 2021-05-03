@@ -240,6 +240,7 @@
                                                          curPageId === "eventResourceAdministration" || 
                                                          curPageId === "eventMediaAdministration" || 
                                                          curPageId === "eventSeriesAdministration" || 
+                                                         curPageId === "eventSpeakerAdministration"|| 
                                                          curPageId === "eventQuestionnaire") &&
                                                         typeof AppBar.scope.loadData === "function" &&
                                                         typeof AppBar.scope.setEventId === "function") {

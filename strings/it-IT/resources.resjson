@@ -568,6 +568,7 @@
     "label.eventStarts": "Panoramica",
     "label.startResourceAdministration": "Panoramica del testo",
     "label.startMediaAdministration": "Panoramica dei media",
+    "label.eventStartLang" : "Linguaggio",
     "label.genDataAnswers" : "Domande",
     "label.eventQuestionnaire" : "Questionario",
 
