@@ -42,17 +42,18 @@
                         restriction = {
                             DokVerwendungID: MediaList._eventTextUsageId
                         };
-                        if (MediaList._eventTextUsageId > 2) {
+                        if (MediaList._eventTextUsageId >= 2) {
                             restriction.VeranstaltungID = MediaList._eventId;
                             if (!restriction.VeranstaltungID) {
                                 restriction.DokVerwendungID = -1;
                             }
-                        } else if (MediaList._eventTextUsageId === 2) {
-                            restriction.MandantSerieID = MediaList.eventSeriesId;
-                            if (!restriction.MandantSerieID) {
-                                restriction.DokVerwendungID = -1;
+                            if (MediaList._eventTextUsageId === 2) {
+                                restriction.MandantSerieID = MediaList.eventSeriesId;
+                                if (!restriction.MandantSerieID) {
+                                    restriction.DokVerwendungID = -1;
+                                }
                             }
-                        }
+                        } 
                     }
                     if (!options) {
                         options = {

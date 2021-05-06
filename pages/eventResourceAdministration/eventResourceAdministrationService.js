@@ -82,17 +82,18 @@
                         LanguageSpecID: EventResourceAdministration._languageId,
                         DokVerwendungID: EventResourceAdministration._eventTextUsageId
                     };
-                    if (EventResourceAdministration._eventTextUsageId > 2) {
+                    if (EventResourceAdministration._eventTextUsageId >= 2) {
                         restriction.VeranstaltungID = EventResourceAdministration._eventId;
                         if (!restriction.VeranstaltungID) {
                             restriction.DokVerwendungID = -1;
                         }
-                    } else if (EventResourceAdministration._eventTextUsageId === 2) {
-                        restriction.MandantSerieID = EventResourceAdministration._eventSeriesId;
-                        if (!restriction.MandantSerieID) {
-                            restriction.DokVerwendungID = -1;
+                        if (EventResourceAdministration._eventTextUsageId === 2) {
+                            restriction.MandantSerieID = EventResourceAdministration._eventSeriesId;
+                            if (!restriction.MandantSerieID) {
+                                restriction.DokVerwendungID = -1;
+                            }
                         }
-                    }
+                    } 
                 }
                 if (typeof restriction === "number") {
                     restriction = {
