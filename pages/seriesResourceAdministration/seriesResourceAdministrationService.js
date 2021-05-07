@@ -77,13 +77,14 @@
                 if (!restriction) {
                     restriction = {
                         LanguageSpecID: SeriesResourceAdministration._languageId,
-                        DokVerwendungID: SeriesResourceAdministration._eventTextUsageId
+                        DokVerwendungID: SeriesResourceAdministration._eventTextUsageId,
+                        VeranstaltungID: "NULL"
                     };
                     if (SeriesResourceAdministration._eventTextUsageId === 2) {
                         restriction.MandantSerieID = SeriesResourceAdministration._eventSeriesId;
-                        /*if (!restriction.MandantSerieID) {
+                        if (!restriction.MandantSerieID) {
                             restriction.DokVerwendungID = -1;
-                        }*/
+                        }
                     }
                 }
                 if (typeof restriction === "number") {

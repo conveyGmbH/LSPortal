@@ -15,6 +15,7 @@
         _eventTextUsageId: -1,
         _eventId: -1,
         _eventSeriesId: -1,
+        _showOnlyEventMedia: false,
         eventSeriesId: {
             get: function() {
                 if (AppBar.scope && typeof AppBar.scope.getEventSeriesId === "function") {
@@ -42,18 +43,21 @@
                         restriction = {
                             DokVerwendungID: MediaList._eventTextUsageId
                         };
-                        if (MediaList._eventTextUsageId >= 2) {
+                        if (MediaList._eventTextUsageId > 2 || MediaList._showOnlyEventMedia) {
                             restriction.VeranstaltungID = MediaList._eventId;
                             if (!restriction.VeranstaltungID) {
                                 restriction.DokVerwendungID = -1;
                             }
-                            if (MediaList._eventTextUsageId === 2) {
-                                restriction.MandantSerieID = MediaList.eventSeriesId;
-                                if (!restriction.MandantSerieID) {
-                                    restriction.DokVerwendungID = -1;
-                                }
-                            }
                         } 
+                        if (MediaList._eventTextUsageId === 2) {
+                            restriction.MandantSerieID = MediaList.eventSeriesId;
+                            if (!restriction.MandantSerieID) {
+                                restriction.DokVerwendungID = -1;
+                            }
+                        }
+                        if (!MediaList._showOnlyEventMedia) {
+                            restriction.VeranstaltungID = "NULL";
+                        }
                     }
                     if (!options) {
                         options = {

@@ -17,6 +17,7 @@
             if (options) {
                 MediaList._eventTextUsageId = options.eventTextUsageId;
                 MediaList._eventId = options.eventId;
+                MediaList._showOnlyEventMedia = options.showOnlyEventMedia;
             }
             Fragments.Controller.apply(this, [fragmentElement, {
                 docId: 0,
@@ -408,99 +409,93 @@
             };
             this.saveData = saveData;
 
-
+            var prevOptions = null;
+            var inLoadData = false;
             var loadData = function (docId, curOptions) {
-                var i, selIdx = -1, ret, reloadDocView = false, row;
-               
+                var i, selIdx = -1, reloadDocView = false;
                 Log.call(Log.l.trace, "MediaList.", "docId=" + docId);
+                if (inLoadData) {
+                    if (curOptions && prevOptions &&
+                        prevOptions.eventTextUsageId === curOptions.eventTextUsageId &&
+                        prevOptions.eventId === curOptions.eventId) {
+                        Log.ret(Log.l.trace, "extra ignored");
+                        return WinJS.Promise.as();
+                    } else {
+                        Log.ret(Log.l.trace, "busy - try later again");
+                        return WinJS.Promise.timeout(50).then(function () {
+                            return that.loadData(docId, curOptions);
+                        });
+                    }
+                }
+                inLoadData = true;
+                prevOptions = curOptions;
                 if (curOptions) {
                     MediaList._eventTextUsageId = curOptions.eventTextUsageId;
                     MediaList._eventId = curOptions.eventId;
                 }
                 AppData.setErrorMsg(that.binding);
-                // find index of docId
-                if (docId && that.records) {
-                    for (i = 0; i < that.records.length; i++) {
-                        row = that.records.getAt(i);
-                        if (row && row.MandantDokumentVIEWID === docId) {
-                            selIdx = i;
-                            break;
-                        }
-                    }
-                }
-                if (selIdx >= 0) {
-                    ret = MediaList.eventDocView.select(function (json) {
-                        // this callback will be called asynchronously
-                        // when the response is available
-                        Log.print(Log.l.trace, "MediaList.eventDocView: success!");
-                        // select returns object already parsed from json file in response
-                        if (json && json.d) {
-                            that.resultConverter(json.d, selIdx);
-                            that.records.setAt(selIdx, json.d);
-                        }
-                    }, function (errorResponse) {
-                        // called asynchronously if an error occurs
-                        // or server returns response with an error status.
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                        }, docId);
-                } else {
-                    ret = MediaList.eventDocView.select(function (json) {
-                        // this callback will be called asynchronously
-                        // when the response is available
-                        Log.print(Log.l.trace, "MediaList.eventDocView: success!");
-                        // select returns object already parsed from json file in response
-                        if (json && json.d) {
-                            that.nextUrl = MediaList.eventDocView.getNextUrl(json, that.binding.isLocal);
-                            var results = json.d.results;
-                            if (results && results.length > 0) {
-                                if (that.records) {
-                                    // reload the bindable list
-                                    that.records.length = 0;
-                                    results.forEach(function(item, index) {
-                                        that.resultConverter(item, index);
-                                        that.records.push(item);
-                                    });
-                                } else {
-                                    results.forEach(function(item, index) {
-                                        that.resultConverter(item, index);
-                                    });
-                                    // Now, we call WinJS.Binding.List to get the bindable list
-                                    that.records = new WinJS.Binding.List(results);
-                                }
-                                // find selection index
-                                //as default, show first doc in doc page
-                                selIdx = 0;
-                                if (docId) {
-                                    for (i = 0; i < results.length; i++) {
-                                        if (results[i].MandantDokumentVIEWID === docId) {
-                                            selIdx = i;
-                                            break;
-                                        }
+                var ret = MediaList.eventDocView.select(function (json) {
+                    // this callback will be called asynchronously
+                    // when the response is available
+                    Log.print(Log.l.trace, "MediaList.eventDocView: success!");
+                    // select returns object already parsed from json file in response
+                    if (json && json.d) {
+                        that.nextUrl = MediaList.eventDocView.getNextUrl(json, that.binding.isLocal);
+                        var results = json.d.results;
+                        if (results && results.length > 0) {
+                            if (that.records) {
+                                // reload the bindable list
+                                that.records.length = 0;
+                                results.forEach(function(item, index) {
+                                    that.resultConverter(item, index);
+                                    that.records.push(item);
+                                });
+                            } else {
+                                results.forEach(function(item, index) {
+                                    that.resultConverter(item, index);
+                                });
+                                // Now, we call WinJS.Binding.List to get the bindable list
+                                that.records = new WinJS.Binding.List(results);
+                            }
+                            // find selection index
+                            //as default, show first doc in doc page
+                            selIdx = 0;
+                            if (docId) {
+                                for (i = 0; i < results.length; i++) {
+                                    if (results[i].MandantDokumentVIEWID === docId) {
+                                        selIdx = i;
+                                        break;
                                     }
                                 }
-                                Log.print(Log.l.trace, "MediaList.eventDocView: selIdx=" + selIdx);
-                            } else {
-                                that.binding.docId = 0;
-                                that.binding.docGroup = null;
-                                that.binding.docFormat = null;
-                                that.binding.flagInsert = null;
-                                that.binding.addIndex = null;
                             }
+                            Log.print(Log.l.trace, "MediaList.eventDocView: selIdx=" + selIdx);
                         } else {
+                            if (that.records) {
+                                that.records.length = 0;
+                            }
                             that.binding.docId = 0;
                             that.binding.docGroup = null;
                             that.binding.docFormat = null;
                             that.binding.flagInsert = null;
                             that.binding.addIndex = null;
                         }
-                        reloadDocView = true;
-                    }, function (errorResponse) {
-                        // called asynchronously if an error occurs
-                        // or server returns response with an error status.
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                    });
-                }
-                ret = ret.then(function() {
+                    } else {
+                        if (that.records) {
+                            that.records.length = 0;
+                        }
+                        that.binding.docId = 0;
+                        that.binding.docGroup = null;
+                        that.binding.docFormat = null;
+                        that.binding.flagInsert = null;
+                        that.binding.addIndex = null;
+                    }
+                    reloadDocView = true;
+                }, function (errorResponse) {
+                    // called asynchronously if an error occurs
+                    // or server returns response with an error status.
+                    inLoadData = false;
+                    AppData.setErrorMsg(that.binding, errorResponse);
+                }).then(function() {
                     if (reloadDocView) {
                         // show/hide this fragment, so use timeout!
                         that.binding.count = that.records ? that.records.length : 0;
@@ -514,12 +509,12 @@
                 }).then(function () {
                     if (reloadDocView) {
                         if (listView && listView.winControl) {
-                            if (that.records && that.records.length > 0 && listView.winControl.selection) {
-                            // add ListView dataSource
-                            listView.winControl.itemDataSource = that.records.dataSource;
+                            if (that.records && that.records.length > 0 && listView.winControl.selection && selIdx >= 0) {
+                                // add ListView dataSource
+                                listView.winControl.itemDataSource = that.records.dataSource;
                                 return listView.winControl.selection.set(selIdx).then(function() {
                                     //load doc with new recordId
-                                    row = that.records.getAt(selIdx);
+                                    var row = that.records.getAt(selIdx);
                                     if (row) {
                                         that.binding.docId = row.MandantDokumentVIEWID;
                                         that.binding.docGroup = row.DocGroup;
@@ -549,6 +544,7 @@
                             AppBar.scope.loadDoc(that.binding.docId, that.binding.docGroup, that.binding.docFormat);
                         }
                     }
+                    inLoadData = false;
                     AppBar.notifyModified = true;
                     AppBar.triggerDisableHandlers();
                     return WinJS.Promise.as();
@@ -569,7 +565,7 @@
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.loadData();
+                return that.loadData(options && options.docId, options);
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
             });

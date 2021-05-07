@@ -80,20 +80,20 @@
                 if (!restriction) {
                     restriction = {
                         LanguageSpecID: EventResourceAdministration._languageId,
-                        DokVerwendungID: EventResourceAdministration._eventTextUsageId
+                        DokVerwendungID: EventResourceAdministration._eventTextUsageId,
+                        VeranstaltungID: EventResourceAdministration._eventId
                     };
-                    if (EventResourceAdministration._eventTextUsageId >= 2) {
-                        restriction.VeranstaltungID = EventResourceAdministration._eventId;
-                        if (!restriction.VeranstaltungID) {
+                    if (!restriction.VeranstaltungID) {
+                        restriction.DokVerwendungID = -1;
+                    }
+                    if (EventResourceAdministration._eventTextUsageId === 1) {
+                        // yet missing restriction on MandantStartID!
+                    } else if (EventResourceAdministration._eventTextUsageId === 2) {
+                        restriction.MandantSerieID = EventResourceAdministration._eventSeriesId;
+                        if (!restriction.MandantSerieID) {
                             restriction.DokVerwendungID = -1;
                         }
-                        if (EventResourceAdministration._eventTextUsageId === 2) {
-                            restriction.MandantSerieID = EventResourceAdministration._eventSeriesId;
-                            if (!restriction.MandantSerieID) {
-                                restriction.DokVerwendungID = -1;
-                            }
-                        }
-                    } 
+                    }
                 }
                 if (typeof restriction === "number") {
                     restriction = {

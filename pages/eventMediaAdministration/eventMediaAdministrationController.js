@@ -195,7 +195,7 @@
                     var js = {
                         doc: ret || WinJS.Promise.as(),
                         text: that.loadText(docId)
-                }
+                    }
                     ret = WinJS.Promise.join(js).then(function () {
                         if (bUpdateCommands) {
                             var uploadMediaFragmentControl;
@@ -210,11 +210,13 @@
                                 if (bGetNewDocViewer) {
                                     that.docViewer = getDocViewer(docGroup, docFormat);
                                 }
-                                if (prevShowUpload !== that.binding.showUpload) {
-                                    uploadMediaFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("uploadMedia"));
-                                    that.docViewer.controller.updateCommands(uploadMediaFragmentControl && uploadMediaFragmentControl.controller);
-                                } else if (prevDocViewer !== that.docViewer && that.docViewer && that.docViewer.controller) {
-                                    that.docViewer.controller.updateCommands(prevDocViewer && prevDocViewer.controller);
+                                if (that.docViewer && that.docViewer.controller) {
+                                    if (prevShowUpload !== that.binding.showUpload) {
+                                        uploadMediaFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("uploadMedia"));
+                                        that.docViewer.controller.updateCommands(uploadMediaFragmentControl && uploadMediaFragmentControl.controller);
+                                    } else if (prevDocViewer !== that.docViewer) {
+                                        that.docViewer.controller.updateCommands(prevDocViewer && prevDocViewer.controller);
+                                    }
                                 }
                             }
                         }
@@ -256,8 +258,10 @@
                     var parentElement = pageElement.querySelector("#mediaListhost");
                     if (parentElement) {
                         ret = Application.loadFragmentById(parentElement, "mediaList", {
+                            docId: docId,
                             eventTextUsageId: EventMediaAdministration._eventTextUsageId,
-                            eventId: EventMediaAdministration._eventId
+                            eventId: EventMediaAdministration._eventId,
+                            showOnlyEventMedia: true
                         });
                     }
                 }

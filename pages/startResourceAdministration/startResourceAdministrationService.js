@@ -52,7 +52,7 @@
             }
         },
         _eventTextUsageId: 1,
-        _eventStartId: 1, /*muss von der Liste gesetzt werden*/
+        _eventStartId: null, /*muss von der Liste gesetzt werden*/
         _languageId: 1031
     });
     WinJS.Namespace.define("StartResourceAdministration", {
@@ -77,13 +77,11 @@
                 if (!restriction) {
                     restriction = {
                         LanguageSpecID: StartResourceAdministration._languageId,
-                        DokVerwendungID: StartResourceAdministration._eventTextUsageId
+                        DokVerwendungID: StartResourceAdministration._eventTextUsageId,
+                        VeranstaltungID: "NULL"
                     };
                     if (StartResourceAdministration._eventTextUsageId === 1) {
                         restriction.MandantStartID = StartResourceAdministration._eventStartId;
-                        /*if (!restriction.MandantSerieID) {
-                            restriction.DokVerwendungID = -1;
-                        }*/
                     }
                 }
                 if (typeof restriction === "number") {
