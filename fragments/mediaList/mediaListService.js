@@ -44,19 +44,23 @@
                             DokVerwendungID: MediaList._eventTextUsageId
                         };
                         if (MediaList._eventTextUsageId > 2 || MediaList._showOnlyEventMedia) {
-                            restriction.VeranstaltungID = MediaList._eventId;
-                            if (!restriction.VeranstaltungID) {
+                            if (MediaList._eventId > 0) {
+                                restriction.VeranstaltungID = MediaList._eventId;
+                            } else {
                                 restriction.DokVerwendungID = -1;
                             }
                         } 
-                        if (MediaList._eventTextUsageId === 2) {
-                            restriction.MandantSerieID = MediaList.eventSeriesId;
-                            if (!restriction.MandantSerieID) {
-                                restriction.DokVerwendungID = -1;
-                            }
-                        }
                         if (!MediaList._showOnlyEventMedia) {
                             restriction.VeranstaltungID = "NULL";
+                            if (MediaList._eventTextUsageId === 2) {
+                                if (MediaList.eventSeriesId > 0) {
+                                    restriction.MandantSerieID = MediaList.eventSeriesId;
+                                } else {
+                                    restriction.DokVerwendungID = -1;
+                                }
+                            }
+                        } else if (MediaList.eventSeriesId > 0) {
+                            restriction.MandantSerieID = MediaList.eventSeriesId;
                         }
                     }
                     if (!options) {

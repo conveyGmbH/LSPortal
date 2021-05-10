@@ -483,7 +483,7 @@
                 Log.print(Log.l.trace, "eventTextUsageId=" + value);
                 EventResourceAdministration._eventTextUsageId = value;
                 var prevShowSeries = that.binding.showSeries;
-                that.binding.showSeries = (value === 2);
+                that.binding.showSeries = (value === 2 || value === 1);
                 AppBar.busy = true;
                 that.saveData(function (response) {
                     AppBar.busy = false;
@@ -517,6 +517,9 @@
                 EventResourceAdministration._eventId = value;
                 var ret = WinJS.Promise.timeout(0).then(function() {
                     return that.loadSeriesData();
+                }).then(function () {
+                    Log.print(Log.l.trace, "eventTextUsage complete");
+                    return that.loadData();
                 });
                 return ret;
             }

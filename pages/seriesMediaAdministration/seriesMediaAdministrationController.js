@@ -283,9 +283,7 @@
                     var parentElement = pageElement.querySelector("#mediaTexthost");
                     if (parentElement) {
                         ret = Application.loadFragmentById(parentElement, "mediaText", {
-                            docId: docId,
-                            eventUsageId: SeriesMediaAdministration._eventTextUsageId,
-                            eventSeriesId: SeriesMediaAdministration._eventSeriesId
+                            docId: docId
                         });
                     }
                 }

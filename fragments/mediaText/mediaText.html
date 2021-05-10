@@ -29,19 +29,9 @@
                                 </div>
                             </div>
                             <div class="field_line field_line_even"
-                                 data-win-bind="style.display: showSeries Binding.Converter.toDisplay">
+                                 data-win-bind="style.display: eventSeriesTitle Binding.Converter.toDisplay">
                                 <span class="label win-type-caption" data-win-res="{textContent: 'label.eventSeries'}"></span>
-                                <div data-win-bind="style.display: multipleSeries Binding.Converter.toDisplay">
-                                    <select id="eventSeries"
-                                            class="input_field win-dropdown"
-                                            data-win-control="WinJS.UI.Repeater"
-                                            onchange="AppBar.handleEvent('change', 'changedSeries', event)">
-                                        <option data-win-bind="value: MandantSerieID; textContent: Titel"></option>
-                                    </select>
-                                </div>
-                                <div data-win-bind="style.display: multipleSeries Binding.Converter.toDisplayNone">
-                                    <span class="input_field" data-win-bind="textContent: eventSeriesItem.Titel"></span>
-                                </div>
+                                <span class="input_field" data-win-bind="textContent: eventSeriesTitle"></span>
                             </div>
                         </div>
                     </div>

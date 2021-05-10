@@ -283,9 +283,7 @@
                     var parentElement = pageElement.querySelector("#mediaTexthost");
                     if (parentElement) {
                         ret = Application.loadFragmentById(parentElement, "mediaText", {
-                            docId: docId,
-                            eventUsageId: EventMediaAdministration._eventTextUsageId,
-                            eventId: EventMediaAdministration._eventId
+                            docId: docId
                         });
                     }
                 }
@@ -603,19 +601,7 @@
             var setEventTextUsageId = function (value) {
                 Log.print(Log.l.trace, "eventTextUsageId=" + value);
                 EventMediaAdministration._eventTextUsageId = value;
-                var ret;
-                var mediaTextFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("mediaText"));
-                if (mediaTextFragmentControl &&
-                    mediaTextFragmentControl.controller &&
-                    typeof mediaTextFragmentControl.controller.setEventTextUsageId === "function") {
-                    ret = mediaTextFragmentControl.controller.setEventTextUsageId(value);
-                } else {
-                    ret = WinJS.Promise.as();
-                }
-                ret = ret.then(function() {
-                    that.loadData();
-                });
-                return ret;
+                return that.loadData();
             }
             this.setEventTextUsageId = setEventTextUsageId;
 
@@ -638,16 +624,12 @@
 
             var setEventId = function (value) {
                 Log.print(Log.l.trace, "eventId=" + value);
-                EventMediaAdministration._eventId = value;
-                var ret;
-                var mediaTextFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("mediaText"));
-                if (mediaTextFragmentControl && mediaTextFragmentControl.controller &&
-                    typeof mediaTextFragmentControl.controller.setEventId === "function") {
-                    ret = mediaTextFragmentControl.controller.setEventId(value);
-                } else {
-                    ret = WinJS.Promise.as();
+                if (EventMediaAdministration._eventId !== value) {
+                    EventMediaAdministration._eventSeriesId = -1;
+                    Log.print(Log.l.trace, "reset eventSeriesId!");
                 }
-                return ret;
+                EventMediaAdministration._eventId = value;
+                return WinJS.Promise.as();
             }
             this.setEventId = setEventId;
 

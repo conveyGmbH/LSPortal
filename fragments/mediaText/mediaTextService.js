@@ -51,60 +51,10 @@
                 return AppData.getFormatView("LangMandantDokument", 0);
             }
         },
-        _eventTextUsageId: -1,
-        _eventId: -1,
         _docId: 0,
-        _languageId: AppData.getLanguageId(),
-        _eventSeriesId: -1,
-        eventSeriesId: {
-            get: function() {
-                if (AppBar.scope && typeof AppBar.scope.getEventSeriesId === "function") {
-                    MediaText._eventSeriesId = AppBar.scope.getEventSeriesId();
-                }
-                return MediaText._eventSeriesId;
-            },
-            set: function(value) {
-                MediaText._eventSeriesId = value;
-                if (AppBar.scope && typeof AppBar.scope.setEventSeriesId === "function") {
-                    MediaText._eventSeriesId = AppBar.scope.setEventSeriesId(value);
-                }
-            }
-        }
+        _languageId: AppData.getLanguageId()
     });
     WinJS.Namespace.define("MediaText", {
-        eventSeriesView: {
-            select: function(complete, error) {
-                var restriction;
-                if (MediaText._eventId > 0) {
-                    restriction = {
-                    LanguageSpecID: MediaText._languageId,
-                    VeranstaltungID: MediaText._eventId
-                };
-                } else if (MediaText._eventSeriesId > 0) {
-                    restriction = {
-                        LanguageSpecID: MediaText._languageId,
-                        MandantSerieID: 1
-                    };
-                } else {
-                    restriction = {
-                        LanguageSpecID: MediaText._languageId,
-                        VeranstaltungID: MediaText._eventId,
-                        MandantSerieID: MediaText._eventSeriesId
-                    };
-                }
-                Log.call(Log.l.trace, "EventResourceAdministration.eventSeriesView.",
-                    "LanguageSpecID=" + restriction.LanguageSpecID,
-                    "VeranstaltungID=" + MediaText._eventId,
-                    "MandantSerieID=" + restriction.MandantSerieID);
-                var ret = MediaText._eventSeriesView.select(complete, error, restriction, {
-                    ordered: true,
-                    orderAttribute: "Titel",
-                    desc: false
-                });
-                Log.ret(Log.l.trace);
-                return ret;
-            }
-        },
         eventTextView: {
             select: function (complete, error, restriction, options) {
                 if (!restriction) {
