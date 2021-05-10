@@ -18,7 +18,8 @@
             Fragments.Controller.apply(this, [fragmentElement, {
                 docId: options && options.docId,
                 fileInfo: "",
-                dataDoc: {}
+                dataDoc: {},
+                showLoadingCircle: false
             }, commandList]);
 
             var dropZone = fragmentElement.querySelector("#dropzone");
@@ -177,6 +178,8 @@
                     } else {
                         return WinJS.Promise.as();
                     }
+                }).then(function() {
+                    that.binding.showLoadingCircle = false;
                 });
                 Log.ret(Log.l.trace);
                 return ret;
@@ -206,7 +209,6 @@
                         // reader.result
                         if (reader.result) {
                             Log.print(Log.l.u1, "result=" + reader.result.substr(0, 64) + "...");
-
                             switch (docFormat.docGroup) {
                                 case 1: {
                                     that.insertImage(docFormat.docFormat, type, name, reader.result);
@@ -232,6 +234,7 @@
 
             var eventHandlers = {
                 handleFileChoose: function (event) {
+                    that.binding.showLoadingCircle = true;
                     if (event && event.target) {
                         // FileList-Objekt des input-Elements auslesen, auf dem 
                         // das change-Event ausgelöst wurde (event.target)
@@ -251,6 +254,7 @@
                     }
                 },
                 onDrop: function(event) {
+                    that.binding.showLoadingCircle = true;
                     if (event) {
                         event.stopPropagation();
                         event.preventDefault();

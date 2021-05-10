@@ -106,6 +106,9 @@
 
                 item.heightSummary = item.Summary ? "196px" : "";
                 item.heightBody = item.Body ? "196px" : "";
+                if (item.NameTitle && (item.NameTitle).indexOf("SEO") === 0) {
+                    item.isSEO = 1;
+                }
                 Log.ret(Log.l.trace);
             }
             this.resultConverter = resultConverter;
@@ -360,6 +363,8 @@
                         case WinJS.Utilities.Key.home:
                         case WinJS.Utilities.Key.leftArrow:
                         case WinJS.Utilities.Key.rightArrow:
+                        case WinJS.Utilities.Key.upArrow:
+                        case WinJS.Utilities.Key.downArrow:
                         case WinJS.Utilities.Key.space:
                             e.stopImmediatePropagation();
                             break;

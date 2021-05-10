@@ -17,7 +17,7 @@
                     <div class="eventText-template"
                          data-win-control="WinJS.Binding.Template" style="display: none">
                         <div class="field_line field_line_odd" data-win-bind="style.display: LabelTitle Binding.Converter.toDisplay">
-                            <span class="label win-type-caption" data-win-bind="textContent: NameTitle"></span>
+                            <span class="label win-type-caption" data-win-bind="textContent: NameTitle; style.fontStyle: isSEO Binding.Converter.toItalic"></span>
                             <input class="input_field win-textbox" type="text"
                                    data-win-bind="value: Title; placeholder: placeholderTitle"
                                    data-field-entry="Title" />
@@ -29,7 +29,7 @@
                             </div>
                         </div>
                         <div class="field_line field_line_even" data-win-bind="style.display: LabelDescription Binding.Converter.toDisplay">
-                            <span class="label win-type-caption" data-win-bind="textContent: NameDescription"></span>
+                            <span class="label win-type-caption" data-win-bind="textContent: NameDescription; style.fontStyle: isSEO Binding.Converter.toItalic"></span>
                             <textarea class="input_field win-textarea input_text_comment"
                                       data-win-bind="value: Description; placeholder: placeholderDescription; style.height: heightSummary"
                                       data-field-entry="Description"

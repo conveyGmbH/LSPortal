@@ -573,6 +573,11 @@
                     AppBar.busy = true;
                     return EventMediaAdministration.mediaTable.deleteRecord(function (json) {
                         AppBar.busy = false;
+                        var uploadMediaFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("uploadMedia"));
+                        if (uploadMediaFragmentControl && uploadMediaFragmentControl.controller &&
+                            typeof uploadMediaFragmentControl.controller.binding.fileInfo !== "undefined") {
+                            uploadMediaFragmentControl.controller.binding.fileInfo = "";
+                        }
                         Log.print(Log.l.info, "deleteRecord: success!");
                         that.binding.docId = null;
                     }, function (errorResponse) {
