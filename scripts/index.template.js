@@ -72,6 +72,8 @@
         { id: "eventSeries", group: 52, svg: "Stammdaten", disabled: true, predecGroup: 23 },
         { id: "genDataModDetails", group: 54, svg: "Stammdaten", disabled: true, predecGroup: 23 },
         { id: "skills", group: 24, svg: "Skills", disabled: true, predecGroup: 23 },
+        { id: "genDataModDetails", group: 53, svg: "calendar_1", disabled: true, predecGroup: 23 },
+        { id: "genDataAnswers", group: 54, svg: "calendar_1", disabled: true, predecGroup: 23 },
         { id: "employeeGrp", group: 25, svg: "Benutzerkonten", disabled: true, popup: true },
         { id: "employee", group: 5, svg: "keys", disabled: true, predecGroup: 25 },
         { id: "myEvents", group: 53, svg: "keys", disabled: true, popup: true },
@@ -109,6 +111,7 @@
         { id: "search", group: 7, svg: "magnifying_glass", disabled: true, predecGroup: 29 },
 		{ id: "contactResultsList", group: 42, svg: "calendar_1", disabled: true, predecGroup: 29 },
         //{ id: "resourcesAdministration", group: 17, svg: "user_headset", disabled: true },
+        //{ id: "search", group: 7, svg: "magnifying_glass", disabled: true },
         //{ id: "info", group: 10, svg: "gearwheel", disabled: true }
     ];
 
@@ -132,6 +135,7 @@
         { id: "eventResourceAdministration", group: 44, disabled: false},
         { id: "eventMediaAdministration", group: 44, disabled: false },
         { id: "eventSpeakerAdministration", group: 44, disabled: false },
+        { id: "eventQuestionnaire", group: 45, disabled: false },
         { id: "questionList", group: 3, disabled: false },
         { id: "questiongroup", group: 3, disabled: false },
         { id: "optQuestionList", group: 3, disabled: false },

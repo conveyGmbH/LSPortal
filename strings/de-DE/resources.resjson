@@ -1328,6 +1328,7 @@
     "genDataModDetails.picture" : "Bild",
     "genDataModDetails.info1" : "Moderatorenbild hier herein ziehen",
     "genDataModDetails.picchanghebutton" : "Bild ändern",
+    "genDataModDetails.academicTitle" : "Akademischer Titel",
 
     "genDataModHisto.title" : "Historie",
     "genDataModHisto.eventname" : "Veranstaltung",

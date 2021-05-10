@@ -519,6 +519,18 @@
                     }
                 };
 
+                var selectCountry = function() {
+                    Log.print(Log.l.trace, "selecting country");
+                    if (!that.binding.modData.LandName) {
+                            for (var j = 0; j < initLand.length; j++) {
+                                if (initLand[j].value === "53") {
+                                    initLand.selectedIndex = j;
+                            }
+                        }
+                    }
+                }
+                this.selectCountry = selectCountry;
+
                 var getAdresseId = function () {
                     return GenDataModDetails._adresseId;
                 }
@@ -686,6 +698,9 @@
                                 Log.print(Log.l.trace, "calling select contactView...");
                                 }, { DOC1AdresseVIEWID: recordId});
                         }
+                    }).then(function () {
+                        Log.print(Log.l.trace, "select country");
+                        return that.selectCountry();
                     }).then(function () {
                         AppBar.notifyModified = true;
                         return WinJS.Promise.as();

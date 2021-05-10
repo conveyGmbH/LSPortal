@@ -1326,6 +1326,7 @@
     "genDataModDetails.picture" : "Immagine",
     "genDataModDetails.info1" : "Trascina qui l'immagine del moderatore",
     "genDataModDetails.picchanghebutton" : "Cambia immagine",
+    "genDataModDetails.academicTitle" : "Titolo accademico",
 
     "genDataModHisto.title" : "Storia",
     "genDataModHisto.eventname" : "Evento",
