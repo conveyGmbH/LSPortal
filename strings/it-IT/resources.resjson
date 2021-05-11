@@ -1304,6 +1304,7 @@
 
     "eventSpeakerAdministration.speaker": "Membro",
     "eventSpeakerAdministration.speakerDelete": "Vuoi eliminare il compito",
+    "eventSpeakerAdministration.index" : "Indice",
 	
     "genDataModList.title" : "Moderatore",
     "genDataModList.name" : "Nome",

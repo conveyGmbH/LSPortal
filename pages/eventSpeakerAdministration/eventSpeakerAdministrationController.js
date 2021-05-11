@@ -45,6 +45,45 @@
                 }
             }
 
+            //Index List
+            this.indexDataList = new WinJS.Binding.List([
+                { SpeakerIDX: 0, TITLE: "0" },
+                { SpeakerIDX: 1, TITLE: "1" },
+                { SpeakerIDX: 2, TITLE: "2" },
+                { SpeakerIDX: 3, TITLE: "3" },
+                { SpeakerIDX: 4, TITLE: "4" },
+                { SpeakerIDX: 5, TITLE: "5" },
+                { SpeakerIDX: 6, TITLE: "6" },
+                { SpeakerIDX: 7, TITLE: "7" },
+                { SpeakerIDX: 8, TITLE: "8" },
+                { SpeakerIDX: 9, TITLE: "9" },
+                { SpeakerIDX: 10, TITLE: "10" }
+            ]);
+
+            var fillIndexCombo = function (combo, item, index) {
+                Log.call(Log.l.u1, "EventSpeakerAdministration.Controller.");
+                if (combo && combo.winControl) {
+                    var eventSpeakerMap = that.records &&
+                        that.records.map(function (recordsItem) {
+                        return recordsItem.SpeakerIDX || 0;
+                        }) || [];
+                    var curIndex = (that.indexDataList || []).filter(function (indexItem) {
+                        return (indexItem.SpeakerIDX === item.SpeakerIDX ||
+                            eventSpeakerMap.indexOf(indexItem.SpeakerIDX) < 0);
+                    });
+                    if (curIndex) {
+                        curIndex.push({
+                            SpeakerIDX: 0,
+                            TITLE: ""
+                        });
+                    }
+                    combo.winControl.data = new WinJS.Binding.List(curIndex);
+                    combo.value = item.SpeakerIDX || 0;
+                }
+                Log.ret(Log.l.u1);
+            }
+            this.fillIndexCombo = fillIndexCombo;
+
             // get field entries
             var getFieldEntries = function (index) {
                 Log.call(Log.l.trace, "EventSpeakerAdministration.Controller.");
@@ -52,16 +91,18 @@
                 if (listView && listView.winControl) {
                     var element = listView.winControl.elementFromIndex(index);
                     if (element) {
-                        var field = element.querySelector('.win-dropdown');
-                        if (field) {
-                            var fieldEntry = field.dataset && field.dataset.fieldEntry;
-                            var value = parseInt(field.value);
-                            if (fieldEntry) {
-                                ret[fieldEntry] = value || null;
-                                if (that.records) {
-                                    var item = that.records.getAt(index);
-                                    if (item && ret[fieldEntry] !== item[fieldEntry]) {
-                                        forceReload = true;
+                        var field = element.querySelectorAll('.win-dropdown');
+                        for (var i = 0; i < field.length; i++) {
+                            if (field[i]) {
+                                var fieldEntry = field[i].dataset && field[i].dataset.fieldEntry;
+                                var value = parseInt(field[i].value);
+                                if (fieldEntry) {
+                                    ret[fieldEntry] = value || null;
+                                    if (that.records) {
+                                        var item = that.records.getAt(index);
+                                        if (item && ret[fieldEntry] !== item[fieldEntry]) {
+                                            forceReload = true;
+                                        }
                                     }
                                 }
                             }
@@ -260,6 +301,8 @@
                                         if (element) {
                                             var combo = element.querySelector('select[data-field-entry="PersonAdresseID"]');
                                             that.fillSpeakerCombo(combo, item, i);
+                                            var combo2 = element.querySelector('select[data-field-entry="SpeakerIDX"]');
+                                            that.fillIndexCombo(combo2, item, i);
                                         }
                                     }
                                 }

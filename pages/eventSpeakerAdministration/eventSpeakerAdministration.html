@@ -22,6 +22,14 @@
                                 <option data-win-bind="value: PersonAdresseVIEWID; textContent: PersonAdresseText"></option>
                             </select>
                         </div>
+                        <div class="field_line field_line_even">
+                            <span class="label win-type-caption" data-win-res="{textContent: 'eventSpeakerAdministration.index'}"></span>
+                            <select class="input_field win-dropdown"
+                                    data-win-control="WinJS.UI.Repeater"
+                                    data-field-entry="SpeakerIDX">
+                                <option data-win-bind="value: SpeakerIDX; textContent: TITLE"></option>
+                            </select>
+                        </div>
                         <div class="field-separator"></div>
                     </div>
                     <div id="eventSpeakerList"

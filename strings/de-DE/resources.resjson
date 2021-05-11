@@ -1317,8 +1317,8 @@
 
 	"eventSpeakerAdministration.speaker" : "Mitglied",
 	"eventSpeakerAdministration.speakerDelete" : "Möchten Sie die Zuordnung löschen",
-
-
+    "eventSpeakerAdministration.index" : "Index",
+	
     "genDataModDetails.title" : "Moderator Details",
     "genDataModDetails.newmodlabel" : "Hinzufügen",
     "genDataModDetails.category" : "Kategorie",
