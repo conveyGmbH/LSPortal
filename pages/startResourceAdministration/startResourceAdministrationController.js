@@ -53,10 +53,26 @@
                     var element = listView.winControl.elementFromIndex(index);
                     if (element) {
                         var fields = element.querySelectorAll('input[type="text"], textarea');
+                        var prevRow = null;
                         for (var i = 0; i < fields.length; i++) {
                             var fieldEntry = fields[i].dataset && fields[i].dataset.fieldEntry;
                             if (fieldEntry) {
                                 ret[fieldEntry] = fields[i].value;
+                                var modifier = "Modified" + fieldEntry;
+                                if (!ret[fieldEntry]) {
+                                    ret[modifier] = null;
+                                } else {
+                                    if (!prevRow && that.records) {
+                                        prevRow = that.records.getAt(index);
+                                    }
+                                    if (prevRow) {
+                                        if (ret[fieldEntry] !== prevRow[fieldEntry]) {
+                                            ret[modifier] = 1;
+                                        } else {
+                                            ret[modifier] = prevRow[modifier];
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
