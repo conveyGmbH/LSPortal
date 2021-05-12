@@ -1306,6 +1306,9 @@
 	"eventSpeakerAdministration.speaker"    : "Member",
 	"eventSpeakerAdministration.speakerDelete": "Would you like to delete the assignment",
     "eventSpeakerAdministration.index" : "Index",
+    "eventSpeakerAdministration.entryLink" : "Access link",
+    "eventSpeakerAdministration.send" : "Access data by mail",
+    "eventSpeakerAdministration.mailsend" : "Sent!",
     
 	"genDataModList.title" : "Speaker",
     "genDataModList.name" : "Name",

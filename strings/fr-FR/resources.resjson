@@ -1306,6 +1306,9 @@
     "eventSpeakerAdministration.speaker"    : "Membre",
     "eventSpeakerAdministration.speakerDelete": "Souhaitez-vous supprimer le devoir",
     "eventSpeakerAdministration.index" : "Index",
+    "eventSpeakerAdministration.entryLink" : "Lien d'accès",
+    "eventSpeakerAdministration.send" : "Accès aux données par courrier",
+    "eventSpeakerAdministration.mailsend" : "Courrier envoyé!",
     
     "genDataModList.title" : "Modérateur",
     "genDataModList.name" : "Nom",

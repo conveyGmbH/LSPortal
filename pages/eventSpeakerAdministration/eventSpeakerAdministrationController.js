@@ -17,9 +17,11 @@
 
             // ListView control
             var listView = pageElement.querySelector("#eventSpeakerList.listview");
-
+            
             Application.RecordsetController.apply(this, [pageElement, {
-                count: 0
+                count: 0,
+                sendentrytmailLabel: getResourceText("eventSpeakerAdministration.send"),
+                sendOk : null
             }, commandList, false,
                 EventSpeakerAdministration.eventSpeakerTable,
                 EventSpeakerAdministration.eventSpeakerVIEW, listView]);
@@ -45,6 +47,9 @@
                 }
             }
 
+            //sendOkTxt
+            
+            this.sendOkValue = null;
             //Index List
             this.indexDataList = new WinJS.Binding.List([
                 { SpeakerIDX: 0, TITLE: "0" },
@@ -153,6 +158,32 @@
                         WinJS.Navigation.back(1).done();
                     }
                     Log.ret(Log.l.trace);
+                },
+                clickSendEntryMail: function(parameters) {
+                    Log.call(Log.l.trace, "EventSpeakerAdministration.Controller.");
+                    var sendOkTxt = pageElement.querySelectorAll("#sendOkTxt");
+                    if (listView && listView.winControl) {
+                        var listControl = listView.winControl;
+                        if (listControl.selection) {
+                            var selectionCount = listControl.selection.count();
+                            if (selectionCount === 1) {
+                                // Only one item is selected, show the page
+                                listControl.selection.getItems().done(function (items) {
+                                    var item = items[0];
+                                    that.sendOkValue = item.index;
+                                    AppData.call("PRC_SendStaffMail", {
+                                        pMitarbeiterID: item.data.BenutzerVIEWID
+                                    }, function (json) {
+                                        Log.print(Log.l.info, "call success!");
+                                        sendOkTxt[that.sendOkValue].style.display = "inline";
+                                    }, function (error) {
+                                        Log.print(Log.l.error, "call error");
+                                        
+                                    });
+                                });
+                            }
+                        }
+                    }
                 },
                 clickForward: function (event) {
                     Log.call(Log.l.trace, "EventSpeakerAdministration.Controller.");

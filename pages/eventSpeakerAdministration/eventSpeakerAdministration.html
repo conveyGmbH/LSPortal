@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <link href="eventSeriesAdministration.css" rel="stylesheet" />
+    <link href="eventSpeakerAdministration.css" rel="stylesheet" />
     <script type="text/javascript" src="eventSpeakerAdministrationService.js"></script>
     <script type="text/javascript" src="eventSpeakerAdministrationController.js"></script>
     <script type="text/javascript" src="eventSpeakerAdministration.js"></script>
@@ -29,6 +29,15 @@
                                     data-field-entry="SpeakerIDX">
                                 <option data-win-bind="value: SpeakerIDX; textContent: TITLE"></option>
                             </select>
+                        </div>
+                        <div class="field_line" 
+                             data-win-bind="style.display: StartLink Binding.Converter.toDisplay">
+                            <span class="label win-type-caption" data-win-res="{textContent: 'eventSpeakerAdministration.entryLink'}"></span>
+                            <a id="entryLink" data-win-bind="href: StartLink; textContent: StartLink"></a>
+                            <button class="sendentryLinkmail-button win-button"
+                                    data-win-res="{textContent: 'eventSpeakerAdministration.send'}"
+                                    onclick="AppBar.handleEvent('click', 'clickSendEntryMail', event)" autofocus="autofocus"></button>
+                            <span id="sendOkTxt" data-win-res="{textContent: 'eventSpeakerAdministration.mailsend'}"></span>
                         </div>
                         <div class="field-separator"></div>
                     </div>
