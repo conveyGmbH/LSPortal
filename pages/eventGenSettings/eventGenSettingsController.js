@@ -129,14 +129,18 @@
                 Log.call(Log.l.trace, "Event.Controller.");
                 var reggie = /(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2})/;
                 var dateArray = reggie.exec(date);
-                var dateObject = new Date(
-                 (+dateArray[1]),
-                 (+dateArray[2]) - 1, // Careful, month starts at 0!
-                 (+dateArray[3]),
-                 (+dateArray[4]),
-                 (+dateArray[5])
-                 );
-                return "/Date(" + dateObject.getTime() + ")/";
+                if (dateArray) {
+                    var dateObject = new Date(
+                        (+dateArray[1]),
+                        (+dateArray[2]) - 1, // Careful, month starts at 0!
+                        (+dateArray[3]),
+                        (+dateArray[4]),
+                        (+dateArray[5])
+                    );
+                    return "/Date(" + dateObject.getTime() + ")/";
+                } else {
+                    return null;
+                }
             }
             this.getDateTimeData = getDateTimeData;
 
