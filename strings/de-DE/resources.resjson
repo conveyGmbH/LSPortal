@@ -1318,6 +1318,9 @@
 	"eventSpeakerAdministration.speaker" : "Mitglied",
 	"eventSpeakerAdministration.speakerDelete" : "Möchten Sie die Zuordnung löschen",
     "eventSpeakerAdministration.index" : "Index",
+    "eventSpeakerAdministration.entryLink" : "Zugangslink",
+    "eventSpeakerAdministration.send" : "Zugangsdaten per Mail",
+    "eventSpeakerAdministration.mailsend" : "Mail versandt!",
 	
     "genDataModDetails.title" : "Moderator Details",
     "genDataModDetails.newmodlabel" : "Hinzufügen",

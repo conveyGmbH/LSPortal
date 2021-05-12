@@ -1305,6 +1305,9 @@
     "eventSpeakerAdministration.speaker": "Membro",
     "eventSpeakerAdministration.speakerDelete": "Vuoi eliminare il compito",
     "eventSpeakerAdministration.index" : "Indice",
+    "eventSpeakerAdministration.entryLink" : "Link di accesso",
+    "eventSpeakerAdministration.send" : "Accesso ai dati per posta",
+    "eventSpeakerAdministration.mailsend" : "Posta inviata!",
 	
     "genDataModList.title" : "Moderatore",
     "genDataModList.name" : "Nome",
