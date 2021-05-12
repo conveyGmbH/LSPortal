@@ -17,7 +17,7 @@
 
             // ListView control
             var listView = pageElement.querySelector("#eventSpeakerList.listview");
-
+            
             Application.RecordsetController.apply(this, [pageElement, {
                 count: 0,
                 sendentrytmailLabel: getResourceText("eventSpeakerAdministration.send"),
