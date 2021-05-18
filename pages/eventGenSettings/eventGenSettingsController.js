@@ -421,7 +421,7 @@
 
             this.disableHandlers = {
                 clickOk: function() {
-                    if (that.binding.dataEvent && AppBar.modified && !AppBar.busy) {
+                    if (that.binding.dataEvent && !AppBar.busy) {
                         return false;
                     } else {
                         return true;
