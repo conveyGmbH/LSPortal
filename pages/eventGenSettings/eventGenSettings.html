@@ -110,6 +110,18 @@
                     </div>
                     <div class="line-separator"></div>
                     <div class="field_line field_line_odd">
+                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventGenSettings.sharednotes'}"></span>
+                        <span class="label landscape_only" data-win-res="{textContent: 'eventGenSettings.sharednotes'}"></span>
+                        <div class="input_field toggle-switch-parent">
+                            <div id="sharedNotes" class="input_field"
+                                 data-win-control="WinJS.UI.ToggleSwitch"
+                                 data-win-bind="winControl.checked: dataEvent.SharedNotes; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                                 onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="line-separator"></div>
+                    <div class="field_line field_line_odd">
                         <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventGenSettings.requirereg'}"></span>
                         <span class="label landscape_only" data-win-res="{textContent: 'eventGenSettings.requirereg'}"></span>
                         <div class="input_field toggle-switch-parent">

@@ -205,6 +205,13 @@
             var changeAppSetting = function(toggleId, checked) {
                 Log.call(Log.l.trace, "Settings.Controller.", "toggleId=" + toggleId + " checked=" + checked);
                 switch (toggleId) {
+                case "sharedNotes":
+                    if (checked) {
+                        that.binding.dataEvent.SharedNotes = 1;
+                    } else {
+                        that.binding.dataEvent.SharedNotes = null;
+                    }
+                    break;
                 case "requireReg":
                     if (checked) {
                         that.binding.dataEvent.RequireReg = 1;

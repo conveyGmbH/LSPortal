@@ -1302,6 +1302,7 @@
     "eventGenSettings.speakertitle"			: "Show speaker title",
     "eventGenSettings.speakercv"			: "Show speaker CV",
     "eventGenSettings.newevent"			: "New Eventname",
+    "eventGenSettings.sharednotes"			: "Shared Notes",
 
 	"eventSpeakerAdministration.speaker"    : "Member",
 	"eventSpeakerAdministration.speakerDelete": "Would you like to delete the assignment",

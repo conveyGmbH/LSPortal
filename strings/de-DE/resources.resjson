@@ -1281,6 +1281,7 @@
     "eventGenSettings.speakertitle"			: "Speaker Titel zeigen",
 	"eventGenSettings.speakercv"			: "Speaker CV zeigen",
     "eventGenSettings.newevent"			: "Neuer Veranstaltungname",
+    "eventGenSettings.sharednotes"			: "Geteilten Notizen",
     
 	"eventSeries.title" : "Titel",
     "eventSeries.language" : "Sprache",
