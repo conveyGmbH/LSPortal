@@ -37,8 +37,29 @@
             Log.ret(Log.l.trace);
         },
 
+        canUnload: function (complete, error) {
+            Log.call(Log.l.trace, pageName + ".");
+            var ret;
+            if (this.controller) {
+                ret = this.controller.saveData(function (response) {
+                    // called asynchronously if ok
+                    complete(response);
+                }, function (errorResponse) {
+                    error(errorResponse);
+                });
+            } else {
+                ret = WinJS.Promise.as().then(function () {
+                    var err = { status: 500, statusText: "fatal: page already deleted!" };
+                    error(err);
+                });
+            }
+            Log.ret(Log.l.trace);
+            return ret;
+        },
+
         updateLayout: function (element, viewState, lastViewState) {
-           
+            /// <param name="element" domElement="true" />
+            // TODO: Respond to changes in viewState.
         }
     });
 })();

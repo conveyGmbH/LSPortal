@@ -122,9 +122,14 @@
                                                 if ((curPageId === "genDataModDetails") &&
                                                     typeof AppBar.scope.loadData === "function" &&
                                                     typeof AppBar.scope.setAdresseId === "function") {
-                                                        AppBar.scope.setAdresseId(item.data.AdresseID);
-                                                        AppBar.scope.setPersonAdresseId(item.data.PersonAdresseVIEWID);
-                                                        AppBar.scope.loadData();
+                                                    AppBar.scope.saveData(function(response) {
+                                                            AppBar.scope.setAdresseId(item.data.AdresseID);
+                                                            AppBar.scope.setPersonAdresseId(item.data.PersonAdresseVIEWID);
+                                                            AppBar.scope.loadData();
+                                                    },
+                                                    function (errorResponse) {
+                                                        that.selectRecordId(item.data.PersonAdresseVIEWID);
+                                                    });
                                                 }
                                                 if ((curPageId === "genDataModHisto") &&
                                                     typeof AppBar.scope.loadData === "function" &&
