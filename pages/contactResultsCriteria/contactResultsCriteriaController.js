@@ -117,6 +117,12 @@
                 AppData.setErrorMsg(that.binding);
                 var ret;
                 var dataContactCriteria = that.binding.dataContactCriteria;
+                if (dataContactCriteria.INKontaktPrioID) {
+                    dataContactCriteria.INKontaktPrioID = parseInt(dataContactCriteria.INKontaktPrioID);
+                }
+                if (dataContactCriteria.INKontaktTypID) {
+                    dataContactCriteria.INKontaktTypID = parseInt(dataContactCriteria.INKontaktTypID);
+                }
                 if (dataContactCriteria && AppBar.modified && !AppBar.busy) {
                     var recordId = getRecordId();
                         AppBar.busy = true;
@@ -161,6 +167,38 @@
                 Log.call(Log.l.trace, "ContactResultsCriteria.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
+                    return ContactResultsCriteria.langINKontaktPrioView.select(function (json) {
+                        Log.print(Log.l.trace, "questionGroupTable: success!");
+                        if (json && json.d && json.d.results) {
+                            var results = json.d.results;
+                            // Now, we call WinJS.Binding.List to get the bindable list
+                            if (initPrio && initPrio.winControl) {
+                                initPrio.winControl.data = new WinJS.Binding.List(results);
+                            }
+                            initPrio.selectedIndex = 0;
+                        }
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                        }, {LanguageSpecID : AppData.getLanguageId()});
+                }).then(function () {
+                    return ContactResultsCriteria.langINKontaktTypView.select(function (json) {
+                        Log.print(Log.l.trace, "questionGroupTable: success!");
+                        if (json && json.d && json.d.results) {
+                            var results = json.d.results;
+                            // Now, we call WinJS.Binding.List to get the bindable list
+                            if (initTyp && initTyp.winControl) {
+                                initTyp.winControl.data = new WinJS.Binding.List(results);
+                            }
+                            initTyp.selectedIndex = 0;
+                        }
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    }, { LanguageSpecID: AppData.getLanguageId() });
+                    }).then(function () {
                     var recordId = getRecordId();
                     Log.print(Log.l.trace, "calling select contactView...");
                     return ContactResultsCriteria.contactView.select(function (json) {
@@ -170,7 +208,7 @@
                                 // now always edit!
                                 var result = json.d;
                                 that.setDataContact(result);
-                        }
+                            }
                         },
                         function (errorResponse) {
                             AppData.setErrorMsg(that.binding, errorResponse);
@@ -192,54 +230,6 @@
                         },
                         { KontaktKriterienVIEWID: recordId });
                 }).then(function () {
-                    if (!AppData.initINKontaktPrioView.getResults().length) {
-                        Log.print(Log.l.trace, "calling select initAnredeData...");
-                        //@nedra:25.09.2015: load the list of INITAnrede for Combobox
-                        return AppData.initINKontaktPrioView.select(function (json) {
-                            Log.print(Log.l.trace, "initAnredeView: success!");
-                            if (json && json.d && json.d.results) {
-                                // Now, we call WinJS.Binding.List to get the bindable list
-                                if (initPrio && initPrio.winControl) {
-                                    initPrio.winControl.data = new WinJS.Binding.List(json.d.results);
-                                }
-                            }
-                        }, function (errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        });
-                    } else {
-                        if (initPrio && initPrio.winControl &&
-                            (!initPrio.winControl.data || !initPrio.winControl.data.length)) {
-                            initPrio.winControl.data = new WinJS.Binding.List(AppData.initINKontaktPrioView.getResults());
-                        }
-                        return WinJS.Promise.as();
-                    }
-                }).then(function () {
-                    if (!AppData.initINKontaktTypView.getResults().length) {
-                        Log.print(Log.l.trace, "calling select initAnredeData...");
-                        //@nedra:25.09.2015: load the list of INITAnrede for Combobox
-                        return AppData.initINKontaktTypView.select(function (json) {
-                            Log.print(Log.l.trace, "initAnredeView: success!");
-                            if (json && json.d && json.d.results) {
-                                // Now, we call WinJS.Binding.List to get the bindable list
-                                if (initTyp && initTyp.winControl) {
-                                    initTyp.winControl.data = new WinJS.Binding.List(json.d.results);
-                                }
-                            }
-                        }, function (errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        });
-                    } else {
-                        if (initTyp && initTyp.winControl &&
-                            (!initTyp.winControl.data || !initTyp.winControl.data.length)) {
-                            initTyp.winControl.data = new WinJS.Binding.List(AppData.initINKontaktTypView.getResults());
-                        }
-                        return WinJS.Promise.as();
-                    }
-                    }).then(function () {
                     AppBar.notifyModified = true;
                     return WinJS.Promise.as();
                 });

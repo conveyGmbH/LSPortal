@@ -51,6 +51,72 @@
                 Log.ret(Log.l.trace);
                 return ret;
             }
+        },
+        _langINKontaktPrioView: {
+            get: function () {
+                return AppData.getFormatView("LangINKontaktPrio", 0);
+            }
+        },
+        langINKontaktPrioView: {
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, "ContactResultsCriteria.");
+                var ret = ContactResultsCriteria._langINKontaktPrioView.select(complete, error, restriction, {
+                    ordered: true,
+                    orderAttribute: "LangINKontaktPrioVIEWID"
+                });
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getNextUrl: function (response) {
+                Log.call(Log.l.trace, "ContactResultsCriteria.");
+                var ret = ContactResultsCriteria._langINKontaktPrioView.getNextUrl(response);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            selectNext: function (complete, error, response, nextUrl) {
+                Log.call(Log.l.trace, "ContactResultsCriteria.");
+                var ret = ContactResultsCriteria._langINKontaktPrioView.selectNext(complete, error, response, nextUrl);
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getDbView: function () {
+                return ContactResultsCriteria.langINKontaktPrioView;
+            }
+        },
+        _langINKontaktTypView: {
+            get: function () {
+                return AppData.getFormatView("LangINKontaktTyp", 0);
+            }
+        },
+        langINKontaktTypView: {
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, "ContactResultsCriteria.");
+                var ret = ContactResultsCriteria._langINKontaktTypView.select(complete, error, restriction, {
+                    ordered: true,
+                    orderAttribute: "LangINKontaktTypVIEWID "
+                });
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getNextUrl: function (response) {
+                Log.call(Log.l.trace, "ContactResultsCriteria.");
+                var ret = ContactResultsCriteria._langINKontaktTypView.getNextUrl(response);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            selectNext: function (complete, error, response, nextUrl) {
+                Log.call(Log.l.trace, "ContactResultsCriteria.");
+                var ret = ContactResultsCriteria._langINKontaktTypView.selectNext(complete, error, response, nextUrl);
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getDbView: function () {
+                return ContactResultsCriteria._langINKontaktTypView;
+            }
         }
     });
 })();
