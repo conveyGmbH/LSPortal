@@ -1282,6 +1282,7 @@
 	"eventGenSettings.speakercv"			: "Speaker CV zeigen",
     "eventGenSettings.newevent"			: "Neuer Veranstaltungname",
     "eventGenSettings.sharednotes"			: "Geteilten Notizen",
+    "eventGenSettings.addevent"			: "Hinzufügen",
     
 	"eventSeries.title" : "Titel",
     "eventSeries.language" : "Sprache",

@@ -1303,6 +1303,7 @@
     "eventGenSettings.speakercv"			: "Afficher le CV de l'orateur",
     "eventGenSettings.newevent"			: "Nouveau nom de l'événement",
     "eventGenSettings.sharednotes"			: "Notes partagées",
+    "eventGenSettings.addevent"			: "Ajouter",
 
     "eventSpeakerAdministration.speaker"    : "Membre",
     "eventSpeakerAdministration.speakerDelete": "Souhaitez-vous supprimer le devoir",

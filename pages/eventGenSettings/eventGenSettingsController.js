@@ -30,6 +30,7 @@
             var listremovedate = pageElement.querySelector("#listremovedate");
             var listremovetime = pageElement.querySelector("#listremovetime");
             var neweventbox = pageElement.querySelector("#newevent");
+            var showbox = pageElement.querySelector(".showcontainer");
 
             var eventtyp = pageElement.querySelector("#eventTyp");
             
@@ -167,6 +168,7 @@
                         Log.print(Log.l.info, "call success!");
                         //that.createMandantVaText(json.d.results[0].NewVeranstaltungID);
                         neweventbox.style.display = "none";
+                        showbox.style.display = "block";
                         var master = Application.navigator.masterControl;
                         master.controller.loadData();
                     }, function (error) {
@@ -360,8 +362,10 @@
                 clickNew: function(event) {
                     if (neweventbox.style.display === "none") {
                         neweventbox.style.display = "block";
+                        showbox.style.display = "none";
                     } else {
                         neweventbox.style.display = "none";
+                        showbox.style.display = "block";
                     }
                 },
                 onClickSave: function () {

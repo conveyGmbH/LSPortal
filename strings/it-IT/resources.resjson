@@ -1302,6 +1302,7 @@
     "eventGenSettings.speakercv"			: "Mostra CV speaker",
     "eventGenSettings.newevent"			: "Nuovo nome dell'evento",
     "eventGenSettings.sharednotes"			: "Note condivise",
+    "eventGenSettings.addevent"			: "Aggiungi",
 
     "eventSpeakerAdministration.speaker": "Membro",
     "eventSpeakerAdministration.speakerDelete": "Vuoi eliminare il compito",
