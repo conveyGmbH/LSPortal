@@ -123,6 +123,9 @@
     "tooltip.pictureZoomout": "Réduire l'image",
     "tooltip.deleteevent": "Supprimer l'événement",
     "tooltip.newmod": "Nouveau modérateur",
+    "tooltip.deletequestion"        : "Supprimer la question",
+    "tooltip.newquestion"        : "Nouvelle question",
+    "tooltip.deletemod"        : "Supprimer le modérateur",
 
     "home.title"            : "Start",
     "home.info"             : "Instructions importantes",
@@ -1334,6 +1337,7 @@
     "genDataModDetails.info1" : "Faites glisser l'image du modérateur ici",
     "genDataModDetails.picchanghebutton" : "Changer l'image",
     "genDataModDetails.academicTitle" : "Titre académique",
+    "genDataModDetails.modDelete" : "Voulez-vous supprimer ce modérateur ?",
 
     "genDataModHisto.title" : "Histoire",
     "genDataModHisto.eventname" : "Événement",

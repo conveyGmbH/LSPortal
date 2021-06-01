@@ -25,6 +25,7 @@
             var commandList = [
                 { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" },
                 { id: "clickOpenNewMod", label: getResourceText("command.newmod"), tooltip: getResourceText("tooltip.newmod"), section: "primary", svg: "plus" },
+                { id: "clickDelete", label: getResourceText("command.delete"), tooltip: getResourceText("tooltip.deletemod"), section: "primary", svg: "garbage_can" },
                 { id: "clickSave", label: getResourceText("command.save"), tooltip: getResourceText("tooltip.save"), section: "primary", svg: "navigate_check" }//, key: WinJS.Utilities.Key.enter
             ];
             this.controller = new GenDataModDetails.Controller(element, commandList);

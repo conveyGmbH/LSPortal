@@ -57,6 +57,23 @@
                 };
                 this.background = background;
 
+                var deleteMod = function (recordId) {
+                    Log.call(Log.l.trace, "EventsList.Controller.", "recordId=" + recordId);
+                    AppData.setErrorMsg(that.binding);
+                    if (recordId) {
+                        AppBar.busy = true;
+                        GenDataModList.personAdresseTable.deleteRecord(function (response) {
+                            AppBar.busy = false;
+                            that.loadData();
+                        }, function (errorResponse) {
+                            AppBar.busy = false;
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        }, recordId);
+                    }
+                    Log.ret(Log.l.trace);
+                }
+                this.deleteMod = deleteMod;
+
                 var getRestriction = function() {
                     var restriction = AppData.getRestriction("Kontakt");
                     if (!restriction) {

@@ -377,6 +377,24 @@
 
                         Log.ret(Log.l.trace);
                     },
+                    clickDelete: function () {
+                        Log.call(Log.l.trace, "GenDataAnswers.Controller.");
+                        var confirmTitle = getResourceText("genDataModDetails.modDelete");
+                        confirm(confirmTitle, function (result) {
+                            if (result) {
+                                AppData.setErrorMsg(that.binding);
+                                Log.print(Log.l.trace, "clickDelete: user choice OK");
+                                var modId = that.binding.modData.PersonAdresseID;
+                                var master = Application.navigator.masterControl;
+                                if (master && master.controller && master.controller.binding) {
+                                    master.controller.deleteMod(modId);
+                                }
+                            } else {
+                                Log.print(Log.l.trace, "clickDelete: user choice CANCEL");
+                            }
+                        });
+                        Log.ret(Log.l.trace);
+                    },
                     handleFileChoose: function (event) {
                         if (event && event.target) {
                             // FileList-Objekt des input-Elements auslesen, auf dem 
@@ -512,6 +530,13 @@
                     },
                     clickSave: function () {
                         if (that.binding.modData && AppBar.modified && !AppBar.busy) {
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    },
+                    clickDelete: function () {
+                        if (that.binding.modData) {
                             return false;
                         } else {
                             return true;

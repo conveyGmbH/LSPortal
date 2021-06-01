@@ -78,6 +78,21 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
+            deleteRecord: function (complete, error, recordId) {
+                var ret;
+                Log.call(Log.l.trace, "EventSeries.seriesTable.");
+                if (recordId) {
+                    ret = GenDataModList._personAdresseTable.deleteRecord(function () {
+                        if (typeof complete === "function") {
+                            complete();
+                        }
+                    }, error, recordId);
+                } else {
+                    ret = WinJS.Promise.as();
+                }
+                Log.ret(Log.l.trace);
+                return ret;
+            },
             relationName: GenDataModList._personAdresseTable.relationName,
             pkName: GenDataModList._personAdresseTable.oDataPkName,
             getRecordId: function (record) {

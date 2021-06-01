@@ -123,6 +123,9 @@
     "tooltip.pictureZoomout"       : "Bild verkleinern",
 	"tooltip.deleteevent"   : "Veranstaltung löschen",
     "tooltip.newmod"        : "Neuer Moderator",
+    "tooltip.deletequestion"        : "Frage löschen",
+    "tooltip.newquestion"        : "Neue Frage",
+    "tooltip.deletemod"        : "Moderator löschen",
 
     "home.title"            : "Start",
     "home.info"             : "Wichtige Hinweise",
@@ -1334,6 +1337,7 @@
     "genDataModDetails.info1" : "Moderatorenbild hier herein ziehen",
     "genDataModDetails.picchanghebutton" : "Bild ändern",
     "genDataModDetails.academicTitle" : "Akademischer Titel",
+    "genDataModDetails.modDelete" : "Wollen Sie diesen Moderator löschen?",
 
     "genDataModHisto.title" : "Historie",
     "genDataModHisto.eventname" : "Veranstaltung",

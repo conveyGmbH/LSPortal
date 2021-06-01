@@ -123,6 +123,9 @@
     "tooltip.pictureZoomout"       : "Zoom out picture",
     "tooltip.deleteevent": "Delete event",
     "tooltip.newmod": "New moderator",
+    "tooltip.deletequestion"        : "Delete Question",
+    "tooltip.newquestion"        : "New Question",
+    "tooltip.deletemod"        : "Delete Moderator",
 
     "home.title"            : "Start",
     "home.info"             : "Important information",
@@ -1334,6 +1337,7 @@
     "genDataModDetails.info1" : "Drag moderator image in here",
     "genDataModDetails.picchanghebutton" : "Change image",
     "genDataModDetails.academicTitle" : "Academic title",
+    "genDataModDetails.modDelete" : "Do you want to delete this moderator?",
 
     "genDataModHisto.title" : "History",
     "genDataModHisto.eventname" : "Event",
