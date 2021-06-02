@@ -50,7 +50,7 @@
             // add page specific commands to AppBar
             var commandList = [
                 { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" },
-                { id: "clickDelete", label: getResourceText("command.delete"), tooltip: getResourceText("tooltip.deleteEventSeries"), section: "primary", svg: "garbage_can" },
+                { id: "clickDelete", label: getResourceText("command.delete"), tooltip: getResourceText("tooltip.deletequestion"), section: "primary", svg: "garbage_can" },
                 { id: "clickNewQuestion", label: getResourceText("command.newquestion"), tooltip: getResourceText("tooltip.newquestion"), section: "primary", svg: "plus" }
             ];
             var isMaster = Application.navigator && Application.navigator._nextMaster === pageName;

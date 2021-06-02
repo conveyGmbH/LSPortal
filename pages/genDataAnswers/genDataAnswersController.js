@@ -474,6 +474,7 @@
                             if (result) {
                                 AppData.setErrorMsg(that.binding);
                                 Log.print(Log.l.trace, "clickDelete: user choice OK");
+                                that.binding.dataQuestion = "";
                                 var questionId = that.getQuestionId();
                                 var master = Application.navigator.masterControl;
                                 if (master && master.controller && master.controller.binding) {
@@ -659,15 +660,22 @@
 
                 };
 
-                this.disableHandlers = {
-                    clickBack: function () {
-                        if (WinJS.Navigation.canGoBack === true) {
-                            return false;
-                        } else {
-                            return true;
-                        }
+            this.disableHandlers = {
+                clickBack: function() {
+                    if (WinJS.Navigation.canGoBack === true) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                },
+                clickDelete: function() {
+                    if (that.binding.dataQuestion) {
+                        return false;
+                    } else {
+                        return true;
                     }
                 }
+            };
                 
                 // register ListView event handler
             if (listView) {
