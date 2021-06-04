@@ -1293,6 +1293,8 @@
     "eventGenSettings.allowaudio"			: "Allow viewers voice",
     "eventGenSettings.allowvideo"			: "Allow viewers video",
     "eventGenSettings.nomemberlist"			: "Don't show viewer list",
+    "eventGenSettings.listonlymoderators"	: "List only moderators",
+    "eventGenSettings.hidesilentvideos"	: "Hide silent videos",
     "eventGenSettings.shownames"			: "Show Names",
     "eventGenSettings.showquestions"			: "Show questionnaire registration",
     "eventGenSettings.showics"			    : "Show calendar",

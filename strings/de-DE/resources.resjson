@@ -1272,6 +1272,8 @@
     "eventGenSettings.allowaudio"			: "Zuschauern Stimmrechte erlauben",
     "eventGenSettings.allowvideo"			: "Zuschauern Videorechte erlauben",
     "eventGenSettings.nomemberlist"			: "Keine Zuschauerliste anzeigen",
+    "eventGenSettings.listonlymoderators"	: "Nur Moderatoren auflisten",
+    "eventGenSettings.hidesilentvideos"	: "Stille Videos ausblenden",
     "eventGenSettings.shownames"			: "Namen anzeigen",
 	"eventGenSettings.showquestions"			: "Fragebogen Registrierung anzeigen",
     "eventGenSettings.showics"			    : "Kalender anzeigen",

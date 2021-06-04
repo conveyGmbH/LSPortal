@@ -1293,6 +1293,8 @@
     "eventGenSettings.allowaudio"			: "Permettre aux téléspectateurs de s'exprimer",
     "eventGenSettings.allowvideo"			: "Permettre aux téléspectateurs de visionner des vidéos",
     "eventGenSettings.nomemberlist"			: "Ne pas montrer la liste des téléspectateurs",
+    "eventGenSettings.listonlymoderators"	: "Liste des modérateurs uniquement",
+    "eventGenSettings.hidesilentvideos"	: "Cacher des vidéos silencieuses",
     "eventGenSettings.shownames"			: "Afficher les noms",
     "eventGenSettings.showquestions"			: "Montrer l'enregistrement du questionnaire",
     "eventGenSettings.showics"			    : "Montrer le calendrier",

@@ -207,125 +207,139 @@
             var changeAppSetting = function(toggleId, checked) {
                 Log.call(Log.l.trace, "Settings.Controller.", "toggleId=" + toggleId + " checked=" + checked);
                 switch (toggleId) {
-                case "sharedNotes":
+                    case "sharedNotes":
                     if (checked) {
                         that.binding.dataEvent.SharedNotes = 1;
                     } else {
                         that.binding.dataEvent.SharedNotes = null;
                     }
                     break;
-                case "requireReg":
+                    case "requireReg":
                     if (checked) {
                         that.binding.dataEvent.RequireReg = 1;
                     } else {
                         that.binding.dataEvent.RequireReg = null;
                     }
-                        break;
-                case "acceptRec":
+                    break;
+                    case "acceptRec":
                     if (checked) {
                         that.binding.dataEvent.AcceptRec = 1;
                     } else {
                         that.binding.dataEvent.AcceptRec = null;
                     }
-                        break;
-                case "showAllowAudio":
+                    break;
+                    case "showAllowAudio":
                     if (checked) {
                         that.binding.dataEvent.AllowAudio = 1;
                     } else {
                         that.binding.dataEvent.AllowAudio = null;
                     }
                     break;
-                case "showAllowVideo":
+                    case "showAllowVideo":
                     if (checked) {
                         that.binding.dataEvent.AllowVideo = 1;
                     } else {
                         that.binding.dataEvent.AllowVideo = null;
                     }
                     break;
-                case "showNoMemberList":
+                    case "hideSilentVideos":
+                    if (checked) {
+                        that.binding.dataEvent.HideSilentVideos = 1;
+                    } else {
+                        that.binding.dataEvent.HideSilentVideos = null;
+                    }
+                    break;
+                    case "showNoMemberList":
                     if (checked) {
                         that.binding.dataEvent.NoMemberList = 1;
                     } else {
                         that.binding.dataEvent.NoMemberList = null;
                     }
                     break;
-                case "showShowNames":
+                    case "listOnlyModerators":
+                    if (checked) {
+                        that.binding.dataEvent.ListOnlyModerators = 1;
+                    } else {
+                        that.binding.dataEvent.ListOnlyModerators = null;
+                    }
+                    break;
+                    case "showShowNames":
                     if (checked) {
                         that.binding.dataEvent.ShowNames = 1;
                     } else {
                         that.binding.dataEvent.ShowNames = null;
                     }
                     break;
-                case "showRecordSession":
+                    case "showRecordSession":
                     if (checked) {
                         that.binding.dataEvent.RecordSession = 1;
                     } else {
                         that.binding.dataEvent.RecordSession = null;
                     }
-                        break;
+                    break;
                     case "showQuestions":
                     if (checked) {
                         that.binding.dataEvent.ShowQuestions = 1;
                     } else {
                         that.binding.dataEvent.ShowQuestions = null;
                     }
-                        break;
+                    break;
                     case "showICS":
                     if (checked) {
                         that.binding.dataEvent.ShowICS = 1;
                     } else {
                         that.binding.dataEvent.ShowICS = null;
                     }
-                        break;
+                    break;
                     case "publishRecording":
                     if (checked) {
                         that.binding.dataEvent.PublishRecording = 1;
                     } else {
                         that.binding.dataEvent.PublishRecording = null;
                     }
-                        break;
+                    break;
                     case "showType":
                     if (checked) {
                         that.binding.dataEvent.ShowType = 1;
                     } else {
                         that.binding.dataEvent.ShowType = null;
                     }
-                        break;
+                    break;
                     case "showReg":
                     if (checked) {
                         that.binding.dataEvent.ShowReg = 1;
                     } else {
                         that.binding.dataEvent.ShowReg = null;
                     }
-                        break;
+                    break;
                     case "speakerName":
                     if (checked) {
                         that.binding.dataEvent.SpeakerName = 1;
                     } else {
                         that.binding.dataEvent.SpeakerName = null;
                     }
-                        break;
+                    break;
                     case "speakerFN":
                     if (checked) {
                         that.binding.dataEvent.SpeakerFN = 1;
                     } else {
                         that.binding.dataEvent.SpeakerFN = null;
                     }
-                        break;
+                    break;
                     case "speakerImage":
                     if (checked) {
                         that.binding.dataEvent.SpeakerImage = 1;
                     } else {
                         that.binding.dataEvent.SpeakerImage = null;
                     }
-                        break;
+                    break;
                     case "speakerTitle":
                     if (checked) {
                         that.binding.dataEvent.SpeakerTitle = 1;
                     } else {
                         that.binding.dataEvent.SpeakerTitle = null;
                     }
-                        break;
+                    break;
                     case "speakerCV":
                     if (checked) {
                         that.binding.dataEvent.SpeakerCV = 1;
@@ -478,9 +492,10 @@
                     Log.call(Log.l.trace, "Contact.Controller.");
                     AppData.setErrorMsg(that.binding);
                     AppData.call("PRC_GetEventTypeList", {
+                        pLanguageSpecID: AppData.getLanguageId()
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
-                        if (eventtyp.winControl) {
+                        if (eventtyp.winControl && json.d) {
                             // add ListView dataSource
                             eventtyp.winControl.data = new WinJS.Binding.List(json.d.results);
                         }

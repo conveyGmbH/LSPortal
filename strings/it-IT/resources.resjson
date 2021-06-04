@@ -1292,6 +1292,8 @@
     "eventGenSettings.allowaudio"			: "Permettere voce spettatori",
     "eventGenSettings.allowvideo"			: "Permettere video spettatori",
     "eventGenSettings.nomemberlist"			: "Non mostrare l'elenco degli spettatori",
+    "eventGenSettings.listonlymoderators"	: "Elenca solo i moderatori",
+    "eventGenSettings.hidesilentvideos"	: "Nascondi i video silenziosi",
     "eventGenSettings.shownames"			: "Mostra i nomi",
     "eventGenSettings.showquestions"			: "Mostra questionario registrazione",
     "eventGenSettings.showics"			    : "Mostra calendario",

@@ -17,6 +17,9 @@
 #showNoMemberList .win-toggleswitch-header {
     display: none;
 }
+#listOnlyModerators .win-toggleswitch-header {
+    display: none;
+}
 #showShowNames .win-toggleswitch-header {
     display: none;
 }
