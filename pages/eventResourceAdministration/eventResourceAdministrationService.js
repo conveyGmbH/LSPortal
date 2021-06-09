@@ -86,8 +86,7 @@
                     if (!restriction.VeranstaltungID) {
                         restriction.DokVerwendungID = -1;
                     }
-                    if (EventResourceAdministration._eventTextUsageId === 1 ||
-                        EventResourceAdministration._eventTextUsageId === 2) {
+                    if (EventResourceAdministration._eventTextUsageId === 2) {
                         restriction.MandantSerieID = EventResourceAdministration._eventSeriesId;
                         if (!restriction.MandantSerieID) {
                             restriction.DokVerwendungID = -1;
