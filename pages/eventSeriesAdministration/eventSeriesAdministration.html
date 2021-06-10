@@ -44,6 +44,7 @@
                                 <label class="list-serieFlagcon-field">
                                     <input type="checkbox" class="win-checkbox" value="1"
                                            data-win-bind="checked: StartAnzeige Binding.Mode.twoway"
+                                           onclick="AppBar.handleEvent('click', 'clickForward', event)"
                                            data-field-entry="StartAnzeige" />
                                     <span data-win-res="{textContent: 'eventSeriesAdministration.startAnzeige'}"></span>
                                 </label>
@@ -72,6 +73,7 @@
                                 <label class="list-mandcon-field">
                                     <input type="checkbox" class="win-checkbox" value="1"
                                            data-win-bind="checked: SerieAnzeige Binding.Mode.twoway"
+                                           onclick="AppBar.handleEvent('click', 'clickForward', event)"
                                            data-field-entry="SerieAnzeige" />
                                     <span data-win-res="{textContent: 'eventSeriesAdministration.serieAnzeige'}"></span>
                                 </label>
