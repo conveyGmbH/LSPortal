@@ -179,6 +179,7 @@
                         return WinJS.Promise.as();
                     }
                 }).then(function() {
+                    that.binding.fileInfo = "";
                     that.binding.showLoadingCircle = false;
                 });
                 Log.ret(Log.l.trace);
@@ -221,6 +222,8 @@
                             saveAs(blob, "Test.txt");*/
                         }
                     };
+                    // setze input-feld value auf leer
+                    fileOpener.value = "";
                     reader.onerror = function(error) {
                         AppData.setErrorMsg(that.binding, error);
                     };
