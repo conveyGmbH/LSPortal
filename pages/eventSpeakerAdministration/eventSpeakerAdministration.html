@@ -33,7 +33,7 @@
                         <div class="field_line" 
                              data-win-bind="style.display: StartLink Binding.Converter.toDisplay">
                             <span class="label win-type-caption" data-win-res="{textContent: 'eventSpeakerAdministration.entryLink'}"></span>
-                            <a id="entryLink" data-win-bind="href: StartLink; textContent: StartLink"></a>
+                            <a id="entryLink" href="/" data-win-bind="href: StartLink; textContent: StartLink" target="_blank"></a>
                             <button class="sendentryLinkmail-button win-button"
                                     data-win-res="{textContent: 'eventSpeakerAdministration.send'}"
                                     onclick="AppBar.handleEvent('click', 'clickSendEntryMail', event)" autofocus="autofocus"></button>
