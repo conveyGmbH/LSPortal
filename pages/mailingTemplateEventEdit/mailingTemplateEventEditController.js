@@ -137,6 +137,11 @@
                 var layoutUpdateData = that.binding.dataLayoutValue;
                 if (layoutUpdateData.Subject === "" && layoutUpdateData.MailText === "") {
                     Log.print(Log.l.trace, "layoutUpdateData.Subject and layoutUpdateData.MailText empty!");
+                    ret = new WinJS.Promise.as().then(function () {
+                        if (typeof complete === "function") {
+                            complete({});
+                        }
+                    });
                 } else {
                     var recordId = that.binding.dataLayoutValue.VAMailTextVIEWID;
                     if (recordId && layoutUpdateData.LanguageSpecID) {
@@ -165,7 +170,6 @@
                 }
                 Log.ret(Log.l.trace, ret);
                 return ret;
-
             }
             this.saveData = saveData;
 
