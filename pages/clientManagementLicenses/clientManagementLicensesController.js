@@ -7,6 +7,7 @@
 /// <reference path="~/www/lib/convey/scripts/pageController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/pages/clientManagementList/clientManagementListService.js" />
+/// <reference path="~/www/pages/clientManagementLicenses/clientManagementLicensesService.js" />
 
 (function () {
     "use strict";
@@ -20,8 +21,8 @@
                 count: 0,
                 licenseId: 0, //AppData.getRecordId("Mitarbeiter")
                 veranstaltungdataLicenses: getEmptyDefaultValue(ClientManagementLicenses.veranstaltungView.defaultValue),
-                dataLicense: getEmptyDefaultValue(ClientManagementLicenses.mandantTempLizenzView.defaultValue),
-                newLicensesdata: getEmptyDefaultValue(ClientManagementLicenses.mandantTempLizenzView.defaultValue),
+                dataLicense: getEmptyDefaultValue(ClientManagementLicenses.mandantTempLizenzView.defaultRestriction),
+                newLicensesdata: getEmptyDefaultValue(ClientManagementLicenses.mandantTempLizenzView.defaultRestriction),
                 newLicensesShowFlag: false,
                 editLicensesShowFlag: false,
                 licensebtnLabel: getResourceText("clientmanagementlicenses.licensebtnLabel"),
@@ -233,7 +234,7 @@
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
                         that.binding.newLicensesShowFlag = false;
-                        that.binding.newLicensesdata = getEmptyDefaultValue(ClientManagementLicenses.mandantTempLizenzView.defaultValue);
+                        that.binding.newLicensesdata = getEmptyDefaultValue(ClientManagementLicenses.mandantTempLizenzView.defaultRestriction);
                         that.loadData(getRecordId());
                         }, function (errorResponse) {
                         Log.print(Log.l.error, "call error");
@@ -252,7 +253,7 @@
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
                         that.binding.editLicensesShowFlag = false;
-                        that.binding.dataLicense = getEmptyDefaultValue(ClientManagementLicenses.mandantTempLizenzView.defaultValue);
+                        that.binding.dataLicense = getEmptyDefaultValue(ClientManagementLicenses.mandantTempLizenzView.defaultRestriction);
                         that.loadData(getRecordId());
                     }, function (errorResponse) {
                         Log.print(Log.l.error, "call error");

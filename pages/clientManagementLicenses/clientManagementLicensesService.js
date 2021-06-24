@@ -40,7 +40,7 @@
             },
             defaultRestriction: {
                 VeranstaltungID: 0,
-                NumLicenses: "",
+                NumLicenses: 0,
                 InfoText: "",
                 VeranstaltungName: "",
                 VeranstaltungBeginn: new Date(),
