@@ -48,10 +48,11 @@
                 this.resultConverter = resultConverter;
 
                 // update data
-                var updateMandant = function () {
+                var saveData = function (complete, error) {
                     Log.call(Log.l.trace, "ClientManagement.Controller.");
                     AppData.setErrorMsg(that.binding);
                     var dataClientManagement = that.binding.dataClientManagement;
+                    var ret;
                     if (dataClientManagement.NumLicenses === null) {
                         dataClientManagement.NumLicenses = -2;
                         parseInt(dataClientManagement.NumLicenses);
@@ -60,9 +61,11 @@
                     AppData.setErrorMsg(that.binding);
                     if (!dataClientManagement.FairMandantVIEWID || dataClientManagement.FairMandantVIEWID < 0) {
                         Log.print(Log.l.info, "FairMandantVIEWID is undefined or 0! ");
-                        return;
+                        complete({});
+                        return WinJS.Promise.as();
                     } else {
-                        AppData.call("PRC_UpdateFairMandant",
+                        if (dataClientManagement && AppBar.modified && !AppBar.busy) {
+                            return AppData.call("PRC_UpdateFairMandant",
                             {
                                 pFairMandantID: dataClientManagement.FairMandantVIEWID,
                                 pName: dataClientManagement.Name,
@@ -77,43 +80,56 @@
                                 pTelefonFestnetz: dataClientManagement.TelefonFestnetz,
                                 pCreateEventUser: createApiUserValue
 
-                            }, function (json) {
+                                },
+                                function(json) {
                                 Log.print(Log.l.info, "call success! ");
                                 AppBar.busy = false;
-                                createApiUserValue = null;
-                                that.loadData(dataClientManagement.FairMandantVIEWID);
+                                    //createApiUserValue = null;
+                                    //that.loadData(dataClientManagement.FairMandantVIEWID);
                                 //Application.navigateById("localevents");
-                            }, function (errorResponse) {
+                                    complete(that.binding.dataClientManagement);
+                                    Log.ret(Log.l.trace);
+                                },
+                                function(errorResponse) {
                                 Log.print(Log.l.error, "call error");
                                 AppBar.busy = false;
                                 AppData.setErrorMsg(that.binding, errorResponse);
+                                    error({});
+                                });
+                        } else if (AppBar.busy) {
+                            ret = WinJS.Promise.timeout(100).then(function() {
+                                return that.saveData(complete, error);
+                            });
+                        } else {
+                            ret = new WinJS.Promise.as().then(function () {
+                                if (typeof complete === "function") {
+                                    complete({});//that.binding.dataClientManagement
+                                }
                             });
                     }
-                    Log.ret(Log.l.trace);
                 }
-                this.updateMandant = updateMandant;
+                    return ret;
+                }
+                this.saveData = saveData;
 
                 var newMandant = function() {
                     Log.call(Log.l.trace, "ClientManagement.Controller.");
                     AppData.setErrorMsg(that.binding);
-                    AppData.call("PRC_CreateFairMandant",
-                            {
+                    AppData.call("PRC_CreateFairMandant", {
                                 pLandID: 0,
                                 pNumLicenses: 0,
                                 pINITFairManTypID : 2
-                                
                             }, function (json) {
                                 Log.print(Log.l.info, "call success! ");
                                 AppBar.busy = false;
                                 var master = Application.navigator.masterControl;
-                                if (master && master.controller) {
+                        if (master && master.controller && typeof master.controller.loadData === "function") {
                                     master.controller.loadData().then(function() {
                                             master.controller.selectRecordId(json.d.results[0].FairMandantID);
                                             if (typeof complete === "function") {
                                                 complete(response);
                                             }
-                                        }
-                                    );
+                                });
                                 };
                             }, function (errorResponse) {
                                 Log.print(Log.l.error, "call error");
@@ -164,7 +180,17 @@
                     },
                     clickUpdate: function (event) {
                         Log.call(Log.l.trace, "ClientManagement.Controller.");
-                        that.updateMandant();
+                        that.saveData(function (response) {
+                            Log.print(Log.l.trace, "update mandant");
+                            var master = Application.navigator.masterControl;
+                            if (master && master.controller && typeof master.controller.loadData === "function") {
+                                master.controller.loadData(response.FairMandantVIEWID).then(function() {
+                                    master.controller.selectRecordId(response.FairMandantVIEWID);
+                                });
+                            };
+                        }, function (error) {
+                            Log.print(Log.l.trace, "error update mandant");
+                        });
                         Log.ret(Log.l.trace);
                     },
                     clickCreateApiUser: function(event) {
@@ -220,7 +246,7 @@
                     }
                 };
                 
-                var loadData = function (MandantID) {
+                var loadData = function (mandantId) {
                     Log.call(Log.l.trace, "SiteEventsBenNach.Controller.");
                     that.loading = true;
                     AppData.setErrorMsg(that.binding);
@@ -256,7 +282,7 @@
                             return WinJS.Promise.as();
                         }
                     }).then(function () {
-                        if (MandantID) {
+                        if (mandantId) {
                             return ClientManagement.fairMandantView.select(function (json) {
                                 // this callback will be called asynchronously
                                 // when the response is available
@@ -272,7 +298,7 @@
                                 // called asynchronously if an error occurs
                                 // or server returns response with an error status.
                                 AppData.setErrorMsg(that.binding, errorResponse);
-                              }, MandantID);
+                              }, mandantId);
                         } else {
                             return WinJS.Promise.as();
                         }

@@ -545,7 +545,7 @@
                     return ClientManagementLicenses.veranstaltungView.select(function (json) {
                         Log.print(Log.l.trace, "ClientManagementLicenses.veranstaltungView: success!");
                         // select returns object already parsed from json file in response
-                        if (json && json.d && json.d.results) {
+                        if (json && json.d && json.d.results && json.d.results.length > 0) {
                             var results = json.d.results;
                             that.binding.newLicensesdata.VeranstaltungVIEWID = results[0].VeranstaltungVIEWID;
                             // Now, we call WinJS.Binding.List to get the bindable list

@@ -217,22 +217,33 @@
                                         item.data.FairMandantVIEWID !== that.binding.clientId) {
                                         // called asynchronously if ok
                                         that.binding.clientId = item.data.FairMandantVIEWID;
-                                        if (curPageId === "clientManagementLicenses") {
+                                        if (AppBar.scope && typeof AppBar.scope.saveData === "function") {
+                                            AppBar.scope.saveData(function(response) {
+                                                Log.print(Log.l.trace, "update mandant");
+                                                if (curPageId === "clientManagement") {
                                             AppBar.scope.binding.saveFlag = true;
                                             if (typeof AppBar.scope.loadData === "function") {
+                                                        AppData.setRecordId("FairMandantVIEW_20582",
+                                                            that.binding.clientId);
                                                 AppBar.scope.loadData(that.binding.clientId);
+                                                    } else {
+                                                        Application.navigateById("clientManagement");
                                             }
-                                            else {
-                                                Application.navigateById("clientManagementLicenses");
                                             }
+                                                if (response && response.FairMandantVIEWID) {
+                                                    that.loadData(response.FairMandantVIEWID).then(function() {
+                                                        master.controller.selectRecordId(response.FairMandantVIEWID);
+                                                    });
                                         }
-                                        if (curPageId === "clientManagement") {
+                                            });
+                                        } else {
+                                            if (curPageId === "clientManagementLicenses") {
                                                 AppBar.scope.binding.saveFlag = true;
                                                 if (typeof AppBar.scope.loadData === "function") {
-                                                    AppData.setRecordId("FairMandantVIEW_20582", that.binding.clientId);
                                                     AppBar.scope.loadData(that.binding.clientId);
                                                 } else {
-                                                    Application.navigateById("clientManagement");
+                                                    Application.navigateById("clientManagementLicenses");
+                                                }
                                                 }
                                             }
                                         }
