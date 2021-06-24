@@ -264,6 +264,7 @@
                 onSelectionChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "EmpList.Controller.");
                     that.binding.licenseId = 0;
+                    that.binding.newLicensesShowFlag = false;
                     Log.ret(Log.l.trace);
                 },
                 onItemInvoked: function (eventInfo) {
@@ -278,7 +279,7 @@
                                 listControl.selection.getItems().done(function (items) {
                                     var item = items[0];
                                     that.binding.dataLicense = item.data;
-                                    that.binding.editLicensesShowFlag = true;
+                                    //that.binding.editLicensesShowFlag = true;
                                     if (item.data &&
                                         item.data.MandantTempLizenzVIEWID &&
                                         item.data.MandantTempLizenzVIEWID !== that.binding.licenseId) {
@@ -288,7 +289,11 @@
                                         that.binding.clientId = item.data.FairMandantID;
                                         that.binding.selIdx = item.index;
                                         } else {
+                                        if (that.binding.editLicensesShowFlag === false) {
+                                            that.binding.editLicensesShowFlag = true;
+                                        } else {
                                         that.binding.editLicensesShowFlag = false;
+                                    }
                                     }
                                 });
                             }
