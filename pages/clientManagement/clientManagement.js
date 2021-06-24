@@ -45,12 +45,6 @@
             if (this.controller) {
                 ret = this.controller.saveData(function (response) {
                     // called asynchronously if ok
-                    var master = Application.navigator.masterControl;
-                    if (master && master.controller && typeof master.controller.loadData === "function") {
-                        master.controller.loadData(response.FairMandantVIEWID).then(function () {
-                            master.controller.selectRecordId(response.FairMandantVIEWID);
-                        });
-                    };
                     complete(response);
                 }, function (errorResponse) {
                     error(errorResponse);

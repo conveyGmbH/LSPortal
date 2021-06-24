@@ -84,6 +84,7 @@
                                 function(json) {
                                 Log.print(Log.l.info, "call success! ");
                                 AppBar.busy = false;
+                                    AppBar.modified = false;
                                     //createApiUserValue = null;
                                     //that.loadData(dataClientManagement.FairMandantVIEWID);
                                 //Application.navigateById("localevents");

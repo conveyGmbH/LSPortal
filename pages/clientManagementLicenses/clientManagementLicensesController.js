@@ -46,6 +46,9 @@
                 if (that.licenses) {
                     that.licenses = null;
                 }
+                if (that.binding.licenseId) {
+                    that.binding.licenseId = 0;
+                }
             }
 
             var progress = null;
@@ -260,6 +263,7 @@
                 },
                 onSelectionChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "EmpList.Controller.");
+                    that.binding.licenseId = 0;
                     Log.ret(Log.l.trace);
                 },
                 onItemInvoked: function (eventInfo) {
