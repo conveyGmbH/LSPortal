@@ -70,6 +70,7 @@
                 var setAnswers = function(count) {
                     Log.call(Log.l.trace, "QuestionList.Controller.", "count=" + count);
                     var questionid = that.getQuestionId();
+                that.binding.lang = parseInt(that.binding.lang);
                     AppData.setErrorMsg(that.binding);
                     AppData.call("PRC_GetAnswers", {
                         pQuestionID: questionid,
@@ -302,7 +303,7 @@
                     var ret;
                     var lang = that.binding.lang;
                     if (lang) {
-                        ret = GenDataAnswers.answerView.select(function (json) {
+                    return GenDataAnswers.answerView.select(function (json) {
                             // this callback will be called asynchronously
                             // when the response is available
                             Log.print(Log.l.trace, "questionnaireDocView: success!");
@@ -346,7 +347,7 @@
                             AppData.setErrorMsg(that.binding, errorResponse);
                             }, { LanguageSpecID: lang, QuestionID : that.getQuestionId() });
                     } else {
-                        ret = new WinJS.Promise.as().then(function () {
+                    // ret = new WinJS.Promise.as().then(function () {
                             that.binding.count = 0;
                             that.binding.Anzahl = 0;
                             that.nextUrl = null;
@@ -365,10 +366,10 @@
                                 counter.style.display = "inline";
                             }
                             that.loading = false;
-                        });
+                    return WinJS.Promise.as();
+                    //});
                     }
                     Log.ret(Log.l.trace);
-                    return ret;
                 }
                 this.getAnswers = getAnswers;
             
@@ -745,7 +746,6 @@
                                 if (initSprache && initSprache.winControl) {
                                     initSprache.winControl.data = new WinJS.Binding.List(results);
                                 }
-                                initSprache.selectedIndex = 2;
                                 that.binding.lang = 1031;
                             }
                         }, function (errorResponse) {
@@ -758,12 +758,10 @@
                             (!initSprache.winControl.data || !initSprache.winControl.data.length)) {
                             var results = GenDataAnswers.initSpracheView.getResults();
                             initSprache.winControl.data = new WinJS.Binding.List(results);
-                            initSprache.selectedIndex = 2;
                             that.binding.lang = 1031;
                         }
                         if (initSprache && initSprache.winControl &&
                             (initSprache.winControl.data || initSprache.winControl.data.length)) {
-                            initSprache.selectedIndex = 2;
                             that.binding.lang = 1031;
                         }
                         return WinJS.Promise.as();
@@ -800,6 +798,7 @@
                             });
                             
                             that.binding.dataQuestion = json.d.results[0];
+                            that.setQuestionId(that.binding.dataQuestion.QuestionVIEWID);
                         }
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
