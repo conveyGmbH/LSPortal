@@ -16,7 +16,7 @@
 }
 #modpicture {
     height: 250px;
-    width: 200px;
+    width: auto;
 }
 #picchange {
     margin-top: 5px;
