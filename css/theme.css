@@ -4,6 +4,12 @@
 .cnv-ui-dark .row-bkg-gray {
     opacity: 0.2;
 }
+.masterhost-container .pagecontrol {
+    background-color: #fcfcfc;
+}
+.cnv-ui-dark .masterhost-container .pagecontrol {
+    background-color: #101010;
+}
 
 .list-container,
 .win-selectionstylefilled .win-container:hover .row-bkg {
@@ -152,4 +158,5 @@
     border-bottom-color: #393939;
     border-bottom-style: solid;
 }
+
 
