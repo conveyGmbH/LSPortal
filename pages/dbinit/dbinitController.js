@@ -119,8 +119,8 @@
                                 // or server returns response with an error status.
                                 AppData.setErrorMsg(that.binding, errorResponse);
                             }).then(function () {
-                                Colors.updateColors();
-                                return WinJS.Promise.as();
+                                var colors = Colors.updateColors();
+                                return (colors && colors._loadCssPromise) || WinJS.Promise.as();
                             });
                         } else {
                             return WinJS.Promise.as();

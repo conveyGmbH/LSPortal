@@ -223,16 +223,19 @@
                                 WinJS.Promise.timeout(0).then(function () {
                                     AppData._persistentStates.colorSettings = copyByValue(AppData.persistentStatesDefaults.colorSettings);
                                     var colors = new Colors.ColorsClass(AppData._persistentStates.colorSettings);
-                                    that.createColorPicker("accentColor");
-                                    that.createColorPicker("backgroundColor");
-                                    that.createColorPicker("textColor");
-                                    that.createColorPicker("labelColor");
-                                    that.createColorPicker("tileTextColor");
-                                    that.createColorPicker("tileBackgroundColor");
-                                    that.createColorPicker("navigationColor");
-                                    that.createColorPicker("dashboardColor");
-                                    AppBar.loadIcons();
-                                    NavigationBar.groups = Application.navigationBarGroups;
+                                    var promise = colors._loadCssPromise || WinJS.Promise.timeout(0);
+                                    promise.then(function() {
+                                        that.createColorPicker("accentColor");
+                                        that.createColorPicker("backgroundColor");
+                                        that.createColorPicker("textColor");
+                                        that.createColorPicker("labelColor");
+                                        that.createColorPicker("tileTextColor");
+                                        that.createColorPicker("tileBackgroundColor");
+                                        that.createColorPicker("navigationColor");
+                                        that.createColorPicker("dashboardColor");
+                                        AppBar.loadIcons();
+                                        NavigationBar.groups = Application.navigationBarGroups;
+                                    });
                                 });
                             }
                             that.binding.generalData.individualColors = toggle.checked;
@@ -485,8 +488,8 @@
                             break;
                         }
                     }
-                    Colors.updateColors();
-                    return WinJS.Promise.as();
+                    var colors = Colors.updateColors();
+                    return (colors && colors._loadCssPromise) || WinJS.Promise.as();
                 });
 
             };
