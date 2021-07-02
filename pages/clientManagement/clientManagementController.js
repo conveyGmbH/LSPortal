@@ -15,16 +15,13 @@
         Controller: WinJS.Class.derive(Application.Controller,
             function Controller(pageElement, commandList) {
                 Log.call(Log.l.trace, "ClientManagement.Controller.");
-                Application.Controller.apply(this,
-                    [
-                        pageElement, {
+                Application.Controller.apply(this, [pageElement, {
                             dataClientManagement: getEmptyDefaultValue(ClientManagement.fairMandantView.defaultValue),
                             recordID : 0,
                             InitLandItem: { InitLandID: 0, TITLE: "" },
                             showapiUserCreate: null,
                             apiUserCreate: null
-                        }, commandList
-                    ]);
+                }, commandList]);
 
                 var that = this;
 
@@ -43,7 +40,6 @@
                 
                 var resultConverter = function (item, index) {
                     item.index = index;
-                    
                 }
                 this.resultConverter = resultConverter;
 
@@ -65,8 +61,7 @@
                         return WinJS.Promise.as();
                     } else {
                         if (dataClientManagement && AppBar.modified && !AppBar.busy) {
-                            return AppData.call("PRC_UpdateFairMandant",
-                            {
+                            return AppData.call("PRC_UpdateFairMandant", {
                                 pFairMandantID: dataClientManagement.FairMandantVIEWID,
                                 pName: dataClientManagement.Name,
                                 pAnsprechpartner: dataClientManagement.Ansprechpartner,
@@ -79,9 +74,7 @@
                                 pLandID: parseInt(dataClientManagement.LandID),
                                 pTelefonFestnetz: dataClientManagement.TelefonFestnetz,
                                 pCreateEventUser: createApiUserValue
-
-                                },
-                                function(json) {
+                            }, function(json) {
                                 Log.print(Log.l.info, "call success! ");
                                 AppBar.busy = false;
                                     AppBar.modified = false;
@@ -90,8 +83,7 @@
                                 //Application.navigateById("localevents");
                                     complete(that.binding.dataClientManagement);
                                     Log.ret(Log.l.trace);
-                                },
-                                function(errorResponse) {
+                            }, function(errorResponse) {
                                 Log.print(Log.l.error, "call error");
                                 AppBar.busy = false;
                                 AppData.setErrorMsg(that.binding, errorResponse);
@@ -248,7 +240,7 @@
                 };
                 
                 var loadData = function (mandantId) {
-                    Log.call(Log.l.trace, "SiteEventsBenNach.Controller.");
+                    Log.call(Log.l.trace, "ClientManagement.Controller.");
                     that.loading = true;
                     AppData.setErrorMsg(that.binding);
                     var ret = new WinJS.Promise.as().then(function () {

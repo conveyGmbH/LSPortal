@@ -26,12 +26,12 @@
                         <div class="field_line field_line_odd">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'clientmanagement.companyname'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'clientmanagement.companyname'}"></span>
-                            <input class="input_field win-textbox" type="text" data-win-bind="value: dataClientManagement.Name Binding.Mode.twoway" />
+                            <input name="Firmenname" class="input_field win-textbox" type="text" data-win-bind="value: dataClientManagement.Name Binding.Mode.twoway" />
                         </div>
                         <div class="field_line field_line_even">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'clientmanagement.contactperson'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'clientmanagement.contactperson'}"></span>
-                            <input class="input_field win-textbox" type="text" data-win-bind="value: dataClientManagement.Ansprechpartner Binding.Mode.twoway" />
+                            <input name="Ansprechpartner" class="input_field win-textbox" type="text" data-win-bind="value: dataClientManagement.Ansprechpartner Binding.Mode.twoway" />
                         </div>
                         <div class="line-separator"></div>
                         <div class="field_line field_line_odd">
@@ -41,8 +41,8 @@
                                 <span data-win-res="{textContent: 'clientmanagement.numLicenses'}"></span> / <span data-win-res="{textContent: 'clientmanagement.customerID'}"></span>
                             </div>
                             <div class="input_group">
-                                <input name="PLZ" class="input_small_left win-textbox" type="text" data-win-bind="value: dataClientManagement.NumLicenses Binding.Mode.twoway; style.display: dataClientManagement.Flag_NoEdit Binding.Converter.toDisplayNone" />
-                                <input name="Stadt" class="input_small_right win-textbox" type="text" data-win-bind="value: dataClientManagement.CustomerID Binding.Mode.twoway; style.display: dataClientManagement.Flag_NoEdit Binding.Converter.toDisplayNone" />
+                                <input name="Lizenznummer" class="input_small_left win-textbox" type="text" data-win-bind="value: dataClientManagement.NumLicenses Binding.Mode.twoway; style.display: dataClientManagement.Flag_NoEdit Binding.Converter.toDisplayNone" />
+                                <input name="Kundennummer" class="input_small_right win-textbox" type="text" data-win-bind="value: dataClientManagement.CustomerID Binding.Mode.twoway; style.display: dataClientManagement.Flag_NoEdit Binding.Converter.toDisplayNone" />
                                 <span class="input_small_left" data-win-bind="textContent: dataClientManagement.NumLicenses; style.display: dataClientManagement.Flag_NoEdit Binding.Converter.toDisplay"></span>
                                 <span class="input_small_right" data-win-bind="textContent: dataClientManagement.CustomerID; style.display: dataClientManagement.Flag_NoEdit Binding.Converter.toDisplay"></span>
                             </div>
@@ -50,7 +50,7 @@
                         <div class="field_line field_line_even">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'clientmanagement.email'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'clientmanagement.email'}"></span>
-                            <input class="input_field win-textbox" type="text" data-win-bind="value: dataClientManagement.EMail Binding.Mode.twoway" />
+                            <input name="Email" class="input_field win-textbox" type="text" data-win-bind="value: dataClientManagement.EMail Binding.Mode.twoway" />
                         </div>
                         <div class="line-separator"></div>
                         <div class="field_line field_line_odd">
@@ -88,7 +88,7 @@
                         <div class="field_line field_line_odd">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'clientmanagement.telefon'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'clientmanagement.telefon'}"></span>
-                            <input class="input_field win-textbox" type="text" data-win-bind="value: dataClientManagement.TelefonFestnetz  Binding.Mode.twoway" />
+                            <input name="Telefon" class="input_field win-textbox" type="text" data-win-bind="value: dataClientManagement.TelefonFestnetz  Binding.Mode.twoway" />
                         </div>
                         <div class="line-separator"></div>
                         <div class="field_line field_line_odd" data-win-bind="style.display: showapiUserCreate Binding.Converter.toDisplay">

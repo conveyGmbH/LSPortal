@@ -15,19 +15,15 @@
         ClientManagementListLayout: WinJS.Class.define(function (options) {
             this._site = null;
             this._surface = null;
-        },
-            {
+        }, {
                 // This sets up any state and CSS layout on the surface of the custom layout
                 initialize: function (site) {
                     this._site = site;
                     this._surface = this._site.surface;
-
                     // Add a CSS class to control the surface level layout
                     WinJS.Utilities.addClass(this._surface, "clientManagementListLayout");
-
                     return WinJS.UI.Orientation.vertical;
                 },
-
                 // Reset the layout to its initial state
                 uninitialize: function () {
                     WinJS.Utilities.removeClass(this._surface, "clientManagementListLayout");
