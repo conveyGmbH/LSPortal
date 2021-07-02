@@ -5,6 +5,10 @@ body.cnv-ui-dark, body.cnv-ui-dark * {
     color-scheme: dark;
 }
 
+.win-listview > object {
+    visibility: hidden;
+}
+
 .row-bkg-gray {
     opacity: 0.1;
 }
