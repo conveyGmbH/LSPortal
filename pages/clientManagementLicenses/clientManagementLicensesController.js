@@ -69,7 +69,7 @@
             this.background = background;
 
             var getRecordId = function () {
-                Log.call(Log.l.trace, "ClientManagement.Controller.");
+                Log.call(Log.l.trace, "ClientManagementLicenses.Controller.");
                 that.binding.recordID = AppData.getRecordId("FairMandantVIEW_20582");
                 Log.ret(Log.l.trace, that.binding.recordID);
                 return that.binding.recordID;
@@ -156,7 +156,7 @@
             this.setSelIndex = setSelIndex;
 
             var selectRecordId = function (recordId) {
-                Log.call(Log.l.trace, "EmpList.Controller.", "recordId=" + recordId);
+                Log.call(Log.l.trace, "ClientManagementLicenses.Controller.", "recordId=" + recordId);
                 if (recordId && listView && listView.winControl && listView.winControl.selection && that.licenses) {
                     for (var i = 0; i < that.licenses.length; i++) {
                         var licenses = that.licenses.getAt(i);
@@ -177,7 +177,7 @@
 
             var scopeFromRecordId = function (recordId) {
                 var i;
-                Log.call(Log.l.trace, "Questiongroup.Controller.", "recordId=" + recordId);
+                Log.call(Log.l.trace, "ClientManagementLicenses.Controller.", "recordId=" + recordId);
                 var item = null;
                 for (i = 0; i < that.licenses.length; i++) {
                     var license = that.licenses.getAt(i);
@@ -207,14 +207,14 @@
             // define handlers
             this.eventHandlers = {
                 clickBack: function (event) {
-                    Log.call(Log.l.trace, "ClientManagement.Controller.");
+                    Log.call(Log.l.trace, "ClientManagementLicenses.Controller.");
                     if (!Application.showMaster() && WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done();
                     }
                     Log.ret(Log.l.trace);
                 },
                 clickShowNewLicenses: function (event) {
-                    Log.call(Log.l.trace, "ClientManagement.Controller.");
+                    Log.call(Log.l.trace, "ClientManagementLicenses.Controller.");
                     infotext.value = "Info zur Lizenz hier eintragen";
                     that.binding.editLicensesShowFlag = false;
                     if (that.binding.newLicensesShowFlag === false) {
@@ -225,7 +225,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickVeranstaltungLicenses: function (event) {
-                    Log.call(Log.l.trace, "ClientManagement.Controller.");
+                    Log.call(Log.l.trace, "ClientManagementLicenses.Controller.");
                     AppData.setErrorMsg(that.binding);
                     AppData.call("PRC_CreateMandantLizenz", {
                         pVeranstaltungID: parseInt(that.binding.newLicensesdata.VeranstaltungVIEWID),
@@ -243,7 +243,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickEditVeranstaltungLicenses: function (event) {
-                    Log.call(Log.l.trace, "ClientManagement.Controller.");
+                    Log.call(Log.l.trace, "ClientManagementLicenses.Controller.");
                     AppData.setErrorMsg(that.binding);
                     AppData.call("PRC_CreateMandantLizenz", {
                         pMandantTempLizenzID: parseInt(that.binding.dataLicense.MandantTempLizenzVIEWID),
@@ -263,13 +263,13 @@
                     
                 },
                 onSelectionChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "EmpList.Controller.");
+                    Log.call(Log.l.trace, "ClientManagementLicenses.Controller.");
                     that.binding.licenseId = 0;
                     that.binding.newLicensesShowFlag = false;
                     Log.ret(Log.l.trace);
                 },
                 onItemInvoked: function (eventInfo) {
-                    Log.call(Log.l.trace, "EmpList.Controller.");
+                    Log.call(Log.l.trace, "ClientManagementLicenses.Controller.");
                     Application.showDetail();
                     if (listView && listView.winControl) {
                         var listControl = listView.winControl;
@@ -304,7 +304,7 @@
                 },
                 onLoadingStateChanged: function (eventInfo) {
                     var i;
-                    Log.call(Log.l.trace, "EmpList.Controller.");
+                    Log.call(Log.l.trace, "ClientManagementLicenses.Controller.");
                     if (listView && listView.winControl) {
                         Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
                         // single list selection
@@ -389,7 +389,7 @@
                     Log.ret(Log.l.trace);
                 },
                 onHeaderVisibilityChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "EmpList.Controller.");
+                    Log.call(Log.l.trace, "ClientManagementLicenses.Controller.");
                     if (eventInfo && eventInfo.detail) {
                         var visible = eventInfo.detail.visible;
                         if (visible) {
@@ -408,7 +408,7 @@
                     Log.ret(Log.l.trace);
                 },
                 onFooterVisibilityChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "EmpList.Controller.");
+                    Log.call(Log.l.trace, "ClientManagementLicenses.Controller.");
                     if (eventInfo && eventInfo.detail) {
                         progress = listView.querySelector(".list-footer .progress");
                         counter = listView.querySelector(".list-footer .counter");
@@ -424,11 +424,11 @@
                             AppData.setErrorMsg(that.binding);
                             var nextUrl = that.nextUrl;
                             //that.nextUrl = null;
-                            Log.print(Log.l.trace, "calling select EmpList.employeeView...");
+                            Log.print(Log.l.trace, "calling select ClientManagementLicenses.mandantTempLizenzView...");
                             ClientManagementLicenses.mandantTempLizenzView.selectNext(function (json) {
                                 // this callback will be called asynchronously
                                 // when the response is available
-                                Log.print(Log.l.trace, "EmpList.employeeView: success!");
+                                Log.print(Log.l.trace, "ClientManagementLicenses.mandantTempLizenzView: success!");
                                 // employeeView returns object already parsed from json file in response
                                 if (json && json.d && json.d.results.length > 0) {
                                     that.nextUrl = ClientManagementLicenses.mandantTempLizenzView.getNextUrl(json);
@@ -475,7 +475,7 @@
             }
 
             var loadData = function (recordId) {
-                Log.call(Log.l.trace, "EmpList.Controller.");
+                Log.call(Log.l.trace, "ClientManagementLicenses.Controller.");
                 that.loading = true;
                 AppData.setRecordId("FairMandantVIEW_20582", recordId);
                 that.binding.newLicensesShowFlag = false;
@@ -493,7 +493,7 @@
                     return ClientManagementLicenses.mandantTempLizenzView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
-                        Log.print(Log.l.trace, "EmpList: success!");
+                        Log.print(Log.l.trace, "ClientManagementLicenses.mandantTempLizenzView: success!");
                         // employeeView returns object already parsed from json file in response
                         if (!recordId) {
                             that.licenses = new WinJS.Binding.List();
@@ -551,7 +551,6 @@
                         }, { FairMandantID: recordId});
                 }).then(function () {
                     Log.print(Log.l.trace, "calling select veranstaltungView...");
-                    //@nedra:25.09.2015: load the list of InitFragengruppe for Combobox
                     return ClientManagementLicenses.veranstaltungView.select(function (json) {
                         Log.print(Log.l.trace, "ClientManagementLicenses.veranstaltungView: success!");
                         // select returns object already parsed from json file in response
