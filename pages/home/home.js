@@ -20,7 +20,6 @@
             Log.call(Log.l.trace, pageName + ".");
             // TODO: Initialize the page here.
             var contentarea = element.querySelector(".contentarea");
-            var homeActions = element.querySelector("#homeActions");
             if (contentarea && contentarea.style) {
                 if (Colors.isDarkTheme) {
                     var bkg = Colors.hex2rgb(Colors.tileBackgroundColor);
@@ -29,14 +28,8 @@
                     bkgHsv.v /= 4;
                     var darkBkg = Colors.hsv2rgb(bkgHsv);
                     contentarea.style.backgroundColor = Colors.rgb2hex(darkBkg);
-                    if (homeActions && homeActions.style) {
-                        homeActions.style.backgroundColor = Colors.rgb2hex(darkBkg);
-                    }
                 } else {
                     contentarea.style.backgroundColor = Colors.tileBackgroundColor;
-                    if (homeActions && homeActions.style) {
-                        homeActions.style.backgroundColor = Colors.tileBackgroundColor;
-                    }
                 }
             }
 
