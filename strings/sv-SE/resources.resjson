@@ -561,8 +561,8 @@
     "label.eventSeries": "Series",
     "label.seriesResourceAdministration": "Texts",
     "label.seriesMediaAdministration": "Media",
-    "label.eventStarts": "Overview",
-    "label.startResourceAdministration": "Text",
+    "label.eventStarts": "Overview page",
+    "label.startResourceAdministration": "Texts",
     "label.startMediaAdministration": "Media",
     "label.eventStartLang" : "Language",
     
