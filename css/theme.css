@@ -1,4 +1,11 @@
-﻿.row-bkg-gray {
+﻿body, body * {
+    color-scheme: light;
+}
+body.cnv-ui-dark, body.cnv-ui-dark * {
+    color-scheme: dark;
+}
+
+.row-bkg-gray {
     opacity: 0.1;
 }
 .cnv-ui-dark .row-bkg-gray {
