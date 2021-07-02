@@ -19,23 +19,11 @@
         ready: function (element, options) {
             Log.call(Log.l.trace, pageName + ".");
             // TODO: Initialize the page here.
-            var contentarea = element.querySelector(".contentarea");
-            if (contentarea && contentarea.style) {
-                if (Colors.isDarkTheme) {
-                    var bkg = Colors.hex2rgb(Colors.tileBackgroundColor);
-                    var bkgHsv = Colors.rgb2hsv(bkg);
-                    bkgHsv.s = Math.min(255, bkgHsv.s * 4);
-                    bkgHsv.v /= 4;
-                    var darkBkg = Colors.hsv2rgb(bkgHsv);
-                    contentarea.style.backgroundColor = Colors.rgb2hex(darkBkg);
-                } else {
-                    contentarea.style.backgroundColor = Colors.tileBackgroundColor;
-                }
-            }
 
             this.inResize = 0;
             this.prevWidth = 0;
             this.prevHeight = 0;
+            this.prevIsDarkTheme = null;
 
             if (!options) {
                 options = {};
@@ -71,6 +59,19 @@
                     if (that.controller) {
                         var contentArea = element.querySelector(".contentarea");
                         if (contentArea) {
+                            if (contentArea.style && 
+                                (that.prevIsDarkTheme === null || that.prevIsDarkTheme !== Colors.isDarkTheme)) {
+                                if (Colors.isDarkTheme) {
+                                    var bkg = Colors.hex2rgb(Colors.tileBackgroundColor);
+                                    var bkgHsv = Colors.rgb2hsv(bkg);
+                                    bkgHsv.s = Math.min(255, bkgHsv.s * 4);
+                                    bkgHsv.v /= 4;
+                                    var darkBkg = Colors.hsv2rgb(bkgHsv);
+                                    contentArea.style.backgroundColor = Colors.rgb2hex(darkBkg);
+                                } else {
+                                    contentArea.style.backgroundColor = Colors.tileBackgroundColor;
+                                }
+                            }
                             var width = contentArea.clientWidth;
                             var height = contentArea.clientHeight;
                             var contentHeader = element.querySelector(".content-header");

@@ -18,22 +18,10 @@
         ready: function (element, options) {
             Log.call(Log.l.trace, fragmentName + ".");
             // TODO: Initialize the fragment here.
-            var contentarea = element.querySelector(".contentarea");
-            if (contentarea && contentarea.style) {
-                if (Colors.isDarkTheme) {
-                    var bkg = Colors.hex2rgb(Colors.tileBackgroundColor);
-                    var bkgHsv = Colors.rgb2hsv(bkg);
-                    bkgHsv.s = Math.min(255, bkgHsv.s * 4);
-                    bkgHsv.v /= 4;
-                    var darkBkg = Colors.hsv2rgb(bkgHsv);
-                    contentarea.style.backgroundColor = Colors.rgb2hex(darkBkg);
-                } else {
-                    contentarea.style.backgroundColor = Colors.tileBackgroundColor;
-                }
-            }
             this.inResize = 0;
             this.prevWidth = 0;
             this.prevHeight = 0;
+            this.prevIsDarkTheme = null;
 
             // add page specific commands to AppBar
             var commandList = [
@@ -62,10 +50,23 @@
                 ret = WinJS.Promise.timeout(0).then(function () {
                     var docContainer = element.querySelector(".doc-container");
                     if (docContainer && docContainer.style) {
-                        var fragment = element.querySelector(".contentarea");
-                        if (fragment) {
-                            var width = fragment.clientWidth;
-                            var height = fragment.clientHeight;
+                        var contentarea = element.querySelector(".contentarea");
+                        if (contentarea) {
+                            if (contentarea.style && 
+                                (that.prevIsDarkTheme === null || that.prevIsDarkTheme !== Colors.isDarkTheme)) {
+                                if (Colors.isDarkTheme) {
+                                    var bkg = Colors.hex2rgb(Colors.tileBackgroundColor);
+                                    var bkgHsv = Colors.rgb2hsv(bkg);
+                                    bkgHsv.s = Math.min(255, bkgHsv.s * 4);
+                                    bkgHsv.v /= 4;
+                                    var darkBkg = Colors.hsv2rgb(bkgHsv);
+                                    contentarea.style.backgroundColor = Colors.rgb2hex(darkBkg);
+                                } else {
+                                    contentarea.style.backgroundColor = Colors.tileBackgroundColor;
+                                }
+                            }
+                            var width = contentarea.clientWidth;
+                            var height = contentarea.clientHeight;
                             var bReposition = false;
 
                             if (width > 0 && width !== that.prevWidth) {
