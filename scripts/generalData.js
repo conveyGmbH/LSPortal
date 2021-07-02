@@ -644,6 +644,7 @@
                 data.filterOff = getResourceText("reporting.filterOff");
                 data.dark = getResourceText("settings.dark");
                 data.light = getResourceText("settings.light");
+                data.system = getResourceText("settings.system");
                 data.present = getResourceText("userinfo.present");
                 data.absend = getResourceText("userinfo.absend");
                 data.active = getResourceText("settings.active");

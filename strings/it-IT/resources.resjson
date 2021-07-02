@@ -311,6 +311,7 @@
     "settings.theme"        : "Colore tema",
     "settings.light"        : "Chiaro",
     "settings.dark"         : "Scuro",
+    "settings.system"       : "Sistema",
     "settings.inputBorder"  : "Bordo campi immissione",
     "settings.inputBorderRadius"  : "Angolo campi immissione",
     "settings.inputBorderBottom"  : "Linea campi immissione",

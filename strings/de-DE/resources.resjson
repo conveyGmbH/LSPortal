@@ -311,6 +311,7 @@
     "settings.theme"        : "Themenfarbe",
     "settings.light"        : "Hell",
     "settings.dark"         : "Dunkel",
+    "settings.system"       : "System",
     "settings.inputBorder"  : "Eingabefelder Rand",
     "settings.inputBorderRadius"  : "Eingabefelder Ecken",
     "settings.inputBorderBottom"  : "Eingabefelder Linie",

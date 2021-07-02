@@ -311,6 +311,7 @@
     "settings.theme"        : "Couleur de Thème",
     "settings.light"        : "Clair",
     "settings.dark"         : "Foncé",
+    "settings.system"       : "Système",
     "settings.inputBorder"  : "Input bordure",
     "settings.inputBorderRadius"  : "Input coincer",
     "settings.inputBorderBottom"  : "Input ligne",
