@@ -56,7 +56,8 @@
             timeZoneAdjustment: 0,
             timeZoneRemoteAdjustment: null,
             timeZoneRemoteDiffMs: 0,
-            serverFailure: false
+            serverFailure: false,
+            corsQuirks: false
         }
     };
 
@@ -69,8 +70,9 @@
         { id: "dashBoard", group: 19, svg: "Dashboard", disabled: true },
         { id: "masterDataGrp", group: 23, svg: "Stammdaten", disabled: true, popup: true },
 		//{ id: "eventStarts", group: 55, svg: "Stammdaten", disabled: true, predecGroup: 23 },
-        { id: "startResourceAdministration", group: 55, svg: "Stammdaten", disabled: true, predecGroup: 23 },
-        { id: "startMediaAdministration", group: 55, svg: "Stammdaten", disabled: true, predecGroup: 23 },
+        //{ id: "eventStartLang", group: 55, svg: "Stammdaten", disabled: true, predecGroup: 23 },
+        { id: "startResourceAdministration", group: 55, svg: "Stammdaten", disabled: true, predecGroup: 23, label: "label.eventStarts", tooltip: "label.eventStarts" },
+        //{ id: "startMediaAdministration", group: 55, svg: "Stammdaten", disabled: true, predecGroup: 23 },
         { id: "eventSeries", group: 52, svg: "Stammdaten", disabled: true, predecGroup: 23 },
         { id: "genDataModDetails", group: 54, svg: "Stammdaten", disabled: true, predecGroup: 23 },
 		{ id: "genDataAnswers", group: 56, svg: "Stammdaten", disabled: true, predecGroup: 23 },
@@ -126,6 +128,7 @@
         { id: "seriesResourceAdministration", group: 52, disabled: false },
         { id: "seriesMediaAdministration", group: 52, disabled: false },
         //{ id: "eventStarts", group: 55, disabled: false },
+        //{ id: "eventStartLang", group: 55, disabled: false },
         { id: "startResourceAdministration", group: 55, disabled: false },
         { id: "startMediaAdministration", group: 55, disabled: false },
 		{ id: "genDataModDetails", group: 54, disabled: false },
