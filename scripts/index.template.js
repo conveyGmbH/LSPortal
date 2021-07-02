@@ -11,6 +11,8 @@
 (function () {
     "use strict";
 
+    Colors.corsAwareCssRuleAccess = true;
+
     // default settings
     AppData.persistentStatesDefaults = {
         colorSettings: {
