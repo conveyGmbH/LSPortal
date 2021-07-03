@@ -79,6 +79,20 @@
                         </div>
                     </div>
                     <div class="line-separator"></div>
+                    <div class="field_line field_line_odd">
+                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'info.expandSubMenuMode'}"></span>
+                        <span class="label landscape_only" data-win-res="{textContent: 'info.expandSubMenuMode'}"></span>
+                        <div class="input_field toggle-switch-parent">
+                            <select id="expandSubMenuModeSelect"
+                                    class="input_field win-dropdown"
+                                    data-win-control="WinJS.UI.Repeater"
+                                    data-win-bind="value: expandSubMenuMode"
+                                    onchange="AppBar.handleEvent('change', 'changedExpandSubMenuMode', event)">
+                                <option data-win-bind="value: mode; textContent: label"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="line-separator"></div>
                     <div class="header-separator float-left"></div>
                     <div class="content-header float-left">
                         <div class="half-circle half-circle-textcolor">&nbsp;</div>

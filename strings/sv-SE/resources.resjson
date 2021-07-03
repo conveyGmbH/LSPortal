@@ -428,6 +428,10 @@
     "info.nolicenceemployee"        : "The following user has already been used on multiple devices. Only the device where it was last used will work!",
     "info.turnThumbsLeft"   : "Turn thumbs left",
     "info.showBackButton"   : "Show back button",
+    "info.expandSubMenuMode" : "Submenu items in navigation",
+    "info.expandSubMenuModeAll" : "All expanded",
+    "info.expandSubMenuModeToggle" : "Expand independently",
+    "info.expandSubMenuModeSingle" : "Single expand",
 
     "infodesk.actualEmployee"     : "Current employee",
     "infodesk.employee"     : "Employee",

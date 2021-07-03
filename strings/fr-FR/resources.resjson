@@ -431,6 +431,10 @@
     "info.nolicenceemployee"        : "L'accès suivant est déjà utilisé sur un ou plusieurs appareils. Seulement le dernier périphérique connecté peut fonctionner!",
     "info.turnThumbsLeft"   : "Tourner l'aperçu à gauche",
     "info.showBackButton"   : "Bouton Retour en arrière",
+    "info.expandSubMenuMode" : "Éléments de sous-menu dans la navigation",
+    "info.expandSubMenuModeAll" : "Tous élargies",
+    "info.expandSubMenuModeToggle" : "Élargir le single",
+    "info.expandSubMenuModeSingle" : "Expansion unique",
 
     "infodesk.actualEmployee"     : "Personnel actuel",
     "infodesk.employee"     : "Personnel",

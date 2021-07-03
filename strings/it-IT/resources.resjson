@@ -431,6 +431,10 @@
     "info.nolicenceemployee"        : "Il seguente utente é stato giá utilizzato su piú di un telefono. Solo l´ultimo su cui é stato utilizzato funzionerá!",
     "info.turnThumbsLeft"   : "Girare l'anteprima a sinistra",
     "info.showBackButton"   : "Mostra pulsante indietro",
+    "info.expandSubMenuMode" : "Voci di sottomenu nella navigazione",
+    "info.expandSubMenuModeAll" : "Tutti espansi",
+    "info.expandSubMenuModeToggle" : "Espansione indipendente",
+    "info.expandSubMenuModeSingle" : "Espandere singolo",
 
     "infodesk.actualEmployee"     : "Employee attuale",
     "infodesk.employee"     : "Employee",

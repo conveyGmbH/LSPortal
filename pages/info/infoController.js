@@ -23,8 +23,11 @@
                 portalInfo: getEmptyDefaultValue(Info.appInfoSpecView.defaultValue),
                 version: Application.version,
                 environment: "Platform: " + navigator.appVersion,
-                timezone: timezone && ("Timezone: " + timezone.name())
+                timezone: timezone && ("Timezone: " + timezone.name()),
+                expandSubMenuMode: (AppData.generalData.expandSubMenuMode || Application.expandSubMenuModes.single)
             }, commandList]);
+            
+            var expandSubMenuModeSelect = pageElement.querySelector("#expandSubMenuModeSelect");
 
             var that = this;
 
@@ -60,6 +63,17 @@
                 Log.call(Log.l.trace, "Info.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function() {
+                    if (expandSubMenuModeSelect && expandSubMenuModeSelect.winControl) {
+                        var expandSubMenuModeList = new WinJS.Binding.List([
+                            { mode: Application.expandSubMenuModes.all, label: getResourceText("info.expandSubMenuModeAll")  },
+                            { mode: Application.expandSubMenuModes.toggle, label: getResourceText("info.expandSubMenuModeToggle") },
+                            { mode: Application.expandSubMenuModes.single, label: getResourceText("info.expandSubMenuModeSingle") }
+                        ]);
+                        expandSubMenuModeSelect.winControl.data = expandSubMenuModeList;
+                        that.binding.expandSubMenuMode = (AppData.generalData.expandSubMenuMode || Application.expandSubMenuModes.single);
+                    }
+                    return WinJS.Promise.as();
+                }).then(function () {
                     return Info.appInfoSpecView.select(function (json) {
                         Log.print(Log.l.trace, "appInfoSpecView: success!");
                         if (json && json.d && json.d.results && json.d.results.length > 0) {
@@ -79,6 +93,8 @@
                 return ret;
             };
             this.loadData = loadData;
+
+
             this.eventHandlers = {
                 clickBack: function (event) {
                     Log.call(Log.l.trace, "Contact.Controller.");
@@ -185,6 +201,17 @@
                     }
                     Application.navigateById("login", event);
                     Log.ret(Log.l.trace);
+                },
+                changedExpandSubMenuMode: function (event) {
+                    Log.call(Log.l.trace, "Account.Controller.");
+                    if (event.currentTarget && AppBar.notifyModified &&
+                        that.binding && that.binding.generalData) {
+                        that.binding.generalData.expandSubMenuMode = event.currentTarget.value;
+                        Log.print(Log.l.trace, "expandSubMenuMode=" + that.binding.generalData.expandSubMenuMode);
+                        Application.pageframe.savePersistentStates();
+                        NavigationBar.groups = Application.navigationBarGroups;
+                    }
+                    Log.ret(Log.l.trace);
                 }
             }
 
@@ -201,8 +228,8 @@
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
             }).then(function () {
+                Log.print(Log.l.trace, "Data loaded");
                 AppBar.notifyModified = true;
-                Log.print(Log.l.trace, "Binding wireup page complete");
             });
             Log.ret(Log.l.trace);
         }),
