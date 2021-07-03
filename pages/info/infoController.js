@@ -208,8 +208,9 @@
                         that.binding && that.binding.generalData) {
                         that.binding.generalData.expandSubMenuMode = event.currentTarget.value;
                         Log.print(Log.l.trace, "expandSubMenuMode=" + that.binding.generalData.expandSubMenuMode);
-                        Application.pageframe.savePersistentStates();
-                        NavigationBar.groups = Application.navigationBarGroups;
+                        WinJS.Promise.timeout(0).then(function() {
+                            NavigationBar.groups = Application.navigationBarGroups;
+                        });
                     }
                     Log.ret(Log.l.trace);
                 }
