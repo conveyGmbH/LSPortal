@@ -1681,3 +1681,7 @@ button.win-button {
     margin-left: 4px;
     margin-right: 4px;
 }
+
+.win-splitview-pane-closed .win-splitview-pane .resize-helper-gripper {
+    display: none;
+}
