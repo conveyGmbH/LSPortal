@@ -1639,6 +1639,9 @@ button.win-button {
     opacity: 0;
     touch-action: none;
 }
+.cnv-ui-dark .resize-helper-gripper {
+    background-color: #a0a0a0;
+}
 .resize-helper-vertical {
     bottom: 0;
     left: 0;
