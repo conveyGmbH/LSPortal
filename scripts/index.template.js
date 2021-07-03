@@ -32,7 +32,9 @@
         inputBorderBottom: true,
         iconStrokeWidth: 150,
         navVertWidth: 300,
+        splitViewPaneWidth: 320,
         loadRemoteResource: true,
+        expandSubMenuMode: "single",
         odata: {
             https: true,
             hostName: "leadsuccess.convey.de",
