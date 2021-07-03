@@ -74,7 +74,7 @@ img .field_line {
 }
 .titlearea-bkg {
     color: #ffffff;
-    background-color: Window;
+    background-color: Canvas;
 }
 
 .row-bkg {
@@ -86,7 +86,7 @@ img .field_line {
     width: 100%;
     height: 100%;
     opacity: 1;
-    background-color: Window;
+    background-color: Canvas;
     /*
     border-top-style: solid;
     border-top-width: 1px;
@@ -150,7 +150,7 @@ img .field_line {
     border-top-color: #f0f0f0;
 }
 .tile-button-color {
-    color: WindowText;
+    color: CanvasText;
     background-color: transparent;
     min-width: 50px;
 }
@@ -168,13 +168,13 @@ img .field_line {
 }
 
 .half-circle-textcolor {
-    border-bottom-color: WindowText;
+    border-bottom-color: CanvasText;
 }
 .text-textcolor {
-    color: WindowText;
+    color: CanvasText;
 }
 .text-tile-textcolor {
-    color: WindowText;
+    color: CanvasText;
 }
 .half-circle-navigationcolor {
     border-bottom-color: #c66145;
@@ -216,7 +216,7 @@ img .field_line {
     forward decls from pages
 */
 .window-text-color {
-    color: WindowText;
+    color: CanvasText;
 }
 .label-color {
     color: gray;
@@ -316,7 +316,7 @@ header[role=banner] {
 
     border-bottom-style: solid;
     border-bottom-width: 2px;
-    border-bottom-color: WindowText;
+    border-bottom-color: CanvasText;
 }
 
 .float-left {
