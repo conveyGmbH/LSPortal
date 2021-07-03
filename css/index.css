@@ -145,16 +145,16 @@
     margin-right: 3px;
 }
 .win-splitviewcommand.submenu-collapsed .win-splitviewcommand-label:before {
-    font-size: 10px;
+    font-size: 8px;
     font-weight: 600;
     font-family: "Segoe MDL2 Assets", "Symbols";
-    content: "\e0e3\00a0";
+    content: "\e0e3\00a0\00a0";
 }
 .win-splitviewcommand.submenu-expanded .win-splitviewcommand-label:before {
-    font-size: 10px;
+    font-size: 8px;
     font-weight: 600;
     font-family: "Segoe MDL2 Assets", "Symbols";
-    content: "\e019\00a0";
+    content: "\e019\00a0\00a0";
 }
 
 .win-splitviewcommand.win-disabled {
