@@ -1,5 +1,11 @@
+/* Replacement for Deprecated CSS System Colors */
+
+
 /* Default CSS2 colors */
 :root {
+    --Background: Background;
+    --Menu: Menu;
+    --MenuText: MenuText;
     --WindowText: WindowText;
     --Window: Window;
 }
@@ -7,6 +13,9 @@
 /* Chrome & Safari (any version) */
 @media screen and (-webkit-min-device-pixel-ratio:0) {
     :root {
+        --Background: ButtonFace;
+        --Menu: ButtonFace;
+        --MenuText: ButtonText;
         --WindowText: CanvasText;
         --Window: Canvas;
     }
@@ -15,6 +24,9 @@
 /* Firefox Any version (Gecko) */
 @-moz-document url-prefix() {
     :root {
+        --Background: ButtonFace;
+        --Menu: ButtonFace;
+        --MenuText: ButtonText;
         --WindowText: CanvasText;
         --Window: Canvas;
     }

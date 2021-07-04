@@ -3721,7 +3721,7 @@ Flyout control.
   }
 }
 /*
-Menu control.
+var(--Menu) control.
 */
 .win-menu {
   padding: 0;
@@ -3737,7 +3737,7 @@ Menu control.
   /* 456px - 2px border */
 }
 /*
-Menu commands.
+var(--Menu) commands.
 */
 .win-menu button.win-command {
   display: block;
@@ -3885,7 +3885,7 @@ Menu commands.
   margin: 9px 20px 10px 20px;
 }
 /*
-Menu toggle and flyout commands.
+var(--Menu) toggle and flyout commands.
 */
 .win-menu-containstogglecommand button.win-command .win-menucommand-liner .win-toggleicon,
 .win-menu-containsflyoutcommand button.win-command .win-menucommand-liner .win-flyouticon {
@@ -3903,7 +3903,7 @@ Menu toggle and flyout commands.
 }
 /*
 Grippers in touch selection do not dissapear when focus moves to an element outside of the selection range and they are always drawn on a layer above all HTML elemements.
-When an _Overlay derived control such as AppBar/Flyout/Menu/SettingsFlyout is invoked and steals focus, if that _Overlay is laid out on top of the elements in the touch selection,
+When an _Overlay derived control such as AppBar/Flyout/var(--Menu)/SettingsFlyout is invoked and steals focus, if that _Overlay is laid out on top of the elements in the touch selection,
 the grippers can still be seen over the _Overlay and its contents. However, all grippers any where in the document will be hidden whenever the current active element has or inherits
 the style "-ms-touch-select: none;"
 */
@@ -4296,7 +4296,7 @@ Settings Pane
 }
 .win-commandingsurface .win-commandingsurface-overflowarea.win-menu {
   max-width: 480px;
-  /* override max-width styles from WinJS.UI.Menu */
+  /* override max-width styles from WinJS.UI.var(--Menu) */
 }
 .win-commandingsurface .win-commandingsurface-overflowarea .win-commandingsurface-spacer {
   /* Reserves space at the bottom of the overflow area */
@@ -7566,7 +7566,7 @@ html.win-hoverable .win-ui-dark button.win-splitviewpanetoggle:hover {
     background-color: Highlight;
   }
   .win-toggleswitch-on.win-toggleswitch-disabled .win-toggleswitch-thumb {
-    background-color: Background;
+    background-color: var(--Background);
   }
   .win-toggleswitch-on.win-toggleswitch-disabled .win-toggleswitch-track {
     background-color: GrayText;
