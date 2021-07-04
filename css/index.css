@@ -1,6 +1,6 @@
 ﻿.window-color {
-    color: CanvasText;
-    background-color: Canvas;
+    color: var(--WindowText);
+    background-color: var(--Window);
 }
 
 .win-listview .win-focusedoutline,
@@ -14,7 +14,7 @@
 }
 
 .navigationbar-container {
-    background-color: Canvas;
+    background-color: var(--Window);
     color: ButtonText;
     position: absolute;
     display: block;
@@ -132,7 +132,7 @@
     width: calc(100% - 16px);
 }
 .win-splitviewcommand-label {
-    color: CanvasText;
+    color: var(--WindowText);
     font-size: 20px;
     margin-top: 12px;
     margin-bottom: 0;
@@ -171,7 +171,7 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
 
 #navigationbar_horizontal .win-selected,
 #navigationbar_vertical .win-selected {
-    color: CanvasText;
+    color: var(--WindowText);
 }
 #navigationbar_horizontal.win-listview {
     margin: 0;
@@ -718,7 +718,7 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
 .win-commandingsurface .win-commandingsurface-actionarea {
     border-top-color: gray;
     border-bottom-color: gray;
-    background-color: Canvas;
+    background-color: var(--Window);
 }
 
 .win-appbar-bottom.win-appbar .win-commandingsurface .win-commandingsurface-actionarea {

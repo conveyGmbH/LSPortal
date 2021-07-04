@@ -1,0 +1,23 @@
+/* Default CSS2 colors */
+:root {
+    --WindowText: WindowText;
+    --Window: Window;
+}
+
+/* Chrome & Safari (any version) */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    :root {
+        --WindowText: CanvasText;
+        --Window: Canvas;
+    }
+}
+
+/* Firefox Any version (Gecko) */
+@-moz-document url-prefix() {
+    :root {
+        --WindowText: CanvasText;
+        --Window: Canvas;
+    }
+}
+
+

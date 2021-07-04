@@ -6,7 +6,7 @@
     eventTextUsageList styles
 */
 #eventTextUsageList .win-selected {
-    color: CanvasText;
+    color: var(--WindowText);
 }
 #eventTextUsageList.win-listview {
     margin: 0;
