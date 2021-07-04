@@ -5,9 +5,11 @@
 /**
     eventTextUsageList styles
 */
+/*
 #eventTextUsageList .win-selected {
     color: var(--WindowText);
 }
+*/
 #eventTextUsageList.win-listview {
     margin: 0;
     padding: 0;
