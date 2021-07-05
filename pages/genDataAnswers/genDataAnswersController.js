@@ -791,7 +791,7 @@
                     return GenDataAnswers.questionView.select(function (json) {
                         AppData.setErrorMsg(that.binding);
                         Log.print(Log.l.trace, "contactView: success!");
-                        if (json && json.d && json.d.results) {
+                        if (json && json.d && json.d.results && json.d.results.length > 0) {
                             var results = json.d.results;
                             results.forEach(function (item, index) {
                                 that.resultConverter(item, index);
@@ -799,6 +799,8 @@
                             
                             that.binding.dataQuestion = json.d.results[0];
                             that.setQuestionId(that.binding.dataQuestion.QuestionVIEWID);
+                        } else {
+                            that.setQuestionId(0);
                         }
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs

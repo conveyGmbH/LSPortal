@@ -300,7 +300,7 @@
                         AppData.setErrorMsg(that.binding);
                         Log.print(Log.l.trace, "Events: success!");
                         // employeeView returns object already parsed from json file in response
-                        if (json && json.d && json.d.results && json.d.results.length) {
+                        if (json && json.d && json.d.results && json.d.results.length > 0) {
                             //that.nextUrl = EventsList.VeranstaltungView.getNextUrl(json);
                             var results = json.d.results;
                             results.forEach(function (item, index) {

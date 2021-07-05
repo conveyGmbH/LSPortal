@@ -101,7 +101,8 @@
                 var recordId = 0;
                 var err = { status: 0, statusText: "no record returned from insert!" };
                 var ret = AppData.call("PRC_CreateEmptyMA", {
-                    pVeranstaltungID: EventSpeakerAdministration._eventId
+                    pVeranstaltungID: EventSpeakerAdministration._eventId,
+                    pVariant: 'OnlineTeam'
                 },
                 function(json) {
                     if (json && json.d && json.d.results && json.d.results[0]) {
