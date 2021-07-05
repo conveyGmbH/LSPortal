@@ -52,6 +52,7 @@
     "command.windowMaximized" : "Maximized",
     "command.windowRestored" : "Split",
     "command.newmod"        : "Neuer Moderator",
+    "command.newquestion"   : "Neue Frage",
 
     "tooltip.backward"      : "Zurück blättern",
     "tooltip.edit"          : "Aktuellen Datensatz bearbeiten",

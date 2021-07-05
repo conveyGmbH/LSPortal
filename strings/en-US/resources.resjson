@@ -52,6 +52,7 @@
     "command.windowMaximized" : "Maximized",
     "command.windowRestored" : "Split",
     "command.newmod": "New",
+    "command.newquestion": "New question",
 
     "tooltip.backward"      : "Browse back",
     "tooltip.edit"          : "Edit current record",

@@ -52,6 +52,7 @@
     "command.windowMaximized" : "Maximisé",
     "command.windowRestored" : "Partagé",
     "command.newmod": "Nouveau",
+    "command.newquestion": "Nouvelle question",
 
     "tooltip.backward"      : "Page présédente",
     "tooltip.edit"          : "Modifier le contact en cours",

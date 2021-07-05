@@ -52,6 +52,7 @@
     "command.windowMaximized" : "Ingrandita",
     "command.windowRestored" : "Diviso",
     "command.newmod": "Nuovo",
+    "command.newquestion": "Nuova domanda",
 
     "tooltip.backward"      : "Pagina precedente",
     "tooltip.edit"          : "Modifica Record attuale",
