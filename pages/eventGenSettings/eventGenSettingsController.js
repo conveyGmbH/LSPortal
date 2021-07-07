@@ -110,7 +110,7 @@
             var setDataEvent = function (newDataEvent) {
                 var prevNotifyModified = AppBar.notifyModified;
                 AppBar.notifyModified = false;
-                that.binding.newEventData.VeranstaltungName = " ";
+                that.binding.newEventData.VeranstaltungName = "";
                 that.binding.dataEvent = newDataEvent;
                 // convert LiveStartTS
                 that.binding.dataEvent.LiveStartTS = that.setDateFields(newDataEvent.LiveStartTS, 1);
