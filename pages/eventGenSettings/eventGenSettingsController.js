@@ -113,13 +113,17 @@
                 that.binding.newEventData.VeranstaltungName = "";
                 that.binding.dataEvent = newDataEvent;
                 // convert LiveStartTS
-                that.binding.dataEvent.LiveStartTS = that.setDateFields(newDataEvent.LiveStartTS, 1);
+                that.binding.dataEvent.LiveStartDate = that.formatDate(that.getDateObject(newDataEvent.LiveStartTS)); //that.setDateFields(newDataEvent.LiveStartTS, 1);
+                that.binding.dataEvent.LiveStartTime = that.formatTime(that.getDateObject(newDataEvent.LiveStartTS));
                 // convert LiveDuration
-                that.binding.dataEvent.LiveEndTS = that.setDateFields(newDataEvent.LiveEndTS, 2);
+                that.binding.dataEvent.LiveEndDate = that.formatDate(that.getDateObject(newDataEvent.LiveEndTS));
+                that.binding.dataEvent.LiveEndTime = that.formatTime(that.getDateObject(newDataEvent.LiveEndTS));
                 // convert ListShowTS
-                that.binding.dataEvent.ListShowTS = that.setDateFields(newDataEvent.ListShowTS, 3);
+                that.binding.dataEvent.ListShowDate = that.formatDate(that.getDateObject(newDataEvent.ListShowTS));
+                that.binding.dataEvent.ListShowTime = that.formatTime(that.getDateObject(newDataEvent.ListShowTS));
                 // convert ListRemoveTS
-                that.binding.dataEvent.ListRemoveTS = that.setDateFields(newDataEvent.ListRemoveTS, 4);
+                that.binding.dataEvent.ListRemoveDate = that.formatDate(that.getDateObject(newDataEvent.ListRemoveTS));
+                that.binding.dataEvent.ListRemoveTime = that.formatTime(that.getDateObject(newDataEvent.ListRemoveTS));
                 AppBar.modified = false;
                 AppBar.notifyModified = prevNotifyModified;
                 AppBar.triggerDisableHandlers();
@@ -180,23 +184,23 @@
 
             var getDataEvent = function () {
                 Log.call(Log.l.trace, "Event.Controller.");
-                if (livestartdate.value && livestarttime.value) {
-                    that.binding.dataEvent.LiveStartTS = that.getDateTimeData(livestartdate.value + " " + livestarttime.value);
+                if (that.binding.dataEvent.LiveStartDate && that.binding.dataEvent.LiveStartTime) {
+                that.binding.dataEvent.LiveStartTS = that.getDateTimeData(that.binding.dataEvent.LiveStartDate + " " + that.binding.dataEvent.LiveStartTime);
                 } else {
                     that.binding.dataEvent.LiveStartTS = null;
                 }
-                if (liveenddate.value && liveendtime.value) {
-                    that.binding.dataEvent.LiveEndTS = that.getDateTimeData(liveenddate.value + " " + liveendtime.value);
+                if (that.binding.dataEvent.LiveEndDate && that.binding.dataEvent.LiveEndTime) {
+                that.binding.dataEvent.LiveEndTS = that.getDateTimeData(that.binding.dataEvent.LiveEndDate + " " + that.binding.dataEvent.LiveEndTime);
                 } else {
                     that.binding.dataEvent.LiveEndTS = null;
                 }
-                if (listshowdate.value && listshowtime.value) {
-                    that.binding.dataEvent.ListShowTS = that.getDateTimeData(listshowdate.value + " " + listshowtime.value);
+                if (that.binding.dataEvent.ListShowDate && that.binding.dataEvent.ListShowTime) {
+                that.binding.dataEvent.ListShowTS = that.getDateTimeData(that.binding.dataEvent.ListShowDate + " " + that.binding.dataEvent.ListShowTime);
                 } else {
                     that.binding.dataEvent.ListShowTS = null;
                 }
-                if (listremovedate.value && listremovetime.value) {
-                    that.binding.dataEvent.ListRemoveTS = that.getDateTimeData(listremovedate.value + " " + listremovetime.value);
+                if (that.binding.dataEvent.ListRemoveDate && that.binding.dataEvent.ListRemoveTime) {
+                that.binding.dataEvent.ListRemoveTS = that.getDateTimeData(that.binding.dataEvent.ListRemoveDate + " " + that.binding.dataEvent.ListRemoveTime);
                 } else {
                     that.binding.dataEvent.ListRemoveTS = null;
                 }
@@ -362,7 +366,7 @@
                 clickOk: function (event) {
                     Log.call(Log.l.trace, "Event.Controller.");
                     WinJS.Promise.as().then(function () {
-                        AppBar.modified = true;
+                       // AppBar.modified = true;
                         that.saveData(function (response) {
                             Log.print(Log.l.trace, "prev Mail saved");
                         }, function (errorResponse) {
@@ -563,7 +567,7 @@
                 } else {
                     ret = new WinJS.Promise.as().then(function () {
                         if (typeof complete === "function") {
-                            complete([]);//dataContact
+                            complete({});//dataContact
                         }
                     });
                 }
@@ -603,7 +607,12 @@
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
+                var recordId = getEventId();
+                if (recordId) {
                 return that.selectConfExhibitorId();
+                } else {
+                    return WinJS.Promise.as();
+                }
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 AppBar.notifyModified = true;

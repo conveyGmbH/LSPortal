@@ -54,14 +54,14 @@
                                     <div class="label landscape_only">
                                         <span data-win-res="{textContent: 'eventGenSettings.startdate'}"></span>
                                     </div>
-                                    <input class="input_field win-textbox" id="livestartdate" type="date">
+                                    <input class="input_field win-textbox" type="date" data-win-bind="value: dataEvent.LiveStartDate Binding.Mode.twoway">
                                 </div>
                                 <div class="input_half_right">
                                     <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'eventGenSettings.starttime'}"></span>
                                     <div class="label landscape_only">
                                         <span data-win-res="{textContent: 'eventGenSettings.starttime'}"></span>
                                     </div>
-                                    <input class="input_small_left win-textbox" id="livestarttime" type="time">
+                                    <input class="input_small_left win-textbox" type="time" data-win-bind="value: dataEvent.LiveStartTime Binding.Mode.twoway">
                                 </div>
                             </div>
                             <div class="field_line field_line_even">
@@ -70,14 +70,14 @@
                                     <div class="label landscape_only">
                                         <span data-win-res="{textContent: 'eventGenSettings.entdate'}"></span>
                                     </div>
-                                    <input class="input_field win-textbox" id="liveenddate" type="date">
+                                    <input class="input_field win-textbox" type="date" data-win-bind="value: dataEvent.LiveEndDate Binding.Mode.twoway">
                                 </div>
                                 <div class="input_half_right">
                                     <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'eventGenSettings.endtime'}"></span>
                                     <div class="label landscape_only">
                                         <span data-win-res="{textContent: 'eventGenSettings.enttime'}"></span>
                                     </div>
-                                    <input class="input_small_left win-textbox" id="liveendtime" type="time">
+                                    <input class="input_small_left win-textbox" type="time" data-win-bind="value: dataEvent.LiveEndTime Binding.Mode.twoway">
                                 </div>
                             </div>
                             <div class="line-separator"></div>
@@ -87,14 +87,14 @@
                                     <div class="label landscape_only">
                                         <span data-win-res="{textContent: 'eventGenSettings.listshowdate'}"></span>
                                     </div>
-                                    <input class="input_field win-textbox" id="listshowdate" type="date">
+                                    <input class="input_field win-textbox" type="date" data-win-bind="value: dataEvent.ListShowDate Binding.Mode.twoway">
                                 </div>
                                 <div class="input_half_right">
                                     <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'eventGenSettings.listshowtime'}"></span>
                                     <div class="label landscape_only">
                                         <span data-win-res="{textContent: 'eventGenSettings.listshowtime'}"></span>
                                     </div>
-                                    <input class="input_small_left win-textbox" id="listshowtime" type="time">
+                                    <input class="input_small_left win-textbox" type="time" data-win-bind="value: dataEvent.ListShowTime Binding.Mode.twoway">
                                 </div>
                             </div>
                             <div class="field_line field_line_even">
@@ -103,14 +103,14 @@
                                     <div class="label landscape_only">
                                         <span data-win-res="{textContent: 'eventGenSettings.listremovedate'}"></span>
                                     </div>
-                                    <input class="input_field win-textbox" id="listremovedate" type="date">
+                                    <input class="input_field win-textbox" type="date" data-win-bind="value: dataEvent.ListRemoveDate Binding.Mode.twoway">
                                 </div>
                                 <div class="input_half_right">
                                     <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'eventGenSettings.listremovetime'}"></span>
                                     <div class="label landscape_only">
                                         <span data-win-res="{textContent: 'eventGenSettings.listremovetime'}"></span>
                                     </div>
-                                    <input class="input_small_left win-textbox" id="listremovetime" type="time">
+                                    <input class="input_small_left win-textbox" type="time" data-win-bind="value: dataEvent.ListRemoveTime Binding.Mode.twoway">
                                 </div>
                             </div>
                             <div class="line-separator"></div>
@@ -122,7 +122,7 @@
                                         <div id="showType" class="input_field"
                                              data-win-control="WinJS.UI.ToggleSwitch"
                                              data-win-bind="winControl.checked: dataEvent.ShowType; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                             onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
+                                             onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
                                         </div>
                                     </div>
                                 </div>
@@ -133,7 +133,7 @@
                                         <div id="showReg" class="input_field"
                                              data-win-control="WinJS.UI.ToggleSwitch"
                                              data-win-bind="winControl.checked: dataEvent.ShowReg; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                             onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
+                                             onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
                                         </div>
                                     </div>
                                 </div>
@@ -146,7 +146,7 @@
                                         <div id="requireReg" class="input_field"
                                              data-win-control="WinJS.UI.ToggleSwitch"
                                              data-win-bind="winControl.checked: dataEvent.RequireReg; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                             onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
+                                             onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
                                         </div>
                                     </div>
                                 </div>
@@ -157,7 +157,7 @@
                                         <div id="acceptRec" class="input_field"
                                              data-win-control="WinJS.UI.ToggleSwitch"
                                              data-win-bind="winControl.checked: dataEvent.AcceptRec; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                             onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
+                                             onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
                                         </div>
                                     </div>
                                 </div>
@@ -171,7 +171,7 @@
                                         <div id="showShowNames" class="input_field"
                                              data-win-control="WinJS.UI.ToggleSwitch"
                                              data-win-bind="winControl.checked: dataEvent.ShowNames; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                             onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
+                                             onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
                                         </div>
                                     </div>
                                 </div>
@@ -182,7 +182,7 @@
                                         <div id="showNoMemberList" class="input_field"
                                              data-win-control="WinJS.UI.ToggleSwitch"
                                              data-win-bind="winControl.checked: dataEvent.NoMemberList; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                             onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
+                                             onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
                                         </div>
                                     </div>
                                 </div>
@@ -195,7 +195,7 @@
                                         <div id="listOnlyModerators" class="input_field"
                                              data-win-control="WinJS.UI.ToggleSwitch"
                                              data-win-bind="winControl.checked: dataEvent.ListOnlyModerators; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                             onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
+                                             onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
                                         </div>
                                     </div>
                                 </div>
@@ -206,7 +206,7 @@
                                         <div id="sharedNotes" class="input_field"
                                              data-win-control="WinJS.UI.ToggleSwitch"
                                              data-win-bind="winControl.checked: dataEvent.SharedNotes; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                             onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
+                                             onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
                                         </div>
                                     </div>
                                 </div>
@@ -220,7 +220,7 @@
                                         <div id="showAllowAudio" class="input_field"
                                              data-win-control="WinJS.UI.ToggleSwitch"
                                              data-win-bind="winControl.checked: dataEvent.AllowAudio; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                             onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
+                                             onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
                                         </div>
                                     </div>
                                 </div>
@@ -231,7 +231,7 @@
                                         <div id="showAllowVideo" class="input_field"
                                              data-win-control="WinJS.UI.ToggleSwitch"
                                              data-win-bind="winControl.checked: dataEvent.AllowVideo; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                             onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
+                                             onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
                                         </div>
                                     </div>
                                 </div>
@@ -244,7 +244,7 @@
                                         <div id="hideSilentVideos" class="input_field"
                                              data-win-control="WinJS.UI.ToggleSwitch"
                                              data-win-bind="winControl.checked: dataEvent.HideSilentVideos; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                             onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
+                                             onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
                                         </div>
                                     </div>
                                 </div>
@@ -255,7 +255,7 @@
                                         <div id="showQuestions" class="input_field"
                                              data-win-control="WinJS.UI.ToggleSwitch"
                                              data-win-bind="winControl.checked: dataEvent.ShowQuestions; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                             onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
+                                             onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
                                         </div>
                                     </div>
                                 </div>
@@ -269,7 +269,7 @@
                                         <div id="showRecordSession" class="input_field"
                                              data-win-control="WinJS.UI.ToggleSwitch"
                                              data-win-bind="winControl.checked: dataEvent.RecordSession; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                             onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
+                                             onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
                                         </div>
                                     </div>
                                 </div>
@@ -280,7 +280,7 @@
                                         <div id="publishRecording" class="input_field"
                                              data-win-control="WinJS.UI.ToggleSwitch"
                                              data-win-bind="winControl.checked: dataEvent.PublishRecording; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                             onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
+                                             onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
                                         </div>
                                     </div>
                                 </div>
@@ -300,7 +300,7 @@
                                         <div id="speakerName" class="input_field"
                                              data-win-control="WinJS.UI.ToggleSwitch"
                                              data-win-bind="winControl.checked: dataEvent.SpeakerName; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                             onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
+                                             onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
                                         </div>
                                     </div>
                                 </div>
@@ -311,7 +311,7 @@
                                         <div id="speakerFN" class="input_field"
                                              data-win-control="WinJS.UI.ToggleSwitch"
                                              data-win-bind="winControl.checked: dataEvent.SpeakerFN; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                             onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
+                                             onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
                                         </div>
                                     </div>
                                 </div>
@@ -324,7 +324,7 @@
                                         <div id="speakerImage" class="input_field"
                                              data-win-control="WinJS.UI.ToggleSwitch"
                                              data-win-bind="winControl.checked: dataEvent.SpeakerImage; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                             onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
+                                             onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
                                         </div>
                                     </div>
                                 </div>
@@ -335,7 +335,7 @@
                                         <div id="speakerTitle" class="input_field"
                                              data-win-control="WinJS.UI.ToggleSwitch"
                                              data-win-bind="winControl.checked: dataEvent.SpeakerTitle; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                             onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
+                                             onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
                                         </div>
                                     </div>
                                 </div>
@@ -348,7 +348,7 @@
                                     <div id="speakerCV" class="input_field"
                                          data-win-control="WinJS.UI.ToggleSwitch"
                                          data-win-bind="winControl.checked: dataEvent.SpeakerCV; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                         onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
+                                         onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
                                     </div>
                                 </div>
                             </div>
