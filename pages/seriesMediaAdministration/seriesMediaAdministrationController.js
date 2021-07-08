@@ -445,8 +445,27 @@
                             }
                         });
                     } else {
-                        Log.print(Log.l.info, "not allowed to delete docId=" + that.binding.docId +
-                            " addIndex=" + that.binding.addIndex + " flagInsert=" + that.binding.flagInsert);
+                        // Log.print(Log.l.info, "not allowed to delete docId=" + that.binding.docId +
+                        //     " addIndex=" + that.binding.addIndex + " flagInsert=" + that.binding.flagInsert);
+
+                        // Call Prc_DeleteMandantDokumentDocs
+                        var confirmTitle = getResourceText("eventMediaAdministration.questionDelete");
+                        confirm(confirmTitle, function (result) {
+                            if (result) {
+                                Log.print(Log.l.trace, "clickDelete: user choice OK");
+                                AppData.call("Prc_DeleteMandantDokumentDocs", {
+                                    pMandantDokumentID: that.binding.docId
+                                }, function (json) {
+                                    Log.print(Log.l.info, "call success! ");
+                                    that.loadList(); /*return?!*/
+                                }, function (error) {
+                                    Log.print(Log.l.error, "call error");
+                                });
+                            } else {
+                                Log.print(Log.l.trace, "clickDelete: user choice CANCEL");
+                            }
+                        });
+
                     }
                     Log.ret(Log.l.trace);
                 },
@@ -473,7 +492,7 @@
                     }
                 },
                 clickDelete: function () {
-                    if (!AppBar.busy && that.binding.docId && that.binding.addIndex && that.binding.flagInsert) {
+                    if (!AppBar.busy && that.binding.docId) {
                         return false;
                     } else {
                         return true;
