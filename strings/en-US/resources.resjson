@@ -1305,7 +1305,7 @@
     "eventGenSettings.showquestions"			: "Show questionnaire registration",
     "eventGenSettings.showics"			    : "Show calendar",
     "eventGenSettings.publishrecording"			: "Show registration after event",
-    "eventGenSettings.showreg"			: "Show registration button",
+    "eventGenSettings.showreg"			: "Show registration",
     "eventGenSettings.showtype"			    : "Show event type",
     "eventGenSettings.speakername"			: "Show speaker surname",
     "eventGenSettings.speakerfn"			: "Show speaker name",

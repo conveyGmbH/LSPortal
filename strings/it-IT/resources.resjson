@@ -1304,7 +1304,7 @@
     "eventGenSettings.showquestions"			: "Mostra questionario registrazione",
     "eventGenSettings.showics"			    : "Mostra calendario",
     "eventGenSettings.publishrecording"			: "Mostra registrazione dopo l'evento",
-    "eventGenSettings.showreg"			: "Mostra il pulsante di registrazione",
+    "eventGenSettings.showreg"			: "Visualizza registrazione",
     "eventGenSettings.showtype"			    : "Mostra tipo evento",
     "eventGenSettings.speakername"			: "Mostra cognome speaker",
     "eventGenSettings.speakerfn"			: "Mostra nome speaker",

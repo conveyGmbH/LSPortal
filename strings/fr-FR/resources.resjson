@@ -1305,7 +1305,7 @@
     "eventGenSettings.showquestions"			: "Montrer l'enregistrement du questionnaire",
     "eventGenSettings.showics"			    : "Montrer le calendrier",
     "eventGenSettings.publishrecording"			: "Inscription au spectacle après l'événement",
-    "eventGenSettings.showreg"			: "Registierungsbutton zeigen",
+    "eventGenSettings.showreg"			: "Voir l'inscription",
     "eventGenSettings.showtype"			    : "Afficher le type d'événement",
     "eventGenSettings.speakername"			: "Afficher le nom de famille de l'orateur",
     "eventGenSettings.speakerfn"			: "Afficher le nom de l'orateur",

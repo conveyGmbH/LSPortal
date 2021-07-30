@@ -1284,7 +1284,7 @@
 	"eventGenSettings.showquestions"			: "Fragebogen Registrierung anzeigen",
     "eventGenSettings.showics"			    : "Kalender anzeigen",
     "eventGenSettings.publishrecording"			: "Aufzeichnung nach der Veranstaltung anzeigen",
-    "eventGenSettings.showreg"			: "Registierungsbutton zeigen",
+    "eventGenSettings.showreg"			: "Registierung anzeigen",
     "eventGenSettings.showtype"			    : "Veranstaltungstyp anzeigen",
     "eventGenSettings.speakername"			: "Speaker Name zeigen",
     "eventGenSettings.speakerfn"			: "Speaker Vorname zeigen",
