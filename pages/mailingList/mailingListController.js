@@ -635,8 +635,7 @@
                                 });
                                 that.processAllData();
                             }
-                        },
-                            function (errorResponse) {
+                        }, function (errorResponse) {
                                 AppData.setErrorMsg(that.binding, errorResponse);
                             }, restr);
                     } else {
@@ -652,8 +651,7 @@
                                     that.resultConverter(item, index);
                                 });
                             }
-                        },
-                            function (errorResponse) {
+                        }, function (errorResponse) {
                                 AppData.setErrorMsg(that.binding, errorResponse);
                             }, {
                                 LanguageSpecID : AppData.getLanguageId()
