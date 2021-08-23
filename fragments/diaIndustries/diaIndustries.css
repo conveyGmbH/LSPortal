@@ -1,0 +1,60 @@
+﻿.diaIndustries .industries-chart-top-container {
+    height: 50px;
+    width: 100%;
+}
+
+.diaIndustries .industries-chart-top-text-container {
+    height: 50px;
+    width: 100%;
+}
+
+.diaIndustries .industries-chart-top-text {
+    display: table-cell;
+    vertical-align: middle;
+    padding-left: 5px;
+}
+
+.diaIndustries .industries-chart-top-combo-container {
+    height: 50px;
+    width: 30%;
+    float: right;
+}
+.chart-container {
+    position: relative;
+    height: 240px;
+    width: 100%;
+}
+
+#industriesYearChart4 {
+    float: left;
+}
+#criteriadropdown {
+    width: 33.3% !important;
+    height: 50px;
+    float: left;
+    margin: 0px;
+}
+.diaIndustries .win-dropdown {
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    background-color: transparent;
+    -webkit-appearance: none;
+}
+.chart-container-block1,
+.chart-container-block2,
+.chart-container-block3,
+.chart-container-block4 {
+    height: 220px;
+    width: 24%;
+    float: left;
+    margin-top: 10px;
+}
+.view-size-medium .chart-container-block1,
+.view-size-medium .chart-container-block2,
+.view-size-medium .chart-container-block3,
+.view-size-medium .chart-container-block4 {
+    height: 100px;
+    width: 49%;
+}

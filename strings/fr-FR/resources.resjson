@@ -1371,5 +1371,16 @@
     
     "eventQuestionnaire.question" : "Question", 
     "eventQuestionnaire.questiontyp" : "Type de question",
-    "eventQuestionnaire.deleteassignment" : "Voulez-vous supprimer l'affectation?"
+    "eventQuestionnaire.deleteassignment" : "Voulez-vous supprimer l'affectation?",
+
+    "diaCountrysIndustries.title" : "L'industrie",
+
+    "diaCountrys.title" : "Top 5 Pays",
+
+    "diaVisitors.title" : "Visiteurs",
+    "diaVisitors.hour" : "Heures",
+    "diaVisitors.day" : "Jours",
+
+    "diaYearRange.title" : "Gamme d'années",
+    "diaYearRange.remaindata" : "Données résiduelles"
 }

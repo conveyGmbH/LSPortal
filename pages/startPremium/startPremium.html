@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="startPremium.css" rel="stylesheet" />
+    <script type="text/javascript" src="startPremiumService.js"></script>
+    <script type="text/javascript" src="startPremiumController.js"></script>
+    <script type="text/javascript" src="startPremium.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="startPremium fragment">
+        <div id="startPremiumController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="contentarea win-type-body">
+                    <div class="header-separator"></div>
+                    <div class="content-header">
+                        <div class="half-circle half-circle-textcolor">&nbsp;</div>
+                        <div class="content-header-line win-type-caption">
+                            <span class="id-field"></span>
+                            <span class="caption-field" data-win-res="{textContent: 'start.title'}"></span>
+                            <span class="date-field"></span>
+                        </div>
+                    </div>
+                    <div class="tiles-container">
+                        <div name="charts" class="tile tile-top">
+                            <div class="tile-content-inner" data-win-bind="style.display: countContacts  Binding.Converter.toDisplay">
+                                <div class="field_line field_tile_half_right">
+                                    <div id="startContactspDhost" class="fragmenthost"></div>
+                                </div>
+                                <div class="field_line field_tile_half_left">
+                                    <div id="startContactshost" class="fragmenthost"></div>
+                                </div>
+                                <div class="field_line field_tile_half_left">
+                                    <div id="startCountryshost" class="fragmenthost"></div>
+                                </div>
+                                <div class="field_line field_tile_half_left">
+                                    <div id="startQuestionshost" class="fragmenthost"></div>
+                                </div>
+                                <div class="field_line field_tile_full">
+                                    <div id="startPremiumdiaIndustrieshost" class="fragmenthost"></div>
+                                </div>
+                            </div>
+                            <div class="tile-content-inner" data-win-bind="style.display: countContacts Binding.Converter.toDisplayNone">
+                                <div class="ITbackground">
+                                    <img class="ipadImg" src="../../images/LS_iPad.png" />
+                                    <div>
+                                        <div class="action-label" data-win-res="{textContent: 'startnodata.text1'}"></div>
+                                        <div class="action-label" data-win-res="{textContent: 'startnodata.text2'}"></div>
+                                        <div class="action-label" data-win-res="{textContent: 'startnodata.text3'}"></div>
+                                        <div class="action-label">
+                                            <a data-win-res="{textContent: 'startnodata.text6', href: 'startnodata.text4'}" target="_blank"></a>
+                                        </div>
+                                        <div class="action-label">
+                                            <a data-win-res="{textContent: 'startnodata.text7', href: 'startnodata.text5'}" target="_blank"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                <div class="error-message"
+                     data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

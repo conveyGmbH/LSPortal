@@ -1,0 +1,34 @@
+﻿.visitor-chart-top-container {
+    height: 50px;
+    width: 100%;
+}
+
+.visitor-chart-top-text-container {
+    height: 50px;
+    width: 70%;
+    float: left;
+    font-weight: bold;
+    display: table;
+}
+.visitor-chart-top-text {
+    display: table-cell;
+    vertical-align: middle;
+    padding-left: 5px;
+}
+.visitor-chart-top-combo-container {
+    height: 50px;
+    width: 30%;
+    float: right;
+    position: relative;
+}
+#showHourDay {
+    margin-left: 20%;
+    top: 25%;
+    position: absolute;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+.visitor-chart-container {
+    height: 240px;
+    width: 100%;
+}

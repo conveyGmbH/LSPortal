@@ -1,0 +1,55 @@
+﻿.countrysindustries-chart-top-container {
+    height: 50px;
+    width: 100%;
+}
+
+.countrysindustries-chart-top-text-container {
+    height: 50px;
+    width: 100%;
+    float: left;
+    font-weight: bold;
+}
+.countrysindustries-chart-top-combo-container {
+    height: 50px;
+    width: 30%;
+    float: right;
+}
+
+.countrysindustries-chart-container {
+    height: 520px !important;
+    width: 98%;
+}
+#worldcontainer {
+    position: relative;
+}
+#container {
+    height: 300px !important;
+    width: 100%;
+    position: relative;
+}
+#criteriadropdown {
+    width: 33.3% !important;
+    height: 50px;
+    float: left;
+}
+#countrydropdown {
+    width: 32% !important;
+    height: 50px;
+    float: left;
+}
+#timedropdown {
+    width: 32% !important;
+    height: 50px;
+}
+.diaCountrysIndustries .win-dropdown {
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    background-color: transparent;
+    -webkit-appearance: none;
+}
+#daydropdown {
+    width: 32% !important;
+    height: 50px;
+}

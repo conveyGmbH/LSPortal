@@ -1,0 +1,315 @@
+/*
+    margins/paddings for all screens
+*/
+.startPremium .tile-button-color,
+.startPremium .tile-header,
+.startPremium .tile-content-wide,
+.startPremium .tile-content,
+.startPremium .tile-content-flat,
+.startPremium .tile-content-inner {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.startPremium .tile-template {
+    display: none;
+}
+
+#dataLicenceUserList  {
+    width: 100%;
+    height: 60px;
+}
+.dataLicenceUser-button {
+    width: 180px;
+}
+
+.startPremium .tile {
+    min-height: 180px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    /*
+    width: 200px;
+    display: table;
+    */
+    width: 100%;
+}
+
+.startPremium .tile-header {
+    text-align: center;
+    height: 42px;
+    /*
+    width: calc(100% - 4px);
+    */
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    /*
+    border-style: solid;
+    border-width: 2px;
+    border-color: transparent;
+    */
+    border: none;
+    display: table-caption;
+}
+
+.startPremium table.jqplot-table-legend,
+.startPremium table.jqplot-cursor-legend {
+    background-color: rgba(255,255,255,0.2);
+}
+
+.start-header-field {
+    height: 20px;
+    padding-top: 10px;
+    width: 100%;
+    height: 100%;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.startPremium .field_line {
+    border: none;
+}
+
+.tiles-container {
+    
+}
+
+.tile-top {
+    
+}
+
+.tile-middle {
+    
+}
+
+.tile-bottom {
+    
+}
+.startPremium .field_tile_half_left {
+    background-color: white;
+}
+.startPremium .field_tile_half_right {
+    background-color: white;
+}
+.startPremium .field_tile_full {
+    background-color: white;
+}
+
+.startPremium .tile-row {
+    display: table-row;
+    height: 96px;
+    width: 100%;
+}
+
+.startPremium .tile-content-wide {
+    min-height: 96px;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    border: none;
+    display: table-cell;
+}
+
+.startPremium .tile-content {
+    min-height: 96px;
+    width: 33.333333%;
+    padding: 0;
+    margin: 0;
+    border: none;
+    display: table-cell;
+}
+
+.startPremium .tile-content-flat {
+    min-height: 48px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    vertical-align: bottom;
+    border: none;
+    display: table-cell;
+}
+
+.startPremium .tile-content-inner {
+    width: 100%;
+    border: none;
+}
+
+.action-image-recent { padding-left: 6px; }
+
+.startPremium .tile-button {
+    width: 100%;
+    min-height: 94px;
+    margin: 0;
+}
+
+:disabled.win-button-primary.win-button.tile-button, :disabled.win-button.tile-button { background-color: transparent; }
+
+.startPremium .tile-button-wide {
+    width: 100%;
+    min-height: 94px;
+    margin: 0;
+    text-align: left;
+}
+
+.startPremium .tile-button-wide-flat {
+    width: 100%;
+    min-height: 46px;
+    margin: 0;
+    text-align: left;
+}
+
+.startPremium .action-label {
+    margin-top: 4px;
+    width: 100%;
+    text-align: center;
+}
+
+.startPremium .start-donut-chart {
+    width: 100%;
+}
+.startPremium .start-donut-chart table.jqplot-table-legend {
+        top: 0 !important;
+        padding: 4px;
+    }
+.startPremium .start-donut-chart td.jqplot-table-legend {
+        white-space: nowrap;
+    }
+
+
+.startPremium .view-size-medium .start-donut-chart {
+    left: 15%;
+    width: 70%;
+}
+
+.startPremium .view-size-small .start-donut-chart {
+    left: 0;
+    width: 100%;
+}
+
+.startPremium .start-pie-chart {
+    width: 100%;
+}
+.startPremium .start-map-chart {
+    text-align: center;
+    width: 100%
+}
+
+.startPremium .start-bar-chart {
+    height: 250px;
+    width: 100%;
+}
+
+.startPremium .jqplot-xaxis-tick,
+.startPremium .jqplot-yaxis-tick,
+.startPremium .jqplot-data-label {
+    font-size: 12px;
+}
+
+.startPremium .jqplot-grid-canvas {
+    visibility: hidden;
+}
+
+.startPremium .visitorsEditedChartBox {
+    width: 100%;
+}
+
+/*
+@media (max-height:1099px) {
+    .pie-chart {
+        display: none;
+    }
+}
+*/
+
+/*
+    margins/paddings for medium size screens or orientation landscape
+    contentarea is less than 699px (in landscape add 140px for navigation bar)
+    @media (max-width:699px), (max-width:839px) and (orientation: landscape) {
+@media (max-width:899px) {
+    
+}
+*/
+
+.startPremium .view-size-medium .hide_if_size_medium {
+    display: none;
+}
+
+.startPremium .view-size-medium .pagetitle {
+    display: inline-block;
+}
+
+.startPremium .view-size-medium .start-photo-container {
+    width: 60%;
+    left: 20%;
+}
+
+/*
+    margins/paddings for small screens and orientation vertical
+@media (max-height:699px) {
+   
+}
+*/
+
+
+/*
+    margins/paddings for small screens and orientation vertical
+@media (max-width:499px) {
+    
+}
+*/
+
+.startPremium .view-size-small .pagetitle {
+    display: none;
+}
+
+.startPremium .view-size-small .start-photo-container {
+    width: 80%;
+    left: 10%;
+}
+
+
+.startPremium .view-size-small .start-pie-chart {
+    min-width: 96px;
+}
+
+.startPremium #startContactshost.fragmenthost {
+    height: 285px;
+}
+.startPremium #startCountryshost.fragmenthost {
+    height: 270px;
+}
+.startPremium #startQuestionshost.fragmenthost {
+    height: 285px;
+}
+.startPremium #startContactspDhost.fragmenthost {
+    height: 875px;
+}
+.startPremium .startPremium #startTop10Countryshost.fragmenthost {
+    height: 270px;
+}
+.startPremium #startTop10Usershost.fragmenthost {
+    height: 270px;
+}
+.startPremium #startPremiumdiaIndustrieshost.fragmenthost {
+    height: 290px;
+}
+.ITbackground {
+    margin-top: 4px;
+    margin-left: 26px;
+    margin-right: 26px;
+    margin-bottom: 4px;
+    width: calc(100% - 54px);
+    height: 730px; /*645px*/
+    background-color: transparent;
+    /*color: white;
+    background-image: url("/www/images/ITBackground.jpg");*/
+}
+.ipadImg {
+    max-width: 100%;
+    width: 600px;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: transparent;
+}

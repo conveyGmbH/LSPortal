@@ -1371,5 +1371,16 @@
     
 	"eventQuestionnaire.question" : "Frage", 
     "eventQuestionnaire.questiontyp" : "Fragetyp",
-    "eventQuestionnaire.deleteassignment" : "Wollen Sie die Zuordnung löschen?"
+    "eventQuestionnaire.deleteassignment" : "Wollen Sie die Zuordnung löschen?",
+
+    "diaCountrysIndustries.title" : "Industrie",
+
+    "diaCountrys.title" : "Top 5 Länder",
+
+    "diaVisitors.title" : "Besucher",
+    "diaVisitors.hour" : "Stunden",
+    "diaVisitors.day" : "Tage",
+
+    "diaYearRange.title" : "Jahr-Bereich",
+    "diaYearRange.remaindata" : "Rest-Daten"
 }		

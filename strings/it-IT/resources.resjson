@@ -1370,5 +1370,16 @@
     
     "eventQuestionnaire.question" : "Domanda", 
     "eventQuestionnaire.questiontyp" : "Tipo di domanda",
-    "eventQuestionnaire.deleteassignment" : "Vuoi cancellare l'incarico?"
+    "eventQuestionnaire.deleteassignment" : "Vuoi cancellare l'incarico?",
+
+    "diaCountrysIndustries.title" : "Industria",
+
+    "diaCountrys.title" : "Top 5 Paesi",
+
+    "diaVisitors.title" : "Visitatori",
+    "diaVisitors.hour" : "Ore",
+    "diaVisitors.day" : "Giorni",
+
+    "diaYearRange.title" : "Gamma di anni",
+    "diaYearRange.remaindata" : "Dati residui"
 }

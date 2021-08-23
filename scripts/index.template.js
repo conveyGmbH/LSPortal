@@ -1,4 +1,4 @@
-// For an introduction to the Blank template, see the following documentation:
+﻿// For an introduction to the Blank template, see the following documentation:
 // http://go.microsoft.com/fwlink/?LinkID=397704
 // To debug code on page load in Ripple or on Android devices/emulators: launch your app, set breakpoints,
 // and then run "window.location.reload()" in the JavaScript Console.
@@ -117,7 +117,8 @@
 		{ id: "contactResultsList", group: 42, svg: "calendar_1", disabled: true, predecGroup: 29 },
         //{ id: "resourcesAdministration", group: 17, svg: "user_headset", disabled: true },
         //{ id: "search", group: 7, svg: "magnifying_glass", disabled: true },
-        //{ id: "info", group: 10, svg: "gearwheel", disabled: true }
+        //{ id: "info", group: 10, svg: "gearwheel", disabled: true },
+          { id: "startPremium", group: 57, svg: "Dashboard", disabled: true }
     ];
 
     // static array of pages for the navigation bar
@@ -188,7 +189,8 @@
         { id: "contactResultsCriteria", group: 43, disabled: false },
         { id: "contactResultsQuestion", group: 43, disabled: false },
         { id: "contactResultsAttach", group: 43, disabled: false },
-        { id: "contactResultsEvents", group: 43, disabled: false }
+        { id: "contactResultsEvents", group: 43, disabled: false },
+        { id: "startPremium", group: -57, disabled: false }
     ];
 
 
