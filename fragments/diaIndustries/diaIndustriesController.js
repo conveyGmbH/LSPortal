@@ -118,7 +118,7 @@
 
                 //IndustriesYearChart1Data
                 var industriesYearChartDataLabels1 = [];
-                var industriesYearChartDataTexts1 = [];
+                var industriesYearChartDataTexts1 = "";
                 var industriesYearChartDataRaw1 = [];
                 var industriesYearChartDataProcent1 = "";
 
@@ -162,7 +162,7 @@
 
                 //YearRangeChart2Data
                 var industriesYearChartDataLabels2 = [];
-                var industriesYearChartDataTexts2 = [];
+                var industriesYearChartDataTexts2 = "";
                 var industriesYearChartDataRaw2 = [];
                 var industriesYearChartDataProcent2 = "";
 
@@ -202,7 +202,7 @@
 
                 //YearRangeChart3Data
                 var industriesYearChartDataLabels3 = [];
-                var industriesYearChartDataTexts3 = [];
+                var industriesYearChartDataTexts3 = "";
                 var industriesYearChartDataRaw3 = [];
                 var industriesYearChartDataProcent3 = "";
 
@@ -242,7 +242,7 @@
 
                 //YearRangeChart4Data
                 var industriesYearChartDataLabels4 = [];
-                var industriesYearChartDataTexts4 = [];
+                var industriesYearChartDataTexts4 = "";
                 var industriesYearChartDataRaw4 = [];
                 var industriesYearChartDataProcent4 = "";
 
@@ -287,7 +287,7 @@
                     Log.call(Log.l.trace, "DiaYearRange.Controller.");
                     //clear IndustriesYearChart1Data
                     industriesYearChartDataLabels1 = [];
-                    industriesYearChartDataTexts1 = [];
+                    industriesYearChartDataTexts1 = "";
                     industriesYearChartDataRaw1 = [];
                     industriesYearChartDataProcent1 = "";
                     yearRangeChart1Data = {
@@ -301,7 +301,7 @@
 
                     //clear IndustriesYearChart2Data
                     industriesYearChartDataLabels2 = [];
-                    industriesYearChartDataTexts2 = [];
+                    industriesYearChartDataTexts2 = "";
                     industriesYearChartDataRaw2 = [];
                     industriesYearChartDataProcent2 = "";
                     yearRangeChart2Data = {
@@ -315,7 +315,7 @@
 
                     //clear IndustriesYearChart3Data
                     industriesYearChartDataLabels3 = [];
-                    industriesYearChartDataTexts3 = [];
+                    industriesYearChartDataTexts3 = "";
                     industriesYearChartDataRaw3 = [];
                     industriesYearChartDataProcent3 = "";
                     yearRangeChart3Data = {
@@ -329,7 +329,7 @@
 
                     //clear IndustriesYearChart4Data
                     industriesYearChartDataLabels4 = [];
-                    industriesYearChartDataTexts4 = [];
+                    industriesYearChartDataTexts4 = "";
                     industriesYearChartDataRaw4 = [];
                     industriesYearChartDataProcent4 = "";
                     yearRangeChart4Data = {
@@ -348,15 +348,19 @@
                     Log.call(Log.l.trace, "DiaYearRange.Controller.");
                     industriesyearchart1.data.labels = industriesYearChartDataLabels1;
                     industriesyearchart1.data.datasets[0].data = industriesYearChartDataRaw2;
+                    industriesyearchart1.options.elements.center.text = industriesYearChartDataProcent1 + " " + industriesYearChartDataTexts1;
                     industriesyearchart1.update();
                     industriesyearchart2.data.labels = industriesYearChartDataLabels2;
                     industriesyearchart2.data.datasets[0].data = industriesYearChartDataRaw2;
+                    industriesyearchart2.options.elements.center.text = industriesYearChartDataProcent2 + " " + industriesYearChartDataTexts2;
                     industriesyearchart2.update();
                     industriesyearchart3.data.labels = industriesYearChartDataLabels3;
                     industriesyearchart3.data.datasets[0].data = industriesYearChartDataRaw3;
+                    industriesyearchart3.options.elements.center.text = industriesYearChartDataProcent3 + " " + industriesYearChartDataTexts3;
                     industriesyearchart3.update();
                     industriesyearchart4.data.labels = industriesYearChartDataLabels4;
                     industriesyearchart4.data.datasets[0].data = industriesYearChartDataRaw4;
+                    industriesyearchart4.options.elements.center.text = industriesYearChartDataProcent4 + " " + industriesYearChartDataTexts4;
                     industriesyearchart4.update();
                     Log.ret(Log.l.trace);
                 }
@@ -374,7 +378,7 @@
                     item.index = index;
                     if (item.QualifierID === 11) {
                         if (industriesYearChartDataTexts1.length === 0) {
-                            industriesYearChartDataTexts1.push(item.Qualifier);
+                            industriesYearChartDataTexts1 = item.Qualifier;
                         }
                         industriesYearChartDataLabels1.push(item.Qualifier2);
                         //industriesYearChartDataLabels1.push(getResourceText("diaYearRange.remaindata"));
@@ -384,7 +388,7 @@
                     }
                     if (item.QualifierID === 12) {
                         if (industriesYearChartDataTexts2.length === 0) {
-                            industriesYearChartDataTexts2.push(item.Qualifier);
+                            industriesYearChartDataTexts2 = item.Qualifier;
                         }
                         industriesYearChartDataLabels2.push(item.Qualifier2);
                         //industriesYearChartDataLabels2.push(getResourceText("diaYearRange.remaindata"));
@@ -394,7 +398,7 @@
                     }
                     if (item.QualifierID === 13) {
                         if (industriesYearChartDataTexts3.length === 0) {
-                            industriesYearChartDataTexts3.push(item.Qualifier);
+                            industriesYearChartDataTexts3 = item.Qualifier;
                         }
                         industriesYearChartDataLabels3.push(item.Qualifier2);
                         //industriesYearChartDataLabels3.push(getResourceText("diaYearRange.remaindata"));
@@ -404,13 +408,20 @@
                     }
                     if (item.QualifierID === 14) {
                         if (industriesYearChartDataTexts4.length === 0) {
-                            industriesYearChartDataTexts4.push(item.Qualifier);
+                            industriesYearChartDataTexts4 = item.Qualifier;
                         }
                         industriesYearChartDataLabels4.push(item.Qualifier2);
                         //industriesYearChartDataLabels4.push(getResourceText("diaYearRange.remaindata"));
                         industriesYearChartDataRaw4.push(item.NumHits);
                         //industriesYearChartDataRaw4.push(item.NumTotal - item.NumHits);
                         industriesYearChartDataProcent4 = Math.round(item.NumHits / item.NumTotal * 100) + "%";
+                    }
+                    if (item.QualifierID === null) {
+                        industriesYearChartDataTexts1 = item.ResultMessage;
+                        industriesYearChartDataTexts2 = item.ResultMessage;
+                        industriesYearChartDataTexts3 = item.ResultMessage;
+                        industriesYearChartDataTexts4 = item.ResultMessage;
+                        industriesYearChartDataProcent4 = "";
                     }
                 }
                 this.resultConverter = resultConverter;
