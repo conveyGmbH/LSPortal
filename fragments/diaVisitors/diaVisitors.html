@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="diaVisitors.css" rel="stylesheet" />
+    <script type="text/javascript" src="diaVisitorsService.js"></script>
+    <script type="text/javascript" src="diaVisitorsController.js"></script>
+    <script type="text/javascript" src="diaVisitors.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="diaVisitors fragment">
+        <div id="diaCountrysController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="visitor-chart-top-container">
+                    <div class="visitor-chart-top-text-container">
+                        <span class="visitor-chart-top-text" data-win-res="{textContent: 'diaVisitors.title'}"></span>
+                    </div>
+                    <div class="visitor-chart-top-combo-container">
+                        <div class="input_field toggle-switch-parent">
+                            <div id="showHourDay" class="input_field"
+                                 data-win-control="WinJS.UI.ToggleSwitch"
+                                 data-win-bind="winControl.checked: dayhourflag; winControl.labelOn: day; winControl.labelOff: hour"
+                                 onchange="AppBar.handleEvent('change', 'clickChangeHourDay', event)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="visitor-chart-container">
+                    <canvas id="visitorChart"></canvas>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

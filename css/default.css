@@ -641,6 +641,32 @@ select {
     margin-left: 4px;
     margin-right: 4px;
 }
+.field_tile_half_left {
+    float: none;
+    width: calc(49% - 10px);
+    overflow-y: hidden;
+    min-height: 290px;
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+.field_tile_half_right {
+    float: right;
+    width: calc(49% - 10px);
+    overflow-y: hidden;
+    min-height: 875px;
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+.field_tile_full {
+    float: left;
+    width: calc(100% - 10px);
+    overflow-y: hidden;
+    min-height: 290px;
+    margin-left: 4px;
+    margin-right: 4px;
+}
 /*
 .input_field, .large_field, .input_small_left, .input_small_right {
     margin-bottom: 20px;

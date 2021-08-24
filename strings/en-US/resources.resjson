@@ -1371,5 +1371,16 @@
     
     "eventQuestionnaire.question" : "Question", 
     "eventQuestionnaire.questiontyp" : "Question type",
-    "eventQuestionnaire.deleteassignment" : "Do you want to delete the assignment?"
+    "eventQuestionnaire.deleteassignment" : "Do you want to delete the assignment?",
+
+    "diaCountrysIndustries.title" : "Industries",
+
+    "diaCountrys.title" : "Top 5 Countrys",
+
+    "diaVisitors.title" : "Visitors",
+    "diaVisitors.hour" : "Hours",
+    "diaVisitors.day" : "Days",
+
+    "diaYearRange.title" : "Year-Range",
+    "diaYearRange.remaindata" : "Left-Data"
 }
