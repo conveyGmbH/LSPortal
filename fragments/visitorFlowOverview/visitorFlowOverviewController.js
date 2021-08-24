@@ -32,7 +32,7 @@
 
             var resultConverter = function (item, index) {
                 item.index = index;
-                that.binding.ZutritteAlle = item.ZutritteBereichHeute - item.AustritteBereichHeute;
+                that.binding.ZutritteAlle = item.Inside;
                 if (that.binding.ZutritteAlle >= item.Limit) {
                     dot.style.backgroundColor = "red";
                 } else if (item.WarnLimit !== null && item.WarnLimit > 0 && that.binding.ZutritteAlle >= item.WarnLimit && that.binding.ZutritteAlle < item.Limit) {
