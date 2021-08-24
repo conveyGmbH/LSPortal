@@ -132,7 +132,7 @@
                     dataExibitor.AppUser = parseInt(dataExibitor.AppUser);
                 }
                 if (!dataExibitor.AppUser || dataExibitor.AppUser < 1) {
-                    dataExibitor.AppUser = 1;
+                    dataExibitor.AppUser = 0;
                 }
                 if (typeof dataExibitor.LandID === "string") {
                     dataExibitor.LandID = parseInt(dataExibitor.LandID);
