@@ -580,6 +580,10 @@
 	"label.eventStartLang" : "Sprache",
     "label.genDataAnswers" : "Fragen",
     "label.eventQuestionnaire" : "Fragebogen",
+    "label.dashBoardGrp" : "Dashboard",
+    "label.AutomaticMailsGrp" : "Automatische Mails",
+    "label.MyEventsLSGrp" : "Meine Veranstaltungen",
+
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Abbrechen",
@@ -783,6 +787,7 @@
     "mailingList.active"            : "Aktiv",
     "mailingList.pending"            : "Anstehend",
     "mailingList.maileditlabel"            : "Edit",
+    "mailingList.comment"            : " Erstellen und Einrichten Ihrer Mailing-Prozesse",
 
 	"mailingTypes.title"	: "E-Mail Typen",
 	"mailingTypes.type"     : "E-Mail Typ",
@@ -1140,6 +1145,9 @@
     "visitorflowoverview.areacombo"			: "Bereich auswählen",
     "visitorflowoverview.offsettext"			: "Bei einem Offset von: ",
 
+    "dashBoard.title"	: "Dashboard",
+    "dashBoard.comment"	: "Zur Übersicht",
+
 	"visitorFlowDashboard.title"	: "Visitor Flow Dashboard",
     "visitorFlowDashboard.comment"  : "Hier finden Sie eine Übersicht über die Anzahl Besucher an Ihrem Stand",
 
@@ -1259,7 +1267,7 @@
     "mailingTemplateEventEdit.mailtext"			: "Mailtext",
     "mailingTemplateEventEdit.layoutactive"			: "Schalten Sie aus, um diesen E-Mail-Entwurf (in allen Sprachen) als veraltet zu kennzeichnen. Wenn ein Entwurf veraltet ist, wird er in der Anwendung Mailing nicht als Option angezeigt.",
 
-    "eventGenSettings.title"			: "Allgemeine Einstellungen",
+    "eventGenSettings.title"			: "Einstellungen",
     "eventGenSettings.name"			: "Veranstaltungname",
     "eventGenSettings.typ"			: "Typ der Veranstaltung",
     "eventGenSettings.startdate"			: "Startdatum",
@@ -1294,14 +1302,16 @@
     "eventGenSettings.newevent"			: "Neuer Veranstaltungname",
     "eventGenSettings.sharednotes"			: "Geteilten Notizen",
     "eventGenSettings.addevent"			: "Hinzufügen",
+    "eventGenSettings.comment"			: "Erstellen und Einrichten Sie Ihre Events",
     
-	"eventSeries.title" : "Titel",
+	"eventSeries.title" : "Serienseite",
     "eventSeries.language" : "Sprache",
     "eventSeries.languageTitle" : "Sprache Titel",
 	"eventSeries.labelDelete" : "Serie",
 	"eventSeries.newSerie" : "Serie hinzufügen",
 	"eventSeries.serieDelete" : "Möchten Sie diese Serie löschen?",
 	"eventSeries.sortierung" : "Sortierung",
+    "eventSeries.comment" : "Richten Sie Ihre Serien und Serien-Seiten ein",
 
     "eventSeriesAdministration.title" : "Serien Titel",
     "eventSeriesAdministration.serien" : "Serien",
@@ -1335,7 +1345,7 @@
     "eventSpeakerAdministration.send" : "Zugangsdaten per Mail",
     "eventSpeakerAdministration.mailsend" : "Mail versandt!",
 	
-    "genDataModDetails.title" : "Moderator Details",
+    "genDataModDetails.title" : "Moderatoren",
     "genDataModDetails.newmodlabel" : "Hinzufügen",
     "genDataModDetails.category" : "Kategorie",
     "genDataModDetails.expertise" : "Expertise",
@@ -1346,6 +1356,7 @@
     "genDataModDetails.picchanghebutton" : "Bild ändern",
     "genDataModDetails.academicTitle" : "Akademischer Titel",
     "genDataModDetails.modDelete" : "Wollen Sie diesen Moderator löschen?",
+    "genDataModDetails.comment" : "Erfassen Sie Ihre Moderatoren und Speaker",
 
     "genDataModHisto.title" : "Historie",
     "genDataModHisto.eventname" : "Veranstaltung",
@@ -1368,6 +1379,7 @@
     "genDataAnswers.question" : "Fragentext", 
     "genDataAnswers.questiongroup" : "Fragengruppe",
     "genDataAnswers.questionDelete" : "Wollen Sie diese Frage löschen?",
+    "genDataAnswers.comment" : "...",
     
 	"eventQuestionnaire.question" : "Frage", 
     "eventQuestionnaire.questiontyp" : "Fragetyp",
@@ -1382,5 +1394,8 @@
     "diaVisitors.day" : "Tage",
 
     "diaYearRange.title" : "Jahr-Bereich",
-    "diaYearRange.remaindata" : "Rest-Daten"
+    "diaYearRange.remaindata" : "Rest-Daten",
+
+	"startResourceAdministration.title" : "Überblickseite",
+    "startResourceAdministration.comment" : "Erstellen und Einrichten Ihrer Startseite"
 }		

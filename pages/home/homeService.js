@@ -8,6 +8,9 @@
 
     WinJS.Namespace.define("Home", {
         _actions: [
+            
+        ],
+        _actionsdefault: [
             { page: "voucherAdministration", imageName: "Gutschein1.1" },
             { page: "esStaffAdministration", imageName: "id_card" },
             { page: "esVoucherUsers", imageName: "voucher_contact" },
@@ -18,11 +21,12 @@
             { page: "mailing", imageName: "mail" },
             { page: "employee", imageName: "keys" },
             { page: "contacts", imageName: "businesspeople2" },
-            { page: "reporting", imageName: "download" }, 
+            { page: "reporting", imageName: "download" },
             { page: "visitorFlowDashboard", imageName: "lsvFlow" },
             { page: "visitorFlowEntExt", imageName: "window_gear" }
             //{ page: "infodesk", imageName: "magnifying_glass" }
         ],
+
         _actionsList: null,
         actionsView: {
             get: function () {
@@ -41,6 +45,20 @@
                     Home._actionsList = new WinJS.Binding.List(list);
                 }
                 return Home._actionsList;
+            }
+        },
+        _StartPageTileView: {
+            get: function () {
+                return AppData.getFormatView("StartPageTile", 20657);
+            }
+        },
+        StartPageTileView: {
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, "LocalEvents.");
+                var ret = Home._StartPageTileView.select(complete, error, restriction);
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
             }
         }
     });

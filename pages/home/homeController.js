@@ -136,8 +136,55 @@
                 this.addRemovableEventListener(listView, "iteminvoked", this.eventHandlers.onItemInvoked.bind(this));
             }
 
+            var resultConverter = function (item, index) {
+                item.index = index;
+                Home._actions.push({ page: item.Page, imageName: item.ImageName});
+            }
+            this.resultConverter = resultConverter;
+
+            var loadData = function () {
+                Log.call(Log.l.trace, "LocalEvents.Controller.");
+                AppData.setErrorMsg(that.binding);
+                if (Home._actions) {
+                    Home._actions = [];
+                }
+                var ret = new WinJS.Promise.as().then(function () {
+                    return Home.StartPageTileView.select(function (json) {
+                        // this callback will be called asynchronously
+                        // when the response is available
+                        AppData.setErrorMsg(that.binding);
+                        Log.print(Log.l.trace, "StartPageTileView: success!");
+                        // employeeView returns object already parsed from json file in response
+                        if (json && json.d && json.d.results && json.d.results.length) {
+                            var results = json.d.results;
+                            results.forEach(function (item, index) {
+                                that.resultConverter(item, index);
+                            });
+                           
+                            Log.print(Log.l.trace, "StartPageTileView: success!");
+                        } else {
+                            Home._actions = Home._actionsdefault;
+                            Log.print(Log.l.trace, "StartPageTileView: success!");
+                        }
+                        }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    }, {
+
+                        }
+                    );
+                });
+                Log.ret(Log.l.trace);
+                return ret;
+            };
+            this.loadData = loadData;
+
             // finally, load the data
-            that.processAll().then(function() {
+            that.processAll().then(function () {
+                Log.print(Log.l.trace, "Binding wireup page complete");
+                return that.loadData();
+            }).then(function() {
                 Log.print(Log.l.trace, "Binding wireup page complete, now load data");
                 if (listView && listView.winControl) {
                     // no list selection

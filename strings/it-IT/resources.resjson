@@ -580,6 +580,9 @@
     "label.eventStartLang" : "Linguaggio",
     "label.genDataAnswers" : "Domande",
     "label.eventQuestionnaire" : "Questionario",
+    "label.dashBoardGrp" : "Dashboard",
+    "label.AutomaticMailsGrp" : "Automatische Mails",
+    "label.MyEventsLSGrp" : "I miei eventi",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annulla",
@@ -1139,6 +1142,9 @@
     "visitorflowoverview.areacombo"			: "scegli l'area",
     "visitorflowoverview.offsettext"			: "Con un offset di: ",
 
+    "dashBoard.title"	: "Dashboard",
+    "dashBoard.comment"	: "Alla panoramica",
+
     "visitorFlowDashboard.title"	: "Visitor Flow Dashboard",
     "visitorFlowDashboard.comment"  : "Qui troverai una panoramica del numero di visitatori del tuo stand",
 
@@ -1265,6 +1271,7 @@
     "eventSeries.newSerie": "Aggiungi serie",
     "eventSeries.serieDelete": "Vuoi eliminare questa serie?",
     "eventSeries.sortierung": "Ordinamento",
+    "eventSeries.comment" : "Imposta la tua serie e le pagine della serie",
 	
     "eventSeriesAdministration.title": "Titolo serie",
     "eventSeriesAdministration.serien": "Serien",
@@ -1314,6 +1321,7 @@
     "eventGenSettings.newevent"			: "Nuovo nome dell'evento",
     "eventGenSettings.sharednotes"			: "Note condivise",
     "eventGenSettings.addevent"			: "Aggiungi",
+    "eventGenSettings.comment"			: "Crea e imposta i tuoi eventi",
 
     "eventSpeakerAdministration.speaker": "Membro",
     "eventSpeakerAdministration.speakerDelete": "Vuoi eliminare il compito",
@@ -1345,6 +1353,7 @@
     "genDataModDetails.picchanghebutton" : "Cambia immagine",
     "genDataModDetails.academicTitle" : "Titolo accademico",
     "genDataModDetails.modDelete" : "Vuoi cancellare questo moderatore?",
+    "genDataModDetails.comment" : "Cattura i tuoi presentatori e oratori",
 
     "genDataModHisto.title" : "Storia",
     "genDataModHisto.eventname" : "Evento",
@@ -1381,5 +1390,8 @@
     "diaVisitors.day" : "Giorni",
 
     "diaYearRange.title" : "Gamma di anni",
-    "diaYearRange.remaindata" : "Dati residui"
+    "diaYearRange.remaindata" : "Dati residui",
+
+    "startResourceAdministration.title" : "Pagina riassuntiva",
+    "startResourceAdministration.comment" : "Crea e imposta la tua homepage"
 }

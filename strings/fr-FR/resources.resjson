@@ -580,6 +580,9 @@
     "label.eventStartLang" : "Langue",
     "label.genDataAnswers" : "Questions",
     "label.eventQuestionnaire" : "Questionnaire",
+    "label.dashBoardGrp" : "Dashboard",
+    "label.AutomaticMailsGrp" : "Courriers automatiques",
+    "label.MyEventsLSGrp" : "Mes événements",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annuler",
@@ -1139,6 +1142,9 @@
     "visitorflowoverview.areacombo"			: "choisir la zone",
     "visitorflowoverview.offsettext"			: "Avec un décalage de: ",
 
+    "dashBoard.title"	: "Dashboard",
+    "dashBoard.comment"	: "Vers la vue d'ensemble",
+
     "visitorFlowDashboard.title"	: "Visitor Flow Dashboard",
     "visitorFlowDashboard.comment"  : "Vous trouverez ici un aperçu du nombre de visiteurs de votre stand",
 
@@ -1265,6 +1271,7 @@
     "eventSeries.newSerie": "Ajouter une série",
     "eventSeries.serieDelete": "Voulez-vous supprimer cette série?",
     "eventSeries.sortierung": "Tri",
+    "eventSeries.comment" : "Configurez vos séries et vos pages de séries",
 
     "eventSeriesAdministration.title": "Titre de la série",
     "eventSeriesAdministration.serien": "Série",
@@ -1315,6 +1322,7 @@
     "eventGenSettings.newevent"			: "Nouveau nom de l'événement",
     "eventGenSettings.sharednotes"			: "Notes partagées",
     "eventGenSettings.addevent"			: "Ajouter",
+    "eventGenSettings.comment"			: "Créer et mettre en place vos événements",
 
     "eventSpeakerAdministration.speaker"    : "Membre",
     "eventSpeakerAdministration.speakerDelete": "Souhaitez-vous supprimer le devoir",
@@ -1346,6 +1354,7 @@
     "genDataModDetails.picchanghebutton" : "Changer l'image",
     "genDataModDetails.academicTitle" : "Titre académique",
     "genDataModDetails.modDelete" : "Voulez-vous supprimer ce modérateur ?",
+    "genDataModDetails.comment" : "Capturez vos présentateurs et intervenants",
 
     "genDataModHisto.title" : "Histoire",
     "genDataModHisto.eventname" : "Événement",
@@ -1382,5 +1391,8 @@
     "diaVisitors.day" : "Jours",
 
     "diaYearRange.title" : "Gamme d'années",
-    "diaYearRange.remaindata" : "Données résiduelles"
+    "diaYearRange.remaindata" : "Données résiduelles",
+
+    "startResourceAdministration.title" : "Page d'accueil",
+    "startResourceAdministration.comment" : "Créez et configurez votre page d'accueil"
 }
