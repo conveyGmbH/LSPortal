@@ -104,7 +104,35 @@
 
             var resultConverterhour = function (item, index) {
                 item.index = index;
-                item.EintritteGesamt = item.EintritteBereich - item.AustritteBereich;
+                if (Math.sign(item.Inside) === 1) {
+
+                } else {
+                    item.Inside = 0;
+                }
+                if (Math.sign(item.MaxInside) === 1) {
+
+                } else {
+                    item.MaxInside = 0;
+                }
+                var eintritteGesamt = item.EintritteBereich - item.AustritteBereich;
+                if (Math.sign(eintritteGesamt) === 1 || eintritteGesamt > 0 || eintritteGesamt === 0) {
+                    item.EintritteGesamt = eintritteGesamt;
+                }
+                else {
+                    item.EintritteGesamt = 0;
+                }
+                if (Math.sign(item.EintritteBereich) === 1 || item.EintritteBereich > 0 || item.EintritteBereich === 0) {
+                    item.EintritteBereich = item.EintritteBereich;
+                }
+                else {
+                    item.EintritteBereich = 0;
+                }
+                if (Math.sign(item.AustritteBereich) === 1 || item.AustritteBereich > 0 || item.AustritteBereich === 0) {
+                    item.AustritteBereich = item.AustritteBereich;
+                }
+                else {
+                    item.AustritteBereich = 0;
+                }
                 item.Zeitraum = item.Zeitraum + ":00";
                 item.EintritteAustritteBereich = item.EintritteBereich + " / " + item.AustritteBereich;
             }
@@ -112,7 +140,35 @@
 
             var resultConverterhalfhour = function (item, index) {
                 item.index = index;
-                item.EintritteGesamt = item.EintritteBereich - item.AustritteBereich;
+                if (Math.sign(item.Inside) === 1) {
+
+                } else {
+                    item.Inside = 0;
+                }
+                if (Math.sign(item.MaxInside) === 1) {
+
+                } else {
+                    item.MaxInside = 0;
+                }
+                var eintritteGesamt = item.EintritteBereich - item.AustritteBereich;
+                if (eintritteGesamt > 0 || eintritteGesamt === 0) {
+                    item.EintritteGesamt = eintritteGesamt;
+                }
+                else {
+                    item.EintritteGesamt = 0;
+                }
+                if (Math.sign(item.EintritteBereich) === 1 || item.EintritteBereich > 0 || item.EintritteBereich === 0) {
+                    item.EintritteBereich = item.EintritteBereich;
+                }
+                else {
+                    item.EintritteBereich = 0;
+                }
+                if (Math.sign(item.AustritteBereich) === 1 || item.AustritteBereich > 0 || item.AustritteBereich === 0) {
+                    item.AustritteBereich = item.AustritteBereich;
+                }
+                else {
+                    item.AustritteBereich = 0;
+                }
                 item.EintritteAustritteBereich = item.EintritteBereich + " / " + item.AustritteBereich;
             }
             this.resultConverterhalfhour = resultConverterhalfhour;

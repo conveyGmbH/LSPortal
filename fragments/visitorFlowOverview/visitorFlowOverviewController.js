@@ -32,7 +32,18 @@
 
             var resultConverter = function (item, index) {
                 item.index = index;
-                that.binding.ZutritteAlle = item.Inside;
+                if (Math.sign(item.Inside) === 1) {
+                    
+                } else {
+                    item.Inside = 0;
+                }
+                var zutritteAlle = item.ZutritteBereichHeute - item.AustritteBereichHeute;
+                if (Math.sign(zutritteAlle) === 1 || zutritteAlle > 0 || zutritteAlle === 0) {
+                    that.binding.ZutritteAlle = zutritteAlle;
+                }
+                else {
+                    that.binding.ZutritteAlle = 0;
+                }
                 if (that.binding.ZutritteAlle >= item.Limit) {
                     dot.style.backgroundColor = "red";
                 } else if (item.WarnLimit !== null && item.WarnLimit > 0 && that.binding.ZutritteAlle >= item.WarnLimit && that.binding.ZutritteAlle < item.Limit) {
