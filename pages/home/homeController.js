@@ -30,6 +30,7 @@
 
 
             var listView = pageElement.querySelector("#homeActions.listview");
+            var tileContainer = pageElement.querySelector(".tiles-container");
             /*
             if (listView && listView.winControl) {
                 listView.winControl.itemDataSource = null;
@@ -136,6 +137,23 @@
                 this.addRemovableEventListener(listView, "iteminvoked", this.eventHandlers.onItemInvoked.bind(this));
             }
 
+            var resizeTileContainer = function(tilecount) {
+                Log.call(Log.l.trace, "LocalEvents.Controller.");
+                if (tilecount === 1 || tilecount === 2) {
+                    tileContainer.style.height = "120px";
+                }
+                if (tilecount === 3 || tilecount === 4) {
+                    tileContainer.style.height = "240px";
+                }
+                if (tilecount === 5 || tilecount === 6) {
+                    tileContainer.style.height = "360px";
+                }
+                if (tilecount === 7 || tilecount === 8) {
+                    tileContainer.style.height = "480px";
+                }
+            }
+            this.resizeTileContainer = resizeTileContainer;
+
             var resultConverter = function (item, index) {
                 item.index = index;
                 Home._actions.push({ page: item.Page, imageName: item.ImageName});
@@ -157,10 +175,11 @@
                         // employeeView returns object already parsed from json file in response
                         if (json && json.d && json.d.results && json.d.results.length) {
                             var results = json.d.results;
+                            var tileCount = results.length;
                             results.forEach(function (item, index) {
                                 that.resultConverter(item, index);
                             });
-                           
+                            that.resizeTileContainer(tileCount);
                             Log.print(Log.l.trace, "StartPageTileView: success!");
                         } else {
                             Home._actions = Home._actionsdefault;
