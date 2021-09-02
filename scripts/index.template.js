@@ -133,7 +133,7 @@
         { id: "optionsGrp", group: 36, svg: "Options", disabled: true, popup: true },
         { id: "info", group: 37, svg: "gearwheel", disabled: true, predecGroup: 36 },
         { id: "settings", group: 38, svg: "Design", disabled: true, predecGroup: 36 },
-        { id: "account", group: 39, svg: "Konto", disabled: true, predecGroup: 36 },
+        { id: "account", group: 39, svg: "Konto", disabled: false, predecGroup: 36 },
         //Support
         { id: "support", group: 40, svg: "user_headset", disabled: true },
         //Administration Sideadmin ONLY
