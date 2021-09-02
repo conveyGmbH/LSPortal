@@ -253,7 +253,8 @@
         { id: "startResourceAdministration", master: "startList" },
         { id: "startMediaAdministration", master: "startList" },
         { id: "genDataAnswers", master: "genDataQuestions" },
-        { id: "startTileAdministration", master: "startTileAdministrationList" }
+        { id: "startTileAdministration", master: "startTileAdministrationList" },
+        { id: "mailing", master: "mailingListLS" }
     ];
 
 
