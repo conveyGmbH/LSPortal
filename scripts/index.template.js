@@ -35,6 +35,7 @@
         splitViewPaneWidth: 320,
         loadRemoteResource: true,
         expandSubMenuMode: "single",
+        manualTheme: true,
         odata: {
             https: true,
             hostName: "leadsuccess.convey.de",
@@ -95,7 +96,7 @@
         { id: "skills", group: 24, svg: "Skills", disabled: true, predecGroup: 25 },
         //MyEvent
         { id: "myEvents", group: 53, svg: "keys", disabled: true, popup: true },
-        { id: "localevents", group: 12, svg: "keys", disabled: true, predecGroup: 53 },
+        //{ id: "localevents", group: 12, svg: "keys", disabled: true, predecGroup: 53 },
         { id: "eventGenSettings", group: 44, svg: "calendar_1", disabled: true, predecGroup: 53 },
         //MyEventsLS
         { id: "MyEventsLSGrp", group: 62, svg: "keys", disabled: true, popup: true },
@@ -194,7 +195,7 @@
         { id: "infodesk", group: -9, disabled: false },
         { id: "info", group: 10, disabled: false },
         { id: "settings", group: 10, disabled: false },
-        { id: "account", group: 10, disabled: false },
+        { id: "account", group: 39, disabled: false },
         { id: "support", group: -11, disabled: false },
         { id: "localevents", group: -12, disabled: false },
         { id: "siteevents", group: 13, disbaled: false },
