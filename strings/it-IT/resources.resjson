@@ -53,6 +53,8 @@
     "command.windowRestored" : "Diviso",
     "command.newmod": "Nuovo",
     "command.newquestion": "Nuova domanda",
+    "command.exportPdfTicket"  : "Scarica il biglietto",
+    "command.newStaff"  : "Aggiungi personale dello stand",
 
     "tooltip.backward"      : "Pagina precedente",
     "tooltip.edit"          : "Modifica Record attuale",

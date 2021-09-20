@@ -53,6 +53,8 @@
     "command.windowRestored" : "Split",
     "command.newmod": "New",
     "command.newquestion": "New question",
+    "command.exportPdfTicket"  : "Download ticket",
+    "command.newStaff"  : "Add stand personnel",
 
     "tooltip.backward"      : "Browse back",
     "tooltip.edit"          : "Edit current record",

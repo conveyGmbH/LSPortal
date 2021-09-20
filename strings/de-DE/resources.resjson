@@ -53,6 +53,8 @@
     "command.windowRestored" : "Aufgeteilt",
 	"command.newmod"        : "Neu",
 	"command.newquestion"   : "Neue Frage",
+    "command.exportPdfTicket"  : "Ticket herunterladen",
+    "command.newStaff"  : "Standpersonal hinzufügen",
 
     "tooltip.backward"      : "Zurück blättern",
     "tooltip.edit"          : "Aktuellen Datensatz bearbeiten",

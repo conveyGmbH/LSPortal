@@ -53,6 +53,8 @@
     "command.windowRestored" : "Partagé",
     "command.newmod": "Nouveau",
     "command.newquestion": "Nouvelle question",
+    "command.exportPdfTicket"  : "Télécharger le ticket",
+    "command.newStaff"  : "Ajouter du personnel sur le stand",
 
     "tooltip.backward"      : "Page présédente",
     "tooltip.edit"          : "Modifier le contact en cours",
