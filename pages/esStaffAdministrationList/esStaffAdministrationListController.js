@@ -230,6 +230,12 @@
                                                 // called asynchronously if ok
                                                 that.binding.employeeId = item.data.MitarbeiterVIEWID;
                                                 that.binding.selIdx = item.index;
+                                                if (typeof AppBar.scope.binding.hideStaffInfo !== "undefined") {
+                                                    AppBar.scope.binding.hideStaffInfo = false;
+                                                }
+                                                if (typeof AppBar.scope.binding.ArticleTypeID !== "undefined") {
+                                                    AppBar.scope.binding.ArticleTypeID = 0;
+                                                }
                                                 AppData.setRecordId("MitarbeiterVIEW_20609", that.binding.employeeId);
                                                 var curPageId = Application.getPageId(nav.location);
                                                 if ((curPageId === "esStaffAdministration") &&
@@ -494,7 +500,7 @@
                                 that.nextUrl = EsStaffAdministrationList.employeeView.getNextUrl(json);
                                 var results = json.d.results;
                                 that.calcOrdered(results[0]);
-                                that.binding.stafftotal = json.d.results.length;
+                                that.binding.stafftotal = results[0].NumAllow;
                                 that.binding.staffordered = results[0].DayList;
                                 results.forEach(function (item, index) {
                                     that.resultConverter(item, index);
