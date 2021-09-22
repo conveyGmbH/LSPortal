@@ -339,6 +339,7 @@
                     Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
                     if (that.binding.hideStaffInfo) {
                         that.binding.hideStaffInfo = false;
+                        AppBar.triggerDisableHandlers();
                     } else {
                     if (!Application.showMaster() && WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done();
@@ -444,6 +445,9 @@
                                 master.controller.selectRecordId(master.controller.binding.employeeId);
                             });
                         }
+                            if (that.binding.hideStaffInfo) {
+                                that.binding.hideStaffInfo = false;
+                            }
                     }, function (error) {
                         Log.print(Log.l.error, "call error");
 
@@ -463,6 +467,7 @@
                     } else {
                         that.binding.hideStaffInfo = !that.binding.dataEmployee.HasTicket;
                     }
+                    AppBar.triggerDisableHandlers();
                     Log.ret(Log.l.trace);
                 },
                 clickExport: function (event) {

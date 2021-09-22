@@ -35,3 +35,6 @@ input[type="email"]:disabled {
     color: red;
     text-align: center
 }
+.staffordered {
+    font-weight: bold;
+}

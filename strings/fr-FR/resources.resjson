@@ -1018,6 +1018,9 @@
     "esstaffadministrationlist.numberoffreestaff" : "libre",
     "esstaffadministrationlist.numberoftopaystaff" : "payer",
     "esStaffAdministration.esArticle" : "des articles",
+    "esStaffAdministration.ticketWarning" : "Attention: Ordered tickets can only be cancelled for a fee!",
+	"esstaffadministrationlist.coronaWarningTicket" : "More tickets per day not allowed due to Covid 19 regulations! Ordered tickets can only be cancelled for a fee!",
+	"esstaffadministrationlist.standBuildTicket" : "No. of stand builder tickets is unlimited.",
 	
     "esStaffAdministration.title"        : "Compte du personnel",
     "esStaffAdministration.firstname"    : "Prénom",

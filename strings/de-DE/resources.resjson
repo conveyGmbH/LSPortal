@@ -1022,6 +1022,8 @@
     "esstaffadministrationlist.numberoftopaystaff" : "zu bezahlen",
 	"esStaffAdministration.esArticle" : "Artikeln",
 	"esStaffAdministration.ticketWarning" : "Hinweiß: Bestellte Tickets können nur gegen Gebühr storniert werden!",
+	"esstaffadministrationlist.coronaWarningTicket" : "Mehr Tickets pro Tag wegen Covid-19-Regeln nicht zulässig! Bestellte Tickets können nur gegen Gebühr storniert werden!",
+	"esstaffadministrationlist.standBuildTicket" : "Anz. Standbauer-Tickets ist unbegrenzt.",
 
     "esStaffAdministration.title"        : "Standpersonal",
     "esStaffAdministration.firstname"    : "Vorname",

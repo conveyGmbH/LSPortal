@@ -495,7 +495,7 @@
                                 var results = json.d.results;
                                 that.calcOrdered(results[0]);
                                 that.binding.stafftotal = json.d.results.length;
-                                that.binding.staffordered = results[0].NumOrdered;
+                                that.binding.staffordered = results[0].DayList;
                                 results.forEach(function (item, index) {
                                     that.resultConverter(item, index);
                                 });
