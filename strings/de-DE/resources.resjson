@@ -1015,11 +1015,13 @@
     "voucheradministrationlist.btnlabelO" : "Info",
     "voucheradministrationlist.btnlabedwn" : "Herunterladen",
 
-    "esstaffadministrationlist.numberofstafftotal" : "Standpersonal gesamt",
+    "esstaffadministrationlist.numberofstafftotal" : "Anz. Standpersonal pro Tag erlaubt",
     "esstaffadministrationlist.numberoforderedstaff" : "Tickets bestellt",
     "esstaffadministrationlist.davon" : "davon",
     "esstaffadministrationlist.numberoffreestaff" : "kostenlos",
     "esstaffadministrationlist.numberoftopaystaff" : "zu bezahlen",
+	"esStaffAdministration.esArticle" : "Artikeln",
+	"esStaffAdministration.ticketWarning" : "Hinweiß: Bestellte Tickets können nur gegen Gebühr storniert werden!",
 
     "esStaffAdministration.title"        : "Standpersonal",
     "esStaffAdministration.firstname"    : "Vorname",

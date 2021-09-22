@@ -30,3 +30,8 @@ input[type="text"]:disabled {
 input[type="email"]:disabled {
     background: #dddddd;
 }
+.warning {
+    font-weight: bold;
+    color: red;
+    text-align: center
+}

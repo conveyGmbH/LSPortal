@@ -25,7 +25,7 @@
             var commandList = [
                 { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" },
                 { id: "clickExport", label: getResourceText("command.exportPdfTicket"), tooltip: getResourceText("tooltip.exportPdfTicket"), section: "primary", svg: "document_pdf" },
-                { id: "clickOrderTicket", label: getResourceText("command.orderTicket"), tooltip: getResourceText("tooltip.orderTicket"), section: "primary", svg: "id_card" },
+                { id: "clickPreOrderTicket", label: getResourceText("command.orderTicket"), tooltip: getResourceText("tooltip.orderTicket"), section: "primary", svg: "id_card" },
                 { id: "clickNew", label: getResourceText("command.newStaff"), tooltip: getResourceText("tooltip.newStaff"), section: "primary", svg: "user_plus" },
                 { id: "clickOk", label: getResourceText("command.ok"), tooltip: getResourceText("tooltip.ok"), section: "primary", svg: "navigate_check", key: WinJS.Utilities.Key.enter },
                 { id: "clickDelete", label: getResourceText("command.delete"), tooltip: getResourceText("tooltip.deleteStaff"), section: "primary", svg: "garbage_can" }

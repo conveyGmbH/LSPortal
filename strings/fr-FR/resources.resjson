@@ -1017,6 +1017,7 @@
     "esstaffadministrationlist.davon" : "à partir de ce",
     "esstaffadministrationlist.numberoffreestaff" : "libre",
     "esstaffadministrationlist.numberoftopaystaff" : "payer",
+    "esStaffAdministration.esArticle" : "des articles",
 	
     "esStaffAdministration.title"        : "Compte du personnel",
     "esStaffAdministration.firstname"    : "Prénom",
@@ -1041,6 +1042,7 @@
     "esStaffAdministration.academicTitle"      : "Titre académique",
     "esStaffAdministration.email"      : "Email",
     "esStaffAdministration.comment"      : "Inscrivez ici le personnel de votre stand et recevez vos laissez-passer d'exposant.",
+    "esStaffAdministration.ticketWarning" : "Attention: Ordered tickets can only be cancelled for a fee!",
 
     "contacts.title"      : "Contacts",
     "contacts.comment"      : "Vous pouvez trouver vos contacts ici.",

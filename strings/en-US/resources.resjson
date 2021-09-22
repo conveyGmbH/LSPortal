@@ -1013,11 +1013,13 @@
     "voucheradministrationlist.btnlabelO" : "Info",
     "voucheradministrationlist.btnlabedwn" : "Download",
 
-    "esstaffadministrationlist.numberofstafftotal" : "Staff total",
+    "esstaffadministrationlist.numberofstafftotal" : "No. of stand personnel allowed per day",
     "esstaffadministrationlist.numberoforderedstaff" : "Tickets ordered",
     "esstaffadministrationlist.davon" : "from that",
     "esstaffadministrationlist.numberoffreestaff" : "free",
     "esstaffadministrationlist.numberoftopaystaff" : "to pay",
+    "esStaffAdministration.esArticle" : "articles",
+    "esStaffAdministration.ticketWarning" : "Attention: Ordered tickets can only be cancelled for a fee!",
 
     "esStaffAdministration.title"        : "Staff account",
     "esStaffAdministration.firstname"    : "Firstname",

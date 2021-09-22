@@ -42,7 +42,8 @@
                 Password: "",
                 VeranstaltungID: AppData.getRecordId("Veranstaltung"),
                 //INITAPUserRoleID: 3,
-                Password2: ""
+                Password2: "",
+                ArticleTypeID: 0
             },
             defaultRestriction: {
                 Vorname: "",

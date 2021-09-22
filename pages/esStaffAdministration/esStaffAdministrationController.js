@@ -20,13 +20,17 @@
                 restriction: getEmptyDefaultValue(EsStaffAdministration.employeeView.defaultRestriction),
                 isEmpRolesVisible: AppHeader.controller.binding.userData.SiteAdmin || AppHeader.controller.binding.userData.HasLocalEvents,
                 noLicence: null,
-                noLicenceText: getResourceText("info.nolicenceemployee")
+                noLicenceText: getResourceText("info.nolicenceemployee"),
+                hideStaffInfo: false,
+                ArticleWarning: false,
+                ArticleTypeID: 0
             }, commandList]);
 
             var that = this;
 
             var initAnrede = pageElement.querySelector("#InitAnrede");
             var titlecombo = pageElement.querySelector("#titlecombo");
+            var esArticle = pageElement.querySelector("#esArticle");
 
             var titlecategorys = [{TITLE : " "}, { TITLE: "Dr." }, { TITLE: "Prof." }, { TITLE: "Prof. Dr." }];
 
@@ -333,8 +337,12 @@
             this.eventHandlers = {
                 clickBack: function (event) {
                     Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
+                    if (that.binding.hideStaffInfo) {
+                        that.binding.hideStaffInfo = false;
+                    } else {
                     if (!Application.showMaster() && WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done();
+                    }
                     }
                     Log.ret(Log.l.trace);
                 },
@@ -420,17 +428,13 @@
                                 master.controller.selectRecordId(that.binding.dataEmployee.MitarbeiterVIEWID);
                             });
                         }
+                        return WinJS.Promise.as();
                     }, function (error) {
                         Log.print(Log.l.info, "call error! ");
-                    });
-                    Log.ret(Log.l.trace);
-                },
-                clickOrderTicket: function(event) {
-                    Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
-                    AppData.setErrorMsg(that.binding);
+                    }).then(function() {
                     AppData.call("PRC_OrderTicket", {
                         pMitarbeiterID: that.binding.dataEmployee.MitarbeiterVIEWID,
-                        pArticleTypeID: 0
+                            pArticleTypeID: parseInt(that.binding.dataEmployee.ArticleTypeID)
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
                         var master = Application.navigator.masterControl;
@@ -444,6 +448,21 @@
                         Log.print(Log.l.error, "call error");
 
                     });
+                    });
+                    Log.ret(Log.l.trace);
+                },
+                clickPreOrderTicket: function (event) {
+                    Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
+                    AppData.setErrorMsg(that.binding);
+                    if (!that.binding.dataEmployee.HasTicket) {
+                        if (that.binding.hideStaffInfo) {
+                            that.binding.hideStaffInfo = false;
+                        } else {
+                            that.binding.hideStaffInfo = true;
+                        }
+                    } else {
+                        that.binding.hideStaffInfo = !that.binding.dataEmployee.HasTicket;
+                    }
                     Log.ret(Log.l.trace);
                 },
                 clickExport: function (event) {
@@ -602,6 +621,20 @@
                     }
                     Application.navigateById("login", event);
                     Log.ret(Log.l.trace);
+                },
+                changedArticle: function(event) {
+                    Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
+                    AppData.setErrorMsg(that.binding);
+                    var target = event.currentTarget || event.target;
+                    var value = parseInt(target.value);
+                    if (value > 0) {
+                        that.binding.ArticleWarning = true;
+                    } else {
+                        that.binding.ArticleWarning = false;
+                    }
+                    
+                    that.binding.dataEmployee.ArticleTypeID = value;
+                    Log.ret(Log.l.trace);
                 }
             };
 
@@ -614,7 +647,8 @@
                     }
                 },
                 clickNew: function() {
-                    return false;
+                    return that.binding.hideStaffInfo;
+                    //return false;
                 },
                 clickDelete: function() {
                     if (that.binding.dataEmployee && that.binding.dataEmployee.MitarbeiterVIEWID && !AppBar.busy &&
@@ -639,11 +673,15 @@
                         return true;
                     }
                 },
-                clickOrderTicket: function() {
+                clickPreOrderTicket: function() {
                     if (that.binding.dataEmployee.HasTicket) {
                         return true;
                     } else {
+                        if (that.binding.dataEmployee.MitarbeiterVIEWID) {
                         return false;
+                        } else {
+                            return true;
+                        }
                     }
                 },
                 clickExport: function() {
@@ -724,6 +762,40 @@
                         }, function (errorResponse) {
                             AppData.setErrorMsg(that.binding, errorResponse);
                         }, recordId);
+                    } else {
+                        return WinJS.Promise.as();
+                    }
+                }).then(function () {
+                    if (recordId) {
+                        return AppData.call("PRC_ESGetArticleList",
+                            {
+                                pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                                pLanguageSpecID: AppData.getLanguageId(),
+                                pArticleMode: 'Ticket'
+                            },
+                            function(json) {
+                                Log.print(Log.l.info, "call success! ");
+                                that.articleList = new WinJS.Binding.List([{ArticleTypeID: 0, ArticleText: ""}]);
+                                if (json && json.d.results.length > 0) {
+                                    var results = json.d.results;
+                                    //that.setDataEvent(json.d);
+                                    results.forEach(function (item, index) {
+                                        //that.resultConverter(item, index);
+                                        that.articleList.push(item);
+                                    });
+                                    //that.binding.dataEmployee.ArticleTypeID = 0;
+
+                                    //that.binding.hideStaffInfo = !that.binding.dataEmployee.HasTicket;
+                                } else {
+                                    //that.binding.hideStaffInfo = !that.binding.dataEmployee.HasTicket;
+                                }
+                                esArticle.winControl.data = that.articleList;
+                                esArticle.selectedIndex = "0";
+                            },
+                            function(error) {
+                                Log.print(Log.l.error, "call error");
+
+                            });
                     } else {
                         return WinJS.Promise.as();
                     }
