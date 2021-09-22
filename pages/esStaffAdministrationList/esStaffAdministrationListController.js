@@ -236,6 +236,9 @@
                                                 if (typeof AppBar.scope.binding.ArticleTypeID !== "undefined") {
                                                     AppBar.scope.binding.ArticleTypeID = 0;
                                                 }
+                                                if (typeof AppBar.scope.binding.ArticleWarning !== "undefined") {
+                                                    AppBar.scope.binding.ArticleWarning = false;
+                                                }
                                                 AppData.setRecordId("MitarbeiterVIEW_20609", that.binding.employeeId);
                                                 var curPageId = Application.getPageId(nav.location);
                                                 if ((curPageId === "esStaffAdministration") &&
