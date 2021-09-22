@@ -503,7 +503,7 @@
                                 that.nextUrl = EsStaffAdministrationList.employeeView.getNextUrl(json);
                                 var results = json.d.results;
                                 that.calcOrdered(results[0]);
-                                that.binding.stafftotal = results[0].NumAllow;
+                                that.binding.stafftotal = results[0].NumAllowed;
                                 that.binding.staffordered = results[0].DayList;
                                 results.forEach(function (item, index) {
                                     that.resultConverter(item, index);
