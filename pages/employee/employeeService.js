@@ -65,9 +65,9 @@
             }
         },
         licenceBView: {
-            select: function (complete, error, restriction) {
+            select: function (complete, error, recordId) {
                 Log.call(Log.l.trace, "employeeView.");
-                var ret = Employee._licenceBView.select(complete, error, restriction);
+                var ret = Employee._licenceBView.selectById(complete, error, recordId);
                 Log.ret(Log.l.trace);
                 return ret;
 

@@ -154,7 +154,7 @@
             };
             this.deleteData = deleteData;
 
-            var checkingLicence = function() {
+            var checkingLicence = function (recordId) {
                 Log.call(Log.l.trace, "Employee.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
@@ -162,14 +162,16 @@
                         // this callback will be called asynchronously
                         // when the response is available
                         Log.print(Log.l.info, "licenceBView select: success!");
-                        if (json && json.d && json.d.results && json.d.results.length > 0) {
-                            that.binding.noLicence = json.d.results[0].NichtLizenzierteApp;
+                        var result = json.d;
+                        if (result && result.NichtLizenzierteApp) {
+                            that.binding.noLicence = result.NichtLizenzierteApp;
+                        } else {
+                            that.binding.noLicence = null;
                         }
-
                     }, function (errorResponse) {
                         Log.print(Log.l.error, "error selecting mailerzeilen");
                         AppData.setErrorMsg(that.binding, errorResponse);
-                        }, { Login: that.binding.dataEmployee.Login });
+                    }, recordId);
                 });
                 Log.ret(Log.l.trace);
                 return ret;
@@ -518,7 +520,7 @@
                                 that.setDataEmployee(json.d);
                                 if (that.binding.dataEmployee.Login) {
                                     Log.print(Log.l.trace, "Checking for licence!");
-                                    that.checkingLicence();
+                                    that.checkingLicence(recordId);
                                     that.checkingReadonlyFlag();
                                     AppBar.busy = false;
                                 }

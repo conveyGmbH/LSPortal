@@ -330,7 +330,7 @@
                             }
                             AppData.setErrorMsg(that.binding);
                             var nextUrl = that.nextUrl;
-                            //that.nextUrl = null;
+                            that.nextUrl = null;
                             Log.print(Log.l.trace, "calling select EmpList.employeeView...");
                             EmpList.employeeView.selectNext(function (json) {
                                 // this callback will be called asynchronously
