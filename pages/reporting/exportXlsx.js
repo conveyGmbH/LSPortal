@@ -248,7 +248,7 @@
                                     type = "inlineStr";
                                     value = new XElement(S.t, value);
                                 } else {
-                                    type = "n";
+                                    type = "str";
                                 }
                                 if (extraValue) {
                                     newCell = new XElement(S.c, new XElement(valueName, value), extraValue);
