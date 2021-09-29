@@ -169,7 +169,13 @@
                                 value = row[key];
                                 extraValue = null;
                                 if (key === "Erfassungsdatum" || key === "AenderungsDatum") {
-                                    attribTypeId = 6;
+                                    if (key === "Erfassungsdatum") {
+                                        value = row.ErfassungsdatumValue;
+                                    }
+                                    if (key === "AenderungsDatum") {
+                                        value = row.AenderungsDatumValue;
+                                    }
+                                    attribTypeId = 8;
                                 } else {
                                     attribTypeId = attribSpecs[c].AttribTypeID;
                                 }
@@ -212,21 +218,28 @@
                                                 "T";
                                         }
                                     } else {
+                                        dateString = value.replace("\/Date(", "").replace(")\/", "");
+                                        milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
+                                        date = new Date(milliseconds);
+                                        year = date.getFullYear();
+                                        month = date.getMonth() + 1;
+                                        day = date.getDate();
+                                        if (attribTypeId === 8) {
+                                            hour = date.getHours();
+                                            minute = date.getMinutes();
+                                            value = year.toString() +
+                                                ((month < 10) ? "-0" : "-") + month.toString() +
+                                                ((day < 10) ? "-0" : "-") + day.toString() +
+                                                ((hour < 10) ? "T0" : "T") + hour.toString() +
+                                                ((minute < 10) ? ":0" : ":") + minute.toString() +
+                                                "Z";
+                                        } else {
+                                            value = year.toString() +
+                                                ((month < 10) ? "-0" : "-") + month.toString() +
+                                                ((day < 10) ? "-0" : "-") + day.toString() +
+                                                "T";
+                                        }
                                         value = value.substring(0, 16);
-
-                                        function toDate(value) {
-                                            var year = value.substring(0, 4);
-                                            var month = value.substring(5, 7);
-                                            var day = value.substring(8, 10);
-                                            var hour = value.substring(11, 13);
-                                            var minute = value.substring(14, 16);
-
-                                            return new Date(year, month - 1, day, hour, minute);
-                                        };
-
-                                        value = toDate(value);
-                                        date = new Date();
-                                        value = new Date(value - (date.getTimezoneOffset() * 60000)).toISOString().slice(0, -1);
                                     }
                                     type = "d";
                                     style = 1;
