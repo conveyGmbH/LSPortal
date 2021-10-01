@@ -185,14 +185,11 @@
                             Home._actions = Home._actionsdefault;
                             Log.print(Log.l.trace, "StartPageTileView: success!");
                         }
-                        }, function (errorResponse) {
+                    }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
-                    }, {
-
-                        }
-                    );
+                    });
                 });
                 Log.ret(Log.l.trace);
                 return ret;
@@ -225,6 +222,15 @@
                 return WinJS.Promise.as();
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
+                var pageControl = pageElement.winControl;
+                if (pageControl && pageControl.updateLayout) {
+                    pageControl.prevWidth = 0;
+                    pageControl.prevHeight = 0;
+                    return pageControl.updateLayout.call(pageControl, pageElement);
+                } else {
+                    return WinJS.Promise.as();
+                }
+            }).then(function () {
                 if (!Application.pageframe.splashScreenDone) {
                     WinJS.Promise.timeout(20).then(function () {
                         return Application.pageframe.hideSplashScreen();
