@@ -28,6 +28,16 @@
 
             var that = this;
 
+            function changeMenuLabel(myEntry, myLabel) {
+                for (var i = 0; i < Application.navigationBarGroups.length; i++) {
+                    if (Application.navigationBarGroups[i].id === myEntry && AppData._userData.IsSupreme > 1) {
+                        Application.navigationBarGroups[i].label = myLabel;
+                        break;
+                    }
+                }
+                NavigationBar.groups = Application.navigationBarGroups;
+            }
+            this.changeMenuLabel = changeMenuLabel;
 
             var listView = pageElement.querySelector("#homeActions.listview");
             var tileContainer = pageElement.querySelector(".tiles-container");
@@ -198,6 +208,9 @@
 
             // finally, load the data
             that.processAll().then(function () {
+                Log.print(Log.l.trace, "Binding wireup page complete");
+                return that.changeMenuLabel("startPremium", "Dashboard Supreme");
+            }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
             }).then(function() {

@@ -585,6 +585,8 @@
     "label.dashBoardGrp" : "Dashboard",
     "label.AutomaticMailsGrp" : "Courriers automatiques",
     "label.MyEventsLSGrp" : "Mes événements",
+    "label.startPremium" : "Dashboard Premium",
+    "label.startSurpreme" : "Dashboard Supreme",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annuler",
@@ -1390,14 +1392,18 @@
     "eventQuestionnaire.deleteassignment" : "Voulez-vous supprimer l'affectation?",
 
     "diaCountrysIndustries.title" : "L'industrie",
+    "diaCountrysIndustries.titleTooltip" : "Hilfetext hier",
 
     "diaCountrys.title" : "Top 5 Pays",
+    "diaCountrys.titleTooltip" : "Hilfetext hier",
 
     "diaVisitors.title" : "Visiteurs",
+    "diaVisitors.titleTooltip" : "Hilfetext hier",
     "diaVisitors.hour" : "Heures",
     "diaVisitors.day" : "Jours",
 
     "diaYearRange.title" : "Gamme d'années",
+    "diaYearRange.titleTooltip" : "Hilfetext hier",
     "diaYearRange.remaindata" : "Données résiduelles",
 
     "startResourceAdministration.title" : "Page d'accueil",

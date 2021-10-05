@@ -24,28 +24,17 @@
     height: 240px;
     width: 100%;
 }
-
 #industriesYearChart4 {
     float: left;
-}
-#criteriadropdown {
-    width: 33.3% !important;
-    height: 50px;
-    float: left;
-    margin: 0px;
-}
-.diaIndustries .win-dropdown {
-    margin: 0;
-    font-size: 16px;
-    font-weight: bold;
-    border: none;
-    background-color: transparent;
-    -webkit-appearance: none;
 }
 .chart-container-block1,
 .chart-container-block2,
 .chart-container-block3,
-.chart-container-block4 {
+.chart-container-block4,
+.chart-container-block5,
+.chart-container-block6,
+.chart-container-block7,
+.chart-container-block8 {
     height: 220px;
     width: 24%;
     float: left;
@@ -54,7 +43,48 @@
 .view-size-medium .chart-container-block1,
 .view-size-medium .chart-container-block2,
 .view-size-medium .chart-container-block3,
-.view-size-medium .chart-container-block4 {
+.view-size-medium .chart-container-block4,
+.view-size-medium .chart-container-block5,
+.view-size-medium .chart-container-block6,
+.view-size-medium .chart-container-block7,
+.view-size-medium .chart-container-block8 {
     height: 100px;
     width: 49%;
+}
+.diaIndustries select {
+    /* Reset Select */
+    outline: 0;
+    border: 0;
+    box-shadow: none;
+    /* Personalize */
+    font-size: 15px;
+    font-weight: bold;
+    flex: 1;
+    padding: 0 1em;
+    color: black;
+    background-color: darkgray;
+    background-image: none;
+    cursor: pointer;
+}
+
+.diaIndustries .win-dropdown {
+    width: 33.3% !important;
+    height: 50px;
+    float: left;
+    position: relative;
+    display: flex;
+    border-radius: .25em;
+    overflow: hidden;
+    margin: 0;
+}
+
+.diaIndustries .win-dropdown :after {
+    content: '\25BC';
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 1em;
+    background-color: #34495e;
+    transition: .25s all ease;
+    pointer-events: none;
 }

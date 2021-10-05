@@ -16,40 +16,69 @@
 }
 
 .countrysindustries-chart-container {
-    height: 520px !important;
+    height: 500px !important;
     width: 98%;
 }
 #worldcontainer {
     position: relative;
 }
 #container {
-    height: 300px !important;
+    margin-top: 5px;
+    height: 320px !important;
     width: 100%;
     position: relative;
-}
-#criteriadropdown {
-    width: 33.3% !important;
-    height: 50px;
-    float: left;
-}
-#countrydropdown {
-    width: 32% !important;
-    height: 50px;
-    float: left;
 }
 #timedropdown {
     width: 32% !important;
     height: 50px;
 }
-.diaCountrysIndustries .win-dropdown {
-    margin: 0;
-    font-size: 16px;
+.diaCountrysIndustries select {
+    /* Reset Select */
+    outline: 0;
+    border: 0;
+    box-shadow: none;
+    /* Personalize */
+    font-size: 15px;
     font-weight: bold;
-    border: none;
-    background-color: transparent;
-    -webkit-appearance: none;
+    flex: 1;
+    padding: 0 1em;
+    color: black;
+    background-color: darkgray;
+    background-image: none;
+    cursor: pointer;
 }
-#daydropdown {
-    width: 32% !important;
+.diaCountrysIndustries .win-dropdown {
+    width: 33.3% !important;
     height: 50px;
+    float: left;
+    position: relative;
+    display: flex;
+    border-radius: .25em;
+    overflow: hidden;
+    margin: 0;
+}
+.diaCountrysIndustries .win-dropdown :after {
+    content: '\25BC';
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 1em;
+    background-color: #34495e;
+    transition: .25s all ease;
+    pointer-events: none;
+}
+.diaCountrysIndustries.win-dropdown:hover:after {
+        color: #f39c12;
+    }
+#daydropdown {
+    width: 33% !important;
+    height: 50px;
+    font-size: 15px;
+    font-weight: bold;
+    color: black;
+    background-color: darkgray;
+    outline: 0;
+    border: 0;
+    box-shadow: none;
+    font-family: Open Sans;
 }

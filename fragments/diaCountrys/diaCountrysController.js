@@ -23,6 +23,8 @@
 
                 var that = this;
 
+                that.isSupreme = AppData._userData.IsSupreme;
+
                 var anzKontakte = null;
 
                 var plugin = {
@@ -193,10 +195,122 @@
                                 }
                             }
                         },
-                        plugins: [plugin]
+                        plugins: [plugin, {
+                            afterLayout: function (chart) {
+                                var total = chart.data.datasets[0].data.reduce((a, b) => {
+                                    return a + b;
+                                });
+                                chart.legend.legendItems.forEach(
+                                    (label) => {
+                                        var value = chart.data.datasets[0].data[label.index];
+                                        label.text += ' - ' + (value / total * 100).toFixed(0) + '%';
+                                        return label;
+                                    }
+                                )
+                            }
+                        }]
+
                     });
                 }
                 this.createTop5Diagram = createTop5Diagram;
+                
+                var dataMainSurpreme = {
+                    labels: [],
+                    datasets: [
+                        {
+                            backgroundColor: "rgba(91, 202, 255,0.2)",
+                            borderColor: "rgba(91, 202, 255,1)",
+                            data: []
+                        },
+                        {
+                            backgroundColor: "rgba(204, 91, 135, 0.2)",
+                            borderColor: "rgba(204, 91, 135,1)",
+                            data: []
+                        }
+                    ]
+                };
+
+                var createTop5DiagramSurpreme = function() {
+                    var promisedDeliveryChartMain = new Chart(fragmentElement.querySelector("#countryChart"),
+                        {
+                            type: 'radar',
+                            data: dataMainSurpreme,
+                            options: {
+                                maintainAspectRatio: false,
+                                tooltips: {
+                                    mode: 'label'
+                                },
+                                legend: false,
+                                legendCallback: function (chart) {
+                                    var elem = [];
+                                    var total = chart.data.datasets[0].data.reduce((a, b) => {
+                                        return a + b;
+                                    });
+                                    var total2 = chart.data.datasets[1].data.reduce((a, b) => {
+                                        return a + b;
+                                    });
+                                    elem.push('<div class="custom-legends">');
+                                    for (var i = 0; i < chart.data.datasets[0].data.length; i++) {
+                                        var value = chart.data.datasets[0].data[i];
+                                        var value2 = chart.data.datasets[1].data[i];
+                                        elem.push('<div class="custom-legends-container">');
+                                        elem.push('<div class="custom-legends-item-left">');
+                                        elem.push('<div class="custom-legends-item-left.label" style="background-color:' + chart.data.datasets[0].backgroundColor[i] + '">');
+                                        if (chart.data.labels[i]) {
+                                            elem.push(chart.data.labels[i] + ":");
+                                        }
+                                        elem.push('<div class="custom-legends-item-left-count" style="background-color:' + chart.data.datasets[0].backgroundColor[i] + '">');
+                                        if (chart.data.labels[i]) {
+                                            elem.push(" " + (value / total * 100).toFixed(0) + "%");
+                                        }
+                                        elem.push('</div>');
+                                        elem.push('</div>');
+                                        elem.push('</div>');
+                                        elem.push('<div class="custom-legends-item-right">');
+                                        elem.push('<div class="custom-legends-item-right-label" style="background-color:' + chart.data.datasets[0].backgroundColor[i] + '">');
+                                        if (chart.data.labels[i]) {
+                                            elem.push("Global: ");
+                                        }
+                                        elem.push('<div class="custom-legends-item-right-count" style="background-color:' + chart.data.datasets[0].backgroundColor[i] + '">');
+                                        if (chart.data.labels[i]) {
+                                            elem.push(" " + (value2 / total2 * 100).toFixed(0) + "%");
+                                        }
+                                        elem.push('</div>');
+                                        elem.push('</div>');
+                                        elem.push('</div>');
+                                        elem.push('</div>');
+                                    }
+                                    elem.push('</div>');
+                                    return elem.join("");
+                                },
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true,
+                                            display: false //this will remove only the label
+                                        },
+                                        gridLines: {
+                                            display: false,
+                                        }
+                                    }],
+                                    xAxes: [{
+                                        ticks: {
+                                            display: false //this will remove only the label
+                                        },
+                                        gridLines: {
+                                            display: false,
+                                        }
+                                    }]
+                                }
+                            }
+                        });
+                    var legentElement = fragmentElement.querySelector(".countrys-label-surpreme");
+                    /* insert custom HTML inside custom div */
+                    legentElement.innerHTML = promisedDeliveryChartMain.generateLegend();
+                }
+                this.createTop5DiagramSurpreme = createTop5DiagramSurpreme;
+
+               
                 
                 var resultConverter = function (item, index) {
                     item.index = index;
@@ -205,6 +319,11 @@
                     }
                     labelsdata.push(item.Land);
                     datasetsdata.push(item.Anzahl);
+                    if (that.isSupreme === 2) {
+                        dataMainSurpreme.labels.push(item.Land);
+                        dataMainSurpreme.datasets[0].data.push(item.Anzahl);
+                        dataMainSurpreme.datasets[1].data.push(item.Anzahl + 10);
+                    }
                 }
                 this.resultConverter = resultConverter;
 
@@ -217,10 +336,15 @@
                             if (json && json.d && json.d.results && json.d.results.length > 0) {
                                 var color = Colors.dashboardColor;
                                 var results = json.d.results;
+                                results.sort(function (a, b) {
+                                    return b.NumHits - a.NumHits;
+                                });
+                                results.length = 5;
                                 results.forEach(function (item, index) {
                                     that.resultConverter(item, index);
                                 });
                                 var result = dataMain;
+
                                 Log.print(Log.l.trace, "reportLand: success!");
                             }
 
@@ -250,14 +374,42 @@
                     Log.ret(Log.l.trace);
                     return ret;
                 };
-                this.loadData = loadData;    
-            
+                this.loadData = loadData;
+                
+                var checkIfSurpreme = function () {
+                    var container = fragmentElement.querySelector(".country-chart-holder");
+                    var labels = fragmentElement.querySelector(".countrys-label-surpreme");
+                    if (that.isSupreme === 2) {
+                        container.style.width = "48%";
+                        container.style.height = "240px";
+                        container.style.float = "right";
+                        labels.style.display = "inline-block";
+                        labels.style.width = "48%";
+                        labels.style.height = "240px";
+                    } else {
+                        container.style.width = "100%";
+                        container.style.height = "230px";
+                        labels.style.display = "none";
+                    }
+                }
+                this.checkIfSurpreme = checkIfSurpreme;
+
             that.processAll().then(function () {
+                    Log.print(Log.l.trace, "Binding wireup page complete");
+                    return that.checkIfSurpreme();
+            }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return loadData();
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
-                return createTop5Diagram();
+                if (that.isSupreme === 2) {
+                    return createTop5DiagramSurpreme();
+                } else {
+                    return createTop5Diagram();
+                }
+            }).then(function () {
+                Log.print(Log.l.trace, "Binding wireup page complete");
+                return;
             });
             Log.ret(Log.l.trace);
         }, {

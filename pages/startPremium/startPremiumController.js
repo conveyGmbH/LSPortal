@@ -37,6 +37,7 @@
             this.nextUrl = null;
 
             var that = this;
+            this.isSupreme = AppData._userData.IsSupreme;
 
             var layout = null;
 
@@ -425,8 +426,21 @@
                 this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
             }
 
+            var checkIfSurpreme = function() {
+                if (that.isSupreme === 2) {
+                    var fieldLineFull = pageElement.querySelector(".field_tile_full");
+                    fieldLineFull.className = "field_line field_tile_full_double";
+                    var fieldLineFullInner = pageElement.querySelector("#startPremiumdiaIndustrieshost");
+                    fieldLineFullInner.style.height = "580px";
+                }
+            }
+            this.checkIfSurpreme = checkIfSurpreme;
+
             // finally, load the data
-            that.processAll().then(function() {
+            that.processAll().then(function () {
+                Log.print(Log.l.trace, "Binding wireup page complete");
+                return that.checkIfSurpreme();
+            }).then(function() {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
             }).then(function() {

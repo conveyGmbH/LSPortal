@@ -13,14 +13,22 @@
             <section aria-label="Main content" role="main" class="animationElement">
                 <div class="country-chart-top-container">
                     <div class="country-chart-top-text-container">
-                        <span class="country-chart-top-text" data-win-res="{textContent: 'diaCountrys.title'}"></span>
-                    </div>
+                        <div class="country-chart-top-text" data-win-control="WinJS.UI.Tooltip" data-win-options="{infotip: true, contentElement: mydiaCountrysElement}">
+                            <span class="country-chart-top-text" data-win-res="{textContent: 'diaCountrys.title'}"></span>
+                        </div>
+                        <div style="display: none;">
+                            <div id="mydiaCountrysElement" data-win-res="{textContent: 'diaCountrys.titleTooltip'}"></div>
+                        </div>
+                     </div>
                     <div class="country-chart-top-combo-container">
 
                     </div>
                 </div>
                 <div class="country-chart-container">
-                    <canvas id="countryChart"></canvas>
+                    <div class="countrys-label-surpreme"></div>
+                    <div class="country-chart-holder">
+                        <canvas id="countryChart"></canvas>
+                    </div>
                 </div>
             </section>
         </div>

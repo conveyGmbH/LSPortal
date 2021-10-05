@@ -12,13 +12,18 @@
         <div id="diaIndustriesController" class="data-container">
             <section aria-label="Main content" role="main" class="animationElement">
                 <div class="industries-chart-top-container">
-                    <div class="industries-chart-top-text-container">
-                        <select id="criteriadropdown"
-                                class="win-dropdown"
-                                data-win-control="WinJS.UI.Repeater"
-                                data-win-bind="value: criteriaMain Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone">
-                            <option data-win-bind="value: CriterionID; textContent: CriterionText"></option>
-                        </select>
+                    <div data-win-control="WinJS.UI.Tooltip" data-win-options="{infotip: true, contentElement: mydiaCountrysIndustriesElement}">
+                        <div class="industries-chart-top-text-container">
+                            <select id="criteriadropdown"
+                                    class="win-dropdown"
+                                    data-win-control="WinJS.UI.Repeater"
+                                    data-win-bind="value: criteriaMain Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone">
+                                <option data-win-bind="value: CriterionID; textContent: CriterionText"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div style="display: none;">
+                        <div id="mydiaCountrysIndustriesElement" data-win-res="{textContent: 'diaCountrysIndustries.titleTooltip'}"></div>
                     </div>
                 </div>
                 <div class="chart-container">
@@ -34,8 +39,22 @@
                     <div class="chart-container-block4">
                         <canvas id="industriesYearChart4"></canvas>
                     </div>
+                    <div class="chart-container-surpreme">
+                        <div class="chart-container-block5">
+                            <canvas id="industriesYearChart5"></canvas>
+                        </div>
+                        <div class="chart-container-block6">
+                            <canvas id="industriesYearChart6"></canvas>
+                        </div>
+                        <div class="chart-container-block7">
+                            <canvas id="industriesYearChart7"></canvas>
+                        </div>
+                        <div class="chart-container-block8">
+                            <canvas id="industriesYearChart8"></canvas>
+                        </div>
+                    </div>
                 </div>
-</section>
+            </section>
         </div>
     </div>
 </body>

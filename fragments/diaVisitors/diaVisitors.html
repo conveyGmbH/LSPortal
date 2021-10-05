@@ -13,16 +13,21 @@
             <section aria-label="Main content" role="main" class="animationElement">
                 <div class="visitor-chart-top-container">
                     <div class="visitor-chart-top-text-container">
-                        <span class="visitor-chart-top-text" data-win-res="{textContent: 'diaVisitors.title'}"></span>
+                        <div class="visitor-chart-top-text" data-win-control="WinJS.UI.Tooltip" data-win-options="{infotip: true, contentElement: mydiaVisitorsElement}">
+                            <span class="visitor-chart-top-text" data-win-res="{textContent: 'diaVisitors.title'}"></span>
+                        </div>
+                    </div>
+                    <div style="display: none;">
+                        <div id="mydiaVisitorsElement" data-win-res="{textContent: 'diaVisitors.titleTooltip'}"></div>
                     </div>
                     <div class="visitor-chart-top-combo-container">
-                        <div class="input_field toggle-switch-parent">
-                            <div id="showHourDay" class="input_field"
-                                 data-win-control="WinJS.UI.ToggleSwitch"
-                                 data-win-bind="winControl.checked: dayhourflag; winControl.labelOn: day; winControl.labelOff: hour"
-                                 onchange="AppBar.handleEvent('change', 'clickChangeHourDay', event)">
-                            </div>
-                        </div>
+                        <input id="daydropdown" type="date">
+                        <select id="dayhourdropdown"
+                                class="win-dropdown"
+                                data-win-control="WinJS.UI.Repeater"
+                                data-win-bind="value: dayhourflag Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone">
+                            <option data-win-bind="value: VALUE; textContent: TITLE"></option>
+                        </select>
                     </div>
                 </div>
                 <div class="visitor-chart-container">

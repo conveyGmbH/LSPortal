@@ -94,6 +94,12 @@
 .startPremium .field_tile_full {
     background-color: white;
 }
+.startPremium .field_tile_half_left_double {
+    background-color: white;
+}
+.startPremium .field_tile_full_double {
+    background-color: white;
+}
 
 .startPremium .tile-row {
     display: table-row;
@@ -313,3 +319,22 @@
     margin-right: auto;
     background-color: transparent;
 }
+.startPremium #btn-all, .startPremium #btn-vis {
+    display: inline-block;
+    padding: 0.35em 1.2em;
+    border: 0.1em solid darkgray;
+    margin: 0 0.3em 0.3em 0;
+    border-radius: 0.12em;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: 'Open Sans',sans-serif;
+    font-weight: bolder;
+    color: darkgray;
+    background-color: transparent;
+    text-align: center;
+    transition: all 0.2s;
+}
+    .startPremium #btn-all:hover, .startPremium #btn-vis:hover {
+        color: #000000;
+        background-color: #FFFFFF;
+    }

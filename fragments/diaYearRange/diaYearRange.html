@@ -13,7 +13,12 @@
             <section aria-label="Main content" role="main" class="animationElement">
                 <div class="yearrange-chart-top-container">
                     <div class="yearrange-chart-top-text-container">
-                        <span class="yearrange-chart-top-text" data-win-res="{textContent: 'diaYearRange.title'}"></span>
+                        <div class="yearrange-chart-top-text" data-win-control="WinJS.UI.Tooltip" data-win-options="{infotip: true, contentElement: mydiaYearRangeElement}">
+                            <span class="yearrange-chart-top-text" data-win-res="{textContent: 'diaYearRange.title'}"></span>
+                        </div>
+                    </div>
+                    <div style="display: none;">
+                        <div id="mydiaYearRangeElement" data-win-res="{textContent: 'diaYearRange.titleTooltip'}"></div>
                     </div>
                     <div class="yearrange-chart-top-combo-container">
 
@@ -22,15 +27,33 @@
                 <div class="chart-container">
                     <div class="chart-container-block1">
                         <canvas id="yearRangeChart1"></canvas>
+                        <div class="yearRangeChart1-legend"></div>
                     </div>
                     <div class="chart-container-block2">
                         <canvas id="yearRangeChart2"></canvas>
+                        <div class="yearRangeChart2-legend"></div>
                     </div>
                     <div class="chart-container-block3">
                         <canvas id="yearRangeChart3"></canvas>
+                        <div class="yearRangeChart3-legend"></div>
                     </div>
                     <div class="chart-container-block4">
                         <canvas id="yearRangeChart4"></canvas>
+                        <div class="yearRangeChart4-legend"></div>
+                    </div>
+                </div>
+                <div class="chart-container-surpreme">
+                    <div class="chart-container-block5">
+                        <canvas id="yearRangeChart5"></canvas>
+                    </div>
+                    <div class="chart-container-block6">
+                        <canvas id="yearRangeChart6"></canvas>
+                    </div>
+                    <div class="chart-container-block7">
+                        <canvas id="yearRangeChart7"></canvas>
+                    </div>
+                    <div class="chart-container-block8">
+                        <canvas id="yearRangeChart8"></canvas>
                     </div>
                 </div>
             </section>

@@ -1,39 +1,89 @@
-﻿.yearrange-chart-top-container {
+﻿.diaYearRange .yearrange-chart-top-container {
     height: 50px;
     width: 100%;
 }
 
-.yearrange-chart-top-text-container {
+.diaYearRange .yearrange-chart-top-text-container {
     height: 50px;
     width: 70%;
     float: left;
     font-weight: bold;
     display: table;
 }
-.yearrange-chart-top-text {
+.diaYearRange .yearrange-chart-top-text {
     display: table-cell;
     vertical-align: middle;
     padding-left: 5px;
 }
-.yearrange-chart-top-combo-container {
+.diaYearRange .yearrange-chart-top-combo-container {
     height: 50px;
     width: 30%;
     float: right;
 }
-.chart-container-block1,
-.chart-container-block2,
-.chart-container-block3,
-.chart-container-block4 {
-    height: 220px;
+.diaYearRange .chart-container-surpreme {
+    position: relative;
+    height: 160px;
+    width: 100%;
+}
+.diaYearRange .chart-container {
+    position: relative;
+    height: 200px;
+    width: 100%;
+}
+.diaYearRange .chart-container-block1,
+.diaYearRange .chart-container-block2,
+.diaYearRange .chart-container-block3,
+.diaYearRange .chart-container-block4 {
+    height: 200px;
     width: 25%;
     float: left;
-    margin-top: 10px;
+}
+.diaYearRange .chart-container-block5,
+.diaYearRange .chart-container-block6,
+.diaYearRange .chart-container-block7,
+.diaYearRange .chart-container-block8 {
+    height: 160px;
+    width: 25%;
+    float: left;
+    margin-top: 0;
 }
 
-.view-size-medium .chart-container-block1,
-.view-size-medium .chart-container-block2,
-.view-size-medium .chart-container-block3,
-.view-size-medium .chart-container-block4 {
+.diaYearRange .view-size-medium .chart-container-block1,
+.diaYearRange .view-size-medium .chart-container-block2,
+.diaYearRange .view-size-medium .chart-container-block3,
+.diaYearRange .view-size-medium .chart-container-block4 {
     height: 110px;
     width: 50%;
+}
+
+.diaYearRange .view-size-medium .chart-container-block5,
+.diaYearRange .view-size-medium .chart-container-block6,
+.diaYearRange .view-size-medium .chart-container-block7,
+.diaYearRange .view-size-medium .chart-container-block8 {
+    height: 90px !important;
+    width: 50%;
+}
+.yearRangeChart1-legend {
+    vertical-align: middle;
+    width: 100%;
+    height: 20px;
+}
+.yearRangeChart2-legend {
+    vertical-align: middle;
+    width: 100%;
+    height: 20px;
+}
+.yearRangeChart3-legend {
+    vertical-align: middle;
+    width: 100%;
+    height: 20px;
+}
+.yearRangeChart4-legend {
+    vertical-align: middle;
+    width: 100%;
+    height: 20px;
+}
+.diaYearRange .custom-legends-item {
+    text-align: center;
+    vertical-align: middle;
 }

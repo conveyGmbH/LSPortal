@@ -35,6 +35,8 @@
                 this.worldMapHeight = 0;
                 this.countryKeyData = null;
                 this.countryColors = [];
+                this.isSupreme = AppData._userData.IsSupreme;
+                this.dayData = 0;
                 
                 var industrieschart = null;
 
@@ -43,8 +45,17 @@
                 var criteriadrop = fragmentElement.querySelector("#criteriadropdown");
                 var countrydrop = fragmentElement.querySelector("#countrydropdown");
                 var daydrop = fragmentElement.querySelector("#daydropdown");
+                var select = fragmentElement.querySelectorAll("select");
 
                 this.countryfills = [];
+
+                var dropdowncolor = function () {
+                    for (var i = 0; i < select.length; i++) {
+                        select[i].style.backgroundColor = "#efedee ";
+                    }
+                    daydrop.style.backgroundColor = "#efedee ";
+                }
+                this.dropdowncolor = dropdowncolor;
 
                 var isotoInitlandId = function (isoCode) {
                     var results = AppData.initLandView.getResults();
@@ -132,7 +143,7 @@
                                         that.worldMap = new Datamap({
                                             element: worldContainer,
                                             responsive: false,
-                                            height: height - 20,
+                                            height: height,
                                             width: width - 20,
                                             fills: fills,
                                             // Array --> 'Countrykey' : { fillKey : 'Rate of importance'}
@@ -196,17 +207,56 @@
                 }
                 this.redrawMap = redrawMap;
 
-                // countryIndustriesChart
+                // Define a plugin to provide data labels
+                var plugin = {
+                    afterDatasetsDraw: function (chart, easing) {
+                        // To only draw at the end of animation, check for easing === 1
+                        var ctx = chart.ctx;
 
+                        chart.data.datasets.forEach(function (dataset, i) {
+                            var meta = chart.getDatasetMeta(i);
+                            if (!meta.hidden) {
+                                meta.data.forEach(function (element, index) {
+                                    // Draw the text in black, with the specified font
+                                    ctx.fillStyle = 'rgb(0, 0, 0)';
+
+                                    var fontSize = 16;
+                                    var fontStyle = 'normal';
+                                    var fontFamily = 'Helvetica Neue';
+                                    ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
+
+                                    // Just naively convert to string for now
+                                    var dataString = dataset.data[index].toString();
+
+                                    // Make sure alignment settings are correct
+                                    ctx.textAlign = 'center';
+                                    ctx.textBaseline = 'middle';
+
+                                    var padding = 10;
+                                    var position = element.tooltipPosition();
+                                    ctx.fillText(dataString, position.x - 10, position.y - (fontSize / 2) + padding);
+                                });
+                            }
+                        });
+                    }
+                }
+                
+                // countryIndustriesChart
                 var countryIndustriesLabels = [];
-                var countryIndustriesRawData = [];
+                var countryIndustriesRawDataPremium = [];
+                var countryIndustriesRawDataSurpreme = [];
 
                 var countryIndustriesData = {
                     labels: countryIndustriesLabels,
                     datasets: [{
-                        data: countryIndustriesRawData,
+                        data: countryIndustriesRawDataPremium,
                         backgroundColor: Colors.dashboardColor,
                         hoverBackgroundColor: Colors.dashboardColor
+                    },
+                    {
+                        data: countryIndustriesRawDataSurpreme,
+                        backgroundColor: "#cc5b87",
+                        hoverBackgroundColor: "#cc5b87"
                     }]
                 };
 
@@ -232,6 +282,7 @@
                                     ticks: {
                                         beginAtZero: true
                                     },
+                                    stacked: true
                                 }],
                                 yAxes: [{
                                     gridLines: {
@@ -249,31 +300,10 @@
                             legend: {
                                 display: false
                             },
-                            animation: {
-                                onComplete: function () {
-                                    var chartInstance = this.chart;
-                                    var ctx = chartInstance.ctx;
-                                    ctx.textAlign = "left";
-                                    ctx.font = "15px Open Sans";
-                                    ctx.fillStyle = "#000000";
-
-                                    Chart.helpers.each(this.data.datasets.forEach(function (dataset, i) {
-                                        var meta = chartInstance.controller.getDatasetMeta(i);
-                                        Chart.helpers.each(meta.data.forEach(function (bar, index) {
-                                            countryIndustriesData = dataset.data[index];
-                                            if (i === 0) {
-                                                ctx.fillText(countryIndustriesData, bar._xScale.left + 5, bar._model.y + 4);
-                                            } else {
-                                                ctx.fillText(countryIndustriesData, bar._model.x - 25, bar._model.y + 4);
-                                            }
-                                        }),
-                                            this);
-                                    }), this);
-                                }
-                            },
                             pointLabelFontFamily: "Quadon Extra Bold",
                             scaleFontFamily: "Quadon Extra Bold",
-                        }
+                        },
+                        plugins: [plugin]
                     });
                 }
                 this.createCountryIndustriesDia = createCountryIndustriesDia;
@@ -281,12 +311,15 @@
                 var redraw = function () {
                     Log.call(Log.l.trace, "LocalEvents.Controller.");
                     industrieschart.data.labels = countryIndustriesLabels;
-                    industrieschart.data.datasets[0].data = countryIndustriesRawData;
+                    industrieschart.data.datasets[0].data = countryIndustriesRawDataPremium;
+                    if (that.isSupreme === 2) {
+                        industrieschart.data.datasets[1].data = countryIndustriesRawDataSurpreme;
+                    }
                     industrieschart.update();
                 }
                 this.redraw = redraw;
                 
-                var resultConverter = function (item, index) {
+                var resultConverterPremium = function (item, index) {
                     item.index = index;
                     if (item.LandID === 0) {
                         item.Land = "-";
@@ -295,7 +328,7 @@
                         countryIndustriesLabels.push(item.Qualifier);
                     }
                     if (item.NumHits) {
-                        countryIndustriesRawData.push(item.NumHits);
+                        countryIndustriesRawDataPremium.push(item.NumHits);
                     }
                     if (item.Startdatum) {
                         item.Startdatum = getDateObject(item.Startdatum);
@@ -304,7 +337,15 @@
                         item.Enddatum = getDateObject(item.Enddatum);
                     }
                 }
-                this.resultConverter = resultConverter;
+                this.resultConverterPremium = resultConverterPremium;
+
+                var resultConverterSurpreme = function (item, index) {
+                    item.index = index;
+                    if (item.NumHits) {
+                        countryIndustriesRawDataSurpreme.push(item.NumHits);
+                    }
+                }
+                this.resultConverterSurpreme = resultConverterSurpreme;
 
                 var getGetCriterionListData = function () {
                     Log.call(Log.l.trace, "LocalEvents.Controller.");
@@ -326,30 +367,41 @@
                 }
                 this.getGetCriterionListData = getGetCriterionListData;
 
-                var dayData = 0;
+                var sortFunc = function(result) {
+                    return a.NumHits - b.NumHits;
+                }
+                this.sortFunc = sortFunc;
 
-                var getGetDashboardData = function () {
+                var sorting = function(a, b) {
+                    
+                }
+                this.sorting = sorting;
+
+                var getGetDashboardDataPremium = function () {
                     Log.call(Log.l.trace, "LocalEvents.Controller.");
+                    countryIndustriesLabels = [];
+                    countryIndustriesRawDataPremium = [];
                     AppData.setErrorMsg(that.binding);
                     if (daydrop.value === "") {
-                        dayData = 0;
+                        that.dayData = 0;
                     } else {
-                        dayData = getMilliseconts(daydrop.value);
+                        that.dayData = getMilliseconts(daydrop.value);
                     }
-                    countryIndustriesLabels = [];
-                    countryIndustriesRawData = [];
                     AppData.call("PRC_GetDashboardData", {
                         pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
                         pCriterion1ID: parseInt(that.binding.criteriaMain),
                         pCriterion2ID: parseInt(that.binding.criteriaDays),
                         pLandID: parseInt(that.binding.criteriaCountry),
-                        pDay: dayData,
+                        pDay: that.dayData,
                         pLanguageSpecID: AppData.getLanguageId()
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
                         var results = json.d.results;
+                        results.sort(function (a, b) {
+                            return b.NumHits - a.NumHits;
+                        });
                         results.forEach(function (item, index) {
-                            that.resultConverter(item, index);
+                             that.resultConverterPremium(item, index);
                         });
                         if (industrieschart) {
                             that.redraw();
@@ -357,41 +409,99 @@
                             that.createCountryIndustriesDia();
                             that.redraw();
                         }
-
                     }, function (error) {
                         Log.print(Log.l.error, "call error");
                     });
                     Log.ret(Log.l.trace);
                 }
-                this.getGetDashboardData = getGetDashboardData;
+                this.getGetDashboardDataPremium = getGetDashboardDataPremium;
+
+                var getGetDashboardDataSurpreme = function () {
+                    Log.call(Log.l.trace, "LocalEvents.Controller.");
+                    countryIndustriesRawDataSurpreme = [];
+                    AppData.setErrorMsg(that.binding);
+                    if (daydrop.value === "") {
+                        that.dayData = 0;
+                    } else {
+                        that.dayData = getMilliseconts(daydrop.value);
+                    }
+                    AppData.call("PRC_GetDashboardData", {
+                        pVeranstaltungID: AppData.getRecordId("Veranstaltung"), //
+                        pCriterion1ID: parseInt(that.binding.criteriaMain),
+                        pCriterion2ID: parseInt(that.binding.criteriaDays),
+                        pLandID: 0,
+                        pDay: that.dayData,
+                        pLanguageSpecID: AppData.getLanguageId()
+                    }, function (json) {
+                        Log.print(Log.l.info, "call success! ");
+                        var results = json.d.results;
+                        results.forEach(function (item, index) {
+                             that.resultConverterSurpreme(item, index);
+                        });
+                        if (industrieschart) {
+                            that.redraw();
+                        } else {
+                            that.createCountryIndustriesDia();
+                            that.redraw();
+                        }
+                    }, function (error) {
+                        Log.print(Log.l.error, "call error");
+                    });
+                    Log.ret(Log.l.trace);
+                }
+                this.getGetDashboardDataSurpreme = getGetDashboardDataSurpreme;
+
+                var drawChart = function() {
+                    if (industrieschart) {
+                        that.redraw();
+                    } else {
+                        that.createCountryIndustriesDia();
+                        that.redraw();
+                    }
+                }
+                this.drawChart = drawChart;
+
+                var setupDataforDashboard = function() {
+                    Log.call(Log.l.trace, "LocalEvents.Controller.");
+                    AppData.setErrorMsg(that.binding);
+                    var ret = new WinJS.Promise.as().then(function () {
+                        return that.getGetDashboardDataPremium();
+                    }).then(function () {
+                        if (that.isSupreme === 2) {
+                            return that.getGetDashboardDataSurpreme();
+                        }
+                    });
+                    Log.ret(Log.l.trace);
+                    return ret;
+                }
+                this.setupDataforDashboard = setupDataforDashboard;
 
                 this.eventHandlers = {
                     changedCriteria: function (event) {
                         Log.call(Log.l.trace, "Contact.Controller.");
                         that.binding.criteriaMain = event.target.value;
-                        that.getGetDashboardData();
+                        that.setupDataforDashboard();
                         Log.ret(Log.l.trace);
                     },
                     changedCountry: function (event) {
                         Log.call(Log.l.trace, "Event.Controller.");
                         that.binding.criteriaCountry = parseInt(event.target.value);
-                        that.getGetDashboardData();
+                        that.setupDataforDashboard();
                         Log.ret(Log.l.trace);
                     },
                     changedDay: function (event) {
                         Log.call(Log.l.trace, "Event.Controller.");
-                        that.getGetDashboardData();
+                        that.setupDataforDashboard();
                         Log.ret(Log.l.trace);
                     },
                     cleardDay: function (event) {
                         Log.call(Log.l.trace, "Event.Controller.");
                         daydrop.value = "";
-                        that.getGetDashboardData();
+                        that.setupDataforDashboard();
                         Log.ret(Log.l.trace);
                     }
                 };
-
-
+                
                 if (criteriadrop) {
                     this.addRemovableEventListener(criteriadrop, "change", this.eventHandlers.changedCriteria.bind(this));
                 }
@@ -415,7 +525,7 @@
                                 that.countryKeyData = {};
                                 var results = json.d.results;
                                 results.forEach(function (item, index) {
-                                    that.resultConverter(item, index);
+                                    that.resultConverterPremium(item, index);
                                 });// store result for next use
                                 var countryresult = json.d.results;
                                 for (var ci = 0; ci < countryresult.length; ci++) {
@@ -439,17 +549,13 @@
                                     }
                                 }
                                 that.worldMapHeight = 0;
-
+                                var countrydropdata = json.d.results;
                                 if (countrydrop && countrydrop.winControl) {
-                                    countrydrop.winControl.data = new WinJS.Binding.List(json.d.results);
-                                    for (var i = 0; i < json.d.results.length; i++) {
-                                        if (json.d.results[i].LandID === 0) {
-                                            countrydrop.selectedIndex = i;
-                                            that.binding.criteriaCountry = json.d.results[i].LandID;
-                                        }
-                                    }
-                                    //countrydrop.selectedIndex = 0;
-                                    //that.binding.criteriaCountry = json.d.results[0].LandID;
+                                    var empty = { LandID: 0, Land: "" };
+                                    countrydropdata.unshift(empty);
+                                    countrydrop.winControl.data = new WinJS.Binding.List(countrydropdata);
+                                    countrydrop.selectedIndex = 0;
+                                    that.binding.criteriaCountry = json.d.results[0].LandID;
                                 }
                                 Log.print(Log.l.trace, "reportLand: success!");
                             }
@@ -465,7 +571,7 @@
                                 if (json && json.d && json.d.results && json.d.results.length > 0) {
                                     var results = json.d.results;
                                     results.forEach(function (item, index) {
-                                        that.resultConverter(item, index);
+                                        that.resultConverterPremium(item, index);
                                     });
                                     daydrop.min = that.formatDate(results[0].Startdatum);
                                     daydrop.max = that.formatDate(results[0].Enddatum);
@@ -483,8 +589,11 @@
                     return ret;
                 };
                 this.loadData = loadData;
-
+                
                 that.processAll().then(function () {
+                    Log.print(Log.l.trace, "Binding wireup page complete");
+                    return dropdowncolor();
+                }).then(function () {
                     Log.print(Log.l.trace, "Data loaded");
                     return that.getGetCriterionListData();
                 }).then(function () {
@@ -492,7 +601,7 @@
                     return loadData();
                 }).then(function () {
                     Log.print(Log.l.trace, "Binding wireup page complete");
-                    return getGetDashboardData();
+                    return setupDataforDashboard();
                 }).then(function () {
                     Log.print(Log.l.trace, "Binding wireup page complete");
                     return createWorldChart(true);
