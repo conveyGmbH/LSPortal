@@ -649,7 +649,14 @@ select {
     margin-left: 4px;
     margin-right: 4px;
 }
-
+.field_tile_half_left_double {
+    float: none;
+    width: calc(49% - 10px);
+    overflow-y: hidden;
+    min-height: 580px;
+    margin-left: 4px;
+    margin-right: 4px;
+}
 .field_tile_half_right {
     float: right;
     width: calc(49% - 10px);
@@ -664,6 +671,14 @@ select {
     width: calc(100% - 10px);
     overflow-y: hidden;
     min-height: 290px;
+    margin-left: 4px;
+    margin-right: 4px;
+}
+.field_tile_full_double {
+    float: left;
+    width: calc(100% - 10px);
+    overflow-y: hidden;
+    min-height: 580px;
     margin-left: 4px;
     margin-right: 4px;
 }
