@@ -225,7 +225,7 @@
                     AppBar.busy = true;
                     ret = EsStaffAdministration.pdfView.select(function (json) {
                         Log.print(Log.l.trace, "exportKontaktDataView: success!");
-                        if (json && json.d) {
+                        if (json && json.d && json.d.results.length > 0) {
                             var results = json.d.results[0];
                             var pdfDataraw = results.DocContentDOCCNT1;
                             var sub = pdfDataraw.search("\r\n\r\n");
@@ -409,7 +409,32 @@
                 clickOk: function (event) {
                     Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
                     AppData.setErrorMsg(that.binding);
-                    AppData.call("PRC_UpdateMA", {
+                    WinJS.Promise.as().then(function () {
+                        if (that.binding.hideStaffInfo) {
+                            return AppData.call("PRC_OrderTicket", {
+                                pMitarbeiterID: that.binding.dataEmployee.MitarbeiterVIEWID,
+                                pArticleTypeID: parseInt(that.binding.dataEmployee.ArticleTypeID)
+                            }, function (json) {
+                                Log.print(Log.l.info, "call success! ");
+                                var master = Application.navigator.masterControl;
+                                if (master && master.controller && master.controller.binding) {
+                                    master.controller.binding.employeeId =
+                                        that.binding.dataEmployee.MitarbeiterVIEWID;
+                                    master.controller.loadData().then(function () {
+                                        master.controller.selectRecordId(master.controller.binding.employeeId);
+                                    });
+                                }
+                                if (that.binding.hideStaffInfo) {
+                                    that.binding.hideStaffInfo = false;
+                                }
+                            }, function (error) {
+                                Log.print(Log.l.error, "call error");
+                            });
+                        } else {
+                            return WinJS.Promise.as();
+                        }
+                    }).then(function () {
+                        return AppData.call("PRC_UpdateMA", {
                         pMitarbeiterID: that.binding.dataEmployee.MitarbeiterVIEWID,
                         pCompanyName: that.binding.dataEmployee.Firma,
                         pFirstName: that.binding.dataEmployee.Vorname,
@@ -429,28 +454,8 @@
                                 master.controller.selectRecordId(that.binding.dataEmployee.MitarbeiterVIEWID);
                             });
                         }
-                        return WinJS.Promise.as();
                     }, function (error) {
                         Log.print(Log.l.info, "call error! ");
-                    }).then(function() {
-                    AppData.call("PRC_OrderTicket", {
-                        pMitarbeiterID: that.binding.dataEmployee.MitarbeiterVIEWID,
-                            pArticleTypeID: parseInt(that.binding.dataEmployee.ArticleTypeID)
-                    }, function (json) {
-                        Log.print(Log.l.info, "call success! ");
-                        var master = Application.navigator.masterControl;
-                        if (master && master.controller && master.controller.binding) {
-                            master.controller.binding.employeeId = that.binding.dataEmployee.MitarbeiterVIEWID;
-                            master.controller.loadData().then(function () {
-                                master.controller.selectRecordId(master.controller.binding.employeeId);
-                            });
-                        }
-                            if (that.binding.hideStaffInfo) {
-                                that.binding.hideStaffInfo = false;
-                            }
-                    }, function (error) {
-                        Log.print(Log.l.error, "call error");
-
                     });
                     });
                     Log.ret(Log.l.trace);
