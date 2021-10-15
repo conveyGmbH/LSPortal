@@ -443,6 +443,9 @@
                     var surpremeColor = "#cc5b87";
                     var global = pageElement.querySelector(".circle-with-text-global");
                     global.style.backgroundColor = surpremeColor;
+                } else {
+                    var tip = pageElement.querySelector(".tip");
+                    tip.style.display = "none";
                 }
             }
             this.checkTip = checkTip;
