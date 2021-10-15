@@ -684,7 +684,7 @@
                     }
                 },
                 clickPreOrderTicket: function() {
-                    if (that.binding.dataEmployee.HasTicket === "1" || ((that.binding.dataEmployee.Vorname === null || that.binding.dataEmployee.Vorname.length === 0) || (that.binding.dataEmployee.Nachname === null || that.binding.dataEmployee.Nachname.length === 0) || (that.binding.dataEmployee.AnredeID === null|| that.binding.dataEmployee.AnredeID === "0"))) {
+                    if (that.binding.dataEmployee.HasTicket === "1" || ((that.binding.dataEmployee.Vorname === null || that.binding.dataEmployee.Vorname.length === 0) || (that.binding.dataEmployee.Nachname === null || that.binding.dataEmployee.Nachname.length === 0) || (that.binding.dataEmployee.AnredeID === null|| parseInt(that.binding.dataEmployee.AnredeID) === 0))) {
                         return true;
                     } else {
                         if (that.binding.dataEmployee.MitarbeiterVIEWID) {
