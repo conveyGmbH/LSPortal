@@ -6,8 +6,8 @@
 /// <reference path="~/www/lib/convey/scripts/fragmentController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/fragments/diaCountrys/diaCountrysService.js" />
-/// <reference path="~/www/lib/chartJS/scripts/dist/Chart.js" />
-/// <reference path="~/www/lib/chartJS/scripts/dist/Chart.bundle.js" />
+/// <reference path="~/www/lib/chartJS/scripts/dist351/chart.js" />
+
 (function () {
     "use strict";
 
@@ -18,6 +18,7 @@
                 Fragments.Controller.apply(this,
                     [
                         fragmentElement, {
+                            Top5Country: 5
                         }
                     ]);
 
@@ -26,6 +27,22 @@
                 that.isSupreme = AppData._userData.IsSupreme;
 
                 var anzKontakte = null;
+
+                var top5DiagramChart = null;
+                var top5DiagramSurpremeChart = null;
+
+                var top5Countrydrop = fragmentElement.querySelector("#top5countrydropdown");
+                var top5Countrydropdata = [{ TITLE: getResourceText("diaCountrys.top5"), VALUE: 5 }, { TITLE: getResourceText("diaCountrys.top10"), VALUE: 10 }];
+
+                if (top5Countrydrop && top5Countrydrop.winControl) {
+                    top5Countrydrop.winControl.data = new WinJS.Binding.List(top5Countrydropdata);
+                    top5Countrydrop.selectedIndex = 0;
+                }
+
+                var dropdowncolor = function () {
+                    top5Countrydrop.style.backgroundColor = "#efedee ";
+                }
+                this.dropdowncolor = dropdowncolor;
 
                 var plugin = {
                     beforeDraw: function (chart) {
@@ -111,7 +128,7 @@
                         }
                     }
                 }
-
+               
                 var getColor = function(color, id) {
                     var rgbColor = Colors.hex2rgb(color);
                     var hsvColor = Colors.rgb2hsv(rgbColor);
@@ -121,6 +138,20 @@
                     return Colors.rgb2hex(rgbColor);
                 }
                 this.getColor = getColor;
+
+                var hexToRgbA = function(hex) {
+                    var c;
+                    if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
+                        c = hex.substring(1).split('');
+                        if (c.length == 3) {
+                            c = [c[0], c[0], c[1], c[1], c[2], c[2]];
+                        }
+                        c = '0x' + c.join('');
+                        return 'rgba(' + [(c >> 16) & 255, (c >> 8) & 255, c & 255].join(',') + ', 0.8)';
+                    }
+                    throw new Error('Bad Hex');
+                }
+                this.hexToRgbA = hexToRgbA;
 
                 // chart1
                 /*var dataMain = {
@@ -145,35 +176,22 @@
                     }]
                 }; */
 
-                var labelsdata = [];
-
-                var datasetsdata = [];
-
+                var top5Diagramlabelsdata = [];
+                var top5Diagramdatasetsdata = [];
+                var top5Diagrambackgroundcolor = [];
+                var top5Diagrambordercolor = [];
+                
                 var dataMain = {
-                    labels: labelsdata,
+                    labels: top5Diagramlabelsdata,
                     datasets: [{
-                        data: datasetsdata,
-                        backgroundColor: [
-                            Colors.dashboardColor,
-                            that.getColor(Colors.dashboardColor, 0.3),
-                            that.getColor(Colors.dashboardColor, 0.4),
-                            that.getColor(Colors.dashboardColor, 0.6),
-                            that.getColor(Colors.dashboardColor, 0.7)
-                        ],
-                        borderColor: [
-                            Colors.dashboardColor,
-                            that.getColor(Colors.dashboardColor, 0.3),
-                            that.getColor(Colors.dashboardColor, 0.4),
-                            that.getColor(Colors.dashboardColor, 0.6),
-                            that.getColor(Colors.dashboardColor, 0.7)
-                        ],
-                        pointStyle: 'rect'
+                        data: top5Diagramdatasetsdata,
+                        backgroundColor: top5Diagrambackgroundcolor,
+                        borderColor: top5Diagrambordercolor
                     }]
                 };
 
-
-                var createTop5Diagram = function() {
-                    var promisedDeliveryChartMain = new Chart(fragmentElement.querySelector("#countryChart"), {
+                var createTop5Diagram = function () {
+                    top5DiagramChart = new Chart(fragmentElement.querySelector("#countryChart"), {
                         type: 'doughnut',
                         data: dataMain,
                         options: {
@@ -213,33 +231,46 @@
                     });
                 }
                 this.createTop5Diagram = createTop5Diagram;
+
                 
+                var top5Diagramsupremedatasetsdata = [];
+                var top5Diagramsupremebackgroundcolor = [];
+                var top5Diagramsupremebordercolor = [];
+
                 var dataMainSurpreme = {
                     labels: [],
                     datasets: [
                         {
-                            backgroundColor: "rgba(91, 202, 255,0.2)",
-                            borderColor: "rgba(91, 202, 255,1)",
-                            data: []
+                            label: "Event",
+                            order: 0,
+                            data: top5Diagramdatasetsdata,
+                            backgroundColor: top5Diagrambackgroundcolor,
+                            borderColor: top5Diagrambordercolor,
+                            fill: true
+                            
                         },
                         {
-                            backgroundColor: "rgba(204, 91, 135, 0.2)",
-                            borderColor: "rgba(204, 91, 135,1)",
-                            data: []
+                            label: "Global",
+                            order: 1,
+                            backgroundColor: top5Diagramsupremebackgroundcolor,
+                            borderColor: top5Diagramsupremebordercolor,
+                            data: top5Diagramsupremedatasetsdata,
+                            fill: false
                         }
                     ]
                 };
 
-                var createTop5DiagramSurpreme = function() {
-                    var promisedDeliveryChartMain = new Chart(fragmentElement.querySelector("#countryChart"),
+                var surpremeColor = "#cc5b87";
+                
+                var ctx2 = fragmentElement.querySelector("#countryChart").getContext('2d');
+
+                var createTop5DiagramSurpreme = function () {
+                    top5DiagramSurpremeChart = new Chart(ctx2,
                         {
                             type: 'radar',
                             data: dataMainSurpreme,
                             options: {
                                 maintainAspectRatio: false,
-                                tooltips: {
-                                    mode: 'label'
-                                },
                                 legend: false,
                                 legendCallback: function (chart) {
                                     var elem = [];
@@ -255,23 +286,18 @@
                                         var value2 = chart.data.datasets[1].data[i];
                                         elem.push('<div class="custom-legends-container">');
                                         elem.push('<div class="custom-legends-item-left">');
-                                        elem.push('<div class="custom-legends-item-left.label" style="background-color:' + chart.data.datasets[0].backgroundColor[i] + '">');
-                                        if (chart.data.labels[i]) {
-                                            elem.push(chart.data.labels[i] + ":");
-                                        }
-                                        elem.push('<div class="custom-legends-item-left-count" style="background-color:' + chart.data.datasets[0].backgroundColor[i] + '">');
+                                        elem.push('<div class="custom-legends-item-left-count" style="color:' + chart.data.datasets[0].backgroundColor[i] + '">');
                                         if (chart.data.labels[i]) {
                                             elem.push(" " + (value / total * 100).toFixed(0) + "%");
                                         }
                                         elem.push('</div>');
                                         elem.push('</div>');
-                                        elem.push('</div>');
                                         elem.push('<div class="custom-legends-item-right">');
-                                        elem.push('<div class="custom-legends-item-right-label" style="background-color:' + chart.data.datasets[0].backgroundColor[i] + '">');
+                                        elem.push('<div class="custom-legends-item-right-label">');
                                         if (chart.data.labels[i]) {
-                                            elem.push("Global: ");
+                                            elem.push(chart.data.labels[i]);
                                         }
-                                        elem.push('<div class="custom-legends-item-right-count" style="background-color:' + chart.data.datasets[0].backgroundColor[i] + '">');
+                                        elem.push('<div class="custom-legends-item-right-count" style="color:' + chart.data.datasets[1].backgroundColor[i] + '">');
                                         if (chart.data.labels[i]) {
                                             elem.push(" " + (value2 / total2 * 100).toFixed(0) + "%");
                                         }
@@ -290,7 +316,7 @@
                                             display: false //this will remove only the label
                                         },
                                         gridLines: {
-                                            display: false,
+                                            display: false
                                         }
                                     }],
                                     xAxes: [{
@@ -298,37 +324,181 @@
                                             display: false //this will remove only the label
                                         },
                                         gridLines: {
-                                            display: false,
+                                            display: false
                                         }
                                     }]
+                                },
+                                tooltips: {
+                                    // Disable the on-canvas tooltip
+                                    enabled: false,
+
+                                    custom: function (tooltipModel) {
+                                        // Tooltip Element
+                                        var tooltipEl = document.getElementById('chartjs-tooltip');
+
+                                        // Create element on first render
+                                        if (!tooltipEl) {
+                                            tooltipEl = document.createElement('div');
+                                            tooltipEl.id = 'chartjs-tooltip';
+                                            tooltipEl.innerHTML = '<table></table>';
+                                            document.body.appendChild(tooltipEl);
+                                        }
+
+                                        // Hide if no tooltip
+                                        if (tooltipModel.opacity === 0) {
+                                            tooltipEl.style.opacity = 0;
+                                            return;
+                                        }
+
+                                        // Set caret Position
+                                        tooltipEl.classList.remove('above', 'below', 'no-transform');
+                                        if (tooltipModel.yAlign) {
+                                            tooltipEl.classList.add(tooltipModel.yAlign);
+                                        } else {
+                                            tooltipEl.classList.add('no-transform');
+                                        }
+
+                                        function getBody(bodyItem) {
+                                            return bodyItem.lines;
+                                        }
+
+                                        // Set Text
+                                        if (tooltipModel.body) {
+                                            var titleLines = tooltipModel.title || [];
+                                            var bodyLines = tooltipModel.body.map(getBody);
+
+                                            var innerHtml = '<thead>';
+
+                                            titleLines.forEach(function (title) {
+                                                innerHtml += '<tr><th>' + title + '</th></tr>';
+                                            });
+                                            innerHtml += '</thead><tbody>';
+
+                                            bodyLines.forEach(function (body, i) {
+                                                var colors = tooltipModel.labelColors[i];
+                                                var style = 'background:' + colors.backgroundColor;
+                                                style += '; border-color:' + colors.borderColor;
+                                                style += '; border-width: 2px';
+                                                var span = '<span style="' + style + '"></span>';
+                                                innerHtml += '<tr><td>' + span + body + '</td></tr>';
+                                            });
+                                            innerHtml += '</tbody>';
+
+                                            var tableRoot = tooltipEl.querySelector('table');
+                                            tableRoot.innerHTML = innerHtml;
+                                        }
+
+                                        // `this` will be the overall tooltip
+                                        var position = this._chart.canvas.getBoundingClientRect();
+
+                                        // Display, position, and set styles for font
+                                        tooltipEl.style.opacity = 1;
+                                        tooltipEl.style.position = 'absolute';
+                                        tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel.caretX + 'px';
+                                        tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY + 'px';
+                                        tooltipEl.style.fontFamily = tooltipModel._bodyFontFamily;
+                                        tooltipEl.style.fontSize = tooltipModel.bodyFontSize + 'px';
+                                        tooltipEl.style.fontStyle = tooltipModel._bodyFontStyle;
+                                        tooltipEl.style.padding = tooltipModel.yPadding + 'px ' + tooltipModel.xPadding + 'px';
+                                        tooltipEl.style.pointerEvents = 'none';
+                                    }
                                 }
                             }
                         });
                     var legentElement = fragmentElement.querySelector(".countrys-label-surpreme");
                     /* insert custom HTML inside custom div */
-                    legentElement.innerHTML = promisedDeliveryChartMain.generateLegend();
+                    legentElement.innerHTML = top5DiagramSurpremeChart.generateLegend();
                 }
                 this.createTop5DiagramSurpreme = createTop5DiagramSurpreme;
 
-               
-                
+                var clearArrays = function() {
+                    top5Diagramlabelsdata = [];
+                    top5Diagramdatasetsdata = [];
+                    top5Diagrambackgroundcolor = [];
+                    top5Diagrambordercolor = [];
+                    if (that.isSupreme === 2) {
+                        top5Diagramsupremedatasetsdata = [];
+                        top5Diagramsupremebackgroundcolor = [];
+                        top5Diagramsupremebordercolor = [];
+                    }
+                }
+                this.clearArrays = clearArrays;
+
+                var setUpData = function() {
+                    Log.call(Log.l.trace, "DiaYearRange.Controller.");
+                    if (that.isSupreme === 1) {
+                        dataMain.labels = top5Diagramlabelsdata;
+                        dataMain.datasets[0].data = top5Diagramlabelsdata;
+                        dataMain.datasets[0].backgroundColor = top5Diagrambackgroundcolor;
+                        dataMain.datasets[0].borderColor = top5Diagrambordercolor;
+                    }
+                    if (that.isSupreme === 2) {
+                        dataMainSurpreme.labels = top5Diagramlabelsdata;
+                        dataMainSurpreme.datasets[0].data = top5Diagramdatasetsdata;
+                        dataMainSurpreme.datasets[0].backgroundColor = top5Diagrambackgroundcolor;
+                        dataMainSurpreme.datasets[0].borderColor = top5Diagrambordercolor;
+                        dataMainSurpreme.datasets[1].data = top5Diagramsupremedatasetsdata;
+                        dataMainSurpreme.datasets[1].backgroundColor = top5Diagramsupremebackgroundcolor;
+                        dataMainSurpreme.datasets[1].borderColor = top5Diagramsupremebordercolor;
+                        
+                    }
+
+                }
+                this.setUpData = setUpData;
+
+                var redrawCharts = function () {
+                    Log.call(Log.l.trace, "DiaYearRange.Controller.");
+                    if (that.isSupreme === 1) {
+                        top5DiagramChart.data.labels = top5Diagramlabelsdata;
+                        top5DiagramChart.data.datasets[0].data = top5Diagramdatasetsdata;
+                        top5DiagramChart.data.datasets[0].backgroundColor = top5Diagrambackgroundcolor;
+                        top5DiagramChart.data.datasets[0].borderColor = top5Diagrambordercolor;
+                        top5DiagramChart.update();
+                    }
+                    if (that.isSupreme === 2) {
+                        top5DiagramSurpremeChart.data.labels = top5Diagramlabelsdata;
+                        top5DiagramSurpremeChart.data.datasets[0].data = top5Diagramdatasetsdata;
+                        top5DiagramSurpremeChart.data.datasets[0].backgroundColor = top5Diagrambackgroundcolor;
+                        top5DiagramSurpremeChart.data.datasets[0].borderColor = top5Diagrambordercolor;
+                        top5DiagramSurpremeChart.data.datasets[1].data = top5Diagramsupremedatasetsdata;
+                        top5DiagramSurpremeChart.data.datasets[1].backgroundColor = top5Diagramsupremebackgroundcolor;
+                        top5DiagramSurpremeChart.data.datasets[1].borderColor = top5Diagramsupremebordercolor;
+                        top5DiagramSurpremeChart.update();
+                    }
+                    Log.ret(Log.l.trace);
+                }
+                this.redrawCharts = redrawCharts;
+
+                var drawCharts = function () {
+                    that.createTop5Diagram();
+                    if (that.isSupreme === 2) {
+                        that.createTop5DiagramSurpreme();
+                    }
+                }
+                this.drawCharts = drawCharts;
+
                 var resultConverter = function (item, index) {
                     item.index = index;
                     if (item.Land === null) {
                         item.Land = "Kein Land";
                     }
-                    labelsdata.push(item.Land);
-                    datasetsdata.push(item.Anzahl);
+                    top5Diagramlabelsdata.push(item.Land);
+                    top5Diagramdatasetsdata.push(item.Anzahl);
+                    top5Diagrambackgroundcolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, item.index / 12)));
+                    top5Diagrambordercolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, item.index / 12)));
                     if (that.isSupreme === 2) {
-                        dataMainSurpreme.labels.push(item.Land);
-                        dataMainSurpreme.datasets[0].data.push(item.Anzahl);
-                        dataMainSurpreme.datasets[1].data.push(item.Anzahl + 10);
+                        top5Diagramsupremedatasetsdata.push(item.Anzahl + 10);
+                        top5Diagramsupremebackgroundcolor.push(that.hexToRgbA(that.getColor(surpremeColor, item.index / 12)));
+                        top5Diagramsupremebordercolor.push(that.hexToRgbA(that.getColor(surpremeColor, item.index / 12)));
                     }
                 }
                 this.resultConverter = resultConverter;
 
                 var loadData = function (recordId) {
                     Log.call(Log.l.trace, "DiaCountrys.");
+                    that.clearArrays();
+                    top5DiagramSurpremeChart = null;
+                    top5DiagramChart = null;
                     AppData.setErrorMsg(that.binding);
                     var ret = new WinJS.Promise.as().then(function () {
                         return DiaCountrys.reportLand.select(function (json) {
@@ -339,12 +509,17 @@
                                 results.sort(function (a, b) {
                                     return b.NumHits - a.NumHits;
                                 });
-                                results.length = 5;
+
+                                if (that.binding.Top5Country === "10") {
+                                    results.length = 10;
+                                } else {
+                                    results.length = 5;
+                                }
+
                                 results.forEach(function (item, index) {
                                     that.resultConverter(item, index);
                                 });
-                                var result = dataMain;
-
+                               
                                 Log.print(Log.l.trace, "reportLand: success!");
                             }
 
@@ -370,6 +545,26 @@
                                 // or server returns response with an error status.
                                 AppData.setErrorMsg(that.binding, errorResponse);
                             });
+                    }).then(function () {
+                        if (that.isSupreme === 1) {
+                            if (top5DiagramChart === null) {
+                                that.setUpData();
+                                that.createTop5Diagram();
+                                that.redrawCharts();
+                            } else {
+                                that.setUpData();
+                                that.redrawCharts();
+                            }
+                        } else {
+                            if (top5DiagramSurpremeChart === null) {
+                                that.setUpData();
+                                that.createTop5DiagramSurpreme();
+                                that.redrawCharts();
+                            } else {
+                                that.setUpData();
+                                that.createTop5DiagramSurpreme();
+                            }
+                        }
                     });
                     Log.ret(Log.l.trace);
                     return ret;
@@ -394,19 +589,28 @@
                 }
                 this.checkIfSurpreme = checkIfSurpreme;
 
+                this.eventHandlers = {
+                    changedTopCountry: function (event) {
+                        Log.call(Log.l.trace, "Contact.Controller.");
+                        that.binding.Top5Country = parseInt(event.target.value);
+                        that.loadData();
+                        Log.ret(Log.l.trace);
+                    }
+                };
+
+                if (top5Countrydrop) {
+                    this.addRemovableEventListener(top5Countrydrop, "change", this.eventHandlers.changedTopCountry.bind(this));
+                }
+
             that.processAll().then(function () {
                     Log.print(Log.l.trace, "Binding wireup page complete");
-                    return that.checkIfSurpreme();
+                return that.dropdowncolor();
+            }).then(function () {
+                Log.print(Log.l.trace, "Binding wireup page complete");
+                return that.checkIfSurpreme();
             }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return loadData();
-            }).then(function () {
-                Log.print(Log.l.trace, "Data loaded");
-                if (that.isSupreme === 2) {
-                    return createTop5DiagramSurpreme();
-                } else {
-                    return createTop5Diagram();
-                }
             }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return;

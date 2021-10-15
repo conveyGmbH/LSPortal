@@ -226,7 +226,7 @@
                                     ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
 
                                     // Just naively convert to string for now
-                                    var dataString = dataset.data[index].toString();
+                                    var dataString = dataset.data[index].toString() + " %";
 
                                     // Make sure alignment settings are correct
                                     ctx.textAlign = 'center';
@@ -234,7 +234,7 @@
 
                                     var padding = 10;
                                     var position = element.tooltipPosition();
-                                    ctx.fillText(dataString, position.x - 10, position.y - (fontSize / 2) + padding);
+                                    ctx.fillText(dataString, position.x - 19, position.y - (fontSize / 2) + padding);
                                 });
                             }
                         });
@@ -282,7 +282,7 @@
                                     ticks: {
                                         beginAtZero: true
                                     },
-                                    stacked: true
+                                    stacked: false
                                 }],
                                 yAxes: [{
                                     gridLines: {
@@ -294,7 +294,7 @@
                                     ticks: {
                                         fontSize: 16
                                     },
-                                    stacked: true
+                                    stacked: false
                                 }]
                             },
                             legend: {
@@ -604,7 +604,7 @@
                     return setupDataforDashboard();
                 }).then(function () {
                     Log.print(Log.l.trace, "Binding wireup page complete");
-                    return createWorldChart(true);
+                    //return createWorldChart(true);
                 }).then(function () {
                     Log.print(Log.l.trace, "Data loaded");
                     //return that.highlightMap();

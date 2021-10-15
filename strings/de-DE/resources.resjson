@@ -1398,13 +1398,15 @@
 
     "diaCountrys.title" : "Top 5 Länder",
     "diaCountrys.titleTooltip" : "Hilfetext hier",
+    "diaCountrys.top5" : "Top 5 Countrys",
+    "diaCountrys.top10" : "Top 10 Countrys",
 
     "diaVisitors.title" : "Besucher",
     "diaVisitors.titleTooltip" : "Hilfetext hier",
     "diaVisitors.hour" : "Stunden",
     "diaVisitors.day" : "Tage",
 
-    "diaYearRange.title" : "Jahr-Bereich",
+    "diaYearRange.title" : "Jahrgangsgruppen",
     "diaYearRange.titleTooltip" : "Hilfetext hier",
     "diaYearRange.remaindata" : "Rest-Daten",
 

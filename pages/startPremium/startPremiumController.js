@@ -428,18 +428,32 @@
 
             var checkIfSurpreme = function() {
                 if (that.isSupreme === 2) {
-                    var fieldLineFull = pageElement.querySelector(".field_tile_full");
-                    fieldLineFull.className = "field_line field_tile_full_double";
+                    var fieldLineFull = pageElement.querySelector(".field_line_full");
+                    fieldLineFull.className = "field_line field_line_full_double";
                     var fieldLineFullInner = pageElement.querySelector("#startPremiumdiaIndustrieshost");
                     fieldLineFullInner.style.height = "580px";
                 }
             }
             this.checkIfSurpreme = checkIfSurpreme;
 
+            var checkTip = function() {
+                if (that.isSupreme === 2) {
+                    var event = pageElement.querySelector(".circle-with-text-event");
+                    event.style.backgroundColor = Colors.dashboardColor;
+                    var surpremeColor = "#cc5b87";
+                    var global = pageElement.querySelector(".circle-with-text-global");
+                    global.style.backgroundColor = surpremeColor;
+                }
+            }
+            this.checkTip = checkTip;
+
             // finally, load the data
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.checkIfSurpreme();
+            }).then(function () {
+                Log.print(Log.l.trace, "Binding wireup page complete");
+                return that.checkTip();
             }).then(function() {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
