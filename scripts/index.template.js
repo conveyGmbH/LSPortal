@@ -74,7 +74,9 @@
         { id: "esVoucherUsers", group: 19, svg: "voucher_contact", disabled: true },
         //Dashboards
         { id: "dashBoard", group: 19, svg: "Dashboard", disabled: true},
+        // only visible in deimos and lstest, not in lsmain
         { id: "startPremium", group: 57, svg: "Dashboard", disabled: true},
+        { id: "startSurpreme", group: 58, svg: "Dashboard", disabled: true},
         //VisitorFlow
         { id: "visitorFlowGrp", group: 28, svg: "lsvFlow", disabled: true, popup: true },
         { id: "visitorFlowDashboard", group: 20, svg: "DashboardVisitorFlow", disabled: true, predecGroup: 28 },

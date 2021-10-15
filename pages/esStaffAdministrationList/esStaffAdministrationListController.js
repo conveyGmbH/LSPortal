@@ -463,8 +463,8 @@
                         if (restriction.btn_textContent) {
                             btnFirstName.textContent = restriction.btn_textContent;
                         }
-                        btnName.textContent = getResourceText("esstaffadministration.name");
-                        btnCompany.textContent = getResourceText("esstaffadministration.company");
+                        btnName.textContent = getResourceText("esStaffAdministration.name");
+                        btnCompany.textContent = getResourceText("esStaffAdministration.company");
                     }
                 }
                 if (restriction.OrderAttribute === "Nachname") {
@@ -472,8 +472,8 @@
                         if (restriction.btn_textContent) {
                             btnName.textContent = restriction.btn_textContent;
                         }
-                        btnFirstName.textContent = getResourceText("esstaffadministration.firstName");
-                        btnCompany.textContent = getResourceText("esstaffadministration.company");
+                        btnFirstName.textContent = getResourceText("esStaffAdministration.firstName");
+                        btnCompany.textContent = getResourceText("esStaffAdministration.company");
                     }
                 }
                 if (restriction.OrderAttribute === "Firma") {
@@ -481,13 +481,13 @@
                         if (restriction.btn_textContent) {
                             //btnName.textContent = restriction.btn_textContent;
                         }
-                        btnFirstName.textContent = getResourceText("esstaffadministration.firstName");
+                        btnFirstName.textContent = getResourceText("esStaffAdministration.firstName");
                     }
                     if(btnName) {
                         if (restriction.btn_textContent) {
                             //btnFirstName.textContent = restriction.btn_textContent;
                         }
-                        btnName.textContent = getResourceText("esstaffadministration.name");
+                        btnName.textContent = getResourceText("esStaffAdministration.name");
                     }
                 }
                 AppData.setErrorMsg(that.binding);

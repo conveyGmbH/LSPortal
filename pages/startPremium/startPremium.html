@@ -20,24 +20,28 @@
                             <span class="caption-field" data-win-res="{textContent: 'start.title'}"></span>
                         </div>
                     </div>
+                    <div class="tip">
+                        <div class="circle-with-text-event"><span>Event</span></div>
+                        <div class="circle-with-text-global"><span>Global</span></div>
+                    </div>
                     <button id="btn-all" style="float: right">Download-Alles</button>
                     <button id="btn-vis"style="float: right">Download-Sichtbar</button>
                     <div class="tiles-container">
                         <div name="charts" class="tile tile-top">
                             <div class="tile-content-inner" data-win-bind="style.display: countContacts  Binding.Converter.toDisplay">
-                                <div class="field_line field_tile_half_right">
+                                <div class="field_line field_line_even">
                                     <div id="startContactspDhost" class="fragmenthost"></div>
                                 </div>
-                                <div class="field_line field_tile_half_left">
+                                <div class="field_line field_line_odd">
                                     <div id="startContactshost" class="fragmenthost"></div>
                                 </div>
-                                <div class="field_line field_tile_half_left">
+                                <div class="field_line field_line_odd">
                                     <div id="startCountryshost" class="fragmenthost"></div>
                                 </div>
-                                <div class="field_line field_tile_half_left">
+                                <div class="field_line field_line_odd">
                                     <div id="startQuestionshost" class="fragmenthost"></div>
                                 </div>
-                                <div class="field_line field_tile_full">
+                                <div class="field_line field_line_full">
                                     <div id="startPremiumdiaIndustrieshost" class="fragmenthost"></div>
                                 </div>
                             </div>

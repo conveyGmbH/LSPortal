@@ -43,6 +43,18 @@
                 var industriesyearchart7 = null;
                 var industriesyearchart8 = null;
 
+                var getColor = function (color, id) {
+                    var rgbColor = Colors.hex2rgb(color);
+                    var hsvColor = Colors.rgb2hsv(rgbColor);
+                    hsvColor.s *= 0.8 - id;
+                    hsvColor.v /= 0.8 - id;
+                    rgbColor = Colors.hsv2rgb(hsvColor);
+                    return Colors.rgb2hex(rgbColor);
+                }
+                this.getColor = getColor;
+
+                var supremeColor = "#cc5b87";
+
                 var plugin = {
                     beforeDraw: function (chart) {
                         // Get ctx from string
@@ -139,8 +151,20 @@
                     labels: industriesYearChartDataLabels1,
                     datasets: [{
                         data: industriesYearChartDataRaw1,
-                        backgroundColor: [Colors.dashboardColor, "#878684"],
-                        hoverBackgroundColor: [Colors.dashboardColor, "#878684"]
+                        backgroundColor: [
+                            Colors.dashboardColor,
+                            that.getColor(Colors.dashboardColor, 0.3),
+                            that.getColor(Colors.dashboardColor, 0.4),
+                            that.getColor(Colors.dashboardColor, 0.6),
+                            that.getColor(Colors.dashboardColor, 0.7)
+                        ],
+                        borderColor: [
+                            Colors.dashboardColor,
+                            that.getColor(Colors.dashboardColor, 0.3),
+                            that.getColor(Colors.dashboardColor, 0.4),
+                            that.getColor(Colors.dashboardColor, 0.6),
+                            that.getColor(Colors.dashboardColor, 0.7)
+                        ]
                     }]
                 };
                 //YearRangeChart1
@@ -221,8 +245,20 @@
                     labels: industriesYearChartDataLabels2,
                     datasets: [{
                         data: industriesYearChartDataRaw2,
-                        backgroundColor: [Colors.dashboardColor, "#878684"],
-                        hoverBackgroundColor: [Colors.dashboardColor, "#878684"]
+                        backgroundColor: [
+                            Colors.dashboardColor,
+                            that.getColor(Colors.dashboardColor, 0.3),
+                            that.getColor(Colors.dashboardColor, 0.4),
+                            that.getColor(Colors.dashboardColor, 0.6),
+                            that.getColor(Colors.dashboardColor, 0.7)
+                        ],
+                        borderColor: [
+                            Colors.dashboardColor,
+                            that.getColor(Colors.dashboardColor, 0.3),
+                            that.getColor(Colors.dashboardColor, 0.4),
+                            that.getColor(Colors.dashboardColor, 0.6),
+                            that.getColor(Colors.dashboardColor, 0.7)
+                        ]
                     }]
                 };
                 //YearRangeChart2
@@ -301,8 +337,20 @@
                     labels: industriesYearChartDataLabels3,
                     datasets: [{
                         data: industriesYearChartDataRaw3,
-                        backgroundColor: [Colors.dashboardColor, "#878684"],
-                        hoverBackgroundColor: [Colors.dashboardColor, "#878684"]
+                        backgroundColor: [
+                            Colors.dashboardColor,
+                            that.getColor(Colors.dashboardColor, 0.3),
+                            that.getColor(Colors.dashboardColor, 0.4),
+                            that.getColor(Colors.dashboardColor, 0.6),
+                            that.getColor(Colors.dashboardColor, 0.7)
+                        ],
+                        borderColor: [
+                            Colors.dashboardColor,
+                            that.getColor(Colors.dashboardColor, 0.3),
+                            that.getColor(Colors.dashboardColor, 0.4),
+                            that.getColor(Colors.dashboardColor, 0.6),
+                            that.getColor(Colors.dashboardColor, 0.7)
+                        ]
                     }]
                 };
                 //YearRangeChart3
@@ -379,8 +427,20 @@
                     labels: industriesYearChartDataLabels4,
                     datasets: [{
                         data: industriesYearChartDataRaw4,
-                        backgroundColor: [Colors.dashboardColor, "#878684"],
-                        hoverBackgroundColor: [Colors.dashboardColor, "#878684"]
+                        backgroundColor: [
+                            Colors.dashboardColor,
+                            that.getColor(Colors.dashboardColor, 0.3),
+                            that.getColor(Colors.dashboardColor, 0.4),
+                            that.getColor(Colors.dashboardColor, 0.6),
+                            that.getColor(Colors.dashboardColor, 0.7)
+                        ],
+                        borderColor: [
+                            Colors.dashboardColor,
+                            that.getColor(Colors.dashboardColor, 0.3),
+                            that.getColor(Colors.dashboardColor, 0.4),
+                            that.getColor(Colors.dashboardColor, 0.6),
+                            that.getColor(Colors.dashboardColor, 0.7)
+                        ]
                     }]
                 };
                 //YearRangeChart4
@@ -460,8 +520,20 @@
                     labels: industriesYearChartDataLabels5,
                     datasets: [{
                         data: industriesYearChartDataRaw5,
-                        backgroundColor: [Colors.dashboardColor, "#878684"],
-                        hoverBackgroundColor: [Colors.dashboardColor, "#878684"]
+                        backgroundColor: [
+                            supremeColor,
+                            that.getColor(supremeColor, 0.3),
+                            that.getColor(supremeColor, 0.4),
+                            that.getColor(supremeColor, 0.6),
+                            that.getColor(supremeColor, 0.7)
+                        ],
+                        borderColor: [
+                            supremeColor,
+                            that.getColor(supremeColor, 0.3),
+                            that.getColor(supremeColor, 0.4),
+                            that.getColor(supremeColor, 0.6),
+                            that.getColor(supremeColor, 0.7)
+                        ]
                     }]
                 };
 
@@ -542,8 +614,20 @@
                     labels: industriesYearChartDataLabels6,
                     datasets: [{
                         data: industriesYearChartDataRaw6,
-                        backgroundColor: [Colors.dashboardColor, "#878684"],
-                        hoverBackgroundColor: [Colors.dashboardColor, "#878684"]
+                        backgroundColor: [
+                            supremeColor,
+                            that.getColor(supremeColor, 0.3),
+                            that.getColor(supremeColor, 0.4),
+                            that.getColor(supremeColor, 0.6),
+                            that.getColor(supremeColor, 0.7)
+                        ],
+                        borderColor: [
+                            supremeColor,
+                            that.getColor(supremeColor, 0.3),
+                            that.getColor(supremeColor, 0.4),
+                            that.getColor(supremeColor, 0.6),
+                            that.getColor(supremeColor, 0.7)
+                        ]
                     }]
                 };
                 //YearRangeChart6
@@ -620,8 +704,20 @@
                     labels: industriesYearChartDataLabels7,
                     datasets: [{
                         data: industriesYearChartDataRaw7,
-                        backgroundColor: [Colors.dashboardColor, "#878684"],
-                        hoverBackgroundColor: [Colors.dashboardColor, "#878684"]
+                        backgroundColor: [
+                            supremeColor,
+                            that.getColor(supremeColor, 0.3),
+                            that.getColor(supremeColor, 0.4),
+                            that.getColor(supremeColor, 0.6),
+                            that.getColor(supremeColor, 0.7)
+                        ],
+                        borderColor: [
+                            supremeColor,
+                            that.getColor(supremeColor, 0.3),
+                            that.getColor(supremeColor, 0.4),
+                            that.getColor(supremeColor, 0.6),
+                            that.getColor(supremeColor, 0.7)
+                        ]
                     }]
                 };
                 //YearRangeChart7
@@ -698,8 +794,20 @@
                     labels: industriesYearChartDataLabels8,
                     datasets: [{
                         data: industriesYearChartDataRaw8,
-                        backgroundColor: [Colors.dashboardColor, "#878684"],
-                        hoverBackgroundColor: [Colors.dashboardColor, "#878684"]
+                        backgroundColor: [
+                            supremeColor,
+                            that.getColor(supremeColor, 0.3),
+                            that.getColor(supremeColor, 0.4),
+                            that.getColor(supremeColor, 0.6),
+                            that.getColor(supremeColor, 0.7)
+                        ],
+                        borderColor: [
+                            supremeColor,
+                            that.getColor(supremeColor, 0.3),
+                            that.getColor(supremeColor, 0.4),
+                            that.getColor(supremeColor, 0.6),
+                            that.getColor(supremeColor, 0.7)
+                        ]
                     }]
                 };
                 //YearRangeChart4
@@ -780,8 +888,20 @@
                         labels: industriesYearChartDataLabels1,
                         datasets: [{
                             data: industriesYearChartDataRaw1,
-                            backgroundColor: [Colors.dashboardColor, "#878684"],
-                            hoverBackgroundColor: [Colors.dashboardColor, "#878684"]
+                            backgroundColor: [
+                                Colors.dashboardColor,
+                                that.getColor(Colors.dashboardColor, 0.3),
+                                that.getColor(Colors.dashboardColor, 0.4),
+                                that.getColor(Colors.dashboardColor, 0.6),
+                                that.getColor(Colors.dashboardColor, 0.7)
+                            ],
+                            borderColor: [
+                                Colors.dashboardColor,
+                                that.getColor(Colors.dashboardColor, 0.3),
+                                that.getColor(Colors.dashboardColor, 0.4),
+                                that.getColor(Colors.dashboardColor, 0.6),
+                                that.getColor(Colors.dashboardColor, 0.7)
+                            ]
                         }]
                     };
 
@@ -795,8 +915,20 @@
                         labels: industriesYearChartDataLabels2,
                         datasets: [{
                             data: industriesYearChartDataRaw2,
-                            backgroundColor: [Colors.dashboardColor, "#878684"],
-                            hoverBackgroundColor: [Colors.dashboardColor, "#878684"]
+                            backgroundColor: [
+                                Colors.dashboardColor,
+                                that.getColor(Colors.dashboardColor, 0.3),
+                                that.getColor(Colors.dashboardColor, 0.4),
+                                that.getColor(Colors.dashboardColor, 0.6),
+                                that.getColor(Colors.dashboardColor, 0.7)
+                            ],
+                            borderColor: [
+                                Colors.dashboardColor,
+                                that.getColor(Colors.dashboardColor, 0.3),
+                                that.getColor(Colors.dashboardColor, 0.4),
+                                that.getColor(Colors.dashboardColor, 0.6),
+                                that.getColor(Colors.dashboardColor, 0.7)
+                            ]
                         }]
                     };
 
@@ -810,8 +942,20 @@
                         labels: industriesYearChartDataLabels3,
                         datasets: [{
                             data: industriesYearChartDataRaw3,
-                            backgroundColor: [Colors.dashboardColor, "#878684"],
-                            hoverBackgroundColor: [Colors.dashboardColor, "#878684"]
+                            backgroundColor: [
+                                Colors.dashboardColor,
+                                that.getColor(Colors.dashboardColor, 0.3),
+                                that.getColor(Colors.dashboardColor, 0.4),
+                                that.getColor(Colors.dashboardColor, 0.6),
+                                that.getColor(Colors.dashboardColor, 0.7)
+                            ],
+                            borderColor: [
+                                Colors.dashboardColor,
+                                that.getColor(Colors.dashboardColor, 0.3),
+                                that.getColor(Colors.dashboardColor, 0.4),
+                                that.getColor(Colors.dashboardColor, 0.6),
+                                that.getColor(Colors.dashboardColor, 0.7)
+                            ]
                         }]
                     };
 
@@ -825,8 +969,20 @@
                         labels: industriesYearChartDataLabels4,
                         datasets: [{
                             data: industriesYearChartDataRaw4,
-                            backgroundColor: [Colors.dashboardColor, "#878684"],
-                            hoverBackgroundColor: [Colors.dashboardColor, "#878684"]
+                            backgroundColor: [
+                                Colors.dashboardColor,
+                                that.getColor(Colors.dashboardColor, 0.3),
+                                that.getColor(Colors.dashboardColor, 0.4),
+                                that.getColor(Colors.dashboardColor, 0.6),
+                                that.getColor(Colors.dashboardColor, 0.7)
+                            ],
+                            borderColor: [
+                                Colors.dashboardColor,
+                                that.getColor(Colors.dashboardColor, 0.3),
+                                that.getColor(Colors.dashboardColor, 0.4),
+                                that.getColor(Colors.dashboardColor, 0.6),
+                                that.getColor(Colors.dashboardColor, 0.7)
+                            ]
                         }]
                     };
                     Log.ret(Log.l.trace);
@@ -843,8 +999,20 @@
                             labels: industriesYearChartDataLabels5,
                             datasets: [{
                                 data: industriesYearChartDataRaw5,
-                                backgroundColor: ["#cc5b87", "#878684"],
-                                hoverBackgroundColor: ["#cc5b87", "#878684"]
+                                backgroundColor: [
+                                    supremeColor,
+                                    that.getColor(supremeColor, 0.3),
+                                    that.getColor(supremeColor, 0.4),
+                                    that.getColor(supremeColor, 0.6),
+                                    that.getColor(supremeColor, 0.7)
+                                ],
+                                borderColor: [
+                                    supremeColor,
+                                    that.getColor(supremeColor, 0.3),
+                                    that.getColor(supremeColor, 0.4),
+                                    that.getColor(supremeColor, 0.6),
+                                    that.getColor(supremeColor, 0.7)
+                                ]
                             }]
                         };
 
@@ -858,8 +1026,20 @@
                             labels: industriesYearChartDataLabels6,
                             datasets: [{
                                 data: industriesYearChartDataRaw6,
-                                backgroundColor: ["#cc5b87", "#878684"],
-                                hoverBackgroundColor: ["#cc5b87", "#878684"]
+                                backgroundColor: [
+                                    supremeColor,
+                                    that.getColor(supremeColor, 0.3),
+                                    that.getColor(supremeColor, 0.4),
+                                    that.getColor(supremeColor, 0.6),
+                                    that.getColor(supremeColor, 0.7)
+                                ],
+                                borderColor: [
+                                    supremeColor,
+                                    that.getColor(supremeColor, 0.3),
+                                    that.getColor(supremeColor, 0.4),
+                                    that.getColor(supremeColor, 0.6),
+                                    that.getColor(supremeColor, 0.7)
+                                ]
                             }]
                         };
 
@@ -873,8 +1053,20 @@
                             labels: industriesYearChartDataLabels7,
                             datasets: [{
                                 data: industriesYearChartDataRaw7,
-                                backgroundColor: ["#cc5b87", "#878684"],
-                                hoverBackgroundColor: ["#cc5b87", "#878684"]
+                                backgroundColor: [
+                                    supremeColor,
+                                    that.getColor(supremeColor, 0.3),
+                                    that.getColor(supremeColor, 0.4),
+                                    that.getColor(supremeColor, 0.6),
+                                    that.getColor(supremeColor, 0.7)
+                                ],
+                                borderColor: [
+                                    supremeColor,
+                                    that.getColor(supremeColor, 0.3),
+                                    that.getColor(supremeColor, 0.4),
+                                    that.getColor(supremeColor, 0.6),
+                                    that.getColor(supremeColor, 0.7)
+                                ]
                             }]
                         };
 
@@ -888,8 +1080,20 @@
                             labels: industriesYearChartDataLabels8,
                             datasets: [{
                                 data: industriesYearChartDataRaw8,
-                                backgroundColor: ["#cc5b87", "#878684"],
-                                hoverBackgroundColor: ["#cc5b87", "#878684"]
+                                backgroundColor: [
+                                    supremeColor,
+                                    that.getColor(supremeColor, 0.3),
+                                    that.getColor(supremeColor, 0.4),
+                                    that.getColor(supremeColor, 0.6),
+                                    that.getColor(supremeColor, 0.7)
+                                ],
+                                borderColor: [
+                                    supremeColor,
+                                    that.getColor(supremeColor, 0.3),
+                                    that.getColor(supremeColor, 0.4),
+                                    that.getColor(supremeColor, 0.6),
+                                    that.getColor(supremeColor, 0.7)
+                                ]
                             }]
                         };
                         Log.ret(Log.l.trace); 

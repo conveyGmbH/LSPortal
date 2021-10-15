@@ -557,12 +557,12 @@
                     that.binding.restriction.OrderAttribute = "Vorname";
                     //that.binding.restriction.OrderDesc = !that.binding.restriction.OrderDesc;
                     AppData.setRestriction("MitarbeiterVIEW_20609", that.binding.restriction);
-                    if (event.target.textContent === getResourceText("esstaffadministration.firstNameDesc")) {
-                        event.target.textContent = getResourceText("esstaffadministration.firstNameAsc");
+                    if (event.target.textContent === getResourceText("esStaffAdministration.firstNameDesc")) {
+                        event.target.textContent = getResourceText("esStaffAdministration.firstNameAsc");
                         that.binding.restriction.btn_textContent = event.target.textContent;
                         that.binding.restriction.OrderDesc = false;
                     } else {
-                        event.target.textContent = getResourceText("esstaffadministration.firstNameDesc");
+                        event.target.textContent = getResourceText("esStaffAdministration.firstNameDesc");
                         that.binding.restriction.btn_textContent = event.target.textContent;
                         that.binding.restriction.OrderDesc = true;
                     }
@@ -578,12 +578,12 @@
                     that.binding.restriction.OrderAttribute = "Nachname";
                     //that.binding.restriction.OrderDesc = !that.binding.restriction.OrderDesc;
                     AppData.setRestriction("MitarbeiterVIEW_20609", that.binding.restriction);
-                    if (event.target.textContent === getResourceText("esstaffadministration.nameDesc")) {
-                        event.target.textContent = getResourceText("esstaffadministration.nameAsc");
+                    if (event.target.textContent === getResourceText("esStaffAdministration.nameDesc")) {
+                        event.target.textContent = getResourceText("esStaffAdministration.nameAsc");
                         that.binding.restriction.btn_textContent = event.target.textContent;
                         that.binding.restriction.OrderDesc = false;
                     } else {
-                        event.target.textContent = getResourceText("esstaffadministration.nameDesc");
+                        event.target.textContent = getResourceText("esStaffAdministration.nameDesc");
                         that.binding.restriction.btn_textContent = event.target.textContent;
                         that.binding.restriction.OrderDesc = true;
                     }
@@ -598,12 +598,12 @@
                     that.binding.restriction.OrderAttribute = "Firma";
                     //that.binding.restriction.OrderDesc = !that.binding.restriction.OrderDesc;
                     AppData.setRestriction("MitarbeiterVIEW_20609", that.binding.restriction);
-                    if (event.target.textContent === getResourceText("esstaffadministration.companyDesc")) {
-                        event.target.textContent = getResourceText("esstaffadministration.companyAsc");
+                    if (event.target.textContent === getResourceText("esStaffAdministration.companyDesc")) {
+                        event.target.textContent = getResourceText("esStaffAdministration.companyAsc");
                         that.binding.restriction.btn_textContent = event.target.textContent;
                         that.binding.restriction.OrderDesc = false;
                     } else {
-                        event.target.textContent = getResourceText("esstaffadministration.companyDesc");
+                        event.target.textContent = getResourceText("esStaffAdministration.companyDesc");
                         that.binding.restriction.btn_textContent = event.target.textContent;
                         that.binding.restriction.OrderDesc = true;
                     }
