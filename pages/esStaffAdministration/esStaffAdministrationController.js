@@ -410,30 +410,6 @@
                     Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
                     AppData.setErrorMsg(that.binding);
                     WinJS.Promise.as().then(function () {
-                        if (that.binding.hideStaffInfo) {
-                            return AppData.call("PRC_OrderTicket", {
-                                pMitarbeiterID: that.binding.dataEmployee.MitarbeiterVIEWID,
-                                pArticleTypeID: parseInt(that.binding.dataEmployee.ArticleTypeID)
-                            }, function (json) {
-                                Log.print(Log.l.info, "call success! ");
-                                var master = Application.navigator.masterControl;
-                                if (master && master.controller && master.controller.binding) {
-                                    master.controller.binding.employeeId =
-                                        that.binding.dataEmployee.MitarbeiterVIEWID;
-                                    master.controller.loadData().then(function () {
-                                        master.controller.selectRecordId(master.controller.binding.employeeId);
-                                    });
-                                }
-                                if (that.binding.hideStaffInfo) {
-                                    that.binding.hideStaffInfo = false;
-                                }
-                            }, function (error) {
-                                Log.print(Log.l.error, "call error");
-                            });
-                        } else {
-                            return WinJS.Promise.as();
-                        }
-                    }).then(function () {
                         return AppData.call("PRC_UpdateMA", {
                         pMitarbeiterID: that.binding.dataEmployee.MitarbeiterVIEWID,
                         pCompanyName: that.binding.dataEmployee.Firma,
@@ -457,6 +433,30 @@
                     }, function (error) {
                         Log.print(Log.l.info, "call error! ");
                     });
+                    }).then(function () {
+                        if (that.binding.hideStaffInfo) {
+                            return AppData.call("PRC_OrderTicket", {
+                                pMitarbeiterID: that.binding.dataEmployee.MitarbeiterVIEWID,
+                                pArticleTypeID: parseInt(that.binding.dataEmployee.ArticleTypeID)
+                            }, function (json) {
+                                Log.print(Log.l.info, "call success! ");
+                                var master = Application.navigator.masterControl;
+                                if (master && master.controller && master.controller.binding) {
+                                    master.controller.binding.employeeId =
+                                        that.binding.dataEmployee.MitarbeiterVIEWID;
+                                    master.controller.loadData().then(function () {
+                                        master.controller.selectRecordId(master.controller.binding.employeeId);
+                                    });
+                                }
+                                if (that.binding.hideStaffInfo) {
+                                    that.binding.hideStaffInfo = false;
+                                }
+                            }, function (error) {
+                                Log.print(Log.l.error, "call error");
+                            });
+                        } else {
+                            return WinJS.Promise.as();
+                        }
                     });
                     Log.ret(Log.l.trace);
                 },
@@ -684,7 +684,7 @@
                     }
                 },
                 clickPreOrderTicket: function() {
-                    if (that.binding.dataEmployee.HasTicket) {
+                    if (!that.binding.dataEmployee.HasTicket && ((!that.binding.dataEmployee.Vorname || that.binding.dataEmployee.Vorname === "") || (!that.binding.dataEmployee.Nachname || that.binding.dataEmployee.Nachname === "") || (!that.binding.dataEmployee.EMail || that.binding.dataEmployee.EMail === ""))) {
                         return true;
                     } else {
                         if (that.binding.dataEmployee.MitarbeiterVIEWID) {
