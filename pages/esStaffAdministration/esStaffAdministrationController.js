@@ -462,6 +462,7 @@
                 },
                 clickPreOrderTicket: function (event) {
                     Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
+                    AppBar.modified = true;
                     AppData.setErrorMsg(that.binding);
                     if (!that.binding.dataEmployee.HasTicket) {
                         if (that.binding.hideStaffInfo) {
@@ -634,6 +635,7 @@
                 },
                 changedArticle: function(event) {
                     Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
+                    AppBar.modified = true;
                     AppData.setErrorMsg(that.binding);
                     var target = event.currentTarget || event.target;
                     var value = parseInt(target.value);
@@ -677,7 +679,7 @@
                     }
                 },
                 clickOk: function () {
-                    if (that.binding.dataEmployee.MitarbeiterVIEWID && !that.binding.dataEmployee.HasTicket){
+                    if (that.binding.dataEmployee.MitarbeiterVIEWID && !that.binding.dataEmployee.HasTicket && AppBar.modified) {
                         return false;
                     } else {
                         return true;
