@@ -73,7 +73,7 @@
                         var contentarea = element.querySelector(".contentarea");
                         if (contentarea) {
                             var width = contentarea.clientWidth;
-                            var height = contentarea.clientHeight - 16;
+                            var height = contentarea.clientHeight - 70;
                             var contentheader = element.querySelector(".content-header");
                             if (contentheader) {
                                 height -= contentheader.clientHeight;

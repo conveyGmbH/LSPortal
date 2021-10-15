@@ -136,3 +136,7 @@
 .list-symbol-IDw {
     color: green;
 }
+
+#esStaffAdministrationListController .contentarea {
+    overflow-y: hidden;
+}
