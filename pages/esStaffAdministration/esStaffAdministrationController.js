@@ -147,10 +147,12 @@
                         },
                         function(json) {
                             Log.print(Log.l.info, "call success! ");
+                            AppBar.busy = false;
                             complete(json);
                         },
                         function (errorResponse) {
                             Log.print(Log.l.error, "call error");
+                            AppBar.busy = false;
                             error(errorResponse);
                         });
                 } else {
