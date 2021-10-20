@@ -442,9 +442,13 @@
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
                         if (criteriadrop && criteriadrop.winControl) {
+                            if (json.d.results && json.d.results[0].CriterionID) {
                             criteriadrop.winControl.data = new WinJS.Binding.List(json.d.results);
                             criteriadrop.selectedIndex = 0;
                             that.binding.criteriaMain = json.d.results[0].CriterionID;
+                            } else {
+                                criteriadrop.winControl.data = new WinJS.Binding.List(json.d.results);
+                            }
                         }
                     }, function (error) {
                         Log.print(Log.l.error, "call error");
