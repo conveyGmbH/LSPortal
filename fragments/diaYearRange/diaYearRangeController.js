@@ -6,8 +6,7 @@
 /// <reference path="~/www/lib/convey/scripts/fragmentController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/fragments/diaYearRange/diaYearRangeService.js" />
-/// <reference path="~/www/lib/chartJS/scripts/dist/Chart.js" />
-/// <reference path="~/www/lib/chartJS/scripts/dist/Chart.bundle.js" />
+/// <reference path="~/www/lib/chartJS/scripts/dist/chart.js" />
 (function () {
     "use strict";
 
@@ -25,99 +24,167 @@
                 var that = this;
 
                 this.isSupreme = AppData._userData.IsSupreme;
+                
+                var yearRangeChart1Legend = {
+                    afterUpdate(chart) {
+                        var elem = [];
+                        elem.push('<div class="custom-legends-item1">');
+                        if (chart.data.labels[0]) {
+                            elem.push(chart.data.labels[0]);
+                        }
+                        elem.push('</div>');
+                        
+                        var legentElement = fragmentElement.querySelector(".yearRangeChart1-legend");
+                        var clegentElement = fragmentElement.querySelector(".custom-legends-item1");
 
-                var yearrangechart1 = null;
-                var yearrangechart2 = null;
-                var yearrangechart3 = null;
-                var yearrangechart4 = null;
-
-                // Surpreme Charts
-                var yearrangechart5 = null;
-                var yearrangechart6 = null;
-                var yearrangechart7 = null;
-                var yearrangechart8 = null;
-
-                var plugin = {
-                    beforeDraw: function(chart) {
-                        // Get ctx from string
-                        var ctx = chart.chart.ctx;
-
-                        // Get options from the center object in options
-                        var centerConfig = chart.config.options.elements.center;
-                        var fontStyle = centerConfig.fontStyle || 'Arial';
-                        var txt = centerConfig.text;
-                        var color = centerConfig.color || '#000';
-                        var maxFontSize = centerConfig.maxFontSize || 75;
-                        var sidePadding = centerConfig.sidePadding || 20;
-                        var sidePaddingCalculated = (sidePadding / 100) * (chart.innerRadius * 2)
-                        // Start with a base font of 30px
-                        ctx.font = "30px " + fontStyle;
-
-                        // Get the width of the string and also the width of the element minus 10 to give it 5px side padding
-                        var stringWidth = ctx.measureText(txt).width;
-                        var elementWidth = (chart.innerRadius * 2) - sidePaddingCalculated;
-
-                        // Find out how much the font can grow in width.
-                        var widthRatio = elementWidth / stringWidth;
-                        var newFontSize = Math.floor(30 * widthRatio);
-                        var elementHeight = (chart.innerRadius * 2);
-
-                        // Pick a new font size so it will not be larger than the height of label.
-                        var fontSizeToUse = Math.min(newFontSize, elementHeight, maxFontSize);
-                        var minFontSize = centerConfig.minFontSize;
-                        var lineHeight = centerConfig.lineHeight || 25;
-                        var wrapText = false;
-
-                        if (minFontSize === undefined) {
-                            minFontSize = 10;
+                        if (clegentElement) {
+                            clegentElement.remove();
                         }
 
-                        if (minFontSize && fontSizeToUse < minFontSize) {
-                            fontSizeToUse = minFontSize;
-                            wrapText = true;
+                        return legentElement.insertAdjacentHTML('beforeend', elem.join(""));
+                    }
+                }
+
+                var yearRangeChart2Legend = {
+                    afterUpdate(chart) {
+                        var elem = [];
+                        elem.push('<div class="custom-legends-item2">');
+                        if (chart.data.labels[0]) {
+                            elem.push(chart.data.labels[0]);
+                        }
+                        elem.push('</div>');
+
+                        var legentElement = fragmentElement.querySelector(".yearRangeChart2-legend");
+                        var clegentElement = fragmentElement.querySelector(".custom-legends-item2");
+
+                        if (clegentElement) {
+                            clegentElement.remove();
                         }
 
-                        // Set font settings to draw it correctly.
-                        ctx.textAlign = 'center';
-                        ctx.textBaseline = 'middle';
-                        var centerX = ((chart.chartArea.left + chart.chartArea.right) / 2);
-                        var centerY = ((chart.chartArea.top + chart.chartArea.bottom) / 2);
-                        ctx.font = fontSizeToUse + "px " + fontStyle;
-                        ctx.fillStyle = color;
+                        return legentElement.insertAdjacentHTML('beforeend', elem.join(""));
+                    }
+                }
 
-                        if (!wrapText) {
-                            ctx.fillText(txt, centerX, centerY);
-                            return;
+                var yearRangeChart3Legend = {
+                    afterUpdate(chart) {
+                        var elem = [];
+                        elem.push('<div class="custom-legends-item3">');
+                        if (chart.data.labels[0]) {
+                            elem.push(chart.data.labels[0]);
+                        }
+                        elem.push('</div>');
+
+                        var legentElement = fragmentElement.querySelector(".yearRangeChart3-legend");
+                        var clegentElement = fragmentElement.querySelector(".custom-legends-item3");
+
+                        if (clegentElement) {
+                            clegentElement.remove();
                         }
 
-                        var lines = [];
-                        var chunks = txt.split('\n');
-                        for (var m = 0; m < chunks.length; m++) {
-                            var words = chunks[m].split(' ');
-                            var line;
+                        return legentElement.insertAdjacentHTML('beforeend', elem.join(""));
+                    }
+                }
+
+                var yearRangeChart4Legend = {
+                    afterUpdate(chart) {
+                        var elem = [];
+                        elem.push('<div class="custom-legends-item4">');
+                        if (chart.data.labels[0]) {
+                            elem.push(chart.data.labels[0]);
+                        }
+                        elem.push('</div>');
+
+                        var legentElement = fragmentElement.querySelector(".yearRangeChart4-legend");
+                        var clegentElement = fragmentElement.querySelector(".custom-legends-item4");
+
+                        if (clegentElement) {
+                            clegentElement.remove();
+                        }
+
+                        return legentElement.insertAdjacentHTML('beforeend', elem.join(""));
+                    }
+                }
+
+                var centerDoughnutPlugin = {
+                    beforeDraw: function (chart) {
+                        if (chart.config.options.elements.center) {
+                            // Get ctx from string
+                            var ctx = chart.ctx;
+                            
+                            // Get options from the center object in options
+                            var centerConfig = chart.config.options.elements.center;
+                            var fontStyle = centerConfig.fontStyle || 'Arial';
+                            var txt = centerConfig.text;
+                            var color = centerConfig.color || '#000';
+                            var maxFontSize = centerConfig.maxFontSize || 75;
+                            var sidePadding = centerConfig.sidePadding || 20;
+                            var sidePaddingCalculated = (sidePadding / 100) * (chart.innerRadius * 2);
+                            // Start with a base font of 30px
+                            ctx.font = "bold " + "20px " + fontStyle;
+
+                            // Get the width of the string and also the width of the element minus 10 to give it 5px side padding
+                            var stringWidth = ctx.measureText(txt).width;
+                            var elementWidth = (chart.innerRadius * 2) - sidePaddingCalculated;
+
+                            // Find out how much the font can grow in width.
+                            var widthRatio = elementWidth / stringWidth;
+                            var newFontSize = Math.floor(30 * widthRatio);
+                            var elementHeight = (chart.innerRadius * 2);
+
+                            // Pick a new font size so it will not be larger than the height of label.
+                            var fontSizeToUse = Math.min(newFontSize, elementHeight, maxFontSize);
+                            var minFontSize = centerConfig.minFontSize;
+                            var lineHeight = centerConfig.lineHeight || 25;
+                            var wrapText = false;
+
+                            if (minFontSize === undefined) {
+                                minFontSize = 20;
+                            }
+
+                            if (minFontSize && fontSizeToUse < minFontSize) {
+                                fontSizeToUse = minFontSize;
+                                wrapText = true;
+                            }
+
+                            // Set font settings to draw it correctly.
+                            ctx.textAlign = 'center';
+                            ctx.textBaseline = 'middle';
+                            var centerX = ((chart.chartArea.left + chart.chartArea.right) / 2);
+                            var centerY = ((chart.chartArea.top + chart.chartArea.bottom) / 2);
+                            ctx.font = fontSizeToUse + "px " + fontStyle;
+                            ctx.fillStyle = color;
+
+                            if (!wrapText) {
+                                ctx.fillText(txt, centerX, centerY);
+                                return;
+                            }
+
+                            var words = txt.split(' ');
+                            var line = '';
+                            var lines = [];
 
                             // Break words up into multiple lines if necessary
                             for (var n = 0; n < words.length; n++) {
-                                var testLine = (n == 0) ? words[n] : line + ' ' + words[n];
+                                var testLine = line + words[n] + ' ';
                                 var metrics = ctx.measureText(testLine);
                                 var testWidth = metrics.width;
                                 if (testWidth > elementWidth && n > 0) {
                                     lines.push(line);
-                                    line = words[n];
+                                    line = words[n] + ' ';
                                 } else {
                                     line = testLine;
                                 }
                             }
-                            lines.push(line);
-                        }
 
-                        // Move the center up depending on line height and number of lines
-                        centerY -= ((lines.length - 1) / 2) * lineHeight;
+                            // Move the center up depending on line height and number of lines
+                            centerY -= (lines.length / 2) * lineHeight;
 
-                        // All but last line
-                        for (var n = 0; n < lines.length; n++) {
-                            ctx.fillText(lines[n], centerX, centerY);
-                            centerY += lineHeight;
+                            for (var n = 0; n < lines.length; n++) {
+                                ctx.fillText(lines[n], centerX, centerY);
+                                centerY += lineHeight;
+                            }
+                            //Draw text in center
+                            ctx.fillText(line, centerX, centerY);
                         }
                     }
                 }
@@ -133,49 +200,47 @@
                     datasets: [{
                         data: yearRangeChartDataRaw1,
                         backgroundColor: [Colors.dashboardColor, "#efedee "],
-                        hoverBackgroundColor: [Colors.dashboardColor, "#efedee "]
+                        hoverBackgroundColor: [Colors.dashboardColor, "#efedee "],
+                        hoverOffset: 4
                     }]
                 };
-                //YearRangeChart1
 
-                var createYearRangeChart1 = function() {
-                    Log.call(Log.l.trace, "DiaYearRange.Controller.");
-                        yearrangechart1 = new Chart(fragmentElement.querySelector("#yearRangeChart1"), {
+                //YearRangeChart1
+                var yearrangechart1;
+                var createYearRangeChart1 = function () {
+                    if (yearrangechart1) {
+                        yearrangechart1.destroy();
+                    }
+                    yearrangechart1 = new Chart(fragmentElement.querySelector("#yearRangeChart1").getContext("2d"),
+                        {
                             type: 'doughnut',
                             data: yearRangeChart1Data,
                             options: {
                                 responsive: true,
                                 maintainAspectRatio: false,
-                            height: 250,
-                            width: 250,
-                            elements: {
-                                center: {
-                                    text: yearRangeChartDataProcent1 //set as you wish
-
+                                cutout: '85%',
+                                elements: {
+                                    center: {
+                                        text: yearRangeChartDataProcent1,
+                                        color: '#000000', // Default is #000000
+                                        fontStyle: 'Arial', // Default is Arial
+                                        sidePadding: 20, // Default is 20 (as a percentage)
+                                        minFontSize: 20, // Default is 20 (in px), set to false and text will not wrap.
+                                        lineHeight: 25 // Default is 25 (in px), used for when text wraps
+                                    }
+                                },
+                                plugins: {
+                                    legend: {
+                                        display: false
+                                    }
                                 }
                             },
-                            cutoutPercentage: 85,
-                                legend: false,
-                                legendCallback: function (chart) {
-                                    var elem = [];
-                                    elem.push('<div class="custom-legends-item">');
-                                    if (chart.data.labels[0]) {
-                                        elem.push(chart.data.labels[0]);
-                                    }
-                                    elem.push('</div>');
-                                    return elem.join("");
-                                }
-                        },
-                        plugins: [plugin]
-                    });
+                            plugins: [centerDoughnutPlugin, yearRangeChart1Legend]
 
-                    Log.ret(Log.l.trace);
-                    var legend1Element = fragmentElement.querySelector(".yearRangeChart1-legend");
-                    /* insert custom HTML inside custom div */
-                    legend1Element.innerHTML = yearrangechart1.generateLegend();
+                        });
                 }
                 this.createYearRangeChart1 = createYearRangeChart1;
-
+                
                 //YearRangeChart2Data
                 var yearRangeChartDataLabels2 = [];
                 var yearRangeChartDataTexts2 = [];
@@ -190,41 +255,44 @@
                         hoverBackgroundColor: [Colors.dashboardColor, "#efedee "]
                     }]
                 };
-                //YearRangeChart2
 
+                //YearRangeChart2
+                var yearrangechart2;
                 var createYearRangeChart2 = function () {
-                    Log.call(Log.l.trace, "DiaYearRange.Controller.");
-                    yearrangechart2 = new Chart(fragmentElement.querySelector("#yearRangeChart2"), {
-                        type: 'doughnut',
-                        data: yearRangeChart2Data,
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            height: 250,
-                            width: 250,
-                            elements: {
-                                center: {
-                                    text: yearRangeChartDataProcent2  //set as you wish
+                    if (yearrangechart2) {
+                        yearrangechart2.destroy();
+                    }
+                    yearrangechart2 = new Chart(fragmentElement.querySelector("#yearRangeChart2"),
+                        {
+                            type: 'doughnut',
+                            data: yearRangeChart2Data,
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                cutout: '85%',
+                                elements: {
+                                    center: {
+                                        text: yearRangeChartDataProcent2,
+                                        color: '#000000', // Default is #000000
+                                        fontStyle: 'Arial', // Default is Arial
+                                        sidePadding: 20, // Default is 20 (as a percentage)
+                                        minFontSize: 20, // Default is 20 (in px), set to false and text will not wrap.
+                                        lineHeight: 25 // Default is 25 (in px), used for when text wraps
+                                    }
+                                },
+                                plugins: {
+                                    htmlLegend: {
+                                        // ID of the container to put the legend in
+                                        containerID: 'yearRangeChart2-legend'
+                                    },
+                                    legend: {
+                                        display: false
+                                    }
                                 }
                             },
-                            cutoutPercentage: 85,
-                            legend: false,
-                            legendCallback: function (chart) {
-                                var elem = [];
-                                elem.push('<div class="custom-legends-item">');
-                                if (chart.data.labels[0]) {
-                                     elem.push(chart.data.labels[0]);
-                                }
-                                elem.push('</div>');
-                                return elem.join("");
-                            }
-                        },
-                        plugins: [plugin]
-                    });
-                    Log.ret(Log.l.trace);
-                    var legend2Element = fragmentElement.querySelector(".yearRangeChart2-legend");
-                    /* insert custom HTML inside custom div */
-                    legend2Element.innerHTML = yearrangechart2.generateLegend();
+                            plugins: [centerDoughnutPlugin, yearRangeChart2Legend]
+
+                        });
                 }
                 this.createYearRangeChart2 = createYearRangeChart2;
 
@@ -242,41 +310,44 @@
                         hoverBackgroundColor: [Colors.dashboardColor, "#efedee "]
                     }]
                 };
-                //YearRangeChart3
 
+                //YearRangeChart3
+                var yearrangechart3;
                 var createYearRangeChart3 = function () {
-                    Log.call(Log.l.trace, "DiaYearRange.Controller.");
-                    yearrangechart3 = new Chart(fragmentElement.querySelector("#yearRangeChart3"), {
-                        type: 'doughnut',
-                        data: yearRangeChart3Data,
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            height: 250,
-                            width: 250,
-                            elements: {
-                                center: {
-                                    text: yearRangeChartDataProcent3  //set as you wish
+                    if (yearrangechart3) {
+                        yearrangechart3.destroy();
+                    }
+                    yearrangechart3 = new Chart(fragmentElement.querySelector("#yearRangeChart3"),
+                        {
+                            type: 'doughnut',
+                            data: yearRangeChart3Data,
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                cutout: '85%',
+                                elements: {
+                                    center: {
+                                        text: yearRangeChartDataProcent3,
+                                        color: '#000000', // Default is #000000
+                                        fontStyle: 'Arial', // Default is Arial
+                                        sidePadding: 20, // Default is 20 (as a percentage)
+                                        minFontSize: 20, // Default is 20 (in px), set to false and text will not wrap.
+                                        lineHeight: 25 // Default is 25 (in px), used for when text wraps
+                                    }
+                                },
+                                plugins: {
+                                    htmlLegend: {
+                                        // ID of the container to put the legend in
+                                        containerID: 'yearRangeChart3-legend'
+                                    },
+                                    legend: {
+                                        display: false
+                                    }
                                 }
                             },
-                            cutoutPercentage: 85,
-                            legend: false,
-                            legendCallback: function (chart) {
-                                var elem = [];
-                                elem.push('<div class="custom-legends-item">');
-                                if (chart.data.labels[0]) {
-                                    elem.push(chart.data.labels[0]);
-                                }
-                                elem.push('</div>');
-                                return elem.join("");
-                            }
-                        },
-                        plugins: [plugin]
-                    });
-                    Log.ret(Log.l.trace);
-                    var legend3Element = fragmentElement.querySelector(".yearRangeChart3-legend");
-                    /* insert custom HTML inside custom div */
-                    legend3Element.innerHTML = yearrangechart3.generateLegend();
+                            plugins: [centerDoughnutPlugin, yearRangeChart3Legend]
+
+                        });
                 }
                 this.createYearRangeChart3 = createYearRangeChart3;
 
@@ -294,41 +365,44 @@
                         hoverBackgroundColor: [Colors.dashboardColor, "#efedee "]
                     }]
                 };
-                //YearRangeChart4
 
+                //YearRangeChart4
+                var yearrangechart4;
                 var createYearRangeChart4 = function () {
-                    Log.call(Log.l.trace, "DiaYearRange.Controller.");
-                    yearrangechart4 = new Chart(fragmentElement.querySelector("#yearRangeChart4"), {
-                        type: 'doughnut',
-                        data: yearRangeChart4Data,
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            height: 250,
-                            width: 250,
-                            elements: {
-                                center: {
-                                    text: yearRangeChartDataProcent4  //set as you wish
+                    if (yearrangechart4) {
+                        yearrangechart4.destroy();
+                    }
+                    yearrangechart4 = new Chart(fragmentElement.querySelector("#yearRangeChart4"),
+                        {
+                            type: 'doughnut',
+                            data: yearRangeChart4Data,
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                cutout: '85%',
+                                elements: {
+                                    center: {
+                                        text: yearRangeChartDataProcent4,
+                                        color: '#000000', // Default is #000000
+                                        fontStyle: 'Arial', // Default is Arial
+                                        sidePadding: 20, // Default is 20 (as a percentage)
+                                        minFontSize: 20, // Default is 20 (in px), set to false and text will not wrap.
+                                        lineHeight: 25 // Default is 25 (in px), used for when text wraps
+                                    }
+                                },
+                                plugins: {
+                                    htmlLegend: {
+                                        // ID of the container to put the legend in
+                                        containerID: 'yearRangeChart4-legend'
+                                    },
+                                    legend: {
+                                        display: false
+                                    }
                                 }
                             },
-                            cutoutPercentage: 85,
-                            legend: false,
-                            legendCallback: function (chart) {
-                                var elem = [];
-                                elem.push('<div class="custom-legends-item">');
-                                if (chart.data.labels[0]) {
-                                    elem.push(chart.data.labels[0]);
-                                }
-                                elem.push('</div>');
-                                return elem.join("");
-                            }
-                        },
-                        plugins: [plugin]
-                    });
-                    Log.ret(Log.l.trace);
-                    var legend4Element = fragmentElement.querySelector(".yearRangeChart4-legend");
-                    /* insert custom HTML inside custom div */
-                    legend4Element.innerHTML = yearrangechart4.generateLegend();
+                            plugins: [centerDoughnutPlugin, yearRangeChart4Legend]
+
+                        });
                 }
                 this.createYearRangeChart4 = createYearRangeChart4;
 
@@ -346,31 +420,40 @@
                         hoverBackgroundColor: ["#cc5b87", "#efedee "]
                     }]
                 };
-                //YearRangeChart5
 
+                //YearRangeChart5
+                var yearrangechart5;
                 var createYearRangeChart5 = function () {
-                    Log.call(Log.l.trace, "DiaYearRange.Controller.");
-                    yearrangechart5 = new Chart(fragmentElement.querySelector("#yearRangeChart5"), {
-                        type: 'doughnut',
-                        data: yearRangeChart5Data,
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            height: 250,
-                            width: 250,
-                            elements: {
-                                center: {
-                                    text: yearRangeChartDataProcent5  //set as you wish
+                    if (yearrangechart5) {
+                        yearrangechart5.destroy();
+                    }
+                    yearrangechart5 = new Chart(fragmentElement.querySelector("#yearRangeChart5"),
+                        {
+                            type: 'doughnut',
+                            data: yearRangeChart5Data,
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                cutout: '85%',
+                                elements: {
+                                    center: {
+                                        text: yearRangeChartDataProcent5,
+                                        color: '#000000', // Default is #000000
+                                        fontStyle: 'Arial', // Default is Arial
+                                        sidePadding: 20, // Default is 20 (as a percentage)
+                                        minFontSize: 20, // Default is 20 (in px), set to false and text will not wrap.
+                                        lineHeight: 25 // Default is 25 (in px), used for when text wraps
+                                    }
+                                },
+                                plugins: {
+                                    legend: {
+                                        display: false
+                                    }
                                 }
                             },
-                            cutoutPercentage: 85,
-                            legend: {
-                                display: false
-                            }
-                        },
-                        plugins: [plugin]
-                    });
-                    Log.ret(Log.l.trace);
+                            plugins: [centerDoughnutPlugin]
+
+                        });
                 }
                 this.createYearRangeChart5 = createYearRangeChart5;
 
@@ -388,31 +471,40 @@
                         hoverBackgroundColor: ["#cc5b87", "#efedee "]
                     }]
                 };
-                //YearRangeChart6
 
+                //YearRangeChart6
+                var yearrangechart6;
                 var createYearRangeChart6 = function () {
-                    Log.call(Log.l.trace, "DiaYearRange.Controller.");
-                    yearrangechart6 = new Chart(fragmentElement.querySelector("#yearRangeChart6"), {
-                        type: 'doughnut',
-                        data: yearRangeChart6Data,
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            height: 250,
-                            width: 250,
-                            elements: {
-                                center: {
-                                    text: yearRangeChartDataProcent6  //set as you wish
+                    if (yearrangechart6) {
+                        yearrangechart6.destroy();
+                    }
+                    yearrangechart6 = new Chart(fragmentElement.querySelector("#yearRangeChart6"),
+                        {
+                            type: 'doughnut',
+                            data: yearRangeChart6Data,
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                cutout: '85%',
+                                elements: {
+                                    center: {
+                                        text: yearRangeChartDataProcent6,
+                                        color: '#000000', // Default is #000000
+                                        fontStyle: 'Arial', // Default is Arial
+                                        sidePadding: 20, // Default is 20 (as a percentage)
+                                        minFontSize: 20, // Default is 20 (in px), set to false and text will not wrap.
+                                        lineHeight: 25 // Default is 25 (in px), used for when text wraps
+                                    }
+                                },
+                                plugins: {
+                                    legend: {
+                                        display: false
+                                    }
                                 }
                             },
-                            cutoutPercentage: 85,
-                            legend: {
-                                display: false
-                            }
-                        },
-                        plugins: [plugin]
-                    });
-                    Log.ret(Log.l.trace);
+                            plugins: [centerDoughnutPlugin]
+
+                        });
                 }
                 this.createYearRangeChart6 = createYearRangeChart6;
 
@@ -430,31 +522,40 @@
                         hoverBackgroundColor: ["#cc5b87", "#efedee "]
                     }]
                 };
-                //YearRangeChart7
 
+                //YearRangeChart7
+                var yearrangechart7;
                 var createYearRangeChart7 = function () {
-                    Log.call(Log.l.trace, "DiaYearRange.Controller.");
-                    yearrangechart7 = new Chart(fragmentElement.querySelector("#yearRangeChart7"), {
-                        type: 'doughnut',
-                        data: yearRangeChart7Data,
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            height: 250,
-                            width: 250,
-                            elements: {
-                                center: {
-                                    text: yearRangeChartDataProcent7  //set as you wish
+                    if (yearrangechart7) {
+                        yearrangechart7.destroy();
+                    }
+                    yearrangechart7 = new Chart(fragmentElement.querySelector("#yearRangeChart7"),
+                        {
+                            type: 'doughnut',
+                            data: yearRangeChart7Data,
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                cutout: '85%',
+                                elements: {
+                                    center: {
+                                        text: yearRangeChartDataProcent7,
+                                        color: '#000000', // Default is #000000
+                                        fontStyle: 'Arial', // Default is Arial
+                                        sidePadding: 20, // Default is 20 (as a percentage)
+                                        minFontSize: 20, // Default is 20 (in px), set to false and text will not wrap.
+                                        lineHeight: 25 // Default is 25 (in px), used for when text wraps
+                                    }
+                                },
+                                plugins: {
+                                    legend: {
+                                        display: false
+                                    }
                                 }
                             },
-                            cutoutPercentage: 85,
-                            legend: {
-                                display: false
-                            }
-                        },
-                        plugins: [plugin]
-                    });
-                    Log.ret(Log.l.trace);
+                            plugins: [centerDoughnutPlugin]
+
+                        });
                 }
                 this.createYearRangeChart7 = createYearRangeChart7;
 
@@ -472,34 +573,77 @@
                         hoverBackgroundColor: ["#cc5b87", "#efedee "]
                     }]
                 };
-                //YearRangeChart8
 
+                //YearRangeChart8
+                var yearrangechart8;
                 var createYearRangeChart8 = function () {
-                    Log.call(Log.l.trace, "DiaYearRange.Controller.");
-                    yearrangechart8 = new Chart(fragmentElement.querySelector("#yearRangeChart8"), {
-                        type: 'doughnut',
-                        data: yearRangeChart8Data,
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            height: 180,
-                            width: 180,
-                            elements: {
-                                center: {
-                                    text: yearRangeChartDataProcent8  //set as you wish
+                    if (yearrangechart8) {
+                        yearrangechart8.destroy();
+                    }
+                    yearrangechart8 = new Chart(fragmentElement.querySelector("#yearRangeChart8"),
+                        {
+                            type: 'doughnut',
+                            data: yearRangeChart8Data,
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                cutout: '85%',
+                                elements: {
+                                    center: {
+                                        text: yearRangeChartDataProcent8,
+                                        color: '#000000', // Default is #000000
+                                        fontStyle: 'Arial', // Default is Arial
+                                        sidePadding: 20, // Default is 20 (as a percentage)
+                                        minFontSize: 20, // Default is 20 (in px), set to false and text will not wrap.
+                                        lineHeight: 25 // Default is 25 (in px), used for when text wraps
+                                    }
+                                },
+                                plugins: {
+                                    legend: {
+                                        display: false
+                                    }
                                 }
                             },
-                            cutoutPercentage: 85,
-                            legend: {
-                                display: false
-                            }
-                        },
-                        plugins: [plugin]
-                    });
-                    Log.ret(Log.l.trace);
+                            plugins: [centerDoughnutPlugin]
+
+                        });
                 }
                 this.createYearRangeChart8 = createYearRangeChart8;
-                
+
+                var setUpData = function () {
+                    Log.call(Log.l.trace, "DiaYearRange.Controller.");
+                    if (that.isSupreme === 1) {
+                        yearRangeChart1Data.labels = yearRangeChartDataLabels1;
+                        yearRangeChart1Data.datasets[0].data = yearRangeChartDataRaw1;
+                        yearRangeChart2Data.labels = yearRangeChartDataLabels2;
+                        yearRangeChart2Data.datasets[0].data = yearRangeChartDataRaw2;
+                        yearRangeChart3Data.labels = yearRangeChartDataLabels3;
+                        yearRangeChart3Data.datasets[0].data = yearRangeChartDataRaw3;
+                        yearRangeChart4Data.labels = yearRangeChartDataLabels4;
+                        yearRangeChart4Data.datasets[0].data = yearRangeChartDataRaw4;
+                    }
+                    if (that.isSupreme === 2) {
+                        yearRangeChart1Data.labels = yearRangeChartDataLabels1;
+                        yearRangeChart1Data.datasets[0].data = yearRangeChartDataRaw1;
+                        yearRangeChart2Data.labels = yearRangeChartDataLabels2;
+                        yearRangeChart2Data.datasets[0].data = yearRangeChartDataRaw2;
+                        yearRangeChart3Data.labels = yearRangeChartDataLabels3;
+                        yearRangeChart3Data.datasets[0].data = yearRangeChartDataRaw3;
+                        yearRangeChart4Data.labels = yearRangeChartDataLabels4;
+                        yearRangeChart4Data.datasets[0].data = yearRangeChartDataRaw4;
+                        yearRangeChart5Data.labels = yearRangeChartDataLabels5;
+                        yearRangeChart5Data.datasets[0].data = yearRangeChartDataRaw5;
+                        yearRangeChart6Data.labels = yearRangeChartDataLabels6;
+                        yearRangeChart6Data.datasets[0].data = yearRangeChartDataRaw6;
+                        yearRangeChart7Data.labels = yearRangeChartDataLabels7;
+                        yearRangeChart7Data.datasets[0].data = yearRangeChartDataRaw7;
+                        yearRangeChart8Data.labels = yearRangeChartDataLabels8;
+                        yearRangeChart8Data.datasets[0].data = yearRangeChartDataRaw8;
+                    }
+
+                }
+                this.setUpData = setUpData;
+
                 var drawCharts = function () {
                     that.createYearRangeChart1();
                     that.createYearRangeChart2();
@@ -632,6 +776,7 @@
                         results.forEach(function (item, index) {
                             that.resultConverterPremium(item, index);
                         });
+                        that.setUpData();
                         that.drawCharts();
                         AppData.setErrorMsg(that.binding);
                     }, function (error) {
@@ -656,6 +801,7 @@
                         results.forEach(function (item, index) {
                             that.resultConverterSurpreme(item, index);
                         });
+                        that.setUpData();
                         that.drawCharts();
                         AppData.setErrorMsg(that.binding);
                     }, function (error) {

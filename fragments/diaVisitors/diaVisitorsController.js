@@ -6,8 +6,7 @@
 /// <reference path="~/www/lib/convey/scripts/fragmentController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/fragments/diaVisitors/diaVisitorsService.js" />
-/// <reference path="~/www/lib/chartJS/scripts/dist/Chart.js" />
-/// <reference path="~/www/lib/chartJS/scripts/dist/Chart.bundle.js" />
+/// <reference path="~/www/lib/chartJS/scripts/dist/chart.js" />
 /// <reference path="~/www/lib/moment/scripts/moment-with-locales.js" />
 (function () {
     "use strict";
@@ -27,8 +26,6 @@
 
                 var that = this;
                 this.isSupreme = AppData._userData.IsSupreme;
-
-                this.visitorChart = null;
 
                 var dayhourcombo = fragmentElement.querySelector("#dayhourdropdown");
                 var daycombo = fragmentElement.querySelector("#daydropdown");
@@ -129,6 +126,39 @@
                 }
                 this.getMilliseconts = getMilliseconts;
 
+                var plugin = {
+                    afterDatasetsDraw: function (chart, easing) {
+                        // To only draw at the end of animation, check for easing === 1
+                        var ctx = chart.ctx;
+
+                        chart.data.datasets.forEach(function (dataset, i) {
+                            var meta = chart.getDatasetMeta(i);
+                            if (!meta.hidden) {
+                                meta.data.forEach(function (element, index) {
+                                    // Draw the text in black, with the specified font
+                                    ctx.fillStyle = 'rgb(0, 0, 0)';
+
+                                    var fontSize = 16;
+                                    var fontStyle = 'bold';
+                                    var fontFamily = 'Helvetica Neue';
+                                    ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
+
+                                    // Just naively convert to string for now
+                                    var dataString = dataset.data[index].toString();
+
+                                    // Make sure alignment settings are correct
+                                    ctx.textAlign = 'center';
+                                    ctx.textBaseline = 'middle';
+
+                                    var padding = 10;
+                                    var position = element.tooltipPosition();
+                                    ctx.fillText(dataString, position.x, position.y - (fontSize / 2));
+                                });
+                            }
+                        });
+                    }
+                }
+
                 // visitorChartData
                 var visitorChartDataLabels = [];
                 var visitorChartDataRaw = [];
@@ -157,83 +187,90 @@
                 };
 
                 //visitorChart
-                var createvisitorChart = function() {
-                    Log.call(Log.l.trace, "DiaVisitors.Controller.");
-                    that.visitorChart = new Chart(fragmentElement.querySelector("#visitorChart"), {
-                        type: 'bar',
-                        data: visitorChartData,
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            "hover": {
-                                "animationDuration": 0
-                            },
-                            "animation": {
-                                "duration": 1,
-                                "onComplete": function () {
-                                    var chartInstance = this.chart,
-                                        ctx = chartInstance.ctx;
+                var visitorChart;
+                var createvisitorChart = function () {
+                    if (visitorChart) {
+                        visitorChart.destroy();
+                    }
+                    visitorChart = new Chart(fragmentElement.querySelector("#visitorChart").getContext("2d"),
+                        {
+                            type: 'bar',
+                            data: visitorChartData,
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                showDatapoints: true,
+                                hover: {
+                                    animationDuration: 0
+                                },
+                                animations: {
+                                    duration: 1,
+                                    onComplete: function() {
+                                        var chartInstance = this.chart,
+                                            ctx = chartInstance.ctx;
 
-                                    ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
-                                    ctx.textAlign = 'center';
-                                    ctx.textBaseline = 'bottom';
+                                        ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize,
+                                            Chart.defaults.global.defaultFontStyle,
+                                            Chart.defaults.global.defaultFontFamily);
+                                        ctx.textAlign = 'center';
+                                        ctx.textBaseline = 'bottom';
 
-                                    this.data.datasets.forEach(function (dataset, i) {
-                                        var meta = chartInstance.controller.getDatasetMeta(i);
-                                        meta.data.forEach(function (bar, index) {
-                                            var data = dataset.data[index];
-                                            ctx.fillText(data, bar._model.x, bar._model.y);
+                                        this.data.datasets.forEach(function(dataset, i) {
+                                            var meta = chartInstance.controller.getDatasetMeta(i);
+                                            meta.data.forEach(function(bar, index) {
+                                                var data = dataset.data[index];
+                                                ctx.fillText(data, bar._model.x, bar._model.y);
+                                            });
                                         });
-                                    });
+                                    }
+                                },
+                                scales: {
+                                    y: 
+                                        {
+                                            display: false,
+                                            grid: {
+                                                display: false
+                                            },
+                                            ticks: {
+                                                max: maxtickNummer + 25,
+                                                display: false,
+                                                beginAtZero: true
+                                            },
+                                            stacked: false
+                                        }
+                                    ,
+                                    x: {
+                                        display: true,
+                                        grid: {
+                                            display: false
+                                        }
+                                    }
+                                },
+                                plugins: {
+                                    legend: {
+                                        display: false
+                                    },
+                                    tooltips: {
+                                        enabled: false
+                                    }
                                 }
                             },
-                            legend: {
-                                "display": false
-                            },
-                            tooltips: {
-                                "enabled": false
-                            },
-                            scales: {
-                                yAxes: [{
-                                    display: false,
-                                    gridLines: {
-                                        display: false
-                                    },
-                                    ticks: {
-                                        max: maxtickNummer + 25,
-                                        display: false,
-                                        beginAtZero: true
-                                    },
-                                    stacked: false,
-                                }],
-                                xAxes: [{
-                                    gridLines: {
-                                        display: false
-                                    },
-                                    ticks: {
-                                        beginAtZero: true
-                                    },
-                                    stacked: false
-                                }]
-                            }
-                        }
-                    });
-                    Log.ret(Log.l.trace);
+                            plugins: [plugin]
+                        });
                 }
                 this.createvisitorChart = createvisitorChart;
 
                 var redraw = function () {
                     Log.call(Log.l.trace, "LocalEvents.Controller.");
-                    that.visitorChart.data.labels = visitorChartDataLabels;
-                    that.visitorChart.data.datasets[0].data = visitorChartDataRaw;
-                    that.visitorChart.data.datasets[0].backgroundColor = visitorChartDatabackgroundColor;
-                    that.visitorChart.data.datasets[0].borderColor = visitorChartDataborderColor;
-                    that.visitorChart.config.options.scales.yAxes[0].ticks.max = maxtickNummer + 25;
+                    visitorChartData.labels = visitorChartDataLabels;
+                    visitorChartData.datasets[0].data = visitorChartDataRaw;
+                    visitorChartData.datasets[0].backgroundColor = visitorChartDatabackgroundColor;
+                    visitorChartData.datasets[0].borderColor = visitorChartDataborderColor;
                     if (that.isSupreme === 2) {
-                        if (that.visitorChart.data.datasets.length > 1) {
-                            that.visitorChart.data.datasets[1].data = visitorChartDataRawSurpreme;
+                        if (visitorChartData.datasets.length > 1) {
+                            visitorChartData.datasets[1].data = visitorChartDataRawSurpreme;
                         } else {
-                            that.visitorChart.data.datasets.push({
+                            visitorChartData.datasets.push({
                                 label: visitorChartDataLabels,
                                 data: visitorChartDataRawSurpreme,
                                 backgroundColor: visitorChartDatabackgroundColorSurpreme,
@@ -243,7 +280,6 @@
                         }
                         
                     }
-                    that.visitorChart.update();
                 }
                 this.redraw = redraw;
 
@@ -317,11 +353,12 @@
                         });
                         }
                         
-                        if (that.visitorChart) {
+                        if (visitorChart) {
                             that.redraw();
-                        } else {
                             that.createvisitorChart();
+                        } else {
                             that.redraw();
+                            that.createvisitorChart();
                         }
 
                     }, function (error) {

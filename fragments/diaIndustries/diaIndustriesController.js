@@ -6,8 +6,7 @@
 /// <reference path="~/www/lib/convey/scripts/fragmentController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/fragments/DiaIndustries/DiaIndustriesService.js" />
-/// <reference path="~/www/lib/chartJS/scripts/dist/Chart.js" />
-/// <reference path="~/www/lib/chartJS/scripts/dist/Chart.bundle.js" />
+/// <reference path="~/www/lib/chartJS/scripts/dist/chart.js" />
 (function () {
     "use strict";
 
@@ -32,17 +31,7 @@
                     criteriadrop.style.backgroundColor = "#efedee ";
                 }
                 this.dropdowncolor = dropdowncolor;
-
-                var industriesyearchart1 = null;
-                var industriesyearchart2 = null;
-                var industriesyearchart3 = null;
-                var industriesyearchart4 = null;
-                //Surpreme
-                var industriesyearchart5 = null;
-                var industriesyearchart6 = null;
-                var industriesyearchart7 = null;
-                var industriesyearchart8 = null;
-
+                
                 var getColor = function (color, id) {
                     var rgbColor = Colors.hex2rgb(color);
                     var hsvColor = Colors.rgb2hsv(rgbColor);
@@ -55,87 +44,86 @@
 
                 var supremeColor = "#cc5b87";
 
-                var plugin = {
+                var centerDoughnutPlugin = {
                     beforeDraw: function (chart) {
-                        // Get ctx from string
-                        var ctx = chart.chart.ctx;
+                        if (chart.config.options.elements.center) {
+                            // Get ctx from string
+                            var ctx = chart.ctx;
 
-                        // Get options from the center object in options
-                        var centerConfig = chart.config.options.elements.center;
-                        var fontStyle = centerConfig.fontStyle || 'Arial';
-                        var txt = centerConfig.text;
-                        var color = centerConfig.color || '#000';
-                        var maxFontSize = centerConfig.maxFontSize || 75;
-                        var sidePadding = centerConfig.sidePadding || 20;
-                        var sidePaddingCalculated = (sidePadding / 100) * (chart.innerRadius * 2);
-                        // Start with a base font of 30px
-                        ctx.font = "30px " + fontStyle;
+                            // Get options from the center object in options
+                            var centerConfig = chart.config.options.elements.center;
+                            var fontStyle = centerConfig.fontStyle || 'Arial';
+                            var txt = centerConfig.text;
+                            var color = centerConfig.color || '#000';
+                            var maxFontSize = centerConfig.maxFontSize || 75;
+                            var sidePadding = centerConfig.sidePadding || 20;
+                            var sidePaddingCalculated = (sidePadding / 100) * (chart.innerRadius * 2);
+                            // Start with a base font of 30px
+                            ctx.font = "bold " + "11px " + fontStyle;
 
-                        // Get the width of the string and also the width of the element minus 10 to give it 5px side padding
-                        var stringWidth = ctx.measureText(txt).width;
-                        var elementWidth = (chart.innerRadius * 2) - sidePaddingCalculated;
+                            // Get the width of the string and also the width of the element minus 10 to give it 5px side padding
+                            var stringWidth = ctx.measureText(txt).width;
+                            var elementWidth = (chart.innerRadius * 2) - sidePaddingCalculated;
 
-                        // Find out how much the font can grow in width.
-                        var widthRatio = elementWidth / stringWidth;
-                        var newFontSize = Math.floor(30 * widthRatio);
-                        var elementHeight = (chart.innerRadius * 2);
+                            // Find out how much the font can grow in width.
+                            var widthRatio = elementWidth / stringWidth;
+                            var newFontSize = Math.floor(30 * widthRatio);
+                            var elementHeight = (chart.innerRadius * 2);
 
-                        // Pick a new font size so it will not be larger than the height of label.
-                        var fontSizeToUse = Math.min(newFontSize, elementHeight, maxFontSize);
-                        var minFontSize = centerConfig.minFontSize;
-                        var lineHeight = centerConfig.lineHeight || 25;
-                        var wrapText = false;
+                            // Pick a new font size so it will not be larger than the height of label.
+                            var fontSizeToUse = Math.min(newFontSize, elementHeight, maxFontSize);
+                            var minFontSize = centerConfig.minFontSize;
+                            var lineHeight = centerConfig.lineHeight || 25;
+                            var wrapText = false;
 
-                        if (minFontSize === undefined) {
-                            minFontSize = 10;
-                        }
+                            if (minFontSize === undefined) {
+                                minFontSize = 20;
+                            }
 
-                        if (minFontSize && fontSizeToUse < minFontSize) {
-                            fontSizeToUse = minFontSize;
-                            wrapText = true;
-                        }
+                            if (minFontSize && fontSizeToUse < minFontSize) {
+                                fontSizeToUse = minFontSize;
+                                wrapText = true;
+                            }
 
-                        // Set font settings to draw it correctly.
-                        ctx.textAlign = 'center';
-                        ctx.textBaseline = 'middle';
-                        var centerX = ((chart.chartArea.left + chart.chartArea.right) / 2);
-                        var centerY = ((chart.chartArea.top + chart.chartArea.bottom) / 2);
-                        ctx.font = fontSizeToUse + "px " + fontStyle;
-                        ctx.fillStyle = color;
+                            // Set font settings to draw it correctly.
+                            ctx.textAlign = 'center';
+                            ctx.textBaseline = 'middle';
+                            var centerX = ((chart.chartArea.left + chart.chartArea.right) / 2);
+                            var centerY = ((chart.chartArea.top + chart.chartArea.bottom) / 2);
+                            ctx.font = fontSizeToUse + "px " + fontStyle;
+                            ctx.fillStyle = color;
 
-                        if (!wrapText) {
-                            ctx.fillText(txt, centerX, centerY);
-                            return;
-                        }
+                            if (!wrapText) {
+                                ctx.fillText(txt, centerX, centerY);
+                                return;
+                            }
 
-                        var lines = [];
-                        var chunks = txt.split('\n');
-                        for (var m = 0; m < chunks.length; m++) {
-                            var words = chunks[m].split(' ');
-                            var line;
+                            var words = txt.split(' ');
+                            var line = '';
+                            var lines = [];
 
                             // Break words up into multiple lines if necessary
                             for (var n = 0; n < words.length; n++) {
-                                var testLine = (n == 0) ? words[n] : line + ' ' + words[n];
+                                var testLine = line + words[n] + ' ';
                                 var metrics = ctx.measureText(testLine);
                                 var testWidth = metrics.width;
                                 if (testWidth > elementWidth && n > 0) {
                                     lines.push(line);
-                                    line = words[n];
+                                    line = words[n] + ' ';
                                 } else {
                                     line = testLine;
                                 }
                             }
-                            lines.push(line);
-                        }
 
-                        // Move the center up depending on line height and number of lines
-                        centerY -= ((lines.length - 1) / 2) * lineHeight;
+                            // Move the center up depending on line height and number of lines
+                            centerY -= (lines.length / 2) * lineHeight;
 
-                        // All but last line
-                        for (var n = 0; n < lines.length; n++) {
-                            ctx.fillText(lines[n], centerX, centerY);
-                            centerY += lineHeight;
+                            for (var n = 0; n < lines.length; n++) {
+                                ctx.fillText(lines[n], centerX, centerY);
+                                centerY += lineHeight;
+                            }
+                            //Draw text in center
+                            ctx.fillText(line, centerX, centerY);
                         }
                     }
                 }
@@ -168,72 +156,63 @@
                     }]
                 };
                 //YearRangeChart1
-
+                var industriesyearchart1;
                 var createIndustriesYearChart1 = function () {
-                    Log.call(Log.l.trace, "DiaYearRange.Controller.");
-                    industriesyearchart1 = new Chart(fragmentElement.querySelector("#industriesYearChart1"), {
-                        type: 'doughnut',
-                        data: yearRangeChart1Data,
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            height: 250,
-                            width: 250,
-                            elements: {
-                                center: {
-                                    text: industriesYearChartDataProcent1 + " " + industriesYearChartDataTexts1//set as you wish
-                                }
-                            },
-                            cutoutPercentage: 85,
-                            legend: {
-                                display: true,
-                                position: 'left',
-                                maxHeight: 50,
-                                maxWidth: 50,
-                                fullSize: false,
-                                labels: {
-                                    boxWidth: 10
+                    if (industriesyearchart1) {
+                        industriesyearchart1.destroy();
+                    }
+                    industriesyearchart1 = new Chart(fragmentElement.querySelector("#industriesYearChart1").getContext("2d"),
+                        {
+                            type: 'doughnut',
+                            data: yearRangeChart1Data,
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                cutout: '85%',
+                                elements: {
+                                    center: {
+                                        text: industriesYearChartDataProcent1 + " " + industriesYearChartDataTexts1,
+                                        color: '#000000', // Default is #000000
+                                        fontStyle: 'Arial', // Default is Arial
+                                        sidePadding: 20, // Default is 20 (as a percentage)
+                                        minFontSize: 20, // Default is 20 (in px), set to false and text will not wrap.
+                                        lineHeight: 25 // Default is 25 (in px), used for when text wraps
+                                    }
                                 },
-                                onHover: function (event, legendItem) {
-                                    var chart = this.chart;
-                                    var index = legendItem.index;
-                                    var segment = chart.getDatasetMeta(0).data[index];
-                                    chart.tooltip._active = [segment];
-                                    chart.tooltip.update();
-                                    chart.draw();
-                                }, onLeave: function (event, legendItem) {
-                                    var chart = this.chart;
-                                    var index = legendItem.index;
-                                    chart.tooltip._active = [];
-                                    chart.tooltip.update();
-                                    chart.draw();
-                                }
-                            },
-                            tooltips: {
-                                backgroundColor: '#f5f5f5',
-                                titleFontColor: '#333',
-                                bodyFontColor: '#666',
-                                bodySpacing: 4,
-                                xPadding: 12,
-                                intersect: 1,
-                                displayColors: false,
-                                callbacks: {
-                                    title: function (tooltipItem, data) {
-                                        var index = tooltipItem[0].index;
-                                        return industriesYearChartDataLabels1[index];
+                                plugins: {
+                                    legend: {
+                                        display: true,
+                                        position: 'left',
+                                        labels: {
+                                            boxWidth: 10
+                                        }
                                     },
-                                    label: function (tooltipItem, data) {
-                                        return "";
+                                    tooltips: {
+                                        backgroundColor: '#f5f5f5',
+                                        titleFontColor: '#333',
+                                        bodyFontColor: '#666',
+                                        bodySpacing: 4,
+                                        xPadding: 12,
+                                        intersect: 1,
+                                        displayColors: false,
+                                        callbacks: {
+                                            title: function (tooltipItem, data) {
+                                                var index = tooltipItem[0].index;
+                                                return industriesYearChartDataLabels1[index];
+                                            },
+                                            label: function (tooltipItem, data) {
+                                                return "";
+                                            }
+                                        }
                                     }
                                 }
-                            }
-                        },
-                        plugins: [plugin]
-                    });
-                    Log.ret(Log.l.trace);
+                            },
+                            plugins: [centerDoughnutPlugin]
+
+                        });
                 }
                 this.createIndustriesYearChart1 = createIndustriesYearChart1;
-
+                
                 //YearRangeChart2Data
                 var industriesYearChartDataLabels2 = [];
                 var industriesYearChartDataLabels2Cut = [];
@@ -263,66 +242,59 @@
                 };
                 //YearRangeChart2
                 
+                var industriesyearchart2;
                 var createIndustriesYearChart2 = function () {
-                    Log.call(Log.l.trace, "DiaYearRange.Controller.");
-                    industriesyearchart2 = new Chart(fragmentElement.querySelector("#industriesYearChart2"), {
-                        type: 'doughnut',
-                        data: yearRangeChart2Data,
-                        options: {
-                            maintainAspectRatio: false,
-                            elements: {
-                                center: {
-                                    text: industriesYearChartDataProcent2 +
-                                        " " +
-                                        industriesYearChartDataTexts2 //set as you wish
-                                }
-                            },
-                            cutoutPercentage: 85,
-                            legend: {
-                                display: true,
-                                position: 'left',
-                                maxHeight: 50,
-                                maxWidth: 50,
-                                labels: {
-                                    boxWidth: 10
-                                },
-                                onHover: function(event, legendItem) {
-                                    var chart = this.chart;
-                                    var index = legendItem.index;
-                                    var segment = chart.getDatasetMeta(0).data[index];
-                                    chart.tooltip._active = [segment];
-                                    chart.tooltip.update();
-                                    chart.draw();
-                                }, onLeave: function (event, legendItem) {
-                                    var chart = this.chart;
-                                    var index = legendItem.index;
-                                    chart.tooltip._active = [];
-                                    chart.tooltip.update();
-                                    chart.draw();
-                                }
-                            },
-                            tooltips: {
-                                backgroundColor: '#f5f5f5',
-                                titleFontColor: '#333',
-                                bodyFontColor: '#666',
-                                bodySpacing: 4,
-                                xPadding: 12,
-                                intersect: 1,
-                                displayColors: false,
-                                callbacks: {
-                                    title: function (tooltipItem, data) {
-                                        var index = tooltipItem[0].index;
-                                        return industriesYearChartDataLabels2[index];
+                    if (industriesyearchart2) {
+                        industriesyearchart2.destroy();
+                    }
+                    industriesyearchart2 = new Chart(fragmentElement.querySelector("#industriesYearChart2").getContext("2d"),
+                        {
+                            type: 'doughnut',
+                            data: yearRangeChart2Data,
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                cutout: '85%',
+                                elements: {
+                                    center: {
+                                        text: industriesYearChartDataProcent2 + " " + industriesYearChartDataTexts2,
+                                        color: '#000000', // Default is #000000
+                                        fontStyle: 'Arial', // Default is Arial
+                                        sidePadding: 20, // Default is 20 (as a percentage)
+                                        minFontSize: 10, // Default is 20 (in px), set to false and text will not wrap.
+                                        lineHeight: 25 // Default is 25 (in px), used for when text wraps
+                                    }
+                                }, plugins: {
+                                    legend: {
+                                        display: true,
+                                        position: 'left',
+                                        labels: {
+                                            boxWidth: 10
+                                        }
                                     },
-                                    label: function (tooltipItem, data) {
-                                        return "";
+                                    tooltips: {
+                                        backgroundColor: '#f5f5f5',
+                                        titleFontColor: '#333',
+                                        bodyFontColor: '#666',
+                                        bodySpacing: 4,
+                                        xPadding: 12,
+                                        intersect: 1,
+                                        displayColors: false,
+                                        callbacks: {
+                                            title: function (tooltipItem, data) {
+                                                var index = tooltipItem[0].index;
+                                                return industriesYearChartDataLabels1[index];
+                                            },
+                                            label: function (tooltipItem, data) {
+                                                return "";
+                                            }
+                                        }
                                     }
                                 }
-                            }
-                        },
-                        plugins: [plugin]
-                    });
-                    Log.ret(Log.l.trace);
+                            },
+                            plugins: [centerDoughnutPlugin]
+
+                        });
                 }
                 this.createIndustriesYearChart2 = createIndustriesYearChart2;
 
@@ -355,64 +327,59 @@
                 };
                 //YearRangeChart3
 
+                var industriesyearchart3;
                 var createIndustriesYearChart3 = function () {
-                    Log.call(Log.l.trace, "DiaYearRange.Controller.");
-                    industriesyearchart3 = new Chart(fragmentElement.querySelector("#industriesYearChart3"), {
-                        type: 'doughnut',
-                        data: yearRangeChart3Data,
-                        options: {
-                            maintainAspectRatio: false,
-                            elements: {
-                                center: {
-                                    text: industriesYearChartDataProcent3 + " " + industriesYearChartDataTexts3  //set as you wish
-                                }
-                            },
-                            cutoutPercentage: 85,
-                            legend: {
-                                display: true,
-                                position: 'left',
-                                maxHeight: 50,
-                                maxWidth: 50,
-                                labels: {
-                                    boxWidth: 10
-                                },
-                                onHover: function (event, legendItem) {
-                                    var chart = this.chart;
-                                    var index = legendItem.index;
-                                    var segment = chart.getDatasetMeta(0).data[index];
-                                    chart.tooltip._active = [segment];
-                                    chart.tooltip.update();
-                                    chart.draw();
-                                }, onLeave: function (event, legendItem) {
-                                    var chart = this.chart;
-                                    var index = legendItem.index;
-                                    chart.tooltip._active = [];
-                                    chart.tooltip.update();
-                                    chart.draw();
-                                }
-                            },
-                            tooltips: {
-                                backgroundColor: '#f5f5f5',
-                                titleFontColor: '#333',
-                                bodyFontColor: '#666',
-                                bodySpacing: 4,
-                                xPadding: 12,
-                                intersect: 1,
-                                displayColors: false,
-                                callbacks: {
-                                    title: function (tooltipItem, data) {
-                                        var index = tooltipItem[0].index;
-                                        return industriesYearChartDataLabels3[index];
+                    if (industriesyearchart3) {
+                        industriesyearchart3.destroy();
+                    }
+                    industriesyearchart3 = new Chart(fragmentElement.querySelector("#industriesYearChart3").getContext("2d"),
+                        {
+                            type: 'doughnut',
+                            data: yearRangeChart3Data,
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                cutout: '85%',
+                                elements: {
+                                    center: {
+                                        text: industriesYearChartDataProcent3 + " " + industriesYearChartDataTexts3,
+                                        color: '#000000', // Default is #000000
+                                        fontStyle: 'Arial', // Default is Arial
+                                        sidePadding: 20, // Default is 20 (as a percentage)
+                                        minFontSize: 20, // Default is 20 (in px), set to false and text will not wrap.
+                                        lineHeight: 25 // Default is 25 (in px), used for when text wraps
+                                    }
+                                }, plugins: {
+                                    legend: {
+                                        display: true,
+                                        position: 'left',
+                                        labels: {
+                                            boxWidth: 10
+                                        }
                                     },
-                                    label: function (tooltipItem, data) {
-                                        return "";
+                                    tooltips: {
+                                        backgroundColor: '#f5f5f5',
+                                        titleFontColor: '#333',
+                                        bodyFontColor: '#666',
+                                        bodySpacing: 4,
+                                        xPadding: 12,
+                                        intersect: 1,
+                                        displayColors: false,
+                                        callbacks: {
+                                            title: function(tooltipItem, data) {
+                                                var index = tooltipItem[0].index;
+                                                return industriesYearChartDataLabels1[index];
+                                            },
+                                            label: function(tooltipItem, data) {
+                                                return "";
+                                            }
+                                        }
                                     }
                                 }
-                            }
-                        },
-                        plugins: [plugin]
-                    });
-                    Log.ret(Log.l.trace);
+                            },
+                            plugins: [centerDoughnutPlugin]
+
+                        });
                 }
                 this.createIndustriesYearChart3 = createIndustriesYearChart3;
 
@@ -445,67 +412,60 @@
                 };
                 //YearRangeChart4
 
+                var industriesyearchart4;
                 var createIndustriesYearChart4 = function () {
-                    Log.call(Log.l.trace, "DiaYearRange.Controller.");
-                    industriesyearchart4 = new Chart(fragmentElement.querySelector("#industriesYearChart4"), {
-                        type: 'doughnut',
-                        data: yearRangeChart4Data,
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            height: 250,
-                            width: 250,
-                            elements: {
-                                center: {
-                                    text: industriesYearChartDataProcent4 + " " + industriesYearChartDataTexts4  //set as you wish
-                                }
-                            },
-                            cutoutPercentage: 85,
-                            legend: {
-                                display: true,
-                                position: 'left',
-                                maxHeight: 50,
-                                maxWidth: 50,
-                                labels: {
-                                    boxWidth: 10
+                    if (industriesyearchart4) {
+                        industriesyearchart4.destroy();
+                    }
+                    industriesyearchart4 = new Chart(fragmentElement.querySelector("#industriesYearChart4").getContext("2d"),
+                        {
+                            type: 'doughnut',
+                            data: yearRangeChart4Data,
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                cutout: '85%',
+                                elements: {
+                                    center: {
+                                        text: industriesYearChartDataProcent4 + " " + industriesYearChartDataTexts4,
+                                        color: '#000000', // Default is #000000
+                                        fontStyle: 'Arial', // Default is Arial
+                                        sidePadding: 20, // Default is 20 (as a percentage)
+                                        minFontSize: 20, // Default is 20 (in px), set to false and text will not wrap.
+                                        lineHeight: 25 // Default is 25 (in px), used for when text wraps
+                                    }
                                 },
-                                onHover: function (event, legendItem) {
-                                    var chart = this.chart;
-                                    var index = legendItem.index;
-                                    var segment = chart.getDatasetMeta(0).data[index];
-                                    chart.tooltip._active = [segment];
-                                    chart.tooltip.update();
-                                    chart.draw();
-                                }, onLeave: function (event, legendItem) {
-                                    var chart = this.chart;
-                                    var index = legendItem.index;
-                                    chart.tooltip._active = [];
-                                    chart.tooltip.update();
-                                    chart.draw();
-                                }
-                            },
-                            tooltips: {
-                                backgroundColor: '#f5f5f5',
-                                titleFontColor: '#333',
-                                bodyFontColor: '#666',
-                                bodySpacing: 4,
-                                xPadding: 12,
-                                intersect: 1,
-                                displayColors: false,
-                                callbacks: {
-                                    title: function (tooltipItem, data) {
-                                        var index = tooltipItem[0].index;
-                                        return industriesYearChartDataLabels4[index];
+                                plugins: {
+                                    legend: {
+                                        display: true,
+                                        position: 'left',
+                                        labels: {
+                                            boxWidth: 10
+                                        }
                                     },
-                                    label: function (tooltipItem, data) {
-                                        return "";
+                                    tooltips: {
+                                        backgroundColor: '#f5f5f5',
+                                        titleFontColor: '#333',
+                                        bodyFontColor: '#666',
+                                        bodySpacing: 4,
+                                        xPadding: 12,
+                                        intersect: 1,
+                                        displayColors: false,
+                                        callbacks: {
+                                            title: function (tooltipItem, data) {
+                                                var index = tooltipItem[0].index;
+                                                return industriesYearChartDataLabels1[index];
+                                            },
+                                            label: function (tooltipItem, data) {
+                                                return "";
+                                            }
+                                        }
                                     }
                                 }
-                            }
-                        },
-                        plugins: [plugin]
-                    });
-                    Log.ret(Log.l.trace);
+                            },
+                            plugins: [centerDoughnutPlugin]
+
+                        });
                 }
                 this.createIndustriesYearChart4 = createIndustriesYearChart4;
 
@@ -539,67 +499,60 @@
 
                 //YearRangeChart5
 
+                var industriesyearchart5;
                 var createIndustriesYearChart5 = function () {
-                    Log.call(Log.l.trace, "DiaYearRange.Controller.");
-                    industriesyearchart5 = new Chart(fragmentElement.querySelector("#industriesYearChart5"), {
-                        type: 'doughnut',
-                        data: yearRangeChart5Data,
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            minHeight: 250,
-                            minWidth: 250,
-                            elements: {
-                                center: {
-                                    text: industriesYearChartDataProcent5 + " " + industriesYearChartDataTexts5//set as you wish
-                                }
-                            },
-                            cutoutPercentage: 85,
-                            legend: {
-                                display: true,
-                                position: 'left',
-                                maxHeight: 50,
-                                maxWidth: 50,
-                                labels: {
-                                    boxWidth: 10
+                    if (industriesyearchart5) {
+                        industriesyearchart5.destroy();
+                    }
+                    industriesyearchart5 = new Chart(fragmentElement.querySelector("#industriesYearChart5").getContext("2d"),
+                        {
+                            type: 'doughnut',
+                            data: yearRangeChart5Data,
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                cutout: '85%',
+                                elements: {
+                                    center: {
+                                        text: industriesYearChartDataProcent5 + " " + industriesYearChartDataTexts5,
+                                        color: '#000000', // Default is #000000
+                                        fontStyle: 'Arial', // Default is Arial
+                                        sidePadding: 20, // Default is 20 (as a percentage)
+                                        minFontSize: 20, // Default is 20 (in px), set to false and text will not wrap.
+                                        lineHeight: 25 // Default is 25 (in px), used for when text wraps
+                                    }
                                 },
-                                onHover: function (event, legendItem) {
-                                    var chart = this.chart;
-                                    var index = legendItem.index;
-                                    var segment = chart.getDatasetMeta(0).data[index];
-                                    chart.tooltip._active = [segment];
-                                    chart.tooltip.update();
-                                    chart.draw();
-                                }, onLeave: function (event, legendItem) {
-                                    var chart = this.chart;
-                                    var index = legendItem.index;
-                                    chart.tooltip._active = [];
-                                    chart.tooltip.update();
-                                    chart.draw();
-                                }
-                            },
-                            tooltips: {
-                                backgroundColor: '#f5f5f5',
-                                titleFontColor: '#333',
-                                bodyFontColor: '#666',
-                                bodySpacing: 4,
-                                xPadding: 12,
-                                intersect: 1,
-                                displayColors: false,
-                                callbacks: {
-                                    title: function (tooltipItem, data) {
-                                        var index = tooltipItem[0].index;
-                                        return industriesYearChartDataLabels5[index];
+                                plugins: {
+                                    legend: {
+                                        display: true,
+                                        position: 'left',
+                                        labels: {
+                                            boxWidth: 10
+                                        }
                                     },
-                                    label: function (tooltipItem, data) {
-                                        return "";
+                                    tooltips: {
+                                        backgroundColor: '#f5f5f5',
+                                        titleFontColor: '#333',
+                                        bodyFontColor: '#666',
+                                        bodySpacing: 4,
+                                        xPadding: 12,
+                                        intersect: 1,
+                                        displayColors: false,
+                                        callbacks: {
+                                            title: function (tooltipItem, data) {
+                                                var index = tooltipItem[0].index;
+                                                return industriesYearChartDataLabels1[index];
+                                            },
+                                            label: function (tooltipItem, data) {
+                                                return "";
+                                            }
+                                        }
                                     }
                                 }
-                            }
-                        },
-                        plugins: [plugin]
-                    });
-                    Log.ret(Log.l.trace);
+                            },
+                            plugins: [centerDoughnutPlugin]
+
+                        });
                 }
                 this.createIndustriesYearChart5 = createIndustriesYearChart5;
 
@@ -632,64 +585,60 @@
                 };
                 //YearRangeChart6
 
+                var industriesyearchart6;
                 var createIndustriesYearChart6 = function () {
-                    Log.call(Log.l.trace, "DiaYearRange.Controller.");
-                    industriesyearchart6 = new Chart(fragmentElement.querySelector("#industriesYearChart6"), {
-                        type: 'doughnut',
-                        data: yearRangeChart6Data,
-                        options: {
-                            maintainAspectRatio: false,
-                            elements: {
-                                center: {
-                                    text: industriesYearChartDataProcent6 + " " + industriesYearChartDataTexts6  //set as you wish
-                                }
-                            },
-                            cutoutPercentage: 85,
-                            legend: {
-                                display: true,
-                                position: 'left',
-                                maxHeight: 50,
-                                maxWidth: 50,
-                                labels: {
-                                    boxWidth: 10
+                    if (industriesyearchart6) {
+                        industriesyearchart6.destroy();
+                    }
+                    industriesyearchart6 = new Chart(fragmentElement.querySelector("#industriesYearChart6").getContext("2d"),
+                        {
+                            type: 'doughnut',
+                            data: yearRangeChart6Data,
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                cutout: '85%',
+                                elements: {
+                                    center: {
+                                        text: industriesYearChartDataProcent6 + " " + industriesYearChartDataTexts6,
+                                        color: '#000000', // Default is #000000
+                                        fontStyle: 'Arial', // Default is Arial
+                                        sidePadding: 20, // Default is 20 (as a percentage)
+                                        minFontSize: 20, // Default is 20 (in px), set to false and text will not wrap.
+                                        lineHeight: 25 // Default is 25 (in px), used for when text wraps
+                                    }
                                 },
-                                onHover: function (event, legendItem) {
-                                    var chart = this.chart;
-                                    var index = legendItem.index;
-                                    var segment = chart.getDatasetMeta(0).data[index];
-                                    chart.tooltip._active = [segment];
-                                    chart.tooltip.update();
-                                    chart.draw();
-                                }, onLeave: function (event, legendItem) {
-                                    var chart = this.chart;
-                                    var index = legendItem.index;
-                                    chart.tooltip._active = [];
-                                    chart.tooltip.update();
-                                    chart.draw();
-                                }
-                            },
-                            tooltips: {
-                                backgroundColor: '#f5f5f5',
-                                titleFontColor: '#333',
-                                bodyFontColor: '#666',
-                                bodySpacing: 4,
-                                xPadding: 12,
-                                intersect: 1,
-                                displayColors: false,
-                                callbacks: {
-                                    title: function (tooltipItem, data) {
-                                        var index = tooltipItem[0].index;
-                                        return industriesYearChartDataLabels6[index];
+                                plugins: {
+                                    legend: {
+                                        display: true,
+                                        position: 'left',
+                                        labels: {
+                                            boxWidth: 10
+                                        }
                                     },
-                                    label: function (tooltipItem, data) {
-                                        return "";
+                                    tooltips: {
+                                        backgroundColor: '#f5f5f5',
+                                        titleFontColor: '#333',
+                                        bodyFontColor: '#666',
+                                        bodySpacing: 4,
+                                        xPadding: 12,
+                                        intersect: 1,
+                                        displayColors: false,
+                                        callbacks: {
+                                            title: function (tooltipItem, data) {
+                                                var index = tooltipItem[0].index;
+                                                return industriesYearChartDataLabels1[index];
+                                            },
+                                            label: function (tooltipItem, data) {
+                                                return "";
+                                            }
+                                        }
                                     }
                                 }
-                            }
-                        },
-                        plugins: [plugin]
-                    });
-                    Log.ret(Log.l.trace);
+                            },
+                            plugins: [centerDoughnutPlugin]
+
+                        });
                 }
                 this.createIndustriesYearChart6 = createIndustriesYearChart6;
 
@@ -722,64 +671,60 @@
                 };
                 //YearRangeChart7
 
+                var industriesyearchart7;
                 var createIndustriesYearChart7 = function () {
-                    Log.call(Log.l.trace, "DiaYearRange.Controller.");
-                    industriesyearchart7 = new Chart(fragmentElement.querySelector("#industriesYearChart7"), {
-                        type: 'doughnut',
-                        data: yearRangeChart7Data,
-                        options: {
-                            maintainAspectRatio: false,
-                            elements: {
-                                center: {
-                                    text: industriesYearChartDataProcent7 + " " + industriesYearChartDataTexts7  //set as you wish
-                                }
-                            },
-                            cutoutPercentage: 85,
-                            legend: {
-                                display: true,
-                                position: 'left',
-                                maxHeight: 50,
-                                maxWidth: 50,
-                                labels: {
-                                    boxWidth: 10
+                    if (industriesyearchart7) {
+                        industriesyearchart7.destroy();
+                    }
+                    industriesyearchart7 = new Chart(fragmentElement.querySelector("#industriesYearChart7").getContext("2d"),
+                        {
+                            type: 'doughnut',
+                            data: yearRangeChart7Data,
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                cutout: '85%',
+                                elements: {
+                                    center: {
+                                        text: industriesYearChartDataProcent7 + " " + industriesYearChartDataTexts7,
+                                        color: '#000000', // Default is #000000
+                                        fontStyle: 'Arial', // Default is Arial
+                                        sidePadding: 20, // Default is 20 (as a percentage)
+                                        minFontSize: 20, // Default is 20 (in px), set to false and text will not wrap.
+                                        lineHeight: 25 // Default is 25 (in px), used for when text wraps
+                                    }
                                 },
-                                onHover: function (event, legendItem) {
-                                    var chart = this.chart;
-                                    var index = legendItem.index;
-                                    var segment = chart.getDatasetMeta(0).data[index];
-                                    chart.tooltip._active = [segment];
-                                    chart.tooltip.update();
-                                    chart.draw();
-                                }, onLeave: function (event, legendItem) {
-                                    var chart = this.chart;
-                                    var index = legendItem.index;
-                                    chart.tooltip._active = [];
-                                    chart.tooltip.update();
-                                    chart.draw();
-                                }
-                            },
-                            tooltips: {
-                                backgroundColor: '#f5f5f5',
-                                titleFontColor: '#333',
-                                bodyFontColor: '#666',
-                                bodySpacing: 4,
-                                xPadding: 12,
-                                intersect: 1,
-                                displayColors: false,
-                                callbacks: {
-                                    title: function (tooltipItem, data) {
-                                        var index = tooltipItem[0].index;
-                                        return industriesYearChartDataLabels7[index];
+                                plugins: {
+                                    legend: {
+                                        display: true,
+                                        position: 'left',
+                                        labels: {
+                                            boxWidth: 10
+                                        }
                                     },
-                                    label: function (tooltipItem, data) {
-                                        return "";
+                                    tooltips: {
+                                        backgroundColor: '#f5f5f5',
+                                        titleFontColor: '#333',
+                                        bodyFontColor: '#666',
+                                        bodySpacing: 4,
+                                        xPadding: 12,
+                                        intersect: 1,
+                                        displayColors: false,
+                                        callbacks: {
+                                            title: function (tooltipItem, data) {
+                                                var index = tooltipItem[0].index;
+                                                return industriesYearChartDataLabels1[index];
+                                            },
+                                            label: function (tooltipItem, data) {
+                                                return "";
+                                            }
+                                        }
                                     }
                                 }
-                            }
-                        },
-                        plugins: [plugin]
-                    });
-                    Log.ret(Log.l.trace);
+                            },
+                            plugins: [centerDoughnutPlugin]
+
+                        });
                 }
                 this.createIndustriesYearChart7 = createIndustriesYearChart7;
 
@@ -812,67 +757,60 @@
                 };
                 //YearRangeChart4
 
+                var industriesyearchart8;
                 var createIndustriesYearChart8 = function () {
-                    Log.call(Log.l.trace, "DiaYearRange.Controller.");
-                    industriesyearchart8 = new Chart(fragmentElement.querySelector("#industriesYearChart8"), {
-                        type: 'doughnut',
-                        data: yearRangeChart8Data,
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            height: 250,
-                            width: 250,
-                            elements: {
-                                center: {
-                                    text: industriesYearChartDataProcent8 + " " + industriesYearChartDataTexts8  //set as you wish
-                                }
-                            },
-                            cutoutPercentage: 85,
-                            legend: {
-                                display: true,
-                                position: 'left',
-                                maxHeight: 50,
-                                maxWidth: 50,
-                                labels: {
-                                    boxWidth: 10
+                    if (industriesyearchart8) {
+                        industriesyearchart8.destroy();
+                    }
+                    industriesyearchart8 = new Chart(fragmentElement.querySelector("#industriesYearChart8").getContext("2d"),
+                        {
+                            type: 'doughnut',
+                            data: yearRangeChart8Data,
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                cutout: '85%',
+                                elements: {
+                                    center: {
+                                        text: industriesYearChartDataProcent8 + " " + industriesYearChartDataTexts8,
+                                        color: '#000000', // Default is #000000
+                                        fontStyle: 'Arial', // Default is Arial
+                                        sidePadding: 20, // Default is 20 (as a percentage)
+                                        minFontSize: 20, // Default is 20 (in px), set to false and text will not wrap.
+                                        lineHeight: 25 // Default is 25 (in px), used for when text wraps
+                                    }
                                 },
-                                onHover: function (event, legendItem) {
-                                    var chart = this.chart;
-                                    var index = legendItem.index;
-                                    var segment = chart.getDatasetMeta(0).data[index];
-                                    chart.tooltip._active = [segment];
-                                    chart.tooltip.update();
-                                    chart.draw();
-                                }, onLeave: function (event, legendItem) {
-                                    var chart = this.chart;
-                                    var index = legendItem.index;
-                                    chart.tooltip._active = [];
-                                    chart.tooltip.update();
-                                    chart.draw();
-                                }
-                            },
-                            tooltips: {
-                                backgroundColor: '#f5f5f5',
-                                titleFontColor: '#333',
-                                bodyFontColor: '#666',
-                                bodySpacing: 4,
-                                xPadding: 12,
-                                intersect: 1,
-                                displayColors: false,
-                                callbacks: {
-                                    title: function (tooltipItem, data) {
-                                        var index = tooltipItem[0].index;
-                                        return industriesYearChartDataLabels8[index];
+                                plugins: {
+                                    legend: {
+                                        display: true,
+                                        position: 'left',
+                                        labels: {
+                                            boxWidth: 10
+                                        }
                                     },
-                                    label: function (tooltipItem, data) {
-                                        return "";
+                                    tooltips: {
+                                        backgroundColor: '#f5f5f5',
+                                        titleFontColor: '#333',
+                                        bodyFontColor: '#666',
+                                        bodySpacing: 4,
+                                        xPadding: 12,
+                                        intersect: 1,
+                                        displayColors: false,
+                                        callbacks: {
+                                            title: function (tooltipItem, data) {
+                                                var index = tooltipItem[0].index;
+                                                return industriesYearChartDataLabels1[index];
+                                            },
+                                            label: function (tooltipItem, data) {
+                                                return "";
+                                            }
+                                        }
                                     }
                                 }
-                            }
-                        },
-                        plugins: [plugin]
-                    });
-                    Log.ret(Log.l.trace);
+                            },
+                            plugins: [centerDoughnutPlugin]
+
+                        });
                 }
                 this.createIndustriesYearChart8 = createIndustriesYearChart8;
 
@@ -1101,59 +1039,45 @@
                 }
                 this.clearArrays = clearArrays;
 
-                var redrawCharts = function () {
+                var redrawCharts = function() {
                     Log.call(Log.l.trace, "DiaYearRange.Controller.");
-                    industriesyearchart1.data.labels = industriesYearChartDataLabels1Cut;
-                    industriesyearchart1.data.datasets[0].data = industriesYearChartDataRaw2;
-                    industriesyearchart1.options.elements.center.text = industriesYearChartDataTexts1;
-                    industriesyearchart1.update();
-                    industriesyearchart2.data.labels = industriesYearChartDataLabels2Cut;
-                    industriesyearchart2.data.datasets[0].data = industriesYearChartDataRaw2;
-                    industriesyearchart2.options.elements.center.text = industriesYearChartDataTexts2;
-                    industriesyearchart2.update();
-                    industriesyearchart3.data.labels = industriesYearChartDataLabels3Cut;
-                    industriesyearchart3.data.datasets[0].data = industriesYearChartDataRaw3;
-                    industriesyearchart3.options.elements.center.text = industriesYearChartDataTexts3;
-                    industriesyearchart3.update();
-                    industriesyearchart4.data.labels = industriesYearChartDataLabels4Cut;
-                    industriesyearchart4.data.datasets[0].data = industriesYearChartDataRaw4;
-                    industriesyearchart4.options.elements.center.text = industriesYearChartDataTexts4;
-                    industriesyearchart4.update();
+                    yearRangeChart1Data.labels = industriesYearChartDataLabels1Cut;
+                    yearRangeChart1Data.datasets[0].data = industriesYearChartDataRaw2;
+                    yearRangeChart2Data.labels = industriesYearChartDataLabels2Cut;
+                    yearRangeChart2Data.datasets[0].data = industriesYearChartDataRaw2;
+                    yearRangeChart3Data.labels = industriesYearChartDataLabels3Cut;
+                    yearRangeChart3Data.datasets[0].data = industriesYearChartDataRaw3;
+                    yearRangeChart4Data.labels = industriesYearChartDataLabels4Cut;
+                    yearRangeChart4Data.datasets[0].data = industriesYearChartDataRaw4;
                     if (that.isSupreme === 2) {
-                        industriesyearchart5.data.labels = industriesYearChartDataLabels5Cut;
-                        industriesyearchart5.data.datasets[0].data = industriesYearChartDataRaw5;
-                        industriesyearchart5.options.elements.center.text = industriesYearChartDataTexts5;
-                        industriesyearchart5.update();
-                        industriesyearchart6.data.labels = industriesYearChartDataLabels6Cut;
-                        industriesyearchart6.data.datasets[0].data = industriesYearChartDataRaw6;
-                        industriesyearchart6.options.elements.center.text = industriesYearChartDataTexts6;
-                        industriesyearchart6.update();
-                        industriesyearchart7.data.labels = industriesYearChartDataLabels7Cut;
-                        industriesyearchart7.data.datasets[0].data = industriesYearChartDataRaw7;
-                        industriesyearchart7.options.elements.center.text = industriesYearChartDataTexts7;
-                        industriesyearchart7.update();
-                        industriesyearchart8.data.labels = industriesYearChartDataLabels8Cut;
-                        industriesyearchart8.data.datasets[0].data = industriesYearChartDataRaw8;
-                        industriesyearchart8.options.elements.center.text = industriesYearChartDataTexts8;
-                        industriesyearchart8.update();
+                        yearRangeChart5Data.labels = industriesYearChartDataLabels5Cut;
+                        yearRangeChart5Data.datasets[0].data = industriesYearChartDataRaw5;
+                        yearRangeChart6Data.labels = industriesYearChartDataLabels6Cut;
+                        yearRangeChart6Data.datasets[0].data = industriesYearChartDataRaw6;
+                        yearRangeChart7Data.labels = industriesYearChartDataLabels7Cut;
+                        yearRangeChart7Data.datasets[0].data = industriesYearChartDataRaw7;
+                        yearRangeChart8Data.labels = industriesYearChartDataLabels8Cut;
+                        yearRangeChart8Data.datasets[0].data = industriesYearChartDataRaw8;
+                        Log.ret(Log.l.trace);
                     }
-                    Log.ret(Log.l.trace);
                 }
                 this.redrawCharts = redrawCharts;
 
-                var drawCharts = function () {
+                var drawPremiumCharts = function () {
                     that.createIndustriesYearChart1();
                     that.createIndustriesYearChart2();
                     that.createIndustriesYearChart3();
                     that.createIndustriesYearChart4();
-                    if (that.isSupreme === 2) {
+                }
+                this.drawPremiumCharts = drawPremiumCharts;
+
+                var drawSupremeCharts = function () {
                         that.createIndustriesYearChart5();
                         that.createIndustriesYearChart6();
                         that.createIndustriesYearChart7();
                         that.createIndustriesYearChart8();
-                    }
                 }
-                this.drawCharts = drawCharts;
+                this.drawSupremeCharts = drawSupremeCharts;
 
                 var resultConverterPremium = function (item, index) {
                     item.index = index;
@@ -1367,11 +1291,9 @@
                         results.forEach(function (item, index) {
                             that.resultConverterPremium(item, index);
                         });
-                        if (industriesyearchart1 === null) {
-                            that.drawCharts();
-                        } else {
-                            that.redrawCharts();
-                        }
+                        that.redrawCharts();
+                        that.drawPremiumCharts();
+                        
                         AppData.setErrorMsg(that.binding);
                     }, function (error) {
                         Log.print(Log.l.error, "call error");
@@ -1399,11 +1321,8 @@
                         results.forEach(function (item, index) {
                             that.resultConverterSurpreme(item, index);
                         });
-                        if (industriesyearchart5 === null) {
-                            that.drawCharts();
-                        } else {
-                            that.redrawCharts();
-                        }
+                        that.redrawCharts();
+                        that.drawSupremeCharts();
                         AppData.setErrorMsg(that.binding);
                     }, function (error) {
                         Log.print(Log.l.error, "call error");
@@ -1414,10 +1333,18 @@
 
                 var loadData = function() {
                     Log.call(Log.l.trace, "LocalEvents.Controller.");
-                    that.getGetDashboardData();
-                    if (that.isSupreme === 2) {
-                        that.getGetDashboardDataSurpreme();
-                    }
+                    AppData.setErrorMsg(that.binding);
+                    var ret = new WinJS.Promise.as().then(function () {
+                        return that.clearArrays();
+                    }).then(function () {
+                        return that.getGetDashboardData();
+                    }).then(function () {
+                        if (that.isSupreme === 2) {
+                            return that.getGetDashboardDataSurpreme();
+                        }
+                    });
+                    Log.ret(Log.l.trace);
+                    return ret;
                 }
                 this.loadData = loadData;
 

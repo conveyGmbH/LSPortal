@@ -45,6 +45,7 @@
             var maxTrailingPages = 0;
 
             var listView = pageElement.querySelector("#dataLicenceUserList.listview");
+            var exportPdfBtn = pageElement.querySelector("#btn-vis");
             
             this.dispose = function () {
                 if (listView && listView.winControl) {
@@ -358,6 +359,10 @@
                     });
                     Log.ret(Log.l.trace);
                 },
+                exportPdf: function(event) {
+                    Log.call(Log.l.trace, "Start.Controller.");
+                    
+                },
                 clickListBusinessCardContacts: function (event) {
                     Log.call(Log.l.trace, "Start.Controller.");
                     that.setRestriction({
@@ -424,6 +429,10 @@
 
             if (listView) {
                 this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
+            }
+
+            if (exportPdfBtn) {
+                this.addRemovableEventListener(exportPdfBtn, "click", this.eventHandlers.exportPdf.bind(this));
             }
 
             var checkIfSurpreme = function() {

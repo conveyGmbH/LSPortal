@@ -6,8 +6,7 @@
 /// <reference path="~/www/lib/convey/scripts/fragmentController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/fragments/diaCountrysIndustries/diaCountrysIndustriesService.js" />
-/// <reference path="~/www/lib/chartJS/scripts/dist/Chart.js" />
-/// <reference path="~/www/lib/chartJS/scripts/dist/Chart.bundle.js" />
+/// <reference path="~/www/lib/chartJS/scripts/dist/chart.js" />
 /// <reference path="~/www/lib/datamaps/scripts/datamaps.world.de.js" />
 /// <reference path="~/www/lib/datamaps/scripts/datamaps.world.en.js" />
 /// <reference path="~/www/lib/d3/scripts/d3.min.js" />
@@ -38,8 +37,6 @@
                 this.isSupreme = AppData._userData.IsSupreme;
                 this.dayData = 0;
                 
-                var industrieschart = null;
-
                 var selectedCountryBefore = null;
 
                 var criteriadrop = fragmentElement.querySelector("#criteriadropdown");
@@ -246,76 +243,165 @@
                 var countryIndustriesRawDataPremium = [];
                 var countryIndustriesRawDataSurpreme = [];
 
-                var countryIndustriesData = {
+                var countryIndustriesPremiumData = {
+                    labels: countryIndustriesLabels,
+                    datasets: [{
+                        data: countryIndustriesRawDataPremium,
+                        backgroundColor: Colors.dashboardColor,
+                        hoverBackgroundColor: Colors.dashboardColor
+                    }]
+                };
+
+                var industriepremiumschart;
+                var createCountryIndustriesPremiumChart = function () {
+                    if (industriepremiumschart) {
+                        industriepremiumschart.destroy();
+                    }
+                    Chart.defaults.font.size = 15;
+                    industriepremiumschart = new Chart(fragmentElement.querySelector("#countrysIndustriesChart").getContext("2d"),
+                        {
+                            type: 'bar',
+                            data: countryIndustriesPremiumData,
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                indexAxis: 'y',
+                                hover: {
+                                    animationDuration: 0
+                                },
+                                scales: {
+                                    y:
+                                    {
+                                        
+                                        grid: {
+                                            display: false,
+                                            drawOnChartArea: false,
+                                            color: "#fff",
+                                            zeroLineColor: "#fff"
+                                        },
+                                        stacked: false
+                                        },
+                                    x: {
+                                        display: false,
+                                        grid: {
+                                            display: false,
+                                            drawOnChartArea: false
+                                        },
+                                        ticks: {
+                                            display: false,
+                                            beginAtZero: true
+                                        },
+                                        stacked: false
+                                    }
+                                },
+                                plugins: {
+                                    legend: {
+                                        display: false
+                                    },
+                                    tooltips: {
+                                        enabled: false
+                                    }
+                                }
+                            },
+                            plugins: [plugin]
+                        });
+                }
+                this.createCountryIndustriesPremiumChart = createCountryIndustriesPremiumChart;
+
+                var surpremeColor = "#cc5b87";
+
+                var countryIndustriesSupremeData = {
                     labels: countryIndustriesLabels,
                     datasets: [{
                         data: countryIndustriesRawDataPremium,
                         backgroundColor: Colors.dashboardColor,
                         hoverBackgroundColor: Colors.dashboardColor
                     },
-                    {
-                        data: countryIndustriesRawDataSurpreme,
-                        backgroundColor: "#cc5b87",
-                        hoverBackgroundColor: "#cc5b87"
-                    }]
+                        {
+                            data: countryIndustriesRawDataSurpreme,
+                            backgroundColor: surpremeColor,
+                            hoverBackgroundColor: surpremeColor
+                        }]
                 };
 
-                var createCountryIndustriesDia = function () {
-                    industrieschart = new Chart(fragmentElement.querySelector("#countrysIndustriesChart"), {
-                        type: 'horizontalBar',
-                        data: countryIndustriesData,
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            tooltips: {
-                                enabled: false
-                            },
-                            hover: {
-                                animationDuration: 0
-                            },
-                            scales: {
-                                xAxes: [{
-                                    display: false,
-                                    gridLines: {
+                var industriesupremeschart;
+                var createCountryIndustriesSupremeChart = function () {
+                    if (industriesupremeschart) {
+                        industriesupremeschart.destroy();
+                    }
+                    Chart.defaults.font.size = 15;
+                    industriesupremeschart = new Chart(fragmentElement.querySelector("#countrysIndustriesChart").getContext("2d"),
+                        {
+                            type: 'bar',
+                            data: countryIndustriesSupremeData,
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                indexAxis: 'y',
+                                hover: {
+                                    animationDuration: 0
+                                },
+                                scales: {
+                                    y:
+                                    {
+
+                                        grid: {
+                                            display: false,
+                                            drawOnChartArea: false,
+                                            color: "#fff",
+                                            zeroLineColor: "#fff"
+                                        },
+                                        stacked: false
+                                    },
+                                    x: {
+                                        display: false,
+                                        grid: {
+                                            display: false,
+                                            drawOnChartArea: false
+                                        },
+                                        ticks: {
+                                            display: false,
+                                            beginAtZero: true
+                                        },
+                                        stacked: false
+                                    }
+                                },
+                                plugins: {
+                                    legend: {
                                         display: false
                                     },
-                                    ticks: {
-                                        beginAtZero: true
-                                    },
-                                    stacked: false
-                                }],
-                                yAxes: [{
-                                    gridLines: {
-                                        display: false,
-                                        color: "#fff",
-                                        zeroLineColor: "#fff",
-                                        zeroLineWidth: 0
-                                    },
-                                    ticks: {
-                                        fontSize: 16
-                                    },
-                                    stacked: false
-                                }]
+                                    tooltips: {
+                                        enabled: false
+                                    }
+                                }
                             },
-                            legend: {
-                                display: false
-                            },
-                            pointLabelFontFamily: "Quadon Extra Bold",
-                            scaleFontFamily: "Quadon Extra Bold",
-                        },
-                        plugins: [plugin]
-                    });
+                            plugins: [plugin]
+                        });
                 }
-                this.createCountryIndustriesDia = createCountryIndustriesDia;
+                this.createCountryIndustriesSupremeChart = createCountryIndustriesSupremeChart;
+
+                var clearArrays = function () {
+                    countryIndustriesLabels = [];
+                    countryIndustriesRawDataPremium = [];
+                    if (that.isSupreme === 2) {
+                        countryIndustriesLabels = [];
+                        countryIndustriesRawDataPremium = [];
+                        countryIndustriesRawDataSurpreme = [];
+                    }
+                }
+                this.clearArrays = clearArrays;
 
                 var redraw = function () {
                     Log.call(Log.l.trace, "LocalEvents.Controller.");
-                    industrieschart.data.labels = countryIndustriesLabels;
-                    industrieschart.data.datasets[0].data = countryIndustriesRawDataPremium;
-                    if (that.isSupreme === 2) {
-                        industrieschart.data.datasets[1].data = countryIndustriesRawDataSurpreme;
+                    if (that.isSupreme === 1) {
+                        countryIndustriesPremiumData.labels = countryIndustriesLabels;
+                        countryIndustriesPremiumData.datasets[0].data = countryIndustriesRawDataPremium;
                     }
-                    industrieschart.update();
+                    if (that.isSupreme === 2) {
+                        countryIndustriesSupremeData.labels = countryIndustriesLabels;
+                        countryIndustriesSupremeData.datasets[0].data = countryIndustriesRawDataPremium;
+                        countryIndustriesSupremeData.datasets[1].data = countryIndustriesRawDataSurpreme;
+                    }
                 }
                 this.redraw = redraw;
                 
@@ -371,23 +457,16 @@
                     return a.NumHits - b.NumHits;
                 }
                 this.sortFunc = sortFunc;
-
-                var sorting = function(a, b) {
-                    
-                }
-                this.sorting = sorting;
-
+                
                 var getGetDashboardDataPremium = function () {
                     Log.call(Log.l.trace, "LocalEvents.Controller.");
-                    countryIndustriesLabels = [];
-                    countryIndustriesRawDataPremium = [];
                     AppData.setErrorMsg(that.binding);
                     if (daydrop.value === "") {
                         that.dayData = 0;
                     } else {
                         that.dayData = getMilliseconts(daydrop.value);
                     }
-                    AppData.call("PRC_GetDashboardData", {
+                     return AppData.call("PRC_GetDashboardData", {
                         pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
                         pCriterion1ID: parseInt(that.binding.criteriaMain),
                         pCriterion2ID: parseInt(that.binding.criteriaDays),
@@ -403,29 +482,25 @@
                         results.forEach(function (item, index) {
                              that.resultConverterPremium(item, index);
                         });
-                        if (industrieschart) {
+                        if (that.isSupreme === 1) {
                             that.redraw();
-                        } else {
-                            that.createCountryIndustriesDia();
-                            that.redraw();
+                            that.createCountryIndustriesPremiumChart();
                         }
                     }, function (error) {
                         Log.print(Log.l.error, "call error");
                     });
-                    Log.ret(Log.l.trace);
                 }
                 this.getGetDashboardDataPremium = getGetDashboardDataPremium;
 
                 var getGetDashboardDataSurpreme = function () {
                     Log.call(Log.l.trace, "LocalEvents.Controller.");
-                    countryIndustriesRawDataSurpreme = [];
                     AppData.setErrorMsg(that.binding);
                     if (daydrop.value === "") {
                         that.dayData = 0;
                     } else {
                         that.dayData = getMilliseconts(daydrop.value);
                     }
-                    AppData.call("PRC_GetDashboardData", {
+                    return AppData.call("PRC_GetDashboardData", {
                         pVeranstaltungID: AppData.getRecordId("Veranstaltung"), //
                         pCriterion1ID: parseInt(that.binding.criteriaMain),
                         pCriterion2ID: parseInt(that.binding.criteriaDays),
@@ -438,33 +513,20 @@
                         results.forEach(function (item, index) {
                              that.resultConverterSurpreme(item, index);
                         });
-                        if (industrieschart) {
-                            that.redraw();
-                        } else {
-                            that.createCountryIndustriesDia();
-                            that.redraw();
-                        }
+                        that.redraw();
+                        that.createCountryIndustriesSupremeChart();
                     }, function (error) {
                         Log.print(Log.l.error, "call error");
                     });
-                    Log.ret(Log.l.trace);
                 }
                 this.getGetDashboardDataSurpreme = getGetDashboardDataSurpreme;
 
-                var drawChart = function() {
-                    if (industrieschart) {
-                        that.redraw();
-                    } else {
-                        that.createCountryIndustriesDia();
-                        that.redraw();
-                    }
-                }
-                this.drawChart = drawChart;
-
-                var setupDataforDashboard = function() {
+                var drawChart = function () {
                     Log.call(Log.l.trace, "LocalEvents.Controller.");
                     AppData.setErrorMsg(that.binding);
                     var ret = new WinJS.Promise.as().then(function () {
+                        return that.clearArrays();
+                    }).then(function () {
                         return that.getGetDashboardDataPremium();
                     }).then(function () {
                         if (that.isSupreme === 2) {
@@ -474,30 +536,30 @@
                     Log.ret(Log.l.trace);
                     return ret;
                 }
-                this.setupDataforDashboard = setupDataforDashboard;
+                this.drawChart = drawChart;
 
                 this.eventHandlers = {
                     changedCriteria: function (event) {
                         Log.call(Log.l.trace, "Contact.Controller.");
                         that.binding.criteriaMain = event.target.value;
-                        that.setupDataforDashboard();
+                        that.drawChart();
                         Log.ret(Log.l.trace);
                     },
                     changedCountry: function (event) {
                         Log.call(Log.l.trace, "Event.Controller.");
                         that.binding.criteriaCountry = parseInt(event.target.value);
-                        that.setupDataforDashboard();
+                        that.drawChart();
                         Log.ret(Log.l.trace);
                     },
                     changedDay: function (event) {
                         Log.call(Log.l.trace, "Event.Controller.");
-                        that.setupDataforDashboard();
+                        that.drawChart();
                         Log.ret(Log.l.trace);
                     },
                     cleardDay: function (event) {
                         Log.call(Log.l.trace, "Event.Controller.");
                         daydrop.value = "";
-                        that.setupDataforDashboard();
+                        that.drawChart();
                         Log.ret(Log.l.trace);
                     }
                 };
@@ -601,7 +663,7 @@
                     return loadData();
                 }).then(function () {
                     Log.print(Log.l.trace, "Binding wireup page complete");
-                    return setupDataforDashboard();
+                    return drawChart();
                 }).then(function () {
                     Log.print(Log.l.trace, "Binding wireup page complete");
                     //return createWorldChart(true);
