@@ -25,13 +25,23 @@
                 var that = this;
                 this.isSupreme = AppData._userData.IsSupreme;
 
-                var criteriadrop = fragmentElement.querySelector("#criteriadropdown");
+                var criteriadrop = fragmentElement.querySelector("#criteriadropdown"); 
+                var industriesTooltip = fragmentElement.querySelector("#mydiaCountrysIndustriesElement");
 
                 var dropdowncolor = function () {
                     criteriadrop.style.backgroundColor = "#efedee ";
                 }
                 this.dropdowncolor = dropdowncolor;
-                
+
+                var setTooltipText = function() {
+                    if (that.isSupreme === 1) {
+                        industriesTooltip.innerHTML = getResourceText("diaIndustries.tooltipPremium");
+                    } else {
+                        industriesTooltip.innerHTML = getResourceText("diaIndustries.tooltipSupreme1") + " <br /> " + getResourceText("diaIndustries.tooltipSupreme2");
+                    }
+                }
+                this.setTooltipText = setTooltipText;
+
                 var getColor = function (color, id) {
                     var rgbColor = Colors.hex2rgb(color);
                     var hsvColor = Colors.rgb2hsv(rgbColor);
@@ -187,21 +197,16 @@
                                             boxWidth: 10
                                         }
                                     },
-                                    tooltips: {
-                                        backgroundColor: '#f5f5f5',
-                                        titleFontColor: '#333',
-                                        bodyFontColor: '#666',
-                                        bodySpacing: 4,
-                                        xPadding: 12,
-                                        intersect: 1,
-                                        displayColors: false,
+                                    tooltip: {
+                                        display: false,
                                         callbacks: {
-                                            title: function (tooltipItem, data) {
-                                                var index = tooltipItem[0].index;
-                                                return industriesYearChartDataLabels1[index];
+                                            title: function (context) {
+                                                var title = industriesYearChartDataLabels1[context[0].dataIndex];
+                                                return title;
                                             },
-                                            label: function (tooltipItem, data) {
-                                                return "";
+                                            label: function (context) {
+                                                var label = context.dataset.data[context.dataIndex];
+                                                return " " + label;
                                             }
                                         }
                                     }
@@ -272,21 +277,16 @@
                                             boxWidth: 10
                                         }
                                     },
-                                    tooltips: {
-                                        backgroundColor: '#f5f5f5',
-                                        titleFontColor: '#333',
-                                        bodyFontColor: '#666',
-                                        bodySpacing: 4,
-                                        xPadding: 12,
-                                        intersect: 1,
-                                        displayColors: false,
+                                    tooltip: {
+                                        display: false,
                                         callbacks: {
-                                            title: function (tooltipItem, data) {
-                                                var index = tooltipItem[0].index;
-                                                return industriesYearChartDataLabels1[index];
+                                            title: function (context) {
+                                                var title = industriesYearChartDataLabels2[context[0].dataIndex];
+                                                return title;
                                             },
-                                            label: function (tooltipItem, data) {
-                                                return "";
+                                            label: function (context) {
+                                                var label = context.dataset.data[context.dataIndex];
+                                                return " " + label;
                                             }
                                         }
                                     }
@@ -357,21 +357,16 @@
                                             boxWidth: 10
                                         }
                                     },
-                                    tooltips: {
-                                        backgroundColor: '#f5f5f5',
-                                        titleFontColor: '#333',
-                                        bodyFontColor: '#666',
-                                        bodySpacing: 4,
-                                        xPadding: 12,
-                                        intersect: 1,
-                                        displayColors: false,
+                                    tooltip: {
+                                        display: false,
                                         callbacks: {
-                                            title: function(tooltipItem, data) {
-                                                var index = tooltipItem[0].index;
-                                                return industriesYearChartDataLabels1[index];
+                                            title: function (context) {
+                                                var title = industriesYearChartDataLabels3[context[0].dataIndex];
+                                                return title;
                                             },
-                                            label: function(tooltipItem, data) {
-                                                return "";
+                                            label: function (context) {
+                                                var label = context.dataset.data[context.dataIndex];
+                                                return " " + label;
                                             }
                                         }
                                     }
@@ -443,21 +438,16 @@
                                             boxWidth: 10
                                         }
                                     },
-                                    tooltips: {
-                                        backgroundColor: '#f5f5f5',
-                                        titleFontColor: '#333',
-                                        bodyFontColor: '#666',
-                                        bodySpacing: 4,
-                                        xPadding: 12,
-                                        intersect: 1,
-                                        displayColors: false,
+                                    tooltip: {
+                                        display: false,
                                         callbacks: {
-                                            title: function (tooltipItem, data) {
-                                                var index = tooltipItem[0].index;
-                                                return industriesYearChartDataLabels1[index];
+                                            title: function (context) {
+                                                var title = industriesYearChartDataLabels4[context[0].dataIndex];
+                                                return title;
                                             },
-                                            label: function (tooltipItem, data) {
-                                                return "";
+                                            label: function (context) {
+                                                var label = context.dataset.data[context.dataIndex];
+                                                return " " + label;
                                             }
                                         }
                                     }
@@ -530,21 +520,16 @@
                                             boxWidth: 10
                                         }
                                     },
-                                    tooltips: {
-                                        backgroundColor: '#f5f5f5',
-                                        titleFontColor: '#333',
-                                        bodyFontColor: '#666',
-                                        bodySpacing: 4,
-                                        xPadding: 12,
-                                        intersect: 1,
-                                        displayColors: false,
+                                    tooltip: {
+                                        display: false,
                                         callbacks: {
-                                            title: function (tooltipItem, data) {
-                                                var index = tooltipItem[0].index;
-                                                return industriesYearChartDataLabels1[index];
+                                            title: function (context) {
+                                                var title = industriesYearChartDataLabels5[context[0].dataIndex];
+                                                return title;
                                             },
-                                            label: function (tooltipItem, data) {
-                                                return "";
+                                            label: function (context) {
+                                                var label = context.dataset.data[context.dataIndex];
+                                                return " " + label;
                                             }
                                         }
                                     }
@@ -616,21 +601,16 @@
                                             boxWidth: 10
                                         }
                                     },
-                                    tooltips: {
-                                        backgroundColor: '#f5f5f5',
-                                        titleFontColor: '#333',
-                                        bodyFontColor: '#666',
-                                        bodySpacing: 4,
-                                        xPadding: 12,
-                                        intersect: 1,
-                                        displayColors: false,
+                                    tooltip: {
+                                        display: false,
                                         callbacks: {
-                                            title: function (tooltipItem, data) {
-                                                var index = tooltipItem[0].index;
-                                                return industriesYearChartDataLabels1[index];
+                                            title: function (context) {
+                                                var title = industriesYearChartDataLabels6[context[0].dataIndex];
+                                                return title;
                                             },
-                                            label: function (tooltipItem, data) {
-                                                return "";
+                                            label: function (context) {
+                                                var label = context.dataset.data[context.dataIndex];
+                                                return " " + label;
                                             }
                                         }
                                     }
@@ -702,21 +682,16 @@
                                             boxWidth: 10
                                         }
                                     },
-                                    tooltips: {
-                                        backgroundColor: '#f5f5f5',
-                                        titleFontColor: '#333',
-                                        bodyFontColor: '#666',
-                                        bodySpacing: 4,
-                                        xPadding: 12,
-                                        intersect: 1,
-                                        displayColors: false,
+                                    tooltip: {
+                                        display: false,
                                         callbacks: {
-                                            title: function (tooltipItem, data) {
-                                                var index = tooltipItem[0].index;
-                                                return industriesYearChartDataLabels1[index];
+                                            title: function (context) {
+                                                var title = industriesYearChartDataLabels7[context[0].dataIndex];
+                                                return title;
                                             },
-                                            label: function (tooltipItem, data) {
-                                                return "";
+                                            label: function (context) {
+                                                var label = context.dataset.data[context.dataIndex];
+                                                return " " + label;
                                             }
                                         }
                                     }
@@ -788,21 +763,16 @@
                                             boxWidth: 10
                                         }
                                     },
-                                    tooltips: {
-                                        backgroundColor: '#f5f5f5',
-                                        titleFontColor: '#333',
-                                        bodyFontColor: '#666',
-                                        bodySpacing: 4,
-                                        xPadding: 12,
-                                        intersect: 1,
-                                        displayColors: false,
+                                    tooltip: {
+                                        display: false,
                                         callbacks: {
-                                            title: function (tooltipItem, data) {
-                                                var index = tooltipItem[0].index;
-                                                return industriesYearChartDataLabels1[index];
+                                            title: function (context) {
+                                                var title = industriesYearChartDataLabels8[context[0].dataIndex];
+                                                return title;
                                             },
-                                            label: function (tooltipItem, data) {
-                                                return "";
+                                            label: function (context) {
+                                                var label = context.dataset.data[context.dataIndex];
+                                                return " " + label;
                                             }
                                         }
                                     }
@@ -1370,6 +1340,9 @@
                 that.processAll().then(function () {
                     Log.print(Log.l.trace, "Data loaded");
                     return dropdowncolor();
+                }).then(function () {
+                    Log.print(Log.l.trace, "Data loaded");
+                    return setTooltipText();
                 }).then(function () {
                     Log.print(Log.l.trace, "Data loaded");
                     return getGetCriterionListData();

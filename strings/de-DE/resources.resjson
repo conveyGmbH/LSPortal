@@ -1393,22 +1393,33 @@
     "eventQuestionnaire.questiontyp" : "Fragetyp",
     "eventQuestionnaire.deleteassignment" : "Wollen Sie die Zuordnung löschen?",
 
-    "diaCountrysIndustries.title" : "Industrie",
-    "diaCountrysIndustries.titleTooltip" : "Hilfetext hier",
+    "diaCountrysIndustries.title" : "Interessensgebiet Ihrer gescannten Besucher",
+    "diaCountrysIndustries.tooltipPremium" : "zum Beispiel: Aus welchen Top 10 Branchen (Abteilungen/Funktionen etc.) kommen Ihre gescannten Besucher (ohne Auswahl von Land/Tag) / aus Land X (ohne Auswahl Tag) / aus  Land X an Tag Y?",
+    "diaCountrysIndustries.tooltipSupreme1" : "generell gilt: blauer Balken = gescannte Besucher auf Ihrem Messestand, roter Balken = alle auf dem Messegelände da gewesenen Besucher",
+    "diaCountrysIndustries.tooltipSupreme2" : "zum Beispiel: Aus welchen Top 10 Branchen (Abteilungen/Funktionen etc.) kommen Ihre gescannten Besucher (ohne Auswahl von Land/Tag) / aus Land X (ohne Auswahl Tag) / aus  Land X an Tag Y?",
 
     "diaCountrys.title" : "Top 5 Länder",
-    "diaCountrys.titleTooltip" : "Hilfetext hier",
-    "diaCountrys.top5" : "Top 5 Countrys",
-    "diaCountrys.top10" : "Top 10 Countrys",
+    "diaCountrys.titleTooltip" : "Aus welchen Top 10 Ländern kommen Ihre gescannten Besucher?",
+    "diaCountrys.top5" : "Top 5 Länder",
+    "diaCountrys.top10" : "Top 10 Länder",
 
     "diaVisitors.title" : "Besucher",
-    "diaVisitors.titleTooltip" : "Hilfetext hier",
+    "diaVisitors.titleTooltip" : "Wie verteilen sich Ihre gescannten Besucher während des Tages / auf die Veranstaltungstage?",
     "diaVisitors.hour" : "Stunden",
     "diaVisitors.day" : "Tage",
 
-    "diaYearRange.title" : "Jahrgangsgruppen",
-    "diaYearRange.titleTooltip" : "Hilfetext hier",
+    "diaYearRange.title" : "Jahrgangsgruppe Ihrer gescannten Besucher",
+    "diaYearRange.titleTooltip" : "Wie teilen Ihre gescannten Besucher sich auf die Jahrgangsgruppen auf?",
     "diaYearRange.remaindata" : "Rest-Daten",
+
+    "startPremium.exportCurrent" : "Download aktuelle Ansicht",
+    "startPremium.exportAll" : "Download vollständige Analyse",
+    "startPremium.tipLocal" : "auf Ihrem Messestand",
+    "startPremium.tipEvent" : "auf dem Messegelände",
+
+    "diaIndustries.tooltipPremium" : "zum Beispiel: Aus welchen Top 5 Branchen (Abteilungen/Funktionen etc.) kommen Ihre gescannten Besucher in Bezug auf ihre Jahrgangsgruppe (ohne Auswahl Tag) / am Tag Y?",
+    "diaIndustries.tooltipSupreme1" : "generell gilt: blauer Balken = gescannte Besucher auf Ihrem Messestand, roter Balken = alle auf dem Messegelände da gewesenen Besucher",
+    "diaIndustries.tooltipSupreme2" : "zum Beispiel: Aus welchen Top 5 Branchen (Abteilungen/Funktionen etc.) kommen Ihre gescannten Besucher in Bezug auf ihre Jahrgangsgruppe (ohne Auswahl Tag) / am Tag Y?",
 
 	"startResourceAdministration.title" : "Überblickseite",
     "startResourceAdministration.comment" : "Erstellen und Einrichten Ihrer Startseite"

@@ -200,6 +200,11 @@
                                 responsive: true,
                                 maintainAspectRatio: false,
                                 showDatapoints: true,
+                                layout: {
+                                    padding: {
+                                        top: 20
+                                    }
+                                },
                                 hover: {
                                     animationDuration: 0
                                 },
@@ -232,7 +237,7 @@
                                                 display: false
                                             },
                                             ticks: {
-                                                max: maxtickNummer + 25,
+                                                max: maxtickNummer + 30,
                                                 display: false,
                                                 beginAtZero: true
                                             },

@@ -21,11 +21,13 @@
                         </div>
                     </div>
                     <div class="tip">
-                        <div class="circle-with-text-event"><span>Event</span></div>
-                        <div class="circle-with-text-global"><span>Global</span></div>
+                        <div class="circle-with-text-event-dot"></div>
+                        <span class="circle-with-text-event-text" data-win-res="{textContent: 'startPremium.tipLocal'}"></span>
+                        <div class="circle-with-text-global-dot"></div>
+                        <span class="circle-with-text-event-text" data-win-res="{textContent: 'startPremium.tipEvent'}"></span>
                     </div>
-                    <button id="btn-all" style="float: right">Download-Alles</button>
-                    <button id="btn-vis"style="float: right">Download-Sichtbar</button>
+                    <button id="btn-all" style="float: right" data-win-res="{textContent: 'startPremium.exportAll'}"></button>
+                    <button id="btn-vis"style="float: right" data-win-res="{textContent: 'startPremium.exportCurrent'}"></button>
                     <div class="tiles-container">
                         <div name="charts" class="tile tile-top">
                             <div class="tile-content-inner" data-win-bind="style.display: countContacts  Binding.Converter.toDisplay">

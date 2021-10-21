@@ -447,10 +447,10 @@
 
             var checkTip = function() {
                 if (that.isSupreme === 2) {
-                    var event = pageElement.querySelector(".circle-with-text-event");
+                    var event = pageElement.querySelector(".circle-with-text-event-dot");
                     event.style.backgroundColor = Colors.dashboardColor;
                     var surpremeColor = "#cc5b87";
-                    var global = pageElement.querySelector(".circle-with-text-global");
+                    var global = pageElement.querySelector(".circle-with-text-global-dot");
                     global.style.backgroundColor = surpremeColor;
                 } else {
                     var tip = pageElement.querySelector(".tip");

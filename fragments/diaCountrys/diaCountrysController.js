@@ -26,7 +26,7 @@
 
                 that.isSupreme = AppData._userData.IsSupreme;
 
-                var anzKontakte = null;
+                var anzKontakte = 0;
                 
                 var top5Countrydrop = fragmentElement.querySelector("#top5countrydropdown");
                 var top5Countrydropdata = [
@@ -195,6 +195,19 @@
                                     legend: {
                                         display: true,
                                         position: 'left'
+                                    },
+                                    tooltip: {
+                                        display: false,
+                                        callbacks: {
+                                            title: function (context) {
+                                                var title = context[0].label;
+                                                return title;
+                                            },
+                                            label: function (context) {
+                                                var label = context.dataset.data[context.dataIndex];
+                                                return " " + label + " %";
+                                            }
+                                        }
                                     }
                                 }
                             },
@@ -323,6 +336,7 @@
                     top5Diagramdatasetsdata = [];
                     top5Diagrambackgroundcolor = [];
                     top5Diagrambordercolor = [];
+                    anzKontakte = 0;
                     if (that.isSupreme === 2) {
                         top5Diagramsupremedatasetsdata = [];
                         top5Diagramsupremebackgroundcolor = [];
@@ -382,6 +396,7 @@
                     }
                     top5Diagramlabelsdata.push(item.Land);
                     top5Diagramdatasetsdata.push(item.Anzahl);
+                    anzKontakte += item.Anzahl;
                     top5Diagrambackgroundcolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, item.index / 12)));
                     top5Diagrambordercolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, item.index / 12)));
                     if (that.isSupreme === 2) {
@@ -431,7 +446,7 @@
                             if (json && json.d && json.d.results && json.d.results.length > 0) {
                                     Log.print(Log.l.trace, "mitarbeiterView: success!");
                                     var result = json.d.results[0];
-                                    anzKontakte = result.AnzKontakte;
+                                    //anzKontakte = result.AnzKontakte;
                                     Log.print(Log.l.trace, "mitarbeiterView: success!");
                             }
 

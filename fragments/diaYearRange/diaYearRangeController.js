@@ -232,6 +232,19 @@
                                 plugins: {
                                     legend: {
                                         display: false
+                                    },
+                                    tooltip: {
+                                        display: false,
+                                        callbacks: {
+                                            title: function (context) {
+                                                var title = context[0].label;
+                                                return title;
+                                            },
+                                            label: function (context) {
+                                                var label = context.dataset.data[context.dataIndex];
+                                                return " " + label + " %";
+                                            }
+                                        }
                                     }
                                 }
                             },
@@ -287,6 +300,19 @@
                                     },
                                     legend: {
                                         display: false
+                                    },
+                                    tooltip: {
+                                        display: false,
+                                        callbacks: {
+                                            title: function (context) {
+                                                var title = context[0].label;
+                                                return title;
+                                            },
+                                            label: function (context) {
+                                                var label = context.dataset.data[context.dataIndex];
+                                                return " " + label + " %";
+                                            }
+                                        }
                                     }
                                 }
                             },
@@ -342,6 +368,19 @@
                                     },
                                     legend: {
                                         display: false
+                                    },
+                                    tooltip: {
+                                        display: false,
+                                        callbacks: {
+                                            title: function (context) {
+                                                var title = context[0].label;
+                                                return title;
+                                            },
+                                            label: function (context) {
+                                                var label = context.dataset.data[context.dataIndex];
+                                                return " " + label + " %";
+                                            }
+                                        }
                                     }
                                 }
                             },
@@ -397,6 +436,19 @@
                                     },
                                     legend: {
                                         display: false
+                                    },
+                                    tooltip: {
+                                        display: false,
+                                        callbacks: {
+                                            title: function (context) {
+                                                var title = context[0].label;
+                                                return title;
+                                            },
+                                            label: function (context) {
+                                                var label = context.dataset.data[context.dataIndex];
+                                                return " " + label + " %";
+                                            }
+                                        }
                                     }
                                 }
                             },
@@ -448,6 +500,19 @@
                                 plugins: {
                                     legend: {
                                         display: false
+                                    },
+                                    tooltip: {
+                                        display: false,
+                                        callbacks: {
+                                            title: function (context) {
+                                                var title = context[0].label;
+                                                return title;
+                                            },
+                                            label: function (context) {
+                                                var label = context.dataset.data[context.dataIndex];
+                                                return " " + label + " %";
+                                            }
+                                        }
                                     }
                                 }
                             },
@@ -499,6 +564,19 @@
                                 plugins: {
                                     legend: {
                                         display: false
+                                    },
+                                    tooltip: {
+                                        display: false,
+                                        callbacks: {
+                                            title: function (context) {
+                                                var title = context[0].label;
+                                                return title;
+                                            },
+                                            label: function (context) {
+                                                var label = context.dataset.data[context.dataIndex];
+                                                return " " + label + " %";
+                                            }
+                                        }
                                     }
                                 }
                             },
@@ -550,6 +628,19 @@
                                 plugins: {
                                     legend: {
                                         display: false
+                                    },
+                                    tooltip: {
+                                        display: false,
+                                        callbacks: {
+                                            title: function (context) {
+                                                var title = context[0].label;
+                                                return title;
+                                            },
+                                            label: function (context) {
+                                                var label = context.dataset.data[context.dataIndex];
+                                                return " " + label + " %";
+                                            }
+                                        }
                                     }
                                 }
                             },
@@ -601,6 +692,19 @@
                                 plugins: {
                                     legend: {
                                         display: false
+                                    },
+                                    tooltip: {
+                                        display: false,
+                                        callbacks: {
+                                            title: function (context) {
+                                                var title = context[0].label;
+                                                return title;
+                                            },
+                                            label: function (context) {
+                                                var label = context.dataset.data[context.dataIndex];
+                                                return " " + label + " %";
+                                            }
+                                        }
                                     }
                                 }
                             },

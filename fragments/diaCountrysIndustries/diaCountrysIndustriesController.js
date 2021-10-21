@@ -43,8 +43,18 @@
                 var countrydrop = fragmentElement.querySelector("#countrydropdown");
                 var daydrop = fragmentElement.querySelector("#daydropdown");
                 var select = fragmentElement.querySelectorAll("select");
+                var countryIndustriestooltip = fragmentElement.querySelector("#mydiaCountrysIndustriesElement");
 
                 this.countryfills = [];
+
+                var setTooltipText = function () {
+                    if (that.isSupreme === 1) {
+                        countryIndustriestooltip.innerHTML = getResourceText("diaCountrysIndustries.tooltipPremium");
+                    } else {
+                        countryIndustriestooltip.innerHTML = getResourceText("diaCountrysIndustries.tooltipSupreme1") + " <br /> " + getResourceText("diaCountrysIndustries.tooltipSupreme2");
+                    }
+                }
+                this.setTooltipText = setTooltipText;
 
                 var dropdowncolor = function () {
                     for (var i = 0; i < select.length; i++) {
@@ -298,8 +308,18 @@
                                     legend: {
                                         display: false
                                     },
-                                    tooltips: {
-                                        enabled: false
+                                    tooltip: {
+                                        display: false,
+                                        callbacks: {
+                                            title: function (context) {
+                                                var title = context[0].label;
+                                                return title;
+                                            },
+                                            label: function (context) {
+                                                var label = context.dataset.data[context.dataIndex];
+                                                return " " + label + " %";
+                                            }
+                                        }
                                     }
                                 }
                             },
@@ -370,8 +390,18 @@
                                     legend: {
                                         display: false
                                     },
-                                    tooltips: {
-                                        enabled: false
+                                    tooltip: {
+                                        display: false,
+                                        callbacks: {
+                                            title: function (context) {
+                                                var title = context[0].label;
+                                                return title;
+                                            },
+                                            label: function(context) {
+                                                var label = context.dataset.data[context.dataIndex];
+                                                return " " + label + " %";
+                                            }
+                                        }
                                     }
                                 }
                             },
@@ -659,6 +689,9 @@
                 that.processAll().then(function () {
                     Log.print(Log.l.trace, "Binding wireup page complete");
                     return dropdowncolor();
+                }).then(function () {
+                    Log.print(Log.l.trace, "Data loaded");
+                    return that.setTooltipText();
                 }).then(function () {
                     Log.print(Log.l.trace, "Data loaded");
                     return that.getGetCriterionListData();
