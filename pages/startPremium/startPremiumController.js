@@ -452,6 +452,10 @@
                     var surpremeColor = "#cc5b87";
                     var global = pageElement.querySelector(".circle-with-text-global-dot");
                     global.style.backgroundColor = surpremeColor;
+                    var eventText = pageElement.querySelector(".circle-with-text-event-text");
+                    eventText.style.color = Colors.labelColor;
+                    var globalText = pageElement.querySelector(".circle-with-text-global-text");
+                    globalText.style.color = Colors.labelColor;
                 } else {
                     var tip = pageElement.querySelector(".tip");
                     tip.style.display = "none";

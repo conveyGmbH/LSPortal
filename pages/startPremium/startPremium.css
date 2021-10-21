@@ -417,7 +417,6 @@
     .circle-with-text-event-text {
         margin-left: 5px !important;
         width: 200px;
-        color: #ffffff;
     }
 .circle-with-text-global-dot {
     background-color: red;
@@ -434,7 +433,6 @@
 .circle-with-text-global-text {
     margin-left: 5px !important;
     width: 230px;
-    color: #ffffff;
 }
 .tip {
     display: inline-flex;
