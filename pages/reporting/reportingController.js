@@ -650,7 +650,7 @@
                             dbView = Reporting.Fragenstatistik;
                             fileName = "Fragenstatistik";
                         } else {
-                            dbView = Reporting.Fragenstatistik;
+                            dbView = Reporting.FragenstatistikEN;
                             fileName = "Questionstatistics";
                         }
                         that.templatestr = that.binding.templatexlsx;

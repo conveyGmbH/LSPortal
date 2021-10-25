@@ -236,6 +236,39 @@
                 return Reporting._Fragenstatistik;
             }
         },
+        _FragenstatistikEN: {
+            get: function () {
+                return AppData.getFormatView("Fragen", 20658);
+            }
+        },
+        FragenstatistikEN: {
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, "Reporting.");
+                var ret = Reporting._FragenstatistikEN.select(complete, error, restriction, {
+                    ordered: true,
+                    orderAttribute: "FragenVIEWID"
+                });
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            selectNext: function (complete, error, response, nextUrl) {
+                Log.call(Log.l.trace, "Reporting.");
+                var ret = Reporting._FragenstatistikEN.selectNext(complete, error, response, nextUrl);
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getNextUrl: function (response) {
+                Log.call(Log.l.trace, "Reporting.xLReportView.");
+                var ret = Reporting._FragenstatistikEN.getNextUrl(response);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getDbView: function () {
+                return Reporting._FragenstatistikEN;
+            }
+        },
         ___xLAuswertungViewNoQuestTitle: null,
         _xLAuswertungViewNoQuestTitle: {
             get: function () {
