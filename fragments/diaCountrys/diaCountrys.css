@@ -4,7 +4,7 @@
 }
 .country-chart-top-text-container {
     height: 50px;
-    width: 50%;
+    width: 20%;
     float: left;
     font-weight: bold;
     display: table;
@@ -16,7 +16,8 @@
 }
 .country-chart-top-combo-container {
     height: 50px;
-    width: 30%;
+    width: 78%;
+    display: table;
     float: right;
 }
 .country-chart-container {
@@ -91,4 +92,9 @@
     border: 0;
     box-shadow: none;
     font-family: Open Sans;
+}
+.diaCountrys .action-image {
+    margin-top: 13px;
+    display: flex !important;
+    position: center;
 }

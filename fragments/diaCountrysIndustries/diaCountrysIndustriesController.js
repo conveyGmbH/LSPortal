@@ -470,6 +470,14 @@
                 }
                 this.resultConverterSurpreme = resultConverterSurpreme;
 
+                var resultConverterCriteria = function (item, index) {
+                    item.index = index;
+                    if (item.CriterionID === 61) {
+                        item.CriterionText = getResourceText("diaCountrysIndustries.comboboxtext");
+                    }
+                }
+                this.resultConverterCriteria = resultConverterCriteria;
+
                 var getGetCriterionListData = function () {
                     Log.call(Log.l.trace, "LocalEvents.Controller.");
                     AppData.setErrorMsg(that.binding);
@@ -480,8 +488,11 @@
                         Log.print(Log.l.info, "call success! ");
                         if (criteriadrop && criteriadrop.winControl) {
                             if (json.d.results && json.d.results[0].CriterionID) {
-                            json.d.results.shift();
-                            criteriadrop.winControl.data = new WinJS.Binding.List(json.d.results);
+                                json.d.results.forEach(function (item, index) {
+                                    that.resultConverterCriteria(item, index);
+                                });
+                                json.d.results.shift();
+                                criteriadrop.winControl.data = new WinJS.Binding.List(json.d.results);
                             criteriadrop.selectedIndex = 0;
                             that.binding.criteriaMain = json.d.results[0].CriterionID;
                             } else {

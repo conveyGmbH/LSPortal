@@ -1394,6 +1394,7 @@
     "diaCountrysIndustries.tooltipPremium" : "for example: From which top 10 industries (departments/functions etc.) do your scanned visitors come from (without selecting country/day) / country X (without selecting day) / from country X on day Y?",
     "diaCountrysIndustries.tooltipSupreme1" : "in general: blue bar = scanned visitors at your booth, red bar = all visitors who were on the exhibition grounds",
     "diaCountrysIndustries.tooltipSupreme2" : "for example: From which top 10 industries (departments/functions etc.) do your scanned visitors come (without selecting country/day) / from country X (without selecting day) / from country X on day Y?",
+    "diaCountrysIndustries.comboboxtext" : "Interests of your scanned visitors",
 
     "diaCountrys.title" : "Top 5 countries",
     "diaCountrys.titleTooltip" : "Which top 10 countries do your scanned visitors come from??",

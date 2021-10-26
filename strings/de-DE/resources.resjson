@@ -1397,6 +1397,7 @@
     "diaCountrysIndustries.tooltipPremium" : "zum Beispiel: Aus welchen Top 10 Branchen (Abteilungen/Funktionen etc.) kommen Ihre gescannten Besucher (ohne Auswahl von Land/Tag) / aus Land X (ohne Auswahl Tag) / aus  Land X an Tag Y?",
     "diaCountrysIndustries.tooltipSupreme1" : "generell gilt: blauer Balken = gescannte Besucher auf Ihrem Messestand, roter Balken = alle auf dem Messegelände da gewesenen Besucher",
     "diaCountrysIndustries.tooltipSupreme2" : "zum Beispiel: Aus welchen Top 10 Branchen (Abteilungen/Funktionen etc.) kommen Ihre gescannten Besucher (ohne Auswahl von Land/Tag) / aus Land X (ohne Auswahl Tag) / aus  Land X an Tag Y?",
+    "diaCountrysIndustries.comboboxtext" : "Interessensgebiet Ihrer gescannten Besucher",
 
     "diaCountrys.title" : "Top 5 Länder",
     "diaCountrys.titleTooltip" : "Aus welchen Top 10 Ländern kommen Ihre gescannten Besucher?",

@@ -1390,20 +1390,36 @@
     "eventQuestionnaire.questiontyp" : "Tipo di domanda",
     "eventQuestionnaire.deleteassignment" : "Vuoi cancellare l'incarico?",
 
-    "diaCountrysIndustries.title" : "Industria",
-    "diaCountrysIndustries.titleTooltip" : "Hilfetext hier",
+    "diaCountrysIndustries.title" : "Interests of your scanned visitors",
+    "diaCountrysIndustries.tooltipPremium" : "for example: From which top 10 industries (departments/functions etc.) do your scanned visitors come from (without selecting country/day) / country X (without selecting day) / from country X on day Y?",
+    "diaCountrysIndustries.tooltipSupreme1" : "in general: blue bar = scanned visitors at your booth, red bar = all visitors who were on the exhibition grounds",
+    "diaCountrysIndustries.tooltipSupreme2" : "for example: From which top 10 industries (departments/functions etc.) do your scanned visitors come (without selecting country/day) / from country X (without selecting day) / from country X on day Y?",
+    "diaCountrysIndustries.comboboxtext" : "Interests of your scanned visitors",
 
-    "diaCountrys.title" : "Top 5 Paesi",
-    "diaCountrys.titleTooltip" : "Hilfetext hier",
+    "diaCountrys.title" : "Top 5 countries",
+    "diaCountrys.titleTooltip" : "Which top 10 countries do your scanned visitors come from??",
+    "diaCountrys.top5" : "Top 5 countries",
+    "diaCountrys.top10" : "Top 10 countries",
+    "diaCountrys.visitors" : " Visitors",
+    "diaCountrys.remaindata" : "Rest-Data",
 
-    "diaVisitors.title" : "Visitatori",
-    "diaVisitors.titleTooltip" : "Hilfetext hier",
-    "diaVisitors.hour" : "Ore",
-    "diaVisitors.day" : "Giorni",
+    "diaVisitors.title" : "Visitors",
+    "diaVisitors.titleTooltip" : "How are your scanned visitors distributed during the day / over the event days?",
+    "diaVisitors.hour" : "Hours",
+    "diaVisitors.day" : "Days",
 
-    "diaYearRange.title" : "Gamma di anni",	
-    "diaYearRange.titleTooltip" : "Hilfetext hier",
-    "diaYearRange.remaindata" : "Dati residui",
+    "diaYearRange.title" : "Age group of your scanned visitors",
+    "diaYearRange.titleTooltip" : "How do your scanned visitors break down by age group?",
+    "diaYearRange.remaindata" : "Rest-Data",
+
+    "startPremium.exportCurrent" : "Download current view",
+    "startPremium.exportAll" : "Download complete analysis",
+    "startPremium.tipLocal" : "at your booth",
+    "startPremium.tipEvent" : "on the exhibition grounds",
+
+    "diaIndustries.tooltipPremium" : "for example: From which top 5 industries (departments/functions etc.) do your scanned visitors come in relation to their age group (without selection day) / on day Y?",
+    "diaIndustries.tooltipSupreme1" : "in general: blue circle = scanned visitors at your booth, red circle = all visitors who were on exhibition grounds",
+    "diaIndustries.tooltipSupreme2" : "for example: From which top 5 industries (departments/functions etc.) do your scanned visitors come in relation to their age group (without selection day) / on day Y?",
 
     "startResourceAdministration.title" : "Pagina riassuntiva",
     "startResourceAdministration.comment" : "Crea e imposta la tua homepage"

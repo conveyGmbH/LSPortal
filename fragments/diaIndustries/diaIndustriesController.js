@@ -1231,6 +1231,14 @@
                 }
                 this.resultConverterYearRange = resultConverterYearRange;
 
+                var resultConverterCriteria = function (item, index) {
+                    item.index = index;
+                    if (item.CriterionID === 61) {
+                        item.CriterionText = getResourceText("diaCountrysIndustries.comboboxtext");
+                    }
+                }
+                this.resultConverterCriteria = resultConverterCriteria;
+
                 var getGetCriterionListData = function () {
                     Log.call(Log.l.trace, "LocalEvents.Controller.");
                     AppData.setErrorMsg(that.binding);
@@ -1239,7 +1247,10 @@
                         pLanguageSpecID: AppData.getLanguageId()
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
-                        var results = json.d.results.shift();
+                        json.d.results.forEach(function (item, index) {
+                            that.resultConverterCriteria(item, index);
+                        });
+                        json.d.results.shift();
                         if (criteriadrop && criteriadrop.winControl) {
                             criteriadrop.winControl.data = new WinJS.Binding.List(json.d.results);
                             criteriadrop.selectedIndex = 0;

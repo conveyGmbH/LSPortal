@@ -26,9 +26,18 @@
 
                 that.isSupreme = parseInt(AppData._userData.IsSupreme);
 
+                var icons = fragmentElement.querySelector(".country-chart-top-container");
+
                 var anzKontakte = 0;
                 var anzKontaktePremium = 0;
-                
+
+                var loadIcon = function () {
+                    var icon = fragmentElement.querySelector(".action-image");
+                    icon.name = "information";
+                    Colors.loadSVGImageElements(icons, "action-image", 24, Colors.textColor, "name");
+                }
+                this.loadIcon = loadIcon;
+
                 var centerDoughnutPlugin = {
                     beforeDraw: function (chart) {
                         if (chart.config.options.elements.center) {
@@ -532,6 +541,9 @@
                 this.checkIfSurpreme = checkIfSurpreme;
                 
             that.processAll().then(function () {
+                Log.print(Log.l.trace, "Binding wireup page complete");
+                return that.loadIcon();
+            }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.checkIfSurpreme();
             }).then(function () {
