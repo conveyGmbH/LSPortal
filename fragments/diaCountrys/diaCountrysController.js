@@ -168,7 +168,7 @@
                                 cutout: 75,
                                 elements: {
                                     center: {
-                                        text: anzKontakte + " Besucher",
+                                        text: anzKontakte + getResourceText("diaCountrys.visitors"),
                                         color: '#000000', // Default is #000000
                                         fontStyle: 'Arial', // Default is Arial
                                         sidePadding: 20, // Default is 20 (as a percentage)
@@ -306,6 +306,11 @@
                                         display: false
                                     }
                                 },
+                                layout: {
+                                    padding: {
+                                        bottom: 5
+                                    }
+                                },
                                 scales: {
                                     yAxes: {
                                         display: false
@@ -407,12 +412,12 @@
                         if (index <= 9) {
                             top5Diagramlabelsdata.push(item.Land);
                             top5Diagramdatasetsdata.push(Math.round((item.Anzahl / item.TotalHits) * 100));
-                            top5Diagrambackgroundcolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, item.index / 12)));
-                            top5Diagrambordercolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, item.index / 12)));
+                            top5Diagrambackgroundcolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, item.index / 15)));
+                            top5Diagrambordercolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, item.index / 15)));
                             var AnzahlSup = that.getRandomInt(8, 12);
                             top5Diagramsupremedatasetsdata.push(AnzahlSup);
-                            top5Diagramsupremebackgroundcolor.push(that.hexToRgbA(that.getColor(surpremeColor, item.index / 12)));
-                            top5Diagramsupremebordercolor.push(that.hexToRgbA(that.getColor(surpremeColor, item.index / 12)));
+                            top5Diagramsupremebackgroundcolor.push(that.hexToRgbA(that.getColor(surpremeColor, item.index / 15)));
+                            top5Diagramsupremebordercolor.push(that.hexToRgbA(that.getColor(surpremeColor, item.index / 15)));
                         } 
                     }
                 }
@@ -436,7 +441,7 @@
                         if (that.isSupreme === 1) {
                             var restdata = anzKontakte - anzKontaktePremium;
                             if (restdata) {
-                                top5Diagramlabelsdata.push("Rest-Daten" + " " + Math.round((restdata / anzKontakte) * 100) + "%");
+                                top5Diagramlabelsdata.push(getResourceText("diaCountrys.remaindata") + " " + Math.round((restdata / anzKontakte) * 100) + "%");
                                 top5Diagramdatasetsdata.push(restdata);
                                 top5Diagrambackgroundcolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, 9 / 12)));
                                 top5Diagrambordercolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, 9 / 12)));

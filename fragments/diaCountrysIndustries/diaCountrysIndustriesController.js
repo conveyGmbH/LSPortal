@@ -276,6 +276,11 @@
                                 hover: {
                                     animationDuration: 0
                                 },
+                                layout: {
+                                    padding: {
+                                        right: 50
+                                    }
+                                },
                                 scales: {
                                     y:
                                     {
@@ -287,7 +292,7 @@
                                             zeroLineColor: "#fff"
                                         },
                                         stacked: false
-                                        },
+                                    },
                                     x: {
                                         display: false,
                                         grid: {
@@ -357,6 +362,11 @@
                                 indexAxis: 'y',
                                 hover: {
                                     animationDuration: 0
+                                },
+                                layout: {
+                                    padding: {
+                                        right: 50
+                                    }
                                 },
                                 scales: {
                                     y:
@@ -506,6 +516,9 @@
                         results.sort(function (a, b) {
                             return b.NumHits - a.NumHits;
                         });
+                        if (results.length > 10) {
+                            results.length = 10;
+                        }
                         results.forEach(function (item, index) {
                              that.resultConverterPremium(item, index);
                         });
@@ -532,6 +545,9 @@
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
                         var results = json.d.results;
+                        if (results.length > 10) {
+                            results.length = 10;
+                        }
                         results.forEach(function (item, index) {
                              that.resultConverterSurpreme(item, index);
                         });
