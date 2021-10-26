@@ -23,7 +23,7 @@
                     ]);
 
                 var that = this;
-                this.isSupreme = AppData._userData.IsSupreme;
+                this.isSupreme = parseInt(AppData._userData.IsSupreme);
 
                 var criteriadrop = fragmentElement.querySelector("#criteriadropdown"); 
                 var industriesTooltip = fragmentElement.querySelector("#mydiaCountrysIndustriesElement");
@@ -1051,10 +1051,7 @@
 
                 var resultConverterPremium = function (item, index) {
                     item.index = index;
-                    if (item.QualifierExtID === "13185") {
-                        if (industriesYearChartDataTexts1.length === 0) {
-                            industriesYearChartDataTexts1 = item.Qualifier;
-                        }
+                    if (item.QualifierExtID === "17281") {
                         industriesYearChartDataLabels1.push(item.Qualifier2 + " " + Math.round(item.NumHits / item.NumTotal * 100) + "%");
                         if (item.Qualifier2) {
                             if (item.Qualifier2.length > 15) {
@@ -1067,12 +1064,8 @@
                         //industriesYearChartDataLabels1.push(getResourceText("diaYearRange.remaindata"));
                         industriesYearChartDataRaw1.push(item.NumHits);
                         //industriesYearChartDataRaw1.push(item.NumTotal - item.NumHits);
-                        industriesYearChartDataProcent1 = Math.round(item.NumHits / item.NumTotal * 100) + "%";
                     }
-                    if (item.QualifierExtID === "13186") {
-                        if (industriesYearChartDataTexts2.length === 0) {
-                            industriesYearChartDataTexts2 = item.Qualifier;
-                        }
+                    if (item.QualifierExtID === "17282") {
                         industriesYearChartDataLabels2.push(item.Qualifier2 + " " + Math.round(item.NumHits / item.NumTotal * 100) + "%");
                         if (item.Qualifier2) {
                             if (item.Qualifier2.length > 15) {
@@ -1085,12 +1078,9 @@
                         //industriesYearChartDataLabels2.push(getResourceText("diaYearRange.remaindata"));
                         industriesYearChartDataRaw2.push(item.NumHits);
                         //industriesYearChartDataRaw2.push(item.NumTotal - item.NumHits);
-                        industriesYearChartDataProcent2 = Math.round(item.NumHits / item.NumTotal * 100) + "%";
                     }
-                    if (item.QualifierExtID === "13187") {
-                        if (industriesYearChartDataTexts3.length === 0) {
-                            industriesYearChartDataTexts3 = item.Qualifier;
-                        }
+                    if (item.QualifierExtID === "17283") {
+                        
                         industriesYearChartDataLabels3.push(item.Qualifier2 + " " + Math.round(item.NumHits / item.NumTotal * 100) + "%");
                         if (item.Qualifier2) {
                             if (item.Qualifier2.length > 15) {
@@ -1103,12 +1093,8 @@
                         //industriesYearChartDataLabels3.push(getResourceText("diaYearRange.remaindata"));
                         industriesYearChartDataRaw3.push(item.NumHits);
                         //industriesYearChartDataRaw3.push(item.NumTotal - item.NumHits);
-                        industriesYearChartDataProcent3 = Math.round(item.NumHits / item.NumTotal * 100) + "%";
                     }
-                    if (item.QualifierExtID === "13188") {
-                        if (industriesYearChartDataTexts4.length === 0) {
-                            industriesYearChartDataTexts4 = item.Qualifier;
-                        }
+                    if (item.QualifierExtID === "17284") {
                         industriesYearChartDataLabels4.push(item.Qualifier2 + " " + Math.round(item.NumHits / item.NumTotal * 100) + "%");
                         if (item.Qualifier2) {
                             if (item.Qualifier2.length > 15) {
@@ -1121,7 +1107,6 @@
                         //industriesYearChartDataLabels4.push(getResourceText("diaYearRange.remaindata"));
                         industriesYearChartDataRaw4.push(item.NumHits);
                         //industriesYearChartDataRaw4.push(item.NumTotal - item.NumHits);
-                        industriesYearChartDataProcent4 = Math.round(item.NumHits / item.NumTotal * 100) + "%";
                     }
                     /*if (item.QualifierExtID === "13189") {
                         industriesYearChartDataTexts1 = item.ResultMessage;
@@ -1135,7 +1120,7 @@
 
                 var resultConverterSurpreme = function (item, index) {
                     item.index = index;  
-                    if (item.QualifierExtID === "13185") {
+                    if (item.QualifierExtID === "17281") {
                         if (industriesYearChartDataTexts5.length === 0) {
                             industriesYearChartDataTexts5 = item.Qualifier;
                         }
@@ -1151,9 +1136,9 @@
                         //industriesYearChartDataLabels5.push(getResourceText("diaYearRange.remaindata"));
                         industriesYearChartDataRaw5.push(item.PercentGlobal);
                         //industriesYearChartDataRaw5.push(item.NumTotal - item.NumHits);
-                        industriesYearChartDataProcent5 = item.PercentGlobal / 100 * 100 + "%";
+                        industriesYearChartDataProcent5 = item.PercentGlobal + "%";
                     }
-                    if (item.QualifierExtID === "13186") {
+                    if (item.QualifierExtID === "17282") {
                         if (industriesYearChartDataTexts6.length === 0) {
                             industriesYearChartDataTexts6 = item.Qualifier;
                         }
@@ -1169,9 +1154,9 @@
                         //industriesYearChartDataLabels6.push(getResourceText("diaYearRange.remaindata"));
                         industriesYearChartDataRaw6.push(item.PercentGlobal);
                         //industriesYearChartDataRaw6.push(item.NumTotal - item.NumHits);
-                        industriesYearChartDataProcent6 = item.PercentGlobal / 100 * 100 + "%";
+                        industriesYearChartDataProcent6 = item.PercentGlobal + "%";
                     }
-                    if (item.QualifierExtID === "13187") {
+                    if (item.QualifierExtID === "17283") {
                         if (industriesYearChartDataTexts7.length === 0) {
                             industriesYearChartDataTexts7 = item.Qualifier;
                         }
@@ -1187,9 +1172,9 @@
                         //industriesYearChartDataLabels7.push(getResourceText("diaYearRange.remaindata"));
                         industriesYearChartDataRaw7.push(item.PercentGlobal);
                         //industriesYearChartDataRaw7.push(item.NumTotal - item.NumHits);
-                        industriesYearChartDataProcent7 = item.PercentGlobal / 100 * 100 + "%";
+                        industriesYearChartDataProcent7 = item.PercentGlobal + "%";
                     }
-                    if (item.QualifierExtID === "13188") {
+                    if (item.QualifierExtID === "17284") {
                         if (industriesYearChartDataTexts8.length === 0) {
                             industriesYearChartDataTexts8 = item.Qualifier;
                         }
@@ -1205,7 +1190,7 @@
                         //industriesYearChartDataLabels8.push(getResourceText("diaYearRange.remaindata"));
                         industriesYearChartDataRaw8.push(item.PercentGlobal);
                         //industriesYearChartDataRaw8.push(item.NumTotal - item.NumHits);
-                        industriesYearChartDataProcent8 = item.PercentGlobal / 100 * 100 + "%";
+                        industriesYearChartDataProcent8 = item.PercentGlobal + "%";
                     }
                     /*if (item.QualifierExtID === "13189") {
                         industriesYearChartDataTexts5 = item.ResultMessage;
@@ -1217,6 +1202,35 @@
                 }
                 this.resultConverterSurpreme = resultConverterSurpreme;
 
+                var resultConverterYearRange = function (item, index) {
+                    item.index = index;
+                    if (item.QualifierExtID === "17281") {
+                        if (industriesYearChartDataTexts1.length === 0) {
+                            industriesYearChartDataTexts1 = item.Qualifier;
+                        }
+                        industriesYearChartDataProcent1 = Math.round(item.NumHits / item.NumTotal * 100) + "%";
+                    }
+                    if (item.QualifierExtID === "17282") {
+                        if (industriesYearChartDataTexts2.length === 0) {
+                            industriesYearChartDataTexts2 = item.Qualifier;
+                        }
+                        industriesYearChartDataProcent2 = Math.round(item.NumHits / item.NumTotal * 100) + "%";
+                    }
+                    if (item.QualifierExtID === "17283") {
+                        if (industriesYearChartDataTexts3.length === 0) {
+                            industriesYearChartDataTexts3 = item.Qualifier;
+                        }
+                        industriesYearChartDataProcent3 = Math.round(item.NumHits / item.NumTotal * 100) + "%";
+                    }
+                    if (item.QualifierExtID === "17284") {
+                        if (industriesYearChartDataTexts4.length === 0) {
+                            industriesYearChartDataTexts4 = item.Qualifier;
+                        }
+                        industriesYearChartDataProcent4 = Math.round(item.NumHits / item.NumTotal * 100) + "%";
+                    }
+                }
+                this.resultConverterYearRange = resultConverterYearRange;
+
                 var getGetCriterionListData = function () {
                     Log.call(Log.l.trace, "LocalEvents.Controller.");
                     AppData.setErrorMsg(that.binding);
@@ -1225,7 +1239,7 @@
                         pLanguageSpecID: AppData.getLanguageId()
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
-                        var results = json.d.results.pop();
+                        var results = json.d.results.shift();
                         if (criteriadrop && criteriadrop.winControl) {
                             criteriadrop.winControl.data = new WinJS.Binding.List(json.d.results);
                             criteriadrop.selectedIndex = 0;
@@ -1240,13 +1254,36 @@
                 }
                 this.getGetCriterionListData = getGetCriterionListData;
 
+                var getGetYearRangePremium = function () {
+                    Log.call(Log.l.trace, "LocalEvents.Controller.");
+                    AppData.setErrorMsg(that.binding);
+                    AppData.call("PRC_GetDashboardData", {
+                        pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                        pCriterion1ID: 40,
+                        pCriterion2ID: 0,
+                        pLandID: 0,
+                        pDay: 0,
+                        pLanguageSpecID: AppData.getLanguageId()
+                    }, function (json) {
+                        Log.print(Log.l.info, "call success! ");
+                        var results = json.d.results;
+                        results.forEach(function (item, index) {
+                            that.resultConverterYearRange(item, index);
+                        });
+                    }, function (error) {
+                        Log.print(Log.l.error, "call error");
+                    });
+                    Log.ret(Log.l.trace);
+                }
+                this.getGetYearRangePremium = getGetYearRangePremium;
+
                 var getGetDashboardData = function () {
                     Log.call(Log.l.trace, "LocalEvents.Controller.");
                     AppData.setErrorMsg(that.binding);
                     that.clearArrays();
                     AppData.call("PRC_GetDashboardData", {
                         pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
-                        pCriterion1ID: 7,
+                        pCriterion1ID: 40,
                         pCriterion2ID: that.binding.criteriaMain,
                         pDay: 0,
                         pLandID: 0,
@@ -1263,7 +1300,6 @@
                         });
                         that.redrawCharts();
                         that.drawPremiumCharts();
-                        
                         AppData.setErrorMsg(that.binding);
                     }, function (error) {
                         Log.print(Log.l.error, "call error");
@@ -1279,7 +1315,7 @@
                     var lang = 
                     AppData.call("PRC_GetDashboardData", {
                         pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
-                        pCriterion1ID: 7,
+                        pCriterion1ID: 40,
                         pCriterion2ID: that.binding.criteriaMain,
                         pLandID: 0,
                         pDay: 0,
@@ -1288,6 +1324,9 @@
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
                         var results = json.d.results;
+                        results.sort(function (a, b) {
+                            return b.NumHits - a.NumHits;
+                        });
                         results.forEach(function (item, index) {
                             that.resultConverterSurpreme(item, index);
                         });
@@ -1306,6 +1345,8 @@
                     AppData.setErrorMsg(that.binding);
                     var ret = new WinJS.Promise.as().then(function () {
                         return that.clearArrays();
+                    }).then(function () {
+                        return that.getGetYearRangePremium();
                     }).then(function () {
                         return that.getGetDashboardData();
                     }).then(function () {

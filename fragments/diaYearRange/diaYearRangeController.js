@@ -17,13 +17,13 @@
                 Fragments.Controller.apply(this,
                     [
                         fragmentElement, {
-                            criteriaMain: 7
+                            criteriaMain: 40
                         }
                     ]);
 
                 var that = this;
 
-                this.isSupreme = AppData._userData.IsSupreme;
+                this.isSupreme = parseInt(AppData._userData.IsSupreme);
                 
                 var yearRangeChart1Legend = {
                     afterUpdate(chart) {
@@ -242,7 +242,7 @@
                                             },
                                             label: function (context) {
                                                 var label = context.dataset.data[context.dataIndex];
-                                                return " " + label + " %";
+                                                return " " + label;
                                             }
                                         }
                                     }
@@ -310,7 +310,7 @@
                                             },
                                             label: function (context) {
                                                 var label = context.dataset.data[context.dataIndex];
-                                                return " " + label + " %";
+                                                return " " + label;
                                             }
                                         }
                                     }
@@ -378,7 +378,7 @@
                                             },
                                             label: function (context) {
                                                 var label = context.dataset.data[context.dataIndex];
-                                                return " " + label + " %";
+                                                return " " + label;
                                             }
                                         }
                                     }
@@ -446,7 +446,7 @@
                                             },
                                             label: function (context) {
                                                 var label = context.dataset.data[context.dataIndex];
-                                                return " " + label + " %";
+                                                return " " + label;
                                             }
                                         }
                                     }
@@ -510,7 +510,7 @@
                                             },
                                             label: function (context) {
                                                 var label = context.dataset.data[context.dataIndex];
-                                                return " " + label + " %";
+                                                return " " + label;
                                             }
                                         }
                                     }
@@ -574,7 +574,7 @@
                                             },
                                             label: function (context) {
                                                 var label = context.dataset.data[context.dataIndex];
-                                                return " " + label + " %";
+                                                return " " + label;
                                             }
                                         }
                                     }
@@ -638,7 +638,7 @@
                                             },
                                             label: function (context) {
                                                 var label = context.dataset.data[context.dataIndex];
-                                                return " " + label + " %";
+                                                return " " + label;
                                             }
                                         }
                                     }
@@ -702,7 +702,7 @@
                                             },
                                             label: function (context) {
                                                 var label = context.dataset.data[context.dataIndex];
-                                                return " " + label + " %";
+                                                return " " + label;
                                             }
                                         }
                                     }
@@ -764,7 +764,7 @@
 
                 var resultConverterPremium = function (item, index) {
                     item.index = index;
-                    if (item.QualifierExtID === "13185") {
+                    if (item.QualifierExtID === "17281") {
                         yearRangeChartDataTexts1.push(item.Qualifier);
                         yearRangeChartDataLabels1.push(item.Qualifier);
                         yearRangeChartDataLabels1.push(getResourceText("diaYearRange.remaindata"));
@@ -772,7 +772,7 @@
                         yearRangeChartDataRaw1.push(item.NumTotal - item.NumHits);
                         yearRangeChartDataProcent1 = Math.round(item.NumHits / item.NumTotal * 100) + "%";
                     }
-                    if (item.QualifierExtID === "13186") {
+                    if (item.QualifierExtID === "17282") {
                         yearRangeChartDataTexts2.push(item.Qualifier);
                         yearRangeChartDataLabels2.push(item.Qualifier);
                         yearRangeChartDataLabels2.push(getResourceText("diaYearRange.remaindata"));
@@ -780,7 +780,7 @@
                         yearRangeChartDataRaw2.push(item.NumTotal - item.NumHits);
                         yearRangeChartDataProcent2 = Math.round(item.NumHits / item.NumTotal * 100) + "%";
                     }
-                    if (item.QualifierExtID === "13187") {
+                    if (item.QualifierExtID === "17283") {
                         yearRangeChartDataTexts3.push(item.Qualifier);
                         yearRangeChartDataLabels3.push(item.Qualifier);
                         yearRangeChartDataLabels3.push(getResourceText("diaYearRange.remaindata"));
@@ -788,7 +788,7 @@
                         yearRangeChartDataRaw3.push(item.NumTotal - item.NumHits);
                         yearRangeChartDataProcent3 = Math.round(item.NumHits / item.NumTotal * 100) + "%";
                     }
-                    if (item.QualifierExtID === "13188") {
+                    if (item.QualifierExtID === "17284") {
                         yearRangeChartDataTexts4.push(item.Qualifier);
                         yearRangeChartDataLabels4.push(item.Qualifier);
                         yearRangeChartDataLabels4.push(getResourceText("diaYearRange.remaindata"));
@@ -801,7 +801,7 @@
 
                 var resultConverterSurpreme = function (item, index) {
                     item.index = index;
-                    if (item.QualifierExtID === "13185") {
+                    if (item.QualifierExtID === "17281") {
                         yearRangeChartDataTexts5.push(item.Qualifier);
                         yearRangeChartDataLabels5.push(item.Qualifier);
                         yearRangeChartDataLabels5.push(getResourceText("diaYearRange.remaindata"));
@@ -809,7 +809,7 @@
                         yearRangeChartDataRaw5.push(100 - item.PercentGlobal);
                         yearRangeChartDataProcent5 = item.PercentGlobal + "%";
                     }
-                    if (item.QualifierExtID === "13186") {
+                    if (item.QualifierExtID === "17282") {
                         yearRangeChartDataTexts6.push(item.Qualifier);
                         yearRangeChartDataLabels6.push(item.Qualifier);
                         yearRangeChartDataLabels6.push(getResourceText("diaYearRange.remaindata"));
@@ -817,7 +817,7 @@
                         yearRangeChartDataRaw6.push(100 - item.PercentGlobal);
                         yearRangeChartDataProcent6 = item.PercentGlobal + "%";
                     }
-                    if (item.QualifierExtID === "13187") {
+                    if (item.QualifierExtID === "17283") {
                         yearRangeChartDataTexts7.push(item.Qualifier);
                         yearRangeChartDataLabels7.push(item.Qualifier);
                         yearRangeChartDataLabels7.push(getResourceText("diaYearRange.remaindata"));
@@ -825,7 +825,7 @@
                         yearRangeChartDataRaw7.push(100 - item.PercentGlobal);
                         yearRangeChartDataProcent7 = item.PercentGlobal + "%";
                     }
-                    if (item.QualifierExtID === "13188") {
+                    if (item.QualifierExtID === "17284") {
                         yearRangeChartDataTexts8.push(item.Qualifier);
                         yearRangeChartDataLabels8.push(item.Qualifier);
                         yearRangeChartDataLabels8.push(getResourceText("diaYearRange.remaindata"));
@@ -838,7 +838,7 @@
 
                 var resultConverterCrit = function (item, index) {
                     item.index = index;
-                    if (item.ExternalID === "10882") {
+                    if (item.ExternalID === "12021") {
                         that.binding.criteriaMain = item.CriterionID;
                     }
                 }

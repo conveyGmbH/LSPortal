@@ -34,14 +34,13 @@
                 this.worldMapHeight = 0;
                 this.countryKeyData = null;
                 this.countryColors = [];
-                this.isSupreme = AppData._userData.IsSupreme;
+                this.isSupreme = parseInt(AppData._userData.IsSupreme);
                 this.dayData = 0;
                 
                 var selectedCountryBefore = null;
 
                 var criteriadrop = fragmentElement.querySelector("#criteriadropdown");
                 var countrydrop = fragmentElement.querySelector("#countrydropdown");
-                var daydrop = fragmentElement.querySelector("#daydropdown");
                 var select = fragmentElement.querySelectorAll("select");
                 var countryIndustriestooltip = fragmentElement.querySelector("#mydiaCountrysIndustriesElement");
 
@@ -60,7 +59,6 @@
                     for (var i = 0; i < select.length; i++) {
                         select[i].style.backgroundColor = "#efedee ";
                     }
-                    daydrop.style.backgroundColor = "#efedee ";
                 }
                 this.dropdowncolor = dropdowncolor;
 
@@ -241,7 +239,7 @@
 
                                     var padding = 10;
                                     var position = element.tooltipPosition();
-                                    ctx.fillText(dataString, position.x - 19, position.y - (fontSize / 2) + padding);
+                                    ctx.fillText(dataString, position.x + 18, position.y - (fontSize / 2) + padding);
                                 });
                             }
                         });
@@ -267,7 +265,6 @@
                     if (industriepremiumschart) {
                         industriepremiumschart.destroy();
                     }
-                    Chart.defaults.font.size = 15;
                     industriepremiumschart = new Chart(fragmentElement.querySelector("#countrysIndustriesChart").getContext("2d"),
                         {
                             type: 'bar',
@@ -444,7 +441,7 @@
                         countryIndustriesLabels.push(item.Qualifier);
                     }
                     if (item.NumHits) {
-                        countryIndustriesRawDataPremium.push(item.NumHits);
+                        countryIndustriesRawDataPremium.push(Math.round((item.NumHits / item.NumTotal) * 100));
                     }
                     if (item.Startdatum) {
                         item.Startdatum = getDateObject(item.Startdatum);
@@ -457,8 +454,8 @@
 
                 var resultConverterSurpreme = function (item, index) {
                     item.index = index;
-                    if (item.NumHits) {
-                        countryIndustriesRawDataSurpreme.push(item.NumHits);
+                    if (item.PercentGlobal) {
+                        countryIndustriesRawDataSurpreme.push(item.PercentGlobal);
                     }
                 }
                 this.resultConverterSurpreme = resultConverterSurpreme;
@@ -473,6 +470,7 @@
                         Log.print(Log.l.info, "call success! ");
                         if (criteriadrop && criteriadrop.winControl) {
                             if (json.d.results && json.d.results[0].CriterionID) {
+                            json.d.results.shift();
                             criteriadrop.winControl.data = new WinJS.Binding.List(json.d.results);
                             criteriadrop.selectedIndex = 0;
                             that.binding.criteriaMain = json.d.results[0].CriterionID;
@@ -495,17 +493,12 @@
                 var getGetDashboardDataPremium = function () {
                     Log.call(Log.l.trace, "LocalEvents.Controller.");
                     AppData.setErrorMsg(that.binding);
-                    if (daydrop.value === "") {
-                        that.dayData = 0;
-                    } else {
-                        that.dayData = getMilliseconts(daydrop.value);
-                    }
-                     return AppData.call("PRC_GetDashboardData", {
+                    return AppData.call("PRC_GetDashboardData", {
                         pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
                         pCriterion1ID: parseInt(that.binding.criteriaMain),
                         pCriterion2ID: parseInt(that.binding.criteriaDays),
                         pLandID: parseInt(that.binding.criteriaCountry),
-                        pDay: that.dayData,
+                        pDay: 0,
                         pLanguageSpecID: AppData.getLanguageId()
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
@@ -529,17 +522,12 @@
                 var getGetDashboardDataSurpreme = function () {
                     Log.call(Log.l.trace, "LocalEvents.Controller.");
                     AppData.setErrorMsg(that.binding);
-                    if (daydrop.value === "") {
-                        that.dayData = 0;
-                    } else {
-                        that.dayData = getMilliseconts(daydrop.value);
-                    }
                     return AppData.call("PRC_GetDashboardData", {
                         pVeranstaltungID: AppData.getRecordId("Veranstaltung"), //
                         pCriterion1ID: parseInt(that.binding.criteriaMain),
                         pCriterion2ID: parseInt(that.binding.criteriaDays),
                         pLandID: 0,
-                        pDay: that.dayData,
+                        pDay: 0,
                         pLanguageSpecID: AppData.getLanguageId()
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
@@ -592,7 +580,6 @@
                     },
                     cleardDay: function (event) {
                         Log.call(Log.l.trace, "Event.Controller.");
-                        daydrop.value = "";
                         that.drawChart();
                         Log.ret(Log.l.trace);
                     }
@@ -605,11 +592,6 @@
                 if (countrydrop) {
                     this.addRemovableEventListener(countrydrop, "change", this.eventHandlers.changedCountry.bind(this));
                 }
-                if (daydrop) {
-                    this.addRemovableEventListener(daydrop, "change", this.eventHandlers.changedDay.bind(this));
-                    this.addRemovableEventListener(daydrop, "focus", this.eventHandlers.cleardDay.bind(this));
-                }
-
                 var loadData = function () {
                     Log.call(Log.l.trace, "DiaCountrys.");
                     AppData.setErrorMsg(that.binding); 

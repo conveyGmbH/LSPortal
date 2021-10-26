@@ -10,7 +10,6 @@
         _reportLand: {
             get: function () {
                 var ret = AppData.getFormatView("Kontakt", 20473);
-                ret.maxPageSize = 10;
                 return ret;
             }
         },

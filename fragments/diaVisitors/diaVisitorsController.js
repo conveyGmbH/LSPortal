@@ -25,7 +25,7 @@
                     ]);
 
                 var that = this;
-                this.isSupreme = AppData._userData.IsSupreme;
+                this.isSupreme = parseInt(AppData._userData.IsSupreme);
 
                 var dayhourcombo = fragmentElement.querySelector("#dayhourdropdown");
                 var daycombo = fragmentElement.querySelector("#daydropdown");

@@ -24,26 +24,11 @@
 
                 var that = this;
 
-                that.isSupreme = AppData._userData.IsSupreme;
+                that.isSupreme = parseInt(AppData._userData.IsSupreme);
 
                 var anzKontakte = 0;
+                var anzKontaktePremium = 0;
                 
-                var top5Countrydrop = fragmentElement.querySelector("#top5countrydropdown");
-                var top5Countrydropdata = [
-                    { TITLE: getResourceText("diaCountrys.top5"), VALUE: 5 },
-                    { TITLE: getResourceText("diaCountrys.top10"), VALUE: 10 }
-                ];
-
-                if (top5Countrydrop && top5Countrydrop.winControl) {
-                    top5Countrydrop.winControl.data = new WinJS.Binding.List(top5Countrydropdata);
-                    top5Countrydrop.selectedIndex = 0;
-                }
-
-                var dropdowncolor = function() {
-                    top5Countrydrop.style.backgroundColor = "#efedee ";
-                }
-                this.dropdowncolor = dropdowncolor;
-
                 var centerDoughnutPlugin = {
                     beforeDraw: function (chart) {
                         if (chart.config.options.elements.center) {
@@ -194,7 +179,11 @@
                                 plugins: {
                                     legend: {
                                         display: true,
-                                        position: 'left'
+                                        position: 'left',
+                                        fullWidth: false,
+                                        labels: {
+                                            boxWidth: 20
+                                        }
                                     },
                                     tooltip: {
                                         display: false,
@@ -205,7 +194,7 @@
                                             },
                                             label: function (context) {
                                                 var label = context.dataset.data[context.dataIndex];
-                                                return " " + label + " %";
+                                                return " " + label;
                                             }
                                         }
                                     }
@@ -261,7 +250,7 @@
                                 chart.data.datasets[0].backgroundColor[i] +
                                 '">');
                             if (chart.data.labels[i]) {
-                                elem.push(" " + (value / total * 100).toFixed(0) + "%");
+                                elem.push(" " + value + "%");
                             }
                             elem.push('</div>');
                             elem.push('</div>');
@@ -274,7 +263,7 @@
                                 chart.data.datasets[1].backgroundColor[i] +
                                 '">');
                             if (chart.data.labels[i]) {
-                                elem.push(" " + (value2 / total2 * 100).toFixed(0) + "%");
+                                elem.push(" " + value2 + "%");
                             }
                             elem.push('</div>');
                             elem.push('</div>');
@@ -388,30 +377,104 @@
                     Log.ret(Log.l.trace);
                 }
                 this.redrawCharts = redrawCharts;
-                
+
+                var getRandomInt = function (min, max) {
+                    min = Math.ceil(min);
+                    max = Math.floor(max);
+                    return Math.floor(Math.random() * (max - min)) + min;
+                }
+                this.getRandomInt = getRandomInt;
+
                 var resultConverter = function (item, index) {
                     item.index = index;
-                    if (item.Land === null) {
-                        item.Land = "Kein Land";
+
+                    if (that.isSupreme === 1) {
+                        if (index <= 8) {
+                            if (item.Land === null) {
+                                item.Land = "Kein Land";
+                            }
+                            anzKontakte = item.TotalHits;
+                            if (that.isSupreme === 1) {
+                                top5Diagramlabelsdata.push(item.Land + " " + Math.round((item.Anzahl / item.TotalHits) * 100) + "%");
+                                top5Diagramdatasetsdata.push(item.Anzahl);
+                                anzKontaktePremium += item.Anzahl;
+                                top5Diagrambackgroundcolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, item.index / 12)));
+                                top5Diagrambordercolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, item.index / 12)));
+                            }
+                        }
                     }
-                    top5Diagramlabelsdata.push(item.Land);
-                    top5Diagramdatasetsdata.push(item.Anzahl);
-                    anzKontakte += item.Anzahl;
-                    top5Diagrambackgroundcolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, item.index / 12)));
-                    top5Diagrambordercolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, item.index / 12)));
                     if (that.isSupreme === 2) {
-                        top5Diagramsupremedatasetsdata.push(item.Anzahl + 10);
-                        top5Diagramsupremebackgroundcolor.push(that.hexToRgbA(that.getColor(surpremeColor, item.index / 12)));
-                        top5Diagramsupremebordercolor.push(that.hexToRgbA(that.getColor(surpremeColor, item.index / 12)));
+                        if (index <= 9) {
+                            top5Diagramlabelsdata.push(item.Land);
+                            top5Diagramdatasetsdata.push(Math.round((item.Anzahl / item.TotalHits) * 100));
+                            top5Diagrambackgroundcolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, item.index / 12)));
+                            top5Diagrambordercolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, item.index / 12)));
+                            var AnzahlSup = that.getRandomInt(8, 12);
+                            top5Diagramsupremedatasetsdata.push(AnzahlSup);
+                            top5Diagramsupremebackgroundcolor.push(that.hexToRgbA(that.getColor(surpremeColor, item.index / 12)));
+                            top5Diagramsupremebordercolor.push(that.hexToRgbA(that.getColor(surpremeColor, item.index / 12)));
+                        } 
                     }
                 }
                 this.resultConverter = resultConverter;
+
+                var getGetCountryHitlistData = function () {
+                    Log.call(Log.l.trace, "LocalEvents.Controller.");
+                    AppData.setErrorMsg(that.binding);
+                    AppData.call("PRC_GetCountryHitlist", {
+                        pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                        pLanguageSpecID: AppData.getLanguageId()
+                    }, function (json) {
+                        Log.print(Log.l.info, "call success! ");
+                        var results = json.d.results;
+                        results.sort(function (a, b) {
+                            return b.Anzahl - a.Anzahl;
+                        });
+                        results.forEach(function (item, index) {
+                            that.resultConverter(item, index);
+                        });
+                        if (that.isSupreme === 1) {
+                            var restdata = anzKontakte - anzKontaktePremium;
+                            if (restdata) {
+                                top5Diagramlabelsdata.push("Rest-Daten" + " " + Math.round((restdata / anzKontakte) * 100) + "%");
+                                top5Diagramdatasetsdata.push(restdata);
+                                top5Diagrambackgroundcolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, 9 / 12)));
+                                top5Diagrambordercolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, 9 / 12)));
+                            }
+                            that.setUpData();
+                            that.createPremiumChart();
+                        } else {
+                            that.setUpData();
+                            that.createSurpremeChart();
+                        } 
+                    }, function (error) {
+                        Log.print(Log.l.error, "call error");
+                    });
+                    Log.ret(Log.l.trace);
+                }
+                this.getGetCountryHitlistData = getGetCountryHitlistData;
 
                 var loadData = function (recordId) {
                     Log.call(Log.l.trace, "DiaCountrys.");
                     that.clearArrays();
                     AppData.setErrorMsg(that.binding);
                     var ret = new WinJS.Promise.as().then(function () {
+                        return DiaCountrys.mitarbeiterView.select(function (json) {
+                                Log.print(Log.l.trace, "mitarbeiterView: success!");
+                                if (json && json.d && json.d.results && json.d.results.length > 0) {
+                                    Log.print(Log.l.trace, "mitarbeiterView: success!");
+                                    var result = json.d.results[0];
+                                    anzKontakte = result.AnzKontakte;
+                                    Log.print(Log.l.trace, "mitarbeiterView: success!");
+                                }
+
+                            },
+                            function (errorResponse) {
+                                // called asynchronously if an error occurs
+                                // or server returns response with an error status.
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                            });
+                    }).then(function () {
                         return DiaCountrys.reportLand.select(function (json) {
                             Log.print(Log.l.trace, "reportLand: success!");
                             if (json && json.d && json.d.results && json.d.results.length > 0) {
@@ -420,20 +483,11 @@
                                 results.sort(function (a, b) {
                                     return b.NumHits - a.NumHits;
                                 });
-
-                                if (that.binding.Top5Country === "10") {
-                                    results.length = 10;
-                                } else {
-                                    results.length = 5;
-                                }
-
                                 results.forEach(function (item, index) {
                                     that.resultConverter(item, index);
                                 });
-                               
                                 Log.print(Log.l.trace, "reportLand: success!");
                             }
-
                         },
                         function (errorResponse) {
                             // called asynchronously if an error occurs
@@ -441,22 +495,6 @@
                              AppData.setErrorMsg(that.binding, errorResponse);
                          });
                     }).then(function () {
-                        return DiaCountrys.mitarbeiterView.select(function (json) {
-                            Log.print(Log.l.trace, "mitarbeiterView: success!");
-                            if (json && json.d && json.d.results && json.d.results.length > 0) {
-                                    Log.print(Log.l.trace, "mitarbeiterView: success!");
-                                    var result = json.d.results[0];
-                                    //anzKontakte = result.AnzKontakte;
-                                    Log.print(Log.l.trace, "mitarbeiterView: success!");
-                            }
-
-                            },
-                            function (errorResponse) {
-                                // called asynchronously if an error occurs
-                                // or server returns response with an error status.
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                            });
-                        }).then(function () {
                         if (that.isSupreme === 1) {
                             that.setUpData();
                             that.createPremiumChart();
@@ -487,29 +525,13 @@
                     }
                 }
                 this.checkIfSurpreme = checkIfSurpreme;
-
-                this.eventHandlers = {
-                    changedTopCountry: function (event) {
-                        Log.call(Log.l.trace, "Contact.Controller.");
-                        that.binding.Top5Country = parseInt(event.target.value);
-                        that.loadData();
-                        Log.ret(Log.l.trace);
-                    }
-                };
-
-                if (top5Countrydrop) {
-                    this.addRemovableEventListener(top5Countrydrop, "change", this.eventHandlers.changedTopCountry.bind(this));
-                }
-
+                
             that.processAll().then(function () {
-                    Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.dropdowncolor();
-            }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.checkIfSurpreme();
             }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                return loadData();
+                return getGetCountryHitlistData();
             }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return;

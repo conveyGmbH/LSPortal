@@ -4,17 +4,10 @@
 }
 
 .countrysindustries-chart-top-text-container {
-    height: 50px;
-    width: 100%;
-    float: left;
-    font-weight: bold;
+    display: inline;
+    vertical-align: middle;
+    width: 100% !important;
 }
-.countrysindustries-chart-top-combo-container {
-    height: 50px;
-    width: 30%;
-    float: right;
-}
-
 .countrysindustries-chart-container {
     height: 93% !important;
     width: 98%;
@@ -48,7 +41,7 @@
     cursor: pointer;
 }
 .diaCountrysIndustries .win-dropdown {
-    width: 33.3% !important;
+    width: 49.9% !important;
     height: 50px;
     float: left;
     position: relative;
