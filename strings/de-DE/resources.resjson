@@ -1402,6 +1402,8 @@
     "diaCountrys.titleTooltip" : "Aus welchen Top 10 Ländern kommen Ihre gescannten Besucher?",
     "diaCountrys.top5" : "Top 5 Länder",
     "diaCountrys.top10" : "Top 10 Länder",
+    "diaCountrys.visitors" : " Besucher",
+    "diaCountrys.remaindata" : "Rest-Daten",
 
     "diaVisitors.title" : "Besucher",
     "diaVisitors.titleTooltip" : "Wie verteilen sich Ihre gescannten Besucher während des Tages / auf die Veranstaltungstage?",

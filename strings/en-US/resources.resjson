@@ -1399,6 +1399,8 @@
     "diaCountrys.titleTooltip" : "Which top 10 countries do your scanned visitors come from??",
     "diaCountrys.top5" : "Top 5 countries",
     "diaCountrys.top10" : "Top 10 countries",
+    "diaCountrys.visitors" : " Visitors",
+    "diaCountrys.remaindata" : "Rest-Data",
 
     "diaVisitors.title" : "Visitors",
     "diaVisitors.titleTooltip" : "How are your scanned visitors distributed during the day / over the event days?",
