@@ -37,7 +37,7 @@
             this.nextUrl = null;
 
             var that = this;
-            this.isSupreme = AppData._userData.IsSupreme;
+            this.isSupreme = parseInt(AppData._userData.IsSupreme);
 
             var layout = null;
 
