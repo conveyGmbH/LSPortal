@@ -17,6 +17,20 @@
                 
             }, commandList]);
 
+            var checkIPhoneBug = function () {
+                if (navigator.appVersion) {
+                    var testDevice = ["iPhone OS", "iPod OS"];
+                    for (var i = 0; i < testDevice.length; i++) {
+                        var iPhonePod = navigator.appVersion.indexOf(testDevice[i]);
+                        if (iPhonePod >= 0) {
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            };
+            var isAppleDevice = checkIPhoneBug();
+
             var that = this;
 
             this.eventHandlers = {
@@ -73,11 +87,12 @@
             };
 
             var conveyUrl = function() {
-                if (AppData.getLanguageId() === 1031) {
-                    window.open('https://www.convey.de/kontakt/');
+                var url = getResourceText("support.url");
+                if (isAppleDevice && cordova.InAppBrowser) {
+                    cordova.InAppBrowser.open(url, '_system');
                     WinJS.Navigation.back(1).done();
                 } else {
-                    window.open('https://www.convey.de/contact-2/');
+                    window.open(url, '_system');
                     WinJS.Navigation.back(1).done();
                 }
             }

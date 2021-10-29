@@ -1275,5 +1275,8 @@
     "seriesList.count" : "Anzahl",
 
     "startList.title" : "Überblick",
-    "startList.count"  : "Anzahl"
+    "startList.count"  : "Anzahl",
+
+	"support.title" : "Support",
+	"support.url" : "https://www.convey.de/kontakt/"
 }			

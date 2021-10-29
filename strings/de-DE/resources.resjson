@@ -1425,5 +1425,8 @@
     "diaIndustries.tooltipSupreme2" : "zum Beispiel: Aus welchen Top 5 Branchen (Abteilungen/Funktionen etc.) kommen Ihre gescannten Besucher in Bezug auf ihre Jahrgangsgruppe (ohne Auswahl Tag) / am Tag Y?",
 
 	"startResourceAdministration.title" : "Überblickseite",
-    "startResourceAdministration.comment" : "Erstellen und Einrichten Ihrer Startseite"
+    "startResourceAdministration.comment" : "Erstellen und Einrichten Ihrer Startseite",
+
+	"support.title" : "Support",
+	"support.url" : "https://www.convey.de/kontakt/"
 }		

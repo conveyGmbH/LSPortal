@@ -1422,5 +1422,8 @@
     "diaIndustries.tooltipSupreme2" : "for example: From which top 5 industries (departments/functions etc.) do your scanned visitors come in relation to their age group (without selection day) / on day Y?",
 
     "startResourceAdministration.title" : "Pagina riassuntiva",
-    "startResourceAdministration.comment" : "Crea e imposta la tua homepage"
+    "startResourceAdministration.comment" : "Crea e imposta la tua homepage",
+
+    "support.title" : "Support",
+    "support.url" : "https://www.convey.de/en/contact-2/"
 }

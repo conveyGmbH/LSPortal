@@ -1275,5 +1275,8 @@
     "seriesList.count": "Number",
 
     "startList.title": "Overview",
-    "startList.count": "Number"
+    "startList.count": "Number",
+
+    "support.title" : "Support",
+    "support.url" : "https://www.convey.de/en/contact-2/"
 }
