@@ -88,13 +88,14 @@
 
             var conveyUrl = function() {
                 var url = getResourceText("support.url");
-                if (isAppleDevice && cordova.InAppBrowser) {
+                // Browser dont have inAppBrowser plugin
+                /*if (isAppleDevice && cordova.InAppBrowser) {
                     cordova.InAppBrowser.open(url, '_system');
                     WinJS.Navigation.back(1).done();
-                } else {
+                } else {*/
                     window.open(url, '_system');
                     WinJS.Navigation.back(1).done();
-                }
+                //}
             }
             this.conveyUrl = conveyUrl;
 
