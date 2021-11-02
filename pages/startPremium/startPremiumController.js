@@ -10,6 +10,8 @@
 /// <reference path="~/www/lib/datamaps/scripts/datamaps.world.en.js" />
 /// <reference path="~/www/lib/d3/scripts/d3.min.js" />
 /// <reference path="~/www/lib/topojson/scripts/topojson.js" />
+/// <reference path="~/www/lib/jspdf/jspdf.min.js"/>
+/// <reference path="~/www/lib"/>
 
 /*
  Structure of states to be set from external modules:
@@ -361,6 +363,72 @@
                 },
                 exportPdf: function(event) {
                     Log.call(Log.l.trace, "Start.Controller.");
+                    var element = document.getElementById("tiles-container");
+                    element.style.transform = "transform";
+                    html2canvas(element).then(canvas => {
+                        var img = canvas.toDataURL(); //image data of canvas
+                        var doc = new jsPDF("landscape");
+                        var width = doc.internal.pageSize.width;
+                        var height = doc.internal.pageSize.height;
+                        doc.addImage(img, 0, 0, width, height);
+                        doc.save('DashboardOverview.pdf');
+                    }); 
+                    /*html2pdf(element, {
+                        margin: 1,
+                        filename: 'myfile.pdf',
+                        image: { type: 'jpeg', quality: 1 },
+                        html2canvas: { scale: 2, logging: true },
+                        jsPDF: { unit: 'in', format: 'a4', orientation: 'l' }
+                    });*/
+                    /*html2canvas(document.getElementById("startContactspDhost"), {
+                        onrendered: function (canvas) {
+                            var img = canvas.toDataURL(); //image data of canvas
+                            var doc = new jsPDF("landscape");
+                            doc.addImage(img, 0, 0);
+                            doc.save('startContactspDhostNoQuality.pdf');
+                        }
+                    });*/
+                    /*html2canvas(document.getElementById("startContactshost"), {
+                        quality: 4,
+                        scale: 5,
+                        onrendered: function (canvas) {
+                            var img = canvas.toDataURL(); //image data of canvas
+                            var doc = new jsPDF("landscape");
+                            doc.addImage(img, 0, 0);
+                            doc.save('startContactshost.pdf');
+                        }
+                    });
+                    html2canvas(document.getElementById("startCountryshost"), {
+                        quality: 4,
+                        scale: 5,
+                        onrendered: function (canvas) {
+                            var img = canvas.toDataURL(); //image data of canvas
+                            var doc = new jsPDF("landscape");
+                            doc.addImage(img, 0, 0);
+                            doc.save('startCountryshost.pdf');
+                        }
+                    });
+                    html2canvas(document.getElementById("startQuestionshost"), {
+                        quality: 4,
+                        scale: 5,
+                        onrendered: function (canvas) {
+                            var img = canvas.toDataURL(); //image data of canvas
+                            var doc = new jsPDF("landscape");
+                            doc.addImage(img, 0, 0);
+                            doc.save('startQuestionshost.pdf');
+                        }
+                    });
+                    html2canvas(document.getElementById("startPremiumdiaIndustrieshost"), {
+                        quality: 4,
+                        scale: 5,
+                        onrendered: function (canvas) {
+                            var img = canvas.toDataURL(); //image data of canvas
+                            var doc = new jsPDF("landscape");
+                            doc.addImage(img, 0, 0);
+                            doc.save('startPremiumdiaIndustrieshost.pdf');
+                        }
+                    });*/
+                    Log.ret(Log.l.trace);
                     
                 },
                 clickListBusinessCardContacts: function (event) {
