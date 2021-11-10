@@ -24,7 +24,17 @@
     position: relative;
     height: 160px;
     width: 100%;
+    margin-top: 5%;
 }
+.view-size-bigger .diaYearRange .chart-container-surpreme {
+    height: 100px;
+    margin-top: 10%;
+}
+.view-size-medium .diaYearRange .chart-container-surpreme {
+    height: 200px;
+    margin-top: 10%;
+}
+
 .diaYearRange .chart-container {
     position: relative;
     height: 200px;
@@ -52,7 +62,7 @@
 .diaYearRange .view-size-medium .chart-container-block2,
 .diaYearRange .view-size-medium .chart-container-block3,
 .diaYearRange .view-size-medium .chart-container-block4 {
-    height: 110px;
+    height: 50%;
     width: 50%;
 }
 
@@ -60,7 +70,7 @@
 .diaYearRange .view-size-medium .chart-container-block6,
 .diaYearRange .view-size-medium .chart-container-block7,
 .diaYearRange .view-size-medium .chart-container-block8 {
-    height: 90px !important;
+    height: 50%; /*90px !important*/
     width: 50%;
 }
 .yearRangeChart1-legend {

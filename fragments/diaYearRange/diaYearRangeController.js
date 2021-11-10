@@ -927,9 +927,9 @@
                     var dia7 = fragmentElement.querySelector(".chart-container-block7");
                     var dia8 = fragmentElement.querySelector(".chart-container-block8");
                     if (that.isSupreme === 2) {
-                        container.style.height = "100px";
-                        containerS.style.height = "100px";
-                        containerS.style.marginTop = "5%";
+                        container.style.height = "110px";
+                        //containerS.style.height = "100px";
+                        //containerS.style.marginTop = "5%";
                         dia1.style.height = "100px";
                         dia2.style.height = "100px";
                         dia3.style.height = "100px";

@@ -57,7 +57,7 @@
     right: 0;
     padding: 1em;
     background-color: #34495e;
-    transition: .25s all ease;
+    /*transition: .25s all ease;*/
     pointer-events: none;
 }
 .diaCountrysIndustries.win-dropdown:hover:after {

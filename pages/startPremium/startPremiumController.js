@@ -48,7 +48,7 @@
 
             var listView = pageElement.querySelector("#dataLicenceUserList.listview");
             var exportPdfBtn = pageElement.querySelector("#btn-vis");
-            
+
             this.dispose = function () {
                 if (listView && listView.winControl) {
                     listView.winControl.itemDataSource = null;
@@ -70,7 +70,7 @@
                 item.index = index;
                 item.buttonColor = Colors.tileBackgroundColor;
                 item.buttonTitle = Colors.tileTextColor;
-                }
+            }
             this.resultConverter = resultConverter;
 
             // define data handling standard methods
@@ -78,8 +78,8 @@
                 return AppData.getRecordId("Mitarbeiter");
             };
             this.getRecordId = getRecordId;
-                
-            var loadData = function() {
+
+            var loadData = function () {
                 Log.call(Log.l.trace, "Start.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
@@ -90,10 +90,10 @@
                         var parentElement = pageElement.querySelector("#startContactshost");
                         if (parentElement) {
                             return Application.loadFragmentById(parentElement, "diaCountrys", {});
-                    } else {
+                        } else {
                             return WinJS.Promise.as();
-                                }
-                                    }
+                        }
+                    }
                 }).then(function () {
                     var startCountrysFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("diaYearRange"));
                     if (startCountrysFragmentControl && startCountrysFragmentControl.controller) {
@@ -104,8 +104,8 @@
                             return Application.loadFragmentById(parentElement, "diaYearRange", {});
                         } else {
                             return WinJS.Promise.as();
-                                }
-                                        }
+                        }
+                    }
                 }).then(function () {
                     var startQuestionsFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("diaVisitors"));
                     if (startQuestionsFragmentControl && startQuestionsFragmentControl.controller) {
@@ -116,8 +116,8 @@
                             return Application.loadFragmentById(parentElement, "diaVisitors", {});
                         } else {
                             return WinJS.Promise.as();
-                                        }
-                                            }
+                        }
+                    }
                 }).then(function () {
                     var startContactspDFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("diaCountrysIndustries"));
                     if (startContactspDFragmentControl && startContactspDFragmentControl.controller) {
@@ -126,10 +126,10 @@
                         var parentElement = pageElement.querySelector("#startContactspDhost");
                         if (parentElement) {
                             return Application.loadFragmentById(parentElement, "diaCountrysIndustries", {});
-                                    } else {
+                        } else {
                             return WinJS.Promise.as();
-                                        }
-                                    }
+                        }
+                    }
                 }).then(function () {
                     var startContactspDFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("diaIndustries"));
                     if (startContactspDFragmentControl && startContactspDFragmentControl.controller) {
@@ -160,16 +160,16 @@
                     }
                 }).then(function () {
                     return Start.licenceView.select(function (json) {
-                            // this callback will be called asynchronously
-                            // when the response is available
-                            Log.print(Log.l.trace, "licenceView: success!");
-                            // kontaktanzahlView returns object already parsed from json file in response
-                            if (json && json.d && json.d.results.length > 0) {
-                                that.binding.dataLicence = json.d.results[0];
-                                that.binding.dataLicence.UserListe = that.binding.dataLicence.UserListe.replace(/,/gi, " ");
-                            }
-                            return WinJS.Promise.as();
-                        },
+                        // this callback will be called asynchronously
+                        // when the response is available
+                        Log.print(Log.l.trace, "licenceView: success!");
+                        // kontaktanzahlView returns object already parsed from json file in response
+                        if (json && json.d && json.d.results.length > 0) {
+                            that.binding.dataLicence = json.d.results[0];
+                            that.binding.dataLicence.UserListe = that.binding.dataLicence.UserListe.replace(/,/gi, " ");
+                        }
+                        return WinJS.Promise.as();
+                    },
                         function (errorResponse) {
                             that.userLicence = null;
                             // called asynchronously if an error occurs
@@ -177,7 +177,7 @@
                             AppData.setErrorMsg(that.binding, errorResponse);
                             return WinJS.Promise.as();
                         });
-                }).then(function() {
+                }).then(function () {
                     Log.print(Log.l.trace, "Start.Controller. getUserData");
                     AppData.getUserData();
                     Log.ret(Log.l.trace);
@@ -308,7 +308,7 @@
                     Application.navigateById("employee", event);
                     Log.ret(Log.l.trace);
                 },
-                clickGoToNorthAmerica: function(event) {
+                clickGoToNorthAmerica: function (event) {
                     Log.call(Log.l.trace, "Start.Controller.");
                     var startCountrysFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("startCountrys"));
                     if (startCountrysFragmentControl && startCountrysFragmentControl.controller) {
@@ -361,18 +361,30 @@
                     });
                     Log.ret(Log.l.trace);
                 },
-                exportPdf: function(event) {
+                exportPdf: function (event) {
                     Log.call(Log.l.trace, "Start.Controller.");
                     var element = document.getElementById("tiles-container");
-                    element.style.transform = "transform";
-                    html2canvas(element).then(canvas => {
-                        var img = canvas.toDataURL(); //image data of canvas
-                        var doc = new jsPDF("landscape");
+                    //element.style.transform = "transform";
+                    var ret = new WinJS.Promise.as().then(function () {
+                        var doc = new jsPDF("landscape", "mm", 'a3');
                         var width = doc.internal.pageSize.width;
                         var height = doc.internal.pageSize.height;
-                        doc.addImage(img, 0, 0, width, height);
-                        doc.save('DashboardOverview.pdf');
-                    }); 
+                        html2canvas(element, { dpi: 300}).then(canvas => {
+                            var img = canvas.toDataURL(); //image data of canvas
+                            var base64result = img.split(',')[1];
+                            return img; /*Colors.resizeImageBase64(base64result, "image/png", 0, 0, 1.25);*/
+                        }).then(function (rezizedData) {
+                            var data = "data:image/png;base64," + rezizedData;
+                            doc.addImage(rezizedData, 0, 0, width, height);
+                            doc.save('DashboardOverview_300dpi.pdf');
+                        }); 
+                    })/*.then(function() {
+                        var countryChart = document.getElementById("countryChart");
+                        var imgData = countryChart.toDataURL();
+                        var pdf = new jsPDF("landscape");
+                        pdf.addImage(imgData, 'image/png', 0, 0);
+                        pdf.save("download.pdf");
+                    })*/;
                     /*html2pdf(element, {
                         margin: 1,
                         filename: 'myfile.pdf',
@@ -429,7 +441,7 @@
                         }
                     });*/
                     Log.ret(Log.l.trace);
-                    
+
                 },
                 clickListBusinessCardContacts: function (event) {
                     Log.call(Log.l.trace, "Start.Controller.");
@@ -483,7 +495,7 @@
             };
 
             this.disableHandlers = {
-                clickBack: function() {
+                clickBack: function () {
                     if (WinJS.Navigation.canGoBack === true) {
                         return false;
                     } else {
@@ -499,11 +511,7 @@
                 this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
             }
 
-            if (exportPdfBtn) {
-                this.addRemovableEventListener(exportPdfBtn, "click", this.eventHandlers.exportPdf.bind(this));
-            }
-
-            var checkIfSurpreme = function() {
+            var checkIfSurpreme = function () {
                 if (that.isSupreme === 2) {
                     var fieldLineFull = pageElement.querySelector(".field_line_full");
                     fieldLineFull.className = "field_line field_line_full_double";
@@ -513,7 +521,7 @@
             }
             this.checkIfSurpreme = checkIfSurpreme;
 
-            var checkTip = function() {
+            var checkTip = function () {
                 if (that.isSupreme === 2) {
                     var event = pageElement.querySelector(".circle-with-text-event-dot");
                     event.style.backgroundColor = Colors.dashboardColor;
@@ -538,10 +546,12 @@
             }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.checkTip();
-            }).then(function() {
+            }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
             }).then(function() {
+                Log.print(Log.l.trace, "Data loaded");
+            })/*.then(function () {
                 WinJS.Promise.timeout(50).then(function () {
                     if (AppHeader.controller.binding.userData.IsNoAdminUser) {
                         var confirmTitle = getResourceText("start.confirmIsAppUser");
@@ -556,7 +566,7 @@
                 Log.print(Log.l.trace, "Splash time over");
                 return Application.pageframe.hideSplashScreen();
             }).then(function () {
-                WinJS.Promise.timeout(50).then(function() {
+                WinJS.Promise.timeout(50).then(function () {
                     if (that.binding.generalData.publishFlag) {
                         var confirmTitle = getResourceText("start.confirmTextPublish");
                         confirm(confirmTitle, function (result) {
@@ -569,7 +579,7 @@
                     }
                 });
                 Log.print(Log.l.trace, "Splash screen vanished");
-            })/*.then(function() {
+            }).then(function() {
                 WinJS.Promise.timeout(50).then(function () {
                     if (AppHeader.controller.binding.userData.IsNoAdminUser) {
                         var confirmTitle = getResourceText("start.confirmIsAppUser");

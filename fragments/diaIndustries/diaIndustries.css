@@ -27,27 +27,27 @@
 #industriesYearChart4 {
     float: left;
 }
-.chart-container-block1,
-.chart-container-block2,
-.chart-container-block3,
-.chart-container-block4,
-.chart-container-block5,
-.chart-container-block6,
-.chart-container-block7,
-.chart-container-block8 {
+.diaIndustries .chart-container-block1,
+.diaIndustries .chart-container-block2,
+.diaIndustries .chart-container-block3,
+.diaIndustries .chart-container-block4,
+.diaIndustries .chart-container-block5,
+.diaIndustries .chart-container-block6,
+.diaIndustries .chart-container-block7,
+.diaIndustries .chart-container-block8 {
     height: 220px;
     width: 24%;
     float: left;
     margin-top: 10px;
 }
-.view-size-medium .chart-container-block1,
-.view-size-medium .chart-container-block2,
-.view-size-medium .chart-container-block3,
-.view-size-medium .chart-container-block4,
-.view-size-medium .chart-container-block5,
-.view-size-medium .chart-container-block6,
-.view-size-medium .chart-container-block7,
-.view-size-medium .chart-container-block8 {
+.view-size-medium .diaIndustries .chart-container-block1,
+.view-size-medium .diaIndustries .chart-container-block2,
+.view-size-medium .diaIndustries .chart-container-block3,
+.view-size-medium .diaIndustries .chart-container-block4,
+.view-size-medium .diaIndustries .chart-container-block5,
+.view-size-medium .diaIndustries .chart-container-block6,
+.view-size-medium .diaIndustries .chart-container-block7,
+.view-size-medium .diaIndustries .chart-container-block8 {
     height: 100px;
     width: 49%;
 }
@@ -85,6 +85,6 @@
     right: 0;
     padding: 1em;
     background-color: #34495e;
-    transition: .25s all ease;
+    /*transition: .25s all ease;*/
     pointer-events: none;
 }

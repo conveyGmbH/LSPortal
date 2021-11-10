@@ -26,8 +26,10 @@
                         <div class="circle-with-text-global-dot"></div>
                         <span class="circle-with-text-global-text" data-win-res="{textContent: 'startPremium.tipEvent'}"></span>
                     </div>
-                    <button id="btn-all" style="float: right" data-win-res="{textContent: 'startPremium.exportAll'}"></button>
-                    <button id="btn-vis"style="float: right" data-win-res="{textContent: 'startPremium.exportCurrent'}"></button>
+                    <button id="btn-all" data-win-res="{textContent: 'startPremium.exportAll'}"></button>
+                    <div>
+                        <button id="btn-vis" onclick="AppBar.handleEvent('click', 'exportPdf', event)"  data-win-res="{textContent: 'startPremium.exportCurrent'}"></button>
+                    </div>
                     <div id="tiles-container" class="tiles-container">
                         <div name="charts" class="tile tile-top">
                             <div class="tile-content-inner" data-win-bind="style.display: countContacts  Binding.Converter.toDisplay">
