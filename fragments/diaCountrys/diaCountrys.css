@@ -21,12 +21,12 @@
     float: right;
 }
 .country-chart-container {
-    min-height: 235px;
+    /*min-height: 235px;*/
     width: 100%;
 }
 .country-chart-holder {
-    width: 50%;
-    height: 240px;
+    /*width: 100%; 50%*/
+    height: 235px; /*240px*/
     float: right;
 }
 .view-size-medium .country-chart-holder {

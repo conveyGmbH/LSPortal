@@ -175,7 +175,7 @@
                             options: {
                                 responsive: true,
                                 maintainAspectRatio: false,
-                                cutout: 75,
+                                cutout: '85%',
                                 elements: {
                                     center: {
                                         text: anzKontakte + getResourceText("diaCountrys.visitors"),
@@ -558,6 +558,7 @@
                     var container = fragmentElement.querySelector(".country-chart-holder");
                     var labels = fragmentElement.querySelector(".countrys-label-surpreme");
                     if (that.isSupreme === 2) {
+                        container.style.width = "50%";
                         /*container.style.width = "48%";
                         container.style.height = "240px";
                         container.style.float = "right";
@@ -566,7 +567,7 @@
                         labels.style.height = "240px";*/
                     } else {
                         container.style.width = "100%";
-                        container.style.height = "235px";
+                        /*container.style.height = "235px";*/
                         labels.style.display = "none";
                     }
                 }
