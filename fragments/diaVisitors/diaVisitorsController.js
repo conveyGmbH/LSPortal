@@ -21,10 +21,19 @@
                             hour: getResourceText("diaVisitors.hour"),
                             day: getResourceText("diaVisitors.day"),
                             dayhourflag: "0"
-                            }
+                        }
                     ]);
 
                 var that = this;
+                var icons = fragmentElement.querySelector(".visitor-chart-top-container");
+
+                var loadIcon = function () {
+                    var icon = fragmentElement.querySelector(".action-image");
+                    icon.name = "information";
+                    Colors.loadSVGImageElements(icons, "action-image", 24, Colors.textColor, "name");
+                }
+                this.loadIcon = loadIcon;
+
                 this.isSupreme = parseInt(AppData._userData.IsSupreme);
 
                 var dayhourcombo = fragmentElement.querySelector("#dayhourdropdown");
@@ -72,7 +81,7 @@
                         } else {
                             moment().locale("de");
                             ret = moment(milliseconds).format("HH:mm");//new Date(milliseconds).toLocaleTimeString().slice(0, -3);
-                            
+
                         }
                         //.toLocaleString('de-DE').substr(0, 10);
                     } else {
@@ -115,10 +124,10 @@
 
                         return mili;
                     }
-                    
+
                 }
                 this.formatDate = formatDate;
-                
+
                 var getMilliseconts = function (date) {
                     var d = new Date(date);
                     var m = date.getTime();
@@ -210,7 +219,7 @@
                                 },
                                 animations: {
                                     duration: 1,
-                                    onComplete: function() {
+                                    onComplete: function () {
                                         var chartInstance = this.chart,
                                             ctx = chartInstance.ctx;
 
@@ -220,9 +229,9 @@
                                         ctx.textAlign = 'center';
                                         ctx.textBaseline = 'bottom';
 
-                                        this.data.datasets.forEach(function(dataset, i) {
+                                        this.data.datasets.forEach(function (dataset, i) {
                                             var meta = chartInstance.controller.getDatasetMeta(i);
-                                            meta.data.forEach(function(bar, index) {
+                                            meta.data.forEach(function (bar, index) {
                                                 var data = dataset.data[index];
                                                 ctx.fillText(data, bar._model.x, bar._model.y);
                                             });
@@ -230,7 +239,7 @@
                                     }
                                 },
                                 scales: {
-                                    y: 
+                                    y:
                                         {
                                             display: false,
                                             grid: {
@@ -275,15 +284,16 @@
                         if (visitorChartData.datasets.length > 1) {
                             visitorChartData.datasets[1].data = visitorChartDataRawSurpreme;
                         } else {
-                            visitorChartData.datasets.push({
+                            //ignoriere Stand 15.11 - von mesago gewünscht - nur blaue Daten hier anzeigen!!!
+                            /*visitorChartData.datasets.push({
                                 label: visitorChartDataLabels,
                                 data: visitorChartDataRawSurpreme,
                                 backgroundColor: visitorChartDatabackgroundColorSurpreme,
                                 borderColor: visitorChartDataborderColorSurpreme,
                                 barPercentage: 1.0
-                            });  
+                            });*/
                         }
-                        
+
                     }
                 }
                 this.redraw = redraw;
@@ -294,11 +304,12 @@
                     visitorChartDataRaw.push(item.NumHits);
                     visitorChartDatabackgroundColor.push(Colors.dashboardColor);
                     visitorChartDataborderColor.push(Colors.dashboardColor);
-                    if (that.isSupreme === 2) {
+                    //ignoriere Stand 15.11 - von mesago gewünscht - nur blaue Daten hier anzeigen!!!
+                    /*if (that.isSupreme === 2) {
                         visitorChartDataRawSurpreme.push(item.NumHits);
                         visitorChartDatabackgroundColorSurpreme.push(surpremebarcolor);
                         visitorChartDataborderColorSurpreme.push(surpremebarcolor);
-                    }
+                    }*/
                 }
                 this.resultDayConverter = resultDayConverter;
 
@@ -323,15 +334,16 @@
                         visitorChartDataRaw.push(item.NumHits);
                         visitorChartDatabackgroundColor.push(Colors.dashboardColor);
                         visitorChartDataborderColor.push(Colors.dashboardColor);
-                        if (that.isSupreme === 2) {
-                            visitorChartDataRawSurpreme.push(item.NumHits);
+                        //ignoriere Stand 15.11 - von mesago gewünscht - nur blaue Daten hier anzeigen!!!
+                        /*if (that.isSupreme === 2) {
+                            visitorChartDataRawSurpreme.push(item.NumHits); Global
                             visitorChartDatabackgroundColorSurpreme.push(surpremebarcolor);
                             visitorChartDataborderColorSurpreme.push(surpremebarcolor);
-                        }
+                        }*/
                     }
                 }
                 this.resultHourConverter = resultHourConverter;
-                
+
                 var getGetDashboardVisitorData = function (interval, startday, endday) {
                     Log.call(Log.l.trace, "LocalEvents.Controller.");
                     AppData.setErrorMsg(that.binding);
@@ -347,23 +359,25 @@
                         Log.print(Log.l.info, "call success! ");
                         var interval = that.binding.dayhourflag;
                         var results = json.d.results;
-                        maxtickNummer = Math.max.apply(Math, results.map(function (o) { return o.NumHits; }));
-                        if (interval === "0") {
-                            results.forEach(function(item, index) {
-                                that.resultHourConverter(item, index);
-                            });
-                        } else {
-                            results.forEach(function (item, index) {
-                            that.resultDayConverter(item, index);
-                        });
-                        }
-                        
-                        if (visitorChart) {
-                            that.redraw();
-                            that.createvisitorChart();
-                        } else {
-                            that.redraw();
-                            that.createvisitorChart();
+                        if (results && results.length > 0) {
+                            maxtickNummer = Math.max.apply(Math, results.map(function (o) { return o.NumHits; }));
+                            if (interval === "0") {
+                                results.forEach(function (item, index) {
+                                    that.resultHourConverter(item, index);
+                                });
+                            } else {
+                                results.forEach(function (item, index) {
+                                    that.resultDayConverter(item, index);
+                                });
+                            }
+
+                            if (visitorChart) {
+                                that.redraw();
+                                that.createvisitorChart();
+                            } else {
+                                that.redraw();
+                                that.createvisitorChart();
+                            }
                         }
 
                     }, function (error) {
@@ -397,14 +411,14 @@
                             endday = 0;
                             daycombo.value = "";
                         } else {
-                            daycombo.style.display = "inline"; 
+                            daycombo.style.display = "inline-flex";
                             startday = moment().valueOf();
                             endday = moment().valueOf();
                             daycombo.value = moment().format("YYYY-MM-DD");
                         }
                         Log.ret(Log.l.trace);
                         that.getGetDashboardVisitorData(that.getDayHourData(), startday, endday);
-                        
+
                         /*var interval = parseInt(that.binding.dayhourflag);
                         if (interval === 0) {
                             that.getGetDashboardVisitorData(24, 0, 0);
@@ -439,18 +453,21 @@
                     //this.addRemovableEventListener(daycombo, "focus", this.eventHandlers.cleardDay.bind(this));
                 }
 
-            that.processAll().then(function () {
-                Log.print(Log.l.trace, "Binding wireup page complete");
-                return dropdowncolor();
-            }).then(function () {
-                Log.print(Log.l.trace, "Binding wireup page complete");
-                return getGetDashboardVisitorData(1, moment().valueOf(), moment().valueOf());
-            }).then(function () {
-                Log.print(Log.l.trace, "Data loaded");
-            });
-            Log.ret(Log.l.trace);
-        }, {
-            
+                that.processAll().then(function () {
+                    Log.print(Log.l.trace, "Binding wireup page complete");
+                    return that.loadIcon();
+                }).then(function () {
+                    Log.print(Log.l.trace, "Binding wireup page complete");
+                    return dropdowncolor();
+                }).then(function () {
+                    Log.print(Log.l.trace, "Binding wireup page complete");
+                    return getGetDashboardVisitorData(1, moment().valueOf(), moment().valueOf());
+                }).then(function () {
+                    Log.print(Log.l.trace, "Data loaded");
+                });
+                Log.ret(Log.l.trace);
+            }, {
+
             })
     });
 })();

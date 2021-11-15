@@ -147,6 +147,7 @@
                 this.hexToRgbA = hexToRgbA;
                 
                 var top5Diagramlabelsdata = [];
+                var to5DiagramLabelsdataMulitline = [];
                 var top5Diagramdatasetsdata = [];
                 var top5Diagrambackgroundcolor = [];
                 var top5Diagrambordercolor = [];
@@ -265,8 +266,9 @@
                             elem.push('</div>');
                             elem.push('<div class="custom-legends-item-right">');
                             elem.push('<div class="custom-legends-item-right-label">');
-                            if (chart.data.labels[i]) {
-                                elem.push(chart.data.labels[i]);
+                            //hack ignore label with multiline -> use top5Diagramlabelsdata instead parameter chart 
+                            if (top5Diagramlabelsdata[i]) {
+                                elem.push(top5Diagramlabelsdata[i]);
                             }
                             elem.push('<div class="custom-legends-item-right-count" style="color:' +
                                 chart.data.datasets[1].backgroundColor[i] +
@@ -309,7 +311,7 @@
                                 plugins: {
                                     htmlLegend: {
                                         // ID of the container to put the legend in
-                                        containerID: 'countrys-label-surpreme',
+                                        containerID: 'countrys-label-surpreme'
                                     },
                                     legend: {
                                         display: false
@@ -326,6 +328,12 @@
                                     },
                                     xAxis: {
                                         display : false
+                                    }, r: {
+                                        pointLabels: {
+                                            font: {
+                                                //size: 14
+                                            }
+                                        }
                                     }
                                 }
                             },
@@ -336,6 +344,7 @@
                 
                 var clearArrays = function() {
                     top5Diagramlabelsdata = [];
+                    to5DiagramLabelsdataMulitline = [];
                     top5Diagramdatasetsdata = [];
                     top5Diagrambackgroundcolor = [];
                     top5Diagrambordercolor = [];
@@ -357,7 +366,7 @@
                         dataMain.datasets[0].borderColor = top5Diagrambordercolor;
                     }
                     if (that.isSupreme === 2) {
-                        dataMainSurpreme.labels = top5Diagramlabelsdata;
+                        dataMainSurpreme.labels = to5DiagramLabelsdataMulitline;
                         dataMainSurpreme.datasets[0].data = top5Diagramdatasetsdata;
                         dataMainSurpreme.datasets[0].backgroundColor = top5Diagrambackgroundcolor;
                         dataMainSurpreme.datasets[0].borderColor = top5Diagrambordercolor;
@@ -379,7 +388,7 @@
                         top5DiagramChart.update();
                     }
                     if (that.isSupreme === 2) {
-                        top5DiagramSurpremeChart.data.labels = top5Diagramlabelsdata;
+                        top5DiagramSurpremeChart.data.labels = to5DiagramLabelsdataMulitline;
                         top5DiagramSurpremeChart.data.datasets[0].data = top5Diagramdatasetsdata;
                         top5DiagramSurpremeChart.data.datasets[0].backgroundColor = top5Diagrambackgroundcolor;
                         top5DiagramSurpremeChart.data.datasets[0].borderColor = top5Diagrambordercolor;
@@ -418,15 +427,27 @@
                         }
                     }
                     if (that.isSupreme === 2) {
-                        if (index <= 9) {
+                        if (index <= 8) {
+                            //item.Land = item.Land.replace(/,/gi, ",?");
+                            var splitLand = item.Land.replace(/,/gi, ",?").split("?");
                             top5Diagramlabelsdata.push(item.Land);
-                            top5Diagramdatasetsdata.push(Math.round((item.Anzahl / item.TotalHits) * 100));
+                            to5DiagramLabelsdataMulitline.push(splitLand);
+                            top5Diagramdatasetsdata.push(Math.round((item.Anzahl / item.TotalHits) * 100)); /*item.GlobalPercentage*/
                             top5Diagrambackgroundcolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, item.index / 15)));
                             top5Diagrambordercolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, item.index / 15)));
                             var AnzahlSup = that.getRandomInt(8, 12);
-                            top5Diagramsupremedatasetsdata.push(AnzahlSup);
+                            top5Diagramsupremedatasetsdata.push(AnzahlSup); /*item.GlobalPercentage*/
                             top5Diagramsupremebackgroundcolor.push(that.hexToRgbA(that.getColor(surpremeColor, item.index / 15)));
                             top5Diagramsupremebordercolor.push(that.hexToRgbA(that.getColor(surpremeColor, item.index / 15)));
+
+                            anzKontakte = item.TotalHits;
+                            anzKontaktePremium += item.Anzahl;
+                            /*if (that.isSupreme === 2) {
+                                top5Diagramlabelsdata.push(item.Land + " " + Math.round((item.Anzahl / item.TotalHits) * 100) + "%");
+                                top5Diagramdatasetsdata.push(item.Anzahl);
+                                top5Diagrambackgroundcolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, item.index / 12)));
+                                top5Diagrambordercolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, item.index / 12)));
+                            }*/
                         } 
                     }
                 }
@@ -458,6 +479,17 @@
                             that.setUpData();
                             that.createPremiumChart();
                         } else {
+                            var restdata = anzKontakte - anzKontaktePremium;
+                            if (restdata) {
+                                top5Diagramlabelsdata.push(getResourceText("diaCountrys.remaindata"));
+                                top5Diagramdatasetsdata.push(Math.round((restdata / anzKontakte) * 100));
+                                top5Diagramsupremedatasetsdata.push(Math.round((restdata / anzKontakte) * 100)); /*Math.round((restdata / item.TotalHits) * 100)*/
+                                top5Diagrambackgroundcolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, 9 / 15)));
+                                top5Diagrambordercolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, 9 / 15)));
+                                to5DiagramLabelsdataMulitline.push([getResourceText("diaCountrys.remaindata")]);
+                                top5Diagramsupremebackgroundcolor.push(that.hexToRgbA(that.getColor(surpremeColor, 9 / 15)));
+                                top5Diagramsupremebordercolor.push(that.hexToRgbA(that.getColor(surpremeColor, 9 / 15)));
+                            }
                             that.setUpData();
                             that.createSurpremeChart();
                         } 
@@ -526,15 +558,15 @@
                     var container = fragmentElement.querySelector(".country-chart-holder");
                     var labels = fragmentElement.querySelector(".countrys-label-surpreme");
                     if (that.isSupreme === 2) {
-                        container.style.width = "48%";
+                        /*container.style.width = "48%";
                         container.style.height = "240px";
                         container.style.float = "right";
                         labels.style.display = "inline-block";
                         labels.style.width = "48%";
-                        labels.style.height = "240px";
+                        labels.style.height = "240px";*/
                     } else {
                         container.style.width = "100%";
-                        container.style.height = "230px";
+                        container.style.height = "235px";
                         labels.style.display = "none";
                     }
                 }

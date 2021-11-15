@@ -2,7 +2,9 @@
     height: 50px;
     width: 100%;
 }
-
+.view-size-small .diaYearRange .yearrange-chart-top-container {
+    font-size: 14px;
+}
 .diaYearRange .yearrange-chart-top-text-container {
     height: 50px;
     width: 70%;
@@ -17,47 +19,90 @@
 }
 .diaYearRange .yearrange-chart-top-combo-container {
     height: 50px;
-    width: 30%;
     float: right;
+}
+.diaYearRange .action-image {
+    margin-top: 13px;
+    display: flex !important;
+    position: center;
 }
 .diaYearRange .chart-container-surpreme {
     position: relative;
-    height: 160px;
+    height: 100px;
     width: 100%;
-    margin-top: 5%;
+   /* margin-top: 5%;*/
 }
 .view-size-bigger .diaYearRange .chart-container-surpreme {
     height: 100px;
-    margin-top: 10%;
+   /* margin-top: 10%;*/
 }
 .view-size-medium .diaYearRange .chart-container-surpreme {
-    height: 200px;
-    margin-top: 10%;
+    height: 100px;
+   /* margin-top: 5%;*/
+}
+
+.view-size-small .diaYearRange .chart-container-surpreme {
+    height: 110px;
+   /* margin-top: 10%;*/
 }
 
 .diaYearRange .chart-container {
     position: relative;
-    height: 200px;
+    height: 130px;
     width: 100%;
 }
+.view-size-biggest .diaYearRange .chart-container {
+    position: relative;
+    height: 130px;
+    width: 100%;
+}
+.view-size-bigger .diaYearRange .chart-container {
+    position: relative;
+    height: 130px;
+    width: 100%;
+}
+.view-size-medium .diaYearRange .chart-container {
+    position: relative;
+    height: 130px;
+    width: 100%;
+}
+.view-size-small .diaYearRange .chart-container {
+    position: relative;
+    height: 150px;
+    width: 100%;
+}
+
 .diaYearRange .chart-container-block1,
 .diaYearRange .chart-container-block2,
 .diaYearRange .chart-container-block3,
 .diaYearRange .chart-container-block4 {
-    height: 200px;
+    height: 100px;
     width: 25%;
     float: left;
+}
+.view-size-small .diaYearRange .chart-container-block1,
+.view-size-small .diaYearRange .chart-container-block2,
+.view-size-small .diaYearRange .chart-container-block3,
+.view-size-small .diaYearRange .chart-container-block4 {
+    width: 25%;
+    height: 120px;
 }
 .diaYearRange .chart-container-block5,
 .diaYearRange .chart-container-block6,
 .diaYearRange .chart-container-block7,
 .diaYearRange .chart-container-block8 {
-    height: 160px;
+    height: 80px;
     width: 25%;
     float: left;
     margin-top: 0;
 }
-
+.view-size-small .diaYearRange .chart-container-block5,
+.view-size-small .diaYearRange .chart-container-block6,
+.view-size-small .diaYearRange .chart-container-block7,
+.view-size-small .diaYearRange .chart-container-block8 {
+    width: 25%;
+    height: 100px;
+}
 .diaYearRange .view-size-medium .chart-container-block1,
 .diaYearRange .view-size-medium .chart-container-block2,
 .diaYearRange .view-size-medium .chart-container-block3,
@@ -93,6 +138,21 @@
     width: 100%;
     height: 20px;
 }
+
+.view-size-medium .diaYearRange .yearRangeChart1-legend,
+.view-size-medium .diaYearRange .yearRangeChart2-legend,
+.view-size-medium .diaYearRange .yearRangeChart3-legend,
+.view-size-medium .diaYearRange .yearRangeChart4-legend {
+    height: 48px;
+}
+
+.view-size-small .diaYearRange .yearRangeChart1-legend,
+.view-size-small .diaYearRange .yearRangeChart2-legend,
+.view-size-small .diaYearRange .yearRangeChart3-legend,
+.view-size-small .diaYearRange .yearRangeChart4-legend {
+    height: 20px;
+}
+
 .diaYearRange .custom-legends-item1 {
     text-align: center;
     vertical-align: middle;

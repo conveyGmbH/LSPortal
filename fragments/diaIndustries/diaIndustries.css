@@ -1,11 +1,16 @@
 ﻿.diaIndustries .industries-chart-top-container {
+    display: inline-block;
     height: 50px;
+    width: calc(50% - 25px);
+}
+.view-size-medium .diaIndustries .industries-chart-top-container {
     width: 100%;
 }
 
 .diaIndustries .industries-chart-top-text-container {
     height: 50px;
-    width: 100%;
+    /*width: 90%;
+    float: left;*/
 }
 
 .diaIndustries .industries-chart-top-text {
@@ -14,14 +19,35 @@
     padding-left: 5px;
 }
 
-.diaIndustries .industries-chart-top-combo-container {
+/*.diaIndustries .industries-chart-top-combo-container {
     height: 50px;
     width: 30%;
     float: right;
+}*/
+.diaIndustries .industries-chart-top-container-tooltip {
+    height: 50px;
+    float: right;
+    /*margin-right: 25px;*/
 }
-.chart-container {
+
+.diaIndustries .action-image {
+    margin-top: 13px;
+    display: flex !important;
+    position: center;
+}
+.diaIndustries .chart-container {
     position: relative;
     height: 240px;
+    width: 100%;
+}
+.view-size-bigger .diaIndustries .chart-container {
+    position: relative;
+    height: 480px;
+    width: 100%;
+}
+.view-size-medium .diaIndustries .chart-container {
+    position: relative;
+    height: 930px; /*960px*/
     width: 100%;
 }
 #industriesYearChart4 {
@@ -40,6 +66,28 @@
     float: left;
     margin-top: 10px;
 }
+.view-size-biggest .diaIndustries .chart-container-block1,
+.view-size-biggest .diaIndustries .chart-container-block2,
+.view-size-biggest .diaIndustries .chart-container-block3,
+.view-size-biggest .diaIndustries .chart-container-block4,
+.view-size-biggest .diaIndustries .chart-container-block5,
+.view-size-biggest .diaIndustries .chart-container-block6,
+.view-size-biggest .diaIndustries .chart-container-block7,
+.view-size-biggest .diaIndustries .chart-container-block8 {
+    height: 220px;
+    width: 49%;
+}
+.view-size-bigger .diaIndustries .chart-container-block1,
+.view-size-bigger .diaIndustries .chart-container-block2,
+.view-size-bigger .diaIndustries .chart-container-block3,
+.view-size-bigger .diaIndustries .chart-container-block4,
+.view-size-bigger .diaIndustries .chart-container-block5,
+.view-size-bigger .diaIndustries .chart-container-block6,
+.view-size-bigger .diaIndustries .chart-container-block7,
+.view-size-bigger .diaIndustries .chart-container-block8 {
+    height: 220px;
+    width: 49%;
+}
 .view-size-medium .diaIndustries .chart-container-block1,
 .view-size-medium .diaIndustries .chart-container-block2,
 .view-size-medium .diaIndustries .chart-container-block3,
@@ -48,8 +96,19 @@
 .view-size-medium .diaIndustries .chart-container-block6,
 .view-size-medium .diaIndustries .chart-container-block7,
 .view-size-medium .diaIndustries .chart-container-block8 {
-    height: 100px;
-    width: 49%;
+    height: 220px;
+    width: 100%;
+}
+.view-size-small .diaIndustries .chart-container-block1,
+.view-size-small .diaIndustries .chart-container-block2,
+.view-size-small .diaIndustries .chart-container-block3,
+.view-size-small .diaIndustries .chart-container-block4,
+.view-size-small .diaIndustries .chart-container-block5,
+.view-size-small .diaIndustries .chart-container-block6,
+.view-size-small .diaIndustries .chart-container-block7,
+.view-size-small .diaIndustries .chart-container-block8 {
+    height: 220px;
+    width: 100%;
 }
 .diaIndustries select {
     /* Reset Select */
@@ -57,7 +116,7 @@
     border: 0;
     box-shadow: none;
     /* Personalize */
-    font-size: 15px;
+    font-size: 14px; /*15px*/
     font-weight: bold;
     flex: 1;
     padding: 0 1em;
@@ -68,7 +127,8 @@
 }
 
 .diaIndustries .win-dropdown {
-    width: 33.3% !important;
+    max-width: 500px;
+    width: 55%;
     height: 50px;
     float: left;
     position: relative;
@@ -76,6 +136,23 @@
     border-radius: .25em;
     overflow: hidden;
     margin: 0;
+    font-size: 13px;
+}
+.view-size-biggest .diaIndustries .win-dropdown {
+    width: 80%;
+}
+
+.view-size-bigger .diaIndustries .win-dropdown {
+    width: 90%;
+}
+.view-size-big .diaIndustries .win-dropdown {
+    width: 70%;
+}
+.view-size-medium .diaIndustries .win-dropdown {
+    width: 90%;
+}
+.view-size-small .diaIndustries .win-dropdown {
+    width: 89%;
 }
 
 .diaIndustries .win-dropdown :after {

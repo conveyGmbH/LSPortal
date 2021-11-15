@@ -2,15 +2,28 @@
     height: 50px;
     width: 100%;
 }
+.diaCountrysIndustries .countrysindustries-chart-top-container-tooltip {
+    height: 50px;
+    float: right;
+    /*margin-right: 25px;*/
+}
 
+.diaCountrysIndustries .action-image {
+    margin-top: 13px;
+    display: flex !important;
+    position: center;
+}
 .countrysindustries-chart-top-text-container {
     display: inline;
     vertical-align: middle;
     width: 100% !important;
 }
 .countrysindustries-chart-container {
-    height: 93% !important;
+    height: 93%;
     width: 98%;
+}
+.view-size-small .countrysindustries-chart-container {
+    height: 89%;
 }
 #worldcontainer {
     position: relative;
@@ -31,7 +44,7 @@
     border: 0;
     box-shadow: none;
     /* Personalize */
-    font-size: 15px;
+    font-size: 13px; /*15px*/
     font-weight: bold;
     flex: 1;
     padding: 0 1em;
@@ -40,8 +53,9 @@
     background-image: none;
     cursor: pointer;
 }
-.diaCountrysIndustries .win-dropdown {
-    width: 49.9% !important;
+.diaCountrysIndustries #criteriadropdown.win-dropdown {
+    max-width: 500px;
+    width: 61% !important; /*49.9% !important*/
     height: 50px;
     float: left;
     position: relative;
@@ -49,6 +63,38 @@
     border-radius: .25em;
     overflow: hidden;
     margin: 0;
+    margin-right: 5px;
+}
+.view-size-small .diaCountrysIndustries #criteriadropdown.win-dropdown {
+    margin-right: 2px;
+}
+.diaCountrysIndustries #countrydropdown.win-dropdown {
+    width: 30%; /*49.9% !important*/
+    height: 50px;
+    float: left;
+    position: relative;
+    display: flex;
+    border-radius: .25em;
+    overflow: hidden;
+    margin: 0;
+}
+.view-size-bigger .diaCountrysIndustries #countrydropdown.win-dropdown {
+    width: 29%; /*49.9% !important*/
+}
+.view-size-small .diaCountrysIndustries #countrydropdown.win-dropdown {
+    width: 28%; /*49.9% !important*/
+}
+.view-size-bigger .diaCountrysIndustries select {
+    font-size: 12px;
+}
+.view-size-big .diaCountrysIndustries select {
+    font-size: 12px;
+}
+.view-size-medium .diaCountrysIndustries select {
+    font-size: 11px;
+}
+.view-size-small .diaCountrysIndustries select {
+    font-size: 9px;
 }
 .diaCountrysIndustries .win-dropdown :after {
     content: '\25BC';

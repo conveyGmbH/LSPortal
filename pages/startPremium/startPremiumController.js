@@ -514,9 +514,11 @@
             var checkIfSurpreme = function () {
                 if (that.isSupreme === 2) {
                     var fieldLineFull = pageElement.querySelector(".field_line_full");
-                    fieldLineFull.className = "field_line field_line_full_double";
+                    //fieldLineFull.className = "field_line field_line_full_double";
                     var fieldLineFullInner = pageElement.querySelector("#startPremiumdiaIndustrieshost");
-                    fieldLineFullInner.style.height = "580px";
+                    //fieldLineFullInner.style.height = "580px";
+                } else {
+                    // getfragment of diaIndustriesController and set binding for display
                 }
             }
             this.checkIfSurpreme = checkIfSurpreme;
@@ -533,7 +535,7 @@
                     var globalText = pageElement.querySelector(".circle-with-text-global-text");
                     globalText.style.color = Colors.labelColor;
                 } else {
-                    var tip = pageElement.querySelector(".tip");
+                    var tip = pageElement.querySelector(".tip-container"); /*.tip*/
                     tip.style.display = "none";
                 }
             }

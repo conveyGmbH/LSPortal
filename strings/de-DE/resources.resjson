@@ -1411,7 +1411,7 @@
     "diaVisitors.hour" : "Stunden",
     "diaVisitors.day" : "Tage",
 
-    "diaYearRange.title" : "Jahrgangsgruppe Ihrer gescannten Besucher",
+    "diaYearRange.title" : "Jahrgangsgruppe Ihrer gescannten Besucher (geboren)",
     "diaYearRange.titleTooltip" : "Wie teilen Ihre gescannten Besucher sich auf die Jahrgangsgruppen auf?",
     "diaYearRange.remaindata" : "Rest-Daten",
 
@@ -1421,7 +1421,7 @@
     "startPremium.tipEvent" : "auf dem Messegelände",
 
     "diaIndustries.tooltipPremium" : "zum Beispiel: Aus welchen Top 5 Branchen (Abteilungen/Funktionen etc.) kommen Ihre gescannten Besucher in Bezug auf ihre Jahrgangsgruppe (ohne Auswahl Tag) / am Tag Y?",
-    "diaIndustries.tooltipSupreme1" : "generell gilt: blauer Balken = gescannte Besucher auf Ihrem Messestand, roter Balken = alle auf dem Messegelände da gewesenen Besucher",
+    "diaIndustries.tooltipSupreme1" : "generell gilt: blauer Kreis = gescannte Besucher auf Ihrem Messestand, roter Kreis = alle auf dem Messegelände da gewesenen Besucher",
     "diaIndustries.tooltipSupreme2" : "zum Beispiel: Aus welchen Top 5 Branchen (Abteilungen/Funktionen etc.) kommen Ihre gescannten Besucher in Bezug auf ihre Jahrgangsgruppe (ohne Auswahl Tag) / am Tag Y?",
 
 	"startResourceAdministration.title" : "Überblickseite",

@@ -36,15 +36,23 @@
                 this.countryColors = [];
                 this.isSupreme = parseInt(AppData._userData.IsSupreme);
                 this.dayData = 0;
-                
+
                 var selectedCountryBefore = null;
 
                 var criteriadrop = fragmentElement.querySelector("#criteriadropdown");
                 var countrydrop = fragmentElement.querySelector("#countrydropdown");
                 var select = fragmentElement.querySelectorAll("select");
                 var countryIndustriestooltip = fragmentElement.querySelector("#mydiaCountrysIndustriesElement");
+                var icons = fragmentElement.querySelector(".countrysindustries-chart-top-container");
 
                 this.countryfills = [];
+
+                var loadIcon = function () {
+                    var icon = fragmentElement.querySelector(".action-image");
+                    icon.name = "information";
+                    Colors.loadSVGImageElements(icons, "action-image", 24, Colors.textColor, "name");
+                }
+                this.loadIcon = loadIcon;
 
                 var setTooltipText = function () {
                     if (that.isSupreme === 1) {
@@ -102,7 +110,7 @@
                 }
                 this.formatDate = formatDate;
 
-                var getMilliseconts = function(date) {
+                var getMilliseconts = function (date) {
                     var d = new Date(date);
                     var m = d.valueOf();
                     return m;
@@ -204,7 +212,7 @@
                 }
                 this.createWorldChart = createWorldChart;
 
-                var redrawMap = function() {
+                var redrawMap = function () {
                     Log.call(Log.l.trace, "StartCountrys.Controller.");
                     var map = d3.select('#container').append("svg").attr('class', 'map');
                     map.resize();
@@ -245,7 +253,7 @@
                         });
                     }
                 }
-                
+
                 // countryIndustriesChart
                 var countryIndustriesLabels = [];
                 var countryIndustriesRawDataPremium = [];
@@ -284,7 +292,7 @@
                                 scales: {
                                     y:
                                     {
-                                        
+
                                         grid: {
                                             display: false,
                                             drawOnChartArea: false,
@@ -404,7 +412,7 @@
                                                 var title = context[0].label;
                                                 return title;
                                             },
-                                            label: function(context) {
+                                            label: function (context) {
                                                 var label = context.dataset.data[context.dataIndex];
                                                 return " " + label + " %";
                                             }
@@ -441,14 +449,15 @@
                     }
                 }
                 this.redraw = redraw;
-                
+
                 var resultConverterPremium = function (item, index) {
                     item.index = index;
                     if (item.LandID === 0) {
                         item.Land = "-";
                     }
+                    var splitQualifier = item.Qualifier.split(" ");
                     if (item.Qualifier) {
-                        countryIndustriesLabels.push(item.Qualifier);
+                        countryIndustriesLabels.push(splitQualifier);
                     }
                     if (item.NumHits) {
                         countryIndustriesRawDataPremium.push(Math.round((item.NumHits / item.NumTotal) * 100));
@@ -472,9 +481,6 @@
 
                 var resultConverterCriteria = function (item, index) {
                     item.index = index;
-                    if (item.CriterionID === 61) {
-                        item.CriterionText = getResourceText("diaCountrysIndustries.comboboxtext");
-                    }
                 }
                 this.resultConverterCriteria = resultConverterCriteria;
 
@@ -491,10 +497,12 @@
                                 json.d.results.forEach(function (item, index) {
                                     that.resultConverterCriteria(item, index);
                                 });
-                                json.d.results.shift();
-                                criteriadrop.winControl.data = new WinJS.Binding.List(json.d.results);
-                            criteriadrop.selectedIndex = 0;
-                            that.binding.criteriaMain = json.d.results[0].CriterionID;
+                                var results = json.d.results.filter(function (item) {
+                                    return (item && item.CriterionID && item.CriterionID !== 40 && item.CriterionID !== -3);
+                                });
+                                criteriadrop.winControl.data = new WinJS.Binding.List(results);
+                                criteriadrop.selectedIndex = 0;
+                                that.binding.criteriaMain = results[0].CriterionID;
                             } else {
                                 criteriadrop.winControl.data = new WinJS.Binding.List(json.d.results);
                             }
@@ -506,11 +514,11 @@
                 }
                 this.getGetCriterionListData = getGetCriterionListData;
 
-                var sortFunc = function(result) {
+                var sortFunc = function (result) {
                     return a.NumHits - b.NumHits;
                 }
                 this.sortFunc = sortFunc;
-                
+
                 var getGetDashboardDataPremium = function () {
                     Log.call(Log.l.trace, "LocalEvents.Controller.");
                     AppData.setErrorMsg(that.binding);
@@ -531,7 +539,7 @@
                             results.length = 10;
                         }
                         results.forEach(function (item, index) {
-                             that.resultConverterPremium(item, index);
+                            that.resultConverterPremium(item, index);
                         });
                         if (that.isSupreme === 1) {
                             that.redraw();
@@ -560,7 +568,7 @@
                             results.length = 10;
                         }
                         results.forEach(function (item, index) {
-                             that.resultConverterSurpreme(item, index);
+                            that.resultConverterSurpreme(item, index);
                         });
                         that.redraw();
                         that.createCountryIndustriesSupremeChart();
@@ -611,7 +619,7 @@
                         Log.ret(Log.l.trace);
                     }
                 };
-                
+
                 if (criteriadrop) {
                     this.addRemovableEventListener(criteriadrop, "change", this.eventHandlers.changedCriteria.bind(this));
                 }
@@ -621,7 +629,7 @@
                 }
                 var loadData = function () {
                     Log.call(Log.l.trace, "DiaCountrys.");
-                    AppData.setErrorMsg(that.binding); 
+                    AppData.setErrorMsg(that.binding);
                     var ret = new WinJS.Promise.as().then(function () {
                         return DiaCountrysIndustries.reportLand.select(function (json) {
                             Log.print(Log.l.trace, "reportLand: success!");
@@ -630,7 +638,7 @@
                                 that.countryKeyData = {};
                                 var results = json.d.results;
                                 results.forEach(function (item, index) {
-                                    that.resultConverterPremium(item, index);
+                                    //that.resultConverterPremium(item, index);
                                 });// store result for next use
                                 var countryresult = json.d.results;
                                 for (var ci = 0; ci < countryresult.length; ci++) {
@@ -672,18 +680,18 @@
                             });
                     }).then(function () {
                         return DiaCountrysIndustries.veranstaltungView.select(function (json) {
+                            Log.print(Log.l.trace, "reportLand: success!");
+                            if (json && json.d && json.d.results && json.d.results.length > 0) {
+                                var results = json.d.results;
+                                results.forEach(function (item, index) {
+                                    that.resultConverterPremium(item, index);
+                                });
+                                daydrop.min = that.formatDate(results[0].Startdatum);
+                                daydrop.max = that.formatDate(results[0].Enddatum);
+                                daydrop.value = '';
                                 Log.print(Log.l.trace, "reportLand: success!");
-                                if (json && json.d && json.d.results && json.d.results.length > 0) {
-                                    var results = json.d.results;
-                                    results.forEach(function (item, index) {
-                                        that.resultConverterPremium(item, index);
-                                    });
-                                    daydrop.min = that.formatDate(results[0].Startdatum);
-                                    daydrop.max = that.formatDate(results[0].Enddatum);
-                                    daydrop.value = '';
-                                    Log.print(Log.l.trace, "reportLand: success!");
-                                }
-                            },
+                            }
+                        },
                             function (errorResponse) {
                                 // called asynchronously if an error occurs
                                 // or server returns response with an error status.
@@ -694,8 +702,11 @@
                     return ret;
                 };
                 this.loadData = loadData;
-                
+
                 that.processAll().then(function () {
+                    Log.print(Log.l.trace, "Binding wireup page complete");
+                    return that.loadIcon();
+                }).then(function () {
                     Log.print(Log.l.trace, "Binding wireup page complete");
                     return dropdowncolor();
                 }).then(function () {
@@ -721,4 +732,5 @@
             }, {
 
             })
-    });})();
+    });
+})();

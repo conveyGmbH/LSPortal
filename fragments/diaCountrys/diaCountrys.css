@@ -4,7 +4,7 @@
 }
 .country-chart-top-text-container {
     height: 50px;
-    width: 20%;
+    /*width: 20%;*/
     float: left;
     font-weight: bold;
     display: table;
@@ -16,7 +16,7 @@
 }
 .country-chart-top-combo-container {
     height: 50px;
-    width: 78%;
+    /*width: 78%;*/
     display: table;
     float: right;
 }
@@ -24,15 +24,50 @@
     min-height: 235px;
     width: 100%;
 }
+.country-chart-holder {
+    width: 50%;
+    height: 240px;
+    float: right;
+}
+.view-size-medium .country-chart-holder {
+    width: 50%;
+}
+.view-size-small .country-chart-holder {
+    width: 100%;
+}
 .countrys-label-surpreme {
+    display: inline-block;
     width: 50%;
     height: 100%;
-    display: none;
+}
+.view-size-biggest .countrys-label-surpreme {
+    width: 50%;
+    /*font-size: 13px;*/
+}
+.view-size-bigger .countrys-label-surpreme {
+    width: 49%;
+    font-size: 13.5px;
+}
+.view-size-big .countrys-label-surpreme {
+    width: 45%;
+    font-size: 13px;
+}
+.view-size-medium .countrys-label-surpreme {
+    width: 48%;
+    font-size: 15px;
+}
+.view-size-small .countrys-label-surpreme {
+    width: 100%;
+    font-size: 13px;
+    margin-bottom: 5px;
 }
 .custom-legends {
     width: 100%;
     height: 100%;
     display: grid;
+}
+.view-size-small .custom-legends {
+    font-size: 14px;
 }
 .custom-legends-item-left {
     margin-left: 5%;
@@ -46,6 +81,9 @@
 .custom-legends-item-right {
     width: 70%;
     float: right;
+}
+.view-size-bigger .custom-legends-item-right {
+    width: 77%;
 }
 .custom-legends-item-right-title {
     float: left;
@@ -61,7 +99,7 @@
     border: 0;
     box-shadow: none;
     /* Personalize */
-    font-size: 15px;
+    font-size: 14px;
     font-weight: bold;
     flex: 1;
     padding: 0 1em;

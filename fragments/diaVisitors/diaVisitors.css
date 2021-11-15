@@ -5,7 +5,7 @@
 
 .visitor-chart-top-text-container {
     height: 50px;
-    width: 50%;
+    width: 23%; /*20%*/
     float: left;
     font-weight: bold;
     display: table;
@@ -15,11 +15,32 @@
     vertical-align: middle;
     padding-left: 5px;
 }
+.diaVisitors .visitor-chart-top-combo-container-tooltip {
+    height: 50px;
+    float: right;
+    margin-left: 5px;
+}
+
+.diaVisitors .action-image {
+    margin-top: 13px;
+    display: flex !important;
+    position: center;
+}
 .visitor-chart-top-combo-container {
     height: 50px;
-    width: 50%;
+    width: 55%; /*50*/
     float: right;
     position: relative;
+}
+.view-size-biggest .visitor-chart-top-combo-container,
+view-size-bigger .visitor-chart-top-combo-container,
+.view-size-big .visitor-chart-top-combo-container,
+.view-size-medium .visitor-chart-top-combo-container,
+.view-size-medium-small .visitor-chart-top-combo-container {
+    width: 66%; /*50*/
+}
+.view-size-small .visitor-chart-top-combo-container {
+    width: 60%;
 }
 #showHourDay {
     margin-left: 20%;
@@ -38,7 +59,7 @@
     border: 0;
     box-shadow: none;
     /* Personalize */
-    font-size: 15px;
+    font-size: 13px;
     font-weight: bold;
     flex: 1;
     padding: 0 1em;
@@ -47,9 +68,11 @@
     background-image: none;
     cursor: pointer;
 }
-
+.view-size-small .diaVisitors select {
+    font-size: 10px;
+}
 .diaVisitors .win-dropdown {
-    width: 50% !important;
+    width: 49% !important;
     height: 50px;
     float: right;
     position: relative;
@@ -69,9 +92,9 @@
     pointer-events: none;
 }
 .diaVisitors #daydropdown {
-    width: 49.5% !important;
+    width: 44% !important;
     height: 50px;
-    font-size: 15px;
+    font-size: 13px;
     font-weight: bold;
     color: black;
     background-color: darkgray;
@@ -79,4 +102,9 @@
     border: 0;
     box-shadow: none;
     font-family: Open Sans;
+    padding: 0;
+    padding-left: 13px;
+}
+.view-size-small .diaVisitors #daydropdown {
+    font-size: 9px;
 }

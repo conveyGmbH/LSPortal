@@ -1273,7 +1273,7 @@
     "mailingTemplateEventEdit.mailtext"			: "Testo della posta",
     "mailingTemplateEventEdit.layoutactive"			: "Disattivare per impostare questa bozza di e-mail (in tutte le lingue) come obsoleta. Se una bozza è obsoleta non sarà mostrata come opzione nell'applicazione Mailing.",
 
-    "eventsSeries.title" : "Series",
+    "eventSeries.title" : "Series",
     "eventSeries.language": "Lingua",
     "eventSeries.languageTitle": "Titolo lingua",
     "eventSeries.labelDelete": "Series",

@@ -18,15 +18,26 @@
                     [
                         fragmentElement, {
                             criteriaMain: 1,
-                            criteriaSecond: ""
+                            criteriaSecond: "",
+                            isSupreme: false
                         }
                     ]);
 
                 var that = this;
+
+                var icons = fragmentElement.querySelector(".industries-chart-top-container");
+
+                var loadIcon = function () {
+                    var icon = fragmentElement.querySelector(".action-image");
+                    icon.name = "information";
+                    Colors.loadSVGImageElements(icons, "action-image", 24, Colors.textColor, "name");
+                }
+                this.loadIcon = loadIcon;
+
                 this.isSupreme = parseInt(AppData._userData.IsSupreme);
 
                 var criteriadrop = fragmentElement.querySelector("#criteriadropdown"); 
-                var industriesTooltip = fragmentElement.querySelector("#mydiaCountrysIndustriesElement");
+                var industriesTooltip = fragmentElement.querySelector("#mydiaIndustriesElement");
 
                 var dropdowncolor = function () {
                     criteriadrop.style.backgroundColor = "#efedee ";
@@ -41,6 +52,15 @@
                     }
                 }
                 this.setTooltipText = setTooltipText;
+
+                var setSupremeContainer = function () {
+                    if (that.isSupreme === 1) {
+                        that.binding.isSupreme = false;
+                    } else {
+                        that.binding.isSupreme = true;
+                    }
+                }
+                this.setSupremeContainer = setSupremeContainer;
 
                 var getColor = function (color, id) {
                     var rgbColor = Colors.hex2rgb(color);
@@ -1390,6 +1410,12 @@
                 }
                 
                 that.processAll().then(function () {
+                    Log.print(Log.l.trace, "Binding wireup page complete");
+                    return that.loadIcon();
+                }).then(function() {
+                    that.setSupremeContainer();
+                    return WinJS.Promise.as();
+                }).then(function () {
                     Log.print(Log.l.trace, "Data loaded");
                     return dropdowncolor();
                 }).then(function () {

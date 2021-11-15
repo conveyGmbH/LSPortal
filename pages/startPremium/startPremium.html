@@ -20,31 +20,71 @@
                             <span class="caption-field" data-win-res="{textContent: 'start.title'}"></span>
                         </div>
                     </div>
-                    <div class="tip">
+                    <div class="dashboard-tip-download-container">
+                        <div class="tip-container">
                         <div class="circle-with-text-event-dot"></div>
                         <span class="circle-with-text-event-text" data-win-res="{textContent: 'startPremium.tipLocal'}"></span>
                         <div class="circle-with-text-global-dot"></div>
                         <span class="circle-with-text-global-text" data-win-res="{textContent: 'startPremium.tipEvent'}"></span>
                     </div>
+                        <div class="download-container">
+                            <div>
                     <button id="btn-all" data-win-res="{textContent: 'startPremium.exportAll'}"></button>
+                            </div>
                     <div>
                         <button id="btn-vis" onclick="AppBar.handleEvent('click', 'exportPdf', event)"  data-win-res="{textContent: 'startPremium.exportCurrent'}"></button>
                     </div>
+                        </div>
+                    </div>
+                    <!--<div class="tip">
+                        <div class="circle-with-text-event-dot"></div>
+                        <span class="circle-with-text-event-text" data-win-res="{textContent: 'startPremium.tipLocal'}"></span>
+                        <div class="circle-with-text-global-dot"></div>
+                        <span class="circle-with-text-global-text" data-win-res="{textContent: 'startPremium.tipEvent'}"></span>
+                    </div>
+                    <div>
+                        <button id="btn-all" data-win-res="{textContent: 'startPremium.exportAll'}"></button>
+                    </div>
+                    <div>
+                        <button id="btn-vis" onclick="AppBar.handleEvent('click', 'exportPdf', event)" data-win-res="{textContent: 'startPremium.exportCurrent'}"></button>
+                    </div>-->
+                    <!--<div class="dashboard-tip-download-container">
+                        <div class="tip-container">
+                            <div>
+                                <div class="circle-with-text-event-dot"></div>
+                                <span class="circle-with-text-event-text" data-win-res="{textContent: 'startPremium.tipLocal'}"></span>
+                            </div>
+                            <div>
+                                <div class="circle-with-text-global-dot"></div>
+                                <span class="circle-with-text-global-text" data-win-res="{textContent: 'startPremium.tipEvent'}"></span>
+                            </div>
+                        </div>
+                        <div class="download-container">
+                            <div>
+                                <button id="btn-all" data-win-res="{textContent: 'startPremium.exportAll'}"></button>
+                            </div>
+                            <div>
+                                <button id="btn-vis" onclick="AppBar.handleEvent('click', 'exportPdf', event)"  data-win-res="{textContent: 'startPremium.exportCurrent'}"></button>
+                            </div>
+                        </div>
+                    </div>-->
                     <div id="tiles-container" class="tiles-container">
                         <div name="charts" class="tile tile-top">
                             <div class="tile-content-inner" data-win-bind="style.display: countContacts  Binding.Converter.toDisplay">
+                                <div class="field_line field_line_odd">
+                                    <div id="startContactshost" class="fragmenthost"></div>
+                                    <div id="startCountryshost" class="fragmenthost"></div>
+                                    <div id="startQuestionshost" class="fragmenthost"></div>
+                                </div>
                                 <div class="field_line field_line_even">
                                     <div id="startContactspDhost" class="fragmenthost"></div>
                                 </div>
-                                <div class="field_line field_line_odd">
-                                    <div id="startContactshost" class="fragmenthost"></div>
-                                </div>
-                                <div class="field_line field_line_odd">
+                                <!--<div class="field_line field_line_odd">
                                     <div id="startCountryshost" class="fragmenthost"></div>
                                 </div>
                                 <div class="field_line field_line_odd">
                                     <div id="startQuestionshost" class="fragmenthost"></div>
-                                </div>
+                                </div>-->
                                 <div class="field_line field_line_full">
                                     <div id="startPremiumdiaIndustrieshost" class="fragmenthost"></div>
                                 </div>

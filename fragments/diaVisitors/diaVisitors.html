@@ -19,8 +19,15 @@
                         <div style="display: none;">
                             <div id="mydiaVisitorsElement" data-win-res="{textContent: 'diaVisitors.titleTooltip'}"></div>
                         </div>
+                    </div>
+                    <div class="visitor-chart-top-combo-container-tooltip">
+                        <div class="list-symbol-ID">
+                            <button data-win-bind="name: information" class="action-image" data-win-control="WinJS.UI.Tooltip" data-win-options="{infotip: true, contentElement: mydiaVisitorsElement}"></button>
                         </div>
-                    
+                        <div style="display: none;">
+                            <div id="mydiaCountrysElement2" data-win-res="{textContent: 'diaCountrys.titleTooltip'}"></div>
+                        </div>
+                    </div>
                     <div class="visitor-chart-top-combo-container">
                         <input id="daydropdown" type="date">
                         <select id="dayhourdropdown"

@@ -30,7 +30,7 @@
 
             function changeMenuLabel(myEntry, myLabel) {
                 for (var i = 0; i < Application.navigationBarGroups.length; i++) {
-                    if (Application.navigationBarGroups[i].id === myEntry && AppData._userData.IsSupreme > 1) {
+                    if (Application.navigationBarGroups[i].id === myEntry) {
                         Application.navigationBarGroups[i].label = myLabel;
                         break;
                     }
@@ -209,7 +209,13 @@
             // finally, load the data
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.changeMenuLabel("startPremium", "Dashboard Supreme");
+                if (parseInt(AppData._userData.IsSupreme) === 2) {
+                    that.changeMenuLabel("startPremium", getResourceText("label.startSurpreme")); //
+                } else if (parseInt(AppData._userData.IsSupreme) === 1) {
+                    that.changeMenuLabel("startPremium", getResourceText("label.startPremium")); //getResourceText()
+                } else {
+                    Log.print(Log.l.trace, "Unknown value of IsSupreme Flag");
+                }
             }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();

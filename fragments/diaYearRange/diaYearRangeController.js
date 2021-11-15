@@ -23,17 +23,33 @@
 
                 var that = this;
 
+                var icons = fragmentElement.querySelector(".yearrange-chart-top-container");
+
+                var loadIcon = function () {
+                    var icon = fragmentElement.querySelector(".action-image");
+                    icon.name = "information";
+                    Colors.loadSVGImageElements(icons, "action-image", 24, Colors.textColor, "name");
+                }
+                this.loadIcon = loadIcon;
+
                 this.isSupreme = parseInt(AppData._userData.IsSupreme);
-                
+
                 var yearRangeChart1Legend = {
                     afterUpdate(chart) {
                         var elem = [];
                         elem.push('<div class="custom-legends-item1">');
                         if (chart.data.labels[0]) {
-                            elem.push(chart.data.labels[0]);
+                            // Ändern in der Datenbank
+                            var chartLabel = "";
+                            if (AppData.getLanguageId() === 1031) {
+                                chartLabel = chart.data.labels[0].replace("geboren", "");
+                            } else {
+                                chartLabel = chart.data.labels[0].replace("born", "");
+                            }
+                            elem.push(chartLabel);
                         }
                         elem.push('</div>');
-                        
+
                         var legentElement = fragmentElement.querySelector(".yearRangeChart1-legend");
                         var clegentElement = fragmentElement.querySelector(".custom-legends-item1");
 
@@ -50,7 +66,13 @@
                         var elem = [];
                         elem.push('<div class="custom-legends-item2">');
                         if (chart.data.labels[0]) {
-                            elem.push(chart.data.labels[0]);
+                            var chartLabel = "";
+                            if (AppData.getLanguageId() === 1031) {
+                                chartLabel = chart.data.labels[0].replace("geboren", "");
+                            } else {
+                                chartLabel = chart.data.labels[0].replace("born", "");
+                            }
+                            elem.push(chartLabel);
                         }
                         elem.push('</div>');
 
@@ -70,7 +92,13 @@
                         var elem = [];
                         elem.push('<div class="custom-legends-item3">');
                         if (chart.data.labels[0]) {
-                            elem.push(chart.data.labels[0]);
+                            var chartLabel = "";
+                            if (AppData.getLanguageId() === 1031) {
+                                chartLabel = chart.data.labels[0].replace("geboren", "");
+                            } else {
+                                chartLabel = chart.data.labels[0].replace("born", "");
+                            }
+                            elem.push(chartLabel);
                         }
                         elem.push('</div>');
 
@@ -90,7 +118,13 @@
                         var elem = [];
                         elem.push('<div class="custom-legends-item4">');
                         if (chart.data.labels[0]) {
-                            elem.push(chart.data.labels[0]);
+                            var chartLabel = "";
+                            if (AppData.getLanguageId() === 1031) {
+                                chartLabel = chart.data.labels[0].replace("geboren", "");
+                            } else {
+                                chartLabel = chart.data.labels[0].replace("born", "");
+                            }
+                            elem.push(chartLabel);
                         }
                         elem.push('</div>');
 
@@ -110,7 +144,7 @@
                         if (chart.config.options.elements.center) {
                             // Get ctx from string
                             var ctx = chart.ctx;
-                            
+
                             // Get options from the center object in options
                             var centerConfig = chart.config.options.elements.center;
                             var fontStyle = centerConfig.fontStyle || 'Arial';
@@ -253,7 +287,7 @@
                         });
                 }
                 this.createYearRangeChart1 = createYearRangeChart1;
-                
+
                 //YearRangeChart2Data
                 var yearRangeChartDataLabels2 = [];
                 var yearRangeChartDataTexts2 = [];
@@ -927,20 +961,20 @@
                     var dia7 = fragmentElement.querySelector(".chart-container-block7");
                     var dia8 = fragmentElement.querySelector(".chart-container-block8");
                     if (that.isSupreme === 2) {
-                        container.style.height = "110px";
+                        //container.style.height = "110px";
                         //containerS.style.height = "100px";
                         //containerS.style.marginTop = "5%";
-                        dia1.style.height = "100px";
+                        /*dia1.style.height = "100px";
                         dia2.style.height = "100px";
                         dia3.style.height = "100px";
                         dia4.style.height = "100px";
                         dia5.style.height = "80px";
                         dia6.style.height = "80px";
                         dia7.style.height = "80px";
-                        dia8.style.height = "80px";
+                        dia8.style.height = "80px";*/
                     } else {
-                        container.style.height = "230px";
-                        container.style.height = "130px";
+                        containerS.style.display = "none";
+                        container.style.height = "180px";
                         container.style.marginTop = "5%";
                         dia1.style.height = "130px";
                         dia2.style.height = "130px";
@@ -950,21 +984,24 @@
                 }
                 this.checkIfSurpreme = checkIfSurpreme;
 
-            that.processAll().then(function () {
-                Log.print(Log.l.trace, "Data loaded");
-                return checkIfSurpreme();
-            }).then(function () {
-                Log.print(Log.l.trace, "Data loaded");
-                return getGetDashboardDataPremium();
-            }).then(function () {
-                if (that.isSupreme === 2) {
+                that.processAll().then(function () {
+                    Log.print(Log.l.trace, "Binding wireup page complete");
+                    return that.loadIcon();
+                }).then(function () {
                     Log.print(Log.l.trace, "Data loaded");
-                    return getGetDashboardDataSurpreme();
-                }
-            });
-            Log.ret(Log.l.trace);
-        }, {
-            
+                    return checkIfSurpreme();
+                }).then(function () {
+                    Log.print(Log.l.trace, "Data loaded");
+                    return getGetDashboardDataPremium();
+                }).then(function () {
+                    if (that.isSupreme === 2) {
+                        Log.print(Log.l.trace, "Data loaded");
+                        return getGetDashboardDataSurpreme();
+                    }
+                });
+                Log.ret(Log.l.trace);
+            }, {
+
             })
     });
 })();
