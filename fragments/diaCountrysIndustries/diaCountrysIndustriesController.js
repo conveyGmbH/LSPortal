@@ -34,7 +34,7 @@
                 this.worldMapHeight = 0;
                 this.countryKeyData = null;
                 this.countryColors = [];
-                this.isSupreme = parseInt(AppData._userData.IsSupreme);
+                this.isSupreme = parseInt(AppData._persistentStates.showdashboardMesagoCombo);
                 this.dayData = 0;
 
                 var selectedCountryBefore = null;

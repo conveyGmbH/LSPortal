@@ -626,6 +626,7 @@
     "event.comment" : "Préparez votre événement.",
     "event.activeApplications": "Applications actives",
     "event.visitorFlowPremium" : "Visitor Flow Premium",
+    "event.dashboardMesago"   : "Dashboard Mesago",
 
 	"optQuestionList.title"   : "En option Questions/Réponses",
     "optQuestionList.count"   : "Nombre",

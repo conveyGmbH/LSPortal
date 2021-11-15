@@ -209,9 +209,9 @@
             // finally, load the data
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                if (parseInt(AppData._userData.IsSupreme) === 2) {
+                if (parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 2) {
                     that.changeMenuLabel("startPremium", getResourceText("label.startSurpreme")); //
-                } else if (parseInt(AppData._userData.IsSupreme) === 1) {
+                } else if (parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 1) {
                     that.changeMenuLabel("startPremium", getResourceText("label.startPremium")); //getResourceText()
                 } else {
                     Log.print(Log.l.trace, "Unknown value of IsSupreme Flag");

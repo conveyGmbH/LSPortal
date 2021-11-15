@@ -32,7 +32,7 @@
                 }
                 this.loadIcon = loadIcon;
 
-                this.isSupreme = parseInt(AppData._userData.IsSupreme);
+                this.isSupreme = parseInt(AppData._persistentStates.showdashboardMesagoCombo);
 
                 var yearRangeChart1Legend = {
                     afterUpdate(chart) {

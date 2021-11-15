@@ -28,6 +28,7 @@
                 showNameInHeader: AppData._persistentStates.showNameInHeader,
                 visitorFlowFeature: AppHeader.controller.binding.userData.SiteAdmin,
                 visitorFlowPremium: AppData._persistentStates.visitorFlowPremium,
+                dashboardMesagoFeature: AppHeader.controller.binding.userData.SiteAdmin,
                 actualYear: new Date().getFullYear()
             }, commandList]);
 
@@ -37,6 +38,7 @@
             var initLand = pageElement.querySelector("#InitLand");
             var initServer = pageElement.querySelector("#InitServer");
             var visitorFlow = pageElement.querySelector("#showvisitorFlowCombo");
+            var dashboardMesagoCombo = pageElement.querySelector('#showdashboardMesagoCombo');
             var textComment = pageElement.querySelector(".input_text_comment");
 
             this.dispose = function () {
@@ -49,6 +51,9 @@
                 if (visitorFlow && visitorFlow.winControl) {
                     visitorFlow.winControl.data = null;
             }
+                if (dashboardMesagoCombo && dashboardMesagoCombo.winControl) {
+                    dashboardMesagoCombo.winControl.data = null;
+                }
             }
 
             var creatingVisitorFlowCategory = function () {
@@ -73,6 +78,29 @@
                 }
             };
             this.creatingVisitorFlowCategory = creatingVisitorFlowCategory;
+
+            var creatingDashboardMesagoComboCategory = function () {
+                Log.call(Log.l.trace, "SiteEventsNeuAus.Controller.");
+                var dashboardMesagoComboCategory = [
+                    {
+                        value: 0,
+                        TITLE: ""
+                    },
+                    {
+                        value: 1,
+                        TITLE: getResourceText("label.startPremium")/*"Premium"*/
+                    },
+                    {
+                        value: 2,
+                        TITLE: getResourceText("label.startSurpreme")/*"Supreme"*/
+                    }
+                ];
+                if (dashboardMesagoCombo && dashboardMesagoCombo.winControl) {
+                    dashboardMesagoCombo.winControl.data = new WinJS.Binding.List(dashboardMesagoComboCategory);
+                    dashboardMesagoCombo.selectedIndex = AppData._persistentStates.showdashboardMesagoCombo;
+                }
+            };
+            this.creatingDashboardMesagoComboCategory = creatingDashboardMesagoComboCategory;
 
             var setDataEvent = function (newDataEvent) {
                 var prevNotifyModified = AppBar.notifyModified;
@@ -222,6 +250,13 @@
                         pOptionTypeId = 45;
                         that.binding.visitorFlowPremium = checked;
                         AppData._persistentStates.visitorFlowPremium = checked;
+                        break;
+                    case "showdashboardMesagoCombo":
+                        pOptionTypeId = 47;
+                        //that.binding.visitorFlowPremium = checked;
+                        AppData._persistentStates.showdashboardMesagoCombo = checked;
+                        pValue = checked;
+                        pValueIsSet = true;
                         break;
                 }
                 if (pOptionTypeId) {
@@ -542,6 +577,8 @@
                 return that.loadData();
             }).then(function () {
                 that.creatingVisitorFlowCategory();
+            }).then(function () {
+                that.creatingDashboardMesagoComboCategory();
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 AppBar.notifyModified = true;

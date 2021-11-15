@@ -627,6 +627,7 @@
     "event.comment" : "Ihre Veranstaltung vorbereiten.",
 	"event.activeApplications" : "Aktive Anwendungen",
     "event.visitorFlowPremium" : "Visitor Flow Premium",
+	"event.dashboardMesago"   : "Dashboard Mesago",
 
     "questiongroup.title"   : "Fragengruppen",
     "questiongroup.count"   : "Anzahl",

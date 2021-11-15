@@ -592,6 +592,19 @@
                         AppData._persistentStates.visitorFlowPremium = false;
                     }
                     break;
+                case 47:
+                    if (parseInt(item.LocalValue) === 1 || parseInt(item.LocalValue) === 2) {
+                        AppData._persistentStates.showdashboardMesagoCombo = parseInt(item.LocalValue);
+                        /* NavigationBar.enablePage("visitorFlowDashboard");
+                         NavigationBar.enablePage("visitorFlowEntExt");
+                         NavigationBar.enablePage("employeeVisitorFlow");/*pagename muss wahrscheinlich nochmal geändert werden, jenachdem wie die seite heisst*/
+                    } else {
+                        AppData._persistentStates.showdashboardMesagoCombo = 0;
+                        /*NavigationBar.disablePage("visitorFlowDashboard");
+                        NavigationBar.disablePage("visitorFlowEntExt");
+                        NavigationBar.disablePage("employeeVisitorFlow");*/
+                    }
+                    break;
                 default:
                     // defaultvalues
             }

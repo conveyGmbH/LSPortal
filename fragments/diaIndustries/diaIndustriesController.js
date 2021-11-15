@@ -34,7 +34,7 @@
                 }
                 this.loadIcon = loadIcon;
 
-                this.isSupreme = parseInt(AppData._userData.IsSupreme);
+                this.isSupreme = parseInt(AppData._persistentStates.showdashboardMesagoCombo);
 
                 var criteriadrop = fragmentElement.querySelector("#criteriadropdown"); 
                 var industriesTooltip = fragmentElement.querySelector("#mydiaIndustriesElement");
