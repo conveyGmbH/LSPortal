@@ -36,6 +36,7 @@
 
                 this.isSupreme = parseInt(AppData._persistentStates.showdashboardMesagoCombo);
 
+                var dayCombobox = fragmentElement.querySelector("#dayCombobox");
                 var dayhourcombo = fragmentElement.querySelector("#dayhourdropdown");
                 var daycombo = fragmentElement.querySelector("#daydropdown");
                 var select = fragmentElement.querySelectorAll("select");
@@ -53,8 +54,8 @@
                     for (var i = 0; i < select.length; i++) {
                         select[i].style.backgroundColor = "#efedee ";
                     }
-                    daycombo.style.backgroundColor = "#efedee ";
-                    daycombo.value = moment().format("YYYY-MM-DD");
+                    //daycombo.style.backgroundColor = "#efedee ";
+                    //daycombo.value = moment().format("YYYY-MM-DD");
                 }
                 this.dropdowncolor = dropdowncolor;
 
@@ -169,6 +170,7 @@
                 }
 
                 // visitorChartData
+                var visitorChartDateAll = [];
                 var visitorChartDataLabels = [];
                 var visitorChartDataRaw = [];
                 var visitorChartDatabackgroundColor = [];
@@ -344,13 +346,34 @@
                 }
                 this.resultHourConverter = resultHourConverter;
 
+                var resultConverterDate = function (item, index) {
+                    var dateString = item.IntervalStart.replace("\/Date(", "").replace(")\/", "");
+                    var milliseconds = parseInt(dateString);
+                    if (AppData.appSettings.odata.timeZoneAdjustment) {
+                        milliseconds -= AppData.appSettings.odata.timeZoneAdjustment * 60000;
+                    }
+                    item.VisitorDate = new Date(milliseconds).toLocaleDateString(); /*?! nötig .toLocaleDateString() ?!*/
+                    var curMoment = moment(item.IntervalStart);
+                    if (curMoment) {
+                        //curMoment.locale(Application.language);
+                        if (AppData.getLanguageId() === 1031) {
+                            item.VisitorDateFormatShow = curMoment.format("DD.MM.YYYY");
+                        } else {
+                            item.VisitorDateFormatShow = curMoment.format("YYYY-MM-DD"); /*"dd ll"*/
+                        }
+                        item.VisitorDateFormatCalc = curMoment.format("YYYY-MM-DD");
+                    }
+
+                }
+                this.resultConverterDate = resultConverterDate;
+
                 var getGetDashboardVisitorData = function (interval, startday, endday) {
                     Log.call(Log.l.trace, "LocalEvents.Controller.");
                     AppData.setErrorMsg(that.binding);
                     visitorChartDataLabels = [];
                     visitorChartDataRaw = [];
                     visitorChartDataRawSurpreme = [];
-                    AppData.call("PRC_GetDashTimeline", {
+                    return AppData.call("PRC_GetDashTimeline", {
                         pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
                         pIntervalHours: interval,
                         pStartTS: startday,
@@ -379,13 +402,45 @@
                                 that.createvisitorChart();
                             }
                         }
-
                     }, function (error) {
                         Log.print(Log.l.error, "call error");
                     });
                     Log.ret(Log.l.trace);
                 }
                 this.getGetDashboardVisitorData = getGetDashboardVisitorData;
+
+                var getVisitorDateAll = function () {
+                    Log.call(Log.l.trace, "DiaVisitors.Controller.");
+                    return AppData.call("PRC_GetDashTimeline", {
+                        pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                        pIntervalHours: 24,
+                        pStartTS: 0,
+                        pEndTS: 0
+                    }, function (json) {
+                        //visitorChartDateAll
+                        //that.binding.dayhourflag = "1";
+                        var results = json.d.results;
+                        if (results && results.length > 0) {
+                            results.forEach(function (item, index) {
+                                that.resultConverterDate(item, index);
+                                if (item.NumHits > 0) {
+                                    visitorChartDateAll.push(item);
+                                }
+                            });
+                        }
+                        Log.print(Log.l.info, "visitorChartDateAll:" + visitorChartDateAll);
+                        if (dayCombobox && dayCombobox.winControl) {
+                            dayCombobox.winControl.data = new WinJS.Binding.List(visitorChartDateAll);
+                            dayCombobox.selectedIndex = 0;
+                        }
+                        //that.binding.dayhourflag = "0";
+
+                    }, function (error) {
+                        Log.print(Log.l.error, "call error");
+                    });
+                    Log.ret(Log.l.trace);
+                }
+                this.getVisitorDateAll = getVisitorDateAll;
 
                 this.eventHandlers = {
                     changedTime: function (event) {
@@ -397,23 +452,26 @@
                         } else {
                             that.binding.dayhourflag = 0;
                         }
-                        var startday = that.formatDate(daycombo.value, 1);
+                        var startday = that.formatDate(dayCombobox.value, 1);//var startday = that.formatDate(daycombo.value, 1);
                         if (isNaN(startday)) {
                             startday = 0;
                         }
-                        var endday = that.formatDate(daycombo.value, 0);
+                        var endday = that.formatDate(dayCombobox.value, 0);//var endday = that.formatDate(daycombo.value, 0);
                         if (isNaN(endday)) {
                             endday = 0;
                         }
                         if (visibilitiyday === 0) {
-                            daycombo.style.display = "none";
+                            //daycombo.style.display = "none";
+                            dayCombobox.style.display = "none";
                             startday = 0;
                             endday = 0;
                             daycombo.value = "";
                         } else {
-                            daycombo.style.display = "inline-flex";
-                            startday = moment().valueOf();
-                            endday = moment().valueOf();
+                            //daycombo.style.display = "inline-flex";
+                            dayCombobox.style.display = "inline";
+                            // use date of new daycombobox
+                            /*startday = moment().valueOf();
+                            endday = moment().valueOf();*/
                             daycombo.value = moment().format("YYYY-MM-DD");
                         }
                         Log.ret(Log.l.trace);
@@ -431,6 +489,13 @@
                         Log.call(Log.l.trace, "Event.Controller.");
                         var startday = that.formatDate(daycombo.value, 1);
                         var endday = that.formatDate(daycombo.value, 0);
+                        that.getGetDashboardVisitorData(that.getDayHourData(), startday, endday);
+                        Log.ret(Log.l.trace);
+                    },
+                    changedComboDay: function (event) {
+                        Log.call(Log.l.trace, "Event.Controller.");
+                        var startday = that.formatDate(dayCombobox.value, 1);
+                        var endday = that.formatDate(dayCombobox.value, 0);
                         that.getGetDashboardVisitorData(that.getDayHourData(), startday, endday);
                         Log.ret(Log.l.trace);
                     },
@@ -452,6 +517,10 @@
                     this.addRemovableEventListener(daycombo, "change", this.eventHandlers.changedDay.bind(this));
                     //this.addRemovableEventListener(daycombo, "focus", this.eventHandlers.cleardDay.bind(this));
                 }
+                if (dayCombobox) {
+                    this.addRemovableEventListener(dayCombobox, "change", this.eventHandlers.changedComboDay.bind(this));
+                    //this.addRemovableEventListener(daycombo, "focus", this.eventHandlers.cleardDay.bind(this));
+                }
 
                 that.processAll().then(function () {
                     Log.print(Log.l.trace, "Binding wireup page complete");
@@ -460,8 +529,13 @@
                     Log.print(Log.l.trace, "Binding wireup page complete");
                     return dropdowncolor();
                 }).then(function () {
+                    return that.getVisitorDateAll();
+                }).then(function () {
                     Log.print(Log.l.trace, "Binding wireup page complete");
-                    return getGetDashboardVisitorData(1, moment().valueOf(), moment().valueOf());
+                    //return getGetDashboardVisitorData(1, moment().valueOf(), moment().valueOf());
+                    var startday = that.formatDate(dayCombobox.value, 1);
+                    var endday = that.formatDate(dayCombobox.value, 0);
+                    return getGetDashboardVisitorData(1, startday, endday);
                 }).then(function () {
                     Log.print(Log.l.trace, "Data loaded");
                 });

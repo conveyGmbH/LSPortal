@@ -550,6 +550,13 @@
                             } else {
                                 NavigationBar.showGroupsMenu([]);
                             }
+                                if (parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 2) {
+                                    that.changeMenuLabel("startPremium", getResourceText("label.startSurpreme")); //
+                                } else if (parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 1) {
+                                    that.changeMenuLabel("startPremium", getResourceText("label.startPremium")); //getResourceText()
+                                } else {
+                                    Log.print(Log.l.trace, "Unknown value of IsSupreme Flag");
+                                }
                             complete(json);
                             return WinJS.Promise.as();
                         }, function (errorResponse) {
@@ -571,6 +578,17 @@
 
             that.binding.dataEvent.dateBegin = getDateObject();
             that.binding.dataEvent.dateEnd = getDateObject();
+
+            function changeMenuLabel(myEntry, myLabel) {
+                for (var i = 0; i < Application.navigationBarGroups.length; i++) {
+                    if (Application.navigationBarGroups[i].id === myEntry) {
+                        Application.navigationBarGroups[i].label = myLabel;
+                        break;
+                    }
+                }
+                NavigationBar.groups = Application.navigationBarGroups;
+            }
+            this.changeMenuLabel = changeMenuLabel;
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
