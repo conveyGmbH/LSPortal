@@ -108,3 +108,7 @@ view-size-bigger .visitor-chart-top-combo-container,
 .view-size-small .diaVisitors #daydropdown {
     font-size: 9px;
 }
+
+.diaVisitors #visitorChart {
+    padding-bottom: 5px;
+}
