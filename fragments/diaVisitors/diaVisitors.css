@@ -68,9 +68,6 @@ view-size-bigger .visitor-chart-top-combo-container,
     background-image: none;
     cursor: pointer;
 }
-.view-size-small .diaVisitors select {
-    font-size: 10px;
-}
 .diaVisitors .win-dropdown {
     width: 49% !important;
     height: 50px;
@@ -104,11 +101,11 @@ view-size-bigger .visitor-chart-top-combo-container,
     font-family: Open Sans;
     padding: 0;
     padding-left: 13px;
-}
-.view-size-small .diaVisitors #daydropdown {
-    font-size: 9px;
+    /*ignore style for ios device*/
+    -webkit-appearance: none
 }
 
 .diaVisitors #visitorChart {
     padding-bottom: 5px;
 }
+
