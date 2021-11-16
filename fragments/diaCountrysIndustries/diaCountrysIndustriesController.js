@@ -256,6 +256,7 @@
 
                 // countryIndustriesChart
                 var countryIndustriesLabels = [];
+                var countryIndustriesLabelsMultiline = [];
                 var countryIndustriesRawDataPremium = [];
                 var countryIndustriesRawDataSurpreme = [];
 
@@ -322,7 +323,7 @@
                                         display: false,
                                         callbacks: {
                                             title: function (context) {
-                                                var title = context[0].label;
+                                                var title = countryIndustriesLabels[context[0].dataIndex];
                                                 return title;
                                             },
                                             label: function (context) {
@@ -408,8 +409,8 @@
                                     tooltip: {
                                         display: false,
                                         callbacks: {
-                                            title: function (context) {
-                                                var title = context[0].label;
+                                            title: function (context) {/*.label*/
+                                                var title = countryIndustriesLabels[context[0].dataIndex];
                                                 return title;
                                             },
                                             label: function (context) {
@@ -427,6 +428,7 @@
 
                 var clearArrays = function () {
                     countryIndustriesLabels = [];
+                    countryIndustriesLabelsMultiline = [];
                     countryIndustriesRawDataPremium = [];
                     if (that.isSupreme === 2) {
                         countryIndustriesLabels = [];
@@ -439,11 +441,11 @@
                 var redraw = function () {
                     Log.call(Log.l.trace, "LocalEvents.Controller.");
                     if (that.isSupreme === 1) {
-                        countryIndustriesPremiumData.labels = countryIndustriesLabels;
+                        countryIndustriesPremiumData.labels = countryIndustriesLabelsMultiline;/*countryIndustriesLabels*/
                         countryIndustriesPremiumData.datasets[0].data = countryIndustriesRawDataPremium;
                     }
                     if (that.isSupreme === 2) {
-                        countryIndustriesSupremeData.labels = countryIndustriesLabels;
+                        countryIndustriesSupremeData.labels = countryIndustriesLabelsMultiline;/*countryIndustriesLabels*/
                         countryIndustriesSupremeData.datasets[0].data = countryIndustriesRawDataPremium;
                         countryIndustriesSupremeData.datasets[1].data = countryIndustriesRawDataSurpreme;
                     }
@@ -455,9 +457,10 @@
                     if (item.LandID === 0) {
                         item.Land = "-";
                     }
+                    countryIndustriesLabels.push(item.Qualifier);
                     var splitQualifier = item.Qualifier.split(" ");
                     if (item.Qualifier) {
-                        countryIndustriesLabels.push(splitQualifier);
+                        countryIndustriesLabelsMultiline.push(splitQualifier);
                     }
                     if (item.NumHits) {
                         countryIndustriesRawDataPremium.push(Math.round((item.NumHits / item.NumTotal) * 100));
