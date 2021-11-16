@@ -25,15 +25,20 @@
     width: 100%;
 }
 .country-chart-holder {
-    /*width: 100%; 50%*/
+    width: 50%;
     height: 235px; /*240px*/
     float: right;
 }
 .view-size-medium .country-chart-holder {
     width: 50%;
 }
+.view-size-medium-small .country-chart-holder {
+    width: 100%;
+    padding-top: 5px;
+}
 .view-size-small .country-chart-holder {
     width: 100%;
+    padding-top: 5px;
 }
 .countrys-label-surpreme {
     display: inline-block;
@@ -54,6 +59,10 @@
 }
 .view-size-medium .countrys-label-surpreme {
     width: 48%;
+    font-size: 15px;
+}
+.view-size-medium-small .countrys-label-surpreme {
+    width: 100%;
     font-size: 15px;
 }
 .view-size-small .countrys-label-surpreme {

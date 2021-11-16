@@ -558,7 +558,7 @@
                     var container = fragmentElement.querySelector(".country-chart-holder");
                     var labels = fragmentElement.querySelector(".countrys-label-surpreme");
                     if (that.isSupreme === 2) {
-                        container.style.width = "50%";
+                        /*container.style.width = "50%";*/
                         /*container.style.width = "48%";
                         container.style.height = "240px";
                         container.style.float = "right";

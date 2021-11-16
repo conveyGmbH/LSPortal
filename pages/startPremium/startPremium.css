@@ -346,9 +346,13 @@
 .startPremium #startContactshost.fragmenthost {
     height: 285px;
 }
-
+.view-size-medium-small .startPremium #startContactshost.fragmenthost {
+    height: auto;
+    width: 100%;
+}
 .view-size-small .startPremium #startContactshost.fragmenthost {
     height: auto;
+    width: 100%;
 }
 .startPremium #startCountryshost.fragmenthost {
     min-height: 280px;
