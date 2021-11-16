@@ -111,6 +111,7 @@
     /*height: 1080px;*/
     margin-top: 4px;
 }
+
 .startPremium .field_tile_half_left {
     background-color: white;
 }
@@ -346,14 +347,17 @@
 .startPremium #startContactshost.fragmenthost {
     height: 285px;
 }
+
 .view-size-medium-small .startPremium #startContactshost.fragmenthost {
     height: auto;
     width: 100%;
 }
+
 .view-size-small .startPremium #startContactshost.fragmenthost {
     height: auto;
     width: 100%;
 }
+
 .startPremium #startCountryshost.fragmenthost {
     min-height: 280px;
     height: auto; /*300px*/
@@ -427,9 +431,17 @@
     background-color: transparent;
 }
 
+.startPremium button:hover {
+    cursor: pointer;
+}
+.startPremium button:disabled {
+    cursor: default;
+}
 .startPremium #btn-all {
     display: inline-block;
     float: right;
+    position: relative;
+    z-index: 99;
     padding: 0.35em 1.2em;
     border: 0.1em solid darkgray;
     margin: 0 0.3em 0.3em 0;
@@ -444,9 +456,12 @@
     /*transition: all 0.2s;*/
 }
 
+
 .startPremium #btn-vis {
     display: inline-block;
     float: right;
+    position: relative;
+    z-index: 99;
     /*width: 250px;
     height: 30px;*/
     padding: 0.35em 1.2em;
@@ -461,9 +476,7 @@
     background-color: transparent;
     text-align: center;
     /*transition: all 0.2s;*/
-    cursor: pointer;
 }
-
 /*.view-size-small #btn-vis,
 .view-size-small #btn-all {
     font-size: 10px;
@@ -507,7 +520,7 @@
 
 .circle-with-text-global-text {
     margin-left: 5px !important;
-   /* width: 230px;*/
+    /* width: 230px;*/
 }
 
 .tip {
@@ -609,5 +622,3 @@
     font-size: 12px;
     margin-left: 8px;
 }
-
-
