@@ -351,6 +351,7 @@
     height: auto;
 }
 .startPremium #startCountryshost.fragmenthost {
+    min-height: 280px;
     height: auto; /*300px*/
     margin-top: 30px;
 }
@@ -369,7 +370,7 @@
 }
 
 .startPremium #startContactspDhost.fragmenthost {
-    height: 925px; /*875px*/
+    height: 885px; /*925 875px*/
 }
 
 
