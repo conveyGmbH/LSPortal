@@ -33,6 +33,11 @@
                 dataLicence: null,
                 countContacts: true,
                 dataLicenceUser: getEmptyDefaultValue(StartPremium.licenceUserView.defaultValue),
+                progress: {
+                    percent: 0,
+                    text: "",
+                    show: null
+                }
                 // add dynamic scripts to page element, src is either a file or inline text:
             }, commandList]);
             this.applist = null;
@@ -271,98 +276,18 @@
                 onFooterVisibilityChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "EmpList.Controller.");
                     if (eventInfo && eventInfo.detail) {
-                        var visible = eventInfo.detail.visible;
-                        if (visible && that.dataLicenceUser && that.nextUrl) {
-                            AppData.setErrorMsg(that.binding);
-                            Log.print(Log.l.trace, "calling select Start.licenceUserView...");
-                            var nextUrl = that.nextUrl;
-                            that.nextUrl = null;
-                            Start.licenceUserView.selectNext(function (json) {
-                                // this callback will be called asynchronously
-                                // when the response is available
-                                Log.print(Log.l.trace, "Start.licenceUserView: success!");
-                                // employeeView returns object already parsed from json file in response
-                                if (json && json.d) {
-                                    that.nextUrl = Start.licenceUserView.getNextUrl(json);
-                                    var results = json.d.results;
-                                    results.forEach(function (item, index) {
-                                        that.resultConverter(item, index);
-                                        that.binding.count = that.dataLicenceUser.push(item);
-                                    });
-                                }
-                            }, function (errorResponse) {
-                                // called asynchronously if an error occurs
-                                // or server returns response with an error status.
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                                that.loading = false;
-                            }, null, nextUrl);
-                        } else {
-                            that.loading = false;
-                        }
                     }
-                    Log.ret(Log.l.trace);
-                },
-                clickLicenceUser: function (event) {
-                    Log.call(Log.l.trace, "Start.Controller.");
-                    AppData.setRecordId("MitarbeiterVIEW_20471", event.currentTarget.value);
-                    Application.navigateById("employee", event);
-                    Log.ret(Log.l.trace);
-                },
-                clickGoToNorthAmerica: function (event) {
-                    Log.call(Log.l.trace, "Start.Controller.");
-                    var startCountrysFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("startCountrys"));
-                    if (startCountrysFragmentControl && startCountrysFragmentControl.controller) {
-                        startCountrysFragmentControl.controller.goToNorthAmerica();
-                    }
-                    Log.ret(Log.l.trace);
-                },
-                clickGoToEurope: function (event) {
-                    Log.call(Log.l.trace, "Start.Controller.");
-                    var startCountrysFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("startCountrys"));
-                    if (startCountrysFragmentControl && startCountrysFragmentControl.controller) {
-                        startCountrysFragmentControl.controller.goToEurope();
-                    }
-                    Log.ret(Log.l.trace);
-                },
-                clickGoToAfrica: function (event) {
-                    Log.call(Log.l.trace, "Start.Controller.");
-                    var startCountrysFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("startCountrys"));
-                    if (startCountrysFragmentControl && startCountrysFragmentControl.controller) {
-                        startCountrysFragmentControl.controller.goToAfrica();
-                    }
-                    Log.ret(Log.l.trace);
-                },
-                clickGoToAsia: function (event) {
-                    Log.call(Log.l.trace, "Start.Controller.");
-                    var startCountrysFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("startCountrys"));
-                    if (startCountrysFragmentControl && startCountrysFragmentControl.controller) {
-                        startCountrysFragmentControl.controller.goToAsia();
-                    }
-                    Log.ret(Log.l.trace);
-                },
-                clickGoToWorld: function (event) {
-                    Log.call(Log.l.trace, "Start.Controller.");
-                    var startCountrysFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("startCountrys"));
-                    if (startCountrysFragmentControl && startCountrysFragmentControl.controller) {
-                        startCountrysFragmentControl.controller.goToWorld();
-                    }
-                    Log.ret(Log.l.trace);
-                },
-                clickListAllContacts: function (event) {
-                    Log.call(Log.l.trace, "Start.Controller.");
-                    that.setRestriction({
-                        SHOW_Barcode: null,
-                        SHOW_Visitenkarte: null,
-                        Nachbearbeitet: null
-                    });
-                    AppData.setRecordId("Kontakt", null);
-                    WinJS.Promise.timeout(0).then(function () {
-                        Application.navigateById("contact", event);
-                    });
                     Log.ret(Log.l.trace);
                 },
                 exportAllChartsToPdf: function(event) {
                     Log.call(Log.l.trace, "StartPremium.Controller.");
+                    var percent = 0;
+                    var statusText = "";
+                    that.binding.progress = {
+                        percent: percent,
+                        text: statusText,
+                        show: 1
+                    };
                     var ret = new WinJS.Promise.as().then(function() {
                         /*var doc = new jsPDF("landscape", "mm", 'a4');
                         var width = doc.internal.pageSize.width;
@@ -467,7 +392,7 @@
                         /*var doc = new jsPDF("landscape", "mm", 'a4');
                         var width = doc.internal.pageSize.width;
                         var height = doc.internal.pageSize.height;*/
-                        html2canvas(document.getElementById("startPremiumdiaIndustrieshost"),
+                        return html2canvas(document.getElementById("startPremiumdiaIndustrieshost"),
                             {
                                 scale: 1
                             }).then(canvas => { /*, { dpi: 300 }*/
@@ -486,22 +411,37 @@
                             var heightOfPDF = doc.internal.pageSize.height;
                             var ratioOfPDF = widthOfPDF / heightOfPDF;
                             doc.addImage(img, 'PNG', 0, 0, widthOfPDF, heightOfPDF);
-                            doc.save('startPremiumdiaIndustrieshost.pdf');
+                                 doc.save('startPremiumdiaIndustrieshost.pdf', { returnPromise: true }).then(function () {
+                                     that.binding.progress.show = null;
+                                 });
                         });
                     });
                     Log.ret(Log.l.trace);
                 },
                 exportBrowserViewToPdf: function (event) {
                     Log.call(Log.l.trace, "Start.Controller.");
+                    var percent = 0;
+                    var statusText = "";
+                    that.binding.progress = {
+                        percent: percent,
+                        text: statusText,
+                        show: 1
+                    };
                     var element = document.getElementById("tiles-container");/*tiles-container startContactshost*/
                     //element.style.transform = "transform";
                     var ret = new WinJS.Promise.as().then(function () {
                         /*var doc = new jsPDF("landscape", "mm", 'a4');
                         var width = doc.internal.pageSize.width;
                         var height = doc.internal.pageSize.height;*/
-                        html2canvas(element, {
+                        return html2canvas(element,
+                            {
                             scale: 2
                         }).then(canvas => { /*, { dpi: 300 }*/
+                                that.binding.progress = {
+                                    percent: 25,
+                                    text: statusText,
+                                    show: 1
+                                };
                             var widthOfCanvas = canvas.width;
                             var heightOfCanvas = canvas.height;
                             var ratioCanvas = widthOfCanvas / heightOfCanvas;
@@ -516,61 +456,27 @@
                             var widthOfPDF = doc.internal.pageSize.width;
                             var heightOfPDF = doc.internal.pageSize.height;
                             var ratioOfPDF = widthOfPDF / heightOfPDF;
+                                that.binding.progress = {
+                                    percent: 75,
+                                    text: statusText,
+                                    show: 1
+                                };
                             doc.addImage(img, 'PNG', 0, 0, widthOfPDF, heightOfPDF);
-                            doc.save('test.pdf');
+                                doc.save('test.pdf', { returnPromise: true });
+                            });
+                    }).then(function () {
+                        that.binding.progress = {
+                            percent: 100,
+                            text: statusText,
+                            show: 1
+                        };
+                    }).then(function() {
+                        WinJS.Promise.timeout(1000).then(function() {
+                            that.binding.progress.show = null;
                         });
                         }); 
                     Log.ret(Log.l.trace);
 
-                },
-                clickListBusinessCardContacts: function (event) {
-                    Log.call(Log.l.trace, "Start.Controller.");
-                    that.setRestriction({
-                        SHOW_Barcode: null,
-                        SHOW_Visitenkarte: 1
-                    });
-                    AppData.setRecordId("Kontakt", null);
-                    WinJS.Promise.timeout(0).then(function () {
-                        Application.navigateById("contact", event);
-                    });
-                    Log.ret(Log.l.trace);
-                },
-                clickListBusinessCardNotEditedContacts: function (event) {
-                    Log.call(Log.l.trace, "Start.Controller.");
-                    that.setRestriction({
-                        SHOW_Barcode: null,
-                        SHOW_Visitenkarte: 1,
-                        Nachbearbeitet: 1
-                    });
-                    AppData.setRecordId("Kontakt", null);
-                    WinJS.Promise.timeout(0).then(function () {
-                        Application.navigateById("contact", event);
-                    });
-                    Log.ret(Log.l.trace);
-                },
-                clickListBarcodeContacts: function (event) {
-                    Log.call(Log.l.trace, "Start.Controller.");
-                    that.setRestriction({
-                        SHOW_Barcode: 1,
-                        SHOW_Visitenkarte: null
-                    });
-                    AppData.setRecordId("Kontakt", null);
-                    WinJS.Promise.timeout(0).then(function () {
-                        Application.navigateById("contact", event);
-                    });
-                    Log.ret(Log.l.trace);
-                },
-                clickListManuellContacts: function (event) {
-                    Log.call(Log.l.trace, "Start.Controller.");
-                    that.setRestriction({
-                        SHOW_Barcode: "NULL",
-                        SHOW_Visitenkarte: "NULL"
-                    });
-                    AppData.setRecordId("Kontakt", null);
-                    WinJS.Promise.timeout(0).then(function () {
-                        Application.navigateById("contact", event);
-                    });
-                    Log.ret(Log.l.trace);
                 }
             };
 
@@ -581,9 +487,6 @@
                     } else {
                         return true;
                     }
-                },
-                clickEditEvent: function () {
-                    return that.binding.disableEditEvent;
                 }
             };
 
@@ -597,8 +500,6 @@
                     //fieldLineFull.className = "field_line field_line_full_double";
                     var fieldLineFullInner = pageElement.querySelector("#startPremiumdiaIndustrieshost");
                     //fieldLineFullInner.style.height = "580px";
-                } else {
-                    // getfragment of diaIndustriesController and set binding for display
                 }
             }
             this.checkIfSurpreme = checkIfSurpreme;
@@ -633,57 +534,8 @@
                 return that.loadData();
             }).then(function() {
                 Log.print(Log.l.trace, "Data loaded");
-            })/*.then(function () {
-                WinJS.Promise.timeout(50).then(function () {
-                    if (AppHeader.controller.binding.userData.IsNoAdminUser) {
-                        var confirmTitle = getResourceText("start.confirmIsAppUser");
-                        alert(confirmTitle);
-                    }
-                });
-                Log.print(Log.l.trace, "IsAppUser: alertbox");
-            }).then(function () {
-                Log.print(Log.l.trace, "Data loaded");
-                return WinJS.Promise.timeout(Application.pageframe.splashScreenDone ? 0 : 1000);
-            }).then(function () {
-                Log.print(Log.l.trace, "Splash time over");
-                return Application.pageframe.hideSplashScreen();
-            }).then(function () {
-                WinJS.Promise.timeout(50).then(function () {
-                    if (that.binding.generalData.publishFlag) {
-                        var confirmTitle = getResourceText("start.confirmTextPublish");
-                        confirm(confirmTitle, function (result) {
-                            if (result) {
-                                Application.navigateById("publish");
-                            } else {
-                                Log.print(Log.l.trace, "publishflag: user choice CANCEL");
-                            }
-                        });
-                    }
-                });
-                Log.print(Log.l.trace, "Splash screen vanished");
-            }).then(function() {
-                WinJS.Promise.timeout(50).then(function () {
-                    if (AppHeader.controller.binding.userData.IsNoAdminUser) {
-                        var confirmTitle = getResourceText("start.confirmIsAppUser");
-                        confirm(confirmTitle, function (result) {
-                            if (result) {
-
-                            } else {
-                                Log.print(Log.l.trace, "IsAppUser: user choice CANCEL");
-                            }
             });
-                    }
-                });
-            Log.print(Log.l.trace, "Splash screen vanished");
-        })*/;
             Log.ret(Log.l.trace);
         })
     });
 })();
-
-
-
-
-
-
-

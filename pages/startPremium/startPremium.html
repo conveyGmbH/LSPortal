@@ -36,38 +36,19 @@
                     </div>
                         </div>
                     </div>
-                    <!--<div class="tip">
-                        <div class="circle-with-text-event-dot"></div>
-                        <span class="circle-with-text-event-text" data-win-res="{textContent: 'startPremium.tipLocal'}"></span>
-                        <div class="circle-with-text-global-dot"></div>
-                        <span class="circle-with-text-global-text" data-win-res="{textContent: 'startPremium.tipEvent'}"></span>
-                    </div>
-                    <div>
-                        <button id="btn-all" data-win-res="{textContent: 'startPremium.exportAll'}"></button>
-                    </div>
-                    <div>
-                        <button id="btn-vis" onclick="AppBar.handleEvent('click', 'exportPdf', event)" data-win-res="{textContent: 'startPremium.exportCurrent'}"></button>
-                    </div>-->
-                    <!--<div class="dashboard-tip-download-container">
-                        <div class="tip-container">
-                            <div>
-                                <div class="circle-with-text-event-dot"></div>
-                                <span class="circle-with-text-event-text" data-win-res="{textContent: 'startPremium.tipLocal'}"></span>
+                    <div class="line-separator"></div>
+                    <div class="field_line"
+                         data-win-bind="style.display: progress.show Binding.Converter.toDisplay">
+                        <span class="label win-type-caption portrait_only"
+                              data-win-res="{textContent: 'start.progress'}"></span>
+                        <span class="label win-type-caption landscape_only"
+                              data-win-res="{textContent: 'start.progress'}"></span>
+                        <progress class="progress_field win-progress-bar"
+                                  data-win-bind="value: progress.percent"
+                                  min="0" max="100"></progress>
+                        <span class="large_field"
+                              data-win-bind="textContent: progress.text"></span>
                             </div>
-                            <div>
-                                <div class="circle-with-text-global-dot"></div>
-                                <span class="circle-with-text-global-text" data-win-res="{textContent: 'startPremium.tipEvent'}"></span>
-                            </div>
-                        </div>
-                        <div class="download-container">
-                            <div>
-                                <button id="btn-all" data-win-res="{textContent: 'startPremium.exportAll'}"></button>
-                            </div>
-                            <div>
-                                <button id="btn-vis" onclick="AppBar.handleEvent('click', 'exportPdf', event)"  data-win-res="{textContent: 'startPremium.exportCurrent'}"></button>
-                            </div>
-                        </div>
-                    </div>-->
                     <div id="tiles-container" class="tiles-container">
                         <div name="charts" class="tile tile-top">
                             <div class="tile-content-inner" data-win-bind="style.display: countContacts  Binding.Converter.toDisplay">
