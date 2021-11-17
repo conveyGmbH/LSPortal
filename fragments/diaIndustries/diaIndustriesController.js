@@ -1032,7 +1032,7 @@
                 var redrawCharts = function() {
                     Log.call(Log.l.trace, "DiaYearRange.Controller.");
                     yearRangeChart1Data.labels = industriesYearChartDataLabels1Cut;
-                    yearRangeChart1Data.datasets[0].data = industriesYearChartDataRaw2;
+                    yearRangeChart1Data.datasets[0].data = industriesYearChartDataRaw1;/*2*/
                     yearRangeChart2Data.labels = industriesYearChartDataLabels2Cut;
                     yearRangeChart2Data.datasets[0].data = industriesYearChartDataRaw2;
                     yearRangeChart3Data.labels = industriesYearChartDataLabels3Cut;
@@ -1072,17 +1072,7 @@
                 var resultConverterPremium = function (item, index) {
                     item.index = index;
                     if (item.QualifierExtID === "17281") {
-                        //tooltip for dougnut
-                        var splitQualifier2;
-                        if (AppData.getLanguageId() === 1031) {
-                            splitQualifier2 = item.Qualifier2.replace(/und/gi, "?und").split("?");
-                        } else {
-                            splitQualifier2 = item.Qualifier2.replace(/and/gi, "?and").split("?");
-
-                        }
-                        splitQualifier2[splitQualifier2.length - 1] = splitQualifier2[splitQualifier2.length - 1].trim() + " " + Math.round(item.NumHits / item.NumTotal * 100) + "%";
-                        industriesYearChartDataLabels1.push(splitQualifier2);
-                        //industriesYearChartDataLabels1.push(item.Qualifier2 + " " + Math.round(item.NumHits / item.NumTotal * 100) + "%");
+                            industriesYearChartDataLabels1.push(item.Qualifier2 + " " + Math.round(item.NumHits / item.NumTotal * 100) + "%");
                         if (item.Qualifier2) {
                             if (item.Qualifier2.length > 15) {
                                 var qualifier2Cut = item.Qualifier2.substring(15, 0);
@@ -1096,17 +1086,7 @@
                         //industriesYearChartDataRaw1.push(item.NumTotal - item.NumHits);
                     }
                     if (item.QualifierExtID === "17282") {
-                        //tooltip for dougnut
-                        var splitQualifier2;
-                        if (AppData.getLanguageId() === 1031) {
-                            splitQualifier2 = item.Qualifier2.replace(/und/gi, "?und").split("?");
-                        } else {
-                            splitQualifier2 = item.Qualifier2.replace(/and/gi, "?and").split("?");
-
-                        }
-                        splitQualifier2[splitQualifier2.length - 1] = splitQualifier2[splitQualifier2.length - 1].trim() + " " + Math.round(item.NumHits / item.NumTotal * 100) + "%";
-                        industriesYearChartDataLabels2.push(splitQualifier2);
-                        //industriesYearChartDataLabels2.push(item.Qualifier2 + " " + Math.round(item.NumHits / item.NumTotal * 100) + "%");
+                            industriesYearChartDataLabels2.push(item.Qualifier2 + " " + Math.round(item.NumHits / item.NumTotal * 100) + "%");
                         if (item.Qualifier2) {
                             if (item.Qualifier2.length > 15) {
                                 var qualifier2Cut = item.Qualifier2.substring(15, 0);
@@ -1120,17 +1100,8 @@
                         //industriesYearChartDataRaw2.push(item.NumTotal - item.NumHits);
                     }
                     if (item.QualifierExtID === "17283") {
-                        //tooltip for dougnut
-                        var splitQualifier2;
-                        if (AppData.getLanguageId() === 1031) {
-                            splitQualifier2 = item.Qualifier2.replace(/und/gi, "?und").split("?");
-                        } else {
-                            splitQualifier2 = item.Qualifier2.replace(/and/gi, "?and").split("?");
                         
-                        }
-                        splitQualifier2[splitQualifier2.length - 1] = splitQualifier2[splitQualifier2.length - 1].trim() + " " + Math.round(item.NumHits / item.NumTotal * 100) + "%";
-                        industriesYearChartDataLabels3.push(splitQualifier2);
-                        //industriesYearChartDataLabels3.push(item.Qualifier2 + " " + Math.round(item.NumHits / item.NumTotal * 100) + "%");
+                            industriesYearChartDataLabels3.push(item.Qualifier2 + " " + Math.round(item.NumHits / item.NumTotal * 100) + "%");
                         if (item.Qualifier2) {
                             if (item.Qualifier2.length > 15) {
                                 var qualifier2Cut = item.Qualifier2.substring(15, 0);
@@ -1144,17 +1115,7 @@
                         //industriesYearChartDataRaw3.push(item.NumTotal - item.NumHits);
                     }
                     if (item.QualifierExtID === "17284") {
-                        //tooltip for dougnut
-                        var splitQualifier2;
-                        if (AppData.getLanguageId() === 1031) {
-                            splitQualifier2 = item.Qualifier2.replace(/und/gi, "?und").split("?");
-                        } else {
-                            splitQualifier2 = item.Qualifier2.replace(/and/gi, "?and").split("?");
-
-                        }
-                        splitQualifier2[splitQualifier2.length - 1] = splitQualifier2[splitQualifier2.length - 1].trim() + " " + Math.round(item.NumHits / item.NumTotal * 100) + "%";
-                        industriesYearChartDataLabels4.push(splitQualifier2);
-                        //industriesYearChartDataLabels4.push(item.Qualifier2 + " " + Math.round(item.NumHits / item.NumTotal * 100) + "%");
+                            industriesYearChartDataLabels4.push(item.Qualifier2 + " " + Math.round(item.NumHits / item.NumTotal * 100) + "%");
                         if (item.Qualifier2) {
                             if (item.Qualifier2.length > 15) {
                                 var qualifier2Cut = item.Qualifier2.substring(15, 0);
@@ -1267,16 +1228,7 @@
                             industriesYearChartDataTexts5 = getResourceText("startPremium.tipEvent"); //2
                         }
                         //tooltip for dougnut
-                    var splitQualifier;
-                    if (AppData.getLanguageId() === 1031) {
-                        splitQualifier = item.Qualifier.replace(/und/gi, "?und").split("?");
-                    } else {
-                        splitQualifier = item.Qualifier.replace(/and/gi, "?and").split("?");
-
-                    }
-                    splitQualifier[splitQualifier.length - 1] = splitQualifier[splitQualifier.length - 1].trim() + " " + item.PercentGlobal + " %";
-                    industriesYearChartDataLabels5.push(splitQualifier);
-                    //industriesYearChartDataLabels5.push(item.Qualifier + " " + item.PercentGlobal + " %");
+                        industriesYearChartDataLabels5.push(item.Qualifier + " " + item.PercentGlobal + "%");
                         if (item.Qualifier) {
                             if (item.Qualifier.length > 15) {
                                 var qualifierCut = item.Qualifier.substring(15, 0);
