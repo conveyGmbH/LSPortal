@@ -1303,7 +1303,7 @@
                         }
                         //tooltip for dougnut
                     var splitQualifier;
-                    if (item.Qualifier2 && item.Qualifier2.length > 28) {
+                    if (item.Qualifier && item.Qualifier.length > 28) {
                         if (AppData.getLanguageId() === 1031) {
                             splitQualifier = item.Qualifier.replace(/und/gi, "?und").split("?");
                         } else {
