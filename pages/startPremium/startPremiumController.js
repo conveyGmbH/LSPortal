@@ -361,85 +361,165 @@
                     });
                     Log.ret(Log.l.trace);
                 },
-                exportPdf: function (event) {
+                exportAllChartsToPdf: function(event) {
+                    Log.call(Log.l.trace, "StartPremium.Controller.");
+                    var ret = new WinJS.Promise.as().then(function() {
+                        /*var doc = new jsPDF("landscape", "mm", 'a4');
+                        var width = doc.internal.pageSize.width;
+                        var height = doc.internal.pageSize.height;*/
+                        html2canvas(document.getElementById("startContactshost"),
+                            {
+                                scale: 1
+                            }).then(canvas => { /*, { dpi: 300 }*/
+                            var widthOfCanvas = canvas.width;
+                            var heightOfCanvas = canvas.height;
+                            var ratioCanvas = widthOfCanvas / heightOfCanvas;
+                            var img = canvas.toDataURL(); //image data of canvas
+                            //set the orientation
+                            var doc;
+                            if (widthOfCanvas > heightOfCanvas) {
+                                doc = new jsPDF('l', 'px', 'a4'); /*[widthOfCanvas, heightOfCanvas]*/
+                            } else {
+                                doc = new jsPDF('p', 'px', 'a4'); /*[heightOfCanvas, widthOfCanvas]*/
+                            }
+                            var widthOfPDF = doc.internal.pageSize.width;
+                            var heightOfPDF = doc.internal.pageSize.height;
+                            var ratioOfPDF = widthOfPDF / heightOfPDF;
+                            doc.addImage(img, 'PNG', 0, 0, widthOfPDF, heightOfPDF);
+                            doc.save('startContactshost.pdf');
+                        });
+                    }).then(function () {
+                        /*var doc = new jsPDF("landscape", "mm", 'a4');
+                        var width = doc.internal.pageSize.width;
+                        var height = doc.internal.pageSize.height;*/
+                        html2canvas(document.getElementById("startCountryshost"),
+                            {
+                                scale: 1
+                            }).then(canvas => { /*, { dpi: 300 }*/
+                            var widthOfCanvas = canvas.width;
+                            var heightOfCanvas = canvas.height;
+                            var ratioCanvas = widthOfCanvas / heightOfCanvas;
+                            var img = canvas.toDataURL(); //image data of canvas
+                            //set the orientation
+                            var doc;
+                            if (widthOfCanvas > heightOfCanvas) {
+                                doc = new jsPDF('l', 'px', 'a4'); /*[widthOfCanvas, heightOfCanvas]*/
+                            } else {
+                                doc = new jsPDF('p', 'px', 'a4'); /*[heightOfCanvas, widthOfCanvas]*/
+                            }
+                            var widthOfPDF = doc.internal.pageSize.width;
+                            var heightOfPDF = doc.internal.pageSize.height;
+                            var ratioOfPDF = widthOfPDF / heightOfPDF;
+                            doc.addImage(img, 'PNG', 0, 0, widthOfPDF, heightOfPDF);
+                            doc.save('startCountryshost.pdf');
+                        });
+                    }).then(function () {
+                        /*var doc = new jsPDF("landscape", "mm", 'a4');
+                        var width = doc.internal.pageSize.width;
+                        var height = doc.internal.pageSize.height;*/
+                        html2canvas(document.getElementById("startQuestionshost"),
+                            {
+                                scale: 1
+                            }).then(canvas => { /*, { dpi: 300 }*/
+                            var widthOfCanvas = canvas.width;
+                            var heightOfCanvas = canvas.height;
+                            var ratioCanvas = widthOfCanvas / heightOfCanvas;
+                            var img = canvas.toDataURL(); //image data of canvas
+                            //set the orientation
+                            var doc;
+                            if (widthOfCanvas > heightOfCanvas) {
+                                doc = new jsPDF('l', 'px', 'a4'); /*[widthOfCanvas, heightOfCanvas]*/
+                            } else {
+                                doc = new jsPDF('p', 'px', 'a4'); /*[heightOfCanvas, widthOfCanvas]*/
+                            }
+                            var widthOfPDF = doc.internal.pageSize.width;
+                            var heightOfPDF = doc.internal.pageSize.height;
+                            var ratioOfPDF = widthOfPDF / heightOfPDF;
+                            doc.addImage(img, 'PNG', 0, 0, widthOfPDF, heightOfPDF);
+                            doc.save('startQuestionshost.pdf');
+                        });
+                    }).then(function () {
+                        /*var doc = new jsPDF("landscape", "mm", 'a4');
+                        var width = doc.internal.pageSize.width;
+                        var height = doc.internal.pageSize.height;*/
+                        html2canvas(document.getElementById("startContactspDhost"),
+                            {
+                                scale: 1
+                            }).then(canvas => { /*, { dpi: 300 }*/
+                            var widthOfCanvas = canvas.width;
+                            var heightOfCanvas = canvas.height;
+                            var ratioCanvas = widthOfCanvas / heightOfCanvas;
+                            var img = canvas.toDataURL(); //image data of canvas
+                            //set the orientation
+                            var doc;
+                            if (widthOfCanvas > heightOfCanvas) {
+                                doc = new jsPDF('l', 'px', 'a4'); /*[widthOfCanvas, heightOfCanvas]*/
+                            } else {
+                                doc = new jsPDF('p', 'px', 'a4'); /*[heightOfCanvas, widthOfCanvas]*/
+                            }
+                            var widthOfPDF = doc.internal.pageSize.width;
+                            var heightOfPDF = doc.internal.pageSize.height;
+                            var ratioOfPDF = widthOfPDF / heightOfPDF;
+                            doc.addImage(img, 'PNG', 0, 0, widthOfPDF, heightOfPDF);
+                            doc.save('startContactspDhost.pdf');
+                        });
+                    }).then(function () {
+                        /*var doc = new jsPDF("landscape", "mm", 'a4');
+                        var width = doc.internal.pageSize.width;
+                        var height = doc.internal.pageSize.height;*/
+                        html2canvas(document.getElementById("startPremiumdiaIndustrieshost"),
+                            {
+                                scale: 1
+                            }).then(canvas => { /*, { dpi: 300 }*/
+                            var widthOfCanvas = canvas.width;
+                            var heightOfCanvas = canvas.height;
+                            var ratioCanvas = widthOfCanvas / heightOfCanvas;
+                            var img = canvas.toDataURL(); //image data of canvas
+                            //set the orientation
+                            var doc;
+                            if (widthOfCanvas > heightOfCanvas) {
+                                doc = new jsPDF('l', 'px', 'a4'); /*[widthOfCanvas, heightOfCanvas]*/
+                            } else {
+                                doc = new jsPDF('p', 'px', 'a4'); /*[heightOfCanvas, widthOfCanvas]*/
+                            }
+                            var widthOfPDF = doc.internal.pageSize.width;
+                            var heightOfPDF = doc.internal.pageSize.height;
+                            var ratioOfPDF = widthOfPDF / heightOfPDF;
+                            doc.addImage(img, 'PNG', 0, 0, widthOfPDF, heightOfPDF);
+                            doc.save('startPremiumdiaIndustrieshost.pdf');
+                        });
+                    });
+                    Log.ret(Log.l.trace);
+                },
+                exportBrowserViewToPdf: function (event) {
                     Log.call(Log.l.trace, "Start.Controller.");
-                    var element = document.getElementById("tiles-container");
+                    var element = document.getElementById("tiles-container");/*tiles-container startContactshost*/
                     //element.style.transform = "transform";
                     var ret = new WinJS.Promise.as().then(function () {
-                        var doc = new jsPDF("landscape", "mm", 'a3');
+                        /*var doc = new jsPDF("landscape", "mm", 'a4');
                         var width = doc.internal.pageSize.width;
-                        var height = doc.internal.pageSize.height;
-                        html2canvas(element, { dpi: 300}).then(canvas => {
+                        var height = doc.internal.pageSize.height;*/
+                        html2canvas(element, {
+                            scale: 2
+                        }).then(canvas => { /*, { dpi: 300 }*/
+                            var widthOfCanvas = canvas.width;
+                            var heightOfCanvas = canvas.height;
+                            var ratioCanvas = widthOfCanvas / heightOfCanvas;
                             var img = canvas.toDataURL(); //image data of canvas
-                            var base64result = img.split(',')[1];
-                            return img; /*Colors.resizeImageBase64(base64result, "image/png", 0, 0, 1.25);*/
-                        }).then(function (rezizedData) {
-                            var data = "data:image/png;base64," + rezizedData;
-                            doc.addImage(rezizedData, 0, 0, width, height);
-                            doc.save('DashboardOverview_300dpi.pdf');
+                            //set the orientation
+                            var doc;
+                            if (widthOfCanvas > heightOfCanvas) {
+                                doc = new jsPDF('l', 'px', 'a4'); /*[widthOfCanvas, heightOfCanvas]*/
+                            } else {
+                                doc = new jsPDF('p', 'px', 'a4'); /*[heightOfCanvas, widthOfCanvas]*/
+                            }
+                            var widthOfPDF = doc.internal.pageSize.width;
+                            var heightOfPDF = doc.internal.pageSize.height;
+                            var ratioOfPDF = widthOfPDF / heightOfPDF;
+                            doc.addImage(img, 'PNG', 0, 0, widthOfPDF, heightOfPDF);
+                            doc.save('test.pdf');
+                        });
                         }); 
-                    })/*.then(function() {
-                        var countryChart = document.getElementById("countryChart");
-                        var imgData = countryChart.toDataURL();
-                        var pdf = new jsPDF("landscape");
-                        pdf.addImage(imgData, 'image/png', 0, 0);
-                        pdf.save("download.pdf");
-                    })*/;
-                    /*html2pdf(element, {
-                        margin: 1,
-                        filename: 'myfile.pdf',
-                        image: { type: 'jpeg', quality: 1 },
-                        html2canvas: { scale: 2, logging: true },
-                        jsPDF: { unit: 'in', format: 'a4', orientation: 'l' }
-                    });*/
-                    /*html2canvas(document.getElementById("startContactspDhost"), {
-                        onrendered: function (canvas) {
-                            var img = canvas.toDataURL(); //image data of canvas
-                            var doc = new jsPDF("landscape");
-                            doc.addImage(img, 0, 0);
-                            doc.save('startContactspDhostNoQuality.pdf');
-                        }
-                    });*/
-                    /*html2canvas(document.getElementById("startContactshost"), {
-                        quality: 4,
-                        scale: 5,
-                        onrendered: function (canvas) {
-                            var img = canvas.toDataURL(); //image data of canvas
-                            var doc = new jsPDF("landscape");
-                            doc.addImage(img, 0, 0);
-                            doc.save('startContactshost.pdf');
-                        }
-                    });
-                    html2canvas(document.getElementById("startCountryshost"), {
-                        quality: 4,
-                        scale: 5,
-                        onrendered: function (canvas) {
-                            var img = canvas.toDataURL(); //image data of canvas
-                            var doc = new jsPDF("landscape");
-                            doc.addImage(img, 0, 0);
-                            doc.save('startCountryshost.pdf');
-                        }
-                    });
-                    html2canvas(document.getElementById("startQuestionshost"), {
-                        quality: 4,
-                        scale: 5,
-                        onrendered: function (canvas) {
-                            var img = canvas.toDataURL(); //image data of canvas
-                            var doc = new jsPDF("landscape");
-                            doc.addImage(img, 0, 0);
-                            doc.save('startQuestionshost.pdf');
-                        }
-                    });
-                    html2canvas(document.getElementById("startPremiumdiaIndustrieshost"), {
-                        quality: 4,
-                        scale: 5,
-                        onrendered: function (canvas) {
-                            var img = canvas.toDataURL(); //image data of canvas
-                            var doc = new jsPDF("landscape");
-                            doc.addImage(img, 0, 0);
-                            doc.save('startPremiumdiaIndustrieshost.pdf');
-                        }
-                    });*/
                     Log.ret(Log.l.trace);
 
                 },

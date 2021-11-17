@@ -29,10 +29,10 @@
                     </div>
                         <div class="download-container">
                             <div>
-                    <button id="btn-all" data-win-res="{textContent: 'startPremium.exportAll'}" disabled></button>
+                                <button id="btn-all" onclick="AppBar.handleEvent('click', 'exportAllChartsToPdf', event)" data-win-res="{textContent: 'startPremium.exportAll'}"></button>
                             </div>
                     <div>
-                        <button id="btn-vis" onclick="AppBar.handleEvent('click', 'exportPdf', event)"  data-win-res="{textContent: 'startPremium.exportCurrent'}"></button>
+                                <button id="btn-vis" onclick="AppBar.handleEvent('click', 'exportBrowserViewToPdf', event)" data-win-res="{textContent: 'startPremium.exportCurrent'}"></button>
                     </div>
                         </div>
                     </div>
