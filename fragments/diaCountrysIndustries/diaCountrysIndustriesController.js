@@ -58,7 +58,7 @@
                     if (that.isSupreme === 1) {
                         countryIndustriestooltip.innerHTML = getResourceText("diaCountrysIndustries.tooltipPremium");
                     } else {
-                        countryIndustriestooltip.innerHTML = getResourceText("diaCountrysIndustries.tooltipSupreme1") + " <br /> " + getResourceText("diaCountrysIndustries.tooltipSupreme2");
+                        countryIndustriestooltip.innerHTML = getResourceText("diaCountrysIndustries.tooltipSupreme1") + " <br> <p></p>" + getResourceText("diaCountrysIndustries.tooltipSupreme2");
                     }
                 }
                 this.setTooltipText = setTooltipText;
@@ -501,7 +501,7 @@
                                     that.resultConverterCriteria(item, index);
                                 });
                                 var results = json.d.results.filter(function (item) {
-                                    return (item && item.CriterionID && item.CriterionID !== 40 && item.CriterionID !== -3);
+                                    return (item && item.CriterionID && item.CriterionID !== -3); /*&& item.CriterionID !== 40*/
                                 });
                                 criteriadrop.winControl.data = new WinJS.Binding.List(results);
                                 criteriadrop.selectedIndex = 0;
@@ -535,9 +535,9 @@
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
                         var results = json.d.results;
-                        results.sort(function (a, b) {
+                        /*results.sort(function (a, b) {
                             return b.NumHits - a.NumHits;
-                        });
+                        });*/
                         if (results.length > 10) {
                             results.length = 10;
                         }

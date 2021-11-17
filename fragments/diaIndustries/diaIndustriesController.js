@@ -48,7 +48,7 @@
                     if (that.isSupreme === 1) {
                         industriesTooltip.innerHTML = getResourceText("diaIndustries.tooltipPremium");
                     } else {
-                        industriesTooltip.innerHTML = getResourceText("diaIndustries.tooltipSupreme1") + " <br /> " + getResourceText("diaIndustries.tooltipSupreme2");
+                        industriesTooltip.innerHTML = getResourceText("diaIndustries.tooltipSupreme1") + " <br>  <p></p>" + getResourceText("diaIndustries.tooltipSupreme2");
                     }
                 }
                 this.setTooltipText = setTooltipText;
@@ -1063,9 +1063,9 @@
 
                 var drawSupremeCharts = function () {
                         that.createIndustriesYearChart5();
-                        that.createIndustriesYearChart6();
+                        /*that.createIndustriesYearChart6();
                         that.createIndustriesYearChart7();
-                        that.createIndustriesYearChart8();
+                        that.createIndustriesYearChart8();*/
                 }
                 this.drawSupremeCharts = drawSupremeCharts;
 
@@ -1222,6 +1222,32 @@
                 }
                 this.resultConverterSurpreme = resultConverterSurpreme;
 
+                var resultConverterSupremeSpecialOne = function(item, index) {
+                    //if (item.QualifierExtID === "17289") {
+                        if (industriesYearChartDataTexts5.length === 0) {
+                            industriesYearChartDataTexts5 = getResourceText("startPremium.tipEvent"); //2
+                        }
+                        //tooltip for dougnut
+                        industriesYearChartDataLabels5.push(item.Qualifier + " " + item.PercentGlobal + " %");
+                        if (item.Qualifier) {
+                            if (item.Qualifier.length > 15) {
+                                var qualifierCut = item.Qualifier.substring(15, 0);
+                                industriesYearChartDataLabels5Cut.push(qualifierCut + " " + item.PercentGlobal + "%");
+                            } else {
+                                industriesYearChartDataLabels5Cut.push(item.Qualifier + " " + item.PercentGlobal + "%");
+                            }
+                        }
+                    //industriesYearChartDataLabels5.push(getResourceText("diaYearRange.remaindata"));
+                    /**
+                     * absolute number!!
+                     */
+                        industriesYearChartDataRaw5.push(item.NumHits);
+                        //industriesYearChartDataRaw5.push(item.NumTotal - item.NumHits);
+                        //industriesYearChartDataProcent5 = item.PercentGlobal + "%";
+                   //}
+                }
+                this.resultConverterSupremeSpecialOne = resultConverterSupremeSpecialOne;
+
                 var resultConverterYearRange = function (item, index) {
                     item.index = index;
                     if (item.QualifierExtID === "17281") {
@@ -1346,8 +1372,8 @@
                     var lang = 
                     AppData.call("PRC_GetDashboardData", {
                         pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
-                        pCriterion1ID: 40,
-                        pCriterion2ID: that.binding.criteriaMain,
+                        pCriterion1ID: that.binding.criteriaMain, /*40*/
+                        pCriterion2ID: 0, /*that.binding.criteriaMain*/
                         pLandID: 0,
                         pDay: 0,
                         pWantedRows: 5,
@@ -1356,10 +1382,11 @@
                         Log.print(Log.l.info, "call success! ");
                         var results = json.d.results;
                         results.sort(function (a, b) {
-                            return b.NumHits - a.NumHits;
+                            return b.PercentGlobal - a.PercentGlobal; /*b.NumHits - a.NumHits*/
                         });
                         results.forEach(function (item, index) {
-                            that.resultConverterSurpreme(item, index);
+                            //that.resultConverterSurpreme(item, index);
+                            that.resultConverterSupremeSpecialOne(item, index);
                         });
                         that.redrawCharts();
                         that.drawSupremeCharts();

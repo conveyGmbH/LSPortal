@@ -1395,9 +1395,9 @@
     "eventQuestionnaire.deleteassignment" : "Wollen Sie die Zuordnung löschen?",
 
     "diaCountrysIndustries.title" : "Interessensgebiet Ihrer gescannten Besucher",
-    "diaCountrysIndustries.tooltipPremium" : "zum Beispiel: Aus welchen Top 10 Branchen (Abteilungen/Funktionen etc.) kommen Ihre gescannten Besucher (ohne Auswahl von Land/Tag) / aus Land X (ohne Auswahl Tag) / aus  Land X an Tag Y?",
+    "diaCountrysIndustries.tooltipPremium" : "zum Beispiel: Aus welchen Top 10 Branchen (Abteilungen/Funktionen etc.) kommen Ihre gescannten Besucher (ohne Auswahl von Land) / aus Land X?",
     "diaCountrysIndustries.tooltipSupreme1" : "generell gilt: blauer Balken = gescannte Besucher auf Ihrem Messestand, roter Balken = alle auf dem Messegelände da gewesenen Besucher",
-    "diaCountrysIndustries.tooltipSupreme2" : "zum Beispiel: Aus welchen Top 10 Branchen (Abteilungen/Funktionen etc.) kommen Ihre gescannten Besucher (ohne Auswahl von Land/Tag) / aus Land X (ohne Auswahl Tag) / aus  Land X an Tag Y?",
+    "diaCountrysIndustries.tooltipSupreme2" : "zum Beispiel: Aus welchen Top 10 Branchen (Abteilungen/Funktionen etc.) kommen Ihre gescannten Besucher (ohne Auswahl von Land) / aus Land X?",
     "diaCountrysIndustries.comboboxtext" : "Interessensgebiet Ihrer gescannten Besucher",
 
     "diaCountrys.title" : "Top 5 Länder",
@@ -1421,9 +1421,9 @@
     "startPremium.tipLocal" : "auf Ihrem Messestand",
     "startPremium.tipEvent" : "auf dem Messegelände",
 
-    "diaIndustries.tooltipPremium" : "zum Beispiel: Aus welchen Top 5 Branchen (Abteilungen/Funktionen etc.) kommen Ihre gescannten Besucher in Bezug auf ihre Jahrgangsgruppe (ohne Auswahl Tag) / am Tag Y?",
+    "diaIndustries.tooltipPremium" : "zum Beispiel: Aus welchen Top 5 Branchen (Abteilungen/Funktionen etc.) kommen Ihre gescannten Besucher in Bezug auf ihre Jahrgangsgruppe?",
     "diaIndustries.tooltipSupreme1" : "generell gilt: blauer Kreis = gescannte Besucher auf Ihrem Messestand, roter Kreis = alle auf dem Messegelände da gewesenen Besucher",
-    "diaIndustries.tooltipSupreme2" : "zum Beispiel: Aus welchen Top 5 Branchen (Abteilungen/Funktionen etc.) kommen Ihre gescannten Besucher in Bezug auf ihre Jahrgangsgruppe (ohne Auswahl Tag) / am Tag Y?",
+    "diaIndustries.tooltipSupreme2" : "zum Beispiel: Aus welchen Top 5 Branchen (Abteilungen/Funktionen etc.) kommen Ihre gescannten Besucher in Bezug auf ihre Jahrgangsgruppe?",
 
 	"startResourceAdministration.title" : "Überblickseite",
     "startResourceAdministration.comment" : "Erstellen und Einrichten Ihrer Startseite",

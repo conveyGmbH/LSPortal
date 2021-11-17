@@ -1392,9 +1392,9 @@
     "eventQuestionnaire.deleteassignment" : "Do you want to delete the assignment?",
 
     "diaCountrysIndustries.title" : "Interests of your scanned visitors",
-    "diaCountrysIndustries.tooltipPremium" : "for example: From which top 10 industries (departments/functions etc.) do your scanned visitors come from (without selecting country/day) / country X (without selecting day) / from country X on day Y?",
+    "diaCountrysIndustries.tooltipPremium" : "for example: From which top 10 industries (departments/functions etc.) do your scanned visitors come (without selecting country) / from country X?",
     "diaCountrysIndustries.tooltipSupreme1" : "in general: blue bar = scanned visitors at your booth, red bar = all visitors who were on the exhibition grounds",
-    "diaCountrysIndustries.tooltipSupreme2" : "for example: From which top 10 industries (departments/functions etc.) do your scanned visitors come (without selecting country/day) / from country X (without selecting day) / from country X on day Y?",
+    "diaCountrysIndustries.tooltipSupreme2" : "for example: From which top 10 industries (departments/functions etc.) do your scanned visitors come (without selecting country) / from country X?",
     "diaCountrysIndustries.comboboxtext" : "Interests of your scanned visitors",
 
     "diaCountrys.title" : "Top 5 countries",
@@ -1418,9 +1418,9 @@
     "startPremium.tipLocal" : "at your booth",
     "startPremium.tipEvent" : "on the exhibition grounds",
 
-    "diaIndustries.tooltipPremium" : "for example: From which top 5 industries (departments/functions etc.) do your scanned visitors come in relation to their age group (without selection day) / on day Y?",
+    "diaIndustries.tooltipPremium" : "for example: From which top 5 industries (departments/functions etc.) do your scanned visitors come in relation to their age group",
     "diaIndustries.tooltipSupreme1" : "in general: blue circle = scanned visitors at your booth, red circle = all visitors who were on exhibition grounds",
-    "diaIndustries.tooltipSupreme2" : "for example: From which top 5 industries (departments/functions etc.) do your scanned visitors come in relation to their age group (without selection day) / on day Y?",
+    "diaIndustries.tooltipSupreme2" : "for example: From which top 5 industries (departments/functions etc.) do your scanned visitors come in relation to their age group?",
 
     "startResourceAdministration.title" : "Overview page",
     "startResourceAdministration.comment" : "Create and set up your homepage",
