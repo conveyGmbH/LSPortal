@@ -490,7 +490,7 @@
                 var getGetCriterionListData = function () {
                     Log.call(Log.l.trace, "LocalEvents.Controller.");
                     AppData.setErrorMsg(that.binding);
-                    AppData.call("PRC_GetCriterionList", {
+                    return AppData.call("PRC_GetCriterionList", {
                         pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
                         pLanguageSpecID: AppData.getLanguageId()
                     }, function (json) {

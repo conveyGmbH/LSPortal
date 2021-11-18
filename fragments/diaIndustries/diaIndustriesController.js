@@ -1401,7 +1401,7 @@
                 var getGetYearRangePremium = function () {
                     Log.call(Log.l.trace, "LocalEvents.Controller.");
                     AppData.setErrorMsg(that.binding);
-                    AppData.call("PRC_GetDashboardData", {
+                    return AppData.call("PRC_GetDashboardData", {
                         pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
                         pCriterion1ID: 40,
                         pCriterion2ID: 0,

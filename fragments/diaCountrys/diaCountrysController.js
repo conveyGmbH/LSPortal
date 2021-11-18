@@ -456,7 +456,7 @@
                 var getGetCountryHitlistData = function () {
                     Log.call(Log.l.trace, "LocalEvents.Controller.");
                     AppData.setErrorMsg(that.binding);
-                    AppData.call("PRC_GetCountryHitlist", {
+                    return AppData.call("PRC_GetCountryHitlist", {
                         pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
                         pLanguageSpecID: AppData.getLanguageId()
                     }, function (json) {
