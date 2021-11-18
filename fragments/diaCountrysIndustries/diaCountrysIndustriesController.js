@@ -675,6 +675,7 @@
                                 }
                                 Log.print(Log.l.trace, "reportLand: success!");
                             }
+                            return WinJS.Promise.as();
                         },
                             function (errorResponse) {
                                 // called asynchronously if an error occurs
@@ -694,6 +695,7 @@
                                 daydrop.value = '';
                                 Log.print(Log.l.trace, "reportLand: success!");
                             }
+                            return WinJS.Promise.as();
                         },
                             function (errorResponse) {
                                 // called asynchronously if an error occurs
