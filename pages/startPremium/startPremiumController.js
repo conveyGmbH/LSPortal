@@ -44,7 +44,7 @@
             this.nextUrl = null;
 
             var that = this;
-            this.isSupreme = parseInt(AppData._persistentStates.showdashboardMesagoCombo); /*AppData._userData.IsSupreme*/
+            this.isSupreme = parseInt(AppData._userData.IsSupreme); /*AppData._userData.IsSupreme*/
 
             var layout = null;
 

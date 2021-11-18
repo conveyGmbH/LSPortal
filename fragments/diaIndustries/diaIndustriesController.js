@@ -1424,11 +1424,10 @@
                 var getGetDashboardData = function () {
                     Log.call(Log.l.trace, "LocalEvents.Controller.");
                     AppData.setErrorMsg(that.binding);
-                    that.clearArrays();
-                    AppData.call("PRC_GetDashboardData", {
+                    return AppData.call("PRC_GetDashboardData", {
                         pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
                         pCriterion1ID: 40,
-                        pCriterion2ID: that.binding.criteriaMain,
+                        pCriterion2ID: parseInt(that.binding.criteriaMain),
                         pDay: 0,
                         pLandID: 0,
                         pWantedRows: 5,
@@ -1455,11 +1454,9 @@
                 var getGetDashboardDataSurpreme = function () {
                     Log.call(Log.l.trace, "LocalEvents.Controller.");
                     AppData.setErrorMsg(that.binding);
-                    that.clearArrays();
-                    var lang = 
-                    AppData.call("PRC_GetDashboardData", {
+                    return AppData.call("PRC_GetDashboardData", {
                         pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
-                        pCriterion1ID: that.binding.criteriaMain, /*40*/
+                        pCriterion1ID: parseInt(that.binding.criteriaMain), /*40*/
                         pCriterion2ID: 0, /*that.binding.criteriaMain*/
                         pLandID: 0,
                         pDay: 0,
