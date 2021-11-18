@@ -549,7 +549,7 @@
                                             },
                                             label: function (context) {
                                                 var label = context.dataset.data[context.dataIndex];
-                                                return " " + label;
+                                                return " " + label + "%";
                                             }
                                         }
                                     }
@@ -1310,10 +1310,10 @@
                             splitQualifier = item.Qualifier.replace(/and/gi, "?and").split("?");
 
                         }
-                        splitQualifier[splitQualifier.length - 1] = splitQualifier[splitQualifier.length - 1].trim() + " " + item.PercentGlobal + " %";
+                        splitQualifier[splitQualifier.length - 1] = splitQualifier[splitQualifier.length - 1].trim();
                         industriesYearChartDataLabels5.push(splitQualifier);
                     } else {
-                        industriesYearChartDataLabels5.push(item.Qualifier + " " + item.PercentGlobal + "%");
+                        industriesYearChartDataLabels5.push(item.Qualifier);
                     }
 
                         if (item.Qualifier) {
