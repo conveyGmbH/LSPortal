@@ -34,7 +34,7 @@
                 this.worldMapHeight = 0;
                 this.countryKeyData = null;
                 this.countryColors = [];
-                this.isSupreme = parseInt(AppData._persistentStates.showdashboardMesagoCombo);
+                this.isSupreme = parseInt(AppData._userData.IsSupreme);
                 this.dayData = 0;
 
                 var selectedCountryBefore = null;
@@ -675,6 +675,7 @@
                                 }
                                 Log.print(Log.l.trace, "reportLand: success!");
                             }
+                            return WinJS.Promise.as();
                         },
                             function (errorResponse) {
                                 // called asynchronously if an error occurs
@@ -694,6 +695,7 @@
                                 daydrop.value = '';
                                 Log.print(Log.l.trace, "reportLand: success!");
                             }
+                            return WinJS.Promise.as();
                         },
                             function (errorResponse) {
                                 // called asynchronously if an error occurs

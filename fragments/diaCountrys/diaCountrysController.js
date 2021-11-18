@@ -24,7 +24,7 @@
 
                 var that = this;
 
-                that.isSupreme = parseInt(AppData._persistentStates.showdashboardMesagoCombo);
+                that.isSupreme = parseInt(AppData._userData.IsSupreme);
 
                 var icons = fragmentElement.querySelector(".country-chart-top-container");
 

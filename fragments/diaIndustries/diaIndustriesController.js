@@ -34,7 +34,7 @@
                 }
                 this.loadIcon = loadIcon;
 
-                this.isSupreme = parseInt(AppData._persistentStates.showdashboardMesagoCombo);
+                this.isSupreme = parseInt(AppData._userData.IsSupreme);
 
                 var criteriadrop = fragmentElement.querySelector("#criteriadropdown"); 
                 var industriesTooltip = fragmentElement.querySelector("#mydiaIndustriesElement");
@@ -1328,7 +1328,7 @@
                     /**
                      * absolute number!!
                      */
-                        industriesYearChartDataRaw5.push(item.NumHits);
+                    industriesYearChartDataRaw5.push(item.PercentGlobal);
                         //industriesYearChartDataRaw5.push(item.NumTotal - item.NumHits);
                         //industriesYearChartDataProcent5 = item.PercentGlobal + "%";
                    //}
