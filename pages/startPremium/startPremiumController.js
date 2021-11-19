@@ -292,6 +292,7 @@
                         /*var doc = new jsPDF("landscape", "mm", 'a4');
                         var width = doc.internal.pageSize.width;
                         var height = doc.internal.pageSize.height;*/
+                        // diaCountrys chart
                         html2canvas(document.getElementById("startContactshost"),
                             {
                                 scale: 1
@@ -311,12 +312,13 @@
                             var heightOfPDF = doc.internal.pageSize.height;
                             var ratioOfPDF = widthOfPDF / heightOfPDF;
                             doc.addImage(img, 'PNG', 0, 0, widthOfPDF, heightOfPDF);
-                            doc.save('startContactshost.pdf');
+                                doc.save(getResourceText('diaCountrys.top10'));
                         });
                     }).then(function () {
                         /*var doc = new jsPDF("landscape", "mm", 'a4');
                         var width = doc.internal.pageSize.width;
                         var height = doc.internal.pageSize.height;*/
+                        // diaYearRange chart
                         html2canvas(document.getElementById("startCountryshost"),
                             {
                                 scale: 1
@@ -336,12 +338,13 @@
                             var heightOfPDF = doc.internal.pageSize.height;
                             var ratioOfPDF = widthOfPDF / heightOfPDF;
                             doc.addImage(img, 'PNG', 0, 0, widthOfPDF, heightOfPDF);
-                            doc.save('startCountryshost.pdf');
+                                doc.save(getResourceText('diaYearRange.title'));
                         });
                     }).then(function () {
                         /*var doc = new jsPDF("landscape", "mm", 'a4');
                         var width = doc.internal.pageSize.width;
                         var height = doc.internal.pageSize.height;*/
+                        // diaVisitors chart
                         html2canvas(document.getElementById("startQuestionshost"),
                             {
                                 scale: 1
@@ -361,12 +364,13 @@
                             var heightOfPDF = doc.internal.pageSize.height;
                             var ratioOfPDF = widthOfPDF / heightOfPDF;
                             doc.addImage(img, 'PNG', 0, 0, widthOfPDF, heightOfPDF);
-                            doc.save('startQuestionshost.pdf');
+                                doc.save(getResourceText('diaVisitors.title'));
                         });
                     }).then(function () {
                         /*var doc = new jsPDF("landscape", "mm", 'a4');
                         var width = doc.internal.pageSize.width;
                         var height = doc.internal.pageSize.height;*/
+                        // diaCountrysIndustries chart
                         html2canvas(document.getElementById("startContactspDhost"),
                             {
                                 scale: 1
@@ -386,12 +390,13 @@
                             var heightOfPDF = doc.internal.pageSize.height;
                             var ratioOfPDF = widthOfPDF / heightOfPDF;
                             doc.addImage(img, 'PNG', 0, 0, widthOfPDF, heightOfPDF);
-                            doc.save('startContactspDhost.pdf');
+                                doc.save(getResourceText('diaCountrysIndustries.title'));
                         });
                     }).then(function () {
                         /*var doc = new jsPDF("landscape", "mm", 'a4');
                         var width = doc.internal.pageSize.width;
                         var height = doc.internal.pageSize.height;*/
+                        // diaIndustries chart
                         return html2canvas(document.getElementById("startPremiumdiaIndustrieshost"),
                             {
                                 scale: 1
@@ -411,6 +416,7 @@
                             var heightOfPDF = doc.internal.pageSize.height;
                             var ratioOfPDF = widthOfPDF / heightOfPDF;
                             doc.addImage(img, 'PNG', 0, 0, widthOfPDF, heightOfPDF);
+                                 // setze title nach ausgewählter combobox + Supreme bzw. Premium
                                  doc.save('startPremiumdiaIndustrieshost.pdf', { returnPromise: true }).then(function () {
                                      that.binding.progress.show = null;
                                  });
@@ -435,7 +441,8 @@
                         var height = doc.internal.pageSize.height;*/
                         return html2canvas(element,
                             {
-                            scale: 2
+                                scale: 1,
+                                quality:4
                         }).then(canvas => { /*, { dpi: 300 }*/
                                 that.binding.progress = {
                                     percent: 25,
@@ -446,6 +453,10 @@
                             var heightOfCanvas = canvas.height;
                             var ratioCanvas = widthOfCanvas / heightOfCanvas;
                             var img = canvas.toDataURL(); //image data of canvas
+                            //function myFunction() {
+                            //    var myWindow = window.open("", "MsgWindow", "width=widthOfCanvas,height=heightOfCanvas");
+                            //    myWindow.document.write('<img src="' + img + '"/>');
+                            //}
                             //set the orientation
                             var doc;
                             if (widthOfCanvas > heightOfCanvas) {
@@ -462,7 +473,12 @@
                                     show: 1
                                 };
                             doc.addImage(img, 'PNG', 0, 0, widthOfPDF, heightOfPDF);
-                                doc.save('test.pdf', { returnPromise: true });
+                                //var pdfTitle = "";
+                                if (that.isSupreme === 2) {
+                                    doc.save(getResourceText("label.startSurpreme"), { returnPromise: true }); /*'test.pdf'*/
+                                } else {
+                                    doc.save(getResourceText("label.startPremium"), { returnPromise: true }); /*'test.pdf'*/
+                                }
                             });
                     }).then(function () {
                         that.binding.progress = {
