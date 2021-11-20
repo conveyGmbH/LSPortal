@@ -293,7 +293,8 @@
                         var width = doc.internal.pageSize.width;
                         var height = doc.internal.pageSize.height;*/
                         // diaCountrys chart
-                        html2canvas(document.getElementById("startContactshost"),
+                        that.binding.progress.statusText = getResourceText('diaCountrys.top10');
+                        return html2canvas(document.getElementById("startContactshost"),
                             {
                                 scale: 1
                             }).then(canvas => { /*, { dpi: 300 }*/
@@ -312,6 +313,8 @@
                             var heightOfPDF = doc.internal.pageSize.height;
                             var ratioOfPDF = widthOfPDF / heightOfPDF;
                             doc.addImage(img, 'PNG', 0, 0, widthOfPDF, heightOfPDF);
+                                that.binding.progress.percent = 25;
+                                that.binding.progress.text = getResourceText('diaCountrys.top10');
                                 doc.save(getResourceText('diaCountrys.top10'));
                         });
                     }).then(function () {
@@ -319,7 +322,8 @@
                         var width = doc.internal.pageSize.width;
                         var height = doc.internal.pageSize.height;*/
                         // diaYearRange chart
-                        html2canvas(document.getElementById("startCountryshost"),
+                        that.binding.progress.text = getResourceText('diaYearRange.title');
+                        return html2canvas(document.getElementById("startCountryshost"),
                             {
                                 scale: 1
                             }).then(canvas => { /*, { dpi: 300 }*/
@@ -338,6 +342,8 @@
                             var heightOfPDF = doc.internal.pageSize.height;
                             var ratioOfPDF = widthOfPDF / heightOfPDF;
                             doc.addImage(img, 'PNG', 0, 0, widthOfPDF, heightOfPDF);
+                                that.binding.progress.percent = 50;
+                                that.binding.progress.text = getResourceText('diaYearRange.title');
                                 doc.save(getResourceText('diaYearRange.title'));
                         });
                     }).then(function () {
@@ -345,7 +351,8 @@
                         var width = doc.internal.pageSize.width;
                         var height = doc.internal.pageSize.height;*/
                         // diaVisitors chart
-                        html2canvas(document.getElementById("startQuestionshost"),
+                        that.binding.progress.text = getResourceText('diaVisitors.title');
+                        return html2canvas(document.getElementById("startQuestionshost"),
                             {
                                 scale: 1
                             }).then(canvas => { /*, { dpi: 300 }*/
@@ -365,13 +372,16 @@
                             var ratioOfPDF = widthOfPDF / heightOfPDF;
                             doc.addImage(img, 'PNG', 0, 0, widthOfPDF, heightOfPDF);
                                 doc.save(getResourceText('diaVisitors.title'));
+                                that.binding.progress.percent = 75;
+                                that.binding.progress.text = getResourceText('diaVisitors.title');
                         });
                     }).then(function () {
                         /*var doc = new jsPDF("landscape", "mm", 'a4');
                         var width = doc.internal.pageSize.width;
                         var height = doc.internal.pageSize.height;*/
                         // diaCountrysIndustries chart
-                        html2canvas(document.getElementById("startContactspDhost"),
+                        that.binding.progress.text = getResourceText('diaCountrysIndustries.title');
+                        return html2canvas(document.getElementById("startContactspDhost"),
                             {
                                 scale: 1
                             }).then(canvas => { /*, { dpi: 300 }*/
@@ -390,6 +400,7 @@
                             var heightOfPDF = doc.internal.pageSize.height;
                             var ratioOfPDF = widthOfPDF / heightOfPDF;
                             doc.addImage(img, 'PNG', 0, 0, widthOfPDF, heightOfPDF);
+                                that.binding.progress.text = getResourceText('diaCountrysIndustries.title');
                                 doc.save(getResourceText('diaCountrysIndustries.title'));
                         });
                     }).then(function () {
@@ -397,6 +408,7 @@
                         var width = doc.internal.pageSize.width;
                         var height = doc.internal.pageSize.height;*/
                         // diaIndustries chart
+                        that.binding.progress.text = "startPremiumdiaIndustrieshost.pdf";
                         return html2canvas(document.getElementById("startPremiumdiaIndustrieshost"),
                             {
                                 scale: 1
@@ -416,12 +428,14 @@
                             var heightOfPDF = doc.internal.pageSize.height;
                             var ratioOfPDF = widthOfPDF / heightOfPDF;
                             doc.addImage(img, 'PNG', 0, 0, widthOfPDF, heightOfPDF);
+                                 that.binding.progress.text = "startPremiumdiaIndustrieshost.pdf";
+                                 that.binding.progress.percent = 100;
                                  // setze title nach ausgewählter combobox + Supreme bzw. Premium
-                                 doc.save('startPremiumdiaIndustrieshost.pdf', { returnPromise: true }).then(function () {
+                                 doc.save('startPremiumdiaIndustrieshost.pdf');
+                             }).then(function () {
                                      that.binding.progress.show = null;
                                  });
                         });
-                    });
                     Log.ret(Log.l.trace);
                 },
                 exportBrowserViewToPdf: function (event) {
@@ -475,8 +489,10 @@
                             doc.addImage(img, 'PNG', 0, 0, widthOfPDF, heightOfPDF);
                                 //var pdfTitle = "";
                                 if (that.isSupreme === 2) {
+                                    statusText = getResourceText("label.startSurpreme");
                                     doc.save(getResourceText("label.startSurpreme"), { returnPromise: true }); /*'test.pdf'*/
                                 } else {
+                                    statusText = getResourceText("label.startPremium");
                                     doc.save(getResourceText("label.startPremium"), { returnPromise: true }); /*'test.pdf'*/
                                 }
                             });
