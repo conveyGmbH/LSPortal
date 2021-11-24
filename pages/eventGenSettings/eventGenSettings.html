@@ -249,6 +249,20 @@
                                     </div>
                                 </div>
                                 <div class="input_half_right">
+                                    <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventGenSettings.speakerVideosPinned'}"></span>
+                                    <span class="label landscape_only" data-win-res="{textContent: 'eventGenSettings.speakerVideosPinned'}"></span>
+                                    <div class="input_field toggle-switch-parent">
+                                        <div id="speakerVideosPinned" class="input_field"
+                                             data-win-control="WinJS.UI.ToggleSwitch"
+                                             data-win-bind="winControl.checked: dataEvent.SpeakerVideosPinned; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                                             onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="line-separator"></div>
+                            <div class="field_line field_line_odd">
+                                <div class="input_half_left">
                                     <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventGenSettings.showquestions'}"></span>
                                     <span class="label landscape_only" data-win-res="{textContent: 'eventGenSettings.showquestions'}"></span>
                                     <div class="input_field toggle-switch-parent">
@@ -259,9 +273,10 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="input_half_right">
+                                </div>
                             </div>
-                            <div class="line-separator"></div>
-                            <div class="field_line field_line_odd">
+                            <div class="field_line field_line_even">
                                 <div class="input_half_left">
                                     <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventGenSettings.recordsession'}"></span>
                                     <span class="label landscape_only" data-win-res="{textContent: 'eventGenSettings.recordsession'}"></span>
@@ -283,12 +298,6 @@
                                              onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="field_line field_line_even">
-                                <div class="input_half_left">
-                                </div>
-                                <div class="input_half_right">
                                 </div>
                             </div>
                             <div class="line-separator"></div>

@@ -17,6 +17,9 @@
 #hideSilentVideos .win-toggleswitch-header {
     display: none;
 }
+#speakerVideosPinned .win-toggleswitch-header {
+    display: none;
+}
 #showNoMemberList .win-toggleswitch-header {
     display: none;
 }

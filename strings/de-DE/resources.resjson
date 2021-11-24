@@ -1297,6 +1297,7 @@
     "eventGenSettings.nomemberlist"			: "Keine Zuschauerliste anzeigen",
     "eventGenSettings.listonlymoderators"	: "Nur Moderatoren auflisten",
     "eventGenSettings.hidesilentvideos"	: "Stille Videos ausblenden",
+    "eventGenSettings.speakerVideosPinned"	: "Videos manuell anheften",
     "eventGenSettings.shownames"			: "Namen anzeigen",
 	"eventGenSettings.showquestions"			: "Fragebogen Registrierung anzeigen",
     "eventGenSettings.showics"			    : "Kalender anzeigen",
