@@ -253,6 +253,13 @@
                         that.binding.dataEvent.HideSilentVideos = null;
                     }
                     break;
+                    case "speakerVideosPinned":
+                    if (checked) {
+                        that.binding.dataEvent.SpeakerVideosPinned = 1;
+                    } else {
+                        that.binding.dataEvent.SpeakerVideosPinned = null;
+                    }
+                    break;
                     case "showNoMemberList":
                     if (checked) {
                         that.binding.dataEvent.NoMemberList = 1;
