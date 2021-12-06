@@ -439,7 +439,7 @@
             that.setEventSeriesId = setEventSeriesId;
             var master = Application.navigator.masterControl;
             if (master && master.controller && master.controller.binding) {
-                that.setEventSeriesId(master.controller.binding.eventId);
+                that.setEventSeriesId(master.controller.binding.seriesId); //eventId
             }
 
             that.processAll().then(function () {
