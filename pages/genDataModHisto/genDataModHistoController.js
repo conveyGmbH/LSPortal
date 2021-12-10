@@ -196,7 +196,9 @@
 
                 var resultConverter = function (item, index) {
                     item.index = index;
-                    
+                    if (item.RatingText === null) {
+                        item.RatingText = "";
+                    }
                 }
                 this.resultConverter = resultConverter;
               
