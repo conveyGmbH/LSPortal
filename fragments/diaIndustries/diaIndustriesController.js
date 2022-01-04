@@ -1063,9 +1063,9 @@
 
                 var drawSupremeCharts = function () {
                         that.createIndustriesYearChart5();
-                        /*that.createIndustriesYearChart6();
+                        that.createIndustriesYearChart6();
                         that.createIndustriesYearChart7();
-                        that.createIndustriesYearChart8();*/
+                        that.createIndustriesYearChart8();
                 }
                 this.drawSupremeCharts = drawSupremeCharts;
 
@@ -1456,8 +1456,8 @@
                     AppData.setErrorMsg(that.binding);
                     return AppData.call("PRC_GetDashboardData", {
                         pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
-                        pCriterion1ID: parseInt(that.binding.criteriaMain), /*40*/
-                        pCriterion2ID: 0, /*that.binding.criteriaMain*/
+                        pCriterion1ID: 40, /*parseInt(that.binding.criteriaMain)*/
+                        pCriterion2ID: parseInt(that.binding.criteriaMain), /*0*/
                         pLandID: 0,
                         pDay: 0,
                         pWantedRows: 5,
@@ -1469,8 +1469,8 @@
                             return b.PercentGlobal - a.PercentGlobal; /*b.NumHits - a.NumHits*/
                         });
                         results.forEach(function (item, index) {
-                            //that.resultConverterSurpreme(item, index);
-                            that.resultConverterSupremeSpecialOne(item, index);
+                            that.resultConverterSurpreme(item, index);
+                            //that.resultConverterSupremeSpecialOne(item, index);
                         });
                         that.redrawCharts();
                         that.drawSupremeCharts();
