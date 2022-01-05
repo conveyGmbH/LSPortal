@@ -190,6 +190,7 @@
                         Log.call(Log.l.trace, "Event.Controller.");
                         if (event.currentTarget) {
                             var toggle = event.currentTarget.winControl;
+                            AppBar.modified = true;
                             if (toggle) {
                                 var value = toggle.checked || event.currentTarget.value;
                                 that.createApiUserValueToggle(event.currentTarget.id, value);
