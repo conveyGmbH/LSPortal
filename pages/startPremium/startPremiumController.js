@@ -453,57 +453,65 @@
                         /*var doc = new jsPDF("landscape", "mm", 'a4');
                         var width = doc.internal.pageSize.width;
                         var height = doc.internal.pageSize.height;*/
-                        return html2canvas(element,
-                            {
-                                scale: 1,
-                                quality:4
+                        var dpi = window.devicePixelRatio * 96;
+                        return html2canvas(element, {
+                            scale: 1,
+                            quality: 4
                         }).then(canvas => { /*, { dpi: 300 }*/
-                                that.binding.progress = {
-                                    percent: 25,
-                                    text: statusText,
-                                    show: 1
-                                };
-                                //element.clientWidth und element.clientHeight
-                                var elementWidth = element.clientWidth;
-                                var elementHeight = element.clientHeight;
-
+                            that.binding.progress = {
+                                percent: 25,
+                                text: statusText,
+                                show: 1
+                            };
                             var widthOfCanvas = canvas.width;
                             var heightOfCanvas = canvas.height;
-                            var ratioCanvas = widthOfCanvas / heightOfCanvas;
-                            var img = canvas.toDataURL(); //image data of canvas
                             //function myFunction() {
-                                var myWindow = window.open("", "MsgWindow", "width=widthOfCanvas,height=heightOfCanvas");
-                                myWindow.document.write('<img src="' + img + '"/>');
-                                var dpi = window.devicePixelRatio;
+                            //    var myWindow = window.open("", "MsgWindow", "width=widthOfCanvas,height=heightOfCanvas");
+                            //    myWindow.document.write('<img src="' + canvas.toDataURL() + '"/>');
                             //}
                             //set the orientation
-                            var orientation;
-                            var doc;
-                                if (widthOfCanvas * 210  >= heightOfCanvas * 297) {
-                                    orientation = 'l';
-                                    doc.addImage(img, 'png', 0, 0, img.width * 25.4 / dpi, img.height * 25.4 / dpi);
-                            } else {
-                                    orientation = 'p';
-                                    doc.addImage(img, 'png', 0, 0, img.width * 25.4 / dpi, img.height * 25.4 / dpi);
-                            }
-                                doc = new jsPDF(orientation, 'mm', 'a4'); /*[widthOfCanvas, heightOfCanvas]*/
-                            var widthOfPDF = doc.internal.pageSize.width;
-                            var heightOfPDF = doc.internal.pageSize.height;
-                            var ratioOfPDF = widthOfPDF / heightOfPDF;
-                                that.binding.progress = {
-                                    percent: 75,
-                                    text: statusText,
-                                    show: 1
-                                };
-                                //doc.addPage(orientation, "mm", "a4");
-                                if (that.isSupreme === 2) {
-                                    statusText = getResourceText("label.startSurpreme");
-                                    doc.save(getResourceText("label.startSurpreme"), { returnPromise: true }); /*'test.pdf'*/
-                                } else {
-                                    statusText = getResourceText("label.startPremium");
-                                    doc.save(getResourceText("label.startPremium"), { returnPromise: true }); /*'test.pdf'*/
+                            var orientation, mmLeft, mmTop, mmWidth, mmHeight;
+                            var mmLongSide = 297, mmShortSide = 210, mmBorder = 5, scale = 1;
+                            if (widthOfCanvas >= heightOfCanvas) {
+                                orientation = 'l';
+                                mmLeft = mmBorder;
+                                mmWidth = mmLongSide - 2 * mmBorder;
+                                mmHeight = mmWidth * heightOfCanvas / widthOfCanvas;
+                                if (mmHeight > (mmShortSide - 2 * mmBorder)) {
+                                    scale = (mmShortSide - 2 * mmBorder) / mmHeight;
+                                    mmHeight *= scale;
+                                    mmWidth *= scale;
+                                    mmLeft = (mmLongSide - mmWidth) / 2;
                                 }
-                            });
+                                mmTop = (mmShortSide - mmHeight) / 2;
+                            } else {
+                                orientation = 'p';
+                                mmTop = mmBorder;
+                                mmHeight = mmLongSide - 2 * mmBorder;
+                                mmWidth = mmHeight * widthOfCanvas / heightOfCanvas;
+                                if (mmWidth > (mmShortSide - 2 * mmBorder)) {
+                                    scale = (mmShortSide - 2 * mmBorder) / mmWidth;
+                                    mmHeight *= scale;
+                                    mmWidth *= scale;
+                                    mmTop = (mmLongSide - mmHeight) / 2;
+                                }
+                                mmLeft = (mmShortSide - mmWidth) / 2;
+                            }
+                            var doc = new jsPDF(orientation, 'mm', 'a4'); /*[widthOfCanvas, heightOfCanvas]*/
+                            doc.addImage(canvas.toDataURL(), 'png', mmLeft, mmTop, mmWidth, mmHeight);
+                            that.binding.progress = {
+                                percent: 75,
+                                text: statusText,
+                                show: 1
+                            };
+                            if (that.isSupreme === 2) {
+                                statusText = getResourceText("label.startSurpreme");
+                                doc.save(getResourceText("label.startSurpreme"), { returnPromise: true }); /*'test.pdf'*/
+                            } else {
+                                statusText = getResourceText("label.startPremium");
+                                doc.save(getResourceText("label.startPremium"), { returnPromise: true }); /*'test.pdf'*/
+                            }
+                        });
                     }).then(function () {
                         that.binding.progress = {
                             percent: 100,
