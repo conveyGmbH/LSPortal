@@ -463,21 +463,30 @@
                                     text: statusText,
                                     show: 1
                                 };
+                                //element.clientWidth und element.clientHeight
+                                var elementWidth = element.clientWidth;
+                                var elementHeight = element.clientHeight;
+
                             var widthOfCanvas = canvas.width;
                             var heightOfCanvas = canvas.height;
                             var ratioCanvas = widthOfCanvas / heightOfCanvas;
                             var img = canvas.toDataURL(); //image data of canvas
                             //function myFunction() {
-                            //    var myWindow = window.open("", "MsgWindow", "width=widthOfCanvas,height=heightOfCanvas");
-                            //    myWindow.document.write('<img src="' + img + '"/>');
+                                var myWindow = window.open("", "MsgWindow", "width=widthOfCanvas,height=heightOfCanvas");
+                                myWindow.document.write('<img src="' + img + '"/>');
+                                var dpi = window.devicePixelRatio;
                             //}
                             //set the orientation
+                            var orientation;
                             var doc;
-                            if (widthOfCanvas > heightOfCanvas) {
-                                doc = new jsPDF('l', 'px', 'a4'); /*[widthOfCanvas, heightOfCanvas]*/
+                                if (widthOfCanvas * 210  >= heightOfCanvas * 297) {
+                                    orientation = 'l';
+                                    doc.addImage(img, 'png', 0, 0, img.width * 25.4 / dpi, img.height * 25.4 / dpi);
                             } else {
-                                doc = new jsPDF('p', 'px', 'a4'); /*[heightOfCanvas, widthOfCanvas]*/
+                                    orientation = 'p';
+                                    doc.addImage(img, 'png', 0, 0, img.width * 25.4 / dpi, img.height * 25.4 / dpi);
                             }
+                                doc = new jsPDF(orientation, 'mm', 'a4'); /*[widthOfCanvas, heightOfCanvas]*/
                             var widthOfPDF = doc.internal.pageSize.width;
                             var heightOfPDF = doc.internal.pageSize.height;
                             var ratioOfPDF = widthOfPDF / heightOfPDF;
@@ -486,8 +495,7 @@
                                     text: statusText,
                                     show: 1
                                 };
-                            doc.addImage(img, 'PNG', 0, 0, widthOfPDF, heightOfPDF);
-                                //var pdfTitle = "";
+                                //doc.addPage(orientation, "mm", "a4");
                                 if (that.isSupreme === 2) {
                                     statusText = getResourceText("label.startSurpreme");
                                     doc.save(getResourceText("label.startSurpreme"), { returnPromise: true }); /*'test.pdf'*/
