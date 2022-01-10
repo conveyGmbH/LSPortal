@@ -1425,6 +1425,7 @@
     "diaIndustries.tooltipPremium" : "zum Beispiel: Aus welchen Top 5 Branchen (Abteilungen/Funktionen etc.) kommen Ihre gescannten Besucher in Bezug auf ihre Jahrgangsgruppe?",
     "diaIndustries.tooltipSupreme1" : "generell gilt: blauer Kreis = gescannte Besucher auf Ihrem Messestand, roter Kreis = alle auf dem Messegelände da gewesenen Besucher",
     "diaIndustries.tooltipSupreme2" : "zum Beispiel: Aus welchen Top 5 Branchen (Abteilungen/Funktionen etc.) kommen Ihre gescannten Besucher in Bezug auf ihre Jahrgangsgruppe?",
+    "diaIndustries.title"           : "Besucher nach Jahresgruppe",
 
 	"startResourceAdministration.title" : "Überblickseite",
     "startResourceAdministration.comment" : "Erstellen und Einrichten Ihrer Startseite",

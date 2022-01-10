@@ -1422,6 +1422,7 @@
     "diaIndustries.tooltipPremium" : "for example: From which top 5 industries (departments/functions etc.) do your scanned visitors come in relation to their age group?",
     "diaIndustries.tooltipSupreme1" : "in general: blue circle = scanned visitors at your booth, red circle = all visitors who were on exhibition grounds",
     "diaIndustries.tooltipSupreme2" : "for example: From which top 5 industries (departments/functions etc.) do your scanned visitors come in relation to their age group?",
+    "diaIndustries.title"           : "Visitors by year group",
 
     "startResourceAdministration.title" : "Pagina riassuntiva",
     "startResourceAdministration.comment" : "Crea e imposta la tua homepage",

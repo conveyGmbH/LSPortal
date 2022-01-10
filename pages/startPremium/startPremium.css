@@ -1,6 +1,3 @@
-/*
-    margins/paddings for all screens
-*/
 .startPremium .tile-button-color,
 .startPremium .tile-header,
 .startPremium .tile-content-wide,
@@ -28,27 +25,15 @@
     min-height: 180px;
     overflow-x: hidden;
     overflow-y: hidden;
-    /*
-    width: 200px;
-    display: table;
-    */
     width: 100%;
 }
 
 .startPremium .tile-header {
     text-align: center;
     height: 42px;
-    /*
-    width: calc(100% - 4px);
-    */
     width: 100%;
     margin: 0;
     padding: 0;
-    /*
-    border-style: solid;
-    border-width: 2px;
-    border-color: transparent;
-    */
     border: none;
     display: table-caption;
 }
@@ -71,18 +56,6 @@
     border: none;
 }
 
-.tiles-container {
-}
-
-.tile-top {
-}
-
-.tile-middle {
-}
-
-.tile-bottom {
-}
-
 .startPremium .field_line_odd {
     background-color: white;
     margin-right: 4px;
@@ -93,7 +66,6 @@
     background-color: white;
     margin-left: 0px;
     width: calc(50% - 5px);
-    /*height: 877px;*/
 }
 
 .startPremium .field_line_full {
@@ -102,13 +74,11 @@
 
 .startPremium .field_line_full_double {
     background-color: white;
-    /*height: 580px;*/
     margin-top: 4px;
 }
 
 .view-size-medium .startPremium .field_line_full_double {
     background-color: white;
-    /*height: 1080px;*/
     margin-top: 4px;
 }
 
@@ -237,15 +207,14 @@
     width: 100%;
 }
 
-    .startPremium .start-donut-chart table.jqplot-table-legend {
-        top: 0 !important;
-        padding: 4px;
-    }
+.startPremium .start-donut-chart table.jqplot-table-legend {
+    top: 0 !important;
+    padding: 4px;
+}
 
-    .startPremium .start-donut-chart td.jqplot-table-legend {
-        white-space: nowrap;
-    }
-
+.startPremium .start-donut-chart td.jqplot-table-legend {
+    white-space: nowrap;
+}
 
 .startPremium .view-size-medium .start-donut-chart {
     left: 15%;
@@ -285,23 +254,6 @@
     width: 100%;
 }
 
-/*
-@media (max-height:1099px) {
-    .pie-chart {
-        display: none;
-    }
-}
-*/
-
-/*
-    margins/paddings for medium size screens or orientation landscape
-    contentarea is less than 699px (in landscape add 140px for navigation bar)
-    @media (max-width:699px), (max-width:839px) and (orientation: landscape) {
-@media (max-width:899px) {
-    
-}
-*/
-
 .startPremium .view-size-medium .hide_if_size_medium {
     display: none;
 }
@@ -315,21 +267,6 @@
     left: 20%;
 }
 
-/*
-    margins/paddings for small screens and orientation vertical
-@media (max-height:699px) {
-   
-}
-*/
-
-
-/*
-    margins/paddings for small screens and orientation vertical
-@media (max-width:499px) {
-    
-}
-*/
-
 .startPremium .view-size-small .pagetitle {
     display: none;
 }
@@ -338,7 +275,6 @@
     width: 80%;
     left: 10%;
 }
-
 
 .startPremium .view-size-small .start-pie-chart {
     min-width: 96px;
@@ -360,27 +296,18 @@
 
 .startPremium #startCountryshost.fragmenthost {
     min-height: 280px;
-    height: auto; /*300px*/
+    height: auto;
     margin-top: 30px;
 }
-
-/*.view-size-small .startPremium #startCountryshost.fragmenthost {
-    height: 540px;
-}
-
-.view-size-medium .startPremium #startCountryshost.fragmenthost {
-    height: auto;
-}*/
 
 .startPremium #startQuestionshost.fragmenthost {
     height: 285px;
     margin-top: 5px;
 }
 
-.startPremium #startContactspDhost.fragmenthost {
+.startPremium #diaCountrysIndustriespDhost.fragmenthost {
     height: 885px; /*925 875px*/
 }
-
 
 .startPremium .startPremium #startTop10Countryshost.fragmenthost {
     height: 270px;
@@ -394,49 +321,15 @@
     height: auto; /*290px*/
     margin-bottom: 10px;
 }
-/*.view-size-biggest .startPremium #startPremiumdiaIndustrieshost.fragmenthost {
-    height: 580px;
-}
-.view-size-bigger .startPremium #startPremiumdiaIndustrieshost.fragmenthost {
-    height: 580px;
-}
-.view-size-medium .startPremium #startPremiumdiaIndustrieshost.fragmenthost {
-    height: 1000px;
-}
-.view-size-medium-small .startPremium #startPremiumdiaIndustrieshost.fragmenthost {
-    height: 1000px;
-}
-.view-size-small .startPremium #startPremiumdiaIndustrieshost.fragmenthost {
-    height: 1000px;
-}*/
-.ITbackground {
-    margin-top: 4px;
-    margin-left: 26px;
-    margin-right: 26px;
-    margin-bottom: 4px;
-    width: calc(100% - 54px);
-    height: 730px; /*645px*/
-    background-color: transparent;
-    /*color: white;
-    background-image: url("/www/images/ITBackground.jpg");*/
-}
-
-.ipadImg {
-    max-width: 100%;
-    width: 600px;
-    height: auto;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: transparent;
-}
 
 .startPremium button:hover {
     cursor: pointer;
 }
+
 .startPremium button:disabled {
     cursor: default;
 }
+
 .startPremium #btn-all {
     display: inline-block;
     float: right;
@@ -453,17 +346,13 @@
     color: darkgray;
     background-color: transparent;
     text-align: center;
-    /*transition: all 0.2s;*/
 }
-
 
 .startPremium #btn-vis {
     display: inline-block;
     float: right;
     position: relative;
     z-index: 99;
-    /*width: 250px;
-    height: 30px;*/
     padding: 0.35em 1.2em;
     border: 0.1em solid darkgray;
     margin: 0 0.3em 0.3em 0;
@@ -475,16 +364,8 @@
     color: darkgray;
     background-color: transparent;
     text-align: center;
-    /*transition: all 0.2s;*/
 }
-/*.view-size-small #btn-vis,
-.view-size-small #btn-all {
-    font-size: 10px;
-}*/
-/*.startPremium #btn-all:hover, .startPremium #btn-vis:hover {
-    /*color: #000000;
-    background-color: #FFFFFF;
-}*/
+
 .circle-with-text-event-dot {
     background-color: red;
     border-color: white;
@@ -497,12 +378,9 @@
     margin-left: 5%;
     margin-right: 5px;
 }
-/*.view-size-small .circle-with-text-event-dot {
-    margin-left: 8px;
-}*/
+
 .circle-with-text-event-text {
     margin-left: 5px !important;
-    /*width: 200px;*/
 }
 
 .circle-with-text-global-dot {
@@ -520,7 +398,6 @@
 
 .circle-with-text-global-text {
     margin-left: 5px !important;
-    /* width: 230px;*/
 }
 
 .tip {
@@ -535,14 +412,6 @@
     font-size: 15px;
     width: 450px;
 }
-
-/*.view-size-small .circle-with-text-event-dot {
-    height: 20px;
-}
-
-.view-size-small .circle-with-text-global-dot {
-    height: 20px;
-}*/
 
 .startPremium button.action-image {
     border: none;
@@ -573,12 +442,6 @@
 .view-size-small .tip-container {
     font-size: 14px;
 }
-
-/*.view-size-small .circle-with-text-event-dot,
-.view-size-small .circle-with-text-global-dot {
-    height: 15px;
-}*/
-
 
 .download-container {
     display: block;

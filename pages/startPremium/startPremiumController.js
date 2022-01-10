@@ -6,93 +6,41 @@
 /// <reference path="~/www/lib/convey/scripts/pageController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/pages/startPremium/startPremiumService.js" />
-/// <reference path="~/www/lib/datamaps/scripts/datamaps.world.de.js" />
-/// <reference path="~/www/lib/datamaps/scripts/datamaps.world.en.js" />
 /// <reference path="~/www/lib/d3/scripts/d3.min.js" />
-/// <reference path="~/www/lib/topojson/scripts/topojson.js" />
 /// <reference path="~/www/lib/jspdf/jspdf.min.js"/>
-/// <reference path="~/www/lib"/>
 
-/*
- Structure of states to be set from external modules:
- {
-    networkState: newNetworkstate:
- }
-*/
+
 
 (function () {
     "use strict";
 
     WinJS.Namespace.define("StartPremium", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
-            Log.call(Log.l.trace, "Start.Controller.");
+            Log.call(Log.l.trace, "StartPremium.Controller.");
             Application.Controller.apply(this, [pageElement, {
-                noLicence: getResourceText("info.nolicence"),
-                disableEditEvent: NavigationBar.isPageDisabled("event"),
-                comment: getResourceText("info.comment"),
-                dataLicence: null,
-                countContacts: true,
-                dataLicenceUser: getEmptyDefaultValue(StartPremium.licenceUserView.defaultValue),
                 progress: {
                     percent: 0,
                     text: "",
                     show: null
                 }
-                // add dynamic scripts to page element, src is either a file or inline text:
             }, commandList]);
-            this.applist = null;
-            this.nextUrl = null;
 
             var that = this;
-            this.isSupreme = parseInt(AppData._userData.IsSupreme); /*AppData._userData.IsSupreme*/
-
-            var layout = null;
-
-            var maxLeadingPages = 0;
-            var maxTrailingPages = 0;
-
-            var listView = pageElement.querySelector("#dataLicenceUserList.listview");
-            var exportPdfBtn = pageElement.querySelector("#btn-vis");
+            this.isSupreme = parseInt(AppData._userData.IsSupreme);
 
             this.dispose = function () {
-                if (listView && listView.winControl) {
-                    listView.winControl.itemDataSource = null;
-                }
-                if (that.kontaktanzahldata) {
-                    that.kontaktanzahldata = null;
-                }
-                if (that.applist) {
-                    that.applist = null;
-                }
-            }
 
-            var setRestriction = function (restriction) {
-                AppData.setRestriction("Kontakt", restriction);
             }
-            this.setRestriction = setRestriction;
-
-            var resultConverter = function (item, index) {
-                item.index = index;
-                item.buttonColor = Colors.tileBackgroundColor;
-                item.buttonTitle = Colors.tileTextColor;
-            }
-            this.resultConverter = resultConverter;
-
-            // define data handling standard methods
-            var getRecordId = function () {
-                return AppData.getRecordId("Mitarbeiter");
-            };
-            this.getRecordId = getRecordId;
 
             var loadData = function () {
                 Log.call(Log.l.trace, "Start.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
-                    var startContactsFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("diaCountrys"));
-                    if (startContactsFragmentControl && startContactsFragmentControl.controller) {
-                        return startContactsFragmentControl.controller.loadData();
+                    var diaCountrysFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("diaCountrys"));
+                    if (diaCountrysFragmentControl && diaCountrysFragmentControl.controller) {
+                        return diaCountrysFragmentControl.controller.loadData();
                     } else {
-                        var parentElement = pageElement.querySelector("#startContactshost");
+                        var parentElement = pageElement.querySelector("#diaCountryshost");
                         if (parentElement) {
                             return Application.loadFragmentById(parentElement, "diaCountrys", {});
                         } else {
@@ -100,11 +48,11 @@
                         }
                     }
                 }).then(function () {
-                    var startCountrysFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("diaYearRange"));
-                    if (startCountrysFragmentControl && startCountrysFragmentControl.controller) {
-                        return startCountrysFragmentControl.controller.loadData();
+                    var diaYearRangeFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("diaYearRange"));
+                    if (diaYearRangeFragmentControl && diaYearRangeFragmentControl.controller) {
+                        return diaYearRangeFragmentControl.controller.loadData();
                     } else {
-                        var parentElement = pageElement.querySelector("#startCountryshost");
+                        var parentElement = pageElement.querySelector("#diaYearRangehost");
                         if (parentElement) {
                             return Application.loadFragmentById(parentElement, "diaYearRange", {});
                         } else {
@@ -112,11 +60,11 @@
                         }
                     }
                 }).then(function () {
-                    var startQuestionsFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("diaVisitors"));
-                    if (startQuestionsFragmentControl && startQuestionsFragmentControl.controller) {
-                        return startQuestionsFragmentControl.controller.loadData();
+                    var diaVisitorsFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("diaVisitors"));
+                    if (diaVisitorsFragmentControl && diaVisitorsFragmentControl.controller) {
+                        return diaVisitorsFragmentControl.controller.loadData();
                     } else {
-                        var parentElement = pageElement.querySelector("#startQuestionshost");
+                        var parentElement = pageElement.querySelector("#diaVisitorshost");
                         if (parentElement) {
                             return Application.loadFragmentById(parentElement, "diaVisitors", {});
                         } else {
@@ -124,11 +72,11 @@
                         }
                     }
                 }).then(function () {
-                    var startContactspDFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("diaCountrysIndustries"));
-                    if (startContactspDFragmentControl && startContactspDFragmentControl.controller) {
-                        return startContactspDFragmentControl.controller.loadData();
+                    var diaCountrysIndustriespDFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("diaCountrysIndustries"));
+                    if (diaCountrysIndustriespDFragmentControl && diaCountrysIndustriespDFragmentControl.controller) {
+                        return diaCountrysIndustriespDFragmentControl.controller.loadData();
                     } else {
-                        var parentElement = pageElement.querySelector("#startContactspDhost");
+                        var parentElement = pageElement.querySelector("#diaCountrysIndustriespDhost");
                         if (parentElement) {
                             return Application.loadFragmentById(parentElement, "diaCountrysIndustries", {});
                         } else {
@@ -136,56 +84,17 @@
                         }
                     }
                 }).then(function () {
-                    var startContactspDFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("diaIndustries"));
-                    if (startContactspDFragmentControl && startContactspDFragmentControl.controller) {
-                        return startContactspDFragmentControl.controller.loadData();
+                    var diaIndustriespDFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("diaIndustries"));
+                    if (diaIndustriespDFragmentControl && diaIndustriespDFragmentControl.controller) {
+                        return diaIndustriespDFragmentControl.controller.loadData();
                     } else {
-                        var parentElement = pageElement.querySelector("#startPremiumdiaIndustrieshost");
+                        var parentElement = pageElement.querySelector("#diaIndustrieshost");
                         if (parentElement) {
                             return Application.loadFragmentById(parentElement, "diaIndustries", {});
                         } else {
                             return WinJS.Promise.as();
                         }
                     }
-                }).then(function () {
-                    if (!AppData.initLandView.getResults().length) {
-                        Log.print(Log.l.trace, "calling select initLandData...");
-                        //@nedra:25.09.2015: load the list of INITLand for Combobox
-                        return AppData.initLandView.select(function (json) {
-                            // this callback will be called asynchronously
-                            // when the response is available
-                            Log.print(Log.l.trace, "initLandView: success!");
-                        }, function (errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        });
-                    } else {
-                        return WinJS.Promise.as();
-                    }
-                }).then(function () {
-                    return Start.licenceView.select(function (json) {
-                        // this callback will be called asynchronously
-                        // when the response is available
-                        Log.print(Log.l.trace, "licenceView: success!");
-                        // kontaktanzahlView returns object already parsed from json file in response
-                        if (json && json.d && json.d.results.length > 0) {
-                            that.binding.dataLicence = json.d.results[0];
-                            that.binding.dataLicence.UserListe = that.binding.dataLicence.UserListe.replace(/,/gi, " ");
-                        }
-                        return WinJS.Promise.as();
-                    },
-                        function (errorResponse) {
-                            that.userLicence = null;
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                            return WinJS.Promise.as();
-                        });
-                }).then(function () {
-                    Log.print(Log.l.trace, "Start.Controller. getUserData");
-                    AppData.getUserData();
-                    Log.ret(Log.l.trace);
                 });
                 Log.ret(Log.l.trace);
                 return ret;
@@ -195,14 +104,14 @@
             // define handlers
             this.eventHandlers = {
                 clickBack: function (event) {
-                    Log.call(Log.l.trace, "Settings.Controller.");
+                    Log.call(Log.l.trace, "StartPremium.Controller.");
                     if (WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done( /* Your success and error handlers */);
                     }
                     Log.ret(Log.l.trace);
                 },
                 clickEditEvent: function (event) {
-                    Log.call(Log.l.trace, "Start.Controller.");
+                    Log.call(Log.l.trace, "StartPremium.Controller.");
                     var command = event.currentTarget;
                     if (command) {
                         Log.print(Log.l.trace, "clickButton event command.name=" + command.name);
@@ -211,17 +120,17 @@
                     Log.ret(Log.l.trace);
                 },
                 clickChangeUserState: function (event) {
-                    Log.call(Log.l.trace, "Start.Controller.");
+                    Log.call(Log.l.trace, "StartPremium.Controller.");
                     Application.navigateById("account", event);
                     Log.ret(Log.l.trace);
                 },
                 clickGotoPublish: function (event) {
-                    Log.call(Log.l.trace, "Start.Controller.");
+                    Log.call(Log.l.trace, "StartPremium.Controller.");
                     Application.navigateById("publish", event);
                     Log.ret(Log.l.trace);
                 },
                 clickTopButton: function (event) {
-                    Log.call(Log.l.trace, "Contact.Controller.");
+                    Log.call(Log.l.trace, "StartPremium.Controller.");
                     var anchor = document.getElementById("menuButton");
                     var menu = document.getElementById("menu1").winControl;
                     var placement = "bottom";
@@ -229,7 +138,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickLogoff: function (event) {
-                    Log.call(Log.l.trace, "Account.Controller.");
+                    Log.call(Log.l.trace, "StartPremium.Controller.");
                     AppData._persistentStates.privacyPolicyFlag = false;
                     if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
                         AppHeader.controller.binding.userData = {};
@@ -241,205 +150,275 @@
                     Log.ret(Log.l.trace);
                 },
                 onLoadingStateChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "Skills.Controller.");
-                    if (listView && listView.winControl) {
-                        Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
-                        // single list selection
-                        if (listView.winControl.selectionMode !== WinJS.UI.SelectionMode.single) {
-                            listView.winControl.selectionMode = WinJS.UI.SelectionMode.single;
-                        }
-                        // direct selection on each tap
-                        if (listView.winControl.tapBehavior !== WinJS.UI.TapBehavior.directSelect) {
-                            listView.winControl.tapBehavior = WinJS.UI.TapBehavior.directSelect;
-                        }
-                        // Double the size of the buffers on both sides
-                        if (!maxLeadingPages) {
-                            maxLeadingPages = listView.winControl.maxLeadingPages * 4;
-                            listView.winControl.maxLeadingPages = maxLeadingPages;
-                        }
-                        if (!maxTrailingPages) {
-                            maxTrailingPages = listView.winControl.maxTrailingPages * 4;
-                            listView.winControl.maxTrailingPages = maxTrailingPages;
-                        }
-                        if (listView.winControl.loadingState === "itemsLoading") {
-                            if (!layout) {
-                                layout = Application.StartLayout.StartLayout;
-                                listView.winControl.layout = { type: layout };
-                            }
-                        } else if (listView.winControl.loadingState === "complete") {
-
-                            that.addScrollIntoViewCheckForInputElements(listView);
-                        }
-                    }
+                    Log.call(Log.l.trace, "StartPremium.Controller.");
                     Log.ret(Log.l.trace);
                 },
                 onFooterVisibilityChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "EmpList.Controller.");
+                    Log.call(Log.l.trace, "StartPremium.Controller.");
                     if (eventInfo && eventInfo.detail) {
                     }
                     Log.ret(Log.l.trace);
                 },
-                exportAllChartsToPdf: function(event) {
+                exportAllChartsToPdf: function (event) {
                     Log.call(Log.l.trace, "StartPremium.Controller.");
                     var percent = 0;
                     var statusText = "";
+                    var zipCharts = new JSZip();
                     that.binding.progress = {
                         percent: percent,
                         text: statusText,
                         show: 1
                     };
-                    var ret = new WinJS.Promise.as().then(function() {
+                    var ret = new WinJS.Promise.as().then(function () {
                         /*var doc = new jsPDF("landscape", "mm", 'a4');
                         var width = doc.internal.pageSize.width;
                         var height = doc.internal.pageSize.height;*/
                         // diaCountrys chart
                         that.binding.progress.statusText = getResourceText('diaCountrys.top10');
-                        return html2canvas(document.getElementById("startContactshost"),
+                        return html2canvas(document.getElementById("diaCountryshost"),
                             {
-                                scale: 1
+                                scale: 1,
+                                quality: 4
                             }).then(canvas => { /*, { dpi: 300 }*/
-                            var widthOfCanvas = canvas.width;
-                            var heightOfCanvas = canvas.height;
-                            var ratioCanvas = widthOfCanvas / heightOfCanvas;
-                            var img = canvas.toDataURL(); //image data of canvas
-                            //set the orientation
-                            var doc;
-                            if (widthOfCanvas > heightOfCanvas) {
-                                doc = new jsPDF('l', 'px', 'a4'); /*[widthOfCanvas, heightOfCanvas]*/
-                            } else {
-                                doc = new jsPDF('p', 'px', 'a4'); /*[heightOfCanvas, widthOfCanvas]*/
-                            }
-                            var widthOfPDF = doc.internal.pageSize.width;
-                            var heightOfPDF = doc.internal.pageSize.height;
-                            var ratioOfPDF = widthOfPDF / heightOfPDF;
-                            doc.addImage(img, 'PNG', 0, 0, widthOfPDF, heightOfPDF);
+                                var widthOfCanvas = canvas.width;
+                                var heightOfCanvas = canvas.height;
+                                //set the orientation
+                                var orientation, mmLeft, mmTop, mmWidth, mmHeight;
+                                var mmLongSide = 297, mmShortSide = 210, mmBorder = 5, scale = 1;
+                                if (widthOfCanvas >= heightOfCanvas) {
+                                    orientation = 'l';
+                                    mmLeft = mmBorder;
+                                    mmWidth = mmLongSide - 2 * mmBorder;
+                                    mmHeight = mmWidth * heightOfCanvas / widthOfCanvas;
+                                    if (mmHeight > (mmShortSide - 2 * mmBorder)) {
+                                        scale = (mmShortSide - 2 * mmBorder) / mmHeight;
+                                        mmHeight *= scale;
+                                        mmWidth *= scale;
+                                        mmLeft = (mmLongSide - mmWidth) / 2;
+                                    }
+                                    mmTop = (mmShortSide - mmHeight) / 2;
+                                } else {
+                                    orientation = 'p';
+                                    mmTop = mmBorder;
+                                    mmHeight = mmLongSide - 2 * mmBorder;
+                                    mmWidth = mmHeight * widthOfCanvas / heightOfCanvas;
+                                    if (mmWidth > (mmShortSide - 2 * mmBorder)) {
+                                        scale = (mmShortSide - 2 * mmBorder) / mmWidth;
+                                        mmHeight *= scale;
+                                        mmWidth *= scale;
+                                        mmTop = (mmLongSide - mmHeight) / 2;
+                                    }
+                                    mmLeft = (mmShortSide - mmWidth) / 2;
+                                }
+                                var doc = new jsPDF(orientation, 'mm', 'a4'); /*[widthOfCanvas, heightOfCanvas]*/
+                                doc.addImage(canvas.toDataURL(), 'png', mmLeft, mmTop, mmWidth, mmHeight);
                                 that.binding.progress.percent = 25;
                                 that.binding.progress.text = getResourceText('diaCountrys.top10');
-                                doc.save(getResourceText('diaCountrys.top10'));
-                        });
+                                //doc.save(getResourceText('diaCountrys.top10'));
+                                zipCharts.file(getResourceText('diaCountrys.top10') + '.pdf', doc.output('blob'));
+                            });
                     }).then(function () {
                         /*var doc = new jsPDF("landscape", "mm", 'a4');
                         var width = doc.internal.pageSize.width;
                         var height = doc.internal.pageSize.height;*/
                         // diaYearRange chart
                         that.binding.progress.text = getResourceText('diaYearRange.title');
-                        return html2canvas(document.getElementById("startCountryshost"),
+                        return html2canvas(document.getElementById("diaYearRangehost"),
                             {
-                                scale: 1
+                                scale: 1,
+                                quality: 4
                             }).then(canvas => { /*, { dpi: 300 }*/
-                            var widthOfCanvas = canvas.width;
-                            var heightOfCanvas = canvas.height;
-                            var ratioCanvas = widthOfCanvas / heightOfCanvas;
-                            var img = canvas.toDataURL(); //image data of canvas
-                            //set the orientation
-                            var doc;
-                            if (widthOfCanvas > heightOfCanvas) {
-                                doc = new jsPDF('l', 'px', 'a4'); /*[widthOfCanvas, heightOfCanvas]*/
-                            } else {
-                                doc = new jsPDF('p', 'px', 'a4'); /*[heightOfCanvas, widthOfCanvas]*/
-                            }
-                            var widthOfPDF = doc.internal.pageSize.width;
-                            var heightOfPDF = doc.internal.pageSize.height;
-                            var ratioOfPDF = widthOfPDF / heightOfPDF;
-                            doc.addImage(img, 'PNG', 0, 0, widthOfPDF, heightOfPDF);
+                                var widthOfCanvas = canvas.width;
+                                var heightOfCanvas = canvas.height;
+                                //set the orientation
+                                var orientation, mmLeft, mmTop, mmWidth, mmHeight;
+                                var mmLongSide = 297, mmShortSide = 210, mmBorder = 5, scale = 1;
+                                if (widthOfCanvas >= heightOfCanvas) {
+                                    orientation = 'l';
+                                    mmLeft = mmBorder;
+                                    mmWidth = mmLongSide - 2 * mmBorder;
+                                    mmHeight = mmWidth * heightOfCanvas / widthOfCanvas;
+                                    if (mmHeight > (mmShortSide - 2 * mmBorder)) {
+                                        scale = (mmShortSide - 2 * mmBorder) / mmHeight;
+                                        mmHeight *= scale;
+                                        mmWidth *= scale;
+                                        mmLeft = (mmLongSide - mmWidth) / 2;
+                                    }
+                                    mmTop = (mmShortSide - mmHeight) / 2;
+                                } else {
+                                    orientation = 'p';
+                                    mmTop = mmBorder;
+                                    mmHeight = mmLongSide - 2 * mmBorder;
+                                    mmWidth = mmHeight * widthOfCanvas / heightOfCanvas;
+                                    if (mmWidth > (mmShortSide - 2 * mmBorder)) {
+                                        scale = (mmShortSide - 2 * mmBorder) / mmWidth;
+                                        mmHeight *= scale;
+                                        mmWidth *= scale;
+                                        mmTop = (mmLongSide - mmHeight) / 2;
+                                    }
+                                    mmLeft = (mmShortSide - mmWidth) / 2;
+                                }
+                                var doc = new jsPDF(orientation, 'mm', 'a4'); /*[widthOfCanvas, heightOfCanvas]*/
+                                doc.addImage(canvas.toDataURL(), 'png', mmLeft, mmTop, mmWidth, mmHeight);
                                 that.binding.progress.percent = 50;
                                 that.binding.progress.text = getResourceText('diaYearRange.title');
-                                doc.save(getResourceText('diaYearRange.title'));
-                        });
+                                //doc.save(getResourceText('diaYearRange.title'));
+                                zipCharts.file(getResourceText('diaYearRange.title') + '.pdf', doc.output('blob'));
+                            });
                     }).then(function () {
                         /*var doc = new jsPDF("landscape", "mm", 'a4');
                         var width = doc.internal.pageSize.width;
                         var height = doc.internal.pageSize.height;*/
                         // diaVisitors chart
                         that.binding.progress.text = getResourceText('diaVisitors.title');
-                        return html2canvas(document.getElementById("startQuestionshost"),
+                        return html2canvas(document.getElementById("diaVisitorshost"),
                             {
-                                scale: 1
+                                scale: 1,
+                                quality: 4
                             }).then(canvas => { /*, { dpi: 300 }*/
-                            var widthOfCanvas = canvas.width;
-                            var heightOfCanvas = canvas.height;
-                            var ratioCanvas = widthOfCanvas / heightOfCanvas;
-                            var img = canvas.toDataURL(); //image data of canvas
-                            //set the orientation
-                            var doc;
-                            if (widthOfCanvas > heightOfCanvas) {
-                                doc = new jsPDF('l', 'px', 'a4'); /*[widthOfCanvas, heightOfCanvas]*/
-                            } else {
-                                doc = new jsPDF('p', 'px', 'a4'); /*[heightOfCanvas, widthOfCanvas]*/
-                            }
-                            var widthOfPDF = doc.internal.pageSize.width;
-                            var heightOfPDF = doc.internal.pageSize.height;
-                            var ratioOfPDF = widthOfPDF / heightOfPDF;
-                            doc.addImage(img, 'PNG', 0, 0, widthOfPDF, heightOfPDF);
-                                doc.save(getResourceText('diaVisitors.title'));
+                                var widthOfCanvas = canvas.width;
+                                var heightOfCanvas = canvas.height;
+                                //set the orientation
+                                var orientation, mmLeft, mmTop, mmWidth, mmHeight;
+                                var mmLongSide = 297, mmShortSide = 210, mmBorder = 5, scale = 1;
+                                if (widthOfCanvas >= heightOfCanvas) {
+                                    orientation = 'l';
+                                    mmLeft = mmBorder;
+                                    mmWidth = mmLongSide - 2 * mmBorder;
+                                    mmHeight = mmWidth * heightOfCanvas / widthOfCanvas;
+                                    if (mmHeight > (mmShortSide - 2 * mmBorder)) {
+                                        scale = (mmShortSide - 2 * mmBorder) / mmHeight;
+                                        mmHeight *= scale;
+                                        mmWidth *= scale;
+                                        mmLeft = (mmLongSide - mmWidth) / 2;
+                                    }
+                                    mmTop = (mmShortSide - mmHeight) / 2;
+                                } else {
+                                    orientation = 'p';
+                                    mmTop = mmBorder;
+                                    mmHeight = mmLongSide - 2 * mmBorder;
+                                    mmWidth = mmHeight * widthOfCanvas / heightOfCanvas;
+                                    if (mmWidth > (mmShortSide - 2 * mmBorder)) {
+                                        scale = (mmShortSide - 2 * mmBorder) / mmWidth;
+                                        mmHeight *= scale;
+                                        mmWidth *= scale;
+                                        mmTop = (mmLongSide - mmHeight) / 2;
+                                    }
+                                    mmLeft = (mmShortSide - mmWidth) / 2;
+                                }
+                                var doc = new jsPDF(orientation, 'mm', 'a4'); /*[widthOfCanvas, heightOfCanvas]*/
+                                doc.addImage(canvas.toDataURL(), 'png', mmLeft, mmTop, mmWidth, mmHeight);
+                                //doc.save(getResourceText('diaVisitors.title'));
                                 that.binding.progress.percent = 75;
                                 that.binding.progress.text = getResourceText('diaVisitors.title');
-                        });
+                                zipCharts.file(getResourceText('diaVisitors.title') + '.pdf', doc.output('blob'));
+                            });
                     }).then(function () {
                         /*var doc = new jsPDF("landscape", "mm", 'a4');
                         var width = doc.internal.pageSize.width;
                         var height = doc.internal.pageSize.height;*/
                         // diaCountrysIndustries chart
                         that.binding.progress.text = getResourceText('diaCountrysIndustries.title');
-                        return html2canvas(document.getElementById("startContactspDhost"),
+                        return html2canvas(document.getElementById("diaCountrysIndustriespDhost"),
                             {
-                                scale: 1
+                                scale: 1,
+                                quality: 4
                             }).then(canvas => { /*, { dpi: 300 }*/
-                            var widthOfCanvas = canvas.width;
-                            var heightOfCanvas = canvas.height;
-                            var ratioCanvas = widthOfCanvas / heightOfCanvas;
-                            var img = canvas.toDataURL(); //image data of canvas
-                            //set the orientation
-                            var doc;
-                            if (widthOfCanvas > heightOfCanvas) {
-                                doc = new jsPDF('l', 'px', 'a4'); /*[widthOfCanvas, heightOfCanvas]*/
-                            } else {
-                                doc = new jsPDF('p', 'px', 'a4'); /*[heightOfCanvas, widthOfCanvas]*/
-                            }
-                            var widthOfPDF = doc.internal.pageSize.width;
-                            var heightOfPDF = doc.internal.pageSize.height;
-                            var ratioOfPDF = widthOfPDF / heightOfPDF;
-                            doc.addImage(img, 'PNG', 0, 0, widthOfPDF, heightOfPDF);
+                                var widthOfCanvas = canvas.width;
+                                var heightOfCanvas = canvas.height;
+                                //set the orientation
+                                var orientation, mmLeft, mmTop, mmWidth, mmHeight;
+                                var mmLongSide = 297, mmShortSide = 210, mmBorder = 5, scale = 1;
+                                if (widthOfCanvas >= heightOfCanvas) {
+                                    orientation = 'l';
+                                    mmLeft = mmBorder;
+                                    mmWidth = mmLongSide - 2 * mmBorder;
+                                    mmHeight = mmWidth * heightOfCanvas / widthOfCanvas;
+                                    if (mmHeight > (mmShortSide - 2 * mmBorder)) {
+                                        scale = (mmShortSide - 2 * mmBorder) / mmHeight;
+                                        mmHeight *= scale;
+                                        mmWidth *= scale;
+                                        mmLeft = (mmLongSide - mmWidth) / 2;
+                                    }
+                                    mmTop = (mmShortSide - mmHeight) / 2;
+                                } else {
+                                    orientation = 'p';
+                                    mmTop = mmBorder;
+                                    mmHeight = mmLongSide - 2 * mmBorder;
+                                    mmWidth = mmHeight * widthOfCanvas / heightOfCanvas;
+                                    if (mmWidth > (mmShortSide - 2 * mmBorder)) {
+                                        scale = (mmShortSide - 2 * mmBorder) / mmWidth;
+                                        mmHeight *= scale;
+                                        mmWidth *= scale;
+                                        mmTop = (mmLongSide - mmHeight) / 2;
+                                    }
+                                    mmLeft = (mmShortSide - mmWidth) / 2;
+                                }
+                                var doc = new jsPDF(orientation, 'mm', 'a4'); /*[widthOfCanvas, heightOfCanvas]*/
+                                doc.addImage(canvas.toDataURL(), 'png', mmLeft, mmTop, mmWidth, mmHeight);
                                 that.binding.progress.text = getResourceText('diaCountrysIndustries.title');
-                                doc.save(getResourceText('diaCountrysIndustries.title'));
-                        });
+                                //doc.save(getResourceText('diaCountrysIndustries.title'));
+                                zipCharts.file(getResourceText('diaCountrysIndustries.title') + '.pdf', doc.output('blob'));
+                            });
                     }).then(function () {
                         /*var doc = new jsPDF("landscape", "mm", 'a4');
                         var width = doc.internal.pageSize.width;
                         var height = doc.internal.pageSize.height;*/
                         // diaIndustries chart
-                        that.binding.progress.text = "startPremiumdiaIndustrieshost.pdf";
-                        return html2canvas(document.getElementById("startPremiumdiaIndustrieshost"),
-                            {
-                                scale: 1
-                            }).then(canvas => { /*, { dpi: 300 }*/
-                            var widthOfCanvas = canvas.width;
-                            var heightOfCanvas = canvas.height;
-                            var ratioCanvas = widthOfCanvas / heightOfCanvas;
-                            var img = canvas.toDataURL(); //image data of canvas
-                            //set the orientation
-                            var doc;
-                            if (widthOfCanvas > heightOfCanvas) {
-                                doc = new jsPDF('l', 'px', 'a4'); /*[widthOfCanvas, heightOfCanvas]*/
-                            } else {
-                                doc = new jsPDF('p', 'px', 'a4'); /*[heightOfCanvas, widthOfCanvas]*/
-                            }
-                            var widthOfPDF = doc.internal.pageSize.width;
-                            var heightOfPDF = doc.internal.pageSize.height;
-                            var ratioOfPDF = widthOfPDF / heightOfPDF;
-                            doc.addImage(img, 'PNG', 0, 0, widthOfPDF, heightOfPDF);
-                                 that.binding.progress.text = "startPremiumdiaIndustrieshost.pdf";
+                        that.binding.progress.text = getResourceText('diaIndustries.title');
+                        return html2canvas(document.getElementById("diaIndustrieshost"),
+                             {
+                                 scale: 1,
+                                 quality: 4
+                             }).then(canvas => { /*, { dpi: 300 }*/
+                                 var widthOfCanvas = canvas.width;
+                                 var heightOfCanvas = canvas.height;
+                                 //set the orientation
+                                 var orientation, mmLeft, mmTop, mmWidth, mmHeight;
+                                 var mmLongSide = 297, mmShortSide = 210, mmBorder = 5, scale = 1;
+                                 if (widthOfCanvas >= heightOfCanvas) {
+                                     orientation = 'l';
+                                     mmLeft = mmBorder;
+                                     mmWidth = mmLongSide - 2 * mmBorder;
+                                     mmHeight = mmWidth * heightOfCanvas / widthOfCanvas;
+                                     if (mmHeight > (mmShortSide - 2 * mmBorder)) {
+                                         scale = (mmShortSide - 2 * mmBorder) / mmHeight;
+                                         mmHeight *= scale;
+                                         mmWidth *= scale;
+                                         mmLeft = (mmLongSide - mmWidth) / 2;
+                                     }
+                                     mmTop = (mmShortSide - mmHeight) / 2;
+                                 } else {
+                                     orientation = 'p';
+                                     mmTop = mmBorder;
+                                     mmHeight = mmLongSide - 2 * mmBorder;
+                                     mmWidth = mmHeight * widthOfCanvas / heightOfCanvas;
+                                     if (mmWidth > (mmShortSide - 2 * mmBorder)) {
+                                         scale = (mmShortSide - 2 * mmBorder) / mmWidth;
+                                         mmHeight *= scale;
+                                         mmWidth *= scale;
+                                         mmTop = (mmLongSide - mmHeight) / 2;
+                                     }
+                                     mmLeft = (mmShortSide - mmWidth) / 2;
+                                 }
+                                 var doc = new jsPDF(orientation, 'mm', 'a4'); /*[widthOfCanvas, heightOfCanvas]*/
+                                 doc.addImage(canvas.toDataURL(), 'png', mmLeft, mmTop, mmWidth, mmHeight);
+                                 //that.binding.progress.text = getResourceText('startPremiumdiaIndustrieshost.title');
                                  that.binding.progress.percent = 100;
                                  // setze title nach ausgewählter combobox + Supreme bzw. Premium
-                                 doc.save('startPremiumdiaIndustrieshost.pdf');
+                                 //doc.save('startPremiumdiaIndustrieshost.pdf');
+                                 zipCharts.file(getResourceText('diaIndustries.title') + '.pdf', doc.output('blob'));
                              }).then(function () {
-                                     that.binding.progress.show = null;
+                                 zipCharts.generateAsync({ type: 'blob' }).then(function (content) {
+                                     saveAs(content, 'Reports.zip');
                                  });
-                        });
+                                 that.binding.progress.show = null;
+                             });
+                    });
                     Log.ret(Log.l.trace);
                 },
                 exportBrowserViewToPdf: function (event) {
-                    Log.call(Log.l.trace, "Start.Controller.");
+                    Log.call(Log.l.trace, "StartPremium.Controller.");
                     var percent = 0;
                     var statusText = "";
                     that.binding.progress = {
@@ -466,8 +445,8 @@
                             var widthOfCanvas = canvas.width;
                             var heightOfCanvas = canvas.height;
                             //function myFunction() {
-                            //    var myWindow = window.open("", "MsgWindow", "width=widthOfCanvas,height=heightOfCanvas");
-                            //    myWindow.document.write('<img src="' + canvas.toDataURL() + '"/>');
+                            //var myWindow = window.open("", "MsgWindow", "width=widthOfCanvas,height=heightOfCanvas");
+                            //myWindow.document.write('<img src="' + canvas.toDataURL() + '"/>');
                             //}
                             //set the orientation
                             var orientation, mmLeft, mmTop, mmWidth, mmHeight;
@@ -506,10 +485,10 @@
                             };
                             if (that.isSupreme === 2) {
                                 statusText = getResourceText("label.startSurpreme");
-                                doc.save(getResourceText("label.startSurpreme"), { returnPromise: true }); /*'test.pdf'*/
+                                doc.save(getResourceText("label.startSurpreme"), { returnPromise: true });
                             } else {
                                 statusText = getResourceText("label.startPremium");
-                                doc.save(getResourceText("label.startPremium"), { returnPromise: true }); /*'test.pdf'*/
+                                doc.save(getResourceText("label.startPremium"), { returnPromise: true });
                             }
                         });
                     }).then(function () {
@@ -518,11 +497,11 @@
                             text: statusText,
                             show: 1
                         };
-                    }).then(function() {
-                        WinJS.Promise.timeout(1000).then(function() {
+                    }).then(function () {
+                        WinJS.Promise.timeout(1000).then(function () {
                             that.binding.progress.show = null;
                         });
-                        }); 
+                    });
                     Log.ret(Log.l.trace);
 
                 }
@@ -538,20 +517,6 @@
                 }
             };
 
-            if (listView) {
-                this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
-            }
-
-            var checkIfSurpreme = function () {
-                if (that.isSupreme === 2) {
-                    var fieldLineFull = pageElement.querySelector(".field_line_full");
-                    //fieldLineFull.className = "field_line field_line_full_double";
-                    var fieldLineFullInner = pageElement.querySelector("#startPremiumdiaIndustrieshost");
-                    //fieldLineFullInner.style.height = "580px";
-                }
-            }
-            this.checkIfSurpreme = checkIfSurpreme;
-
             var checkTip = function () {
                 if (that.isSupreme === 2) {
                     var event = pageElement.querySelector(".circle-with-text-event-dot");
@@ -564,7 +529,7 @@
                     var globalText = pageElement.querySelector(".circle-with-text-global-text");
                     globalText.style.color = Colors.labelColor;
                 } else {
-                    var tip = pageElement.querySelector(".tip-container"); /*.tip*/
+                    var tip = pageElement.querySelector(".tip-container");
                     tip.style.display = "none";
                 }
             }
@@ -572,15 +537,12 @@
 
             // finally, load the data
             that.processAll().then(function () {
-                Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.checkIfSurpreme();
-            }).then(function () {
-                Log.print(Log.l.trace, "Binding wireup page complete");
+                Log.print(Log.l.trace, "Calling checkTip");
                 return that.checkTip();
             }).then(function () {
-                Log.print(Log.l.trace, "Binding wireup page complete");
+                Log.print(Log.l.trace, "Calling loadData");
                 return that.loadData();
-            }).then(function() {
+            }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
             });
             Log.ret(Log.l.trace);
