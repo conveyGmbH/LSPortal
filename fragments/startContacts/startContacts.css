@@ -51,21 +51,21 @@
     font-size: 20px;
     font-weight: bolder;
 }
-#businesscards {
+.barcode-container {
     float: left;
     margin-top: 13px;
     width: 95px;
     text-align: center;
     font-weight: bolder;
 }
-#barcodes {
+.businesscards-container {
     float: left;
     margin-top: 20px;
     width: 95px;
     text-align: center;
     font-weight: bolder;
 }
-#manually {
+.manually-container {
     float: left;
     margin-top: 20px;
     width: 95px;
@@ -79,15 +79,15 @@
     float: left;
     width: calc(100% - 1px);
 }
-.view-size-small #businesscards {
+.view-size-small .barcode-container {
     width: 33.3%;
     margin-top: 0px;
 }
-.view-size-small #barcodes {
+.view-size-small .businesscards-container {
     width: 33.3%;
     margin-top: 0px;
 }
-.view-size-small #manually {
+.view-size-small .manually-container {
     width: 33.3%;
     margin-top: 0px;
 }
@@ -101,17 +101,17 @@
     width: calc(100% - 1px);
 }
 
-.view-size-medium #businesscards {
+.view-size-medium .barcode-container {
     width: 33.3%;
     margin-top: 0px;
 }
 
-.view-size-medium #barcodes {
+.view-size-medium .businesscards-container {
     width: 33.3%;
     margin-top: 0px;
 }
 
-.view-size-medium #manually {
+.view-size-medium .manually-container {
     width: 33.3%;
     margin-top: 0px;
 }
@@ -127,17 +127,17 @@
     width: calc(100% - 1px);
 }
 
-.view-size-bigger #businesscards {
+.view-size-bigger .barcode-container {
     width: 33.3%;
     margin-top: 0px;
 }
 
-.view-size-bigger #barcodes {
+.view-size-bigger .businesscards-container {
     width: 33.3%;
     margin-top: 0px;
 }
 
-.view-size-bigger #manually {
+.view-size-bigger .manually-container {
     width: 33.3%;
     margin-top: 0px;
 }
@@ -156,17 +156,17 @@
         width: calc(100% - 1px);
     }
 
-    #businesscards {
+    .barcode-container {
         width: 33.3%;
         margin-top: 0px;
     }
 
-    #barcodes {
+    .businesscards-container {
         width: 33.3%;
         margin-top: 0px;
     }
 
-    #manually {
+    .manually-container {
         width: 33.3%;
         margin-top: 0px;
     }

@@ -23,7 +23,18 @@
             this.prevHeight = 0;
 
             this.controller = new StartContacts.Controller(element, options);
-
+            var barcodeContainer = document.querySelector(".barcode-container");
+            if (barcodeContainer) {
+                Colors.loadSVGImageElements(barcodeContainer, "app-logo", { width: 50, height: 50 }, Colors.textColor);
+            }
+            var businesscardsContainer = document.querySelector(".businesscards-container");
+            if (businesscardsContainer) {
+                Colors.loadSVGImageElements(businesscardsContainer, "app-logo", { width: 50, height: 50 }, Colors.textColor);
+            }
+            var manuallyContainer = document.querySelector(".manually-container");
+            if (manuallyContainer) {
+                Colors.loadSVGImageElements(manuallyContainer, "app-logo", { width: 50, height: 50 }, Colors.textColor);
+            }
             Log.ret(Log.l.trace);
         },
 

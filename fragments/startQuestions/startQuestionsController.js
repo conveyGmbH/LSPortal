@@ -154,7 +154,8 @@
                                                 min: 0,
                                                 tickInterval: questionWithMostAnswser > 2000 ? 500 : (questionWithMostAnswser > 100 ? 100 : (questionWithMostAnswser > 50 ? 50 : (questionWithMostAnswser > 20 ? 5 : 1))),
                                                 tickOptions: {
-                                                    formatString: '%d'
+                                                    formatString: '%d',
+                                                    textColor: Colors.textColor
                                                 }
                                             },
                                             xaxis: {
@@ -162,7 +163,8 @@
                                                 ticks: that.anwsersquestiontext,
                                                 tickOptions: {
                                                     showGridline: false,
-                                                    markSize: 0
+                                                    markSize: 0,
+                                                    textColor: Colors.textColor
                                                 }
                                             }
                                         },
