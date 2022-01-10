@@ -146,7 +146,7 @@
                             if (!meta.hidden) {
                                 meta.data.forEach(function (element, index) {
                                     // Draw the text in black, with the specified font
-                                    ctx.fillStyle = 'rgb(0, 0, 0)';
+                                    ctx.fillStyle = Colors.textColor; //'rgb(0, 0, 0)'
 
                                     var fontSize = 16;
                                     var fontStyle = 'bold';
@@ -241,8 +241,7 @@
                                     }
                                 },
                                 scales: {
-                                    y:
-                                        {
+                                    y: {
                                             display: false,
                                             grid: {
                                                 display: false
@@ -250,15 +249,18 @@
                                             ticks: {
                                                 max: maxtickNummer + 30,
                                                 display: false,
-                                                beginAtZero: true
+                                            beginAtZero: true,
+                                            color: Colors.textColor
                                             },
                                             stacked: false
-                                        }
-                                    ,
+                                    },
                                     x: {
                                         display: true,
                                         grid: {
                                             display: false
+                                        },
+                                        ticks: {
+                                            color: Colors.textColor
                                         }
                                     }
                                 },
@@ -525,10 +527,10 @@
                 that.processAll().then(function () {
                     Log.print(Log.l.trace, "Binding wireup page complete");
                     return that.loadIcon();
-                }).then(function () {
+                })/*.then(function () {
                     Log.print(Log.l.trace, "Binding wireup page complete");
                     return dropdowncolor();
-                }).then(function () {
+                })*/.then(function () {
                     return that.getVisitorDateAll();
                 }).then(function () {
                     Log.print(Log.l.trace, "Binding wireup page complete");

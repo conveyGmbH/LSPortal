@@ -231,7 +231,7 @@
                             if (!meta.hidden) {
                                 meta.data.forEach(function (element, index) {
                                     // Draw the text in black, with the specified font
-                                    ctx.fillStyle = 'rgb(0, 0, 0)';
+                                    ctx.fillStyle = Colors.textColor;
 
                                     var fontSize = 16;
                                     var fontStyle = 'normal';
@@ -291,16 +291,17 @@
                                     }
                                 },
                                 scales: {
-                                    y:
-                                    {
-
+                                    y: {
                                         grid: {
                                             display: false,
                                             drawOnChartArea: false,
                                             color: "#fff",
                                             zeroLineColor: "#fff"
                                         },
-                                        stacked: false
+                                        stacked: false,
+                                        ticks: {
+                                            color: Colors.textColor
+                                        }
                                     },
                                     x: {
                                         display: false,
@@ -387,7 +388,10 @@
                                             color: "#fff",
                                             zeroLineColor: "#fff"
                                         },
-                                        stacked: false
+                                        stacked: false,
+                                        ticks: {
+                                            color: Colors.textColor
+                                        }
                                     },
                                     x: {
                                         display: false,
@@ -711,10 +715,10 @@
                 that.processAll().then(function () {
                     Log.print(Log.l.trace, "Binding wireup page complete");
                     return that.loadIcon();
-                }).then(function () {
+                })/*.then(function () {
                     Log.print(Log.l.trace, "Binding wireup page complete");
                     return dropdowncolor();
-                }).then(function () {
+                })*/.then(function () {
                     Log.print(Log.l.trace, "Data loaded");
                     return that.setTooltipText();
                 }).then(function () {

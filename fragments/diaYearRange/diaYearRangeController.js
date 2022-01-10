@@ -256,7 +256,7 @@
                                 elements: {
                                     center: {
                                         text: yearRangeChartDataProcent1,
-                                        color: '#000000', // Default is #000000
+                                        color: Colors.textColor, // Default is #000000
                                         fontStyle: 'Arial', // Default is Arial
                                         sidePadding: 20, // Default is 20 (as a percentage)
                                         minFontSize: 20, // Default is 20 (in px), set to false and text will not wrap.
@@ -320,7 +320,7 @@
                                 elements: {
                                     center: {
                                         text: yearRangeChartDataProcent2,
-                                        color: '#000000', // Default is #000000
+                                        color: Colors.textColor, // Default is #000000
                                         fontStyle: 'Arial', // Default is Arial
                                         sidePadding: 20, // Default is 20 (as a percentage)
                                         minFontSize: 20, // Default is 20 (in px), set to false and text will not wrap.
@@ -388,7 +388,7 @@
                                 elements: {
                                     center: {
                                         text: yearRangeChartDataProcent3,
-                                        color: '#000000', // Default is #000000
+                                        color: Colors.textColor, // Default is #000000
                                         fontStyle: 'Arial', // Default is Arial
                                         sidePadding: 20, // Default is 20 (as a percentage)
                                         minFontSize: 20, // Default is 20 (in px), set to false and text will not wrap.
@@ -456,7 +456,7 @@
                                 elements: {
                                     center: {
                                         text: yearRangeChartDataProcent4,
-                                        color: '#000000', // Default is #000000
+                                        color: Colors.textColor, // Default is #000000
                                         fontStyle: 'Arial', // Default is Arial
                                         sidePadding: 20, // Default is 20 (as a percentage)
                                         minFontSize: 20, // Default is 20 (in px), set to false and text will not wrap.
@@ -524,7 +524,7 @@
                                 elements: {
                                     center: {
                                         text: yearRangeChartDataProcent5,
-                                        color: '#000000', // Default is #000000
+                                        color: Colors.textColor, // Default is #000000
                                         fontStyle: 'Arial', // Default is Arial
                                         sidePadding: 20, // Default is 20 (as a percentage)
                                         minFontSize: 20, // Default is 20 (in px), set to false and text will not wrap.
@@ -588,7 +588,7 @@
                                 elements: {
                                     center: {
                                         text: yearRangeChartDataProcent6,
-                                        color: '#000000', // Default is #000000
+                                        color: Colors.textColor, // Default is #000000
                                         fontStyle: 'Arial', // Default is Arial
                                         sidePadding: 20, // Default is 20 (as a percentage)
                                         minFontSize: 20, // Default is 20 (in px), set to false and text will not wrap.
@@ -652,7 +652,7 @@
                                 elements: {
                                     center: {
                                         text: yearRangeChartDataProcent7,
-                                        color: '#000000', // Default is #000000
+                                        color: Colors.textColor, // Default is #000000
                                         fontStyle: 'Arial', // Default is Arial
                                         sidePadding: 20, // Default is 20 (as a percentage)
                                         minFontSize: 20, // Default is 20 (in px), set to false and text will not wrap.
@@ -716,7 +716,7 @@
                                 elements: {
                                     center: {
                                         text: yearRangeChartDataProcent8,
-                                        color: '#000000', // Default is #000000
+                                        color: Colors.textColor, // Default is #000000
                                         fontStyle: 'Arial', // Default is Arial
                                         sidePadding: 20, // Default is 20 (as a percentage)
                                         minFontSize: 20, // Default is 20 (in px), set to false and text will not wrap.

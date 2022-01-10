@@ -40,7 +40,7 @@
                 var industriesTooltip = fragmentElement.querySelector("#mydiaIndustriesElement");
 
                 var dropdowncolor = function () {
-                    criteriadrop.style.backgroundColor = "#efedee ";
+                    criteriadrop.style.backgroundColor = Colors.textColor;
                 }
                 this.dropdowncolor = dropdowncolor;
 
@@ -202,7 +202,7 @@
                                 elements: {
                                     center: {
                                         text: industriesYearChartDataProcent1 + " " + industriesYearChartDataTexts1,
-                                        color: '#000000', // Default is #000000
+                                        color: Colors.textColor, // Default is #000000
                                         fontStyle: 'Arial', // Default is Arial
                                         sidePadding: 20, // Default is 20 (as a percentage)
                                         minFontSize: 20, // Default is 20 (in px), set to false and text will not wrap.
@@ -214,7 +214,8 @@
                                         display: true,
                                         position: 'left',
                                         labels: {
-                                            boxWidth: 10
+                                            boxWidth: 10,
+                                            color: Colors.textColor
                                         }
                                     },
                                     tooltip: {
@@ -283,7 +284,7 @@
                                 elements: {
                                     center: {
                                         text: industriesYearChartDataProcent2 + " " + industriesYearChartDataTexts2,
-                                        color: '#000000', // Default is #000000
+                                        color: Colors.textColor, // Default is #000000
                                         fontStyle: 'Arial', // Default is Arial
                                         sidePadding: 20, // Default is 20 (as a percentage)
                                         minFontSize: 10, // Default is 20 (in px), set to false and text will not wrap.
@@ -294,7 +295,8 @@
                                         display: true,
                                         position: 'left',
                                         labels: {
-                                            boxWidth: 10
+                                            boxWidth: 10,
+                                            color: Colors.textColor
                                         }
                                     },
                                     tooltip: {
@@ -363,7 +365,7 @@
                                 elements: {
                                     center: {
                                         text: industriesYearChartDataProcent3 + " " + industriesYearChartDataTexts3,
-                                        color: '#000000', // Default is #000000
+                                        color: Colors.textColor, // Default is #000000
                                         fontStyle: 'Arial', // Default is Arial
                                         sidePadding: 20, // Default is 20 (as a percentage)
                                         minFontSize: 20, // Default is 20 (in px), set to false and text will not wrap.
@@ -374,7 +376,8 @@
                                         display: true,
                                         position: 'left',
                                         labels: {
-                                            boxWidth: 10
+                                            boxWidth: 10,
+                                            color: Colors.textColor
                                         }
                                     },
                                     tooltip: {
@@ -443,7 +446,7 @@
                                 elements: {
                                     center: {
                                         text: industriesYearChartDataProcent4 + " " + industriesYearChartDataTexts4,
-                                        color: '#000000', // Default is #000000
+                                        color: Colors.textColor, // Default is #000000
                                         fontStyle: 'Arial', // Default is Arial
                                         sidePadding: 20, // Default is 20 (as a percentage)
                                         minFontSize: 20, // Default is 20 (in px), set to false and text will not wrap.
@@ -455,7 +458,8 @@
                                         display: true,
                                         position: 'left',
                                         labels: {
-                                            boxWidth: 10
+                                            boxWidth: 10,
+                                            color: Colors.textColor
                                         }
                                     },
                                     tooltip: {
@@ -525,7 +529,7 @@
                                 elements: {
                                     center: {
                                         text: industriesYearChartDataProcent5 + " " + industriesYearChartDataTexts5,
-                                        color: '#000000', // Default is #000000
+                                        color: Colors.textColor, // Default is #000000
                                         fontStyle: 'Arial', // Default is Arial
                                         sidePadding: 20, // Default is 20 (as a percentage)
                                         minFontSize: 20, // Default is 20 (in px), set to false and text will not wrap.
@@ -537,7 +541,8 @@
                                         display: true,
                                         position: 'left',
                                         labels: {
-                                            boxWidth: 10
+                                            boxWidth: 10,
+                                            color: Colors.textColor
                                         }
                                     },
                                     tooltip: {
@@ -606,7 +611,7 @@
                                 elements: {
                                     center: {
                                         text: industriesYearChartDataProcent6 + " " + industriesYearChartDataTexts6,
-                                        color: '#000000', // Default is #000000
+                                        color: Colors.textColor, // Default is #000000
                                         fontStyle: 'Arial', // Default is Arial
                                         sidePadding: 20, // Default is 20 (as a percentage)
                                         minFontSize: 20, // Default is 20 (in px), set to false and text will not wrap.
@@ -618,7 +623,8 @@
                                         display: true,
                                         position: 'left',
                                         labels: {
-                                            boxWidth: 10
+                                            boxWidth: 10,
+                                            color: Colors.textColor
                                         }
                                     },
                                     tooltip: {
@@ -687,7 +693,7 @@
                                 elements: {
                                     center: {
                                         text: industriesYearChartDataProcent7 + " " + industriesYearChartDataTexts7,
-                                        color: '#000000', // Default is #000000
+                                        color: Colors.textColor, // Default is #000000
                                         fontStyle: 'Arial', // Default is Arial
                                         sidePadding: 20, // Default is 20 (as a percentage)
                                         minFontSize: 20, // Default is 20 (in px), set to false and text will not wrap.
@@ -699,7 +705,8 @@
                                         display: true,
                                         position: 'left',
                                         labels: {
-                                            boxWidth: 10
+                                            boxWidth: 10,
+                                            color: Colors.textColor
                                         }
                                     },
                                     tooltip: {
@@ -768,7 +775,7 @@
                                 elements: {
                                     center: {
                                         text: industriesYearChartDataProcent8 + " " + industriesYearChartDataTexts8,
-                                        color: '#000000', // Default is #000000
+                                        color: Colors.textColor, // Default is #000000
                                         fontStyle: 'Arial', // Default is Arial
                                         sidePadding: 20, // Default is 20 (as a percentage)
                                         minFontSize: 20, // Default is 20 (in px), set to false and text will not wrap.
@@ -780,7 +787,8 @@
                                         display: true,
                                         position: 'left',
                                         labels: {
-                                            boxWidth: 10
+                                            boxWidth: 10,
+                                            color: Colors.textColor
                                         }
                                     },
                                     tooltip: {
@@ -1526,10 +1534,10 @@
                 }).then(function() {
                     that.setSupremeContainer();
                     return WinJS.Promise.as();
-                }).then(function () {
+                })/*.then(function () {
                     Log.print(Log.l.trace, "Data loaded");
                     return dropdowncolor();
-                }).then(function () {
+                })*/.then(function () {
                     Log.print(Log.l.trace, "Data loaded");
                     return setTooltipText();
                 }).then(function () {

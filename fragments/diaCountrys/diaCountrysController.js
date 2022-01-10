@@ -179,7 +179,7 @@
                                 elements: {
                                     center: {
                                         text: anzKontakte + getResourceText("diaCountrys.visitors"),
-                                        color: '#000000', // Default is #000000
+                                        color: Colors.textColor, // Default is #000000 '#000000'
                                         fontStyle: 'Arial', // Default is Arial
                                         sidePadding: 20, // Default is 20 (as a percentage)
                                         minFontSize: 20, // Default is 20 (in px), set to false and text will not wrap.
@@ -192,7 +192,8 @@
                                         position: 'left',
                                         fullWidth: false,
                                         labels: {
-                                            boxWidth: 20
+                                            boxWidth: 20,
+                                            color: Colors.textColor
                                         }
                                     },
                                     tooltip: {
@@ -314,7 +315,10 @@
                                         containerID: 'countrys-label-surpreme'
                                     },
                                     legend: {
-                                        display: false
+                                        display: false,
+                                        labels: {
+                                            color: Colors.textColor
+                                        }
                                     }
                                 },
                                 layout: {
@@ -332,7 +336,14 @@
                                         pointLabels: {
                                             font: {
                                                 //size: 14
-                                            }
+                                            },
+                                            color: Colors.textColor
+                                        },
+                                        angleLines: {
+                                            color: Colors.textColor
+                                        },
+                                        grid: {
+                                            color: Colors.textColor
                                         }
                                     }
                                 }
