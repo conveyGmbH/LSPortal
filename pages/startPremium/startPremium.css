@@ -280,27 +280,27 @@
     min-width: 96px;
 }
 
-.startPremium #startContactshost.fragmenthost {
+.startPremium #diaCountryshost.fragmenthost {
     height: 285px;
 }
 
-.view-size-medium-small .startPremium #startContactshost.fragmenthost {
+.view-size-medium-small .startPremium #diaCountryshost.fragmenthost {
     height: auto;
     width: 100%;
 }
 
-.view-size-small .startPremium #startContactshost.fragmenthost {
+.view-size-small .startPremium #diaCountryshost.fragmenthost {
     height: auto;
     width: 100%;
 }
 
-.startPremium #startCountryshost.fragmenthost {
+.startPremium #diaYearRangehost.fragmenthost {
     min-height: 280px;
     height: auto;
     margin-top: 30px;
 }
 
-.startPremium #startQuestionshost.fragmenthost {
+.startPremium #diaVisitorshost.fragmenthost {
     height: 285px;
     margin-top: 5px;
 }
@@ -309,15 +309,7 @@
     height: 885px; /*925 875px*/
 }
 
-.startPremium .startPremium #startTop10Countryshost.fragmenthost {
-    height: 270px;
-}
-
-.startPremium #startTop10Usershost.fragmenthost {
-    height: 270px;
-}
-
-.startPremium #startPremiumdiaIndustrieshost.fragmenthost {
+.startPremium #diaIndustrieshost.fragmenthost {
     height: auto; /*290px*/
     margin-bottom: 10px;
 }
