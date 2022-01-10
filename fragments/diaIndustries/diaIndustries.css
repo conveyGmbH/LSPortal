@@ -120,8 +120,6 @@
     font-weight: bold;
     flex: 1;
     padding: 0 1em;
-    color: black;
-    background-color: darkgray;
     background-image: none;
     cursor: pointer;
 }

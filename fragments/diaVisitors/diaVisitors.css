@@ -63,8 +63,6 @@ view-size-bigger .visitor-chart-top-combo-container,
     font-weight: bold;
     flex: 1;
     padding: 0 1em;
-    color: black;
-    background-color: darkgray;
     background-image: none;
     cursor: pointer;
 }
@@ -93,8 +91,6 @@ view-size-bigger .visitor-chart-top-combo-container,
     height: 50px;
     font-size: 13px;
     font-weight: bold;
-    color: black;
-    background-color: darkgray;
     outline: 0;
     border: 0;
     box-shadow: none;
