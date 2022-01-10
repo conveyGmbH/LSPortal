@@ -104,6 +104,28 @@
                     if (that.controller) {
                         var contentarea = element.querySelector(".contentarea");
                         if (contentarea) {
+                            if (contentarea.style &&
+                                (that.prevIsDarkTheme === null || that.prevIsDarkTheme !== Colors.isDarkTheme)) {
+                                if (Colors.isDarkTheme) {
+                                    var bkg = Colors.hex2rgb(Colors.tileBackgroundColor);
+                                    var bkgHsv = Colors.rgb2hsv(bkg);
+                                    bkgHsv.s = Math.min(255, bkgHsv.s * 4);
+                                    bkgHsv.v /= 4;
+                                    var darkBkg = Colors.hsv2rgb(bkgHsv);
+                                    contentarea.style.backgroundColor = Colors.rgb2hex(darkBkg);
+                                } else {
+                                    contentarea.style.backgroundColor = Colors.tileBackgroundColor;
+                                }
+                                var fieldTiles = element.querySelectorAll(".field_tile_bkg");
+                                if (fieldTiles && fieldTiles.length > 0) {
+                                    for (var i = 0; i < fieldTiles.length; i++) {
+                                        var fieldTile = fieldTiles[i];
+                                        if (fieldTile && fieldTile.style) {
+                                            fieldTile.style.backgroundColor = Colors.backgroundColor;
+                                        }
+                                    }
+                                }
+                            }
                             var width = contentarea.clientWidth;
                             var height = contentarea.clientHeight;
                             var contentHeader = element.querySelector(".content-header");
