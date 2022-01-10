@@ -295,8 +295,7 @@
 }
 
 .startPremium #diaYearRangehost.fragmenthost {
-    min-height: 280px;
-    height: auto;
+    height: 280px;
     margin-top: 30px;
 }
 
