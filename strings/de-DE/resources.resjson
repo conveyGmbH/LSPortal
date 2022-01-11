@@ -1268,6 +1268,7 @@
     "mailingTemplateEvent.templatesearchbtn"			: "Suchen",
     "mailingTemplateEvent.layoutname"			: "Name der Vorlage",
     "mailingTemplateEvent.templateinserthbtn"			: "Erstellen",
+    "mailingTemplateEvent.edited"			: "Letzte Änderung",
 
 	"mailingTemplateEventEdit.title"			: "Vorlage bearbeiten",
 	"mailingTemplateEventEdit.language"			: "Sprache",

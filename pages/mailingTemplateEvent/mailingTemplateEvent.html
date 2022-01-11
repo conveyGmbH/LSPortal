@@ -51,30 +51,31 @@
                         <table id="tableId">
                             <thead class="table-header">
                                 <tr>
-                                    <th></th>
-                                    <th data-win-bind="value: dataTemplateEventHeaderValue.TemplateName; textContent: dataTemplateEventHeaderText.TemplateName"></th>
-                                    <th data-win-bind="value: dataTemplateEventHeaderValue.MailTypeTitle; textContent: dataTemplateEventHeaderText.MailTypeTitle"></th>
-                                    <th data-win-bind="value: dataTemplateEventHeaderValue.UsedVeranstaltung; textContent: dataTemplateEventHeaderText.UsedVeranstaltung"></th>
-                                    <th data-win-bind="value: dataTemplateEventHeaderValue.LangsAvailable; textContent: dataTemplateEventHeaderText.LangsAvailable"></th>
-                                    <th data-win-bind="value: dataTemplateEventHeaderValue.Erfassungsdatum; textContent: dataTemplateEventHeaderText.Erfassungsdatum"></th>
-                                    <th data-win-bind="value: dataTemplateEventHeaderValue.IsActive; textContent: dataTemplateEventHeaderText.IsActive"></th>
+                                    <!--<th></th>-->
+                                    <th id="0" onclick="AppBar.handleEvent('click', 'clickSortTable', event)" data-win-bind="value: dataTemplateEventHeaderValue.TemplateName; textContent: dataTemplateEventHeaderText.TemplateName"></th>
+                                    <th id="1" onclick="AppBar.handleEvent('click', 'clickSortTable', event)" data-win-bind="value: dataTemplateEventHeaderValue.MailTypeTitle; textContent: dataTemplateEventHeaderText.MailTypeTitle"></th>
+                                    <th id="2" onclick="AppBar.handleEvent('click', 'clickSortTable', event)" data-win-bind="value: dataTemplateEventHeaderValue.UsedVeranstaltung; textContent: dataTemplateEventHeaderText.UsedVeranstaltung"></th>
+                                    <th id="3" onclick="AppBar.handleEvent('click', 'clickSortTable', event)" data-win-bind="value: dataTemplateEventHeaderValue.LangsAvailable; textContent: dataTemplateEventHeaderText.LangsAvailable"></th>
+                                    <th id="4" onclick="AppBar.handleEvent('click', 'clickSortTable', event)" data-win-bind="value: dataTemplateEventHeaderValue.Erfassungsdatum; textContent: dataTemplateEventHeaderText.Erfassungsdatum"></th>
+                                    <th id="5" onclick="AppBar.handleEvent('click', 'clickSortTable', event)" data-win-bind="value: dataTemplateEventHeaderValue.IsActive; textContent: dataTemplateEventHeaderText.IsActive"></th>
+                                    <th id="6" onclick="AppBar.handleEvent('click', 'clickSortTable', event)" data-win-bind="value: Edited; textContent: Edited"></th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody class="table-body" data-win-control="WinJS.UI.Repeater">
                                 <tr data-win-bind="value: VAMailLayoutVIEWID">
-                                    <td id="datacheckbox"><input type="checkbox" class="win-checkbox checkbox" data-win-bind="value: VAMailLayoutVIEWID" onchange="AppBar.handleEvent('click', 'setDeleteID', event)" /> </td>
-                                    <td>
-                                        <span data-win-bind="textContent: TextName"></span><br />
-                                        <span id="lmuser" data-win-bind="textContent: Modifier"></span>
-                                        <span id="lmutc" data-win-bind="textContent: ModifiedTS"></span>
-                                    </td>
+                                    <!--<td id="datacheckbox"><input type="checkbox" class="win-checkbox checkbox" data-win-bind="value: VAMailLayoutVIEWID" onchange="AppBar.handleEvent('click', 'setDeleteID', event)" /> </td>-->
+                                    <td data-win-bind="textContent: TextName"></td>
                                     <td data-win-bind="textContent: MailTypeTitle"></td>
                                     <td data-win-bind="textContent: UsedVeranstaltung"></td>
                                     <td data-win-bind="textContent: LangsAvailable"></td>
                                     <td data-win-bind="textContent: CreateTS"></td>
                                     <td>
                                         <span id="templateactivestatus" data-win-bind="textContent: IsActive"></span>
+                                    </td>
+                                    <td>
+                                        <span id="lmuser" data-win-bind="textContent: Modifier"></span>
+                                        <span id="lmutc" data-win-bind="textContent: ModifiedTS"></span>
                                     </td>
                                     <td id="edit">
                                         <button class="mailedit-button win-button" data-win-bind="textContent: maileditlabel; value: VAMailLayoutVIEWID" onclick="AppBar.handleEvent('click', 'clickLayoutEdit', event)" autofocus="autofocus"></button>

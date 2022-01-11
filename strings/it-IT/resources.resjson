@@ -1266,6 +1266,7 @@
     "mailingTemplateEvent.templatesearchbtn"			: "Ricerca",
     "mailingTemplateEvent.layoutname"			: "Nome layout",
     "mailingTemplateEvent.templateinserthbtn"			: "Creare",
+    "mailingTemplateEvent.edited"			: "Ultima modifica",
 
 	"mailingTemplateEventEdit.title"			: "Modifica modello",
 	"mailingTemplateEventEdit.language"			: "Linguaggio",

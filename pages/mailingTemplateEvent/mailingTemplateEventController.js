@@ -23,6 +23,7 @@
                 newDataTemplate: getEmptyDefaultValue(MailingTemplateEvent.VAMailLayout.insertRestriction),
                 templatesearchlabel: getResourceText("mailingTemplateEvent.templatesearchbtn"),
                 templateinsertbtnlabel: getResourceText("mailingTemplateEvent.templateinserthbtn"),
+                Edited: getResourceText("mailingTemplateEvent.edited"),
                 deleteID : null
             }, commandList]);
             this.nextUrl = null;
@@ -58,6 +59,7 @@
                 that.binding.dataTemplateEventHeaderValue.LangsAvailable = "LangsAvailable";
                 that.binding.dataTemplateEventHeaderValue.Erfassungsdatum = "Erfassungsdatum";
                 that.binding.dataTemplateEventHeaderValue.IsActive = "IsActive";
+                that.binding.dataTemplateEventHeaderValue.Edited = "Letzte Änderung";
                 that.binding.dataTemplateEventHeaderText.TemplateName = getResourceText("mailingTemplateEvent.headertemplatename");
                 that.binding.dataTemplateEventHeaderText.MailTypeTitle = getResourceText("mailingTemplateEvent.headermailtypetitle");
                 that.binding.dataTemplateEventHeaderText.VeranstaltungName = getResourceText("mailingTemplateEvent.headerveranstaltungname");
@@ -65,6 +67,7 @@
                 that.binding.dataTemplateEventHeaderText.LangsAvailable = getResourceText("mailingTemplateEvent.headerlangsavailable");
                 that.binding.dataTemplateEventHeaderText.Erfassungsdatum = getResourceText("mailingTemplateEvent.headererfassungsdatum");
                 that.binding.dataTemplateEventHeaderText.IsActive = getResourceText("mailingTemplateEvent.headerisactive");
+                that.binding.dataTemplateEventHeaderText.Edited = getResourceText("mailingTemplateEvent.edited");
                 Log.call(Log.l.trace, "ContactResultsList.Controller.");
             }
             this.createHeaderData = createHeaderData;
@@ -100,7 +103,67 @@
                 return formdate;
             };
             this.getDateObject = getDateObject;
-            
+
+            var sortTable = function(n) {
+                Log.call(Log.l.trace, "ContactResultsEvents.Controller.");
+                var rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+                switching = true;
+                // Set the sorting direction to ascending:
+                dir = "asc";
+                /* Make a loop that will continue until
+                no switching has been done: */
+                while (switching) {
+                    // Start by saying: no switching is done:
+                    switching = false;
+                    rows = table.rows;
+                    /* Loop through all table rows (except the
+                    first, which contains table headers): */
+                    for (i = 1; i < (rows.length - 1); i++) {
+                        // Start by saying there should be no switching:
+                        shouldSwitch = false;
+                        /* Get the two elements you want to compare,
+                        one from current row and one from the next: */
+                        x = rows[i].getElementsByTagName("TD")[n];
+                        y = rows[i + 1].getElementsByTagName("TD")[n];
+                        /* Check if the two rows should switch place,
+                        based on the direction, asc or desc: */
+                        if (Number(x.innerHTML) > Number(y.innerHTML)) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                        if (dir === "asc") {
+                            if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                                // If so, mark as a switch and break the loop:
+                                shouldSwitch = true;
+                                break;
+                            }
+                        } else if (dir === "desc") {
+                            if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                                // If so, mark as a switch and break the loop:
+                                shouldSwitch = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (shouldSwitch) {
+                        /* If a switch has been marked, make the switch
+                        and mark that a switch has been done: */
+                        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                        switching = true;
+                        // Each time a switch is done, increase this count by 1:
+                        switchcount++;
+                    } else {
+                        /* If no switching has been done AND the direction is "asc",
+                        set the direction to "desc" and run the while loop again. */
+                        if (switchcount === 0 && dir === "asc") {
+                            dir = "desc";
+                            switching = true;
+                        }
+                    }
+                }
+            }
+            this.sortTable = sortTable;
+
             var resizableGrid = function () {
                 var row = tableHeader ? tableHeader.querySelector("tr") : null,
                     cols = row ? row.children : null;
@@ -335,6 +398,11 @@
                     }
                     Log.ret(Log.l.trace);
                 },
+                clickSortTable: function (event) {
+                    Log.call(Log.l.trace, "LocalEvents.Controller.");
+                    that.sortTable(parseInt(event.currentTarget.id));
+                    Log.ret(Log.l.trace);
+                }, 
                 clickNew: function (event) {
                     Log.call(Log.l.trace, "LocalEvents.Controller.");
                     directory.style.border = "1px solid black";

@@ -1266,6 +1266,7 @@
     "mailingTemplateEvent.templatesearchbtn"			: "Search",
     "mailingTemplateEvent.layoutname"			: "Name of Layout",
     "mailingTemplateEvent.templateinserthbtn"			: "Create",
+    "mailingTemplateEvent.edited"			: "Last change",
 
 	"mailingTemplateEventEdit.title"			: "Edit template",
 	"mailingTemplateEventEdit.language"			: "Language",
