@@ -683,7 +683,7 @@
                                             },
                                             label: function (context) {
                                                 var label = context.dataset.data[context.dataIndex];
-                                                return " " + label;
+                                                return " " + label + "%";
                                             }
                                         }
                                     }
