@@ -14,14 +14,11 @@
         Controller: WinJS.Class.derive(Fragments.Controller,
             function Controller(fragmentElement, options) {
                 Log.call(Log.l.trace, "DiaIndustries.Controller.");
-                Fragments.Controller.apply(this,
-                    [
-                        fragmentElement, {
-                            criteriaMain: 1,
-                            criteriaSecond: "",
-                            isSupreme: false
-                        }
-                    ]);
+                Fragments.Controller.apply(this, [fragmentElement, {
+                    criteriaMain: 1,
+                    criteriaSecond: "",
+                    isSupreme: false
+                }]);
 
                 var that = this;
 
@@ -36,7 +33,7 @@
 
                 this.isSupreme = parseInt(AppData._userData.IsSupreme);
 
-                var criteriadrop = fragmentElement.querySelector("#criteriadropdown"); 
+                var criteriadrop = fragmentElement.querySelector("#criteriadropdown");
                 var industriesTooltip = fragmentElement.querySelector("#mydiaIndustriesElement");
 
                 var dropdowncolor = function () {
@@ -44,7 +41,7 @@
                 }
                 this.dropdowncolor = dropdowncolor;
 
-                var setTooltipText = function() {
+                var setTooltipText = function () {
                     if (that.isSupreme === 1) {
                         industriesTooltip.innerHTML = getResourceText("diaIndustries.tooltipPremium");
                     } else {
@@ -231,6 +228,16 @@
                                             }
                                         }
                                     }
+                                },
+                                animation: {
+                                    onComplete: function () {
+                                        this.options.animation.onComplete = null;
+                                        //var myWindow = window.open("", "MsgWindow", "width=widthOfCanvas,height=heightOfCanvas");
+                                        //myWindow.document.write('<img src="' + industriepremiumschart.toBase64Image() + '"/>');
+                                        if (AppBar && AppBar.scope.binding && AppBar.scope.binding.exportActive) {
+                                            that.exportChartToPdf();
+                                        }
+                                    }
                                 }
                             },
                             plugins: [centerDoughnutPlugin]
@@ -238,7 +245,7 @@
                         });
                 }
                 this.createIndustriesYearChart1 = createIndustriesYearChart1;
-                
+
                 //YearRangeChart2Data
                 var industriesYearChartDataLabels2 = [];
                 var industriesYearChartDataLabels2Cut = [];
@@ -267,7 +274,7 @@
                     }]
                 };
                 //YearRangeChart2
-                
+
                 var industriesyearchart2;
                 var createIndustriesYearChart2 = function () {
                     if (industriesyearchart2) {
@@ -310,6 +317,16 @@
                                                 var label = context.dataset.data[context.dataIndex];
                                                 return " " + label;
                                             }
+                                        }
+                                    }
+                                },
+                                animation: {
+                                    onComplete: function () {
+                                        this.options.animation.onComplete = null;
+                                        //var myWindow = window.open("", "MsgWindow", "width=widthOfCanvas,height=heightOfCanvas");
+                                        //myWindow.document.write('<img src="' + industriepremiumschart.toBase64Image() + '"/>');
+                                        if (AppBar && AppBar.scope.binding && AppBar.scope.binding.exportActive) {
+                                            that.exportChartToPdf();
                                         }
                                     }
                                 }
@@ -393,6 +410,16 @@
                                             }
                                         }
                                     }
+                                },
+                                animation: {
+                                    onComplete: function () {
+                                        this.options.animation.onComplete = null;
+                                        //var myWindow = window.open("", "MsgWindow", "width=widthOfCanvas,height=heightOfCanvas");
+                                        //myWindow.document.write('<img src="' + industriepremiumschart.toBase64Image() + '"/>');
+                                        if (AppBar && AppBar.scope.binding && AppBar.scope.binding.exportActive) {
+                                            that.exportChartToPdf();
+                                        }
+                                    }
                                 }
                             },
                             plugins: [centerDoughnutPlugin]
@@ -473,6 +500,16 @@
                                                 var label = context.dataset.data[context.dataIndex];
                                                 return " " + label;
                                             }
+                                        }
+                                    }
+                                },
+                                animation: {
+                                    onComplete: function () {
+                                        this.options.animation.onComplete = null;
+                                        //var myWindow = window.open("", "MsgWindow", "width=widthOfCanvas,height=heightOfCanvas");
+                                        //myWindow.document.write('<img src="' + industriepremiumschart.toBase64Image() + '"/>');
+                                        if (AppBar && AppBar.scope.binding && AppBar.scope.binding.exportActive) {
+                                            that.exportChartToPdf();
                                         }
                                     }
                                 }
@@ -558,6 +595,16 @@
                                             }
                                         }
                                     }
+                                },
+                                animation: {
+                                    onComplete: function () {
+                                        this.options.animation.onComplete = null;
+                                        //var myWindow = window.open("", "MsgWindow", "width=widthOfCanvas,height=heightOfCanvas");
+                                        //myWindow.document.write('<img src="' + industriepremiumschart.toBase64Image() + '"/>');
+                                        if (AppBar && AppBar.scope.binding && AppBar.scope.binding.exportActive) {
+                                            that.exportChartToPdf();
+                                        }
+                                    }
                                 }
                             },
                             plugins: [centerDoughnutPlugin]
@@ -638,6 +685,16 @@
                                                 var label = context.dataset.data[context.dataIndex];
                                                 return " " + label;
                                             }
+                                        }
+                                    }
+                                },
+                                animation: {
+                                    onComplete: function () {
+                                        this.options.animation.onComplete = null;
+                                        //var myWindow = window.open("", "MsgWindow", "width=widthOfCanvas,height=heightOfCanvas");
+                                        //myWindow.document.write('<img src="' + industriepremiumschart.toBase64Image() + '"/>');
+                                        if (AppBar && AppBar.scope.binding && AppBar.scope.binding.exportActive) {
+                                            that.exportChartToPdf();
                                         }
                                     }
                                 }
@@ -722,6 +779,16 @@
                                             }
                                         }
                                     }
+                                },
+                                animation: {
+                                    onComplete: function () {
+                                        this.options.animation.onComplete = null;
+                                        //var myWindow = window.open("", "MsgWindow", "width=widthOfCanvas,height=heightOfCanvas");
+                                        //myWindow.document.write('<img src="' + industriepremiumschart.toBase64Image() + '"/>');
+                                        if (AppBar && AppBar.scope.binding && AppBar.scope.binding.exportActive) {
+                                            that.exportChartToPdf();
+                                        }
+                                    }
                                 }
                             },
                             plugins: [centerDoughnutPlugin]
@@ -804,6 +871,16 @@
                                             }
                                         }
                                     }
+                                },
+                                animation: {
+                                    onComplete: function () {
+                                        this.options.animation.onComplete = null;
+                                        //var myWindow = window.open("", "MsgWindow", "width=widthOfCanvas,height=heightOfCanvas");
+                                        //myWindow.document.write('<img src="' + industriepremiumschart.toBase64Image() + '"/>');
+                                        if (AppBar && AppBar.scope.binding && AppBar.scope.binding.exportActive) {
+                                            that.exportChartToPdf();
+                                        }
+                                    }
                                 }
                             },
                             plugins: [centerDoughnutPlugin]
@@ -812,7 +889,7 @@
                 }
                 this.createIndustriesYearChart8 = createIndustriesYearChart8;
 
-                var clearArrays = function() {
+                var clearArrays = function () {
                     Log.call(Log.l.trace, "DiaYearRange.Controller.");
                     //clear IndustriesYearChart1Data
                     industriesYearChartDataLabels1 = [];
@@ -1032,12 +1109,12 @@
                                 ]
                             }]
                         };
-                        Log.ret(Log.l.trace); 
+                        Log.ret(Log.l.trace);
                     }
                 }
                 this.clearArrays = clearArrays;
 
-                var redrawCharts = function() {
+                var redrawCharts = function () {
                     Log.call(Log.l.trace, "DiaYearRange.Controller.");
                     yearRangeChart1Data.labels = industriesYearChartDataLabels1Cut;
                     yearRangeChart1Data.datasets[0].data = industriesYearChartDataRaw1;/*2*/
@@ -1070,10 +1147,10 @@
                 this.drawPremiumCharts = drawPremiumCharts;
 
                 var drawSupremeCharts = function () {
-                        that.createIndustriesYearChart5();
-                        that.createIndustriesYearChart6();
-                        that.createIndustriesYearChart7();
-                        that.createIndustriesYearChart8();
+                    that.createIndustriesYearChart5();
+                    that.createIndustriesYearChart6();
+                    that.createIndustriesYearChart7();
+                    that.createIndustriesYearChart8();
                 }
                 this.drawSupremeCharts = drawSupremeCharts;
 
@@ -1146,7 +1223,7 @@
                         //industriesYearChartDataRaw2.push(item.NumTotal - item.NumHits);
                     }
                     if (item.QualifierExtID === "17283") {
-                        
+
                         //tooltip for dougnut
                         var splitQualifier2;
                         if (item.Qualifier2 && item.Qualifier2.length > 28) {
@@ -1221,7 +1298,7 @@
                 this.resultConverterPremium = resultConverterPremium;
 
                 var resultConverterSurpreme = function (item, index) {
-                    item.index = index;  
+                    item.index = index;
                     if (item.QualifierExtID === "17281") {
                         if (industriesYearChartDataTexts5.length === 0) {
                             industriesYearChartDataTexts5 = item.Qualifier;
@@ -1304,12 +1381,12 @@
                 }
                 this.resultConverterSurpreme = resultConverterSurpreme;
 
-                var resultConverterSupremeSpecialOne = function(item, index) {
+                var resultConverterSupremeSpecialOne = function (item, index) {
                     //if (item.QualifierExtID === "17289") {
-                        if (industriesYearChartDataTexts5.length === 0) {
-                            industriesYearChartDataTexts5 = getResourceText("startPremium.tipEvent"); //2
-                        }
-                        //tooltip for dougnut
+                    if (industriesYearChartDataTexts5.length === 0) {
+                        industriesYearChartDataTexts5 = getResourceText("startPremium.tipEvent"); //2
+                    }
+                    //tooltip for dougnut
                     var splitQualifier;
                     if (item.Qualifier && item.Qualifier.length > 28) {
                         if (AppData.getLanguageId() === 1031) {
@@ -1324,22 +1401,22 @@
                         industriesYearChartDataLabels5.push(item.Qualifier);
                     }
 
-                        if (item.Qualifier) {
-                            if (item.Qualifier.length > 15) {
-                                var qualifierCut = item.Qualifier.substring(15, 0);
-                                industriesYearChartDataLabels5Cut.push(qualifierCut + " " + item.PercentGlobal + "%");
-                            } else {
-                                industriesYearChartDataLabels5Cut.push(item.Qualifier + " " + item.PercentGlobal + "%");
-                            }
+                    if (item.Qualifier) {
+                        if (item.Qualifier.length > 15) {
+                            var qualifierCut = item.Qualifier.substring(15, 0);
+                            industriesYearChartDataLabels5Cut.push(qualifierCut + " " + item.PercentGlobal + "%");
+                        } else {
+                            industriesYearChartDataLabels5Cut.push(item.Qualifier + " " + item.PercentGlobal + "%");
                         }
+                    }
                     //industriesYearChartDataLabels5.push(getResourceText("diaYearRange.remaindata"));
                     /**
                      * absolute number!!
                      */
                     industriesYearChartDataRaw5.push(item.PercentGlobal);
-                        //industriesYearChartDataRaw5.push(item.NumTotal - item.NumHits);
-                        //industriesYearChartDataProcent5 = item.PercentGlobal + "%";
-                   //}
+                    //industriesYearChartDataRaw5.push(item.NumTotal - item.NumHits);
+                    //industriesYearChartDataProcent5 = item.PercentGlobal + "%";
+                    //}
                 }
                 this.resultConverterSupremeSpecialOne = resultConverterSupremeSpecialOne;
 
@@ -1490,7 +1567,7 @@
                 }
                 this.getGetDashboardDataSurpreme = getGetDashboardDataSurpreme;
 
-                var loadData = function() {
+                var loadData = function () {
                     Log.call(Log.l.trace, "LocalEvents.Controller.");
                     AppData.setErrorMsg(that.binding);
                     var ret = new WinJS.Promise.as().then(function () {
@@ -1508,6 +1585,85 @@
                     return ret;
                 }
                 this.loadData = loadData;
+
+                var exportCharts = function () {
+                    Log.call(Log.l.trace, "DiaCountrys.");
+                    if (criteriadrop.winControl.data && criteriadrop.winControl.data.length > 0) {
+                        //criteriadrop.winControl.data.forEach(function (criteria, index, array) {
+                        return WinJS.Promise.as().then(function () {
+                            that.binding.criteriaMain = 40;
+                            return loadData();
+                        }).then(function () {
+                            that.binding.criteriaMain = 41;
+                            return loadData();
+                        }).then(function () {
+                            that.binding.criteriaMain = 61;
+                            return loadData();
+                        }).then(function () {
+                            that.binding.criteriaMain = -1;
+                            return loadData();
+                        }).then(function () {
+                            that.binding.criteriaMain = -2;
+                            return loadData();
+                        });
+                        //});
+                    } else {
+                        return WinJS.Promise.as();
+                    }
+                    Log.ret(Log.l.trace);
+                };
+                this.exportCharts = exportCharts;
+
+
+                var exportChartToPdf = function () {
+                    var element = document.getElementById("diaIndustrieshost");
+                    html2canvas(element,
+                        {
+                            scale: 1,
+                            quality: 4
+                        }).then(canvas => { /*, { dpi: 300 }*/
+                            var widthOfCanvas = canvas.width;
+                            var heightOfCanvas = canvas.height;
+                            //set the orientation
+                            var orientation, mmLeft, mmTop, mmWidth, mmHeight;
+                            var mmLongSide = 297, mmShortSide = 210, mmBorder = 5, scale = 1;
+                            if (widthOfCanvas >= heightOfCanvas) {
+                                orientation = 'l';
+                                mmLeft = mmBorder;
+                                mmWidth = mmLongSide - 2 * mmBorder;
+                                mmHeight = mmWidth * heightOfCanvas / widthOfCanvas;
+                                if (mmHeight > (mmShortSide - 2 * mmBorder)) {
+                                    scale = (mmShortSide - 2 * mmBorder) / mmHeight;
+                                    mmHeight *= scale;
+                                    mmWidth *= scale;
+                                    mmLeft = (mmLongSide - mmWidth) / 2;
+                                }
+                                mmTop = (mmShortSide - mmHeight) / 2;
+                            } else {
+                                orientation = 'p';
+                                mmTop = mmBorder;
+                                mmHeight = mmLongSide - 2 * mmBorder;
+                                mmWidth = mmHeight * widthOfCanvas / heightOfCanvas;
+                                if (mmWidth > (mmShortSide - 2 * mmBorder)) {
+                                    scale = (mmShortSide - 2 * mmBorder) / mmWidth;
+                                    mmHeight *= scale;
+                                    mmWidth *= scale;
+                                    mmTop = (mmLongSide - mmHeight) / 2;
+                                }
+                                mmLeft = (mmShortSide - mmWidth) / 2;
+                            }
+                            var doc = new jsPDF(orientation, 'mm', 'a4'); /*[widthOfCanvas, heightOfCanvas]*/
+                            doc.addImage(canvas.toDataURL(), 'png', mmLeft, mmTop, mmWidth, mmHeight);
+                            //that.binding.progress.percent = 25;
+                            //that.binding.progress.text = getResourceText('diaCountrys.top10');
+                            return doc.save(getResourceText('diaIndustries.title'));
+                            //zipCharts.file(getResourceText('diaCountrys.top10') + '.pdf', doc.output('blob'));
+                            if (AppBar.scope && AppBar.scope.binding && AppBar.scope.binding.dashBoardZip) {
+                                AppBar.scope.binding.dashBoardZip.file(getResourceText('diaCountrys.top10') + ' - ' + AppBar.scope.binding.fileName + '.pdf', doc.output('blob'));
+                            }
+                        });
+                }
+                this.exportChartToPdf = exportChartToPdf;
 
                 this.eventHandlers = {
                     changedCriteria: function (event) {
@@ -1527,11 +1683,11 @@
                 if (criteriadrop) {
                     this.addRemovableEventListener(criteriadrop, "change", this.eventHandlers.changedCriteria.bind(this));
                 }
-                
+
                 that.processAll().then(function () {
                     Log.print(Log.l.trace, "Binding wireup page complete");
                     return that.loadIcon();
-                }).then(function() {
+                }).then(function () {
                     that.setSupremeContainer();
                     return WinJS.Promise.as();
                 })/*.then(function () {

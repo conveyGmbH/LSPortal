@@ -29,6 +29,7 @@
                 visitorFlowFeature: AppHeader.controller.binding.userData.SiteAdmin,
                 visitorFlowPremium: AppData._persistentStates.visitorFlowPremium,
                 dashboardMesagoFeature: AppHeader.controller.binding.userData.SiteAdmin,
+                isDashboardPremium: AppData._persistentStates.showdashboardMesagoCombo === 1 ? true:false,
                 actualYear: new Date().getFullYear()
             }, commandList]);
 
@@ -39,6 +40,7 @@
             var initServer = pageElement.querySelector("#InitServer");
             var visitorFlow = pageElement.querySelector("#showvisitorFlowCombo");
             var dashboardMesagoCombo = pageElement.querySelector('#showdashboardMesagoCombo');
+            var premiumDashboardCombo = pageElement.querySelector('#showPremiumDashboardCombo');
             var textComment = pageElement.querySelector(".input_text_comment");
 
             this.dispose = function () {
@@ -57,7 +59,7 @@
             }
 
             var creatingVisitorFlowCategory = function () {
-                Log.call(Log.l.trace, "SiteEventsNeuAus.Controller.");
+                Log.call(Log.l.trace, "Event.Controller.");
                 var exhibitorCategory = [
                     {
                         value: 0,
@@ -80,7 +82,7 @@
             this.creatingVisitorFlowCategory = creatingVisitorFlowCategory;
 
             var creatingDashboardMesagoComboCategory = function () {
-                Log.call(Log.l.trace, "SiteEventsNeuAus.Controller.");
+                Log.call(Log.l.trace, "Event.Controller.");
                 var dashboardMesagoComboCategory = [
                     {
                         value: 0,
@@ -93,6 +95,14 @@
                     {
                         value: 2,
                         TITLE: getResourceText("label.startSurpreme")/*"Supreme"*/
+                    },
+                    {
+                        value: 3,
+                        TITLE: getResourceText("label.startPremium1")/*"Premium"*/
+                    },
+                    {
+                        value: 4,
+                        TITLE: getResourceText("label.startPremium2")/*"Premium"*/
                     }
                 ];
                 if (dashboardMesagoCombo && dashboardMesagoCombo.winControl) {
@@ -101,6 +111,29 @@
                 }
             };
             this.creatingDashboardMesagoComboCategory = creatingDashboardMesagoComboCategory;
+
+            var creatingPremiumDashboardComboCategory = function () {
+                Log.call(Log.l.trace, "Event.Controller.");
+                var premiumDashboardComboCategory = [
+                    {
+                        value: 0,
+                        TITLE: getResourceText("label.startPremiumStandard")
+                    },
+                    {
+                        value: 1,
+                        TITLE: getResourceText("label.startPremium1")/*"Premium"*/
+                    },
+                    {
+                        value: 2,
+                        TITLE: getResourceText("label.startPremium2")/*"Supreme"*/
+                    }
+                ];
+                if (premiumDashboardCombo && premiumDashboardCombo.winControl) {
+                    premiumDashboardCombo.winControl.data = new WinJS.Binding.List(premiumDashboardComboCategory);
+                    premiumDashboardCombo.selectedIndex = AppData._persistentStates.showPremiumDashboardCombo;
+                }
+            };
+            this.creatingPremiumDashboardComboCategory = creatingPremiumDashboardComboCategory;
 
             var setDataEvent = function (newDataEvent) {
                 var prevNotifyModified = AppBar.notifyModified;
@@ -255,6 +288,18 @@
                         pOptionTypeId = 47;
                         //that.binding.visitorFlowPremium = checked;
                         AppData._persistentStates.showdashboardMesagoCombo = checked;
+                        that.binding.isDashboardPremium = parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 1 ? true : false;
+                        if (!that.binding.isDashboardPremium) {
+                            AppData._persistentStates.showPremiumDashboardCombo = null;
+                        }
+                        pValue = checked;
+                        pValueIsSet = true;
+                        break;
+                    case "showPremiumDashboardCombo":
+                        pOptionTypeId = 48;
+                        //that.binding.visitorFlowPremium = checked;
+                        AppData._persistentStates.showPremiumDashboardCombo = checked;
+                        //that.binding.isDashboardPremium = parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 1 ? true : false;
                         pValue = checked;
                         pValueIsSet = true;
                         break;
@@ -597,6 +642,8 @@
                 that.creatingVisitorFlowCategory();
             }).then(function () {
                 that.creatingDashboardMesagoComboCategory();
+            }).then(function () {
+                that.creatingPremiumDashboardComboCategory();
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 AppBar.notifyModified = true;

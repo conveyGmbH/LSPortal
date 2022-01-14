@@ -154,12 +154,22 @@
                             <div class="field_line field_line_odd">
                                 <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'event.dashboardMesago'}"></span>
                                 <span class="label landscape_only" data-win-res="{textContent: 'event.dashboardMesago'}"></span>
+                                <!--data-win-bind="value: isdashboardMesagoVisible"-->
                                 <select id="showdashboardMesagoCombo"
                                         class="input_field input_half_left win-dropdown"
                                         data-win-control="WinJS.UI.Repeater"
-                                        data-win-bind="value: isdashboardMesagoVisible"
                                         onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
-                                    <!---->
+                                    <option data-win-bind="value: value; textContent: TITLE"></option>
+                                </select>
+                            </div>
+                            <div class="field_line field_line_even" style="display: None">
+                                <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'event.dashboardPremium'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'event.dashboardPremium'}"></span>
+                                <!--data-win-bind="value: isdashboardMesagoVisible"-->
+                                <select id="showPremiumDashboardCombo"
+                                        class="input_field input_half_left win-dropdown"
+                                        data-win-control="WinJS.UI.Repeater"
+                                        onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
                                     <option data-win-bind="value: value; textContent: TITLE"></option>
                                 </select>
                             </div>

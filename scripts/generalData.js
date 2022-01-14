@@ -593,7 +593,7 @@
                     }
                     break;
                 case 47:
-                    if (parseInt(item.LocalValue) === 1 || parseInt(item.LocalValue) === 2) {
+                    if (parseInt(item.LocalValue) === 1 || parseInt(item.LocalValue) === 2 || parseInt(item.LocalValue) === 3 || parseInt(item.LocalValue) === 4) {
                         AppData._persistentStates.showdashboardMesagoCombo = parseInt(item.LocalValue);
                         /* NavigationBar.enablePage("visitorFlowDashboard");
                          NavigationBar.enablePage("visitorFlowEntExt");

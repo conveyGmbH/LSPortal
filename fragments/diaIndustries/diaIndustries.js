@@ -36,29 +36,7 @@
         },
 
         updateLayout: function (element, viewState, lastViewState) {
-            var ret = null;
-            var that = this;
-            /// <param name="element" domElement="true" />
-            Log.call(Log.l.u1, fragmentName + ".");
-            // TODO: Respond to changes in viewState.
-            if (element && !that.inResize) {
-                that.inResize = 1;
-                ret = WinJS.Promise.timeout(0).then(function () {
-                    var contentarea = element.querySelector(".chart-container");
-                    if (contentarea) {
-                        var width = contentarea.clientWidth / 5;
-                        var height = contentarea.clientHeight - 8;
-                        if (that.controller) {
-                            //that.controller.redrawCharts(width, height);
-                            that.controller.redrawCharts();
-                        }
-                        Log.ret(Log.l.u1);
-                    }
-                    that.inResize = 0;
-                });
-            }
-            Log.ret(Log.l.u1);
-            return ret || WinJS.Promise.as();
+
         }
     });
 })();

@@ -8,6 +8,8 @@
 /// <reference path="~/www/pages/startPremium/startPremiumService.js" />
 /// <reference path="~/www/lib/d3/scripts/d3.min.js" />
 /// <reference path="~/www/lib/jspdf/jspdf.min.js"/>
+/// <reference path="~/www/fragments/diaCountrysIndustries/diaCountrysIndustriesController.js"/>
+/// <reference path="~/www/fragments/diaIndustries/diaIndustriesController.js"/>
 
 
 
@@ -22,7 +24,9 @@
                     percent: 0,
                     text: "",
                     show: null
-                }
+                },
+                exportActive: false,
+                dashBoardZip: null
             }, commandList]);
 
             var that = this;
@@ -106,7 +110,7 @@
                 clickBack: function (event) {
                     Log.call(Log.l.trace, "StartPremium.Controller.");
                     if (WinJS.Navigation.canGoBack === true) {
-                        WinJS.Navigation.back(1).done( /* Your success and error handlers */);
+                        WinJS.Navigation.back(1).done(/* Your success and error handlers */);
                     }
                     Log.ret(Log.l.trace);
                 },
@@ -163,12 +167,16 @@
                     Log.call(Log.l.trace, "StartPremium.Controller.");
                     var percent = 0;
                     var statusText = "";
+                    /*if (!that.binding.dashBoardZip) {
+                        that.binding.dashBoardZip = new JSZip();
+                    }*/
                     var zipCharts = new JSZip();
                     that.binding.progress = {
                         percent: percent,
                         text: statusText,
                         show: 1
                     };
+                    that.binding.exportActive = true;
                     var ret = new WinJS.Promise.as().then(function () {
                         /*var doc = new jsPDF("landscape", "mm", 'a4');
                         var width = doc.internal.pageSize.width;
@@ -215,7 +223,7 @@
                                 that.binding.progress.percent = 25;
                                 that.binding.progress.text = getResourceText('diaCountrys.top10');
                                 //doc.save(getResourceText('diaCountrys.top10'));
-                                zipCharts.file(getResourceText('diaCountrys.top10') + '.pdf', doc.output('blob'));
+                            zipCharts.file(getResourceText('diaCountrys.top10') + '.pdf', doc.output('blob'));
                             });
                     }).then(function () {
                         /*var doc = new jsPDF("landscape", "mm", 'a4');
@@ -263,7 +271,7 @@
                                 that.binding.progress.percent = 50;
                                 that.binding.progress.text = getResourceText('diaYearRange.title');
                                 //doc.save(getResourceText('diaYearRange.title'));
-                                zipCharts.file(getResourceText('diaYearRange.title') + '.pdf', doc.output('blob'));
+                            zipCharts.file(getResourceText('diaYearRange.title') + '.pdf', doc.output('blob'));
                             });
                     }).then(function () {
                         /*var doc = new jsPDF("landscape", "mm", 'a4');
@@ -311,111 +319,48 @@
                                 //doc.save(getResourceText('diaVisitors.title'));
                                 that.binding.progress.percent = 75;
                                 that.binding.progress.text = getResourceText('diaVisitors.title');
-                                zipCharts.file(getResourceText('diaVisitors.title') + '.pdf', doc.output('blob'));
+                            zipCharts.file(getResourceText('diaVisitors.title') + '.pdf', doc.output('blob'));
                             });
                     }).then(function () {
-                        /*var doc = new jsPDF("landscape", "mm", 'a4');
-                        var width = doc.internal.pageSize.width;
-                        var height = doc.internal.pageSize.height;*/
-                        // diaCountrysIndustries chart
-                        that.binding.progress.text = getResourceText('diaCountrysIndustries.title');
-                        return html2canvas(document.getElementById("diaCountrysIndustriespDhost"),
-                            {
-                                scale: 1,
-                                quality: 4
-                            }).then(canvas => { /*, { dpi: 300 }*/
-                                var widthOfCanvas = canvas.width;
-                                var heightOfCanvas = canvas.height;
-                                //set the orientation
-                                var orientation, mmLeft, mmTop, mmWidth, mmHeight;
-                                var mmLongSide = 297, mmShortSide = 210, mmBorder = 5, scale = 1;
-                                if (widthOfCanvas >= heightOfCanvas) {
-                                    orientation = 'l';
-                                    mmLeft = mmBorder;
-                                    mmWidth = mmLongSide - 2 * mmBorder;
-                                    mmHeight = mmWidth * heightOfCanvas / widthOfCanvas;
-                                    if (mmHeight > (mmShortSide - 2 * mmBorder)) {
-                                        scale = (mmShortSide - 2 * mmBorder) / mmHeight;
-                                        mmHeight *= scale;
-                                        mmWidth *= scale;
-                                        mmLeft = (mmLongSide - mmWidth) / 2;
-                                    }
-                                    mmTop = (mmShortSide - mmHeight) / 2;
-                                } else {
-                                    orientation = 'p';
-                                    mmTop = mmBorder;
-                                    mmHeight = mmLongSide - 2 * mmBorder;
-                                    mmWidth = mmHeight * widthOfCanvas / heightOfCanvas;
-                                    if (mmWidth > (mmShortSide - 2 * mmBorder)) {
-                                        scale = (mmShortSide - 2 * mmBorder) / mmWidth;
-                                        mmHeight *= scale;
-                                        mmWidth *= scale;
-                                        mmTop = (mmLongSide - mmHeight) / 2;
-                                    }
-                                    mmLeft = (mmShortSide - mmWidth) / 2;
-                                }
-                                var doc = new jsPDF(orientation, 'mm', 'a4'); /*[widthOfCanvas, heightOfCanvas]*/
-                                doc.addImage(canvas.toDataURL(), 'png', mmLeft, mmTop, mmWidth, mmHeight);
-                                that.binding.progress.text = getResourceText('diaCountrysIndustries.title');
-                                //doc.save(getResourceText('diaCountrysIndustries.title'));
-                                zipCharts.file(getResourceText('diaCountrysIndustries.title') + '.pdf', doc.output('blob'));
-                            });
+                        var diaCountrysIndustriespDFragmentControl =
+                            Application.navigator.getFragmentControlFromLocation(
+                                Application.getFragmentPath("diaCountrysIndustries"));
+                        if (diaCountrysIndustriespDFragmentControl &&
+                            diaCountrysIndustriespDFragmentControl.controller) {
+                            Log.ret(Log.l.trace);
+                            return diaCountrysIndustriespDFragmentControl.controller.exportCharts();
+                        } else {
+                            var parentElement = pageElement.querySelector("#diaCountrysIndustriespDhost");
+                            if (parentElement) {
+                                return Application.loadFragmentById(parentElement, "diaCountrysIndustries", {});
+                            } else {
+                                return WinJS.Promise.as();
+                            }
+                        }
                     }).then(function () {
-                        /*var doc = new jsPDF("landscape", "mm", 'a4');
-                        var width = doc.internal.pageSize.width;
-                        var height = doc.internal.pageSize.height;*/
-                        // diaIndustries chart
-                        that.binding.progress.text = getResourceText('diaIndustries.title');
-                        return html2canvas(document.getElementById("diaIndustrieshost"),
-                             {
-                                 scale: 1,
-                                 quality: 4
-                             }).then(canvas => { /*, { dpi: 300 }*/
-                                 var widthOfCanvas = canvas.width;
-                                 var heightOfCanvas = canvas.height;
-                                 //set the orientation
-                                 var orientation, mmLeft, mmTop, mmWidth, mmHeight;
-                                 var mmLongSide = 297, mmShortSide = 210, mmBorder = 5, scale = 1;
-                                 if (widthOfCanvas >= heightOfCanvas) {
-                                     orientation = 'l';
-                                     mmLeft = mmBorder;
-                                     mmWidth = mmLongSide - 2 * mmBorder;
-                                     mmHeight = mmWidth * heightOfCanvas / widthOfCanvas;
-                                     if (mmHeight > (mmShortSide - 2 * mmBorder)) {
-                                         scale = (mmShortSide - 2 * mmBorder) / mmHeight;
-                                         mmHeight *= scale;
-                                         mmWidth *= scale;
-                                         mmLeft = (mmLongSide - mmWidth) / 2;
-                                     }
-                                     mmTop = (mmShortSide - mmHeight) / 2;
-                                 } else {
-                                     orientation = 'p';
-                                     mmTop = mmBorder;
-                                     mmHeight = mmLongSide - 2 * mmBorder;
-                                     mmWidth = mmHeight * widthOfCanvas / heightOfCanvas;
-                                     if (mmWidth > (mmShortSide - 2 * mmBorder)) {
-                                         scale = (mmShortSide - 2 * mmBorder) / mmWidth;
-                                         mmHeight *= scale;
-                                         mmWidth *= scale;
-                                         mmTop = (mmLongSide - mmHeight) / 2;
-                                     }
-                                     mmLeft = (mmShortSide - mmWidth) / 2;
-                                 }
-                                 var doc = new jsPDF(orientation, 'mm', 'a4'); /*[widthOfCanvas, heightOfCanvas]*/
-                                 doc.addImage(canvas.toDataURL(), 'png', mmLeft, mmTop, mmWidth, mmHeight);
-                                 //that.binding.progress.text = getResourceText('startPremiumdiaIndustrieshost.title');
-                                 that.binding.progress.percent = 100;
-                                 // setze title nach ausgewählter combobox + Supreme bzw. Premium
-                                 //doc.save('startPremiumdiaIndustrieshost.pdf');
-                                 zipCharts.file(getResourceText('diaIndustries.title') + '.pdf', doc.output('blob'));
-                             }).then(function () {
-                                 zipCharts.generateAsync({ type: 'blob' }).then(function (content) {
-                                     saveAs(content, 'Reports.zip');
-                                 });
-                                 that.binding.progress.show = null;
-                             });
+                        var diaCountrysIndustriesFragmentControl =
+                            Application.navigator.getFragmentControlFromLocation(
+                                Application.getFragmentPath("diaIndustries"));
+                        if (diaCountrysIndustriesFragmentControl &&
+                            diaCountrysIndustriesFragmentControl.controller) {
+                            Log.ret(Log.l.trace);
+                            return diaCountrysIndustriesFragmentControl.controller.exportCharts();
+                        } else {
+                            var parentElement = pageElement.querySelector("#diIndustrieshost");
+                            if (parentElement) {
+                                return Application.loadFragmentById(parentElement, "diaIndustries", {});
+                            } else {
+                                return WinJS.Promise.as();
+                            }
+                        }
+                    }).then(function() {
+                        that.binding.exportActive = false;
+                    }).then(function () {
+                        zipCharts.generateAsync({ type: 'blob' }).then(function (content) {
+                            saveAs(content, 'Reports.zip');
+                        });
+                        that.binding.progress.show = null;
                     });
-                    Log.ret(Log.l.trace);
                 },
                 exportBrowserViewToPdf: function (event) {
                     Log.call(Log.l.trace, "StartPremium.Controller.");

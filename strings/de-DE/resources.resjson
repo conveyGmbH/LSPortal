@@ -587,7 +587,9 @@
     "label.MyEventsLSGrp" : "Meine Veranstaltungen",
     "label.startPremium" : "Dashboard Premium",
     "label.startSurpreme" : "Dashboard Supreme",
-
+	"label.startPremiumStandard" : "Standard",
+	"label.startPremium1": "Premium 1",
+	"label.startPremium2": "Premium 2",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Abbrechen",
@@ -628,6 +630,7 @@
 	"event.activeApplications" : "Aktive Anwendungen",
     "event.visitorFlowPremium" : "Visitor Flow Premium",
 	"event.dashboardMesago"   : "Dashboard Mesago",
+    "event.dashboardPremium"    : "Premium Typ",
 
     "questiongroup.title"   : "Fragengruppen",
     "questiongroup.count"   : "Anzahl",
@@ -1396,7 +1399,7 @@
     "eventQuestionnaire.questiontyp" : "Fragetyp",
     "eventQuestionnaire.deleteassignment" : "Wollen Sie die Zuordnung löschen?",
 
-    "diaCountrysIndustries.title" : "Interessensgebiet Ihrer gescannten Besucher",
+    "diaCountrysIndustries.title" : "Interessensgebiet Ihrer gescannten Besucher nach Land",
     "diaCountrysIndustries.tooltipPremium" : "zum Beispiel: Aus welchen Top 10 Branchen (Abteilungen/Funktionen etc.) kommen Ihre gescannten Besucher (ohne Auswahl von Land) / aus Land X?",
     "diaCountrysIndustries.tooltipSupreme1" : "generell gilt: blauer Balken = gescannte Besucher auf Ihrem Messestand, roter Balken = alle auf dem Messegelände da gewesenen Besucher",
     "diaCountrysIndustries.tooltipSupreme2" : "zum Beispiel: Aus welchen Top 10 Branchen (Abteilungen/Funktionen etc.) kommen Ihre gescannten Besucher (ohne Auswahl von Land) / aus Land X?",
@@ -1423,7 +1426,7 @@
     "startPremium.tipLocal" : "auf Ihrem Messestand",
     "startPremium.tipEvent" : "auf dem Messegelände",
 
-    "diaIndustries.tooltipPremium" : "zum Beispiel: Aus welchen Top 5 Branchen (Abteilungen/Funktionen etc.) kommen Ihre gescannten Besucher in Bezug auf ihre Jahrgangsgruppe?",
+    "diaIndustries.tooltipPremium"  : "zum Beispiel: Aus welchen Top 5 Branchen (Abteilungen/Funktionen etc.) kommen Ihre gescannten Besucher in Bezug auf ihre Jahrgangsgruppe?",
     "diaIndustries.tooltipSupreme1" : "generell gilt: blauer Kreis = gescannte Besucher auf Ihrem Messestand, roter Kreis = alle auf dem Messegelände da gewesenen Besucher",
     "diaIndustries.tooltipSupreme2" : "zum Beispiel: Aus welchen Top 5 Branchen (Abteilungen/Funktionen etc.) kommen Ihre gescannten Besucher in Bezug auf ihre Jahrgangsgruppe?",
     "diaIndustries.title"           : "Besucher nach Jahresgruppe",

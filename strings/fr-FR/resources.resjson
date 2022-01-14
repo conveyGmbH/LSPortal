@@ -587,6 +587,9 @@
     "label.MyEventsLSGrp" : "Mes événements",
     "label.startPremium" : "Dashboard Premium",
     "label.startSurpreme" : "Dashboard Supreme",
+	"label.startPremiumStandard" : "Standard",
+	"label.startPremium1": "Premium 1",
+	"label.startPremium2": "Premium 2",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annuler",
@@ -627,6 +630,7 @@
     "event.activeApplications": "Applications actives",
     "event.visitorFlowPremium" : "Visitor Flow Premium",
     "event.dashboardMesago"   : "Dashboard Mesago",
+	"event.dashboardPremium"    : "Premium Typ",
 
 	"optQuestionList.title"   : "En option Questions/Réponses",
     "optQuestionList.count"   : "Nombre",

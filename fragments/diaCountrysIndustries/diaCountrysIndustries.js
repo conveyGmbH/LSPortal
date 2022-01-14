@@ -36,22 +36,7 @@
         },
 
         updateLayout: function (element, viewState, lastViewState) {
-            var ret = null;
-            var that = this;
-            /// <param name="element" domElement="true" />
-            Log.call(Log.l.u1, fragmentName + ".");
-            // TODO: Respond to changes in viewState.
-            if (element && !that.inResize) {
-                that.inResize = 1;
-                ret = WinJS.Promise.timeout(0).then(function () {
-                    if (that.controller && that.controller.worldMap) {
-                        that.controller.createWorldChart(true);
-                    }
-                    that.inResize = 0;
-                });
-            }
-            Log.ret(Log.l.u1);
-            return ret;
+
         }
     });
 })();

@@ -571,6 +571,11 @@
     "label.startResourceAdministration": "Texts",
     "label.startMediaAdministration": "Media",
     "label.eventStartLang" : "Language",
+	"label.startPremium" : "Dashboard Premium",
+    "label.startSurpreme" : "Dashboard Supreme",
+    "label.startPremiumStandard" : "Standard",
+	"label.startPremium1": "Premium 1",
+	"label.startPremium2": "Premium 2",
     
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Cancel",
@@ -611,6 +616,7 @@
     "event.activeApplications" : "Active Applications",
     "event.visitorFlowPremium" : "Visitor Flow Premium",
     "event.dashboardMesago"   : "Dashboard Mesago",
+	"event.dashboardPremium"    : "Premium Typ",
 
 	"optQuestionList.title"   : "Optional Questions/Answers",
     "optQuestionList.count"   : "Count",

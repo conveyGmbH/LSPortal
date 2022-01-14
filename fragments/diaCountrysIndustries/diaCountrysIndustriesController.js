@@ -333,12 +333,71 @@
                                             }
                                         }
                                     }
+                                },
+                                animation: {
+                                    onComplete: function () {
+                                        this.options.animation.onComplete = null;
+                                        //var myWindow = window.open("", "MsgWindow", "width=widthOfCanvas,height=heightOfCanvas");
+                                        //myWindow.document.write('<img src="' + industriepremiumschart.toBase64Image() + '"/>');
+                                        if (AppBar && AppBar.scope.binding && AppBar.scope.binding.exportActive) {
+                                            that.exportChartToPdf();
+                                        }
+                                    }
                                 }
                             },
                             plugins: [plugin]
                         });
                 }
                 this.createCountryIndustriesPremiumChart = createCountryIndustriesPremiumChart;
+
+                var exportChartToPdf = function () {
+                    var element = document.getElementById("diaCountrysIndustriespDhost");
+                    html2canvas(element,
+                        {
+                            scale: 1,
+                            quality: 4
+                        }).then(canvas => { /*, { dpi: 300 }*/
+                            var widthOfCanvas = canvas.width;
+                            var heightOfCanvas = canvas.height;
+                            //set the orientation
+                            var orientation, mmLeft, mmTop, mmWidth, mmHeight;
+                            var mmLongSide = 297, mmShortSide = 210, mmBorder = 5, scale = 1;
+                            if (widthOfCanvas >= heightOfCanvas) {
+                                orientation = 'l';
+                                mmLeft = mmBorder;
+                                mmWidth = mmLongSide - 2 * mmBorder;
+                                mmHeight = mmWidth * heightOfCanvas / widthOfCanvas;
+                                if (mmHeight > (mmShortSide - 2 * mmBorder)) {
+                                    scale = (mmShortSide - 2 * mmBorder) / mmHeight;
+                                    mmHeight *= scale;
+                                    mmWidth *= scale;
+                                    mmLeft = (mmLongSide - mmWidth) / 2;
+                                }
+                                mmTop = (mmShortSide - mmHeight) / 2;
+                            } else {
+                                orientation = 'p';
+                                mmTop = mmBorder;
+                                mmHeight = mmLongSide - 2 * mmBorder;
+                                mmWidth = mmHeight * widthOfCanvas / heightOfCanvas;
+                                if (mmWidth > (mmShortSide - 2 * mmBorder)) {
+                                    scale = (mmShortSide - 2 * mmBorder) / mmWidth;
+                                    mmHeight *= scale;
+                                    mmWidth *= scale;
+                                    mmTop = (mmLongSide - mmHeight) / 2;
+                                }
+                                mmLeft = (mmShortSide - mmWidth) / 2;
+                            }
+                            var doc = new jsPDF(orientation, 'mm', 'a4'); /*[widthOfCanvas, heightOfCanvas]*/
+                            doc.addImage(canvas.toDataURL(), 'png', mmLeft, mmTop, mmWidth, mmHeight);
+                            //that.binding.progress.percent = 25;
+                            //that.binding.progress.text = getResourceText('diaCountrys.top10');
+                            return doc.save(getResourceText('diaCountrys.top10'));
+                            if (AppBar.scope && AppBar.scope.binding && AppBar.scope.binding.dashBoardZip) {
+                                AppBar.scope.binding.dashBoardZip.file(getResourceText('ddiaCountrysIndustries.title') + ' - ' + AppBar.scope.binding.fileName + '.pdf', doc.output('blob'));
+                            }
+                        });
+                }
+                this.exportChartToPdf = exportChartToPdf;
 
                 var surpremeColor = "#cc5b87";
 
@@ -421,6 +480,16 @@
                                                 var label = context.dataset.data[context.dataIndex];
                                                 return " " + label + " %";
                                             }
+                                        }
+                                    }
+                                },
+                                animation: {
+                                    onComplete: function () {
+                                        this.options.animation.onComplete = null;
+                                        //var myWindow = window.open("", "MsgWindow", "width=widthOfCanvas,height=heightOfCanvas");
+                                        //myWindow.document.write('<img src="' + industriepremiumschart.toBase64Image() + '"/>');
+                                        if (AppBar && AppBar.scope.binding && AppBar.scope.binding.exportActive) {
+                                            that.exportChartToPdf();
                                         }
                                     }
                                 }
@@ -552,6 +621,7 @@
                             that.redraw();
                             that.createCountryIndustriesPremiumChart();
                         }
+                        //complete({});
                     }, function (error) {
                         Log.print(Log.l.error, "call error");
                     });
@@ -700,8 +770,7 @@
                                 Log.print(Log.l.trace, "reportLand: success!");
                             }
                             return WinJS.Promise.as();
-                        },
-                            function (errorResponse) {
+                        }, function (errorResponse) {
                                 // called asynchronously if an error occurs
                                 // or server returns response with an error status.
                                 AppData.setErrorMsg(that.binding, errorResponse);
@@ -711,6 +780,50 @@
                     return ret;
                 };
                 this.loadData = loadData;
+
+                /**
+                 * Funktion die über über alle ComboboxWerten - criteriadrop durchloopt und
+                 * jedes Mal PRC_GetDashboardData aufruft mit dem jeweiligen Wert in der Combobox
+                 * dann zeichne Chart
+                 * dann rufe Export auf!!
+                 */
+                var exportCharts = function (zipCharts) {
+                    Log.print(Log.l.trace, "DiaCountrys.");
+                    if (criteriadrop.winControl.data && criteriadrop.winControl.data.length > 0) {
+                        //criteriadrop.winControl.data.forEach(function (criteria, index, array) {
+                        return WinJS.Promise.as().then(function () {
+                            that.binding.criteriaMain = 40;
+                            that.binding.criteriaCountry = 0;
+                            that.binding.fileName = "Jahrgangsgruppe Ihrer gescannten Besucher";
+                            return drawChart();
+                        }).then(function () {
+                            that.binding.criteriaMain = 41;
+                            that.binding.criteriaCountry = 0;
+                            that.binding.fileName = "Branche Ihrer gescannten Besucher";
+                            return drawChart();
+                        }).then(function () {
+                            that.binding.criteriaMain = 61;
+                            that.binding.criteriaCountry = 0;
+                            that.binding.fileName = "Interessengebiet Ihrer gescannten Besucher";
+                            return drawChart();
+                        }).then(function () {
+                            that.binding.criteriaMain = -1;
+                            that.binding.criteriaCountry = 0;
+                            that.binding.fileName = "Abteilung Ihrer gescannten Besucher";
+                            return drawChart();
+                        }).then(function () {
+                            that.binding.criteriaMain = -2;
+                            that.binding.criteriaCountry = 0;
+                            that.binding.fileName = "Funktion Ihrer gescannten Besucher";
+                            return drawChart();
+                        });
+                        //});
+                    } else {
+                        return WinJS.Promise.as();
+                    }
+                    Log.ret(Log.l.trace);
+                };
+                this.exportCharts = exportCharts;
 
                 that.processAll().then(function () {
                     Log.print(Log.l.trace, "Binding wireup page complete");

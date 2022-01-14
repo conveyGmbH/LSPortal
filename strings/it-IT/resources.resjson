@@ -570,7 +570,7 @@
     "label.eventSeriesAdministration": "Assegnazione seriale",
     "label.eventSpeakerAdministration": "Assegnazione del team",
     "label.eventSeries": "Serie",
-	  "label.eventGenSettings" : "Impostazioni generali",
+	"label.eventGenSettings" : "Impostazioni generali",
     "label.genDataModList" : "Moderatore",
     "label.genDataModDetails" : "Moderatore",
     "label.genDataModHisto" : "Storia",
@@ -587,6 +587,9 @@
     "label.MyEventsLSGrp" : "I miei eventi",
     "label.startPremium" : "Dashboard Premium",
     "label.startSurpreme" : "Dashboard Supreme",
+    "label.startPremiumStandard" : "Standard",
+	"label.startPremium1": "Premium 1",
+	"label.startPremium2": "Premium 2",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annulla",
@@ -627,6 +630,7 @@
     "event.activeApplications": "Applicazioni attive",
     "event.visitorFlowPremium" : "Visitor Flow Premium",
     "event.dashboardMesago"   : "Dashboard Mesago",
+	"event.dashboardPremium"    : "Premium Typ",
 
     "optQuestionList.title"   : "opzionale Domande/Risposte",
     "optQuestionList.count"   : "Numero",
