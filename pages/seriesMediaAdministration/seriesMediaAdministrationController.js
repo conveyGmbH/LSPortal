@@ -615,12 +615,12 @@
             var setEventSeriesId = function (value) {
                 Log.print(Log.l.trace, "eventSeriesId=" + value);
                 SeriesMediaAdministration._eventSeriesId = value;
-                return that.loadData();
+                //return that.loadData();
             }
             that.setEventSeriesId = setEventSeriesId;
 
             var master = Application.navigator.masterControl;
-            if (master && master.controller && master.controller.binding) {
+            if (master && master.controller && master.controller.binding && master.controller.binding.seriesId) {
                 that.setEventSeriesId(master.controller.binding.seriesId);
             }
 
