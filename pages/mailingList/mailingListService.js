@@ -12,7 +12,8 @@
                 var ret = AppData.getFormatView("VAMail", 20623);
                 ret.maxPageSize = 50;
                 return ret;
-            }
+            },
+            _eventId: 0
         },
         VAMail: {
             select: function (complete, error, restriction) {
@@ -62,6 +63,31 @@
                 VAMailTypeID: 0,
                 Language: ""
             }
-        }
+        },
+        _initSpracheView: {
+            get: function () {
+                return AppData.getLgntInit("LGNTINITSprache", false, true);
+            }
+        },
+        initSpracheView: {
+            select: function (complete, error, recordId) {
+                Log.call(Log.l.trace, "AppData._initSpracheView.");
+                var ret = MailingList._initSpracheView.select(complete, error, recordId, { ordered: true });
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getResults: function () {
+                Log.call(Log.l.trace, "AppData._initSpracheView.");
+                var ret = MailingList._initSpracheView.results;
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getMap: function () {
+                Log.call(Log.l.trace, "AppData._initSpracheView.");
+                var ret = MailingList._initSpracheView.map;
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+        },
     });
 })();

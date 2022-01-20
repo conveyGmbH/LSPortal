@@ -20,11 +20,14 @@
                 count: 0,
                 dataMailingHeaderValue: getEmptyDefaultValue(MailingList.VAMail.defaultContactHeader),
                 dataMailingHeaderText: getEmptyDefaultValue(MailingList.VAMail.defaultContactHeader),
-                maileditlabel: getResourceText("mailingList.maileditlabel")
+                maileditlabel: getResourceText("mailingList.maileditlabel"),
+                Edited: getResourceText("mailingTemplateEvent.edited"),
+                LanguageIDVA: 0
             }, commandList]);
             this.nextUrl = null;
 
             var that = this;
+            var initSprache = pageElement.querySelector("#InitSprache");
             var table = pageElement.querySelector("#tableId");
             var tableHeader = pageElement.querySelector(".table-header");
             var tableBody = pageElement.querySelector(".table-body");
@@ -425,6 +428,73 @@
             }
             this.addBodyRowHandlers = addBodyRowHandlers;
 
+            var sortTable = function (n) {
+                Log.call(Log.l.trace, "ContactResultsEvents.Controller.");
+                var rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+                switching = true;
+                // Set the sorting direction to ascending:
+                dir = "asc";
+                /* Make a loop that will continue until
+                no switching has been done: */
+                while (switching) {
+                    // Start by saying: no switching is done:
+                    switching = false;
+                    rows = table.rows;
+                    /* Loop through all table rows (except the
+                    first, which contains table headers): */
+                    for (i = 1; i < (rows.length - 1); i++) {
+                        // Start by saying there should be no switching:
+                        shouldSwitch = false;
+                        /* Get the two elements you want to compare,
+                        one from current row and one from the next: */
+                        x = rows[i].getElementsByTagName("TD")[n];
+                        y = rows[i + 1].getElementsByTagName("TD")[n];
+                        /* Check if the two rows should switch place,
+                        based on the direction, asc or desc: */
+                        if (Number(x.innerHTML) > Number(y.innerHTML)) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                        if (dir === "asc") {
+                            if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                                // If so, mark as a switch and break the loop:
+                                shouldSwitch = true;
+                                break;
+                            }
+                        } else if (dir === "desc") {
+                            if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                                // If so, mark as a switch and break the loop:
+                                shouldSwitch = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (shouldSwitch) {
+                        /* If a switch has been marked, make the switch
+                        and mark that a switch has been done: */
+                        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                        switching = true;
+                        // Each time a switch is done, increase this count by 1:
+                        switchcount++;
+                    } else {
+                        /* If no switching has been done AND the direction is "asc",
+                        set the direction to "desc" and run the while loop again. */
+                        if (switchcount === 0 && dir === "asc") {
+                            dir = "desc";
+                            switching = true;
+                        }
+                    }
+                }
+            }
+            this.sortTable = sortTable;
+
+            var setGermanCombo = function() {
+                Log.call(Log.l.trace, "ContactResultsList.Controller.");
+                initSprache.selectedIndex = 0;
+                that.binding.LanguageIDVA = 1031;
+            }
+            this.setGermanCombo = setGermanCombo;
+
             // define handlers
             this.eventHandlers = {
                 clickBack: function (event) {
@@ -433,6 +503,16 @@
                         WinJS.Navigation.back(1).done();
                     }
                     Log.ret(Log.l.trace);
+                },
+                clickSortTable: function (event) {
+                    Log.call(Log.l.trace, "LocalEvents.Controller.");
+                    that.sortTable(parseInt(event.currentTarget.id));
+                    Log.ret(Log.l.trace);
+                }, 
+                onLanguageChange: function() {
+                    Log.call(Log.l.trace, "ContactResultsList.Controller.");
+                    that.binding.LanguageIDVA = parseInt(initSprache.value);
+                    that.loadData();
                 },
                 clickMailEdit: function (event) {
                     Log.call(Log.l.trace, "ContactResultsList.Controller.");
@@ -509,6 +589,9 @@
 
             if (contentArea) {
                 this.addRemovableEventListener(contentArea, "scroll", this.eventHandlers.onContentScroll.bind(this));
+            }
+            if (initSprache) {
+                this.addRemovableEventListener(contentArea, "change", this.eventHandlers.onLanguageChange.bind(this));
             }
 
             var resultConverter = function (item, index) {
@@ -608,8 +691,23 @@
             }
             this.processAllData = processAllData;
 
-            var loadData = function (restr) {
+            var getEventId = function () {
+                return MailingList._eventId;
+            }
+            that.getEventId = getEventId;
+
+            var setEventId = function (value) {
+                Log.print(Log.l.trace, "eventId=" + value);
+                MailingList._eventId = value;
+            }
+            that.setEventId = setEventId;
+
+            var loadData = function () {
                 Log.call(Log.l.trace, "MailingTypes.Controller.");
+                var restr = getEventId();
+                if (!that.binding.LanguageIDVA) {
+                    that.binding.LanguageIDVA = 1031;
+                }
                 AppData.setErrorMsg(that.binding);
                 that.nextUrl = null;
                 if (tableBody && tableBody.winControl) {
@@ -620,6 +718,33 @@
                     }
                 }
                 var ret = new WinJS.Promise.as().then(function () {
+                    if (!MailingList.initSpracheView.getResults().length) {
+                        Log.print(Log.l.trace, "calling select initSpracheView...");
+                        //@nedra:25.09.2015: load the list of INITAnrede for Combobox
+                        return MailingList.initSpracheView.select(function (json) {
+                            Log.print(Log.l.trace, "initSpracheView: success!");
+                            if (json && json.d) {
+                                var results = json.d.results;
+                                // Now, we call WinJS.Binding.List to get the bindable list
+                                if (initSprache && initSprache.winControl) {
+                                    initSprache.winControl.data = new WinJS.Binding.List(results);
+                                    initSprache.selectedIndex = 0;
+                                }
+                            }
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        });
+                    } else {
+                        if (initSprache && initSprache.winControl) {
+                            var results = MailingList.initSpracheView.getResults();
+                            initSprache.winControl.data = new WinJS.Binding.List(results);
+                            initSprache.selectedIndex = 0;
+                        }
+                        return WinJS.Promise.as();
+                    }
+                }).then(function () {
                     Log.print(Log.l.trace, "calling select MailingTypes...");
                     if (restr) {
                         return MailingList.VAMail.select(function (json) {
@@ -637,8 +762,9 @@
                             }
                         }, function (errorResponse) {
                                 AppData.setErrorMsg(that.binding, errorResponse);
-                            }, restr);
-                    } else {
+                            },
+                            { VeranstaltungID: restr, LanguageSpecID: that.binding.LanguageIDVA });
+                    } /*else {
                         return MailingList.VAMail.select(function (json) {
                             AppData.setErrorMsg(that.binding);
                             Log.print(Log.l.trace, "MailingTypes: success!");
@@ -650,6 +776,7 @@
                                 results.forEach(function (item, index) {
                                     that.resultConverter(item, index);
                                 });
+                                that.processAllData();
                             }
                         }, function (errorResponse) {
                                 AppData.setErrorMsg(that.binding, errorResponse);

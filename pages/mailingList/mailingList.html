@@ -16,33 +16,42 @@
                         <div class="win-type-subtitle master-list-header">
                             <span data-win-res="{textContent: 'mailingList.title'}"></span>
                         </div>
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'account.language'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'account.language'}"></span>
+                            <select id="InitSprache"
+                                    class="input_field win-dropdown"
+                                    data-win-control="WinJS.UI.Repeater"
+                                    data-win-bind="value: LanguageIDVA Binding.Mode.twoway">
+                                <option data-win-bind="value: LanguageID; textContent: TITLE"></option>
+                            </select>
+                        </div>
                     </div>
                     <div class="field_line scroll-line">
                         <table id="tableId">
                             <thead class="table-header">
                                 <tr>
-                                    <th data-win-bind="value: dataMailingHeaderValue.VAMailTypeID; textContent: dataMailingHeaderText.VAMailTypeID"></th>
-                                    <th data-win-bind="value: dataMailingHeaderValue.MailTypeName; textContent: dataMailingHeaderText.MailTypeName"></th>
-                                    <th data-win-bind="value: dataMailingHeaderValue.VeranstaltungName; textContent: dataMailingHeaderText.VeranstaltungName"></th>
-                                    <th data-win-bind="value: dataMailingHeaderValue.Serie; textContent: dataMailingHeaderText.Serie"></th>
-                                    <th data-win-bind="value: dataMailingHeaderValue.TemplateName; textContent: dataMailingHeaderText.TemplateName"></th>
-                                    <th data-win-bind="value: dataMailingHeaderValue.LastModUTC; textContent: dataMailingHeaderText.LastModUTC"></th>
-                                    <th data-win-bind="value: dataMailingHeaderValue.Language; textContent: dataMailingHeaderText.Language"></th>
-                                    <th data-win-bind="value: dataMailingHeaderValue.IsActive; textContent: dataMailingHeaderText.IsActive"></th>
+                                    <!--<th data-win-bind="value: dataMailingHeaderValue.VAMailTypeID; textContent: dataMailingHeaderText.VAMailTypeID"></th>-->
+                                    <th id="0" onclick="AppBar.handleEvent('click', 'clickSortTable', event)" data-win-bind="value: dataMailingHeaderValue.MailTypeName; textContent: dataMailingHeaderText.MailTypeName"></th>
+                                    <th id="1" onclick="AppBar.handleEvent('click', 'clickSortTable', event)" data-win-bind="value: dataMailingHeaderValue.VeranstaltungName; textContent: dataMailingHeaderText.VeranstaltungName"></th>
+                                    <th id="2" onclick="AppBar.handleEvent('click', 'clickSortTable', event)" data-win-bind="value: dataMailingHeaderValue.Serie; textContent: dataMailingHeaderText.Serie"></th>
+                                    <th id="3" onclick="AppBar.handleEvent('click', 'clickSortTable', event)" data-win-bind="value: dataMailingHeaderValue.TemplateName; textContent: dataMailingHeaderText.TemplateName"></th>
+                                    <th id="4" onclick="AppBar.handleEvent('click', 'clickSortTable', event)" data-win-bind="value: dataMailingHeaderValue.LastModUTC; textContent: dataMailingHeaderText.LastModUTC"></th>
+                                    <th id="5" onclick="AppBar.handleEvent('click', 'clickSortTable', event)" data-win-bind="value: dataMailingHeaderValue.Language; textContent: dataMailingHeaderText.Language"></th>
+                                    <th id="6" onclick="AppBar.handleEvent('click', 'clickSortTable', event)" data-win-bind="value: dataMailingHeaderValue.IsActive; textContent: dataMailingHeaderText.IsActive"></th>
+                                    <th id="7" onclick="AppBar.handleEvent('click', 'clickSortTable', event)" data-win-bind="value: Edited; textContent: Edited"></th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody class="table-body" data-win-control="WinJS.UI.Repeater">
                                 <tr data-win-bind="value: VAMailVIEWID">
-                                    <td id="icons">
+                                    <!--<td id="icons">
                                         <div class="list-symbol-ID">
                                             <div data-win-bind="name: mail_open2" class="action-image"></div>
                                         </div>
-                                    </td>
-                                    <td >
-                                        <span data-win-bind="textContent: MailTypeName"></span><br/>
-                                        <span id="lmuser" data-win-bind="textContent: LastModUser"></span>
-                                        <span id="lmutc" data-win-bind="textContent: LastModUTC"></span>
+                                    </td>-->
+                                    <td>
+                                        <span data-win-bind="textContent: MailTypeName"></span>
                                     </td>
                                     <td data-win-bind="textContent: VeranstaltungName"></td>
                                     <td data-win-bind="textContent: Serie"></td>
@@ -70,6 +79,10 @@
                                     </td>
                                     <td>
                                         <div id="mailactivestatus" data-win-bind="textContent: IsActive"></div>
+                                    </td>
+                                    <td>
+                                        <span id="lmuser" data-win-bind="textContent: LastModUser"></span>
+                                        <span id="lmutc" data-win-bind="textContent: LastModUTC"></span>
                                     </td>
                                     <td id="edit">
                                         <button class="mailedit-button win-button" data-win-bind="textContent: maileditlabel; value: VAMailVIEWID" onclick="AppBar.handleEvent('click', 'clickMailEdit', event)" autofocus="autofocus"></button>
