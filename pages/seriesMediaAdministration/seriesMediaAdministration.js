@@ -80,7 +80,7 @@
                     var myTextFragment = element.querySelector(".textfragmenthost");
                     var myMediaList = element.querySelector(".listfragmenthost");
                     if (myMediaContainer && myTextUsage && myMediaList && myDocFragments && myTextFragment) {
-                        var contentarea = element.querySelector(".contentarea");
+                        var contentarea = element.querySelector("#seriesMediaAdministrationController .contentarea");
                         if (contentarea) {
                             var bHalfSize = false;
                             var contentHeader = element.querySelector(".content-header");
@@ -102,6 +102,16 @@
                                     WinJS.Utilities.removeClass(element, "view-size-medium-small");
                                     WinJS.Utilities.removeClass(element, "view-size-medium");
                                     WinJS.Utilities.removeClass(element, "view-size-bigger");
+                                    //remove classes of myTextUsage like contentarea
+                                    WinJS.Utilities.removeClass(myTextUsage, "view-size-small");
+                                    WinJS.Utilities.removeClass(myTextUsage, "view-size-medium-small");
+                                    WinJS.Utilities.removeClass(myTextUsage, "view-size-medium");
+                                    WinJS.Utilities.removeClass(myTextUsage, "view-size-bigger");
+                                    // remove classes of myTextFragment like contentarea
+                                    WinJS.Utilities.removeClass(myTextFragment, "view-size-small");
+                                    WinJS.Utilities.removeClass(myTextFragment, "view-size-medium-small");
+                                    WinJS.Utilities.removeClass(myTextFragment, "view-size-medium");
+                                    WinJS.Utilities.removeClass(myTextFragment, "view-size-bigger");
                                     if (width > Application.maxViewSize.small) {
                                         // remove class: view-size-small  
                                         WinJS.Utilities.removeClass(myTextUsage, "view-size-small");

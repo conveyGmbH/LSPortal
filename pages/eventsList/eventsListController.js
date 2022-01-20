@@ -247,12 +247,7 @@
                                                         if (curPageId === "eventGenSettings") {
                                                             AppBar.scope.setEventId(item.data.VeranstaltungVIEWID);
                                                             AppBar.scope.selectConfExhibitorId();
-                                                        }
-                                                        if (curPageId === "eventQuestionnaire") {
-                                                            AppBar.scope.setEventId(item.data.VeranstaltungVIEWID);
-                                                            AppBar.scope.loadData();
-                                                        }
-                                                        else {
+                                                        } else {
                                                             AppBar.scope.setEventId(item.data.VeranstaltungVIEWID);
                                                             AppBar.scope.loadData();
                                                         }

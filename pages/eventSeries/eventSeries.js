@@ -98,7 +98,7 @@
                 that.inResize = 1;
                 ret = WinJS.Promise.timeout(0).then(function () {
                     if (that.controller) {
-                        var contentarea = element.querySelector(".contentarea");
+                        var contentarea = element.querySelector("#eventSeriesController .contentarea");
                         if (contentarea) {
                             var width = contentarea.clientWidth;
                             var height = contentarea.clientHeight;
