@@ -161,6 +161,9 @@
                 if (tilecount === 7 || tilecount === 8) {
                     tileContainer.style.height = "480px";
                 }
+                if (tilecount === 9 || tilecount === 10) {
+                    tileContainer.style.height = "600px";
+                }
             }
             this.resizeTileContainer = resizeTileContainer;
 
