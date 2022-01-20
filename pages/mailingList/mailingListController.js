@@ -783,7 +783,7 @@
                             }, {
                                 LanguageSpecID : AppData.getLanguageId()
                             });
-                    }
+                    }*/
                 }).then(function () {
                     return WinJS.Promise.timeout(100);
                 }).then(function () {
