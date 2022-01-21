@@ -3,16 +3,16 @@
     height: 48px;
     display: inline-block;
 }
-.eventResourceAdministration .contentarea {
+.seriesResourceAdministration .contentarea {
     overflow: hidden;
 }
-.eventResourceAdministration .list-header {
+.seriesResourceAdministration .list-header {
     width: calc(100% - 31px);
     padding: 10px 24px 0 7px;
     margin: 0;
     display: inline-block;
 }
-.eventResourceAdministration .list-header .field_line {
+.seriesResourceAdministration .list-header .field_line {
     height: 60px;
     display: inline-block;
 }
@@ -30,23 +30,23 @@
 #eventTextList .win-itembox:hover::before {
     border-color: transparent;
 }
-.eventResourceAdministration .label-right {
+.seriesResourceAdministration .label-right {
     float: right;
     opacity: 0.6;
 }
-.eventResourceAdministration .label-left {
+.seriesResourceAdministration .label-left {
     float: left;
     width: 50%;
     opacity: 0.6;
 }
-.eventResourceAdministration .input_field {
+.seriesResourceAdministration .input_field {
     margin-bottom: 0;
 }
-.view-size-medium .eventResourceAdministration .input_field {
+/*.view-size-medium .seriesResourceAdministration .input_field {
     float: left;
-    width: 100%;
+    width: 50%;
     min-width: 100%;
-}
+}*/
 
 .headercircle {
     float: left;

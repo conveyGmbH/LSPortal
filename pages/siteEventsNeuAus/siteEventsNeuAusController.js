@@ -196,12 +196,14 @@
                 if (validemail === false) {
                     var alerttext = getResourceText("siteeventsneuaus.mailerrortext");
                     alert(alerttext);
+                    Log.ret(Log.l.trace); 
+                    return WinJS.Promise.as();
                 } else {
                     AppData.setErrorMsg(that.binding);
                     var dataExibitor = getExibitorData();
                     Log.call(Log.l.trace, "SiteEventsNeuAus.Controller.");
                     AppData.setErrorMsg(that.binding);
-                    AppData.call("PRC_CreateSiteVeranstaltung",
+                    return AppData.call("PRC_CreateSiteVeranstaltung",
                         {
                             pVeranstaltungTerminID: that.binding.VeranstaltungTerminID,
                             pVeranstaltungName: that.binding.VeranstaltungName,
@@ -226,13 +228,14 @@
                             Log.print(Log.l.info, "call success! ");
                             AppBar.busy = false;
                             Application.navigateById("siteevents", event);
+                            Log.ret(Log.l.trace);
                         }, function (errorResponse) {
                             Log.print(Log.l.error, "call error");
                             AppBar.busy = false;
                             AppData.setErrorMsg(that.binding, errorResponse);
+                            Log.ret(Log.l.trace);
                         });
                 }
-                Log.ret(Log.l.trace); 
             }
             this.saveExhibitor = saveExhibitor;
 

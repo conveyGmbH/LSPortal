@@ -98,7 +98,7 @@
                 that.inResize = 1;
                 ret = WinJS.Promise.timeout(0).then(function () {
                     if (that.controller) {
-                        var contentArea = element.querySelector(".contentarea");
+                        var contentArea = element.querySelector("#seriesResourceAdministrationController .contentarea");
                         if (contentArea) {
                             var fragmentHost = element.querySelector(".contentarea > .fragmenthost");
                             var listHeader = element.querySelector(".contentarea > .list-header");
