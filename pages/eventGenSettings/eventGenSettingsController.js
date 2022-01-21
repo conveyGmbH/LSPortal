@@ -588,7 +588,6 @@
                 AppData.setErrorMsg(that.binding);
                 var recordId = getEventId();
                 if (recordId) {
-                    AppData.setErrorMsg(that.binding);
                     AppData.call("PRC_ConfExhibitorID", {
                         pVeranstaltungID: recordId
                     }, function (json) {

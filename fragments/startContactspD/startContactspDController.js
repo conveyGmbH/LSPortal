@@ -112,7 +112,10 @@
                                         },
                                         axes: {
                                             xaxis: {
-                                                renderer: $.jqplot.CategoryAxisRenderer
+                                                renderer: $.jqplot.CategoryAxisRenderer,
+                                                tickOptions: {
+                                                    textColor: Colors.textColor
+                                                }
                                             },
                                             yaxis: {
                                                 renderer: $.jqplot.AxisThickRenderer,

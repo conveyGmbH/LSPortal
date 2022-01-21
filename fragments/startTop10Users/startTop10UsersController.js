@@ -130,7 +130,8 @@
                                                 tickOptions: {
                                                     showGridline: false,
                                                     markSize: 0,
-                                                    formatString: '%d'
+                                                    formatString: '%d',
+                                                    textColor: Colors.textColor
                                                 }
                                             },
                                             xaxis: {
@@ -138,7 +139,8 @@
                                                 min: 0,
                                                 tickInterval: employeeWithMostContacts > 2000 ? 500 : (employeeWithMostContacts > 100 ? 100 : (employeeWithMostContacts > 50 ? 50 : (employeeWithMostContacts > 20 ? 5 : 1))),
                                                 tickOptions: {
-                                                    formatString: '%d'
+                                                    formatString: '%d',
+                                                    textColor: Colors.textColor
                                                 }
                                             }
                                         },
