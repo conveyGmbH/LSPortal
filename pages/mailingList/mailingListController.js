@@ -51,10 +51,10 @@
             var initializeTemplates = function (complete, error) {
                 Log.call(Log.l.trace, "Contact.Controller.");
                 AppData.setErrorMsg(that.binding);
-                var recordId = AppData.getRecordId("Veranstaltung");
+                var recordId = that.getEventId();
                 if (recordId) {
                     AppData.setErrorMsg(that.binding);
-                    AppData.call("PRC_INITVAMails", {
+                    return AppData.call("PRC_INITVAMails", {
                         pVeranstaltungID: recordId
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
@@ -64,6 +64,7 @@
                 } else {
                     var err = { status: 0, statusText: "no event" };
                     error(err);
+                    return WinJS.Promise.as();
                 }
                 Log.ret(Log.l.trace);
             };
@@ -718,6 +719,12 @@
                     }
                 }
                 var ret = new WinJS.Promise.as().then(function () {
+                    Log.print(Log.l.trace, "Calling initializeTemplates");
+                    return that.initializeTemplates();
+                }).then(function () {
+                    Log.print(Log.l.trace, "Calling createHeaderData");
+                    return that.createHeaderData();
+                }).then(function () {
                     if (!MailingList.initSpracheView.getResults().length) {
                         Log.print(Log.l.trace, "calling select initSpracheView...");
                         //@nedra:25.09.2015: load the list of INITAnrede for Combobox
@@ -758,54 +765,13 @@
                                 results.forEach(function (item, index) {
                                     that.resultConverter(item, index);
                                 });
-                                that.processAllData();
                             }
                         }, function (errorResponse) {
                                 AppData.setErrorMsg(that.binding, errorResponse);
                             },
                             { VeranstaltungID: restr, LanguageSpecID: that.binding.LanguageIDVA });
-                    } /*else {
-                        return MailingList.VAMail.select(function (json) {
-                            AppData.setErrorMsg(that.binding);
-                            Log.print(Log.l.trace, "MailingTypes: success!");
-                            if (json && json.d && json.d.results.length > 0) {
-                                that.nextUrl = MailingList.VAMail.getNextUrl(json);
-                                // now always edit!
-                                var results = json.d.results;
-                                that.flagdata = results;
-                                results.forEach(function (item, index) {
-                                    that.resultConverter(item, index);
-                                });
-                                that.processAllData();
                             }
-                        }, function (errorResponse) {
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                            }, {
-                                LanguageSpecID : AppData.getLanguageId()
-                            });
-                    }*/
                 }).then(function () {
-                    return WinJS.Promise.timeout(100);
-                }).then(function () {
-                    that.eventHandlers.onItemInserted();
-                    AppBar.notifyModified = true;
-                    return WinJS.Promise.as();
-                });
-                Log.ret(Log.l.trace);
-                return ret;
-            }
-            this.loadData = loadData;
-
-            that.processAll().then(function () {
-                Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.initializeTemplates();
-            }).then(function () {
-                Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.createHeaderData();
-            }).then(function () {
-                Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.loadData();
-            }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.resizableGrid();
             }).then(function () {
@@ -829,6 +795,21 @@
             }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.setMailStatusColor();
+            }).then(function () {
+                    return WinJS.Promise.timeout(100);
+                }).then(function () {
+                    that.eventHandlers.onItemInserted();
+                    AppBar.notifyModified = true;
+                    return WinJS.Promise.as();
+                });
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+            this.loadData = loadData;
+
+            that.processAll().then(function () {
+                Log.print(Log.l.trace, "Binding wireup page complete");
+                return that.loadData();
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 AppBar.notifyModified = true;
