@@ -27,11 +27,12 @@
             this.nextUrl = null;
 
             var that = this;
+
             var initSprache = pageElement.querySelector("#InitSprache");
             var table = pageElement.querySelector("#tableId");
             var tableHeader = pageElement.querySelector(".table-header");
             var tableBody = pageElement.querySelector(".table-body");
-            var contentArea = pageElement.querySelector(".contentarea"); 
+            var contentArea = pageElement.querySelector(".contentarea");
 
             this.dispose = function () {
                 if (tableBody && tableBody.winControl) {
@@ -49,7 +50,7 @@
             this.loadIcons = loadIcons;
 
             var initializeTemplates = function (complete, error) {
-                Log.call(Log.l.trace, "Contact.Controller.");
+                Log.call(Log.l.trace, "MailingList.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var recordId = that.getEventId();
                 if (recordId) {
@@ -70,7 +71,7 @@
             };
             this.initializeTemplates = initializeTemplates;
 
-            var loadFlags = function() {
+            var loadFlags = function () {
                 var flagde = pageElement.querySelectorAll("#flags #flagde");
                 for (var i = 0; i < flagde.length; i++) {
                     flagde[i].name = "de";
@@ -95,12 +96,12 @@
                 for (var i = 0; i < flagelse.length; i++) {
                     flagelse[i].name = "threedots";
                 }
-                Colors.loadSVGImageElements(tableBody, "flag-image", 20, null , "name");
+                Colors.loadSVGImageElements(tableBody, "flag-image", 20, null, "name");
             }
             this.loadFlags = loadFlags;
 
-            var setFlags = function(flagdata) {
-                Log.call(Log.l.trace, "ContactResultsList.Controller.");
+            var setFlags = function (flagdata) {
+                Log.call(Log.l.trace, "MailingList.Controller.");
                 var flaggb = pageElement.querySelectorAll("#flags #flaggb");
                 var flagde = pageElement.querySelectorAll("#flags #flagde");
                 var flagfr = pageElement.querySelectorAll("#flags #flagfr");
@@ -143,7 +144,7 @@
             }
             this.setFlags = setFlags;
 
-            var editButton = function() {
+            var editButton = function () {
                 var editbutton = pageElement.querySelectorAll(".mailedit-button");
                 for (var i = 0; i < editbutton.length; i++) {
                     editbutton[i].textContent = getResourceText("mailingList.maileditlabel");
@@ -151,11 +152,11 @@
             }
             this.editButton = editButton;
 
-            var createHeaderData = function() {
-                Log.call(Log.l.trace, "ContactResultsList.Controller.");
+            var createHeaderData = function () {
+                Log.call(Log.l.trace, "MailingList.Controller.");
                 that.binding.dataMailingHeaderValue.VAMailTypeID = "VAMailTypeID";
                 that.binding.dataMailingHeaderValue.MailTypeName = "MailTypeName";
-                that.binding.dataMailingHeaderValue.VeranstaltungName ="VeranstaltungName" ;
+                that.binding.dataMailingHeaderValue.VeranstaltungName = "VeranstaltungName";
                 that.binding.dataMailingHeaderValue.Serie = "Serie";
                 that.binding.dataMailingHeaderValue.TemplateName = "TemplateName";
                 that.binding.dataMailingHeaderValue.LastModUTC = "LastModUTC";
@@ -173,7 +174,7 @@
             }
             this.createHeaderData = createHeaderData;
 
-            var setMailStatusColor = function() {
+            var setMailStatusColor = function () {
                 var mailActiveStatus = pageElement.querySelectorAll("#mailactivestatus");
                 var active = getResourceText("mailingList.active");
                 for (var i = 0; i < mailActiveStatus.length; i++) {
@@ -186,7 +187,7 @@
             }
             this.setMailStatusColor = setMailStatusColor;
 
-            var addZero = function(i) {
+            var addZero = function (i) {
                 if (i < 10) {
                     i = "0" + i;
                 }
@@ -195,12 +196,12 @@
             this.addZero = addZero;
 
             var getDateObject = function (date) {
-                Log.call(Log.l.trace, "ContactResultsEvents.Controller.");
+                Log.call(Log.l.trace, "MailingList.Controller.");
                 var dateString = date.replace("\/Date(", "").replace(")\/", "");
                 var milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
                 var time = new Date(milliseconds);
                 var formdate = ("0" + time.getDate()).slice(-2) + "." + ("0" + (time.getMonth() + 1)).slice(-2) + "." + time.getFullYear() + " " + that.addZero(time.getUTCHours()) + ":" + that.addZero(time.getMinutes());
-                Log.call(Log.l.trace, "ContactResultsEvents.Controller.");
+                Log.ret(Log.l.trace);
                 return formdate;
             };
             this.getDateObject = getDateObject;
@@ -413,7 +414,7 @@
                     var rows = tableBody.getElementsByTagName("tr");
                     for (var i = 0; i < rows.length; i++) {
                         var row = rows[i];
-                       
+
                         if (!row.onclick) {
                             row.ondblclick = function (myrow) {
                                 return function () {
@@ -430,7 +431,7 @@
             this.addBodyRowHandlers = addBodyRowHandlers;
 
             var sortTable = function (n) {
-                Log.call(Log.l.trace, "ContactResultsEvents.Controller.");
+                Log.call(Log.l.trace, "MailingList.Controller.");
                 var rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
                 switching = true;
                 // Set the sorting direction to ascending:
@@ -443,7 +444,7 @@
                     rows = table.rows;
                     /* Loop through all table rows (except the
                     first, which contains table headers): */
-                    for (i = 1; i < (rows.length - 1); i++) {
+                    for (i = 1; i < (rows.length - 1) ; i++) {
                         // Start by saying there should be no switching:
                         shouldSwitch = false;
                         /* Get the two elements you want to compare,
@@ -489,34 +490,41 @@
             }
             this.sortTable = sortTable;
 
-            var setGermanCombo = function() {
-                Log.call(Log.l.trace, "ContactResultsList.Controller.");
-                initSprache.selectedIndex = 0;
-                that.binding.LanguageIDVA = 1031;
-            }
-            this.setGermanCombo = setGermanCombo;
-
             // define handlers
             this.eventHandlers = {
                 clickBack: function (event) {
-                    Log.call(Log.l.trace, "ContactResultsList.Controller.");
+                    Log.call(Log.l.trace, "MailingList.Controller.");
                     if (WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done();
                     }
                     Log.ret(Log.l.trace);
                 },
                 clickSortTable: function (event) {
-                    Log.call(Log.l.trace, "LocalEvents.Controller.");
+                    Log.call(Log.l.trace, "MailingList.Controller.");
                     that.sortTable(parseInt(event.currentTarget.id));
                     Log.ret(Log.l.trace);
-                }, 
-                onLanguageChange: function() {
-                    Log.call(Log.l.trace, "ContactResultsList.Controller.");
-                    that.binding.LanguageIDVA = parseInt(initSprache.value);
-                    that.loadData();
+                },
+                changedLanguage: function (event) {
+                    Log.call(Log.l.trace, "MailingList.Controller.");
+                    if (event.currentTarget && AppBar.notifyModified) {
+                        var combobox = event.currentTarget;
+                        MailingList._languageId = parseInt(combobox.value);
+                        AppBar.busy = true;
+                        that.loadData();
+                        /*that.saveData(function (response) {
+                            AppBar.busy = false;
+                            // erst savedata und dann loaddata
+                            that.loadData();
+                            Log.print(Log.l.trace, "event text saved");
+                        }, function (errorResponse) {
+                            AppBar.busy = false;
+                            Log.print(Log.l.error, "error saving event text");
+                        });*/
+                    }
+                    Log.ret(Log.l.trace);
                 },
                 clickMailEdit: function (event) {
-                    Log.call(Log.l.trace, "ContactResultsList.Controller.");
+                    Log.call(Log.l.trace, "MailingList.Controller.");
                     var id = parseInt(event.currentTarget.value);
                     var langid = parseInt(AppData.getLanguageId());
                     AppData.setRecordId("VAMail", id);
@@ -525,17 +533,17 @@
                     Application.navigateById("mailingEdit");
                 },
                 clickChangeUserState: function (event) {
-                    Log.call(Log.l.trace, "ContactResultsList.Controller.");
+                    Log.call(Log.l.trace, "MailingList.Controller.");
                     Application.navigateById("userinfo", event);
                     Log.ret(Log.l.trace);
                 },
                 clickGotoPublish: function (event) {
-                    Log.call(Log.l.trace, "ContactResultsList.Controller.");
+                    Log.call(Log.l.trace, "MailingList.Controller.");
                     Application.navigateById("publish", event);
                     Log.ret(Log.l.trace);
                 },
                 clickTopButton: function (event) {
-                    Log.call(Log.l.trace, "ContactResultsList.Controller.");
+                    Log.call(Log.l.trace, "MailingList.Controller.");
                     var anchor = document.getElementById("menuButton");
                     var menu = document.getElementById("menu1").winControl;
                     var placement = "bottom";
@@ -543,7 +551,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickLogoff: function (event) {
-                    Log.call(Log.l.trace, "ContactResultList.Controller.");
+                    Log.call(Log.l.trace, "MailingList.Controller.");
                     AppData._persistentStates.privacyPolicyFlag = false;
                     if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
                         AppHeader.controller.binding.userData = {};
@@ -556,14 +564,14 @@
                 },
                 onItemInserted: function (eventInfo) {
                     var index = eventInfo && eventInfo.detail && eventInfo.detail.index;
-                    Log.call(Log.l.trace, "ContactResultList.Controller.", "index=" + index);
+                    Log.call(Log.l.trace, "MailingList.Controller.", "index=" + index);
                     that.resizableGrid();
                     that.addHeaderRowHandlers();
                     that.addBodyRowHandlers();
                     Log.ret(Log.l.trace);
                 },
                 onContentScroll: function (eventInfo) {
-                    Log.call(Log.l.trace, "ContactResultList.Controller.");
+                    Log.call(Log.l.trace, "MailingList.Controller.");
                     if (contentArea && that.nextUrl) {
                         var scrollMax = contentArea.scrollHeight - contentArea.clientHeight;
                         var scrollPos = contentArea.scrollTop;
@@ -591,9 +599,6 @@
             if (contentArea) {
                 this.addRemovableEventListener(contentArea, "scroll", this.eventHandlers.onContentScroll.bind(this));
             }
-            if (initSprache) {
-                this.addRemovableEventListener(contentArea, "change", this.eventHandlers.onLanguageChange.bind(this));
-            }
 
             var resultConverter = function (item, index) {
                 item.index = index;
@@ -618,7 +623,7 @@
 
             var loadNextUrl = function () {
                 var ret = null;
-                Log.call(Log.l.trace, "ContactResultsList.Controller.");
+                Log.call(Log.l.trace, "MailingList.Controller.");
                 if (that.nextUrl) {
                     AppData.setErrorMsg(that.binding);
                     Log.print(Log.l.trace, "calling select ContactResultsList.contactView...");
@@ -636,61 +641,23 @@
                                 that.resultConverter(item, index);
                             });
                         }
-                    },
-                        function (errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            Log.print(Log.l.error, "ContactResultsList.KontaktReport: error!");
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                            that.loading = false;
-                        },
-                        null,
-                        nextUrl).then(function () {
-                            return WinJS.Promise.timeout(100);
-                        }).then(function () {
-                            that.eventHandlers.onItemInserted();
-                            return WinJS.Promise.as();
-                        });
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        Log.print(Log.l.error, "ContactResultsList.KontaktReport: error!");
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                        that.loading = false;
+                    }, null, nextUrl).then(function () {
+                        return WinJS.Promise.timeout(100);
+                    }).then(function () {
+                        that.eventHandlers.onItemInserted();
+                        return WinJS.Promise.as();
+                    });
                 }
                 Log.ret(Log.l.trace);
                 return ret || WinJS.Promise.as();
             }
             this.loadNextUrl = loadNextUrl;
-
-            var processAllData = function() {
-                that.processAll().then(function () {
-                    Log.print(Log.l.trace, "Binding wireup page complete");
-                    return that.createHeaderData();
-                }).then(function () {
-                    Log.print(Log.l.trace, "Binding wireup page complete");
-                    return that.resizableGrid();
-                }).then(function () {
-                    Log.print(Log.l.trace, "Binding wireup page complete");
-                    return that.addHeaderRowHandlers();
-                }).then(function () {
-                    Log.print(Log.l.trace, "Binding wireup page complete");
-                    return that.addBodyRowHandlers();
-                }).then(function () {
-                    Log.print(Log.l.trace, "Binding wireup page complete");
-                    return that.loadIcons();
-                }).then(function () {
-                    Log.print(Log.l.trace, "Binding wireup page complete");
-                    return that.loadFlags();
-                }).then(function () {
-                    Log.print(Log.l.trace, "Binding wireup page complete");
-                    return that.setFlags(that.flagdata);
-                }).then(function () {
-                    Log.print(Log.l.trace, "Binding wireup page complete");
-                    return that.editButton();
-                }).then(function () {
-                    Log.print(Log.l.trace, "Binding wireup page complete");
-                    return that.setMailStatusColor();
-                }).then(function () {
-                    Log.print(Log.l.trace, "Data loaded");
-                    AppBar.notifyModified = true;
-                }); 
-            }
-            this.processAllData = processAllData;
 
             var getEventId = function () {
                 return MailingList._eventId;
@@ -703,8 +670,60 @@
             }
             that.setEventId = setEventId;
 
+            var setLanguageComboResults = function (results) {
+                var i;
+                Log.call(Log.l.trace, "MailingList.Controller.");
+                that.binding.multipleLanguages = (results && results.length > 1);
+                if (initSprache && initSprache.winControl) {
+                    initSprache.winControl.data = new WinJS.Binding.List(results ? results : []);
+                    if (results && results.length > 0) {
+                        for (i = 0; i < results.length; i++) {
+                            if (results[i] && results[i].LanguageID === MailingList._languageId) {
+                                break;
+                            }
+                        }
+                        if (i === results.length) {
+                            MailingList._languageId = results[0].LanguageID;
+                            i = 0;
+                        }
+                        initSprache.selectedIndex = i;
+                        that.binding.seriesLanguageItem = results[i];
+                    }
+                }
+                Log.ret(Log.l.trace);
+            }
+
+            var loadInitLanguageData = function () {
+                Log.call(Log.l.trace, "MailingList.Controller.");
+                AppData.setErrorMsg(that.binding);
+                var ret = new WinJS.Promise.as().then(function () {
+                    var results = MailingList.initSpracheView.getResults();
+                    if (results || !results.length) {
+                        Log.print(Log.l.trace, "calling select initSpracheView...");
+                        //load the list of INITSprache for Combobox
+                        return MailingList.initSpracheView.select(function (json) {
+                            Log.print(Log.l.trace, "initSpracheView: success!");
+                            if (json && json.d) {
+                                // Now, we call WinJS.Binding.List to get the bindable list
+                                setLanguageComboResults(json.d.results);
+                            }
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        });
+                    } else {
+                        setLanguageComboResults(results);
+                        return WinJS.Promise.as();
+                    }
+                });
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+            that.loadInitLanguageData = loadInitLanguageData;
+
             var loadData = function () {
-                Log.call(Log.l.trace, "MailingTypes.Controller.");
+                Log.call(Log.l.trace, "MailingList.Controller.");
                 var restr = getEventId();
                 if (!that.binding.LanguageIDVA) {
                     that.binding.LanguageIDVA = 1031;
@@ -725,33 +744,6 @@
                     Log.print(Log.l.trace, "Calling createHeaderData");
                     return that.createHeaderData();
                 }).then(function () {
-                    if (!MailingList.initSpracheView.getResults().length) {
-                        Log.print(Log.l.trace, "calling select initSpracheView...");
-                        //@nedra:25.09.2015: load the list of INITAnrede for Combobox
-                        return MailingList.initSpracheView.select(function (json) {
-                            Log.print(Log.l.trace, "initSpracheView: success!");
-                            if (json && json.d) {
-                                var results = json.d.results;
-                                // Now, we call WinJS.Binding.List to get the bindable list
-                                if (initSprache && initSprache.winControl) {
-                                    initSprache.winControl.data = new WinJS.Binding.List(results);
-                                    initSprache.selectedIndex = 0;
-                                }
-                            }
-                        }, function (errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        });
-                    } else {
-                        if (initSprache && initSprache.winControl) {
-                            var results = MailingList.initSpracheView.getResults();
-                            initSprache.winControl.data = new WinJS.Binding.List(results);
-                            initSprache.selectedIndex = 0;
-                        }
-                        return WinJS.Promise.as();
-                    }
-                }).then(function () {
                     Log.print(Log.l.trace, "calling select MailingTypes...");
                     if (restr) {
                         return MailingList.VAMail.select(function (json) {
@@ -766,36 +758,39 @@
                                     that.resultConverter(item, index);
                                 });
                             }
-                        }, function (errorResponse) {
+                        },
+                            function (errorResponse) {
                                 AppData.setErrorMsg(that.binding, errorResponse);
                             },
-                            { VeranstaltungID: restr, LanguageSpecID: that.binding.LanguageIDVA });
-                            }
+                            { VeranstaltungID: restr, LanguageSpecID: MailingList._languageId });
+                    } else {
+                        return WinJS.Promise.as();
+                    }
                 }).then(function () {
-                Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.resizableGrid();
-            }).then(function () {
-                Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.addHeaderRowHandlers();
-            }).then(function () {
-                Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.addBodyRowHandlers();
-            }).then(function () {
-                Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.loadIcons();
-            }).then(function () {
-                Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.loadFlags();
-            }).then(function () {
-                Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.setFlags(that.flagdata);
-            }).then(function () {
-                Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.editButton();
-            }).then(function () {
-                Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.setMailStatusColor();
-            }).then(function () {
+                    Log.print(Log.l.trace, "Calling resizableGrid");
+                    return that.resizableGrid();
+                }).then(function () {
+                    Log.print(Log.l.trace, "Calling addHeaderRowHandlers");
+                    return that.addHeaderRowHandlers();
+                }).then(function () {
+                    Log.print(Log.l.trace, "Calling addBodyRowHandlers");
+                    return that.addBodyRowHandlers();
+                }).then(function () {
+                    Log.print(Log.l.trace, "Calling loadIcons");
+                    return that.loadIcons();
+                }).then(function () {
+                    Log.print(Log.l.trace, "Calling loadFlags");
+                    return that.loadFlags();
+                }).then(function () {
+                    Log.print(Log.l.trace, "Calling setFlags");
+                    return that.setFlags(that.flagdata);
+                }).then(function () {
+                    Log.print(Log.l.trace, "Calling editButton");
+                    return that.editButton();
+                }).then(function () {
+                    Log.print(Log.l.trace, "Calling setMailStatusColor");
+                    return that.setMailStatusColor();
+                }).then(function () {
                     return WinJS.Promise.timeout(100);
                 }).then(function () {
                     that.eventHandlers.onItemInserted();
@@ -809,16 +804,21 @@
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
+            }).then(function () {
+                Log.print(Log.l.trace, "Calling loadInitLanguageData");
+                return that.loadInitLanguageData();
+            }).then(function () {
+                Log.print(Log.l.trace, "Calling loadData");
                 return that.loadData();
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 AppBar.notifyModified = true;
-            }); 
+            });
             Log.ret(Log.l.trace);
         }, {
-                headerdata: null,
-                bodydata: null,
-                flagdata: null
-            })
+            headerdata: null,
+            bodydata: null,
+            flagdata: null
+        })
     });
-})(); 
+})();

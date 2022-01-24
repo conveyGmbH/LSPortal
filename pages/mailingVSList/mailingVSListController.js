@@ -241,7 +241,6 @@
                                                         typeof AppBar.scope.setEventId === "function") {
                                                         if (curPageId === "mailingList") {
                                                             AppBar.scope.setEventId(item.data.VeranstaltungVIEWID);
-                                                            AppBar.scope.setGermanCombo();
                                                             AppBar.scope.loadData();
                                                         }
                                                     } else {
@@ -258,7 +257,6 @@
                                                     typeof AppBar.scope.loadData === "function" &&
                                                     typeof AppBar.scope.setEventId === "function") {
                                                     AppBar.scope.setEventId(item.data.VeranstaltungVIEWID);
-                                                    AppBar.scope.setGermanCombo();
                                                     AppBar.scope.loadData();
                                                 } else {
                                                     Application.navigateById("mailingList");
