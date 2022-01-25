@@ -7,7 +7,6 @@
 /// <reference path="~/www/lib/convey/scripts/pageController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/pages/mailingTemplateEvent/mailingTemplateEventService.js" />
-
 (function () {
     "use strict";
 
@@ -16,16 +15,20 @@
     WinJS.Namespace.define("MailingTemplateEvent", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "MailingTemplateEvent.Controller.");
-            Application.Controller.apply(this, [pageElement, {
-                count: 0,
-                dataTemplateEventHeaderValue: getEmptyDefaultValue(MailingTemplateEvent.VAMailLayout.defaultRestriction),
-                dataTemplateEventHeaderText: getEmptyDefaultValue(MailingTemplateEvent.VAMailLayout.defaultRestriction),
-                newDataTemplate: getEmptyDefaultValue(MailingTemplateEvent.VAMailLayout.insertRestriction),
-                templatesearchlabel: getResourceText("mailingTemplateEvent.templatesearchbtn"),
-                templateinsertbtnlabel: getResourceText("mailingTemplateEvent.templateinserthbtn"),
-                Edited: getResourceText("mailingTemplateEvent.edited"),
-                deleteID : null
-            }, commandList]);
+            Application.Controller.apply(this,
+                [
+                    pageElement, {
+                        count: 0,
+                        dataTemplateEventHeaderValue: getEmptyDefaultValue(MailingTemplateEvent.VAMailLayout.defaultRestriction),
+                        dataTemplateEventHeaderText: getEmptyDefaultValue(MailingTemplateEvent.VAMailLayout.defaultRestriction),
+                        newDataTemplate: getEmptyDefaultValue(MailingTemplateEvent.VAMailLayout.insertRestriction),
+                        templatesearchlabel: getResourceText("mailingTemplateEvent.templatesearchbtn"),
+                        templateinsertbtnlabel: getResourceText("mailingTemplateEvent.templateinserthbtn"),
+                        Edited: getResourceText("mailingTemplateEvent.edited"),
+                        deleteID: null
+                    },
+                    commandList
+                ]);
             this.nextUrl = null;
 
             var that = this;
@@ -33,16 +36,16 @@
             var tableHeader = pageElement.querySelector(".table-header");
             var tableBody = pageElement.querySelector(".table-body");
             var contentArea = pageElement.querySelector(".contentarea");
-            var directory = pageElement.querySelector("#directorydropdown"); 
+            var directory = pageElement.querySelector("#directorydropdown");
             var textName = pageElement.querySelector("#layouttextname");
-            
+
             this.dispose = function () {
                 if (tableBody && tableBody.winControl) {
                     tableBody.winControl.data = null;
                 }
             }
-            
-            var editButton = function() {
+
+            var editButton = function () {
                 var editbutton = pageElement.querySelectorAll(".mailedit-button");
                 for (var i = 0; i < editbutton.length; i++) {
                     editbutton[i].textContent = getResourceText("mailingList.maileditlabel");
@@ -50,11 +53,11 @@
             }
             this.editButton = editButton;
 
-            var createHeaderData = function() {
+            var createHeaderData = function () {
                 Log.call(Log.l.trace, "ContactResultsList.Controller.");
                 that.binding.dataTemplateEventHeaderValue.TemplateName = "TemplateName";
                 that.binding.dataTemplateEventHeaderValue.MailTypeTitle = "MailTypeTitle";
-                that.binding.dataTemplateEventHeaderValue.VeranstaltungName ="VeranstaltungName" ;
+                that.binding.dataTemplateEventHeaderValue.VeranstaltungName = "VeranstaltungName";
                 that.binding.dataTemplateEventHeaderValue.UsedVeranstaltung = "UsedVeranstaltung";
                 that.binding.dataTemplateEventHeaderValue.LangsAvailable = "LangsAvailable";
                 that.binding.dataTemplateEventHeaderValue.Erfassungsdatum = "Erfassungsdatum";
@@ -72,7 +75,7 @@
             }
             this.createHeaderData = createHeaderData;
 
-            var setMailStatusColor = function() {
+            var setMailStatusColor = function () {
                 var templateActiveStatus = pageElement.querySelectorAll("#templateactivestatus");
                 var active = getResourceText("mailingList.active");
                 for (var i = 0; i <= templateActiveStatus.length; i++) {
@@ -85,7 +88,7 @@
             }
             this.setMailStatusColor = setMailStatusColor;
 
-            var addZero = function(i) {
+            var addZero = function (i) {
                 if (i < 10) {
                     i = "0" + i;
                 }
@@ -98,13 +101,13 @@
                 var dateString = date.replace("\/Date(", "").replace(")\/", "");
                 var milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
                 var time = new Date(milliseconds);
-                var formdate = ("0" + time.getDate()).slice(-2) + "." + ("0" + (time.getMonth() + 1)).slice(-2) + "." + time.getFullYear() + " " + that.addZero(time.getUTCHours()) + ":" + that.addZero(time.getMinutes());
+                var formdate = ("0" + time.getDate()).slice(-2) + "." + ("0" + (time.getMonth() + 1)).slice(-2) + "." + time.getFullYear() + " " +that.addZero(time.getUTCHours()) + ":" + that.addZero(time.getMinutes());
                 Log.call(Log.l.trace, "ContactResultsEvents.Controller.");
                 return formdate;
             };
             this.getDateObject = getDateObject;
 
-            var sortTable = function(n) {
+            var sortTable = function (n) {
                 Log.call(Log.l.trace, "ContactResultsEvents.Controller.");
                 var rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
                 switching = true;
@@ -200,17 +203,18 @@
                 function setListeners(div) {
                     var pageX, curCol, nxtCol, curColWidth, nxtColWidth;
 
-                    div.addEventListener("mousedown", function (e) {
-                        curCol = e.target.parentElement;
-                        nxtCol = curCol.nextElementSibling;
-                        pageX = e.pageX;
+                    div.addEventListener("mousedown",
+                        function (e) {
+                            curCol = e.target.parentElement;
+                            nxtCol = curCol.nextElementSibling;
+                            pageX = e.pageX;
 
-                        var padding = paddingDiff(curCol);
+                            var padding = paddingDiff(curCol);
 
-                        curColWidth = curCol.offsetWidth - padding;
-                        if (nxtCol)
-                            nxtColWidth = nxtCol.offsetWidth - padding;
-                    });
+                            curColWidth = curCol.offsetWidth - padding;
+                            if (nxtCol)
+                                nxtColWidth = nxtCol.offsetWidth - padding;
+                        });
 
                     div.addEventListener("mouseover",
                         function (e) {
@@ -222,24 +226,26 @@
                             e.target.style.borderRight = "";
                         });
 
-                    pageElement.addEventListener("mousemove", function (e) {
-                        if (curCol) {
-                            var diffX = e.pageX - pageX;
+                    pageElement.addEventListener("mousemove",
+                        function (e) {
+                            if (curCol) {
+                                var diffX = e.pageX - pageX;
 
-                            if (nxtCol)
-                                nxtCol.style.width = (nxtColWidth - (diffX)) + "px";
+                                if (nxtCol)
+                                    nxtCol.style.width = (nxtColWidth - (diffX)) + "px";
 
-                            curCol.style.width = (curColWidth + diffX) + "px";
-                        }
-                    });
+                                curCol.style.width = (curColWidth + diffX) + "px";
+                            }
+                        });
 
-                    pageElement.addEventListener("mouseup", function (e) {
-                        curCol = undefined;
-                        nxtCol = undefined;
-                        pageX = undefined;
-                        nxtColWidth = undefined;
-                        curColWidth = undefined;
-                    });
+                    pageElement.addEventListener("mouseup",
+                        function (e) {
+                            curCol = undefined;
+                            nxtCol = undefined;
+                            pageX = undefined;
+                            nxtColWidth = undefined;
+                            curColWidth = undefined;
+                        });
 
                 }
 
@@ -256,7 +262,7 @@
                 }
             }
             this.resizableGrid = resizableGrid;
-            
+
             var addHeaderRowHandlers = function () {
                 if (tableHeader) {
                     var cells = tableHeader.getElementsByTagName("th");
@@ -306,7 +312,7 @@
             }
             this.addBodyRowHandlers = addBodyRowHandlers;
 
-            var insertBtn = function() {
+            var insertBtn = function () {
                 var insertTemplate = pageElement.querySelector("#inserttemplate");
                 if (insertTemplate.style.display === "none") {
                     insertTemplate.style.display = "block";
@@ -317,7 +323,7 @@
             }
             this.insertBtn = insertBtn;
 
-            var processAllData = function() {
+            var processAllData = function () {
                 Log.call(Log.l.trace, "Employee.Controller.");
                 that.processAll().then(function () {
                     Log.print(Log.l.trace, "Binding wireup page complete");
@@ -351,14 +357,16 @@
                 AppData.call("PRC_GetLangText", {
                     pTextID: resultmessageid,
                     pLanguageID: lang
-                }, function (json) {
-                    Log.print(Log.l.info, "call success! ");
-                    errorMsg.data.error.message.value = json.d.results[0].ResultText;
-                    AppData.setErrorMsg(that.binding, errorMsg);
-                }, function (error) {
-                    Log.print(Log.l.error, "call error");
+                },
+                    function (json) {
+                        Log.print(Log.l.info, "call success! ");
+                        errorMsg.data.error.message.value = json.d.results[0].ResultText;
+                        AppData.setErrorMsg(that.binding, errorMsg);
+                    },
+                    function (error) {
+                        Log.print(Log.l.error, "call error");
 
-                });
+                    });
                 Log.ret(Log.l.trace);
             }
             this.getLangSpecErrorMsg = getLangSpecErrorMsg;
@@ -366,25 +374,27 @@
             var getErrorMsgFromErrorStack = function (errorMsg) {
                 Log.call(Log.l.trace, "Employee.Controller.");
                 AppData.setErrorMsg(that.binding);
-                AppData.call("PRC_GetErrorStack", {
-                }, function (json) {
-                    Log.print(Log.l.info, "call success! ");
-                    AppBar.modified = false;
-                    if (json.d.results[0].ResultMessageID > 0) {
-                        errorMsg.data.error.code = json.d.results[0].ResultCode;
-                        errorMsg.data.error.message.value = that.getLangSpecErrorMsg(json.d.results[0].ResultMessageID, errorMsg);
+                AppData.call("PRC_GetErrorStack", {},
+                    function (json) {
                         Log.print(Log.l.info, "call success! ");
-                    } else {
-                        errorMsg.data.error.message.value = json.d.results[0].ResultMessage;
-                        errorMsg.data.error.code = json.d.results[0].ResultCode;
-                        AppData.setErrorMsg(that.binding, errorMsg);
-                        Log.print(Log.l.info, "call success! ");
-                    }
-                }, function (error) {
-                    Log.print(Log.l.error, "call error");
-                    AppBar.modified = false;
+                        AppBar.modified = false;
+                        if (json.d.results[0].ResultMessageID > 0) {
+                            errorMsg.data.error.code = json.d.results[0].ResultCode;
+                            errorMsg.data.error.message.value =
+                                that.getLangSpecErrorMsg(json.d.results[0].ResultMessageID, errorMsg);
+                            Log.print(Log.l.info, "call success! ");
+                        } else {
+                            errorMsg.data.error.message.value = json.d.results[0].ResultMessage;
+                            errorMsg.data.error.code = json.d.results[0].ResultCode;
+                            AppData.setErrorMsg(that.binding, errorMsg);
+                            Log.print(Log.l.info, "call success! ");
+                        }
+                    },
+                    function (error) {
+                        Log.print(Log.l.error, "call error");
+                        AppBar.modified = false;
 
-                });
+                    });
                 Log.ret(Log.l.trace);
             }
             this.getErrorMsgFromErrorStack = getErrorMsgFromErrorStack;
@@ -402,7 +412,21 @@
                     Log.call(Log.l.trace, "LocalEvents.Controller.");
                     that.sortTable(parseInt(event.currentTarget.id));
                     Log.ret(Log.l.trace);
-                }, 
+                },
+                onDirectoryChange: function (event) {
+                    Log.call(Log.l.trace, "LocalEvents.Controller.");
+                    var st = directory.options[directory.selectedIndex].text;
+                    var count = 0;
+                    for (var i = 0; i < that.tableData.length; i++) {
+                        if (that.tableData[i].MailTypeTitle === st) {
+                            count = count + 1;
+                        }
+                    }
+                    var str = st.replace('E-Mail ', '');
+                    textName.value = str + " " + (count + 1);
+                    that.binding.newDataTemplate.TextName = str + " " + (count + 1);
+                    Log.ret(Log.l.trace);
+                },
                 clickNew: function (event) {
                     Log.call(Log.l.trace, "LocalEvents.Controller.");
                     directory.style.border = "1px solid black";
@@ -413,7 +437,7 @@
                     that.insertBtn();
                     Log.ret(Log.l.trace);
                 },
-                clickInsertLayout: function(event) {
+                clickInsertLayout: function (event) {
                     Log.call(Log.l.trace, "LocalEvents.Controller.");
                     AppBar.busy = true;
                     Log.print(Log.l.trace, "eployee saved");
@@ -473,9 +497,9 @@
                     }
                     Log.ret(Log.l.trace);
                 },
-                clickTemplateSearch: function(event) {
+                clickTemplateSearch: function (event) {
                     Log.call(Log.l.trace, "ContactResultsList.Controller.");
-                  
+
                 },
                 clickLayoutEdit: function (event) {
                     Log.call(Log.l.trace, "ContactResultsList.Controller.");
@@ -494,7 +518,7 @@
                             Log.call(Log.l.trace, "Mailing.Controller.");
                         } else if (checkbox[i].value === tar) {
                             that.binding.deleteID = parseInt(checkbox[i].value);
-                           Log.call(Log.l.trace, "Mailing.Controller."); 
+                            Log.call(Log.l.trace, "Mailing.Controller.");
                         } else {
                             checkbox[i].checked = false;
                             Log.call(Log.l.trace, "Mailing.Controller.");
@@ -510,17 +534,19 @@
                         AppBar.busy = true;
                         MailingTemplateEvent.VAMailLayout.deleteRecord(function (response) {
                             AppBar.busy = false;
-                            that.processAll().then(function() {
+                            that.processAll().then(function () {
                                 Log.print(Log.l.trace, "Binding wireup page complete");
                                 return that.loadData();
-                            }).then(function() {
+                            }).then(function () {
                                 Log.print(Log.l.trace, "Binding wireup page complete");
                                 return that.processAllData();
                             });
-                        }, function (errorResponse) {
-                            AppBar.busy = false;
-                            that.getErrorMsgFromErrorStack(errorResponse);
-                        }, recordId);
+                        },
+                            function (errorResponse) {
+                                AppBar.busy = false;
+                                that.getErrorMsgFromErrorStack(errorResponse);
+                            },
+                            recordId);
                     }
                     Log.ret(Log.l.trace);
                 },
@@ -592,10 +618,17 @@
                 this.addRemovableEventListener(contentArea, "scroll", this.eventHandlers.onContentScroll.bind(this));
             }
 
+            if (directory) {
+                this.addRemovableEventListener(directory, "change", this.eventHandlers.onDirectoryChange.bind(this));
+            }
+
             var resultCategoryConverter = function (item, index) {
                 item.index = index;
                 if (item.LanguageTitle) {
-                    that.templateData.push({ VAMailTypeID: item.VAMailTypeID, TITLE: item.LanguageTitle });
+                    that.templateData.push({
+                        VAMailTypeID: item.VAMailTypeID,
+                        TITLE: item.LanguageTitle
+                    });
                 }
             }
             this.resultCategoryConverter = resultCategoryConverter;
@@ -614,7 +647,10 @@
                     item.CreateTS = that.getDateObject(item.CreateTS);
                 }
                 if (item.LanguageTitle) {
-                    that.templateData.push({ VAMailTypeID: item.VAMailTypeID, TITLE: item.LanguageTitle });
+                    that.templateData.push({
+                        VAMailTypeID: item.VAMailTypeID,
+                        TITLE: item.LanguageTitle
+                    });
                 }
                 if (tableBody &&
                     tableBody.winControl &&
@@ -669,6 +705,7 @@
                 Log.call(Log.l.trace, "MailingTypes.Controller.");
                 AppData.setErrorMsg(that.binding);
                 that.nextUrl = null;
+                that.tableData = [];
                 if (tableBody && tableBody.winControl) {
                     if (tableBody.winControl.data) {
                         tableBody.winControl.data.length = 0;
@@ -684,29 +721,34 @@
                     Log.print(Log.l.trace, "calling select initSpracheView...");
                     //@nedra:25.09.2015: load the list of INITAnrede for Combobox
                     return MailingTemplateEvent.LangVAMailTypeView.select(function (json) {
-                            Log.print(Log.l.trace, "initSpracheView: success!");
-                            if (json && json.d && json.d.results) {
-                                var results = json.d.results;
-                                that.templateData = that.templateData.concat({ INITSpracheID: 0, TITLE: "" });
-                                // Now, we call WinJS.Binding.List to get the bindable list
-                                results.forEach(function (item, index) {
-                                    that.resultCategoryConverter(item, index);
-                                });
-                                if (directory && directory.winControl) {
-                                    directory.winControl.data = new WinJS.Binding.List(that.templateData);
-                                    directory.selectedIndex = 0;
-                                }
-                                /*if (firstdirectory && firstdirectory.winControl) {
-                                    firstdirectory.winControl.data = new WinJS.Binding.List(that.templateData);
-                                    firstdirectory.selectedIndex = 0;
-                                }*/
-                        } 
-                        },
+                        Log.print(Log.l.trace, "initSpracheView: success!");
+                        if (json && json.d && json.d.results) {
+                            var results = json.d.results;
+                            that.templateData = that.templateData.concat({
+                                INITSpracheID: 0,
+                                TITLE: ""
+                            });
+                            // Now, we call WinJS.Binding.List to get the bindable list
+                            results.forEach(function (item, index) {
+                                that.resultCategoryConverter(item, index);
+                            });
+                            if (directory && directory.winControl) {
+                                directory.winControl.data = new WinJS.Binding.List(that.templateData);
+                                directory.selectedIndex = 0;
+                            }
+                            /*if (firstdirectory && firstdirectory.winControl) {
+                                firstdirectory.winControl.data = new WinJS.Binding.List(that.templateData);
+                                firstdirectory.selectedIndex = 0;
+                            }*/
+                        }
+                    },
                         function (errorResponse) {
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
                             AppData.setErrorMsg(that.binding, errorResponse);
-                        }, { LanguageSpecID : AppData.getLanguageId() });
+                        }, {
+                            LanguageSpecID: AppData.getLanguageId()
+                        });
 
                 }).then(function () {
                     Log.print(Log.l.trace, "calling select VAMailLayout...");
@@ -718,6 +760,7 @@
                                 that.nextUrl = MailingTemplateEvent.VAMailLayout.getNextUrl(json);
                                 // now always edit!
                                 var results = json.d.results;
+                                that.tableData = results;
                                 results.forEach(function (item, index) {
                                     that.resultConverter(item, index);
                                 });
@@ -726,7 +769,8 @@
                         },
                             function (errorResponse) {
                                 AppData.setErrorMsg(that.binding, errorResponse);
-                            }, restr);
+                            },
+                            restr);
                     } else {
                         return MailingTemplateEvent.VAMailLayout.select(function (json) {
                             AppData.setErrorMsg(that.binding);
@@ -735,15 +779,17 @@
                                 that.nextUrl = MailingTemplateEvent.VAMailLayout.getNextUrl(json);
                                 // now always edit!
                                 var results = json.d.results;
+                                that.tableData = results;
                                 results.forEach(function (item, index) {
                                     that.resultConverter(item, index);
                                 });
+                                that.processAllData();
                             }
                         },
                             function (errorResponse) {
                                 AppData.setErrorMsg(that.binding, errorResponse);
                             }, {
-                                LanguageSpecID : AppData.getLanguageId()
+                                LanguageSpecID: AppData.getLanguageId()
                             });
                     }
                 }).then(function () {
@@ -757,7 +803,7 @@
                 return ret;
             }
             this.loadData = loadData;
-            
+
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.createHeaderData();
@@ -782,12 +828,13 @@
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 AppBar.notifyModified = true;
-                }); 
+            });
             Log.ret(Log.l.trace);
         }, {
                 headerdata: null,
                 bodydata: null,
-                templateData: []
+                templateData: [],
+                tableData: []
             })
     });
-})(); 
+})();
