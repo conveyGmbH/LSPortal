@@ -299,6 +299,17 @@
                     }
                     Application.navigateById("login", event);
                     Log.ret(Log.l.trace);
+                },
+                clickMailConfigActivate: function (event) {
+                    Log.call(Log.l.trace, "Event.Controller.");
+                    if (event.currentTarget) {
+                        var toggle = event.currentTarget.winControl;
+                        if (toggle) {
+                            var value = toggle.checked || event.currentTarget.value;
+                            that.binding.dataMail.IsActive = value;
+                        }
+                    }
+                    Log.ret(Log.l.trace);
                 }
             };
             this.disableHandlers = {
@@ -516,6 +527,9 @@
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 that.loadIcons();
+            }).then(function () {
+                Log.print(Log.l.trace, "Icons loaded");
+                AppBar.notifyModified = true;
             });
             Log.ret(Log.l.trace);
         }, {

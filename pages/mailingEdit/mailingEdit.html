@@ -222,7 +222,8 @@
                                     <div class="input_field toggle-switch-parent">
                                         <div id="turnThumbsLeft" class="input_field"
                                              data-win-control="WinJS.UI.ToggleSwitch"
-                                             data-win-bind="winControl.checked: dataMail.IsActive Binding.Mode.twoway; winControl.labelOn: generalData.active; winControl.labelOff: generalData.inactive">
+                                             data-win-bind="winControl.checked: dataMail.IsActive; winControl.labelOn: generalData.active; winControl.labelOff: generalData.inactive"
+                                             onchange="AppBar.handleEvent('change', 'clickMailConfigActivate', event)">
                                         </div>
                                     </div>
                                 </div>
