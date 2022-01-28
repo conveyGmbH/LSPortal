@@ -54,7 +54,8 @@
 	"command.newmod"        : "Neu",
 	"command.newquestion"   : "Neue Frage",
     "command.exportPdfTicket"  : "Ticket herunterladen",
-    "command.newStaff"  : "Standpersonal hinzufügen",
+    "command.newStaff"  : "Standpersonal hinzufügen",	
+    "command.openWebpage"  : "Webseite öffnen",
 
     "tooltip.backward"      : "Zurück blättern",
     "tooltip.edit"          : "Aktuellen Datensatz bearbeiten",
@@ -128,7 +129,8 @@
     "tooltip.newmod"        : "Neuer Moderator",
     "tooltip.deletequestion"        : "Frage löschen",
     "tooltip.newquestion"        : "Neue Frage",
-    "tooltip.deletemod"        : "Moderator löschen",
+    "tooltip.deletemod"        : "Moderator löschen",	
+    "tooltip.openWebpage"        : "Webseite öffnen",
 
     "home.title"            : "Start",
     "home.info"             : "Wichtige Hinweise",
