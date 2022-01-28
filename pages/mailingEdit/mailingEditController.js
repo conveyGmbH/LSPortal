@@ -83,6 +83,9 @@
                 if (dataMail.LayoutID) {
                     dataMail.LayoutID = parseInt(dataMail.LayoutID);
                 }
+                if (dataMail.INITAnredeID) {
+                    dataMail.INITAnredeID = parseInt(dataMail.INITAnredeID);
+                }
             }
             this.getDataMail = getDataMail;
 
@@ -183,11 +186,11 @@
                     AppData.call("PRC_ScheduleTestMail", {
                         pRecordID: that.binding.dataMail.VAMailVIEWID,
                         pTableName: "VAMail",
-                        pGenderID: parseInt(that.binding.dataTestMail.AnredeID),
-                        pFirstName: that.binding.dataTestMail.Vorname,
-                        pLastName: that.binding.dataTestMail.Nachname,
-                        pTargetAddres: that.binding.dataTestMail.TargetAddr,
-                        pLanguageSpecID: parseInt(that.binding.dataTestMail.LanguageID)
+                        pGenderID: parseInt(that.binding.dataMail.INITAnredeID),
+                        pFirstName: that.binding.dataMail.TestFirstname,
+                        pLastName: that.binding.dataMail.TestLastname,
+                        pTargetAddres: that.binding.dataMail.TestTarget,
+                        pLanguageSpecID: parseInt(that.binding.dataMail.TestLanguageID)
                     }, function (json) {
                         Log.print(Log.l.info, "call success!");
                         mailMessage.textContent = getResourceText("mailingEdit.mailsuccess");
@@ -365,7 +368,7 @@
                                     // Now, we call WinJS.Binding.List to get the bindable list
                                     if (initAnrede && initAnrede.winControl) {
                                         initAnrede.winControl.data = new WinJS.Binding.List(json.d.results);
-                                        initAnrede.selectedIndex = 0;
+                                    //initAnrede.selectedIndex = 0;
                                     }
                                 }
                             },
@@ -379,7 +382,7 @@
                             initAnrede.winControl &&
                             (!initAnrede.winControl.data || !initAnrede.winControl.data.length)) {
                             initAnrede.winControl.data = new WinJS.Binding.List(AppData.initAnredeView.getResults());
-                            initAnrede.selectedIndex = 0;
+                            //initAnrede.selectedIndex = 0;
                         }
                         return WinJS.Promise.as();
                     }
@@ -397,7 +400,7 @@
                                     });
                                     if (initSprache && initSprache.winControl) {
                                         initSprache.winControl.data = new WinJS.Binding.List(that.mailLang);
-                                        initSprache.selectedIndex = 0;
+                                //initSprache.selectedIndex = 0;
                                     }
                                 }
                             },

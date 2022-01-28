@@ -662,13 +662,13 @@
             var getEventId = function () {
                 return MailingList._eventId;
             }
-            that.getEventId = getEventId;
+            this.getEventId = getEventId;
 
             var setEventId = function (value) {
                 Log.print(Log.l.trace, "eventId=" + value);
                 MailingList._eventId = value;
             }
-            that.setEventId = setEventId;
+            this.setEventId = setEventId;
 
             var setLanguageComboResults = function (results) {
                 var i;
@@ -720,7 +720,7 @@
                 Log.ret(Log.l.trace);
                 return ret;
             }
-            that.loadInitLanguageData = loadInitLanguageData;
+            this.loadInitLanguageData = loadInitLanguageData;
 
             var loadData = function () {
                 Log.call(Log.l.trace, "MailingList.Controller.");
@@ -807,10 +807,10 @@
             }).then(function () {
                 Log.print(Log.l.trace, "Calling loadInitLanguageData");
                 return that.loadInitLanguageData();
-            }).then(function () {
+            })/*.then(function () {
                 Log.print(Log.l.trace, "Calling loadData");
                 return that.loadData();
-            }).then(function () {
+            })*/.then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 AppBar.notifyModified = true;
             });

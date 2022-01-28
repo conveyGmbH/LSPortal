@@ -782,6 +782,8 @@
     "mailingList.pending"            : "Anstehend",
     "mailingList.maileditlabel"            : "Edit",
 
+    "mailingvslist.count" : "Anzahl",
+
 	"mailingTypes.title"	: "E-Mail Typen",
 	"mailingTypes.type"     : "E-Mail Typ",
 	"mailingTypes.bccAddr"	: "BCC",

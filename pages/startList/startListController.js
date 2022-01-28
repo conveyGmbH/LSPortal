@@ -232,14 +232,14 @@
                                                 // current detail view has saveData() function
                                                 AppBar.scope.saveData(function (response) {
                                                     // called asynchronously if ok
-                                                    if ((curPageId === "startResourceAdministration" || curPageId === "startMediaAdministration") &&
+                                                    if ((curPageId === "eventBaseLink" || curPageId === "startResourceAdministration" || curPageId === "startMediaAdministration") &&
                                                         typeof AppBar.scope.loadData === "function" &&
                                                         typeof AppBar.scope.setEventStartId === "function") {
                                                         AppBar.scope.setEventStartId(item.data.MandantStartVIEWID);
                                                         AppBar.scope.loadData();
                                                     }
                                                 }, function (errorResponse) {
-                                                    if ((curPageId === "startTextAdministration" || curPageId === "startMediaAdministration") &&
+                                                    if ((curPageId === "eventBaseLink" || curPageId === "startTextAdministration" || curPageId === "startMediaAdministration") &&
                                                         typeof AppBar.scope.getEventStartId === "function") {
                                                         that.selectRecordId(AppBar.scope.getEventStartId());
                                                     }

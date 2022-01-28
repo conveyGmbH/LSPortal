@@ -800,6 +800,8 @@
     "mailingList.maileditlabel"            : "Edit",
     "mailingList.comment"            : " Erstellen und Einrichten Ihrer Mailing-Prozesse",
 
+	"mailingvslist.count" : "Anzahl",
+
 	"mailingTypes.title"	: "E-Mail Typen",
 	"mailingTypes.type"     : "E-Mail Typ",
 	"mailingTypes.bccAddr"	: "BCC",
