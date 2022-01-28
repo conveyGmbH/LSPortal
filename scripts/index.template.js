@@ -137,7 +137,7 @@
         { id: "settings", group: 38, svg: "Design", disabled: true, predecGroup: 36 },
         { id: "account", group: 39, svg: "Konto", disabled: false, predecGroup: 36 },
         //Support
-        { id: "support", group: 40, svg: "user_headset", disabled: true },
+        { id: "support", group: -11, svg: "user_headset", disabled: true }, /*40*/
         //Administration Sideadmin ONLY
         { id: "administrationGrp", group: 41, svg: "Administration", disabled: true, popup: true },
         { id: "siteevents", group: 13, svg: "mandant", disabled: true, predecGroup: 41 },
@@ -195,10 +195,10 @@
         { id: "reportingColumnList", group: 8, disabled: false },
         //{ id: "pdfExport", group: 8, disabled: false },
         { id: "infodesk", group: -9, disabled: false },
-        { id: "info", group: 10, disabled: false },
-        { id: "settings", group: 10, disabled: false },
-        { id: "account", group: 39, disabled: false },
-        { id: "support", group: -11, disabled: false },
+        { id: "info", group: 36, disabled: false }, /*10*/
+        { id: "settings", group: 36, disabled: false }, /*10*/
+        { id: "account", group: 36, disabled: false }, /*39*/
+        //{ id: "support", group: -11, disabled: false },
         { id: "localevents", group: -12, disabled: false },
         { id: "siteevents", group: 13, disbaled: false },
         { id: "mailingTypes", group: 13, disabled: false },
