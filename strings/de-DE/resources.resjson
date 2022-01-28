@@ -589,9 +589,10 @@
     "label.MyEventsLSGrp" : "Meine Veranstaltungen",
     "label.startPremium" : "Dashboard Premium",
     "label.startSurpreme" : "Dashboard Supreme",
-	"label.startPremiumStandard" : "Standard",
-	"label.startPremium1": "Premium 1",
-	"label.startPremium2": "Premium 2",
+	 "label.startPremiumStandard" : "Standard",
+	 "label.startPremium1": "Premium 1",
+	 "label.startPremium2": "Premium 2",
+   "label.eventBaseLink" : "Basis Link",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Abbrechen",
@@ -1437,5 +1438,9 @@
     "startResourceAdministration.comment" : "Erstellen und Einrichten Ihrer Startseite",
 
 	"support.title" : "Support",
-	"support.url" : "https://www.convey.de/kontakt/"
+	"support.url" : "https://www.convey.de/kontakt/",
+
+    "eventbaselink.title" : "Basis Link",
+    "eventbaselink.starturl" : "URL Pfad",
+    "eventbaselink.titlebaselink" : "Titel"
 }		

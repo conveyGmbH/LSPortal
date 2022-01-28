@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="eventBaseLink.css" rel="stylesheet"/>
+    <script type="text/javascript" src="eventBaseLinkService.js"></script>
+    <script type="text/javascript" src="eventBaseLinkController.js"></script>
+    <script type="text/javascript" src="eventBaseLink.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="eventBaseLink fragment">
+        <div id="eventBaseLinkController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="contentarea win-type-body">
+                    <div class="header-separator"></div>
+                    <div class="content-header">
+                        <div class="half-circle half-circle-textcolor">&nbsp;</div>
+                        <span class="caption-field" data-win-res="{textContent: 'eventbaselink.title'}"></span>
+                    </div>
+                    <div class="line-separator"></div>
+                    <div class="field_line field_line_odd">
+                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventbaselink.starturl'}"></span>
+                        <span class="label landscape_only" data-win-res="{textContent: 'eventbaselink.starturl'}"></span>
+                        <input name="starturl" class="input_field win-textbox" type="text" data-win-bind="value: eventMandantStartData.StartUrl Binding.Mode.twoway" />
+                    </div>
+                    <div class="field_line field_line_even">
+                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventbaselink.titlebaselink'}"></span>
+                        <span class="label landscape_only" data-win-res="{textContent: 'eventbaselink.titlebaselink'}"></span>
+                        <input name="title" class="input_field win-textbox" type="text" data-win-bind="value: eventMandantStartData.Titel Binding.Mode.twoway" />
+                    </div>
+                    <div class="line-separator"></div>
+                </div>
+                <div class="error-message"
+                     data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
+            </section>
+        </div>
+    </div>
+ </body>
+</html>
