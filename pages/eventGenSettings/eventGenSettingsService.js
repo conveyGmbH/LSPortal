@@ -64,6 +64,22 @@
                 }
                 return ret;
             }
+        },
+        _mandantStartView: {
+            get: function () {
+                return AppData.getFormatView("MandantStart", 0);
+            }
+        },
+        mandantStartView: {
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, "mandantStartView.");
+                var ret = EventGenSettings._mandantStartView.select(complete, error, restriction);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            defaultValue: {
+                StartUrl: ""
+            }
         }
     });
 })();

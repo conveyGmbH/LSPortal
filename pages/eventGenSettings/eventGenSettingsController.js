@@ -15,8 +15,9 @@
             Log.call(Log.l.trace, "Event.Controller.");
             Application.Controller.apply(this, [pageElement, {
                 dataEvent: getEmptyDefaultValue(EventGenSettings.conferenceExhibitorView.defaultValue),
-                newEventData: getEmptyDefaultValue(EventGenSettings.conferenceExhibitorView.newEventDefault)
-            }, commandList]);
+                newEventData: getEmptyDefaultValue(EventGenSettings.conferenceExhibitorView.newEventDefault),
+                websiteData: getEmptyDefaultValue(EventGenSettings.mandantStartView.defaultValue) 
+        }, commandList]);
 
             var that = this;
 
@@ -370,6 +371,11 @@
                     }
                     Log.ret(Log.l.trace);
                 },
+                clickOpenWebpage: function() {
+                    Log.call(Log.l.trace, "Event.Controller.");
+                    var windowObjectReference = window.open(that.binding.websiteData, "Homepage", "popup");
+                    Log.ret(Log.l.trace);
+                },
                 clickOk: function (event) {
                     Log.call(Log.l.trace, "Event.Controller.");
                     WinJS.Promise.as().then(function () {
@@ -528,6 +534,20 @@
                             AppData.setErrorMsg(that.binding, errorResponse);
                         });
                 }).then(function () {
+                    return EventGenSettings.mandantStartView.select(function (json) {
+                        Log.print(Log.l.trace, "mandantStartView: success!");
+                        if (json && json.d && json.d.results && json.d.results.length > 0) {
+                            var result = json.d.results[0];
+                            that.binding.websiteData = result.StartUrl;
+                            Log.print(Log.l.trace, "Data loaded");
+                        }
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                        that.loading = false;
+                    });
+                }).then(function () {
                     AppBar.notifyModified = true;
                     return WinJS.Promise.as();
                 });
@@ -588,6 +608,7 @@
                 AppData.setErrorMsg(that.binding);
                 var recordId = getEventId();
                 if (recordId) {
+                    AppData.setErrorMsg(that.binding);
                     AppData.call("PRC_ConfExhibitorID", {
                         pVeranstaltungID: recordId
                     }, function (json) {
