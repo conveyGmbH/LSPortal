@@ -54,7 +54,8 @@
     "command.newmod": "New",
     "command.newquestion": "New question",
     "command.exportPdfTicket"  : "Download ticket",
-    "command.newStaff"  : "Add stand personnel",
+    "command.newStaff"  : "Add stand personnel",	
+    "command.openWebpage"  : "Open webpage",
 
     "tooltip.backward"      : "Browse back",
     "tooltip.edit"          : "Edit current record",
@@ -128,7 +129,8 @@
     "tooltip.newmod": "New moderator",
     "tooltip.deletequestion"        : "Delete Question",
     "tooltip.newquestion"        : "New Question",
-    "tooltip.deletemod"        : "Delete Moderator",
+    "tooltip.deletemod"        : "Delete Moderator",	
+    "tooltip.openWebpage"        : "Open webpage",
 
     "home.title"            : "Start",
     "home.info"             : "Important information",
@@ -590,6 +592,7 @@
     "label.startPremiumStandard" : "Standard",
 	"label.startPremium1": "Premium 1",
 	"label.startPremium2": "Premium 2",
+  "label.eventBaseLink" : "Base Link",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Cancel",
@@ -1435,5 +1438,9 @@
     "startResourceAdministration.comment" : "Create and set up your homepage",
 
     "support.title" : "Support",
-    "support.url" : "https://www.convey.de/en/contact-2/"
+    "support.url" : "https://www.convey.de/en/contact-2/",
+
+    "eventbaselink.title" : "Base Link",
+    "eventbaselink.starturl" : "URL Path",
+    "eventbaselink.titlebaselink" : "Title"
 }

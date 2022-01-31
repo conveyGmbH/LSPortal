@@ -54,7 +54,8 @@
     "command.newmod": "Nouveau",
     "command.newquestion": "Nouvelle question",
     "command.exportPdfTicket"  : "Télécharger le ticket",
-    "command.newStaff"  : "Ajouter du personnel sur le stand",
+    "command.newStaff"  : "Ajouter du personnel sur le stand",	
+    "command.openWebpage"  : "Ouvrir le site web",
 
     "tooltip.backward"      : "Page présédente",
     "tooltip.edit"          : "Modifier le contact en cours",
@@ -128,7 +129,8 @@
     "tooltip.newmod": "Nouveau modérateur",
     "tooltip.deletequestion"        : "Supprimer la question",
     "tooltip.newquestion"        : "Nouvelle question",
-    "tooltip.deletemod"        : "Supprimer le modérateur",
+    "tooltip.deletemod"        : "Supprimer le modérateur",	
+    "tooltip.openWebpage"        : "Ouvrir le site web",
 
     "home.title"            : "Start",
     "home.info"             : "Instructions importantes",
@@ -590,6 +592,7 @@
 	"label.startPremiumStandard" : "Standard",
 	"label.startPremium1": "Premium 1",
 	"label.startPremium2": "Premium 2",
+  "label.eventBaseLink" : "Lien de base",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annuler",
@@ -1436,5 +1439,9 @@
     "startResourceAdministration.comment" : "Créez et configurez votre page d'accueil",
 
     "support.title" : "Support",
-    "support.url" : "https://www.convey.de/en/contact-2/"
+    "support.url" : "https://www.convey.de/en/contact-2/",
+
+    "eventbaselink.title" : "Lien de base",
+    "eventbaselink.starturl" : "Chemin d'accès URL",
+    "eventbaselink.titlebaselink" : "Titre"
 }
