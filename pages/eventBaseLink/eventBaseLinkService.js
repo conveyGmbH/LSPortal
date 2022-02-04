@@ -29,6 +29,7 @@
                 MandantStartVIEWID: 0,
                 StartUrl: ""
             }
-        }
+        },
+        _eventStartId: null /*muss von der Liste gesetzt werden*/
     });
 })();

@@ -21,6 +21,22 @@
            
             var that = this;
 
+            var getEventStartId = function () {
+                return EventBaseLink._eventStartId;
+            }
+            that.getEventStartId = getEventStartId;
+
+            var setEventStartId = function (value) {
+                Log.print(Log.l.trace, "eventStartId=" + value);
+                EventBaseLink._eventStartId = value;
+                return that.loadData();
+            }
+            that.setEventStartId = setEventStartId;
+            var master = Application.navigator.masterControl;
+            if (master && master.controller && master.controller.binding) {
+                that.setEventStartId(master.controller.binding.startId);
+            }
+
             // save data
             var saveData = function (complete, error) {
                 Log.call(Log.l.trace, "EventBaseLink.Controller.");
