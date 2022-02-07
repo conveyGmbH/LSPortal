@@ -34,7 +34,7 @@
             that.setEventStartId = setEventStartId;
             var master = Application.navigator.masterControl;
             if (master && master.controller && master.controller.binding) {
-                that.setEventStartId(master.controller.binding.startId);
+                //that.setEventStartId(master.controller.binding.startId);
             }
 
             // save data
