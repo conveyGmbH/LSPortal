@@ -285,7 +285,11 @@
                                 // Now, we call WinJS.Binding.List to get the bindable list
                                 if (initSprache && initSprache.winControl) {
                                     initSprache.winControl.data = new WinJS.Binding.List(results);
-                                    initSprache.selectedIndex = 0;
+                                    for (var i = 0; i < results.length; i++) {
+                                        if (results[i].LanguageID === 1031) {
+                                            initSprache.selectedIndex = i;
+                                        }
+                                    }
                                 }
                             }
                         }, function (errorResponse) {
@@ -298,7 +302,11 @@
                             (!initSprache.winControl.data || !initSprache.winControl.data.length)) {
                             var results = MailingTemplateEventEdit.initSpracheView.getResults();
                             initSprache.winControl.data = new WinJS.Binding.List(results);
-                            initSprache.selectedIndex = 0;
+                            for (var i = 0; i < results.length; i++) {
+                                if (results[i].LanguageID === 1031) {
+                                    initSprache.selectedIndex = i;
+                                }
+                            }
                         }
                         return WinJS.Promise.as();
                     }
