@@ -53,28 +53,6 @@
             }
             this.editButton = editButton;
 
-            var createHeaderData = function () {
-                Log.call(Log.l.trace, "ContactResultsList.Controller.");
-                that.binding.dataTemplateEventHeaderValue.TemplateName = "TemplateName";
-                that.binding.dataTemplateEventHeaderValue.MailTypeTitle = "MailTypeTitle";
-                that.binding.dataTemplateEventHeaderValue.VeranstaltungName = "VeranstaltungName";
-                that.binding.dataTemplateEventHeaderValue.UsedVeranstaltung = "UsedVeranstaltung";
-                that.binding.dataTemplateEventHeaderValue.LangsAvailable = "LangsAvailable";
-                that.binding.dataTemplateEventHeaderValue.Erfassungsdatum = "Erfassungsdatum";
-                that.binding.dataTemplateEventHeaderValue.IsActive = "IsActive";
-                that.binding.dataTemplateEventHeaderValue.Edited = "Letzte Änderung";
-                that.binding.dataTemplateEventHeaderText.TemplateName = getResourceText("mailingTemplateEvent.headertemplatename");
-                that.binding.dataTemplateEventHeaderText.MailTypeTitle = getResourceText("mailingTemplateEvent.headermailtypetitle");
-                that.binding.dataTemplateEventHeaderText.VeranstaltungName = getResourceText("mailingTemplateEvent.headerveranstaltungname");
-                that.binding.dataTemplateEventHeaderText.UsedVeranstaltung = getResourceText("mailingTemplateEvent.headerusedveranstaltung");
-                that.binding.dataTemplateEventHeaderText.LangsAvailable = getResourceText("mailingTemplateEvent.headerlangsavailable");
-                that.binding.dataTemplateEventHeaderText.Erfassungsdatum = getResourceText("mailingTemplateEvent.headererfassungsdatum");
-                that.binding.dataTemplateEventHeaderText.IsActive = getResourceText("mailingTemplateEvent.headerisactive");
-                that.binding.dataTemplateEventHeaderText.Edited = getResourceText("mailingTemplateEvent.edited");
-                Log.call(Log.l.trace, "ContactResultsList.Controller.");
-            }
-            this.createHeaderData = createHeaderData;
-
             var setMailStatusColor = function () {
                 var templateActiveStatus = pageElement.querySelectorAll("#templateactivestatus");
                 var active = getResourceText("mailingList.active");
@@ -327,9 +305,6 @@
                 Log.call(Log.l.trace, "Employee.Controller.");
                 that.processAll().then(function () {
                     Log.print(Log.l.trace, "Binding wireup page complete");
-                    return that.createHeaderData();
-                }).then(function () {
-                    Log.print(Log.l.trace, "Binding wireup page complete");
                     return that.resizableGrid();
                 }).then(function () {
                     Log.print(Log.l.trace, "Binding wireup page complete");
@@ -461,9 +436,6 @@
                                 Log.print(Log.l.error, "error inserting employee");
                                 that.insertBtn();
                                 that.processAll().then(function () {
-                                    Log.print(Log.l.trace, "Binding wireup page complete");
-                                    return that.createHeaderData();
-                                }).then(function () {
                                     Log.print(Log.l.trace, "Binding wireup page complete");
                                     return that.loadData();
                                 }).then(function () {
@@ -805,9 +777,6 @@
             this.loadData = loadData;
 
             that.processAll().then(function () {
-                Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.createHeaderData();
-            }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
             }).then(function () {

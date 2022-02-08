@@ -21,7 +21,6 @@
                 dataMailingHeaderValue: getEmptyDefaultValue(MailingList.VAMail.defaultContactHeader),
                 dataMailingHeaderText: getEmptyDefaultValue(MailingList.VAMail.defaultContactHeader),
                 maileditlabel: getResourceText("mailingList.maileditlabel"),
-                Edited: getResourceText("mailingTemplateEvent.edited"),
                 LanguageIDVA: 0
             }, commandList]);
             this.nextUrl = null;
@@ -151,28 +150,6 @@
                 }
             }
             this.editButton = editButton;
-
-            var createHeaderData = function () {
-                Log.call(Log.l.trace, "MailingList.Controller.");
-                that.binding.dataMailingHeaderValue.VAMailTypeID = "VAMailTypeID";
-                that.binding.dataMailingHeaderValue.MailTypeName = "MailTypeName";
-                that.binding.dataMailingHeaderValue.VeranstaltungName = "VeranstaltungName";
-                that.binding.dataMailingHeaderValue.Serie = "Serie";
-                that.binding.dataMailingHeaderValue.TemplateName = "TemplateName";
-                that.binding.dataMailingHeaderValue.LastModUTC = "LastModUTC";
-                that.binding.dataMailingHeaderValue.Language = "Language";
-                that.binding.dataMailingHeaderValue.IsActive = "IsActive";
-                that.binding.dataMailingHeaderText.VAMailTypeID = getResourceText("mailingList.headerMailTyp");
-                that.binding.dataMailingHeaderText.MailTypeName = getResourceText("mailingList.headermailtypename");
-                that.binding.dataMailingHeaderText.VeranstaltungName = getResourceText("mailingList.headerveranstaltungname");
-                that.binding.dataMailingHeaderText.Serie = getResourceText("mailingList.headerserie");
-                that.binding.dataMailingHeaderText.TemplateName = getResourceText("mailingList.headertemplatename");
-                that.binding.dataMailingHeaderText.LastModUTC = getResourceText("mailingList.headerlastmodutc");
-                that.binding.dataMailingHeaderText.Language = getResourceText("mailingList.headerlanguage");
-                that.binding.dataMailingHeaderText.IsActive = getResourceText("mailingList.headeractive");
-                Log.call(Log.l.trace, "ContactResultsList.Controller.");
-            }
-            this.createHeaderData = createHeaderData;
 
             var setMailStatusColor = function () {
                 var mailActiveStatus = pageElement.querySelectorAll("#mailactivestatus");
@@ -740,9 +717,6 @@
                 var ret = new WinJS.Promise.as().then(function () {
                     Log.print(Log.l.trace, "Calling initializeTemplates");
                     return that.initializeTemplates();
-                }).then(function () {
-                    Log.print(Log.l.trace, "Calling createHeaderData");
-                    return that.createHeaderData();
                 }).then(function () {
                     Log.print(Log.l.trace, "calling select MailingTypes...");
                     if (restr) {

@@ -781,6 +781,7 @@
     "mailingList.active"            : "Aktive",
     "mailingList.pending"            : "Pending",
     "mailingList.maileditlabel"            : "Edit",
+    "mailingList.lastedit"           : "Last change",
 
     "mailingvslist.count"     : "Count",
 
