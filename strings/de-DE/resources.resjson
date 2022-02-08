@@ -799,6 +799,7 @@
     "mailingList.pending"            : "Anstehend",
     "mailingList.maileditlabel"            : "Edit",
     "mailingList.comment"            : " Erstellen und Einrichten Ihrer Mailing-Prozesse",
+    "mailingList.lastedit"            : "Letzte Änderung",
 
 	"mailingvslist.count" : "Anzahl",
 

@@ -798,6 +798,8 @@
     "mailingList.active"            : "Aktive",
     "mailingList.pending"            : "Pending",
     "mailingList.maileditlabel"            : "Edit",
+    "mailingList.comment"            : " Create and set up your mailing processes",
+    "mailingList.lastedit"            : "Last Edit",
 
 	"mailingvslist.count" : "Count",
 
