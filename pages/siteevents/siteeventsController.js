@@ -527,8 +527,12 @@
                     confirm(confirmTitle, function (result) {
                         if (result) {
                             Log.print(Log.l.trace, "clickDelete: user choice OK");
+                            AppBar.busy = true;
+                            AppBar.triggerDisableHandlers();
                             deleteData(function (response) {
                                 // delete OK - goto start
+                                AppBar.busy = false;
+                                AppBar.triggerDisableHandlers();
                             }, function (errorResponse) {
                                 // delete ERROR
                                 var message = null;
@@ -544,6 +548,8 @@
                                     message = getResourceText("error.delete");
                                 }
                                 alert(message);
+                                AppBar.busy = false;
+                                AppBar.triggerDisableHandlers();
                             });
                         } else {
                             Log.print(Log.l.trace, "clickDelete: user choice CANCEL");
@@ -915,7 +921,7 @@
                     }
                 },
                 clickDelete: function () {
-                    if (!that.reorderId || that.binding.active === 1 || AppData.generalData.eventId === that.reorderId) {
+                    if (!that.reorderId || that.binding.active === 1 || AppData.generalData.eventId === that.reorderId || AppBar.busy) {
                         return true;
                     } else {
                         return false;
