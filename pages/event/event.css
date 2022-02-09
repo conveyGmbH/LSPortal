@@ -28,7 +28,8 @@
 #showvisitorFlowAndLeadSuccess .win-toggleswitch-header,
 #showvisitorFlow .win-toggleswitch-header,
 #visitorFlowPremium .win-toggleswitch-header,
-#shopAppBkg .win-toggleswitch-header {
+#shopAppBkg .win-toggleswitch-header,
+#sendMailPrivacypolicy .win-toggleswitch-header {
     display: none;
 }
 
@@ -39,4 +40,8 @@
     .toggle-switch-parent {
         margin-bottom: 8px;
     }
+}
+
+.event .label {
+    width: auto;
 }

@@ -605,6 +605,13 @@
                         NavigationBar.disablePage("employeeVisitorFlow");*/
                     }
                     break;
+                case 49:
+                    if (item.LocalValue === "1") {
+                        AppData._persistentStates.sendMailPrivacypolicy = true;
+                    } else {
+                        AppData._persistentStates.sendMailPrivacypolicy = false;
+                    }
+                    break;
                 default:
                     // defaultvalues
             }

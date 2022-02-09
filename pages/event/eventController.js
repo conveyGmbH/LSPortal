@@ -22,6 +22,7 @@
                 isBarcodeScanVisible: !AppData._persistentStates.hideBarcodeScan,
                 isDBSyncVisible: AppHeader.controller.binding.userData.SiteAdmin,
                 isPrivacyPolicySVGVisible: AppData._persistentStates.privacyPolicySVGVisible,
+                isSendMailPrivacypolicy: AppData._persistentStates.sendMailPrivacypolicy,
                 showQRCode: AppData._persistentStates.showQRCode,
                 isvisitorFlowVisible: AppData._persistentStates.showvisitorFlow,
                 isvisitorFlowVisibleAndLeadSuccess: AppData._persistentStates.showvisitorFlowAndLeadSuccess,
@@ -213,6 +214,19 @@
                         if (!checked) {
                             that.binding.dataEvent.DatenschutzText = "";
                             that.binding.dataEvent.DatenschutzSVG = null;
+                            // setze sendMailPrivacypolicy auf null
+                            //that.binding.isSendMailPrivacypolicy = !checked;
+                            //AppData._persistentStates.sendMailPrivacypolicy = !checked;
+                            //that.changeAppSetting("sendMailPrivacypolicy", !checked);
+                            /*AppData.call("PRC_SETVERANSTOPTION", {
+                                pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                                pOptionTypeID: 49,
+                                pValue: !checked
+                            }, function (json) {
+                                Log.print(Log.l.info, "call success! ");
+                            }, function (error) {
+                                Log.print(Log.l.error, "call error");
+                            });*/
                         } else {
                             that.binding.dataEvent.DatenschutzText = getResourceText("event.privacyPolicyStandartText");
                         }
@@ -302,6 +316,12 @@
                         //that.binding.isDashboardPremium = parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 1 ? true : false;
                         pValue = checked;
                         pValueIsSet = true;
+                        break;
+                    case "sendMailPrivacypolicy":
+                        pOptionTypeId = 49;
+                        /*****/
+                        that.binding.isSendMailPrivacypolicy = checked;
+                        AppData._persistentStates.sendMailPrivacypolicy = checked;
                         break;
                 }
                 if (pOptionTypeId) {

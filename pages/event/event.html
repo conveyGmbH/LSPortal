@@ -8,7 +8,7 @@
     <script type="text/javascript" src="event.js"></script>
 </head>
 <body class="win-type-body">
-    <div class="settings fragment">
+    <div class="event fragment">
         <div id="eventController" class="data-container">
             <section aria-label="Main content" role="main" class="animationElement">
                 <div class="contentarea win-type-body">
@@ -226,7 +226,7 @@
                                 <span class="date-field"></span>
                             </div>
                         </div>
-                        <div class="field_line field_line_odd">
+                        <!--<div class="field_line field_line_odd">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'event.privacypolicy'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'event.privacypolicy'}"></span>
                             <div class="input_field toggle-switch-parent">
@@ -235,6 +235,23 @@
                                      data-win-bind="winControl.checked: isPrivacyPolicySVGVisible; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
                                      onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
                                 </div>
+                            </div>
+                        </div>-->
+                        <div class="field_line field_line_odd" style="overflow-y: hidden">
+                            <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'event.privacypolicy'}"></span>
+                            <span class="label win-type-caption portrait_only_half" data-win-bind="style.display: isPrivacyPolicySVGVisible Binding.Converter.toDisplay" data-win-res="{textContent: 'event.sendMailPrivacypolicy'}"></span>
+                            <div class="label landscape_only"><span data-win-res="{textContent: 'event.privacypolicy'}"></span> / <span data-win-res="{textContent: 'event.sendMailPrivacypolicy'}"></span></div>
+                            <div class="input_group toggle-switch-parent">
+                                <div id="showPrivacyPolicySVG" class="input_half_left"
+                                     data-win-control="WinJS.UI.ToggleSwitch"
+                                     data-win-bind="winControl.checked: isPrivacyPolicySVGVisible; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                                     onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
+                                </div>                                
+                                <div id="sendMailPrivacypolicy" class="input_half_right"
+                                     data-win-control="WinJS.UI.ToggleSwitch"
+                                     data-win-bind="winControl.checked: isSendMailPrivacypolicy; style.display: isPrivacyPolicySVGVisible Binding.Converter.toDisplay; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                                     onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
+                                </div>                                
                             </div>
                         </div>
                         <div class="field_line field_line_even" data-win-bind="style.display: isPrivacyPolicySVGVisible Binding.Converter.toDisplay">
