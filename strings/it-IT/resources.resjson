@@ -622,6 +622,7 @@
 	"event.privacypolicy"   : "Schizzo della privacy",
 	"event.privacyPolicyText" : "Testo sulla privacy",
 	"event.privacyPolicyStandartText" : "Con la presente confermo che i miei dati sono raccolti e trattati in base al GDPR",
+    "event.sendMailPrivacypolicy" : "Spedizione solo con firma GDPR",
     "event.displayOptions" : "Impostazioni di visualizzazione",
 	"event.showNameInHeader" : "Nome nell'intestazione",
 	"event.ticketCodeServer" : "Ticketcode-Server",

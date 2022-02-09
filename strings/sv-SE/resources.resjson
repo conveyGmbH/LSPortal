@@ -605,6 +605,7 @@
     "event.privacypolicy"   : "Privacypolicynote",
 	"event.privacyPolicyText" : "Privacypolicy",
 	"event.privacyPolicyStandartText" : "I hereby confirm that my data is collected and processed according to the GDPR",
+    "event.sendMailPrivacypolicy" : "Sending only with GDPR signature",
     "event.displayOptions" : "Display options",
     "event.showNameInHeader" : "Name in header",
 	"event.ticketCodeServer" : "Ticketcode-Server",

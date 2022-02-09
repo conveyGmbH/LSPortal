@@ -622,6 +622,7 @@
     "event.privacypolicy"   : "Esquisse de confidentialité",
 	"event.privacyPolicyText" : "Texte de confidentialité",
 	"event.privacyPolicyStandartText" : "Je confirme par la présente que mes données sont collectées et traitées conformément au RGPD",
+    "event.sendMailPrivacypolicy" : "Expédition uniquement avec signature RGPD",
     "event.displayOptions" : "Paramètres d'affichage",
     "event.showNameInHeader" : "Nom dans l'en-tête",
 	"event.ticketCodeServer" : "Ticketcode-Server",
