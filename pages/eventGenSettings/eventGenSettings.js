@@ -23,6 +23,7 @@
             var commandList = [
                 { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" },
                 { id: "clickOpenWebpage", label: getResourceText("command.openWebpage"), tooltip: getResourceText("tooltip.openWebpage"), section: "primary", svg: "monitor" },
+                { id: "clickDelete", label: getResourceText("command.delete"), tooltip: getResourceText("tooltip.deleteevent"), section: "primary", svg: "garbage_can" },
                 { id: "clickNew", label: getResourceText("command.new"), tooltip: getResourceText("tooltip.newevent"), section: "primary", svg: "plus" },
                 { id: "clickOk", label: getResourceText("command.ok"), tooltip: getResourceText("tooltip.ok"), section: "primary", svg: "navigate_check", key: WinJS.Utilities.Key.enter }
             ];

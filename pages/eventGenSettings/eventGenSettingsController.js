@@ -458,6 +458,14 @@
                     }
                     Application.navigateById("login", event);
                     Log.ret(Log.l.trace);
+                },
+                clickDelete: function (event) {
+                    Log.call(Log.l.trace, "LocalEvents.Controller.");
+                    var recordId = that.getEventId();
+                    if (recordId) {
+                        that.getDeleteEventData(recordId);
+                    }
+                    Log.ret(Log.l.trace);
                 }
             };
 
@@ -468,30 +476,41 @@
                     } else {
                         return true;
                     }
+                },
+                clickDelete: function () {
+                    if (typeof that.getEventId === "function") {
+                        if (that.getEventId() !== AppData.getRecordId("Veranstaltung") && !that.binding.active && !AppBar.busy) {
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    } else {
+                        return true;
+                    }
                 }
             };
 
             var getEventId = function () {
                 return EventGenSettings._eventId;
             }
-            that.getEventId = getEventId;
+            this.getEventId = getEventId;
 
             var setEventId = function (value) {
                 Log.print(Log.l.trace, "eventId=" + value);
                 EventGenSettings._eventId = value;
             }
-            that.setEventId = setEventId;
+            this.setEventId = setEventId;
 
             var getConferenceId = function () {
                 return EventGenSettings._conferenceId;
             }
-            that.getConferenceId = getConferenceId;
+            this.getConferenceId = getConferenceId;
 
             var setConferenceId = function (value) {
                 Log.print(Log.l.trace, "_conferenceId=" + value);
                 EventGenSettings._conferenceId = value;
             }
-            that.setConferenceId = setConferenceId;
+            this.setConferenceId = setConferenceId;
 
             var resultConverter = function (item, index) {
                 var property = AppData.getPropertyFromInitoptionTypeID(item);
@@ -626,6 +645,53 @@
                 Log.ret(Log.l.trace);
             };
             this.selectConfExhibitorId = selectConfExhibitorId;
+
+            var getDeleteEventData = function (eventID) {
+                Log.call(Log.l.trace, "LocalEvents.Controller.");
+                AppData.setErrorMsg(that.binding);
+                var ret = new WinJS.Promise.as()/*.then(function () {
+                    return LocalEvents.VeranstaltungView.select(function (json) {
+                        // this callback will be called asynchronously
+                        // when the response is available
+                        Log.print(Log.l.info, "MAILERZEILENView select: success!");
+                        if (json && json.d && json.d.results && json.d.results.length > 0) {
+                            that.deleteEventData = json.d.results[0];
+                        }
+
+                    }, function (errorResponse) {
+                        Log.print(Log.l.error, "error selecting mailerzeilen");
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                        }, { VeranstaltungVIEWID: eventID});
+                })*/.then(function () {
+                    // var curScope = that.deleteEventData;
+                    var curScope = that.binding.dataEvent;
+                    if (curScope) {
+                        var confirmTitle = getResourceText("localevents.labelDelete") + ": " + curScope.MeetingName +
+                            "\r\n" + getResourceText("localevents.eventDelete");
+                        confirm(confirmTitle, function (result) {
+                            if (result) {
+                                AppBar.busy = true;
+                                AppData.setErrorMsg(that.binding);
+                                AppData.call("PRC_DeleteVeranstaltung", {
+                                    pVeranstaltungID: eventID
+                                }, function (json) {
+                                    Log.print(Log.l.info, "call success! ");
+                                    AppBar.busy = false;
+                                    that.loadData();
+                                }, function (error) {
+                                    AppBar.busy = false;
+                                    Log.print(Log.l.error, "call error");
+                                });
+                            } else {
+                                Log.print(Log.l.trace, "clickDelete: event choice CANCEL");
+                            }
+                        });
+                    }
+                });
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+            this.getDeleteEventData = getDeleteEventData;
 
             var master = Application.navigator.masterControl;
             if (master && master.controller && master.controller.binding) {

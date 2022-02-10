@@ -180,6 +180,9 @@
                 var hidePageItem = false;
                 var pValue;
                 var pValueIsSet = false;
+                var callChangeAppSettingNext = false;
+                var toggleIdNext = null;
+                var checkedNext = null;
                 switch (toggleId) {
                     case "showQuestionnaire":
                         pOptionTypeId = 20;
@@ -214,19 +217,9 @@
                         if (!checked) {
                             that.binding.dataEvent.DatenschutzText = "";
                             that.binding.dataEvent.DatenschutzSVG = null;
-                            // setze sendMailPrivacypolicy auf null
-                            //that.binding.isSendMailPrivacypolicy = !checked;
-                            //AppData._persistentStates.sendMailPrivacypolicy = !checked;
-                            //that.changeAppSetting("sendMailPrivacypolicy", !checked);
-                            /*AppData.call("PRC_SETVERANSTOPTION", {
-                                pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
-                                pOptionTypeID: 49,
-                                pValue: !checked
-                            }, function (json) {
-                                Log.print(Log.l.info, "call success! ");
-                            }, function (error) {
-                                Log.print(Log.l.error, "call error");
-                            });*/
+                            callChangeAppSettingNext = true;
+                            toggleIdNext = "sendMailPrivacypolicy";
+                            checkedNext = checked;
                         } else {
                             that.binding.dataEvent.DatenschutzText = getResourceText("event.privacyPolicyStandartText");
                         }
@@ -349,6 +342,11 @@
                         Log.print(Log.l.info, "call success! ");
                     }, function (error) {
                         Log.print(Log.l.error, "call error");
+                    }).then(function() {
+                        // rufe nochmal funktion changeAppSetting - Bedingung muss erfüllt sein
+                        if (callChangeAppSettingNext && toggleIdNext) {
+                            that.changeAppSetting(toggleIdNext, checkedNext);
+                        }
                     });
                     if (pageProperty) {
                         if (pValue === "1") {
@@ -393,8 +391,15 @@
                     Log.call(Log.l.trace, "Event.Controller.");
                     if (event.currentTarget) {
                         var toggle = event.currentTarget.winControl;
+                        var target = event.target || event.currentTarget;
+                        var targetId = event.currentTarget.id;
                         if (toggle) {
-                            var value = toggle.checked || event.currentTarget.value;
+                            var value; 
+                            if (targetId.includes("Combo")) {
+                                value = target.value;
+                            } else {
+                                value = toggle.checked;
+                            }
                             that.changeAppSetting(event.currentTarget.id, value);
                         }
                     }
