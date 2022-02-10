@@ -1305,7 +1305,7 @@
     "eventGenSettings.recordsession"			: "Event Aufzeichnung",
     "eventGenSettings.allowaudio"			: "Zuschauer Mikrofon erlauben",
     "eventGenSettings.allowvideo"			: "Zuschauer Video erlauben",
-    "eventGenSettings.nomemberlist"			: "Keine Zuschauerliste anzeigen",
+    "eventGenSettings.nomemberlist"			: "Zuschauerliste anzeigen",
     "eventGenSettings.listonlymoderators"	: "Nur Moderatoren anzeigen",
     "eventGenSettings.hidesilentvideos"	: "Stille Videos ausblenden",
     "eventGenSettings.speakerVideosPinned"	: "Videos manuell anheften",
