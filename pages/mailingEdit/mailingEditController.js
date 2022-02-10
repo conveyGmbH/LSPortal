@@ -106,11 +106,26 @@
                 var ret;
                 that.getDataMail(that.binding.dataMail);
                 var dataMail = that.binding.dataMail;
+                if (dataMail.SenderAddr === null) {
+                    dataMail.SenderAddr = "";
+                }
+                if (typeof dataMail.VAMailLayoutID === "string") {
+                    dataMail.VAMailLayoutID = parseInt(dataMail.VAMailLayoutID);
+                }
                 if (dataMail && AppBar.modified && !AppBar.busy) {
                     AppBar.busy = true;
                     var recordId = getRecordId();
                     if (recordId) {
                         ret = WinJS.Promise.as().then(function () {
+                            if (dataMail.SenderAddr.length === 0 || dataMail.VAMailLayoutID === 0) {
+                                AppBar.busy = false;
+                                AppBar.modified = false;
+                                AppData.setErrorMsg(that.binding, "SenderAddrese is empty or MailLayout is empty");
+                                if (typeof complete === "function") {
+                                    complete(dataMail);
+                                }
+                                return WinJS.Promise.as();
+                            }
                             MailingEdit.MaildokumentView.update(function (response) {
                             AppBar.busy = false;
                             // called asynchronously if ok
@@ -433,7 +448,7 @@
                         Log.print(Log.l.trace, "initSpracheView: success!");
                         if (json && json.d && json.d.results) {
                             var results = json.d.results;
-                            results = results.concat({ VAMailTemplateVIEWID: 0, TITLE: "DEFAULT" });
+                            results = results.concat({ VAMailLayoutVIEWID: 0, TextName: "DEFAULT" });
                             // Now, we call WinJS.Binding.List to get the bindable list
                             if (tempDropdown && tempDropdown.winControl) {
                                 tempDropdown.winControl.data = new WinJS.Binding.List(results);
