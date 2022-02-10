@@ -1,6 +1,7 @@
 ﻿.mailingList .scroll-line {
     overflow-x: auto;
-    overflow-y: hidden;
+    overflow-y: auto;
+    height: 79vh;
 }
 
 .mailingList * {
