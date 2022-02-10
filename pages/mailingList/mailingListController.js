@@ -21,7 +21,6 @@
                 dataMailingHeaderValue: getEmptyDefaultValue(MailingList.VAMail.defaultContactHeader),
                 dataMailingHeaderText: getEmptyDefaultValue(MailingList.VAMail.defaultContactHeader),
                 maileditlabel: getResourceText("mailingList.maileditlabel"),
-                Edited: getResourceText("mailingTemplateEvent.edited"),
                 LanguageIDVA: 0
             }, commandList]);
             this.nextUrl = null;
