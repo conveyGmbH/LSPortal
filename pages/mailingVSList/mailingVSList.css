@@ -12,12 +12,12 @@
     font-weight: 600;
 }
 
-#mailingVSList .win-itembox {
+#mailingvslist .win-itembox {
     width: 100%;
     min-height: 60px;
 }
 
-#mailingVSList .win-container {
+#mailingvslist .win-container {
     width: 100%;
     height: auto;
     margin: 0;
@@ -26,12 +26,12 @@
     background-color: transparent;
 }
 
-#mailingVSList .win-surface {
+#mailingvslist .win-surface {
     margin-top: 0;
     margin-left: 0;
 }
 
-#mailingVSList.listview {
+#mailingvslist.listview {
     position: relative;
     left: 0;
     top: 0;
