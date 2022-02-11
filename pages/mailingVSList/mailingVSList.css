@@ -1,23 +1,23 @@
-﻿.mailingvslist .list-div-left,
-.mailingvslist .list-div-right {
+﻿.mailingVSList .list-div-left,
+.mailingVSList .list-div-right {
     width: calc(100% - 32px);
     margin: 0 16px;
 }
 
-.mailingvslist .grayed-out {
+.mailingVSList .grayed-out {
     opacity: 0.6;
 }
 
-.mailingvslist .semibold {
+.mailingVSList .semibold {
     font-weight: 600;
 }
 
-#mailingvslist .win-itembox {
+#mailingVSList .win-itembox {
     width: 100%;
     min-height: 60px;
 }
 
-#mailingvslist .win-container {
+#mailingVSList .win-container {
     width: 100%;
     height: auto;
     margin: 0;
@@ -26,12 +26,12 @@
     background-color: transparent;
 }
 
-#mailingvslist .win-surface {
+#mailingVSList .win-surface {
     margin-top: 0;
     margin-left: 0;
 }
 
-#mailingvslist.listview {
+#mailingVSList.listview {
     position: relative;
     left: 0;
     top: 0;
