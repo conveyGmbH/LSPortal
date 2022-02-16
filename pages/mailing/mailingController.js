@@ -185,7 +185,7 @@
 
             var insertMailing = function () {
                 Log.call(Log.l.trace, "Mailing.Controller.");
-                var dataMail = getEmptyDefaultValue(that.binding.dataMail);
+                var dataMail = Mailing.MaildokumentView.defaultValue;
                 if (!dataMail.VeranstaltungID)
                     dataMail.VeranstaltungID = AppData.getRecordId("Veranstaltung");
                 Mailing.MaildokumentView.insert(function (json) {
@@ -294,8 +294,9 @@
                     var recordId = getRecordId();
                     if (recordId) {
                         var curScope = that.binding.dataMail;
+                        var description = curScope.Beschreibung ? curScope.Beschreibung : "";
                         if (curScope) {
-                            var confirmTitle = getResourceText("mailing.labelDelete") + ": " + curScope.Beschreibung +
+                            var confirmTitle = getResourceText("mailing.labelDelete") + ": " + description +
                                 "\r\n" + getResourceText("mailing.mailDelete");
                             confirm(confirmTitle, function (result) {
                                 if (result) {
