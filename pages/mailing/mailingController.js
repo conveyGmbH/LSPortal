@@ -572,7 +572,6 @@
                             AppData.setErrorMsg(that.binding, errorResponse);
                         }, recordId);
                     } else {
-                        master.controller.loading_Flag = false;
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
@@ -631,16 +630,10 @@
             this.getLangSpecErrorMsg = getLangSpecErrorMsg;
 
             // Finally, wire up binding
-            that.processAll().then(function () {
+            that.processAll()/*.then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                var master = Application.navigator.masterControl;
-                if (master && master.controller && !master.controller.loading_Flag) {
-                    master.controller.loading_Flag = true;
                 return that.loadData();
-                } else {
-                    return WinJS.Promise.as();
-                }
-            }).then(function () {
+            })*/.then(function () {
                 Log.print(Log.l.trace, "Data loaded");
             });
             Log.ret(Log.l.trace);
