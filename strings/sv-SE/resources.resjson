@@ -784,6 +784,7 @@
     "mailingList.maileditlabel"            : "Edit",
     "mailingList.lastedit"           : "Last change",
 
+    "mailingListLS.count"     : "Count",
     "mailingvslist.count"     : "Count",
 
 	"mailingTypes.title"	: "Mailtypes",

@@ -17,3 +17,7 @@
     width: 50%;
     height: 150px;
 }
+
+#sendMailPrivacypolicySignature .win-toggleswitch-header {
+    display: none;
+}

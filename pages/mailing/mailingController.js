@@ -22,7 +22,8 @@
                 sendtstmailLabel: getResourceText("mailing.send"),
                 sendTestMailShowFlag: 0,
                 testMailShowPanelFlag: 0,
-                testMailSuccessMsgFlag: 0
+                testMailSuccessMsgFlag: 0,
+                isPrivacyPolicySVGVisible: AppData._persistentStates.privacyPolicySVGVisible
             }, commandList]);
 
             var that = this;
@@ -72,6 +73,11 @@
                 // Bug: textarea control shows 'null' string on null value in Internet Explorer!
                 if (dataMail.Mailtext === null) {
                     dataMail.Mailtext = "";
+                }
+                if (dataMail.GDPR_Flag === "0" || dataMail.GDPR_Flag === null) {
+                    dataMail.GDPR_Flag = false;
+                } else {
+                    dataMail.GDPR_Flag = true;
                 }
                 if (textComment) {
                     if (that.binding.dataMail.Mailtext) {
@@ -141,9 +147,9 @@
                             AppBar.modified = false;
                             var master = Application.navigator.masterControl;
                             if (master && master.controller) {
-                                    master.controller.loadData().then(function () {
+                                    master.controller.loadData()/*.then(function () {
                                         master.controller.selectRecordId(getRecordId());
-                                    });
+                                    })*/;
                                 }
                                         if (typeof complete === "function") {
                                    complete(dataMail);
@@ -195,9 +201,9 @@
                                 /* Mitarbeiter Liste neu laden und Selektion auf neue Zeile setzen */
                                 var master = Application.navigator.masterControl;
                                 if (master && master.controller) {
-                                    master.controller.loadData().then(function () {
+                            master.controller.loadData()/*.then(function () {
                                         master.controller.selectRecordId(getRecordId());
-                                    });
+                            })*/;
                                 }
                             }
                         }, function (errorResponse) {
@@ -385,7 +391,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickTopButton: function (event) {
-                    Log.call(Log.l.trace, "Contact.Controller.");
+                    Log.call(Log.l.trace, "Mailing.Controller.");
                     var anchor = document.getElementById("menuButton");
                     var menu = document.getElementById("menu1").winControl;
                     var placement = "bottom";
@@ -393,7 +399,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickLogoff: function (event) {
-                    Log.call(Log.l.trace, "Account.Controller.");
+                    Log.call(Log.l.trace, "Mailing.Controller.");
                     AppData._persistentStates.privacyPolicyFlag = false;
                     if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
                         AppHeader.controller.binding.userData = {};
@@ -402,6 +408,25 @@
                         }
                     }
                     Application.navigateById("login", event);
+                    Log.ret(Log.l.trace);
+                },
+                clickChangeSendMailPrivacypolicySignature: function (event) {
+                    Log.call(Log.l.trace, "Mailing.Controller.");
+                    var target = event.currentTarget || event.target;
+                    if (target) {
+                        if (!AppBar.modified) {
+                            AppBar.modified = true;
+                        }
+                        var toggle = target.winControl;
+                        if (toggle) {
+                            var value = toggle.checked;
+                            if (value)
+                                that.binding.dataMail.GDPR_Flag = "1";
+                            else {
+                                that.binding.dataMail.GDPR_Flag = null;
+                            }
+                        }
+                    }
                     Log.ret(Log.l.trace);
                 }
             };
@@ -608,7 +633,13 @@
             // Finally, wire up binding
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
+                var master = Application.navigator.masterControl;
+                if (master && master.controller && !master.controller.loading_Flag) {
+                    master.controller.loading_Flag = true;
                 return that.loadData();
+                } else {
+                    return WinJS.Promise.as();
+                }
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
             });

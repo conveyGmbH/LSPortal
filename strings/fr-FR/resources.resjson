@@ -802,6 +802,7 @@
     "mailingList.comment"            : " Création et mise en place de vos processus de mailing",
     "mailingList.lastedit"            : "Dernière modification",
 
+    "mailingListLS.count" : "Nombre",
     "mailingvslist.count" : "Nombre",
 
 	"mailingTypes.title"	: "Types de courrier",

@@ -24,6 +24,7 @@
             this.nextUrl = null;
             this.loading = false;
             this.maildocuments = null;
+            this.loading_Flag = false;
 
             var that = this;
 
@@ -172,8 +173,12 @@
                                                         // called asynchronously if ok
                                                         that.binding.mailingId = item.data.MaildokumentVIEWID;
                                                         AppData.setRecordId("Maildokument", that.binding.mailingId);
-                                            if (typeof AppBar.scope.loadData === "function") {
+                                                        if (typeof AppBar.scope.loadData === "function" && !that.loading_Flag) {
+                                                            // set flag called
                                                             AppBar.scope.loadData();
+                                                            that.loading_Flag = true;
+                                                        } else {
+                                                            that.loading_Flag = false;
                                             }
                                                 }, function (errorResponse) {
                                                         that.selectRecordId(that.binding.mailingId);

@@ -802,6 +802,7 @@
     "mailingList.comment"            : " Creare e impostare i vostri processi di mailing",
     "mailingList.lastedit"            : "Ultimo cambiamento",
 	
+    "mailingListLS.count" : "Numero",
     "mailingvslist.count" : "Numero",
 	
 	"mailingTypes.title"	: "Tipo di posta",

@@ -389,10 +389,11 @@
                 },
                 clickChangeAppSetting: function(event) {
                     Log.call(Log.l.trace, "Event.Controller.");
-                    if (event.currentTarget) {
-                        var toggle = event.currentTarget.winControl;
-                        var target = event.target || event.currentTarget;
-                        var targetId = event.currentTarget.id;
+                    var target = event.currentTarget || event.target;
+                    if (target) {
+                        var toggle = target.winControl;
+                        //var target = event.target || event.currentTarget;
+                        var targetId = target.id;
                         if (toggle) {
                             var value; 
                             if (targetId.includes("Combo")) {
@@ -400,7 +401,7 @@
                             } else {
                                 value = toggle.checked;
                             }
-                            that.changeAppSetting(event.currentTarget.id, value);
+                            that.changeAppSetting(target.id, value);
                         }
                     }
                     Log.ret(Log.l.trace);

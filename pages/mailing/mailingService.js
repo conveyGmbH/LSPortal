@@ -56,7 +56,8 @@
                 ReplyTo: "",
                 VeranstaltungID: AppData.getRecordId("Veranstaltung"),
                 INITSpracheID: 0,
-                MailFooter: ""
+                MailFooter: "",
+                GDPR_Flag: false
             }
         },
         _FragebogenzeileView: {

@@ -83,12 +83,12 @@
                         <div class="field_line field_line_odd">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'esStaffAdministration.firstname'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'esStaffAdministration.firstname'}"></span>
-                            <input class="input_field win-textbox" type="text" data-win-bind-onevent="onkeyup" data-win-bind="value: dataEmployee.Vorname Binding.Mode.twoway" />
+                            <input class="input_field win-textbox" type="text" data-win-bind-onevent="oninput" data-win-bind="value: dataEmployee.Vorname Binding.Mode.twoway" />
                         </div>
                         <div class="field_line field_line_even">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'esStaffAdministration.lastname'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'esStaffAdministration.lastname'}"></span>
-                            <input class="input_field win-textbox" type="text" data-win-bind-onevent="onkeyup" data-win-bind="value: dataEmployee.Nachname Binding.Mode.twoway" />
+                            <input class="input_field win-textbox" type="text" data-win-bind-onevent="oninput" data-win-bind="value: dataEmployee.Nachname Binding.Mode.twoway" />
                         </div>
                         <div class="line-separator"></div>
                         <!--<div class="field_line field_line_odd" data-win-bind="style.display: dataEmployee.LogInNameAfterAtSymbole Binding.Converter.toDisplayNone">
@@ -110,7 +110,7 @@
                         <div class="field_line field_line_odd">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'esStaffAdministration.email'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'esStaffAdministration.email'}"></span>
-                            <input class="input_field win-textbox" type="email" data-win-bind-onevent="onkeyup" data-win-bind="value: dataEmployee.EMail Binding.Mode.twoway" />
+                            <input class="input_field win-textbox" type="email" data-win-bind-onevent="oninput" data-win-bind="value: dataEmployee.EMail Binding.Mode.twoway" />
                         </div>
                         <div class="line-separator"></div>
                         <!--<div class="field_line field_line_odd">
