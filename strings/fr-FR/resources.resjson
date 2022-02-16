@@ -772,6 +772,7 @@
     "mailing.send"          : "Envoyer",
     "mailing.testmailsuccessmsg"          : "Votre testmail a été envoyé avec succès",
     "mailing.comment"          : "Envoyez des e-mails de remerciement à vos contacts.",
+    "mailing.GDPRInfo"       : "Pour définir cette option, vous devez activer la signature GDPR",
 
     "mailingProduct.title"         : "Mailing Produit",
     "mailingProduct.event"         : "événement",

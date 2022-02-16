@@ -772,6 +772,7 @@
     "mailing.send"          : "Inviare",
     "mailing.testmailsuccessmsg"          : "Il tuo testmail è stato inviato con successo",
     "mailing.comment"          : "Invia e-mail di ringraziamento ai tuoi contatti.",
+    "mailing.GDPRInfo"       : "Per impostare questa opzione, è necessario abilitare la firma GDPR",
 
 	"mailingProduct.title"         : "Mailing Prodotto",
     "mailingProduct.event"         : "Evento",

@@ -630,10 +630,10 @@
             this.getLangSpecErrorMsg = getLangSpecErrorMsg;
 
             // Finally, wire up binding
-            that.processAll()/*.then(function () {
+            that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
-            })*/.then(function () {
+            }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
             });
             Log.ret(Log.l.trace);

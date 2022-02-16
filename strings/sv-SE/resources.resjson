@@ -755,6 +755,7 @@
     "mailing.send"          : "Send",
     "mailing.testmailsuccessmsg"          : "Your testmail has been sent successfullys",
 	"mailing.comment"          : "Send thank you emails to your contacts.",
+    "mailing.GDPRInfo"        : "To set this option, you must enable GDPR signing",
     
     "mailingProduct.title"    : "Mailing Products",
     "mailingProduct.event"    : "Event",

@@ -772,6 +772,7 @@
     "mailing.send"          : "Senden",
     "mailing.testmailsuccessmsg"          : "Ihre Test-E-Mail wurde erfolgreich versendet",
     "mailing.comment"          : "Senden Sie Dankes-Emails an ihre Kontakte.",
+    "mailing.GDPRInfo"         : "Um diese Option einzustellen, müssen Sie die GDPR-Signatur aktivieren",
     
     "mailingProduct.title"         : "Mailing Produkte",
     "mailingProduct.event"         : "Veranstaltung",
