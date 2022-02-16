@@ -570,9 +570,9 @@
                             // or server returns response with an error status.
 
                             AppData.setErrorMsg(that.binding, errorResponse);
-                        },
-                            recordId);
+                        }, recordId);
                     } else {
+                        master.controller.loading_Flag = false;
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
