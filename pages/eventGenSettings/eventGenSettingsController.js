@@ -7,6 +7,7 @@
 /// <reference path="~/www/lib/convey/scripts/pageController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/pages/eventGenSettings/eventGenSettingsService.js" />
+/// <reference path="~/www/lib/moment/scripts/moment-with-locales.js" />
 
 (function () {
     "use strict";
@@ -34,7 +35,8 @@
             var showbox = pageElement.querySelector(".showcontainer");
 
             var eventtyp = pageElement.querySelector("#eventTyp");
-            
+
+            this.fieldisempty = false;
 
             this.dispose = function () {
                 
@@ -362,7 +364,143 @@
                 }
             };
             this.changeAppSetting = changeAppSetting;
-            
+
+            var warningMsg = function(fieldName) {
+                Log.call(Log.l.trace, "EventGenSettings.Controller.");
+                alert(getResourceText("eventGenSettings.warnmsg") + fieldName);
+            }
+            this.warningMsg = warningMsg;
+
+            var warningMsgDecider = function(fieldId) {
+                Log.call(Log.l.trace, "EventGenSettings.Controller.");
+                // getting id for the field without data and sending the WarningMsg
+                switch (fieldId) {
+                    case 1:
+                        that.warningMsg(getResourceText("eventGenSettings.startdate"));
+                        break;
+                    case 2:
+                        that.warningMsg(getResourceText("eventGenSettings.starttime"));
+                        break;
+                    case 3:
+                        that.warningMsg(getResourceText("eventGenSettings.enddate"));
+                        break;
+                    case 4:
+                        that.warningMsg(getResourceText("eventGenSettings.endtime"));
+                        break;
+                    case 5:
+                        that.warningMsg(getResourceText("eventGenSettings.listshowdate"));
+                        break;
+                    case 6:
+                        that.warningMsg(getResourceText("eventGenSettings.listshowtime"));
+                        break;
+                    case 7:
+                        that.warningMsg(getResourceText("eventGenSettings.listremovedate"));
+                        break;
+                    case 8:
+                        that.warningMsg(getResourceText("eventGenSettings.listremovetime"));
+                        break;
+                default:
+                }
+            }
+            this.warningMsgDecider = warningMsgDecider;
+
+
+            var isValidDate =  function (date) {
+                if (moment(date).isValid() && typeof date !== 'undefined') {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            this.isValidDate = isValidDate;
+
+            var isValidTime = function (time) {
+                if (moment(time, "HH:mm").isValid() && typeof time !== 'undefined') {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            this.isValidTime = isValidTime;
+
+            var checkifFieldIsEmpty = function() {
+                Log.call(Log.l.trace, "EventGenSettings.Controller.");
+                //Checking if a Date and Time field has only 1 with data to throw a Warning Msg
+                if (that.isValidDate(that.binding.dataEvent.LiveStartDate) === true || that.isValidTime(that.binding.dataEvent.LiveStartTime) === true) {
+                    if (that.isValidDate(that.binding.dataEvent.LiveStartDate) === false && that.isValidTime(that.binding.dataEvent.LiveStartTime) === true) {
+                        that.warningMsgDecider(1);
+                        AppBar.modified = false;
+                        Log.print(Log.l.info, "LiveStartDate empty and LiveStartTime not empty, cannot save!");
+                        that.fieldisempty = true;
+                    } else if (that.isValidTime(that.binding.dataEvent.LiveStartTime) === false && that.isValidDate(that.binding.dataEvent.LiveStartDate) === true) {
+                        that.warningMsgDecider(2);
+                        AppBar.modified = false;
+                        Log.print(Log.l.info, "LiveStartDate not empty and LiveStartTime empty, cannot save!");
+                        that.fieldisempty = true;
+                    } else {
+                        AppBar.modified = true;
+                        Log.print(Log.l.info, "LiveStartDate and LiveStartTime empty, no action taken!");
+                        that.fieldisempty = false;
+                    }
+                }
+                else if (that.isValidDate(that.binding.dataEvent.LiveEndDate) === true || that.isValidTime(that.binding.dataEvent.LiveEndTime) === true) {
+                    if (that.isValidDate(that.binding.dataEvent.LiveEndDate) === false && that.isValidTime(that.binding.dataEvent.LiveEndTime) === true) {
+                        that.warningMsgDecider(3);
+                        AppBar.modified = false;
+                        Log.print(Log.l.info, "LiveEndDate empty and LiveEndTime not empty, cannot save!");
+                        that.fieldisempty = true;
+                    } else if (that.isValidTime(that.binding.dataEvent.LiveEndTime) === false && that.isValidDate(that.binding.dataEvent.LiveEndDate) === true) {
+                        that.warningMsgDecider(4);
+                        AppBar.modified = false;
+                        Log.print(Log.l.info, "LiveEndDate not empty and LiveEndTime empty, cannot save!");
+                        that.fieldisempty = true;
+                    } else {
+                        AppBar.modified = true;
+                        Log.print(Log.l.info, "LiveEndDate and LiveEndTime empty, no action taken!");
+                        that.fieldisempty = false;
+                    }
+                }
+                else if (that.isValidDate(that.binding.dataEvent.ListShowDate) === true || that.isValidTime(that.binding.dataEvent.ListShowTime) === true) {
+                    if (that.isValidDate(that.binding.dataEvent.ListShowDate) === false && that.isValidTime(that.binding.dataEvent.ListShowTime) === true) {
+                        that.warningMsgDecider(5);
+                        AppBar.modified = false;
+                        Log.print(Log.l.info, "ListShowDate empty and ListShowTime not empty, cannot save!");
+                        that.fieldisempty = true;
+                    } else if (that.isValidTime(that.binding.dataEvent.ListShowTime) === false && that.isValidDate(that.binding.dataEvent.ListShowDate) === false) {
+                        that.warningMsgDecider(6);
+                        AppBar.modified = false;
+                        Log.print(Log.l.info, "ListShowDate not empty and ListShowTime empty, cannot save!");
+                        that.fieldisempty = true;
+                    } else {
+                        AppBar.modified = true;
+                        Log.print(Log.l.info, "ListShowDate and ListShowTime empty, no action taken!");
+                        fieldisempty = false;
+                    }
+                }
+                else if (that.isValidDate(that.binding.dataEvent.ListRemoveDate) === true ||
+                    that.isValidTime(that.binding.dataEvent.ListRemoveTime) === true) {
+                    if (that.isValidDate(that.binding.dataEvent.ListRemoveDate) === false && that.isValidTime(that.binding.dataEvent.ListRemoveTime) === true) {
+                        that.warningMsgDecider(7);
+                        AppBar.modified = false;
+                        Log.print(Log.l.info, "ListRemoveDate empty and ListRemoveTime not empty, cannot save!");
+                        that.fieldisempty = true;
+                    } else if (that.isValidTime(that.binding.dataEvent.ListRemoveTime) === false && that.isValidDate(that.binding.dataEvent.ListRemoveDate) === true) {
+                        that.warningMsgDecider(8);
+                        AppBar.modified = false;
+                        Log.print(Log.l.info, "ListRemoveDate not empty and ListRemoveTime empty, cannot save!");
+                        that.fieldisempty = true;
+                    } else {
+                        AppBar.modified = true;
+                        Log.print(Log.l.info, "ListRemoveDate and ListRemoveTime empty, no action taken!");
+                        that.fieldisempty = false;
+                    }
+                } else {
+                    AppBar.modified = false;
+                    that.fieldisempty = false;
+                }
+            }
+            this.checkifFieldIsEmpty = checkifFieldIsEmpty;
+
             this.eventHandlers = {
                 clickBack: function (event) {
                     Log.call(Log.l.trace, "Contact.Controller.");
@@ -380,11 +518,16 @@
                     Log.call(Log.l.trace, "Event.Controller.");
                     WinJS.Promise.as().then(function () {
                        // AppBar.modified = true;
-                        that.saveData(function (response) {
-                            Log.print(Log.l.trace, "prev Mail saved");
-                        }, function (errorResponse) {
-                            Log.print(Log.l.error, "error saving mail");
-                        });
+                        if (that.fieldisempty === false) {
+                            that.saveData(function (response) {
+                                Log.print(Log.l.trace, "prev Mail saved");
+                            }, function (errorResponse) {
+                                Log.print(Log.l.error, "error saving mail");
+                            });
+                        } else {
+                            
+                        }
+                            
                     }).then(function () {
 
                     });
@@ -579,46 +722,51 @@
             var saveData = function (complete, error) {
                 Log.call(Log.l.trace, "Event.Controller.");
                 AppData.setErrorMsg(that.binding);
-                var ret;
-                var dataEvent = that.binding.dataEvent;
-                if (dataEvent && AppBar.modified && !AppBar.busy) {
-                    that.getDataEvent();
-                    var recordId = dataEvent.ConferenceExhibitorVIEWID;
-                    if (recordId) {
-                        AppBar.busy = true;
-                        AppBar.triggerDisableHandlers();
-                        ret = EventGenSettings.conferenceExhibitorView.update(function (response) {
-                            AppBar.busy = false;
+                that.checkifFieldIsEmpty();
+                if (that.fieldisempty === false) {
+                    var ret;
+                    var dataEvent = that.binding.dataEvent;
+                    if (dataEvent && AppBar.modified && !AppBar.busy) {
+                        that.getDataEvent();
+                        var recordId = dataEvent.ConferenceExhibitorVIEWID;
+                        if (recordId) {
+                            AppBar.busy = true;
                             AppBar.triggerDisableHandlers();
-                            // called asynchronously if ok
-                            Log.print(Log.l.info, "eventData update: success!");
-                            AppBar.modified = false;
-                            complete(response);
-                        }, function (errorResponse) {
-                            AppBar.busy = false;
-                            AppBar.triggerDisableHandlers();
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                            error(errorResponse);
-                        }, recordId, dataEvent);
-                    } else {
-                        Log.print(Log.l.info, "not supported");
-                        ret = WinJS.Promise.as();
-                    }
-                } else if (AppBar.busy) {
-                    ret = WinJS.Promise.timeout(100).then(function () {
-                        return that.saveData(complete, error);
-                    });
-                } else {
-                    ret = new WinJS.Promise.as().then(function () {
-                        if (typeof complete === "function") {
-                            complete({});//dataContact
+                            ret = EventGenSettings.conferenceExhibitorView.update(function (response) {
+                                AppBar.busy = false;
+                                AppBar.triggerDisableHandlers();
+                                // called asynchronously if ok
+                                Log.print(Log.l.info, "eventData update: success!");
+                                AppBar.modified = false;
+                                complete(response);
+                            }, function (errorResponse) {
+                                AppBar.busy = false;
+                                AppBar.triggerDisableHandlers();
+                                // called asynchronously if an error occurs
+                                // or server returns response with an error status.
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                                error(errorResponse);
+                            }, recordId, dataEvent);
+                        } else {
+                            Log.print(Log.l.info, "not supported");
+                            ret = WinJS.Promise.as();
                         }
-                    });
+                    } else if (AppBar.busy) {
+                        ret = WinJS.Promise.timeout(100).then(function () {
+                            return that.saveData(complete, error);
+                        });
+                    } else {
+                        ret = new WinJS.Promise.as().then(function () {
+                            if (typeof complete === "function") {
+                                complete({});//dataContact
+                            }
+                        });
+                    }
+                    Log.ret(Log.l.trace);
+                    return ret;
+                } else {
+                    error({});
                 }
-                Log.ret(Log.l.trace);
-                return ret;
             };
             this.saveData = saveData;
             

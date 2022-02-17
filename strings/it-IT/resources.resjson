@@ -1348,6 +1348,7 @@
     "eventGenSettings.sharednotes"			: "Note condivise",
     "eventGenSettings.addevent"			: "Aggiungi",
     "eventGenSettings.comment"			: "Crea e imposta i tuoi eventi",
+    "eventGenSettings.warnmsg"			: "Il campo deve essere compilato: ",
 
     "eventSpeakerAdministration.speaker": "Membro",
     "eventSpeakerAdministration.speakerDelete": "Vuoi eliminare il compito",

@@ -1348,6 +1348,7 @@
     "eventGenSettings.sharednotes"			: "Shared Notes",
     "eventGenSettings.addevent"			: "Add",
     "eventGenSettings.comment"			: "Create and set up your events",
+    "eventGenSettings.warnmsg"			: "Field must be filled in: ",
 
 	"eventSpeakerAdministration.speaker"    : "Member",
 	"eventSpeakerAdministration.speakerDelete": "Would you like to delete the assignment",

@@ -1349,6 +1349,7 @@
     "eventGenSettings.sharednotes"			: "Notes partagées",
     "eventGenSettings.addevent"			: "Ajouter",
     "eventGenSettings.comment"			: "Créer et mettre en place vos événements",
+    "eventGenSettings.warnmsg"			: "Le champ doit être rempli: ",
 
     "eventSpeakerAdministration.speaker"    : "Membre",
     "eventSpeakerAdministration.speakerDelete": "Souhaitez-vous supprimer le devoir",

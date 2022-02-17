@@ -1326,6 +1326,7 @@
     "eventGenSettings.sharednotes"			: "Geteilten Notizen",
     "eventGenSettings.addevent"			: "Hinzufügen",
     "eventGenSettings.comment"			: "Erstellen und Einrichten Sie Ihre Events",
+    "eventGenSettings.warnmsg"			: "Feld muss ausgefüllt sein: ",
     
 	"eventSeries.title" : "Serienseite",
     "eventSeries.language" : "Sprache",
