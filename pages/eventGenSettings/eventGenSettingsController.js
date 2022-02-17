@@ -116,17 +116,25 @@
                 that.binding.newEventData.VeranstaltungName = "";
                 that.binding.dataEvent = newDataEvent;
                 // convert LiveStartTS
+                if (newDataEvent.LiveStartTS) {
                 that.binding.dataEvent.LiveStartDate = that.formatDate(that.getDateObject(newDataEvent.LiveStartTS)); //that.setDateFields(newDataEvent.LiveStartTS, 1);
                 that.binding.dataEvent.LiveStartTime = that.formatTime(that.getDateObject(newDataEvent.LiveStartTS));
+                }
+                if (newDataEvent.LiveEndTS) {
                 // convert LiveDuration
                 that.binding.dataEvent.LiveEndDate = that.formatDate(that.getDateObject(newDataEvent.LiveEndTS));
                 that.binding.dataEvent.LiveEndTime = that.formatTime(that.getDateObject(newDataEvent.LiveEndTS));
+                }
+                if (newDataEvent.ListShowTS) {
                 // convert ListShowTS
                 that.binding.dataEvent.ListShowDate = that.formatDate(that.getDateObject(newDataEvent.ListShowTS));
                 that.binding.dataEvent.ListShowTime = that.formatTime(that.getDateObject(newDataEvent.ListShowTS));
+                }
+                if (newDataEvent.ListRemoveTS) {
                 // convert ListRemoveTS
                 that.binding.dataEvent.ListRemoveDate = that.formatDate(that.getDateObject(newDataEvent.ListRemoveTS));
                 that.binding.dataEvent.ListRemoveTime = that.formatTime(that.getDateObject(newDataEvent.ListRemoveTS));
+                }
                 AppBar.modified = false;
                 AppBar.notifyModified = prevNotifyModified;
                 AppBar.triggerDisableHandlers();
@@ -404,9 +412,8 @@
             }
             this.warningMsgDecider = warningMsgDecider;
 
-
             var isValidDate =  function (date) {
-                if (moment(date).isValid() && typeof date !== 'undefined') {
+                if ((moment(date).isValid() && typeof date !== 'undefined') || date === "") {
                     return true;
                 } else {
                     return false;
@@ -415,7 +422,7 @@
             this.isValidDate = isValidDate;
 
             var isValidTime = function (time) {
-                if (moment(time, "HH:mm").isValid() && typeof time !== 'undefined') {
+                if (moment(time, "HH:mm").isValid() && typeof time !== 'undefined' || time === "") {
                     return true;
                 } else {
                     return false;
@@ -423,81 +430,38 @@
             }
             this.isValidTime = isValidTime;
 
-            var checkifFieldIsEmpty = function() {
+            var checkValidDate = function (date, time, dateId, timeId) {
+                if ((typeof date === "undefined" || date === "") && (typeof time === "undefined" || time === "")) {
+                    return true;
+                }
+                if ((that.isValidDate(date) && that.isValidTime(time))) {
+                    return true;
+                    } else {
+                    if (!that.isValidDate(date)) {
+                        that.warningMsgDecider(dateId);
+                    }
+                    if (!that.isValidTime(time)) {
+                        that.warningMsgDecider(timeId);
+                }
+                    return false;
+                    }
+                }
+            this.checkValidDate = checkValidDate();
+
+            var checkifFieldIsEmpty = function () {
                 Log.call(Log.l.trace, "EventGenSettings.Controller.");
                 //Checking if a Date and Time field has only 1 with data to throw a Warning Msg
-                if (that.isValidDate(that.binding.dataEvent.LiveStartDate) === true || that.isValidTime(that.binding.dataEvent.LiveStartTime) === true) {
-                    if (that.isValidDate(that.binding.dataEvent.LiveStartDate) === false && that.isValidTime(that.binding.dataEvent.LiveStartTime) === true) {
-                        that.warningMsgDecider(1);
-                        AppBar.modified = false;
-                        Log.print(Log.l.info, "LiveStartDate empty and LiveStartTime not empty, cannot save!");
-                        that.fieldisempty = true;
-                    } else if (that.isValidTime(that.binding.dataEvent.LiveStartTime) === false && that.isValidDate(that.binding.dataEvent.LiveStartDate) === true) {
-                        that.warningMsgDecider(2);
-                        AppBar.modified = false;
-                        Log.print(Log.l.info, "LiveStartDate not empty and LiveStartTime empty, cannot save!");
-                        that.fieldisempty = true;
-                    } else {
-                        AppBar.modified = true;
-                        Log.print(Log.l.info, "LiveStartDate and LiveStartTime empty, no action taken!");
-                        that.fieldisempty = false;
-                    }
-                }
-                else if (that.isValidDate(that.binding.dataEvent.LiveEndDate) === true || that.isValidTime(that.binding.dataEvent.LiveEndTime) === true) {
-                    if (that.isValidDate(that.binding.dataEvent.LiveEndDate) === false && that.isValidTime(that.binding.dataEvent.LiveEndTime) === true) {
-                        that.warningMsgDecider(3);
-                        AppBar.modified = false;
-                        Log.print(Log.l.info, "LiveEndDate empty and LiveEndTime not empty, cannot save!");
-                        that.fieldisempty = true;
-                    } else if (that.isValidTime(that.binding.dataEvent.LiveEndTime) === false && that.isValidDate(that.binding.dataEvent.LiveEndDate) === true) {
-                        that.warningMsgDecider(4);
-                        AppBar.modified = false;
-                        Log.print(Log.l.info, "LiveEndDate not empty and LiveEndTime empty, cannot save!");
-                        that.fieldisempty = true;
-                    } else {
-                        AppBar.modified = true;
-                        Log.print(Log.l.info, "LiveEndDate and LiveEndTime empty, no action taken!");
-                        that.fieldisempty = false;
-                    }
-                }
-                else if (that.isValidDate(that.binding.dataEvent.ListShowDate) === true || that.isValidTime(that.binding.dataEvent.ListShowTime) === true) {
-                    if (that.isValidDate(that.binding.dataEvent.ListShowDate) === false && that.isValidTime(that.binding.dataEvent.ListShowTime) === true) {
-                        that.warningMsgDecider(5);
-                        AppBar.modified = false;
-                        Log.print(Log.l.info, "ListShowDate empty and ListShowTime not empty, cannot save!");
-                        that.fieldisempty = true;
-                    } else if (that.isValidTime(that.binding.dataEvent.ListShowTime) === false && that.isValidDate(that.binding.dataEvent.ListShowDate) === false) {
-                        that.warningMsgDecider(6);
-                        AppBar.modified = false;
-                        Log.print(Log.l.info, "ListShowDate not empty and ListShowTime empty, cannot save!");
-                        that.fieldisempty = true;
-                    } else {
-                        AppBar.modified = true;
-                        Log.print(Log.l.info, "ListShowDate and ListShowTime empty, no action taken!");
-                        fieldisempty = false;
-                    }
-                }
-                else if (that.isValidDate(that.binding.dataEvent.ListRemoveDate) === true ||
-                    that.isValidTime(that.binding.dataEvent.ListRemoveTime) === true) {
-                    if (that.isValidDate(that.binding.dataEvent.ListRemoveDate) === false && that.isValidTime(that.binding.dataEvent.ListRemoveTime) === true) {
-                        that.warningMsgDecider(7);
-                        AppBar.modified = false;
-                        Log.print(Log.l.info, "ListRemoveDate empty and ListRemoveTime not empty, cannot save!");
-                        that.fieldisempty = true;
-                    } else if (that.isValidTime(that.binding.dataEvent.ListRemoveTime) === false && that.isValidDate(that.binding.dataEvent.ListRemoveDate) === true) {
-                        that.warningMsgDecider(8);
-                        AppBar.modified = false;
-                        Log.print(Log.l.info, "ListRemoveDate not empty and ListRemoveTime empty, cannot save!");
-                        that.fieldisempty = true;
-                    } else {
-                        AppBar.modified = true;
-                        Log.print(Log.l.info, "ListRemoveDate and ListRemoveTime empty, no action taken!");
-                        that.fieldisempty = false;
-                    }
+                if (!checkValidDate(that.binding.dataEvent.LiveStartDate, that.binding.dataEvent.LiveStartTime, 1, 2)) {
+                    return true;
+                } else if (!checkValidDate(that.binding.dataEvent.LiveEndDate, that.binding.dataEvent.LiveEndTime, 3, 4)) {
+                    return true;
+                } else if (!checkValidDate(that.binding.dataEvent.ListShowDate, that.binding.dataEvent.ListShowTime, 5, 6)) {
+                    return true;
+                } else if (!checkValidDate(that.binding.dataEvent.ListRemoveDate, that.binding.dataEvent.ListRemoveTime, 7, 8)) {
+                    return true;
                 } else {
-                    AppBar.modified = false;
-                    that.fieldisempty = false;
-                }
+                    return false;
+            }
             }
             this.checkifFieldIsEmpty = checkifFieldIsEmpty;
 
@@ -722,10 +686,12 @@
             var saveData = function (complete, error) {
                 Log.call(Log.l.trace, "Event.Controller.");
                 AppData.setErrorMsg(that.binding);
-                that.checkifFieldIsEmpty();
-                if (that.fieldisempty === false) {
                     var ret;
                     var dataEvent = that.binding.dataEvent;
+                if (AppBar.modified && that.checkifFieldIsEmpty() && !AppBar.busy) {
+                    error({});
+                    return WinJS.Promise.as();
+                } else {
                     if (dataEvent && AppBar.modified && !AppBar.busy) {
                         that.getDataEvent();
                         var recordId = dataEvent.ConferenceExhibitorVIEWID;
@@ -762,11 +728,9 @@
                             }
                         });
                     }
+                };
                     Log.ret(Log.l.trace);
                     return ret;
-                } else {
-                    error({});
-                }
             };
             this.saveData = saveData;
             

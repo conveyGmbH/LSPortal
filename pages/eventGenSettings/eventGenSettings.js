@@ -46,17 +46,12 @@
             var ret;
             Log.call(Log.l.trace, pageName + ".");
             if (this.controller) {
-                if (this.controller.fieldisempty === false) {
                     ret = this.controller.saveData(function (response) {
                         // called asynchronously if ok
                         complete(response);
                     }, function (errorResponse) {
                         error(errorResponse);
                     });
-                } else {
-                    error({});
-                    ret = WinJS.Promise.as();
-                }
             } else {
                 ret = WinJS.Promise.as();
             }
