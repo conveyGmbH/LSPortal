@@ -476,6 +476,7 @@
                 clickLayoutEdit: function (event) {
                     Log.call(Log.l.trace, "ContactResultsList.Controller.");
                     var id = parseInt(event.currentTarget.value);
+                    // VAMailLayout
                     AppData.setRecordId("VAMail", id);
                     Application.navigateById("MailingTemplateEventEdit");
                 },
