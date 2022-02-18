@@ -134,6 +134,11 @@
                 Log.call(Log.l.trace, "Mailing.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret;
+                if (that.binding.dataMail.GDPR_Flag) {
+                    that.binding.dataMail.GDPR_Flag = "1";
+                } else {
+                    that.binding.dataMail.GDPR_Flag = null;
+                }
                 var dataMail = that.binding.dataMail;
                 if (dataMail && AppBar.modified && !AppBar.busy) {
                     AppBar.busy = true;
