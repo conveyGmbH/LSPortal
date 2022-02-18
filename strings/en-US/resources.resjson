@@ -1268,6 +1268,7 @@
     "mailingEdit.mailactive"			: "Are all settings correct? Then activate this mail here.",
     "mailingEdit.active"			: "Active",
     "mailingEdit.deactive"			: "Inactive",
+    "mailingEdit.warnmsg"           : "Sender address is empty or mail layout is empty",
 
     "mailingTemplateEvent.title"			: "Templates",
     "mailingTemplateEvent.headertemplatename"			: "Name",

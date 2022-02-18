@@ -1240,6 +1240,7 @@
     "mailingEdit.mailactive"			: "Passen alle Einstellungen? Dann aktivieren Sie diese Mail hier.",
     "mailingEdit.active"			: "Aktiv",
     "mailingEdit.deactive"			: "Inaktive",
+    "mailingEdit.warnmsg"           : "Absenderadresse ist leer oder Maillayout ist leer",
 
     "mailingTemplateEvent.title"			: "Vorlagen",
     "mailingTemplateEvent.headertemplatename"			: "Name",
