@@ -19,27 +19,27 @@
         },
         MaildokumentView: {
             select: function (complete, error, recordId) {
-                Log.call(Log.l.trace, "Mailing.");
+                Log.call(Log.l.trace, "MailingEdit.");
                 var ret = MailingEdit._MaildokumentView.selectById(complete, error, recordId);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
             },
             update: function (complete, error, recordId, viewResponse) {
-                Log.call(Log.l.trace, "Mailing.");
+                Log.call(Log.l.trace, "MailingEdit.");
                 var ret = MailingEdit._MaildokumentTable.update(complete, error, recordId, viewResponse);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
             },
             insert: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "Mailing.");
+                Log.call(Log.l.trace, "MailingEdit.");
                 var ret = MailingEdit._MaildokumentTable.insert(complete, error, restriction);
                 Log.ret(Log.l.trace);
                 return ret;
             },
             deleteRecord: function (complete, error, recordId) {
-                Log.call(Log.l.trace, "Mailing.");
+                Log.call(Log.l.trace, "MailingEdit.");
                 var ret = MailingEdit._MaildokumentTable.deleteRecord(complete, error, recordId);
                 Log.ret(Log.l.trace);
                 return ret;
@@ -73,7 +73,7 @@
         },
         VAMail: {
             select: function (complete, error, restricion) {
-                Log.call(Log.l.trace, "ContactResultsList.");
+                Log.call(Log.l.trace, "MailingEdit.");
                 var ret = MailingEdit._VAMail.select(complete, error, restricion);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
@@ -87,19 +87,19 @@
         },
         initSpracheView: {
             select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "Mailing._initSpracheView.");
+                Log.call(Log.l.trace, "MailingEdit.");
                 var ret = MailingEdit._initSpracheView.select(complete, error, restriction, { ordered: true });
                 Log.ret(Log.l.trace);
                 return ret;
             },
             getResults: function () {
-                Log.call(Log.l.trace, "Mailing._initSpracheView.");
+                Log.call(Log.l.trace, "MailingEdit.");
                 var ret = MailingEdit._initSpracheView.results;
                 Log.ret(Log.l.trace);
                 return ret;
             },
             getMap: function () {
-                Log.call(Log.l.trace, "Mailing._initSpracheView.");
+                Log.call(Log.l.trace, "MailingEdit.");
                 var ret = MailingEdit._initSpracheView.map;
                 Log.ret(Log.l.trace);
                 return ret;
@@ -112,19 +112,19 @@
         },
         vAMailTemplateView: {
             select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "MailingEdit._vAMailTemplateView.");
+                Log.call(Log.l.trace, "MailingEdit.");
                 var ret = MailingEdit._vAMailTemplateView.select(complete, error, restriction);
                 Log.ret(Log.l.trace);
                 return ret;
             },
             getResults: function () {
-                Log.call(Log.l.trace, "MailingEdit._vAMailTemplateView.");
+                Log.call(Log.l.trace, "MailingEdit.");
                 var ret = MailingEdit._vAMailTemplateView.results;
                 Log.ret(Log.l.trace);
                 return ret;
             },
             getMap: function () {
-                Log.call(Log.l.trace, "MailingEdit._vAMailTemplateView.");
+                Log.call(Log.l.trace, "MailingEdit.");
                 var ret = MailingEdit._vAMailTemplateView.map;
                 Log.ret(Log.l.trace);
                 return ret;
@@ -137,7 +137,7 @@
         },
         TestMailView: {
             insert: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "Mailing.");
+                Log.call(Log.l.trace, "MailingEdit.");
                 var ret = MailingEdit._TestMailView.insert(complete, error, restriction);
                 Log.ret(Log.l.trace);
                 return ret;
