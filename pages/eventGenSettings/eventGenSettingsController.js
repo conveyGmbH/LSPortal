@@ -13,12 +13,12 @@
     "use strict";
     WinJS.Namespace.define("EventGenSettings", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
-            Log.call(Log.l.trace, "Event.Controller.");
+            Log.call(Log.l.trace, "EventGenSettings.Controller.");
             Application.Controller.apply(this, [pageElement, {
                 dataEvent: getEmptyDefaultValue(EventGenSettings.conferenceExhibitorView.defaultValue),
                 newEventData: getEmptyDefaultValue(EventGenSettings.conferenceExhibitorView.newEventDefault),
-                websiteData: getEmptyDefaultValue(EventGenSettings.mandantStartView.defaultValue) 
-        }, commandList]);
+                websiteData: getEmptyDefaultValue(EventGenSettings.mandantStartView.defaultValue)
+            }, commandList]);
 
             var that = this;
 
@@ -39,7 +39,7 @@
             this.fieldisempty = false;
 
             this.dispose = function () {
-                
+
             }
 
             var getDateObject = function (dateData) {
@@ -70,7 +70,7 @@
             }
             this.formatDate = formatDate;
 
-            var formatTime = function(time) {
+            var formatTime = function (time) {
                 var currentTime = time;
                 var gmt = -(new Date()).getTimezoneOffset() / 60;
                 var totalSeconds = Math.floor(currentTime / 1000);
@@ -83,33 +83,6 @@
             }
             this.formatTime = formatTime;
 
-            var setDateFields = function(datetimedata , fielddata) {
-                datetimedata = that.getDateObject(datetimedata);
-                var date = that.formatDate(datetimedata);
-                var time = that.formatTime(datetimedata);
-                Log.call(Log.l.trace, "Event.Controller.");
-                switch (fielddata) {
-                    case 1:
-                        livestartdate.value = date;
-                        livestarttime.value = time;
-                        break; 
-                    case 2:
-                        liveenddate.value = date;
-                        liveendtime.value = time;
-                        break;
-                    case 3:
-                        listshowdate.value = date;
-                        listshowtime.value = time;
-                        break;
-                    case 4:
-                        listremovedate.value = date;
-                        listremovetime.value = time;
-                    break;
-                default:
-                }
-            }
-            this.setDateFields = setDateFields;
-
             var setDataEvent = function (newDataEvent) {
                 var prevNotifyModified = AppBar.notifyModified;
                 AppBar.notifyModified = false;
@@ -117,23 +90,23 @@
                 that.binding.dataEvent = newDataEvent;
                 // convert LiveStartTS
                 if (newDataEvent.LiveStartTS) {
-                that.binding.dataEvent.LiveStartDate = that.formatDate(that.getDateObject(newDataEvent.LiveStartTS)); //that.setDateFields(newDataEvent.LiveStartTS, 1);
-                that.binding.dataEvent.LiveStartTime = that.formatTime(that.getDateObject(newDataEvent.LiveStartTS));
+                    that.binding.dataEvent.LiveStartDate = that.formatDate(that.getDateObject(newDataEvent.LiveStartTS));
+                    that.binding.dataEvent.LiveStartTime = that.formatTime(that.getDateObject(newDataEvent.LiveStartTS));
                 }
                 if (newDataEvent.LiveEndTS) {
-                // convert LiveDuration
-                that.binding.dataEvent.LiveEndDate = that.formatDate(that.getDateObject(newDataEvent.LiveEndTS));
-                that.binding.dataEvent.LiveEndTime = that.formatTime(that.getDateObject(newDataEvent.LiveEndTS));
+                    // convert LiveDuration
+                    that.binding.dataEvent.LiveEndDate = that.formatDate(that.getDateObject(newDataEvent.LiveEndTS));
+                    that.binding.dataEvent.LiveEndTime = that.formatTime(that.getDateObject(newDataEvent.LiveEndTS));
                 }
                 if (newDataEvent.ListShowTS) {
-                // convert ListShowTS
-                that.binding.dataEvent.ListShowDate = that.formatDate(that.getDateObject(newDataEvent.ListShowTS));
-                that.binding.dataEvent.ListShowTime = that.formatTime(that.getDateObject(newDataEvent.ListShowTS));
+                    // convert ListShowTS
+                    that.binding.dataEvent.ListShowDate = that.formatDate(that.getDateObject(newDataEvent.ListShowTS));
+                    that.binding.dataEvent.ListShowTime = that.formatTime(that.getDateObject(newDataEvent.ListShowTS));
                 }
                 if (newDataEvent.ListRemoveTS) {
-                // convert ListRemoveTS
-                that.binding.dataEvent.ListRemoveDate = that.formatDate(that.getDateObject(newDataEvent.ListRemoveTS));
-                that.binding.dataEvent.ListRemoveTime = that.formatTime(that.getDateObject(newDataEvent.ListRemoveTS));
+                    // convert ListRemoveTS
+                    that.binding.dataEvent.ListRemoveDate = that.formatDate(that.getDateObject(newDataEvent.ListRemoveTS));
+                    that.binding.dataEvent.ListRemoveTime = that.formatTime(that.getDateObject(newDataEvent.ListRemoveTS));
                 }
                 AppBar.modified = false;
                 AppBar.notifyModified = prevNotifyModified;
@@ -141,8 +114,8 @@
             };
             this.setDataEvent = setDataEvent;
 
-            var getDateTimeData = function(date) {
-                Log.call(Log.l.trace, "Event.Controller.");
+            var getDateTimeData = function (date) {
+                Log.call(Log.l.trace, "EventGenSettings.Controller.");
                 var reggie = /(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2})/;
                 var dateArray = reggie.exec(date);
                 if (dateArray) {
@@ -160,7 +133,7 @@
             }
             this.getDateTimeData = getDateTimeData;
 
-            var createMandantVaText = function(id) {
+            var createMandantVaText = function (id) {
                 Log.call(Log.l.trace, "EventGenSettings.Controller.");
                 AppData.setErrorMsg(that.binding);
                 AppData.call("Prc_CreateMandantVAText", {
@@ -176,210 +149,212 @@
 
             var insertNewEvent = function () {
                 Log.call(Log.l.trace, "EventGenSettings.Controller.");
-                    AppData.setErrorMsg(that.binding);
-                    AppData.call("PRC_CreateUserVeranstaltung", {
-                        pVeranstaltungName: that.binding.newEventData.VeranstaltungName
-                    }, function (json) {
-                        Log.print(Log.l.info, "call success!");
-                        //that.createMandantVaText(json.d.results[0].NewVeranstaltungID);
-                        neweventbox.style.display = "none";
-                        showbox.style.display = "block";
-                        var master = Application.navigator.masterControl;
-                        master.controller.loadData();
-                    }, function (error) {
-                        Log.print(Log.l.error, "call error");
-                        
-                    });
+                AppData.setErrorMsg(that.binding);
+                AppData.call("PRC_CreateUserVeranstaltung", {
+                    pVeranstaltungName: that.binding.newEventData.VeranstaltungName
+                }, function (json) {
+                    Log.print(Log.l.info, "call success!");
+                    //that.createMandantVaText(json.d.results[0].NewVeranstaltungID);
+                    neweventbox.style.display = "none";
+                    showbox.style.display = "block";
+                    var master = Application.navigator.masterControl;
+                    master.controller.loadData();
+                }, function (error) {
+                    Log.print(Log.l.error, "call error");
+
+                });
             }
             this.insertNewEvent = insertNewEvent;
 
             var getDataEvent = function () {
-                Log.call(Log.l.trace, "Event.Controller.");
+                Log.call(Log.l.trace, "EventGenSettings.Controller.");
                 if (that.binding.dataEvent.LiveStartDate && that.binding.dataEvent.LiveStartTime) {
-                that.binding.dataEvent.LiveStartTS = that.getDateTimeData(that.binding.dataEvent.LiveStartDate + " " + that.binding.dataEvent.LiveStartTime);
+                    that.binding.dataEvent.LiveStartTS = that.getDateTimeData(that.binding.dataEvent.LiveStartDate + " " + that.binding.dataEvent.LiveStartTime);
                 } else {
                     that.binding.dataEvent.LiveStartTS = null;
                 }
                 if (that.binding.dataEvent.LiveEndDate && that.binding.dataEvent.LiveEndTime) {
-                that.binding.dataEvent.LiveEndTS = that.getDateTimeData(that.binding.dataEvent.LiveEndDate + " " + that.binding.dataEvent.LiveEndTime);
+                    that.binding.dataEvent.LiveEndTS = that.getDateTimeData(that.binding.dataEvent.LiveEndDate + " " + that.binding.dataEvent.LiveEndTime);
                 } else {
                     that.binding.dataEvent.LiveEndTS = null;
                 }
                 if (that.binding.dataEvent.ListShowDate && that.binding.dataEvent.ListShowTime) {
-                that.binding.dataEvent.ListShowTS = that.getDateTimeData(that.binding.dataEvent.ListShowDate + " " + that.binding.dataEvent.ListShowTime);
+                    that.binding.dataEvent.ListShowTS = that.getDateTimeData(that.binding.dataEvent.ListShowDate + " " + that.binding.dataEvent.ListShowTime);
                 } else {
                     that.binding.dataEvent.ListShowTS = null;
                 }
                 if (that.binding.dataEvent.ListRemoveDate && that.binding.dataEvent.ListRemoveTime) {
-                that.binding.dataEvent.ListRemoveTS = that.getDateTimeData(that.binding.dataEvent.ListRemoveDate + " " + that.binding.dataEvent.ListRemoveTime);
+                    that.binding.dataEvent.ListRemoveTS = that.getDateTimeData(that.binding.dataEvent.ListRemoveDate + " " + that.binding.dataEvent.ListRemoveTime);
                 } else {
                     that.binding.dataEvent.ListRemoveTS = null;
                 }
-                Log.call(Log.l.trace, "Event.Controller.");
+                Log.ret(Log.l.trace);
             };
             this.getDataEvent = getDataEvent;
-            
-            var changeAppSetting = function(toggleId, checked) {
+
+            var changeAppSetting = function (toggleId, checked) {
                 Log.call(Log.l.trace, "Settings.Controller.", "toggleId=" + toggleId + " checked=" + checked);
                 switch (toggleId) {
                     case "sharedNotes":
-                    if (checked) {
-                        that.binding.dataEvent.SharedNotes = 1;
-                    } else {
-                        that.binding.dataEvent.SharedNotes = null;
-                    }
-                    break;
+                        if (checked) {
+                            that.binding.dataEvent.SharedNotes = 1;
+                        } else {
+                            that.binding.dataEvent.SharedNotes = null;
+                        }
+                        break;
                     case "requireReg":
-                    if (checked) {
-                        that.binding.dataEvent.RequireReg = 1;
-                    } else {
-                        that.binding.dataEvent.RequireReg = null;
-                    }
-                    break;
+                        if (checked) {
+                            that.binding.dataEvent.RequireReg = 1;
+                        } else {
+                            that.binding.dataEvent.RequireReg = null;
+                        }
+                        break;
                     case "acceptRec":
-                    if (checked) {
-                        that.binding.dataEvent.AcceptRec = 1;
-                    } else {
-                        that.binding.dataEvent.AcceptRec = null;
-                    }
-                    break;
+                        if (checked) {
+                            that.binding.dataEvent.AcceptRec = 1;
+                        } else {
+                            that.binding.dataEvent.AcceptRec = null;
+                        }
+                        break;
                     case "showAllowAudio":
-                    if (checked) {
-                        that.binding.dataEvent.AllowAudio = 1;
-                    } else {
-                        that.binding.dataEvent.AllowAudio = null;
-                    }
-                    break;
+                        if (checked) {
+                            that.binding.dataEvent.AllowAudio = 1;
+                        } else {
+                            that.binding.dataEvent.AllowAudio = null;
+                        }
+                        break;
                     case "showAllowVideo":
-                    if (checked) {
-                        that.binding.dataEvent.AllowVideo = 1;
-                    } else {
-                        that.binding.dataEvent.AllowVideo = null;
-                    }
-                    break;
+                        if (checked) {
+                            that.binding.dataEvent.AllowVideo = 1;
+                        } else {
+                            that.binding.dataEvent.AllowVideo = null;
+                        }
+                        break;
                     case "hideSilentVideos":
-                    if (checked) {
-                        that.binding.dataEvent.HideSilentVideos = 1;
-                    } else {
-                        that.binding.dataEvent.HideSilentVideos = null;
-                    }
-                    break;
+                        if (checked) {
+                            that.binding.dataEvent.HideSilentVideos = 1;
+                        } else {
+                            that.binding.dataEvent.HideSilentVideos = null;
+                        }
+                        break;
                     case "speakerVideosPinned":
-                    if (checked) {
-                        that.binding.dataEvent.SpeakerVideosPinned = 1;
-                    } else {
-                        that.binding.dataEvent.SpeakerVideosPinned = null;
-                    }
-                    break;
+                        if (checked) {
+                            that.binding.dataEvent.SpeakerVideosPinned = 1;
+                        } else {
+                            that.binding.dataEvent.SpeakerVideosPinned = null;
+                        }
+                        break;
                     case "showNoMemberList":
-                    if (checked) {
-                        that.binding.dataEvent.NoMemberList = 1;
-                    } else {
-                        that.binding.dataEvent.NoMemberList = null;
-                    }
-                    break;
+                        if (checked) {
+                            that.binding.dataEvent.NoMemberList = 1;
+                        } else {
+                            that.binding.dataEvent.NoMemberList = null;
+                        }
+                        break;
                     case "listOnlyModerators":
-                    if (checked) {
-                        that.binding.dataEvent.ListOnlyModerators = 1;
-                    } else {
-                        that.binding.dataEvent.ListOnlyModerators = null;
-                    }
-                    break;
+                        if (checked) {
+                            that.binding.dataEvent.ListOnlyModerators = 1;
+                        } else {
+                            that.binding.dataEvent.ListOnlyModerators = null;
+                        }
+                        break;
                     case "showShowNames":
-                    if (checked) {
-                        that.binding.dataEvent.ShowNames = 1;
-                    } else {
-                        that.binding.dataEvent.ShowNames = null;
-                    }
-                    break;
+                        if (checked) {
+                            that.binding.dataEvent.ShowNames = 1;
+                        } else {
+                            that.binding.dataEvent.ShowNames = null;
+                        }
+                        break;
                     case "showRecordSession":
-                    if (checked) {
-                        that.binding.dataEvent.RecordSession = 1;
-                    } else {
-                        that.binding.dataEvent.RecordSession = null;
-                    }
-                    break;
+                        if (checked) {
+                            that.binding.dataEvent.RecordSession = 1;
+                        } else {
+                            that.binding.dataEvent.RecordSession = null;
+                        }
+                        break;
                     case "showQuestions":
-                    if (checked) {
-                        that.binding.dataEvent.ShowQuestions = 1;
-                    } else {
-                        that.binding.dataEvent.ShowQuestions = null;
-                    }
-                    break;
+                        if (checked) {
+                            that.binding.dataEvent.ShowQuestions = 1;
+                        } else {
+                            that.binding.dataEvent.ShowQuestions = null;
+                        }
+                        break;
                     case "showICS":
-                    if (checked) {
-                        that.binding.dataEvent.ShowICS = 1;
-                    } else {
-                        that.binding.dataEvent.ShowICS = null;
-                    }
-                    break;
+                        if (checked) {
+                            that.binding.dataEvent.ShowICS = 1;
+                        } else {
+                            that.binding.dataEvent.ShowICS = null;
+                        }
+                        break;
                     case "publishRecording":
-                    if (checked) {
-                        that.binding.dataEvent.PublishRecording = 1;
-                    } else {
-                        that.binding.dataEvent.PublishRecording = null;
-                    }
-                    break;
+                        if (checked) {
+                            that.binding.dataEvent.PublishRecording = 1;
+                        } else {
+                            that.binding.dataEvent.PublishRecording = null;
+                        }
+                        break;
                     case "showType":
-                    if (checked) {
-                        that.binding.dataEvent.ShowType = 1;
-                    } else {
-                        that.binding.dataEvent.ShowType = null;
-                    }
-                    break;
+                        if (checked) {
+                            that.binding.dataEvent.ShowType = 1;
+                        } else {
+                            that.binding.dataEvent.ShowType = null;
+                        }
+                        break;
                     case "showReg":
-                    if (checked) {
-                        that.binding.dataEvent.ShowReg = 1;
-                    } else {
-                        that.binding.dataEvent.ShowReg = null;
-                    }
-                    break;
+                        if (checked) {
+                            that.binding.dataEvent.ShowReg = 1;
+                        } else {
+                            that.binding.dataEvent.ShowReg = null;
+                        }
+                        break;
                     case "speakerName":
-                    if (checked) {
-                        that.binding.dataEvent.SpeakerName = 1;
-                    } else {
-                        that.binding.dataEvent.SpeakerName = null;
-                    }
-                    break;
+                        if (checked) {
+                            that.binding.dataEvent.SpeakerName = 1;
+                        } else {
+                            that.binding.dataEvent.SpeakerName = null;
+                        }
+                        break;
                     case "speakerFN":
-                    if (checked) {
-                        that.binding.dataEvent.SpeakerFN = 1;
-                    } else {
-                        that.binding.dataEvent.SpeakerFN = null;
-                    }
-                    break;
+                        if (checked) {
+                            that.binding.dataEvent.SpeakerFN = 1;
+                        } else {
+                            that.binding.dataEvent.SpeakerFN = null;
+                        }
+                        break;
                     case "speakerImage":
-                    if (checked) {
-                        that.binding.dataEvent.SpeakerImage = 1;
-                    } else {
-                        that.binding.dataEvent.SpeakerImage = null;
-                    }
-                    break;
+                        if (checked) {
+                            that.binding.dataEvent.SpeakerImage = 1;
+                        } else {
+                            that.binding.dataEvent.SpeakerImage = null;
+                        }
+                        break;
                     case "speakerTitle":
-                    if (checked) {
-                        that.binding.dataEvent.SpeakerTitle = 1;
-                    } else {
-                        that.binding.dataEvent.SpeakerTitle = null;
-                    }
-                    break;
+                        if (checked) {
+                            that.binding.dataEvent.SpeakerTitle = 1;
+                        } else {
+                            that.binding.dataEvent.SpeakerTitle = null;
+                        }
+                        break;
                     case "speakerCV":
-                    if (checked) {
-                        that.binding.dataEvent.SpeakerCV = 1;
-                    } else {
-                        that.binding.dataEvent.SpeakerCV = null;
-                    }
-                    break;
+                        if (checked) {
+                            that.binding.dataEvent.SpeakerCV = 1;
+                        } else {
+                            that.binding.dataEvent.SpeakerCV = null;
+                        }
+                        break;
                 }
+                Log.ret(Log.l.trace);
             };
             this.changeAppSetting = changeAppSetting;
 
-            var warningMsg = function(fieldName) {
+            var warningMsg = function (fieldName) {
                 Log.call(Log.l.trace, "EventGenSettings.Controller.");
                 alert(getResourceText("eventGenSettings.warnmsg") + fieldName);
+                Log.ret(Log.l.trace);
             }
             this.warningMsg = warningMsg;
 
-            var warningMsgDecider = function(fieldId) {
+            var warningMsgDecider = function (fieldId) {
                 Log.call(Log.l.trace, "EventGenSettings.Controller.");
                 // getting id for the field without data and sending the WarningMsg
                 switch (fieldId) {
@@ -407,97 +382,104 @@
                     case 8:
                         that.warningMsg(getResourceText("eventGenSettings.listremovetime"));
                         break;
-                default:
+                    default:
                 }
+                Log.ret(Log.l.trace);
             }
             this.warningMsgDecider = warningMsgDecider;
 
-            var isValidDate =  function (date) {
-                if ((moment(date).isValid() && typeof date !== 'undefined') || date === "") {
+            var isValidDate = function (date) {
+                Log.call(Log.l.trace, "EventGenSettings.Controller.");
+                if (moment(date).isValid() && typeof date !== 'undefined') {
+                    Log.ret(Log.l.trace);
                     return true;
                 } else {
+                    Log.ret(Log.l.trace);
                     return false;
                 }
             }
             this.isValidDate = isValidDate;
 
             var isValidTime = function (time) {
-                if (moment(time, "HH:mm").isValid() && typeof time !== 'undefined' || time === "") {
+                Log.call(Log.l.trace, "EventGenSettings.Controller.");
+                if (moment(time, "HH:mm").isValid() && typeof time !== 'undefined') {
+                    Log.ret(Log.l.trace);
                     return true;
                 } else {
+                    Log.ret(Log.l.trace);
                     return false;
                 }
             }
             this.isValidTime = isValidTime;
 
             var checkValidDate = function (date, time, dateId, timeId) {
+                Log.call(Log.l.trace, "EventGenSettings.Controller.");
                 if ((typeof date === "undefined" || date === "") && (typeof time === "undefined" || time === "")) {
+                    Log.ret(Log.l.trace);
                     return true;
                 }
                 if ((that.isValidDate(date) && that.isValidTime(time))) {
+                    Log.ret(Log.l.trace);
                     return true;
-                    } else {
+                } else {
                     if (!that.isValidDate(date)) {
                         that.warningMsgDecider(dateId);
                     }
                     if (!that.isValidTime(time)) {
                         that.warningMsgDecider(timeId);
-                }
-                    return false;
                     }
+                    Log.ret(Log.l.trace);
+                    return false;
                 }
+            }
             this.checkValidDate = checkValidDate();
 
             var checkifFieldIsEmpty = function () {
                 Log.call(Log.l.trace, "EventGenSettings.Controller.");
                 //Checking if a Date and Time field has only 1 with data to throw a Warning Msg
                 if (!checkValidDate(that.binding.dataEvent.LiveStartDate, that.binding.dataEvent.LiveStartTime, 1, 2)) {
+                    Log.ret(Log.l.trace);
                     return true;
                 } else if (!checkValidDate(that.binding.dataEvent.LiveEndDate, that.binding.dataEvent.LiveEndTime, 3, 4)) {
+                    Log.ret(Log.l.trace);
                     return true;
                 } else if (!checkValidDate(that.binding.dataEvent.ListShowDate, that.binding.dataEvent.ListShowTime, 5, 6)) {
+                    Log.ret(Log.l.trace);
                     return true;
                 } else if (!checkValidDate(that.binding.dataEvent.ListRemoveDate, that.binding.dataEvent.ListRemoveTime, 7, 8)) {
+                    Log.ret(Log.l.trace);
                     return true;
                 } else {
+                    Log.ret(Log.l.trace);
                     return false;
-            }
+                }
             }
             this.checkifFieldIsEmpty = checkifFieldIsEmpty;
 
             this.eventHandlers = {
                 clickBack: function (event) {
-                    Log.call(Log.l.trace, "Contact.Controller.");
+                    Log.call(Log.l.trace, "EventGenSettings.Controller.");
                     if (!Application.showMaster() && WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done();
                     }
                     Log.ret(Log.l.trace);
                 },
-                clickOpenWebpage: function() {
-                    Log.call(Log.l.trace, "Event.Controller.");
+                clickOpenWebpage: function () {
+                    Log.call(Log.l.trace, "EventGenSettings.Controller.");
                     var windowObjectReference = window.open(that.binding.websiteData, "Homepage", "popup");
                     Log.ret(Log.l.trace);
                 },
                 clickOk: function (event) {
-                    Log.call(Log.l.trace, "Event.Controller.");
-                    WinJS.Promise.as().then(function () {
-                       // AppBar.modified = true;
-                        if (that.fieldisempty === false) {
-                            that.saveData(function (response) {
-                                Log.print(Log.l.trace, "prev Mail saved");
-                            }, function (errorResponse) {
-                                Log.print(Log.l.error, "error saving mail");
-                            });
-                        } else {
-                            
-                        }
-                            
-                    }).then(function () {
-
+                    Log.call(Log.l.trace, "EventGenSettings.Controller.");
+                    that.saveData(function (response) {
+                        Log.print(Log.l.trace, "event settings saved");
+                    }, function (errorResponse) {
+                        Log.print(Log.l.error, "error saving event settings");
                     });
                     Log.ret(Log.l.trace);
                 },
-                clickNew: function(event) {
+                clickNew: function (event) {
+                    Log.call(Log.l.trace, "EventGenSettings.Controller.");
                     if (neweventbox.style.display === "none") {
                         neweventbox.style.display = "block";
                         showbox.style.display = "none";
@@ -507,22 +489,22 @@
                     }
                 },
                 onClickSave: function () {
-                    Log.call(Log.l.trace, "Event.Controller.");
+                    Log.call(Log.l.trace, "EventGenSettings.Controller.");
                     that.insertNewEvent();
                     Log.ret(Log.l.trace);
                 },
-                clickChangeUserState: function(event) {
-                    Log.call(Log.l.trace, "Event.Controller.");
+                clickChangeUserState: function (event) {
+                    Log.call(Log.l.trace, "EventGenSettings.Controller.");
                     Application.navigateById("userinfo", event);
                     Log.ret(Log.l.trace);
                 },
                 clickGotoPublish: function (event) {
-                    Log.call(Log.l.trace, "Event.Controller.");
+                    Log.call(Log.l.trace, "EventGenSettings.Controller.");
                     Application.navigateById("publish", event);
                     Log.ret(Log.l.trace);
                 },
-                clickChangeAppSetting: function(event) {
-                    Log.call(Log.l.trace, "Event.Controller.");
+                clickChangeAppSetting: function (event) {
+                    Log.call(Log.l.trace, "EventGenSettings.Controller.");
                     AppBar.modified = true;
                     if (event.currentTarget) {
                         var toggle = event.currentTarget.winControl;
@@ -534,6 +516,7 @@
                     Log.ret(Log.l.trace);
                 },
                 blockEnterKey: function (event) {
+                    Log.call(Log.l.trace, "EventGenSettings.Controller.");
                     for (var i = 0; i < AppBar.commandList.length; i++) {
                         if (AppBar.commandList[i].id === "clickOk")
                             AppBar.commandList[i].key = null;
@@ -541,13 +524,14 @@
 
                 },
                 releaseEnterKey: function (event) {
+                    Log.call(Log.l.trace, "EventGenSettings.Controller.");
                     for (var i = 0; i < AppBar.commandList.length; i++) {
                         if (AppBar.commandList[i].id === "clickOk")
                             AppBar.commandList[i].key = WinJS.Utilities.Key.enter;
                     }
                 },
                 clickTopButton: function (event) {
-                    Log.call(Log.l.trace, "Contact.Controller.");
+                    Log.call(Log.l.trace, "EventGenSettings.Controller.");
                     var anchor = document.getElementById("menuButton");
                     var menu = document.getElementById("menu1").winControl;
                     var placement = "bottom";
@@ -555,7 +539,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickLogoff: function (event) {
-                    Log.call(Log.l.trace, "Account.Controller.");
+                    Log.call(Log.l.trace, "EventGenSettings.Controller.");
                     AppData._persistentStates.privacyPolicyFlag = false;
                     if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
                         AppHeader.controller.binding.userData = {};
@@ -567,7 +551,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickDelete: function (event) {
-                    Log.call(Log.l.trace, "LocalEvents.Controller.");
+                    Log.call(Log.l.trace, "EventGenSettings.Controller.");
                     var recordId = that.getEventId();
                     if (recordId) {
                         that.getDeleteEventData(recordId);
@@ -577,7 +561,7 @@
             };
 
             this.disableHandlers = {
-                clickOk: function() {
+                clickOk: function () {
                     if (that.binding.dataEvent && !AppBar.busy) {
                         return false;
                     } else {
@@ -598,23 +582,25 @@
             };
 
             var getEventId = function () {
+                Log.print(Log.l.trace, "getEventId EventGenSettings._eventId=" + EventGenSettings._eventId);
                 return EventGenSettings._eventId;
             }
             this.getEventId = getEventId;
 
             var setEventId = function (value) {
-                Log.print(Log.l.trace, "eventId=" + value);
+                Log.print(Log.l.trace, "setEventId EventGenSettings._eventId=" + value);
                 EventGenSettings._eventId = value;
             }
             this.setEventId = setEventId;
 
             var getConferenceId = function () {
+                Log.print(Log.l.trace, "getEventId EventGenSettings._eventId=" + EventGenSettings._conferenceId);
                 return EventGenSettings._conferenceId;
             }
             this.getConferenceId = getConferenceId;
 
             var setConferenceId = function (value) {
-                Log.print(Log.l.trace, "_conferenceId=" + value);
+                Log.print(Log.l.trace, "setEventId EventGenSettings._conferenceId=" + value);
                 EventGenSettings._conferenceId = value;
             }
             this.setConferenceId = setConferenceId;
@@ -629,12 +615,12 @@
             this.resultConverter = resultConverter;
 
             var loadData = function (recordId) {
-                Log.call(Log.l.trace, "Event.Controller.");
+                Log.call(Log.l.trace, "EventGenSettings.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                     Log.call(Log.l.trace, "Contact.Controller.");
                     AppData.setErrorMsg(that.binding);
-                    AppData.call("PRC_GetEventTypeList", {
+                    return AppData.call("PRC_GetEventTypeList", {
                         pLanguageSpecID: AppData.getLanguageId()
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
@@ -645,21 +631,21 @@
                     }, function (error) {
                         Log.print(Log.l.error, "call error");
                     });
-                    Log.ret(Log.l.trace);
                 }).then(function () {
-                        //load of format relation record data
-                        Log.print(Log.l.trace, "calling select eventView...");
-                        return EventGenSettings.conferenceExhibitorView.select(function (json) {
-                            AppData.setErrorMsg(that.binding);
-                            Log.print(Log.l.trace, "eventView: success!");
-                            if (json && json.d) {
-                                // now always edit!
-                                that.setDataEvent(json.d.results[0]);
-                            }
-                        }, function (errorResponse) {
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        });
+                    //load of format relation record data
+                    Log.print(Log.l.trace, "calling select eventView...");
+                    return EventGenSettings.conferenceExhibitorView.select(function (json) {
+                        AppData.setErrorMsg(that.binding);
+                        Log.print(Log.l.trace, "eventView: success!");
+                        if (json && json.d) {
+                            // now always edit!
+                            that.setDataEvent(json.d.results[0]);
+                        }
+                    }, function (errorResponse) {
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    });
                 }).then(function () {
+                    Log.print(Log.l.trace, "calling select mandantStartView...");
                     return EventGenSettings.mandantStartView.select(function (json) {
                         Log.print(Log.l.trace, "mandantStartView: success!");
                         if (json && json.d && json.d.results && json.d.results.length > 0) {
@@ -674,6 +660,7 @@
                         that.loading = false;
                     });
                 }).then(function () {
+                    Log.print(Log.l.trace, "AppBar.notifyModified = " + AppBar.notifyModified);
                     AppBar.notifyModified = true;
                     return WinJS.Promise.as();
                 });
@@ -681,13 +668,13 @@
                 return ret;
             };
             this.loadData = loadData;
-            
+
             //save data
             var saveData = function (complete, error) {
-                Log.call(Log.l.trace, "Event.Controller.");
+                Log.call(Log.l.trace, "EventGenSettings.Controller.");
                 AppData.setErrorMsg(that.binding);
-                    var ret;
-                    var dataEvent = that.binding.dataEvent;
+                var ret;
+                var dataEvent = that.binding.dataEvent;
                 if (AppBar.modified && that.checkifFieldIsEmpty() && !AppBar.busy) {
                     error({});
                     return WinJS.Promise.as();
@@ -724,20 +711,20 @@
                     } else {
                         ret = new WinJS.Promise.as().then(function () {
                             if (typeof complete === "function") {
-                                complete({});//dataContact
+                                complete({});
                             }
                         });
                     }
                 };
-                    Log.ret(Log.l.trace);
-                    return ret;
+                Log.ret(Log.l.trace);
+                return ret;
             };
             this.saveData = saveData;
-            
+
             var selectConfExhibitorId = function () {
-                Log.call(Log.l.trace, "Contact.Controller.");
+                Log.call(Log.l.trace, "EventGenSettings.Controller.");
                 AppData.setErrorMsg(that.binding);
-                var recordId = getEventId();
+                var recordId = that.getEventId();
                 if (recordId) {
                     AppData.setErrorMsg(that.binding);
                     AppData.call("PRC_ConfExhibitorID", {
@@ -759,7 +746,7 @@
             this.selectConfExhibitorId = selectConfExhibitorId;
 
             var getDeleteEventData = function (eventID) {
-                Log.call(Log.l.trace, "LocalEvents.Controller.");
+                Log.call(Log.l.trace, "EventGenSettings.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as()/*.then(function () {
                     return LocalEvents.VeranstaltungView.select(function (json) {
@@ -814,7 +801,7 @@
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 var recordId = getEventId();
                 if (recordId) {
-                return that.selectConfExhibitorId();
+                    return that.selectConfExhibitorId();
                 } else {
                     return WinJS.Promise.as();
                 }
