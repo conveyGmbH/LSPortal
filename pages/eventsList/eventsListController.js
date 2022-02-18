@@ -402,7 +402,10 @@
                                 listView.winControl.itemDataSource = that.records.dataSource;
                             }
                             Log.print(Log.l.trace, "Data loaded");
-                            var recordId = AppBar.scope.getEventId();
+                            var recordId;
+                            if (typeof AppBar.scope.getEventId === "function") {
+                                recordId = AppBar.scope.getEventId();
+                            }
                             if (recordId) {
                                 that.selectRecordId(recordId);
                             } else {
