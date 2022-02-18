@@ -150,15 +150,24 @@
             var insertNewEvent = function () {
                 Log.call(Log.l.trace, "EventGenSettings.Controller.");
                 AppData.setErrorMsg(that.binding);
-                AppData.call("PRC_CreateUserVeranstaltung", {
+                return AppData.call("PRC_CreateUserVeranstaltung", {
                     pVeranstaltungName: that.binding.newEventData.VeranstaltungName
                 }, function (json) {
                     Log.print(Log.l.info, "call success!");
                     //that.createMandantVaText(json.d.results[0].NewVeranstaltungID);
                     neweventbox.style.display = "none";
                     showbox.style.display = "block";
+                    var veranstaltungId = null;
+                    if (json && json.d.results[0] && json.d.results[0].NewVeranstaltungID) {
+                        veranstaltungId = json.d.results[0].NewVeranstaltungID;
                     var master = Application.navigator.masterControl;
+                        that.setEventId(veranstaltungId);                        
+                        if (master && master.controller && typeof master.controller.loadData === "function") {
                     master.controller.loadData();
+                        };
+                    } else {
+                        Log.print(Log.l.error, "call error veranstaltungId is null");
+                    }
                 }, function (error) {
                     Log.print(Log.l.error, "call error");
 
@@ -748,20 +757,7 @@
             var getDeleteEventData = function (eventID) {
                 Log.call(Log.l.trace, "EventGenSettings.Controller.");
                 AppData.setErrorMsg(that.binding);
-                var ret = new WinJS.Promise.as()/*.then(function () {
-                    return LocalEvents.VeranstaltungView.select(function (json) {
-                        // this callback will be called asynchronously
-                        // when the response is available
-                        Log.print(Log.l.info, "MAILERZEILENView select: success!");
-                        if (json && json.d && json.d.results && json.d.results.length > 0) {
-                            that.deleteEventData = json.d.results[0];
-                        }
-
-                    }, function (errorResponse) {
-                        Log.print(Log.l.error, "error selecting mailerzeilen");
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                        }, { VeranstaltungVIEWID: eventID});
-                })*/.then(function () {
+                var ret = new WinJS.Promise.as().then(function () {
                     // var curScope = that.deleteEventData;
                     var curScope = that.binding.dataEvent;
                     if (curScope) {
@@ -771,18 +767,24 @@
                             if (result) {
                                 AppBar.busy = true;
                                 AppData.setErrorMsg(that.binding);
-                                AppData.call("PRC_DeleteVeranstaltung", {
+                                return AppData.call("PRC_DeleteVeranstaltung", {
                                     pVeranstaltungID: eventID
                                 }, function (json) {
                                     Log.print(Log.l.info, "call success! ");
                                     AppBar.busy = false;
-                                    that.loadData();
+                                    that.setEventId(0);
+                                    var master = Application.navigator.masterControl;
+                                    if (master && master.controller && typeof master.controller.loadData === "function") {
+                                        return master.controller.loadData();
+                                    }
+                                    return WinJS.Promise.as();
                                 }, function (error) {
                                     AppBar.busy = false;
                                     Log.print(Log.l.error, "call error");
                                 });
                             } else {
                                 Log.print(Log.l.trace, "clickDelete: event choice CANCEL");
+                                return WinJS.Promise.as();
                             }
                         });
                     }

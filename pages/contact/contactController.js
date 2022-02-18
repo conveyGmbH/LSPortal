@@ -1146,13 +1146,11 @@
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
             }).then(function () {
-                
                 Log.print(Log.l.trace, "Checking if there is a PDF-File!");
             }).then(function () {
                 AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Data loaded");
             });
-
             Log.ret(Log.l.trace);
         })
     });

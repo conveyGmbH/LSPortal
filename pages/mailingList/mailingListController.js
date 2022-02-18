@@ -49,7 +49,7 @@
             this.loadIcons = loadIcons;
 
             var initializeTemplates = function (complete, error) {
-                Log.call(Log.l.trace, "MailingList.Controller.");
+                Log.print(Log.l.trace, "MailingList.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var recordId = that.getEventId();
                 if (recordId) {
@@ -66,7 +66,6 @@
                     error(err);
                     return WinJS.Promise.as();
                 }
-                Log.ret(Log.l.trace);
             };
             this.initializeTemplates = initializeTemplates;
 
@@ -732,11 +731,9 @@
                                     that.resultConverter(item, index);
                                 });
                             }
-                        },
-                            function (errorResponse) {
+                        }, function (errorResponse) {
                                 AppData.setErrorMsg(that.binding, errorResponse);
-                            },
-                            { VeranstaltungID: restr, LanguageSpecID: MailingList._languageId });
+                        }, { VeranstaltungID: restr, LanguageSpecID: MailingList._languageId });
                     } else {
                         return WinJS.Promise.as();
                     }

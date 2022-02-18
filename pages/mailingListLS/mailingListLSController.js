@@ -167,7 +167,6 @@
                                         if (AppBar.scope._element &&
                                             AppBar.scope._element.id === "mailingController") {
                                             if (typeof AppBar.scope.saveData === "function") {
-                                                WinJS.Promise.as().then(function () {
                                                     AppBar.scope.saveData(function (response) {
                                                         // called asynchronously if ok
                                                         that.binding.mailingId = item.data.MaildokumentVIEWID;
@@ -178,7 +177,6 @@
                                             }
                                                 }, function (errorResponse) {
                                                         that.selectRecordId(that.binding.mailingId);
-                                                });
                                                 });
                                             }
                                             }

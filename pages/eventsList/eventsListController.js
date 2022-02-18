@@ -402,7 +402,14 @@
                                 listView.winControl.itemDataSource = that.records.dataSource;
                             }
                             Log.print(Log.l.trace, "Data loaded");
-
+                            var recordId = AppBar.scope.getEventId();
+                            if (recordId) {
+                                that.selectRecordId(recordId);
+                            } else {
+                                if (listView && listView.winControl) {
+                                    listView.winControl.selection.set(0);
+                                }
+                            }
                         } else {
                             that.binding.count = 0;
                             that.nextUrl = null;
@@ -421,6 +428,7 @@
                             }
                             that.loading = false;
                         }
+                        return WinJS.Promise.as();
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
@@ -437,12 +445,6 @@
                     }, {
 
                     });
-                }).then(function () {
-                    if (listView && listView.winControl) {
-                        return listView.winControl.selection.set(0);
-                    } else {
-                        return WinJS.Promise.as();
-                    }
                 });
                 Log.ret(Log.l.trace);
                 return ret;
