@@ -55,7 +55,7 @@
                 SpecType: "",
                 ReplyTo: "",
                 VeranstaltungID: AppData.getRecordId("Veranstaltung"),
-                INITSpracheID: null,
+                INITSpracheID: 0,
                 MailFooter: "",
                 GDPR_Flag: null
             }
