@@ -552,7 +552,7 @@
                         var scrollMax = contentArea.scrollHeight - contentArea.clientHeight;
                         var scrollPos = contentArea.scrollTop;
                         if (scrollPos === scrollMax) {
-                            that.loadNextUrl();
+                           // that.loadNextUrl();
                         }
                     }
                     Log.ret(Log.l.trace);
@@ -623,12 +623,12 @@
                         Log.print(Log.l.error, "ContactResultsList.KontaktReport: error!");
                         AppData.setErrorMsg(that.binding, errorResponse);
                         that.loading = false;
-                    }, null, nextUrl).then(function () {
+                    }, null, nextUrl)/*.then(function () {
                         return WinJS.Promise.timeout(100);
                     }).then(function () {
                         that.eventHandlers.onItemInserted();
                         return WinJS.Promise.as();
-                    });
+                    })*/;
                 }
                 Log.ret(Log.l.trace);
                 return ret || WinJS.Promise.as();
@@ -732,7 +732,7 @@
                                 });
                             }
                         }, function (errorResponse) {
-                                AppData.setErrorMsg(that.binding, errorResponse);
+                            AppData.setErrorMsg(that.binding, errorResponse);
                         }, { VeranstaltungID: restr, LanguageSpecID: MailingList._languageId });
                     } else {
                         return WinJS.Promise.as();
@@ -764,7 +764,7 @@
                 }).then(function () {
                     return WinJS.Promise.timeout(100);
                 }).then(function () {
-                    that.eventHandlers.onItemInserted();
+                    //that.eventHandlers.onItemInserted();
                     AppBar.notifyModified = true;
                     return WinJS.Promise.as();
                 });
@@ -778,10 +778,10 @@
             }).then(function () {
                 Log.print(Log.l.trace, "Calling loadInitLanguageData");
                 return that.loadInitLanguageData();
-            }).then(function () {
+            })/*.then(function () {
                 Log.print(Log.l.trace, "Calling loadData");
                 return that.loadData();
-            }).then(function () {
+            })*/.then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 AppBar.notifyModified = true;
             });

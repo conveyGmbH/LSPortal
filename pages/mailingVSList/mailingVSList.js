@@ -6,6 +6,7 @@
 /// <reference path="~/www/lib/convey/scripts/logging.js" />
 /// <reference path="~/www/lib/convey/scripts/navigator.js" />
 /// <reference path="~/www/lib/convey/scripts/appbar.js" />
+/// <reference path="~/www/pages/mailingVSList/mailingVSListController.js" />
 
 (function () {
     "use strict";
@@ -55,12 +56,12 @@
                 { id: "clickNew", label: getResourceText("command.new"), tooltip: getResourceText("tooltip.newevent"), section: "primary", svg: "plus" },
                 { id: "clickChange", label: getResourceText("command.ok"), tooltip: getResourceText("tooltip.eventchange"), section: "primary", svg: "navigate_check" }
             ];
-
-            this.controller = new MailingVSList.Controller(element, commandList);
-            if (this.controller.eventHandlers) {
+            var isMaster = Application.navigator && Application.navigator._nextMaster === pageName;
+            this.controller = new MailingVSList.Controller(element, commandList, isMaster);
+            /*if (this.controller.eventHandlers) {
                 // general event listener for hardware back button, too!
                 this.controller.addRemovableEventListener(document, "backbutton", this.controller.eventHandlers.clickBack.bind(this.controller));
-            }
+            }*/
             Log.ret(Log.l.trace);
         },
 

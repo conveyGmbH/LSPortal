@@ -54,7 +54,7 @@
                 }
             };
             this.background = background;
-            
+
             var loadNextUrl = function () {
                 Log.call(Log.l.trace, "MailingVSList.Controller.");
                 progress = listView.querySelector(".list-footer .progress");
@@ -201,7 +201,7 @@
                             // load SVG images
                             Colors.loadSVGImageElements(listView, "action-image", 40, Colors.textColor);
                             Colors.loadSVGImageElements(listView, "action-image-flag", 40);
-                            that.loadNextUrl();
+                            //that.loadNextUrl();
                         }
                     }
                     Log.ret(Log.l.trace);
@@ -244,8 +244,8 @@
                                                         typeof AppBar.scope.loadData === "function" &&
                                                         typeof AppBar.scope.setEventId === "function") {
                                                         //if (curPageId === "mailingList") {
-                                                            AppBar.scope.setEventId(item.data.VeranstaltungVIEWID);
-                                                            AppBar.scope.loadData();
+                                                        AppBar.scope.setEventId(item.data.VeranstaltungVIEWID);
+                                                        AppBar.scope.loadData();
                                                         //}
                                                     } else {
                                                         Application.navigateById("mailingList");
@@ -375,7 +375,7 @@
                         AppData.setErrorMsg(that.binding);
                         Log.print(Log.l.trace, "Events: success!");
                         // employeeView returns object already parsed from json file in response
-                        if (json && json.d && json.d.results && json.d.results.length) {
+                        if (json && json.d && json.d.results && json.d.results.length > 0) {
                             that.nextUrl = MailingVSList.VeranstaltungView.getNextUrl(json);
                             var results = json.d.results;
                             results.forEach(function (item, index) {
@@ -390,7 +390,21 @@
                                 listView.winControl.itemDataSource = that.records.dataSource;
                             }
                             Log.print(Log.l.trace, "Data loaded");
-
+                            var recordID;
+                            if (AppBar.scope && typeof AppBar.scope.getEventId === "function") {
+                                recordID = AppBar.scope.getEventId();//AppData.getRecordId("Kontakt");
+                            }
+                            if (recordID) {
+                                WinJS.Promise.timeout(0).then(function () {
+                                    that.selectRecordId(recordID);
+                                });
+                            } else {
+                                if (results[0] && results[0].VeranstaltungVIEWID) {
+                                    WinJS.Promise.timeout(0).then(function () {
+                                        that.selectRecordId(results[0].VeranstaltungVIEWID);
+                                    });
+                                }
+                            }
                         } else {
                             that.binding.count = 0;
                             that.nextUrl = null;
@@ -425,13 +439,13 @@
                     }, {
 
                     });
-                }).then(function () {
+                })/*.then(function () {
                     if (listView && listView.winControl) {
                         return listView.winControl.selection.set(0);
                     } else {
                         return WinJS.Promise.as();
                     }
-                });
+                })*/;
                 Log.ret(Log.l.trace);
                 return ret;
             };

@@ -17,7 +17,7 @@
         },
         VAMail: {
             select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "ContactResultsList.");
+                Log.call(Log.l.trace, "MailingList.");
                 var ret = MailingList._VAMail.select(complete, error, restriction, {
                     ordered: true,
                     desc: restriction.OrderDesc,
@@ -28,14 +28,14 @@
                 return ret;
             },
             selectNext: function (complete, error, response, nextUrl) {
-                Log.call(Log.l.trace, "ContactResultsList.");
+                Log.call(Log.l.trace, "MailingList.");
                 var ret = MailingList._VAMail.selectNext(complete, error, response, nextUrl);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
             },
             getNextUrl: function (response) {
-                Log.call(Log.l.trace, "ContactResultsList.xLReportView.");
+                Log.call(Log.l.trace, "MailingList.xLReportView.");
                 var ret = MailingList._VAMail.getNextUrl(response);
                 Log.ret(Log.l.trace);
                 return ret;
