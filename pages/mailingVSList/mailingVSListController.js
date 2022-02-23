@@ -218,7 +218,11 @@
                                     var item = items[0];
                                     var curPageId = Application.getPageId(nav.location);
                                     that.binding.active = null;
+                                    Log.print(Log.l.trace,
+                                        "item.data.VeranstaltungVIEWID before: " + item.data.VeranstaltungVIEWID);
                                     if (item.data && item.data.VeranstaltungVIEWID) {
+                                        Log.print(Log.l.trace,
+                                            "item.data.VeranstaltungVIEWID after: " + item.data.VeranstaltungVIEWID);
                                         if (item.data.Aktiv) {
                                             that.binding.active = 1;
                                         }
@@ -239,10 +243,10 @@
                                                     if ((curPageId === "mailingList") &&
                                                         typeof AppBar.scope.loadData === "function" &&
                                                         typeof AppBar.scope.setEventId === "function") {
-                                                        if (curPageId === "mailingList") {
+                                                        //if (curPageId === "mailingList") {
                                                             AppBar.scope.setEventId(item.data.VeranstaltungVIEWID);
                                                             AppBar.scope.loadData();
-                                                        }
+                                                        //}
                                                     } else {
                                                         Application.navigateById("mailingList");
                                                     }
@@ -265,6 +269,8 @@
                                             AppBar.triggerDisableHandlers();
                                         }
                                     }
+                                    Log.print(Log.l.trace,
+                                        "item.data.VeranstaltungVIEWID end: " + item.data.VeranstaltungVIEWID);
                                 });
                             }
                         }
