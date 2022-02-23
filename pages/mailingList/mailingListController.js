@@ -589,11 +589,11 @@
                 if (item.SendMailTSUTC) {
                     item.SendMailTSUTC = that.getDateObject(item.SendMailTSUTC);
                 }
-                if (tableBody &&
+                /*if (tableBody &&
                     tableBody.winControl &&
                     tableBody.winControl.data) {
                     that.binding.count = tableBody.winControl.data.push(item);
-                }
+                }*/
             }
             this.resultConverter = resultConverter;
 
@@ -707,11 +707,11 @@
                 AppData.setErrorMsg(that.binding);
                 that.nextUrl = null;
                 if (tableBody && tableBody.winControl) {
-                    if (tableBody.winControl.data) {
+                    /*if (tableBody.winControl.data) {
                         tableBody.winControl.data.length = 0;
-                    } else {
-                        tableBody.winControl.data = WinJS.Binding.List([]);
-                    }
+                    } else {*/
+                    //tableBody.winControl.data = WinJS.Binding.List([]);
+                    //}
                 }
                 var ret = new WinJS.Promise.as().then(function () {
                     Log.print(Log.l.trace, "Calling initializeTemplates");
@@ -730,6 +730,9 @@
                                 results.forEach(function (item, index) {
                                     that.resultConverter(item, index);
                                 });
+                            }
+                            if (tableBody && tableBody.winControl) {
+                                tableBody.winControl.data = new WinJS.Binding.List(json.d.results);
                             }
                         }, function (errorResponse) {
                             AppData.setErrorMsg(that.binding, errorResponse);
@@ -778,10 +781,10 @@
             }).then(function () {
                 Log.print(Log.l.trace, "Calling loadInitLanguageData");
                 return that.loadInitLanguageData();
-            })/*.then(function () {
+            }).then(function () {
                 Log.print(Log.l.trace, "Calling loadData");
                 return that.loadData();
-            })*/.then(function () {
+            }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 AppBar.notifyModified = true;
             });
