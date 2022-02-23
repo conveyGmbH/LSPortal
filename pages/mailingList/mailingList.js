@@ -54,8 +54,8 @@
             var commandList = [
                 { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" }
             ];
-            var isMaster = Application.navigator && Application.navigator._nextMaster === pageName;
-            this.controller = new MailingList.Controller(element, commandList, isMaster);
+            //var isMaster = Application.navigator && Application.navigator._nextMaster === pageName;
+            this.controller = new MailingList.Controller(element, commandList);
             Log.ret(Log.l.trace);
         },
 

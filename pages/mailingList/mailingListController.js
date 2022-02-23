@@ -778,10 +778,10 @@
             }).then(function () {
                 Log.print(Log.l.trace, "Calling loadInitLanguageData");
                 return that.loadInitLanguageData();
-            })/*.then(function () {
+            }).then(function () {
                 Log.print(Log.l.trace, "Calling loadData");
                 return that.loadData();
-            })*/.then(function () {
+            }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 AppBar.notifyModified = true;
             });
