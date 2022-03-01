@@ -393,12 +393,13 @@
                             top5Diagramlabelsdata.push(item.Land);
                             top5DiagramLabelsdataMulitline.push(splitLand);
                             top5Diagramdatasetsdata.push(Math.round((item.Anzahl / item.TotalHits) * 100)); /*item.GlobalPercentage*/
-                            top5Diagrambackgroundcolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, index / 15)));
-                            top5Diagrambordercolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, index / 15)));
-                            var AnzahlSup = that.getRandomInt(8, 12);
-                            top5Diagramsupremedatasetsdata.push(AnzahlSup); /*item.GlobalPercentage*/
-                            top5Diagramsupremebackgroundcolor.push(that.hexToRgbA(that.getColor(surpremeColor, index / 15)));
-                            top5Diagramsupremebordercolor.push(that.hexToRgbA(that.getColor(surpremeColor, index / 15)));
+                            top5Diagrambackgroundcolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, item.index / 15)));
+                            top5Diagrambordercolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, item.index / 15)));
+                            /*var AnzahlSup = that.getRandomInt(8, 12);*/
+                            top5Diagramsupremedatasetsdata.push(item.GlobalPercentage); /*item.GlobalPercentage*/
+                            top5Diagramsupremebackgroundcolor.push(that.hexToRgbA(that.getColor(surpremeColor, item.index / 15)));
+                            top5Diagramsupremebordercolor.push(that.hexToRgbA(that.getColor(surpremeColor, item.index / 15)));
+
                             anzKontakte = item.TotalHits;
                             anzKontaktePremium += item.Anzahl;
                         }
