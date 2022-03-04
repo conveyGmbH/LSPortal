@@ -19,7 +19,8 @@
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
                 dataContactHeaderValue: getEmptyDefaultValue(ContactResultsList.KontaktReport.defaultContactHeader),
-                dataContactHeaderText: getEmptyDefaultValue(ContactResultsList.KontaktReport.defaultContactHeader)
+                dataContactHeaderText: getEmptyDefaultValue(ContactResultsList.KontaktReport.defaultContactHeader),
+                noctcount: 0
             }, commandList]);
             this.nextUrl = null;
 
@@ -483,6 +484,25 @@
                                 
                             });
                     }
+                }).then(function () {
+                    return ContactResultsList.mitarbeiterView.select(function (json) {
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            Log.print(Log.l.trace, "mitarbeiterView: success!");
+                            // startContact returns object already parsed from json file in response
+                            if (json && json.d) {
+                                var results = json.d;
+                                that.binding.noctcount = results.AnzKontakte;
+                            } else {
+                                Log.print(Log.l.trace, "mitarbeiterView: no data found!");
+                            }
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            Log.print(Log.l.error, "ContactList.mitarbeiterView: error!");
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        },
+                        AppData.getRecordId("Mitarbeiter"));
                 }).then(function () {
                     return WinJS.Promise.timeout(100);
                 }).then(function () {
