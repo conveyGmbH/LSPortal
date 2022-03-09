@@ -1156,7 +1156,7 @@
 
                 var resultConverterPremium = function (item, index) {
                     item.index = index;
-                    if (item.QualifierExtID === "17281") {
+                    if (item.QualifierExtID === "BORN-64") {
                         //tooltip for dougnut
                         var splitQualifier2;
                         if (item.Qualifier2 && item.Qualifier2.length > 28) {
@@ -1190,7 +1190,7 @@
                         industriesYearChartDataRaw1.push(item.NumHits);
                         //industriesYearChartDataRaw1.push(item.NumTotal - item.NumHits);
                     }
-                    if (item.QualifierExtID === "17282") {
+                    if (item.QualifierExtID === "BORN-79") {
                         //tooltip for dougnut
                         var splitQualifier2;
                         if (item.Qualifier2 && item.Qualifier2.length > 28) {
@@ -1222,7 +1222,7 @@
                         industriesYearChartDataRaw2.push(item.NumHits);
                         //industriesYearChartDataRaw2.push(item.NumTotal - item.NumHits);
                     }
-                    if (item.QualifierExtID === "17283") {
+                    if (item.QualifierExtID === "BORN-95") {
 
                         //tooltip for dougnut
                         var splitQualifier2;
@@ -1255,7 +1255,7 @@
                         industriesYearChartDataRaw3.push(item.NumHits);
                         //industriesYearChartDataRaw3.push(item.NumTotal - item.NumHits);
                     }
-                    if (item.QualifierExtID === "17284") {
+                    if (item.QualifierExtID === "BORN96+") {
                         //tooltip for dougnut
                         var splitQualifier2;
                         if (item.Qualifier2 && item.Qualifier2.length > 28) {
@@ -1299,7 +1299,7 @@
 
                 var resultConverterSurpreme = function (item, index) {
                     item.index = index;
-                    if (item.QualifierExtID === "17281") {
+                    if (item.QualifierExtID === "BORN-64") {
                         if (industriesYearChartDataTexts5.length === 0) {
                             industriesYearChartDataTexts5 = item.Qualifier;
                         }
@@ -1317,7 +1317,7 @@
                         //industriesYearChartDataRaw5.push(item.NumTotal - item.NumHits);
                         industriesYearChartDataProcent5 = item.PercentGlobal + "%";
                     }
-                    if (item.QualifierExtID === "17282") {
+                    if (item.QualifierExtID === "BORN-79") {
                         if (industriesYearChartDataTexts6.length === 0) {
                             industriesYearChartDataTexts6 = item.Qualifier;
                         }
@@ -1335,7 +1335,7 @@
                         //industriesYearChartDataRaw6.push(item.NumTotal - item.NumHits);
                         industriesYearChartDataProcent6 = item.PercentGlobal + "%";
                     }
-                    if (item.QualifierExtID === "17283") {
+                    if (item.QualifierExtID === "BORN-95") {
                         if (industriesYearChartDataTexts7.length === 0) {
                             industriesYearChartDataTexts7 = item.Qualifier;
                         }
@@ -1353,7 +1353,7 @@
                         //industriesYearChartDataRaw7.push(item.NumTotal - item.NumHits);
                         industriesYearChartDataProcent7 = item.PercentGlobal + "%";
                     }
-                    if (item.QualifierExtID === "17284") {
+                    if (item.QualifierExtID === "BORN96+") {
                         if (industriesYearChartDataTexts8.length === 0) {
                             industriesYearChartDataTexts8 = item.Qualifier;
                         }
@@ -1422,25 +1422,25 @@
 
                 var resultConverterYearRange = function (item, index) {
                     item.index = index;
-                    if (item.QualifierExtID === "17281") {
+                    if (item.QualifierExtID === "BORN-64") {
                         if (industriesYearChartDataTexts1.length === 0) {
                             industriesYearChartDataTexts1 = item.Qualifier;
                         }
                         industriesYearChartDataProcent1 = Math.round(item.NumHits / item.NumTotal * 100) + "%";
                     }
-                    if (item.QualifierExtID === "17282") {
+                    if (item.QualifierExtID === "BORN-79") {
                         if (industriesYearChartDataTexts2.length === 0) {
                             industriesYearChartDataTexts2 = item.Qualifier;
                         }
                         industriesYearChartDataProcent2 = Math.round(item.NumHits / item.NumTotal * 100) + "%";
                     }
-                    if (item.QualifierExtID === "17283") {
+                    if (item.QualifierExtID === "BORN-95") {
                         if (industriesYearChartDataTexts3.length === 0) {
                             industriesYearChartDataTexts3 = item.Qualifier;
                         }
                         industriesYearChartDataProcent3 = Math.round(item.NumHits / item.NumTotal * 100) + "%";
                     }
-                    if (item.QualifierExtID === "17284") {
+                    if (item.QualifierExtID === "BORN96+") {
                         if (industriesYearChartDataTexts4.length === 0) {
                             industriesYearChartDataTexts4 = item.Qualifier;
                         }
@@ -1488,7 +1488,7 @@
                     AppData.setErrorMsg(that.binding);
                     return AppData.call("PRC_GetDashboardData", {
                         pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
-                        pCriterion1ID: 40,
+                        pCriterion1ID: -100,
                         pCriterion2ID: 0,
                         pLandID: 0,
                         pDay: 0,
@@ -1511,7 +1511,7 @@
                     AppData.setErrorMsg(that.binding);
                     return AppData.call("PRC_GetDashboardData", {
                         pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
-                        pCriterion1ID: 40,
+                        pCriterion1ID: -100,
                         pCriterion2ID: parseInt(that.binding.criteriaMain),
                         pDay: 0,
                         pLandID: 0,
@@ -1541,7 +1541,7 @@
                     AppData.setErrorMsg(that.binding);
                     return AppData.call("PRC_GetDashboardData", {
                         pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
-                        pCriterion1ID: 40, /*parseInt(that.binding.criteriaMain)*/
+                        pCriterion1ID: -100, /*parseInt(that.binding.criteriaMain)*/
                         pCriterion2ID: parseInt(that.binding.criteriaMain), /*0*/
                         pLandID: 0,
                         pDay: 0,
