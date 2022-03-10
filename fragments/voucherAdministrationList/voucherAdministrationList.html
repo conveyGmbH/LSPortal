@@ -27,10 +27,11 @@
                     </div>
                     
                     <div class="data-template" data-win-control="WinJS.Binding.Template">
-                        <div class="data-templateitem" data-win-bind="style.visibility: OpenVoucherSecondary Binding.Converter.toDisplay">
+                        <div class="data-templateitem">
+                            <!--data-win-bind="style.visibility: OpenVoucherSecondary Binding.Converter.toDisplay"-->
                             <div class="header-template" data-win-control="WinJS.Binding.Template" style="display: none">
                                 <div class="header-templateitem">
-                                </div> 
+                                </div>
                             </div>
                             <div class="list-landscape-only">
                                 <div class="row-bkg-gray"
@@ -50,7 +51,7 @@
                                             data-win-bind="value: ESVoucherOrderVIEWID"
                                             onclick="AppBar.handleEvent('click', 'clickDownloadVoucher', event)"></button>
                                 </div>
-                                
+
                             </div>
                             <div class="list-portrait-only">
                                 <div class="row-separator"></div>

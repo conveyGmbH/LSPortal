@@ -19,7 +19,7 @@
             Fragments.Controller.apply(this, [fragmentElement, {
                 recordID: 0,
                 btnLabel: getResourceText("voucheradministrationlist.btnlabelO"),
-                OpenVoucherSecondary: 'hidden'
+                OpenVoucherSecondary: 'block'
             }]);
             var that = this;
             
@@ -27,6 +27,8 @@
             this.voucherSubItem = [];
             this.voucherMainItem = [];
             this.voucherHeaderString = "";
+            this.voucherHeaderItem = new WinJS.Binding.List();
+            this.voucherNoHeaderItem = new WinJS.Binding.List();
 
             var layout = null;
 
@@ -192,6 +194,9 @@
             
             var resultConverter = function (item, index) {
                 item.index = index;
+                if (!that.voucherHeaderItem) {
+                    that.voucherHeaderItem = new WinJS.Binding.List();
+                }
                 if (item.IsHeader === null) {
                     that.voucherSubItem.push(item);
                 } else {
@@ -259,8 +264,6 @@
             });
             Log.ret(Log.l.trace);
         }, {
-                voucherHeaderItem: new WinJS.Binding.List(),
-                voucherNoHeaderItem: new WinJS.Binding.List(),
                 esid : "",
                 disableFlag: 0,
                 index : null
