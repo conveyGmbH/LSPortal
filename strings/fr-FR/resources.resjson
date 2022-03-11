@@ -54,7 +54,7 @@
     "command.newmod": "Nouveau",
     "command.newquestion": "Nouvelle question",
     "command.exportPdfTicket"  : "Télécharger le ticket",
-    "command.newStaff"  : "Ajouter du personnel sur le stand",	
+    "command.newStaff"  : "Saisir une autre personne",	
     "command.openWebpage"  : "Ouvrir le site web",
 
     "tooltip.backward"      : "Page présédente",
@@ -116,7 +116,7 @@
     "tooltip.terminedit"  : "Rendez-vous d'édition",
 	"tooltip.exportPdfTicket"  : "Télécharger le ticket",
     "tooltip.orderTicket"  : "Commander un ticket",
-    "tooltip.newStaff"  : "Ajouter du personnel sur le stand",
+    "tooltip.newStaff"  : "Saisir une autre personne",
     "tooltip.deleteStaff"  : "Supprimer le personnel du stand",
     "tooltip.permuser"  : "Changer en client régulier",
     "tooltip.newEventSeries" : "Ajouter à une nouvelle série",

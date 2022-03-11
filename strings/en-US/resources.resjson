@@ -54,7 +54,7 @@
     "command.newmod": "New",
     "command.newquestion": "New question",
     "command.exportPdfTicket"  : "Download ticket",
-    "command.newStaff"  : "Add stand personnel",	
+    "command.newStaff"  : "Enter another person",	
     "command.openWebpage"  : "Open webpage",
 
     "tooltip.backward"      : "Browse back",
@@ -116,7 +116,7 @@
 	"tooltip.terminedit"  : "Edit appointment",
 	"tooltip.exportPdfTicket"  : "Download ticket",
     "tooltip.orderTicket"  : "Order ticket",
-    "tooltip.newStaff"  : "Add stand personnel",
+    "tooltip.newStaff"  : "Enter another person",
     "tooltip.deleteStaff"  : "Delete stand personnel",
     "tooltip.permuser"  : "Change to regular customer",
     "tooltip.newEventSeries" : "Add to new series",

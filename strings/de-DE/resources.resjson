@@ -54,7 +54,7 @@
 	"command.newmod"        : "Neu",
 	"command.newquestion"   : "Neue Frage",
     "command.exportPdfTicket"  : "Ticket herunterladen",
-    "command.newStaff"  : "Standpersonal hinzufügen",	
+    "command.newStaff"  : "Weitere Person erfassen",	
     "command.openWebpage"  : "Webseite öffnen",
 
     "tooltip.backward"      : "Zurück blättern",
@@ -116,7 +116,7 @@
     "tooltip.terminedit"  : "Termin ändern",
     "tooltip.exportPdfTicket"  : "Ticket herunterladen",
     "tooltip.orderTicket"  : "Ticket bestellen",
-    "tooltip.newStaff"  : "Standpersonal hinzufügen",
+    "tooltip.newStaff"  : "Weitere Person erfassen",
     "tooltip.deleteStaff"  : "Standpersonal löschen",
     "tooltip.permuser"  : "Zu Dauerkunde ändern",
 	"tooltip.newEventSeries" : "Zu neuer Serie zufügen",
