@@ -17,7 +17,18 @@
     AppData.persistentStatesDefaults = {
         colorSettings: {
             // navigation-color with 100% saturation and brightness
-            accentColor: "#fe3600"
+            // LeadSuccess
+            accentColor: "#fe3600" 
+            //
+            // LiveBridge
+            // accentColor: "#07b9cb",
+            // textColor: "#2a2f3d",
+            // labelColor: "#2a2f3d",
+            // backgroundColor: "#f3fbfc",
+            // navigationColor: "#07b9cb",
+            // dashboardColor: "#38a2ad",
+            // tileTextColor: "#07b9cb",
+            // tileBackgroundColor: "#f3fbfc"
         },
         showAppBkg: false,
         showBackButton: true,
