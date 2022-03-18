@@ -67,9 +67,16 @@
 
             var setDataMail = function (dataMail) {
                 // Bug: textarea control shows 'null' string on null value in Internet Explorer!
+                /*if (!dataMail.TestLanguageID) {
 
-                AppBar.modified = false;
-                return dataMail;
+                    dataMail.TestLanguageID = 0;
+                } else {
+                    dataMail.TestLanguageID = parseInt(dataMail.TestLanguageID);
+                }*/
+                dataMail.LanguageSpecID = dataMail.TestLanguageID;
+                that.binding.dataMail = dataMail;
+                //AppBar.modified = false;
+                //return that.binding.dataMail;
             };
             this.setDataMail = setDataMail;
 
@@ -86,14 +93,17 @@
                 if (dataMail.INITAnredeID) {
                     dataMail.INITAnredeID = parseInt(dataMail.INITAnredeID);
                 }
+                if (dataMail.LanguageSpecID) {
+                    dataMail.LanguageSpecID = parseInt(dataMail.LanguageSpecID);
+                }
             }
             this.getDataMail = getDataMail;
 
-            var setNewDataMail = function () {
+            /*var setNewDataMail = function () {
 
                 that.binding.dataMail.INITSpracheID = 0;
             };
-            this.setNewDataMail = setNewDataMail;
+            this.setNewDataMail = setNewDataMail;*/
 
             var resultConverter = function (item, index) {
 
@@ -105,6 +115,7 @@
                 AppData.setErrorMsg(that.binding);
                 var ret;
                 that.getDataMail(that.binding.dataMail);
+                that.binding.dataMail.TestLanguageID = that.binding.dataMail.LanguageSpecID;
                 var dataMail = that.binding.dataMail;
                 if (dataMail.SenderAddr === null) {
                     dataMail.SenderAddr = "";
@@ -120,37 +131,34 @@
                         AppBar.busy = true;
                         var recordId = getRecordId();
                         if (recordId) {
-                            ret = WinJS.Promise.as().then(function() {
-                                return MailingEdit.MaildokumentView.update(function(response) {
-                                        AppBar.busy = false;
-                                        // called asynchronously if ok
-                                        Log.print(Log.l.info, "dataMail update: success!");
-                                        AppBar.modified = false;
-                                        if (typeof complete === "function") {
-                                            complete(dataMail);
-                                        }
-                                    },
-                                    function(errorResponse) {
-                                        AppBar.busy = false;
-                                        // called asynchronously if an error occurs
-                                        // or server returns response with an error status.
-                                        AppData.setErrorMsg(that.binding, errorResponse);
-                                        if (typeof error === "function") {
-                                            error(errorResponse);
-                                        }
-                                    },
-                                    recordId,
-                                    dataMail);
+                            ret = WinJS.Promise.as().then(function () {
+                                return MailingEdit.MaildokumentView.update(function (response) {
+                                    AppBar.busy = false;
+                                    // called asynchronously if ok
+                                    Log.print(Log.l.info, "dataMail update: success!");
+                                    AppBar.modified = false;
+                                    if (typeof complete === "function") {
+                                        complete(dataMail);
+                                    }
+                                }, function (errorResponse) {
+                                    AppBar.busy = false;
+                                    // called asynchronously if an error occurs
+                                    // or server returns response with an error status.
+                                    AppData.setErrorMsg(that.binding, errorResponse);
+                                    if (typeof error === "function") {
+                                        error(errorResponse);
+                                    }
+                                }, recordId, dataMail);
                             });
                         } else {
                             ret = WinJS.Promise.as();
                         }
                     } else if (AppBar.busy) {
-                        ret = WinJS.Promise.timeout(100).then(function() {
+                        ret = WinJS.Promise.timeout(100).then(function () {
                             return that.saveData(complete, error);
                         });
                     } else {
-                        ret = new WinJS.Promise.as().then(function() {
+                        ret = new WinJS.Promise.as().then(function () {
                             if (typeof complete === "function") {
                                 complete(dataMail);
                             }
@@ -197,21 +205,28 @@
                 clickSendTestMail: function () {
                     Log.call(Log.l.trace, "MailingEdit.Controller.");
                     AppData.setErrorMsg(that.binding);
-                    AppData.call("PRC_ScheduleTestMail", {
-                        pRecordID: that.binding.dataMail.VAMailVIEWID,
-                        pTableName: "VAMail",
-                        pGenderID: parseInt(that.binding.dataMail.INITAnredeID),
-                        pFirstName: that.binding.dataMail.TestFirstname,
-                        pLastName: that.binding.dataMail.TestLastname,
-                        pTargetAddres: that.binding.dataMail.TestTarget,
-                        pLanguageSpecID: parseInt(that.binding.dataMail.TestLanguageID)
-                    }, function (json) {
-                        Log.print(Log.l.info, "call success!");
-                        mailMessage.textContent = getResourceText("mailingEdit.mailsuccess");
-                    }, function (error) {
-                        Log.print(Log.l.error, "call error");
-                        mailMessage.textContent = getResourceText("mailingEdit.mailerror");
-                    });
+                    var testLanguageId = parseInt(that.binding.dataMail.TestLanguageID);
+                    if (!testLanguageId) {
+                        alert("Sprache ist leer!");
+                        /*error({});
+                        return WinJS.Promise.as();*/
+                    } else {
+                        AppData.call("PRC_ScheduleTestMail", {
+                            pRecordID: that.binding.dataMail.VAMailVIEWID,
+                            pTableName: "VAMail",
+                            pGenderID: parseInt(that.binding.dataMail.INITAnredeID),
+                            pFirstName: that.binding.dataMail.TestFirstname,
+                            pLastName: that.binding.dataMail.TestLastname,
+                            pTargetAddres: that.binding.dataMail.TestTarget,
+                            pLanguageSpecID: parseInt(that.binding.dataMail.LanguageSpecID)
+                        }, function (json) {
+                            Log.print(Log.l.info, "call success!");
+                            mailMessage.textContent = getResourceText("mailingEdit.mailsuccess");
+                        }, function (error) {
+                            Log.print(Log.l.error, "call error");
+                            mailMessage.textContent = getResourceText("mailingEdit.mailerror");
+                        });
+                    }
                 },
                 clickSave: function (event) {
                     Log.call(Log.l.trace, "MailingEdit.Controller.");
@@ -353,8 +368,9 @@
             };
 
             var resultLangConverter = function (item, index) {
-                item.index = index;
-                that.mailLang.push({ LanguageID: item.LanguageSpecID, TITLE: item.LanguageTitle });
+                item.TITLE = item.LanguageTitle;
+
+                //that.mailLang.push({ LanguageSpecID: item.LanguageSpecID, TITLE: item.LanguageTitle });
             }
             this.resultLangConverter = resultLangConverter;
 
@@ -366,11 +382,10 @@
                 that.binding.sendTestMailShowFlag = 0;
                 that.binding.testMailShowPanelFlag = 0;
                 that.binding.testMailSuccessMsgFlag = 0;
-                if (initSprache && initSprache.winControl) {
+                /*if (initSprache && initSprache.winControl) {
                     initSprache.winControl.data.length = 0;
                     that.mailLang = [];
-                }
-
+                }*/
                 var ret = new WinJS.Promise.as().then(function () {
                     if (!AppData.initAnredeView.getResults().length) {
                         Log.print(Log.l.trace, "calling select initAnredeData...");
@@ -405,16 +420,17 @@
                         Log.print(Log.l.trace, "initSpracheView: success!");
                         if (json && json.d && json.d.results) {
                             var results = json.d.results;
-                            that.mailLang = that.mailLang.concat({ INITSpracheID: 0, TITLE: "" });
+                            //that.mailLang.push({ LanguageSpecID: 0, TITLE: "" });
                             // Now, we call WinJS.Binding.List to get the bindable list
                             results.forEach(function (item, index) {
                                 that.resultLangConverter(item, index);
                             });
                             if (initSprache && initSprache.winControl) {
-                                initSprache.winControl.data = new WinJS.Binding.List(that.mailLang);
+                                initSprache.winControl.data = new WinJS.Binding.List(results);
                                 //initSprache.selectedIndex = 0;
                             }
                         }
+                        //return WinJS.Promise.as();
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
@@ -457,20 +473,24 @@
                 }).then(function () {
                     if (recordId) {
                         // AppData.setRecordId("Maildokument", recordId);
-                        return MailingEdit.MaildokumentView.select(function (json) {
-                            // this callback will be called asynchronously
-                            // when the response is available
-                            Log.print(Log.l.trace, "Mailing: success!");
-                            if (json && json.d) {
-                                that.binding.dataMail = setDataMail(json.d);
+                        //ret = WinJS.Promise.timeout(900).then(function() {
+                            return MailingEdit.MaildokumentView.select(function (json) {
+                                // this callback will be called asynchronously
+                                // when the response is available
                                 Log.print(Log.l.trace, "Mailing: success!");
-                            }
-                            // startContact returns object already parsed from json file in response
-                        }, function (errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        }, recordId);
+                                if (json && json.d) {
+                                    that.setDataMail(json.d);
+                                    //that.binding.dataMail.LanguageSpecID = "1031";
+                                    console.log("Sprachecombobox initialisieren");
+                                    Log.print(Log.l.trace, "Mailing: success!");
+                                }
+                                // startContact returns object already parsed from json file in response
+                            }, function (errorResponse) {
+                                // called asynchronously if an error occurs
+                                // or server returns response with an error status.
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                            }, recordId);
+                       // });
                     } else {
                         return WinJS.Promise.as();
                     }

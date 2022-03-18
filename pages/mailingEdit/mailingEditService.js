@@ -55,13 +55,12 @@
                 SpecType: "",
                 ReplyTo: "",
                 VeranstaltungID: AppData.getRecordId("Veranstaltung"),
-                INITSpracheID: 0,
                 MailFooter: "",
                 INITAnredeID: 0,
                 Vorname: "",
                 Nachname: "",
                 TargetAddr: "",
-                LanguageID: ""
+                LanguageSpecID: 1031
             }
         },
         _VAMail: {
