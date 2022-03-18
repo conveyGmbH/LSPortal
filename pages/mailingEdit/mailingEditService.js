@@ -87,7 +87,11 @@
         VAMailSpracheView: {
             select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, "MailingEdit.");
-                var ret = MailingEdit._VAMailSpracheView.select(complete, error, restriction, { ordered: true });
+                var ret = MailingEdit._VAMailSpracheView.select(complete, error, restriction, { 
+                    ordered: true, 
+                    orderAttribute: "LanguageSpecID",
+                    desc: false 
+                });
                 Log.ret(Log.l.trace);
                 return ret;
             }

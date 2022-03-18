@@ -1,7 +1,6 @@
 ﻿.mailingEdit .content-record > div {
     display: inline-block;
 }
-
 .mailingeditboxhead {
     width: 90%;
     height: 70px;
@@ -57,4 +56,7 @@
 }
 #turnThumbsLeft .win-toggleswitch-header {
     display: none;
+}
+.mailingEdit #VAMailSprache {
+    max-width: 50%;
 }

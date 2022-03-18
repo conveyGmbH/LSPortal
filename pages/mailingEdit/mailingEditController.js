@@ -187,11 +187,8 @@
                 clickSendTestMail: function () {
                     Log.call(Log.l.trace, "MailingEdit.Controller.");
                     AppData.setErrorMsg(that.binding);
-                    var testLanguageId = parseInt(that.binding.dataMail.TestLanguageID);
-                    if (!testLanguageId) {
-                        alert("Sprache ist leer!");
-                        /*error({});
-                        return WinJS.Promise.as();*/
+                    if (!that.binding.dataMail.TestLanguageID) {
+                        alert(getResourceText("mailingEdit.emptyLanguage"));
                     } else {
                         AppData.call("PRC_ScheduleTestMail", {
                             pRecordID: that.binding.dataMail.VAMailVIEWID,
@@ -200,7 +197,7 @@
                             pFirstName: that.binding.dataMail.TestFirstname,
                             pLastName: that.binding.dataMail.TestLastname,
                             pTargetAddres: that.binding.dataMail.TestTarget,
-                            pLanguageSpecID: parseInt(that.binding.dataMail.LanguageSpecID)
+                            pLanguageSpecID: parseInt(that.binding.dataMail.TestLanguageID)
                         }, function (json) {
                             Log.print(Log.l.info, "call success!");
                             mailMessage.textContent = getResourceText("mailingEdit.mailsuccess");
@@ -359,21 +356,19 @@
                 that.binding.testMailSuccessMsgFlag = 0;
                 var jp = [];
                 var ret = new WinJS.Promise.as().then(function () {
-                    return MailingEdit.VAMail.select(function(json) {
-                            Log.print(Log.l.trace, "Mailing.VAMail: success!");
-                            // select returns object already parsed from json file in response
-                            if (json && json.d && json.d.results) {
-                                var result = json.d.results[0];
-                                that.tempid = result.VAMailTypeID;
-                                that.binding.mailName = result;
-                            }
-                        },
-                        function(errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        },
-                        { VAMailVIEWID: recordId, LanguageSpecID: langRecordId });
+                    return MailingEdit.VAMail.select(function (json) {
+                        Log.print(Log.l.trace, "Mailing.VAMail: success!");
+                        // select returns object already parsed from json file in response
+                        if (json && json.d && json.d.results) {
+                            var result = json.d.results[0];
+                            that.tempid = result.VAMailTypeID;
+                            that.binding.mailName = result;
+                        }
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    }, { VAMailVIEWID: recordId, LanguageSpecID: langRecordId });
                 }).then(function () {
                     if (!AppData.initAnredeView.getResults().length) {
                         Log.print(Log.l.trace, "calling select initAnredeData...");
@@ -404,6 +399,8 @@
                         Log.print(Log.l.trace, "VAMailSpracheView: success!");
                         if (json && json.d && json.d.results) {
                             var results = json.d.results;
+                            results.splice(0, 0, { LanguageSpecID: 0, TITLE: "" });
+                            //results = results.concat({ LanguageSpecID: 0, TITLE: "" });
                             // Now, we call WinJS.Binding.List to get the bindable list
                             if (vaMailSprache && vaMailSprache.winControl) {
                                 vaMailSprache.winControl.data = new WinJS.Binding.List(results);
@@ -421,23 +418,22 @@
                     Log.print(Log.l.trace, "calling select vAMailTemplateView...");
                     //@nedra:25.09.2015: load the list of INITAnrede for Combobox
                     if (that.tempid) {
-                        jp.push(MailingEdit.vAMailTemplateView.select(function(json) {
-                                Log.print(Log.l.trace, "vAMailTemplateView: success!");
-                                if (json && json.d && json.d.results) {
-                                    var results = json.d.results;
-                                    results = results.concat({ VAMailLayoutVIEWID: 0, TextName: "DEFAULT" });
-                                    // Now, we call WinJS.Binding.List to get the bindable list
-                                    if (tempDropdown && tempDropdown.winControl) {
-                                        tempDropdown.winControl.data = new WinJS.Binding.List(results);
-                                    }
+                        jp.push(MailingEdit.vAMailTemplateView.select(function (json) {
+                            Log.print(Log.l.trace, "vAMailTemplateView: success!");
+                            if (json && json.d && json.d.results) {
+                                var results = json.d.results;
+                                //results = results.concat({ VAMailLayoutVIEWID: 0, TextName: "DEFAULT" });
+                                results.splice(0, 0, { VAMailLayoutVIEWID: 0, TextName: "DEFAULT" });
+                                // Now, we call WinJS.Binding.List to get the bindable list
+                                if (tempDropdown && tempDropdown.winControl) {
+                                    tempDropdown.winControl.data = new WinJS.Binding.List(results);
                                 }
-                            },
-                            function(errorResponse) {
-                                // called asynchronously if an error occurs
-                                // or server returns response with an error status.
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                            },
-                            { VAMailTypeID: that.tempid }));
+                            }
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        }, { VAMailTypeID: that.tempid }));
                     } else {
                         var results = [{ VAMailLayoutVIEWID: 0, TextName: "DEFAULT" }];
                         if (tempDropdown && tempDropdown.winControl) {
