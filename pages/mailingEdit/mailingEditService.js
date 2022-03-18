@@ -60,7 +60,7 @@
                 Vorname: "",
                 Nachname: "",
                 TargetAddr: "",
-                LanguageSpecID: 1031
+                TestLanguageID: 0
             }
         },
         _VAMail: {
@@ -79,27 +79,15 @@
                 return ret;
             }
         },
-        _initSpracheView: {
+        _VAMailSpracheView: {
             get: function () {
                 return AppData.getFormatView("VAMail", 20632);
             }
         },
-        initSpracheView: {
+        VAMailSpracheView: {
             select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, "MailingEdit.");
-                var ret = MailingEdit._initSpracheView.select(complete, error, restriction, { ordered: true });
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            getResults: function () {
-                Log.call(Log.l.trace, "MailingEdit.");
-                var ret = MailingEdit._initSpracheView.results;
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            getMap: function () {
-                Log.call(Log.l.trace, "MailingEdit.");
-                var ret = MailingEdit._initSpracheView.map;
+                var ret = MailingEdit._VAMailSpracheView.select(complete, error, restriction, { ordered: true });
                 Log.ret(Log.l.trace);
                 return ret;
             }
