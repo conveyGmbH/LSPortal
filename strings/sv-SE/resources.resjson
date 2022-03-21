@@ -1241,6 +1241,7 @@
     "mailingEdit.active"			: "Active",
     "mailingEdit.deactive"			: "Inactive",
     "mailingEdit.warnmsg"           : "Sender address is empty or mail layout is empty",
+    "mailingEdit.emptyLanguage"     : "Language is empty",
 
     "mailingTemplateEvent.title"			: "Templates",
     "mailingTemplateEvent.headertemplatename"			: "Name",

@@ -1268,6 +1268,7 @@
     "mailingEdit.active"			: "Actif",
     "mailingEdit.deactive"			: "Inactif",
     "mailingEdit.warnmsg"           : "L'adresse de l'expéditeur est vide ou la mise en page du courrier est vide",
+    "mailingEdit.emptyLanguage"     : "La langue est vide",
 
     "mailingTemplateEvent.title"			: "Modèles",
     "mailingTemplateEvent.headertemplatename"			: "Nom",

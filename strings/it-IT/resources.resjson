@@ -1268,6 +1268,7 @@
     "mailingEdit.active"			: "attivo",
     "mailingEdit.deactive"			: "Inattivo",
     "mailingEdit.warnmsg"           : "L'indirizzo del mittente è vuoto o il layout della posta è vuoto",
+    "mailingEdit.emptyLanguage"     : "La lingua è vuota",
 
     "mailingTemplateEvent.title"			: "Modelli",
     "mailingTemplateEvent.headertemplatename"			: "Nome",
