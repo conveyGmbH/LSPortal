@@ -668,14 +668,7 @@
                     if (that.binding.dataEmployee && that.binding.dataEmployee.MitarbeiterVIEWID && !AppBar.busy &&
                         that.binding.dataEmployee.MitarbeiterVIEWID !== AppData.getRecordId("Mitarbeiter") &&
                         that.binding.dataEmployee.IsDeletable != null) {
-                        var master = Application.navigator.masterControl;
-                        if (master && master.controller && master.controller.binding &&
-                            master.controller.binding.hasLocalevents &&
-                            !master.controller.binding.hasContacts) {
                             return false;
-                        } else {
-                            return true;
-                        }
                     } else {
                         return true;
                     }
