@@ -21,16 +21,16 @@
                             <span class="date-field"></span>
                         </div>
                     </div>
-                    <div class="fields-container">
+                    <div class="fields-container" data-win-bind="style.display: mailingtrackingdata.ExhibitorMailingStatusVIEWID Binding.Converter.toDisplay">
                         <div class="field_line field_line_odd">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingtracking.mailtype'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'mailingtracking.mailtype'}"></span>
-                            <input class="input_field win-textbox" id="mailtype" type="text" data-win-bind="value: mailingtrackingdata.MailType" disabled="disabled"/>
+                            <input class="input_field win-textbox" id="mailtype" type="text" data-win-bind="value: mailingtrackingdata.MailType" disabled="disabled" />
                         </div>
                         <div class="field_line field_line_even">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingtracking.fairmandant'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'mailingtracking.fairmandant'}"></span>
-                            <input class="input_field win-textbox" id="fairmandant" type="text" data-win-bind="value: fairmandant" disabled="disabled"/>
+                            <input class="input_field win-textbox" id="fairmandant" type="text" data-win-bind="value: mailingtrackingdata.Name" disabled="disabled" />
                         </div>
                         <div class="line-separator"></div>
                         <div class="field_line field_line_odd">
@@ -59,39 +59,39 @@
                                 <option data-win-bind="value: VALUE; textContent: TITLE"></option>
                             </select>
                         </div>
-                     <div class="line-separator"></div>
-                            <div class="field_line field_line_odd">
-                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingtracking.schedultedsendtsdate'}"></span>
-                                 <span class="label landscape_only" data-win-res="{textContent: 'mailingtracking.schedultedsendtsdate'}"></span>
-                                 <input class="input_field win-textbox" type="text" data-win-bind="value: mailingtrackingdata.ScheduledSendTS Binding.Mode.twoway" data-win-bind-onevent="oninput"/>
-                            </div>
+                        <div class="line-separator"></div>
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingtracking.schedultedsendtsdate'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'mailingtracking.schedultedsendtsdate'}"></span>
+                            <input class="input_field win-textbox" type="text" data-win-bind="value: mailingtrackingdata.ScheduledSendTS Binding.Mode.twoway" data-win-bind-onevent="oninput" />
                         </div>
-                    <div class="line-separator"></div>
-                    <div class="field_line field_line_odd">
-                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingtracking.language'}"></span>
-                        <span class="label landscape_only" data-win-res="{textContent: 'mailingtracking.language'}"></span>
-                        <select id="InitSprache"
-                                class="input_field win-dropdown"
-                                data-win-control="WinJS.UI.Repeater"
-                                data-win-bind="value: mailingtrackingdata.LanguageSpecID Binding.Mode.twoway">
-                            <option data-win-bind="value: LanguageID; textContent: TITLE"></option>
-                        </select>
-                    </div>
-                    <div class="field_line field_line_even">
-                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingtracking.category'}"></span>
-                        <span class="label landscape_only" data-win-res="{textContent: 'mailingtracking.category'}"></span>
-                        <select id="exhibitorcategory"
-                                class="input_field win-dropdown"
-                                data-win-control="WinJS.UI.Repeater"
-                                data-win-bind="value: mailingtrackingdata.ExhibitorCategory Binding.Mode.twoway">
-                            <option data-win-bind="value: TITLE; textContent: TITLE"></option>
-                        </select>
-                    </div>
-                    <div class="line-separator"></div>
-                    <div class="field_line">
+                        <div class="line-separator"></div>
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingtracking.language'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'mailingtracking.language'}"></span>
+                            <select id="InitSprache"
+                                    class="input_field win-dropdown"
+                                    data-win-control="WinJS.UI.Repeater"
+                                    data-win-bind="value: mailingtrackingdata.LanguageSpecID Binding.Mode.twoway">
+                                <option data-win-bind="value: LanguageID; textContent: TITLE"></option>
+                            </select>
+                        </div>
+                        <div class="field_line field_line_even">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingtracking.category'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'mailingtracking.category'}"></span>
+                            <select id="exhibitorcategory"
+                                    class="input_field win-dropdown"
+                                    data-win-control="WinJS.UI.Repeater"
+                                    data-win-bind="value: mailingtrackingdata.ExhibitorCategory Binding.Mode.twoway">
+                                <option data-win-bind="value: TITLE; textContent: TITLE"></option>
+                            </select>
+                        </div>
+                        <div class="line-separator"></div>
+                        <div class="field_line">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingtracking.supportcomment'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'mailingtracking.supportcomment'}"></span>
                             <textarea class="input_field win-textarea input_text_comment" data-win-bind="value: mailingtrackingdata.SupportComment Binding.Mode.twoway" data-win-bind-onevent="oninput"></textarea>
+                        </div>
                     </div>
                     <div class="error-message"
                          data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>

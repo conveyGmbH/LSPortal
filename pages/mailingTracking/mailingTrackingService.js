@@ -21,6 +21,7 @@
                 return ret;
             },
             defaultValue: {
+                ExhibitorMailingStatusVIEWID: 0,
                 MailType: "",
                 FairMandantVeranstID: 0,
                 Status: "",

@@ -16,7 +16,6 @@
             Log.call(Log.l.trace, "MailingTracking.Controller.");
             Application.Controller.apply(this, [pageElement, {
                 mailingtrackingdata: getEmptyDefaultValue(MailingTracking.MailTrackingDialogView.defaultValue),
-                fairmandant: "",
                 statusheader: "",
                 senddate: new Date().toLocaleString(),
                 mailsendoptdata : null
@@ -61,14 +60,6 @@
             };
             this.getFieldEntries = getFieldEntries;
 
-            var getRecordId = function () {
-                Log.call(Log.l.trace, "MailingTracking.Controller.");
-                var recordId = AppData.getRecordId("Maildokument");
-                Log.ret(Log.l.trace, recordId);
-                return recordId;
-            };
-            this.getRecordId = getRecordId;
-
             if (exhibitorcategory && exhibitorcategory.winControl) {
                 exhibitorcategory.winControl.data = new WinJS.Binding.List(exhibitorcategorys);
             }
@@ -84,19 +75,7 @@
                 var dateString = rawdate.replace("\/Date(", "").replace(")\/", "");
                 var milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000; //
                 var date = new Date(milliseconds).toISOString();
-
-                /*var year = date.getFullYear(),
-                    month = date.getMonth() + 1,
-                    day = date.getDate(),
-                    hour = date.getHours(),
-                    min = date.getMinutes();
-                month = (month < 10 ? '0' + month : month);
-                day = (day < 10 ? '0' + day : day);
-                hour = (hour < 10 ? '0' + hour : hour); 
-                min = (min < 10 ? '0' + min : min);*/
-                
                 that.binding.mailingtrackingdata.ScheduledSendTS = date;
-                //
             }
             this.getTimeToSend = getTimeToSend;
 
@@ -116,7 +95,6 @@
                     day = (day < 10 ? '0' + day : day);
                     hour = (hour < 10 ? '0' + hour : hour);
                     min = (min < 10 ? '0' + min : min);
-
                     that.binding.statusheader = sendTxt + ': ' +  day + '.' + month + '.' + year + ' ' + hour + ':' + min;
                 } else {
                     Log.call(Log.l.trace, "Not send!");
@@ -156,15 +134,11 @@
             this.resultConverter = resultConverter;
 
             var saveData = function (complete, error) {
-                Log.call(Log.l.trace, "Mailing.Controller.");
+                Log.call(Log.l.trace, "MailingTracking.Controller.");
                 AppData.setErrorMsg(that.binding);
                 if (typeof that.binding.mailingtrackingdata.LanguageSpecID === "string") {
                     that.binding.mailingtrackingdata.LanguageSpecID = parseInt(that.binding.mailingtrackingdata.LanguageSpecID);
                 }
-                //var TS = new Date(that.binding.senddate);
-                /*var TS = new Date(that.binding.mailingtrackingdata.ScheduledSendTS);
-                var isoDate = new Date(TS.getTime() - (TS.getTimezoneOffset() * 60000)).toISOString();
-                that.binding.mailingtrackingdata.ScheduledSendTS = isoDate;*/
                 Log.call(Log.l.trace, "Mailing.Controller.");
                 AppData.call("PRC_UpdateExhibitorMailing",
                     {
@@ -177,14 +151,12 @@
                         pExhibitorCategory: that.binding.mailingtrackingdata.ExhibitorCategory,
                         pTempOnly: that.binding.mailsendoptdata
 
-                    },
-                    function (json) {
+                    }, function (json) {
                         Log.print(Log.l.info, "call success! ");
                         AppBar.busy = false;
                         AppBar.modified = false;
                         that.loadData(that.binding.mailingtrackingdata.ExhibitorMailingStatusVIEWID);
-                    },
-                    function (errorResponse) {
+                    }, function (errorResponse) {
                         Log.print(Log.l.error, "call error");
                         AppBar.busy = false;
                         AppData.setErrorMsg(that.binding, errorResponse);
@@ -196,29 +168,29 @@
             // Then, do anything special on this page
             this.eventHandlers = {
                 clickBack: function (event) {
-                    Log.call(Log.l.trace, "Mailing.Controller.");
+                    Log.call(Log.l.trace, "MailingTracking.Controller.");
                     if (!Application.showMaster() && WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done();
                     }
                     Log.ret(Log.l.trace);
                 },
                 clickSave: function (event) {
-                    Log.call(Log.l.trace, "Mailing.Controller.");
+                    Log.call(Log.l.trace, "MailingTracking.Controller.");
                     that.saveData();
                     Log.ret(Log.l.trace);
                 },
                 clickChangeUserState: function (event) {
-                    Log.call(Log.l.trace, "Mailing.Controller.");
+                    Log.call(Log.l.trace, "MailingTracking.Controller.");
                     Application.navigateById("userinfo", event);
                     Log.ret(Log.l.trace);
                 },
                 clickGotoPublish: function (event) {
-                    Log.call(Log.l.trace, "Mailing.Controller.");
+                    Log.call(Log.l.trace, "MailingTracking.Controller.");
                     Application.navigateById("publish", event);
                     Log.ret(Log.l.trace);
                 },
                 clickTopButton: function (event) {
-                    Log.call(Log.l.trace, "Contact.Controller.");
+                    Log.call(Log.l.trace, "MailingTracking.Controller.");
                     var anchor = document.getElementById("menuButton");
                     var menu = document.getElementById("menu1").winControl;
                     var placement = "bottom";
@@ -226,7 +198,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickLogoff: function (event) {
-                    Log.call(Log.l.trace, "Account.Controller.");
+                    Log.call(Log.l.trace, "MailingTracking.Controller.");
                     AppData._persistentStates.privacyPolicyFlag = false;
                     if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
                         AppHeader.controller.binding.userData = {};
@@ -306,37 +278,11 @@
                                 that.getStatusHeader(that.binding.mailingtrackingdata.LastSendTS);
                                 Log.print(Log.l.trace, "MailingTracking: success!");
                             }
-                            // startContact returns object already parsed from json file in response
-                        },
-                            function (errorResponse) {
+                        }, function (errorResponse) {
                                 // called asynchronously if an error occurs
                                 // or server returns response with an error status.
-
                                 AppData.setErrorMsg(that.binding, errorResponse);
-                            },
-                            recordId);
-                    } else {
-                        return WinJS.Promise.as();
-                    }
-                }).then(function () {
-                    if (that.binding.mailingtrackingdata.FairMandantVeranstID) {
-                        return MailingTracking.FairMandantView.select(function (json) {
-                                // this callback will be called asynchronously
-                                // when the response is available
-                                Log.print(Log.l.trace, "MailingTracking: success!");
-                                if (json && json.d) {
-                                    that.binding.fairmandant = json.d.Name;
-                                    Log.print(Log.l.trace, "MailingTracking: success!");
-                                }
-                                // startContact returns object already parsed from json file in response
-                            },
-                            function (errorResponse) {
-                                // called asynchronously if an error occurs
-                                // or server returns response with an error status.
-
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                            },
-                            that.binding.mailingtrackingdata.FairMandantVeranstID);
+                        }, recordId);
                     } else {
                         return WinJS.Promise.as();
                     }

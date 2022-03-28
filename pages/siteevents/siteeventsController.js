@@ -517,7 +517,6 @@
                 },
                 clickMailTracking: function (event) {
                     Log.call(Log.l.trace, "SiteEvents.Controller.");
-                    AppData.setRestriction("ExhibitorMailingStatus", that.binding.mailingtrackingrestriction);
                     Application.navigateById("mailingTracking", event);
                     Log.ret(Log.l.trace);
                 },

@@ -247,7 +247,6 @@
         { id: "infodesk", master: "infodeskEmpList" },
         { id: "mailingTypes", master: "siteEventsList" },
         { id: "mailingTemplate", master: "siteEventsList" },
-        { id: "mailingTracking", master: "siteEventsList" },
         { id: "siteevents", master: "siteEventsList" },
         { id: "clientManagement", master: "clientManagementList" },
         { id: "clientManagementLicenses", master: "clientManagementList" },

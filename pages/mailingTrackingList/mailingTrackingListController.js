@@ -101,9 +101,7 @@
                             counter.style.display = "inline";
                         }
                         that.loading = false;
-                    },
-                        null,
-                        nextUrl);
+                    }, null, nextUrl);
                 } else {
                     if (progress && progress.style) {
                         progress.style.display = "none";
@@ -166,13 +164,8 @@
                                         // called asynchronously if ok
                                         that.binding.mailingId = item.data.ExhibitorMailingStatusVIEWID;
                                         if (curPageId === "mailingTracking") {
-                                            //AppBar.scope.binding.saveFlag = true;
-
-
                                             if (typeof AppBar.scope.loadData === "function") {
                                                 AppBar.scope.loadData(that.binding.mailingId);
-
-
                                             }
                                         }
                                     }
@@ -316,6 +309,7 @@
                             }
                         } else {
                             that.binding.count = 0;
+                            AppData.setRestriction("ExhibitorMailingStatus", 0);
                             that.nextUrl = null;
                             that.maildocuments = null;
                             if (listView.winControl) {
