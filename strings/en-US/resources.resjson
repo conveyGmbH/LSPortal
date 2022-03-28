@@ -592,7 +592,8 @@
     "label.startPremiumStandard" : "Standard",
 	"label.startPremium1": "Premium 1",
 	"label.startPremium2": "Premium 2",
-  "label.eventBaseLink" : "Base Link",
+  "label.eventBaseLink" : "Base Link",   
+    "label.ticketLimits" : "Ticket Limits",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Cancel",
@@ -1450,5 +1451,11 @@
 
     "eventbaselink.title" : "Base Link",
     "eventbaselink.starturl" : "URL Path",
-    "eventbaselink.titlebaselink" : "Title"
+    "eventbaselink.titlebaselink" : "Title",
+
+    "ticketLimitsList.title" : "Ticket List",
+
+    "ticketLimits.title" : "Ticket Settings",
+    "ticketLimits.locallimit" : "Ticket Limit",
+    "ticketLimits.localfree" : "Tickets Free"
 }

@@ -110,6 +110,7 @@
         { id: "myEvents", group: 53, svg: "keys", disabled: true, popup: true },
         //{ id: "localevents", group: 12, svg: "keys", disabled: true, predecGroup: 53 },
         { id: "eventGenSettings", group: 44, svg: "calendar_1", disabled: true, predecGroup: 53 },
+        { id: "ticketLimits", group: 67, svg: "calendar_1", disabled: true, predecGroup: 53 },
         //MyEventsLS
         { id: "MyEventsLSGrp", group: 62, svg: "keys", disabled: true, popup: true },
         { id: "localevents", group: 12, svg: "keys", disabled: true, predecGroup: 62 },
@@ -231,7 +232,8 @@
         { id: "contactResultsEvents", group: 43, disabled: false },
         { id: "startPremium", group: -57, disabled: false },
         { id: "startSurpreme", group: -58, disabled: false },
-        { id: "startTileAdministration", group: 61, disabled: false }
+        { id: "startTileAdministration", group: 61, disabled: false },
+        { id: "ticketLimits", group: 67, disabled: false },
     ];
 
 
@@ -269,10 +271,10 @@
         { id: "genDataAnswers", master: "genDataQuestions" },
         { id: "startTileAdministration", master: "startTileAdministrationList" },
         { id: "mailing", master: "mailingListLS" },
-        { id: "mailingList", master: "mailingVSList" }
+        { id: "mailingList", master: "mailingVSList" },
+        { id: "ticketLimits", master: "ticketLimitsList" }
     ];
-
-
+    
     // init page for app startup
     Application.initPage = Application.getPagePath("dbinit");
     // home page of app
