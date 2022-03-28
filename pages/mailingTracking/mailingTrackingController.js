@@ -140,7 +140,7 @@
                     that.binding.mailingtrackingdata.LanguageSpecID = parseInt(that.binding.mailingtrackingdata.LanguageSpecID);
                 }
                 Log.call(Log.l.trace, "Mailing.Controller.");
-                AppData.call("PRC_UpdateExhibitorMailing",
+                return AppData.call("PRC_UpdateExhibitorMailing",
                     {
                         pExhibitorMailingStatusID: that.binding.mailingtrackingdata.ExhibitorMailingStatusVIEWID,
                         pStatus: that.binding.mailingtrackingdata.Status,
@@ -156,12 +156,12 @@
                         AppBar.busy = false;
                         AppBar.modified = false;
                         that.loadData(that.binding.mailingtrackingdata.ExhibitorMailingStatusVIEWID);
+                        Log.ret(Log.l.trace);
                     }, function (errorResponse) {
                         Log.print(Log.l.error, "call error");
                         AppBar.busy = false;
                         AppData.setErrorMsg(that.binding, errorResponse);
                     });
-				Log.ret(Log.l.trace);
             };
             this.saveData = saveData;
             
@@ -274,7 +274,7 @@
                                     that.binding.mailingtrackingdata.SupportComment = "";
                                 }
                                 that.binding.statusheader = "";
-                                that.getTimeToSend(that.binding.mailingtrackingdata.ScheduledSendTS);
+                                // that.getTimeToSend(that.binding.mailingtrackingdata.ScheduledSendTS);
                                 that.getStatusHeader(that.binding.mailingtrackingdata.LastSendTS);
                                 Log.print(Log.l.trace, "MailingTracking: success!");
                             }
