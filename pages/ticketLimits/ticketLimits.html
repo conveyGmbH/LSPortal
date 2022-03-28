@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <link href="ticketLimits.css" rel="stylesheet"/>
+    <script type="text/javascript" src="ticketLimitsService.js"></script>
+    <script type="text/javascript" src="ticketLimitsController.js"></script>
+    <script type="text/javascript" src="ticketLimits.js"></script>
+</head>
+<body class="win-type-body">
+<div class="ticketLimits fragment">
+    <div id="mailingProductController" class="data-container">
+        <section aria-label="Main content" role="main" class="animationElement">
+            <div class="contentarea win-type-body">
+                <div class="header-separator"></div>
+                <div class="content-header">
+                    <div class="half-circle half-circle-textcolor">&nbsp;</div>
+                    <div class="content-header-line win-type-caption">
+                        <span class="id-field"></span>
+                        <span class="caption-field" data-win-res="{textContent: 'ticketLimits.title'}"></span>
+                        <span class="date-field"></span>
+                    </div>
+                </div>
+                <div class="content-record"
+                     data-win-bind="style.display: dataTicketLimits.CRVeranstaltungBucketVIEWID Binding.Converter.toDisplay">
+                    <div class="fields-container">
+                        <div class="line-separator"></div>
+                        <div class="field_line field_line_odd">
+                            <h1 data-win-bind="textContent: dataTicketLimits.BucketText Binding.Mode.twoway"></h1>
+                        </div>
+                        <div class="line-separator"></div>
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'ticketLimits.locallimit'}"></span>
+                            <span class="label win-type-caption portrait_only_quarter" data-win-res="{textContent: 'ticketLimits.localfree'}"></span>
+                            <span class="label landscape_only">
+                                <span data-win-res="{textContent: 'ticketLimits.locallimit'}"></span> / <span data-win-res="{textContent: 'ticketLimits.localfree'}"></span>
+                            </span>
+                            <div class="input_group">
+                                <div class="input_half_left">
+                                    <input class="input_half_left win-textbox" type="number" min="0" max="99999999" data-win-bind="value: dataTicketLimits.LocalLimit Binding.Mode.twoway" />
+                                    <!--<span class="seperator-slash"> / </span>-->
+                                    <input class="input_half_right win-textbox" type="number" min="0" max="99999999" data-win-bind="value: dataTicketLimits.LocalFree Binding.Mode.twoway" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="line-separator"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="error-message"
+                 data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
+        </section>
+    </div>
+</div>
+</body>
+</html>

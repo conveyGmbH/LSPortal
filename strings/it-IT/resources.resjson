@@ -593,6 +593,7 @@
 	"label.startPremium1": "Premium 1",
 	"label.startPremium2": "Premium 2",
   "label.eventBaseLink" : "Collegamento alla base",
+  "label.ticketLimits" : "Ticket Limits",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annulla",
@@ -1449,5 +1450,11 @@
 
     "eventbaselink.title" : "Link alla base",
     "eventbaselink.starturl" : "Percorso dell'URL",
-    "eventbaselink.titlebaselink" : "Titolo"
+    "eventbaselink.titlebaselink" : "Titolo",
+
+    "ticketLimitsList.title" : "Elenco dei biglietti",
+
+    "ticketLimits.title" : "Impostazione del biglietto",
+    "ticketLimits.locallimit" : "Limite del biglietto",
+    "ticketLimits.localfree" : "Biglietti gratis"
 }
