@@ -10,35 +10,30 @@
 
 (function () {
     "use strict";
-    WinJS.Namespace.define("Skills", {
+    WinJS.Namespace.define("EmpSkills", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "Skills.Controller.");
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
                 questionId: AppData.generalData.getRecordId("SkillTypeSkills")
             }, commandList]);
+            this.nextUrl = null;
+            this.loading = false;
+            this.questions = null;
 
             var that = this;
-
-            var input = pageElement.querySelectorAll('.win-range');
 
             // ListView control
             var listView = pageElement.querySelector("#skillsList.listview");
 
-            // prevent some keyboard actions from listview to navigate within controls!
-            /*listView.addEventListener("keydown", function (e) {
-                if (!e.ctrlKey && !e.altKey) {
-                    switch (e.keyCode) {
-                        case WinJS.Utilities.Key.end:
-                        case WinJS.Utilities.Key.home:
-                        case WinJS.Utilities.Key.leftArrow:
-                        case WinJS.Utilities.Key.rightArrow:
-                        case WinJS.Utilities.Key.space:
-                            e.stopImmediatePropagation();
-                            break;
-                    }
+            this.dispose = function () {
+                if (listView && listView.winControl) {
+                    listView.winControl.itemDataSource = null;
                 }
-            }.bind(this), true);*/
+                if (that.questions) {
+                    that.questions = null;
+                }
+            }
 
             var progress = null;
             var counter = null;
@@ -186,7 +181,7 @@
                 var recordId = that.curRecId;
                 if (recordId) {
                     AppBar.busy = true;
-                    Skills.skilltypeskillsView.deleteRecord(function (response) {
+                    EmpSkills.skilltypeskillsView.deleteRecord(function (response) {
                         AppBar.busy = false;
                         // called asynchronously if ok
                         that.loadData();
@@ -216,7 +211,7 @@
                         var newRecord = that.getFieldEntries(curScope.index);
                         if (that.mergeRecord(curScope.item, newRecord) || AppBar.modified) {
                             Log.print(Log.l.trace, "save changes of recordId:" + recordId);
-                            ret = Skills.skilltypeskillsView.update(function (response) {
+                            ret = EmpSkills.skilltypeskillsView.update(function (response) {
                                 Log.print(Log.l.info, "skilltypeskillsView update: success!");
                                 AppData.getUserData();
                                 // called asynchronously if ok
@@ -258,7 +253,7 @@
                     Log.call(Log.l.trace, "Skills.Controller.");
                     that.saveData(function (response) {
                         AppBar.busy = true;
-                        Skills.skilltypeskillsView.insert(function (json) {
+                        EmpSkills.skilltypeskillsView.insert(function (json) {
                             AppBar.busy = false;
                             // called asynchronously if ok
                             Log.print(Log.l.info, "skilltypeskillsView insert: success!");
@@ -577,13 +572,13 @@
                             Log.print(Log.l.trace, "calling select Skills.skilltypeskillsView...");
                             var nextUrl = that.nextUrl;
                             that.nextUrl = null;
-                            Skills.skilltypeskillsView.selectNext(function (json) {
+                            EmpSkills.skilltypeskillsView.selectNext(function (json) {
                                 // this callback will be called asynchronously
                                 // when the response is available
                                 Log.print(Log.l.trace, "Skills.skilltypeskillsView: success!");
                                 // selectNext returns object already parsed from json file in response
                                 if (json && json.d) {
-                                    that.nextUrl = Skills.skilltypeskillsView.getNextUrl(json);
+                                    that.nextUrl = EmpSkills.skilltypeskillsView.getNextUrl(json);
                                     var results = json.d.results;
                                     results.forEach(function (item) {
                                         that.resultConverter(item);
@@ -743,25 +738,25 @@
                         }
                     }
                 }.bind(this), true);
-                listView.addEventListener("selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
-                listView.addEventListener("loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
-                listView.addEventListener("headervisibilitychanged", this.eventHandlers.onHeaderVisibilityChanged.bind(this));
-                listView.addEventListener("footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
-                listView.addEventListener("iteminvoked", this.eventHandlers.onItemInvoked.bind(this));
+                this.addRemovableEventListener(listView, "selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
+                this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
+                this.addRemovableEventListener(listView, "headervisibilitychanged", this.eventHandlers.onHeaderVisibilityChanged.bind(this));
+                this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
+                this.addRemovableEventListener(listView, "iteminvoked", this.eventHandlers.onItemInvoked.bind(this));
             }
 
             var loadData = function () {
                 Log.call(Log.l.trace, "Skills.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
-                    return Skills.skilltypeskillsView.select(function (json) {
+                    return EmpSkills.skilltypeskillsView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
                         Log.print(Log.l.trace, "Skills.questionListView: success!");
                         // select returns object already parsed from json file in response
                         if (json && json.d) {
                             that.binding.count = json.d.results.length;
-                            that.nextUrl = Skills.skilltypeskillsView.getNextUrl(json);
+                            that.nextUrl = EmpSkills.skilltypeskillsView.getNextUrl(json);
                             var results = json.d.results;
                             results.forEach(function (item) {
                                 that.resultConverter(item);
@@ -769,7 +764,7 @@
                             // Now, we call WinJS.Binding.List to get the bindable list
                             that.questions = new WinJS.Binding.List(results);
 
-                            if (listView.winControl) {
+                            if (listView && listView.winControl) {
                                 // fix focus handling
                                 that.setFocusOnItemInListView(listView);
 
@@ -800,7 +795,7 @@
                 return that.loadData();
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
-                return that.selectRecordId(that.binding.questionId);
+               return that.selectRecordId(that.binding.questionId);
             }).then(function () {
                 AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Record selected");

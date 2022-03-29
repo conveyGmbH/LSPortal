@@ -552,11 +552,11 @@
 
             // register ListView event handler
             if (listView) {
-                listView.addEventListener("selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
-                listView.addEventListener("loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
-                listView.addEventListener("headervisibilitychanged", this.eventHandlers.onHeaderVisibilityChanged.bind(this));
-                listView.addEventListener("footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
-                listView.addEventListener("iteminvoked", this.eventHandlers.onItemInvoked.bind(this));
+                this.addRemovableEventListener(listView, "selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
+                this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
+                this.addRemovableEventListener(listView, "headervisibilitychanged", this.eventHandlers.onHeaderVisibilityChanged.bind(this));
+                this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
+                this.addRemovableEventListener(listView, "iteminvoked", this.eventHandlers.onItemInvoked.bind(this));
             }
 
             var loadData = function (mitarbeiterId) {
