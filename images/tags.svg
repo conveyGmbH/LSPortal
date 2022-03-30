@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="580px" height="580px" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="nonzero" clip-rule="nonzero" viewBox="0 0 5800 5800" xmlns:xlink="http://www.w3.org/1999/xlink">
-	<title>tags icon</title>
-	<desc>tags icon from the IconExperience.com I-Collection. Copyright by INCORS GmbH (www.incors.com).</desc>
-		<path id="curve29" fill="#000000" d="M5477 2572c193,193 193,514 0,707l-76 76c-17,-70 -46,-138 -84,-199l19 -18c14,15 187,-237 0,-424l-2317 -2316 -1847 0c-122,0 -229,80 -263,196 -66,1 -141,1 -206,7 35,-231 235,-403 469,-403l1929 0 2376 2374z"/>
-	<path id="curve28" fill="#000000" d="M5077 3172c193,193 193,514 0,707l-1698 1697c-193,193 -513,194 -706,0l-2376 -2377 1 -1928c0,-261 212,-473 474,-473l1929 0 2376 2374zm-212 354l-1838 1838 -2265 -2267 1838 -1838 2265 2267zm-283 0l-1982 -1985 -1556 1556 1982 1985 1556 -1556zm-3304 -2049c0,165 -135,300 -300,300 -166,0 -300,-134 -300,-300 0,-165 135,-300 300,-300 166,0 300,135 300,300zm-200 0c0,-55 -45,-100 -100,-100 -56,0 -100,44 -100,100 0,56 45,100 100,100 26,0 51,-9 71,-29 19,-19 29,-45 29,-71zm3858 1837l-2317 -2316 -1847 0c-151,0 -274,122 -274,273l-1 1845 2317 2319c117,116 308,116 425,0l1697 -1697c116,-116 116,-308 0,-424z"/>
-</svg>
