@@ -10,7 +10,7 @@
 
 (function () {
     "use strict";
-    WinJS.Namespace.define("EmpSkills", {
+    WinJS.Namespace.define("Skills", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "Skills.Controller.");
             Application.Controller.apply(this, [pageElement, {
@@ -187,7 +187,7 @@
                 var recordId = that.curRecId;
                 if (recordId) {
                     AppBar.busy = true;
-                    EmpSkills.skilltypeskillsView.deleteRecord(function (response) {
+                    Skills.skilltypeskillsView.deleteRecord(function (response) {
                         AppBar.busy = false;
                         // called asynchronously if ok
                         that.loadData();
@@ -217,7 +217,7 @@
                         var newRecord = that.getFieldEntries(curScope.index);
                         if (that.mergeRecord(curScope.item, newRecord) || AppBar.modified) {
                             Log.print(Log.l.trace, "save changes of recordId:" + recordId);
-                            ret = EmpSkills.skilltypeskillsView.update(function (response) {
+                            ret = Skills.skilltypeskillsView.update(function (response) {
                                 Log.print(Log.l.info, "skilltypeskillsView update: success!");
                                 AppData.getUserData();
                                 // called asynchronously if ok
@@ -259,7 +259,7 @@
                     Log.call(Log.l.trace, "Skills.Controller.");
                     that.saveData(function (response) {
                         AppBar.busy = true;
-                        EmpSkills.skilltypeskillsView.insert(function (json) {
+                        Skills.skilltypeskillsView.insert(function (json) {
                             AppBar.busy = false;
                             // called asynchronously if ok
                             Log.print(Log.l.info, "skilltypeskillsView insert: success!");
@@ -578,13 +578,13 @@
                             Log.print(Log.l.trace, "calling select Skills.skilltypeskillsView...");
                             var nextUrl = that.nextUrl;
                             that.nextUrl = null;
-                            EmpSkills.skilltypeskillsView.selectNext(function (json) {
+                            Skills.skilltypeskillsView.selectNext(function (json) {
                                 // this callback will be called asynchronously
                                 // when the response is available
                                 Log.print(Log.l.trace, "Skills.skilltypeskillsView: success!");
                                 // selectNext returns object already parsed from json file in response
                                 if (json && json.d) {
-                                    that.nextUrl = EmpSkills.skilltypeskillsView.getNextUrl(json);
+                                    that.nextUrl = Skills.skilltypeskillsView.getNextUrl(json);
                                     var results = json.d.results;
                                     results.forEach(function (item) {
                                         that.resultConverter(item);
@@ -755,14 +755,14 @@
                 Log.call(Log.l.trace, "Skills.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
-                    return EmpSkills.skilltypeskillsView.select(function (json) {
+                    return Skills.skilltypeskillsView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
                         Log.print(Log.l.trace, "Skills.questionListView: success!");
                         // select returns object already parsed from json file in response
                         if (json && json.d) {
                             that.binding.count = json.d.results.length;
-                            that.nextUrl = EmpSkills.skilltypeskillsView.getNextUrl(json);
+                            that.nextUrl = Skills.skilltypeskillsView.getNextUrl(json);
                             var results = json.d.results;
                             results.forEach(function (item) {
                                 that.resultConverter(item);

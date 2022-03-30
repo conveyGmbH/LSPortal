@@ -6,7 +6,7 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("EmpSkills", {
+    WinJS.Namespace.define("Skills", {
         _skilltypeView: {
             get: function () {
                 return AppData.getFormatView("SkillType", 0);
@@ -20,7 +20,7 @@
         skilltypeskillsView: {
             select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, "Skills.");
-                var ret = EmpSkills._skilltypeskillsView.select(complete, error, restriction, {
+                var ret = Skills._skilltypeskillsView.select(complete, error, restriction, {
                     ordered: true,
                     orderAttribute: "Sortierung"
                 });
@@ -30,27 +30,27 @@
             },
             getNextUrl: function (response) {
                 Log.call(Log.l.trace, "Skills.");
-                var ret = EmpSkills._skilltypeskillsView.getNextUrl(response);
+                var ret = Skills._skilltypeskillsView.getNextUrl(response);
                 Log.ret(Log.l.trace);
                 return ret;
             },
             selectNext: function (complete, error, response, nextUrl) {
                 Log.call(Log.l.trace, "Skills.");
-                var ret = EmpSkills._skilltypeskillsView.selectNext(complete, error, response, nextUrl);
+                var ret = Skills._skilltypeskillsView.selectNext(complete, error, response, nextUrl);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
             },
             update: function (complete, error, recordId, viewResponse) {
                 Log.call(Log.l.trace, "Skills.");
-                var ret = EmpSkills._skilltypeskillsView.update(complete, error, recordId, viewResponse);
+                var ret = Skills._skilltypeskillsView.update(complete, error, recordId, viewResponse);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
             },
             insert: function (complete, error) {
                 Log.call(Log.l.trace, "skilltypeView.");
-                var ret = EmpSkills._skilltypeView.insert(complete, error, {
+                var ret = Skills._skilltypeView.insert(complete, error, {
                     FragengruppeID: 0
                 });
                 Log.ret(Log.l.trace);
@@ -58,7 +58,7 @@
             },
             deleteRecord: function (complete, error, recordId) {
                 Log.call(Log.l.trace, "skilltypeView.");
-                var ret = EmpSkills._skilltypeView.deleteRecord(complete, error, recordId);
+                var ret = Skills._skilltypeView.deleteRecord(complete, error, recordId);
                 Log.ret(Log.l.trace);
                 return ret;
             }
