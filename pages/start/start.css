@@ -258,7 +258,7 @@
 #startTop10Usershost.fragmenthost {
     height: 360px;
 }
-.ITbackground {
+.backgroundIT {
     margin-top: 4px;
     margin-left: 26px;
     margin-right: 26px;
@@ -267,7 +267,7 @@
     height: 730px; /*645px*/
     background-color: transparent;
     /*color: white;
-    background-image: url("/www/images/ITBackground.jpg");*/
+    background-image: url("/www/images/backgroundIT.jpg");*/
 }
 .ipadImg {
     max-width: 100%;
