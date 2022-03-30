@@ -45,6 +45,12 @@
             var mouseDown = false;
 
             var resultConverter = function (item) {
+                for (var prop in item) {
+                    if (item.hasOwnProperty(prop) && prop.substr(0,6) === "Skills" &&
+                        item[prop] === null) {
+                        item[prop] = "";
+                    }
+                }
                 var key = "Line";
                 for (var j = 1; j <= 28; j++) {
                     if (j <= item.Anzahl) {
