@@ -101,11 +101,11 @@
         { id: "eventSeries", group: 52, svg: "Stammdaten", disabled: true, predecGroup: 23 },
         { id: "genDataModDetails", group: 54, svg: "Stammdaten", disabled: true, predecGroup: 23 },
 		{ id: "genDataAnswers", group: 56, svg: "Stammdaten", disabled: true, predecGroup: 23 },
-        { id: "skills", group: 24, svg: "Skills", disabled: true, predecGroup: 23 },
+        { id: "skills", group: 24, svg: "user_skills", disabled: true, predecGroup: 23 },
         //Employee
         { id: "employeeGrp", group: 25, svg: "Benutzerkonten", disabled: true, popup: true },
         { id: "employee", group: 5, svg: "keys", disabled: true, predecGroup: 25 },
-        { id: "skills", group: 24, svg: "Skills", disabled: true, predecGroup: 25 },
+        { id: "skills", group: 24, svg: "user_skills", disabled: true, predecGroup: 25 },
         //MyEvent
         { id: "myEvents", group: 53, svg: "keys", disabled: true, popup: true },
         //{ id: "localevents", group: 12, svg: "keys", disabled: true, predecGroup: 53 },
