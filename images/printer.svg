@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="580px" height="580px" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="nonzero" clip-rule="nonzero" viewBox="0 0 5800 5800" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>printer icon</title>
+	<desc>printer icon from the IconExperience.com I-Collection. Copyright by INCORS GmbH (www.incors.com).</desc>
+		<path id="curve29" fill="#000000" d="M4500 4100l-3200 0 0 100c0,55 45,100 100,100l3000 0c55,0 100,-45 100,-100l0 -100zm-3100 -400l3000 0c165,0 300,135 300,300l0 200c0,165 -135,300 -300,300l-3000 0c-165,0 -300,-135 -300,-300l0 -200c0,-165 135,-300 300,-300zm-600 -1400c1400,0 2800,0 4200,0 275,0 500,225 500,500l0 1600c0,275 -225,500 -500,500l-4200 0c-275,0 -500,-225 -500,-500l0 -1600c0,-275 225,-500 500,-500zm4200 200l-4200 0c-165,0 -300,135 -300,300l0 1600c0,165 135,300 300,300l4200 0c165,0 300,-135 300,-300l0 -1600c0,-165 -135,-300 -300,-300zm-3900 200c110,0 200,90 200,200 0,110 -90,200 -200,200 -110,0 -200,-90 -200,-200 0,-110 90,-200 200,-200zm600 0c110,0 200,90 200,200 0,110 -90,200 -200,200 -110,0 -200,-90 -200,-200 0,-110 90,-200 200,-200z"/>
+	<path id="curve28" fill="#000000" d="M1900 1700l2000 0 0 200 -2000 0 0 -200zm2600 -1400l0 1800c-61,-4 -138,0 -200,0l0 -1600 -2800 0 0 1600 -200 0 0 -1800 3200 0zm-2600 600l2000 0 0 200 -2000 0 0 -200zm0 400l2000 0 0 200 -2000 0 0 -200z"/>
+</svg>
