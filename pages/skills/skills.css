@@ -33,7 +33,6 @@
 }
 #skillsList .answer-block {
     width: calc(100% - 68px);
-    float: right;
 }
 
 #skillsList .line-separator .row-end {
@@ -64,8 +63,8 @@
     padding-top: 0;
     height: 40px;
 }
-.checkbox .win-textbox,
-.radio .win-textbox {
+#skillsList .checkbox .win-textbox,
+#skillsList .radio .win-textbox {
     width: calc(100% - 60px) !important;
 }
 
@@ -74,38 +73,38 @@
   background-color: transparent;
 }
 
-.list-question-field {
+#skillsList .list-question-field {
     padding-bottom: 8px;
     padding-top: 10px;
     width: 60%;
     float: left;
 }
-.list-question-content {
+#skillsList .list-question-content {
     padding-left: 28px;
 }
-.questionnaire-row {
+#skillsList .questionnaire-row {
     /*margin-top: 10px;*/
     height: auto;
 }
-.field_line_questionnaire {
+#skillsList .field_line_questionnaire {
     height: auto;
 }
-.field_row_odd {
+#skillsList .field_row_odd {
     float: left;
-    width: 50%;
+    width: calc(50% - 5px);
 }
-.field_row_even {
+#skillsList .field_row_even {
     float: right;
-    width: 50%;
+    width: calc(50% - 5px);
 }
-.field_line_left {
+#skillsList .field_line_left {
     float: left;
-    width: 50%;
+    width: calc(50% - 5px);
     padding: 0;
 }
-.field_line_right {
+#skillsList .field_line_right {
     float: right;
-    width: 50%;
+    width: calc(50% - 5px);
     padding: 0;
 }
 
@@ -121,27 +120,27 @@
 */
 
 
-.view-size-medium #listQuestionList .win-item {
+#skillsList .view-size-medium #listQuestionList .win-item {
     width: calc(100% - 36px);
     padding-left: 18px;
     padding-right: 18px;
     padding-top: 8px;
     padding-bottom: 8px;
 }
-.view-size-medium .field_row_odd {
+#skillsList .view-size-medium .field_row_odd {
     float: left;
     width: 100%;
 }
-.view-size-medium .field_row_even {
+#skillsList .view-size-medium .field_row_even {
     float: left;
     width: 100%;
 }
-.view-size-medium .field-separator {
-        width:calc(100% - 40px);
-        height:0;
-        float:left;
+#skillsList .view-size-medium .field-separator {
+    width: calc(100% - 40px);
+    height: 0;
+    float: left;
 }
-.view-size-medium .list-question-content {
+#skillsList .view-size-medium .list-question-content {
     padding-left: 15px;
 }
     
@@ -156,7 +155,7 @@
 */
 
 
-.view-size-medium-small .list-question-field {
+#skillsList .view-size-medium-small .list-question-field {
     padding-bottom: 8px;
     width: 100%;
     float: left;
@@ -164,7 +163,7 @@
     -webkit-hyphens: auto;
     -ms-hyphens: auto;
     -o-hyphens: auto;
-    hyphens: auto; 
+    hyphens: auto;
 }
 
  
@@ -177,28 +176,28 @@
     @media (max-width:499px) {
     }
 */
-.view-size-small #listQuestionList .win-item {
+#skillsList .view-size-small #listQuestionList .win-item {
     width: calc(100% - 20px);
     padding-left: 10px;
     padding-right: 10px;
     padding-top: 4px;
     padding-bottom: 4px;
 }
-.view-size-small .field_line_left {
+#skillsList .view-size-small .field_line_left {
     float: left;
     width: 100%;
 }
-.view-size-small .field_line_right {
+#skillsList .view-size-small .field_line_right {
     float: left;
     width: 100%;
 }
-.view-size-small .field-separator {
+#skillsList .view-size-small .field-separator {
     display: none;
 }
-.view-size-small .rating-question-field {
-    float:left;
+#skillsList .view-size-small .rating-question-field {
+    float: left;
     width: 100%;
 }
-.view-size-small .list-question-content {
+#skillsList .view-size-small .list-question-content {
     padding-left: 9px;
 }
