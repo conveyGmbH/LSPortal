@@ -233,7 +233,7 @@
         { id: "startPremium", group: -57, disabled: false },
         { id: "startSurpreme", group: -58, disabled: false },
         { id: "startTileAdministration", group: 61, disabled: false },
-        { id: "ticketLimits", group: 67, disabled: false },
+        { id: "ticketLimits", group: 67, disabled: false }
     ];
 
 
