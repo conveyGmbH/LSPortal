@@ -81,6 +81,7 @@
         { id: "home", group: 1, svg: "home", disabled: true },
         //EventSuccess
         { id: "esStaffAdministration", group: 18, svg: "id_card", disabled: true },
+        { id: "ticketLimits", group: 16, svg: "id_card", disabled: true },
         { id: "voucherAdministration", group: 16, svg: "gutschein1.1", disabled: true },
         { id: "esVoucherUsers", group: 19, svg: "voucher_contact", disabled: true },
         //Dashboards
@@ -110,7 +111,6 @@
         { id: "myEvents", group: 53, svg: "keys", disabled: true, popup: true },
         //{ id: "localevents", group: 12, svg: "keys", disabled: true, predecGroup: 53 },
         { id: "eventGenSettings", group: 44, svg: "calendar_1", disabled: true, predecGroup: 53 },
-        { id: "ticketLimits", group: 67, svg: "calendar_1", disabled: true, predecGroup: 53 },
         //MyEventsLS
         { id: "MyEventsLSGrp", group: 62, svg: "keys", disabled: true, popup: true },
         { id: "localevents", group: 12, svg: "keys", disabled: true, predecGroup: 62 },
@@ -233,7 +233,7 @@
         { id: "startPremium", group: -57, disabled: false },
         { id: "startSurpreme", group: -58, disabled: false },
         { id: "startTileAdministration", group: 61, disabled: false },
-        { id: "ticketLimits", group: 67, disabled: false }
+        { id: "ticketLimits", group: -67, disabled: false }
     ];
 
 

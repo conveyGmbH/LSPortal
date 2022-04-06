@@ -29,7 +29,8 @@
                 fairmandantId: 0,
                 firstentry: 0,
                 eventText: getResourceText("siteevents.placeholder"),
-                active: null
+                active: null,
+                searchString: ""
             }, commandList]);
 
             var that = this;
@@ -39,6 +40,7 @@
             var fileinputbox = pageElement.querySelector(".fileinputbox");
             var inputbox = pageElement.querySelector("#myFile");
             var inputmsg = pageElement.querySelector("#inputmsg");
+            var searchInput = pageElement.querySelector("#searchInput");
 
             var prevMasterLoadPromise = null;
             // ListView control
@@ -436,11 +438,64 @@
             }
             that.exportData = exportData;
 
+            var processSearch = function (searchString) {
+                Log.call(Log.l.trace, "SiteEvents.Controller.");
+                AppData.setErrorMsg(that.binding);
+                var ret;
+                var recordId = AppData.getRecordId("VeranstaltungTermin");
+                if (recordId) {
+                    ret = AppData.call("PRC_GetExhibitorList", {
+                        pVeranstaltungTerminID: recordId,
+                        pSearchString: searchString
+                    }, function (json) {
+                        Log.print(Log.l.info, "call success! ");
+                        if (json && json.d && json.d.results.length > 0) {
+                            var results = json.d.results;
+                            results.forEach(function (item, index) {
+                                that.resultConverter(item, index);
+                            });
+                            that.siteeventsdata = new WinJS.Binding.List(results);
+                            if (listView.winControl) {
+                                // add ListView dataSource
+                                listView.winControl.itemDataSource = that.siteeventsdata.dataSource;
+                            }
+                            AppBar.busy = false;
+                            AppBar.triggerDisableHandlers();
+                        }
+                    }, function (error) {
+                        Log.print(Log.l.error, "call error");
+                        AppBar.busy = false;
+                        AppBar.triggerDisableHandlers();
+                        AppData.setErrorMsg(that.binding, error);
+                        if (typeof error === "function") {
+                            error(error);
+                        }
+                    });
+                } else {
+                    var err = { status: 0, statusText: "no record selected" };
+                    error(err);
+                    ret = WinJS.Promise.as();
+                }
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+            this.processSearch = processSearch;
+
             this.eventHandlers = {
                 clickBack: function (event) {
                     Log.call(Log.l.trace, "SiteEvents.Controller.");
                     if (!Application.showMaster() && WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done();
+                    }
+                    Log.ret(Log.l.trace);
+                },
+                onSearchInput: function() {
+                    Log.call(Log.l.trace, "SiteEvents.Controller.");
+                    var searchstring = searchInput.value;
+                    if (searchstring !== "") {
+                        that.processSearch(searchstring);
+                    } else {
+                        that.loadData(that.binding.restriction.VeranstaltungTerminID);
                     }
                     Log.ret(Log.l.trace);
                 },
@@ -517,6 +572,7 @@
                 },
                 clickMailTracking: function (event) {
                     Log.call(Log.l.trace, "SiteEvents.Controller.");
+                    AppData.setRestriction("ExhibitorMailingStatus", that.binding.mailingtrackingrestriction);
                     Application.navigateById("mailingTracking", event);
                     Log.ret(Log.l.trace);
                 },
@@ -977,6 +1033,9 @@
             if (suggestionBox) {
                 this.addRemovableEventListener(suggestionBox, "suggestionsrequested", this.eventHandlers.onquerychanged.bind(this));
                 this.addRemovableEventListener(suggestionBox, "querysubmitted", this.eventHandlers.onquerysubmitted.bind(this));
+            }
+            if (searchInput) {
+                this.addRemovableEventListener(searchInput, "keyup", this.eventHandlers.onSearchInput.bind(this));
             }
 
             var resultConverter = function (item, index) {

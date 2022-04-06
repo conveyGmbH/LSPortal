@@ -7,23 +7,21 @@
 } 
 #Hall {
     width: 50px;
-    text-align: center;
 }
 #Stand {
     width: 80px;
-    text-align: center;
+    
 }
 #Ansprechpartner {
     width: 250px;
-    text-align: center;
 }
 #Appusers {
     width: 50px;
-    text-align: center;
+    
 }
 #UlLUser {
     width: 150px;
-    text-align: center;
+    
 }
 #Warningicon {
     width: 40px;
@@ -37,7 +35,6 @@
 
 .list-field-small-fixed {
     width: 300px;
-    padding-left: 20px;
 }
 
 .status {
@@ -50,7 +47,7 @@
 }
 
 .list-header {
-    padding-left: 27px;
+    margin-left: 5px;
     font-weight: bold;
 }
 #suggestionBox {

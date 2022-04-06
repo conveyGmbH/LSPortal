@@ -915,6 +915,8 @@
     "siteevents.uploadbtn"   : "Carica",
     "siteevents.csvupload"   : "Caricamento file Csv",
     "siteevents.eventpermuser"   : "Vuoi convertire questo espositore in un cliente abituale?",
+    "siteevents.search"   : "Cerca",
+    "siteevents.searchplaceholder"   : "Cosa stai cercando?",
 
     "siteeventsneuaus.title" : "Nuovo espositore",
     "siteeventsneuaus.veranstaltungsname" : "nome dell'evento",

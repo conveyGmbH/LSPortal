@@ -904,10 +904,10 @@
     "siteevents.title" : "Aussteller",
     "siteevents.event" : "Aussteller",
     "siteevents.hall" : "Halle",
-    "siteevents.stand"   : "Standnummer",
+    "siteevents.stand"   : "Standnr.",
     "siteevents.adminuser"   : "Ansprechpartner",
-    "siteevents.appusercount"   : "Geräte",
-    "siteevents.freeolockappuser"   : "Freigegebene/gesperrte Geräte",
+    "siteevents.appusercount"   : "Gerät",
+    "siteevents.freeolockappuser"   : "Freigeg./gesperrt",
     "siteevents.placeholder"   : "Ausstellersuche",
     "siteevents.eventdelete"   : "Möchten Sie die Veranstaltung wirklich löschen?",
     "siteevents.successmsg"   : "Csv-Datei erfolgreich hochgeladen",
@@ -915,6 +915,9 @@
     "siteevents.uploadbtn"   : "Hochladen",
     "siteevents.csvupload"   : "Csv Datei Upload",
     "siteevents.eventpermuser"   : "Wollen Sie diesen Austeller zu einem Dauerkunden konvertieren?",
+    "siteevents.search"   : "Suche",
+    "siteevents.searchplaceholder"   : "Was suchen Sie?",
+
 
     "siteeventsneuaus.title" : "Neuer Aussteller",
     "siteeventsneuaus.veranstaltungsname" : "Veranstaltungsname",

@@ -915,6 +915,8 @@
     "siteevents.uploadbtn"   : "Upload",
     "siteevents.csvupload"   : "Csv file upload",
     "siteevents.eventpermuser"   : "Do you want to convert this exhibitor to a regular customer?",
+    "siteevents.search"   : "Search",
+    "siteevents.searchplaceholder"   : "What are you looking for?",
 
     "siteeventsneuaus.title" : "New Exhibitor",
     "siteeventsneuaus.veranstaltungsname" : "Event name",

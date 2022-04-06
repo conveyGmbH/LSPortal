@@ -28,19 +28,24 @@
                         <button onclick="AppBar.handleEvent('click', 'ondateiupload', event)" data-win-res="{textContent: 'siteevents.uploadbtn'}"></button><br />
                         <span id="inputmsg"></span>
                     </div>
-                    <div id="suggestionBox"
+                    <div class="field_line field_line_odd">
+                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'siteevents.search'}"></span>
+                        <span class="label landscape_only" data-win-res="{textContent: 'siteevents.search'}"></span>
+                        <input id="searchInput" class="input_field win-textbox" type="text" data-win-bind="value: searchString Binding.Mode.twoway" data-win-res="{placeholder: 'siteevents.searchplaceholder'}"/>
+                    </div>
+                    <!--<div id="suggestionBox"
                          class="input_half_right win-autosuggestbox"
                          data-win-control="WinJS.UI.AutoSuggestBox"
                          data-win-bind="winControl.placeholderText: eventText; wincontrol.queryText: siteeventsdata.Firmenname" oninput="AppBar.handleEvent('oninput', 'changeSearchField', event)">
-                    </div>
+                    </div>-->
                     <div class="headerFooterPlaceholder">
                         <div class="list-header">
                             <div class="list-landscape-only">
                                 <div id="Warningicon" class="list-field-small-fixed win-type-ellipsis"></div>
                                 <div class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'siteevents.event'}"></div>
+                                <div id="Ansprechpartner" class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'siteevents.adminuser'}"></div>
                                 <div id="Hall" class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'siteevents.hall'}"></div>
                                 <div id="Stand" class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'siteevents.stand'}"></div>
-                                <div id="Ansprechpartner" class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'siteevents.adminuser'}"></div>
                                 <div id="Appusers" class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'siteevents.appusercount'}"></div>
                                 <div id="UlLUser" class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'siteevents.freeolockappuser'}"></div>
                             </div>
@@ -58,12 +63,12 @@
                             </div>
                             <div class="list-field-small-fixed win-type-ellipsis"
                                  data-win-bind="textContent: Firmenname"></div>
-                            <div id="Hall" class="list-field-small-fixed win-type-ellipsis"
-                                 data-win-bind="textContent: StandHall"></div>
-                            <div id="Stand"class="list-field-small-fixed win-type-ellipsis"
-                                 data-win-bind="textContent: StandNo"></div>
                             <div id="Ansprechpartner" class="list-field-small-fixed win-type-ellipsis"
                                  data-win-bind="textContent: FairMandant_Email"></div>
+                            <div id="Hall" class="list-field-small-fixed win-type-ellipsis"
+                                 data-win-bind="textContent: StandHall"></div>
+                            <div id="Stand" class="list-field-small-fixed win-type-ellipsis"
+                                 data-win-bind="textContent: StandNo"></div>
                             <div id="Appusers" class="list-field-small-fixed win-type-ellipsis"
                                  data-win-bind="textContent: OrderedApp"></div>
                             <div id="UlLUser" class="list-field-small-fixed win-type-ellipsis"
@@ -80,11 +85,11 @@
                                     <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
                                           data-win-bind="textContent: Firmenname"></span>
                                     <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
+                                          data-win-bind="textContent: FairMandant_Email"></span>
+                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
                                           data-win-bind="textContent: StandHall"></span>
                                     <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
                                           data-win-bind="textContent: StandNo"></span>
-                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
-                                          data-win-bind="textContent: FairMandant_Email"></span>
                                     <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
                                           data-win-bind="textContent: OrderedApp"></span>
                                     <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
