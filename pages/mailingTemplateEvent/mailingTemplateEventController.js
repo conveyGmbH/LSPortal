@@ -75,18 +75,18 @@
             this.addZero = addZero;
 
             var getDateObject = function (date) {
-                Log.call(Log.l.trace, "ContactResultsEvents.Controller.");
+                Log.call(Log.l.trace, "MailingTemplateEvent.Controller.");
                 var dateString = date.replace("\/Date(", "").replace(")\/", "");
                 var milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
                 var time = new Date(milliseconds);
-                var formdate = ("0" + time.getDate()).slice(-2) + "." + ("0" + (time.getMonth() + 1)).slice(-2) + "." + time.getFullYear() + " " +that.addZero(time.getUTCHours()) + ":" + that.addZero(time.getMinutes());
-                Log.call(Log.l.trace, "ContactResultsEvents.Controller.");
+                var formdate = ("0" + time.getDate()).slice(-2) + "." + ("0" + (time.getMonth() + 1)).slice(-2) + "." + time.getFullYear() + " " + that.addZero(time.getUTCHours()) + ":" + that.addZero(time.getMinutes());
+                Log.print(Log.l.trace);
                 return formdate;
             };
             this.getDateObject = getDateObject;
 
             var sortTable = function (n) {
-                Log.call(Log.l.trace, "ContactResultsEvents.Controller.");
+                Log.call(Log.l.trace, "MailingTemplateEvent.Controller.");
                 var rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
                 switching = true;
                 // Set the sorting direction to ascending:
@@ -99,7 +99,7 @@
                     rows = table.rows;
                     /* Loop through all table rows (except the
                     first, which contains table headers): */
-                    for (i = 1; i < (rows.length - 1); i++) {
+                    for (i = 1; i < (rows.length - 1) ; i++) {
                         // Start by saying there should be no switching:
                         shouldSwitch = false;
                         /* Get the two elements you want to compare,
@@ -326,28 +326,25 @@
             this.processAllData = processAllData;
 
             var getLangSpecErrorMsg = function (resultmessageid, errorMsg) {
-                Log.call(Log.l.trace, "Employee.Controller.");
+                Log.call(Log.l.trace, "MailingTemplateEvent.Controller.");
                 var lang = AppData.getLanguageId();
                 AppData.setErrorMsg(that.binding);
                 AppData.call("PRC_GetLangText", {
                     pTextID: resultmessageid,
                     pLanguageID: lang
-                },
-                    function (json) {
-                        Log.print(Log.l.info, "call success! ");
-                        errorMsg.data.error.message.value = json.d.results[0].ResultText;
-                        AppData.setErrorMsg(that.binding, errorMsg);
-                    },
-                    function (error) {
-                        Log.print(Log.l.error, "call error");
-
-                    });
+                }, function (json) {
+                    Log.print(Log.l.info, "call success! ");
+                    errorMsg.data.error.message.value = json.d.results[0].ResultText;
+                    AppData.setErrorMsg(that.binding, errorMsg);
+                }, function (error) {
+                    Log.print(Log.l.error, "call error");
+                });
                 Log.ret(Log.l.trace);
             }
             this.getLangSpecErrorMsg = getLangSpecErrorMsg;
 
             var getErrorMsgFromErrorStack = function (errorMsg) {
-                Log.call(Log.l.trace, "Employee.Controller.");
+                Log.call(Log.l.trace, "MailingTemplateEvent.Controller.");
                 AppData.setErrorMsg(that.binding);
                 AppData.call("PRC_GetErrorStack", {},
                     function (json) {
@@ -377,19 +374,19 @@
             // define handlers
             this.eventHandlers = {
                 clickBack: function (event) {
-                    Log.call(Log.l.trace, "ContactResultsList.Controller.");
+                    Log.call(Log.l.trace, "MailingTemplateEvent.Controller.");
                     if (WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done();
                     }
                     Log.ret(Log.l.trace);
                 },
                 clickSortTable: function (event) {
-                    Log.call(Log.l.trace, "LocalEvents.Controller.");
+                    Log.call(Log.l.trace, "MailingTemplateEvent.Controller.");
                     that.sortTable(parseInt(event.currentTarget.id));
                     Log.ret(Log.l.trace);
                 },
                 onDirectoryChange: function (event) {
-                    Log.call(Log.l.trace, "LocalEvents.Controller.");
+                    Log.call(Log.l.trace, "MailingTemplateEvent.Controller.");
                     var st = directory.options[directory.selectedIndex].text;
                     var count = 0;
                     for (var i = 0; i < that.tableData.length; i++) {
@@ -403,7 +400,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickNew: function (event) {
-                    Log.call(Log.l.trace, "LocalEvents.Controller.");
+                    Log.call(Log.l.trace, "MailingTemplateEvent.Controller.");
                     directory.style.border = "1px solid black";
                     textName.style.borderBottom = "1px solid black";
                     textName.style.borderLeft = "none";
@@ -413,7 +410,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickInsertLayout: function (event) {
-                    Log.call(Log.l.trace, "LocalEvents.Controller.");
+                    Log.call(Log.l.trace, "MailingTemplateEvent.Controller.");
                     AppBar.busy = true;
                     Log.print(Log.l.trace, "eployee saved");
                     var newLayoutData = that.binding.newDataTemplate;
@@ -435,6 +432,7 @@
                             if (json && json.d) {
                                 Log.print(Log.l.error, "error inserting employee");
                                 that.insertBtn();
+                                //return that.loadData();
                                 that.processAll().then(function () {
                                     Log.print(Log.l.trace, "Binding wireup page complete");
                                     return that.loadData();
@@ -459,54 +457,52 @@
                                 });
                             }
                             AppBar.modified = true;
-                        },
-                            function (errorResponse) {
-                                Log.print(Log.l.error, "error inserting employee");
-                                AppBar.busy = false;
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                            },
-                            newLayoutData);
+                        }, function (errorResponse) {
+                            Log.print(Log.l.error, "error inserting employee");
+                            AppBar.busy = false;
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        }, newLayoutData);
                     }
                     Log.ret(Log.l.trace);
                 },
                 clickTemplateSearch: function (event) {
-                    Log.call(Log.l.trace, "ContactResultsList.Controller.");
-
+                    Log.call(Log.l.trace, "MailingTemplateEvent.Controller.");
+                    Log.ret(Log.l.trace);
                 },
                 clickLayoutEdit: function (event) {
-                    Log.call(Log.l.trace, "ContactResultsList.Controller.");
+                    Log.call(Log.l.trace, "MailingTemplateEvent.Controller.");
                     var id = parseInt(event.currentTarget.value);
                     // VAMailLayout
                     AppData.setRecordId("VAMail", id);
                     Application.navigateById("MailingTemplateEventEdit");
+                    Log.ret(Log.l.trace);
                 },
                 setDeleteID: function (event) {
                     var tar = event.currentTarget.value;
-                    Log.call(Log.l.trace, "Mailing.Controller.");
+                    Log.call(Log.l.trace, "MailingTemplateEvent.Controller.");
                     var checkbox = pageElement.querySelectorAll(".checkbox");
                     for (var i = 0; i < checkbox.length; i++) {
                         if (checkbox[i].value === tar && checkbox[i].checked === false) {
                             checkbox[i].checked = false;
                             that.binding.deleteID = null;
-                            Log.call(Log.l.trace, "Mailing.Controller.");
                         } else if (checkbox[i].value === tar) {
                             that.binding.deleteID = parseInt(checkbox[i].value);
-                            Log.call(Log.l.trace, "Mailing.Controller.");
                         } else {
                             checkbox[i].checked = false;
-                            Log.call(Log.l.trace, "Mailing.Controller.");
                         }
                     }
-                    Log.call(Log.l.trace, "Mailing.Controller.");
+                    AppBar.triggerDisableHandlers();
+                    Log.ret(Log.l.trace);
                 },
                 clickDelete: function (event) {
-                    Log.call(Log.l.trace, "Mailing.Controller.");
+                    Log.call(Log.l.trace, "MailingTemplateEvent.Controller.");
                     AppData.setErrorMsg(that.binding);
                     var recordId = that.binding.deleteID;
                     if (recordId) {
                         AppBar.busy = true;
                         MailingTemplateEvent.VAMailLayout.deleteRecord(function (response) {
                             AppBar.busy = false;
+                            //return that.loadData();
                             that.processAll().then(function () {
                                 Log.print(Log.l.trace, "Binding wireup page complete");
                                 return that.loadData();
@@ -514,27 +510,25 @@
                                 Log.print(Log.l.trace, "Binding wireup page complete");
                                 return that.processAllData();
                             });
-                        },
-                            function (errorResponse) {
-                                AppBar.busy = false;
-                                that.getErrorMsgFromErrorStack(errorResponse);
-                            },
-                            recordId);
+                        }, function (errorResponse) {
+                            AppBar.busy = false;
+                            that.getErrorMsgFromErrorStack(errorResponse);
+                        }, recordId);
                     }
                     Log.ret(Log.l.trace);
                 },
                 clickChangeUserState: function (event) {
-                    Log.call(Log.l.trace, "ContactResultsList.Controller.");
+                    Log.call(Log.l.trace, "MailingTemplateEvent.Controller.");
                     Application.navigateById("userinfo", event);
                     Log.ret(Log.l.trace);
                 },
                 clickGotoPublish: function (event) {
-                    Log.call(Log.l.trace, "ContactResultsList.Controller.");
+                    Log.call(Log.l.trace, "MailingTemplateEvent.Controller.");
                     Application.navigateById("publish", event);
                     Log.ret(Log.l.trace);
                 },
                 clickTopButton: function (event) {
-                    Log.call(Log.l.trace, "ContactResultsList.Controller.");
+                    Log.call(Log.l.trace, "MailingTemplateEvent.Controller.");
                     var anchor = document.getElementById("menuButton");
                     var menu = document.getElementById("menu1").winControl;
                     var placement = "bottom";
@@ -542,7 +536,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickLogoff: function (event) {
-                    Log.call(Log.l.trace, "ContactResultList.Controller.");
+                    Log.call(Log.l.trace, "MailingTemplateEvent.Controller.");
                     AppData._persistentStates.privacyPolicyFlag = false;
                     if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
                         AppHeader.controller.binding.userData = {};
@@ -555,14 +549,14 @@
                 },
                 onItemInserted: function (eventInfo) {
                     var index = eventInfo && eventInfo.detail && eventInfo.detail.index;
-                    Log.call(Log.l.trace, "ContactResultList.Controller.", "index=" + index);
+                    Log.call(Log.l.trace, "MailingTemplateEvent.Controller.", "index=" + index);
                     that.resizableGrid();
                     that.addHeaderRowHandlers();
                     that.addBodyRowHandlers();
                     Log.ret(Log.l.trace);
                 },
                 onContentScroll: function (eventInfo) {
-                    Log.call(Log.l.trace, "ContactResultList.Controller.");
+                    Log.call(Log.l.trace, "MailingTemplateEvent.Controller.");
                     if (contentArea && that.nextUrl) {
                         var scrollMax = contentArea.scrollHeight - contentArea.clientHeight;
                         var scrollPos = contentArea.scrollTop;
@@ -584,6 +578,14 @@
                 },
                 clickGotoPublish: function () {
                     return true;
+                },
+                clickDelete: function () {
+                    // && that.binding.dataContact.KontaktVIEWID && 
+                    if (that.binding.deleteID && !AppBar.busy) {
+                        return false;
+                    } else {
+                        return true;
+                    }
                 }
             };
 
@@ -635,7 +637,7 @@
 
             var loadNextUrl = function () {
                 var ret = null;
-                Log.call(Log.l.trace, "ContactResultsList.Controller.");
+                Log.call(Log.l.trace, "MailingTemplateEvent.Controller.");
                 if (that.nextUrl) {
                     AppData.setErrorMsg(that.binding);
                     Log.print(Log.l.trace, "calling select ContactResultsList.contactView...");
@@ -653,21 +655,18 @@
                                 that.resultConverter(item, index);
                             });
                         }
-                    },
-                        function (errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            Log.print(Log.l.error, "ContactResultsList.KontaktReport: error!");
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                            that.loading = false;
-                        },
-                        null,
-                        nextUrl).then(function () {
-                            return WinJS.Promise.timeout(100);
-                        }).then(function () {
-                            that.eventHandlers.onItemInserted();
-                            return WinJS.Promise.as();
-                        });
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        Log.print(Log.l.error, "ContactResultsList.KontaktReport: error!");
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                        that.loading = false;
+                    }, null, nextUrl).then(function () {
+                        return WinJS.Promise.timeout(100);
+                    }).then(function () {
+                        that.eventHandlers.onItemInserted();
+                        return WinJS.Promise.as();
+                    });
                 }
                 Log.ret(Log.l.trace);
                 return ret || WinJS.Promise.as();
@@ -675,7 +674,7 @@
             this.loadNextUrl = loadNextUrl;
 
             var loadData = function (restr) {
-                Log.call(Log.l.trace, "MailingTypes.Controller.");
+                Log.call(Log.l.trace, "MailingTemplateEvent.Controller.");
                 AppData.setErrorMsg(that.binding);
                 that.nextUrl = null;
                 that.tableData = [];
@@ -714,15 +713,13 @@
                                 firstdirectory.selectedIndex = 0;
                             }*/
                         }
-                    },
-                        function (errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        }, {
-                            LanguageSpecID: AppData.getLanguageId()
-                        });
-
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    }, {
+                        LanguageSpecID: AppData.getLanguageId()
+                    });
                 }).then(function () {
                     Log.print(Log.l.trace, "calling select VAMailLayout...");
                     if (restr) {
@@ -739,11 +736,9 @@
                                 });
                                 that.processAllData();
                             }
-                        },
-                            function (errorResponse) {
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                            },
-                            restr);
+                        }, function (errorResponse) {
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        }, restr);
                     } else {
                         return MailingTemplateEvent.VAMailLayout.select(function (json) {
                             AppData.setErrorMsg(that.binding);
@@ -758,12 +753,11 @@
                                 });
                                 that.processAllData();
                             }
-                        },
-                            function (errorResponse) {
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                            }, {
-                                LanguageSpecID: AppData.getLanguageId()
-                            });
+                        }, function (errorResponse) {
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        }, {
+                            LanguageSpecID: AppData.getLanguageId()
+                        });
                     }
                 }).then(function () {
                     return WinJS.Promise.timeout(100);
@@ -801,10 +795,10 @@
             });
             Log.ret(Log.l.trace);
         }, {
-                headerdata: null,
-                bodydata: null,
-                templateData: [],
-                tableData: []
-            })
+            headerdata: null,
+            bodydata: null,
+            templateData: [],
+            tableData: []
+        })
     });
 })();
