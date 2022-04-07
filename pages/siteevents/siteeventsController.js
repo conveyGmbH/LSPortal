@@ -449,7 +449,7 @@
                         pSearchString: searchString
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
-                        if (json && json.d && json.d.results.length > 0) {
+                        if (json && json.d) {
                             var results = json.d.results;
                             results.forEach(function (item, index) {
                                 that.resultConverter(item, index);
