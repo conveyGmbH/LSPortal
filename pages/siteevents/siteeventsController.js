@@ -57,6 +57,8 @@
             var maxLeadingPages = 0;
             var maxTrailingPages = 0;
 
+            var timer = null;
+
             this.dispose = function () {
                 if (listView && listView.winControl) {
                     listView.winControl.itemDataSource = null;
@@ -459,6 +461,7 @@
                                 // add ListView dataSource
                                 listView.winControl.itemDataSource = that.siteeventsdata.dataSource;
                             }
+                            that.binding.count = results.length;
                             AppBar.busy = false;
                             AppBar.triggerDisableHandlers();
                         }
@@ -481,6 +484,18 @@
             }
             this.processSearch = processSearch;
 
+            var searchStringProcess = function() {
+                Log.call(Log.l.trace, "SiteEvents.Controller.");
+                var searchstring = searchInput.value;
+                if (searchstring !== "") {
+                    that.processSearch(searchstring);
+                } else {
+                    that.loadData(that.binding.restriction.VeranstaltungTerminID);
+                }
+                Log.ret(Log.l.trace);
+            }
+            this.searchStringProcess = searchStringProcess;
+
             this.eventHandlers = {
                 clickBack: function (event) {
                     Log.call(Log.l.trace, "SiteEvents.Controller.");
@@ -491,12 +506,8 @@
                 },
                 onSearchInput: function() {
                     Log.call(Log.l.trace, "SiteEvents.Controller.");
-                    var searchstring = searchInput.value;
-                    if (searchstring !== "") {
-                        that.processSearch(searchstring);
-                    } else {
-                        that.loadData(that.binding.restriction.VeranstaltungTerminID);
-                    }
+                    clearTimeout(timer);
+                    timer = setTimeout(that.searchStringProcess(), 1000);
                     Log.ret(Log.l.trace);
                 },
                 clickCreatePermanentUser: function () {
