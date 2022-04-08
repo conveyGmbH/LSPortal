@@ -80,6 +80,8 @@
                     that.binding.dataExhibitor.INITSpracheID = 4;
                     break;
                 default:
+                    that.binding.dataExhibitor.INITSpracheID = 1;
+                    break;
                 }
             }
             this.setLangID = setLangID;
@@ -99,29 +101,24 @@
             this.getRecordId = getRecordId;
             
             var setMandetoryFields = function () {
-                var inputfieldland = pageElement.querySelector("#InitLandReporting");
                 var inputfieldVeranstaltungname = pageElement.querySelector("#veranstaltungname");
                 var inputfieldemailadress = pageElement.querySelector("#loginemail");
-                var inputfieldinfotext = pageElement.querySelector("#infotext");
+                var inputfieldfirmenname = pageElement.querySelector("#firmenname");
 
                 if (Colors.isDarkTheme) {
-                    WinJS.Utilities.removeClass(inputfieldland, "lightthemeMandatory");
                     WinJS.Utilities.removeClass(inputfieldVeranstaltungname, "lightthemeMandatory");
                     WinJS.Utilities.removeClass(inputfieldemailadress, "lightthemeMandatory");
-                    WinJS.Utilities.removeClass(inputfieldinfotext, "lightthemeMandatory");
-                    WinJS.Utilities.addClass(inputfieldland, "darkthemeMandatory");
+                    WinJS.Utilities.removeClass(inputfieldfirmenname, "lightthemeMandatory");
                     WinJS.Utilities.addClass(inputfieldVeranstaltungname, "darkthemeMandatory");
                     WinJS.Utilities.addClass(inputfieldemailadress, "darkthemeMandatory");
-                    WinJS.Utilities.addClass(inputfieldinfotext, "darkthemeMandatory");
+                    WinJS.Utilities.addClass(inputfieldfirmenname, "darkthemeMandatory");
                 } else {
-                    WinJS.Utilities.removeClass(inputfieldland, "darkthemeMandatory");
                     WinJS.Utilities.removeClass(inputfieldVeranstaltungname, "darkthemeMandatory");
                     WinJS.Utilities.removeClass(inputfieldemailadress, "darkthemeMandatory");
-                    WinJS.Utilities.removeClass(inputfieldinfotext, "darkthemeMandatory");
-                    WinJS.Utilities.addClass(inputfieldland, "lightthemeMandatory");
+                    WinJS.Utilities.removeClass(inputfieldfirmenname, "darkthemeMandatory");
                     WinJS.Utilities.addClass(inputfieldVeranstaltungname, "lightthemeMandatory");
                     WinJS.Utilities.addClass(inputfieldemailadress, "lightthemeMandatory");
-                    WinJS.Utilities.addClass(inputfieldinfotext, "lightthemeMandatory");
+                    WinJS.Utilities.addClass(inputfieldfirmenname, "lightthemeMandatory");
                 }
             }
             this.setMandetoryFields = setMandetoryFields;
@@ -350,6 +347,11 @@
                                 if (initLand && initLand.winControl) {
                                     initLand.winControl.data = new WinJS.Binding.List(json.d.results);
                                 }
+                                for (var i = 0; i < json.d.results.length; i++) {
+                                    if (json.d.results[i].INITLandID === 53) {
+                                        initLand.selectedIndex = i;
+                                    }
+                                }
                             }
                         }, function (errorResponse) {
                             // called asynchronously if an error occurs
@@ -361,7 +363,12 @@
                             (!initLand.winControl.data || !initLand.winControl.data.length)) {
                             initLand.winControl.data = new WinJS.Binding.List(AppData.initLandView.getResults());
                         }
-                        initLand.selectedIndex = 0;
+                        var storedResults = AppData.initLandView.getResults();
+                        for (var i = 0; i < storedResults.length; i++) {
+                            if (storedResults[i].INITLandID === 53) {
+                                initLand.selectedIndex = i;
+                            }
+                        }
                         return WinJS.Promise.as();
                     }
                 });
