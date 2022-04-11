@@ -925,7 +925,7 @@
     "siteeventsneuaus.plz" : "code postal",
     "siteeventsneuaus.ort" : "lieu",
     "siteeventsneuaus.stadt" : "ville",
-    "siteeventsneuaus.land" : "pays *",
+    "siteeventsneuaus.land" : "pays",
     "siteeventsneuaus.webadresse" : "Adresse Web",
     "siteeventsneuaus.loginemail" : "Login-Email *",
     "siteeventsneuaus.appuser" : "appuser",

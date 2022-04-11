@@ -904,7 +904,7 @@
     "siteeventsneuaus.plz" : "PLZ",
     "siteeventsneuaus.ort" : "Ort",
     "siteeventsneuaus.stadt" : "Stadt",
-    "siteeventsneuaus.land" : "Land *",
+    "siteeventsneuaus.land" : "Land",
     "siteeventsneuaus.webadresse" : "Webadresse",
     "siteeventsneuaus.loginemail" : "Login-E-Mail *",
     "siteeventsneuaus.appuser" : "Benutzer der App",
