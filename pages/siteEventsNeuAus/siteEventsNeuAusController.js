@@ -349,7 +349,8 @@
                                 }
                                 for (var i = 0; i < json.d.results.length; i++) {
                                     if (json.d.results[i].INITLandID === 53) {
-                                        initLand.selectedIndex = i;
+                                        that.binding.dataExhibitor.LandID = json.d.results[i].INITLandID.toString();
+                                        //initLand.selectedIndex = i;
                                     }
                                 }
                             }
@@ -366,7 +367,8 @@
                         var storedResults = AppData.initLandView.getResults();
                         for (var i = 0; i < storedResults.length; i++) {
                             if (storedResults[i].INITLandID === 53) {
-                                initLand.selectedIndex = i;
+                                that.binding.dataExhibitor.LandID = json.d.results[i].INITLandID.toString();
+                                //initLand.selectedIndex = i;
                             }
                         }
                         return WinJS.Promise.as();
