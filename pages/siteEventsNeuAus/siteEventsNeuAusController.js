@@ -367,7 +367,7 @@
                         var storedResults = AppData.initLandView.getResults();
                         for (var i = 0; i < storedResults.length; i++) {
                             if (storedResults[i].INITLandID === 53) {
-                                that.binding.dataExhibitor.LandID = json.d.results[i].INITLandID.toString();
+                                that.binding.dataExhibitor.LandID = storedResults[i].INITLandID.toString();
                                 //initLand.selectedIndex = i;
                             }
                         }
