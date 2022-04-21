@@ -443,12 +443,13 @@
             var processSearch = function (searchString) {
                 Log.call(Log.l.trace, "SiteEvents.Controller.");
                 AppData.setErrorMsg(that.binding);
+                var cleanSearchString = searchString.replace("\"", "");
                 var ret;
                 var recordId = AppData.getRecordId("VeranstaltungTermin");
                 if (recordId) {
                     ret = AppData.call("PRC_GetExhibitorList", {
                         pVeranstaltungTerminID: recordId,
-                        pSearchString: searchString
+                        pSearchString: cleanSearchString
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
                         if (json && json.d) {
