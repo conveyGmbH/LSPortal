@@ -130,14 +130,16 @@
                 var recordId = that.binding.veranstaltungId;
                 if (recordId) {
                     AppData.setErrorMsg(that.binding);
-                    AppData.call("PRC_DeleteVeranstaltung", {
+                    return AppData.call("PRC_DeleteVeranstaltung", {
                         pVeranstaltungID: recordId
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
                         var master = Application.navigator.masterControl;
                         master.controller.loadData();
+                        complete({});
                     }, function (error) {
                         Log.print(Log.l.error, "call error");
+                        error(error);
                     });
                 } else {
                     var err = { status: 0, statusText: "no record selected" };

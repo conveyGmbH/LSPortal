@@ -179,7 +179,6 @@
                     }, {
                         VeranstaltungID : that.binding.recordID
                         }).then(function () {
-
                             Log.print(Log.l.trace, "Data loaded");
                         });
                 });
