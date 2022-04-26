@@ -21,6 +21,7 @@
             AppData._persistentStates.odata.login = null;
             AppData._persistentStates.odata.password = null;
             AppData._persistentStates.odata.dbSiteId = null;
+            AppData._persistentStates.visitorFlowInterval = null;
             AppData._persistentStates.allRestrictions = {};
             AppData._persistentStates.allRecIds = {};
             AppData._userData = {};

@@ -29,8 +29,9 @@
                 showNameInHeader: AppData._persistentStates.showNameInHeader,
                 visitorFlowFeature: AppHeader.controller.binding.userData.SiteAdmin,
                 visitorFlowPremium: AppData._persistentStates.visitorFlowPremium,
+                visitorFlowInterval: AppData._persistentStates.visitorFlowInterval || "",
                 dashboardMesagoFeature: AppHeader.controller.binding.userData.SiteAdmin,
-                isDashboardPremium: AppData._persistentStates.showdashboardMesagoCombo === 1 ? true:false,
+                isDashboardPremium: AppData._persistentStates.showdashboardMesagoCombo === 1 ? true : false,
                 actualYear: new Date().getFullYear()
             }, commandList]);
 
@@ -53,7 +54,7 @@
                 }
                 if (visitorFlow && visitorFlow.winControl) {
                     visitorFlow.winControl.data = null;
-            }
+                }
                 if (dashboardMesagoCombo && dashboardMesagoCombo.winControl) {
                     dashboardMesagoCombo.winControl.data = null;
                 }
@@ -162,7 +163,7 @@
             };
             this.setDataEvent = setDataEvent;
 
-            var getRecordId = function() {
+            var getRecordId = function () {
                 Log.call(Log.l.trace, "Event.Controller.");
                 var recordId = AppData.getRecordId("Veranstaltung");
                 if (!recordId) {
@@ -236,49 +237,49 @@
                         pOptionTypeId = 39;
                         that.binding.showNameInHeader = checked;
                         AppData._persistentStates.showNameInHeader = checked;
-                        WinJS.Promise.timeout(0).then(function() {
+                        WinJS.Promise.timeout(0).then(function () {
                             AppData.getUserData();
                         });
                         break;
-                    /*case "showvisitorFlow":
-                        pOptionTypeId = 44;
-                        that.binding.isvisitorFlowVisible = checked;
-                        AppData._persistentStates.showvisitorFlow = checked;
-                        //var pValue;
-                        if (!that.binding.isvisitorFlowVisible) {
+                        /*case "showvisitorFlow":
+                            pOptionTypeId = 44;
+                            that.binding.isvisitorFlowVisible = checked;
+                            AppData._persistentStates.showvisitorFlow = checked;
+                            //var pValue;
+                            if (!that.binding.isvisitorFlowVisible) {
+                                that.binding.isvisitorFlowVisibleAndLeadSuccess = checked;
+                                AppData._persistentStates.showvisitorFlowAndLeadSuccess = checked;
+                                pValue = "0";
+                            } else {
+                                pValue = "1";
+                            }
+                            /*if (pValue === "1") {
+                                NavigationBar.enablePage("visitorFlowDashboard");
+                                NavigationBar.enablePage("visitorFlowEntExt"); 
+                                NavigationBar.enablePage("employeeVisitorFlow");
+                            } else {
+                                NavigationBar.disablePage("visitorFlowDashboard");
+                                NavigationBar.disablePage("visitorFlowEntExt");
+                                NavigationBar.disablePage("employeeVisitorFlow");
+                            }
+                            //AppData._persistentStates.showvisitorFlowAndLeadSuccess = checked;
+                            break;
+                        case "showvisitorFlowAndLeadSuccess":
+                            pOptionTypeId = 44;
                             that.binding.isvisitorFlowVisibleAndLeadSuccess = checked;
                             AppData._persistentStates.showvisitorFlowAndLeadSuccess = checked;
-                            pValue = "0";
-                        } else {
-                            pValue = "1";
-                        }
-                        /*if (pValue === "1") {
-                            NavigationBar.enablePage("visitorFlowDashboard");
-                            NavigationBar.enablePage("visitorFlowEntExt"); 
-                            NavigationBar.enablePage("employeeVisitorFlow");
-                        } else {
-                            NavigationBar.disablePage("visitorFlowDashboard");
-                            NavigationBar.disablePage("visitorFlowEntExt");
-                            NavigationBar.disablePage("employeeVisitorFlow");
-                        }
-                        //AppData._persistentStates.showvisitorFlowAndLeadSuccess = checked;
-                        break;
-                    case "showvisitorFlowAndLeadSuccess":
-                        pOptionTypeId = 44;
-                        that.binding.isvisitorFlowVisibleAndLeadSuccess = checked;
-                        AppData._persistentStates.showvisitorFlowAndLeadSuccess = checked;
-                        //AppData._persistentStates.showvisitorFlowAndLeadSuccess = checked;
-                        if (that.binding.isvisitorFlowVisibleAndLeadSuccess) {
-                            pValue = "2";
-                        } else {
-                            if (that.binding.isvisitorFlowVisible) {
-                            pValue = "1";
+                            //AppData._persistentStates.showvisitorFlowAndLeadSuccess = checked;
+                            if (that.binding.isvisitorFlowVisibleAndLeadSuccess) {
+                                pValue = "2";
                             } else {
-                                pValue = "0";
-                        }
-                        }
-                        pValueIsSet = true;
-                        break;*/
+                                if (that.binding.isvisitorFlowVisible) {
+                                pValue = "1";
+                                } else {
+                                    pValue = "0";
+                            }
+                            }
+                            pValueIsSet = true;
+                            break;*/
                     case "showvisitorFlowCombo":
                         pOptionTypeId = 44;
                         that.binding.isvisitorFlowVisible = checked;
@@ -316,23 +317,30 @@
                         that.binding.isSendMailPrivacypolicy = checked;
                         AppData._persistentStates.sendMailPrivacypolicy = checked;
                         break;
+                    case "visitorFlowInterval":
+                        pOptionTypeId = 50;
+                        that.binding.visitorFlowInterval = checked;
+                        AppData._persistentStates.visitorFlowInterval = checked;
+                        pValueIsSet = true;
+                        pValue = checked;
+                        break;
                 }
                 if (pOptionTypeId) {
                     // value: show => pValue: hide!
                     if (!pValueIsSet) {
-                    if (hidePageItem) {
-                        if (!checked) {
-                            pValue = "1";
+                        if (hidePageItem) {
+                            if (!checked) {
+                                pValue = "1";
+                            } else {
+                                pValue = "0";
+                            }
                         } else {
-                            pValue = "0";
+                            if (checked) {
+                                pValue = "1";
+                            } else {
+                                pValue = "0";
+                            }
                         }
-                    } else {
-                        if (checked) {
-                            pValue = "1";
-                        } else {
-                            pValue = "0";
-                        }
-                    }
                     }
                     AppData.call("PRC_SETVERANSTOPTION", {
                         pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
@@ -377,7 +385,7 @@
                     });
                     Log.ret(Log.l.trace);
                 },
-                clickChangeUserState: function(event) {
+                clickChangeUserState: function (event) {
                     Log.call(Log.l.trace, "Event.Controller.");
                     Application.navigateById("userinfo", event);
                     Log.ret(Log.l.trace);
@@ -387,7 +395,7 @@
                     Application.navigateById("publish", event);
                     Log.ret(Log.l.trace);
                 },
-                clickChangeAppSetting: function(event) {
+                clickChangeAppSetting: function (event) {
                     Log.call(Log.l.trace, "Event.Controller.");
                     var target = event.currentTarget || event.target;
                     if (target) {
@@ -442,7 +450,7 @@
             };
 
             this.disableHandlers = {
-                clickOk: function() {
+                clickOk: function () {
                     // always enabled!
                     return false;
                 }
@@ -545,6 +553,7 @@
                 var ret;
                 var dataEvent = that.binding.dataEvent;
                 if (dataEvent && AppBar.modified && !AppBar.busy) {
+                    var visitorFlowInterval = changeAppSetting("visitorFlowInterval", that.binding.visitorFlowInterval);
                     dataEvent.Startdatum = getDateData(that.binding.dataEvent.dateBegin);
                     dataEvent.Enddatum = getDateData(that.binding.dataEvent.dateEnd);
                     var recordId = getRecordId();
@@ -581,8 +590,8 @@
                     }).then(function () {
                         if (!err) {
                             // load color settings
-                           // AppData._persistentStates.hideQuestionnaire = false;
-                           // AppData._persistentStates.hideSketch = false;
+                            // AppData._persistentStates.hideQuestionnaire = false;
+                            // AppData._persistentStates.hideSketch = false;
                             return Event.CR_VERANSTOPTION_ODataView.select(function (json) {
                                 // this callback will be called asynchronously
                                 // when the response is available
@@ -608,19 +617,19 @@
                         }
                     }).then(function () {
                         if (!err) {
-                        if (typeof Home === "object" && Home._actionsList) {
-                            Home._actionsList = null;
-                        }
-                        return Event.appListSpecView.select(function (json) {
-                            // this callback will be called asynchronously
-                            // when the response is available
-                            Log.print(Log.l.trace, "appListSpecView: success!");
-                            // kontaktanzahlView returns object already parsed from json file in response
-                            if (json && json.d && json.d.results) {
-                                NavigationBar.showGroupsMenu(json.d.results, true);
-                            } else {
-                                NavigationBar.showGroupsMenu([]);
+                            if (typeof Home === "object" && Home._actionsList) {
+                                Home._actionsList = null;
                             }
+                            return Event.appListSpecView.select(function (json) {
+                                // this callback will be called asynchronously
+                                // when the response is available
+                                Log.print(Log.l.trace, "appListSpecView: success!");
+                                // kontaktanzahlView returns object already parsed from json file in response
+                                if (json && json.d && json.d.results) {
+                                    NavigationBar.showGroupsMenu(json.d.results, true);
+                                } else {
+                                    NavigationBar.showGroupsMenu([]);
+                                }
                                 if (parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 2) {
                                     that.changeMenuLabel("startPremium", getResourceText("label.startSurpreme")); //
                                 } else if (parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 1) {
@@ -628,15 +637,15 @@
                                 } else {
                                     Log.print(Log.l.trace, "Unknown value of IsSupreme Flag");
                                 }
-                            complete(json);
-                            return WinJS.Promise.as();
-                        }, function (errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                            error(errorResponse);
-                            return WinJS.Promise.as();
-                        });
+                                complete(json);
+                                return WinJS.Promise.as();
+                            }, function (errorResponse) {
+                                // called asynchronously if an error occurs
+                                // or server returns response with an error status.
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                                error(errorResponse);
+                                return WinJS.Promise.as();
+                            });
                         } else {
                             return WinJS.Promise.as();
                         }

@@ -636,6 +636,7 @@
     "event.visitorFlowPremium" : "Visitor Flow Premium",
     "event.dashboardMesago"   : "Dashboard Mesago",
 	"event.dashboardPremium"    : "Premium Typ",
+    "event.visitorFlowInterval" : "VisitorFlow Interval",
 
     "optQuestionList.title"   : "opzionale Domande/Risposte",
     "optQuestionList.count"   : "Numero",
