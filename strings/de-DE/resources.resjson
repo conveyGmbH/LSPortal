@@ -56,6 +56,8 @@
     "command.exportPdfTicket"  : "Ticket herunterladen",
     "command.newStaff"  : "Weitere Person erfassen",	
     "command.openWebpage"  : "Webseite öffnen",
+    "command.sendPDF"  : "PDF senden",
+    "command.sendWallet"  : "Wallet senden",
 
     "tooltip.backward"      : "Zurück blättern",
     "tooltip.edit"          : "Aktuellen Datensatz bearbeiten",
@@ -130,7 +132,9 @@
     "tooltip.deletequestion"        : "Frage löschen",
     "tooltip.newquestion"        : "Neue Frage",
     "tooltip.deletemod"        : "Moderator löschen",	
-    "tooltip.openWebpage"        : "Webseite öffnen",
+    "tooltip.openWebpage"        : "Webseite öffnen",		
+    "tooltip.sendPDF"        : "PDF Ticket senden",	
+    "tooltip.sendWallet"        : "Wallet Ticket senden",
 
     "home.title"            : "Start",
     "home.info"             : "Wichtige Hinweise",
@@ -1044,6 +1048,8 @@
 	"esStaffAdministration.ticketWarning" : "Hinweis: Bestellte Tickets können nur gegen Gebühr storniert werden!",
 	"esstaffadministrationlist.coronaWarningTicket" : "Mehr Tickets pro Tag wegen Covid-19-Regeln nicht zulässig! Bestellte Tickets können nur gegen Gebühr storniert werden!",
 	"esstaffadministrationlist.standBuildTicket" : "Anz. Standbauer-Tickets ist unbegrenzt.",
+    "esstaffadministrationlist.pdfTicketDot" : "PDF-Ticket versandt",
+    "esstaffadministrationlist.walletTicketDot" : "Wallet-Ticket versandt",
 
     "esStaffAdministration.title"        : "Standpersonal",
     "esStaffAdministration.firstname"    : "Vorname",

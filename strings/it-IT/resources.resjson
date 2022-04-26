@@ -56,6 +56,8 @@
     "command.exportPdfTicket"  : "Scarica il biglietto",
     "command.newStaff"  : "Inserisci un'altra persona",	
     "command.openWebpage"  : "Aprire il sito web",
+    "command.sendPDF"  : "Invia biglietto  PDF",
+    "command.sendWallet"  : "Invia biglietto del wallet",
 
     "tooltip.backward"      : "Pagina precedente",
     "tooltip.edit"          : "Modifica Record attuale",
@@ -131,6 +133,8 @@
     "tooltip.newquestion"        : "Nuova domanda",
     "tooltip.deletemod"        : "Cancellare il moderatore",	
     "tooltip.openWebpage"        : "Aprire il sito web",
+    "tooltip.sendPDF"  : "Invia biglietto PDF",
+    "tooltip.sendWallet"  : "Invia biglietto del wallet",
 
     "home.title"            : "Start",
     "home.info"             : "Informazioni importanti",
@@ -1039,7 +1043,9 @@
     "esstaffadministrationlist.numberoffreestaff" : "gratuito",
     "esstaffadministrationlist.numberoftopaystaff" : "pagare",
 	"esstaffadministrationlist.coronaWarningTicket" : "More tickets per day not allowed due to Covid 19 regulations! Ordered tickets can only be cancelled for a fee!",
-	"esstaffadministrationlist.standBuildTicket" : "No. of stand builder tickets is unlimited.",
+	"esstaffadministrationlist.standBuildTicket" : "No. of stand builder tickets is unlimited.",		
+    "esstaffadministrationlist.pdfTicketDot" : "Biglietto PDF inviato",
+    "esstaffadministrationlist.walletTicketDot" : "Biglietto del portafoglio inviato",
 	
     "esStaffAdministration.title"        : "Conto del personale",
     "esStaffAdministration.firstname"    : "Nome",

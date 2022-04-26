@@ -56,6 +56,8 @@
     "command.exportPdfTicket"  : "Télécharger le ticket",
     "command.newStaff"  : "Saisir une autre personne",	
     "command.openWebpage"  : "Ouvrir le site web",
+    "command.sendPDF"  : "Envoyer un ticket PDF",
+    "command.sendWallet"  : "Envoyer un ticket wallet",
 
     "tooltip.backward"      : "Page présédente",
     "tooltip.edit"          : "Modifier le contact en cours",
@@ -131,6 +133,8 @@
     "tooltip.newquestion"        : "Nouvelle question",
     "tooltip.deletemod"        : "Supprimer le modérateur",	
     "tooltip.openWebpage"        : "Ouvrir le site web",
+    "tooltip.sendPDF"  : "Envoyer un ticket PDF",
+    "tooltip.sendWallet"  : "Envoyer un ticket wallet",
 
     "home.title"            : "Start",
     "home.info"             : "Instructions importantes",
@@ -1039,7 +1043,9 @@
     "esstaffadministrationlist.numberoffreestaff" : "libre",
     "esstaffadministrationlist.numberoftopaystaff" : "payer",
 	"esstaffadministrationlist.coronaWarningTicket" : "More tickets per day not allowed due to Covid 19 regulations! Ordered tickets can only be cancelled for a fee!",
-	"esstaffadministrationlist.standBuildTicket" : "No. of stand builder tickets is unlimited.",
+	"esstaffadministrationlist.standBuildTicket" : "No. of stand builder tickets is unlimited.",	
+    "esstaffadministrationlist.pdfTicketDot" : "Billet PDF envoyé",
+    "esstaffadministrationlist.walletTicketDot" : "Billet portefeuille envoyé",
 	
     "esStaffAdministration.title"        : "Compte du personnel",
     "esStaffAdministration.firstname"    : "Prénom",

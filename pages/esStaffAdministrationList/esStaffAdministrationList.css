@@ -140,3 +140,17 @@
 #esStaffAdministrationListController .contentarea {
     overflow-y: hidden;
 }
+.reddot {
+    height: 25px;
+    width: 25px;
+    background-color: red;
+    border-radius: 50%;
+    display: inline-block;
+}
+.bluedot {
+    height: 25px;
+    width: 25px;
+    background-color: blue;
+    border-radius: 50%;
+    display: inline-block;
+}

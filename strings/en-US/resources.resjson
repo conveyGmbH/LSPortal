@@ -56,6 +56,8 @@
     "command.exportPdfTicket"  : "Download ticket",
     "command.newStaff"  : "Enter another person",	
     "command.openWebpage"  : "Open webpage",
+    "command.sendPDF"  : "Send PDF ticket",
+    "command.sendWallet"  : "Send Wallet ticket",
 
     "tooltip.backward"      : "Browse back",
     "tooltip.edit"          : "Edit current record",
@@ -130,7 +132,9 @@
     "tooltip.deletequestion"        : "Delete Question",
     "tooltip.newquestion"        : "New Question",
     "tooltip.deletemod"        : "Delete Moderator",	
-    "tooltip.openWebpage"        : "Open webpage",
+    "tooltip.openWebpage"        : "Open webpage",	
+    "tooltip.sendPDF"  : "Send PDF ticket",
+    "tooltip.sendWallet"  : "Send Wallet ticket",
 
     "home.title"            : "Start",
     "home.info"             : "Important information",
@@ -1042,7 +1046,9 @@
     "esStaffAdministration.esArticle" : "Ticket",
     "esStaffAdministration.ticketWarning" : "Attention: Ordered tickets can only be cancelled for a fee!",
     "esstaffadministrationlist.coronaWarningTicket" : "More tickets per day not allowed due to Covid 19 regulations! Ordered tickets can only be cancelled for a fee!",
-	"esstaffadministrationlist.standBuildTicket" : "No. of stand builder tickets is unlimited.",
+	"esstaffadministrationlist.standBuildTicket" : "No. of stand builder tickets is unlimited.",	
+    "esstaffadministrationlist.pdfTicketDot" : "PDF ticket sent",
+    "esstaffadministrationlist.walletTicketDot" : "Wallet ticket sent",
 
     "esStaffAdministration.title"        : "Staff account",
     "esStaffAdministration.firstname"    : "Firstname",

@@ -81,6 +81,24 @@
             }
             this.getLangSpecErrorMsg = getLangSpecErrorMsg;
 
+            var sendPdfWalletMail = function (mailtype) {
+                Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
+                var recordId = that.binding.dataEmployee && that.binding.dataEmployee.MitarbeiterVIEWID;
+                AppData.setErrorMsg(that.binding);
+                AppData.call("PRC_ESSendTicketMail", {
+                    pMitarbeiterID: recordId,
+                    pMailType: mailtype
+                }, function (json) {
+                    Log.print(Log.l.info, "call success! ");
+                    
+                }, function (error) {
+                    Log.print(Log.l.error, "call error");
+
+                });
+                Log.ret(Log.l.trace);
+            }
+            this.sendPdfWalletMail = sendPdfWalletMail;
+
             var getErrorMsgFromErrorStack = function (errorMsg) {
                 Log.call(Log.l.trace, "Employee.Controller.");
                 AppData.setErrorMsg(that.binding);
@@ -347,6 +365,16 @@
                         WinJS.Navigation.back(1).done();
                     }
                     }
+                    Log.ret(Log.l.trace);
+                },
+                clickSendPDF: function() {
+                    Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
+                    that.sendPdfWalletMail("PDF");
+                    Log.ret(Log.l.trace);
+                },
+                clickSendWallet: function () {
+                    Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
+                    that.sendPdfWalletMail("WALLET");
                     Log.ret(Log.l.trace);
                 },
                 clickNew: function (event) {
@@ -675,6 +703,20 @@
                 },
                 clickOk: function () {
                     if (that.binding.dataEmployee.MitarbeiterVIEWID && !that.binding.dataEmployee.HasTicket && AppBar.modified) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                },
+                clickSendPDF: function () {
+                    if (that.binding.dataEmployee.MitarbeiterVIEWID && that.binding.dataEmployee.HasTicket !== null) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                },
+                clickSendWallet: function () {
+                    if (that.binding.dataEmployee.MitarbeiterVIEWID && that.binding.dataEmployee.HasTicket !== null) {
                         return false;
                     } else {
                         return true;
