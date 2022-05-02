@@ -193,6 +193,7 @@
     "contact.firstName"     : "Primo nome",
     "contact.middleName"    : "Secondo nome",
     "contact.position"      : "Posizione",
+    "contact.industry"		: "Industria",
     "contact.formOf"        : "Sesso",
     "contact.academicTitle" : "Titolo",
     "contact.company"       : "Nome dell'azienda",

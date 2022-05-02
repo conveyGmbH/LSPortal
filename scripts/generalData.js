@@ -612,6 +612,13 @@
                         AppData._persistentStates.sendMailPrivacypolicy = false;
                     }
                     break;
+                case 50:
+                    //if (item.LocalValue === "1") {
+                    AppData._persistentStates.visitorFlowInterval = item.LocalValue;
+                    /*} else {
+                        AppData._persistentStates.visitorFlowInterval = false;
+                    }*/
+                    break;
                 default:
                     // defaultvalues
             }

@@ -49,6 +49,8 @@
                 Vorname2: "",
                 Name: "",
                 Firmenname: "",
+                Position: "",
+                Branche: "",
                 Strasse: "",
                 PLZ: "",
                 Stadt: "",
