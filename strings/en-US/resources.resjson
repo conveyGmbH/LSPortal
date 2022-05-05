@@ -1342,7 +1342,7 @@
     "eventGenSettings.recordsession"			: "Event recording",
     "eventGenSettings.allowaudio"			: "Allow viewer microphone",
     "eventGenSettings.allowvideo"			: "Allow viewers video",
-    "eventGenSettings.nomemberlist"			: "Show viewer list",
+    "eventGenSettings.nomemberlist"			: "Show moderators only",
     "eventGenSettings.listonlymoderators"	: "Show moderators only",
     "eventGenSettings.hidesilentvideos"	: "Hide silent videos",
     "eventGenSettings.speakerVideosPinned"	: "Pin videos manually",

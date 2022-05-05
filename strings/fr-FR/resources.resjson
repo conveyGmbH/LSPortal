@@ -1342,7 +1342,7 @@
     "eventGenSettings.recordsession"			: "Enregistrement des événements",
     "eventGenSettings.allowaudio"			: "Autoriser les spectateurs à utiliser le microphone",
     "eventGenSettings.allowvideo"			: "Autoriser la vidéo des spectateurs",
-    "eventGenSettings.nomemberlist"			: "Afficher la liste des spectateurs",
+    "eventGenSettings.nomemberlist"			: "N'afficher que les modérateurs",
     "eventGenSettings.listonlymoderators"	: "N'afficher que les modérateurs",
     "eventGenSettings.hidesilentvideos"	: "Cacher des vidéos silencieuses",
     "eventGenSettings.speakerVideosPinned"	: "Épingler des vidéos manuellement",
