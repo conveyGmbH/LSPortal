@@ -349,7 +349,8 @@
                                 }
                                 for (var i = 0; i < json.d.results.length; i++) {
                                     if (json.d.results[i].INITLandID === 53) {
-                                        that.binding.dataExhibitor.LandID = json.d.results[i].INITLandID.toString();
+                                        that.binding.dataExhibitor.LandID = json.d.results[i].INITLandID;
+                                        Log.print(Log.l.trace, "initLandDataView: success!");
                                         //initLand.selectedIndex = i;
                                     }
                                 }
@@ -367,7 +368,8 @@
                         var storedResults = AppData.initLandView.getResults();
                         for (var i = 0; i < storedResults.length; i++) {
                             if (storedResults[i].INITLandID === 53) {
-                                that.binding.dataExhibitor.LandID = storedResults[i].INITLandID.toString();
+                                that.binding.dataExhibitor.LandID = storedResults[i].INITLandID;
+                                Log.print(Log.l.trace, "initLandDataView: success!");
                                 //initLand.selectedIndex = i;
                             }
                         }

@@ -1341,7 +1341,7 @@
     "eventGenSettings.recordsession"			: "Registrazione evento",
     "eventGenSettings.allowaudio"			: "Permettere il microfono allo spettatore",
     "eventGenSettings.allowvideo"			: "Permettere il video dello spettatore",
-    "eventGenSettings.nomemberlist"			: "Mostra la lista degli spettatori",
+    "eventGenSettings.nomemberlist"			: "Mostra solo ai moderatori",
     "eventGenSettings.listonlymoderators"	: "Mostra solo ai moderatori",
     "eventGenSettings.hidesilentvideos"	: "Nascondi i video silenziosi",
     "eventGenSettings.speakerVideosPinned"	: "Pin video manualmente",
