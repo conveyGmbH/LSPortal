@@ -252,6 +252,8 @@
     "search.ID"             : "ID",
     "search.deviceID"       : "Appareil",
     "search.company"        : "Société",
+    "search.position"       : "Position",
+    "search.industry"		: "Branche",
     "search.firstName"      : "Prénom",
     "search.name"           : "Nom",
     "search.email"          : "Adresse e-mail",
@@ -1045,7 +1047,7 @@
     "esstaffadministrationlist.numberoffreestaff" : "libre",
     "esstaffadministrationlist.numberoftopaystaff" : "payer",
 	"esstaffadministrationlist.coronaWarningTicket" : "More tickets per day not allowed due to Covid 19 regulations! Ordered tickets can only be cancelled for a fee!",
-	"esstaffadministrationlist.standBuildTicket" : "No. of stand builder tickets is unlimited.",	
+	"esstaffadministrationlist.standBuildTicket" : "No. of stand builder tickets is unlimited.",
     "esstaffadministrationlist.pdfTicketDot" : "Billet PDF envoyé",
     "esstaffadministrationlist.walletTicketDot" : "Billet portefeuille envoyé",
 	
