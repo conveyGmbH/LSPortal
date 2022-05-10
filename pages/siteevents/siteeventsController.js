@@ -543,7 +543,7 @@
                                                 rows[rowi].style.backgroundColor = "";
                                                 rows[rowi].classList.remove('selected');
                                             }
-                                            myrow.style.backgroundColor  = (Colors.isDarkTheme ? Colors.navigationColor : Colors.accentColor);
+                                            myrow.style.backgroundColor  = Colors.navigationColor;
                                             myrow.className += " selected";
                                             var newRecId = that.siteeventsdataraw[i].VeranstaltungVIEWID;
                                             AppData.setRecordId("ExhibitorMailingStatus", that.siteeventsdataraw[i].FairMandantVeranstID);
@@ -1010,11 +1010,6 @@
 
             var resultConverter = function (item, index) {
                 item.index = index;
-                if (tableBody &&
-                    tableBody.winControl &&
-                    tableBody.winControl.data) {
-                    tableBody.winControl.data.push(item);
-                }
                 if (!item.StandHall) {
                     item.StandHall = "";
                 }
@@ -1076,21 +1071,16 @@
                             that.siteeventsdata = new WinJS.Binding.List(results);
                             if (tableBody.winControl) {
                                 // add ListView dataSource
-                                tableBody.winControl.itemDataSource = that.siteeventsdata.dataSource;
+                                tableBody.winControl.data = that.siteeventsdata;
                             }
                             Log.print(Log.l.trace, "Data loaded");
-                            if (results[0] && results[0].VeranstaltungVIEWID) {
-                                WinJS.Promise.timeout(0).then(function () {
-                                    that.selectRecordId(results[0].VeranstaltungVIEWID);
-                                });
-                            }
                         } else {
                             that.binding.count = 0;
                             that.nextUrl = null;
                             that.siteeventsdata = null;
                             if (tableBody.winControl) {
                                 // add ListView dataSource
-                                tableBody.winControl.itemDataSource = null;
+                                tableBody.winControl.data = null;
                             }
                             if (progress && progress.style) {
                                 progress.style.display = "none";
@@ -1114,7 +1104,7 @@
                             }
                         that.loading = false;
                         }, that.binding.restriction);
-                 }).then(function () {
+                    }).then(function () {
                     return that.addBodyRowHandlers();
                     }).then(function () {
                         return that.setDataLabels();
