@@ -38,84 +38,31 @@
                          data-win-control="WinJS.UI.AutoSuggestBox"
                          data-win-bind="winControl.placeholderText: eventText; wincontrol.queryText: siteeventsdata.Firmenname" oninput="AppBar.handleEvent('oninput', 'changeSearchField', event)">
                     </div>-->
-                    <div class="headerFooterPlaceholder">
-                        <div class="list-header">
-                            <div class="list-landscape-only">
-                                <div id="Warningicon" class="list-field-small-fixed win-type-ellipsis"></div>
-                                <div class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'siteevents.event'}"></div>
-                                <div id="Ansprechpartner" class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'siteevents.adminuser'}"></div>
-                                <div id="Hall" class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'siteevents.hall'}"></div>
-                                <div id="Stand" class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'siteevents.stand'}"></div>
-                                <div id="Appusers" class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'siteevents.appusercount'}"></div>
-                                <div id="UlLUser" class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'siteevents.freeolockappuser'}"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="siteevents-template"
-                         data-win-control="WinJS.Binding.Template" style="display: none">
-                        <div class="list-landscape-only">
-                            <div class="row-bkg-gray"
-                                 data-win-bind="style.display: index Binding.Converter.oddToDisplay"></div>
-                            <div id="Warningicon" class="list-field-small-fixed">
-                                <div class="list-symbol-ID v" data-win-bind="style.display: DevicesNotLicensed Binding.Converter.toDisplay">
-                                    <div id="about" class="action-image"></div>
-                                </div>
-                            </div>
-                            <div class="list-field-small-fixed win-type-ellipsis"
-                                 data-win-bind="textContent: Firmenname"></div>
-                            <div id="Ansprechpartner" class="list-field-small-fixed win-type-ellipsis"
-                                 data-win-bind="textContent: FairMandant_Email"></div>
-                            <div id="Hall" class="list-field-small-fixed win-type-ellipsis"
-                                 data-win-bind="textContent: StandHall"></div>
-                            <div id="Stand" class="list-field-small-fixed win-type-ellipsis"
-                                 data-win-bind="textContent: StandNo"></div>
-                            <div id="Appusers" class="list-field-small-fixed win-type-ellipsis"
-                                 data-win-bind="textContent: OrderedApp"></div>
-                            <div id="UlLUser" class="list-field-small-fixed win-type-ellipsis"
-                                 data-win-bind="textContent: LULUsers"></div>
-                        </div>
-                        <div class="list-portrait-only">
-                            <div class="row-separator"></div>
-                            <div class="list-div-left">
-                                <div class="list-symbol-ID">
-                                    <div id="market_stand" class="action-image"></div>
-                                </div>
-                                <div class="list-compressed">
-                                    <!--list-localeventsList-->
-                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
-                                          data-win-bind="textContent: Firmenname"></span>
-                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
-                                          data-win-bind="textContent: FairMandant_Email"></span>
-                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
-                                          data-win-bind="textContent: StandHall"></span>
-                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
-                                          data-win-bind="textContent: StandNo"></span>
-                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
-                                          data-win-bind="textContent: OrderedApp"></span>
-                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
-                                          data-win-bind="textContent: LULUsers"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="headerFooterPlaceholder">
-                        <div class="list-footer">
-                            <div class="status">
-                                <progress class="win-progress-bar progress"></progress>
-                                <div class="counter">
-                                    <span data-win-res="{textContent: 'mailingList.count'}"></span><span>: </span><span data-win-bind="textContent: count"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="siteevents"
-                         class="listview win-selectionstylefilled"
-                         data-win-control="WinJS.UI.ListView"
-                         data-win-options="{
-                                header : select('.list-header'),
-                                itemTemplate: select('.siteevents-template'),
-                                footer: select('.list-footer')
-                         }">
+                    <div class="field_line scroll-line">
+                        <table id="tableId">
+                            <thead class="table-header">
+                                <tr>
+                                    <th data-win-res="{textContent: 'siteevents.event'}"></th>
+                                    <th data-win-res="{textContent: 'siteevents.adminuser'}"></th>
+                                    <th data-win-res="{textContent: 'siteevents.hall'}"></th>
+                                    <th data-win-res="{textContent: 'siteevents.stand'}"></th>
+                                    <th data-win-res="{textContent: 'siteevents.appusercount'}"></th>
+                                    <th data-win-res="{textContent: 'siteevents.freeolockappuser'}"></th>
+                                    <th data-win-res="{textContent: 'siteevents.numContacts'}"></th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-body" data-win-control="WinJS.UI.Repeater">
+                                <tr data-win-bind="value: VeranstaltungVIEWID">
+                                    <td data-win-bind="textContent: Firmenname"></td>
+                                    <td data-win-bind="textContent: FairMandant_Email"></td>
+                                    <td data-win-bind="textContent: StandHall"></td>
+                                    <td data-win-bind="textContent: StandNo"></td>
+                                    <td data-win-bind="textContent: OrderedApp"></td>
+                                    <td data-win-bind="textContent: LULUsers"></td>
+                                    <td data-win-bind="textContent: NumContacts"></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 <div class="error-message"

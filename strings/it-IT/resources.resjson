@@ -914,6 +914,7 @@
     "siteevents.adminuser"   : "Numero di stand",
     "siteevents.appusercount"   : "Dispositivi",
     "siteevents.freeolockappuser"   : "unlock. / lock. Dispositivi",
+    "siteevents.numContacts"   : "Contatti",
     "siteevents.placeholder"   : "Ricerca Espositori",
     "siteevents.eventdelete"   : "Vuoi veramente cancellare l'evento?",
     "siteevents.successmsg"   : "File Csv caricato con successo",

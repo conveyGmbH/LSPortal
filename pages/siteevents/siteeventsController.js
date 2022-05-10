@@ -44,7 +44,10 @@
 
             var prevMasterLoadPromise = null;
             // ListView control
-            var listView = pageElement.querySelector("#siteevents.listview");
+            var table = pageElement.querySelector("#tableId");
+            var tableHeader = pageElement.querySelector(".table-header");
+            var tableBody = pageElement.querySelector(".table-body");
+            var tableBodyRow = pageElement.querySelector(".list-symbol-ID");
             var progress = null;
             var counter = null;
             var layout = null;
@@ -60,13 +63,15 @@
             var timer = null;
 
             this.dispose = function () {
-                if (listView && listView.winControl) {
-                    listView.winControl.itemDataSource = null;
+                if (tableBody && tableBody.winControl) {
+                    tableBody.winControl.data = null;
                 }
                 if (that.siteeventsdata) {
                     that.siteeventsdata = null;
                 }
-                listView = null;
+                if (that.siteeventsdataraw) {
+                    that.siteeventsdataraw = null;
+                }
             }
             
             var restriction; 
@@ -74,6 +79,39 @@
                 restriction = SiteEvents.defaultRestriction;
             }
             that.binding.restriction = restriction;
+
+            var setDataLabels = function() {
+                Log.call(Log.l.trace, "Contact.Controller.");
+                var row = pageElement.querySelectorAll("table tr");
+                for (var i = 0; i < row.length; i++) {
+                    var cell = row[i].cells;
+                    for (var j = 0; j < cell.length; j++) {
+                        if (j === 0) {
+                            cell[j].setAttribute("data-label", getResourceText("siteevents.event"));
+                        }
+                        if (j === 1) {
+                            cell[j].setAttribute("data-label", getResourceText("siteevents.adminuser"));
+                        }
+                        if (j === 2) {
+                            cell[j].setAttribute("data-label", getResourceText("siteevents.hall"));
+                        }
+                        if (j === 3) {
+                            cell[j].setAttribute("data-label", getResourceText("siteevents.stand"));
+                        }
+                        if (j === 4) {
+                            cell[j].setAttribute("data-label", getResourceText("siteevents.appusercount"));
+                        }
+                        if (j === 5) {
+                            cell[j].setAttribute("data-label", getResourceText("siteevents.freeolockappuser"));
+                        }
+                        if (j === 6) {
+                            cell[j].setAttribute("data-label", getResourceText("siteevents.numContacts"));
+                        }
+                    }
+                }
+                Log.call(Log.l.trace, "Contact.Controller.");
+            }
+            this.setDataLabels = setDataLabels;
 
             var getDateObject = function (dateData) {
                 var ret;
@@ -88,23 +126,7 @@
                 return ret;
             };
             this.getDateObject = getDateObject;
-
-            var selectRecordId = function (recordId) {
-                Log.call(Log.l.trace, "LocalEvents.Controller.", "recordId=" + recordId);
-                if (recordId && listView && listView.winControl && listView.winControl.selection) {
-                    for (var i = 0; i < that.siteeventsdata.length; i++) {
-                        var siteevents = that.siteeventsdata.getAt(i);
-                        if (siteevents && typeof siteevents === "object" &&
-                            siteevents.VeranstaltungVIEWID === recordId) {
-                            listView.winControl.selection.set(i);
-                            break;
-                        }
-                    }
-                }
-                Log.ret(Log.l.trace);
-            }
-            this.selectRecordId = selectRecordId;
-
+            
             var checkId = function() {
                 if (that.vidID) {
                     fileinputbox.style.display = "block";
@@ -206,9 +228,7 @@
 
             var loadNextUrl = function (recordId) {
                 Log.call(Log.l.trace, "SiteEvents.Controller.", "recordId=" + recordId);
-                if (that.siteeventsdata && that.nextUrl && listView) {
-                    progress = listView.querySelector(".list-footer .progress");
-                    counter = listView.querySelector(".list-footer .counter");
+                if (that.siteeventsdata && that.nextUrl) {
                     that.loading = true;
                     if (progress && progress.style) {
                         progress.style.display = "inline";
@@ -445,6 +465,13 @@
             var processSearch = function (searchString) {
                 Log.call(Log.l.trace, "SiteEvents.Controller.");
                 AppData.setErrorMsg(that.binding);
+                if (tableBody && tableBody.winControl) {
+                    if (tableBody.winControl.data) {
+                        tableBody.winControl.data.length = 0;
+                    } else {
+                        tableBody.winControl.data = WinJS.Binding.List([]);
+                    }
+                }
                 var cleanSearchString = searchString.replace("\"", "");
                 var ret;
                 var recordId = AppData.getRecordId("VeranstaltungTermin");
@@ -460,10 +487,12 @@
                                 that.resultConverter(item, index);
                             });
                             that.siteeventsdata = new WinJS.Binding.List(results);
-                            if (listView.winControl) {
+                            if (tableBody.winControl) {
                                 // add ListView dataSource
-                                listView.winControl.itemDataSource = that.siteeventsdata.dataSource;
+                                tableBody.winControl.itemDataSource = that.siteeventsdata.dataSource;
                             }
+                            that.addBodyRowHandlers();
+                            that.setDataLabels();
                             that.binding.count = results.length;
                             AppBar.busy = false;
                             AppBar.triggerDisableHandlers();
@@ -498,6 +527,51 @@
                 Log.ret(Log.l.trace);
             }
             this.searchStringProcess = searchStringProcess;
+
+            var addBodyRowHandlers = function () {
+                if (tableBody) {
+                    var rows = tableBody.getElementsByTagName("tr");
+                    for (var i = 0; i < rows.length; i++) {
+                        var row = rows[i];
+                        if (!row.onclick) {
+                            row.onclick = function (myrow) {
+                                return function () {
+                                    var id = myrow.value;
+                                    for (var i = 0; i < that.siteeventsdataraw.length; i++) {
+                                        if (that.siteeventsdataraw[i].VeranstaltungVIEWID === id) {
+                                            for (var rowi = 0; rowi < rows.length; rowi++) {
+                                                rows[rowi].style.backgroundColor = "";
+                                                rows[rowi].classList.remove('selected');
+                                            }
+                                            myrow.style.backgroundColor  = (Colors.isDarkTheme ? Colors.navigationColor : Colors.accentColor);
+                                            myrow.className += " selected";
+                                            var newRecId = that.siteeventsdataraw[i].VeranstaltungVIEWID;
+                                            AppData.setRecordId("ExhibitorMailingStatus", that.siteeventsdataraw[i].FairMandantVeranstID);
+                                            that.binding.veranstaltungId = that.siteeventsdataraw[i].VeranstaltungVIEWID;
+                                            that.isConvertable = that.siteeventsdataraw[i].CanConvert;
+                                            that.binding.active = that.siteeventsdataraw[i].Aktiv;
+                                            AppData.setRecordId("VeranstaltungTermin", that.siteeventsdataraw[i].VeranstaltungTerminID);
+                                            Log.print(Log.l.trace, "newRecId:" + newRecId + " curRecId:" + that.curRecId);
+                                            if (newRecId !== 0 && newRecId !== that.curRecId) {
+                                                if (that.curRecId) {
+                                                    that.prevRecId = that.curRecId;
+                                                }
+                                                that.curRecId = newRecId;
+                                                that.eventChangeId = that.curRecId;
+                                                that.reorderId = that.curRecId;
+                                                AppData.setRecordId("VeranstaltungAnlage", that.reorderId);
+                                                AppBar.triggerDisableHandlers();
+                                            }
+                                        }
+                                    }
+                                    
+                                };
+                            }(row);
+                        }
+                    }
+                }
+            }
+            this.addBodyRowHandlers = addBodyRowHandlers;
 
             this.eventHandlers = {
                 clickBack: function (event) {
@@ -701,121 +775,9 @@
                     that.binding.restriction.Firmenname = "";
                     Log.ret(Log.l.trace);
                 },
-                onLoadingStateChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "SiteEvents.Controller.");
-                    if (listView && listView.winControl) {
-                        Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
-                        // single list selection
-                        if (listView.winControl.selectionMode !== WinJS.UI.SelectionMode.single) {
-                            listView.winControl.selectionMode = WinJS.UI.SelectionMode.single;
-                        }
-                        // direct selection on each tap
-                        if (listView.winControl.tapBehavior !== WinJS.UI.TapBehavior.directSelect) {
-                            listView.winControl.tapBehavior = WinJS.UI.TapBehavior.directSelect;
-                        }
-                        // Double the size of the buffers on both sides
-                        if (!maxLeadingPages) {
-                            maxLeadingPages = listView.winControl.maxLeadingPages * 4;
-                            listView.winControl.maxLeadingPages = maxLeadingPages;
-                        }
-                        if (!maxTrailingPages) {
-                            maxTrailingPages = listView.winControl.maxTrailingPages * 4;
-                            listView.winControl.maxTrailingPages = maxTrailingPages;
-                        }
-                        if (listView.winControl.loadingState === "itemsLoading") {
-                            if (!layout) {
-                                layout = Application.SiteEventsLayout.SiteEventsLayout;
-                                listView.winControl.layout = { type: layout };
-                            }
-                        } else if (listView.winControl.loadingState === "complete") {
-                            // load SVG images
-                            Colors.loadSVGImageElements(listView, "action-image", 40, Colors.textColor);
-                            Colors.loadSVGImageElements(listView, "action-image-flag", 40);
-                        }
-                    }
-                    Log.ret(Log.l.trace);
-                },
                 onItemInvoked: function (eventInfo) {
                     Log.call(Log.l.trace, "LocalEvents.Controller.");
                     Application.showDetail();
-                    Log.ret(Log.l.trace);
-                },
-                onHeaderVisibilityChanged: function (eventInfo) {
-                        Log.call(Log.l.trace, "LocalEvents.Controller.");
-                        if (eventInfo && eventInfo.detail) {
-                            var visible = eventInfo.detail.visible;
-                            if (visible) {
-                                var contentHeader = listView.querySelector(".content-header");
-                                if (contentHeader) {
-                                    var halfCircle = contentHeader.querySelector(".half-circle");
-                                    if (halfCircle && halfCircle.style) {
-                                        if (halfCircle.style.visibility === "hidden") {
-                                            halfCircle.style.visibility = "";
-                                            WinJS.UI.Animation.enterPage(halfCircle);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        Log.ret(Log.l.trace);
-                },
-                onFooterVisibilityChanged: function (eventInfo) {
-                        Log.call(Log.l.trace, "LocalEvents.Controller.");
-                        if (eventInfo && eventInfo.detail) {
-                            progress = listView.querySelector(".list-footer .progress");
-                            counter = listView.querySelector(".list-footer .counter");
-                            var visible = eventInfo.detail.visible;
-                            if (visible && that.siteeventsdata && that.nextUrl) {
-                                that.loading = true;
-                                that.loadNextUrl();
-                            } else {
-                                if (progress && progress.style) {
-                                    progress.style.display = "none";
-                                }
-                                if (counter && counter.style) {
-                                    counter.style.display = "inline";
-                                }
-                                that.loading = false;
-                            }
-                        }
-                        Log.ret(Log.l.trace);
-                },
-                onSelectionChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "LocalEvents.Controller.");
-                    if (listView && listView.winControl) {
-                        var listControl = listView.winControl;
-                        if (listControl.selection) {
-                            var selectionCount = listControl.selection.count();
-                            if (selectionCount === 1) {
-                                // Only one item is selected, show the page
-                                listControl.selection.getItems().done(function (items) {
-                                    var item = items[0];
-                                    that.binding.active = null;
-                                    if (item.data.Aktiv) {
-                                        that.binding.active = 1;
-                                    }
-                                    that.actualSelectedItem = item.data;
-                                    if (item.data && item.data.VeranstaltungVIEWID) {
-                                        var newRecId = item.data.VeranstaltungVIEWID;
-                                        AppData.setRecordId("ExhibitorMailingStatus", item.data.FairMandantVeranstID);
-                                        that.binding.veranstaltungId = item.data.VeranstaltungVIEWID;
-                                        that.isConvertable = item.data.CanConvert;
-                                        Log.print(Log.l.trace, "newRecId:" + newRecId + " curRecId:" + that.curRecId);
-                                        if (newRecId !== 0 && newRecId !== that.curRecId) {
-                                            if (that.curRecId) {
-                                                that.prevRecId = that.curRecId;
-                                            }
-                                            that.curRecId = newRecId;
-                                            that.eventChangeId = that.curRecId;
-                                            that.reorderId = that.curRecId;
-                                            AppData.setRecordId("VeranstaltungAnlage", that.reorderId);
-                                            AppBar.triggerDisableHandlers();
-                                        }
-                                    }
-                                });
-                            }
-                        }
-                    }
                     Log.ret(Log.l.trace);
                 },
                 clickNew: function (event) {
@@ -1038,12 +1000,6 @@
             }
 
             // register ListView event handler
-            if (listView) {
-                this.addRemovableEventListener(listView, "iteminvoked", this.eventHandlers.onItemInvoked.bind(this));
-                this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
-                this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
-                this.addRemovableEventListener(listView, "selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
-            }
             if (suggestionBox) {
                 this.addRemovableEventListener(suggestionBox, "suggestionsrequested", this.eventHandlers.onquerychanged.bind(this));
                 this.addRemovableEventListener(suggestionBox, "querysubmitted", this.eventHandlers.onquerysubmitted.bind(this));
@@ -1054,6 +1010,11 @@
 
             var resultConverter = function (item, index) {
                 item.index = index;
+                if (tableBody &&
+                    tableBody.winControl &&
+                    tableBody.winControl.data) {
+                    tableBody.winControl.data.push(item);
+                }
                 if (!item.StandHall) {
                     item.StandHall = "";
                 }
@@ -1077,6 +1038,8 @@
                 Log.call(Log.l.trace, "LocalEvents.Controller.");
                 inputmsg.textContent = " ";
                 inputbox.value = null;
+                that.siteeventsdata = null;
+                that.siteeventsdataraw = null;
                 that.loading = true;
                 if (vid) {
                     that.binding.restriction.VeranstaltungTerminID = vid;
@@ -1084,15 +1047,12 @@
                 } else {
                     that.binding.restriction.VeranstaltungTerminID = that.vidID;
                 }
-                if (listView) {
-                progress = listView.querySelector(".list-footer .progress");
-                counter = listView.querySelector(".list-footer .counter");
-                if (progress && progress.style) {
-                    progress.style.display = "inline";
-                }
-                if (counter && counter.style) {
-                    counter.style.display = "none";
-                }
+                if (tableBody && tableBody.winControl) {
+                    if (tableBody.winControl.data) {
+                        tableBody.winControl.data.length = 0;
+                    } else {
+                        tableBody.winControl.data = WinJS.Binding.List([]);
+                    }
                 }
                 AppData.setErrorMsg(that.binding);
                 var ret = null;
@@ -1111,12 +1071,12 @@
                             results.forEach(function (item, index) {
                                 that.resultConverter(item, index);
                             });
-                            
+                            that.siteeventsdataraw = results;
                             that.vidID2 = vid;
                             that.siteeventsdata = new WinJS.Binding.List(results);
-                            if (listView.winControl) {
+                            if (tableBody.winControl) {
                                 // add ListView dataSource
-                                listView.winControl.itemDataSource = that.siteeventsdata.dataSource;
+                                tableBody.winControl.itemDataSource = that.siteeventsdata.dataSource;
                             }
                             Log.print(Log.l.trace, "Data loaded");
                             if (results[0] && results[0].VeranstaltungVIEWID) {
@@ -1128,12 +1088,10 @@
                             that.binding.count = 0;
                             that.nextUrl = null;
                             that.siteeventsdata = null;
-                            if (listView.winControl) {
+                            if (tableBody.winControl) {
                                 // add ListView dataSource
-                                listView.winControl.itemDataSource = null;
+                                tableBody.winControl.itemDataSource = null;
                             }
-                            progress = listView.querySelector(".list-footer .progress");
-                            counter = listView.querySelector(".list-footer .counter");
                             if (progress && progress.style) {
                                 progress.style.display = "none";
                             }
@@ -1146,9 +1104,7 @@
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
-                            if (listView && typeof listView !== 'undefined') {
-                        progress = listView.querySelector(".list-footer .progress");
-                        counter = listView.querySelector(".list-footer .counter");
+                        if (tableBody && typeof tableBody !== 'undefined') {
                         if (progress && progress.style) {
                             progress.style.display = "none";
                         }
@@ -1158,7 +1114,11 @@
                             }
                         that.loading = false;
                         }, that.binding.restriction);
-                });
+                 }).then(function () {
+                    return that.addBodyRowHandlers();
+                    }).then(function () {
+                        return that.setDataLabels();
+                    });
                 } else {
                     ret = new WinJS.Promise.as();
                 }
@@ -1189,7 +1149,8 @@
                 suggestionList: null,
                 reorderId: null,
                 imageData: null,
-                isConvertable: null
+                isConvertable: null,
+                siteeventsdataraw: null
         })
         
     });

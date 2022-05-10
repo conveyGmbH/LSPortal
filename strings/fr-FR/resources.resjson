@@ -914,6 +914,7 @@
     "siteevents.adminuser"   : "Contact",
     "siteevents.appusercount"   : "Appareils",
     "siteevents.freeolockappuser"   : "unlock. / lock. appareils",
+    "siteevents.numContacts"   : "Contacts",
     "siteevents.placeholder"   : "Recherche exposants",
     "siteevents.eventdelete"   : "Voulez-vous vraiment supprimer l'événement?",
     "siteevents.successmsg"   : "Fichier Csv téléchargé avec succès",
