@@ -207,11 +207,11 @@
                             listView.winControl.maxTrailingPages = maxTrailingPages;
                         }
                         if (listView.winControl.loadingState === "itemsLoading") {
-                            if (!layout) {
+                            /*if (!layout) {
                                 layout = new WinJS.UI.GridLayout();
                                 layout.orientation = "horizontal";
-                                listView.winControl.layout = { type: layout };
-                            }
+                                //listView.winControl.layout = { type: layout };
+                            }*/
                         } else if (listView.winControl.loadingState === "complete") {
                             if (that.loading) {
                                 that.loading = false;

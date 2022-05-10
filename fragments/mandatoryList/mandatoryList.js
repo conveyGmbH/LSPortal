@@ -65,15 +65,31 @@
             if (element && !that.inResize) {
                 that.inResize = 1;
                 ret = WinJS.Promise.timeout(0).then(function () {
-                    var empList = element.querySelector(".win-itemsblock");/*#mandatoryList.listview*/
-                    if (empList && empList.style) {
+                    var win_single_itemsblock = element.querySelector("#mandatoryList .win-single-itemsblock");
+                    var win_itemscontainer = element.querySelector("#mandatoryList .win-itemscontainer");/*#mandatoryList.listview*/
+                    if (win_itemscontainer && win_itemscontainer.style) {
                         var contentarea = element.querySelector(".contentarea");
                         if (contentarea) {
                             var width = contentarea.clientWidth;
                             var height = contentarea.clientHeight;
                             if (width !== that.prevWidth) {
                                 that.prevWidth = width;
-                                empList.style.width = width.toString() + "px";
+                                win_itemscontainer.style.width = width.toString() + "px";
+                            }
+                            /*if (height !== that.prevHeight) {
+                                that.prevHeight = height;
+                                empList.style.height = height.toString() + "px";
+                            }*/
+                        }
+                    }
+                    if (win_single_itemsblock && win_single_itemsblock.style) {
+                        var contentarea = element.querySelector(".contentarea");
+                        if (contentarea) {
+                            var width = contentarea.clientWidth;
+                            var height = contentarea.clientHeight;
+                            if (width !== that.prevWidth) {
+                                that.prevWidth = width;
+                                win_single_itemsblock.style.width = width.toString() + "px";
                             }
                             /*if (height !== that.prevHeight) {
                                 that.prevHeight = height;

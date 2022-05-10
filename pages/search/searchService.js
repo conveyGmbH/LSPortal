@@ -25,6 +25,8 @@
                 CreatorSiteID: "",
                 CreatorRecID: "",
                 Firmenname: "",
+                Position: "",
+                Branche: "",
                 Vorname: "",
                 Name: "",
                 EMail: "",
