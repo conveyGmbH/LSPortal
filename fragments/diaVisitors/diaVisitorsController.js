@@ -444,6 +444,18 @@
                 }
                 this.getVisitorDateAll = getVisitorDateAll;
 
+                var selectCurrentDay = function() {
+                    var today = moment(new Date()).format("DD.MM.YYYY");
+                    for (var i = 0; i < dayCombobox.options.length; i++) {
+                        if (dayCombobox.options[i].textContent === today) {
+                            dayCombobox.options[i].selected = true;
+                            return;
+                        }
+                    }
+                    Log.ret(Log.l.trace);
+                }
+                this.selectCurrentDay = selectCurrentDay;
+
                 this.eventHandlers = {
                     changedTime: function (event) {
                         Log.call(Log.l.trace, "Contact.Controller.");
@@ -538,7 +550,8 @@
                     var startday = that.formatDate(dayCombobox.value, 1);
                     var endday = that.formatDate(dayCombobox.value, 0);
                     return getGetDashboardVisitorData(1, startday, endday);
-                }).then(function () {
+                    }).then(function () {
+                    that.selectCurrentDay();
                     Log.print(Log.l.trace, "Data loaded");
                 });
                 Log.ret(Log.l.trace);
