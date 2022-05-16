@@ -188,14 +188,6 @@
 
             var saveExhibitor = function () {
                 Log.call(Log.l.trace, "SiteEventsNeuAus.Controller.");
-                var emailadress = pageElement.querySelector("#loginemail").value;
-                var validemail = that.isEmail(emailadress);
-                if (validemail === false) {
-                    var alerttext = getResourceText("siteeventsneuaus.mailerrortext");
-                    alert(alerttext);
-                    Log.ret(Log.l.trace); 
-                    return WinJS.Promise.as();
-                } else {
                     AppData.setErrorMsg(that.binding);
                     var dataExibitor = getExibitorData();
                     Log.call(Log.l.trace, "SiteEventsNeuAus.Controller.");
@@ -232,9 +224,24 @@
                             AppData.setErrorMsg(that.binding, errorResponse);
                             Log.ret(Log.l.trace);
                         });
-                }
+                
             }
             this.saveExhibitor = saveExhibitor;
+
+            var checkedEmail = function () {
+                Log.call(Log.l.trace, "SiteEventsNeuAus.Controller.");
+                var emailadress = pageElement.querySelector("#loginemail").value;
+                var validemail = that.isEmail(emailadress);
+                if (validemail === false) {
+                    var alerttext = getResourceText("siteeventsneuaus.mailerrortext");
+                    alert(alerttext);
+                    Log.ret(Log.l.trace);
+                    return that.saveExhibitor();
+                } else {
+                    return that.saveExhibitor();
+                }
+            }
+            this.checkedEmail = checkedEmail;
 
             this.eventHandlers = {
                 clickBack: function (event) {
@@ -246,7 +253,7 @@
                 },
                 clickSave: function (event) {
                     Log.call(Log.l.trace, "SiteEventsNeuAus.Controller.");
-                    that.saveExhibitor();
+                    that.checkedEmail();
                     Log.ret(Log.l.trace);
                 },
                 clickTopButton: function (event) {
