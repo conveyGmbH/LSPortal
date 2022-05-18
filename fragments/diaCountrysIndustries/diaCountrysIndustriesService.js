@@ -61,6 +61,23 @@
                 Log.ret(Log.l.trace);
                 return ret;
             }
+        },
+        _mitarbeiterView: {
+            get: function () {
+                return AppData.getFormatView("Mitarbeiter", 20453);
+            }
+        },
+        mitarbeiterView: {
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, "mitarbeiterView.", "restriction=" + restriction);
+                var ret = DiaCountrysIndustries._mitarbeiterView.select(complete, error, restriction);
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            defaultValue: {
+                AnzKontakte: 0
+            }
         }
     });
 })();

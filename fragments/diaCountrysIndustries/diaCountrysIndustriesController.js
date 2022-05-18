@@ -24,7 +24,9 @@
                         fragmentElement, {
                             criteriaMain: 0,
                             criteriaCountry: 0,
-                            criteriaDays: 0
+                            criteriaDays: 0,
+                            anzKontakte: AppBar.scope.binding.countContacts,
+                            anzKontakteWData: 0
                         }
                     ]);
 
@@ -595,6 +597,13 @@
                 }
                 this.sortFunc = sortFunc;
 
+                var countingEntries = function (item, index) {
+                    item.index = index;
+                    that.binding.anzKontakteWData += item.NumHits;
+                }
+                this.countingEntries = countingEntries;
+
+
                 var getGetDashboardDataPremium = function () {
                     Log.call(Log.l.trace, "LocalEvents.Controller.");
                     AppData.setErrorMsg(that.binding);
@@ -608,6 +617,9 @@
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
                         var results = json.d.results;
+                        results.forEach(function (item, index) {
+                            that.countingEntries(item, index);
+                        });
                         /*results.sort(function (a, b) {
                             return b.NumHits - a.NumHits;
                         });*/
@@ -675,6 +687,9 @@
                 this.eventHandlers = {
                     changedCriteria: function (event) {
                         Log.call(Log.l.trace, "Contact.Controller.");
+                        if (that.binding.anzKontakteWData > 0) {
+                            that.binding.anzKontakteWData = 0;
+                        }
                         that.binding.criteriaMain = event.target.value;
                         that.drawChart();
                         Log.ret(Log.l.trace);
@@ -775,6 +790,24 @@
                                 // or server returns response with an error status.
                                 AppData.setErrorMsg(that.binding, errorResponse);
                             });
+                    }).then(function () {
+                        return DiaCountrysIndustries.mitarbeiterView.select(function (json) {
+                            Log.print(Log.l.trace, "calling select mitarbeiterView...");
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            Log.print(Log.l.trace, "mitarbeiterView: success!");
+                            // mitarbeiterView returns object already parsed from json file in response
+                            if (json && json.d && json.d.results) {
+                                var diaCountryIndustriesdata = json.d.results[0];
+                                that.binding.anzKontakte = diaCountryIndustriesdata.AnzKontakte;
+                            }
+                            return WinJS.Promise.as();
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                            return WinJS.Promise.as();
+                            }, { VeranstaltungID: AppData.getRecordId("Veranstaltung")});
                     });
                     Log.ret(Log.l.trace);
                     return ret;
