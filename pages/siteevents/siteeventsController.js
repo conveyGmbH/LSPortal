@@ -226,6 +226,27 @@
             };
             this.suggestionsRequestedHandler = suggestionsRequestedHandler;
 
+            var resultConverter = function (item, index) {
+                item.index = index;
+                if (!item.StandHall) {
+                    item.StandHall = "";
+                }
+                if (!item.StandNo) {
+                    item.StandNo = "";
+                }
+                if (typeof item.DevicesLicensed === "undefined") {
+                    item.DevicesLicensed = "0";
+                }
+                if (typeof item.DevicesNotLicensed === "undefined") {
+                    item.DevicesNotLicensed = "0";
+                }
+                if (item.OrderedApp === null) {
+                    item.OrderedApp = "0";
+                }
+                item.LULUsers = item.DevicesLicensed + " / " + item.DevicesNotLicensed;
+            }
+            this.resultConverter = resultConverter;
+
             var loadNextUrl = function (recordId) {
                 Log.call(Log.l.trace, "SiteEvents.Controller.", "recordId=" + recordId);
                 if (that.siteeventsdata && that.nextUrl) {
@@ -489,7 +510,7 @@
                             that.siteeventsdata = new WinJS.Binding.List(results);
                             if (tableBody.winControl) {
                                 // add ListView dataSource
-                                tableBody.winControl.itemDataSource = that.siteeventsdata.dataSource;
+                                tableBody.winControl.data = that.siteeventsdata;
                             }
                             that.addBodyRowHandlers();
                             that.setDataLabels();
@@ -1007,28 +1028,7 @@
             if (searchInput) {
                 this.addRemovableEventListener(searchInput, "keyup", this.eventHandlers.onSearchInput.bind(this));
             }
-
-            var resultConverter = function (item, index) {
-                item.index = index;
-                if (!item.StandHall) {
-                    item.StandHall = "";
-                }
-                if (!item.StandNo) {
-                    item.StandNo = "";
-                }
-                if (typeof item.DevicesLicensed === "undefined") {
-                    item.DevicesLicensed = "0";
-                }
-                if (typeof item.DevicesNotLicensed === "undefined") {
-                    item.DevicesNotLicensed = "0";
-                }
-                if (item.OrderedApp === null) {
-                    item.OrderedApp = "0";
-                }
-                item.LULUsers = item.DevicesLicensed + " / " + item.DevicesNotLicensed;
-            }
-            this.resultConverter = resultConverter;
-
+            
             var loadData = function (vid) {
                 Log.call(Log.l.trace, "LocalEvents.Controller.");
                 inputmsg.textContent = " ";
