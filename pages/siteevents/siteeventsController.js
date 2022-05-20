@@ -472,7 +472,7 @@
                         tableBody.winControl.data = WinJS.Binding.List([]);
                     }
                 }
-                var cleanSearchString = searchString.replace("\"", "");
+                var cleanSearchString = searchString.replace("\'", " ").replace("\"", " ");
                 var ret;
                 var recordId = AppData.getRecordId("VeranstaltungTermin");
                 if (recordId) {
@@ -489,7 +489,8 @@
                             that.siteeventsdata = new WinJS.Binding.List(results);
                             if (tableBody.winControl) {
                                 // add ListView dataSource
-                                tableBody.winControl.itemDataSource = that.siteeventsdata.dataSource;
+                                tableBody.winControl.data = that.siteeventsdata;
+                                //tableBody.winControl.itemDataSource = that.siteeventsdata.dataSource;
                             }
                             that.addBodyRowHandlers();
                             that.setDataLabels();
