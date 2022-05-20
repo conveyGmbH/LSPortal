@@ -493,7 +493,7 @@
                         tableBody.winControl.data = WinJS.Binding.List([]);
                     }
                 }
-                var cleanSearchString = searchString.replace("\"", "");
+                var cleanSearchString = searchString.replace("\'", " ").replace("\"", " ");
                 var ret;
                 var recordId = AppData.getRecordId("VeranstaltungTermin");
                 if (recordId) {
