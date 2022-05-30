@@ -186,7 +186,7 @@
                 item.EndDatum = that.getDateObject(item.EndDatum);
             }
             this.resultConverter = resultConverter;
-
+            
             // define handlers
             this.eventHandlers = {
                 clickBack: function (event) {
