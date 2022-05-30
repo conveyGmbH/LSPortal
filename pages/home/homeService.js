@@ -21,6 +21,7 @@
             { page: "mailing", imageName: "mail" },
             { page: "employee", imageName: "keys" },
             { page: "contacts", imageName: "businesspeople2" },
+            { page: "search", imageName: "magnifying_glass" },
             { page: "reporting", imageName: "download" },
             { page: "visitorFlowDashboard", imageName: "lsvFlow" },
             { page: "visitorFlowEntExt", imageName: "window_gear" }
