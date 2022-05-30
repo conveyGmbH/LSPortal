@@ -908,6 +908,10 @@
 	"pdfExport.msg" : "Modifier/lier",
     
 	"siteEventsList.title" : "Emplacement",
+    "siteEventsList.allEvents" : "Tous les salons",
+    "siteEventsList.customerEvents" : "Salons de la clientèle permanente",
+    "siteEventsList.siteEvents" : "Salons du site",
+    "siteEventsList.eventcombotitle" : "Quels salons afficher ?",
 
     "siteevents.title" : "exposant",
     "siteevents.event" : "exposant",

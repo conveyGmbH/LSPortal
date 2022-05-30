@@ -908,6 +908,10 @@
 	"pdfExport.msg" : "Modifica/collegamento",
 	
     "siteEventsList.title" : "posizione",
+    "siteEventsList.allEvents" : "Tutte le fiere",
+    "siteEventsList.customerEvents" : "Fiere permanenti per i clienti",
+    "siteEventsList.siteEvents" : "Fiere di posizione",
+    "siteEventsList.eventcombotitle" : "Quali fiere esporre?",
 
     "siteevents.title" : "espositore",
     "siteevents.event" : "espositore",

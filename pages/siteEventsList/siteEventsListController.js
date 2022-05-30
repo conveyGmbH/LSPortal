@@ -20,7 +20,9 @@
                 count: 0,
                 eventId: 0,
                 selIdx: AppData.getRecordId("VeranstaltungTermin") - 1,
-                eventText: getResourceText("siteEventsList.event")
+                eventText: getResourceText("siteEventsList.event"),
+                eventTypID: null,
+                preveventTypID: null
             }, commandList, true]);
             this.nextUrl = null;
 
@@ -28,6 +30,7 @@
 
             // ListView control
             var listView = pageElement.querySelector("#siteEventsList.listview");
+            var eventTypDropdown = pageElement.querySelector("#eventTyp");
             var progress = null;
             var counter = null;
             var layout = null;
@@ -45,6 +48,29 @@
                 }
                 listView = null;
             }
+
+            var creatingEventsCategory = function () {
+                Log.call(Log.l.trace, "SiteEventsList.Controller.");
+                var exhibitorCategory = [
+                    {
+                        value: null,
+                        title: getResourceText("siteEventsList.allEvents")
+                    },
+                    {
+                        value: 1,
+                        title: getResourceText("siteEventsList.customerEvents")
+                    },
+                    {
+                        value: 2,
+                        title: getResourceText("siteEventsList.siteEvents")
+                    }
+                ];
+                if (eventTypDropdown && eventTypDropdown.winControl) {
+                    eventTypDropdown.winControl.data = new WinJS.Binding.List(exhibitorCategory);
+                    eventTypDropdown.selectedIndex = 0;
+                }
+            }
+            this.creatingEventsCategory = creatingEventsCategory;
 
             var background = function (index) {
                 if (index % 2 === 0) {
@@ -168,6 +194,11 @@
                     if (WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done();
                     }
+                    Log.ret(Log.l.trace);
+                },
+                onSelectionDropDownChanged: function() {
+                    Log.call(Log.l.trace, "SiteEventsList.Controller.");
+                    that.loadData();
                     Log.ret(Log.l.trace);
                 },
                 onSelectionChanged: function (eventInfo) {
@@ -297,6 +328,9 @@
                 this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
                 this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
             }
+            if (eventTypDropdown) {
+                this.addRemovableEventListener(eventTypDropdown, "mouseout", this.eventHandlers.onSelectionDropDownChanged.bind(this));
+            }
             
             var loadData = function () {
                 Log.call(Log.l.trace, "SiteEventsList.Controller.");
@@ -310,7 +344,17 @@
                     counter.style.display = "none";
                 }
                 AppData.setErrorMsg(that.binding);
-                var restriction = AppData.getRestriction("Veranstaltung");
+                var restriction = "";
+                if (that.binding.eventTypID === null || that.binding.eventTypID === "null") {
+                    restriction = "";
+                    that.binding.preveventTypID = null;
+                } else if (that.binding.eventTypID === that.binding.preveventTypID) {
+                    Log.call(Log.l.trace, "SiteEventsList.Controller.");
+                    return WinJS.Promise.as();
+                } else {
+                    restriction = { TerminTyp: parseInt(that.binding.eventTypID) };
+                    that.binding.preveventTypID = that.binding.eventTypID;
+                }
                 var ret = new WinJS.Promise.as().then(function () {
                     return SiteEventsList.VeranstaltungView.select(function (json) {
                         // this callback will be called asynchronously
@@ -385,8 +429,11 @@
                 return ret;
             };
             this.loadData = loadData;
-
+            
             that.processAll().then(function () {
+                Log.print(Log.l.trace, "Binding wireup page complete");
+                return that.creatingEventsCategory();
+            }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
             }).then(function () {

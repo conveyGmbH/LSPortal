@@ -908,6 +908,10 @@
 	"pdfExport.msg" : "Edit/Link",
 	
     "siteEventsList.title" : "Fairs",
+    "siteEventsList.allEvents" : "All Fairs",
+    "siteEventsList.customerEvents" : "Permanent customer fairs",
+    "siteEventsList.siteEvents" : "Local fairs",
+    "siteEventsList.eventcombotitle" : "Which trade fairs to show?",
 
     "siteevents.title" : "Exhibitor",
     "siteevents.event" : "Exhibitor",
