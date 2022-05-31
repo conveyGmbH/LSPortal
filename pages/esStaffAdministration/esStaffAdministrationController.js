@@ -90,7 +90,10 @@
                     pMailType: mailtype
                 }, function (json) {
                     Log.print(Log.l.info, "call success! ");
-                    
+                    var master = Application.navigator.masterControl;
+                    if (master && master.controller && master.controller.binding) {
+                        master.controller.loadData(recordId);
+                    }
                 }, function (error) {
                     Log.print(Log.l.error, "call error");
 
