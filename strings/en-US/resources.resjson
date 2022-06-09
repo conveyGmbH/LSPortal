@@ -1081,6 +1081,10 @@
     "esStaffAdministration.academicTitle"      : "Academic title",
     "esStaffAdministration.email"      : "Email",
     "esStaffAdministration.comment"      : "Register your stand personnel here and receive your exhibitor passes.",
+    "esStaffAdministration.ticketStornoTitle"      : "Give a reason for cancelling *",
+    "esStaffAdministration.ticketcancelconfirm"      : "Ticket successfully cancelled",
+    "esStaffAdministration.ticketcancelabort"      : "Ticket cancelled", 
+    "esStaffAdministration.ticketcancelstringempty"      : "Please state the reason for ticket cancellation",
 
     "contacts.title"      : "Contacts",
     "contacts.comment"      : "You can find your contacts here.",

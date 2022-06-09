@@ -31,6 +31,7 @@
                 //{ id: "clickSendPDFWallet", label: getResourceText("command.sendPDFWallet"), tooltip: getResourceText("tooltip.sendPDFWallet"), section: "primary", svg: "document_pdf_wallet2" },
                 { id: "clickNew", label: getResourceText("command.newStaff"), tooltip: getResourceText("tooltip.newStaff"), section: "primary", svg: "user_plus" },
                 { id: "clickOk", label: getResourceText("command.ok"), tooltip: getResourceText("tooltip.ok"), section: "primary", svg: "navigate_check", key: WinJS.Utilities.Key.enter },
+                { id: "clickDeleteTicket", label: getResourceText("command.deleteTicket"), tooltip: getResourceText("tooltip.deleteTicket"), section: "primary", svg: "delete_Ticket" },
                 { id: "clickDelete", label: getResourceText("command.delete"), tooltip: getResourceText("tooltip.deleteStaff"), section: "primary", svg: "garbage_can" }
             ];
 

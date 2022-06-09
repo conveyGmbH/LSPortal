@@ -1080,6 +1080,10 @@
     "esStaffAdministration.comment"      : "Registra qui il personale dello stand e ricevi i pass per gli espositori.",
     "esStaffAdministration.ticketWarning" : "Attention: Ordered tickets can only be cancelled for a fee!",
     "esStaffAdministration.esArticle" : "Ticket",
+    "esStaffAdministration.ticketStornoTitle"      : "Indicare il motivo della cancellazione *",
+    "esStaffAdministration.ticketcancelconfirm"      : "Biglietto annullato con successo",
+    "esStaffAdministration.ticketcancelabort"      : "Biglietto annullato", 
+    "esStaffAdministration.ticketcancelstringempty"      : "Indicare il motivo della cancellazione del biglietto",
 
     "contacts.title"      : "Contatti",
     "contacts.comment"      : "Puoi trovare i tuoi contatti qui.",

@@ -1082,6 +1082,10 @@
     "esStaffAdministration.academicTitle"      : "Titel",
     "esStaffAdministration.email"      : "E-Mail",
     "esStaffAdministration.comment"      : "Hier registrieren Sie Ihr Standpersonal und erhalten Ihre Ausstellerausweise.",
+    "esStaffAdministration.ticketStornoTitle"      : "Geben Sie einen Grund für das stonieren an *",
+    "esStaffAdministration.ticketcancelconfirm"      : "Ticket erfolgreich stoniert",
+    "esStaffAdministration.ticketcancelabort"      : "Ticket stonieren abgebrochen", 
+    "esStaffAdministration.ticketcancelstringempty"      : "Bitte Grund für die Ticket stonierung angeben",
 
     "contacts.title"      : "Kontakte",
     "contacts.comment"      : "Hier finden Sie Ihre Kontakte.",

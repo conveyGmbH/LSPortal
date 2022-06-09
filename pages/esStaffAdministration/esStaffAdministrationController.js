@@ -81,6 +81,30 @@
             }
             this.getLangSpecErrorMsg = getLangSpecErrorMsg;
 
+            var cancelMaTicket = function (reasonstring) {
+                Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
+                var recordId = that.binding.dataEmployee && that.binding.dataEmployee.MitarbeiterVIEWID;
+                AppData.setErrorMsg(that.binding);
+                AppData.call("PRC_ESCancelMATicket", {
+                    pMitarbeiterID: recordId,
+                    pTicketCode: null,
+                    pReasonString: reasonstring
+                }, function (json) {
+                    Log.print(Log.l.info, "call success! ");
+                    var master = Application.navigator.masterControl;
+                    if (master && master.controller && master.controller.binding) {
+                        master.controller.loadData(recordId);
+                    }
+                    that.loadData(recordId);
+                    alert(getResourceText("esStaffAdministration.ticketcancelconfirm"));
+                }, function (error) {
+                    Log.print(Log.l.error, "call error");
+
+                });
+                Log.ret(Log.l.trace);
+            }
+            this.cancelMaTicket = cancelMaTicket;
+
             var sendPdfWalletMail = function (mailtype) {
                 Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
                 var recordId = that.binding.dataEmployee && that.binding.dataEmployee.MitarbeiterVIEWID;
@@ -367,6 +391,20 @@
                     if (!Application.showMaster() && WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done();
                     }
+                    }
+                    Log.ret(Log.l.trace);
+                },
+                clickDeleteTicket: function() {
+                    Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
+                    var deleteTicketString = prompt(getResourceText("esStaffAdministration.ticketStornoTitle"), "");
+                    if (deleteTicketString === null || deleteTicketString === undefined) {
+                        Log.print(Log.l.info, "No delete done!");
+                        alert(getResourceText("esStaffAdministration.ticketcancelabort"));
+                    } else if (deleteTicketString === "") {
+                        Log.print(Log.l.info, "Kein Grund angegben!");
+                        alert(getResourceText("esStaffAdministration.ticketcancelstringempty"));
+                    } else {
+                        that.cancelMaTicket(deleteTicketString);
                     }
                     Log.ret(Log.l.trace);
                 },
@@ -686,6 +724,13 @@
             this.disableHandlers = {
                 clickBack: function() {
                     if (WinJS.Navigation.canGoBack === true) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                },
+                clickDeleteTicket: function () {
+                    if (that.binding.dataEmployee.MitarbeiterVIEWID && that.binding.dataEmployee.HasTicket && that.binding.dataEmployee.CancelEnabled) {
                         return false;
                     } else {
                         return true;

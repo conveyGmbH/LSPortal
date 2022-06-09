@@ -1080,6 +1080,10 @@
     "esStaffAdministration.comment"      : "Inscrivez ici le personnel de votre stand et recevez vos laissez-passer d'exposant.",
     "esStaffAdministration.ticketWarning" : "Attention: Ordered tickets can only be cancelled for a fee!",
     "esStaffAdministration.esArticle" : "Ticket",
+    "esStaffAdministration.ticketStornoTitle"      : "Indiquez une raison pour le biffage *.",
+    "esStaffAdministration.ticketcancelconfirm"      : "Ticket annulé avec succès",
+    "esStaffAdministration.ticketcancelabort"      : "Annulation du ticket annulée", 
+    "esStaffAdministration.ticketcancelstringempty"      : "Veuillez indiquer la raison de l'annulation du billet",
 
     "contacts.title"      : "Contacts",
     "contacts.comment"      : "Vous pouvez trouver vos contacts ici.",
