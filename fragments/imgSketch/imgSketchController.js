@@ -55,7 +55,6 @@
             var resultConverter = function (item, index) {
                 Log.call(Log.l.trace, "ImgSketch.Controller.");
                 if (item) {
-                    that.binding.noteId = json.d.KontaktNotizVIEWID;
                     if (item.DocContentDOCCNT1 && item.DocGroup === AppData.DocGroup.Image) {
                         var key1 = "Content-Type:";
                         var key2 = "Accept-Ranges:";
@@ -542,6 +541,7 @@
                             if (json && json.d) {
                                 that.resultConverter(json.d);
                                 that.binding.dataSketch = json.d;
+                                that.binding.noteId = json.d.KontaktNotizVIEWID;
                                 WinJS.Promise.timeout(0).then(function () {
                                     showPhotoAfterResize();
                                 }).then(function () {
