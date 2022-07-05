@@ -98,7 +98,7 @@
     "tooltip.print"         : "Print",
     "tooltip.sendMessage"	: "Send Message",
     "tooltip.newevent"		: "Create new event",
-    "tooltip.eventchange"	: "Change event",
+    "tooltip.eventchange"	: "Change exhibitor",
     "tooltip.savepdf"	    : "Save PDF filename",
     "tooltip.exportpdf"	    : "Export PDF",
     "tooltip.deletemail"	: "Delete mail",
@@ -602,7 +602,7 @@
 	"label.startPremium1": "Premium 1",
 	"label.startPremium2": "Premium 2",
   "label.eventBaseLink" : "Base Link",   
-    "label.ticketLimits" : "Ticket Limits",
+    "label.ticketLimits" : "Limits exhibitor passes",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Cancel",
@@ -1049,16 +1049,16 @@
     "voucheradministrationlist.btnlabedwn" : "Download",
 
     "esstaffadministrationlist.numberofstafftotal" : "No. of stand personnel allowed per day",
-    "esstaffadministrationlist.numberoforderedstaff" : "Tickets ordered",
+    "esstaffadministrationlist.numberoforderedstaff" : "Passes ordered",
     "esstaffadministrationlist.davon" : "from that",
     "esstaffadministrationlist.numberoffreestaff" : "free",
     "esstaffadministrationlist.numberoftopaystaff" : "to pay",
     "esStaffAdministration.esArticle" : "Ticket",
-    "esStaffAdministration.ticketWarning" : "Attention: Ordered tickets can only be cancelled for a fee!",
-    "esstaffadministrationlist.coronaWarningTicket" : "More tickets per day not allowed due to Covid 19 regulations! Ordered tickets can only be cancelled for a fee!",
-	"esstaffadministrationlist.standBuildTicket" : "No. of stand builder tickets is unlimited.",
-    "esstaffadministrationlist.pdfTicketDot" : "PDF ticket sent",
-    "esstaffadministrationlist.walletTicketDot" : "Wallet ticket sent",
+    "esStaffAdministration.ticketWarning" : "Attention: Ordered passes can only be cancelled for a fee!",
+    "esstaffadministrationlist.coronaWarningTicket" : "More passes per day not allowed due to Covid 19 regulations! Ordered passes can only be cancelled for a fee!",
+	"esstaffadministrationlist.standBuildTicket" : "No. of stand builder passes is unlimited.",
+    "esstaffadministrationlist.pdfTicketDot" : "PDF pass sent",
+    "esstaffadministrationlist.walletTicketDot" : "Wallet pass sent",
 
     "esStaffAdministration.title"        : "Staff account",
     "esStaffAdministration.firstname"    : "Firstname",
@@ -1084,9 +1084,9 @@
     "esStaffAdministration.email"      : "Email",
     "esStaffAdministration.comment"      : "Register your stand personnel here and receive your exhibitor passes.",
     "esStaffAdministration.ticketStornoTitle"      : "Give a reason for cancelling *",
-    "esStaffAdministration.ticketcancelconfirm"      : "Ticket successfully cancelled",
-    "esStaffAdministration.ticketcancelabort"      : "Ticket cancelled", 
-    "esStaffAdministration.ticketcancelstringempty"      : "Please state the reason for ticket cancellation",
+    "esStaffAdministration.ticketcancelconfirm"      : "Pass successfully cancelled",
+    "esStaffAdministration.ticketcancelabort"      : "Pass cancelled", 
+    "esStaffAdministration.ticketcancelstringempty"      : "Please state the reason for pass cancellation",
 
     "contacts.title"      : "Contacts",
     "contacts.comment"      : "You can find your contacts here.",
@@ -1479,7 +1479,7 @@
 
     "ticketLimitsList.title" : "Ticket List",
 
-    "ticketLimits.title" : "Ticket Settings",
-    "ticketLimits.locallimit" : "Ticket Limit",
-    "ticketLimits.localfree" : "Tickets Free"
+    "ticketLimits.title" : "Setup Pass Details",
+    "ticketLimits.locallimit" : "Max. Passes",
+    "ticketLimits.localfree" : "Free Passes"
 }

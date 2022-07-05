@@ -98,7 +98,7 @@
     "tooltip.print"			    : "Drucken",
     "tooltip.sendMessage"	: "Nachricht senden",
     "tooltip.newevent"		: "Neue Veranstaltung erstellen",
-    "tooltip.eventchange"	: "Veranstaltung wechseln",
+    "tooltip.eventchange"	: "Aussteller wechseln",
     "tooltip.savepdf"	    : "PDF Dateiname speichern",
     "tooltip.exportpdf"	    : "PDF exportieren",
     "tooltip.deletemail"	: "E-Mail löschen",
@@ -602,7 +602,7 @@
 	 "label.startPremium1": "Premium 1",
 	 "label.startPremium2": "Premium 2",
    "label.eventBaseLink" : "Basis Link",   
-    "label.ticketLimits" : "Ticket Limits",
+    "label.ticketLimits" : "Limits Ausstellerausweise",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Abbrechen",
@@ -954,7 +954,7 @@
     "siteeventsneuaus.customerid" : "Registrierungsnummer",
     "siteeventsneuaus.exhibitorcategory" : "Kategorie",
     "siteeventsneuaus.language" : "Sprache",
-    "siteeventsneuaus.mailerrortext" : "Ungültige Emailadresse!",
+    "siteeventsneuaus.mailerrortext" : "Ungültige Emailadresse erkannt! Speichern mit ungültiger Emailadresse?",
 
     "siteeventsbennach.title" : "Nachbestellungen",
     "siteeventsbennach.eventname" : "Aussteller",
@@ -1050,16 +1050,16 @@
     "voucheradministrationlist.btnlabedwn" : "Herunterladen",
 
     "esstaffadministrationlist.numberofstafftotal" : "Anz. Standpersonal pro Tag erlaubt",
-    "esstaffadministrationlist.numberoforderedstaff" : "Tickets bestellt",
+    "esstaffadministrationlist.numberoforderedstaff" : "Ausweise bestellt",
     "esstaffadministrationlist.davon" : "davon",
     "esstaffadministrationlist.numberoffreestaff" : "kostenlos",
     "esstaffadministrationlist.numberoftopaystaff" : "zu bezahlen",
 	"esStaffAdministration.esArticle" : "Ticketart",
-	"esStaffAdministration.ticketWarning" : "Hinweis: Bestellte Tickets können nur gegen Gebühr storniert werden!",
-	"esstaffadministrationlist.coronaWarningTicket" : "Mehr Tickets pro Tag wegen Covid-19-Regeln nicht zulässig! Bestellte Tickets können nur gegen Gebühr storniert werden!",
-	"esstaffadministrationlist.standBuildTicket" : "Anz. Standbauer-Tickets ist unbegrenzt.",
-    "esstaffadministrationlist.pdfTicketDot" : "PDF-Ticket versandt",
-    "esstaffadministrationlist.walletTicketDot" : "Wallet-Ticket versandt",
+	"esStaffAdministration.ticketWarning" : "Hinweis: Bestellte Ausweise können nur gegen Gebühr storniert werden!",
+	"esstaffadministrationlist.coronaWarningTicket" : "Mehr Ausweise pro Tag wegen Covid-19-Regeln nicht zulässig! Bestellte Ausweise können nur gegen Gebühr storniert werden!",
+	"esstaffadministrationlist.standBuildTicket" : "Anz. Standbauer-Ausweise ist unbegrenzt.",
+    "esstaffadministrationlist.pdfTicketDot" : "PDF-Ausweis versandt",
+    "esstaffadministrationlist.walletTicketDot" : "Wallet-Ausweis versandt",
 
     "esStaffAdministration.title"        : "Standpersonal",
     "esStaffAdministration.firstname"    : "Vorname",
@@ -1085,9 +1085,9 @@
     "esStaffAdministration.email"      : "E-Mail",
     "esStaffAdministration.comment"      : "Hier registrieren Sie Ihr Standpersonal und erhalten Ihre Ausstellerausweise.",
     "esStaffAdministration.ticketStornoTitle"      : "Geben Sie einen Grund für das stonieren an *",
-    "esStaffAdministration.ticketcancelconfirm"      : "Ticket erfolgreich stoniert",
-    "esStaffAdministration.ticketcancelabort"      : "Ticket stonieren abgebrochen", 
-    "esStaffAdministration.ticketcancelstringempty"      : "Bitte Grund für die Ticket stonierung angeben",
+    "esStaffAdministration.ticketcancelconfirm"      : "Ausweis erfolgreich stoniert",
+    "esStaffAdministration.ticketcancelabort"      : "Ausweis stonieren abgebrochen", 
+    "esStaffAdministration.ticketcancelstringempty"      : "Bitte Grund für die Ausweis stonierung angeben",
 
     "contacts.title"      : "Kontakte",
     "contacts.comment"      : "Hier finden Sie Ihre Kontakte.",
@@ -1481,7 +1481,7 @@
 
     "ticketLimitsList.title" : "Ticket Liste",
 
-    "ticketLimits.title" : "Ticket Einstellung",
-    "ticketLimits.locallimit" : "Ticket Limit",
-    "ticketLimits.localfree" : "Tickets Frei"
+    "ticketLimits.title" : "Einstellungen zu Ausweisen",
+    "ticketLimits.locallimit" : "Max. Ausweise",
+    "ticketLimits.localfree" : "Freie Ausweise"
 }		

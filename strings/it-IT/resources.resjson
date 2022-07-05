@@ -98,7 +98,7 @@
     "tooltip.print"         : "Stampa",
     "tooltip.sendMessage"	: "Invia un messaggio",
     "tooltip.newevent"		: "Crea un nuovo evento",
-    "tooltip.eventchange"	: "Cambia evento",
+    "tooltip.eventchange"	: "Cambia espositore",
     "tooltip.savepdf"	    : "Salva il nome del file PDF",
     "tooltip.exportpdf"	    : "Esporta PDF",
     "tooltip.deletemail"	: "Elimina la posta",
@@ -602,7 +602,7 @@
 	"label.startPremium1": "Premium 1",
 	"label.startPremium2": "Premium 2",
   "label.eventBaseLink" : "Collegamento alla base",
-  "label.ticketLimits" : "Ticket Limits",
+  "label.ticketLimits" : "Limiti Pass espositori",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annulla",
@@ -1478,7 +1478,7 @@
 
     "ticketLimitsList.title" : "Elenco dei biglietti",
 
-    "ticketLimits.title" : "Impostazione del biglietto",
-    "ticketLimits.locallimit" : "Limite del biglietto",
-    "ticketLimits.localfree" : "Biglietti gratis"
+    "ticketLimits.title" : "Impostazioni del badge",
+    "ticketLimits.locallimit" : "Max. Distintivi",
+    "ticketLimits.localfree" : "Distintivi gratuiti"
 }
