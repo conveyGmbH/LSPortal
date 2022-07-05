@@ -57,7 +57,8 @@
     "command.newStaff"  : "Enter another person",	
     "command.openWebpage"  : "Open webpage",
     "command.sendPDF"  : "Send PDF ticket",
-    "command.sendWallet"  : "Send Wallet ticket",
+    "command.sendWallet"  : "Send Wallet ticket",	
+    "command.deleteTicket"  : "Delete ticket",
 
     "tooltip.backward"      : "Browse back",
     "tooltip.edit"          : "Edit current record",
@@ -134,7 +135,8 @@
     "tooltip.deletemod"        : "Delete Moderator",	
     "tooltip.openWebpage"        : "Open webpage",
     "tooltip.sendPDF"  : "Send PDF ticket",
-    "tooltip.sendWallet"  : "Send Wallet ticket",
+    "tooltip.sendWallet"  : "Send Wallet ticket",	
+    "tooltip.deleteTicket"        : "Delete ticket",
 
     "home.title"            : "Start",
     "home.info"             : "Important information",

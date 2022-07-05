@@ -58,6 +58,7 @@
     "command.openWebpage"  : "Aprire il sito web",
     "command.sendPDF"  : "Invia biglietto  PDF",
     "command.sendWallet"  : "Invia biglietto del wallet",
+    "command.deleteTicket"  : "Cancellare il biglietto",
 
     "tooltip.backward"      : "Pagina precedente",
     "tooltip.edit"          : "Modifica Record attuale",
@@ -134,7 +135,8 @@
     "tooltip.deletemod"        : "Cancellare il moderatore",	
     "tooltip.openWebpage"        : "Aprire il sito web",
     "tooltip.sendPDF"  : "Invia biglietto PDF",
-    "tooltip.sendWallet"  : "Invia biglietto del wallet",
+    "tooltip.sendWallet"  : "Invia biglietto del wallet",	
+    "tooltip.deleteTicket"  : "Cancellare il biglietto",
 
     "home.title"            : "Start",
     "home.info"             : "Informazioni importanti",

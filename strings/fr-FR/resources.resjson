@@ -57,7 +57,8 @@
     "command.newStaff"  : "Saisir une autre personne",	
     "command.openWebpage"  : "Ouvrir le site web",
     "command.sendPDF"  : "Envoyer un ticket PDF",
-    "command.sendWallet"  : "Envoyer un ticket wallet",
+    "command.sendWallet"  : "Envoyer un ticket wallet",	
+    "command.deleteTicket"  : "Supprimer un ticket",
 
     "tooltip.backward"      : "Page présédente",
     "tooltip.edit"          : "Modifier le contact en cours",
@@ -134,7 +135,8 @@
     "tooltip.deletemod"        : "Supprimer le modérateur",	
     "tooltip.openWebpage"        : "Ouvrir le site web",
     "tooltip.sendPDF"  : "Envoyer un ticket PDF",
-    "tooltip.sendWallet"  : "Envoyer un ticket wallet",
+    "tooltip.sendWallet"  : "Envoyer un ticket wallet",	
+    "tooltip.deleteTicket"  : "Supprimer un ticket",
 
     "home.title"            : "Start",
     "home.info"             : "Instructions importantes",

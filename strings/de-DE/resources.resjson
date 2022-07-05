@@ -57,7 +57,8 @@
     "command.newStaff"  : "Weitere Person erfassen",	
     "command.openWebpage"  : "Webseite öffnen",
     "command.sendPDF"  : "PDF senden",
-    "command.sendWallet"  : "Wallet senden",
+    "command.sendWallet"  : "Wallet senden",	
+    "command.deleteTicket"  : "Ticket löschen",
 
     "tooltip.backward"      : "Zurück blättern",
     "tooltip.edit"          : "Aktuellen Datensatz bearbeiten",
@@ -134,7 +135,8 @@
     "tooltip.deletemod"        : "Moderator löschen",	
     "tooltip.openWebpage"        : "Webseite öffnen",		
     "tooltip.sendPDF"        : "PDF Ticket senden",	
-    "tooltip.sendWallet"        : "Wallet Ticket senden",
+    "tooltip.sendWallet"        : "Wallet Ticket senden",	
+    "tooltip.deleteTicket"        : "Ticket löschen",
 
     "home.title"            : "Start",
     "home.info"             : "Wichtige Hinweise",
