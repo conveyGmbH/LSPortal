@@ -82,6 +82,29 @@
                 Log.ret(Log.l.trace);
             }
 
+            var setLogo = function() {
+                Log.call(Log.l.trace, "AppHeader.Controller.");
+                var appLogoContainer = pageElement.querySelector(".app-logo-container");
+                if (appLogoContainer) {
+                    NavigationBar._logoLoaded = true;
+                    var rgb = Colors.hex2rgb(Colors.navigationColor);
+                    var rgbStr = (rgb.r + rgb.g + rgb.b) / 3 >= 128 ? "#000000" : "#ffffff";
+                    // load the image file
+                    var svgObject = appLogoContainer.querySelector(".app-logo");
+                    if (svgObject) {
+                        Colors.loadSVGImage({
+                            fileName: AppData._persistentStates.logo,
+                            element: svgObject,
+                            size: { width: 182, height: 44 },
+                            useStrokeColor: false,
+                            strokeWidth: 100
+                        });
+                    }
+                }
+                Log.ret(Log.l.trace);
+            }
+            this.setLogo = setLogo;
+
             var loadData = function () {
                 Log.call(Log.l.trace, "AppHeader.Controller.");
                 var ret = new WinJS.Promise.as().then(function () {
@@ -122,6 +145,8 @@
                     } else {
                         return WinJS.Promise.as();
                     }
+                }).then(function () {
+                    that.setLogo();
                 });
                 Log.ret(Log.l.trace);
                 return ret;

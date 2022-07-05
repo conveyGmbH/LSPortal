@@ -191,7 +191,7 @@
                                 AppHeader.controller.binding.userData = AppData._userData;
                                 AppHeader.controller.binding.userMessagesDataCount = AppData._userMessagesData.MessagesCounter;
                                 AppHeader.controller.binding.showNameInHeader = AppData._persistentStates.showNameInHeader;
-                                //AppHeader.controller.loadData();
+                                AppHeader.controller.loadData();
                             }
                             if (typeof AppBar === "object" && AppBar.scope) {
                                 if (typeof AppBar.scope.updateActions === "function" &&
@@ -645,6 +645,18 @@
             }
             Log.ret(Log.l.u1);
         },
+        getLogo : function() {
+            switch (AppData._userData.VeranstaltungTyp) {
+                case 0:
+                    return "leadsuccess_white";
+                case 1:
+                    return "livebrigde_white_logo";
+                case 2:
+                    return "eventsuccess_logo";
+                default:
+                    return "leadsuccess_white";
+            }
+        },
         generalData: {
             get: function () {
                 var data = AppData._persistentStates;
@@ -678,6 +690,7 @@
                 data.absend = getResourceText("userinfo.absend");
                 data.active = getResourceText("settings.active");
                 data.inactive = getResourceText("settings.inactive");
+                data.logo = AppData.getLogo(AppData._userData.VeranstaltungTyp);
                 return data;
             }
         },

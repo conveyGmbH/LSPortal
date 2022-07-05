@@ -258,6 +258,11 @@
                         return Application.pageframe.hideSplashScreen();
                     });
                 }
+            }).then(function () {
+                if(typeof AppHeader === "object" &&
+                    AppHeader.controller && AppHeader.controller.binding) {
+                    AppHeader.controller.loadData();
+                }
             });
             Log.ret(Log.l.trace);
         })
