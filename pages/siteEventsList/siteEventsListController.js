@@ -196,8 +196,12 @@
                     }
                     Log.ret(Log.l.trace);
                 },
-                onSelectionDropDownChanged: function() {
+                onSelectionDropDownChanged: function(event) {
                     Log.call(Log.l.trace, "SiteEventsList.Controller.");
+                    var target = event.currentTarget || event.target;
+                    if (target) {
+                        that.binding.eventTypID = target.value;
+                    }
                     that.loadData();
                     Log.ret(Log.l.trace);
                 },
@@ -329,7 +333,7 @@
                 this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
             }
             if (eventTypDropdown) {
-                this.addRemovableEventListener(eventTypDropdown, "mouseout", this.eventHandlers.onSelectionDropDownChanged.bind(this));
+                this.addRemovableEventListener(eventTypDropdown, "change", this.eventHandlers.onSelectionDropDownChanged.bind(this));
             }
             
             var loadData = function () {
