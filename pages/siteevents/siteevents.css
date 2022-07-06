@@ -10,18 +10,15 @@
 }
 #Stand {
     width: 80px;
-    
 }
 #Ansprechpartner {
     width: 250px;
 }
 #Appusers {
     width: 50px;
-    
 }
 #UlLUser {
     width: 150px;
-    
 }
 #Warningicon {
     width: 40px;
@@ -136,4 +133,7 @@
 .view-size-medium .siteevents td {
     border-bottom: 1px solid grey;
     border-top: none;
+}
+.view-size-medium .siteevents td.last {
+    border-bottom: 2px solid black;
 }
