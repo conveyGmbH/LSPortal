@@ -1052,7 +1052,7 @@
     "esstaffadministrationlist.davon" : "à partir de ce",
     "esstaffadministrationlist.numberoffreestaff" : "libre",
     "esstaffadministrationlist.numberoftopaystaff" : "payer",
-	"esstaffadministrationlist.coronaWarningTicket" : "More tickets per day not allowed due to Covid 19 regulations! Ordered tickets can only be cancelled for a fee!",
+	"esstaffadministrationlist.coronaWarningTicket" : "Ordered tickets can only be cancelled for a fee!",
 	"esstaffadministrationlist.standBuildTicket" : "No. of stand builder tickets is unlimited.",
     "esstaffadministrationlist.pdfTicketDot" : "Billet PDF envoyé",
     "esstaffadministrationlist.walletTicketDot" : "Billet portefeuille envoyé",
