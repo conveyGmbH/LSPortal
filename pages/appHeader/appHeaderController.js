@@ -147,6 +147,15 @@
                     }
                 }).then(function () {
                     that.setLogo();
+                }).then(function () {
+                    if (AppData._persistentStates.eventColor) {
+                        Colors.accentColor = AppData._persistentStates.eventColor;
+                    }
+                    var colors = Colors.updateColors();
+                    return (colors && colors._loadCssPromise) || WinJS.Promise.as();
+                }).then(function() {
+                    AppBar.loadIcons();
+                    NavigationBar.groups = Application.navigationBarGroups;
                 });
                 Log.ret(Log.l.trace);
                 return ret;

@@ -575,11 +575,13 @@
                     // Enable bzw. disable wird hier behandelt, da umgekehrte Logik mit Anzeigewert
                     if (parseInt(item.LocalValue) === 1 || parseInt(item.LocalValue) === 2) {
                         AppData._persistentStates.showvisitorFlow = parseInt(item.LocalValue);
+                        // NavigationBar.enablePage("employee");
                        /* NavigationBar.enablePage("visitorFlowDashboard");
                         NavigationBar.enablePage("visitorFlowEntExt");
                         NavigationBar.enablePage("employeeVisitorFlow");/*pagename muss wahrscheinlich nochmal geändert werden, jenachdem wie die seite heisst*/
                     } else {
                         AppData._persistentStates.showvisitorFlow = 0;
+                        //NavigationBar.disablePage("employeeVisitoFlow");
                         /*NavigationBar.disablePage("visitorFlowDashboard");
                         NavigationBar.disablePage("visitorFlowEntExt");
                         NavigationBar.disablePage("employeeVisitorFlow");*/
@@ -657,6 +659,19 @@
                     return "leadsuccess_white";
             }
         },
+        getEventColor: function () {
+            if (!AppData._persistentStates.individualColors) {
+                var colorSetting = AppData.persistentStatesDefaults.colorSettingsDefaults[AppData._userData.VeranstaltungTyp]
+                for (var prop in colorSetting) {
+                    if (colorSetting.hasOwnProperty(prop)) {
+                        AppData.persistentStatesDefaults[prop] = colorSetting[prop];
+                    }
+                }
+                return AppData.persistentStatesDefaults["accentColor"];
+            } else {
+                return null;
+            }
+        },
         generalData: {
             get: function () {
                 var data = AppData._persistentStates;
@@ -690,7 +705,8 @@
                 data.absend = getResourceText("userinfo.absend");
                 data.active = getResourceText("settings.active");
                 data.inactive = getResourceText("settings.inactive");
-                data.logo = AppData.getLogo(AppData._userData.VeranstaltungTyp);
+                data.logo = AppData.getLogo();
+                data.eventColor = AppData.getEventColor();
                 return data;
             }
         },
