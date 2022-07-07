@@ -660,14 +660,16 @@
             }
         },
         getEventColor: function () {
-            if (!AppData._persistentStates.individualColors) {
+            if (!AppData._persistentStates.individualColors &&
+                AppData._userData && typeof AppData._userData.VeranstaltungTyp === "number" &&
+                AppData.persistentStatesDefaults.colorSettingsDefaults) {
                 var colorSetting = AppData.persistentStatesDefaults.colorSettingsDefaults[AppData._userData.VeranstaltungTyp];
                 for (var prop in colorSetting) {
                     if (colorSetting.hasOwnProperty(prop)) {
                         AppData.persistentStatesDefaults[prop] = colorSetting[prop];
                     }
                 }
-                return AppData.persistentStatesDefaults["accentColor"];
+                return AppData.persistentStatesDefaults.accentColor;
             } else {
                 return null;
             }
