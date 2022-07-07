@@ -102,7 +102,7 @@
         { id: "administrationGrp", group: 41, svg: "administration", disabled: true, popup: true },
         { id: "siteevents", group: 13, svg: "mandant", disabled: true, predecGroup: 41 },
         { id: "clientManagement", group: 14, svg: "standpersonal", disabled: true, predecGroup: 41 },
-        { id: "startTileAdministration", group: 61, svg: "home", disabled: true, predecGroup: 41 },
+        // { id: "startTileAdministration", group: 61, svg: "home", disabled: true, predecGroup: 41 },
         //EventSuccess
         { id: "esStaffAdministration", group: 18, svg: "id_card", disabled: true },
         { id: "ticketLimits", group: 16, svg: "id_card", disabled: true },
