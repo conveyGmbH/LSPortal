@@ -20,7 +20,7 @@
     width: calc(100% - 12px);
     min-width: calc(100% - 12px);
 }
-.win-type-caption {
+#siteEventsListController .win-type-caption {
     font-size: 16px;
     margin-left: 5px;
 }
