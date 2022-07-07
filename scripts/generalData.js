@@ -661,7 +661,7 @@
         },
         getEventColor: function () {
             if (!AppData._persistentStates.individualColors) {
-                var colorSetting = AppData.persistentStatesDefaults.colorSettingsDefaults[AppData._userData.VeranstaltungTyp]
+                var colorSetting = AppData.persistentStatesDefaults.colorSettingsDefaults[AppData._userData.VeranstaltungTyp];
                 for (var prop in colorSetting) {
                     if (colorSetting.hasOwnProperty(prop)) {
                         AppData.persistentStatesDefaults[prop] = colorSetting[prop];
