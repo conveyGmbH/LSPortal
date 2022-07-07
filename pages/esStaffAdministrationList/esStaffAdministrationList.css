@@ -132,6 +132,8 @@
     font-size: small;
     float: left;
     width: 100%;
+    margin-top: 8px;
+    margin-bottom: 5px;
 }
 .list-symbol-IDw {
     color: green;
