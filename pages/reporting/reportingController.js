@@ -218,15 +218,15 @@
                     reportingRestriction.Erfassungsdatum = null;
                     reportingRestriction.ErfassungsdatumValue = null;
                 }
-                if (that.binding.showModifiedTS && that.binding.restriction.Aenderungsdatum) {
+                if (that.binding.showModifiedTS && that.binding.restriction.AenderungsDatum) {
                     if (AppData.getLanguageId() === 1031) {
-                        reportingRestriction.AenderungsDatumValue = that.binding.restriction.Aenderungsdatum;
-                        reportingRestriction.AenderungsDatum = that.binding.restriction.Aenderungsdatum;
+                        reportingRestriction.AenderungsDatumValue = that.binding.restriction.AenderungsDatum;
+                        reportingRestriction.AenderungsDatum = that.binding.restriction.AenderungsDatum;
                         
                     } else {
                         reportingRestriction.ModificationDate = that.binding.restriction.ModifiedTs;
                     }
-                    reportingRestriction.KontaktModifiedTS = that.binding.restriction.Aenderungsdatum;
+                    reportingRestriction.KontaktModifiedTS = that.binding.restriction.AenderungsDatum;
                 } else {
                     reportingRestriction.AenderungsDatumValue = null;
                     reportingRestriction.ModificationDate = null;
@@ -1166,6 +1166,7 @@
                     Log.call(Log.l.trace, "Reporting.Controller.");
                     if (event && event.currentTarget) {
                         that.pdfzip = new JSZip();
+                        that.audiozip = new JSZip();
                         that.binding.progress.count = 0;
                         that.binding.progress.max = 0;
                         var exportselection = event.currentTarget.value;
@@ -1232,7 +1233,7 @@
                 clickModifiedTs: function(event) {
                     if (event.currentTarget) {
                         that.binding.showModifiedTS = event.currentTarget.checked;
-                        that.binding.restriction.Aenderungsdatum = new Date();
+                        that.binding.restriction.AenderungsDatum = new Date();
                         that.binding.restriction.KontaktModifiedTS = new Date();
                     }
                     that.showDateRestrictions();
@@ -1484,8 +1485,8 @@
                         that.binding.restriction.Erfassungsdatum = new Date();
                     }
                     // always define date types
-                    if (typeof that.binding.restriction.Aenderungsdatum === "undefined" || that.binding.restriction.Aenderungsdatum === null) {
-                        that.binding.restriction.Aenderungsdatum = new Date();
+                    if (typeof that.binding.restriction.AenderungsDatum === "undefined" || that.binding.restriction.AenderungsDatum === null) {
+                        that.binding.restriction.AenderungsDatum = new Date();
                     }
                     if (typeof that.binding.restriction.KontaktModifiedTS === "undefined" || that.binding.restriction.KontaktModifiedTS) {
                         that.binding.restriction.KontaktModifiedTS = new Date();
