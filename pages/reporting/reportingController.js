@@ -218,15 +218,21 @@
                     reportingRestriction.Erfassungsdatum = null;
                     reportingRestriction.ErfassungsdatumValue = null;
                 }
-                if (that.binding.showModifiedTS && that.binding.restriction.ModifiedTs) {
+                if (that.binding.showModifiedTS && that.binding.restriction.Aenderungsdatum) {
                     if (AppData.getLanguageId() === 1031) {
-                        reportingRestriction.AenderungsDatumValue = that.binding.restriction.ModifiedTs;
+                        reportingRestriction.AenderungsDatumValue = that.binding.restriction.Aenderungsdatum;
+                        reportingRestriction.AenderungsDatum = that.binding.restriction.Aenderungsdatum;
+                        
                     } else {
                         reportingRestriction.ModificationDate = that.binding.restriction.ModifiedTs;
                     }
+                    reportingRestriction.KontaktModifiedTS = that.binding.restriction.Aenderungsdatum;
                 } else {
                     reportingRestriction.AenderungsDatumValue = null;
                     reportingRestriction.ModificationDate = null;
+                    reportingRestriction.AenderungsDatum = null;
+                    reportingRestriction.KontaktModifiedTS = null;
+
                 }
                 return reportingRestriction;
             }
@@ -592,11 +598,11 @@
                                 switch (prop) {
                                     case "Erfassungsdatum":
                                     case "RecordDate":
-                                        restriction["ErfassungsdatumValue"] = [null, tempRestriction[prop]];
+                                        restriction["ErfassungsdatumValue"] = [null, tempRestriction[prop]]; //[null, tempRestriction[prop]]
                                         break;
                                     case "AenderungsDatum":
                                     case "ModificationDate":
-                                        restriction["AenderungsDatumValue"] = [null, tempRestriction[prop]];
+                                        restriction["AenderungsDatumValue"] = [null, tempRestriction[prop]];//[null, tempRestriction[prop]]
                                         break;
                                     default:
                                         restriction[prop] = [null, tempRestriction[prop]];
@@ -909,9 +915,9 @@
                 var dbView = Reporting.KontaktPDF;
                 //var dbViewTitle = PDFExport.xLAuswertungViewNoQuestTitle;
                 var fileName = "PDFExcel";
-                if (!that.binding.restrictionPdf) {
+                //if (!that.binding.restrictionPdf) {
                     that.binding.restrictionPdf = {};
-                }
+                //}
                 // rufe setrestriction auf 
                 that.binding.restrictionPdf = setRestriction();
                 that.binding.restrictionPdf.LandTitle = that.binding.restriction.InitLandID;
@@ -945,7 +951,7 @@
                     }
                 }
                 //var hasRestriction = false;
-                if (that.binding.showFilter || that.binding.restrictionPdf.Erfassungsdatum || that.binding.restrictionPdf.AenderugsDatum || that.binding.restrictionPdf.Land || that.binding.restrictionPdf.Erfasser) {
+                if (that.binding.showFilter || that.binding.restrictionPdf.Erfassungsdatum || that.binding.restrictionPdf.AenderungsDatum || that.binding.restrictionPdf.Land || that.binding.restrictionPdf.Erfasser) {
                     //hasRestriction = true;
                     that.binding.restrictionExcel["KontaktVIEWID"] = ["<0", ">0"];
                     that.binding.restrictionExcel.bAndInEachRow = true;
@@ -964,6 +970,7 @@
                             AppData.setErrorMsg(that.binding, errorResponse);
                             AppBar.busy = false;
                             AppBar.triggerDisableHandlers();
+                            //that.binding.restrictionExcel
                         }, that.binding.restrictionExcel, null, null);
                 } else {
                 exporter.saveXlsxFromView(dbView, fileName, function (result) {
@@ -1158,6 +1165,7 @@
                 clickExport: function(event) {
                     Log.call(Log.l.trace, "Reporting.Controller.");
                     if (event && event.currentTarget) {
+                        that.pdfzip = new JSZip();
                         that.binding.progress.count = 0;
                         that.binding.progress.max = 0;
                         var exportselection = event.currentTarget.value;
@@ -1224,7 +1232,8 @@
                 clickModifiedTs: function(event) {
                     if (event.currentTarget) {
                         that.binding.showModifiedTS = event.currentTarget.checked;
-                        that.binding.restriction.ModifiedTs = new Date();
+                        that.binding.restriction.Aenderungsdatum = new Date();
+                        that.binding.restriction.KontaktModifiedTS = new Date();
                     }
                     that.showDateRestrictions();
                 },
@@ -1475,8 +1484,11 @@
                         that.binding.restriction.Erfassungsdatum = new Date();
                     }
                     // always define date types
-                    if (typeof that.binding.restriction.ModifiedTs === "undefined" || that.binding.restriction.ModifiedTs === null) {
-                        that.binding.modifiedTS = new Date();
+                    if (typeof that.binding.restriction.Aenderungsdatum === "undefined" || that.binding.restriction.Aenderungsdatum === null) {
+                        that.binding.restriction.Aenderungsdatum = new Date();
+                    }
+                    if (typeof that.binding.restriction.KontaktModifiedTS === "undefined" || that.binding.restriction.KontaktModifiedTS) {
+                        that.binding.restriction.KontaktModifiedTS = new Date();
                     }
 
                 }).then(function () {
