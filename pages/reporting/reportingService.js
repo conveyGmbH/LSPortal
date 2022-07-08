@@ -640,7 +640,7 @@
             InitLandID: null,
             Erfassungsdatum: null,
             showErfassungsdatum: false,
-            AenderungsDatum: null,
+            ModifiedTs: null,
             showModifiedTS: false
         },
         _exportAudioDataView: {
