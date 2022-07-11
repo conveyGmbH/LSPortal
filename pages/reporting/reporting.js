@@ -37,7 +37,7 @@
             Log.ret(Log.l.trace);
         },
         // save Restriction when navigate away from this page
-        canUnload: function (complete, error) {
+        /*canUnload: function () {
             Log.call(Log.l.trace, pageName + ".");
             var ret;
             if (this.controller) {
@@ -53,8 +53,9 @@
                 });
             }
             Log.ret(Log.l.trace);
-            return ret;
-        },
+            //return ret;
+            Log.ret(Log.l.trace);
+        },*/
         unload: function () {
             Log.call(Log.l.trace, pageName + ".");
             // TODO: Respond to navigations away from this page.
