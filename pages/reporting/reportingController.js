@@ -33,7 +33,7 @@
                         InitLandID: null,
                         Erfassungsdatum: null,
                         showErfassungsdatum: false,
-                        ModifiedTs: null,
+                        AenderungsDatum: null,
                         showModifiedTS: false
                     },
                     restrictionExcel: getEmptyDefaultValue(Reporting.defaultrestriction),
@@ -175,8 +175,8 @@
                     }
                     //@nedra:10.11.2015: modifiedTS is undefined if it is not updated -> modifiedTS = current date
                     if (that.binding.restriction.usemodifiedTS &&
-                        typeof that.binding.restriction.ModifiedTS === "undefined") {
-                        that.binding.restriction.ModifiedTS = new Date();
+                        typeof that.binding.restriction.AenderungsDatum === "undefined") {
+                        that.binding.restriction.AenderungsDatum = new Date();
                     }
                     AppData.setRestriction("Kontakt", that.binding.restriction);
                     complete({});
@@ -188,48 +188,20 @@
 
             var setRestriction = function () {
                 var reportingRestriction = {};
-                //if (that.binding.restriction.InitLandID && that.binding.restriction.InitLandID !== null) {
-                    if (AppData.getLanguageId() === 1031) {
-                        reportingRestriction.Land = that.binding.restriction.InitLandID;
-                    } else {
-                        reportingRestriction.Land = that.binding.restriction.InitLandID;
-                    }
-                //}
-                if (that.binding.restriction.ErfasserID && that.binding.restriction.ErfasserID !== "undefined") {
-                    if (AppData.getLanguageId() === 1031) {
-                        reportingRestriction.Mitarbeiter = that.binding.restriction.ErfasserID;
-                    } else {
-                        reportingRestriction.Mitarbeiter = that.binding.restriction.ErfasserID;
-                    }
-                } else {
-                    that.binding.restriction.ErfasserID = null;
-                    reportingRestriction.Mitarbeiter = that.binding.restriction.ErfasserID;
-
-                }
+                    reportingRestriction.Land = that.binding.restriction.InitLandID ? that.binding.restriction.InitLandID : null;
                 if (that.binding.showErfassungsdatum && that.binding.restriction.Erfassungsdatum) {
-                    if (AppData.getLanguageId() === 1031) {
                         reportingRestriction.Erfassungsdatum = that.binding.restriction.Erfassungsdatum;
-                        reportingRestriction.ErfassungsdatumValue =
-                            that.binding.restriction.Erfassungsdatum; //.toISOString().substring(0, 10)
-                    } else {
-                        reportingRestriction.RecordDate = that.binding.restriction.Erfassungsdatum;
-                    }
+                    reportingRestriction.ErfassungsdatumValue = that.binding.restriction.Erfassungsdatum;
                 } else {
                     reportingRestriction.Erfassungsdatum = null;
                     reportingRestriction.ErfassungsdatumValue = null;
                 }
                 if (that.binding.showModifiedTS && that.binding.restriction.AenderungsDatum) {
-                    if (AppData.getLanguageId() === 1031) {
-                        reportingRestriction.AenderungsDatumValue = that.binding.restriction.AenderungsDatum;
-                        reportingRestriction.AenderungsDatum = that.binding.restriction.AenderungsDatum;
-                        
-                    } else {
-                        reportingRestriction.ModificationDate = that.binding.restriction.ModifiedTs;
-                    }
+                    reportingRestriction.AenderungsDatumValue = that.binding.restriction.AenderungsDatum;
+                    reportingRestriction.AenderungsDatum = that.binding.restriction.AenderungsDatum;
                     reportingRestriction.KontaktModifiedTS = that.binding.restriction.AenderungsDatum;
                 } else {
                     reportingRestriction.AenderungsDatumValue = null;
-                    reportingRestriction.ModificationDate = null;
                     reportingRestriction.AenderungsDatum = null;
                     reportingRestriction.KontaktModifiedTS = null;
 
@@ -915,18 +887,12 @@
                 var dbView = Reporting.KontaktPDF;
                 //var dbViewTitle = PDFExport.xLAuswertungViewNoQuestTitle;
                 var fileName = "PDFExcel";
-                //if (!that.binding.restrictionPdf) {
-                    that.binding.restrictionPdf = {};
-                //}
+                that.binding.restrictionPdf = {};
+                that.binding.restrictionExcel = {};
                 // rufe setrestriction auf 
                 that.binding.restrictionPdf = setRestriction();
-                that.binding.restrictionPdf.LandTitle = that.binding.restriction.InitLandID;
+                that.binding.restrictionPdf.LandTitle = that.binding.restriction.InitLandID ? that.binding.restriction.InitLandID:null;
                 that.binding.restrictionPdf.Erfasser = that.binding.restriction.ErfasserID; // mögliches Problem?!
-                /*if (AppData.getLanguageId() === 1031) {
-                    that.binding.restrictionPdf.Erfassungsdatum = that.binding.restriction.Erfassungsdatum;  //that.binding.restriction.Erfassungsdatum;.toISOString().substring(0, 10)
-                } else {
-                    that.binding.restrictionPdf.RecordDate = that.binding.restriction.Erfassungsdatum;
-                }*/
                 for (var prop in that.binding.restrictionPdf) {
                     if (that.binding.restrictionPdf.hasOwnProperty(prop)) {
                         //hasRestriction = true;
@@ -943,7 +909,7 @@
                                 that.binding.restrictionExcel["AenderungsDatumValue"] = [null, that.binding.restrictionPdf[prop]];
                                 break;
                             default:
-                                that.binding.restrictionExcel[prop] = [null, that.binding.restrictionPdf[prop]];
+                                //that.binding.restrictionExcel[prop] = [null, that.binding.restrictionPdf[prop]];
                         }
                         //that.binding.restrictionExcel["Land"] = that.binding.restrictionPdf.Land;
                         that.binding.restrictionExcel["Land"] = [null, that.binding.restrictionPdf.Land];
