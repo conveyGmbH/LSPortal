@@ -53,12 +53,12 @@
     "command.windowRestored" : "Aufgeteilt",
 	"command.newmod"        : "Neu",
 	"command.newquestion"   : "Neue Frage",
-    "command.exportPdfTicket"  : "Ticket herunterladen",
+    "command.exportPdfTicket"  : "Ausweis herunterladen",
     "command.newStaff"  : "Weitere Person erfassen",	
     "command.openWebpage"  : "Webseite öffnen",
     "command.sendPDF"  : "PDF senden",
     "command.sendWallet"  : "Wallet senden",	
-    "command.deleteTicket"  : "Ticket löschen",
+    "command.deleteTicket"  : "Ausweis löschen",
 
     "tooltip.backward"      : "Zurück blättern",
     "tooltip.edit"          : "Aktuellen Datensatz bearbeiten",
@@ -1479,7 +1479,7 @@
     "eventbaselink.starturl" : "URL Pfad",
     "eventbaselink.titlebaselink" : "Titel",
 
-    "ticketLimitsList.title" : "Ticket Liste",
+    "ticketLimitsList.title" : "Ausweis Einstellungen",
 
     "ticketLimits.title" : "Einstellungen zu Ausweisen",
     "ticketLimits.locallimit" : "Max. Ausweise",

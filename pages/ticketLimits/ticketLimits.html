@@ -32,9 +32,6 @@
                         <div class="field_line field_line_odd">
                             <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'ticketLimits.locallimit'}"></span>
                             <span class="label win-type-caption portrait_only_quarter" data-win-res="{textContent: 'ticketLimits.localfree'}"></span>
-                            <span class="label landscape_only">
-                                <span data-win-res="{textContent: 'ticketLimits.locallimit'}"></span> / <span data-win-res="{textContent: 'ticketLimits.localfree'}"></span>
-                            </span>
                             <div class="input_group">
                                 <div class="input_half_left">
                                     <input class="input_half_left win-textbox" type="number" min="0" max="99999999" data-win-bind="value: dataTicketLimits.LocalLimit Binding.Mode.twoway" />
@@ -44,8 +41,11 @@
                             </div>
                         </div>
                         <div class="line-separator"></div>
+                        <div class="field_line">
+                            <span data-win-bind="textContent: dataTicketLimits.BucketInfo Binding.Mode.twoway"></span>
+                        </div>
+                        </div>
                     </div>
-                </div>
             </div>
             <div class="error-message"
                  data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>

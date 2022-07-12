@@ -1,3 +1,15 @@
 ﻿.fields-container {
     width: 100%;
 }
+.view-size-medium .input_group {
+    float: left !important;
+}
+.view-size-medium .portrait_only_left {
+    display: block !important;
+}
+.view-size-medium .portrait_only_quarter {
+    display: block !important;
+    position: relative;
+    left: 20%;
+    height: 0;
+}

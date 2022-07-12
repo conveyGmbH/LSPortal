@@ -38,7 +38,8 @@
                     ESBucketID: 0,
                     LocalLimit: 0,
                     LocalFree: 0,
-                    BucketText: ""
+                    BucketText: "",
+                    BucketInfo: ""
                 }
             }
     });

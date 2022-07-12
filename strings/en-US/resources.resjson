@@ -1477,7 +1477,7 @@
     "eventbaselink.starturl" : "URL Path",
     "eventbaselink.titlebaselink" : "Title",
 
-    "ticketLimitsList.title" : "Ticket List",
+    "ticketLimitsList.title" : "Passes Settings",
 
     "ticketLimits.title" : "Setup Pass Details",
     "ticketLimits.locallimit" : "Max. Passes",
