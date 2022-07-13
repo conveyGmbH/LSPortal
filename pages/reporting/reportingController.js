@@ -188,7 +188,14 @@
 
             var setRestriction = function () {
                 var reportingRestriction = {};
+                if (that.binding.restriction.InitLandID === "null") {
+                    that.binding.restriction.InitLandID = null;
+                }
                     reportingRestriction.Land = that.binding.restriction.InitLandID ? that.binding.restriction.InitLandID : null;
+                if (that.binding.restriction.ErfasserID === "null") {
+                    that.binding.restriction.ErfasserID = null;
+                }
+                reportingRestriction.Mitarbeiter = that.binding.restriction.ErfasserID ? that.binding.restriction.ErfasserID : null;
                 if (that.binding.showErfassungsdatum && that.binding.restriction.Erfassungsdatum) {
                         reportingRestriction.Erfassungsdatum = that.binding.restriction.Erfassungsdatum;
                     reportingRestriction.ErfassungsdatumValue = that.binding.restriction.Erfassungsdatum;
@@ -338,7 +345,7 @@
                                 that.binding.restrictionAudio["LandName"] = that.binding.restrictionAudio[prop];
                                 break;
                             default:
-                                that.binding.restrictionAudio[prop] = that.binding.restrictionAudio[prop];
+                                //that.binding.restrictionAudio[prop] = that.binding.restrictionAudio[prop];
                         }
                     }
                 }
@@ -913,7 +920,8 @@
                         }
                         //that.binding.restrictionExcel["Land"] = that.binding.restrictionPdf.Land;
                         that.binding.restrictionExcel["Land"] = [null, that.binding.restrictionPdf.Land];
-                        that.binding.restrictionExcel["Erfasser"] = [null, that.binding.restrictionPdf.Erfasser];
+                        // anstatt Erfasser ->Mitarbeiter (NUR in Excel)
+                        that.binding.restrictionExcel["Mitarbeiter"] = [null, that.binding.restrictionPdf.Erfasser];
                     }
                 }
                 //var hasRestriction = false;
