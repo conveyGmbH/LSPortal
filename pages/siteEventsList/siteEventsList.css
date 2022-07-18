@@ -7,15 +7,15 @@
     min-width: calc(100% - 12px);
     margin-left: 5px;
 }
-.view-size-small .portrait_only {
+#siteEventsListController .view-size-small .portrait_only {
     display: none;
 }
-.view-size-medium .landscape_only {
+#siteEventsListController .view-size-medium .landscape_only {
     display: inline;
     top: 0px;
     margin-left: 5px;
 }
-.view-size-medium .input_field {
+#siteEventsListController .view-size-medium .input_field {
     float: left;
     width: calc(100% - 12px);
     min-width: calc(100% - 12px);
