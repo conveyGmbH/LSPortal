@@ -3,14 +3,15 @@
     width: 90%;
 }
 #eventTyp.input_field {
+    float: left;
     width: calc(100% - 12px);
     min-width: calc(100% - 12px);
     margin-left: 5px;
 }
-#siteEventsListController .view-size-small .portrait_only {
+.view-size-small #siteEventsList .portrait_only {
     display: none;
 }
-#siteEventsListController .view-size-medium .landscape_only {
+.view-size-medium #siteEventsList .landscape_only {
     display: inline;
     top: 0px;
     margin-left: 5px;
@@ -23,4 +24,10 @@
 #siteEventsListController .win-type-caption {
     font-size: 16px;
     margin-left: 5px;
+}
+#siteEventsListController .label {
+    width: auto;
+    margin-left: 5px;
+    font-size: 16px;
+    top: 0px;
 }

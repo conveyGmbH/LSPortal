@@ -130,8 +130,8 @@ img .field_line {
 }
 
 .win-selectionstylefilled .win-selected .win-textbox {
-    background-color: #ffffff !important;
-    border-color: rgba(0, 0, 0, 0.4) !important;
+    background-color: #ffffff;
+    border-color: rgba(0, 0, 0, 0.4);
 }
 .win-selectionstylefilled .win-selected .win-textbox:focus {
     border-color: HighLight !important;

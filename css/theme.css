@@ -169,5 +169,11 @@ body.cnv-ui-dark, body.cnv-ui-dark * {
     border-bottom-color: #393939;
     border-bottom-style: solid;
 }
+.cnv-ui-dark .win-selectionstylefilled .win-selected .win-textbox {
+    background-color: rgba(250,250,250,0.2);
+}
+.cnv-ui-dark .win-selectionstylefilled .win-selected .win-textbox:focus {
+    background-color: #ffffff;
+}
 
 
