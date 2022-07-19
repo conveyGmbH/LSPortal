@@ -9,7 +9,9 @@
     WinJS.Namespace.define("SiteEvents", {
         _VeranstaltungView: {
             get: function () {
-                return AppData.getFormatView("Veranstaltung", 20564);
+                var ret = AppData.getFormatView("Veranstaltung", 20564);
+                ret.maxPageSize = 20;
+                return ret;
             }
         },
         VeranstaltungView: {

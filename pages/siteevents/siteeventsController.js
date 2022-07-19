@@ -276,8 +276,11 @@
                             results.forEach(function (item, index) {
                                 that.resultConverter(item, that.binding.count);
                                 that.binding.count = that.siteeventsdata.push(item);
+                                that.siteeventsdataraw.push(item);
                             });
                         }
+                        that.addBodyRowHandlers();
+                        that.setDataLabels();
                         if (recordId) {
                             that.selectRecordId(recordId);
                         }
@@ -566,9 +569,11 @@
                                         if (that.siteeventsdataraw[i].VeranstaltungVIEWID === id) {
                                             for (var rowi = 0; rowi < rows.length; rowi++) {
                                                 rows[rowi].style.backgroundColor = "";
+                                                myrow.style.opacity = 1;
                                                 rows[rowi].classList.remove('selected');
                                             }
-                                            myrow.style.backgroundColor  = Colors.navigationColor;
+                                            myrow.style.backgroundColor = (Colors.isDarkTheme ? Colors.navigationColor : Colors.accentColor); /*navigationColor*/
+                                            myrow.style.opacity = 0.4;
                                             myrow.className += " selected";
                                             var newRecId = that.siteeventsdataraw[i].VeranstaltungVIEWID;
                                             AppData.setRecordId("ExhibitorMailingStatus", that.siteeventsdataraw[i].FairMandantVeranstID);
@@ -947,8 +952,8 @@
                 },
                 onFooterVisibilityChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "ContactList.Controller.");
-                    if ((contentArea.offsetHeight + contentArea.scrollTop) >= contentArea.scrollHeight) {
-                        // you're at the bottom of the page
+                    var element = eventInfo.target;    
+                    if (Math.abs(element.scrollHeight - element.scrollTop - element.clientHeight) <= 3.0) {
                         that.loadNextUrl();
                     }
                     Log.ret(Log.l.trace);
