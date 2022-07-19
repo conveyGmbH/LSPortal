@@ -35,6 +35,10 @@
 
             var that = this;
 
+            this.nextUrl = null;
+            this.loading = false;
+
+            var contentArea = pageElement.querySelector(".contentarea");
             var suggestionBox = pageElement.querySelector("#suggestionBox");
             var autosuggestbox = pageElement.querySelector(".win-autosuggestbox");
             var fileinputbox = pageElement.querySelector(".fileinputbox");
@@ -940,6 +944,14 @@
                         return that.exportPwdQrCodeEmployeePdf();
                     });
                     Log.ret(Log.l.trace);
+                },
+                onFooterVisibilityChanged: function (eventInfo) {
+                    Log.call(Log.l.trace, "ContactList.Controller.");
+                    if ((contentArea.offsetHeight + contentArea.scrollTop) >= contentArea.scrollHeight) {
+                        // you're at the bottom of the page
+                        that.loadNextUrl();
+                    }
+                    Log.ret(Log.l.trace);
                 }
             }
 
@@ -1027,6 +1039,9 @@
             }
             if (searchInput) {
                 this.addRemovableEventListener(searchInput, "keyup", this.eventHandlers.onSearchInput.bind(this));
+            }
+            if (contentArea) {
+                this.addRemovableEventListener(contentArea, "scroll", this.eventHandlers.onFooterVisibilityChanged.bind(this));
             }
             
             var loadData = function (vid) {

@@ -15,11 +15,10 @@
         VeranstaltungView: {
             select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, "SiteEvents.");
-                var ret = SiteEvents._VeranstaltungView.select(complete,
-                    error, restriction,
-                    {
+                var ret = SiteEvents._VeranstaltungView.select(complete,error, restriction,{
                         ordered: true,
-                        orderAttribute: "Firmenname"
+                        orderAttribute: "Firmenname",
+                        desc: false
                     });
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
