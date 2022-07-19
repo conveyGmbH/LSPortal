@@ -663,13 +663,13 @@
             if (!AppData._persistentStates.individualColors &&
                 AppData._userData && typeof AppData._userData.VeranstaltungTyp === "number" &&
                 AppData.persistentStatesDefaults.colorSettingsDefaults) {
-                var colorSetting = AppData.persistentStatesDefaults.colorSettingsDefaults[AppData._userData.VeranstaltungTyp];
-                for (var prop in colorSetting) {
-                    if (colorSetting.hasOwnProperty(prop)) {
-                        AppData.persistentStatesDefaults[prop] = colorSetting[prop];
+                var colorSettings = AppData.persistentStatesDefaults.colorSettingsDefaults[AppData._userData.VeranstaltungTyp];
+                for (var prop in colorSettings) {
+                    if (colorSettings.hasOwnProperty(prop)) {
+                        AppData.persistentStatesDefaults.colorSettings[prop] = colorSettings[prop];
                     }
                 }
-                return AppData.persistentStatesDefaults.accentColor;
+                return AppData.persistentStatesDefaults.colorSettings.accentColor;
             } else {
                 return null;
             }

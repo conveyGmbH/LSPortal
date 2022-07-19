@@ -195,7 +195,9 @@
                         }
                         Log.print(Log.l.trace, "isDarkTheme=" + that.binding.generalData.isDarkTheme +
                             " manualTheme=" + that.binding.generalData.manualTheme);
-                        WinJS.Promise.timeout(0).then(function () {
+                        var colors = Colors.updateColors();
+                        var promise = (colors && colors._loadCssPromise) || WinJS.Promise.timeout(0);
+                        promise.then(function () {
                             Colors.isDarkTheme = that.binding.generalData.isDarkTheme;
                             that.createColorPicker("backgroundColor");
                             that.createColorPicker("textColor");
@@ -234,8 +236,8 @@
                         if (toggle) {
                             if (!toggle.checked && AppData._persistentStates.individualColors) {
                                 WinJS.Promise.timeout(0).then(function () {
-                                    AppData._persistentStates.colorSettings = copyByValue(AppData.persistentStatesDefaults.colorSettings);
-                                    var colors = new Colors.ColorsClass(AppData._persistentStates.colorSettings);
+                                    var colorSettings = copyByValue(AppData.persistentStatesDefaults.colorSettings);
+                                    var colors = new Colors.ColorsClass(colorSettings);
                                     var promise = colors._loadCssPromise || WinJS.Promise.timeout(0);
                                     promise.then(function() {
                                         that.createColorPicker("accentColor");
