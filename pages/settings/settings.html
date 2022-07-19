@@ -58,7 +58,7 @@
                                 <div id="accentColor_picker" class="input_small_right color-picker-parent"></div>
                                 <input id="accentColor" class="input_small_left win-textbox" type="text" 
                                        data-win-bind="value: generalData.colorSettings.accentColor" 
-                                       onchange="AppBar.handleEvent('change', 'ChangeColorPicker', event)" />
+                                       oninput="AppBar.handleEvent('change', 'ChangeColorPicker', event)" />
                             </div>
                         </div>
                         <div class="line-separator"
@@ -72,7 +72,7 @@
                                 <div id="backgroundColor_picker" class="input_small_right color-picker-parent"></div>
                                 <input id="backgroundColor" class="input_small_left win-textbox" type="text" 
                                        data-win-bind="value: generalData.colorSettings.backgroundColor" 
-                                       onchange="AppBar.handleEvent('change', 'ChangeColorPicker', event)" />
+                                       oninput="AppBar.handleEvent('change', 'ChangeColorPicker', event)" />
                             </div>
                         </div>
                         <div class="field_line field_line_even"
@@ -98,7 +98,7 @@
                                 <div id="navigationColor_picker" class="input_small_right color-picker-parent"></div>
                                 <input id="navigationColor" class="input_small_left win-textbox" type="text" 
                                        data-win-bind="value: generalData.colorSettings.navigationColor" 
-                                       onchange="AppBar.handleEvent('change', 'ChangeColorPicker', event)" />
+                                       oninput="AppBar.handleEvent('change', 'ChangeColorPicker', event)" />
                             </div>
                         </div>
                         <div class="field_line field_line_even"
@@ -110,7 +110,7 @@
                                 <div id="dashboardColor_picker" class="input_small_right color-picker-parent"></div>
                                 <input id="dashboardColor" class="input_small_left win-textbox" type="text" 
                                        data-win-bind="value: generalData.colorSettings.dashboardColor"
-                                       onchange="AppBar.handleEvent('change', 'ChangeColorPicker', event)" />
+                                       oninput="AppBar.handleEvent('change', 'ChangeColorPicker', event)" />
                             </div>
                         </div>
                         <div class="line-separator"
@@ -124,7 +124,7 @@
                                 <div id="textColor_picker" class="input_small_right color-picker-parent"></div>
                                 <input id="textColor" class="input_small_left win-textbox" type="text" 
                                        data-win-bind="value: generalData.colorSettings.textColor" 
-                                       onchange="AppBar.handleEvent('change', 'ChangeColorPicker', event)" />
+                                       oninput="AppBar.handleEvent('change', 'ChangeColorPicker', event)" />
                             </div>
                         </div>
                         <div class="field_line field_line_even"
@@ -136,7 +136,7 @@
                                 <div id="labelColor_picker" class="input_small_right color-picker-parent"></div>
                                 <input id="labelColor" class="input_small_left win-textbox" type="text" 
                                        data-win-bind="value: generalData.colorSettings.labelColor" 
-                                       onchange="AppBar.handleEvent('change', 'ChangeColorPicker', event)" />
+                                       oninput="AppBar.handleEvent('change', 'ChangeColorPicker', event)" />
                             </div>
                         </div>
                         <div class="line-separator"
@@ -150,7 +150,7 @@
                                 <div id="tileTextColor_picker" class="input_small_right color-picker-parent"></div>
                                 <input id="tileTextColor" class="input_small_left win-textbox" type="text" 
                                        data-win-bind="value: generalData.colorSettings.tileTextColor" 
-                                       onchange="AppBar.handleEvent('change', 'ChangeColorPicker', event)" />
+                                       oninput="AppBar.handleEvent('change', 'ChangeColorPicker', event)" />
                             </div>
                         </div>
                         <div class="field_line field_line_even"
@@ -162,7 +162,7 @@
                                 <div id="tileBackgroundColor_picker" class="input_small_right color-picker-parent"></div>
                                 <input id="tileBackgroundColor" class="input_small_left win-textbox" type="text" 
                                        data-win-bind="value: generalData.colorSettings.tileBackgroundColor" 
-                                       onchange="AppBar.handleEvent('change', 'ChangeColorPicker', event)" />
+                                       oninput="AppBar.handleEvent('change', 'ChangeColorPicker', event)" />
                             </div>
                         </div>
                         <div class="line-separator"
@@ -175,8 +175,7 @@
                             <input id="inputBorder" class="input_field win-range"
                                    type="range" min="0" max="2" step="1"
                                    data-win-bind="value: generalData.inputBorder"
-                                   oninput="AppBar.handleEvent('change', 'changedInputBorder', event)"
-                                   onchange="AppBar.handleEvent('change', 'changedInputBorder', event)" />
+                                   oninput="AppBar.handleEvent('change', 'changedInputBorder', event)" />
                         </div>
                         <div class="field_line field_line_even"
                              data-win-bind="style.display: generalData.individualColors Binding.Converter.toDisplay">
@@ -186,8 +185,7 @@
                             <input id="inputBorderRadius" class="input_field win-range"
                                    type="range" min="0" max="12" step="1"
                                    data-win-bind="value: generalData.inputBorderRadius"
-                                   oninput="AppBar.handleEvent('change', 'changedInputBorderRadius', event)"
-                                   onchange="AppBar.handleEvent('change', 'changedInputBorderRadius', event)" />
+                                   oninput="AppBar.handleEvent('change', 'changedInputBorderRadius', event)" />
                         </div>
                         <div class="line-separator"
                              data-win-bind="style.display: generalData.individualColors Binding.Converter.toDisplay"></div>
@@ -213,7 +211,7 @@
                             <div class="input_group">
                                 <input id="iconStrokeWidth" class="input_small_left win-textbox" type="text" 
                                        data-win-bind="value: generalData.iconStrokeWidth"
-                                       onchange="AppBar.handleEvent('change', 'ChangeIconStrokeWidth', event)" />
+                                       oninput="AppBar.handleEvent('change', 'ChangeIconStrokeWidth', event)" />
                             </div>
                         </div>
                     </div>
