@@ -569,11 +569,11 @@
                                         if (that.siteeventsdataraw[i].VeranstaltungVIEWID === id) {
                                             for (var rowi = 0; rowi < rows.length; rowi++) {
                                                 rows[rowi].style.backgroundColor = "";
-                                                myrow.style.opacity = 1;
+                                                //myrow.style.opacity = 1;
                                                 rows[rowi].classList.remove('selected');
                                             }
                                             myrow.style.backgroundColor = (Colors.isDarkTheme ? Colors.navigationColor : Colors.accentColor); /*navigationColor*/
-                                            myrow.style.opacity = 0.4;
+                                            //myrow.style.opacity = 0.4;
                                             myrow.className += " selected";
                                             var newRecId = that.siteeventsdataraw[i].VeranstaltungVIEWID;
                                             AppData.setRecordId("ExhibitorMailingStatus", that.siteeventsdataraw[i].FairMandantVeranstID);
