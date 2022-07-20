@@ -493,6 +493,8 @@
             var processSearch = function (searchString) {
                 Log.call(Log.l.trace, "SiteEvents.Controller.");
                 AppData.setErrorMsg(that.binding);
+                that.siteeventsdataraw = null;
+                that.nextUrl = null;
                 if (tableBody && tableBody.winControl) {
                     if (tableBody.winControl.data) {
                         tableBody.winControl.data.length = 0;
@@ -514,6 +516,7 @@
                             results.forEach(function (item, index) {
                                 that.resultConverter(item, index);
                             });
+                            that.siteeventsdataraw = results;
                             that.siteeventsdata = new WinJS.Binding.List(results);
                             if (tableBody.winControl) {
                                 // add ListView dataSource
@@ -953,7 +956,7 @@
                 onFooterVisibilityChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "ContactList.Controller.");
                     var element = eventInfo.target;    
-                    if (Math.abs(element.scrollHeight - element.scrollTop - element.clientHeight) <= 3.0) {
+                    if (that.siteeventsdataraw && that.nextUrl && Math.abs(element.scrollHeight - element.scrollTop - element.clientHeight) <= 3.0) {
                         that.loadNextUrl();
                     }
                     Log.ret(Log.l.trace);
