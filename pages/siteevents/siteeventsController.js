@@ -575,7 +575,7 @@
                                                 //myrow.style.opacity = 1;
                                                 rows[rowi].classList.remove('selected');
                                             }
-                                            myrow.style.backgroundColor = (Colors.isDarkTheme ? Colors.navigationColor : Colors.accentColor); /*navigationColor*/
+                                            myrow.style.backgroundColor = Colors.navigationColor; /*navigationColor*/
                                             //myrow.style.opacity = 0.4;
                                             myrow.className += " selected";
                                             var newRecId = that.siteeventsdataraw[i].VeranstaltungVIEWID;
