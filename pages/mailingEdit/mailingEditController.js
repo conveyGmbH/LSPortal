@@ -74,11 +74,6 @@
 
             var getDataMail = function (dataMail) {
                 Log.call(Log.l.trace, "MailingEdit.Controller.");
-                if (dataMail.IsActive === false) {
-                    that.binding.dataMail.IsActive = null;
-                } else {
-                    that.binding.dataMail.IsActive = 1;
-                }
                 if (typeof dataMail.VAMailLayoutID === "string") {
                     dataMail.VAMailLayoutID = parseInt(dataMail.VAMailLayoutID);
                 }
@@ -315,8 +310,10 @@
                     if (event.currentTarget) {
                         var toggle = event.currentTarget.winControl;
                         if (toggle) {
-                            var value = toggle.checked || event.currentTarget.value;
+                            var value = toggle.checked ? 1: 0;
                             that.binding.dataMail.IsActive = value;
+                            AppBar.modified = true;
+                            AppBar.triggerDisableHandlers();
                         }
                     }
                     Log.ret(Log.l.trace);
