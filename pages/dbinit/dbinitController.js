@@ -285,13 +285,7 @@
                     } else {
                         return WinJS.Promise.as();
                     }
-                    })/*.then(function () {
-                    if (err) {
-                        WinJS.Promise.timeout(3000).then(function () {
-                            Application.navigateById("login");
                         });
-                    }
-                    })*/;
                 });
                 Log.ret(Log.l.trace);
                 return ret;

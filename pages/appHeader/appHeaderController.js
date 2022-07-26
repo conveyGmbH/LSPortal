@@ -25,6 +25,7 @@
             this.pageData.userMessagesDataCount = AppData._userMessagesData.MessagesCounter;
             this.pageData.photoData = null;
             this.pageData.showNameInHeader = !!AppData._persistentStates.showNameInHeader;
+            this.pageData.loadUserImage = true;
 
             AppHeader.controller = this;
 
@@ -109,7 +110,7 @@
                 Log.call(Log.l.trace, "AppHeader.Controller.");
                 var ret = new WinJS.Promise.as().then(function () {
                     var employeeId = AppData.getRecordId("Mitarbeiter");
-                    if (employeeId) {
+                    if (employeeId && that.binding.loadUserImage) {
                         // todo: load image data and set src of img-element
                         Log.print(Log.l.trace, "calling select contactView...");
                         return AppHeader.userPhotoView.select(function (json) {
@@ -136,8 +137,9 @@
                                 that.binding.photoData = "";
                                 showPhoto();
                             }
-
+                            that.binding.loadUserImage = false;
                         }, function (errorResponse) {
+                            that.binding.loadUserImage = false;
                             that.binding.photoData = "";
                             showPhoto();
                             // ignore that

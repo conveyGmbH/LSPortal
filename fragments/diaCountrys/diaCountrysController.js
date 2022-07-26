@@ -389,13 +389,21 @@
                     }
                     if (that.isSupreme === 2) {
                         if (index <= 8) {
+							if (item.Land === null) {
+                                item.Land = "Kein Land";
+                            }
+                            if (item.Land !== null) {
                             var splitLand = item.Land.replace(/,/gi, ",?").split("?");
+                            }
                             top5Diagramlabelsdata.push(item.Land);
                             top5DiagramLabelsdataMulitline.push(splitLand);
                             top5Diagramdatasetsdata.push(Math.round((item.Anzahl / item.TotalHits) * 100)); /*item.GlobalPercentage*/
                             top5Diagrambackgroundcolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, index / 15)));
                             top5Diagrambordercolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, index / 15)));
                             /*var AnzahlSup = that.getRandomInt(8, 12);*/
+							if(item.GlobalPercentage === null){
+								item.GlobalPercentage = 0;
+							}
                             top5Diagramsupremedatasetsdata.push(item.GlobalPercentage); /*item.GlobalPercentage*/
                             top5Diagramsupremebackgroundcolor.push(that.hexToRgbA(that.getColor(surpremeColor, index / 15)));
                             top5Diagramsupremebordercolor.push(that.hexToRgbA(that.getColor(surpremeColor, index / 15)));
