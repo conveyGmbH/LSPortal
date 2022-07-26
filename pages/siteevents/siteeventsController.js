@@ -614,10 +614,12 @@
                     }
                     Log.ret(Log.l.trace);
                 },
-                onSearchInput: function() {
+                onSearchInput: function (event) {
                     Log.call(Log.l.trace, "SiteEvents.Controller.");
                     clearTimeout(timer);
-                    timer = setTimeout(that.searchStringProcess(), 1000);
+                    if (event.key === 'Enter' || event.keyCode === 13) {
+                        timer = setTimeout(that.searchStringProcess(), 1000);
+                    }
                     Log.ret(Log.l.trace);
                 },
                 clickCreatePermanentUser: function () {
