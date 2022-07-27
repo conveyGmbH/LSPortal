@@ -393,7 +393,7 @@
                                 item.Land = "Kein Land";
                             }
                             if (item.Land !== null) {
-                            var splitLand = item.Land.replace(/,/gi, ",?").split("?");
+                                var splitLand = item.Land.replace(/,/gi, ",?").split("?");
                             }
                             top5Diagramlabelsdata.push(item.Land);
                             top5DiagramLabelsdataMulitline.push(splitLand);

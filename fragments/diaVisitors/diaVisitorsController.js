@@ -550,7 +550,7 @@
                     var startday = that.formatDate(dayCombobox.value, 1);
                     var endday = that.formatDate(dayCombobox.value, 0);
                     return getGetDashboardVisitorData(1, startday, endday);
-                    }).then(function () {
+                }).then(function () {
                     that.selectCurrentDay();
                     Log.print(Log.l.trace, "Data loaded");
                 });

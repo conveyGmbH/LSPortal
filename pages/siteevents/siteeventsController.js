@@ -957,7 +957,7 @@
                 },
                 onFooterVisibilityChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "ContactList.Controller.");
-                    var element = eventInfo.target;    
+                    var element = eventInfo.target;
                     if (that.siteeventsdataraw && that.nextUrl && Math.abs(element.scrollHeight - element.scrollTop - element.clientHeight) <= 3.0) {
                         that.loadNextUrl();
                     }
@@ -1053,7 +1053,7 @@
             if (contentArea) {
                 this.addRemovableEventListener(contentArea, "scroll", this.eventHandlers.onFooterVisibilityChanged.bind(this));
             }
-            
+
             var loadData = function (vid) {
                 Log.call(Log.l.trace, "LocalEvents.Controller.");
                 inputmsg.textContent = " ";

@@ -135,7 +135,7 @@
     "tooltip.deletemod"        : "Cancellare il moderatore",	
     "tooltip.openWebpage"        : "Aprire il sito web",
     "tooltip.sendPDF"  : "Invia biglietto PDF",
-    "tooltip.sendWallet"  : "Invia biglietto del wallet",	
+    "tooltip.sendWallet"  : "Invia biglietto del wallet",
     "tooltip.deleteTicket"  : "Cancellare il biglietto",
 
     "home.title"            : "Start",

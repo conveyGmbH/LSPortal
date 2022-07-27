@@ -237,7 +237,7 @@
                         pOptionTypeId = 39;
                         that.binding.showNameInHeader = checked;
                         AppData._persistentStates.showNameInHeader = checked;
-                        WinJS.Promise.timeout(0).then(function () {
+                        WinJS.Promise.timeout(0).then(function() {
                             AppData.getUserData();
                         });
                         break;
@@ -403,7 +403,7 @@
                         //var target = event.target || event.currentTarget;
                         var targetId = target.id;
                         if (toggle) {
-                            var value; 
+                            var value;
                             if (targetId.includes("Combo")) {
                                 value = target.value;
                             } else {
