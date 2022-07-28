@@ -25,9 +25,9 @@
     position: static;
 }
 
-    .listView .genDataModListLayout .win-surface {
-        margin-left: 0;
-    }
+.listView .genDataModListLayout .win-surface {
+    margin-left: 0;
+}
 
 #genDataModList .win-container {
     margin: 0;

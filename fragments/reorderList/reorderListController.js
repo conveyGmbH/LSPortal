@@ -132,7 +132,7 @@
                 }
                 Log.ret(Log.l.trace);
             }
-            
+
             var loadData = function () {
                 Log.call(Log.l.trace, "ReorderList.");
                 AppData.setErrorMsg(that.binding);
@@ -177,10 +177,10 @@
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, {
-                        VeranstaltungID : that.binding.recordID
-                        }).then(function () {
-                            Log.print(Log.l.trace, "Data loaded");
-                        });
+                        VeranstaltungID: that.binding.recordID
+                    }).then(function () {
+                        Log.print(Log.l.trace, "Data loaded");
+                    });
                 });
                 Log.ret(Log.l.trace);
                 return ret;
@@ -198,8 +198,8 @@
             });
             Log.ret(Log.l.trace);
         }, {
-                orderItem: null,
-                disableFlag: 0
-            })
+            orderItem: null,
+            disableFlag: 0
+        })
     });
 })();

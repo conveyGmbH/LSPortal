@@ -16,10 +16,10 @@
             select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, "ClientManagementLicenses.");
                 var ret = ClientManagementLicenses._mandantTempLizenzView.select(complete, error, restriction, {
-                        ordered: true,
-                        orderAttribute: "MandantTempLizenzVIEWID",
-                        desc: true
-                    });
+                    ordered: true,
+                    orderAttribute: "MandantTempLizenzVIEWID",
+                    desc: true
+                });
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
@@ -55,10 +55,10 @@
             select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, "ClientManagementLicenses.");
                 var ret = ClientManagementLicenses._veranstaltungView.select(complete, error, restriction, {
-                        ordered: true,
-                        orderAttribute: "VeranstaltungVIEWID",
-                        desc: true
-                    });
+                    ordered: true,
+                    orderAttribute: "VeranstaltungVIEWID",
+                    desc: true
+                });
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;

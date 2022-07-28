@@ -22,10 +22,10 @@
     height: 100%;
 }
 #localevents .list-header {
-        padding-left: 27px;
-        font-weight: bold;
-    }
+    padding-left: 27px;
+    font-weight: bold;
+}
 #localevents .confirm-button {
-        position: absolute;
-        height: 100%;
+    position: absolute;
+    height: 100%;
 }

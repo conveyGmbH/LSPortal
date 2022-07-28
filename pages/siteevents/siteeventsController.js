@@ -77,8 +77,8 @@
                     that.siteeventsdataraw = null;
                 }
             }
-            
-            var restriction; 
+
+            var restriction;
             if (!restriction) {
                 restriction = SiteEvents.defaultRestriction;
             }
@@ -130,7 +130,7 @@
                 return ret;
             };
             this.getDateObject = getDateObject;
-            
+
             var checkId = function() {
                 if (that.vidID) {
                     fileinputbox.style.display = "block";
@@ -265,7 +265,7 @@
                     Log.print(Log.l.trace, "calling select SiteEvents.VeranstaltungView...");
                     var nextUrl = that.nextUrl;
                     that.nextUrl = null;
-                    SiteEvents.VeranstaltungView.selectNext(function (json) { //json is undefined
+                    SiteEvents.VeranstaltungView.selectNext(function(json) { //json is undefined
                         // this callback will be called asynchronously
                         // when the response is available
                         Log.print(Log.l.trace, "SiteEvents.VeranstaltungView: success!");
@@ -273,7 +273,7 @@
                         if (json && json.d && that.siteeventsdata) {
                             that.nextUrl = SiteEvents.VeranstaltungView.getNextUrl(json);
                             var results = json.d.results;
-                            results.forEach(function (item, index) {
+                            results.forEach(function(item, index) {
                                 that.resultConverter(item, that.binding.count);
                                 that.binding.count = that.siteeventsdata.push(item);
                                 that.siteeventsdataraw.push(item);
@@ -337,7 +337,7 @@
                 var ret;
                 var recordId = AppData.getRecordId("VeranstaltungTermin");
                 if (recordId) {
-                    ret = AppData.call("PRC_GetQRPdf", { 
+                    ret = AppData.call("PRC_GetQRPdf", {
                         pVeranstaltungTerminID: recordId
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
@@ -413,18 +413,17 @@
                 newFileUploadData.DocContentDOCCNT1 = that.createCsvString(newFileUploadData.DocContentDOCCNT1);
                 AppBar.busy = true;
                 var ret = SiteEvents.doc3import_file.insert(function (json) {
-                        AppBar.busy = false;
-                        // this callback will be called asynchronously
-                        // when the response is available
+                    AppBar.busy = false;
+                    // this callback will be called asynchronously
+                    // when the response is available
+                    Log.print(Log.l.info, "doc3import_file insert: success!");
+                    // doc3import_file returns object already parsed from json file in response
+                    if (json && json.d) {
                         Log.print(Log.l.info, "doc3import_file insert: success!");
-                        // doc3import_file returns object already parsed from json file in response
-                        if (json && json.d) {
-                            Log.print(Log.l.info, "doc3import_file insert: success!");
-                            that.showMessage(true);
-                        }
-                        AppBar.modified = true;
-                    },
-                    function (errorResponse) {
+                        that.showMessage(true);
+                    }
+                    AppBar.modified = true;
+                }, function (errorResponse) {
                         Log.print(Log.l.error, "error inserting csv");
                         that.showMessage(false);
                         AppBar.busy = false;
@@ -439,21 +438,20 @@
                 Log.call(Log.l.trace, "SiteEvents.Controller.");
                 AppData.setErrorMsg(that.binding);
                 AppBar.busy = true;
-                var ret = SiteEvents.importfileView.insert(function(json) {
-                        AppBar.busy = false;
-                        // this callback will be called asynchronously
-                        // when the response is available
+                var ret = SiteEvents.importfileView.insert(function (json) {
+                    AppBar.busy = false;
+                    // this callback will be called asynchronously
+                    // when the response is available
+                    Log.print(Log.l.info, "importfileView insert: success!");
+                    // importfileView returns object already parsed from json file in response
+                    if (json && json.d) {
                         Log.print(Log.l.info, "importfileView insert: success!");
-                        // importfileView returns object already parsed from json file in response
-                        if (json && json.d) {
-                            Log.print(Log.l.info, "importfileView insert: success!");
-                            var importFileViewId = json.d.Import_FileVIEWID;
-                            var newFileUploadData = that.getCsvData(importFileViewId);
-                            that.uploadCsvData(newFileUploadData);
-                        }
-                        AppBar.modified = true;
-                    },
-                    function(errorResponse) {
+                        var importFileViewId = json.d.Import_FileVIEWID;
+                        var newFileUploadData = that.getCsvData(importFileViewId);
+                        that.uploadCsvData(newFileUploadData);
+                    }
+                    AppBar.modified = true;
+                }, function(errorResponse) {
                         Log.print(Log.l.error, "error inserting csv");
                         AppBar.busy = false;
                         AppData.setErrorMsg(that.binding, errorResponse);
@@ -597,7 +595,7 @@
                                             }
                                         }
                                     }
-                                    
+
                                 };
                             }(row);
                         }
@@ -764,7 +762,7 @@
                 },
                 changeSearchField: function (event) {
                     Log.call(Log.l.trace, "Event.Controller.");
-                   /* that.binding.restriction.Firmenname = [];
+                    /* that.binding.restriction.Firmenname = [];
                     if (event.target.value) {
                         that.binding.restriction.Firmenname = event.target.value;
                         that.binding.restriction.VeranstaltungTerminID = that.vidID;
@@ -843,8 +841,8 @@
                     Application.navigateById("siteEventsBenNach", event);
                     Log.ret(Log.l.trace);
                 },
-               clickTopButton: function (event) {
-                   Log.call(Log.l.trace, "SiteEvents.Controller.");
+                clickTopButton: function (event) {
+                    Log.call(Log.l.trace, "SiteEvents.Controller.");
                     var anchor = document.getElementById("menuButton");
                     var menu = document.getElementById("menu1").winControl;
                     var placement = "bottom";
@@ -1009,7 +1007,7 @@
                     }
                 },
                 clickExport: function() {
-                        if (AppBar.busy) {
+                    if (AppBar.busy) {
                         return true;
                     } else {
                         return false;
@@ -1027,18 +1025,18 @@
                     }
                 },
                 clickExportRegistrationList: function () {
-                        if (AppBar.busy) {
-                            return true;
-                        } else {
-                            return false;
-                        }
+                    if (AppBar.busy) {
+                        return true;
+                    } else {
+                        return false;
+                    }
                 },
-                clickExportLockedDeviceList: function() {
-                        if (AppBar.busy) {
-                            return true;
-                        } else {
-                            return false;
-                        }
+                clickExportLockedDeviceList: function () {
+                    if (AppBar.busy) {
+                        return true;
+                    } else {
+                        return false;
+                    }
                 }
             }
 
@@ -1078,59 +1076,59 @@
                 var ret = null;
                 if (that.binding.restriction.VeranstaltungTerminID) {
                     ret = new WinJS.Promise.as().then(function () {
-                    return SiteEvents.VeranstaltungView.select(function (json) {
-                        // this callback will be called asynchronously
-                        // when the response is available
-                        AppData.setErrorMsg(that.binding);
-                        Log.print(Log.l.trace, "LocalEvent: success!");
-                        // employeeView returns object already parsed from json file in response
-                        if (json && json.d && json.d.results.length > 0) {
-                            that.binding.count = json.d.results.length;
-                            that.nextUrl = SiteEvents.VeranstaltungView.getNextUrl(json);
-                            var results = json.d.results;
-                            results.forEach(function (item, index) {
-                                that.resultConverter(item, index);
-                            });
-                            that.siteeventsdataraw = results;
-                            that.vidID2 = vid;
-                            that.siteeventsdata = new WinJS.Binding.List(results);
-                            if (tableBody.winControl) {
-                                // add ListView dataSource
-                                tableBody.winControl.data = that.siteeventsdata;
+                        return SiteEvents.VeranstaltungView.select(function (json) {
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            AppData.setErrorMsg(that.binding);
+                            Log.print(Log.l.trace, "LocalEvent: success!");
+                            // employeeView returns object already parsed from json file in response
+                            if (json && json.d && json.d.results.length > 0) {
+                                that.binding.count = json.d.results.length;
+                                that.nextUrl = SiteEvents.VeranstaltungView.getNextUrl(json);
+                                var results = json.d.results;
+                                results.forEach(function (item, index) {
+                                    that.resultConverter(item, index);
+                                });
+                                that.siteeventsdataraw = results;
+                                that.vidID2 = vid;
+                                that.siteeventsdata = new WinJS.Binding.List(results);
+                                if (tableBody.winControl) {
+                                    // add ListView dataSource
+                                    tableBody.winControl.data = that.siteeventsdata;
+                                }
+                                Log.print(Log.l.trace, "Data loaded");
+                            } else {
+                                that.binding.count = 0;
+                                that.nextUrl = null;
+                                that.siteeventsdata = null;
+                                if (tableBody.winControl) {
+                                    // add ListView dataSource
+                                    tableBody.winControl.data = null;
+                                }
+                                if (progress && progress.style) {
+                                    progress.style.display = "none";
+                                }
+                                if (counter && counter.style) {
+                                    counter.style.display = "inline";
+                                }
+                                that.loading = false;
                             }
-                            Log.print(Log.l.trace, "Data loaded");
-                        } else {
-                            that.binding.count = 0;
-                            that.nextUrl = null;
-                            that.siteeventsdata = null;
-                            if (tableBody.winControl) {
-                                // add ListView dataSource
-                                tableBody.winControl.data = null;
-                            }
-                            if (progress && progress.style) {
-                                progress.style.display = "none";
-                            }
-                            if (counter && counter.style) {
-                                counter.style.display = "inline";
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                            if (tableBody && typeof tableBody !== 'undefined') {
+                                if (progress && progress.style) {
+                                    progress.style.display = "none";
+                                }
+                                if (counter && counter.style) {
+                                    counter.style.display = "inline";
+                                }
                             }
                             that.loading = false;
-                        }
-                    }, function (errorResponse) {
-                        // called asynchronously if an error occurs
-                        // or server returns response with an error status.
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                        if (tableBody && typeof tableBody !== 'undefined') {
-                        if (progress && progress.style) {
-                            progress.style.display = "none";
-                        }
-                        if (counter && counter.style) {
-                            counter.style.display = "inline";
-                        }
-                            }
-                        that.loading = false;
                         }, that.binding.restriction);
                     }).then(function () {
-                    return that.addBodyRowHandlers();
+                        return that.addBodyRowHandlers();
                     }).then(function () {
                         return that.setDataLabels();
                     });
@@ -1154,19 +1152,19 @@
             });
             Log.ret(Log.l.trace);
         }, {
-                eventChangeId: null,
-                vidID: null,
-                vidID2: null,
-                nextUrl: null,
-                loading: false,
-                siteeventsdata: null,
-                deleteEventData: null,
-                suggestionList: null,
-                reorderId: null,
-                imageData: null,
-                isConvertable: null,
-                siteeventsdataraw: null
+            eventChangeId: null,
+            vidID: null,
+            vidID2: null,
+            nextUrl: null,
+            loading: false,
+            siteeventsdata: null,
+            deleteEventData: null,
+            suggestionList: null,
+            reorderId: null,
+            imageData: null,
+            isConvertable: null,
+            siteeventsdataraw: null
         })
-        
+
     });
 })();

@@ -242,17 +242,17 @@
                                 },
                                 scales: {
                                     y: {
+                                        display: false,
+                                        grid: {
+                                            display: false
+                                        },
+                                        ticks: {
+                                            max: maxtickNummer + 30,
                                             display: false,
-                                            grid: {
-                                                display: false
-                                            },
-                                            ticks: {
-                                                max: maxtickNummer + 30,
-                                                display: false,
                                             beginAtZero: true,
                                             color: Colors.textColor
-                                            },
-                                            stacked: false
+                                        },
+                                        stacked: false
                                     },
                                     x: {
                                         display: true,

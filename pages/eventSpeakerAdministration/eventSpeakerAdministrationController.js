@@ -17,7 +17,7 @@
 
             // ListView control
             var listView = pageElement.querySelector("#eventSpeakerList.listview");
-            
+
             Application.RecordsetController.apply(this, [pageElement, {
                 count: 0,
                 sendentrytmailLabel: getResourceText("eventSpeakerAdministration.send"),
@@ -101,18 +101,18 @@
                             if (field[i]) {
                                 var fieldEntry = field[i].dataset && field[i].dataset.fieldEntry;
                                 var value = parseInt(field[i].value);
-                                if (fieldEntry) {
-                                    ret[fieldEntry] = value || null;
-                                    if (that.records) {
-                                        var item = that.records.getAt(index);
-                                        if (item && ret[fieldEntry] !== item[fieldEntry]) {
-                                            forceReload = true;
-                                        }
+                            if (fieldEntry) {
+                                ret[fieldEntry] = value || null;
+                                if (that.records) {
+                                    var item = that.records.getAt(index);
+                                    if (item && ret[fieldEntry] !== item[fieldEntry]) {
+                                        forceReload = true;
                                     }
                                 }
                             }
                         }
                     }
+                }
                 }
                 Log.ret(Log.l.trace, ret);
                 return ret;
@@ -219,7 +219,7 @@
                     confirm(confirmTitle, function (result) {
                         if (result) {
                             AppData.setErrorMsg(that.binding);
-                            Log.print(Log.l.trace,"clickDelete: user choice OK");
+                            Log.print(Log.l.trace, "clickDelete: user choice OK");
                             that.deleteData().then(function() {
                                 AppBar.triggerDisableHandlers();
                             });
@@ -344,7 +344,7 @@
                 },
                 onHeaderVisibilityChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "EventSpeakerAdministration.Controller.");
-                    
+
                     Log.ret(Log.l.trace);
                 },
                 onFooterVisibilityChanged: function (eventInfo) {

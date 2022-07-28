@@ -389,7 +389,7 @@
                     }
                     if (that.isSupreme === 2) {
                         if (index <= 8) {
-							if (item.Land === null) {
+                            if (item.Land === null) {
                                 item.Land = "Kein Land";
                             }
                             if (item.Land !== null) {
@@ -401,9 +401,9 @@
                             top5Diagrambackgroundcolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, index / 15)));
                             top5Diagrambordercolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, index / 15)));
                             /*var AnzahlSup = that.getRandomInt(8, 12);*/
-							if(item.GlobalPercentage === null){
-								item.GlobalPercentage = 0;
-							}
+                            if (item.GlobalPercentage === null) {
+                                item.GlobalPercentage = 0;
+                            }
                             top5Diagramsupremedatasetsdata.push(item.GlobalPercentage); /*item.GlobalPercentage*/
                             top5Diagramsupremebackgroundcolor.push(that.hexToRgbA(that.getColor(surpremeColor, index / 15)));
                             top5Diagramsupremebordercolor.push(that.hexToRgbA(that.getColor(surpremeColor, index / 15)));

@@ -54,7 +54,7 @@
                 }
             };
             this.background = background;
-            
+
             var loadNextUrl = function () {
                 Log.call(Log.l.trace, "EventsList.Controller.");
                 progress = listView.querySelector(".list-footer .progress");

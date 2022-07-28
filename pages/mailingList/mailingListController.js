@@ -552,7 +552,7 @@
                         var scrollMax = contentArea.scrollHeight - contentArea.clientHeight;
                         var scrollPos = contentArea.scrollTop;
                         if (scrollPos === scrollMax) {
-                           // that.loadNextUrl();
+                            // that.loadNextUrl();
                         }
                     }
                     Log.ret(Log.l.trace);

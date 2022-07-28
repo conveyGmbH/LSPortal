@@ -416,7 +416,7 @@
                     }, {
 
                     });
-                }).then(function () {
+                }).then(function() {
                     if (listView && listView.winControl) {
                         return listView.winControl.selection.set(0);
                     } else {

@@ -57,7 +57,7 @@
     "command.newStaff"  : "Weitere Person erfassen",	
     "command.openWebpage"  : "Webseite öffnen",
     "command.sendPDF"  : "PDF senden",
-    "command.sendWallet"  : "Wallet senden",	
+    "command.sendWallet"  : "Wallet senden",
     "command.deleteTicket"  : "Ausweis löschen",
 
     "tooltip.backward"      : "Zurück blättern",

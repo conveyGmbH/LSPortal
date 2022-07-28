@@ -29,7 +29,7 @@
             var that = this;
 
             this.ssItems = [];
-            var firstquestion = pageElement.querySelector("#firstquestioncombo"); 
+            var firstquestion = pageElement.querySelector("#firstquestioncombo");
             var erstefragelabel = pageElement.querySelector("#erstefragelabel");
             var textComment = pageElement.querySelector(".input_text_comment");
             var initAnrede = pageElement.querySelector("#InitMailingAnrede");
@@ -46,7 +46,7 @@
                 return recordId;
             };
             this.getRecordId = getRecordId;
-            
+
             var deleteData = function () {
                 Log.call(Log.l.trace, "Mailing.Controller.");
                 AppData.setErrorMsg(that.binding);
@@ -68,7 +68,7 @@
                 Log.ret(Log.l.trace);
             };
             this.deleteData = deleteData;
-            
+
             var setDataMail = function (dataMail) {
                 // Bug: textarea control shows 'null' string on null value in Internet Explorer!
                 if (dataMail.Mailtext === null) {
@@ -122,14 +122,14 @@
                         if (item[keyTitle] && item[keyValue] && item[keyTitle] !== "null" && item[keyValue] !== "null") {
                             that.ssItems.push({
                                 title: item[keyTitle],
-                                value: "0"+i
+                                value: "0" + i
                             });
                         }
                     }
                 }
             };
             this.resultConverter = resultConverter;
-            
+
             var saveData = function (complete, error) {
                 Log.call(Log.l.trace, "Mailing.Controller.");
                 AppData.setErrorMsg(that.binding);
@@ -146,27 +146,27 @@
                     if (recordId) {
                         ret = WinJS.Promise.as().then(function () {
                             Mailing.MaildokumentView.update(function (response) {
-                            AppBar.busy = false;
-                            // called asynchronously if ok
-                            Log.print(Log.l.info, "dataMail update: success!");
-                            AppBar.modified = false;
-                            var master = Application.navigator.masterControl;
-                            if (master && master.controller) {
+                                AppBar.busy = false;
+                                // called asynchronously if ok
+                                Log.print(Log.l.info, "dataMail update: success!");
+                                AppBar.modified = false;
+                                var master = Application.navigator.masterControl;
+                                if (master && master.controller) {
                                     master.controller.loadData()/*.then(function () {
                                         master.controller.selectRecordId(getRecordId());
                                     })*/;
                                 }
-                                        if (typeof complete === "function") {
-                                   complete(dataMail);
-                                        }
+                                if (typeof complete === "function") {
+                                    complete(dataMail);
+                                }
                             }, function (errorResponse) {
-                            AppBar.busy = false;
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                            if (typeof error === "function") {
-                                error(errorResponse);
-                            }
+                                AppBar.busy = false;
+                                // called asynchronously if an error occurs
+                                // or server returns response with an error status.
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                                if (typeof error === "function") {
+                                    error(errorResponse);
+                                }
                             }, recordId, dataMail);
                         });
                     } else {
@@ -176,7 +176,7 @@
                     ret = WinJS.Promise.timeout(100).then(function () {
                         return that.saveData(complete, error);
                     });
-                    } else {
+                } else {
                     ret = new WinJS.Promise.as().then(function () {
                         if (typeof complete === "function") {
                             complete(dataMail);
@@ -194,42 +194,42 @@
                 if (!dataMail.VeranstaltungID)
                     dataMail.VeranstaltungID = AppData.getRecordId("Veranstaltung");
                 Mailing.MaildokumentView.insert(function (json) {
-                            AppBar.busy = false;
-                            // this callback will be called asynchronously
-                            // when the response is available
-                            Log.print(Log.l.info, "MaildokumentView insert: success!");
-                            AppBar.modified = false;
-                            // employeeView returns object already parsed from json file in response
-                            if (json && json.d) {
-                                that.binding.dataMail = setDataMail(json.d);
-                                AppData.setRecordId("Maildokument", that.binding.dataMail.MaildokumentVIEWID);
-                                /* Mitarbeiter Liste neu laden und Selektion auf neue Zeile setzen */
-                                var master = Application.navigator.masterControl;
-                                if (master && master.controller) {
+                    AppBar.busy = false;
+                    // this callback will be called asynchronously
+                    // when the response is available
+                    Log.print(Log.l.info, "MaildokumentView insert: success!");
+                    AppBar.modified = false;
+                    // employeeView returns object already parsed from json file in response
+                    if (json && json.d) {
+                        that.binding.dataMail = setDataMail(json.d);
+                        AppData.setRecordId("Maildokument", that.binding.dataMail.MaildokumentVIEWID);
+                        /* Mitarbeiter Liste neu laden und Selektion auf neue Zeile setzen */
+                        var master = Application.navigator.masterControl;
+                        if (master && master.controller) {
                             master.controller.loadData()/*.then(function () {
-                                        master.controller.selectRecordId(getRecordId());
+                                master.controller.selectRecordId(getRecordId());
                             })*/;
-                                }
-                            }
-                        }, function (errorResponse) {
-                            Log.print(Log.l.error, "error inserting mail");
-                            AppBar.busy = false;
-                            that.getErrorMsgFromErrorStack(errorResponse);
-                           // AppData.setErrorMsg(that.binding, errorResponse);
-                        }, dataMail);
+                        }
                     }
+                }, function (errorResponse) {
+                    Log.print(Log.l.error, "error inserting mail");
+                    AppBar.busy = false;
+                    that.getErrorMsgFromErrorStack(errorResponse);
+                    // AppData.setErrorMsg(that.binding, errorResponse);
+                }, dataMail);
+            }
             this.insertMailing = insertMailing;
 
-            var getTestMailData = function() {
+            var getTestMailData = function () {
                 that.binding.dataTestMail.MailDokumentID = parseInt(that.binding.dataMail.MaildokumentVIEWID);
                 that.binding.dataTestMail.AnredeID = parseInt(that.binding.dataTestMail.AnredeID);
                 that.binding.dataTestMail.TestType = parseInt(2);
             }
             this.getTestMailData = getTestMailData;
-            
+
             // Then, do anything special on this page
             this.eventHandlers = {
-                clickBack: function(event) {
+                clickBack: function (event) {
                     Log.call(Log.l.trace, "Mailing.Controller.");
                     if (WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done();
@@ -239,20 +239,20 @@
                 clickNew: function (event) {
                     Log.call(Log.l.trace, "Mailing.Controller.");
                     WinJS.Promise.as().then(function () {
-                    that.saveData(function (response) {
-                        Log.print(Log.l.trace, "prev Mail saved");
+                        that.saveData(function (response) {
+                            Log.print(Log.l.trace, "prev Mail saved");
                             //that.setNewDataMail();
-                        AppBar.modified = true;
-                        //that.saveData();
-                    }, function (errorResponse) {
-                        Log.print(Log.l.error, "error saving mail");
-                    });
+                            AppBar.modified = true;
+                            //that.saveData();
+                        }, function (errorResponse) {
+                            Log.print(Log.l.error, "error saving mail");
+                        });
                     }).then(function () {
                         that.insertMailing();
                     });
                     Log.ret(Log.l.trace);
                 },
-                clickTestMailOpen : function(event) {
+                clickTestMailOpen: function (event) {
                     Log.call(Log.l.trace, "Mailing.Controller.clickTestMailOpen");
                     if (that.binding.sendTestMailShowFlag === 0) {
                         that.binding.sendTestMailShowFlag = 1;
@@ -268,7 +268,7 @@
                     }
                     Log.ret(Log.l.trace);
                 },
-                clickSendTestMail: function() {
+                clickSendTestMail: function () {
                     Log.call(Log.l.trace, "Mailing.Controller.clickSendTestMail");
                     AppData.setErrorMsg(that.binding);
                     that.getTestMailData();
@@ -351,47 +351,47 @@
                 clickFirstQuestion: function (event) {
                     Log.call(Log.l.trace, "info.Controller.");
                     //if (event.currentTarget && AppBar.notifyModified) {
-                        var toggle = event.currentTarget.winControl;
-                        if (toggle) {
-                            if (toggle.checked === false) {
-                                that.binding.dataMail.SpecType = null;
-                                that.binding.dataMail.MemoSpec = null;
-                                AppBar.modified = true;
+                    var toggle = event.currentTarget.winControl;
+                    if (toggle) {
+                        if (toggle.checked === false) {
+                            that.binding.dataMail.SpecType = null;
+                            that.binding.dataMail.MemoSpec = null;
+                            AppBar.modified = true;
                             that.saveData(function (response) {
                                 // called asynchronously if ok
                                 if (typeof complete === "function") {
-                                complete(response);
+                                    complete(response);
                                 }
                             }, function (errorResponse) {
                                 if (typeof error === "function") {
-                                error(errorResponse);
+                                    error(errorResponse);
                                 }
                             });
-                            } else {
-                                that.binding.dataMail.SpecType = 1;
-                                that.binding.dataMail.MemoSpec = null;
-                                AppBar.modified = true;
+                        } else {
+                            that.binding.dataMail.SpecType = 1;
+                            that.binding.dataMail.MemoSpec = null;
+                            AppBar.modified = true;
                             that.saveData(function (response) {
                                 // called asynchronously if ok
                                 if (typeof complete === "function") {
-                                complete(response);
+                                    complete(response);
                                 }
                             }, function (errorResponse) {
                                 if (typeof error === "function") {
-                                error(errorResponse);
+                                    error(errorResponse);
                                 }
                             });
-                            }
                         }
+                    }
                     //}
                     Log.ret(Log.l.trace);
                 },
-                clickChangeUserState: function(event) {
+                clickChangeUserState: function (event) {
                     Log.call(Log.l.trace, "Mailing.Controller.");
                     Application.navigateById("userinfo", event);
                     Log.ret(Log.l.trace);
                 },
-                clickGotoPublish: function(event) {
+                clickGotoPublish: function (event) {
                     Log.call(Log.l.trace, "Mailing.Controller.");
                     Application.navigateById("publish", event);
                     Log.ret(Log.l.trace);
@@ -465,7 +465,7 @@
                         return true;
                     }
                 },
-                clickTestMailOpen: function() {
+                clickTestMailOpen: function () {
                     if (that.binding.dataMail && that.binding.dataMail.MaildokumentVIEWID && !AppBar.busy) {
                         return false;
                     } else {
@@ -560,7 +560,7 @@
                     });
                 }).then(function () {
                     if (recordId) {
-                       // AppData.setRecordId("Maildokument", recordId);
+                        // AppData.setRecordId("Maildokument", recordId);
                         return Mailing.MaildokumentView.select(function (json) {
                             // this callback will be called asynchronously
                             // when the response is available
@@ -571,7 +571,7 @@
                             }
                             // startContact returns object already parsed from json file in response
                         },
-                        function(errorResponse) {
+                        function (errorResponse) {
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
 

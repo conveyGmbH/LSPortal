@@ -195,10 +195,10 @@
                             }
                             if (typeof AppBar === "object" && AppBar.scope) {
                                 if (typeof AppBar.scope.updateActions === "function" &&
-                                (!prevUserData ||
-                                    prevUserData.VeranstaltungName !== AppData._userData.VeranstaltungName ||
-                                    prevUserData.userName !== AppData._userData.userName ||
-                                    prevUserData.AnzLokaleKontakte !== AppData._userData.AnzLokaleKontakte)) {
+                                    (!prevUserData ||
+                                        prevUserData.VeranstaltungName !== AppData._userData.VeranstaltungName ||
+                                        prevUserData.userName !== AppData._userData.userName ||
+                                        prevUserData.AnzLokaleKontakte !== AppData._userData.AnzLokaleKontakte)) {
                                     AppBar.scope.updateActions();
                                 }
                                 if (AppBar.scope.binding && AppBar.scope.binding.generalData) {
@@ -215,7 +215,7 @@
                         if (AppData._userRemoteDataPromise) {
                             Log.print(Log.l.info, "Cancelling previous userRemoteDataPromise");
                             AppData._userRemoteDataPromise.cancel();
-                        } 
+                        }
                         AppData._userRemoteDataPromise = WinJS.Promise.timeout(timeout * 1000).then(function () {
                             Log.print(Log.l.info, "getUserRemoteData: Now, timeout=" + timeout + "s is over!");
                             AppData._curGetUserRemoteDataId = 0;
@@ -370,7 +370,7 @@
                 var hours = date.getHours();
                 var minutes = date.getMinutes();
                 ret = ((hours < 10) ? "0" : "") + hours.toString() + ":" +
-                      ((minutes < 10) ? "0" : "") + minutes.toString();
+                    ((minutes < 10) ? "0" : "") + minutes.toString();
             } else {
                 ret = "";
             }
@@ -576,7 +576,7 @@
                     if (parseInt(item.LocalValue) === 1 || parseInt(item.LocalValue) === 2) {
                         AppData._persistentStates.showvisitorFlow = parseInt(item.LocalValue);
                         // NavigationBar.enablePage("employee");
-                       /* NavigationBar.enablePage("visitorFlowDashboard");
+                        /* NavigationBar.enablePage("visitorFlowDashboard");
                         NavigationBar.enablePage("visitorFlowEntExt");
                         NavigationBar.enablePage("employeeVisitorFlow");/*pagename muss wahrscheinlich nochmal geändert werden, jenachdem wie die seite heisst*/
                     } else {
@@ -638,16 +638,16 @@
             Log.call(Log.l.u1, "AppData.", "colorProperty=" + colorProperty + " color=" + color);
             Colors[colorProperty] = color;
             switch (colorProperty) {
-            case "accentColor":
-            // fall through...
-            case "navigationColor":
-                AppBar.loadIcons();
-                NavigationBar.groups = Application.navigationBarGroups;
-                break;
+                case "accentColor":
+                    // fall through...
+                case "navigationColor":
+                    AppBar.loadIcons();
+                    NavigationBar.groups = Application.navigationBarGroups;
+                    break;
             }
             Log.ret(Log.l.u1);
         },
-        getLogo : function() {
+        getLogo: function() {
             switch (AppData._userData.VeranstaltungTyp) {
                 case 0:
                     return "leadsuccess_white";

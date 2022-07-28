@@ -81,8 +81,8 @@
                 } else {
                     var serialnumernew = serialnumer;
                     if (serialnumernew) {
-                    var sub = serialnumernew.search("0000000000");
-                    serialnumernew = serialnumernew.substr(sub + 10);
+                        var sub = serialnumernew.search("0000000000");
+                        serialnumernew = serialnumernew.substr(sub + 10);
                     }
                     return serialnumernew;
                 }
@@ -137,11 +137,9 @@
                 item.index = index;
                 that.binding.hasLocalevents = AppHeader.controller.binding.userData.HasLocalEvents;
                 item.Names = "",
-                item.fullName =
-                (item.Vorname ? (item.Vorname + " ") : "") +
-                (item.Nachname ? item.Nachname : "");
+                item.fullName = (item.Vorname ? (item.Vorname + " ") : "") + (item.Nachname ? item.Nachname : "");
                 if (typeof cutSerialnumer !== "undefined" && typeof item.CS1504SerienNr !== "undefined") {
-                item.CS1504SerienNr = that.cutSerialnumer(item.CS1504SerienNr);
+                    item.CS1504SerienNr = that.cutSerialnumer(item.CS1504SerienNr);
                 }
                 if (item.Gesperrt === 1) {
                     if (AppHeader.controller.binding.userData.SiteAdmin) {
@@ -171,7 +169,7 @@
                                 listControl.selection.getItems().done(function (items) {
                                     var item = items[0];
                                     if (item.data && item.data.MitarbeiterVIEWID &&
-    item.data.MitarbeiterVIEWID !== that.binding.employeeId && item.data.Gesperrt !== 1) {
+                                        item.data.MitarbeiterVIEWID !== that.binding.employeeId && item.data.Gesperrt !== 1) {
                                         if (AppBar.scope &&
                                             typeof AppBar.scope.saveData === "function") {
                                             AppBar.scope.saveData(function (response) {
@@ -245,8 +243,8 @@
                                                         WinJS.Utilities.removeClass(element, "win-nonselectable");
                                                     }
                                                 } else {
-                                                if (!WinJS.Utilities.hasClass(element, "win-nonselectable")) {
-                                                    WinJS.Utilities.addClass(element, "win-nonselectable");
+                                                    if (!WinJS.Utilities.hasClass(element, "win-nonselectable")) {
+                                                        WinJS.Utilities.addClass(element, "win-nonselectable");
                                                     }
                                                 }
                                             } else {
@@ -481,7 +479,7 @@
             };
             this.loadData = loadData;
 
-            that.processAll().then(function () {
+            that.processAll().then(function() {
                 if (!AppData._persistentStates.showvisitorFlow) {
                     NavigationBar.disablePage("employeeVisitorFlow");
                 } 

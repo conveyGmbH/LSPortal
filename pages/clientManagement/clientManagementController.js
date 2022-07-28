@@ -16,16 +16,16 @@
             function Controller(pageElement, commandList) {
                 Log.call(Log.l.trace, "ClientManagement.Controller.");
                 Application.Controller.apply(this, [pageElement, {
-                            dataClientManagement: getEmptyDefaultValue(ClientManagement.fairMandantView.defaultValue),
-                            recordID : 0,
-                            InitLandItem: { InitLandID: 0, TITLE: "" },
-                            showapiUserCreate: null,
-                            apiUserCreate: null
+                    dataClientManagement: getEmptyDefaultValue(ClientManagement.fairMandantView.defaultValue),
+                    recordID : 0,
+                    InitLandItem: { InitLandID: 0, TITLE: "" },
+                    showapiUserCreate: null,
+                    apiUserCreate: null
                 }, commandList]);
 
                 var that = this;
 
-                var initLand = pageElement.querySelector("#InitLand"); 
+                var initLand = pageElement.querySelector("#InitLand");
                 var apiToggle = pageElement.querySelector("#createApiUser"); 
 
                 var createApiUserValue = 0;
@@ -77,18 +77,18 @@
                             }, function(json) {
                                 Log.print(Log.l.info, "call success! ");
                                 AppBar.busy = false;
-                                    AppBar.modified = false;
-                                    //createApiUserValue = null;
-                                    //that.loadData(dataClientManagement.FairMandantVIEWID);
+                                AppBar.modified = false;
+                                //createApiUserValue = null;
+                                //that.loadData(dataClientManagement.FairMandantVIEWID);
                                 //Application.navigateById("localevents");
-                                    complete(that.binding.dataClientManagement);
-                                    Log.ret(Log.l.trace);
+                                complete(that.binding.dataClientManagement);
+                                Log.ret(Log.l.trace);
                             }, function(errorResponse) {
                                 Log.print(Log.l.error, "call error");
                                 AppBar.busy = false;
                                 AppData.setErrorMsg(that.binding, errorResponse);
-                                    error({});
-                                });
+                                error({});
+                            });
                         } else if (AppBar.busy) {
                             ret = WinJS.Promise.timeout(100).then(function() {
                                 return that.saveData(complete, error);
@@ -99,8 +99,8 @@
                                     complete({});//that.binding.dataClientManagement
                                 }
                             });
+                        }
                     }
-                }
                     return ret;
                 }
                 this.saveData = saveData;
@@ -109,26 +109,26 @@
                     Log.call(Log.l.trace, "ClientManagement.Controller.");
                     AppData.setErrorMsg(that.binding);
                     AppData.call("PRC_CreateFairMandant", {
-                                pLandID: 0,
-                                pNumLicenses: 0,
-                                pINITFairManTypID : 2
-                            }, function (json) {
-                                Log.print(Log.l.info, "call success! ");
-                                AppBar.busy = false;
-                                var master = Application.navigator.masterControl;
+                        pLandID: 0,
+                        pNumLicenses: 0,
+                        pINITFairManTypID : 2
+                    }, function (json) {
+                        Log.print(Log.l.info, "call success! ");
+                        AppBar.busy = false;
+                        var master = Application.navigator.masterControl;
                         if (master && master.controller && typeof master.controller.loadData === "function") {
-                                    master.controller.loadData().then(function() {
-                                            master.controller.selectRecordId(json.d.results[0].FairMandantID);
-                                            if (typeof complete === "function") {
-                                                complete(response);
-                                            }
-                                });
-                                };
-                            }, function (errorResponse) {
-                                Log.print(Log.l.error, "call error");
-                                AppBar.busy = false;
-                                AppData.setErrorMsg(that.binding, errorResponse);
+                            master.controller.loadData().then(function() {
+                                master.controller.selectRecordId(json.d.results[0].FairMandantID);
+                                if (typeof complete === "function") {
+                                    complete(response);
+                                }
                             });
+                        };
+                    }, function (errorResponse) {
+                        Log.print(Log.l.error, "call error");
+                        AppBar.busy = false;
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    });
                     Log.ret(Log.l.trace);
                 }
                 this.newMandant = newMandant;

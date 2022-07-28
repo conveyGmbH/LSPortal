@@ -160,10 +160,10 @@
                     var veranstaltungId = null;
                     if (json && json.d.results[0] && json.d.results[0].NewVeranstaltungID) {
                         veranstaltungId = json.d.results[0].NewVeranstaltungID;
-                    var master = Application.navigator.masterControl;
+                        var master = Application.navigator.masterControl;
                         that.setEventId(veranstaltungId);                        
                         if (master && master.controller && typeof master.controller.loadData === "function") {
-                    master.controller.loadData();
+                            master.controller.loadData();
                         };
                     } else {
                         Log.print(Log.l.error, "call error veranstaltungId is null");

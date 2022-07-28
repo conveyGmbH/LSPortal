@@ -46,7 +46,7 @@
             var ret;
             Log.call(Log.l.trace, pageName + ".");
             if (this.controller) {
-                    ret = this.controller.saveData(function (response) {
+                ret = this.controller.saveData(function(response) {
                         // called asynchronously if ok
                         complete(response);
                     }, function (errorResponse) {
@@ -70,22 +70,22 @@
             if (element && !that.inResize) {
                 that.inResize = 1;
                 ret = WinJS.Promise.timeout(0).then(function () {
-                        var contentarea = element.querySelector(".contentarea");
-                        if (contentarea) {
-                            var width = contentarea.clientWidth;
-                            var height = contentarea.clientHeight - 8;
-                            WinJS.Utilities.removeClass(element, "view-size-small");
-                            WinJS.Utilities.removeClass(element, "view-size-medium-small");
-                            WinJS.Utilities.removeClass(element, "view-size-medium");
-                            WinJS.Utilities.removeClass(element, "view-size-bigger");
-                            if (width > 900) {
-                                WinJS.Utilities.removeClass(contentarea, "view-size-small");
-                                WinJS.Utilities.addClass(contentarea, "view-size-bigger");
-                            } else {
-                                WinJS.Utilities.removeClass(contentarea, "view-size-bigger");
-                                WinJS.Utilities.addClass(contentarea, "view-size-small");
-                            }
+                    var contentarea = element.querySelector(".contentarea");
+                    if (contentarea) {
+                        var width = contentarea.clientWidth;
+                        var height = contentarea.clientHeight - 8;
+                        WinJS.Utilities.removeClass(element, "view-size-small");
+                        WinJS.Utilities.removeClass(element, "view-size-medium-small");
+                        WinJS.Utilities.removeClass(element, "view-size-medium");
+                        WinJS.Utilities.removeClass(element, "view-size-bigger");
+                        if (width > 900) {
+                            WinJS.Utilities.removeClass(contentarea, "view-size-small");
+                            WinJS.Utilities.addClass(contentarea, "view-size-bigger");
+                        } else {
+                            WinJS.Utilities.removeClass(contentarea, "view-size-bigger");
+                            WinJS.Utilities.addClass(contentarea, "view-size-small");
                         }
+                    }
                     that.inResize = 0;
                 });
             }

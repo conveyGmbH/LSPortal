@@ -334,7 +334,7 @@
                         that.saveData(function (response) {
                             AppBar.busy = false;
                             // erst savedata und dann loaddata
-                        that.loadData();
+                            that.loadData();
                             Log.print(Log.l.trace, "event text saved");
                         }, function (errorResponse) {
                             AppBar.busy = false;

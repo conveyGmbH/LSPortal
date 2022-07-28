@@ -170,7 +170,7 @@
                                         }
                                     }
                                 });
-                            }      
+                            }
                         }
                     }
                     Log.ret(Log.l.trace);
@@ -340,8 +340,8 @@
                         }
                         that.loading = false;
                     }, {
-                            FairMandantVeranstID: veranstid
-                        }
+                        FairMandantVeranstID: veranstid
+                    }
                     );
                 });
                 Log.ret(Log.l.trace);
@@ -358,9 +358,9 @@
             });
             Log.ret(Log.l.trace);
         }, {
-                nextUrl: null,
-                loading: false,
-                maildocuments: null
-            })
+            nextUrl: null,
+            loading: false,
+            maildocuments: null
+        })
     });
 })();

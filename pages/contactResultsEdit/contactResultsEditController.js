@@ -85,7 +85,7 @@
             }
             this.hasDoc = hasDoc;
 
-           var removePhoto = function () {
+            var removePhoto = function () {
                 if (photoview) {
                     var photoItemBox = photoview.querySelector("#contactPhoto .win-itembox");
                     if (photoItemBox) {
@@ -97,22 +97,22 @@
                     }
                 }
             }
-            
+
             var getDateObject = function (modifyDate, editDate) {
                 var dateString, milliseconds, time;
                 if (modifyDate) {
-                     dateString = modifyDate.replace("\/Date(", "").replace(")\/", "");
-                     milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
-                     time = new Date(milliseconds);
-                     that.binding.modifyData = ("0" + time.getDate()).slice(-2) + "." + ("0" + (time.getMonth() + 1)).slice(-2) + "." + time.getFullYear();
-                     Log.call(Log.l.trace, "Contact.Controller.");
+                    dateString = modifyDate.replace("\/Date(", "").replace(")\/", "");
+                    milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
+                    time = new Date(milliseconds);
+                    that.binding.modifyData = ("0" + time.getDate()).slice(-2) + "." + ("0" + (time.getMonth() + 1)).slice(-2) + "." + time.getFullYear();
+                    Log.call(Log.l.trace, "Contact.Controller.");
                 }
                 if (editDate) {
-                     dateString = editDate.replace("\/Date(", "").replace(")\/", "");
-                     milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
-                     time = new Date(milliseconds);
-                     that.binding.editData = ("0" + time.getDate()).slice(-2) + "." + ("0" + (time.getMonth() + 1)).slice(-2) + "." + time.getFullYear();
-                     Log.call(Log.l.trace, "Contact.Controller.");
+                    dateString = editDate.replace("\/Date(", "").replace(")\/", "");
+                    milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
+                    time = new Date(milliseconds);
+                    that.binding.editData = ("0" + time.getDate()).slice(-2) + "." + ("0" + (time.getMonth() + 1)).slice(-2) + "." + time.getFullYear();
+                    Log.call(Log.l.trace, "Contact.Controller.");
                 }
                 Log.call(Log.l.trace, "Contact.Controller.");
             };
@@ -244,7 +244,7 @@
                 }
             }
             this.calcImagePosition = calcImagePosition;
-            
+
             var showPhoto = function () {
                 if (photoview) {
                     var photoItemBox = photoview.querySelector("#contactPhoto .win-itembox");
@@ -382,7 +382,7 @@
                     }
                 }
                 AppBar.triggerDisableHandlers();
-            } 
+            }
 
             var setDataContact = function(newDataContact) {
                 var prevNotifyModified = AppBar.notifyModified;
@@ -459,7 +459,7 @@
                 Log.ret(Log.l.trace);
             }
             this.setRecordId = setRecordId;
-            
+
             var getAudioData = function () {
                 Log.call(Log.l.trace, "Contact.Controller.");
                 AppData.setErrorMsg(that.binding);
@@ -536,7 +536,7 @@
                         AppBar.busy = false;
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, { KontaktID: recordId });
-                } 
+                }
                 Log.ret(Log.l.trace);
                 return ret;
             }
@@ -589,7 +589,7 @@
                         if (typeof error === "function") {
                             error(errorResponse);
                         }
-                        }, { KontaktID: recordId});
+                    }, { KontaktID: recordId});
                 } else {
                     var err = { status: 0, statusText: "no record selected" };
                     error(err);
@@ -605,16 +605,16 @@
                 AppData.setErrorMsg(that.binding);
                 var recordId = getRecordId();
                 if (recordId) {
-                        AppData.setErrorMsg(that.binding);
-                        AppData.call("PRC_DeleteKontakt", {
-                            pKontaktID: recordId
-                        }, function (json) {
-                            Log.print(Log.l.info, "call success! ");
-                            var master = Application.navigator.masterControl;
-                            master.controller.deleteContactLineInList();
-                        }, function (error) {
-                            Log.print(Log.l.error, "call error");
-                        });
+                    AppData.setErrorMsg(that.binding);
+                    AppData.call("PRC_DeleteKontakt", {
+                        pKontaktID: recordId
+                    }, function (json) {
+                        Log.print(Log.l.info, "call success! ");
+                        var master = Application.navigator.masterControl;
+                        master.controller.deleteContactLineInList();
+                    }, function (error) {
+                        Log.print(Log.l.error, "call error");
+                    });
                 } else {
                     var err = { status: 0, statusText: "no record selected" };
                     error(err);
@@ -669,7 +669,7 @@
                     var confirmTitle = getResourceText("contact.questionDelete");
                     confirm(confirmTitle, function (result) {
                         if (result) {
-                            Log.print(Log.l.trace,"clickDelete: user choice OK");
+                            Log.print(Log.l.trace, "clickDelete: user choice OK");
                             deleteData(function(response) {
                                 // delete OK - goto start
                             }, function(errorResponse) {
@@ -1043,7 +1043,7 @@
                                     //if (json.d.wFormat === 1) {
                                     //    docContent = json.d.PrevContentDOCCNT2;
                                     //} else {
-                                        docContent = json.d.DocContentDOCCNT1;
+                                    docContent = json.d.DocContentDOCCNT1;
                                     //}
                                     if (docContent) {
                                         var sub = docContent.search("\r\n\r\n");
@@ -1176,7 +1176,6 @@
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
             }).then(function () {
-                
                 Log.print(Log.l.trace, "Checking if there is a PDF-File!");
             }).then(function () {
                 AppBar.notifyModified = true;

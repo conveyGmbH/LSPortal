@@ -57,7 +57,7 @@
                 AppData.call("PRC_GetLangText", {
                     pTextID: resultmessageid,
                     pLanguageID: lang
-            }, function (json) {
+                }, function (json) {
                     Log.print(Log.l.info, "call success! ");
                     errorMsg.data.error.message.value = json.d.results[0].ResultText;
                     AppData.setErrorMsg(that.binding, errorMsg);
@@ -212,7 +212,7 @@
                             Log.print(Log.l.info, "employeeView insert: success!");
                             // employeeView returns object already parsed from json file in response
                             if (json && json.d) {
-                                    json.d.Login = AppData.generalData.userName;
+                                json.d.Login = AppData.generalData.userName;
                                 that.setDataEmployee(json.d);
                                 that.binding.dataEmployee.LogInNameBeforeAtSymbole = "";
                             }
@@ -221,18 +221,18 @@
                             Log.print(Log.l.error, "error inserting employee");
                             AppBar.busy = false;
                             AppData.setErrorMsg(that.binding, errorResponse);
-                            }, newEmployee).then(function () {
-                        /* Mitarbeiter Liste neu laden und Selektion auf neue Zeile setzen */
-                        var master = Application.navigator.masterControl;
-                        if (master && master.controller && master.controller.binding) {
-                            master.controller.binding.employeeId = that.binding.dataEmployee.MitarbeiterVIEWID;
-                            master.controller.loadData().then(function () {
-                                //master.controller.loadData(master.controller.binding.employeeId).then(function () {
-                                master.controller.selectRecordId(master.controller.binding.employeeId);
-                                //});
-                            });
-                        }
-                    });
+                        }, newEmployee).then(function () {
+                            /* Mitarbeiter Liste neu laden und Selektion auf neue Zeile setzen */
+                            var master = Application.navigator.masterControl;
+                            if (master && master.controller && master.controller.binding) {
+                                master.controller.binding.employeeId = that.binding.dataEmployee.MitarbeiterVIEWID;
+                                master.controller.loadData().then(function () {
+                                    //master.controller.loadData(master.controller.binding.employeeId).then(function () {
+                                    master.controller.selectRecordId(master.controller.binding.employeeId);
+                                    //});
+                                });
+                            }
+                        });
                     }, function (errorResponse) {
                         Log.print(Log.l.error, "error saving employee");
                     });
@@ -543,7 +543,7 @@
                             return WinJS.Promise.as();
                         }
                     }
-                    }).then(function () {
+                }).then(function () {
                     AppBar.notifyModified = true;
                     return WinJS.Promise.as();
                 });
@@ -578,7 +578,7 @@
                                         }
                                     }
                                     Application.navigateById("dbinit", event);
-                                } 
+                                }
                                 var empRolesFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("empRoles"));
                                 if (empRolesFragmentControl && empRolesFragmentControl.controller) {
                                     empRolesFragmentControl.controller.saveData(function () {
@@ -610,7 +610,7 @@
                                 var recordid = AppData.getRecordId("Mitarbeiter");
                                 if (recordid === dataEmployee.MitarbeiterVIEWID)
                                     if (AppData._persistentStates.odata.login !== that.binding.dataEmployee.Login || that.binding.dataEmployee.Password !== prevPassword) {
-                                    ret = new WinJS.Promise.as().then(function () {
+                                        ret = new WinJS.Promise.as().then(function () {
                                             AppData._persistentStates.privacyPolicyFlag = false;
                                             if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
                                                 AppHeader.controller.binding.userData = {};
@@ -619,8 +619,8 @@
                                                 }
                                             }
                                             Application.navigateById("dbinit", event);
-                                    });
-                                }
+                                        });
+                                    }
                             });
                         } else {
                             Log.print(Log.l.info, "not supported");
@@ -638,7 +638,7 @@
                 } else {
                     ret = new WinJS.Promise.as().then(function () {
                         if (typeof complete === "function") {
-                        complete(dataEmployee);
+                            complete(dataEmployee);
                         }
                     });
                 }

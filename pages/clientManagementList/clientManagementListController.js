@@ -166,7 +166,7 @@
                 Log.ret(Log.l.trace);
             }
             this.selectRecordId = selectRecordId;
-            
+
             var scopeFromRecordId = function (recordId) {
                 var i;
                 Log.call(Log.l.trace, "ClientManagementList.Controller.", "recordId=" + recordId);
@@ -221,20 +221,20 @@
                                             AppBar.scope.saveData(function(response) {
                                                 Log.print(Log.l.trace, "update mandant");
                                                 if (curPageId === "clientManagement") {
-                                            AppBar.scope.binding.saveFlag = true;
-                                            if (typeof AppBar.scope.loadData === "function") {
+                                                    AppBar.scope.binding.saveFlag = true;
+                                                    if (typeof AppBar.scope.loadData === "function") {
                                                         AppData.setRecordId("FairMandantVIEW_20582",
                                                             that.binding.clientId);
-                                                AppBar.scope.loadData(that.binding.clientId);
+                                                        AppBar.scope.loadData(that.binding.clientId);
                                                     } else {
                                                         Application.navigateById("clientManagement");
-                                            }
-                                            }
+                                                    }
+                                                }
                                                 if (response && response.FairMandantVIEWID) {
                                                     that.loadData(response.FairMandantVIEWID).then(function() {
                                                         master.controller.selectRecordId(response.FairMandantVIEWID);
                                                     });
-                                        }
+                                                }
                                             });
                                         } else {
                                             if (curPageId === "clientManagementLicenses") {
@@ -244,10 +244,10 @@
                                                 } else {
                                                     Application.navigateById("clientManagementLicenses");
                                                 }
-                                                }
                                             }
                                         }
-                                    });
+                                    }
+                                });
                             }
                         }
                     }
@@ -514,7 +514,6 @@
                 return that.loadData();
             }).then(function () {
                 Log.print(Log.l.trace, "Record selected");
-                
             });
             Log.ret(Log.l.trace);
         })

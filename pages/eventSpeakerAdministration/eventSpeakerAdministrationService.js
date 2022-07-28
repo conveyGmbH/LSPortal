@@ -138,7 +138,7 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            deleteRecord: function (complete, error, recordId) {
+            deleteRecord: function(complete, error, recordId) {
                 Log.call(Log.l.trace, "EventSpeakerAdministration.eventSpeakerTable.");
                 // Mitarbeiter need to be deleted via DELETE Trigger!
                 var ret = EventSpeakerAdministration._eventSpeakerTable.deleteRecord(function () {

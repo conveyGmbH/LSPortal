@@ -18,8 +18,8 @@
                 mailingtrackingdata: getEmptyDefaultValue(MailingTracking.MailTrackingDialogView.defaultValue),
                 statusheader: "",
                 senddate: new Date().toLocaleString(),
-                mailsendoptdata : null
-        }, commandList]);
+                mailsendoptdata: null
+            }, commandList]);
             var that = this;
 
             var exhibitorcategory = pageElement.querySelector("#exhibitorcategory");
@@ -32,13 +32,13 @@
 
             var stati = [{ TITLE: 'READY' }, { TITLE: 'SENT' }];
             var exhibitorcategorys = [{ TITLE: "APP" }, { TITLE: "SERVICE" }, { TITLE: "IPAD" }, { TITLE: "RTW" }];
-            var mailsendoptions = [{ TITLE: all, VALUE : null }, { TITLE: once, VALUE : 1 }];
+            var mailsendoptions = [{ TITLE: all, VALUE: null }, { TITLE: once, VALUE: 1 }];
 
             // select combo
             var initSprache = pageElement.querySelector("#InitSprache");
             var textComment = pageElement.querySelector(".input_text_comment");
 
-            var setDisabledFields = function() {
+            var setDisabledFields = function () {
                 Log.call(Log.l.trace, "MailingTracking.Controller.");
                 if (mailtype) {
                     WinJS.Utilities.addClass(mailtype, "mandatory-bkg");
@@ -49,7 +49,7 @@
             }
             this.setDisabledFields = setDisabledFields;
 
-            
+
             var getFieldEntries = function (index) {
                 Log.call(Log.l.trace, "EmpRoles.Controller.");
                 var ret = {};
@@ -69,8 +69,8 @@
             if (mailsendoptiondata && mailsendoptiondata.winControl) {
                 mailsendoptiondata.winControl.data = new WinJS.Binding.List(mailsendoptions);
             }
-           
-            var getTimeToSend = function(rawdate) {
+
+            var getTimeToSend = function (rawdate) {
                 Log.call(Log.l.trace, "MailingTracking.Controller.");
                 var dateString = rawdate.replace("\/Date(", "").replace(")\/", "");
                 var milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000; //
@@ -95,7 +95,7 @@
                     day = (day < 10 ? '0' + day : day);
                     hour = (hour < 10 ? '0' + hour : hour);
                     min = (min < 10 ? '0' + min : min);
-                    that.binding.statusheader = sendTxt + ': ' +  day + '.' + month + '.' + year + ' ' + hour + ':' + min;
+                    that.binding.statusheader = sendTxt + ': ' + day + '.' + month + '.' + year + ' ' + hour + ':' + min;
                 } else {
                     Log.call(Log.l.trace, "Not send!");
                 }
@@ -124,12 +124,12 @@
                 return mailingtrackingdata;
             };
             this.setMailingTrackingData = setMailingTrackingData;
-            
+
             var resultConverter = function (item, index) {
                 if (item.SchedultedSendTS) {
                     that.getTimeToSend(item.SchedultedSendTS);
                 }
-                
+
             };
             this.resultConverter = resultConverter;
 
@@ -164,7 +164,7 @@
                     });
             };
             this.saveData = saveData;
-            
+
             // Then, do anything special on this page
             this.eventHandlers = {
                 clickBack: function (event) {
@@ -242,7 +242,7 @@
                             Log.print(Log.l.trace, "initSpracheView: success!");
                             if (json && json.d && json.d.results) {
                                 var results = json.d.results;
-                                
+
                                 // Now, we call WinJS.Binding.List to get the bindable list
                                 if (initSprache && initSprache.winControl) {
                                     initSprache.winControl.data = new WinJS.Binding.List(results);
@@ -279,9 +279,9 @@
                                 Log.print(Log.l.trace, "MailingTracking: success!");
                             }
                         }, function (errorResponse) {
-                                // called asynchronously if an error occurs
-                                // or server returns response with an error status.
-                                AppData.setErrorMsg(that.binding, errorResponse);
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
                         }, recordId);
                     } else {
                         return WinJS.Promise.as();
@@ -306,6 +306,6 @@
             });
             Log.ret(Log.l.trace);
         }, {
-            })
+        })
     });
 })();

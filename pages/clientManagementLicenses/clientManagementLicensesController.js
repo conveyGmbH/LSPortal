@@ -289,12 +289,12 @@
                                         that.binding.licenseId = item.data.MandantTempLizenzVIEWID;
                                         that.binding.clientId = item.data.FairMandantID;
                                         that.binding.selIdx = item.index;
-                                        } else {
+                                    } else {
                                         if (that.binding.editLicensesShowFlag === false) {
                                             that.binding.editLicensesShowFlag = true;
                                         } else {
-                                        that.binding.editLicensesShowFlag = false;
-                                    }
+                                            that.binding.editLicensesShowFlag = false;
+                                        }
                                     }
                                 });
                             }

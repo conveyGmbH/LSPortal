@@ -31,7 +31,7 @@
             this.controller = new GenDataModDetails.Controller(element, commandList);
             Log.ret(Log.l.trace);
         },
-        
+
         unload: function () {
             Log.call(Log.l.trace, pageName + ".");
             // TODO: Respond to navigations away from this page.

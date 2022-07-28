@@ -186,7 +186,7 @@
                 item.EndDatum = that.getDateObject(item.EndDatum);
             }
             this.resultConverter = resultConverter;
-            
+
             // define handlers
             this.eventHandlers = {
                 clickBack: function (event) {
@@ -433,7 +433,7 @@
                 return ret;
             };
             this.loadData = loadData;
-            
+
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.creatingEventsCategory();

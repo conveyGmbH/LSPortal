@@ -134,7 +134,7 @@
                 Log.ret(Log.l.trace);
             }
             this.selectRecordId = selectRecordId;
-            
+
             var resultConverter = function (item, index) {
                 item.index = index;
             }
@@ -167,20 +167,20 @@
                                         if (AppBar.scope._element &&
                                             AppBar.scope._element.id === "mailingController") {
                                             if (typeof AppBar.scope.saveData === "function") {
-                                                    AppBar.scope.saveData(function (response) {
-                                                        // called asynchronously if ok
-                                                        that.binding.mailingId = item.data.MaildokumentVIEWID;
-                                                        AppData.setRecordId("Maildokument", that.binding.mailingId);
-                                                        if (typeof AppBar.scope.loadData === "function") {
-                                                            // set flag called
-                                                            AppBar.scope.loadData();
-                                            }
+                                                AppBar.scope.saveData(function (response) {
+                                                    // called asynchronously if ok
+                                                    that.binding.mailingId = item.data.MaildokumentVIEWID;
+                                                    AppData.setRecordId("Maildokument", that.binding.mailingId);
+                                                    if (typeof AppBar.scope.loadData === "function") {
+                                                        // set flag called
+                                                        AppBar.scope.loadData();
+                                                    }
                                                 }, function (errorResponse) {
-                                                        that.selectRecordId(that.binding.mailingId);
+                                                    that.selectRecordId(that.binding.mailingId);
                                                 });
                                             }
-                                            }
-                                        } else {
+                                        }
+                                    } else {
                                         if (typeof AppBar.scope.loadData === "function") {
                                             AppBar.scope.loadData();
                                         }
@@ -296,24 +296,24 @@
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                     return MailingList.MaildokumentView.select(function (json) {
-                            // this callback will be called asynchronously
-                            // when the response is available
-                            AppData.setErrorMsg(that.binding);
-                            Log.print(Log.l.trace, "MailingList: success!");
-                            // employeeView returns object already parsed from json file in response
-                            if (json && json.d && json.d.results && json.d.results.length > 0) {
-                                that.nextUrl = MailingList.MaildokumentView.getNextUrl(json);
-                                var results = json.d.results;
-                                
-                                that.binding.count = results.length;
-                                
-                                that.maildocuments = new WinJS.Binding.List(results);
+                        // this callback will be called asynchronously
+                        // when the response is available
+                        AppData.setErrorMsg(that.binding);
+                        Log.print(Log.l.trace, "MailingList: success!");
+                        // employeeView returns object already parsed from json file in response
+                        if (json && json.d && json.d.results && json.d.results.length > 0) {
+                            that.nextUrl = MailingList.MaildokumentView.getNextUrl(json);
+                            var results = json.d.results;
 
-                                if (listView.winControl) {
-                                    // add ListView dataSource
-                                    listView.winControl.itemDataSource = that.maildocuments.dataSource;
-                                }
-                                Log.print(Log.l.trace, "Data loaded");
+                            that.binding.count = results.length;
+
+                            that.maildocuments = new WinJS.Binding.List(results);
+
+                            if (listView.winControl) {
+                                // add ListView dataSource
+                                listView.winControl.itemDataSource = that.maildocuments.dataSource;
+                            }
+                            Log.print(Log.l.trace, "Data loaded");
                             var recordID = AppData.getRecordId("Maildokument");
                             if (recordID) {
                                 WinJS.Promise.timeout(0).then(function () {
@@ -328,28 +328,14 @@
                                     });
                                 }
                             }
-                            } else {
-                                that.binding.count = 0;
-                                that.nextUrl = null;
-                                that.maildocuments = null;
-                                if (listView.winControl) {
-                                    // add ListView dataSource
-                                    listView.winControl.itemDataSource = null;
-                                }
-                                progress = listView.querySelector(".list-footer .progress");
-                                counter = listView.querySelector(".list-footer .counter");
-                                if (progress && progress.style) {
-                                    progress.style.display = "none";
-                                }
-                                if (counter && counter.style) {
-                                    counter.style.display = "inline";
-                                }
-                                that.loading = false;
+                        } else {
+                            that.binding.count = 0;
+                            that.nextUrl = null;
+                            that.maildocuments = null;
+                            if (listView.winControl) {
+                                // add ListView dataSource
+                                listView.winControl.itemDataSource = null;
                             }
-                        }, function (errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
                             progress = listView.querySelector(".list-footer .progress");
                             counter = listView.querySelector(".list-footer .counter");
                             if (progress && progress.style) {
@@ -359,17 +345,31 @@
                                 counter.style.display = "inline";
                             }
                             that.loading = false;
-                        }, {
-                            SpecType: ["NULL",1]
                         }
-                    ); 
-                }).then(function() {
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                        progress = listView.querySelector(".list-footer .progress");
+                        counter = listView.querySelector(".list-footer .counter");
+                        if (progress && progress.style) {
+                            progress.style.display = "none";
+                        }
+                        if (counter && counter.style) {
+                            counter.style.display = "inline";
+                        }
+                        that.loading = false;
+                    }, {
+                        SpecType: ["NULL", 1]
+                    }
+                    );
+                }).then(function () {
                     if (that.binding.count === 0) {
                         if (typeof AppBar.scope.insertMailing === "function") {
                             AppBar.scope.insertMailing();
                         }
                     }
-                 });
+                });
                 Log.ret(Log.l.trace);
                 return ret;
             };
