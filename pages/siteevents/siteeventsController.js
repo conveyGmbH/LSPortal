@@ -265,7 +265,7 @@
                     Log.print(Log.l.trace, "calling select SiteEvents.VeranstaltungView...");
                     var nextUrl = that.nextUrl;
                     that.nextUrl = null;
-                    SiteEvents.VeranstaltungView.selectNext(function(json) { //json is undefined
+                    SiteEvents.VeranstaltungView.selectNext(function (json) { //json is undefined
                         // this callback will be called asynchronously
                         // when the response is available
                         Log.print(Log.l.trace, "SiteEvents.VeranstaltungView: success!");
@@ -273,7 +273,7 @@
                         if (json && json.d && that.siteeventsdata) {
                             that.nextUrl = SiteEvents.VeranstaltungView.getNextUrl(json);
                             var results = json.d.results;
-                            results.forEach(function(item, index) {
+                            results.forEach(function (item, index) {
                                 that.resultConverter(item, that.binding.count);
                                 that.binding.count = that.siteeventsdata.push(item);
                                 that.siteeventsdataraw.push(item);

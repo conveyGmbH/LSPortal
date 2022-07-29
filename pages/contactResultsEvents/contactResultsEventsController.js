@@ -17,7 +17,7 @@
                 count: 0,
                 dataContact: null
             }, commandList]);
-            
+
             var that = this;
 
             var table = pageElement.querySelector("#tableId");
@@ -43,16 +43,17 @@
             };
             this.getDateObject = getDateObject;
 
-            var setDataContact = function(data) {
+            var setDataContact = function (data) {
                 Log.call(Log.l.trace, "ContactResultsEvents.Controller.");
                 that.binding.dataContact = data;
+                that.binding.dataContact.fullName = "";
                 if (data.Anrede) {
                     that.binding.dataContact.fullName = data.Anrede + " ";
                 }
-                if (data.Vorname !== "undefined" || data.Vorname !== null) {
+                if (data.Vorname) {
                     that.binding.dataContact.fullName += data.Vorname + " ";
                 }
-                if (data.Name !== "undefined" || data.Name !== null) {
+                if (data.Name) {
                     that.binding.dataContact.fullName += data.Name;
                 }
             }
@@ -219,7 +220,7 @@
                     return true;
                 }
             };
-            
+
             var resultConverter = function (item, index) {
                 item.index = index;
                 if (item.CreatorName === null) {
@@ -233,9 +234,9 @@
                     tableBody.winControl.data) {
                     that.binding.count = tableBody.winControl.data.push(item);
                 }
-             }
+            }
             this.resultConverter = resultConverter;
-            
+
             var loadData = function () {
                 Log.call(Log.l.trace, "ContactResultsCriteria.Controller.");
                 AppData.setErrorMsg(that.binding);
@@ -243,34 +244,31 @@
                     var recordId = getRecordId();
                     Log.print(Log.l.trace, "calling select contactView...");
                     return ContactResultsEvents.contactView.select(function (json) {
-                            AppData.setErrorMsg(that.binding);
-                            Log.print(Log.l.trace, "contactView: success!");
-                            if (json && json.d) {
-                                // now always edit!
-                                var result = json.d;
-                                that.setDataContact(result);
+                        AppData.setErrorMsg(that.binding);
+                        Log.print(Log.l.trace, "contactView: success!");
+                        if (json && json.d) {
+                            // now always edit!
+                            var result = json.d;
+                            that.setDataContact(result);
                         }
-                        },
-                        function (errorResponse) {
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        }, recordId);
+                    }, function (errorResponse) {
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    }, recordId);
                 }).then(function () {
                     Log.print(Log.l.trace, "calling select contactView...");
                     var recordId = getRecordId();
-                    return ContactResultsEvents.incidentView.select(function(json) {
-                            AppData.setErrorMsg(that.binding);
-                            Log.print(Log.l.trace, "contactView: success!");
-                            if (json && json.d && json.d.results) {
-                                var results = json.d.results;
-                                results.forEach(function (item, index) {
-                                    that.resultConverter(item, index);
-                                });
-                            }
-                        },
-                        function(errorResponse) {
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        },
-                        { KontaktID: recordId, LanguageSpecID: AppData.getLanguageId() });
+                    return ContactResultsEvents.incidentView.select(function (json) {
+                        AppData.setErrorMsg(that.binding);
+                        Log.print(Log.l.trace, "contactView: success!");
+                        if (json && json.d && json.d.results) {
+                            var results = json.d.results;
+                            results.forEach(function (item, index) {
+                                that.resultConverter(item, index);
+                            });
+                        }
+                    }, function (errorResponse) {
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    }, { KontaktID: recordId, LanguageSpecID: AppData.getLanguageId() });
                 }).then(function () {
                     AppBar.notifyModified = true;
                     return WinJS.Promise.as();
@@ -295,7 +293,7 @@
             });
             Log.ret(Log.l.trace);
         }, {
-                
+
         })
     });
-})(); 
+})();

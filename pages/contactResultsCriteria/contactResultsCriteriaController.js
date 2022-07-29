@@ -18,7 +18,7 @@
                 dataContact: null,
                 dataContactCriteria: null
             }, commandList]);
-            
+
             var that = this;
 
             var initPrio = pageElement.querySelector("#InitPrio");
@@ -32,16 +32,17 @@
             }
             this.getRecordId = getRecordId;
 
-            var setDataContact = function(data) {
+            var setDataContact = function (data) {
                 Log.call(Log.l.trace, "ContactResultsCriteria.Controller.");
                 that.binding.dataContact = data;
+                that.binding.dataContact.fullName = "";
                 if (data.Anrede) {
                     that.binding.dataContact.fullName = data.Anrede + " ";
-                } else
-                if (data.Vorname !== "undefined" || data.Vorname !== null) {
+                }
+                if (data.Vorname) {
                     that.binding.dataContact.fullName += data.Vorname + " ";
                 }
-                if (data.Name !== "undefined" || data.Name !== null) {
+                if (data.Name) {
                     that.binding.dataContact.fullName += data.Name;
                 }
             }
@@ -125,23 +126,20 @@
                 }
                 if (dataContactCriteria && AppBar.modified && !AppBar.busy) {
                     var recordId = getRecordId();
-                        AppBar.busy = true;
-                        ret = ContactResultsCriteria.kontaktKriterienView.update(function(response) {
-                            AppBar.busy = false;
-                            // called asynchronously if ok
-                            Log.print(Log.l.info, "ContactResultsCriteria update: success!");
-                            AppBar.modified = false;
-                            complete(response);
-                        },
-                        function(errorResponse) {
-                            AppBar.busy = false;
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                            error(errorResponse);
-                        },
-                        recordId,
-                        dataContactCriteria);
+                    AppBar.busy = true;
+                    ret = ContactResultsCriteria.kontaktKriterienView.update(function (response) {
+                        AppBar.busy = false;
+                        // called asynchronously if ok
+                        Log.print(Log.l.info, "ContactResultsCriteria update: success!");
+                        AppBar.modified = false;
+                        complete(response);
+                    }, function (errorResponse) {
+                        AppBar.busy = false;
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                        error(errorResponse);
+                    }, recordId, dataContactCriteria);
                 } else if (AppBar.busy) {
                     ret = WinJS.Promise.timeout(100).then(function () {
                         return that.saveData(complete, error);
@@ -160,9 +158,9 @@
 
             var resultConverter = function (item, index) {
                 item.index = index;
-             }
+            }
             this.resultConverter = resultConverter;
-            
+
             var loadData = function () {
                 Log.call(Log.l.trace, "ContactResultsCriteria.Controller.");
                 AppData.setErrorMsg(that.binding);
@@ -181,7 +179,7 @@
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
-                        }, {LanguageSpecID : AppData.getLanguageId()});
+                    }, {LanguageSpecID: AppData.getLanguageId() });
                 }).then(function () {
                     return ContactResultsCriteria.langINKontaktTypView.select(function (json) {
                         Log.print(Log.l.trace, "questionGroupTable: success!");
@@ -198,37 +196,34 @@
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, { LanguageSpecID: AppData.getLanguageId() });
-                    }).then(function () {
+                }).then(function () {
                     var recordId = getRecordId();
                     Log.print(Log.l.trace, "calling select contactView...");
                     return ContactResultsCriteria.contactView.select(function (json) {
-                            AppData.setErrorMsg(that.binding);
-                            Log.print(Log.l.trace, "contactView: success!");
-                            if (json && json.d) {
-                                // now always edit!
-                                var result = json.d;
-                                that.setDataContact(result);
-                            }
-                        },
-                        function (errorResponse) {
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        }, recordId);
+                        AppData.setErrorMsg(that.binding);
+                        Log.print(Log.l.trace, "contactView: success!");
+                        if (json && json.d) {
+                            // now always edit!
+                            var result = json.d;
+                            that.setDataContact(result);
+                        }
+                    }, function (errorResponse) {
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    }, recordId);
                 }).then(function () {
                     Log.print(Log.l.trace, "calling select contactView...");
                     var recordId = getRecordId();
                     return ContactResultsCriteria.kontaktKriterienView.select(function (json) {
-                            AppData.setErrorMsg(that.binding);
-                            Log.print(Log.l.trace, "contactView: success!");
-                            if (json && json.d) {
-                                // now always edit!
-                                var results = json.d.results[0];
-                                that.binding.dataContactCriteria = results;
-                            }
-                        },
-                        function (errorResponse) {
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        },
-                        { KontaktKriterienVIEWID: recordId });
+                        AppData.setErrorMsg(that.binding);
+                        Log.print(Log.l.trace, "contactView: success!");
+                        if (json && json.d) {
+                            // now always edit!
+                            var results = json.d.results[0];
+                            that.binding.dataContactCriteria = results;
+                        }
+                    }, function (errorResponse) {
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    }, { KontaktKriterienVIEWID: recordId });
                 }).then(function () {
                     AppBar.notifyModified = true;
                     return WinJS.Promise.as();
@@ -247,7 +242,7 @@
             });
             Log.ret(Log.l.trace);
         }, {
-                
+
         })
     });
-})(); 
+})();
