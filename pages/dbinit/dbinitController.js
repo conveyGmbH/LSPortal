@@ -296,7 +296,9 @@
                 AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 /*Test wenn Veranstaltung von anderen Browser geändert wird (wechsel)*/
-                delete AppData._persistentStates.allRecIds["Veranstaltung"];
+                if (AppData._persistentStates.allRecIds && typeof AppData._persistentStates.allRecIds["Veranstaltung"] !== "undefined") {
+                    delete AppData._persistentStates.allRecIds["Veranstaltung"];
+                }
                 // now open the DB
                 return that.saveData(function (response) {
                     // called asynchronously if ok
