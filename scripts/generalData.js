@@ -186,14 +186,14 @@
                                 // preset with not-on-site!
                                 AppData._userData.Present = 0;
                             }
-                            /*if (typeof AppHeader === "object" &&
+                            if (typeof AppHeader === "object" &&
                                 AppHeader.controller && AppHeader.controller.binding) {
                                 AppHeader.controller.binding.userData = AppData._userData;
                                 AppHeader.controller.binding.userMessagesDataCount = AppData._userMessagesData.MessagesCounter;
                                 AppHeader.controller.binding.showNameInHeader = AppData._persistentStates.showNameInHeader;
                                 // Call in homeController
-                                AppHeader.controller.loadData();
-                            }*/
+                                //AppHeader.controller.loadData();
+                            }
                             if (typeof AppBar === "object" && AppBar.scope) {
                                 if (typeof AppBar.scope.updateActions === "function" &&
                                     (!prevUserData ||
