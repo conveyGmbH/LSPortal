@@ -42,7 +42,7 @@
                     });
                     Log.ret(Log.l.trace);
                 },
-                clickChangeUserState: function(event) {
+                clickChangeUserState: function (event) {
                     Log.call(Log.l.trace, "Publish.Controller.");
                     Application.navigateById("userinfo", event);
                     Log.ret(Log.l.trace);
@@ -70,13 +70,13 @@
                     // disabled if not to publish!
                     return !that.binding.generalData.publishFlag;
                 },
-                clickGotoPublish: function() {
+                clickGotoPublish: function () {
                     return false;
                 }
             };
 
             // save data
-            var saveData = function(complete, error) {
+            var saveData = function (complete, error) {
                 Log.call(Log.l.trace, "Publish.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret;
@@ -92,7 +92,7 @@
                             Log.print(Log.l.info, "questionView update: success!");
                             AppBar.modified = false;
                             complete(response);
-                        }, function(errorResponse) {
+                        }, function (errorResponse) {
                             AppBar.busy = false;
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
@@ -104,11 +104,11 @@
                         ret = WinJS.Promise.as();
                     }
                 } else if (AppBar.busy) {
-                    ret = WinJS.Promise.timeout(100).then(function() {
+                    ret = WinJS.Promise.timeout(100).then(function () {
                         return that.saveData(complete, error);
                     });
                 } else {
-                    ret = new WinJS.Promise.as().then(function() {
+                    ret = new WinJS.Promise.as().then(function () {
                         complete(dataPublish);
                     });
                 }
@@ -145,7 +145,7 @@
             };
             this.loadData = loadData;
 
-            that.processAll().then(function() {
+            that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
             }).then(function () {
