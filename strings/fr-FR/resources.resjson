@@ -1375,6 +1375,9 @@
     "eventGenSettings.addevent"			: "Ajouter",
     "eventGenSettings.comment"			: "Créer et mettre en place vos événements",
     "eventGenSettings.warnmsg"			: "Le champ doit être rempli: ",
+    "eventGenSettings.registergroupheader"			: "ENREGISTREMENT",
+    "eventGenSettings.speakergroupheader"			: "SPEAKER",
+    "eventGenSettings.sessiongroupheader"			: "SESSION",
 
     "eventSpeakerAdministration.speaker"    : "Membre",
     "eventSpeakerAdministration.speakerDelete": "Souhaitez-vous supprimer le devoir",
