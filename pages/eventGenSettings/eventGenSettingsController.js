@@ -17,7 +17,8 @@
             Application.Controller.apply(this, [pageElement, {
                 dataEvent: getEmptyDefaultValue(EventGenSettings.conferenceExhibitorView.defaultValue),
                 newEventData: getEmptyDefaultValue(EventGenSettings.conferenceExhibitorView.newEventDefault),
-                websiteData: getEmptyDefaultValue(EventGenSettings.mandantStartView.defaultValue)
+                websiteData: getEmptyDefaultValue(EventGenSettings.mandantStartView.defaultValue),
+                maileditlabel: getResourceText("mailingList.maileditlabel"),
             }, commandList]);
 
             var that = this;

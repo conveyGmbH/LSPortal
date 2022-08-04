@@ -115,251 +115,156 @@
                             </div>
                             <div class="line-separator"></div>
                             <div class="field_line field_line_odd">
-                                <div class="input_half_left">
-                                    <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventGenSettings.showtype'}"></span>
-                                    <span class="label landscape_only" data-win-res="{textContent: 'eventGenSettings.showtype'}"></span>
-                                    <div class="input_field toggle-switch-parent">
-                                        <div id="showType" class="input_field"
-                                             data-win-control="WinJS.UI.ToggleSwitch"
-                                             data-win-bind="winControl.checked: dataEvent.ShowType; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                             onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
-                                        </div>
+                                <!--REGISTRIERUNG-->
+                                <span class="toogle_group_header" data-win-res="{textContent: 'eventGenSettings.registergroupheader'}"></span>
+                                <div class="line-separator"></div>
+                                <span class="label landscape_only toggle" data-win-res="{textContent: 'eventGenSettings.showreg'}"></span>
+                                <div class="input_field_toggle_parent toggle-switch-parent">
+                                    <div id="showType" class="input_field_toggle"
+                                         data-win-control="WinJS.UI.ToggleSwitch"
+                                         data-win-bind="winControl.checked: dataEvent.ShowType; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                                         onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
                                     </div>
                                 </div>
-                                <div class="input_half_right">
-                                    <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventGenSettings.showreg'}"></span>
-                                    <span class="label landscape_only" data-win-res="{textContent: 'eventGenSettings.showreg'}"></span>
-                                    <div class="input_field toggle-switch-parent">
-                                        <div id="showReg" class="input_field"
-                                             data-win-control="WinJS.UI.ToggleSwitch"
-                                             data-win-bind="winControl.checked: dataEvent.ShowReg; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                             onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
-                                        </div>
+                                <span class="label landscape_only toggle" data-win-res="{textContent: 'eventGenSettings.requirereg'}"></span>
+                                <div class="input_field_toggle_parent toggle-switch-parent">
+                                    <div id="requireReg" class="input_field_toggle"
+                                         data-win-control="WinJS.UI.ToggleSwitch"
+                                         data-win-bind="winControl.checked: dataEvent.RequireReg; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                                         onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
                                     </div>
                                 </div>
-                            </div>
-                            <div class="field_line field_line_even">
-                                <div class="input_half_left">
-                                    <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventGenSettings.requirereg'}"></span>
-                                    <span class="label landscape_only" data-win-res="{textContent: 'eventGenSettings.requirereg'}"></span>
-                                    <div class="input_field toggle-switch-parent">
-                                        <div id="requireReg" class="input_field"
-                                             data-win-control="WinJS.UI.ToggleSwitch"
-                                             data-win-bind="winControl.checked: dataEvent.RequireReg; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                             onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
-                                        </div>
+                                <span class="label landscape_only toggle" data-win-res="{textContent: 'eventGenSettings.acceptreg'}"></span>
+                                <div class="input_field_toggle_parent toggle-switch-parent">
+                                    <div id="acceptRec" class="input_field_toggle"
+                                         data-win-control="WinJS.UI.ToggleSwitch"
+                                         data-win-bind="winControl.checked: dataEvent.AcceptRec; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                                         onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
                                     </div>
                                 </div>
-                                <div class="input_half_right">
-                                    <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventGenSettings.acceptreg'}"></span>
-                                    <span class="label landscape_only" data-win-res="{textContent: 'eventGenSettings.acceptreg'}"></span>
-                                    <div class="input_field toggle-switch-parent">
-                                        <div id="acceptRec" class="input_field"
-                                             data-win-control="WinJS.UI.ToggleSwitch"
-                                             data-win-bind="winControl.checked: dataEvent.AcceptRec; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                             onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
-                                        </div>
+                                <!--SPEAKER-->
+                                <span class="toogle_group_header" data-win-res="{textContent: 'eventGenSettings.speakergroupheader'}"></span>
+                                <div class="line-separator"></div>
+                                <span class="label landscape_only toggle" data-win-res="{textContent: 'eventGenSettings.speakerfn'}"></span>
+                                <div class="input_field_toggle_parent toggle-switch-parent">
+                                    <div id="speakerFN" class="input_field_toggle"
+                                         data-win-control="WinJS.UI.ToggleSwitch"
+                                         data-win-bind="winControl.checked: dataEvent.SpeakerFN; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                                         onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
                                     </div>
                                 </div>
-                            </div>
-                            <div class="line-separator"></div>
-                            <div class="field_line field_line_odd">
-                                <div class="input_half_left">
-                                    <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventGenSettings.shownames'}"></span>
-                                    <span class="label landscape_only" data-win-res="{textContent: 'eventGenSettings.shownames'}"></span>
-                                    <div class="input_field toggle-switch-parent">
-                                        <div id="showShowNames" class="input_field"
-                                             data-win-control="WinJS.UI.ToggleSwitch"
-                                             data-win-bind="winControl.checked: dataEvent.ShowNames; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                             onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
-                                        </div>
+                                <span class="label landscape_only toggle" data-win-res="{textContent: 'eventGenSettings.speakername'}"></span>
+                                <div class="input_field_toggle_parent toggle-switch-parent">
+                                    <div id="speakerName" class="input_field_toggle"
+                                         data-win-control="WinJS.UI.ToggleSwitch"
+                                         data-win-bind="winControl.checked: dataEvent.SpeakerName; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                                         onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
                                     </div>
                                 </div>
-                                <div class="input_half_right">
-                                    <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventGenSettings.nomemberlist'}"></span>
-                                    <span class="label landscape_only" data-win-res="{textContent: 'eventGenSettings.nomemberlist'}"></span>
-                                    <div class="input_field toggle-switch-parent">
-                                        <div id="showNoMemberList" class="input_field"
-                                             data-win-control="WinJS.UI.ToggleSwitch"
-                                             data-win-bind="winControl.checked: dataEvent.NoMemberList; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                             onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
-                                        </div>
+                                <span class="label landscape_only toggle" data-win-res="{textContent: 'eventGenSettings.speakertitle'}"></span>
+                                <div class="input_field_toggle_parent toggle-switch-parent">
+                                    <div id="speakerTitle" class="input_field_toggle"
+                                         data-win-control="WinJS.UI.ToggleSwitch"
+                                         data-win-bind="winControl.checked: dataEvent.SpeakerTitle; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                                         onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
                                     </div>
                                 </div>
-                            </div>
-                            <div class="field_line field_line_even">
-                                <!--<div class="input_half_left">
-                                    <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventGenSettings.listonlymoderators'}"></span>
-                                    <span class="label landscape_only" data-win-res="{textContent: 'eventGenSettings.listonlymoderators'}"></span>
-                                    <div class="input_field toggle-switch-parent">
-                                        <div id="listOnlyModerators" class="input_field"
-                                             data-win-control="WinJS.UI.ToggleSwitch"
-                                             data-win-bind="winControl.checked: dataEvent.ListOnlyModerators; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                             onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
-                                        </div>
-                                    </div>
-                                </div>-->
-                                <div class="input_half_right">
-                                    <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventGenSettings.sharednotes'}"></span>
-                                    <span class="label landscape_only" data-win-res="{textContent: 'eventGenSettings.sharednotes'}"></span>
-                                    <div class="input_field toggle-switch-parent">
-                                        <div id="sharedNotes" class="input_field"
-                                             data-win-control="WinJS.UI.ToggleSwitch"
-                                             data-win-bind="winControl.checked: dataEvent.SharedNotes; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                             onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
-                                        </div>
+                                <span class="label landscape_only toggle" data-win-res="{textContent: 'eventGenSettings.speakerimage'}"></span>
+                                <div class="input_field_toggle_parent toggle-switch-parent">
+                                    <div id="speakerImage" class="input_field_toggle"
+                                         data-win-control="WinJS.UI.ToggleSwitch"
+                                         data-win-bind="winControl.checked: dataEvent.SpeakerImage; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                                         onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
                                     </div>
                                 </div>
-                            </div>
-                            <div class="line-separator"></div>
-                            <div class="field_line field_line_odd">
-                                <div class="input_half_left">
-                                    <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventGenSettings.allowaudio'}"></span>
-                                    <span class="label landscape_only" data-win-res="{textContent: 'eventGenSettings.allowaudio'}"></span>
-                                    <div class="input_field toggle-switch-parent">
-                                        <div id="showAllowAudio" class="input_field"
-                                             data-win-control="WinJS.UI.ToggleSwitch"
-                                             data-win-bind="winControl.checked: dataEvent.AllowAudio; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                             onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="input_half_right">
-                                    <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventGenSettings.allowvideo'}"></span>
-                                    <span class="label landscape_only" data-win-res="{textContent: 'eventGenSettings.allowvideo'}"></span>
-                                    <div class="input_field toggle-switch-parent">
-                                        <div id="showAllowVideo" class="input_field"
-                                             data-win-control="WinJS.UI.ToggleSwitch"
-                                             data-win-bind="winControl.checked: dataEvent.AllowVideo; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                             onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="field_line field_line_even">
-                                <div class="input_half_left">
-                                    <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventGenSettings.hidesilentvideos'}"></span>
-                                    <span class="label landscape_only" data-win-res="{textContent: 'eventGenSettings.hidesilentvideos'}"></span>
-                                    <div class="input_field toggle-switch-parent">
-                                        <div id="hideSilentVideos" class="input_field"
-                                             data-win-control="WinJS.UI.ToggleSwitch"
-                                             data-win-bind="winControl.checked: dataEvent.HideSilentVideos; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                             onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="input_half_right">
-                                    <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventGenSettings.speakerVideosPinned'}"></span>
-                                    <span class="label landscape_only" data-win-res="{textContent: 'eventGenSettings.speakerVideosPinned'}"></span>
-                                    <div class="input_field toggle-switch-parent">
-                                        <div id="speakerVideosPinned" class="input_field"
-                                             data-win-control="WinJS.UI.ToggleSwitch"
-                                             data-win-bind="winControl.checked: dataEvent.SpeakerVideosPinned; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                             onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="line-separator"></div>
-                            <div class="field_line field_line_odd">
-                                <div class="input_half_left">
-                                    <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventGenSettings.showquestions'}"></span>
-                                    <span class="label landscape_only" data-win-res="{textContent: 'eventGenSettings.showquestions'}"></span>
-                                    <div class="input_field toggle-switch-parent">
-                                        <div id="showQuestions" class="input_field"
-                                             data-win-control="WinJS.UI.ToggleSwitch"
-                                             data-win-bind="winControl.checked: dataEvent.ShowQuestions; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                             onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="input_half_right">
-                                </div>
-                            </div>
-                            <div class="field_line field_line_even">
-                                <div class="input_half_left">
-                                    <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventGenSettings.recordsession'}"></span>
-                                    <span class="label landscape_only" data-win-res="{textContent: 'eventGenSettings.recordsession'}"></span>
-                                    <div class="input_field toggle-switch-parent">
-                                        <div id="showRecordSession" class="input_field"
-                                             data-win-control="WinJS.UI.ToggleSwitch"
-                                             data-win-bind="winControl.checked: dataEvent.RecordSession; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                             onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="input_half_right">
-                                    <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventGenSettings.publishrecording'}"></span>
-                                    <span class="label landscape_only" data-win-res="{textContent: 'eventGenSettings.publishrecording'}"></span>
-                                    <div class="input_field toggle-switch-parent">
-                                        <div id="publishRecording" class="input_field"
-                                             data-win-control="WinJS.UI.ToggleSwitch"
-                                             data-win-bind="winControl.checked: dataEvent.PublishRecording; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                             onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="line-separator"></div>
-                            <div class="field_line field_line_odd">
-                                <div class="input_half_left">
-                                    <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventGenSettings.speakername'}"></span>
-                                    <span class="label landscape_only" data-win-res="{textContent: 'eventGenSettings.speakername'}"></span>
-                                    <div class="input_field toggle-switch-parent">
-                                        <div id="speakerName" class="input_field"
-                                             data-win-control="WinJS.UI.ToggleSwitch"
-                                             data-win-bind="winControl.checked: dataEvent.SpeakerName; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                             onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="input_half_right">
-                                    <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventGenSettings.speakerfn'}"></span>
-                                    <span class="label landscape_only" data-win-res="{textContent: 'eventGenSettings.speakerfn'}"></span>
-                                    <div class="input_field toggle-switch-parent">
-                                        <div id="speakerFN" class="input_field"
-                                             data-win-control="WinJS.UI.ToggleSwitch"
-                                             data-win-bind="winControl.checked: dataEvent.SpeakerFN; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                             onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="field_line field_line_even">
-                                <div class="input_half_left">
-                                    <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventGenSettings.speakerimage'}"></span>
-                                    <span class="label landscape_only" data-win-res="{textContent: 'eventGenSettings.speakerimage'}"></span>
-                                    <div class="input_field toggle-switch-parent">
-                                        <div id="speakerImage" class="input_field"
-                                             data-win-control="WinJS.UI.ToggleSwitch"
-                                             data-win-bind="winControl.checked: dataEvent.SpeakerImage; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                             onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="input_half_right">
-                                    <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventGenSettings.speakertitle'}"></span>
-                                    <span class="label landscape_only" data-win-res="{textContent: 'eventGenSettings.speakertitle'}"></span>
-                                    <div class="input_field toggle-switch-parent">
-                                        <div id="speakerTitle" class="input_field"
-                                             data-win-control="WinJS.UI.ToggleSwitch"
-                                             data-win-bind="winControl.checked: dataEvent.SpeakerTitle; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                             onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="line-separator"></div>
-                            <div class="field_line field_line_odd">
-                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventGenSettings.speakercv'}"></span>
-                                <span class="label landscape_only" data-win-res="{textContent: 'eventGenSettings.speakercv'}"></span>
-                                <div class="input_field toggle-switch-parent">
-                                    <div id="speakerCV" class="input_field"
+                                <span class="label landscape_only toggle" data-win-res="{textContent: 'eventGenSettings.speakercv'}"></span>
+                                <div class="input_field_toggle_parent toggle-switch-parent">
+                                    <div id="speakerCV" class="input_field_toggle"
                                          data-win-control="WinJS.UI.ToggleSwitch"
                                          data-win-bind="winControl.checked: dataEvent.SpeakerCV; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
                                          onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
                                     </div>
                                 </div>
+                            </div>
+                            <div class="field_line field_line_even">
+                                <!--SESSION-->
+                                <span class="toogle_group_header" data-win-res="{textContent: 'eventGenSettings.sessiongroupheader'}"></span>
+                                <div class="line-separator"></div>
+                                <span class="label landscape_only toggle" data-win-res="{textContent: 'eventGenSettings.allowaudio'}"></span>
+                                <div class="input_field_toggle_parent toggle-switch-parent">
+                                    <div id="showAllowAudio" class="input_field_toggle"
+                                         data-win-control="WinJS.UI.ToggleSwitch"
+                                         data-win-bind="winControl.checked: dataEvent.AllowAudio; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                                         onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
+                                    </div>
+                                </div>
+                                <span class="label landscape_only toggle" data-win-res="{textContent: 'eventGenSettings.allowvideo'}"></span>
+                                <div class="input_field_toggle_parent toggle-switch-parent">
+                                    <div id="showAllowVideo" class="input_field_toggle"
+                                         data-win-control="WinJS.UI.ToggleSwitch"
+                                         data-win-bind="winControl.checked: dataEvent.AllowVideo; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                                         onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
+                                    </div>
+                                </div>
+                                <span class="label landscape_only toggle" data-win-res="{textContent: 'eventGenSettings.hidesilentvideos'}"></span>
+                                <div class="input_field_toggle_parent toggle-switch-parent">
+                                    <div id="hideSilentVideos" class="input_field_toggle"
+                                         data-win-control="WinJS.UI.ToggleSwitch"
+                                         data-win-bind="winControl.checked: dataEvent.HideSilentVideos; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                                         onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
+                                    </div>
+                                </div>
+                                <span class="label landscape_only toggle" data-win-res="{textContent: 'eventGenSettings.speakerVideosPinned'}"></span>
+                                <div class="input_field_toggle_parent toggle-switch-parent">
+                                    <div id="speakerVideosPinned" class="input_field_toggle"
+                                         data-win-control="WinJS.UI.ToggleSwitch"
+                                         data-win-bind="winControl.checked: dataEvent.SpeakerVideosPinned; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                                         onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
+                                    </div>
+                                </div>
+                                <span class="label landscape_only toggle" data-win-res="{textContent: 'eventGenSettings.recordsession'}"></span>
+                                <div class="input_field_toggle_parent toggle-switch-parent">
+                                    <div id="showRecordSession" class="input_field_toggle"
+                                         data-win-control="WinJS.UI.ToggleSwitch"
+                                         data-win-bind="winControl.checked: dataEvent.RecordSession; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                                         onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
+                                    </div>
+                                </div>
+                                <span class="label landscape_only toggle" data-win-res="{textContent: 'eventGenSettings.publishrecording'}"></span>
+                                <div class="input_field_toggle_parent toggle-switch-parent">
+                                    <div id="publishRecording" class="input_field_toggle"
+                                         data-win-control="WinJS.UI.ToggleSwitch"
+                                         data-win-bind="winControl.checked: dataEvent.PublishRecording; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                                         onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
+                                    </div>
+                                </div>
+                                <span class="label landscape_only toggle" data-win-res="{textContent: 'eventGenSettings.shownames'}"></span>
+                                <div class="input_field_toggle_parent toggle-switch-parent">
+                                    <div id="showShowNames" class="input_field_toggle"
+                                         data-win-control="WinJS.UI.ToggleSwitch"
+                                         data-win-bind="winControl.checked: dataEvent.ShowNames; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                                         onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
+                                    </div>
+                                </div>
+                                <span class="label landscape_only toggle" data-win-res="{textContent: 'eventGenSettings.nomemberlist'}"></span>
+                                <div class="input_field_toggle_parent toggle-switch-parent">
+                                    <div id="showNoMemberList" class="input_field_toggle"
+                                         data-win-control="WinJS.UI.ToggleSwitch"
+                                         data-win-bind="winControl.checked: dataEvent.NoMemberList; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                                         onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
+                                    </div>
+                                </div>
+                                <span class="label landscape_only toggle" data-win-res="{textContent: 'eventGenSettings.sharednotes'}"></span>
+                                <div class="input_field_toggle_parent toggle-switch-parent">
+                                    <div id="sharedNotes" class="input_field_toggle"
+                                         data-win-control="WinJS.UI.ToggleSwitch"
+                                         data-win-bind="winControl.checked: dataEvent.SharedNotes; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                                         onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="line-separator"></div>
+                            <div class="field_line field_line_odd">
                             </div>
                         </div>
                     </div>

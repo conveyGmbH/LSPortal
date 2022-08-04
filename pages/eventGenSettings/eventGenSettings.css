@@ -2,6 +2,10 @@
     width: 145px !important;
 }
 
+.input_field_toggle_parent {
+    margin-top: 10px !important;
+}
+
 #requireReg .win-toggleswitch-header {
     display: none;
 }
@@ -61,4 +65,34 @@
 }
 #sharedNotes .win-toggleswitch-header {
     display: none;
+}
+.view-size-medium .toggle {
+    float: left;
+    display: inline-block;
+    position: relative;
+    top: 3px;
+    width: 50%;
+}
+.view-size-small .toggle {
+    float: left;
+    display: inline-block;
+    position: relative;
+    top: 3px;
+    width: 50%;
+}
+.toggle {
+    float: left;
+    display: inline-block;
+    position: relative;
+    top: 3px;
+    width: 50%;
+}
+.input_field_toggle {
+    float: none;
+}
+.toogle_group_header {
+    font-size: 20px;
+    font-weight: bolder;
+    float: left;
+    top: 5px;
 }
