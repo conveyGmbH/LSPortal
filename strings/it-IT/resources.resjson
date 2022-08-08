@@ -812,7 +812,7 @@
     "mailingList.pending"            : "In attesa di",
     "mailingList.maileditlabel"            : "Edit",
     "mailingList.comment"            : " Creare e impostare i vostri processi di mailing",
-    "mailingList.lastedit"            : "Ultimo cambiamento",
+    "mailingList.lastedit"            : "Ultimo cambiamento (UTC)",
 	
     "mailingListLS.count" : "Numero",
     "mailingvslist.count" : "Numero",
@@ -1305,7 +1305,7 @@
     "mailingTemplateEvent.templatesearchbtn"			: "Ricerca",
     "mailingTemplateEvent.layoutname"			: "Nome layout",
     "mailingTemplateEvent.templateinserthbtn"			: "Creare",
-    "mailingTemplateEvent.edited"			: "Ultima modifica",
+    "mailingTemplateEvent.edited"			: "Ultima modifica (UTC)",
 
 	"mailingTemplateEventEdit.title"			: "Modifica modello",
 	"mailingTemplateEventEdit.language"			: "Linguaggio",

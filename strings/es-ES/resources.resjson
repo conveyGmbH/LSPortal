@@ -787,7 +787,8 @@
     "mailingList.active"            : "Aktiv",
     "mailingList.pending"            : "Anstehend",
     "mailingList.maileditlabel"            : "Edit",
-    "mailingList.edited"			: "Letzte Änderung",
+    "mailingList.comment"            : " Erstellen und Einrichten Ihrer Mailing-Prozesse",
+    "mailingList.lastedit"            : "Letzte Änderung (UTC)",
 
     "mailingListLS.count" : "Anzahl",
     "mailingvslist.count" : "Anzahl",
@@ -1258,6 +1259,7 @@
     "mailingTemplateEvent.templatesearchbtn"			: "Suchen",
     "mailingTemplateEvent.layoutname"			: "Name der Vorlage",
     "mailingTemplateEvent.templateinserthbtn"			: "Erstellen",
+    "mailingTemplateEvent.edited"			: "Letzte Änderung (UTC)",
 
 	"mailingTemplateEventEdit.title"			: "Vorlage bearbeiten",
 	"mailingTemplateEventEdit.language"			: "Sprache",

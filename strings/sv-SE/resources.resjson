@@ -787,7 +787,7 @@
     "mailingList.active"            : "Aktive",
     "mailingList.pending"            : "Pending",
     "mailingList.maileditlabel"            : "Edit",
-    "mailingList.lastedit"           : "Last change",
+    "mailingList.lastedit"           : "Last change (UTC)",
 
     "mailingListLS.count"     : "Count",
     "mailingvslist.count"     : "Count",
@@ -1258,6 +1258,7 @@
     "mailingTemplateEvent.templatesearchbtn"			: "Search",
     "mailingTemplateEvent.layoutname"			: "Name of Layout",
     "mailingTemplateEvent.templateinserthbtn"			: "Create",
+    "mailingTemplateEvent.edited"			: "Last change (UTC)",
 
 	"mailingTemplateEventEdit.title"			: "Edit template",
 	"mailingTemplateEventEdit.language"			: "Language",
