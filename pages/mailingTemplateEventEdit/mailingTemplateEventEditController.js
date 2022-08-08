@@ -136,38 +136,46 @@
                 Log.call(Log.l.trace, "Product.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var layoutUpdateData = that.binding.dataLayoutValue;
-                if (layoutUpdateData.Subject === "" && layoutUpdateData.MailText === "") {
-                    Log.print(Log.l.trace, "layoutUpdateData.Subject and layoutUpdateData.MailText empty!");
-                    ret = new WinJS.Promise.as().then(function () {
-                        if (typeof complete === "function") {
-                            complete({});
-                        }
-                    });
-                } else {
+                /*if (AppBar.modified && that.checkifFieldIsEmpty() && !AppBar.busy) {
+                    error({});
+                    return WinJS.Promise.as();
+                } else {*/
+                if (layoutUpdateData && AppBar.modified && !AppBar.busy) {
+                    AppBar.busy = true;
                     var recordId = that.binding.dataLayoutValue.VAMailTextVIEWID;
                     if (recordId && layoutUpdateData.LanguageSpecID) {
-                        Log.print(Log.l.trace, "save changes of recordId:" + recordId);
-                        ret = MailingTemplateEventEdit.VAMailTextView.update(function (response) {
-                            Log.print(Log.l.info, "Products.Controller. update: success!");
-                            // called asynchronously if ok
-                            AppBar.modified = false;
-                            if (typeof complete === "function") {
-                                complete(response);
-                            }
-                        }, function (errorResponse) {
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                            if (typeof error === "function") {
-                                error(errorResponse);
-                            }
-                        }, recordId, layoutUpdateData);
-                    }
-                    if (!ret) {
-                        ret = new WinJS.Promise.as().then(function () {
-                            if (typeof complete === "function") {
-                                complete({});
-                            }
+                        ret = WinJS.Promise.as().then(function () {
+                            return MailingTemplateEventEdit.VAMailTextView.update(function (response) {
+                                AppBar.busy = false;
+                                // called asynchronously if ok
+                                Log.print(Log.l.info, "dataMail update: success!");
+                                AppBar.modified = false;
+                                if (typeof complete === "function") {
+                                    complete(response);
+                                }
+                            }, function (errorResponse) {
+                                AppBar.busy = false;
+                                // called asynchronously if an error occurs
+                                // or server returns response with an error status.
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                                if (typeof error === "function") {
+                                    error(errorResponse);
+                                }
+                            }, recordId, layoutUpdateData);
                         });
+                    } else {
+                        ret = WinJS.Promise.as();
                     }
+                } else if (AppBar.busy) {
+                    ret = WinJS.Promise.timeout(100).then(function () {
+                        return that.saveData(complete, error);
+                    });
+                } else {
+                    ret = new WinJS.Promise.as().then(function () {
+                        if (typeof complete === "function") {
+                            complete(layoutUpdateData);
+                        }
+                    });
                 }
                 Log.ret(Log.l.trace, ret);
                 return ret;
@@ -333,17 +341,17 @@
                     if (that.layoutData) {
                         Log.print(Log.l.trace, "calling select VAMailTextView...");
                         //@nedra:25.09.2015: load the list of INITAnrede for Combobox
-                        return MailingTemplateEventEdit.VAMailTextView.select(function(json) {
-                                Log.print(Log.l.trace, "initAnredeView: success!");
-                                if (json && json.d && json.d.results) {
-                                    // Now, we call WinJS.Binding.List to get the bindable list
-                                    that.binding.dataLayoutValue = json.d.results[0];
-                                }
-                            }, function(errorResponse) {
-                                // called asynchronously if an error occurs
-                                // or server returns response with an error status.
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                            }, { VAMailTextVIEWID: that.layoutData, LanguageSpecID: parseInt(initSprache.value) });
+                        return MailingTemplateEventEdit.VAMailTextView.select(function (json) {
+                            Log.print(Log.l.trace, "initAnredeView: success!");
+                            if (json && json.d && json.d.results) {
+                                // Now, we call WinJS.Binding.List to get the bindable list
+                                that.binding.dataLayoutValue = json.d.results[0];
+                            }
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        }, { VAMailTextVIEWID: that.layoutData, LanguageSpecID: parseInt(initSprache.value) });
                     }
                 }).then(function () {
                     Log.print(Log.l.trace, "calling select VAMailLayout...");
