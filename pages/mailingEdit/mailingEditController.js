@@ -311,8 +311,10 @@
                         var toggle = event.currentTarget.winControl;
                         if (toggle) {
                             var value = toggle.checked ? 1: 0;
-                            that.binding.dataMail.IsActive = value;
-                            AppBar.modified = true;
+                            if (that.binding.dataMail.IsActive !== value) {
+                                that.binding.dataMail.IsActive = value;
+                                AppBar.modified = true;
+                            }
                             AppBar.triggerDisableHandlers();
                         }
                     }
