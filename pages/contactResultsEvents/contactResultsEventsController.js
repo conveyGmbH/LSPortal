@@ -38,7 +38,7 @@
                 var milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
                 var time = new Date(milliseconds);
                 var formdate = ("0" + time.getDate()).slice(-2) + "." + ("0" + (time.getMonth() + 1)).slice(-2) + "." + time.getFullYear();
-                Log.call(Log.l.trace, "ContactResultsEvents.Controller.");
+                Log.ret(Log.l.trace);
                 return formdate;
             };
             this.getDateObject = getDateObject;
@@ -56,6 +56,7 @@
                 if (data.Name) {
                     that.binding.dataContact.fullName += data.Name;
                 }
+                Log.ret(Log.l.trace);
             }
             this.setDataContact = setDataContact;
 

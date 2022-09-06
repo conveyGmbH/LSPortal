@@ -68,6 +68,10 @@
 
             var resultConverter = function (item, index) {
                 item.index = index;
+                if (item.OLELetterID === 32) {
+                    // Fragenstatistik rausfiltern (siehe #7194)
+                    return;
+                }
                 if (item.OLELetterID) {
                     that.reportingItem.push(item);
                 } else {
