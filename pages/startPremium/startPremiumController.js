@@ -232,15 +232,6 @@
                 },
                 exportDashboardExcel: function(event) {
                     Log.call(Log.l.trace, "StartPremium.Controller.");
-                    var exportTypeString = "";
-                    if (that.isSupreme === 2) {
-                        exportTypeString = "DBSUPREME";
-                    }
-                    else if (that.isSupreme === 1) {
-                        exportTypeString = "DBPREMIUM";
-                    } else {
-                        exportTypeString = "";
-                    }
                     excelButton.disabled = "true";
                     overlay.style.display = "block";
                     if (that.isSupreme === 2) {
@@ -248,7 +239,7 @@
                         return AppData.call("PRC_DBExcelRequest", {
                             pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
                             pLanguageSpecID: AppData.getLanguageId(),
-                            pExportType: exportTypeString,
+                            pExportType: "DBSUPREME",
                             psyncRun: 1
                         }, function (json) {
                             Log.print(Log.l.info, "call success!");
@@ -274,7 +265,7 @@
                             Log.print(Log.l.info, "call success!");
                             if (json && json.d.results[0]) {
                                 excelButton.removeAttribute("disabled");
-
+                                that.exportDbExcel(json.d.results[0]);
                             } else {
                                 Log.print(Log.l.error, "call error DOC3ExportPDFID is null");
                             }
