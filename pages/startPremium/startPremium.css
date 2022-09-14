@@ -322,7 +322,7 @@
 }
 
 .startPremium #btn-all {
-    display: inline-block;
+    display: none;
     float: right;
     position: relative;
     z-index: 99;
@@ -340,6 +340,23 @@
 }
 
 .startPremium #btn-vis {
+    display: none;
+    float: right;
+    position: relative;
+    z-index: 99;
+    padding: 0.35em 1.2em;
+    border: 0.1em solid darkgray;
+    margin: 0 0.3em 0.3em 0;
+    border-radius: 0.12em;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: 'Open Sans',sans-serif;
+    font-weight: bolder;
+    color: darkgray;
+    background-color: transparent;
+    text-align: center;
+}
+.startPremium #btn-excel {
     display: inline-block;
     float: right;
     position: relative;
