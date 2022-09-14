@@ -32,6 +32,12 @@
             }, {
                 // EventSuccess
                 accentColor: "#fe3600"
+            }, {
+                // Mesago Dashboard (Premium)
+                accentColor: "#74b2e1"
+            }, {
+                // Mesago Dashboard (Supreme)
+                accentColor: "#b26086"
             }
         ],
         colorSettings: {

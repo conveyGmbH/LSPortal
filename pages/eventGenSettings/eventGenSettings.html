@@ -246,12 +246,14 @@
                                          onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
                                     </div>
                                 </div>
-                                <span class="label landscape_only toggle" data-win-res="{textContent: 'eventGenSettings.nomemberlist'}"></span>
-                                <div class="input_field_toggle_parent toggle-switch-parent">
-                                    <div id="showNoMemberList" class="input_field_toggle"
-                                         data-win-control="WinJS.UI.ToggleSwitch"
-                                         data-win-bind="winControl.checked: dataEvent.NoMemberList; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                         onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
+                                <div data-win-bind="style.display: dataEvent.ShowNames Binding.Converter.toDisplay">
+                                    <span class="label landscape_only toggle" data-win-res="{textContent: 'eventGenSettings.nomemberlist'}"></span>
+                                    <div class="input_field_toggle_parent toggle-switch-parent">
+                                        <div id="listOnlyModerators" class="input_field_toggle"
+                                             data-win-control="WinJS.UI.ToggleSwitch"
+                                             data-win-bind="winControl.checked: dataEvent.NoMemberList; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                                             onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
+                                        </div>
                                     </div>
                                 </div>
                                 <span class="label landscape_only toggle" data-win-res="{textContent: 'eventGenSettings.sharednotes'}"></span>

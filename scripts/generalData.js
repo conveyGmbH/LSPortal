@@ -664,7 +664,22 @@
             if (!AppData._persistentStates.individualColors &&
                 AppData._userData && typeof AppData._userData.VeranstaltungTyp === "number" &&
                 AppData.persistentStatesDefaults.colorSettingsDefaults) {
-                var colorSettings = AppData.persistentStatesDefaults.colorSettingsDefaults[AppData._userData.VeranstaltungTyp];
+                var dashboardColorType = 0;
+                if (AppData._userData.VeranstaltungTyp === 0) {
+                    //if(AppData._userData.isSupreme === "1")
+                    switch(AppData._userData.IsSupreme) {
+                        case "1":
+                            // type 3 
+                            dashboardColorType = 3;
+                            break;
+                        case "2":
+                            // type 4
+                            dashboardColorType = 4;
+                            break;
+                        default:
+                    }
+                }
+                var colorSettings = AppData.persistentStatesDefaults.colorSettingsDefaults[dashboardColorType || AppData._userData.VeranstaltungTyp];
                 for (var prop in colorSettings) {
                     if (colorSettings.hasOwnProperty(prop)) {
                         AppData.persistentStatesDefaults.colorSettings[prop] = colorSettings[prop];
