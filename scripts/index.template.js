@@ -100,7 +100,7 @@
         }
     };
 
-     // static array of menu groups for the split view pane
+    // static array of menu groups for the split view pane
     Application.navigationBarGroups = [
         //Home-Startseite
         { id: "home", group: 1, svg: "home", disabled: true },
@@ -250,7 +250,7 @@
         { id: "visitorFlowDashboard", group: -20, disabled: true },
         { id: "visitorFlowEntExt", group: -22, disabled: true },
 		{ id: "contactResultsList", group: -29, disabled: true },
-        { id: "contactResultsEdit", group: 43, disabled: false }, 
+        { id: "contactResultsEdit", group: 43, disabled: false },
         { id: "contactResultsCriteria", group: 43, disabled: false },
         { id: "contactResultsQuestion", group: 43, disabled: false },
         { id: "contactResultsAttach", group: 43, disabled: false },
