@@ -68,6 +68,7 @@
             this.employeeHisto = null;
             this.employeechart = null;
             this.xlsxfilename = "PDFExport.xlsx";
+            this.isSupreme = parseInt(AppData._userData.IsSupreme);
 
             var that = this;
 
@@ -461,6 +462,42 @@
             }
             this.getNextAudioData = getNextAudioData;
 
+            var exportDbExcel = function (recordId) {
+                Log.call(Log.l.trace, "Reporting.Controller.");
+                AppData.setErrorMsg(that.binding);
+                var ret;
+                if (recordId) {
+                    AppBar.busy = true;
+                    ret = Reporting.DOC3ExportPDFView.select(function (json) {
+                        Log.print(Log.l.trace, "exportKontaktDataView: success!");
+                        if (json && json.d) {
+                            var results = json.d.results[0];
+                            var excelDataraw = results.DocContentDOCCNT1;
+                            var sub = excelDataraw.search("\r\n\r\n");
+                            var excelDataBase64 = excelDataraw.substr(sub + 4);
+                            var excelData = that.base64ToBlob(excelDataBase64, "xlsx");
+                            var excelName = results.szOriFileNameDOC1;
+                            saveAs(excelData, excelName);
+                            that.disableReportingList(false);
+                            AppBar.busy = false;
+                        }
+                    }, function (errorResponse) {
+                        AppBar.busy = false;
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                        if (typeof error === "function") {
+                            error(errorResponse);
+                        }
+                    }, { DOC3ExportPDFVIEWID: recordId });
+                } else {
+                    var err = { status: 0, statusText: "no record selected" };
+                    error(err);
+                    ret = WinJS.Promise.as();
+                }
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+            this.exportDbExcel = exportDbExcel;
+
             var exportData = function(exportselection) {
                 Log.call(Log.l.trace, "Reporting.Controller.");
                 var dbViewTitle = null;
@@ -667,6 +704,45 @@
                             restriction.bExact = true;
                         }
                         break;
+                    case 34:
+                        if (that.isSupreme === 2) {
+                            AppData.setErrorMsg(that.binding);
+                            return AppData.call("PRC_DBExcelRequest", {
+                                pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                                pLanguageSpecID: AppData.getLanguageId(),
+                                pExportType: "DBSUPREME",
+                                psyncRun: 1
+                            }, function (json) {
+                                Log.print(Log.l.info, "call success!");
+                                if (json && json.d.results[0]) {
+                                    that.exportDbExcel(json.d.results[0]);
+                                } else {
+                                    Log.print(Log.l.error, "call error DOC3ExportPDFID is null");
+                                }
+                            }, function (error) {
+                                Log.print(Log.l.error, "call error");
+
+                            });
+                        } else {
+                            AppData.setErrorMsg(that.binding);
+                            return AppData.call("PRC_DBExcelRequest", {
+                                pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                                pLanguageSpecID: AppData.getLanguageId(),
+                                pExportType: "DBPREMIUM",
+                                psyncRun: 1
+                            }, function (json) {
+                                Log.print(Log.l.info, "call success!");
+                                if (json && json.d.results[0]) {
+                                    that.exportDbExcel(json.d.results[0]);
+                                } else {
+                                    Log.print(Log.l.error, "call error DOC3ExportPDFID is null");
+                                }
+                            }, function (error) {
+                                Log.print(Log.l.error, "call error");
+
+                            });
+                        }
+                        break;
                     default:
                         Log.print(Log.l.error, "curOLELetterID=" + that.binding.curOLELetterID + "not supported");
                 }
@@ -724,9 +800,13 @@
                 } else {
                     //that.disableReportingList(true);
                     WinJS.Promise.timeout(1000).then(function () {
-                        that.getAudioIdDaten();
+                        if (exportselectionId !== 34) {
+                            that.getAudioIdDaten();
+                        }
                     }).then(function () {
-                        that.insertExcelFiletoZip();
+                        if (exportselectionId !== 34) {
+                            that.insertExcelFiletoZip();
+                        }
                     });
                     //disableReportingList(false);
                     AppBar.busy = false;
