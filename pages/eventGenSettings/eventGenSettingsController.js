@@ -254,25 +254,20 @@
                             that.binding.dataEvent.SpeakerVideosPinned = null;
                         }
                         break;
-                    case "showNoMemberList":
+                    case "listOnlyModerators":
                         if (checked) {
                             that.binding.dataEvent.NoMemberList = 1;
                         } else {
                             that.binding.dataEvent.NoMemberList = null;
                         }
                         break;
-                    case "listOnlyModerators":
-                        if (checked) {
-                            that.binding.dataEvent.ListOnlyModerators = 1;
-                        } else {
-                            that.binding.dataEvent.ListOnlyModerators = null;
-                        }
-                        break;
+                    // Teilnehmerliste anzeigen bzw. verstecken
                     case "showShowNames":
                         if (checked) {
                             that.binding.dataEvent.ShowNames = 1;
                         } else {
                             that.binding.dataEvent.ShowNames = null;
+                            that.binding.dataEvent.NoMemberList = null;
                         }
                         break;
                     case "showRecordSession":
@@ -519,7 +514,7 @@
                     if (event.currentTarget) {
                         var toggle = event.currentTarget.winControl;
                         if (toggle) {
-                            var value = toggle.checked || event.currentTarget.value;
+                            var value = toggle.checked;
                             that.changeAppSetting(event.currentTarget.id, value);
                         }
                     }

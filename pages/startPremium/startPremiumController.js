@@ -32,9 +32,76 @@
             var that = this;
             this.isSupreme = parseInt(AppData._userData.IsSupreme);
 
+            var excelButton = pageElement.querySelector("#btn-excel");
+            var overlay = pageElement.querySelector("#overlay");
+            var icon = pageElement.querySelector(".dashboard-tip-download-container");
+
             this.dispose = function () {
 
             }
+
+            var loadIcon = function () {
+                Colors.loadSVGImageElements(icon, "action-image", 40, Colors.textColor, "name");
+            }
+            this.loadIcon = loadIcon;
+
+            var base64ToBlob = function (base64Data, contentType) {
+                contentType = contentType || '';
+                var sliceSize = 1024;
+                var byteCharacters = atob(base64Data);
+                var bytesLength = byteCharacters.length;
+                var slicesCount = Math.ceil(bytesLength / sliceSize);
+                var byteArrays = new Array(slicesCount);
+
+                for (var sliceIndex = 0; sliceIndex < slicesCount; ++sliceIndex) {
+                    var begin = sliceIndex * sliceSize;
+                    var end = Math.min(begin + sliceSize, bytesLength);
+
+                    var bytes = new Array(end - begin);
+                    for (var offset = begin, i = 0; offset < end; ++i, ++offset) {
+                        bytes[i] = byteCharacters[offset].charCodeAt(0);
+                    }
+                    byteArrays[sliceIndex] = new Uint8Array(bytes);
+                }
+                return new Blob(byteArrays, { type: contentType });
+            }
+            this.base64ToBlob = base64ToBlob;
+
+            var exportDbExcel = function (recordId) {
+                Log.call(Log.l.trace, "StartPremium.Controller.");
+                AppData.setErrorMsg(that.binding);
+                var ret;
+                if (recordId) {
+                    AppBar.busy = true;
+                    ret = StartPremium.DOC3ExportPDFView.select(function (json) {
+                        Log.print(Log.l.trace, "exportKontaktDataView: success!");
+                        if (json && json.d) {
+                            var results = json.d.results[0];
+                            var excelDataraw = results.DocContentDOCCNT1;
+                            var sub = excelDataraw.search("\r\n\r\n");
+                            var excelDataBase64 = excelDataraw.substr(sub + 4);
+                            var excelData = that.base64ToBlob(excelDataBase64, "xlsx");
+                            var excelName = results.szOriFileNameDOC1;
+                            saveAs(excelData, excelName);
+                            overlay.style.display = "none";
+                            AppBar.busy = false;
+                        }
+                    }, function (errorResponse) {
+                        AppBar.busy = false;
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                        if (typeof error === "function") {
+                            error(errorResponse);
+                        }
+                        }, { DOC3ExportPDFVIEWID: recordId });
+                } else {
+                    var err = { status: 0, statusText: "no record selected" };
+                    error(err);
+                    ret = WinJS.Promise.as();
+                }
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+            this.exportDbExcel = exportDbExcel;
 
             var loadData = function () {
                 Log.call(Log.l.trace, "Start.Controller.");
@@ -160,6 +227,52 @@
                 onFooterVisibilityChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "StartPremium.Controller.");
                     if (eventInfo && eventInfo.detail) {
+                    }
+                    Log.ret(Log.l.trace);
+                },
+                exportDashboardExcel: function(event) {
+                    Log.call(Log.l.trace, "StartPremium.Controller.");
+                    excelButton.disabled = "true";
+                    overlay.style.display = "block";
+                    if (that.isSupreme === 2) {
+                        AppData.setErrorMsg(that.binding);
+                        return AppData.call("PRC_DBExcelRequest", {
+                            pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                            pLanguageSpecID: AppData.getLanguageId(),
+                            pExportType: "DBSUPREME",
+                            psyncRun: 1
+                        }, function (json) {
+                            Log.print(Log.l.info, "call success!");
+                            if (json && json.d.results[0]) {
+                                excelButton.removeAttribute("disabled");
+                                that.exportDbExcel(json.d.results[0]);
+                            } else {
+                                Log.print(Log.l.error, "call error DOC3ExportPDFID is null");
+                            }
+                        }, function (error) {
+                            Log.print(Log.l.error, "call error");
+
+                        });
+                    } else {
+                        AppData.setErrorMsg(that.binding);
+                        excelButton.disabled = "true";
+                        return AppData.call("PRC_DBExcelRequest", {
+                            pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                            pLanguageSpecID: AppData.getLanguageId(),
+                            pExportType: "DBPREMIUM",
+                            psyncRun: 1
+                        }, function (json) {
+                            Log.print(Log.l.info, "call success!");
+                            if (json && json.d.results[0]) {
+                                excelButton.removeAttribute("disabled");
+                                that.exportDbExcel(json.d.results[0]);
+                            } else {
+                                Log.print(Log.l.error, "call error DOC3ExportPDFID is null");
+                            }
+                        }, function (error) {
+                            Log.print(Log.l.error, "call error");
+
+                        });
                     }
                     Log.ret(Log.l.trace);
                 },
@@ -487,6 +600,9 @@
             }).then(function () {
                 Log.print(Log.l.trace, "Calling loadData");
                 return that.loadData();
+            }).then(function () {
+                Log.print(Log.l.trace, "Calling loadData");
+                return that.loadIcon();
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
             });

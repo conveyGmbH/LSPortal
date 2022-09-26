@@ -20,6 +20,9 @@
                             <span class="caption-field" data-win-res="{textContent: 'start.title'}"></span>
                         </div>
                     </div>
+                    <div id="overlay">
+                        <div id="overlaytext" data-win-res="{textContent: 'startPremium.overlayText'}"></div>
+                    </div>
                     <div class="dashboard-tip-download-container">
                         <div class="tip-container">
                             <div class="circle-with-text-event-dot"></div>
@@ -33,6 +36,12 @@
                             </div>
                             <div>
                                 <button id="btn-vis" onclick="AppBar.handleEvent('click', 'exportBrowserViewToPdf', event)" data-win-res="{textContent: 'startPremium.exportCurrent'}"></button>
+                            </div>
+                            <div id="Excel-container">
+                                <div class="list-symbol-ID">
+                                    <div id="excel" data-win-bind="name: excel" class="flag-image"></div>
+                                </div>
+                                <button id="btn-excel" onclick="AppBar.handleEvent('click', 'exportDashboardExcel', event)" data-win-res="{textContent: 'startPremium.exportDashboardExcel'}"></button>
                             </div>
                         </div>
                     </div>
