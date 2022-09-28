@@ -24,110 +24,115 @@
                     </div>
                 </div>
                 <div class="content-record">
-                        <!--<div class="field_line">-->
-                            <!--<span class="label win-type-caption portrait_only" id="exportlist" data-win-res="{textContent: 'reporting.exportlist'}"></span>
-                            <span class="label landscape_only" id="exportlist" data-win-res="{textContent: 'reporting.exportlist'}"></span>-->
-                            <div id="reportingListhost" class="fragmenthost"></div>
-                        <!--</div>-->
-                        <div class="line-separator"></div>
-                        <div class="field_line"
-                             data-win-bind="style.display: progress.show Binding.Converter.toDisplay">
-                            <span data-win-res="{textContent: 'reporting.progress'}"></span>
-                            <span data-win-bind="textContent: progress.percent"></span>
-                            <span>%</span>
-                            <progress class="progress_field win-progress-bar"
-                                      data-win-bind="value: progress.percent"
-                                      min="0" max="100"></progress>
-                            <span class="large_field"
-                                  data-win-bind="textContent: progress.text"></span>
+                    <!--<div class="field_line">-->
+                    <!--<span class="label win-type-caption portrait_only" id="exportlist" data-win-res="{textContent: 'reporting.exportlist'}"></span>
+                    <span class="label landscape_only" id="exportlist" data-win-res="{textContent: 'reporting.exportlist'}"></span>-->
+                    <div id="reportingListhost" class="fragmenthost"></div>
+                    <!--</div>-->
+                    <div class="line-separator"></div>
+                    <div class="field_line dashboardloadingtext">
+                        <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                        <div id="dashboardexporttext" data-win-res="{textContent: 'startPremium.overlayText'}"></div>
+                    </div>
+                    <div class="line-separator"></div>
+                    <div class="field_line"
+                         data-win-bind="style.display: progress.show Binding.Converter.toDisplay">
+                        <span data-win-res="{textContent: 'reporting.progress'}"></span>
+                        <span data-win-bind="textContent: progress.percent"></span>
+                        <span>%</span>
+                        <progress class="progress_field win-progress-bar"
+                                  data-win-bind="value: progress.percent"
+                                  min="0" max="100"></progress>
+                        <span class="large_field"
+                              data-win-bind="textContent: progress.text"></span>
+                    </div>
+                    <div class="line-separator"></div>
+                    <div class="field_line"
+                         data-win-bind="style.display: progress.showOther Binding.Converter.toDisplay">
+                        <span data-win-res="{textContent: 'reporting.progress'}"></span>
+                        <span data-win-bind="textContent: progress.count"></span>
+                        <span data-win-res="{textContent: 'label.listContact'}"></span>
+                        <span data-win-bind="textContent: progress.text"></span>
+                        <span data-win-bind="textContent: progress.max"></span>
+                        <progress class="progress_field win-progress-bar"
+                                  data-win-bind="value: progress.count; max: progress.max"
+                                  min="0"></progress>
+                    </div>
+                    <div class="header-separator"></div>
+                    <div class="content-header">
+                        <div class="half-circle half-circle-textcolor">&nbsp;</div>
+                        <div class="content-header-line win-type-caption">
+                            <span class="id-field"></span>
+                            <span class="caption-field" data-win-res="{textContent: 'reporting.filter'}"></span>
+                            <span class="date-field"></span>
                         </div>
-                        <div class="line-separator"></div>
-                        <div class="field_line"
-                             data-win-bind="style.display: progress.showOther Binding.Converter.toDisplay">
-                            <span data-win-res="{textContent: 'reporting.progress'}"></span>
-                            <span data-win-bind="textContent: progress.count"></span>
-                            <span data-win-res="{textContent: 'label.listContact'}"></span>
-                            <span data-win-bind="textContent: progress.text"></span>
-                            <span data-win-bind="textContent: progress.max"></span>
-                            <progress class="progress_field win-progress-bar"
-                                      data-win-bind="value: progress.count; max: progress.max"
-                                      min="0"></progress>
-                        </div>
-                        <div class="header-separator"></div>
-                        <div class="content-header">
-                            <div class="half-circle half-circle-textcolor">&nbsp;</div>
-                            <div class="content-header-line win-type-caption">
-                                <span class="id-field"></span>
-                                <span class="caption-field" data-win-res="{textContent: 'reporting.filter'}"></span>
-                                <span class="date-field"></span>
+                    </div>
+                    <div class="line-separator"></div>
+                    <div class="field_line">
+                        <!--<span class="label win-type-caption portrait_only" data-win-res="{textContent: 'reporting.filter'}"></span>-->
+                        <span class="label landscape_only" data-win-res="{textContent: 'reporting.filter'}"></span>
+                        <div class="input_field toggle-switch-parent">
+                            <div id="showExcelReporting" class="input_field"
+                                 data-win-control="WinJS.UI.ToggleSwitch"
+                                 data-win-bind="winControl.checked: showFilter; winControl.labelOn: generalData.filterOn; winControl.labelOff: generalData.filterOff"
+                                 onchange="AppBar.handleEvent('change', 'clickshowReportingFilter', event)">
                             </div>
                         </div>
-                        <div class="line-separator"></div>
-                        <div class="field_line">
-                            <!--<span class="label win-type-caption portrait_only" data-win-res="{textContent: 'reporting.filter'}"></span>-->
-                            <span class="label landscape_only" data-win-res="{textContent: 'reporting.filter'}"></span>
-                            <div class="input_field toggle-switch-parent">
-                                <div id="showExcelReporting" class="input_field"
-                                     data-win-control="WinJS.UI.ToggleSwitch"
-                                     data-win-bind="winControl.checked: showFilter; winControl.labelOn: generalData.filterOn; winControl.labelOff: generalData.filterOff"
-                                     onchange="AppBar.handleEvent('change', 'clickshowReportingFilter', event)">
+                    </div>
+                    <div data-win-bind="style.display: showFilter  Binding.Converter.toDisplay">
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'reporting.dateofentry'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'reporting.dateofentry'}"></span>
+                            <div class="input_group">
+                                <div data-win-control="WinJS.UI.DatePicker" id="ReportingExcelErfassungsdatum" class="input_big_left"
+                                     data-win-bind="winControl.current: restriction.Erfassungsdatum Binding.Mode.twoway">
                                 </div>
+                                <label class="input_big_right">
+                                    <input type="checkbox" class="win-checkbox" value="1"
+                                           data-win-bind="checked: restriction.showErfassungsdatum"
+                                           onchange="AppBar.handleEvent('change', 'clickErfassungsdatum', event)" />
+                                    <span data-win-res="{textContent: 'search.useRestriction'}"></span>
+                                </label>
                             </div>
                         </div>
-                        <div data-win-bind="style.display: showFilter  Binding.Converter.toDisplay">
-                    <div class="field_line field_line_odd">
-                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'reporting.dateofentry'}"></span>
-                        <span class="label landscape_only" data-win-res="{textContent: 'reporting.dateofentry'}"></span>
-                        <div class="input_group">
-                            <div data-win-control="WinJS.UI.DatePicker" id="ReportingExcelErfassungsdatum" class="input_big_left"
-                                 data-win-bind="winControl.current: restriction.Erfassungsdatum Binding.Mode.twoway">
+                        <div class="field_line field_line_even">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'reporting.changedate'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'reporting.changedate'}"></span>
+                            <div class="input_group">
+                                <div data-win-control="WinJS.UI.DatePicker" id="ModifiedTs" class="input_big_left"
+                                     data-win-bind="winControl.current: restriction.AenderungsDatum Binding.Mode.twoway">
+                                </div>
+                                <label class="input_big_right">
+                                    <input type="checkbox" class="win-checkbox" value="1"
+                                           data-win-bind="checked: restriction.showModifiedTS"
+                                           onchange="AppBar.handleEvent('change', 'clickModifiedTs', event)" />
+                                    <span data-win-res="{textContent: 'search.useRestriction'}"></span>
+                                </label>
                             </div>
-                            <label class="input_big_right">
-                                <input type="checkbox" class="win-checkbox" value="1"
-                                       data-win-bind="checked: restriction.showErfassungsdatum"
-                                       onchange="AppBar.handleEvent('change', 'clickErfassungsdatum', event)"/>
-                                <span data-win-res="{textContent: 'search.useRestriction'}"></span>
-                            </label>
+                        </div>
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'reporting.country'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'reporting.country'}"></span>
+                            <select id="InitLandReporting"
+                                    class="input_field win-dropdown"
+                                    data-win-control="WinJS.UI.Repeater"
+                                    data-win-bind="value: restriction.InitLandID Binding.Mode.twoway">
+                                <option data-win-bind="value: TITLE; textContent: TITLE"></option>
+                            </select>
+                        </div>
+                        <div class="field_line field_line_even">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'reporting.employee'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'reporting.employee'}"></span>
+                            <select id="ErfasserIDReporting"
+                                    class="input_field win-dropdown"
+                                    data-win-control="WinJS.UI.Repeater"
+                                    data-win-bind="value: restriction.ErfasserID Binding.Mode.twoway">
+                                <option data-win-bind="value: fullNameValue; textContent: fullName"></option>
+                            </select>
                         </div>
                     </div>
-                            <div class="field_line field_line_even">
-                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'reporting.changedate'}"></span>
-                        <span class="label landscape_only" data-win-res="{textContent: 'reporting.changedate'}"></span>
-                        <div class="input_group">
-                            <div data-win-control="WinJS.UI.DatePicker" id="ModifiedTs" class="input_big_left"
-                                 data-win-bind="winControl.current: restriction.AenderungsDatum Binding.Mode.twoway">
-                            </div>
-                            <label class="input_big_right">
-                                <input type="checkbox" class="win-checkbox" value="1"
-                                       data-win-bind="checked: restriction.showModifiedTS"
-                                       onchange="AppBar.handleEvent('change', 'clickModifiedTs', event)"/>
-                                <span data-win-res="{textContent: 'search.useRestriction'}"></span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="field_line field_line_odd">
-                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'reporting.country'}"></span>
-                        <span class="label landscape_only" data-win-res="{textContent: 'reporting.country'}"></span>
-                        <select id="InitLandReporting"
-                                class="input_field win-dropdown"
-                                data-win-control="WinJS.UI.Repeater"
-                                data-win-bind="value: restriction.InitLandID Binding.Mode.twoway">
-                            <option data-win-bind="value: TITLE; textContent: TITLE"></option>
-                        </select>
-                    </div>
-                            <div class="field_line field_line_even">
-                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'reporting.employee'}"></span>
-                        <span class="label landscape_only" data-win-res="{textContent: 'reporting.employee'}"></span>
-                        <select id="ErfasserIDReporting"
-                                class="input_field win-dropdown"
-                                data-win-control="WinJS.UI.Repeater"
-                                data-win-bind="value: restriction.ErfasserID Binding.Mode.twoway">
-                            <option data-win-bind="value: fullNameValue; textContent: fullName"></option>
-                        </select>
-                    </div>
-                        </div>
-                    </div>
-            </div>
+                </div>
+                </div>
             <div class="error-message"
                  data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
         </section>

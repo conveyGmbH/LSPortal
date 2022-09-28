@@ -462,6 +462,16 @@
             }
             this.getNextAudioData = getNextAudioData;
 
+            var showDashboardLoadingText = function (show) {
+                var dashboardloadingcontainer = pageElement.querySelector(".dashboardloadingtext");
+                if (show === false) {
+                    dashboardloadingcontainer.style.display = "none";
+                } else {
+                    dashboardloadingcontainer.style.display = "block";
+                }
+            }
+            this.showDashboardLoadingText = showDashboardLoadingText;
+
             var exportDbExcel = function (recordId) {
                 Log.call(Log.l.trace, "Reporting.Controller.");
                 AppData.setErrorMsg(that.binding);
@@ -479,6 +489,7 @@
                             var excelName = results.szOriFileNameDOC1;
                             saveAs(excelData, excelName);
                             that.disableReportingList(false);
+                            that.showDashboardLoadingText(false);
                             AppBar.busy = false;
                         }
                     }, function (errorResponse) {
@@ -707,6 +718,7 @@
                     case 34:
                         if (that.isSupreme === 2) {
                             AppData.setErrorMsg(that.binding);
+                            that.showDashboardLoadingText(true);
                             return AppData.call("PRC_DBExcelRequest", {
                                 pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
                                 pLanguageSpecID: AppData.getLanguageId(),
@@ -718,13 +730,15 @@
                                     that.exportDbExcel(json.d.results[0]);
                                 } else {
                                     Log.print(Log.l.error, "call error DOC3ExportPDFID is null");
+                                    that.showDashboardLoadingText(false);
                                 }
                             }, function (error) {
                                 Log.print(Log.l.error, "call error");
-
+                                that.showDashboardLoadingText(false);
                             });
                         } else {
                             AppData.setErrorMsg(that.binding);
+                            that.showDashboardLoadingText(true);
                             return AppData.call("PRC_DBExcelRequest", {
                                 pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
                                 pLanguageSpecID: AppData.getLanguageId(),
@@ -736,10 +750,11 @@
                                     that.exportDbExcel(json.d.results[0]);
                                 } else {
                                     Log.print(Log.l.error, "call error DOC3ExportPDFID is null");
+                                    that.showDashboardLoadingText(false);
                                 }
                             }, function (error) {
                                 Log.print(Log.l.error, "call error");
-
+                                that.showDashboardLoadingText(false);
                             });
                         }
                         break;
