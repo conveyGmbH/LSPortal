@@ -22,6 +22,8 @@
             }, commandList]);
             
             var that = this;
+            this.mandatoryErrorCount = 0;
+            this.mandatoryErrorMsg = "";
 
             var initLand = pageElement.querySelector("#InitLandReporting");
             var initSprache = pageElement.querySelector("#InitSprache");
@@ -233,15 +235,53 @@
                 var emailadress = pageElement.querySelector("#loginemail").value;
                 var validemail = that.isEmail(emailadress);
                 if (validemail === false) {
-                    var alerttext = getResourceText("siteeventsneuaus.mailerrortext");
-                    alert(alerttext);
-                    Log.ret(Log.l.trace);
-                    return that.saveExhibitor();
+                    return false;
                 } else {
-                    return that.saveExhibitor();
+                    return true;
                 }
             }
             this.checkedEmail = checkedEmail;
+
+            var checkMandatoryFields = function () {
+                Log.call(Log.l.trace, "SiteEventsNeuAus.Controller.");
+                var firmenname = pageElement.querySelector("#firmenname").value;
+                var loginemail = pageElement.querySelector("#loginemail").value;
+                var appUser = pageElement.querySelector("#AppUser").value;
+                var exibitorcategoryvalue = pageElement.querySelector("#exibitorcategory").value;
+                var ret = WinJS.Promise.as().then(function() {
+                    Log.print(Log.l.trace, "calling select MaildokumentView...");
+                    if (firmenname) {
+                        that.mandatoryErrorCount += 0;
+                    } else {
+                        that.mandatoryErrorCount += 1;
+                        that.mandatoryErrorMsg += getResourceText("siteeventsneuaus.firmenname") + " ";
+                    }
+                    if (loginemail) {
+                        that.mandatoryErrorCount += 0;
+                    } else {
+                        that.mandatoryErrorCount += 1;
+                        that.mandatoryErrorMsg += getResourceText("siteeventsneuaus.loginemail") + " ";
+                    }
+                    if (appUser) {
+                        that.mandatoryErrorCount += 0;
+                    } else {
+                        that.mandatoryErrorCount += 1;
+                        that.mandatoryErrorMsg += getResourceText("siteeventsneuaus.appuser") + " ";
+                    }
+                    if (exibitorcategoryvalue === "") {
+                        that.mandatoryErrorCount += 0;
+                    } else {
+                        that.mandatoryErrorCount += 1;
+                        that.mandatoryErrorMsg += getResourceText("siteeventsneuaus.exhibitorcategory") + " ";
+                    }
+                }).then(function () {
+                    if (that.mandatoryErrorCount > 0) {
+                        that.mandatoryErrorMsg += getResourceText("siteeventsneuaus.mandatoryerrormsgadd");
+                    }
+                });
+                return ret;
+            }
+            this.checkMandatoryFields = checkMandatoryFields;
 
             this.eventHandlers = {
                 clickBack: function (event) {
@@ -253,7 +293,29 @@
                 },
                 clickSave: function (event) {
                     Log.call(Log.l.trace, "SiteEventsNeuAus.Controller.");
-                    that.checkedEmail();
+                    AppBar.busy = true;
+                    that.mandatoryErrorCount = 0;
+                    that.mandatoryErrorMsg = "";
+                    that.checkMandatoryFields();
+                    if (that.mandatoryErrorCount > 0) {
+                        alert(that.mandatoryErrorMsg);
+                        AppBar.busy = false;
+                    } else {
+                        if (that.checkedEmail() === false) {
+                            var confirmTitle = getResourceText("siteeventsneuaus.mailerrortext");
+                            confirm(confirmTitle, function (result) {
+                                if (result) {
+                                    that.saveExhibitor();
+                                    Log.print(Log.l.trace, "clickOk: event choice Ok");
+                                } else {
+                                    Log.print(Log.l.trace, "clickDelete: event choice CANCEL");
+                                    AppBar.busy = false;
+                                }
+                            });
+                        } else {
+                            that.saveExhibitor();
+                        }
+                    }
                     Log.ret(Log.l.trace);
                 },
                 clickTopButton: function (event) {
@@ -287,7 +349,7 @@
                     }
                 },
                 clickSave: function () {
-                    if (that.binding.VeranstaltungTerminID) {
+                    if (that.binding.VeranstaltungTerminID && !AppBar.busy) {
                         return false;
                     } else {
                         return true;

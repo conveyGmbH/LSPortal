@@ -955,6 +955,7 @@
     "siteeventsneuaus.exhibitorcategory" : "Kategorie",
     "siteeventsneuaus.language" : "Sprache",
     "siteeventsneuaus.mailerrortext" : "Ungültige Emailadresse erkannt! Speichern mit ungültiger Emailadresse?",
+    "siteeventsneuaus.mandatoryerrormsgadd" : "sind Pflichtfeld/er. Bitte ergänzen Sie die Angaben!",
 
     "siteeventsbennach.title" : "Nachbestellungen",
     "siteeventsbennach.eventname" : "Aussteller",

@@ -954,6 +954,7 @@
     "siteeventsneuaus.exhibitorcategory" : "Catégorie",
     "siteeventsneuaus.language" : "Langue",
     "siteeventsneuaus.mailerrortext" : "Adresse électronique invalide !",
+    "siteeventsneuaus.mandatoryerrormsgadd" : "sont des champs obligatoires. Veuillez compléter les informations !",
 
     "siteeventsbennach.title" : "réassorts",
     "siteeventsbennach.eventname" : "exposant",

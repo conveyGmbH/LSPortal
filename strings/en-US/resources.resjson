@@ -953,7 +953,8 @@
     "siteeventsneuaus.customerid" : "Registrationnumber",
     "siteeventsneuaus.exhibitorcategory" : "Category",
     "siteeventsneuaus.language" : "Language",
-    "siteeventsneuaus.mailerrortext" : "Invalid email address!",
+    "siteeventsneuaus.mailerrortext" : "Invalid email address!",	
+    "siteeventsneuaus.mandatoryerrormsgadd" : "are mandatory field(s). Please complete the information!",
 
     "siteeventsbennach.title" : "Reorders",
     "siteeventsbennach.eventname" : "Exhibitor",
