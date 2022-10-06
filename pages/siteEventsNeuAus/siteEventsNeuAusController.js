@@ -184,6 +184,9 @@
                 if (dataExibitor.CustomerID === "") {
                     dataExibitor.CustomerID = null;
                 }
+                if (dataExibitor.ExhibitorCategory === "null") {
+                    dataExibitor.ExhibitorCategory = null;
+                }
                 return dataExibitor;
             }
             this.getExibitorData = getExibitorData;
@@ -244,31 +247,28 @@
 
             var checkMandatoryFields = function () {
                 Log.call(Log.l.trace, "SiteEventsNeuAus.Controller.");
-                var firmenname = pageElement.querySelector("#firmenname").value;
-                var loginemail = pageElement.querySelector("#loginemail").value;
-                var appUser = pageElement.querySelector("#AppUser").value;
-                var exibitorcategoryvalue = pageElement.querySelector("#exibitorcategory").value;
+                var dataExibitor = getExibitorData();
                 var ret = WinJS.Promise.as().then(function() {
                     Log.print(Log.l.trace, "calling select MaildokumentView...");
-                    if (firmenname) {
+                    if (dataExibitor.FirmenName) {
                         that.mandatoryErrorCount += 0;
                     } else {
                         that.mandatoryErrorCount += 1;
                         that.mandatoryErrorMsg += getResourceText("siteeventsneuaus.firmenname") + " ";
                     }
-                    if (loginemail) {
+                    if (dataExibitor.LoginEmail) {
                         that.mandatoryErrorCount += 0;
                     } else {
                         that.mandatoryErrorCount += 1;
                         that.mandatoryErrorMsg += getResourceText("siteeventsneuaus.loginemail") + " ";
                     }
-                    if (appUser) {
+                    if (dataExibitor.AppUser) {
                         that.mandatoryErrorCount += 0;
                     } else {
                         that.mandatoryErrorCount += 1;
                         that.mandatoryErrorMsg += getResourceText("siteeventsneuaus.appuser") + " ";
                     }
-                    if (exibitorcategoryvalue === "") {
+                    if (dataExibitor.ExhibitorCategory) {
                         that.mandatoryErrorCount += 0;
                     } else {
                         that.mandatoryErrorCount += 1;
