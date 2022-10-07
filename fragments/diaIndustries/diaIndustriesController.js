@@ -1307,9 +1307,9 @@
                         if (item.Qualifier2) {
                             if (item.Qualifier2.length > 15) {
                                 var qualifier2Cut = item.Qualifier2.substring(15, 0);
-                                industriesYearChartDataLabels5Cut.push(qualifier2Cut + " " + Math.round(item.NumHits / item.NumTotal * 100) + "%");
+                                industriesYearChartDataLabels5Cut.push(qualifier2Cut + " " + item.PercentGlobal + "%");
                             } else {
-                                industriesYearChartDataLabels5Cut.push(item.Qualifier2 + " " + Math.round(item.NumHits / item.NumTotal * 100) + "%");
+                                industriesYearChartDataLabels5Cut.push(item.Qualifier2 + " " + item.PercentGlobal + "%");
                             }
                         }
                         //industriesYearChartDataLabels5.push(getResourceText("diaYearRange.remaindata"));
@@ -1325,9 +1325,9 @@
                         if (item.Qualifier2) {
                             if (item.Qualifier2.length > 15) {
                                 var qualifier2Cut = item.Qualifier2.substring(15, 0);
-                                industriesYearChartDataLabels6Cut.push(qualifier2Cut + " " + Math.round(item.NumHits / item.NumTotal * 100) + "%");
+                                industriesYearChartDataLabels6Cut.push(qualifier2Cut + " " + item.PercentGlobal + "%");
                             } else {
-                                industriesYearChartDataLabels6Cut.push(item.Qualifier2 + " " + Math.round(item.NumHits / item.NumTotal * 100) + "%");
+                                industriesYearChartDataLabels6Cut.push(item.Qualifier2 + " " + item.PercentGlobal + "%");
                             }
                         }
                         //industriesYearChartDataLabels6.push(getResourceText("diaYearRange.remaindata"));
@@ -1343,9 +1343,9 @@
                         if (item.Qualifier2) {
                             if (item.Qualifier2.length > 15) {
                                 var qualifier2Cut = item.Qualifier2.substring(15, 0);
-                                industriesYearChartDataLabels7Cut.push(qualifier2Cut + " " + Math.round(item.NumHits / item.NumTotal * 100) + "%");
+                                industriesYearChartDataLabels7Cut.push(qualifier2Cut + " " + item.PercentGlobal + "%");
                             } else {
-                                industriesYearChartDataLabels7Cut.push(item.Qualifier2 + " " + Math.round(item.NumHits / item.NumTotal * 100) + "%");
+                                industriesYearChartDataLabels7Cut.push(item.Qualifier2 + " " + item.PercentGlobal + "%");
                             }
                         }
                         //industriesYearChartDataLabels7.push(getResourceText("diaYearRange.remaindata"));
@@ -1361,9 +1361,9 @@
                         if (item.Qualifier2) {
                             if (item.Qualifier2.length > 15) {
                                 var qualifier2Cut = item.Qualifier2.substring(15, 0);
-                                industriesYearChartDataLabels8Cut.push(qualifier2Cut + " " + Math.round(item.NumHits / item.NumTotal * 100) + "%");
+                                industriesYearChartDataLabels8Cut.push(qualifier2Cut + " " + item.PercentGlobal + "%");
                             } else {
-                                industriesYearChartDataLabels8Cut.push(item.Qualifier2 + " " + Math.round(item.NumHits / item.NumTotal * 100) + "%");
+                                industriesYearChartDataLabels8Cut.push(item.Qualifier2 + " " + item.PercentGlobal + "%");
                             }
                         }
                         //industriesYearChartDataLabels8.push(getResourceText("diaYearRange.remaindata"));
