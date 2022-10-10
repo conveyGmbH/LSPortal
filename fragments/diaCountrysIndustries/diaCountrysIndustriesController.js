@@ -696,6 +696,9 @@
                     },
                     changedCountry: function (event) {
                         Log.call(Log.l.trace, "Event.Controller.");
+                        if (that.binding.anzKontakteWData > 0) {
+                            that.binding.anzKontakteWData = 0;
+                        }
                         that.binding.criteriaCountry = parseInt(event.target.value);
                         that.drawChart();
                         Log.ret(Log.l.trace);
