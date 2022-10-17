@@ -41,6 +41,8 @@
 
                 var selectedCountryBefore = null;
 
+                var varID = AppData.getRecordId("Veranstaltung");
+
                 var criteriadrop = fragmentElement.querySelector("#criteriadropdown");
                 var countrydrop = fragmentElement.querySelector("#countrydropdown");
                 var select = fragmentElement.querySelectorAll("select");
@@ -249,7 +251,7 @@
 
                                     var padding = 10;
                                     var position = element.tooltipPosition();
-                                    ctx.fillText(dataString, position.x + 18, position.y - (fontSize / 2) + padding);
+                                    ctx.fillText(dataString, position.x + 25, position.y - (fontSize / 2) + padding);
                                 });
                             }
                         });
@@ -538,7 +540,7 @@
                         countryIndustriesLabelsMultiline.push(splitQualifier);
                     }
                     if (item.NumHits) {
-                        countryIndustriesRawDataPremium.push(Math.round((item.NumHits / item.NumTotal) * 100));
+                        countryIndustriesRawDataPremium.push(((item.NumHits / item.NumTotal) * 100).toFixed(1));
                     }
                     if (item.Startdatum) {
                         item.Startdatum = getDateObject(item.Startdatum);

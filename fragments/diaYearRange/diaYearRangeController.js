@@ -804,7 +804,7 @@
                         yearRangeChartDataLabels1.push(getResourceText("diaYearRange.remaindata"));
                         yearRangeChartDataRaw1.push(item.NumHits);
                         yearRangeChartDataRaw1.push(item.NumTotal - item.NumHits);
-                        yearRangeChartDataProcent1 = Math.round(item.NumHits / item.NumTotal * 100) + "%";
+                        yearRangeChartDataProcent1 = ((item.NumHits / item.NumTotal) * 100).toFixed(1) + "%";
                     }
                     if (item.QualifierExtID === "BORN-79") {
                         yearRangeChartDataTexts2.push(item.Qualifier);
@@ -812,7 +812,7 @@
                         yearRangeChartDataLabels2.push(getResourceText("diaYearRange.remaindata"));
                         yearRangeChartDataRaw2.push(item.NumHits);
                         yearRangeChartDataRaw2.push(item.NumTotal - item.NumHits);
-                        yearRangeChartDataProcent2 = Math.round(item.NumHits / item.NumTotal * 100) + "%";
+                        yearRangeChartDataProcent2 = ((item.NumHits / item.NumTotal) * 100).toFixed(1) + "%";
                     }
                     if (item.QualifierExtID === "BORN-95") {
                         yearRangeChartDataTexts3.push(item.Qualifier);
@@ -820,7 +820,7 @@
                         yearRangeChartDataLabels3.push(getResourceText("diaYearRange.remaindata"));
                         yearRangeChartDataRaw3.push(item.NumHits);
                         yearRangeChartDataRaw3.push(item.NumTotal - item.NumHits);
-                        yearRangeChartDataProcent3 = Math.round(item.NumHits / item.NumTotal * 100) + "%";
+                        yearRangeChartDataProcent3 = ((item.NumHits / item.NumTotal) * 100).toFixed(1) + "%";
                     }
                     if (item.QualifierExtID === "BORN96+") {
                         yearRangeChartDataTexts4.push(item.Qualifier);
@@ -828,7 +828,7 @@
                         yearRangeChartDataLabels4.push(getResourceText("diaYearRange.remaindata"));
                         yearRangeChartDataRaw4.push(item.NumHits);
                         yearRangeChartDataRaw4.push(item.NumTotal - item.NumHits);
-                        yearRangeChartDataProcent4 = Math.round(item.NumHits / item.NumTotal * 100) + "%";
+                        yearRangeChartDataProcent4 = ((item.NumHits / item.NumTotal) * 100).toFixed(1) + "%";
                     }
                 }
                 this.resultConverterPremium = resultConverterPremium;
