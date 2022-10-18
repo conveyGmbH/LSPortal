@@ -58,6 +58,10 @@
                     {
                         value: "FLOW",
                         title: "FLOW"
+                    },
+                    {
+                        value: "ESUCCESS",
+                        title: "ESUCCESS"
                     }
                 ];
                 if (exibitorcategory && exibitorcategory.winControl) {
