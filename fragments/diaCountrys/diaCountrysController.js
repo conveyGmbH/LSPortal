@@ -380,7 +380,7 @@
                                 item.Land = "Kein Land";
                             }
                             anzKontakte = item.TotalHits;
-                            top5Diagramlabelsdata.push(item.Land + " " + Math.round((item.Anzahl / item.TotalHits) * 100) + "%");
+                            top5Diagramlabelsdata.push(item.Land + " " + Math.round(((item.NumHits / item.NumTotal) * 100).toFixed(1)) + "%");
                             top5Diagramdatasetsdata.push(item.Anzahl);
                             anzKontaktePremium += item.Anzahl;
                             top5Diagrambackgroundcolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, index / 12)));
@@ -397,7 +397,7 @@
                             }
                             top5Diagramlabelsdata.push(item.Land);
                             top5DiagramLabelsdataMulitline.push(splitLand);
-                            top5Diagramdatasetsdata.push(Math.round((item.Anzahl / item.TotalHits) * 100)); /*item.GlobalPercentage*/
+                            top5Diagramdatasetsdata.push(Math.round((item.Anzahl / item.TotalHits) * 100).toFixed(1)); /*item.GlobalPercentage*/
                             top5Diagrambackgroundcolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, index / 15)));
                             top5Diagrambordercolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, index / 15)));
                             /*var AnzahlSup = that.getRandomInt(8, 12);*/
@@ -435,7 +435,7 @@
                             if (that.isSupreme === 1) {
                                 restdata = anzKontakte - anzKontaktePremium;
                                 if (restdata) {
-                                    top5Diagramlabelsdata.push(getResourceText("diaCountrys.remaindata") + " " + Math.round((restdata / anzKontakte) * 100) + "%");
+                                    top5Diagramlabelsdata.push(getResourceText("diaCountrys.remaindata") + " " + Math.round(((item.NumHits / item.NumTotal) * 100).toFixed(1)) + "%");
                                     top5Diagramdatasetsdata.push(restdata);
                                     top5Diagrambackgroundcolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, 9 / 12)));
                                     top5Diagrambordercolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, 9 / 12)));
@@ -446,8 +446,8 @@
                                 restdata = anzKontakte - anzKontaktePremium;
                                 if (restdata) {
                                     top5Diagramlabelsdata.push(getResourceText("diaCountrys.remaindata"));
-                                    top5Diagramdatasetsdata.push(Math.round((restdata / anzKontakte) * 100));
-                                    top5Diagramsupremedatasetsdata.push(Math.round((restdata / anzKontakte) * 100)); /*Math.round((restdata / item.TotalHits) * 100)*/
+                                    top5Diagramdatasetsdata.push(Math.round((restdata / anzKontakte) * 100).toFixed(1));
+                                    top5Diagramsupremedatasetsdata.push(Math.round((restdata / anzKontakte) * 100).toFixed(1)); /*Math.round((restdata / item.TotalHits) * 100)*/
                                     top5Diagrambackgroundcolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, 9 / 15)));
                                     top5Diagrambordercolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, 9 / 15)));
                                     top5DiagramLabelsdataMulitline.push([getResourceText("diaCountrys.remaindata")]);

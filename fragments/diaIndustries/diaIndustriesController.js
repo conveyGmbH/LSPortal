@@ -93,7 +93,7 @@
                             var elementWidth = (chart.innerRadius * 2) - sidePaddingCalculated;
 
                             // Find out how much the font can grow in width.
-                            var widthRatio = elementWidth / stringWidth;
+                            var widthRatio = (elementWidth / stringWidth) - 10;
                             var newFontSize = Math.floor(30 * widthRatio);
                             var elementHeight = (chart.innerRadius * 2);
 
