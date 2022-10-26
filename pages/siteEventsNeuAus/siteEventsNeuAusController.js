@@ -134,9 +134,9 @@
                 if (typeof dataExibitor.AppUser === "string") {
                     dataExibitor.AppUser = parseInt(dataExibitor.AppUser);
                 }
-                /*if (!dataExibitor.AppUser || dataExibitor.AppUser < 1) {
+                if (!dataExibitor.AppUser || dataExibitor.AppUser < 1) {
                     dataExibitor.AppUser = 0;
-                }*/
+                }
                 if (typeof dataExibitor.LandID === "string") {
                     dataExibitor.LandID = parseInt(dataExibitor.LandID);
                 }
@@ -265,12 +265,6 @@
                     } else {
                         that.mandatoryErrorCount += 1;
                         that.mandatoryErrorMsg += getResourceText("siteeventsneuaus.loginemail") + " ";
-                    }
-                    if (dataExibitor.AppUser >= 0) {
-                        that.mandatoryErrorCount += 0;
-                    } else {
-                        that.mandatoryErrorCount += 1;
-                        that.mandatoryErrorMsg += getResourceText("siteeventsneuaus.appuser") + " ";
                     }
                     if (dataExibitor.ExhibitorCategory) {
                         that.mandatoryErrorCount += 0;
