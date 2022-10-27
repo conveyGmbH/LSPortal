@@ -84,23 +84,23 @@
                             var color = centerConfig.color || '#000';
                             var maxFontSize = centerConfig.maxFontSize || 75;
                             var sidePadding = centerConfig.sidePadding || 20;
-                            var sidePaddingCalculated = (sidePadding / 100) * (chart.innerRadius * 2);
+                            var sidePaddingCalculated = (sidePadding / 100) * (chart._metasets[chart._metasets.length - 1].data[0].innerRadius * 2);
                             // Start with a base font of 30px
-                            ctx.font = "bold " + "11px " + fontStyle;
+                            ctx.font = "15px " + fontStyle;
 
                             // Get the width of the string and also the width of the element minus 10 to give it 5px side padding
-                            var stringWidth = ctx.measureText(txt).width;
-                            var elementWidth = (chart.innerRadius * 2) - sidePaddingCalculated;
+                            var stringWidth = ctx.measureText(txt).width - 10;
+                            var elementWidth = (chart._metasets[chart._metasets.length - 1].data[0].innerRadius * 2) - sidePaddingCalculated;
 
                             // Find out how much the font can grow in width.
-                            var widthRatio = (elementWidth / stringWidth) - 10;
-                            var newFontSize = Math.floor(30 * widthRatio);
-                            var elementHeight = (chart.innerRadius * 2);
+                            var widthRatio = (elementWidth / stringWidth);
+                            var newFontSize = 15;
+                            var elementHeight = (chart._metasets[chart._metasets.length - 1].data[0].innerRadius * 2);
 
                             // Pick a new font size so it will not be larger than the height of label.
                             var fontSizeToUse = Math.min(newFontSize, elementHeight, maxFontSize);
-                            var minFontSize = centerConfig.minFontSize;
-                            var lineHeight = centerConfig.lineHeight || 25;
+                            var minFontSize = centerConfig.minFontSize + 5;
+                            var lineHeight = centerConfig.lineHeight + 5 || 25;
                             var wrapText = false;
 
                             if (minFontSize === undefined) {
@@ -119,11 +119,6 @@
                             var centerY = ((chart.chartArea.top + chart.chartArea.bottom) / 2);
                             ctx.font = fontSizeToUse + "px " + fontStyle;
                             ctx.fillStyle = color;
-
-                            if (!wrapText) {
-                                ctx.fillText(txt, centerX, centerY);
-                                return;
-                            }
 
                             var words = txt.split(' ');
                             var line = '';
@@ -145,12 +140,19 @@
                             // Move the center up depending on line height and number of lines
                             centerY -= (lines.length / 2) * lineHeight;
 
-                            for (var n = 0; n < lines.length; n++) {
-                                ctx.fillText(lines[n], centerX, centerY);
+                            for (var e = 0; e < lines.length; e++) {
+                                ctx.fillText(lines[e], centerX, centerY);
                                 centerY += lineHeight;
                             }
                             //Draw text in center
                             ctx.fillText(line, centerX, centerY);
+                            
+                            /*
+                            if (!wrapText) {
+                                ctx.fillText(txt, centerX, centerY);
+                                return;
+                            }
+                            */
                         }
                     }
                 }
@@ -213,7 +215,8 @@
                                         labels: {
                                             boxWidth: 10,
                                             color: Colors.textColor
-                                        }
+                                        },
+                                        maxWidth: 205
                                     },
                                     tooltip: {
                                         display: false,
@@ -294,7 +297,7 @@
                                         color: Colors.textColor, // Default is #000000
                                         fontStyle: 'Arial', // Default is Arial
                                         sidePadding: 20, // Default is 20 (as a percentage)
-                                        minFontSize: 10, // Default is 20 (in px), set to false and text will not wrap.
+                                        minFontSize: 20, // Default is 20 (in px), set to false and text will not wrap.
                                         lineHeight: 25 // Default is 25 (in px), used for when text wraps
                                     }
                                 }, plugins: {
@@ -304,7 +307,8 @@
                                         labels: {
                                             boxWidth: 10,
                                             color: Colors.textColor
-                                        }
+                                        },
+                                        maxWidth: 205
                                     },
                                     tooltip: {
                                         display: false,
@@ -395,7 +399,8 @@
                                         labels: {
                                             boxWidth: 10,
                                             color: Colors.textColor
-                                        }
+                                        },
+                                        maxWidth: 205
                                     },
                                     tooltip: {
                                         display: false,
@@ -487,7 +492,8 @@
                                         labels: {
                                             boxWidth: 10,
                                             color: Colors.textColor
-                                        }
+                                        },
+                                        maxWidth: 205
                                     },
                                     tooltip: {
                                         display: false,
@@ -580,7 +586,8 @@
                                         labels: {
                                             boxWidth: 10,
                                             color: Colors.textColor
-                                        }
+                                        },
+                                        maxWidth: 205
                                     },
                                     tooltip: {
                                         display: false,
@@ -672,7 +679,8 @@
                                         labels: {
                                             boxWidth: 10,
                                             color: Colors.textColor
-                                        }
+                                        },
+                                        maxWidth: 205
                                     },
                                     tooltip: {
                                         display: false,
@@ -764,7 +772,8 @@
                                         labels: {
                                             boxWidth: 10,
                                             color: Colors.textColor
-                                        }
+                                        },
+                                        maxWidth: 205
                                     },
                                     tooltip: {
                                         display: false,
@@ -856,7 +865,8 @@
                                         labels: {
                                             boxWidth: 10,
                                             color: Colors.textColor
-                                        }
+                                        },
+                                        maxWidth: 205
                                     },
                                     tooltip: {
                                         display: false,

@@ -380,11 +380,11 @@
                                 item.Land = "Kein Land";
                             }
                             anzKontakte = item.TotalHits;
-                            top5Diagramlabelsdata.push(item.Land + " " + Math.round(((item.NumHits / item.NumTotal) * 100).toFixed(1)) + "%");
+                            top5Diagramlabelsdata.push(item.Land + " " + Math.round(((item.Anzahl / item.TotalHits) * 100).toFixed(1)) + "%");
                             top5Diagramdatasetsdata.push(item.Anzahl);
                             anzKontaktePremium += item.Anzahl;
-                            top5Diagrambackgroundcolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, index / 12)));
-                            top5Diagrambordercolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, index / 12)));
+                            top5Diagrambackgroundcolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, index / 30)));
+                            top5Diagrambordercolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, index / 30)));
                         }
                     }
                     if (that.isSupreme === 2) {
@@ -398,15 +398,15 @@
                             top5Diagramlabelsdata.push(item.Land);
                             top5DiagramLabelsdataMulitline.push(splitLand);
                             top5Diagramdatasetsdata.push(Math.round((item.Anzahl / item.TotalHits) * 100).toFixed(1)); /*item.GlobalPercentage*/
-                            top5Diagrambackgroundcolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, index / 15)));
-                            top5Diagrambordercolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, index / 15)));
+                            top5Diagrambackgroundcolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, index / 30)));
+                            top5Diagrambordercolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, index / 30)));
                             /*var AnzahlSup = that.getRandomInt(8, 12);*/
                             if (item.GlobalPercentage === null) {
                                 item.GlobalPercentage = 0;
                             }
                             top5Diagramsupremedatasetsdata.push(item.GlobalPercentage); /*item.GlobalPercentage*/
-                            top5Diagramsupremebackgroundcolor.push(that.hexToRgbA(that.getColor(surpremeColor, index / 15)));
-                            top5Diagramsupremebordercolor.push(that.hexToRgbA(that.getColor(surpremeColor, index / 15)));
+                            top5Diagramsupremebackgroundcolor.push(that.hexToRgbA(that.getColor(surpremeColor, index / 30)));
+                            top5Diagramsupremebordercolor.push(that.hexToRgbA(that.getColor(surpremeColor, index / 30)));
 
                             anzKontakte = item.TotalHits;
                             anzKontaktePremium += item.Anzahl;
@@ -435,10 +435,10 @@
                             if (that.isSupreme === 1) {
                                 restdata = anzKontakte - anzKontaktePremium;
                                 if (restdata) {
-                                    top5Diagramlabelsdata.push(getResourceText("diaCountrys.remaindata") + " " + Math.round(((item.NumHits / item.NumTotal) * 100).toFixed(1)) + "%");
+                                    top5Diagramlabelsdata.push(getResourceText("diaCountrys.remaindata") + " " + Math.round(((anzKontakte / anzKontaktePremium) * 100).toFixed(1)) + "%");
                                     top5Diagramdatasetsdata.push(restdata);
-                                    top5Diagrambackgroundcolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, 9 / 12)));
-                                    top5Diagrambordercolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, 9 / 12)));
+                                    top5Diagrambackgroundcolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, 9 / 30)));
+                                    top5Diagrambordercolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, 9 / 30)));
                                 }
                                 that.setUpData();
                                 that.createPremiumChart();
@@ -448,11 +448,11 @@
                                     top5Diagramlabelsdata.push(getResourceText("diaCountrys.remaindata"));
                                     top5Diagramdatasetsdata.push(Math.round((restdata / anzKontakte) * 100).toFixed(1));
                                     top5Diagramsupremedatasetsdata.push(Math.round((restdata / anzKontakte) * 100).toFixed(1)); /*Math.round((restdata / item.TotalHits) * 100)*/
-                                    top5Diagrambackgroundcolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, 9 / 15)));
-                                    top5Diagrambordercolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, 9 / 15)));
+                                    top5Diagrambackgroundcolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, 9 / 30)));
+                                    top5Diagrambordercolor.push(that.hexToRgbA(that.getColor(Colors.dashboardColor, 9 / 30)));
                                     top5DiagramLabelsdataMulitline.push([getResourceText("diaCountrys.remaindata")]);
-                                    top5Diagramsupremebackgroundcolor.push(that.hexToRgbA(that.getColor(surpremeColor, 9 / 15)));
-                                    top5Diagramsupremebordercolor.push(that.hexToRgbA(that.getColor(surpremeColor, 9 / 15)));
+                                    top5Diagramsupremebackgroundcolor.push(that.hexToRgbA(that.getColor(surpremeColor, 9 / 30)));
+                                    top5Diagramsupremebordercolor.push(that.hexToRgbA(that.getColor(surpremeColor, 9 / 30)));
                                 }
                                 that.setUpData();
                                 that.createSurpremeChart();
