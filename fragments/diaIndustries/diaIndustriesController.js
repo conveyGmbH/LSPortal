@@ -36,6 +36,17 @@
                 var criteriadrop = fragmentElement.querySelector("#criteriadropdown");
                 var industriesTooltip = fragmentElement.querySelector("#mydiaIndustriesElement");
 
+                var langSet = function() {
+                    Log.call(Log.l.trace, "DiaIndustries.Controller.");
+                    var lang = AppData.getLanguageId();
+                    if (lang === 1031) {
+                        return 1031;
+                    } else {
+                        return 1033;
+                    }
+                }
+                this.langSet = langSet;
+
                 var dropdowncolor = function () {
                     criteriadrop.style.backgroundColor = Colors.textColor;
                 }
@@ -1484,7 +1495,7 @@
                     AppData.setErrorMsg(that.binding);
                     AppData.call("PRC_GetCriterionList", {
                         pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
-                        pLanguageSpecID: AppData.getLanguageId()
+                        pLanguageSpecID: that.langSet()
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
                         for (var i = 0; i < json.d.results.length; i++) {
@@ -1519,7 +1530,7 @@
                         pCriterion2ID: 0,
                         pLandID: 0,
                         pDay: 0,
-                        pLanguageSpecID: AppData.getLanguageId()
+                        pLanguageSpecID: that.langSet()
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
                         var results = json.d.results;
@@ -1543,7 +1554,7 @@
                         pDay: 0,
                         pLandID: 0,
                         pWantedRows: 5,
-                        pLanguageSpecID: AppData.getLanguageId()
+                        pLanguageSpecID: that.langSet()
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
                         var results = json.d.results;
@@ -1573,7 +1584,7 @@
                         pLandID: 0,
                         pDay: 0,
                         pWantedRows: 5,
-                        pLanguageSpecID: AppData.getLanguageId()
+                        pLanguageSpecID: that.langSet()
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
                         var results = json.d.results;
