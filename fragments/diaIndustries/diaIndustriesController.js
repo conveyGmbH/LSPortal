@@ -99,8 +99,8 @@
 
                             // Pick a new font size so it will not be larger than the height of label.
                             var fontSizeToUse = Math.min(newFontSize, elementHeight, maxFontSize);
-                            var minFontSize = centerConfig.minFontSize + 5;
-                            var lineHeight = centerConfig.lineHeight + 5 || 25;
+                            var minFontSize = centerConfig.minFontSize + 3;
+                            var lineHeight = centerConfig.lineHeight + 2 || 25;
                             var wrapText = false;
 
                             if (minFontSize === undefined) {
@@ -204,7 +204,7 @@
                                         color: Colors.textColor, // Default is #000000
                                         fontStyle: 'Arial', // Default is Arial
                                         sidePadding: 20, // Default is 20 (as a percentage)
-                                        minFontSize: 20, // Default is 20 (in px), set to false and text will not wrap.
+                                        minFontSize: 18, // Default is 20 (in px), set to false and text will not wrap.
                                         lineHeight: 25 // Default is 25 (in px), used for when text wraps
                                     }
                                 },
@@ -297,7 +297,7 @@
                                         color: Colors.textColor, // Default is #000000
                                         fontStyle: 'Arial', // Default is Arial
                                         sidePadding: 20, // Default is 20 (as a percentage)
-                                        minFontSize: 20, // Default is 20 (in px), set to false and text will not wrap.
+                                        minFontSize: 18, // Default is 20 (in px), set to false and text will not wrap.
                                         lineHeight: 25 // Default is 25 (in px), used for when text wraps
                                     }
                                 }, plugins: {
@@ -389,7 +389,7 @@
                                         color: Colors.textColor, // Default is #000000
                                         fontStyle: 'Arial', // Default is Arial
                                         sidePadding: 20, // Default is 20 (as a percentage)
-                                        minFontSize: 20, // Default is 20 (in px), set to false and text will not wrap.
+                                        minFontSize: 18, // Default is 20 (in px), set to false and text will not wrap.
                                         lineHeight: 25 // Default is 25 (in px), used for when text wraps
                                     }
                                 }, plugins: {
@@ -481,7 +481,7 @@
                                         color: Colors.textColor, // Default is #000000
                                         fontStyle: 'Arial', // Default is Arial
                                         sidePadding: 20, // Default is 20 (as a percentage)
-                                        minFontSize: 20, // Default is 20 (in px), set to false and text will not wrap.
+                                        minFontSize: 18, // Default is 20 (in px), set to false and text will not wrap.
                                         lineHeight: 25 // Default is 25 (in px), used for when text wraps
                                     }
                                 },
@@ -575,7 +575,7 @@
                                         color: Colors.textColor, // Default is #000000
                                         fontStyle: 'Arial', // Default is Arial
                                         sidePadding: 20, // Default is 20 (as a percentage)
-                                        minFontSize: 20, // Default is 20 (in px), set to false and text will not wrap.
+                                        minFontSize: 18, // Default is 20 (in px), set to false and text will not wrap.
                                         lineHeight: 25 // Default is 25 (in px), used for when text wraps
                                     }
                                 },
@@ -668,7 +668,7 @@
                                         color: Colors.textColor, // Default is #000000
                                         fontStyle: 'Arial', // Default is Arial
                                         sidePadding: 20, // Default is 20 (as a percentage)
-                                        minFontSize: 20, // Default is 20 (in px), set to false and text will not wrap.
+                                        minFontSize: 18, // Default is 20 (in px), set to false and text will not wrap.
                                         lineHeight: 25 // Default is 25 (in px), used for when text wraps
                                     }
                                 },
@@ -761,7 +761,7 @@
                                         color: Colors.textColor, // Default is #000000
                                         fontStyle: 'Arial', // Default is Arial
                                         sidePadding: 20, // Default is 20 (as a percentage)
-                                        minFontSize: 20, // Default is 20 (in px), set to false and text will not wrap.
+                                        minFontSize: 18, // Default is 20 (in px), set to false and text will not wrap.
                                         lineHeight: 25 // Default is 25 (in px), used for when text wraps
                                     }
                                 },
@@ -854,7 +854,7 @@
                                         color: Colors.textColor, // Default is #000000
                                         fontStyle: 'Arial', // Default is Arial
                                         sidePadding: 20, // Default is 20 (as a percentage)
-                                        minFontSize: 20, // Default is 20 (in px), set to false and text will not wrap.
+                                        minFontSize: 18, // Default is 20 (in px), set to false and text will not wrap.
                                         lineHeight: 25 // Default is 25 (in px), used for when text wraps
                                     }
                                 },
@@ -1487,6 +1487,11 @@
                         pLanguageSpecID: AppData.getLanguageId()
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
+                        for (var i = 0; i < json.d.results.length; i++) {
+                            if (json.d.results[i].CriterionID === 40) {
+                                delete json.d.results[i];
+                            }
+                        }
                         json.d.results.forEach(function (item, index) {
                             that.resultConverterCriteria(item, index);
                         });
