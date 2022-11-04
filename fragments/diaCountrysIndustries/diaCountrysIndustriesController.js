@@ -43,6 +43,17 @@
 
                 var varID = AppData.getRecordId("Veranstaltung");
 
+                var langSet = function () {
+                    Log.call(Log.l.trace, "DiaIndustries.Controller.");
+                    var lang = AppData.getLanguageId();
+                    if (lang === 1031) {
+                        return 1031;
+                    } else {
+                        return 1033;
+                    }
+                }
+                this.langSet = langSet;
+
                 var criteriadrop = fragmentElement.querySelector("#criteriadropdown");
                 var countrydrop = fragmentElement.querySelector("#countrydropdown");
                 var select = fragmentElement.querySelectorAll("select");
@@ -569,7 +580,7 @@
                     AppData.setErrorMsg(that.binding);
                     return AppData.call("PRC_GetCriterionList", {
                         pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
-                        pLanguageSpecID: AppData.getLanguageId()
+                        pLanguageSpecID: that.langSet()
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
                         if (criteriadrop && criteriadrop.winControl) {
@@ -615,7 +626,7 @@
                         pCriterion2ID: parseInt(that.binding.criteriaDays),
                         pLandID: parseInt(that.binding.criteriaCountry),
                         pDay: 0,
-                        pLanguageSpecID: AppData.getLanguageId()
+                        pLanguageSpecID: that.langSet()
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
                         var results = json.d.results;
@@ -651,7 +662,7 @@
                         pCriterion2ID: parseInt(that.binding.criteriaDays),
                         pLandID: 0,
                         pDay: 0,
-                        pLanguageSpecID: AppData.getLanguageId()
+                        pLanguageSpecID: that.langSet()
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
                         var results = json.d.results;

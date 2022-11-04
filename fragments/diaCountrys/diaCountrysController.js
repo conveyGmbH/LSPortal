@@ -30,6 +30,17 @@
                 var anzKontakte = 0;
                 var anzKontaktePremium = 0;
 
+                var langSet = function () {
+                    Log.call(Log.l.trace, "DiaIndustries.Controller.");
+                    var lang = AppData.getLanguageId();
+                    if (lang === 1031) {
+                        return 1031;
+                    } else {
+                        return 1033;
+                    }
+                }
+                this.langSet = langSet;
+
                 var top5Diagramlabelsdata = [];
                 var top5DiagramLabelsdataMulitline = [];
                 var top5Diagramdatasetsdata = [];
@@ -420,7 +431,7 @@
                     AppData.setErrorMsg(that.binding);
                     return AppData.call("PRC_GetCountryHitlist", {
                         pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
-                        pLanguageSpecID: AppData.getLanguageId()
+                        pLanguageSpecID: that.langSet()
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
                         if (json.d.results && json.d.results.length > 0) {
