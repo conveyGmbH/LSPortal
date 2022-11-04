@@ -612,7 +612,7 @@
 
                 var countingEntries = function (item, index) {
                     item.index = index;
-                    that.binding.anzKontakteWData += item.NumHits;
+                    that.binding.anzKontakteWData = item.NumTotal;
                 }
                 this.countingEntries = countingEntries;
 
