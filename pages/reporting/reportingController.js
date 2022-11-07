@@ -96,6 +96,17 @@
                 }
             }
 
+            var langSet = function () {
+                Log.call(Log.l.trace, "DiaIndustries.Controller.");
+                var lang = AppData.getLanguageId();
+                if (lang === 1031) {
+                    return 1031;
+                } else {
+                    return 1033;
+                }
+            }
+            this.langSet = langSet;
+
             //audio
             var showProgress = function (percent, text, max) {
                 if (that.binding.progress && typeof that.binding.progress === "object") {
@@ -721,7 +732,7 @@
                             that.showDashboardLoadingText(true);
                             return AppData.call("PRC_DBExcelRequest", {
                                 pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
-                                pLanguageSpecID: AppData.getLanguageId(),
+                                pLanguageSpecID: that.langSet(),
                                 pExportType: "DBSUPREME",
                                 psyncRun: 1
                             }, function (json) {
@@ -741,7 +752,7 @@
                             that.showDashboardLoadingText(true);
                             return AppData.call("PRC_DBExcelRequest", {
                                 pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
-                                pLanguageSpecID: AppData.getLanguageId(),
+                                pLanguageSpecID: that.langSet(),
                                 pExportType: "DBPREMIUM",
                                 psyncRun: 1
                             }, function (json) {
