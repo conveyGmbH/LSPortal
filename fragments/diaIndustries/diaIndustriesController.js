@@ -1499,14 +1499,13 @@
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
                         for (var i = 0; i < json.d.results.length; i++) {
-                            if (json.d.results[i].CriterionID === 40) {
+                            if (json.d.results[i].ExternalID === "-100") {
                                 delete json.d.results[i];
                             }
                         }
                         json.d.results.forEach(function (item, index) {
                             that.resultConverterCriteria(item, index);
                         });
-                        json.d.results.shift();
                         if (criteriadrop && criteriadrop.winControl) {
                             criteriadrop.winControl.data = new WinJS.Binding.List(json.d.results);
                             criteriadrop.selectedIndex = 0;
