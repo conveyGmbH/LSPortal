@@ -116,3 +116,6 @@
     box-shadow: none;
     font-family: Open Sans;
 }
+.anzcontainer {
+    display: none;
+}
