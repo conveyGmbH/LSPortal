@@ -687,6 +687,27 @@
                 }
                 return AppData.persistentStatesDefaults.colorSettings.accentColor;
             } else {
+                /*if (AppData._userData.VeranstaltungTyp === 0) {
+                    //if(AppData._userData.isSupreme === "1")
+                    switch (AppData._userData.IsSupreme) {
+                        case "1":
+                            // type 3 
+                            dashboardColorType = 3;
+                            break;
+                        case "2":
+                            // type 4
+                            dashboardColorType = 4;
+                            break;
+                        default:
+                    }
+                    var colorSettings = AppData.persistentStatesDefaults.colorSettingsDefaults[dashboardColorType || AppData._userData.VeranstaltungTyp];
+                    for (var prop in colorSettings) {
+                        if (colorSettings.hasOwnProperty(prop)) {
+                            AppData.persistentStatesDefaults.colorSettings[prop] = colorSettings[prop];
+                        }
+                    }
+                    return AppData.persistentStatesDefaults.colorSettings.accentColor;
+                } else  */
                 return null;
             }
         },

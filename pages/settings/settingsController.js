@@ -236,6 +236,26 @@
                         if (toggle) {
                             if (!toggle.checked && AppData._persistentStates.individualColors) {
                                 WinJS.Promise.timeout(0).then(function () {
+                                    if (AppData._userData.VeranstaltungTyp === 0) {
+                                        //if(AppData._userData.isSupreme === "1")
+                                        switch (AppData._userData.IsSupreme) {
+                                            case "1":
+                                                // type 3 
+                                                dashboardColorType = 3;
+                                                break;
+                                            case "2":
+                                                // type 4
+                                                dashboardColorType = 4;
+                                                break;
+                                            default:
+                                        }
+                                        var colorSettings = AppData.persistentStatesDefaults.colorSettingsDefaults[dashboardColorType || AppData._userData.VeranstaltungTyp];
+                                        for (var prop in colorSettings) {
+                                            if (colorSettings.hasOwnProperty(prop)) {
+                                                AppData.persistentStatesDefaults.colorSettings[prop] = colorSettings[prop];
+                                            }
+                                        }
+                                    }
                                     var colorSettings = copyByValue(AppData.persistentStatesDefaults.colorSettings);
                                     var colors = new Colors.ColorsClass(colorSettings);
                                     var promise = colors._loadCssPromise || WinJS.Promise.timeout(0);
