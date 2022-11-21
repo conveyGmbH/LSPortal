@@ -180,6 +180,11 @@
                         }
                         Application.navigateById("login", event);
                         Log.ret(Log.l.trace);
+                    },
+                    clickChange: function (event) {
+                        Log.call(Log.l.trace, "SiteEvents.Controller.");
+                        that.changeEvent();
+                        Log.ret(Log.l.trace);
                     }
                 };
 
@@ -190,8 +195,29 @@
                         } else {
                             return true;
                         }
+                    },
+                    clickChange: function () {
+                        return AppData.generalData.eventId !== getRecordId();
                     }
                 };
+
+                var changeEvent = function () {
+                    Log.call(Log.l.trace, "LocalEvents.Controller.");
+                    AppData.setErrorMsg(that.binding);
+                    AppData.call("PRC_ChangeSiteVeranstaltung", {
+                        pNewVeranstaltungID: getRecordId(),
+                        pLoginName: AppData._persistentStates.odata.login
+                    }, function (json) {
+                        Log.print(Log.l.info, "call success! ");
+                        AppData.prevLogin = AppData._persistentStates.odata.login;
+                        AppData.prevPassword = AppData._persistentStates.odata.password;
+                        Application.navigateById("login");
+                    }, function (error) {
+                        Log.print(Log.l.error, "call error");
+                    });
+                    Log.ret(Log.l.trace);
+                }
+                this.changeEvent = changeEvent;
 
                 var loadData = function () {
                     Log.call(Log.l.trace, "SiteEventsBenNach.Controller.");
