@@ -186,6 +186,11 @@
                                 // preset with not-on-site!
                                 AppData._userData.Present = 0;
                             }
+                            if (AppData._userData.EventCount > 1 || AppData._userData.VeranstaltungTyp === 1) {
+                                NavigationBar.enablePage("eventsList");
+                            } else {
+                                NavigationBar.disablePage("eventsList");
+                            }
                             if (typeof AppHeader === "object" &&
                                 AppHeader.controller && AppHeader.controller.binding) {
                                 AppHeader.controller.binding.userData = AppData._userData;
