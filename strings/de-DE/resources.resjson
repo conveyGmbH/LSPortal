@@ -1479,7 +1479,8 @@
     "startResourceAdministration.comment" : "Erstellen und Einrichten Ihrer Startseite",
 
 	"support.title" : "Support",
-	"support.url" : "https://www.convey.de/kontakt/",
+	"support.urlleadsuccess" : "https://www.convey.de/kontakt/",
+    "support.urllivebridge" : "https://www.livebridge.eu/faq",
 
     "eventbaselink.title" : "Basis Link",
     "eventbaselink.starturl" : "URL Pfad",

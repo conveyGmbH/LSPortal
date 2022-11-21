@@ -1478,7 +1478,8 @@
     "startResourceAdministration.comment" : "Create and set up your homepage",
 
     "support.title" : "Support",
-    "support.url" : "https://www.convey.de/en/contact-2/",
+    "support.urlleadsuccess" : "https://www.convey.de/en/contact-2/",
+    "support.urllivebridge" : "https://www.livebridge.eu/faq-2?lang=en",
 
     "eventbaselink.title" : "Base Link",
     "eventbaselink.starturl" : "URL Path",

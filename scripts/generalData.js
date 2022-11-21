@@ -660,6 +660,13 @@
                     return "leadsuccess_white";
             }
         },
+        getSupportString : function() {
+            if (AppData._userData.VeranstaltungTyp === 1) {
+                return getResourceText("support.urllivebridge");
+            } else {
+                return getResourceText("support.urlleadsuccess");
+            }
+        },
         getEventColor: function () {
             if (!AppData._persistentStates.individualColors &&
                 AppData._userData && typeof AppData._userData.VeranstaltungTyp === "number" &&

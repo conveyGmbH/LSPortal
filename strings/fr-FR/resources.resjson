@@ -1477,7 +1477,8 @@
     "startResourceAdministration.comment" : "Créez et configurez votre page d'accueil",
 
     "support.title" : "Support",
-    "support.url" : "https://www.convey.de/en/contact-2/",
+    "support.urlleadsuccess" : "https://www.convey.de/en/contact-2/",
+    "support.urllivebridge" : "https://www.livebridge.eu/faq-2?lang=en",
 
     "eventbaselink.title" : "Lien de base",
     "eventbaselink.starturl" : "Chemin d'accès URL",
