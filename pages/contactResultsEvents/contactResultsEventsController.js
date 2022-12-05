@@ -7,6 +7,7 @@
 /// <reference path="~/www/lib/convey/scripts/pageController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/pages/contactResultsEvents/contactResultsEventsService.js" />
+/// <reference path="~/www/lib/moment/scripts/moment-with-locales.min.js" />
 
 (function () {
     "use strict";
@@ -37,11 +38,23 @@
                 var dateString = date.replace("\/Date(", "").replace(")\/", "");
                 var milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
                 var time = new Date(milliseconds);
-                var formdate = ("0" + time.getDate()).slice(-2) + "." + ("0" + (time.getMonth() + 1)).slice(-2) + "." + time.getFullYear();
+                var formdate = ("0" + time.getDate()).slice(-2) + "." + ("0" + (time.getMonth() + 1)).slice(-2) + "." + time.getFullYear() + " " + time.getUTCHours() + ":" + time.getUTCMinutes();
                 Log.ret(Log.l.trace);
-                return formdate;
+                return time;
             };
             this.getDateObject = getDateObject;
+
+            var getDateTime = function(date) {
+                Log.call(Log.l.trace, "ContactResultsEvents.Controller.");
+                var currentDate = getDateObject(date);
+                var curMoment = moment(currentDate);
+                    curMoment.locale(Application.language);
+                var currentDateString = curMoment.format("L");
+                var currentTimeString = curMoment.format("HH:mm");
+                return currentDateString + " " + currentTimeString;
+
+            }
+            this.getDateTime = getDateTime;
 
             var setDataContact = function (data) {
                 Log.call(Log.l.trace, "ContactResultsEvents.Controller.");
@@ -228,7 +241,7 @@
                     item.CreatorName = "auto";
                 }
                 if (item.IncidentTSUTC) {
-                    item.IncidentTSUTC = that.getDateObject(item.IncidentTSUTC);
+                    item.IncidentTSUTC = that.getDateTime(item.IncidentTSUTC);
                 }
                 if (tableBody &&
                     tableBody.winControl &&
