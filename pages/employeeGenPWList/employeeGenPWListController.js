@@ -268,6 +268,31 @@
                         }
                     }
                     Log.ret(Log.l.trace);
+                },
+                clickChangeUserState: function (event) {
+                    Log.call(Log.l.trace, "Employee.Controller.");
+                    Application.navigateById("userinfo", event);
+                    Log.ret(Log.l.trace);
+                },
+                clickTopButton: function (event) {
+                    Log.call(Log.l.trace, "Contact.Controller.");
+                    var anchor = document.getElementById("menuButton");
+                    var menu = document.getElementById("menu1").winControl;
+                    var placement = "bottom";
+                    menu.show(anchor, placement);
+                    Log.ret(Log.l.trace);
+                },
+                clickLogoff: function (event) {
+                    Log.call(Log.l.trace, "Account.Controller.");
+                    AppData._persistentStates.privacyPolicyFlag = false;
+                    if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
+                        AppHeader.controller.binding.userData = {};
+                        if (!AppHeader.controller.binding.userData.VeranstaltungName) {
+                            AppHeader.controller.binding.userData.VeranstaltungName = "";
+                        }
+                    }
+                    Application.navigateById("login", event);
+                    Log.ret(Log.l.trace);
                 }
             };
             this.disableHandlers = {

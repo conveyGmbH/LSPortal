@@ -660,7 +660,7 @@
                 case 1:
                     return "livebrigde_white_logo";
                 case 2:
-                    return "eventsuccess_logo";
+                    return "eventsuccess_white_logo";
                 default:
                     return "leadsuccess_white";
             }
