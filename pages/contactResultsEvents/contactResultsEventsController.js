@@ -50,7 +50,7 @@
                 var curMoment = moment(currentDate);
                     curMoment.locale(Application.language);
                 var currentDateString = curMoment.format("L");
-                var currentTimeString = curMoment.format("HH:mm");
+                var currentTimeString = curMoment.format("HH:mm:ss");
                 return currentDateString + " " + currentTimeString;
 
             }
