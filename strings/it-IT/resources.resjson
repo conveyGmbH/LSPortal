@@ -1487,5 +1487,12 @@
 
     "ticketLimits.title" : "Impostazioni del badge",
     "ticketLimits.locallimit" : "Max. Distintivi",
-    "ticketLimits.localfree" : "Distintivi gratuiti"
+    "ticketLimits.localfree" : "Distintivi gratuiti",
+
+    "genDataModEventsHisto.title"			: "Moderator Eventi",
+	"genDataModEventsHisto.date"			: "Data",
+    "genDataModEventsHisto.ereignistyp"			: "Tipo di evento",
+    "genDataModEventsHisto.ereignisdetails"			: "Dettagli dell'evento",
+    "genDataModEventsHisto.creator"			: "Entra in",
+    "genDataModEventsHisto.event"			: "Evento"
 }

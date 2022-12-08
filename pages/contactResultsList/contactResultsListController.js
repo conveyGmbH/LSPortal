@@ -37,6 +37,18 @@
                 }
             }
 
+            var getEventId = function () {
+                Log.print(Log.l.trace, "getEventId ContactResultsList._eventId=" + ContactResultsList._eventId);
+                return ContactResultsList._eventId;
+            }
+            this.getEventId = getEventId;
+
+            var setEventId = function (value) {
+                Log.print(Log.l.trace, "setEventId ContactResultsList._eventId=" + value);
+                ContactResultsList._eventId = value;
+            }
+            this.setEventId = setEventId;
+
             var colorStatus = function() {
                 var statusrow = pageElement.querySelectorAll("#status");
                 for (var i = 1; i < statusrow.length; i++) {

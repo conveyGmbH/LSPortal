@@ -1,0 +1,65 @@
+﻿.genDataModEventsHisto .scroll-line {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.genDataModEventsHisto * {
+    box-sizing: border-box;
+}
+
+.genDataModEventsHisto #fullname {
+    font-weight: bolder;
+}
+
+.topcontainer {
+    width: 100%;
+    border-bottom: 2px solid grey;
+}
+
+.genDataModEventsHisto table {
+    border-collapse: collapse;
+    width: 95%;
+    margin-left: 20px;
+    overflow: hidden;
+}
+
+.genDataModEventsHisto td,
+.genDataModEventsHisto th {
+    padding: 5px 15px;
+    text-align: justify;
+    height: 35px;
+}
+
+.genDataModEventsHisto table {
+    border: 1px solid grey;
+}
+
+.genDataModEventsHisto td {
+    border-bottom: 1px solid grey;
+    border-top: 1px solid grey;
+}
+.genDataModEventsHisto th {
+    border-bottom: 1px solid grey;
+}
+.genDataModEventsHisto .table-body tr:hover {
+    background: #f8f9fb;
+}
+
+.genDataModEventsHisto #counter {
+    margin-left: 25px;
+}
+
+.genDataModEventsHisto table,
+.genDataModEventsHisto tr,
+.genDataModEventsHisto #status {
+    border-right: 0px !important;
+}
+
+.genDataModEventsHisto table,
+.genDataModEventsHisto tr,
+.genDataModEventsHisto #datacheckbox {
+    border-left: 0px !important;
+}
+.genDataModEventsHisto #textinfo {
+    max-width: 600px;
+}

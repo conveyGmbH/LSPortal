@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="genDataModEventsHisto.css" rel="stylesheet" />
+    <script type="text/javascript" src="genDataModEventsHistoService.js"></script>
+    <script type="text/javascript" src="genDataModEventsHistoController.js"></script>
+    <script type="text/javascript" src="genDataModEventsHisto.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="genDataModEventsHisto fragment">
+        <div id="genDataModHistoController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="contentarea win-type-body">
+                    <div class="content-header">
+                        <div class="half-circle half-circle-textcolor">&nbsp;</div>
+                        <div class="content-header-line win-type-caption">
+                            <span class="id-field"></span>
+                            <span class="caption-field" data-win-res="{textContent: 'genDataModEventsHisto.title'}"></span>
+                            <span class="date-field"></span>
+                        </div>
+                    </div>
+                    <div class="topcontainerevent" data-win-bind="style.display: dataContact.BenutzerVIEWID Binding.Converter.toDisplay">
+                        <div id="fieldlinetop" class="field_line">
+                            <div class="field_line field_line_odd">
+                                <span id="fullname" data-win-bind="textContent: dataContact.fullName"></span><br />
+                                <span data-win-bind="textContent: dataContact.EMail"></span><br />
+                                <span data-win-bind="textContent: dataContact.PersonKategorie"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <table id="tableId">
+                        <thead class="table-header">
+                            <tr>
+                                <th id="icon"></th>
+                                <th data-win-res="{textContent: 'genDataModEventsHisto.date'}"></th>
+                                <th data-win-res="{textContent: 'genDataModEventsHisto.ereignistyp'}"></th>
+                                <th data-win-res="{textContent: 'genDataModEventsHisto.ereignisdetails'}"></th>
+                                <th data-win-res="{textContent: 'genDataModEventsHisto.event'}"></th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-body" data-win-control="WinJS.UI.Repeater">
+                            <tr data-win-bind="value: KontaktID">
+                                <td id="icon">
+                                    <div class="list-symbol-ID">
+                                        <div data-win-bind="name: IconName" class="action-image"></div>
+                                    </div>
+                                </td>
+                                <td data-win-bind="textContent: IncidentTSUTC"></td>
+                                <td data-win-bind="textContent: IncidentName"></td>
+                                <td id="textinfo" data-win-bind="textContent: TextInfo"></td>
+                                <td data-win-bind="textContent: Veranstaltung"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="error-message"
+                     data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

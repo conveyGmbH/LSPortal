@@ -5,12 +5,12 @@
 /// <reference path="~/www/lib/convey/scripts/logging.js" />
 /// <reference path="~/www/lib/convey/scripts/navigator.js" />
 /// <reference path="~/www/lib/convey/scripts/appbar.js" />
-/// <reference path="~/www/pages/genDataModHisto/genDataModHistoController.js" />
+/// <reference path="~/www/pages/genDataModEventsHisto/genDataModEventsHistoController.js" />
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("Application.GenDataModHistoLayout", {
-        GenDataModHistoLayout: WinJS.Class.define(function (options) {
+    WinJS.Namespace.define("Application.GenDataModEventsHistoLayout", {
+        GenDataModEventsHistoLayout: WinJS.Class.define(function (options) {
             this._site = null;
             this._surface = null;
         },
@@ -21,21 +21,21 @@
                 this._surface = this._site.surface;
 
                 // Add a CSS class to control the surface level layout
-                WinJS.Utilities.addClass(this._surface, "genDataModHistoLayout");
+                WinJS.Utilities.addClass(this._surface, "genDataModEventsHistoLayout");
 
                 return WinJS.UI.Orientation.vertical;
             },
 
             // Reset the layout to its initial state
             uninitialize: function () {
-                WinJS.Utilities.removeClass(this._surface, "genDataModHistoLayout");
+                WinJS.Utilities.removeClass(this._surface, "genDataModEventsHistoLayout");
                 this._site = null;
                 this._surface = null;
             }
         })
     });
 
-    var pageName = Application.getPagePath("genDataModHisto");
+    var pageName = Application.getPagePath("genDataModEventsHisto");
 
     WinJS.UI.Pages.define(pageName, {
         // This function is called whenever a user navigates to this page. It
@@ -49,11 +49,9 @@
             
             // add page specific commands to AppBar
             var commandList = [
-                { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" },
-                { id: "clickShowEvents", label: getResourceText("command.showevents"), tooltip: getResourceText("eventSeries.newSerie"), section: "primary", svg: "user_monitor" }
+                { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" }
             ];
-            var isMaster = Application.navigator && Application.navigator._nextMaster === pageName;
-            this.controller = new GenDataModHisto.Controller(element, commandList, isMaster);
+            this.controller = new GenDataModEventsHisto.Controller(element, commandList);
             Log.ret(Log.l.trace);
         },
 
@@ -72,7 +70,7 @@
             if (element && !that.inResize) {
                 that.inResize = 1;
                 ret =  WinJS.Promise.timeout(0).then(function () {
-                    var contactList = element.querySelector("#genDataModList.listview");
+                    var contactList = element.querySelector("#genDataModEventsHistoList.listview");
                     if (contactList && contactList.style) {
                         var contentarea = element.querySelector(".contentarea");
                         if (contentarea) {

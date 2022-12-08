@@ -17,7 +17,7 @@
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList, isMaster) {
                 Log.call(Log.l.trace, "GenDataModHisto.Controller.");
                 Application.RecordsetController.apply(this, [pageElement, {
-                      count: 0
+                    count: 0
                 }, commandList]);
 
                 // ListView control
@@ -28,6 +28,7 @@
                 this.nextDocUrl = null;
                 this.loading = false;
                 this.modHistoData = null;
+                this.vaId = null;
               
                 this.firstmodHistoDataIndex = 0;
 
@@ -51,7 +52,12 @@
 
                 var maxLeadingPages = 0;
                 var maxTrailingPages = 0;
-              
+
+                var setVaId = function(vaid) {
+                    that.vaId = vaid;
+                }
+                this.setVaId = setVaId;
+
                 var background = function (index) {
                     if (index % 2 === 0) {
                         return 1;
@@ -211,6 +217,11 @@
                         }
                         Log.ret(Log.l.trace);
                     },
+                    clickShowEvents: function(event) {
+                        Log.call(Log.l.trace, "GenDataModHisto.Controller.");
+                        Application.navigateById("genDataModEventsHisto", event);
+                        Log.ret(Log.l.trace);
+                    },
                     onPointerDown: function (e) {
                         Log.call(Log.l.trace, "Questiongroup.Controller.");
                         that.cursorPos = { x: e.pageX, y: e.pageY };
@@ -231,6 +242,32 @@
                     onMouseUp: function (e) {
                         Log.call(Log.l.trace, "Questiongroup.Controller.");
                         mouseDown = false;
+                        Log.ret(Log.l.trace);
+                    },
+                    onSelectionChanged: function (eventInfo) {
+                        Log.call(Log.l.trace, "GenDataModList.Controller.");
+                        that.binding.vaId = null;
+                        if (listView && listView.winControl) {
+                            var listControl = listView.winControl;
+                            if (listControl.selection) {
+                                var selectionCount = listControl.selection.count();
+                                if (selectionCount === 1) {
+                                    // Only one item is selected, show the page
+                                    listControl.selection.getItems().done(function (items) {
+                                        var item = items[0];
+                                        var curPageId = Application.getPageId(nav.location);
+                                        if (item.data &&
+                                            item.data.BenutzerVIEWID) {
+                                            that.setVaId(item.data.VeranstaltungID);
+                                            AppData.setRecordId("IncidentUID", item.data.BenutzerVIEWID);
+                                            AppData.setRecordId("IncidentPID", item.data.PersonID);
+                                            AppData.setRecordId("IncidentVID", item.data.VeranstaltungID);
+                                            AppBar.modified = false;
+                                        }
+                                    });
+                                }
+                            }
+                        }
                         Log.ret(Log.l.trace);
                     },
                     clickUpdateRating: function (event) {
@@ -444,6 +481,13 @@
                         } else {
                             return true;
                         }
+                    },
+                    clickShowEvents: function () {
+                        if (!AppBar.busy && that.vaId) {
+                            return false;
+                        } else {
+                            return true;
+                        }
                     }
                 }
 
@@ -463,6 +507,7 @@
                     }
                 }.bind(this), true);
                     this.addRemovableEventListener(listView, "iteminvoked", this.eventHandlers.onItemInvoked.bind(this));
+                    this.addRemovableEventListener(listView, "selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
                     this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
                     this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
                 }

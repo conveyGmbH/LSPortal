@@ -1490,5 +1490,14 @@
 
     "ticketLimits.title" : "Einstellungen zu Ausweisen",
     "ticketLimits.locallimit" : "Max. Ausweise",
-    "ticketLimits.localfree" : "Freie Ausweise"
+    "ticketLimits.localfree" : "Freie Ausweise",
+
+    "genDataModEventsHisto.title"			: "Moderator Ereignisse",
+    "genDataModEventsHisto.date"			: "Datum",
+    "genDataModEventsHisto.ereignistyp"			: "Ereignis-Typ",
+    "genDataModEventsHisto.ereignisdetails"			: "Ereignis-Details",
+    "genDataModEventsHisto.creator"			: "Erfasser",
+    "genDataModEventsHisto.event"			: "Veranstaltung"
+
+
 }		

@@ -1488,5 +1488,12 @@
 
     "ticketLimits.title" : "Paramètres des badges",
     "ticketLimits.locallimit" : "Max. Badges d'accès",
-    "ticketLimits.localfree" : "Badges libres"
+    "ticketLimits.localfree" : "Badges libres",	
+
+    "genDataModEventsHisto.title"			: "Moderator Événements",
+    "genDataModEventsHisto.date"			: "Date",
+    "genDataModEventsHisto.ereignistyp"			: "Type d'événement",
+    "genDataModEventsHisto.ereignisdetails"			: "Détails de l'événement",
+    "genDataModEventsHisto.creator"			: "Entrez",
+    "genDataModEventsHisto.event"			: "Événement"
 }

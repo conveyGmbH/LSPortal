@@ -152,6 +152,7 @@
                                                 typeof AppBar.scope.loadData === "function" &&
                                                 typeof AppBar.scope.setPersonId === "function") {
                                                 AppBar.scope.setPersonId(item.data.PersonID);
+                                                AppBar.scope.setVaId(null);
                                                 AppBar.scope.loadData();
                                             }
                                         } else {

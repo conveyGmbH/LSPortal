@@ -1489,5 +1489,12 @@
 
     "ticketLimits.title" : "Setup Pass Details",
     "ticketLimits.locallimit" : "Max. Passes",
-    "ticketLimits.localfree" : "Free Passes"
+    "ticketLimits.localfree" : "Free Passes",	
+
+    "genDataModEventsHisto.title"			: "Moderator Incidents",
+    "genDataModEventsHisto.date"			: "Date",
+    "genDataModEventsHisto.ereignistyp"			: "Event type",
+    "genDataModEventsHisto.ereignisdetails"			: "Event details",
+    "genDataModEventsHisto.creator"			: "Creator",
+    "genDataModEventsHisto.event"			: "Event"
 }
