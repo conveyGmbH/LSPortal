@@ -728,7 +728,8 @@
 	"employee.nameDesc"     : "Nom ↓",
 	"employee.nameAsc"      : "Nom ↑",
     "employee.comment"      : "Gérez vos données d'accès des employés ici.",
-	"employee.alertNewLoginPassword" : "Bitte melden Sie sich mit dem neuen Passwort an",
+	"employee.alertNewLoginPassword" : "Veuillez vous connecter avec le nouveau mot de passe",
+    "employee.alertPasswordShort": "Le mot de passe doit contenir au moins 5 caractères",
 
     "empList.title"         : "Comptes utilisateurs",
     "empList.count"         : "Combre",

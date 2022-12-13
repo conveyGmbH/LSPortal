@@ -705,6 +705,7 @@
 	"employee.nameAsc"      : "Name ↑",
     "employee.comment"      : "Verwalten Sie hier Ihre Mitarbeiter Zugangsdaten.",
 	"employee.alertNewLoginPassword" : "Bitte melden Sie sich mit dem neuen Passwort an",
+    "employee.alertPasswordShort": "Passwort muss mindestens 5 Zeichen enthalten",
 
     "empList.title"         : "Benutzerkonten",
     "empList.count"         : "Anzahl",

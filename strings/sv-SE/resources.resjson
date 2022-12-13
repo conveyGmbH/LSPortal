@@ -704,7 +704,8 @@
 	"employee.nameDesc"     : "Last Name ↓",
 	"employee.nameAsc"      : "Last Name ↑",
     "employee.comment"      : "Manage your employee access data here.",
-	"employee.alertNewLoginPassword" : "Bitte melden Sie sich mit dem neuen Passwort an",
+	"employee.alertNewLoginPassword" : "Please log in with the new password",
+	"employee.alertPasswordShort": "Password must contain at least 5 characters",
 
     "empList.title"         : "User accounts",
     "empList.count"         : "Count",
