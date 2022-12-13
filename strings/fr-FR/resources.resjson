@@ -14,6 +14,7 @@
     "general.october"       : "Oct",
     "general.november"      : "Nov",
     "general.december"      : "Déc",
+	"general.unauthorizedUser" : "Invalid username/password!\nlogon denied!\nPassword may have been changed, please login again",
 
     "command.backward"      : "Présédent",
     "command.edit"          : "Modifier",
@@ -727,6 +728,7 @@
 	"employee.nameDesc"     : "Nom ↓",
 	"employee.nameAsc"      : "Nom ↑",
     "employee.comment"      : "Gérez vos données d'accès des employés ici.",
+	"employee.alertNewLoginPassword" : "Bitte melden Sie sich mit dem neuen Passwort an",
 
     "empList.title"         : "Comptes utilisateurs",
     "empList.count"         : "Combre",

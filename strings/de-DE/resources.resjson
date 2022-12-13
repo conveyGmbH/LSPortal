@@ -14,6 +14,7 @@
     "general.october"       : "Okt",
     "general.november"      : "Nov",
     "general.december"      : "Dez",
+	"general.unauthorizedUser" : "Benutzername/Passwort ungültig!\nAnmeldung ungültig!\nPasswort ist möglicherweise geändert worden, Bitte melden Sie sich neu an",
 
     "command.backward"      : "Zurück",
     "command.edit"          : "Bearbeiten",
@@ -727,6 +728,7 @@
 	"employee.nameDesc"     : "Name ↓",
 	"employee.nameAsc"      : "Name ↑",
     "employee.comment"      : "Verwalten Sie hier Ihre Mitarbeiter Zugangsdaten.",
+	"employee.alertNewLoginPassword" : "Bitte melden Sie sich mit dem neuen Passwort an",
 
     "empList.title"         : "Benutzerkonten",
     "empList.count"         : "Anzahl",

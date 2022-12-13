@@ -25,6 +25,7 @@
             var table = pageElement.querySelector("#tableId");
             var tableHeader = pageElement.querySelector(".table-header");
             var tableBody = pageElement.querySelector(".table-body");
+            var contentArea = pageElement.querySelector(".contentarea");
 
             var getRecordId = function () {
                 Log.call(Log.l.trace, "ContactResultsEvents.Controller.");
@@ -210,6 +211,14 @@
                     }
                     Application.navigateById("login", event);
                     Log.ret(Log.l.trace);
+                },
+                onFooterVisibilityChanged: function (eventInfo) {
+                    Log.call(Log.l.trace, "ContactList.Controller.");
+                    var element = eventInfo.target;
+                    if (that.dataContact && that.nextUrl && Math.abs(element.scrollHeight - element.scrollTop - element.clientHeight) <= 3.0) {
+                        that.loadNextUrl();
+                    }
+                    Log.ret(Log.l.trace);
                 }
             };
 
@@ -301,6 +310,10 @@
                 Log.ret(Log.l.trace);
             }
             this.loadNextUrl = loadNextUrl;
+
+            if (contentArea) {
+                this.addRemovableEventListener(contentArea, "scroll", this.eventHandlers.onFooterVisibilityChanged.bind(this));
+            }
 
             var loadData = function () {
                 Log.call(Log.l.trace, "ContactResultsCriteria.Controller.");
