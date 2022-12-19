@@ -247,6 +247,7 @@
                                     var restriction = ContactResultsList.KontaktReport.defaultRestriction;
                                     var sortname = myrow.value;
                                     if (restriction.OrderAttribute !== sortname) {
+                                        restriction.VeranstaltungID = that.getEventId();
                                         restriction.OrderAttribute = sortname;
                                         restriction.OrderDesc = false;
                                         that.loadData(restriction);
@@ -254,6 +255,7 @@
                                         Log.call(Log.l.trace, "ContactResultsList.Controller.");
                                     } else {
                                         restriction.OrderDesc = !restriction.OrderDesc;
+                                        restriction.VeranstaltungID = that.getEventId();
                                         that.loadData(restriction);
                                         that.setHeaderText(myrow.value);
                                         Log.call(Log.l.trace, "ContactResultsList.Controller.");
@@ -448,8 +450,22 @@
             }
             this.loadNextUrl = loadNextUrl;
 
+            var saveData = function (complete, error) {
+                Log.call(Log.l.trace, "ContactResultsList.Controller.");
+                // Dummy Save Data Function
+                AppData.setErrorMsg(that.binding);
+                var ret = new WinJS.Promise.as().then(function () {
+                    if (typeof complete === "function") {
+                        complete({});
+                    }
+                });
+                Log.ret(Log.l.trace);
+                return ret;
+            };
+            this.saveData = saveData;
+
             var loadData = function (restr) {
-                Log.call(Log.l.trace, "MailingTypes.Controller.");
+                Log.call(Log.l.trace, "ContactResultsList.Controller.");
                 AppData.setErrorMsg(that.binding);
                 that.nextUrl = null;
                 if (tableBody && tableBody.winControl) {
@@ -493,28 +509,9 @@
                             function (errorResponse) {
                                 AppData.setErrorMsg(that.binding, errorResponse);
                             }, {
-                                
+                                VeranstaltungID: that.getEventId()
                             });
                     }
-                }).then(function () {
-                    return ContactResultsList.mitarbeiterView.select(function (json) {
-                            // this callback will be called asynchronously
-                            // when the response is available
-                            Log.print(Log.l.trace, "mitarbeiterView: success!");
-                            // startContact returns object already parsed from json file in response
-                            if (json && json.d) {
-                                var results = json.d;
-                                that.binding.noctcount = results.AnzKontakte;
-                            } else {
-                                Log.print(Log.l.trace, "mitarbeiterView: no data found!");
-                            }
-                        }, function (errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            Log.print(Log.l.error, "ContactList.mitarbeiterView: error!");
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        },
-                        AppData.getRecordId("Mitarbeiter"));
                 }).then(function () {
                     return WinJS.Promise.timeout(100);
                 }).then(function () {
