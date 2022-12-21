@@ -559,6 +559,11 @@
                 var ret;
                 var dataEmployee = that.binding.dataEmployee;
                 if (dataEmployee && AppBar.modified && !AppBar.busy) {
+                    if (dataEmployee.Password.length < 5) {
+                        Log.print(Log.l.error, "password must be min length 5");
+                        alert(getResourceText("employee.alertPasswordShort"));
+                        return WinJS.Promise.as();
+                    }
                     if (dataEmployee.Password2 && dataEmployee.Password && dataEmployee.Password2 === dataEmployee.Password) {
                         var recordId = getRecordId();
                         if (recordId) {
@@ -577,7 +582,9 @@
                                             AppHeader.controller.binding.userData.VeranstaltungName = "";
                                         }
                                     }
-                                    Application.navigateById("dbinit", event);
+                                    alert(getResourceText("employee.alertNewLoginPassword"));
+                                    Application.navigateById("login", event);
+                                    return WinJS.Promise.as();
                                 }
                                 var empRolesFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("empRoles"));
                                 if (empRolesFragmentControl && empRolesFragmentControl.controller) {
@@ -606,11 +613,10 @@
                                 //AppData.setErrorMsg(that.binding, errorResponse);
                                 //error(errorResponse);
                                 ;
-                            }, recordId, dataEmployee).then(function () {
+                            }, recordId, dataEmployee)/*.then(function () {
                                 var recordid = AppData.getRecordId("Mitarbeiter");
                                 if (recordid === dataEmployee.MitarbeiterVIEWID)
-                                    if (AppData._persistentStates.odata.login !== that.binding.dataEmployee.Login || that.binding.dataEmployee.Password !== prevPassword) {
-                                        ret = new WinJS.Promise.as().then(function () {
+                                    if (AppData._persistentStates.odata.login !== that.binding.dataEmployee.Login || AppData._persistentStates.odata.password !== that.binding.dataEmployee.Password) {
                                             AppData._persistentStates.privacyPolicyFlag = false;
                                             if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
                                                 AppHeader.controller.binding.userData = {};
@@ -618,10 +624,8 @@
                                                     AppHeader.controller.binding.userData.VeranstaltungName = "";
                                                 }
                                             }
-                                            Application.navigateById("dbinit", event);
-                                        });
                                     }
-                            });
+                            })*/;
                         } else {
                             Log.print(Log.l.info, "not supported");
                             ret = WinJS.Promise.as();

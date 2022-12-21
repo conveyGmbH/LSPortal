@@ -231,6 +231,18 @@
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         Log.print(Log.l.error, "error in select generalUserView statusText=" + errorResponse.statusText);
+                        if (errorResponse.status === 401) {
+                            // user is not authorized to access this service
+                            AppBar.scope.binding.generalData.notAuthorizedUser = true;
+                            //var errorMessage = getResourceText("general.unauthorizedUser");
+                            AppBar.scope.binding.generalData.oDataErrorMsg = errorResponse;
+                            alert(errorMessage);
+                            //AppData.setErrorMsg(AppBar.scope.binding, errorResponse);
+                            // user is not authorized to access this service
+                            WinJS.Promise.timeout(0).then(function () {
+                                Application.navigateById("login");
+                            });
+                        }
                         AppData._curGetUserDataId = 0;
                     }, userId);
                 });

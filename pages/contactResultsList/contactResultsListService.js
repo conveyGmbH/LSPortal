@@ -9,7 +9,7 @@
     WinJS.Namespace.define("ContactResultsList", {
         _KontaktReport: {
             get: function () {
-                var ret = AppData.getFormatView("KontaktReport", 0);
+                var ret = AppData.getFormatView("KontaktListe", 0);
                 ret.maxPageSize = 50;
                 return ret;
             }
@@ -44,10 +44,10 @@
             },
             defaultRestriction: {
                 Vorname: "",
-                Nachname: "",
-                Login: "",
-                Names: "",
-                OrderAttribute: ["NichtLizenzierteApp", "Nachname"],
+                Name: "",
+                Firmenname: "",
+                EMail: "",
+                OrderAttribute: "Name",
                 OrderDesc: false
             },
             defaultContactHeader: {

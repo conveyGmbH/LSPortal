@@ -14,6 +14,7 @@
     "general.october"       : "Ott",
     "general.november"      : "Nov",
     "general.december"      : "Dic",
+    "general.unauthorizedUser" : "Invalid username/password!\nlogon denied!\nPassword may have been changed, please login again",
 
     "command.backward"      : "Indietro",
     "command.edit"          : "Modifica",
@@ -727,6 +728,8 @@
 	"employee.nameDesc"     : "Cognome ↓",
 	"employee.nameAsc"      : "Cognome ↑",
     "employee.comment"      : "Gestisci i dati di accesso dei tuoi dipendenti qui.",
+	"employee.alertNewLoginPassword" : "Effettuare il login con la nuova password",
+	"employee.alertPasswordShort": "La password deve contenere almeno 5 caratteri",
 
     "empList.title"         : "Utenti",
     "empList.count"         : "Numero",
