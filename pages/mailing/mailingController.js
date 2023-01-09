@@ -191,7 +191,6 @@
             var insertMailing = function () {
                 Log.call(Log.l.trace, "Mailing.Controller.");
                 var dataMail = Mailing.MaildokumentView.defaultValue;
-                if (!dataMail.VeranstaltungID)
                     dataMail.VeranstaltungID = AppData.getRecordId("Veranstaltung");
                 Mailing.MaildokumentView.insert(function (json) {
                     AppBar.busy = false;
@@ -206,9 +205,9 @@
                         /* Mitarbeiter Liste neu laden und Selektion auf neue Zeile setzen */
                         var master = Application.navigator.masterControl;
                         if (master && master.controller) {
-                            master.controller.loadData()/*.then(function () {
+                            master.controller.loadData().then(function () {
                                 master.controller.selectRecordId(getRecordId());
-                            })*/;
+                            });
                         }
                     }
                 }, function (errorResponse) {
