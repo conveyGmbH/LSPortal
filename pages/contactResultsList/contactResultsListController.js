@@ -20,7 +20,8 @@
                 count: 0,
                 dataContactHeaderValue: getEmptyDefaultValue(ContactResultsList.KontaktReport.defaultContactHeader),
                 dataContactHeaderText: getEmptyDefaultValue(ContactResultsList.KontaktReport.defaultContactHeader),
-                noctcount: 0
+                noctcount: 0,
+                searchString: ""
             }, commandList]);
             this.nextUrl = null;
 
@@ -30,6 +31,7 @@
             var tableBody = pageElement.querySelector(".table-body");
             var contentArea = pageElement.querySelector(".contentarea");
             var selectAll = pageElement.querySelector("#selectAll");
+            var searchInput = pageElement.querySelector("#searchInput");
             
             this.dispose = function () {
                 if (tableBody && tableBody.winControl) {
@@ -62,6 +64,25 @@
                 }
             }
             this.colorStatus = colorStatus;
+
+            var addZero = function (i) {
+                if (i < 10) {
+                    i = "0" + i;
+                }
+                return i;
+            }
+            this.addZero = addZero;
+
+            var getDateObject = function (date) {
+                Log.call(Log.l.trace, "MailingList.Controller.");
+                var dateString = date.replace("\/Date(", "").replace(")\/", "");
+                var milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
+                var time = new Date(milliseconds);
+                var formdate = ("0" + time.getDate()).slice(-2) + "." + ("0" + (time.getMonth() + 1)).slice(-2) + "." + time.getFullYear() + " " + that.addZero(time.getUTCHours()) + ":" + that.addZero(time.getMinutes());
+                Log.ret(Log.l.trace);
+                return formdate;
+            };
+            this.getDateObject = getDateObject;
 
             var resizableGrid = function () {
                 var row = tableHeader ? tableHeader.querySelector("tr") : null,
@@ -156,6 +177,35 @@
             }
             this.resizableGrid = resizableGrid;
 
+            var setInitialHeaderTextValue = function() {
+                Log.print(Log.l.trace, "Setting up initial header texts and value shown in header of table");
+                //text part
+                that.binding.dataContactHeaderText.Name = getResourceText("contactResultsList.headername");
+                that.binding.dataContactHeaderText.Vorname = getResourceText("contactResultsList.headervorname");
+                that.binding.dataContactHeaderText.Firmenname = getResourceText("contactResultsList.headerfirmenname");
+                that.binding.dataContactHeaderText.EMail = getResourceText("contactResultsList.headeremail");
+                that.binding.dataContactHeaderText.Land = getResourceText("contactResultsList.headerland");
+                that.binding.dataContactHeaderText.Erfassungsdatum = getResourceText("contactResultsList.headererfassungsdatum");
+                that.binding.dataContactHeaderText.ModifiedTS = getResourceText("contactResultsList.headeränderungsdatum");
+                that.binding.dataContactHeaderText.MailVersandTS = getResourceText("contactResultsList.headeremailversandtzeit");
+                that.binding.dataContactHeaderText.Prio = getResourceText("contactResultsList.headerkontaktprio");
+                that.binding.dataContactHeaderText.Typ = getResourceText("contactResultsList.headerkontakttyp");
+                that.binding.dataContactHeaderText.Status = getResourceText("contactResultsList.headerstatus");
+                //value part
+                that.binding.dataContactHeaderValue.Name = getResourceText("contactResultsList.headername");
+                that.binding.dataContactHeaderValue.Vorname = getResourceText("contactResultsList.headervorname");
+                that.binding.dataContactHeaderValue.Firmenname = getResourceText("contactResultsList.headerfirmenname");
+                that.binding.dataContactHeaderValue.EMail = getResourceText("contactResultsList.headeremail");
+                that.binding.dataContactHeaderValue.Land = getResourceText("contactResultsList.headerland");
+                that.binding.dataContactHeaderValue.Erfassungsdatum = getResourceText("contactResultsList.headererfassungsdatum");
+                that.binding.dataContactHeaderValue.ModifiedTS = getResourceText("contactResultsList.headeränderungsdatum");
+                that.binding.dataContactHeaderValue.MailVersandTS = getResourceText("contactResultsList.headeremailversandtzeit");
+                that.binding.dataContactHeaderValue.Prio = getResourceText("contactResultsList.headerkontaktprio");
+                that.binding.dataContactHeaderValue.Typ = getResourceText("contactResultsList.headerkontakttyp");
+                that.binding.dataContactHeaderValue.Status = getResourceText("contactResultsList.headerstatus");
+            }
+            this.setInitialHeaderTextValue = setInitialHeaderTextValue;
+
             var setHeaderText = function (headervalue, headertext) {
                 var up = " ↑";
                 var down = " ↓";
@@ -171,66 +221,66 @@
                     }
                 }
                 if (headervalue === "Vorname") {
-                    if (headertext === headervalue + " ↓") {
-
-                    } else if (headertext === headervalue + " ↑") {
-
+                    if (headertext === headervalueup) {
+                        that.binding.dataContactHeaderText.Vorname = headervaluedown;
+                    } else if (headertext === headervaluedown) {
+                        that.binding.dataContactHeaderText.Vorname = headervalueup;
                     } else {
-
+                        that.binding.dataContactHeaderText.Vorname = headervaluedown;
                     }
                 }
                 if (headervalue === "Firmenname") {
-                    if (headertext === headervalue + " ↓") {
-
-                    } else if (headertext === headervalue + " ↑") {
-
+                    if (headertext === headervalueup) {
+                        that.binding.dataContactHeaderText.Firmenname = headervaluedown;
+                    } else if (headertext === headervaluedown) {
+                        that.binding.dataContactHeaderText.Firmenname = headervalueup;
                     } else {
-
+                        that.binding.dataContactHeaderText.Firmenname = headervaluedown;
                     }
                 }
                 if (headervalue === "EMail") {
-                    if (headertext === headervalue + " ↓") {
-
-                    } else if (headertext === headervalue + " ↑") {
-
+                    if (headertext === headervalueup) {
+                        that.binding.dataContactHeaderText.EMail = headervaluedown;
+                    } else if (headertext === headervaluedown) {
+                        that.binding.dataContactHeaderText.EMail = headervalueup;
                     } else {
-
+                        that.binding.dataContactHeaderText.EMail = headervaluedown;
                     }
                 }
                 if (headervalue === "Stadt") {
-                    if (headertext === headervalue + " ↓") {
-
-                    } else if (headertext === headervalue + " ↑") {
-
+                    if (headertext === headervalueup) {
+                        that.binding.dataContactHeaderText.Stadt = headervaluedown;
+                    } else if (headertext === headervaluedown) {
+                        that.binding.dataContactHeaderText.Stadt = headervalueup;
                     } else {
-
+                        that.binding.dataContactHeaderText.Stadt = headervaluedown;
                     }
                 }
                 if (headervalue === "Land") {
-                    if (headertext === headervalue + " ↓") {
-
-                    } else if (headertext === headervalue + " ↑") {
-
+                    if (headertext === headervalueup) {
+                        that.binding.dataContactHeaderText.Land = headervaluedown;
+                    } else if (headertext === headervaluedown) {
+                        that.binding.dataContactHeaderText.Land = headervalueup;
                     } else {
-
+                        that.binding.dataContactHeaderText.Land = headervaluedown;
                     }
                 }
-                if (headervalue === "KontaktPrio") {
-                    if (headertext === headervalue + " ↓") {
-
-                    } else if (headertext === headervalue + " ↑") {
-
+                if (headervalue === "Prio") {
+                    if (headertext === headervalueup) {
+                        that.binding.dataContactHeaderText.Prio = headervaluedown;
+                    } else if (headertext === headervaluedown) {
+                        that.binding.dataContactHeaderText.Prio = headervalueup;
                     } else {
-
+                        that.binding.dataContactHeaderText.Prio = headervaluedown;
                     }
                 }
-                if (headervalue === "KontaktTyp") {
-                    if (headertext === headervalue + " ↓") {
-
-                    } else if (headertext === headervalue + " ↑") {
-
+                if (headervalue === "Typ") {
+                    if (headertext === headervalueup) {
+                        that.binding.dataContactHeaderText.Typ = headervaluedown;
+                    } else if (headertext === headervaluedown) {
+                        that.binding.dataContactHeaderText.Typ = headervalueup;
                     } else {
-
+                        that.binding.dataContactHeaderText.Typ = headervaluedown;
                     }
                 }
             }
@@ -246,18 +296,19 @@
                                 return function () {
                                     var restriction = ContactResultsList.KontaktReport.defaultRestriction;
                                     var sortname = myrow.value;
+                                    var sorttext = myrow.textContent;
                                     if (restriction.OrderAttribute !== sortname) {
                                         restriction.VeranstaltungID = that.getEventId();
                                         restriction.OrderAttribute = sortname;
                                         restriction.OrderDesc = false;
                                         that.loadData(restriction);
-                                        that.setHeaderText(myrow.value);
+                                        that.setHeaderText(myrow.value, sorttext);
                                         Log.call(Log.l.trace, "ContactResultsList.Controller.");
                                     } else {
                                         restriction.OrderDesc = !restriction.OrderDesc;
                                         restriction.VeranstaltungID = that.getEventId();
                                         that.loadData(restriction);
-                                        that.setHeaderText(myrow.value);
+                                        that.setHeaderText(myrow.value, sorttext);
                                         Log.call(Log.l.trace, "ContactResultsList.Controller.");
                                     }
                                 };
@@ -295,6 +346,15 @@
                         WinJS.Navigation.back(1).done();
                     }
                     Log.ret(Log.l.trace);
+                },
+                onSearchInput: function (event) {
+                    Log.call(Log.l.trace, "ContactResultsList.Controller.");
+                    if (that.binding.searchString.length > 2) {
+                        that.searchKontaktListe(that.binding.searchString);
+                    }
+                    if (that.binding.searchString.length === 0) {
+                        that.loadData();
+                    }
                 },
                 onSelectAll: function(event) {
                     Log.call(Log.l.trace, "ContactResultsList.Controller.");
@@ -382,30 +442,36 @@
             if (selectAll) {
                 this.addRemovableEventListener(selectAll, "change", this.eventHandlers.onSelectAll.bind(this));
             }
+            if (searchInput) {
+                this.addRemovableEventListener(searchInput, "keyup", this.eventHandlers.onSearchInput.bind(this));
+            }
 
             var resultConverter = function (item, index) {
                 item.index = index;
-                if (item.KontaktVIEWID === -2) {
-                    that.binding.dataContactHeaderValue = item;
-                    that.binding.dataContactHeaderValue.Status = "Status";
-                    that.binding.dataContactHeaderText = item;
-                    that.binding.dataContactHeaderText.Status = "Status";
-                } else if (item.KontaktVIEWID === -1) {
-                    
-                } else {
                     if (!item.Name && !item.Vorname && !item.Firmenname) {
                         item.Status = getResourceText("contactResultsCriteria.incomplete");
                     } else if (!item.EMail) {
                         item.Status = getResourceText("contactResultsCriteria.partialcomplete");
                     } else {
                         item.Status = getResourceText("contactResultsCriteria.complete");
-                    }
+                }
+                if (item.Anzahl) {
+                    that.binding.noctcount = item.Anzahl;
+                }
+                if (item.Erfassungsdatum) {
+                    item.Erfassungsdatum = that.getDateObject(item.Erfassungsdatum);
+                }
+                if (item.ModifiedTS) {
+                    item.ModifiedTS = that.getDateObject(item.ModifiedTS);
+                }
+                if (item.MailVersandTS) {
+                    item.MailVersandTS = that.getDateObject(item.MailVersandTS);
+                }
                     if (tableBody &&
                         tableBody.winControl &&
                         tableBody.winControl.data) {
                         that.binding.count = tableBody.winControl.data.push(item);
                     }
-                }
             }
             this.resultConverter = resultConverter;
 
@@ -464,9 +530,40 @@
             };
             this.saveData = saveData;
 
+            var searchKontaktListe = function (searchString) {
+                Log.call(Log.l.trace, "ContactResultsList.Controller.");
+                AppData.setErrorMsg(that.binding);
+                if (tableBody && tableBody.winControl) {
+                    if (tableBody.winControl.data) {
+                        tableBody.winControl.data.length = 0;
+                    } else {
+                        tableBody.winControl.data = WinJS.Binding.List([]);
+                    }
+                }
+                AppData.call("PRC_SearchKontaktListe", {
+                    pAttributeIdx: 0,
+                    pVeranstaltungId: that.getEventId(), // Für Alle suchen 0 eintragen!
+                    pSuchText: searchString
+                }, function (json) {
+                    Log.print(Log.l.info, "call success! ");
+                    AppBar.busy = false;
+                    var results = json.d.results;
+                    results.forEach(function (item, index) {
+                        that.resultConverter(item, index);
+                    });
+                }, function (errorResponse) {
+                    Log.print(Log.l.error, "call error");
+                    AppBar.busy = false;
+                    AppData.setErrorMsg(that.binding, errorResponse);
+                });
+                Log.ret(Log.l.trace);
+            }
+            this.searchKontaktListe = searchKontaktListe;
+
             var loadData = function (restr) {
                 Log.call(Log.l.trace, "ContactResultsList.Controller.");
                 AppData.setErrorMsg(that.binding);
+                that.binding.noctcount = 0;
                 that.nextUrl = null;
                 if (tableBody && tableBody.winControl) {
                     if (tableBody.winControl.data) {
@@ -532,6 +629,9 @@
             }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.resizableGrid();
+            }).then(function () {
+                Log.print(Log.l.trace, "Binding wireup page complete");
+                return that.setInitialHeaderTextValue();
             }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.addHeaderRowHandlers();

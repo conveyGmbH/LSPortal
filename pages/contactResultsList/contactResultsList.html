@@ -20,34 +20,45 @@
                             <span class="date-field"></span>
                         </div>
                     </div>
-                    <span id="counter" data-win-res="{textContent: 'contactResultsList.count'}"></span><span>: </span><span data-win-bind="textContent: noctcount"></span>
+                    <div class="field_line field_line_even">
+                        <span id="counter" data-win-res="{textContent: 'contactResultsList.count'}"></span><span>: </span><span data-win-bind="textContent: noctcount"></span>
+                    </div>
+                    <div class="field_line field_line_odd">
+                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'siteevents.search'}"></span>
+                        <span class="label landscape_only" data-win-res="{textContent: 'siteevents.search'}"></span>
+                        <input id="searchInput" class="input_field win-textbox" type="text" data-win-bind="value: searchString Binding.Mode.twoway" data-win-res="{placeholder: 'siteevents.searchplaceholder'}" />
+                    </div>
                     <div class="field_line scroll-line">
                         <table id="tableId">
                             <thead class="table-header">
-                            <tr>
-                                <th id="datacheckbox"><input id="selectAll" type="checkbox" class="win-checkbox checkbox" value="1"/></th>
-                                <th data-win-bind="value: dataContactHeaderValue.Name; textContent: dataContactHeaderText.Name"></th>
-                                <th data-win-bind="value: dataContactHeaderValue.Vorname; textContent: dataContactHeaderText.Vorname"></th>
-                                <th data-win-bind="value: dataContactHeaderValue.Firmenname; textContent: dataContactHeaderText.Firmenname"></th>
-                                <th data-win-bind="value: dataContactHeaderValue.EMail; textContent: dataContactHeaderText.EMail"></th>
-                                <th data-win-bind="value: dataContactHeaderValue.Stadt; textContent: dataContactHeaderText.Stadt"></th>
-                                <th data-win-bind="value: dataContactHeaderValue.Land; textContent: dataContactHeaderText.Land"></th>
-                                <th data-win-bind="value: dataContactHeaderValue.KontaktPrio; textContent: dataContactHeaderText.KontaktPrio"></th>
-                                <th data-win-bind="value: dataContactHeaderValue.KontaktTyp; textContent: dataContactHeaderText.KontaktTyp"></th>
-                                <th id="status" data-win-bind="value: dataContactHeaderValue.Status; textContent: dataContactHeaderText.Status"></th>
-                            </tr>
+                                <tr>
+                                    <th id="datacheckbox"><input id="selectAll" type="checkbox" class="win-checkbox checkbox" value="1" /></th>
+                                    <th data-win-bind="value: dataContactHeaderValue.Name; textContent: dataContactHeaderText.Name"></th>
+                                    <th data-win-bind="value: dataContactHeaderValue.Vorname; textContent: dataContactHeaderText.Vorname"></th>
+                                    <th data-win-bind="value: dataContactHeaderValue.Firmenname; textContent: dataContactHeaderText.Firmenname"></th>
+                                    <th data-win-bind="value: dataContactHeaderValue.EMail; textContent: dataContactHeaderText.EMail"></th>
+                                    <th data-win-bind="value: dataContactHeaderValue.Land; textContent: dataContactHeaderText.Land"></th>
+                                    <th data-win-bind="value: dataContactHeaderValue.Erfassungsdatum; textContent: dataContactHeaderText.Erfassungsdatum"></th>
+                                    <th data-win-bind="value: dataContactHeaderValue.ModifiedTS; textContent: dataContactHeaderText.ModifiedTS"></th>
+                                    <th data-win-bind="value: dataContactHeaderValue.MailVersandTS; textContent: dataContactHeaderText.MailVersandTS"></th>
+                                    <th data-win-bind="value: dataContactHeaderValue.Prio; textContent: dataContactHeaderText.Prio"></th>
+                                    <th data-win-bind="value: dataContactHeaderValue.Typ; textContent: dataContactHeaderText.Typ"></th>
+                                    <th id="status" data-win-bind="value: dataContactHeaderValue.Status; textContent: dataContactHeaderText.Status"></th>
+                                </tr>
                             </thead>
                             <tbody class="table-body" data-win-control="WinJS.UI.Repeater">
                                 <tr data-win-bind="value: KontaktVIEWID">
-                                    <td id="datacheckbox" ><input type="checkbox" class="win-checkbox checkbox" value="1" /> </td>
+                                    <td id="datacheckbox"><input type="checkbox" class="win-checkbox checkbox" value="1" /> </td>
                                     <td data-win-bind="textContent: Name"></td>
                                     <td data-win-bind="textContent: Vorname"></td>
                                     <td data-win-bind="textContent: Firmenname"></td>
                                     <td data-win-bind="textContent: EMail"></td>
-                                    <td data-win-bind="textContent: Stadt"></td>
                                     <td data-win-bind="textContent: Land"></td>
-                                    <td data-win-bind="textContent: KontaktPrio"></td>
-                                    <td data-win-bind="textContent: KontaktTyp"></td>
+                                    <td data-win-bind="textContent: Erfassungsdatum"></td>
+                                    <td data-win-bind="textContent: ModifiedTS"></td>
+                                    <td data-win-bind="textContent: MailVersandTS"></td>
+                                    <td data-win-bind="textContent: Prio"></td>
+                                    <td data-win-bind="textContent: Typ"></td>
                                     <td id="status" data-win-bind="textContent: Status"></td>
                                 </tr>
                             </tbody>

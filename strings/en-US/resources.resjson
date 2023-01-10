@@ -1203,6 +1203,18 @@
 
     "contactResultsList.title"			: "Contacts",
     "contactResultsList.count"			: "Number of contacts",
+    "contactResultsList.headername"			: "Name",
+    "contactResultsList.headervorname"			: "First name",
+    "contactResultsList.headerfirmenname"			: "Company name",
+    "contactResultsList.headeremail"			: "EMail",
+    "contactResultsList.headerstadt"			: "City",
+    "contactResultsList.headerland"			: "Country",
+    "contactResultsList.headererfassungsdatum"			: "Entry date",
+    "contactResultsList.headeränderungsdatum"			: "Date of change",
+    "contactResultsList.headeremailversandtzeit"			: "EMail dispatch time",
+    "contactResultsList.headerkontaktprio"			: "ContactPrio",
+    "contactResultsList.headerkontakttyp"			: "ContactType",
+    "contactResultsList.headerstatus"			: "Status",
 	    
     "contactResultsEdit.title"         : "Recorded contact details",
     "contactResultsEdit.comment"       : "Use the back button on this page to go back!",
