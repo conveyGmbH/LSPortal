@@ -329,7 +329,7 @@
                                 return function () {
                                     var id = myrow.value;
                                     AppData.setRecordId("Kontakt", id);
-                                    Application.navigateById("contactResultsEdit");
+                                    Application.navigateById("contactResultsEvents");
                                 };
                             }(row);
                         }
@@ -584,6 +584,7 @@
                                     that.nextUrl = ContactResultsList.KontaktReport.getNextUrl(json);
                                     // now always edit!
                                     var results = json.d.results;
+                                    AppData.setRecordId("KontaktEventID", results[0].VeranstaltungID);
                                     results.forEach(function (item, index) {
                                         that.resultConverter(item, index);
                                     });
@@ -600,6 +601,7 @@
                                     that.nextUrl = ContactResultsList.KontaktReport.getNextUrl(json);
                                     // now always edit!
                                     var results = json.d.results;
+                                    AppData.setRecordId("KontaktEventID", results[0].VeranstaltungID);
                                     results.forEach(function (item, index) {
                                         that.resultConverter(item, index);
                                     });

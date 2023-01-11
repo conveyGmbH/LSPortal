@@ -257,32 +257,51 @@
                 var ret = new WinJS.Promise.as().then(function () {
                     var recordId = getRecordId();
                     Log.print(Log.l.trace, "calling select contactView...");
-                    return ContactResultsEvents.contactView.select(function (json) {
-                        AppData.setErrorMsg(that.binding);
-                        Log.print(Log.l.trace, "contactView: success!");
-                        if (json && json.d) {
-                            // now always edit!
-                            var result = json.d;
-                            that.setDataContact(result);
-                        }
-                    }, function (errorResponse) {
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                    }, recordId);
+                    if (recordId) {
+                        return ContactResultsEvents.contactView.select(function (json) {
+                            AppData.setErrorMsg(that.binding);
+                            Log.print(Log.l.trace, "contactView: success!");
+                            if (json && json.d) {
+                                // now always edit!
+                                var result = json.d;
+                                that.setDataContact(result);
+                            }
+                        }, function (errorResponse) {
+                            //AppData.setErrorMsg(that.binding, errorResponse);
+                        }, recordId); 
+                    }
                 }).then(function () {
                     Log.print(Log.l.trace, "calling select contactView...");
                     var recordId = getRecordId();
-                    return ContactResultsEvents.incidentView.select(function (json) {
-                        AppData.setErrorMsg(that.binding);
-                        Log.print(Log.l.trace, "contactView: success!");
-                        if (json && json.d && json.d.results) {
-                            var results = json.d.results;
-                            results.forEach(function (item, index) {
-                                that.resultConverter(item, index);
-                            });
+                    if (recordId) {
+                        return ContactResultsEvents.incidentView.select(function (json) {
+                            AppData.setErrorMsg(that.binding);
+                            Log.print(Log.l.trace, "contactView: success!");
+                            if (json && json.d && json.d.results) {
+                                var results = json.d.results;
+                                results.forEach(function (item, index) {
+                                    that.resultConverter(item, index);
+                                });
+                            }
+                        }, function (errorResponse) {
+                            //AppData.setErrorMsg(that.binding, errorResponse);
+                        }, { KontaktID: recordId, LanguageSpecID: AppData.getLanguageId(), VeranstaltungID: AppData.getRecordId("KontaktEventID") });
+                    }
+                    }).then(function () {
+                        var curVID = AppData.getRecordId("Veranstaltung");
+                        var selVID = AppData.getRecordId("KontaktEventID");
+                        if (curVID !== selVID) {
+                            NavigationBar.disablePage("contactResultsQuestion");
+                            NavigationBar.disablePage("contactResultsAttach");
+                            NavigationBar.disablePage("contactResultsCriteria");
+                            NavigationBar.disablePage("contactResultsEdit");
+                        } else {
+                            NavigationBar.enablePage("contactResultsQuestion");
+                            NavigationBar.enablePage("contactResultsAttach");
+                            NavigationBar.enablePage("contactResultsCriteria");
+                            NavigationBar.enablePage("contactResultsEdit");
                         }
-                    }, function (errorResponse) {
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                    }, { KontaktID: recordId, LanguageSpecID: AppData.getLanguageId() });
+                    return WinJS.Promise.as();
                 }).then(function () {
                     AppBar.notifyModified = true;
                     return WinJS.Promise.as();

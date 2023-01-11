@@ -297,7 +297,8 @@
         { id: "startTileAdministration", master: "startTileAdministrationList" },
         { id: "mailing", master: "mailingListLS" },
         { id: "mailingList", master: "mailingVSList" },
-        { id: "ticketLimits", master: "ticketLimitsList" }
+        { id: "ticketLimits", master: "ticketLimitsList" },
+        { id: "contactResultsList", master: "eventsList" }
     ];
 
     // init page for app startup
