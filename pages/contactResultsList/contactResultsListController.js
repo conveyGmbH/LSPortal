@@ -349,11 +349,13 @@
                 },
                 onSearchInput: function (event) {
                     Log.call(Log.l.trace, "ContactResultsList.Controller.");
-                    if (that.binding.searchString.length > 2) {
-                        that.searchKontaktListe(that.binding.searchString);
-                    }
-                    if (that.binding.searchString.length === 0) {
-                        that.loadData();
+                    if (event.keyCode === 13) {
+                        if (event.currentTarget.value.length > 2) {
+                            that.searchKontaktListe(event.currentTarget.value);
+                        }
+                        if (event.currentTarget.value.length === 0) {
+                            that.loadData();
+                        }
                     }
                 },
                 onSelectAll: function(event) {
@@ -443,7 +445,7 @@
                 this.addRemovableEventListener(selectAll, "change", this.eventHandlers.onSelectAll.bind(this));
             }
             if (searchInput) {
-                this.addRemovableEventListener(searchInput, "keyup", this.eventHandlers.onSearchInput.bind(this));
+                this.addRemovableEventListener(searchInput, "keydown", this.eventHandlers.onSearchInput.bind(this));
             }
 
             var resultConverter = function (item, index) {

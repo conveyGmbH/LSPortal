@@ -8,38 +8,41 @@
 
     WinJS.Namespace.define("ContactResultsList", {
         _KontaktReport: {
-            get: function () {
-                var ret = AppData.getFormatView("KontaktListe", 0);
+            get: function() {
+                var ret = AppData.getFormatView("Kontakt", 20662);
                 ret.maxPageSize = 50;
                 return ret;
             }
         },
         KontaktReport: {
-            select: function (complete, error, restriction) {
+            select: function(complete, error, restriction) {
                 Log.call(Log.l.trace, "ContactResultsList.");
-                var ret = ContactResultsList._KontaktReport.select(complete, error, restriction, {
-                    ordered: true,
-                    desc: restriction.OrderDesc,
-                    orderAttribute: restriction.OrderAttribute
-                });
+                var ret = ContactResultsList._KontaktReport.select(complete,
+                    error,
+                    restriction,
+                    {
+                        ordered: true,
+                        desc: restriction.OrderDesc,
+                        orderAttribute: restriction.OrderAttribute
+                    });
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            selectNext: function (complete, error, response, nextUrl) {
+            selectNext: function(complete, error, response, nextUrl) {
                 Log.call(Log.l.trace, "ContactResultsList.");
                 var ret = ContactResultsList._KontaktReport.selectNext(complete, error, response, nextUrl);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            getNextUrl: function (response) {
+            getNextUrl: function(response) {
                 Log.call(Log.l.trace, "ContactResultsList.xLReportView.");
                 var ret = ContactResultsList._KontaktReport.getNextUrl(response);
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            getDbView: function () {
+            getDbView: function() {
                 return ContactResultsList._KontaktReport;
             },
             defaultRestriction: {
@@ -47,6 +50,13 @@
                 Name: "",
                 Firmenname: "",
                 EMail: "",
+                Stadt: "",
+                Land: "",
+                Erfassungsdatum: "",
+                ModifiedTS: "",
+                MailVersandTS: "",
+                Prio: "",
+                Typ: "", 
                 OrderAttribute: "Name",
                 OrderDesc: false
             },
@@ -57,6 +67,9 @@
                 EMail: "",
                 Stadt: "",
                 Land: "",
+                Erfassungsdatum: "",
+                ModifiedTS: "",
+                MailVersandTS: "",
                 Prio: "", 
                 Typ: "", 
                 Status: ""
