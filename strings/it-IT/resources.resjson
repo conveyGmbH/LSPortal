@@ -600,10 +600,13 @@
     "label.startPremium" : "Dashboard Premium",
     "label.startSurpreme" : "Dashboard Supreme",
     "label.startPremiumStandard" : "Standard",
-	"label.startPremium1": "Premium 1",
-	"label.startPremium2": "Premium 2",
+	"label.startPremium1": "Ambiente Premium",
+	"label.startPremium2": "Ambiente Supreme",
   "label.eventBaseLink" : "Collegamento alla base",
   "label.ticketLimits" : "Limiti Pass espositori",
+    "label.dashboardFN" : "Dashboard Premium",
+    "label.dashboardFNPremium" : "Dashboard Premium",
+    "label.dashboardFNSupreme" : "Dashboard Supreme",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annulla",
@@ -1509,5 +1512,11 @@
     "genDataModEventsHisto.ereignistyp"			: "Tipo di evento",
     "genDataModEventsHisto.ereignisdetails"			: "Dettagli dell'evento",
     "genDataModEventsHisto.creator"			: "Entra in",
-    "genDataModEventsHisto.event"			: "Evento"
+    "genDataModEventsHisto.event"			: "Evento",
+
+    "dashboardFNHour.title"			: "Visitatori (ora)",
+
+    "dashboardFNDay.title"			: "Visitatori (giorno)",
+	
+    "dashboardFNTop10.title"			: "I 10 paesi principali"
 }

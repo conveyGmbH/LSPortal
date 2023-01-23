@@ -1,0 +1,525 @@
+.dashboardFN .tile-button-color,
+.dashboardFN .tile-header,
+.dashboardFN .tile-content-wide,
+.dashboardFN .tile-content,
+.dashboardFN .tile-content-flat,
+.dashboardFN .tile-content-inner {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.dashboardFN .tile-template {
+    display: none;
+}
+
+#dataLicenceUserList {
+    width: 100%;
+    height: 60px;
+}
+
+.dataLicenceUser-button {
+    width: 180px;
+}
+
+.dashboardFN .tile {
+    min-height: 180px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    width: 100%;
+}
+
+.dashboardFN .tile-header {
+    text-align: center;
+    height: 42px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: none;
+    display: table-caption;
+}
+
+.dashboardFN table.jqplot-table-legend,
+.dashboardFN table.jqplot-cursor-legend {
+    background-color: rgba(255,255,255,0.2);
+}
+
+.start-header-field {
+    height: 20px;
+    padding-top: 10px;
+    width: 100%;
+    height: 100%;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.dashboardFN .field_line {
+    border: none;
+}
+
+.dashboardFN .field_line_odd {
+    background-color: white;
+    margin-right: 4px;
+    /*height: 287px;*/
+}
+
+.dashboardFN .field_line_even {
+    background-color: white;
+    margin-left: 0px;
+    width: calc(50% - 5px);
+}
+
+.dashboardFN .field_line_full {
+    background-color: white;
+}
+
+.dashboardFN .field_line_full_double {
+    background-color: white;
+    margin-top: 4px;
+}
+
+.view-size-medium .dashboardFN .field_line_full_double {
+    background-color: white;
+    margin-top: 4px;
+}
+
+.dashboardFN .field_tile_half_left {
+    background-color: white;
+}
+
+.dashboardFN .field_tile_half_right {
+    background-color: white;
+}
+
+.dashboardFN .field_tile_full_dash {
+    background-color: white;
+}
+
+.dashboardFN .field_tile_half_left_double {
+    background-color: white;
+}
+
+.dashboardFN .field_tile_full_double {
+    background-color: white;
+}
+
+.view-size-medium .dashboardFN .field_line_even {
+    overflow-x: hidden;
+    padding: 0;
+    min-height: 60px;
+    margin-top: 16px;
+    margin-left: 18px;
+    margin-right: 18px;
+    margin-bottom: 4px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: #f8f8f8;
+    width: calc(100% - 38px);
+}
+
+.view-size-small .dashboardFN .field_line_even {
+    overflow-x: hidden;
+    padding: 0;
+    min-height: 60px;
+    margin-top: 4px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 4px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: #f8f8f8;
+    width: calc(100% - 22px);
+}
+
+.dashboardFN .tile-row {
+    display: table-row;
+    height: 96px;
+    width: 100%;
+}
+
+.dashboardFN .tile-content-wide {
+    min-height: 96px;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    border: none;
+    display: table-cell;
+}
+
+.dashboardFN .tile-content {
+    min-height: 96px;
+    width: 33.333333%;
+    padding: 0;
+    margin: 0;
+    border: none;
+    display: table-cell;
+}
+
+.dashboardFN .tile-content-flat {
+    min-height: 48px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    vertical-align: bottom;
+    border: none;
+    display: table-cell;
+}
+
+.dashboardFN .tile-content-inner {
+    width: 100%;
+    border: none;
+}
+
+.action-image-recent {
+    padding-left: 6px;
+}
+
+.dashboardFN .tile-button {
+    width: 100%;
+    min-height: 94px;
+    margin: 0;
+}
+
+:disabled.win-button-primary.win-button.tile-button, :disabled.win-button.tile-button {
+    background-color: transparent;
+}
+
+.dashboardFN .tile-button-wide {
+    width: 100%;
+    min-height: 94px;
+    margin: 0;
+    text-align: left;
+}
+
+.dashboardFN .tile-button-wide-flat {
+    width: 100%;
+    min-height: 46px;
+    margin: 0;
+    text-align: left;
+}
+
+.dashboardFN .action-label {
+    margin-top: 4px;
+    width: 100%;
+    text-align: center;
+}
+
+.dashboardFN .start-donut-chart {
+    width: 100%;
+}
+
+.dashboardFN .start-donut-chart table.jqplot-table-legend {
+    top: 0 !important;
+    padding: 4px;
+}
+
+.dashboardFN .start-donut-chart td.jqplot-table-legend {
+    white-space: nowrap;
+}
+
+.dashboardFN .view-size-medium .start-donut-chart {
+    left: 15%;
+    width: 70%;
+}
+
+.dashboardFN .view-size-small .start-donut-chart {
+    left: 0;
+    width: 100%;
+}
+
+.dashboardFN .start-pie-chart {
+    width: 100%;
+}
+
+.dashboardFN .start-map-chart {
+    text-align: center;
+    width: 100%
+}
+
+.dashboardFN .start-bar-chart {
+    height: 250px;
+    width: 100%;
+}
+
+.dashboardFN .jqplot-xaxis-tick,
+.dashboardFN .jqplot-yaxis-tick,
+.dashboardFN .jqplot-data-label {
+    font-size: 12px;
+}
+
+.dashboardFN .jqplot-grid-canvas {
+    visibility: hidden;
+}
+
+.dashboardFN .visitorsEditedChartBox {
+    width: 100%;
+}
+
+.dashboardFN .view-size-medium .hide_if_size_medium {
+    display: none;
+}
+
+.dashboardFN .view-size-medium .pagetitle {
+    display: inline-block;
+}
+
+.dashboardFN .view-size-medium .start-photo-container {
+    width: 60%;
+    left: 20%;
+}
+
+.dashboardFN .view-size-small .pagetitle {
+    display: none;
+}
+
+.dashboardFN .view-size-small .start-photo-container {
+    width: 80%;
+    left: 10%;
+}
+
+.dashboardFN .view-size-small .start-pie-chart {
+    min-width: 96px;
+}
+
+.dashboardFN #diaCountryshost.fragmenthost {
+    height: 285px;
+}
+
+.view-size-medium-small .dashboardFN #diaCountryshost.fragmenthost {
+    height: auto;
+    width: 100%;
+}
+
+.view-size-small .dashboardFN #diaCountryshost.fragmenthost {
+    height: auto;
+    width: 100%;
+}
+
+.dashboardFN #diaYearRangehost.fragmenthost {
+    height: 280px;
+}
+
+.dashboardFN #diaVisitorshost.fragmenthost {
+    height: 285px;
+    margin-top: 5px;
+}
+
+.dashboardFN #diaCountrysIndustriespDhost.fragmenthost {
+    height: 570px; /*925 875px*/
+}
+
+.dashboardFN #diaIndustrieshost.fragmenthost {
+    height: 600px; /*290px*/
+    margin-bottom: 10px;
+}
+
+.dashboardFN button:hover {
+    cursor: pointer;
+}
+
+.dashboardFN button:disabled {
+    cursor: default;
+}
+
+.dashboardFN #btn-all {
+    display: none;
+    float: right;
+    position: relative;
+    z-index: 99;
+    padding: 0.35em 1.2em;
+    border: 0.1em solid darkgray;
+    margin: 0 0.3em 0.3em 0;
+    border-radius: 0.12em;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: 'Open Sans',sans-serif;
+    font-weight: bolder;
+    color: darkgray;
+    background-color: transparent;
+    text-align: center;
+}
+
+.dashboardFN #btn-vis {
+    display: none;
+    float: right;
+    position: relative;
+    z-index: 99;
+    padding: 0.35em 1.2em;
+    border: 0.1em solid darkgray;
+    margin: 0 0.3em 0.3em 0;
+    border-radius: 0.12em;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: 'Open Sans',sans-serif;
+    font-weight: bolder;
+    color: darkgray;
+    background-color: transparent;
+    text-align: center;
+}
+.dashboardFN #btn-excel {
+    display: inline-block;
+    float: right;
+    position: relative;
+    z-index: 99;
+    padding: 0.35em 1.2em;
+    border: 0.1em solid darkgray;
+    margin: 0 0.3em 0.3em 0;
+    border-radius: 0.12em;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: 'Open Sans',sans-serif;
+    font-weight: bolder;
+    color: darkgray;
+    background-color: transparent;
+    text-align: center;
+}
+
+.circle-with-text-event-dot {
+    background-color: red;
+    border-color: white;
+    border-radius: 50%;
+    border-width: 5px;
+    height: 25px;
+    width: 25px;
+    line-height: 25px;
+    display: inline-flex;
+    margin-left: 5%;
+    margin-right: 5px;
+}
+
+.circle-with-text-event-text {
+    margin-left: 5px !important;
+}
+
+.circle-with-text-global-dot {
+    background-color: red;
+    border-color: white;
+    border-radius: 50%;
+    border-width: 5px;
+    height: 25px;
+    width: 25px;
+    line-height: 25px;
+    display: inline-flex;
+    margin-left: 40px; /*15px*/
+    margin-right: 5px;
+}
+
+.circle-with-text-global-text {
+    margin-left: 5px !important;
+}
+
+.tip {
+    display: inline-flex;
+    float: left;
+    padding-top: 2px;
+    padding-bottom: 5px;
+    width: 550px;
+}
+
+.view-size-small .tip {
+    font-size: 15px;
+    width: 450px;
+}
+
+.dashboardFN button.action-image {
+    border: none;
+    background-color: transparent;
+}
+
+.dashboardFN .list-symbol-ID {
+    width: 36px; /*40*/
+}
+
+.dashboard-tip-download-container {
+    width: 100%;
+}
+
+.tip-container {
+    display: inline-flex;
+    float: left;
+    width: calc(50% - 5px)
+}
+
+.view-size-bigger .tip-container,
+.view-size-big .tip-container,
+.view-size-medium .tip-container,
+.view-size-small .tip-container {
+    width: 100%
+}
+
+.view-size-small .tip-container {
+    font-size: 14px;
+}
+
+.download-container {
+    display: block;
+    float: right;
+    width: calc(50% - 5px)
+}
+
+.view-size-bigger .download-container,
+.view-size-big .download-container,
+.view-size-medium .download-container
+.view-size-medium-small .download-container,
+.view-size-small .download-container {
+    width: 100%;
+    float: left;
+}
+
+.view-size-big .download-container,
+.view-size-medium .download-container,
+.view-size-medium-small .download-container,
+.view-size-small .download-container {
+    margin-top: 5px;
+    font-size: 15px;
+}
+
+.view-size-bigger #btn-vis,
+.view-size-bigger #btn-all,
+.view-size-big #btn-vis,
+.view-size-big #btn-all,
+.view-size-medium #btn-vis,
+.view-size-medium #btn-all,
+.view-size-small #btn-vis,
+.view-size-small #btn-all {
+    float: left;
+    margin-left: 35px;
+}
+
+.view-size-medium-small #btn-vis,
+.view-size-medium-small #btn-all,
+.view-size-small #btn-vis,
+.view-size-small #btn-all {
+    font-size: 12px;
+    margin-left: 8px;
+}
+#overlay {
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 2;
+    cursor: pointer;
+}
+
+#overlaytext {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 50px;
+    color: white;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+}
+#excel .list-symbol-ID {
+    width: 40px;
+    height: 20px;
+    margin-top: 5px;
+}
+#Excel-container {
+    display: none;
+}

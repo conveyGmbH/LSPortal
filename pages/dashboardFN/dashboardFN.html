@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="dashboardFN.css" rel="stylesheet" />
+    <script type="text/javascript" src="dashboardFNService.js"></script>
+    <script type="text/javascript" src="dashboardFNController.js"></script>
+    <script type="text/javascript" src="dashboardFN.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="dashboardFN fragment">
+        <div id="startPremiumController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="contentarea win-type-body">
+                    <div class="header-separator"></div>
+                    <div class="content-header">
+                        <div class="half-circle half-circle-textcolor">&nbsp;</div>
+                        <div class="content-header-line win-type-caption">
+                            <span class="id-field"></span>
+                            <span class="caption-field" data-win-res="{textContent: 'start.title'}"></span>
+                        </div>
+                    </div>
+                    <div id="overlay">
+                        <div id="overlaytext" data-win-res="{textContent: 'startPremium.overlayText'}"></div>
+                    </div>
+                    <div class="dashboard-tip-download-container">
+                        <div class="tip-container">
+                            <div class="circle-with-text-event-dot"></div>
+                            <span class="circle-with-text-event-text" data-win-res="{textContent: 'startPremium.tipLocal'}"></span>
+                            <div class="circle-with-text-global-dot"></div>
+                            <span class="circle-with-text-global-text" data-win-res="{textContent: 'startPremium.tipEvent'}"></span>
+                        </div>
+                        <div class="download-container">
+                            <div>
+                                <button id="btn-all" onclick="AppBar.handleEvent('click', 'exportAllChartsToPdf', event)" data-win-res="{textContent: 'startPremium.exportAll'}"></button>
+                            </div>
+                            <div>
+                                <button id="btn-vis" onclick="AppBar.handleEvent('click', 'exportBrowserViewToPdf', event)" data-win-res="{textContent: 'startPremium.exportCurrent'}"></button>
+                            </div>
+                            <div id="Excel-container">
+                                <div class="list-symbol-ID">
+                                    <div id="excel" data-win-bind="name: excel" class="flag-image"></div>
+                                </div>
+                                <button id="btn-excel" onclick="AppBar.handleEvent('click', 'exportDashboardExcel', event)" data-win-res="{textContent: 'startPremium.exportDashboardExcel'}"></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="line-separator"></div>
+                    <div class="field_line"
+                         data-win-bind="style.display: progress.show Binding.Converter.toDisplay">
+                        <span class="label win-type-caption portrait_only"
+                              data-win-res="{textContent: 'dbinit.progress'}"></span>
+                        <span class="label win-type-caption landscape_only"
+                              data-win-res="{textContent: 'dbinit.progress'}"></span>
+                        <progress class="progress_field win-progress-bar"
+                                  data-win-bind="value: progress.percent"
+                                  min="0" max="100"></progress>
+                        <span class="large_field"
+                              data-win-bind="textContent: progress.text"></span>
+                    </div>
+                    <div id="tiles-container" class="tiles-container">
+                        <div name="charts" class="tile tile-top">
+                            <div class="tile-content-inner">
+                                <div class="field_line field_line_odd field_tile_bkg">
+                                    <!--<div id="diaCountryshost" class="fragmenthost"></div>-->
+                                    <div id="diaYearRangehost" class="fragmenthost"></div>
+                                    <div id="diaVisitorshost" class="fragmenthost"></div>
+                                </div>
+                                <div class="field_line field_line_even field_tile_bkg">
+                                    <div id="diaCountrysIndustriespDhost" class="fragmenthost"></div>
+                                </div>
+                                <div class="field_line field_line_full field_tile_bkg">
+                                    <div id="diaIndustrieshost" class="fragmenthost"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="error-message"
+                     data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

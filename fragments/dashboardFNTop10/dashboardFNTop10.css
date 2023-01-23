@@ -1,0 +1,130 @@
+﻿.countrysindustries-chart-top-container {
+    height: 50px;
+    width: 23%; /*20%*/
+    float: left;
+    font-weight: bold;
+    display: table;
+}
+.dashboardFNTop10 .countrysindustries-chart-top-container-tooltip {
+    height: 50px;
+    float: right;
+    /*margin-right: 25px;*/
+}
+.dashboardFNTop10 .visitor-chart-top-text {
+    display: table-cell;
+    vertical-align: middle;
+    float: left;
+    padding-left: 15px;
+    padding-top: 15px;
+}
+.dashboardFNTop10 .action-image {
+    margin-top: 13px;
+    display: flex !important;
+    position: center;
+}
+.countrysindustries-chart-top-text-container {
+    display: inline;
+    vertical-align: middle;
+    width: 100% !important;
+}
+.countrysindustries-chart-container {
+    height: 91%;
+    width: 98%;
+}
+.view-size-small .countrysindustries-chart-container {
+    height: 89%;
+}
+#worldcontainer {
+    position: relative;
+}
+#container {
+    margin-top: 5px;
+    height: 320px !important;
+    width: 100%;
+    position: relative;
+}
+#timedropdown {
+    width: 32% !important;
+    height: 50px;
+}
+.dashboardFNTop10 select {
+    /* Reset Select */
+    outline: 0;
+    border: 0;
+    box-shadow: none;
+    /* Personalize */
+    font-size: 13px; /*15px*/
+    font-weight: bold;
+    flex: 1;
+    padding: 0 1em;
+    background-image: none;
+    cursor: pointer;
+}
+.dashboardFNTop10 #criteriadropdown.win-dropdown {
+    max-width: 500px;
+    width: 61% !important; /*49.9% !important*/
+    height: 50px;
+    float: left;
+    position: relative;
+    display: none;
+    border-radius: .25em;
+    overflow: hidden;
+    margin: 0;
+}
+.view-size-small .dashboardFNTop10 #criteriadropdown.win-dropdown {
+    margin-right: 2px;
+}
+.dashboardFNTop10 #countrydropdown.win-dropdown {
+    width: 30%; /*49.9% !important*/
+    height: 50px;
+    float: left;
+    position: relative;
+    display: none;
+    border-radius: .25em;
+    overflow: hidden;
+    margin: 0;
+}
+.view-size-bigger .dashboardFNTop10 #countrydropdown.win-dropdown {
+    width: 29%; /*49.9% !important*/
+}
+.view-size-small .dashboardFNTop10 #countrydropdown.win-dropdown {
+    width: 28%; /*49.9% !important*/
+}
+.view-size-bigger .dashboardFNTop10 select {
+    font-size: 12px;
+}
+.view-size-big .dashboardFNTop10 select {
+    font-size: 12px;
+}
+.view-size-medium .dashboardFNTop10 select {
+    font-size: 11px;
+}
+.view-size-small .dashboardFNTop10 select {
+    font-size: 9px;
+}
+.dashboardFNTop10 .win-dropdown :after {
+    content: '\25BC';
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 1em;
+    background-color: #34495e;
+    /*transition: .25s all ease;*/
+    pointer-events: none;
+}
+.dashboardFNTop10.win-dropdown:hover:after {
+        color: #f39c12;
+    }
+#daydropdown {
+    width: 33% !important;
+    height: 50px;
+    font-size: 15px;
+    font-weight: bold;
+    outline: 0;
+    border: 0;
+    box-shadow: none;
+    font-family: Open Sans;
+}
+.anzcontainer {
+    display: none;
+}

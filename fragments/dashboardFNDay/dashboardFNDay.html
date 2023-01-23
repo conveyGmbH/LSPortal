@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="dashboardFNDay.css" rel="stylesheet" />
+    <script type="text/javascript" src="dashboardFNDayService.js"></script>
+    <script type="text/javascript" src="dashboardFNDayController.js"></script>
+    <script type="text/javascript" src="dashboardFNDay.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="dashboardFNDay fragment">
+        <div id="diaCountrysController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="visitor-chart-top-container">
+                    <div class="visitor-chart-top-text-container">
+                        <div class="visitor-chart-top-text" data-win-control="WinJS.UI.Tooltip" data-win-options="{infotip: true, contentElement: mydiaVisitorsElement}">
+                            <span class="visitor-chart-top-text" data-win-res="{textContent: 'dashboardFNHour.title'}"></span>
+                        </div>
+                        <div style="display: none;">
+                            <div id="mydiaVisitorsElement" data-win-res="{textContent: 'diaVisitors.titleTooltip'}"></div>
+                        </div>
+                    </div>
+                    <div class="visitor-chart-top-combo-container-tooltip" data-html2canvas-ignore="true">
+                        <div class="list-symbol-ID">
+                            <button data-win-bind="name: information" class="action-image" data-win-control="WinJS.UI.Tooltip" data-win-options="{infotip: true, contentElement: mydiaVisitorsElement}"></button>
+                        </div>
+                        <div style="display: none;">
+                            <div id="mydiaCountrysElement2" data-win-res="{textContent: 'diaCountrys.titleTooltip'}"></div>
+                        </div>
+                    </div>
+                    <div class="visitor-chart-top-combo-container">
+                        <input id="daydropdown" type="date" style="display:none">
+                        <select id="dayhourdropdown"
+                                class="win-dropdown"
+                                data-win-control="WinJS.UI.Repeater"
+                                data-win-bind="value: dayhourflag Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone">
+                            <option data-win-bind="value: VALUE; textContent: TITLE"></option>
+                        </select>
+                        <select id="dayCombobox"
+                                class="win-dropdown"
+                                data-win-control="WinJS.UI.Repeater">
+                            <option data-win-bind="value: VisitorDateFormatCalc; textContent: VisitorDateFormatShow"></option>
+                        </select>
+ 
+                    </div>
+                </div>
+                <div class="visitor-chart-container">
+                    <canvas id="visitorChart"></canvas>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

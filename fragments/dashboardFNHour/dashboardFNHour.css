@@ -1,0 +1,108 @@
+﻿.visitor-chart-top-container {
+    height: 50px;
+    width: 100%;
+}
+
+.visitor-chart-top-text-container {
+    height: 50px;
+    width: 23%; /*20%*/
+    float: left;
+    font-weight: bold;
+    display: table;
+}
+.visitor-chart-top-text {
+    display: table-cell;
+    vertical-align: middle;
+    padding-left: 5px;
+}
+.dashboardFNHour .visitor-chart-top-combo-container-tooltip {
+    height: 50px;
+    float: right;
+    margin-left: 5px;
+}
+
+.dashboardFNHour .action-image {
+    margin-top: 13px;
+    display: flex !important;
+    position: center;
+}
+.visitor-chart-top-combo-container {
+    height: 50px;
+    width: 55%; /*50*/
+    float: right;
+    position: relative;
+}
+.view-size-biggest .visitor-chart-top-combo-container,
+view-size-bigger .visitor-chart-top-combo-container,
+.view-size-big .visitor-chart-top-combo-container,
+.view-size-medium .visitor-chart-top-combo-container,
+.view-size-medium-small .visitor-chart-top-combo-container {
+    width: 66%; /*50*/
+}
+.view-size-small .visitor-chart-top-combo-container {
+    width: 60%;
+}
+#showHourDay {
+    margin-left: 20%;
+    top: 25%;
+    position: absolute;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+.visitor-chart-container {
+    height: 240px;
+    width: 100%;
+}
+.dashboardFNHour select {
+    /* Reset Select */
+    outline: 0;
+    border: 0;
+    box-shadow: none;
+    /* Personalize */
+    font-size: 13px;
+    font-weight: bold;
+    flex: 1;
+    padding: 0 1em;
+    background-image: none;
+    cursor: pointer;
+}
+.dashboardFNHour .win-dropdown {
+    width: 49% !important;
+    height: 50px;
+    float: right;
+    position: relative;
+    display: flex;
+    border-radius: .25em;
+    overflow: hidden;
+    margin: 0;
+    display: none;
+}
+.dashboardFNHour .win-dropdown :after {
+    content: '\25BC';
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 1em;
+    background-color: #34495e;
+    /*transition: .25s all ease;*/
+    pointer-events: none;
+}
+.dashboardFNHour #daydropdown {
+    width: 44% !important;
+    height: 50px;
+    font-size: 13px;
+    font-weight: bold;
+    outline: 0;
+    border: 0;
+    box-shadow: none;
+    font-family: Open Sans;
+    padding: 0;
+    padding-left: 13px;
+    /*ignore style for ios device*/
+    -webkit-appearance: none
+}
+
+.dashboardFNHour #visitorChart {
+    padding-bottom: 5px;
+}
+

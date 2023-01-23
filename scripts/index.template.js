@@ -117,7 +117,8 @@
         //Dashboards
         { id: "dashBoard", group: 19, svg: "dashboard", disabled: true },
         // only visible in deimos and lstest, not in lsmain
-        { id: "startPremium", group: 57, svg: "dashboard", disabled: true},
+        { id: "startPremium", group: 57, svg: "dashboard", disabled: true },
+        { id: "dashboardFN", group: 57, svg: "dashboard", disabled: true },
         //VisitorFlow
         { id: "visitorFlowGrp", group: 28, svg: "lsvFlow", disabled: true, popup: true },
         { id: "visitorFlowDashboard", group: 20, svg: "dashboardVisitorFlow", disabled: true, predecGroup: 28 },
@@ -258,7 +259,8 @@
         { id: "startPremium", group: -57, disabled: false },
         { id: "startSurpreme", group: -58, disabled: false },
         { id: "startTileAdministration", group: 61, disabled: false },
-        { id: "ticketLimits", group: -67, disabled: false }
+        { id: "ticketLimits", group: -67, disabled: false },
+        { id: "dashboardFN", group: -70, disabled: false }
     ];
 
 

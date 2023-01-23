@@ -1,0 +1,121 @@
+﻿.countrysindustries-chart-top-container {
+    height: 50px;
+    width: 100%;
+}
+.dashboardFNIndustries .countrysindustries-chart-top-container-tooltip {
+    height: 50px;
+    float: right;
+    /*margin-right: 25px;*/
+}
+
+.dashboardFNIndustries .action-image {
+    margin-top: 13px;
+    display: flex !important;
+    position: center;
+}
+.countrysindustries-chart-top-text-container {
+    display: inline;
+    vertical-align: middle;
+    width: 100% !important;
+}
+.countrysindustries-chart-container {
+    height: 91%;
+    width: 98%;
+}
+.view-size-small .countrysindustries-chart-container {
+    height: 89%;
+}
+#worldcontainer {
+    position: relative;
+}
+#container {
+    margin-top: 5px;
+    height: 320px !important;
+    width: 100%;
+    position: relative;
+}
+#timedropdown {
+    width: 32% !important;
+    height: 50px;
+}
+.dashboardFNIndustries select {
+    /* Reset Select */
+    outline: 0;
+    border: 0;
+    box-shadow: none;
+    /* Personalize */
+    font-size: 13px; /*15px*/
+    font-weight: bold;
+    flex: 1;
+    padding: 0 1em;
+    background-image: none;
+    cursor: pointer;
+}
+.dashboardFNIndustries #criteriadropdown.win-dropdown {
+    max-width: 500px;
+    width: 61% !important; /*49.9% !important*/
+    height: 50px;
+    float: left;
+    position: relative;
+    display: flex;
+    border-radius: .25em;
+    overflow: hidden;
+    margin: 0;
+}
+.view-size-small .dashboardFNIndustries #criteriadropdown.win-dropdown {
+    margin-right: 2px;
+}
+.dashboardFNIndustries #countrydropdown.win-dropdown {
+    width: 30%; /*49.9% !important*/
+    height: 50px;
+    float: left;
+    position: relative;
+    display: flex;
+    border-radius: .25em;
+    overflow: hidden;
+    margin: 0;
+}
+.view-size-bigger .dashboardFNIndustries #countrydropdown.win-dropdown {
+    width: 29%; /*49.9% !important*/
+}
+.view-size-small .dashboardFNIndustries #countrydropdown.win-dropdown {
+    width: 28%; /*49.9% !important*/
+}
+.view-size-bigger .dashboardFNIndustries select {
+    font-size: 12px;
+}
+.view-size-big .dashboardFNIndustries select {
+    font-size: 12px;
+}
+.view-size-medium .dashboardFNIndustries select {
+    font-size: 11px;
+}
+.view-size-small .dashboardFNIndustries select {
+    font-size: 9px;
+}
+.dashboardFNIndustries .win-dropdown :after {
+    content: '\25BC';
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 1em;
+    background-color: #34495e;
+    /*transition: .25s all ease;*/
+    pointer-events: none;
+}
+.dashboardFNIndustries.win-dropdown:hover:after {
+        color: #f39c12;
+    }
+#daydropdown {
+    width: 33% !important;
+    height: 50px;
+    font-size: 15px;
+    font-weight: bold;
+    outline: 0;
+    border: 0;
+    box-shadow: none;
+    font-family: Open Sans;
+}
+.anzcontainer {
+    display: none;
+}
