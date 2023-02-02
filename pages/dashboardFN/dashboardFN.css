@@ -54,18 +54,20 @@
 
 .dashboardFN .field_line {
     border: none;
+    margin-right: 20px !important;
 }
 
 .dashboardFN .field_line_odd {
     background-color: white;
-    margin-right: 4px;
+    /*margin-right: 4px;*/
     /*height: 287px;*/
+    width: calc(50% - 33px);
 }
 
 .dashboardFN .field_line_even {
     background-color: white;
     margin-left: 0px;
-    width: calc(50% - 5px);
+    width: calc(50% - 33px);
 }
 
 .dashboardFN .field_line_full {

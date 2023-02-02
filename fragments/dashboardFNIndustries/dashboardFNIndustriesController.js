@@ -778,7 +778,7 @@
                                 that.worldMapHeight = 0;
                                 var countrydropdata = json.d.results;
                                 if (countrydrop && countrydrop.winControl) {
-                                    var empty = { LandID: 0, Land: "" };
+                                    var empty = { LandID: 0, Land: getResourceText("dashboardFNIndustries.allcountry") };
                                     countrydropdata.unshift(empty);
                                     countrydrop.winControl.data = new WinJS.Binding.List(countrydropdata);
                                     countrydrop.selectedIndex = 0;

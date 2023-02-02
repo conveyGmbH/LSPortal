@@ -1521,5 +1521,14 @@
 
     "dashboardFNDay.title"			: "Besucher (Tag)",
 	
-    "dashboardFNTop10.title"			: "Top 10 Länder"
+    "dashboardFNTop10.title"			: "Top 10 Länder",
+
+    "dashboardFNIndustries.allcountry"			: "Alle Länder",
+
+    "eventStatus.title"			: "Session Status",
+
+    "eventSession.id"			: "Session ID",
+    "eventSession.length"			: "Dauer",
+    "eventSession.status"			: "Status",
+    "eventSession.notshow"			: "Nicht zeigen"
 }		

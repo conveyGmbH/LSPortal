@@ -1521,5 +1521,7 @@
 
     "dashboardFNDay.title"			: "Visitors (day)",
 	
-    "dashboardFNTop10.title"			: "Top 10 countries"
+    "dashboardFNTop10.title"			: "Top 10 countries",
+
+    "dashboardFNIndustries.allcountry"			: "All countrys"
 }

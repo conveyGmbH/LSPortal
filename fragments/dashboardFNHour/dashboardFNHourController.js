@@ -26,6 +26,7 @@
 
                 var that = this;
                 var icons = fragmentElement.querySelector(".visitor-chart-top-container");
+                var visitorchartcontainer = fragmentElement.querySelector(".visitor-chart-container");
 
                 var loadIcon = function () {
                     var icon = fragmentElement.querySelector(".action-image");
@@ -396,9 +397,23 @@
 
                             if (visitorChart) {
                                 that.redraw();
+                                if (results.length <= 2) {
+                                    visitorchartcontainer.style.width = "25%";
+                                    var widthbox = icons.offsetWidth / 2;
+                                    var widthelement = visitorchartcontainer.offsetWidth / 2;
+                                    var postition = widthbox - widthelement;
+                                    visitorchartcontainer.style.marginLeft = postition + "px";
+                                }
                                 that.createvisitorChart();
                             } else {
                                 that.redraw();
+                                if (results.length <= 2) {
+                                    visitorchartcontainer.style.width = "25%";
+                                    var widthbox = icons.offsetWidth / 2;
+                                    var widthelement = visitorchartcontainer.offsetWidth / 2;
+                                    var postition = widthbox - widthelement;
+                                    visitorchartcontainer.style.marginLeft = postition + "px";
+                                }
                                 that.createvisitorChart();
                             }
                         }
