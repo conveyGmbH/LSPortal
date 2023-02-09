@@ -561,6 +561,7 @@
                     results.forEach(function (item, index) {
                         that.resultConverter(item, index);
                     });
+                    that.addBodyRowHandlers();
                 }, function (errorResponse) {
                     Log.print(Log.l.error, "call error");
                     AppBar.busy = false;
@@ -620,7 +621,7 @@
                                 AppData.setErrorMsg(that.binding, errorResponse);
                             },
                             {
-                                VeranstaltungID: that.getEventId()
+                                VeranstaltungID: varanstId
                             });
                     } else {
                         return ContactResultsList.KontaktReport.select(function (json) {
