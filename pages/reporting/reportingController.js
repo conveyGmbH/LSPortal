@@ -726,6 +726,27 @@
                             restriction.bExact = true;
                         }
                         break;
+                    case 33:
+                            AppData.setErrorMsg(that.binding);
+                            that.showDashboardLoadingText(true);
+                            return AppData.call("PRC_DBExcelRequest", {
+                                pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                                pLanguageSpecID: that.langSet(),
+                                pExportType: "DASHBOARD",
+                                psyncRun: 1
+                            }, function (json) {
+                                Log.print(Log.l.info, "call success!");
+                                if (json && json.d.results[0]) {
+                                    that.exportDbExcel(json.d.results[0]);
+                                } else {
+                                    Log.print(Log.l.error, "call error DOC3ExportPDFID is null");
+                                    that.showDashboardLoadingText(false);
+                                }
+                            }, function (error) {
+                                Log.print(Log.l.error, "call error");
+                                that.showDashboardLoadingText(false);
+                            });
+                        break;
                     case 34:
                         if (that.isSupreme === 2) {
                             AppData.setErrorMsg(that.binding);
@@ -768,6 +789,48 @@
                                 that.showDashboardLoadingText(false);
                             });
                         }
+                        break;
+                    case 35:
+                        AppData.setErrorMsg(that.binding);
+                        that.showDashboardLoadingText(true);
+                        return AppData.call("PRC_DBExcelRequest", {
+                            pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                            pLanguageSpecID: that.langSet(),
+                            pExportType: "LBKontakt",
+                            psyncRun: 1
+                        }, function (json) {
+                            Log.print(Log.l.info, "call success!");
+                            if (json && json.d.results[0]) {
+                                that.exportDbExcel(json.d.results[0]);
+                            } else {
+                                Log.print(Log.l.error, "call error DOC3ExportPDFID is null");
+                                that.showDashboardLoadingText(false);
+                            }
+                        }, function (error) {
+                            Log.print(Log.l.error, "call error");
+                            that.showDashboardLoadingText(false);
+                        });
+                        break;
+                    case 36:
+                        AppData.setErrorMsg(that.binding);
+                        that.showDashboardLoadingText(true);
+                        return AppData.call("PRC_DBExcelRequest", {
+                            pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                            pLanguageSpecID: that.langSet(),
+                            pExportType: "LBChat",
+                            psyncRun: 1
+                        }, function (json) {
+                            Log.print(Log.l.info, "call success!");
+                            if (json && json.d.results[0]) {
+                                that.exportDbExcel(json.d.results[0]);
+                            } else {
+                                Log.print(Log.l.error, "call error DOC3ExportPDFID is null");
+                                that.showDashboardLoadingText(false);
+                            }
+                        }, function (error) {
+                            Log.print(Log.l.error, "call error");
+                            that.showDashboardLoadingText(false);
+                        });
                         break;
                     default:
                         Log.print(Log.l.error, "curOLELetterID=" + that.binding.curOLELetterID + "not supported");

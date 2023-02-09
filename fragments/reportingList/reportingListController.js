@@ -68,7 +68,7 @@
 
             var resultConverter = function (item, index) {
                 item.index = index;
-                if (item.OLELetterID && item.OLELetterID !== 33 && item.OLELetterID !== 32) {
+                if (item.OLELetterID && item.OLELetterID !== 32) {
                     that.reportingItem.push(item);
                 } else {
                     Log.print(Log.l.trace, "OLELetterID 32 blocked!");
@@ -80,6 +80,9 @@
                     item.OLELetterID === 13 ||
                     item.OLELetterID === 8 ||
                     item.OLELetterID === 34 ||
+                    item.OLELetterID === 33 ||
+                    item.OLELetterID === 35 ||
+                    item.OLELetterID === 36 ||
                     item.OLELetterID === 1) {
                     item.exportTypeIcon = "excel";
                 } else {
