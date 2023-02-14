@@ -607,6 +607,7 @@
     "label.dashboardFN" : "Dashboard Premium",
     "label.dashboardFNPremium" : "Dashboard Premium",
     "label.dashboardFNSupreme" : "Dashboard Supreme",
+    "label.eventStatus" : "Session Status",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Abbrechen",
@@ -1526,9 +1527,15 @@
     "dashboardFNIndustries.allcountry"			: "Alle Länder",
 
     "eventStatus.title"			: "Session Status",
+    "eventStatus.confirmSessionEnd"			: "Wollen Sie die Session wirklich beenden?",
 
-    "eventSession.id"			: "Session ID",
+    "eventSession.id"			: "Session",
     "eventSession.length"			: "Dauer",
     "eventSession.status"			: "Status",
-    "eventSession.notshow"			: "Nicht zeigen"
+    "eventSession.notshow"			: "Nicht zeigen",
+    "eventSession.btnEndSession"			: "Session beenden",
+    "eventSession.sessionStatus"			: "Status: ",
+    "eventSession.event"			: "Veranstaltung",
+    "eventSession.mod"			: "Moderator/en",
+    "eventSession.sessionlink"			: "Session Link"
 }		

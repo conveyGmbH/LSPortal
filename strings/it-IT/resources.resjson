@@ -607,6 +607,7 @@
     "label.dashboardFN" : "Dashboard Premium",
     "label.dashboardFNPremium" : "Dashboard Premium",
     "label.dashboardFNSupreme" : "Dashboard Supreme",
+    "label.eventStatus" : "Stato della sessione",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annulla",
@@ -1520,5 +1521,18 @@
 	
     "dashboardFNTop10.title"			: "I 10 paesi principali",
 
-    "dashboardFNIndustries.allcountry"			: "Tutti i paesi"
+    "dashboardFNIndustries.allcountry"			: "Tutti i paesi",
+
+    "eventStatus.title"			: "Stato della sessione",
+    "eventStatus.confirmSessionEnd"			: "Vuole davvero concludere la sessione?",
+
+    "eventSession.id"			: "Sessione",
+    "eventSession.length"			: "Durata",
+    "eventSession.status"			: "Stato",
+    "eventSession.notshow"			: "Non mostrare",
+    "eventSession.btnEndSession"			: "Fine sessione",
+    "eventSession.sessionStatus"			: "Stato: ",
+    "eventSession.event"			: "Evento",
+    "eventSession.mod"			: "Moderatore/i",
+    "eventSession.sessionlink"			: "Collegamento alla sessione"
 }

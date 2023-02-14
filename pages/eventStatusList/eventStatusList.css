@@ -1,0 +1,40 @@
+﻿.eventStatusList .list-div-left,
+.eventStatusList .list-div-right {
+    width: calc(100% - 32px);
+    margin: 0 16px;
+}
+
+.eventStatusList .grayed-out {
+    opacity: 0.6;
+}
+
+.eventStatusList .semibold {
+    font-weight: 600;
+}
+
+#eventStatusList .win-itembox {
+    width: 100%;
+    min-height: 60px;
+}
+
+#eventStatusList .win-container {
+    width: 100%;
+    height: auto;
+    margin: 0;
+    margin-bottom: 0;
+    border-radius: 0;
+    background-color: transparent;
+}
+
+#eventStatusList .win-surface {
+    margin-top: 0;
+    margin-left: 0;
+}
+
+#eventStatusList.listview {
+    position: relative;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: calc(100% - 72px);
+}

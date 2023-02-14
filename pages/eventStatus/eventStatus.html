@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="eventStatus.css" rel="stylesheet"/>
+    <script type="text/javascript" src="eventStatusService.js"></script>
+    <script type="text/javascript" src="eventStatusController.js"></script>
+    <script type="text/javascript" src="eventStatus.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="eventStatus fragment">
+        <div id="eventStatusController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="contentarea win-type-body">
+                    <div class="header-separator"></div>
+                    <div class="content-header">
+                        <div class="half-circle half-circle-textcolor">&nbsp;</div>
+                        <span class="caption-field" data-win-res="{textContent: 'eventbaselink.title'}"></span>
+                    </div>
+                    <div class="line-separator"></div>
+                        <div class="field_line">
+                            <div id="eventSessionhost" class="fragmenthost"></div>
+                        </div>
+                    <div class="line-separator"></div>
+                </div>
+                <div class="error-message"
+                     data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
+            </section>
+        </div>
+    </div>
+ </body>
+</html>
