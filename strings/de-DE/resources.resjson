@@ -1335,7 +1335,8 @@
 	"mailingTemplateEventEdit.subject"			: "Betreff",
     "mailingTemplateEventEdit.mailtext"			: "Mailtext",
     "mailingTemplateEventEdit.layoutactive"			: "Schalten Sie aus, um diesen E-Mail-Entwurf (in allen Sprachen) als veraltet zu kennzeichnen. Wenn ein Entwurf veraltet ist, wird er in der Anwendung Mailing nicht als Option angezeigt.",
-
+	"mailingTemplateEventEdit.addICSVariantActive" : "Kalender-Einladung anhängen",
+	 
     "eventGenSettings.title"			: "Einstellungen",
     "eventGenSettings.name"			: "Veranstaltungname",
     "eventGenSettings.typ"			: "Typ der Veranstaltung",

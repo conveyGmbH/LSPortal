@@ -27,7 +27,6 @@
             var that = this;
             var initSprache = pageElement.querySelector("#InitSprache");
             var mailType = pageElement.querySelector("#mailType");
-            var layoutActiveToggle = pageElement.querySelector("#layoutActiveToggle");
 
             var getRecordId = function () {
                 Log.call(Log.l.trace, "Contact.Controller.");
@@ -135,6 +134,11 @@
                 var ret = null;
                 Log.call(Log.l.trace, "Product.Controller.");
                 AppData.setErrorMsg(that.binding);
+                if (that.binding.dataLayoutValue && that.binding.dataLayoutValue.AddICSVariant) {
+                    that.binding.dataLayoutValue.AddICSVariant = 1;
+                } else {
+                    that.binding.dataLayoutValue.AddICSVariant = 0;
+                }
                 var layoutUpdateData = that.binding.dataLayoutValue;
                 /*if (AppBar.modified && that.checkifFieldIsEmpty() && !AppBar.busy) {
                     error({});
@@ -203,7 +207,19 @@
                     that.saveToggleData();
                     Log.ret(Log.l.trace);
                 },
-                setPrevData: function (parameters) {
+                clickDoEdit: function (event) {
+                    Log.call(Log.l.trace, "Account.Controller.");
+                    AppBar.modified = true;
+                    if (event.currentTarget && AppBar.notifyModified) {
+                        var toggle = event.currentTarget.winControl;
+                        if (toggle) {
+                            that.binding.dataLayoutValue.AddICSVariant = toggle.checked;
+                        }
+                        AppBar.triggerDisableHandlers();
+                    }
+                    Log.ret(Log.l.trace);
+                },
+                setPrevData: function (parameters) {l
                     Log.call(Log.l.trace, "ContactResultsList.Controller.");
                     that.saveData(function (response) {
                         Log.print(Log.l.trace, "layout saved");
@@ -256,9 +272,6 @@
             if (initSprache) {
                 this.addRemovableEventListener(initSprache, "change", this.eventHandlers.selectionChange.bind(this));
                 this.addRemovableEventListener(initSprache, "click", this.eventHandlers.setPrevData.bind(this));
-            }
-            if (layoutActiveToggle) {
-                this.addRemovableEventListener(layoutActiveToggle, "click", this.eventHandlers.onLayoutActiveToggle.bind(this));
             }
 
             this.disableHandlers = {
@@ -346,6 +359,11 @@
                             if (json && json.d && json.d.results) {
                                 // Now, we call WinJS.Binding.List to get the bindable list
                                 that.binding.dataLayoutValue = json.d.results[0];
+                                if (that.binding.dataLayoutValue && that.binding.dataLayoutValue.AddICSVariant) {
+                                    that.binding.dataLayoutValue.AddICSVariant = true;
+                                } else {
+                                    that.binding.dataLayoutValue.AddICSVariant = false;
+                                }
                             }
                         }, function (errorResponse) {
                             // called asynchronously if an error occurs
@@ -361,6 +379,11 @@
                         if (json && json.d && json.d.results) {
                             // Now, we call WinJS.Binding.List to get the bindable list
                             that.binding.dataLayoutActive = json.d.results[0];
+                            if (that.binding.dataLayoutActive && that.binding.dataLayoutActive.IsActive) {
+                                that.binding.dataLayoutActive.IsActive = true;
+                            } else {
+                                that.binding.dataLayoutActive.IsActive = false;
+                            }
                         }
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs

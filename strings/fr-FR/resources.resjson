@@ -1333,6 +1333,7 @@
 	"mailingTemplateEventEdit.subject"			: "Matière",
     "mailingTemplateEventEdit.mailtext"			: "Texte du courrier",
     "mailingTemplateEventEdit.layoutactive"			: "Désactivez cette option pour que ce projet de courriel (dans toutes les langues) soit dépassé. Si un brouillon est obsolète, il ne sera pas affiché comme option dans l'application d'envoi.",
+	"mailingTemplateEventEdit.addICSVariantActive" : "Joindre une invitation de calendrier",
 
     "eventSeries.title" : "Série",
     "eventSeries.language": "Langue",

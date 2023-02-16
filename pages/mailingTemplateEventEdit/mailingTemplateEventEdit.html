@@ -63,9 +63,24 @@
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingTemplateEventEdit.layoutactive'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'mailingTemplateEventEdit.layoutactive'}"></span>
                             <div class="input_field toggle-switch-parent">
-                                <div id="layoutActiveToggle" class="input_field"
+                                <div class="input_field"
                                      data-win-control="WinJS.UI.ToggleSwitch"
-                                     data-win-bind="winControl.checked: dataLayoutActive.IsActive; winControl.labelOn: generalData.active; winControl.labelOff: generalData.inactive">
+                                     data-win-bind="winControl.checked: dataLayoutActive.IsActive; winControl.labelOn: generalData.active; winControl.labelOff: generalData.inactive"
+                                     onchange="AppBar.handleEvent('change', 'onLayoutActiveToggle', event)">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="line-separator"></div>
+                    <div class="field_line">
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingTemplateEventEdit.addICSVariantActive'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'mailingTemplateEventEdit.addICSVariantActive'}"></span>
+                            <div class="input_field toggle-switch-parent">
+                                <div class="input_field"
+                                     data-win-control="WinJS.UI.ToggleSwitch"
+                                     data-win-bind="winControl.checked: dataLayoutValue.AddICSVariant; winControl.labelOn: generalData.active; winControl.labelOff: generalData.inactive"
+                                     onchange="AppBar.handleEvent('change', 'clickDoEdit', event)">
                                 </div>
                             </div>
                         </div>
