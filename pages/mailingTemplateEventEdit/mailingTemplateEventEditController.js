@@ -359,11 +359,6 @@
                             if (json && json.d && json.d.results) {
                                 // Now, we call WinJS.Binding.List to get the bindable list
                                 that.binding.dataLayoutValue = json.d.results[0];
-                                if (that.binding.dataLayoutValue && that.binding.dataLayoutValue.AddICSVariant) {
-                                    that.binding.dataLayoutValue.AddICSVariant = true;
-                                } else {
-                                    that.binding.dataLayoutValue.AddICSVariant = false;
-                                }
                             }
                         }, function (errorResponse) {
                             // called asynchronously if an error occurs
@@ -379,11 +374,6 @@
                         if (json && json.d && json.d.results) {
                             // Now, we call WinJS.Binding.List to get the bindable list
                             that.binding.dataLayoutActive = json.d.results[0];
-                            if (that.binding.dataLayoutActive && that.binding.dataLayoutActive.IsActive) {
-                                that.binding.dataLayoutActive.IsActive = true;
-                            } else {
-                                that.binding.dataLayoutActive.IsActive = false;
-                            }
                         }
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
