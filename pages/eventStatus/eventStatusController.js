@@ -232,6 +232,7 @@
             var loadData = function () {
                 Log.call(Log.l.trace, "EventStatus.Controller.");
                 var recordId = that.getSessionEventId();
+                AppData.setRecordId("VeranstaltungSession", recordId);
                 AppData.setErrorMsg(that.binding);
                 var ret;
                 if (recordId) {

@@ -27,7 +27,8 @@
                 eventStatusState: "",
                 dwlink: null,
                 sessionEndBtn: null,
-                sessionEndData: []
+                sessionEndData: [],
+                sessiondownloadData: []
             }]);
             var that = this;
             
@@ -36,6 +37,7 @@
 
             // now do anything...
             var listView = fragmentElement.querySelector("#eventSessionList.listview");
+            var linkcontainer = fragmentElement.querySelector("#dwlinkcontainer");
            
             this.dispose = function () {
                 if (that.binding.moderatorData) {
@@ -240,6 +242,92 @@
             }
             this.getSelectedData = getSelectedData;
 
+            var converterToArray = function (item) {
+                for (var i = 0; i < item.length; i++) {
+                    if (item[i]) {
+                        that.binding.sessiondownloadData.push({ "Link" : item[i]});
+                    }
+                }
+            }
+            this.converterToArray = converterToArray;
+
+            var createButtonFromArray = function(url) {
+                Log.call(Log.l.trace, "EventSession.Controller.");
+                that.binding.dwlink = 1;
+                if (url) {
+                    if (that.binding.sessiondownloadData.length !== 0) {
+                        for (var i = 0; i < that.binding.sessiondownloadData.length; i++) {
+                            var newA = document.createElement("a");
+                            newA.textContent = that.binding.sessiondownloadData[i].Link;
+                            newA.id = "dwlinktext";
+                            newA.href = url + that.binding.sessiondownloadData[i].Link;
+                            newA.target = "_blank";
+                            linkcontainer.appendChild(newA);
+                        }
+                    } else {
+                        var newB = document.createElement("a");
+                        newB.textContent = "Download Session";
+                        newB.id = "dwlinktext";
+                        newB.target = "_blank";
+                        newB.href = url;
+                        linkcontainer.appendChild(newB);
+                    }
+                }
+            }
+            this.createButtonFromArray = createButtonFromArray;
+
+            var getSessionDownloadFiles = function(rawurl) {
+                Log.call(Log.l.trace, "EventSession.Controller.");
+                if (rawurl) {
+                    if (rawurl.search("/recording/") > 0) {
+                        var urlsuffix = rawurl.substring(rawurl.indexOf("/recording/") + 11, rawurl.length);
+                        var urlsuffix2 = rawurl.substring(rawurl.indexOf("/recording/") + 11, rawurl.length - 9);
+                        var url = AppData.getBaseURL(AppData.appSettings.odata.onlinePort) + "/recording/" + urlsuffix;
+                        var url2 = AppData.getBaseURL(AppData.appSettings.odata.onlinePort) + "/recording/" + urlsuffix2;
+                        var options = AppData.initXhrOptions("GET", url, false);
+                        Log.print(Log.l.info, "calling xhr method=GET url=" + options.url);
+                        WinJS.xhr(options).then(function xhrSuccess(response) {
+                            Log.print(Log.l.info, "AppData.call xhr", "method=GET" + options.url);
+                            try {
+                                var result = response.responseText;
+                                var breakfinal = result.split(/\r?\n|\r|\n/g);
+                                linkcontainer.innerHTML = "";
+                                that.binding.sessiondownloadData = [];
+                                that.converterToArray(breakfinal);
+                                that.createButtonFromArray(url2);
+                                return WinJS.Promise.as();
+                            } catch (exception) {
+                                Log.print(Log.l.error, "resource parse error " + (exception && exception.message));
+                            }
+                            Log.ret(Log.l.info);
+                            return WinJS.Promise.as();
+                        }, function (errorResponse) {
+                            Log.print(Log.l.error, "error=" + AppData.getErrorMsgFromResponse(errorResponse));
+                            AppData.setErrorMsg(AppBar.scope.binding, errorResponse);
+                            if (errorResponse.status === 401) {
+                                // user is not authorized to access this service
+                                AppBar.scope.binding.generalData.notAuthorizedUser = true;
+                                var errorMessage = getResourceText("general.unauthorizedUser");
+                                alert(errorMessage);
+                                //AppData.setErrorMsg(AppBar.scope.binding, err);
+                                // user is not authorized to access this service
+                                WinJS.Promise.timeout(1000).then(function () {
+
+                                });
+                            }
+                            return WinJS.Promise.as();
+                        });
+                        Log.call(Log.l.trace, "EventSession.Controller.");
+                    } else {
+                        linkcontainer.innerHTML = "";
+                        that.createButtonFromArray(rawurl);
+                    }
+                } else {
+                    Log.call(Log.l.trace, "EventSession.Controller.");
+                }
+            }
+            this.getSessionDownloadFiles = getSessionDownloadFiles;
+
             var eventHandlers = {
                 onSelectionChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "EmpList.Controller.");
@@ -301,6 +389,7 @@
             
             var resultConverter = function (item, index) {
                 item.index = index;
+                that.getSessionDownloadFiles();
                 if (item.StartTSUTC) {
                     item.SessionStart = that.getDateObject(item.StartTSUTC);
                 }
@@ -324,7 +413,7 @@
                 }
                 else if (item.StartTSUTC && item.EndTSUTC && item.RecordingExpected === 0 || item.RecordingExpected === null && item.RecordingLink) {
                     item.Status = "Beendet mit Aufnahme fertig";
-                    that.setDownloadLink(item.RecordingLink);
+                    that.getSessionDownloadFiles(item.RecordingLink);
                     that.setStatus(4);
                 }
                 else if (item.StartTSUTC && item.EndTSUTC && item.RecordingExpected === 0 && item.RecordingLink === null) {
@@ -336,12 +425,17 @@
 
             var loadData = function () {
                 Log.call(Log.l.trace, "EventSession.");
+                var vId = that.getEventId();
+                if (vId === null) {
+                    vId = AppData.getRecordId("VeranstaltungSession");
+                }
                 that.sessions = [];
                 that.binding.moderatorData = null;
                 that.binding.dwlink = null;
                 that.binding.eventStatusState = "";
                 that.binding.sessionEndBtn = null;
                 that.statuscounter = 0;
+                that.binding.sessiondownloadData = [];
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                     return EventSession.BBBSessionODataView.select(function (json) {
@@ -370,7 +464,7 @@
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, {
-                            VeranstaltungID: that.getEventId()
+                            VeranstaltungID: vId
                         }).then(function () {
 
                             Log.print(Log.l.trace, "Data loaded");
@@ -389,7 +483,8 @@
             });
             Log.ret(Log.l.trace);
         }, {
-                statuscounter: 0
+                statuscounter: 0,
+                linkname: ""
             })
     });
 })();
