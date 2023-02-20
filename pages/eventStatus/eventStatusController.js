@@ -75,7 +75,11 @@
                         AppBar.busy = false;
                         Log.print(Log.l.trace, "PRC_RequestSessionEnd success!");
                         if (json && json.d && json.d.results) {
-                            var result = json.d.results[0];
+                            var eventSessionFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("eventSession"));
+                            if (eventSessionFragmentControl && eventSessionFragmentControl.controller) {
+                                return eventSessionFragmentControl.controller.loadData(sessionEndData.VeranstaltungID);
+                            }
+                            Log.call(Log.l.trace, "EventStatus.Controller.");
                         }
                         Log.ret(Log.l.trace);
                     }, function (error) {
