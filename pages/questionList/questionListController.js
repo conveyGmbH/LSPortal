@@ -23,7 +23,8 @@
             Log.call(Log.l.trace, "QuestionList.Controller.");
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
-                questionId: AppData.getRecordId("FragenAntworten")
+                questionId: AppData.getRecordId("FragenAntworten"),
+                questiongroupflag: true
             }, commandList]);
             this.nextUrl = null;
             this.loading = false;
@@ -1165,8 +1166,11 @@
                         //@nedra:25.09.2015: load the list of InitFragengruppe for Combobox
                         return QuestionList.initFragengruppeView.select(function (json) {
                             Log.print(Log.l.trace, "initFragengruppeView: success!");
-                            if (json && json.d && json.d.results) {
+                            if (json && json.d && json.d.results && json.d.results.length > 1) {
                                 that.initFragengruppe = new WinJS.Binding.List(json.d.results);
+                                //that.binding.questiongroupflag = 1;
+                            } else {
+                                //that.binding.questiongroupflag = null;
                             }
                         }, function (errorResponse) {
                             // called asynchronously if an error occurs
@@ -1175,6 +1179,11 @@
                         });
                     } else {
                         that.initFragengruppe = new WinJS.Binding.List(QuestionList.initFragengruppeView.getResults());
+                        if (QuestionList.initFragengruppeView.getResults().length > 1) {
+                            //that.binding.questiongroupflag = 1;
+                        } else {
+                            //that.binding.questiongroupflag = null;
+                        }
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
@@ -1226,6 +1235,9 @@
                         
                     }, recordId);
                 }).then(function () {
+                    that.binding.questiongroupflag = true;
+                    return WinJS.Promise.as();
+                }).then(function () {
                     AppBar.notifyModified = true;
                     AppBar.triggerDisableHandlers();
                     return WinJS.Promise.as();
@@ -1245,7 +1257,6 @@
                 that.checkingQuestionnaireBarcodePdf();
                 Log.print(Log.l.trace, "Binding wireup page complete");
             }).then(function () {
-               
                 Log.print(Log.l.trace, "Record selected");
             });
             Log.ret(Log.l.trace);
