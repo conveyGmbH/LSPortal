@@ -143,6 +143,7 @@
                 }
                 item.showText = (item.Freitext === "1") ? true : false;
                 item.showDate = (item.DateCombobox === "1") ? true : false;
+                item.questiongroupflag = that.binding.questiongroupflag;
                 item.labelOn = that.labelOn;
                 item.labelOff = that.labelOff;
                 item.textarea = that.textarea;
@@ -1168,9 +1169,9 @@
                             Log.print(Log.l.trace, "initFragengruppeView: success!");
                             if (json && json.d && json.d.results && json.d.results.length > 1) {
                                 that.initFragengruppe = new WinJS.Binding.List(json.d.results);
-                                //that.binding.questiongroupflag = 1;
+                                that.binding.questiongroupflag = true;
                             } else {
-                                //that.binding.questiongroupflag = null;
+                                that.binding.questiongroupflag = false;
                             }
                         }, function (errorResponse) {
                             // called asynchronously if an error occurs
@@ -1180,9 +1181,9 @@
                     } else {
                         that.initFragengruppe = new WinJS.Binding.List(QuestionList.initFragengruppeView.getResults());
                         if (QuestionList.initFragengruppeView.getResults().length > 1) {
-                            //that.binding.questiongroupflag = 1;
+                            that.binding.questiongroupflag = true;
                         } else {
-                            //that.binding.questiongroupflag = null;
+                            that.binding.questiongroupflag = false;
                         }
                         return WinJS.Promise.as();
                     }
@@ -1234,9 +1235,6 @@
                     }, {
                         
                     }, recordId);
-                }).then(function () {
-                    that.binding.questiongroupflag = true;
-                    return WinJS.Promise.as();
                 }).then(function () {
                     AppBar.notifyModified = true;
                     AppBar.triggerDisableHandlers();
