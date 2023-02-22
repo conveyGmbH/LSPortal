@@ -130,5 +130,7 @@
     
 }
 */
-
+#info {
+    display: none !important;
+}
 
