@@ -748,13 +748,12 @@
                             });
                         break;
                     case 34:
-                        if (that.isSupreme === 2) {
                             AppData.setErrorMsg(that.binding);
                             that.showDashboardLoadingText(true);
                             return AppData.call("PRC_DBExcelRequest", {
                                 pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
                                 pLanguageSpecID: that.langSet(),
-                                pExportType: "DBSUPREME",
+                                pExportType: "Advanced",
                                 psyncRun: 1
                             }, function (json) {
                                 Log.print(Log.l.info, "call success!");
@@ -768,27 +767,6 @@
                                 Log.print(Log.l.error, "call error");
                                 that.showDashboardLoadingText(false);
                             });
-                        } else {
-                            AppData.setErrorMsg(that.binding);
-                            that.showDashboardLoadingText(true);
-                            return AppData.call("PRC_DBExcelRequest", {
-                                pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
-                                pLanguageSpecID: that.langSet(),
-                                pExportType: "DBPREMIUM",
-                                psyncRun: 1
-                            }, function (json) {
-                                Log.print(Log.l.info, "call success!");
-                                if (json && json.d.results[0]) {
-                                    that.exportDbExcel(json.d.results[0]);
-                                } else {
-                                    Log.print(Log.l.error, "call error DOC3ExportPDFID is null");
-                                    that.showDashboardLoadingText(false);
-                                }
-                            }, function (error) {
-                                Log.print(Log.l.error, "call error");
-                                that.showDashboardLoadingText(false);
-                            });
-                        }
                         break;
                     case 35:
                         AppData.setErrorMsg(that.binding);
