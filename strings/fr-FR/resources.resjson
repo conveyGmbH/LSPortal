@@ -606,7 +606,7 @@
     "label.ticketLimits" : "Limites des badges d'exposants",
     "label.dashboardFN" : "Dashboard Premium",
     "label.dashboardFNPremium" : "Dashboard Premium",
-    "label.dashboardFNSupreme" : "Dashboard Supreme",
+    "label.dashboardFNSupreme" : "Dashboard Professional",
     "label.eventStatus" : "Statut de la session",
 
     "flyout.ok"             : "OK",
