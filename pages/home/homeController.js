@@ -217,9 +217,9 @@
                 } else if (parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 1) {
                     that.changeMenuLabel("startPremium", getResourceText("label.startPremium")); //getResourceText()
                 } else if (parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 3) {
-                    that.changeMenuLabel("startPremium", getResourceText("label.dashboardFNPremium")); //getResourceText()
+                    that.changeMenuLabel("dashboardFN", getResourceText("label.dashboardFNPremium")); //getResourceText()
                 } else if (parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 4) {
-                    that.changeMenuLabel("startPremium", getResourceText("label.dashboardFNSupreme")); //getResourceText()
+                    that.changeMenuLabel("dashboardFN", getResourceText("label.dashboardFNSupreme")); //getResourceText()
                 } else {
                     Log.print(Log.l.trace, "Unknown value of IsSupreme Flag");
                 }
@@ -278,7 +278,7 @@
                 return (colors && colors._loadCssPromise) || WinJS.Promise.as();
             }).then(function () {
                 AppBar.loadIcons();
-                NavigationBar.groups = Application.navigationBarGroups;              
+                //NavigationBar.groups = Application.navigationBarGroups;              
             });
             Log.ret(Log.l.trace);
         })
