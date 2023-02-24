@@ -648,7 +648,7 @@
     "event.comment" : "Ihre Veranstaltung vorbereiten.",
 	"event.activeApplications" : "Aktive Anwendungen",
     "event.visitorFlowPremium" : "Visitor Flow Premium",
-	"event.dashboardMesago"   : "Dashboard Mesago",
+	"event.dashboardMesago"   : "Dashboard",
     "event.dashboardPremium"    : "Premium Typ",
 	"event.visitorFlowInterval" : "VisitorFlow Interval",
 
