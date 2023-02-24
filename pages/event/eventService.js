@@ -91,7 +91,21 @@
                 ComboText: "",
                 ShowText: ""
             }
-        }
+        },
+        _iNOptionTypeValueView: {
+            get: function () {
+                return AppData.getFormatView("INOptionTypeValue", 20666);
+            }
+        },
+        iNOptionTypeValueView: {
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, "iNOptionTypeValueView.");
+                var ret = Event._iNOptionTypeValueView.select(complete, error, restriction);
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+        },
     });
 })();
 
