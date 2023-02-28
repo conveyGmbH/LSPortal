@@ -24,7 +24,8 @@
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
                 questionId: AppData.getRecordId("FragenAntworten"),
-                questiongroupflag: true
+                questiongroupflag: true,
+                dataPublish: getEmptyDefaultValue(QuestionList.questionPublishView.defaultValue)
             }, commandList]);
             this.nextUrl = null;
             this.loading = false;
@@ -143,7 +144,6 @@
                 }
                 item.showText = (item.Freitext === "1") ? true : false;
                 item.showDate = (item.DateCombobox === "1") ? true : false;
-                item.questiongroupflag = that.binding.questiongroupflag;
                 item.labelOn = that.labelOn;
                 item.labelOff = that.labelOff;
                 item.textarea = that.textarea;
@@ -519,6 +519,47 @@
                 return ret;
             }
             this.checkingQuestionnaireBarcodePdf = checkingQuestionnaireBarcodePdf;
+
+            var publish = function (complete, error) {
+                Log.call(Log.l.trace, "QuestionList.Controller.");
+                AppData.setErrorMsg(that.binding);
+                var ret;
+                var dataPublish = that.binding.dataPublish;
+                if (dataPublish && !AppBar.busy && that.binding.generalData.publishFlag) {
+                    dataPublish.Aktionflag = 1;
+                    var recordId = dataPublish.FragenVIEWID;
+                    if (recordId) {
+                        AppBar.busy = true;
+                        ret = QuestionList.questionPublishView.update(function (response) {
+                            AppBar.busy = false;
+                            // called asynchronously if ok
+                            Log.print(Log.l.info, "questionView update: success!");
+                            AppBar.modified = false;
+                            complete(response);
+                        }, function (errorResponse) {
+                            AppBar.busy = false;
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                            error(errorResponse);
+                        }, recordId, dataPublish);
+                    } else {
+                        Log.print(Log.l.info, "not supported");
+                        ret = WinJS.Promise.as();
+                    }
+                } else if (AppBar.busy) {
+                    ret = WinJS.Promise.timeout(100).then(function () {
+                        return that.saveData(complete, error);
+                    });
+                } else {
+                    ret = new WinJS.Promise.as().then(function () {
+                        complete(dataPublish);
+                    });
+                }
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+            this.publish = publish;
 
             // define handlers
             this.eventHandlers = {
@@ -1169,9 +1210,9 @@
                             Log.print(Log.l.trace, "initFragengruppeView: success!");
                             if (json && json.d && json.d.results && json.d.results.length > 1) {
                                 that.initFragengruppe = new WinJS.Binding.List(json.d.results);
-                                that.binding.questiongroupflag = true;
+                                //that.binding.questiongroupflag = 1;
                             } else {
-                                that.binding.questiongroupflag = false;
+                                //that.binding.questiongroupflag = null;
                             }
                         }, function (errorResponse) {
                             // called asynchronously if an error occurs
@@ -1181,9 +1222,9 @@
                     } else {
                         that.initFragengruppe = new WinJS.Binding.List(QuestionList.initFragengruppeView.getResults());
                         if (QuestionList.initFragengruppeView.getResults().length > 1) {
-                            that.binding.questiongroupflag = true;
+                            //that.binding.questiongroupflag = 1;
                         } else {
-                            that.binding.questiongroupflag = false;
+                            //that.binding.questiongroupflag = null;
                         }
                         return WinJS.Promise.as();
                     }
@@ -1235,6 +1276,27 @@
                     }, {
                         
                     }, recordId);
+                }).then(function () {
+                    return QuestionList.questionPublishView.select(function (json) {
+                        // this callback will be called asynchronously
+                        // when the response is available
+                        Log.print(Log.l.trace, "QuestionList.questionPublishView: success!");
+                        // select returns object already parsed from json file in response
+                        if (json && json.d && json.d.results) {
+                            var result = json.d.results[0];
+                            that.binding.dataPublish = result;
+                            Log.print(Log.l.trace, "QuestionList.questionPublishView: that.binding.dataPublish set!");
+                        }
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    }, {
+
+                        });
+                }).then(function () {
+                    that.binding.questiongroupflag = true;
+                    return WinJS.Promise.as();
                 }).then(function () {
                     AppBar.notifyModified = true;
                     AppBar.triggerDisableHandlers();

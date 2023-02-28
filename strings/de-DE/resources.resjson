@@ -742,6 +742,7 @@
     "publish.title"         : "Fragebogen publizieren",
     "publish.comment"       : "Sind Sie sicher, dass Sie den Fragebogen publizieren möchten?",
     "publish.published"     : "Fragebogen ist publiziert",
+    "publish.publishText"     : "Möchten Sie den aktuellen Fragebogen für alle APPs freigegeben?",
 
     "skills.title"          : "Fähigkeiten",
     "skills.count"          : "Anzahl",
@@ -751,7 +752,7 @@
     "skillentry.title"      : "Fähigkeit eintragen",
     "skillentry.count"      : "Anzahl",
 
-    "appheader.notpublished": "Nicht publiziert",
+    "appheader.notpublished": "Fragebogen nicht für APP/s freigegeben",
     "appheader.portal"      : "Portal",
 
     "mailing.title"         : "Mailing",

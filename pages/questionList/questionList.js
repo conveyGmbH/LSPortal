@@ -70,24 +70,49 @@
         },
         canUnload: function (complete, error) {
             Log.call(Log.l.trace, pageName + ".");
-            var ret;
+            var ret = null;
+            var confirmTitle = getResourceText("publish.publishText");
             if (this.controller) {
+                var saveResponse = null;
+                var that = this;
                 ret = this.controller.saveData(function (response) {
                     // called asynchronously if ok
-                    complete(response);
+                    saveResponse = response;
                 }, function (errorResponse) {
                     error(errorResponse);
-                });
-            } else {
-                ret = WinJS.Promise.as().then(function () {
-                    var err = { status: 500, statusText: "fatal: page already deleted!" };
-                    error(err);
+                }).then(function () {
+                    if (saveResponse && AppData.generalData.publishFlag === 1) {
+                        return confirm(confirmTitle, function (result) {
+                            // called asynchronously if user-choice
+                            if (!result) {
+                                complete(saveResponse);
+                            }
+                            return result;
+                        });
+                    } else {
+                        if (saveResponse) {
+                            complete(saveResponse);
+                        }
+                        return WinJS.Promise.as();
+                    }
+                }).then(function (result) {
+                    if (result) {
+                        if (that.controller) {
+                            return that.controller.publish(function(response) {
+                             complete(response);
+                        },
+                        function(errorResponse) {
+                             error(errorResponse);
+                         });
+                        }
+                    } else {
+                        return WinJS.Promise.as();
+                    }
                 });
             }
-            Log.ret(Log.l.trace);
-            return ret;
+            return ret || WinJS.Promise.as();
         },
-        unload: function () {
+        unload: function (complete, error) {
             Log.call(Log.l.u1, pageName + ".");
             // TODO: Respond to navigations away from this page.
             Log.ret(Log.l.trace);

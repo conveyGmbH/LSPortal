@@ -742,7 +742,8 @@
 
     "publish.title"         : "Publish questionnaire",
     "publish.comment"       : "Are you sure you want to publish the questionnaire?",
-    "publish.published"     : "Questionnaire is published",
+    "publish.published"     : "Questionnaire is published",	
+    "publish.publishText"     : "Do you want the current questionnaire released for all APPs?",
 
     "skills.title"          : "Skills",
     "skills.count"          : "Count",
@@ -752,7 +753,7 @@
     "skillentry.title"      : "Enter skill",
     "skillentry.count"      : "Count",
 
-    "appheader.notpublished": "Not published",
+    "appheader.notpublished": "Questionnaire not released for APP/s",
     "appheader.portal"      : "Portal",
 
     "mailing.title"         : "Mailing",

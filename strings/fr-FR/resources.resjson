@@ -742,6 +742,7 @@
     "publish.title"         : "Publier le questionnaire",
     "publish.comment"       : "Êtes-vous sûre de vouloir publier le questionnaire?",
     "publish.published"     : "Le questionnaire est publié",
+    "publish.publishText"     : "Souhaitez-vous partager le questionnaire actuel pour tous les APPs ?",
 
     "skills.title"          : "Capacités",
     "skills.count"          : "Nombre",
@@ -751,7 +752,7 @@
     "skillentry.title"      : "entrer une capacité",
     "skillentry.count"      : "Nombre",
 
-    "appheader.notpublished": "Pas publié",
+    "appheader.notpublished": "Questionnaire non validé pour APP/s",
     "appheader.portal"      : "Portal",
 
     "mailing.title"         : "Mailing",

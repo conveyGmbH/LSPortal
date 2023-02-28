@@ -742,6 +742,7 @@
     "publish.title"         : "Pubblicare il questionario",
     "publish.comment"       : "Siete sicuro di voler pubblicare il questionario?",
     "publish.published"     : "Il questionnaire è pubblicato",
+    "publish.publishText"     : "Volete che il questionario attuale sia rilasciato per tutte le APP?",
 
     "skills.title"          : "Ruolo",
     "skills.count"          : "Numero",
@@ -751,7 +752,7 @@
     "skillentry.title"      : "Immetti ruolo",
     "skillentry.count"      : "Numero",
 
-    "appheader.notpublished": "Non pubblicato",
+    "appheader.notpublished": "Questionario non rilasciato per APP/i",
     "appheader.portal"      : "Portal",
 
     "mailing.title"         : "Mailing",
