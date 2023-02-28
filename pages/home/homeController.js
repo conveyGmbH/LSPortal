@@ -278,7 +278,8 @@
                 return (colors && colors._loadCssPromise) || WinJS.Promise.as();
             }).then(function () {
                 AppBar.loadIcons();
-                //NavigationBar.groups = Application.navigationBarGroups;              
+                // workaround fix loading menu icon color
+                NavigationBar.groups = Application.navigationBarGroups;              
             });
             Log.ret(Log.l.trace);
         })
