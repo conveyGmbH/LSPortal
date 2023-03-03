@@ -316,7 +316,18 @@
                                         },
                                         stacked: false,
                                         ticks: {
-                                            color: Colors.textColor
+                                            color: Colors.textColor,
+                                            callback: function (value, index, values) {
+                                                var label = countryIndustriesLabels[value];
+                                                if (label == null) {
+                                                    return '';
+                                                }
+                                                if (label.length > 15) {
+                                                    label = label.substring(0, 15);
+                                                    label += '..';
+                                                }
+                                                return label;
+                                            }
                                         }
                                     },
                                     x: {
@@ -415,7 +426,7 @@
                 }
                 this.exportChartToPdf = exportChartToPdf;
 
-                var surpremeColor = "#cc5b87";
+                var surpremeColor = "#2B3F52";
 
                 var countryIndustriesSupremeData = {
                     labels: countryIndustriesLabels,
@@ -466,11 +477,16 @@
                                         stacked: false,
                                         ticks: {
                                             color: Colors.textColor,
-                                            callback: 
-                                                function (value, index, ticks) {/*.label*/
-                                                    var title = countryIndustriesLabels[index];
-                                                    var titleRec = title.substr(0, 20);
-                                                    return titleRec;
+                                            callback: function (value, index, values) {
+                                                var label = countryIndustriesLabels[value];
+                                                if (label == null) {
+                                                    return '';
+                                                }
+                                                if (label.length > 15) {
+                                                    label = label.substring(0, 15);
+                                                    label += '..';
+                                                }
+                                                return label;
                                             }
                                         }
                                     },
