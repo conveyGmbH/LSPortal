@@ -1463,6 +1463,7 @@
     "diaCountrysIndustries.tooltipPremium" : "for example: From which top 10 industries (departments/functions etc.) do your scanned visitors come (without selecting country) / from country X?",
     "diaCountrysIndustries.tooltipSupreme1" : "in general: blue bar = scanned visitors at your booth, red bar = all visitors who were on the exhibition grounds",
     "diaCountrysIndustries.tooltipSupreme2" : "for example: From which top 10 industries (departments/functions etc.) do your scanned visitors come (without selecting country) / from country X?",
+    "diaCountrysIndustries.tooltipProfessional" : "This overview shows the time of visit of your scanned stand visitors. You can display the distribution over the duration of the fair or the distribution by time on a selected day of the fair. The respective number of scanned visitors per trade fair day is also available to you.",
     "diaCountrysIndustries.comboboxtext" : "Interests of your scanned visitors",
     "diaCountrysIndustries.anzkontaktewdatatext" : " Contacts have responded to this criterion from ",
 
@@ -1492,6 +1493,7 @@
     "diaIndustries.tooltipPremium" : "for example: From which top 5 industries (departments/functions etc.) do your scanned visitors come in relation to their age group?",
     "diaIndustries.tooltipSupreme1" : "in general: blue circle = scanned visitors at your booth, red circle = all visitors who were on exhibition grounds",
     "diaIndustries.tooltipSupreme2" : "for example: From which top 5 industries (departments/functions etc.) do your scanned visitors come in relation to their age group?",
+    "diaIndustries.tooltipProfessional" : "Here you can see the distribution of your scanned visitors based on the characteristics they recorded during their registration. These characteristics are trade fair-specific, often e.g. visitors' main interests as characteristics.The first row of pie charts shows all scanned visitors for the respective characteristic on your stand. The second row of pie charts shows the comparison with the figures for the entire fairground for the Supreme package",
     "diaIndustries.title"           : "Visitors by year group",
 
     "startResourceAdministration.title" : "Page d'accueil",

@@ -73,7 +73,7 @@
                     if (that.isSupreme === 3) {
                         countryIndustriestooltip.innerHTML = getResourceText("diaCountrysIndustries.tooltipPremium");
                     } else {
-                        countryIndustriestooltip.innerHTML = getResourceText("diaCountrysIndustries.tooltipSupreme1") + " <br> <p></p>" + getResourceText("diaCountrysIndustries.tooltipSupreme2");
+                        countryIndustriestooltip.innerHTML = getResourceText("diaCountrysIndustries.tooltipProfessional");
                     }
                 }
                 this.setTooltipText = setTooltipText;
@@ -315,7 +315,18 @@
                                         },
                                         stacked: false,
                                         ticks: {
-                                            color: Colors.textColor
+                                            color: Colors.textColor,
+                                            callback: function (value, index, values) {
+                                                var label = countryIndustriesLabels[value];
+                                                if (label == null) {
+                                                    return '';
+                                                }
+                                                if (label.length > 15) {
+                                                    label = label.substring(0, 15);
+                                                    label += '..';
+                                                }
+                                                return label;
+                                            }
                                         }
                                     },
                                     x: {
@@ -414,7 +425,7 @@
                 }
                 this.exportChartToPdf = exportChartToPdf;
 
-                var surpremeColor = "#cc5b87";
+                var surpremeColor = "#2B3F52";
 
                 var countryIndustriesSupremeData = {
                     labels: countryIndustriesLabels,
@@ -464,7 +475,18 @@
                                         },
                                         stacked: false,
                                         ticks: {
-                                            color: Colors.textColor
+                                            color: Colors.textColor,
+                                            callback: function (value, index, values) {
+                                                var label = countryIndustriesLabels[value];
+                                                if (label == null) {
+                                                    return '';
+                                                }
+                                                if (label.length > 15) {
+                                                    label = label.substring(0, 15);
+                                                    label += '..';
+                                                }
+                                                return label;
+                                            }
                                         }
                                     },
                                     x: {

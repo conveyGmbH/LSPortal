@@ -1465,6 +1465,7 @@
     "diaCountrysIndustries.tooltipPremium" : "zum Beispiel: Aus welchen Top 10 Branchen (Abteilungen/Funktionen etc.) kommen Ihre gescannten Besucher (ohne Auswahl von Land) / aus Land X?",
     "diaCountrysIndustries.tooltipSupreme1" : "generell gilt: blauer Balken = gescannte Besucher auf Ihrem Messestand, roter Balken = alle auf dem Messegelände da gewesenen Besucher",
     "diaCountrysIndustries.tooltipSupreme2" : "zum Beispiel: Aus welchen Top 10 Branchen (Abteilungen/Funktionen etc.) kommen Ihre gescannten Besucher (ohne Auswahl von Land) / aus Land X?",
+    "diaCountrysIndustries.tooltipProfessional" : "Diese Übersicht zeigt Ihnen Ihre gescannten Besucher anhand der Länderzuordnung. Im Professional-Paket stehen diese im Vergleich zu den Zahlen des gesamten Messegeländes.",
     "diaCountrysIndustries.comboboxtext" : "Interessensgebiet Ihrer gescannten Besucher",
     "diaCountrysIndustries.anzkontaktewdatatext" : " Kontakte haben zu diesem Kriterium geantwortet von ",
 
@@ -1494,6 +1495,7 @@
     "diaIndustries.tooltipPremium"  : "zum Beispiel: Aus welchen Top 5 Branchen (Abteilungen/Funktionen etc.) kommen Ihre gescannten Besucher in Bezug auf ihre Jahrgangsgruppe?",
     "diaIndustries.tooltipSupreme1" : "generell gilt: blauer Kreis = gescannte Besucher auf Ihrem Messestand, roter Kreis = alle auf dem Messegelände da gewesenen Besucher",
     "diaIndustries.tooltipSupreme2" : "zum Beispiel: Aus welchen Top 5 Branchen (Abteilungen/Funktionen etc.) kommen Ihre gescannten Besucher in Bezug auf ihre Jahrgangsgruppe?",
+    "diaIndustries.tooltipProfessional" : "Hier sehen Sie die Verteilung Ihrer gescannten Besucher anhand der Merkmale, die diese bei ihrer Registrierung erfasst haben. Diese Merkmale sind messe-spezifisch, häufig sind z.B. Interessenschwerpunkte der Besucher als Merkmale.Die erste Reihe Kreisdiagramme zeigt alle gescannten Besucher für das jeweilige Merkmal auf Ihrem Stand. Die zweite Reihe Kreisdiagramme zeigt beim Supreme-Paket den Vergleich zu den Zahlen des gesamten Messegeländes.",
     "diaIndustries.title"           : "Besucher nach Jahresgruppe",
 
 	"startResourceAdministration.title" : "Überblickseite",

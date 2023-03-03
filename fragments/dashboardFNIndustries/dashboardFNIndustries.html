@@ -9,7 +9,7 @@
 </head>
 <body class="win-type-body">
     <div class="dashboardFNIndustries fragment">
-        <div id="diaCountrysIndustriesController" class="data-container">
+        <div id="dashboardFNIndustriesController" class="data-container">
             <section aria-label="Main content" role="main" class="animationElement">
                 <div class="contentarea win-type-body">
                     <div class="countrysindustries-chart-top-container">
@@ -20,7 +20,7 @@
                             <option data-win-bind="value: CriterionID; textContent: CriterionText"></option>
                         </select>
                         <div style="display: none;">
-                            <div id="mydiaCountrysIndustriesElement"></div>
+                            <div id="mydashboardFNIndustriesElement"></div>
                         </div>
                         <select id="countrydropdown"
                                 class="win-dropdown"
@@ -28,9 +28,9 @@
                                 data-win-bind="value: criteriaCountry Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone">
                             <option data-win-bind="value: LandID; textContent: Land"></option>
                         </select>
-                        <div class="countrysindustries-chart-top-container-tooltip" data-html2canvas-ignore="true">
+                        <div class="dashboardFNIndustries-chart-top-container-tooltip" data-html2canvas-ignore="true">
                             <div class="list-symbol-ID">
-                                <button data-win-bind="name: information" class="action-image" data-win-control="WinJS.UI.Tooltip" data-win-options="{infotip: true, contentElement: mydiaCountrysIndustriesElement}"></button>
+                                <button data-win-bind="name: information" class="action-image" data-win-control="WinJS.UI.Tooltip" data-win-options="{infotip: true, contentElement: mydashboardFNIndustriesElement}"></button>
                             </div>
                             <div style="display: none;">
                                 <div id="mydiaCountrysElement2"></div>
