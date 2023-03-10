@@ -329,7 +329,11 @@
                                 return function () {
                                     var id = myrow.value;
                                     AppData.setRecordId("Kontakt", id);
-                                    Application.navigateById("contactResultsEvents");
+                                    if (that.getEventId()) {
+                                        Application.navigateById("contactResultsEvents");
+                                    } else {
+                                        Application.navigateById("contactResultsEdit");
+                                    }
                                 };
                             }(row);
                         }
@@ -535,6 +539,10 @@
             var searchKontaktListe = function (searchString) {
                 Log.call(Log.l.trace, "ContactResultsList.Controller.");
                 AppData.setErrorMsg(that.binding);
+                var sid = that.getEventId();
+                if (!sid) {
+                    sid = AppData.getRecordId("Veranstaltung");
+                }
                 if (tableBody && tableBody.winControl) {
                     if (tableBody.winControl.data) {
                         tableBody.winControl.data.length = 0;
@@ -544,7 +552,7 @@
                 }
                 AppData.call("PRC_SearchKontaktListe", {
                     pAttributeIdx: 0,
-                    pVeranstaltungId: that.getEventId(), // Für Alle suchen 0 eintragen!
+                    pVeranstaltungId: sid, // Für Alle suchen 0 eintragen!
                     pSuchText: searchString
                 }, function (json) {
                     Log.print(Log.l.info, "call success! ");
@@ -553,6 +561,7 @@
                     results.forEach(function (item, index) {
                         that.resultConverter(item, index);
                     });
+                    that.addBodyRowHandlers();
                 }, function (errorResponse) {
                     Log.print(Log.l.error, "call error");
                     AppBar.busy = false;
@@ -567,6 +576,7 @@
                 AppData.setErrorMsg(that.binding);
                 that.binding.noctcount = 0;
                 that.nextUrl = null;
+                var varanstId = that.getEventId();
                 if (tableBody && tableBody.winControl) {
                     if (tableBody.winControl.data) {
                         tableBody.winControl.data.length = 0;
@@ -578,6 +588,23 @@
                     Log.print(Log.l.trace, "calling select MailingTypes...");
                     if (restr) {
                         return ContactResultsList.KontaktReport.select(function (json) {
+                            AppData.setErrorMsg(that.binding);
+                            Log.print(Log.l.trace, "MailingTypes: success!");
+                            if (json && json.d && json.d.results.length > 0) {
+                                that.nextUrl = ContactResultsList.KontaktReport.getNextUrl(json);
+                                // now always edit!
+                                var results = json.d.results;
+                                AppData.setRecordId("KontaktEventID", results[0].VeranstaltungID);
+                                results.forEach(function (item, index) {
+                                    that.resultConverter(item, index);
+                                });
+                            }
+                        },
+                            function (errorResponse) {
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                            }, restr);
+                    } else if (varanstId) {
+                        return ContactResultsList.KontaktReport.select(function(json) {
                                 AppData.setErrorMsg(that.binding);
                                 Log.print(Log.l.trace, "MailingTypes: success!");
                                 if (json && json.d && json.d.results.length > 0) {
@@ -585,14 +612,17 @@
                                     // now always edit!
                                     var results = json.d.results;
                                     AppData.setRecordId("KontaktEventID", results[0].VeranstaltungID);
-                                    results.forEach(function (item, index) {
+                                    results.forEach(function(item, index) {
                                         that.resultConverter(item, index);
                                     });
                                 }
                             },
-                            function (errorResponse) {
+                            function(errorResponse) {
                                 AppData.setErrorMsg(that.binding, errorResponse);
-                            }, restr);
+                            },
+                            {
+                                VeranstaltungID: varanstId
+                            });
                     } else {
                         return ContactResultsList.KontaktReport.select(function (json) {
                                 AppData.setErrorMsg(that.binding);
@@ -609,8 +639,9 @@
                             },
                             function (errorResponse) {
                                 AppData.setErrorMsg(that.binding, errorResponse);
-                            }, {
-                                VeranstaltungID: that.getEventId()
+                            },
+                            {
+                                VeranstaltungID: AppData.getRecordId("Veranstaltung")
                             });
                     }
                 }).then(function () {

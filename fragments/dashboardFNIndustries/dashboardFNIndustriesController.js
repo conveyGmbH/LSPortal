@@ -57,7 +57,7 @@
                 var criteriadrop = fragmentElement.querySelector("#criteriadropdown");
                 var countrydrop = fragmentElement.querySelector("#countrydropdown");
                 var select = fragmentElement.querySelectorAll("select");
-                var countryIndustriestooltip = fragmentElement.querySelector("#mydiaCountrysIndustriesElement");
+                var countryIndustriestooltip = fragmentElement.querySelector("#mydashboardFNIndustriesElement");
                 var icons = fragmentElement.querySelector(".countrysindustries-chart-top-container");
 
                 this.countryfills = [];
@@ -70,10 +70,11 @@
                 this.loadIcon = loadIcon;
 
                 var setTooltipText = function () {
-                    if (that.isSupreme === 1) {
+                    if (that.isSupreme === 3) {
                         countryIndustriestooltip.innerHTML = getResourceText("diaCountrysIndustries.tooltipPremium");
-                    } else {
-                        countryIndustriestooltip.innerHTML = getResourceText("diaCountrysIndustries.tooltipSupreme1") + " <br> <p></p>" + getResourceText("diaCountrysIndustries.tooltipSupreme2");
+                    }
+                    if (that.isSupreme === 4) {
+                        countryIndustriestooltip.innerHTML = getResourceText("diaCountrysIndustries.tooltipProfessional");
                     }
                 }
                 this.setTooltipText = setTooltipText;
@@ -315,7 +316,18 @@
                                         },
                                         stacked: false,
                                         ticks: {
-                                            color: Colors.textColor
+                                            color: Colors.textColor,
+                                            callback: function (value, index, values) {
+                                                var label = countryIndustriesLabels[value];
+                                                if (label == null) {
+                                                    return '';
+                                                }
+                                                if (label.length > 15) {
+                                                    label = label.substring(0, 15);
+                                                    label += '..';
+                                                }
+                                                return label;
+                                            }
                                         }
                                     },
                                     x: {
@@ -414,7 +426,7 @@
                 }
                 this.exportChartToPdf = exportChartToPdf;
 
-                var surpremeColor = "#cc5b87";
+                var surpremeColor = "#2B3F52";
 
                 var countryIndustriesSupremeData = {
                     labels: countryIndustriesLabels,
@@ -465,11 +477,16 @@
                                         stacked: false,
                                         ticks: {
                                             color: Colors.textColor,
-                                            callback: 
-                                                function (value, index, ticks) {/*.label*/
-                                                    var title = countryIndustriesLabels[index];
-                                                    var titleRec = title.substr(0, 20);
-                                                    return titleRec;
+                                            callback: function (value, index, values) {
+                                                var label = countryIndustriesLabels[value];
+                                                if (label == null) {
+                                                    return '';
+                                                }
+                                                if (label.length > 15) {
+                                                    label = label.substring(0, 15);
+                                                    label += '..';
+                                                }
+                                                return label;
                                             }
                                         }
                                     },

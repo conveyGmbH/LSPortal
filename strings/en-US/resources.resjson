@@ -353,7 +353,7 @@
     "login.login"           : "User",
     "login.password"        : "Password",
 	"login.privacyPolicyAggrement"   : "I have read the privacy statement and consent to my data being electronically processed and saved. ",
-    "login.privacyPolicyLink": "www.convey.de/privacy-policy/",
+    "login.privacyPolicyLink": "www.convey.de/en/privacy-policy-convey/",
     "login.privacyPolicy"   : "Privacy Policy", 
     "login.progress"        : "Progress",
     "login.unknown"         : "Specified user not found!",
@@ -606,7 +606,8 @@
     "label.ticketLimits" : "Limits exhibitor passes",
 	"label.dashboardFN" : "Dashboard Premium",
     "label.dashboardFNPremium" : "Dashboard Premium",
-    "label.dashboardFNSupreme" : "Dashboard Supreme",
+    "label.dashboardFNSupreme" : "Dashboard Professional",
+    "label.eventStatus" : "Session Status",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Cancel",
@@ -647,7 +648,7 @@
     "event.comment" : "Prepare your event",
     "event.activeApplications" : "Active Applications",
     "event.visitorFlowPremium" : "Visitor Flow Premium",
-    "event.dashboardMesago"   : "Dashboard Mesago",
+    "event.dashboardMesago"   : "Dashboard",
 	"event.dashboardPremium"    : "Premium Typ",
     "event.visitorFlowInterval" : "VisitorFlow Interval",
 
@@ -741,7 +742,8 @@
 
     "publish.title"         : "Publish questionnaire",
     "publish.comment"       : "Are you sure you want to publish the questionnaire?",
-    "publish.published"     : "Questionnaire is published",
+    "publish.published"     : "Questionnaire is published",	
+    "publish.publishText"     : "Do you want the current questionnaire released for all APPs?",
 
     "skills.title"          : "Skills",
     "skills.count"          : "Count",
@@ -751,7 +753,7 @@
     "skillentry.title"      : "Enter skill",
     "skillentry.count"      : "Count",
 
-    "appheader.notpublished": "Not published",
+    "appheader.notpublished": "Questionnaire not released for APP/s",
     "appheader.portal"      : "Portal",
 
     "mailing.title"         : "Mailing",
@@ -1334,6 +1336,7 @@
 	"mailingTemplateEventEdit.subject"			: "Subject",
     "mailingTemplateEventEdit.mailtext"			: "Mailtext",
     "mailingTemplateEventEdit.layoutactive"			: "Turn off to set this E-Mail draft (in all languages) as outdated. If a draft is outdated it will not be shown as option in the Mailing application.",
+	"mailingTemplateEventEdit.addICSVariantActive" : "Attach calendar invitation",
 
     "eventSeries.title" : "Series",
     "eventSeries.language": "Language",
@@ -1461,6 +1464,7 @@
     "diaCountrysIndustries.tooltipPremium" : "for example: From which top 10 industries (departments/functions etc.) do your scanned visitors come (without selecting country) / from country X?",
     "diaCountrysIndustries.tooltipSupreme1" : "in general: blue bar = scanned visitors at your booth, red bar = all visitors who were on the exhibition grounds",
     "diaCountrysIndustries.tooltipSupreme2" : "for example: From which top 10 industries (departments/functions etc.) do your scanned visitors come (without selecting country) / from country X?",
+    "diaCountrysIndustries.tooltipProfessional" : "This overview shows the time of visit of your scanned stand visitors. You can display the distribution over the duration of the fair or the distribution by time on a selected day of the fair. The respective number of scanned visitors per trade fair day is also available to you.",
     "diaCountrysIndustries.comboboxtext" : "Interests of your scanned visitors",
     "diaCountrysIndustries.anzkontaktewdatatext" : " Contacts have responded to this criterion from ",
 
@@ -1491,6 +1495,7 @@
     "diaIndustries.tooltipPremium" : "for example: From which top 5 industries (departments/functions etc.) do your scanned visitors come in relation to their age group",
     "diaIndustries.tooltipSupreme1" : "in general: blue circle = scanned visitors at your booth, red circle = all visitors who were on exhibition grounds",
     "diaIndustries.tooltipSupreme2" : "for example: From which top 5 industries (departments/functions etc.) do your scanned visitors come in relation to their age group?",
+    "diaIndustries.tooltipProfessional" : "Here you can see the distribution of your scanned visitors based on the characteristics they recorded during their registration. These characteristics are trade fair-specific, often e.g. visitors' main interests as characteristics.The first row of pie charts shows all scanned visitors for the respective characteristic on your stand. The second row of pie charts shows the comparison with the figures for the entire fairground for the Supreme package",
     "diaIndustries.title"           : "Visitors by year group",
 
     "startResourceAdministration.title" : "Overview page",
@@ -1523,5 +1528,18 @@
 	
     "dashboardFNTop10.title"			: "Top 10 countries",
 
-    "dashboardFNIndustries.allcountry"			: "All countrys"
+    "dashboardFNIndustries.allcountry"			: "All countries",
+
+    "eventStatus.title"			: "Session Status",
+    "eventStatus.confirmSessionEnd"			: "Do you really want to end the session?",
+
+    "eventSession.id"			: "Session",
+    "eventSession.length"			: "Duration",
+    "eventSession.status"			: "Status",
+    "eventSession.notshow"			: "Do not show",
+    "eventSession.btnEndSession"			: "End session",
+    "eventSession.sessionStatus"			: "Status: ",
+    "eventSession.event"			: "Event",
+    "eventSession.mod"			: "Moderator/s",
+    "eventSession.sessionlink"			: "Session Link"
 }

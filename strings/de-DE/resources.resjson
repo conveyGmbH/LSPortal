@@ -606,7 +606,8 @@
     "label.ticketLimits" : "Limits Ausstellerausweise",
     "label.dashboardFN" : "Dashboard Premium",
     "label.dashboardFNPremium" : "Dashboard Premium",
-    "label.dashboardFNSupreme" : "Dashboard Supreme",
+    "label.dashboardFNSupreme" : "Dashboard Professional",
+    "label.eventStatus" : "Session Status",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Abbrechen",
@@ -647,7 +648,7 @@
     "event.comment" : "Ihre Veranstaltung vorbereiten.",
 	"event.activeApplications" : "Aktive Anwendungen",
     "event.visitorFlowPremium" : "Visitor Flow Premium",
-	"event.dashboardMesago"   : "Dashboard Mesago",
+	"event.dashboardMesago"   : "Dashboard",
     "event.dashboardPremium"    : "Premium Typ",
 	"event.visitorFlowInterval" : "VisitorFlow Interval",
 
@@ -741,6 +742,7 @@
     "publish.title"         : "Fragebogen publizieren",
     "publish.comment"       : "Sind Sie sicher, dass Sie den Fragebogen publizieren möchten?",
     "publish.published"     : "Fragebogen ist publiziert",
+    "publish.publishText"     : "Möchten Sie den aktuellen Fragebogen für alle APPs freigegeben?",
 
     "skills.title"          : "Fähigkeiten",
     "skills.count"          : "Anzahl",
@@ -750,7 +752,7 @@
     "skillentry.title"      : "Fähigkeit eintragen",
     "skillentry.count"      : "Anzahl",
 
-    "appheader.notpublished": "Nicht publiziert",
+    "appheader.notpublished": "Fragebogen nicht für APP/s freigegeben",
     "appheader.portal"      : "Portal",
 
     "mailing.title"         : "Mailing",
@@ -1334,7 +1336,8 @@
 	"mailingTemplateEventEdit.subject"			: "Betreff",
     "mailingTemplateEventEdit.mailtext"			: "Mailtext",
     "mailingTemplateEventEdit.layoutactive"			: "Schalten Sie aus, um diesen E-Mail-Entwurf (in allen Sprachen) als veraltet zu kennzeichnen. Wenn ein Entwurf veraltet ist, wird er in der Anwendung Mailing nicht als Option angezeigt.",
-
+	"mailingTemplateEventEdit.addICSVariantActive" : "Kalender-Einladung anhängen",
+	 
     "eventGenSettings.title"			: "Einstellungen",
     "eventGenSettings.name"			: "Veranstaltungname",
     "eventGenSettings.typ"			: "Typ der Veranstaltung",
@@ -1462,6 +1465,7 @@
     "diaCountrysIndustries.tooltipPremium" : "zum Beispiel: Aus welchen Top 10 Branchen (Abteilungen/Funktionen etc.) kommen Ihre gescannten Besucher (ohne Auswahl von Land) / aus Land X?",
     "diaCountrysIndustries.tooltipSupreme1" : "generell gilt: blauer Balken = gescannte Besucher auf Ihrem Messestand, roter Balken = alle auf dem Messegelände da gewesenen Besucher",
     "diaCountrysIndustries.tooltipSupreme2" : "zum Beispiel: Aus welchen Top 10 Branchen (Abteilungen/Funktionen etc.) kommen Ihre gescannten Besucher (ohne Auswahl von Land) / aus Land X?",
+    "diaCountrysIndustries.tooltipProfessional" : "Diese Übersicht zeigt Ihnen Ihre gescannten Besucher anhand der Länderzuordnung. Im Professional-Paket stehen diese im Vergleich zu den Zahlen des gesamten Messegeländes.",
     "diaCountrysIndustries.comboboxtext" : "Interessensgebiet Ihrer gescannten Besucher",
     "diaCountrysIndustries.anzkontaktewdatatext" : " Kontakte haben zu diesem Kriterium geantwortet von ",
 
@@ -1491,6 +1495,7 @@
     "diaIndustries.tooltipPremium"  : "zum Beispiel: Aus welchen Top 5 Branchen (Abteilungen/Funktionen etc.) kommen Ihre gescannten Besucher in Bezug auf ihre Jahrgangsgruppe?",
     "diaIndustries.tooltipSupreme1" : "generell gilt: blauer Kreis = gescannte Besucher auf Ihrem Messestand, roter Kreis = alle auf dem Messegelände da gewesenen Besucher",
     "diaIndustries.tooltipSupreme2" : "zum Beispiel: Aus welchen Top 5 Branchen (Abteilungen/Funktionen etc.) kommen Ihre gescannten Besucher in Bezug auf ihre Jahrgangsgruppe?",
+    "diaIndustries.tooltipProfessional" : "Hier sehen Sie die Verteilung Ihrer gescannten Besucher anhand der Merkmale, die diese bei ihrer Registrierung erfasst haben. Diese Merkmale sind messe-spezifisch, häufig sind z.B. Interessenschwerpunkte der Besucher als Merkmale.Die erste Reihe Kreisdiagramme zeigt alle gescannten Besucher für das jeweilige Merkmal auf Ihrem Stand. Die zweite Reihe Kreisdiagramme zeigt beim Supreme-Paket den Vergleich zu den Zahlen des gesamten Messegeländes.",
     "diaIndustries.title"           : "Besucher nach Jahresgruppe",
 
 	"startResourceAdministration.title" : "Überblickseite",
@@ -1526,9 +1531,15 @@
     "dashboardFNIndustries.allcountry"			: "Alle Länder",
 
     "eventStatus.title"			: "Session Status",
+    "eventStatus.confirmSessionEnd"			: "Wollen Sie die Session wirklich beenden?",
 
-    "eventSession.id"			: "Session ID",
+    "eventSession.id"			: "Session",
     "eventSession.length"			: "Dauer",
     "eventSession.status"			: "Status",
-    "eventSession.notshow"			: "Nicht zeigen"
+    "eventSession.notshow"			: "Nicht zeigen",
+    "eventSession.btnEndSession"			: "Session beenden",
+    "eventSession.sessionStatus"			: "Status: ",
+    "eventSession.event"			: "Veranstaltung",
+    "eventSession.mod"			: "Moderator/en",
+    "eventSession.sessionlink"			: "Session Link"
 }		

@@ -495,6 +495,24 @@
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
+                    return Event.iNOptionTypeValueView.select(function (json) {
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            Log.print(Log.l.trace, "initLandView: success!");
+                            if (json && json.d && json.d.results) {
+                                // Now, we call WinJS.Binding.List to get the bindable list
+                                var results = json.d.results;
+                                if (dashboardMesagoCombo && dashboardMesagoCombo.winControl) {
+                                    dashboardMesagoCombo.winControl.data = new WinJS.Binding.List(results);
+                                    dashboardMesagoCombo.selectedIndex = parseInt(AppData._userData.IsSupreme) - 1;
+                                }
+                            }
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        }, { LanguageSpecID: AppData.getLanguageId()});
+                }).then(function () {
                     //load of format relation record data
                     that.remoteServerList = new WinJS.Binding.List([Event.remoteKonfigurationView.defaultValue]);
                     // that.employees = new WinJS.Binding.List([Search.employeeView.defaultValue]);
@@ -680,7 +698,7 @@
             }).then(function () {
                 that.creatingVisitorFlowCategory();
             }).then(function () {
-                that.creatingDashboardMesagoComboCategory();
+                //that.creatingDashboardMesagoComboCategory();
             }).then(function () {
                 that.creatingPremiumDashboardComboCategory();
             }).then(function () {

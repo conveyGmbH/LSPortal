@@ -142,6 +142,7 @@
         { id: "myEvents", group: 53, svg: "keys", disabled: true, popup: true },
         //{ id: "localevents", group: 12, svg: "keys", disabled: true, predecGroup: 53 },
         { id: "eventGenSettings", group: 44, svg: "calendar_1", disabled: true, predecGroup: 53 },
+        { id: "eventStatus", group: 73, svg: "calendar_1", disabled: true, predecGroup: 53 },
         //MyEventsLS
         { id: "MyEventsLSGrp", group: 62, svg: "keys", disabled: true, popup: true },
         { id: "localevents", group: 12, svg: "keys", disabled: true, predecGroup: 62 },
@@ -260,7 +261,8 @@
         { id: "startSurpreme", group: -58, disabled: false },
         { id: "startTileAdministration", group: 61, disabled: false },
         { id: "ticketLimits", group: -67, disabled: false },
-        { id: "dashboardFN", group: -70, disabled: false }
+        { id: "dashboardFN", group: -70, disabled: false },
+        { id: "eventStatus", group: 73, disabled: false }
     ];
 
 
@@ -300,7 +302,8 @@
         { id: "mailing", master: "mailingListLS" },
         { id: "mailingList", master: "mailingVSList" },
         { id: "ticketLimits", master: "ticketLimitsList" },
-        { id: "contactResultsList", master: "eventsList" }
+        { id: "contactResultsList", master: "eventsList" },
+        { id: "eventStatus", master: "eventStatusList" }
     ];
 
     // init page for app startup

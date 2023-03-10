@@ -110,6 +110,28 @@
                 Log.ret(Log.l.trace);
                 return ret;
             }
+        },
+        _questioPublishView: {
+            get: function () {
+                return AppData.getFormatView("Fragen", 0);
+            }
+        },
+        questionPublishView: {
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, "questionView.");
+                var ret = QuestionList._questioPublishView.select(complete, error, restriction);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            update: function (complete, error, recordId, viewResponse) {
+                Log.call(Log.l.trace, "questionView.");
+                var ret = QuestionList._questioPublishView.update(complete, error, recordId, viewResponse);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            defaultValue: {
+                Aktionflag: ""
+            }
         }
     });
 })();

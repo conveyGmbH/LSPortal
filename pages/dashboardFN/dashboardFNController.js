@@ -576,10 +576,20 @@
             };
 
             var checkTip = function () {
-                if (that.isSupreme === 4) {
+                if (that.isSupreme === 2) {
                     var event = pageElement.querySelector(".circle-with-text-event-dot");
                     event.style.backgroundColor = Colors.dashboardColor;
                     var surpremeColor = "#cc5b87";
+                    var global = pageElement.querySelector(".circle-with-text-global-dot");
+                    global.style.backgroundColor = surpremeColor;
+                    var eventText = pageElement.querySelector(".circle-with-text-event-text");
+                    eventText.style.color = Colors.labelColor;
+                    var globalText = pageElement.querySelector(".circle-with-text-global-text");
+                    globalText.style.color = Colors.labelColor;
+                } else if (that.isSupreme === 4) {
+                    var event = pageElement.querySelector(".circle-with-text-event-dot");
+                    event.style.backgroundColor = Colors.dashboardColor;
+                    var surpremeColor = "#2B3F52";
                     var global = pageElement.querySelector(".circle-with-text-global-dot");
                     global.style.backgroundColor = surpremeColor;
                     var eventText = pageElement.querySelector(".circle-with-text-event-text");

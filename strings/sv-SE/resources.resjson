@@ -340,7 +340,7 @@
     "login.login"           : "User",
     "login.password"        : "Password",
 	"login.privacyPolicyAggrement"   : "I have read the privacy statement and consent to my data being electronically processed and saved. ",
-    "login.privacyPolicyLink": "www.convey.de/privacy-policy/",
+    "login.privacyPolicyLink": "www.convey.de/en/privacy-policy-convey/",
     "login.privacyPolicy"   : "Privacy Policy", 
     "login.progress"        : "Progress",
     "login.unknown"         : "Specified user not found!",
@@ -1269,6 +1269,7 @@
 	"mailingTemplateEventEdit.subject"			: "Subject",
     "mailingTemplateEventEdit.mailtext"			: "Mailtext",
     "mailingTemplateEventEdit.layoutactive"			: "Turn off to set this E-Mail draft (in all languages) as outdated. If a draft is outdated it will not be shown as option in the Mailing application.",
+	"mailingTemplateEventEdit.addICSVariantActive" : "Attach calendar invitation",
 
     "eventSeries.title" : "Series",
     "eventSeries.language": "Language",
