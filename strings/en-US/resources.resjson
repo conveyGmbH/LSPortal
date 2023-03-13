@@ -719,7 +719,7 @@
     "employee.lastname"     : "Last name",
     "employee.login"        : "Login",
 	"employee.domain"		: "Domain",
-    "employee.password"     : "Pasword",
+    "employee.password"     : "Password",
     "employee.password2"    : "Confirmation",
     "employee.roles"        : "Roles",
     "employee.count"        : "Count",
