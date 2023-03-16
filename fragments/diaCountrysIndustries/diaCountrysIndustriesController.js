@@ -660,7 +660,7 @@
                         pVeranstaltungID: AppData.getRecordId("Veranstaltung"), //
                         pCriterion1ID: parseInt(that.binding.criteriaMain),
                         pCriterion2ID: parseInt(that.binding.criteriaDays),
-                        pLandID: 0,
+                        pLandID: parseInt(that.binding.criteriaCountry),
                         pDay: 0,
                         pLanguageSpecID: that.langSet()
                     }, function (json) {
