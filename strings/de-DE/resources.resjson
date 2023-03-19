@@ -925,8 +925,6 @@
 
     "siteevents.title" : "Aussteller",
     "siteevents.event" : "Aussteller",
-    "siteevents.hall" : "Halle",
-    "siteevents.stand"   : "Standnr.",
     "siteevents.adminuser"   : "Ansprechpartner",
     "siteevents.appusercount"   : "Geräte",
     "siteevents.freeolockappuser"   : "Freigeg./gesperrt",
@@ -940,6 +938,23 @@
     "siteevents.eventpermuser"   : "Wollen Sie diesen Austeller zu einem Dauerkunden konvertieren?",
     "siteevents.search"   : "Suche",
     "siteevents.searchplaceholder"   : "Was suchen Sie?",
+
+    "siteevents.exhibitorname" : "Ausstellername",
+    "siteevents.contact" : "Ansprechpartner",
+    "siteevents.hall" : "Halle",
+    "siteevents.stand" : "Stand",
+    "siteevents.numberofusers" : "Anzahl Users",
+    "siteevents.numberofregisteredusers" : "Anzahl angemeldeter Users",
+    "siteevents.numberofblockedcontacts" : "Anzahl gesperrte Kontakte",
+    "siteevents.numberofusersused" : "Anzahl benutzte Users",
+    "siteevents.numberofcontactsBRQR" : "Anzahl Kontakte - Barcodes/QR-Codes",
+    "siteevents.numberofcontactsBC" : "Anzahl Kontakte - Visitenkarten",
+    "siteevents.numberofcontactsMA" : "Anzahl Kontakte - Manuell",
+    "siteevents.numberofexports" : "Anzahl Exporte",
+    "siteevents.lastexportdateandtime" : "Datum und Uhrzeit letzte Export",
+    "siteevents.questionnairestatus" : "Fragebogen Status",
+    "siteevents.numberofemailssent" : "Anzahl versendete E-Mails",
+    "siteevents.lastlogintotheportal" : "Letzte Anmeldung im Portal",
 
 
     "siteeventsneuaus.title" : "Neuer Aussteller",

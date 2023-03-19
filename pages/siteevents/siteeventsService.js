@@ -49,9 +49,48 @@
             }
         },
         defaultRestriction: {
+            VeranstaltungTerminID: null,
             Name: null,
             bAndInEachRow: true,
-            bUseOr: false
+            bUseOr: false,
+            OrderAttribute: 0,
+            OrderType: "desc"
+        },
+        defaultHeaderRestriction: {
+            FairMandant_Name: "",
+            FairMandant_Ansprechpartner: "",
+            StandHall: "",
+            StandNo: "",
+            NumUsers: "",
+            NumUsedUsers: "",
+            NumLockedContacts: "",
+            NumActiveUsers: "",
+            NumContactsBC: "",
+            NumContactsVC: "",
+            NumContactsMan: "",
+            NumExports: "",
+            LastExportTS: "",
+            FBStatus: "",
+            NumSentEmails: "",
+            PortalLoginTS: ""
+        },
+        defaultHeaderLabelRestriction: {
+            FairMandant_NameLabel: "",
+            FairMandant_AnsprechpartnerLabel: "",
+            StandHallLabel: "",
+            StandNoLabel: "",
+            NumUsersLabel: "",
+            NumUsedUsersLabel: "",
+            NumLockedContactsLabel: "",
+            NumActiveUsersLabel: "",
+            NumContactsBCLabel: "",
+            NumContactsVCLabel: "",
+            NumContactsManLabel: "",
+            NumExportsLabel: "",
+            LastExportTSLabel: "",
+            FBStatusLabel: "",
+            NumSentEmailsLabel: "",
+            PortalLoginTSLabel: ""
         },
         _registrationView: {
             get: function () {
