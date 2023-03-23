@@ -24,7 +24,7 @@
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
                 questionId: AppData.getRecordId("FragenAntworten"),
-                questiongroupflag: true,
+                questiongroupflag: false,
                 dataPublish: getEmptyDefaultValue(QuestionList.questionPublishView.defaultValue)
             }, commandList]);
             this.nextUrl = null;
@@ -1295,9 +1295,6 @@
                     }, {
 
                         });
-                }).then(function () {
-                    that.binding.questiongroupflag = true;
-                    return WinJS.Promise.as();
                 }).then(function () {
                     AppBar.notifyModified = true;
                     AppBar.triggerDisableHandlers();

@@ -62,9 +62,9 @@
                         if (Application.navigator.masterElement && Application.navigator._nextMaster) {
                             widthMaster = Application.navigator.masterElement.clientWidth;
                         }
-                        if (widthMaster + widthAdd> widthLogo) {
+                        /*if (widthMaster + widthAdd > widthLogo) {
                             widthLogo = widthMaster + widthAdd;
-                        }
+                        }*/
                         if (NavigationBar.orientation === "vertical" &&
                             NavigationBar.navVertWidth + widthAdd > widthLogo) {
                             widthLogo = NavigationBar.navVertWidth + widthAdd;
