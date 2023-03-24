@@ -350,6 +350,11 @@
                     }
                     Application.navigateById("login", event);
                     Log.ret(Log.l.trace);
+                },
+                clickGotoPublish: function (event) {
+                    Log.call(Log.l.trace, "MailingTemplate.Controller.");
+                    Application.navigateById("publish", event);
+                    Log.ret(Log.l.trace);
                 }
             };
             this.disableHandlers = {
