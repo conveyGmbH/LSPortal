@@ -15,8 +15,7 @@
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "SiteEventsTermin.Controller.");
             Application.Controller.apply(this, [pageElement, {
-                restriction: getEmptyDefaultValue(SiteEventsTermin.defaultRestriction),
-                dataTermin: SiteEventsTermin.defaultRestriction,
+                dataTermin: getEmptyDefaultValue(SiteEventsTermin.defaultValue),
                 InitFairVeranstalterItem: { FairVeranstalterID: 0, Name: "" },
                 VeranstaltungTerminID: 0
             }, commandList]);
@@ -35,27 +34,10 @@
             }
             this.getRecordId = getRecordId;
 
-            var getExibitorData = function() {
-                var dataTermin = that.binding.dataTermin;
-               
-                if (dataTermin.VeranstaltungName === "") {
-                    dataTermin.VeranstaltungName = null;
-                }
-                if (dataTermin.DisyplayName === "") {
-                    dataTermin.DisyplayName = null;
-                }
-                return dataTermin;
-            }
-            this.getExibitorData = getExibitorData;
-
-            var saveExhibitor = function () {
+            var saveTermin = function () {
                 //var dataEvent = that.binding.eventData;
                 that.binding.dataTermin.StartDatum = new Date(that.binding.dataTermin.StartDatum).toISOString();
                 that.binding.dataTermin.EndDatum = new Date(that.binding.dataTermin.EndDatum).toISOString();
-                that.binding.dataTermin.FairVeranstalterVIEWID =
-                    parseInt(that.binding.dataTermin.FairVeranstalterVIEWID);
-                //that.binding.dataTermin.FairVeranstalterID = 1; // nur auf deimos 
-                //var dataTermin = getExibitorData();
                 Log.call(Log.l.trace, "SiteEventsTermin.Controller.");
                 AppData.setErrorMsg(that.binding);
                 AppData.call("PRC_CreateVATerminPortal",
@@ -64,8 +46,8 @@
                         pDisplayName: that.binding.dataTermin.DisplayName,
                         pStartDate: that.binding.dataTermin.StartDatum,
                         pEndDate: that.binding.dataTermin.EndDatum,
-                        pFairVeranstalterID: that.binding.dataTermin.FairVeranstalterVIEWID,
-                        pFairLocationID: 0,
+                        pFairVeranstalterID: parseInt(that.binding.dataTermin.FairVeranstalterID),
+                        pFairLocationID: 0, /* Stand 2023 @hung: For now always 0 */
                         pVeranstaltungTerminID: that.binding.dataTermin.VeranstaltungTerminVIEWID
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
@@ -78,7 +60,7 @@
                     });
                 Log.ret(Log.l.trace); 
             }
-            this.saveExhibitor = saveExhibitor;
+            this.saveTermin = saveTermin;
 
             this.eventHandlers = {
                 clickBack: function (event) {
@@ -90,7 +72,7 @@
                 },
                 clickSave: function (event) {
                     Log.call(Log.l.trace, "SiteEventsTermin.Controller.");
-                    that.saveExhibitor();
+                    that.saveTermin();
                     Log.ret(Log.l.trace);
                 },
                 clickTopButton: function (event) {
@@ -147,6 +129,7 @@
             this.getDateObject = getDateObject;
 
             var setTerminData = function (terminData) {
+                that.binding.dataTermin = terminData;
                 if (terminData.DisplayName === null) {
                     that.binding.dataTermin.DisplayName = "";
                 }
@@ -172,7 +155,7 @@
                             var result = json.d.results;
                             if (fairVeranstalter && fairVeranstalter.winControl) {
                                 fairVeranstalter.winControl.data = new WinJS.Binding.List(result);
-                                that.binding.dataTermin.FairVeranstalterVIEWID = result[json.d.results.length - 1].FairVeranstalterVIEWID;
+                                that.binding.dataTermin.FairVeranstalterID = result[0].FairVeranstalterVIEWID;
                             }
                         }
                     }, function (errorResponse) {
@@ -191,8 +174,8 @@
                             if (json && json.d && json.d.results) {
                                 // Now, we call WinJS.Binding.List to get the bindable list
                                 var result = json.d.results[0];
-                                that.binding.dataTermin = result;
-                                that.setTerminData(that.binding.dataTermin);
+                                //that.binding.dataTermin = result;
+                                that.setTerminData(result);
                                 fairVeranstalter.disabled = true; 
                                 Log.print(Log.l.trace, "VeranstaltungView: success!");
                             }

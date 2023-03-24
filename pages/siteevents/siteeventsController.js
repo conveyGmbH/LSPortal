@@ -1140,6 +1140,13 @@
                     } else {
                         return false;
                     }
+                },
+                clickEventTerminEdit: function () {
+                    if (!AppBar.busy && AppData.getRecordId("VeranstaltungTermin")) {
+                        return false;
+                    } else {
+                        return true;
+                    }
                 }
             }
 

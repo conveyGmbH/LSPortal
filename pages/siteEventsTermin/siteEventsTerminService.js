@@ -57,10 +57,10 @@
                 Name: null
             }
         },
-        defaultRestriction: {
+        defaultValue: {
             VeranstaltungName: "",
             DisplayName: "",
-            FairVeranstalterVIEWID: 0, //deimos muss dann angepasst werden
+            FairVeranstalterID: 0, //deimos muss dann angepasst werden
             StartDatum: null,
             EndDatum: null,
             VeranstaltungTerminVIEWID: 0
