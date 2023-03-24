@@ -364,8 +364,7 @@
                     }
                 }
                 Log.ret(Log.l.trace);
-            },
-                clickTopButton: function (event) {
+                }, clickTopButton: function (event) {
                     Log.call(Log.l.trace, "Contact.Controller.");
                     var anchor = document.getElementById("menuButton");
                     var menu = document.getElementById("menu1").winControl;

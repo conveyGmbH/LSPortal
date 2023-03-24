@@ -78,7 +78,7 @@
                         Log.print(Log.l.trace, "EmployeeGenPWList.employeePWView: success!");
                         // startContact returns object already parsed from json file in response
                         if (json && json.d && json.d.results && that.employeePWListdata) {
-                            that.nextUrl =EmployeeGenPWList.employeePWView.getNextUrl(json);
+                            that.nextUrl = EmployeeGenPWList.employeePWView.getNextUrl(json);
                             var results = json.d.results;
                             results.forEach(function (item, index) {
                                 that.resultConverter(item, that.binding.count);
@@ -120,7 +120,7 @@
                 Log.ret(Log.l.trace);
             }
             this.loadNextUrl = loadNextUrl;
-            
+
             // define handlers
             this.eventHandlers = {
                 clickBack: function (event) {
@@ -142,7 +142,7 @@
                         AppData.setErrorMsg(that.binding, errorResponse);
                         AppBar.busy = false;
                         AppBar.triggerDisableHandlers();
-                    }, null , null);
+                    }, null, null);
                     Log.ret(Log.l.trace);
                 },
                 onItemInvoked: function (eventInfo) {
@@ -187,11 +187,11 @@
                                     counter.style.display = "inline";
                                 }
                                 //if (that.employeePWListdata) {
-                                    var indexOfFirstVisible = listView.winControl.indexOfFirstVisible;
-                                    var indexOfLastVisible = listView.winControl.indexOfLastVisible;
-                                    for (var i = indexOfFirstVisible; i <= indexOfLastVisible; i++) {
-                                        var element = listView.winControl.elementFromIndex(i);
-                                        if (element) {
+                                var indexOfFirstVisible = listView.winControl.indexOfFirstVisible;
+                                var indexOfLastVisible = listView.winControl.indexOfLastVisible;
+                                for (var i = indexOfFirstVisible; i <= indexOfLastVisible; i++) {
+                                    var element = listView.winControl.elementFromIndex(i);
+                                    if (element) {
                                         var barcodeImage = element.querySelectorAll(".userinfo-qrcode-container");
                                         if (barcodeImage && barcodeImage.length > 0) {
                                             for (var y = 0; y < barcodeImage.length; y++) {
@@ -215,16 +215,16 @@
                                                     correctLevel: 0 //QRErrorCorrectLevel.M
                                                 });
                                                 barcodeImage[y].appendChild(qrcodeViewer);
-                                                    }
-                                                }
                                             }
                                         }
+                                    }
+                                }
                                 that.loading = false;
-                            // load SVG images
-                            Colors.loadSVGImageElements(listView, "action-image", 40, Colors.textColor);
-                            Colors.loadSVGImageElements(listView, "action-image-flag", 40);
-                            that.loadNextUrl();
-                        }
+                                // load SVG images
+                                Colors.loadSVGImageElements(listView, "action-image", 40, Colors.textColor);
+                                Colors.loadSVGImageElements(listView, "action-image-flag", 40);
+                                that.loadNextUrl();
+                            }
                             Log.ret(Log.l.trace);
                         }
                     }
@@ -292,6 +292,11 @@
                         }
                     }
                     Application.navigateById("login", event);
+                    Log.ret(Log.l.trace);
+                },
+                clickGotoPublish: function (event) {
+                    Log.call(Log.l.trace, "EventGenSettings.Controller.");
+                    Application.navigateById("publish", event);
                     Log.ret(Log.l.trace);
                 }
             };
@@ -386,8 +391,8 @@
                         }
                         that.loading = false;
                     }, {
-                       GenPassword: ['NOT NULL']
-                       }
+                        GenPassword: ['NOT NULL']
+                    }
                     );
                 });
                 Log.ret(Log.l.trace);
@@ -404,9 +409,9 @@
             });
             Log.ret(Log.l.trace);
         }, {
-                nextUrl: null,
-                loading: false,
-                employeePWListdata: null
-            })
+            nextUrl: null,
+            loading: false,
+            employeePWListdata: null
+        })
     });
 })();

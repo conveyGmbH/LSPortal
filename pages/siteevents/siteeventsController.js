@@ -106,7 +106,7 @@
                 that.binding.dataSiteeventsHeaderText.FBStatus = getResourceText("siteevents.questionnairestatus");
                 that.binding.dataSiteeventsHeaderText.NumSentEmails = getResourceText("siteevents.numberofemailssent");
                 that.binding.dataSiteeventsHeaderText.PortalLoginTS = getResourceText("siteevents.lastlogintotheportal");
-               //value part
+                //value part
                 that.binding.dataSiteeventsHeaderValue.FairMandant_Name = 1;
                 that.binding.dataSiteeventsHeaderValue.FairMandant_Ansprechpartner = 2;
                 that.binding.dataSiteeventsHeaderValue.StandHall = 3;
@@ -126,11 +126,11 @@
             }
             this.setInitialHeaderTextValue = setInitialHeaderTextValue;
 
-            var setCellTitle = function() {
+            var setCellTitle = function () {
                 Log.print(Log.l.trace, "Setting up initial Title of the cells!");
                 var cells = pageElement.querySelectorAll("td");
                 for (var i = 0; i < cells.length; i++) {
-                    if (cells[i].title  === "1") {
+                    if (cells[i].title === "1") {
                         cells[i].title = getResourceText("siteevents.exhibitorname");
                     }
                     if (cells[i].title === "2") {
@@ -175,7 +175,7 @@
                     if (cells[i].title === "15") {
                         cells[i].title = getResourceText("siteevents.numberofemailssent");
                     }
-                    if (cells[i].title  === "16") {
+                    if (cells[i].title === "16") {
                         cells[i].title = getResourceText("siteevents.lastlogintotheportal");
                     }
                 }
@@ -220,7 +220,7 @@
                 }
             }
             this.addHeaderRowHandlers = addHeaderRowHandlers;
-            
+
             var getDateObject = function (dateData) {
                 var ret;
                 if (dateData) {
@@ -228,7 +228,7 @@
                     var milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
                     moment().locale("de");
                     ret = moment(milliseconds).format("DD.MM.YYYY HH:mm");//new Date(milliseconds).toLocaleTimeString().slice(0, -3);
-                    
+
                     //.toLocaleString('de-DE').substr(0, 10);
                 } else {
                     ret = "";
@@ -237,7 +237,7 @@
             };
             this.getDateObject = getDateObject;
 
-            var checkId = function() {
+            var checkId = function () {
                 if (that.vidID) {
                     fileinputbox.style.display = "block";
                 } else {
@@ -482,7 +482,7 @@
             }
             this.showMessage = showMessage;
 
-            var createCsvString = function(id) {
+            var createCsvString = function (id) {
 
                 var tabId = id.split(",").pop();
 
@@ -524,11 +524,11 @@
                     }
                     AppBar.modified = true;
                 }, function (errorResponse) {
-                        Log.print(Log.l.error, "error inserting csv");
-                        that.showMessage(false);
-                        AppBar.busy = false;
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                    },
+                    Log.print(Log.l.error, "error inserting csv");
+                    that.showMessage(false);
+                    AppBar.busy = false;
+                    AppData.setErrorMsg(that.binding, errorResponse);
+                },
                     newFileUploadData);
                 return ret;
             }
@@ -551,11 +551,11 @@
                         that.uploadCsvData(newFileUploadData);
                     }
                     AppBar.modified = true;
-                }, function(errorResponse) {
-                        Log.print(Log.l.error, "error inserting csv");
-                        AppBar.busy = false;
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                    },
+                }, function (errorResponse) {
+                    Log.print(Log.l.error, "error inserting csv");
+                    AppBar.busy = false;
+                    AppData.setErrorMsg(that.binding, errorResponse);
+                },
                     newFileUploadId);
                 return ret;
             }
@@ -647,7 +647,7 @@
             }
             this.processSearch = processSearch;
 
-            var searchStringProcess = function() {
+            var searchStringProcess = function () {
                 Log.call(Log.l.trace, "SiteEvents.Controller.");
                 var searchstring = searchInput.value;
                 if (searchstring !== "") {
@@ -836,7 +836,7 @@
                     });
                     Log.ret(Log.l.trace);
                 },
-                ondateiupload: function() {
+                ondateiupload: function () {
                     Log.call(Log.l.trace, "SiteEvents.Controller.");
                     var files = pageElement.querySelector("#myFile").files;
                     if (files[0].name.match(/\.(csv)/g) != null) {
@@ -1021,7 +1021,7 @@
                     });
                     Log.ret(Log.l.trace);
                 },
-                clickExportLockedDeviceList: function(event) {
+                clickExportLockedDeviceList: function (event) {
                     Log.call(Log.l.trace, "SiteEvents.Controller.");
                     var dbView, fileName;
                     if (AppData.getLanguageId() === 1031) {
@@ -1042,7 +1042,7 @@
                     }
                     AppBar.busy = true;
                     AppBar.triggerDisableHandlers();
-                    WinJS.Promise.timeout(0).then(function() {
+                    WinJS.Promise.timeout(0).then(function () {
                         that.exportData(dbView, fileName);
                     });
                     Log.ret(Log.l.trace);
@@ -1051,7 +1051,7 @@
                     Log.call(Log.l.trace, "SiteEvents.Controller.");
                     AppBar.busy = true;
                     AppBar.triggerDisableHandlers();
-                    WinJS.Promise.timeout(0).then(function() {
+                    WinJS.Promise.timeout(0).then(function () {
                         return that.exportPwdQrCodeEmployeePdf();
                     });
                     Log.ret(Log.l.trace);
@@ -1062,6 +1062,11 @@
                     if (that.siteeventsdataraw && that.nextUrl && Math.abs(element.scrollHeight - element.scrollTop - element.clientHeight) <= 3.0) {
                         that.loadNextUrl();
                     }
+                    Log.ret(Log.l.trace);
+                },
+                clickGotoPublish: function (event) {
+                    Log.call(Log.l.trace, "Settings.Controller.");
+                    Application.navigateById("publish", event);
                     Log.ret(Log.l.trace);
                 }
             }
@@ -1074,7 +1079,7 @@
                         return true;
                     }
                 },
-                clickCreatePermanentUser: function(parameters) {
+                clickCreatePermanentUser: function (parameters) {
                     if (that.isConvertable) {
                         return false;
                     } else {
@@ -1109,14 +1114,14 @@
                         return false;
                     }
                 },
-                clickExport: function() {
+                clickExport: function () {
                     if (AppBar.busy) {
                         return true;
                     } else {
                         return false;
                     }
                 },
-                clickExportQrcode: function() {
+                clickExportQrcode: function () {
                     if (AppData.getRecordId("VeranstaltungTermin")) {
                         if (AppBar.busy) {
                             return true;
@@ -1267,7 +1272,7 @@
                 that.checkId();
                 Log.print(Log.l.trace, "Binding wireup page complete");
             }).then(function () {
-                
+
                 Log.print(Log.l.trace, "Binding wireup page complete");
             });
             Log.ret(Log.l.trace);

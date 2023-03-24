@@ -116,6 +116,11 @@
                     }
                     Application.navigateById("login", event);
                     Log.ret(Log.l.trace);
+                },
+                clickGotoPublish: function (event) {
+                    Log.call(Log.l.trace, "ClientManagement.Controller.");
+                    Application.navigateById("publish", event);
+                    Log.ret(Log.l.trace);
                 }
             };
 
