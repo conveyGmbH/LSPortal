@@ -526,57 +526,52 @@
                 AppData.setErrorMsg(that.binding);
                 var ret;
                 if (!AppBar.busy && that.binding.generalData.publishFlag) {
-                    var recordId = that.binding.questionId;
-                    if (recordId) {
-                        AppBar.busy = true;
-                        ret = QuestionList.questionPublishView.select(function (json) {
-                            // this callback will be called asynchronously
-                            // when the response is available
-                            Log.print(Log.l.trace, "QuestionList.questionPublishView: success!");
-                            // select returns object already parsed from json file in response
-                            if (json && json.d && json.d.results) {
-                                var result = json.d.results[0];
-                                that.binding.dataPublish = result;
-                                Log.print(Log.l.trace, "QuestionList.questionPublishView: that.binding.dataPublish set!");
-                            }
-                        }, function (errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        }, {
-
-                        }).then(function() {
-                            var dataPublish = that.binding.dataPublish;
-                            if (dataPublish) {
+                    AppBar.busy = true;
+                    ret = QuestionList.questionPublishView.select(function (json) {
+                        // this callback will be called asynchronously
+                        // when the response is available
+                        Log.print(Log.l.trace, "QuestionList.questionPublishView: success!");
+                        // select returns object already parsed from json file in response
+                        if (json && json.d && json.d.results) {
+                            var result = json.d.results[0];
+                            that.binding.dataPublish = result;
+                            Log.print(Log.l.trace, "QuestionList.questionPublishView: that.binding.dataPublish set!");
+                        }
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    }, {}).then(function () {
+                        var dataPublish = that.binding.dataPublish;
+                        if (dataPublish) {
+                            var recordId = dataPublish.FragenVIEWID;
+                            if (recordId) {
                                 dataPublish.Aktionflag = 1;
-                                return QuestionList.questionPublishView.update(function(response) {
-                                        AppBar.busy = false;
-                                        // called asynchronously if ok
-                                        Log.print(Log.l.info, "questionView update: success!");
-                                        AppBar.modified = false;
-                                        complete(response);
-                                    },
-                                    function(errorResponse) {
-                                        AppBar.busy = false;
-                                        // called asynchronously if an error occurs
-                                        // or server returns response with an error status.
-                                        AppData.setErrorMsg(that.binding, errorResponse);
-                                        error(errorResponse);
-                                    },
-                                    recordId,
-                                    dataPublish);
+                                return QuestionList.questionPublishView.update(function (response) {
+                                    AppBar.busy = false;
+                                    // called asynchronously if ok
+                                    Log.print(Log.l.info, "questionView update: success!");
+                                    AppBar.modified = false;
+                                    complete(response);
+                                }, function (errorResponse) {
+                                    AppBar.busy = false;
+                                    // called asynchronously if an error occurs
+                                    // or server returns response with an error status.
+                                    AppData.setErrorMsg(that.binding, errorResponse);
+                                    error(errorResponse);
+                                }, recordId, dataPublish);
                             } else {
+                                Log.print(Log.l.info, "not supported");
                                 return WinJS.Promise.as().then(function () {
                                     complete(that.binding.dataPublish);
                                 });
                             }
-                        });
-                    } else {
-                        Log.print(Log.l.info, "not supported");
-                        ret = WinJS.Promise.as().then(function () {
-                            complete(that.binding.dataPublish);
-                        });
-                    }
+                        } else {
+                            return WinJS.Promise.as().then(function () {
+                                complete(that.binding.dataPublish);
+                            });
+                        }
+                    });
                 } else {
                     ret = new WinJS.Promise.as().then(function () {
                         complete(that.binding.dataPublish);
