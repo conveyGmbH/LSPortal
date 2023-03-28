@@ -155,6 +155,11 @@
                         Log.print(Log.l.info, "call success! ");
                         AppBar.busy = false;
                         AppBar.modified = false;
+                        var master = Application.navigator.masterControl;
+                        if (master && master.controller && master.controller.binding) {
+                            AppData.setRecordId("ExhibitorMailingStatus", that.binding.mailingtrackingdata.FairMandantVeranstID);
+                            master.controller.loadData();
+                        }
                         that.loadData(that.binding.mailingtrackingdata.ExhibitorMailingStatusVIEWID);
                         Log.ret(Log.l.trace);
                     }, function (errorResponse) {
@@ -264,25 +269,21 @@
                 }).then(function () {
                     if (recordId) {
                         AppData.setRecordId("MailingTracking", recordId);
-                        return MailingTracking.MailTrackingDialogView.select(function (json) {
-                            // this callback will be called asynchronously ScheduledSendTS = "/Date(1323950400000)/" = ""
-                            // when the response is available
-                            Log.print(Log.l.trace, "MailingTracking: success!");
-                            if (json && json.d) {
-                                that.binding.mailingtrackingdata = json.d;
-                                if (that.binding.mailingtrackingdata.SupportComment === null) {
-                                    that.binding.mailingtrackingdata.SupportComment = "";
-                                }
-                                that.binding.statusheader = "";
-                                // that.getTimeToSend(that.binding.mailingtrackingdata.ScheduledSendTS);
-                                that.getStatusHeader(that.binding.mailingtrackingdata.LastSendTS);
-                                Log.print(Log.l.trace, "MailingTracking: success!");
+                        return AppData.call("PRC_GetExhMailingStatus", {
+                            pExhibitorMailingStatusID: recordId
+                        }, function (json) {
+                            Log.print(Log.l.info, "call success! ");
+                            that.binding.mailingtrackingdata = json.d.results[0];
+                            if (that.binding.mailingtrackingdata.SupportComment === null) {
+                                that.binding.mailingtrackingdata.SupportComment = "";
                             }
-                        }, function (errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        }, recordId);
+                            that.binding.statusheader = "";
+                            // that.getTimeToSend(that.binding.mailingtrackingdata.ScheduledSendTS);
+                            that.getStatusHeader(that.binding.mailingtrackingdata.LastSendTS);
+                            Log.print(Log.l.trace, "MailingTracking: success!");
+                        }, function (error) {
+                            Log.print(Log.l.error, "call error");
+                        });
                     } else {
                         return WinJS.Promise.as();
                     }
