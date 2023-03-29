@@ -60,6 +60,7 @@
     "command.sendPDF"  : "PDF senden",
     "command.sendWallet"  : "Wallet senden",
     "command.deleteTicket"  : "Ausweis löschen",
+    "command.exportexhibitorList"  : "Austellerliste",
 
     "tooltip.backward"      : "Zurück blättern",
     "tooltip.edit"          : "Aktuellen Datensatz bearbeiten",

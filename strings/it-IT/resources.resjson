@@ -60,6 +60,7 @@
     "command.sendPDF"  : "Invia biglietto  PDF",
     "command.sendWallet"  : "Invia biglietto del wallet",
     "command.deleteTicket"  : "Cancellare il biglietto",
+    "command.exportexhibitorList"  : "Elenco espositori",
 
     "tooltip.backward"      : "Pagina precedente",
     "tooltip.edit"          : "Modifica Record attuale",

@@ -60,6 +60,7 @@
     "command.sendPDF"  : "Envoyer un ticket PDF",
     "command.sendWallet"  : "Envoyer un ticket wallet",	
     "command.deleteTicket"  : "Supprimer un ticket",
+    "command.exportexhibitorList"  : "Liste des exposants",
 
     "tooltip.backward"      : "Page présédente",
     "tooltip.edit"          : "Modifier le contact en cours",

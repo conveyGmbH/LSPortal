@@ -403,7 +403,7 @@
             this.loadNextUrl = loadNextUrl;
 
             var querySubmittedHandler = function (eventObject) {
-                Log.call(Log.l.trace, "SiteEventsList.Controller.");
+                Log.call(Log.l.trace, "SiteEvents.Controller.");
                 var queryText = eventObject.detail.queryText;
                 WinJS.log && WinJS.log(queryText, "sample", "status");
             };
@@ -432,7 +432,7 @@
             this.base64ToBlob = base64ToBlob;
 
             var exportPwdQrCodeEmployeePdf = function () {
-                Log.call(Log.l.trace, "Contact.Controller.");
+                Log.call(Log.l.trace, "SiteEvents.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret;
                 var recordId = AppData.getRecordId("VeranstaltungTermin");
@@ -471,8 +471,44 @@
             }
             this.exportPwdQrCodeEmployeePdf = exportPwdQrCodeEmployeePdf;
 
+            var exportExhibitorList = function(exhId) {
+                Log.call(Log.l.trace, "SiteEvents.Controller.");
+                AppData.setErrorMsg(that.binding);
+                var ret;
+                var recordId = exhId;
+                if (recordId) {
+                    AppBar.busy = true;
+                    ret = SiteEvents.DOC3ExportPDFView.select(function (json) {
+                        Log.print(Log.l.trace, "exportKontaktDataView: success!");
+                        if (json && json.d) {
+                            var results = json.d.results[0];
+                            var excelDataraw = results.DocContentDOCCNT1;
+                            var sub = excelDataraw.search("\r\n\r\n");
+                            var excelDataBase64 = excelDataraw.substr(sub + 4);
+                            var excelData = that.base64ToBlob(excelDataBase64, "xlsx");
+                            var excelName = results.szOriFileNameDOC1;
+                            saveAs(excelData, excelName);
+                            AppBar.busy = false;
+                        }
+                    }, function (errorResponse) {
+                        AppBar.busy = false;
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                        if (typeof error === "function") {
+                            error(errorResponse);
+                        }
+                    }, { DOC3ExportPDFVIEWID: recordId });
+                } else {
+                    var err = { status: 0, statusText: "no record selected" };
+                    error(err);
+                    ret = WinJS.Promise.as();
+                }
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+            this.exportExhibitorList = exportExhibitorList;
+
             var showMessage = function (msgText) {
-                Log.call(Log.l.trace, "Contact.Controller.");
+                Log.call(Log.l.trace, "SiteEvents.Controller.");
                 if (msgText === true) {
                     inputmsg.textContent = getResourceText("siteevents.successmsg");
                 } else {
@@ -713,6 +749,38 @@
                     if (!Application.showMaster() && WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done();
                     }
+                    Log.ret(Log.l.trace);
+                },
+                clickExportExhibitorList: function() {
+                    Log.call(Log.l.trace, "SiteEvents.Controller.");
+                    var ret;
+                    var recordId = AppData.getRecordId("VeranstaltungTermin");
+                    if (recordId) {
+                        ret = AppData.call("PRC_ExcelRequest", {
+                            pRecordID: recordId,
+                            pLanguageSpecID: AppData.getLanguageId(),
+                            pExportType: "ExhibitorList",
+                            psyncRun: 1
+                        }, function (json) {
+                            Log.print(Log.l.info, "call success! ");
+                            if (json && json.d && json.d.results.length > 0) {
+                                var exhId = json.d.results[0];
+                                that.exportExhibitorList(exhId);
+                            }
+                        }, function (error) {
+                            AppBar.busy = false;
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                            if (typeof error === "function") {
+                                error(errorResponse);
+                            }
+                        });
+                    } else {
+                        var err = { status: 0, statusText: "no record selected" };
+                        error(err);
+                        ret = WinJS.Promise.as();
+                    }
+                    Log.ret(Log.l.trace);
+                    return ret;
                     Log.ret(Log.l.trace);
                 },
                 onSearchInput: function (event) {

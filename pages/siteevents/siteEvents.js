@@ -59,7 +59,8 @@
                 { id: "clickExport", label: getResourceText("command.export"), tooltip: getResourceText("tooltip.export"), section: "primary", svg: "arrow_barrier_down" },
                 { id: "clickExportQrcode", label: getResourceText("command.userPwExport"), tooltip: getResourceText("tooltip.export"), section: "secondary" },
                 { id: "clickExportRegistrationList", label: getResourceText("command.registrationList"), tooltip: getResourceText("tooltip.export"), section: "secondary" },
-                { id: "clickExportLockedDeviceList", label: getResourceText("command.lockedDeviceList"), tooltip: getResourceText("tooltip.export"), section: "secondary" }
+                { id: "clickExportLockedDeviceList", label: getResourceText("command.lockedDeviceList"), tooltip: getResourceText("tooltip.export"), section: "secondary" },
+                { id: "clickExportExhibitorList", label: getResourceText("command.exportexhibitorList"), tooltip: getResourceText("tooltip.export"), section: "secondary" }
             ];
 
             this.controller = new SiteEvents.Controller(element, commandList);

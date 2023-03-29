@@ -59,7 +59,8 @@
     "command.openWebpage"  : "Open webpage",
     "command.sendPDF"  : "Send PDF ticket",
     "command.sendWallet"  : "Send Wallet ticket",	
-    "command.deleteTicket"  : "Delete ticket",
+    "command.deleteTicket"  : "Delete ticket",	
+    "command.exportexhibitorList"  : "Exhibitor list",
 
     "tooltip.backward"      : "Browse back",
     "tooltip.edit"          : "Edit current record",
