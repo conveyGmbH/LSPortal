@@ -26,6 +26,36 @@
 
             var that = this;
 
+            var terminStatus = pageElement.querySelector("#TerminStatus");
+            var initServer = pageElement.querySelector("#InitServer");
+
+            var creatingTerminStatusCategory = function () {
+                Log.call(Log.l.trace, "Event.Controller.");
+                var terminStatusCategory = [
+                    {
+                        value: 0,
+                        TITLE: null
+                    },
+                    {
+                        value: 1,
+                        TITLE: "CANCELED"
+                    },
+                    {
+                        value: 2,
+                        TITLE: "HIDE"
+                    },
+                    {
+                        value: 3,
+                        TITLE: "SHOW"
+                    }
+                ];
+                if (terminStatus && terminStatus.winControl) {
+                    terminStatus.winControl.data = new WinJS.Binding.List(terminStatusCategory);
+                    terminStatus.selectedIndex = 0;
+                }
+            };
+            this.creatingTerminStatusCategory = creatingTerminStatusCategory;
+
             var getRecordId = function () {
                 Log.call(Log.l.trace, "SiteEventsTermin.Controller.");
                 that.binding.VeranstaltungTerminID = AppData.getRecordId("VeranstaltungTermin");
@@ -40,6 +70,22 @@
                 that.binding.dataTermin.EndDatum = new Date(that.binding.dataTermin.EndDatum).toISOString();
                 Log.call(Log.l.trace, "SiteEventsTermin.Controller.");
                 AppData.setErrorMsg(that.binding);
+                if (typeof that.binding.dataTermin.MailBCC === "undefined") {
+                    that.binding.dataTermin.MailBCC = null;
+                }
+                if (typeof that.binding.dataTermin.MailCC === "undefined") {
+                    that.binding.dataTermin.MailCC = null;
+                }
+                if (typeof that.binding.dataTermin.MailFrom === "undefined") {
+                    that.binding.dataTermin.MailFrom = null;
+                }
+                if (typeof that.binding.dataTermin.MailReplyTo === "undefined") {
+                    that.binding.dataTermin.MailReplyTo = null;
+                }
+               
+                if (typeof that.binding.dataTermin.DefRemoteKonfigID === "string") {
+                    that.binding.dataTermin.DefRemoteKonfigID = parseInt(that.binding.dataTermin.DefRemoteKonfigID);
+                }
                 AppData.call("PRC_CreateVATerminPortal",
                     {
                         pShortName: that.binding.dataTermin.VeranstaltungName,
@@ -48,11 +94,18 @@
                         pEndDate: that.binding.dataTermin.EndDatum,
                         pFairVeranstalterID: parseInt(that.binding.dataTermin.FairVeranstalterID),
                         pFairLocationID: 0, /* Stand 2023 @hung: For now always 0 */
-                        pVeranstaltungTerminID: that.binding.dataTermin.VeranstaltungTerminVIEWID
+                        pVeranstaltungTerminID: that.binding.dataTermin.VeranstaltungTerminVIEWID,
+                        pStatus: that.binding.dataTermin.Status,
+                        pHostReference: that.binding.dataTermin.HostReference,
+                        pEventSuccessID: that.binding.dataTermin.EventSuccessID,
+                        pDefRemoteKonfigID: parseInt(that.binding.dataTermin.DefRemoteKonfigID),
+                        pMailBCC: that.binding.dataTermin.MailBCC,
+                        pMailCC: that.binding.dataTermin.MailCC,
+                        pMailFrom: that.binding.dataTermin.MailFrom,
+                        pMailReplyTo: that.binding.dataTermin.MailReplyTo
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
                         AppBar.busy = false;
-                        Application.navigateById("siteevents", event);
                     }, function (errorResponse) {
                         Log.print(Log.l.error, "call error");
                         AppBar.busy = false;
@@ -130,8 +183,17 @@
 
             var setTerminData = function (terminData) {
                 that.binding.dataTermin = terminData;
-                if (terminData.DisplayName === null) {
-                    that.binding.dataTermin.DisplayName = "";
+                if (typeof that.binding.dataTermin.MailBCC === "undefined") {
+                    that.binding.dataTermin.MailBCC = null;
+                }
+                if (typeof that.binding.dataTermin.MailCC === "undefined") {
+                    that.binding.dataTermin.MailCC = null;
+                }
+                if (typeof that.binding.dataTermin.MailFrom === "undefined") {
+                    that.binding.dataTermin.MailFrom = null;
+                }
+                if (typeof that.binding.dataTermin.MailReplyTo === "undefined") {
+                    that.binding.dataTermin.MailReplyTo = null;
                 }
                 if (terminData.StartDatum) {
                     that.binding.dataTermin.StartDatum = that.getDateObject(terminData.StartDatum);
@@ -145,6 +207,30 @@
             var loadData = function (complete, error) {
                 AppData.setErrorMsg(that.binding);
                 var ret = WinJS.Promise.as().then(function () {
+                    //load of format relation record data
+                    that.remoteServerList = new WinJS.Binding.List([SiteEventsTermin.remoteKonfigurationView.defaultValue]);
+                    // that.employees = new WinJS.Binding.List([Search.employeeView.defaultValue]);
+                    initServer.winControl.data = new WinJS.Binding.List();
+                    Log.print(Log.l.trace, "calling select eventView...");
+                    return SiteEventsTermin.remoteKonfigurationView.select(function (json) {
+                        AppData.setErrorMsg(that.binding);
+                        Log.print(Log.l.trace, "eventView: success!");
+                        if (json && json.d) {
+                            // now always edit!
+                            var results = json.d.results;
+                            //that.setDataEvent(json.d);
+                            results.forEach(function (item, index) {
+                                //that.resultConverter(item, index);
+                                that.remoteServerList.push(item);
+                            });
+                            if (initServer && initServer.winControl) {
+                                initServer.winControl.data = that.remoteServerList;
+                            }
+                        }
+                    }, function (errorResponse) {
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    });
+                }).then(function () {
                     Log.print(Log.l.trace, "calling select MaildokumentView...");
                     return SiteEventsTermin.FairVeranstalterView.select(function (json) {
                         Log.print(Log.l.trace, "FairVeranstalterView: success!");
@@ -191,6 +277,8 @@
             this.loadData = loadData;
 
             that.processAll().then(function () {
+                that.creatingTerminStatusCategory();
+            }).then(function () {
                 Log.print(Log.l.trace, "getRecordId loaded!");
                 return that.getRecordId();
             }).then(function () {

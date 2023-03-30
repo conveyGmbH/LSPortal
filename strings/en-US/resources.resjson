@@ -59,7 +59,7 @@
     "command.openWebpage"  : "Open webpage",
     "command.sendPDF"  : "Send PDF ticket",
     "command.sendWallet"  : "Send Wallet ticket",	
-    "command.deleteTicket"  : "Delete ticket",	
+    "command.deleteTicket"  : "Delete ticket",
     "command.exportexhibitorList"  : "Exhibitor list",
 
     "tooltip.backward"      : "Browse back",
@@ -993,7 +993,15 @@
     "siteeventsTermin.title": "Create event date",
     "siteeventsTermin.veranstaltungsname": "Date name",
     "siteeventsTermin.veranstaltungsnameDisplay": "Display name",
-	
+	"siteeventsTermin.terminStatus" : "Termin Status",
+	"siteeventsTermin.hostReference" : "Host Reference",
+	"siteeventsTermin.eventSuccessID" : "EventSuccessID",
+	"siteeventsTermin.defRemoteKonfigID" : "Barcode Server",
+	"siteeventsTermin.mailBCC" : "BCC",
+	"siteeventsTermin.mailCC" : "CC",
+	"siteeventsTermin.mailFrom" : "Absender",
+	"siteeventsTermin.mailReplyTo" : "Antwort an",
+
     "reorderlist.posno" : "PosNo.",
     "reorderlist.eventname" : "Event",
     "reorderlist.orderedapps" : "Ordered apps",

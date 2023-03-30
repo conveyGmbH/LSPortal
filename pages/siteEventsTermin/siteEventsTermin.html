@@ -60,6 +60,69 @@
                             </select>
                             <!--<span class="input_field" data-win-bind="textContent: InitLandItem.TITLE; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>-->
                         </div>
+                        <div class="field_line field_line_even">
+
+                        </div>
+                        <div class="line-separator"></div>
+                        <div class="field_line">
+                            <span class="label win-type-caption portrait_only win-type-ellipsis" data-win-res="{textContent: 'siteeventsTermin.mailBCC'}"></span>
+                            <span class="label landscape_only win-type-ellipsis" data-win-res="{textContent: 'siteeventsTermin.mailBCC'}"></span>
+                            <input class="input_field win-textbox" type="text" data-win-bind="value: dataTermin.MailBCC Binding.Mode.twoway" />
+                        </div>
+                        <div class="field_line">
+                            <span class="label win-type-caption portrait_only win-type-ellipsis" data-win-res="{textContent: 'siteeventsTermin.mailCC'}"></span>
+                            <span class="label landscape_only win-type-ellipsis" data-win-res="{textContent: 'siteeventsTermin.mailCC'}"></span>
+                            <input class="input_field win-textbox" type="text" data-win-bind="value: dataTermin.MailCC Binding.Mode.twoway" />
+                        </div>
+                        <div class="field_line">
+                            <span class="label win-type-caption portrait_only win-type-ellipsis" data-win-res="{textContent: 'siteeventsTermin.mailFrom'}"></span>
+                            <span class="label landscape_only win-type-ellipsis" data-win-res="{textContent: 'siteeventsTermin.mailFrom'}"></span>
+                            <input class="input_field win-textbox" type="text" data-win-bind="value: dataTermin.MailFrom Binding.Mode.twoway" />
+                        </div>
+                        <div class="field_line">
+                            <span class="label win-type-caption portrait_only win-type-ellipsis" data-win-res="{textContent: 'siteeventsTermin.mailReplyTo'}"></span>
+                            <span class="label landscape_only win-type-ellipsis" data-win-res="{textContent: 'siteeventsTermin.mailReplyTo'}"></span>
+                            <input class="input_field win-textbox" type="text" data-win-bind="value: dataTermin.MailReplyTo Binding.Mode.twoway" />
+                        </div>
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'siteeventsTermin.terminStatus'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'siteeventsTermin.terminStatus'}"></span>
+                            <select id="TerminStatus"
+                                    class="input_field win-dropdown"
+                                    data-win-control="WinJS.UI.Repeater"
+                                    data-win-bind="value: dataTermin.Status Binding.Mode.twoway">
+                                <option data-win-bind="value: TITLE; textContent: TITLE"></option>
+                            </select>
+                            <!--<span class="input_field" data-win-bind="textContent: InitLandItem.TITLE; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>-->
+                        </div>
+                        <div class="field_line field_line_even">
+
+                        </div>
+                        <div class="field_line">
+                            <span class="label win-type-caption portrait_only win-type-ellipsis" data-win-res="{textContent: 'siteeventsTermin.hostReference'}"></span>
+                            <span class="label landscape_only win-type-ellipsis" data-win-res="{textContent: 'siteeventsTermin.hostReference'}"></span>
+                            <input id="HostReference" class="input_field win-textbox" type="text" data-win-bind="value: dataTermin.HostReference Binding.Mode.twoway" />
+                        </div>
+                        <div class="field_line">
+                            <span class="label win-type-caption portrait_only win-type-ellipsis" data-win-res="{textContent: 'siteeventsTermin.eventSuccessID'}"></span>
+                            <span class="label landscape_only win-type-ellipsis" data-win-res="{textContent: 'siteeventsTermin.veranstaltungsname'}"></span>
+                            <input id="EventSuccessID" class="input_field win-textbox" type="text" data-win-bind="value: dataTermin.EventSuccessID Binding.Mode.twoway" />
+                        </div>
+                        <div class="line-separator"></div>
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'siteeventsTermin.defRemoteKonfigID'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'siteeventsTermin.defRemoteKonfigID'}"></span>
+                            <select id="InitServer"
+                                    class="input_field win-dropdown"
+                                    data-win-control="WinJS.UI.Repeater"
+                                    data-win-bind="value: dataTermin.DefRemoteKonfigID Binding.Mode.twoway">
+                                <option data-win-bind="value: RemoteKonfigurationVIEWID; textContent: ShowText"></option>
+                            </select>
+                            <!--<span class="input_field" data-win-bind="textContent: InitLandItem.TITLE; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>-->
+                        </div>
+                        <div class="field_line field_line_even">
+
+                        </div>
                     </div>
                 </div>
                     <div class="error-message"

@@ -58,13 +58,48 @@
             }
         },
         defaultValue: {
-            VeranstaltungName: "",
-            DisplayName: "",
+            VeranstaltungName: null,
+            DisplayName: null,
             FairVeranstalterID: 0, //deimos muss dann angepasst werden
             StartDatum: null,
             EndDatum: null,
-            VeranstaltungTerminVIEWID: 0
-
+            VeranstaltungTerminVIEWID: 0,
+            MailBCC: null,
+            MailCC: null,
+            MailFrom: null,
+            MailReplyTo: null,
+            StatusID: null,
+            HostReference: null,
+            EventSuccessID: null,
+            DefRemoteKonfigID: 0
+        },
+        _remoteKonfigurationView: {
+            get: function () {
+                return AppData.getFormatView("RemoteKonfiguration", 0, false);
+            }
+        },
+        remoteKonfigurationView: {
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, "eventView.");
+                var ret = SiteEventsTermin._remoteKonfigurationView.select(complete, error, restriction,
+                    {
+                        ordered: true,
+                        orderAttribute: "ShowText"
+                    });
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            update: function (complete, error, recordId, viewResponse) {
+                Log.call(Log.l.trace, "eventView.");
+                var ret = SiteEventsTermin._remoteKonfigurationView.update(complete, error, recordId, viewResponse);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            defaultValue: {
+                RemoteKonfigurationVIEWID: "",
+                ComboText: "",
+                ShowText: ""
+            }
         }
     });
 })();
