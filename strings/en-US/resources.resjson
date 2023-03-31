@@ -518,7 +518,7 @@
     "label.recover"         : "Password",
     "label.listContact"     : "PDF-Contacts",
     "label.contacts"        : "Edit Contacts",
-    "label.questionList"    : "Questionnaire",
+    "label.questionList"    : "Questions/Answers",
     "label.events"          : "Plan event",
 	"label.serviceevents"	: "Plan event",
     "label.event"           : "Event",

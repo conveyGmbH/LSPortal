@@ -518,7 +518,7 @@
     "label.recover"         : "Password",
     "label.listContact"     : "Contatti",
     "label.contacts"        : "Modifica contatti",
-    "label.questionList"    : "Questionario",
+    "label.questionList"    : "Domande/Risposte",
     "label.events"          : "Organizza evento",
     "label.serviceevents"	: "Organizza evento",
     "label.event"           : "Evento",
