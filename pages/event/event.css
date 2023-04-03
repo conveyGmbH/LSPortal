@@ -44,4 +44,5 @@
 
 .event .label {
     width: auto;
+    white-space: break-spaces;
 }
