@@ -228,10 +228,10 @@
                     var milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
                     if (AppData.getLanguageId() === 1031) {
                         moment().locale("de");
-                        ret = moment(milliseconds).format("DD.MM.YYYY HH:mm");//new Date(milliseconds).toLocaleTimeString().slice(0, -3);
+                        ret = moment(milliseconds).utc().format("DD.MM.YYYY HH:mm");//new Date(milliseconds).toLocaleTimeString().slice(0, -3);
                     } else {
                         moment().locale("en");
-                        ret = moment(milliseconds).format("DD/MM/YYYY HH:mm");//new Date(milliseconds).toLocaleTimeString().slice(0, -3);
+                        ret = moment(milliseconds).utc().format("DD/MM/YYYY HH:mm");//new Date(milliseconds).toLocaleTimeString().slice(0, -3);
                     }
                     //.toLocaleString('de-DE').substr(0, 10);
                 } else {
