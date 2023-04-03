@@ -235,6 +235,11 @@
     text-transform: uppercase;
     font-weight: 600;
 }
+
+#multiRating {
+    display: none;
+}
+
 .list-question-multi-rating {
     float: left;
     width: 30%;
