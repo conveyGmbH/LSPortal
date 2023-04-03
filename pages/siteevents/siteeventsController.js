@@ -185,7 +185,7 @@
             var addHeaderRowHandlers = function () {
                 if (tableHeader) {
                     var cells = tableHeader.getElementsByTagName("th");
-                    for (var i = 1; i < cells.length; i++) {
+                    for (var i = 0; i < cells.length; i++) {
                         var cell = cells[i];
                         if (!cell.onclick) {
                             cell.onclick = function (myrow) {
@@ -226,9 +226,13 @@
                 if (dateData) {
                     var dateString = dateData.replace("\/Date(", "").replace(")\/", "");
                     var milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
-                    moment().locale("de");
-                    ret = moment(milliseconds).format("DD.MM.YYYY HH:mm");//new Date(milliseconds).toLocaleTimeString().slice(0, -3);
-
+                    if (AppData.getLanguageId() === 1031) {
+                        moment().locale("de");
+                        ret = moment(milliseconds).format("DD.MM.YYYY HH:mm");//new Date(milliseconds).toLocaleTimeString().slice(0, -3);
+                    } else {
+                        moment().locale("en");
+                        ret = moment(milliseconds).format("DD/MM/YYYY HH:mm");//new Date(milliseconds).toLocaleTimeString().slice(0, -3);
+                    }
                     //.toLocaleString('de-DE').substr(0, 10);
                 } else {
                     ret = "";
