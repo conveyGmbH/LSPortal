@@ -113,6 +113,13 @@
     width: calc(100% - 20px);
 }
 
+#listQuestionList .answer-type-container {
+    min-height: 28px;
+    float: left;
+    width: 50%;
+    margin: 0 4px;
+}
+
 #listQuestionList .answer-count-container {
     min-height: 28px;
     width: 50%;
@@ -120,15 +127,17 @@
     margin: 0 4px;
 }
 
-#listQuestionList .answer-count-label {
+#listQuestionList .answer-count-label, #listQuestionList .answer-type-label {
     width: 100%;
 }
+
 #listQuestionList .answer-count-range {
     padding: 0;
     margin-top: 6px;
     width: calc(100% - 48px);
     float: left;
 }
+
 #listQuestionList .answer-count {
     width: 40px;
     float: right;

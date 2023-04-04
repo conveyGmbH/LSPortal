@@ -139,6 +139,10 @@
     "tooltip.sendPDF"  : "Envoyer un ticket PDF",
     "tooltip.sendWallet"  : "Envoyer un ticket wallet",	
     "tooltip.deleteTicket"  : "Supprimer un ticket",
+    "tooltip.singlechoice" : "Avec ce type de réponse, une seule réponse peut être sélectionnée",
+    "tooltip.multchoice" : "Ce type de réponse permet de sélectionner une ou plusieurs réponses",
+    "tooltip.rating" : "Avec ce type de réponse une seule réponse peut être sélectionnée. La réponse ne peut pas contenir de texte, mais seulement un à six étoiles",
+    "tooltip.dropdown" : "Avec ce type de réponse, une seule réponse peut être sélectionnée. Les réponses peuvent être affichées dans une liste déroulante",
 
     "home.title"            : "Start",
     "home.info"             : "Instructions importantes",
@@ -668,6 +672,7 @@
 
     "questionList.title"    : "Rapport juste",
     "questionList.count"    : "Nombre",
+    "questionList.answertype": "Veuillez sélectionnez le mode de réponse pour cette question:",
     "questionList.answercnt": "Choisissez le nombre de réponses à la question en cours en déplaçant la diapositive vers la gauche ou la droite",
     "questionList.labelDelete": "Question",
     "questionList.questionDelete": "Voulez-vous supprimer cet question?",

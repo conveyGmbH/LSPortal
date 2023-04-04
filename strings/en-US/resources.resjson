@@ -139,6 +139,10 @@
     "tooltip.sendPDF"  : "Send PDF Pass",
     "tooltip.sendWallet"  : "Send Wallet Pass",	
     "tooltip.deleteTicket"        : "Delete Pass",
+    "tooltip.singlechoice" : "With this answer type only one of the answers can be selected",
+    "tooltip.multchoice" : "With this answer type one or more of the answers can be selected",
+    "tooltip.rating" : "With this answer type only one answer can be selected. The answer cannot contain text, just one to six star symbols",
+    "tooltip.dropdown" : "With this answer type, only one of the answers can be selected. The answers are displayed inside a drop down box",
 
     "home.title"            : "Start",
     "home.info"             : "Important information",
@@ -668,6 +672,7 @@
 
     "questionList.title"    : "Fair report",
     "questionList.count"    : "Count",
+    "questionList.answertype": "Please select the answer type for this question:",
     "questionList.answercnt": "Choose the amount of answers for the current question by moving the slide left or right",
     "questionList.labelDelete": "Question",
     "questionList.questionDelete": "Do you want to delete the current question?",

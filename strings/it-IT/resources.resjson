@@ -139,6 +139,10 @@
     "tooltip.sendPDF"  : "Invia biglietto PDF",
     "tooltip.sendWallet"  : "Invia biglietto del wallet",
     "tooltip.deleteTicket"  : "Cancellare il biglietto",
+    "tooltip.singlechoice" : "Con questo tipo di risposta è possibile selezionare solo una delle risposte",
+    "tooltip.multchoice" : "Con questo tipo di risposta è possibile selezionare una o più risposte",
+    "tooltip.rating" : "Con questo tipo di risposta è possibile selezionare una sola risposta. La risposta non può contenere testo, ma solo da uno a sei simboli stella",
+    "tooltip.dropdown" : "Con questo tipo di risposta, è possibile selezionare solo una delle risposte. Le risposte sono visualizzate in una casella a discesa",
 
     "home.title"            : "Start",
     "home.info"             : "Informazioni importanti",
@@ -668,6 +672,7 @@
 
     "questionList.title"    : "Rapporto equo",
     "questionList.count"    : "Numero",
+    "questionList.answertype": "Selezionare la modalità di risposta per questa domanda:",
     "questionList.answercnt": "Scegliere il numero di risposte per la domanda corrente spostando la slide a sinistra o a destra",
     "questionList.labelDelete": "Domande",
     "questionList.questionDelete": "Siete sicuri di vole cancellare questa domanda?",

@@ -139,6 +139,10 @@
     "tooltip.sendPDF"        : "PDF Ausweis senden",	
     "tooltip.sendWallet"        : "Wallet Ausweis senden",	
     "tooltip.deleteTicket"        : "Ausweis löschen",
+	"tooltip.singlechoice" : "Bei dieser Antwortart kann nur eine der Antworten ausgewählt werden",
+	"tooltip.multchoice" : "Bei dieser Antwortart können eine oder mehrere Antworten ausgewählt werden",
+	"tooltip.rating" : "Bei dieser Antwortart kann nur eine Antwort ausgewählt werden. Die Antwort darf keinen Text enthalten, sondern nur ein bis sechs Sternsymbole",
+	"tooltip.dropdown" : "Bei dieser Antwortart kann nur eine der Antworten ausgewählt werden. Die Antworten werden innerhalb eine Drop Down Box angezeigt",
 
     "home.title"            : "Start",
     "home.info"             : "Wichtige Hinweise",
@@ -668,6 +672,7 @@
 
     "questionList.title"    : "Messebericht",
     "questionList.count"    : "Anzahl",
+	"questionList.answertype": "Bitte wählen Sie den Antworttyp für diese Frage aus:",
     "questionList.answercnt": "Wählen Sie die Anzahl der Antworten für die aktuelle Frage, indem Sie die Schiene nach links oder rechts bewegen",
     "questionList.labelDelete": "Frage",
     "questionList.questionDelete": "Möchten Sie diese Frage löschen?",

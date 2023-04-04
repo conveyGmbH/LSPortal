@@ -37,11 +37,16 @@
                             </div>
                             <div class="row-separator" data-win-bind="style.display: FLAG_Trennlinie Binding.Converter.toDisplayNone"></div>
                             <div class="question-type titlearea-bkg">
+                                <div class="answer-type-container">
+                                    <span class="answer-type-label win-type-caption"
+                                          data-win-res="{textContent: 'questionList.answertype'}"></span>
+                                
                                 <button id="single"
                                         class="win-button question-list-button"
                                         onclick="AppBar.handleEvent('click', 'clickButton', event)">
                                     <div class="question-list-image-container">
                                         <div class="question-list-image" id="radio_button_selected"></div>
+                                        <span class="win-tooltip" data-win-res="{title: 'tooltip.singlechoice'}"></span>
                                     </div>
                                 </button>
                                 <button id="multi"
@@ -49,11 +54,13 @@
                                         onclick="AppBar.handleEvent('click', 'clickButton', event)">
                                     <div class="question-list-image-container">
                                         <div class="question-list-image" id="checkbox_selected"></div>
+                                        <span class="win-tooltip" data-win-res="{textContent: 'tooltip.multchoice'}"></span>
                                     </div>
                                 </button>
                                 <button class="win-button question-list-button type-selected" disabled="">
                                     <div class="question-list-image-container">
                                         <div class="question-list-image-selected" id="star2"></div>
+                                        <span class="win-tooltip" data-win-res="{textContent: 'tooltip.rating'}"></span>
                                     </div>
                                 </button>
                                 <button id="multiRating"
@@ -63,13 +70,16 @@
                                         <div class="question-list-image" id="elements3"></div>
                                     </div>
                                 </button>
-                                <button id="combo"
-                                        class="win-button question-list-button"
-                                        onclick="AppBar.handleEvent('click', 'clickButton', event)">
-                                    <div class="question-list-image-container">
-                                        <div class="question-list-image" id="drop_down_list"></div>
-                                    </div>
-                                </button>
+                                    <button id="combo"
+                                            class="win-button question-list-button"
+                                            onclick="AppBar.handleEvent('click', 'clickButton', event)">
+                                        <div class="question-list-image-container">
+                                            <div class="question-list-image" id="drop_down_list"></div>
+                                            <span class="win-tooltip" data-win-res="{textContent: 'tooltip.dropdown'}"></span>
+                                        </div>
+                                    </button>
+                                
+                                </div>
                                 <div class="answer-count-container">
                                     <span class="answer-count-label win-type-caption"
                                           data-win-res="{textContent: 'questionList.answercnt'}"></span>
@@ -78,7 +88,7 @@
                                            type="range" min="2" max="6" step="1"
                                            data-win-bind="value: Anzahl"
                                            oninput="AppBar.handleEvent('change', 'changedAnswerCount', event)"
-                                           onchange="AppBar.handleEvent('change', 'changedAnswerCount', event)" />
+                                           onchange="AppBar.handleEvent('change', 'changedAnswerCount', event)"/>
                                     <span class="answer-count range_output" data-win-bind="textContent: Anzahl"></span>
                                 </div>
                             </div>
