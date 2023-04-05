@@ -19,40 +19,15 @@
                 eventData: getEmptyDefaultValue(EventStatus.veranstaltungView.defaultValue),
                 sessionData: getEmptyDefaultValue(EventStatus.BBBSessionODataView.defaultValue)
             }, commandList]);
-           
+
             var that = this;
-
-            var getSessionEventId = function () {
-                return EventStatus._sessionEventId;
-            }
-            this.getSessionEventId = getSessionEventId;
-
-            var setSessionEventId = function (value) {
-                Log.print(Log.l.trace, "setSessionEventId=" + value);
-                EventStatus._sessionEventId = value;
-                return that.loadData();
-            }
-            this.setSessionEventId = setSessionEventId;
-
-            var getEventName = function () {
-                return EventStatus._eventName;
-            }
-            this.getEventName = getEventName;
-
-            var setEventName = function (value) {
-                Log.print(Log.l.trace, "setEventName=" + value);
-                EventStatus._eventName = value;
-                return;
-            }
-            this.setEventName = setEventName;
-            
 
             var master = Application.navigator.masterControl;
             if (master && master.controller && master.controller.binding) {
-                //that.setSessionEventId(master.controller.binding.generalData.eventId);
+                that.binding.eventName = master.controller.binding.eventName;
             }
 
-            var requestSessionEndData = function() {
+            var requestSessionEndData = function () {
                 Log.call(Log.l.trace, "EventStatus.Controller.");
                 var eventSessionFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("eventSession"));
                 if (eventSessionFragmentControl && eventSessionFragmentControl.controller) {
@@ -92,26 +67,16 @@
                 Log.ret(Log.l.trace);
             }
             this.requestSessionEnd = requestSessionEnd;
-            
-            var getSessionData = function() {
+
+            var getSessionData = function () {
                 Log.call(Log.l.trace, "EventStatus.Controller.");
                 var eventSessionFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("eventSession"));
                 if (eventSessionFragmentControl && eventSessionFragmentControl.controller) {
-                    return eventSessionFragmentControl.controller.getSelectedData();
+                    return eventSessionFragmentControl.controller.binding.selectedData;
                 }
                 Log.call(Log.l.trace, "EventStatus.Controller.");
             }
             this.getSessionData = getSessionData;
-
-            var setVaName = function () {
-                Log.call(Log.l.trace, "EventStatus.Controller.");
-                var eventSessionFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("eventSession"));
-                if (eventSessionFragmentControl && eventSessionFragmentControl.controller) {
-                    return eventSessionFragmentControl.controller.setVaName(that.getEventName());
-                }
-                Log.call(Log.l.trace, "EventStatus.Controller.");
-            }
-            this.setVaName = setVaName;
 
             // define handlers
             this.eventHandlers = {
@@ -122,16 +87,16 @@
                     }
                     Log.ret(Log.l.trace);
                 },
-                clickDontShow: function(event) {
+                clickDontShow: function (event) {
                     Log.call(Log.l.trace, "EventStatus.Controller.");
                     var checked = event.currentTarget.checked;
-                    var sesstionData = getSessionData();
+                    var sessionData = getSessionData();
                     if (checked) {
-                        sesstionData.DontShow = 1;
+                        sessionData.DontShow = 1;
                     } else {
-                        sesstionData.DontShow = null;
+                        sessionData.DontShow = null;
                     }
-                    var recordId = sesstionData.BBBSessionVIEWID;
+                    var recordId = sessionData.BBBSessionVIEWID;
                     Log.call(Log.l.trace, "EventStatus.Controller.");
                     var ret = new WinJS.Promise.as().then(function () {
                         return EventStatus.BBBSessionODataView.update(function (json) {
@@ -144,12 +109,12 @@
                             Log.print(Log.l.error, "error update BBBSessionODataView");
                             AppBar.busy = false;
                             AppData.setErrorMsg(that.binding, errorResponse);
-                            }, recordId, sesstionData);
+                        }, recordId, sessionData);
                     });
                     Log.ret(Log.l.trace);
                     return ret;
                 },
-                clickEndSession: function(event) {
+                clickEndSession: function (event) {
                     Log.call(Log.l.trace, "EventStatus.Controller.");
                     var confirmTitle = getResourceText("eventStatus.confirmSessionEnd");
                     confirm(confirmTitle, function (result) {
@@ -183,7 +148,7 @@
                     Log.call(Log.l.trace, "EventStatus.Controller.");
                     that.saveData(function (response) {
                         Log.print(Log.l.trace, "starturl saved");
-                        
+
                     }, function (errorResponse) {
                         Log.print(Log.l.error, "error saving employee");
                     });
@@ -217,14 +182,14 @@
             };
 
             this.disableHandlers = {
-                clickBack: function() {
+                clickBack: function () {
                     if (WinJS.Navigation.canGoBack === true) {
                         return false;
                     } else {
                         return true;
                     }
                 },
-                clickSave: function() {
+                clickSave: function () {
                     if (that.binding.eventData.VeranstaltungVIEWID) {
                         return false;
                     } else {
@@ -235,18 +200,21 @@
 
             var loadData = function () {
                 Log.call(Log.l.trace, "EventStatus.Controller.");
-                var recordId = that.getSessionEventId();
-                AppData.setRecordId("VeranstaltungSession", recordId);
+                var master = Application.navigator.masterControl;
+                var recordId = null;
+                that.binding.eventName = master.controller.binding.eventName;
+                recordId = master.controller.binding.eventId;
+                that.binding.eventId = recordId;
+
                 AppData.setErrorMsg(that.binding);
                 var ret;
                 if (recordId) {
-                        ret = new WinJS.Promise.as().then(function () {
+                    ret = new WinJS.Promise.as().then(function () {
                         return EventStatus.veranstaltungView.select(function (json) {
                             Log.print(Log.l.trace, "veranstaltungView: success!");
                             if (json && json.d) {
                                 var result = json.d;
                                 that.binding.eventData = result;
-                                that.setVaName();
                                 Log.print(Log.l.trace, "Data loaded");
                             }
                         }, function (errorResponse) {
@@ -255,26 +223,26 @@
                             AppData.setErrorMsg(that.binding, errorResponse);
                             that.loading = false;
                         }, recordId);
-                        }).then(function () {
-                            var eventSessionFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("eventSession"));
-                            if (eventSessionFragmentControl && eventSessionFragmentControl.controller) {
-                                return eventSessionFragmentControl.controller.setEventId(that.getSessionEventId());
+                    }).then(function () {
+                        var eventSessionFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("eventSession"));
+                        if (eventSessionFragmentControl && eventSessionFragmentControl.controller) {
+                            return eventSessionFragmentControl.controller.loadData();
+                        } else {
+                            var parentElement = pageElement.querySelector("#eventSessionhost");
+                            if (parentElement) {
+                                return Application.loadFragmentById(parentElement, "eventSession", {});
                             } else {
-                                var parentElement = pageElement.querySelector("#eventSessionhost");
-                                if (parentElement) {
-                                    return Application.loadFragmentById(parentElement, "eventSession", {});
-                                } else {
-                                    return WinJS.Promise.as();
-                                }
+                                return WinJS.Promise.as();
                             }
-                        });
+                        }
+                    });
                 }
                 Log.ret(Log.l.trace);
                 return ret;
             }
             this.loadData = loadData;
-            
-            that.processAll().then(function() {
+
+            that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 //return that.loadData();
             }).then(function () {

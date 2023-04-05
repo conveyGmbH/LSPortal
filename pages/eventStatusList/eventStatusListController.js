@@ -234,13 +234,12 @@
                                             if (AppBar.scope && typeof AppBar.scope.saveData === "function") {
                                                 //=== "function" save wird nicht aufgerufen wenn selectionchange
                                                 // current detail view has saveData() function
+                                                that.binding.eventName = item.data.Name;
                                                 AppBar.scope.saveData(function (response) {
                                                     // called asynchronously if ok
                                                     if ((curPageId === "eventStatus" ) &&
                                                         typeof AppBar.scope.loadData === "function" &&
                                                         typeof AppBar.scope.setSessionEventId === "function") {
-                                                        AppBar.scope.setSessionEventId(item.data.VeranstaltungVIEWID);
-                                                        AppBar.scope.setEventName(item.data.Name);
                                                         //AppBar.scope.loadData();
                                                     } else {
                                                         Application.navigateById("eventStatus");
@@ -254,11 +253,9 @@
                                             } else {
                                                 // current detail view has NO saveData() function - is list
                                                 if ((curPageId === "eventStatus") &&
-                                                    typeof AppBar.scope.loadData === "function" &&
-                                                    typeof AppBar.scope.setSessionEventId === "function") {
-                                                    AppBar.scope.setSessionEventId(item.data.VeranstaltungVIEWID);
-                                                    AppBar.scope.setEventName(item.data.Name);
-                                                    //AppBar.scope.loadData();
+                                                    typeof AppBar.scope.loadData === "function") {
+                                                    that.binding.eventName = item.data.Name;
+                                                    AppBar.scope.loadData();
                                                 } else {
                                                     Application.navigateById("eventStatus");
                                                 }
