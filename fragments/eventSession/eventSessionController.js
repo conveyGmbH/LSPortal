@@ -22,7 +22,7 @@
                 btnLabel: getResourceText("voucheradministrationlist.btnlabelO"),
                 selectedData: { Status: "" },
                 moderatorData: null,
-                eventName: AppBar.scope && AppBar.scope.binding && AppBar.scope.binding.eventData && AppBar.scope.binding.eventData.Name,
+                eventName: "",
                 showEventNameStatus: null,
                 eventStatusState: "",
                 dwlink: null,
@@ -234,8 +234,6 @@
                             try {
                                 var result = response.responseText;
                                 var breakfinal = result.split(/\r?\n|\r|\n/g);
-                                linkcontainer.innerHTML = "";
-                                that.binding.sessiondownloadData = [];
                                 that.converterToArray(breakfinal);
                                 that.createButtonFromArray(url2);
                                 return WinJS.Promise.as();
@@ -282,12 +280,22 @@
                                 // Only one item is selected, show the page
                                 listControl.selection.getItems().done(function (items) {
                                     var item = items[0];
-                                    if (item.data && item.data.BBBSessionVIEWID) {
+                                    that.binding.moderatorData = null;
+                                    that.binding.sessionEndBtn = null;
+                                    that.binding.dwlink = null;
+                                    that.binding.sessionEndData = [];
+                                    that.binding.sessiondownloadData = [];
+                                    linkcontainer.innerHTML = "";
+                                    if (item.data && item.data.BBBSessionVIEWID && item.data.BBBSessionVIEWID !== that.binding.recordID) {
                                         that.binding.selectedData = item.data;
+                                        that.binding.recordID = that.binding.selectedData.BBBSessionVIEWID;
                                         that.binding.eventStatusState = that.binding.selectedData.Status;
                                         that.getModeratorData(item.data.VeranstaltungID);
                                         if (that.binding.selectedData.StartTSUTC && that.binding.selectedData.EndTSUTC === null && that.binding.selectedData.RecordingLink === null) {
                                             that.binding.sessionEndBtn = 1;
+                                        }
+                                        if (that.binding.selectedData.StartTSUTC && that.binding.selectedData.RecordingLink) {
+                                            that.getSessionDownloadFiles(that.binding.selectedData.RecordingLink);
                                         }
                                     }
                                 });
@@ -336,7 +344,6 @@
 
             var resultConverter = function (item, index) {
                 item.index = index;
-                that.getSessionDownloadFiles();
                 if (item.StartTSUTC) {
                     item.SessionStart = that.getDateObject(item.StartTSUTC);
                 }
@@ -367,7 +374,6 @@
                 } else {
                     if (item.StartTSUTC && item.RecordingLink) {
                         item.Status = "Beendet mit Aufnahme fertig";
-                        that.getSessionDownloadFiles(item.RecordingLink);
                     }
                     if (item.StartTSUTC && item.EndTSUTC && item.RecordingLink === null) {
                         item.Status = "beendet ohne Aufnahme";
