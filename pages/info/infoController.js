@@ -33,7 +33,7 @@
 
             var homepageLink = pageElement.querySelector("#homepageLink");
             if (homepageLink) {
-                homepageLink.innerHTML = "<a href=\"https://" + getResourceText("info.homepage") + "\">" + getResourceText("info.homepage") + "</a>";
+                homepageLink.innerHTML = "<a target=\"_blank\" href=\"https://" + getResourceText("info.homepage") + "\">" + getResourceText("info.homepage") + "</a>";
             }
 
             var setupLog = function () {

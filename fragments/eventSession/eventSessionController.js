@@ -28,7 +28,8 @@
                 dwlink: null,
                 sessionEndBtn: null,
                 sessionEndData: [],
-                sessiondownloadData: []
+                sessiondownloadData: [],
+                oldPlayback: false
             }]);
             var that = this;
 
@@ -38,6 +39,7 @@
             // now do anything...
             var listView = fragmentElement.querySelector("#eventSessionList.listview");
             var linkcontainer = fragmentElement.querySelector("#dwlinkcontainer");
+            var oldRecordingLink = fragmentElement.querySelector("#playbackLink"); // with playback
 
             this.dispose = function () {
                 if (that.binding.moderatorData) {
@@ -196,7 +198,7 @@
 
             var createButtonFromArray = function (url) {
                 Log.call(Log.l.trace, "EventSession.Controller.");
-                that.binding.dwlink = 1;
+                that.binding.dwlink = true;
                 if (url) {
                     if (that.binding.sessiondownloadData.length !== 0) {
                         for (var i = 0; i < that.binding.sessiondownloadData.length; i++) {
@@ -259,8 +261,15 @@
                             return WinJS.Promise.as();
                         });
                         Log.call(Log.l.trace, "EventSession.Controller.");
+                    } 
+                    else if (rawurl.search("/playback/") > 0) {
+                        that.binding.oldPlayback = true;
+                        if (oldRecordingLink) {
+                            oldRecordingLink.innerHTML = "<a target=\"_blank\" href=" + rawurl + ">" + getResourceText("eventSession.sessionlink") + "</a>";
+                        }
                     } else {
                         linkcontainer.innerHTML = "";
+                        that.binding.oldPlayback = false;
                         that.createButtonFromArray(rawurl);
                     }
                 } else {
@@ -287,6 +296,7 @@
                                     that.binding.sessiondownloadData = [];
                                     linkcontainer.innerHTML = "";
                                     if (item.data && item.data.BBBSessionVIEWID && item.data.BBBSessionVIEWID !== that.binding.recordID) {
+                                        oldRecordingLink.innerHTML = "";
                                         that.binding.selectedData = item.data;
                                         that.binding.recordID = that.binding.selectedData.BBBSessionVIEWID;
                                         that.binding.eventStatusState = that.binding.selectedData.Status;
@@ -389,6 +399,7 @@
                 that.sessions = [];
                 that.binding.moderatorData = null;
                 that.binding.dwlink = null;
+                that.binding.oldPlayback = false;
                 that.binding.selectedData = null;
                 that.binding.sessionEndBtn = null;
                 that.statuscounter = 0;
