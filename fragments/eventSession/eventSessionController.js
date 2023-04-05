@@ -286,7 +286,7 @@
                                         that.binding.selectedData = item.data;
                                         that.binding.eventStatusState = that.binding.selectedData.Status;
                                         that.getModeratorData(item.data.VeranstaltungID);
-                                        if (selectedData.StartTSUTC && selectedData.EndTSUTC === null && selectedData.RecordingLink === null) {
+                                        if (that.binding.selectedData.StartTSUTC && that.binding.selectedData.EndTSUTC === null && that.binding.selectedData.RecordingLink === null) {
                                             that.binding.sessionEndBtn = 1;
                                         }
                                     }
