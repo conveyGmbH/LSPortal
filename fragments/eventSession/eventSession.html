@@ -13,15 +13,14 @@
             <section aria-label="Main content" role="main" class="animationElement">
                 <div class="contentarea win-type-body">
                     <div class="infoHeader">
-                        <div class="field_line field_line" data-win-bind="style.display: showEventNameStatus Binding.Converter.toDisplay">
-                            <div class="field_line field_line_odd">
+                        <div class="field_line field_line">
+                            <div class="field_line field_line_odd" data-win-bind="style.display: eventName Binding.Converter.toDisplay">
                                 <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'eventSession.event'}"></span>
                                 <span id="eventname" data-win-bind="textContent: eventName"></span><br/>
                             </div>
-                            <div class="field_line field_line_even" data-win-bind="style.display: eventStatusState Binding.Converter.toDisplay">
+                            <div class="field_line field_line_even" data-win-bind="style.display: selectedData.Status Binding.Converter.toDisplay">
                                 <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'eventSession.status'}"></span>
-                                <span id="eventstatustext" data-win-res="{textContent: 'eventSession.sessionStatus'}"></span>
-                                <span id="eventstatusstatetext" data-win-bind="textContent: eventStatusState"></span>
+                                <span id="eventstatusstatetext" data-win-bind="textContent: selectedData.Status"></span>
                             </div>
                         </div>
                         <div class="field_line field_line">

@@ -20,9 +20,9 @@
             Fragments.Controller.apply(this, [fragmentElement, {
                 recordID: 0,
                 btnLabel: getResourceText("voucheradministrationlist.btnlabelO"),
-                selectedData: null,
+                selectedData: { Status: "" },
                 moderatorData: null,
-                eventName: null,
+                eventName: "",
                 showEventNameStatus: null,
                 eventStatusState: "",
                 dwlink: null,
@@ -31,14 +31,14 @@
                 sessiondownloadData: []
             }]);
             var that = this;
-            
+
             var layout = null;
             this.sessions = null;
 
             // now do anything...
             var listView = fragmentElement.querySelector("#eventSessionList.listview");
             var linkcontainer = fragmentElement.querySelector("#dwlinkcontainer");
-           
+
             this.dispose = function () {
                 if (that.binding.moderatorData) {
                     that.binding.moderatorData = null;
@@ -51,25 +51,6 @@
                 }
                 listView = null;
             }
-
-            var getEventId = function () {
-                return EventSession._eventId;
-            }
-            this.getEventId = getEventId;
-
-            var setEventId = function (value) {
-                Log.print(Log.l.trace, "setEventId=" + value);
-                EventSession._eventId = value;
-                return that.loadData();
-            }
-            this.setEventId = setEventId;
-
-            var setVaName = function(eventName) {
-                Log.print(Log.l.trace, "setVaName=" + eventName);
-                that.binding.eventName = eventName;
-                that.binding.showEventNameStatus = 1;
-            }
-            this.setVaName = setVaName;
 
             var scopeFromRecordId = function (recordId) {
                 var i;
@@ -112,14 +93,6 @@
                 Log.ret(Log.l.trace);
             }
             this.selectRecordId = selectRecordId;
-            
-            var getRecordId = function () {
-                Log.call(Log.l.trace, "EventSession.Controller.");
-                that.binding.recordID = AppData.getRecordId("VeranstaltungAnlage");
-                Log.ret(Log.l.trace, that.binding.recordID);
-                return that.binding.recordID;
-            }
-            this.getRecordId = getRecordId;
 
             var getDateObject = function (dateData) {
                 var ret;
@@ -135,7 +108,7 @@
             };
             this.getDateObject = getDateObject;
 
-            var getDurationObject = function(startDate, endDate) {
+            var getDurationObject = function (startDate, endDate) {
                 var ret;
                 var start;
                 var end;
@@ -164,31 +137,7 @@
             }
             this.getDurationObject = getDurationObject;
 
-            var setStatus = function (statusid) {
-                Log.call(Log.l.trace, "EventSession.Controller.");
-                if (that.statuscounter < statusid) {
-                    that.statuscounter = statusid;
-                }
-                if (that.statuscounter === 1) {
-                    that.binding.eventStatusState = "Vorbereitung";
-                }
-                if (that.statuscounter === 2) {
-                    that.binding.eventStatusState = "Aktiv laufend";
-                }
-                if (that.statuscounter === 3) {
-                    that.binding.eventStatusState = "Beendet mit Aufnahme laufend";
-                }
-                if (that.statuscounter === 4) {
-                    that.binding.eventStatusState = "Beendet mit Aufnahme fertig";
-                }
-                if (that.statuscounter === 5) {
-                    that.binding.eventStatusState = "beendet ohne Aufnahme";
-                }
-                Log.ret(Log.l.trace);
-            }
-            this.setStatus = setStatus;
-
-            var setDownloadLink = function(link) {
+            var setDownloadLink = function (link) {
                 Log.call(Log.l.trace, "EventSession.Controller.");
                 if (link) {
                     that.binding.dwlink = link;
@@ -197,7 +146,7 @@
             }
             this.setDownloadLink = setDownloadLink;
 
-            var setSesssionEndButton = function(vid) {
+            var setSesssionEndButton = function (vid) {
                 Log.call(Log.l.trace, "EventSession.Controller.");
                 if (vid) {
                     that.binding.sessionEndBtn = 1;
@@ -210,12 +159,12 @@
             }
             this.setSesssionEndButton = setSesssionEndButton;
 
-            var getSessionEndData = function() {
+            var getSessionEndData = function () {
                 return that.binding.sessionEndData;
             }
             this.getSessionEndData = getSessionEndData;
 
-            var getModeratorData = function(veranstId) {
+            var getModeratorData = function (veranstId) {
                 Log.call(Log.l.trace, "EventSession.Controller.");
                 AppData.call("PRC_GetLBModerator",
                     {
@@ -236,22 +185,16 @@
             }
             this.getModeratorData = getModeratorData;
 
-            var getSelectedData = function() {
-                Log.call(Log.l.trace, "EventSession.Controller.");
-                return that.binding.selectedData;
-            }
-            this.getSelectedData = getSelectedData;
-
             var converterToArray = function (item) {
                 for (var i = 0; i < item.length; i++) {
                     if (item[i]) {
-                        that.binding.sessiondownloadData.push({ "Link" : item[i]});
+                        that.binding.sessiondownloadData.push({ "Link": item[i] });
                     }
                 }
             }
             this.converterToArray = converterToArray;
 
-            var createButtonFromArray = function(url) {
+            var createButtonFromArray = function (url) {
                 Log.call(Log.l.trace, "EventSession.Controller.");
                 that.binding.dwlink = 1;
                 if (url) {
@@ -276,7 +219,7 @@
             }
             this.createButtonFromArray = createButtonFromArray;
 
-            var getSessionDownloadFiles = function(rawurl) {
+            var getSessionDownloadFiles = function (rawurl) {
                 Log.call(Log.l.trace, "EventSession.Controller.");
                 if (rawurl) {
                     if (rawurl.search("/recording/") > 0) {
@@ -291,8 +234,6 @@
                             try {
                                 var result = response.responseText;
                                 var breakfinal = result.split(/\r?\n|\r|\n/g);
-                                linkcontainer.innerHTML = "";
-                                that.binding.sessiondownloadData = [];
                                 that.converterToArray(breakfinal);
                                 that.createButtonFromArray(url2);
                                 return WinJS.Promise.as();
@@ -339,9 +280,23 @@
                                 // Only one item is selected, show the page
                                 listControl.selection.getItems().done(function (items) {
                                     var item = items[0];
-                                    if (item.data && item.data.BBBSessionVIEWID) {
+                                    that.binding.moderatorData = null;
+                                    that.binding.sessionEndBtn = null;
+                                    that.binding.dwlink = null;
+                                    that.binding.sessionEndData = [];
+                                    that.binding.sessiondownloadData = [];
+                                    linkcontainer.innerHTML = "";
+                                    if (item.data && item.data.BBBSessionVIEWID && item.data.BBBSessionVIEWID !== that.binding.recordID) {
                                         that.binding.selectedData = item.data;
+                                        that.binding.recordID = that.binding.selectedData.BBBSessionVIEWID;
+                                        that.binding.eventStatusState = that.binding.selectedData.Status;
                                         that.getModeratorData(item.data.VeranstaltungID);
+                                        if (that.binding.selectedData.StartTSUTC && that.binding.selectedData.EndTSUTC === null && that.binding.selectedData.RecordingLink === null) {
+                                            that.binding.sessionEndBtn = 1;
+                                        }
+                                        if (that.binding.selectedData.StartTSUTC && that.binding.selectedData.RecordingLink) {
+                                            that.getSessionDownloadFiles(that.binding.selectedData.RecordingLink);
+                                        }
                                     }
                                 });
                             }
@@ -386,10 +341,9 @@
                 this.addRemovableEventListener(listView, "selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
             }
             this.addRemovableEventListener(listView, "selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
-            
+
             var resultConverter = function (item, index) {
                 item.index = index;
-                that.getSessionDownloadFiles();
                 if (item.StartTSUTC) {
                     item.SessionStart = that.getDateObject(item.StartTSUTC);
                 }
@@ -398,44 +352,48 @@
                 } else {
                     item.Dauer = "-";
                 }
-                if (item.StartTSUTC === null && item.EndTSUTC === null && item.RecordingExpected === 0 || item.RecordingExpected === null  && item.RecordingLink === null) {
-                    item.Status = "Vorbereitung";
-                    that.setStatus(1);
+                if (item.RecordingExpected === 0) {
+                    if (item.EndTSUTC) {
+                        item.Status = "Session beendet! (Keine Aufzeichnung)";
+                        //that.binding.eventStatusState = "Session beendet! (Keine Aufzeichnung)";
+                    } else {
+                        item.Status = "Session läuft! (Aufzeichnung nicht gestartet)";
+                        that.binding.sessionEndBtn = 1;
+                        //that.binding.eventStatusState = "Session läuft! (Aufzeichnung nicht gestartet)";
+                    }
+                } else if (item.RecordingExpected === 1) {
+                    if (item.StartTSUTC === null && item.EndTSUTC === null && item.RecordingLink === null) {
+                        item.Status = "Vorbereitung";
+                    }
+                    if (item.StartTSUTC && item.EndTSUTC === null && item.RecordingLink === null) {
+                        item.Status = "Aktiv laufend";
+                    }
+                    if (item.StartTSUTC && item.EndTSUTC && item.RecordingLink === null) {
+                        item.Status = "Beendet mit Aufnahme laufend";
+                    }
+                } else {
+                    if (item.StartTSUTC && item.RecordingLink) {
+                        item.Status = "Beendet mit Aufnahme fertig";
+                    }
+                    if (item.StartTSUTC && item.EndTSUTC && item.RecordingLink === null) {
+                        item.Status = "beendet ohne Aufnahme";
+                    }
                 }
-                else if (item.StartTSUTC && item.EndTSUTC === null && item.RecordingExpected === 0 || item.RecordingExpected === null && item.RecordingLink === null) {
-                    item.Status = "Aktiv laufend";
-                    that.binding.sessionEndBtn = 1;
-                    that.setStatus(2);
-                }
-                else if (item.StartTSUTC && item.EndTSUTC && item.RecordingExpected === 1 && item.RecordingLink === null) {
-                    item.Status = "Beendet mit Aufnahme laufend";
-                    that.setStatus(3);
-                }
-                else if (item.StartTSUTC && item.EndTSUTC && item.RecordingExpected === 0 || item.RecordingExpected === null && item.RecordingLink) {
-                    item.Status = "Beendet mit Aufnahme fertig";
-                    that.getSessionDownloadFiles(item.RecordingLink);
-                    that.setStatus(4);
-                }
-                else if (item.StartTSUTC && item.EndTSUTC && item.RecordingExpected === 0 && item.RecordingLink === null) {
-                    item.Status = "beendet ohne Aufnahme";
-                    that.setStatus(5);
-                }
+                //that.binding.eventStatusState = item.Status;
             }
             this.resultConverter = resultConverter;
 
             var loadData = function () {
                 Log.call(Log.l.trace, "EventSession.");
-                var vId = that.getEventId();
-                if (vId === null) {
-                    vId = AppData.getRecordId("VeranstaltungSession");
-                }
+                var eventId = AppBar.scope.binding.eventId;
                 that.sessions = [];
                 that.binding.moderatorData = null;
                 that.binding.dwlink = null;
-                that.binding.eventStatusState = "";
+                that.binding.selectedData = null;
                 that.binding.sessionEndBtn = null;
                 that.statuscounter = 0;
                 that.binding.sessiondownloadData = [];
+                that.binding.eventName = AppBar.scope.binding.eventName;
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                     return EventSession.BBBSessionODataView.select(function (json) {
@@ -463,12 +421,7 @@
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
-                    }, {
-                            VeranstaltungID: vId
-                        }).then(function () {
-
-                            Log.print(Log.l.trace, "Data loaded");
-                        });
+                    }, { VeranstaltungID: eventId });
                 });
                 Log.ret(Log.l.trace);
                 return ret;
