@@ -284,7 +284,7 @@
                                     var item = items[0];
                                     if (item.data && item.data.BBBSessionVIEWID) {
                                         that.binding.selectedData = item.data;
-                                        that.binding.eventStatusState = selectedData.Status;
+                                        that.binding.eventStatusState = that.binding.selectedData.Status;
                                         that.getModeratorData(item.data.VeranstaltungID);
                                         if (selectedData.StartTSUTC && selectedData.EndTSUTC === null && selectedData.RecordingLink === null) {
                                             that.binding.sessionEndBtn = 1;
