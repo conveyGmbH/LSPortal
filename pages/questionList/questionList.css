@@ -42,7 +42,7 @@
     display: none;
     padding: 8px;
     width: calc(100% - 16px);
-    height: 60px;
+    height: auto;
 }
 
 #listQuestionList .win-selected .question-type {
@@ -117,7 +117,7 @@
 #listQuestionList .answer-type-container {
     min-height: 28px;
     float: left;
-    width: 50%;
+    width: auto;
     margin: 0 4px;
 }
 
@@ -130,6 +130,8 @@
 
 #listQuestionList .answer-count-label, #listQuestionList .answer-type-label {
     width: 100%;
+    display: block;
+    margin: 5px;
 }
 
 #listQuestionList .answer-count-range {
