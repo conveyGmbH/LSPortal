@@ -61,6 +61,7 @@
     "command.sendWallet"  : "Send Wallet ticket",	
     "command.deleteTicket"  : "Delete ticket",
     "command.exportexhibitorList"  : "Exhibitor list",
+	"command.showevents"    : "Ereignisse anzeigen",
 
     "tooltip.backward"      : "Browse back",
     "tooltip.edit"          : "Edit current record",
@@ -139,6 +140,7 @@
     "tooltip.sendPDF"  : "Send PDF Pass",
     "tooltip.sendWallet"  : "Send Wallet Pass",	
     "tooltip.deleteTicket"        : "Delete Pass",
+	  "tooltip.showEvents"    : "Ereignisse anzeigen",
     "tooltip.singlechoice" : "With this answer type only one of the answers can be selected",
     "tooltip.multchoice" : "With this answer type one or more of the answers can be selected",
     "tooltip.rating" : "With this answer type only one answer can be selected. The answer cannot contain text, just one to six star symbols",

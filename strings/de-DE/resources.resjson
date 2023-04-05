@@ -61,6 +61,7 @@
     "command.sendWallet"  : "Wallet senden",
     "command.deleteTicket"  : "Ausweis löschen",
     "command.exportexhibitorList"  : "Austellerliste",
+	"command.showevents"    : "Ereignisse anzeigen",
 
     "tooltip.backward"      : "Zurück blättern",
     "tooltip.edit"          : "Aktuellen Datensatz bearbeiten",
@@ -139,6 +140,7 @@
     "tooltip.sendPDF"        : "PDF Ausweis senden",	
     "tooltip.sendWallet"        : "Wallet Ausweis senden",	
     "tooltip.deleteTicket"        : "Ausweis löschen",
+	"tooltip.showEvents"    : "Ereignisse anzeigen",
 	"tooltip.singlechoice" : "Bei dieser Antwortart kann nur eine der Antworten ausgewählt werden",
 	"tooltip.multchoice" : "Bei dieser Antwortart können eine oder mehrere Antworten ausgewählt werden",
 	"tooltip.rating" : "Bei dieser Antwortart kann nur eine Antwort ausgewählt werden. Die Antwort darf keinen Text enthalten, sondern nur ein bis sechs Sternsymbole",

@@ -54,6 +54,7 @@
     "command.windowRestored" : "Split",
     "command.newmod"        : "Neuer Moderator",
     "command.newquestion"   : "Neue Frage",
+	"command.showevents"    : "Ereignisse anzeigen",
 
     "tooltip.backward"      : "Zurück blättern",
     "tooltip.edit"          : "Aktuellen Datensatz bearbeiten",
@@ -125,6 +126,7 @@
     "tooltip.pictureZoomout"       : "Visitenkarte verkleinern",
     "tooltip.deleteevent"   : "Veranstaltung löschen",
     "tooltip.newmod"        : "Neuer Moderator",
+	"tooltip.showEvents"    : "Ereignisse anzeigen",
 
     "home.title"            : "Start",
     "home.info"             : "Wichtige Hinweise",

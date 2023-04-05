@@ -50,7 +50,7 @@
             // add page specific commands to AppBar
             var commandList = [
                 { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" },
-                { id: "clickShowEvents", label: getResourceText("command.showevents"), tooltip: getResourceText("eventSeries.newSerie"), section: "primary", svg: "user_monitor" }
+                { id: "clickShowEvents", label: getResourceText("command.showEvents"), tooltip: getResourceText("tooltip.showEvents"), section: "primary", svg: "user_monitor" }
             ];
             var isMaster = Application.navigator && Application.navigator._nextMaster === pageName;
             this.controller = new GenDataModHisto.Controller(element, commandList, isMaster);

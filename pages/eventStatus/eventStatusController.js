@@ -226,6 +226,7 @@
                     }).then(function () {
                         var eventSessionFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("eventSession"));
                         if (eventSessionFragmentControl && eventSessionFragmentControl.controller) {
+                            eventSessionFragmentControl.controller.binding.recordId = 0;
                             return eventSessionFragmentControl.controller.loadData();
                         } else {
                             var parentElement = pageElement.querySelector("#eventSessionhost");

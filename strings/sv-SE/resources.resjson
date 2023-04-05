@@ -54,6 +54,7 @@
     "command.windowRestored" : "Split",
     "command.newmod": "New moderator",
     "command.newquestion": "New question",
+	"command.showevents"    : "Ereignisse anzeigen",
 
     "tooltip.backward"      : "Browse back",
     "tooltip.edit"          : "Edit current record",
@@ -125,6 +126,7 @@
     "tooltip.pictureZoomout"       : "Zoom out picture",
     "tooltip.deleteevent"   : "Veranstaltung löschen",
     "tooltip.newmod": "New moderator",
+	"tooltip.showEvents"    : "Ereignisse anzeigen",
 
     "home.title"            : "Start",
     "home.info"             : "Important information",
