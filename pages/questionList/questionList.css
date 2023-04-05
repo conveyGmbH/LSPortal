@@ -42,6 +42,7 @@
     display: none;
     padding: 8px;
     width: calc(100% - 16px);
+    height: 60px;
 }
 
 #listQuestionList .win-selected .question-type {

@@ -53,6 +53,33 @@
                 }
             }
 
+            var setTooltips = function () {
+                //ToolTips Single
+                var single = pageElement.querySelectorAll("#single");
+                for (var k = 0; k < single.length; k++) {
+                    single[k].title = getResourceText("tooltip.singlechoice");;
+                }
+                //Tooltips Multi
+                var multi = pageElement.querySelectorAll("#multi");
+                for (var i = 0; i < multi.length; i++) {
+                    multi[i].title = getResourceText("tooltip.multchoice"); 
+                }
+                //Tooltips multiRating
+                var multirating = pageElement.querySelectorAll("#singleRating");
+                for (var j = 0; j < multirating.length; j++) {
+                    multirating[j].title = getResourceText("tooltip.rating");
+                }
+                //combo
+                var combo = pageElement.querySelectorAll("#combo");
+                for (var l = 0; l < combo.length; l++) {
+                    combo[l].title = getResourceText("tooltip.dropdown");
+                }
+                //Anwser Text
+                var answer = pageElement.querySelectorAll(".answer-type-container");
+                
+            }
+            this.setTooltips = setTooltips;
+
             var singleRatingTemplate = null, multiRatingTemplate = null, comboTemplate = null, singleTemplate = null, multiTemplate = null;
             // Conditional renderer that chooses between templates
             var listQuestionListRenderer = function (itemPromise) {
@@ -1301,7 +1328,9 @@
                     AppBar.notifyModified = true;
                     AppBar.triggerDisableHandlers();
                     return WinJS.Promise.as();
-                });
+                    }).then(function () {
+                    that.setTooltips();
+                }); 
                 Log.ret(Log.l.trace);
                 return ret;
             };
