@@ -378,7 +378,10 @@ textarea:-ms-input-placeholder { font-style:italic; } /* ie */
 .view-size-medium .list-question-content {
     padding-left: 15px;
 }
-    
+
+.view-size-medium .landscape_only {
+    display: inline;
+}
 /*
     margins/paddings for medium small sized screens 
 
