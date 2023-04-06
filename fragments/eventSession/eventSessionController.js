@@ -168,7 +168,7 @@
 
             var getModeratorData = function (veranstId) {
                 Log.call(Log.l.trace, "EventSession.Controller.");
-                AppData.call("PRC_GetLBModerator",
+                return AppData.call("PRC_GetLBModerator",
                     {
                         pVeranstaltungID: veranstId
                     },

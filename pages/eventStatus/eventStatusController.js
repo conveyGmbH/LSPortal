@@ -73,6 +73,8 @@
                 var eventSessionFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("eventSession"));
                 if (eventSessionFragmentControl && eventSessionFragmentControl.controller) {
                     return eventSessionFragmentControl.controller.binding.selectedData;
+                } else {
+                    return WinJS.Promise.as();
                 }
                 Log.call(Log.l.trace, "EventStatus.Controller.");
             }
