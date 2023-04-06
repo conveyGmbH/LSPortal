@@ -20,7 +20,7 @@
             Fragments.Controller.apply(this, [fragmentElement, {
                 recordID: 0,
                 btnLabel: getResourceText("voucheradministrationlist.btnlabelO"),
-                selectedData: { Status: "" },
+                selectedData: { Status: "", sessionEndBtn: false },
                 moderatorData: null,
                 eventName: "",
                 showEventNameStatus: null,
@@ -175,9 +175,6 @@
                     function (json) {
                         Log.print(Log.l.info, "call success! ");
                         that.binding.moderatorData = json.d.results[0];
-                        if (that.binding.sessionEndBtn) {
-                            that.setSesssionEndButton(veranstId);
-                        }
                         Log.print(Log.l.info, "call success! ");
                     },
                     function (error) {
@@ -302,7 +299,7 @@
                                         that.binding.eventStatusState = that.binding.selectedData.Status;
                                         that.getModeratorData(item.data.VeranstaltungID);
                                         if (that.binding.selectedData.StartTSUTC && that.binding.selectedData.EndTSUTC === null && that.binding.selectedData.RecordingLink === null) {
-                                            that.binding.sessionEndBtn = 1;
+                                            that.binding.selectedData.sessionEndBtn = true;
                                         }
                                         if (that.binding.selectedData.StartTSUTC && that.binding.selectedData.RecordingLink) {
                                             that.getSessionDownloadFiles(that.binding.selectedData.RecordingLink);
@@ -365,11 +362,8 @@
                 if (item.RecordingExpected === 0) {
                     if (item.EndTSUTC) {
                         item.Status = "Session beendet! (Keine Aufzeichnung)";
-                        //that.binding.eventStatusState = "Session beendet! (Keine Aufzeichnung)";
                     } else {
                         item.Status = "Session läuft! (Aufzeichnung nicht gestartet)";
-                        that.binding.sessionEndBtn = 1;
-                        //that.binding.eventStatusState = "Session läuft! (Aufzeichnung nicht gestartet)";
                     }
                 } else if (item.RecordingExpected === 1) {
                     if (item.StartTSUTC === null && item.EndTSUTC === null && item.RecordingLink === null) {
@@ -389,7 +383,6 @@
                         item.Status = "beendet ohne Aufnahme";
                     }
                 }
-                //that.binding.eventStatusState = item.Status;
             }
             this.resultConverter = resultConverter;
 

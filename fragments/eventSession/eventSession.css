@@ -135,7 +135,8 @@
     overflow: hidden;
 }
 
-#btn_end_Session {
+.btn_end_Session {
+    vertical-align: middle;
     display: inline-block;
     border-radius: 4px;
     background-color: #f4511e;

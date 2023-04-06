@@ -32,8 +32,8 @@
                                 </div>
                                 <span data-win-bind="textContent: moderatorData.EMail"></span>
                             </div>
-                            <div class="field_line field_line_even">
-                                <button id="btn_end_Session" style="vertical-align: middle" onclick="AppBar.handleEvent('onclick', 'clickEndSession', event)" data-win-bind="style.display: sessionEndBtn Binding.Converter.toDisplay"><span>End Session </span></button>
+                            <div class="field_line field_line_even" data-win-bind="style.display: selectedData.sessionEndBtn Binding.Converter.toDisplay">
+                                <button class="btn_end_Session" onclick="AppBar.handleEvent('onclick', 'clickEndSession', event)"><span>End Session </span></button>
                             </div>
                         </div>
                         <div id="dwlink" class="field_line field_line" data-win-bind="style.display: dwlink Binding.Converter.toDisplay">
