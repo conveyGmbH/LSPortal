@@ -82,7 +82,9 @@
                 if (typeof that.binding.dataTermin.MailReplyTo === "undefined") {
                     that.binding.dataTermin.MailReplyTo = null;
                 }
-               
+                if (that.binding.dataTermin.DefRemoteKonfigID === null) {
+                    that.binding.dataTermin.DefRemoteKonfigID = 0;
+                }
                 if (typeof that.binding.dataTermin.DefRemoteKonfigID === "string") {
                     that.binding.dataTermin.DefRemoteKonfigID = parseInt(that.binding.dataTermin.DefRemoteKonfigID);
                 }
@@ -98,7 +100,7 @@
                         pStatus: that.binding.dataTermin.Status,
                         pHostReference: that.binding.dataTermin.HostReference,
                         pEventSuccessID: that.binding.dataTermin.EventSuccessID,
-                        pDefRemoteKonfigID: parseInt(that.binding.dataTermin.DefRemoteKonfigID),
+                        pDefRemoteKonfigID: that.binding.dataTermin.DefRemoteKonfigID,
                         pMailBCC: that.binding.dataTermin.MailBCC,
                         pMailCC: that.binding.dataTermin.MailCC,
                         pMailFrom: that.binding.dataTermin.MailFrom,
