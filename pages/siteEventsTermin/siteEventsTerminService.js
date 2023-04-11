@@ -96,7 +96,7 @@
                 return ret;
             },
             defaultValue: {
-                RemoteKonfigurationVIEWID: "",
+                RemoteKonfigurationVIEWID: 0,
                 ComboText: "",
                 ShowText: ""
             }
