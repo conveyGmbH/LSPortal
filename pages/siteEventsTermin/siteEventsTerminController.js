@@ -15,7 +15,7 @@
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "SiteEventsTermin.Controller.");
             Application.Controller.apply(this, [pageElement, {
-                dataTermin: getEmptyDefaultValue(SiteEventsTermin.defaultValue),
+                dataTermin: SiteEventsTermin.defaultValue,
                 InitFairVeranstalterItem: { FairVeranstalterID: 0, Name: "" },
                 VeranstaltungTerminID: 0
             }, commandList]);
@@ -65,11 +65,11 @@
             this.getRecordId = getRecordId;
 
             var saveTermin = function () {
-                //var dataEvent = that.binding.eventData;
+                Log.call(Log.l.trace, "SiteEventsTermin.Controller.");
+                AppBar.busy = true;      
+                AppData.setErrorMsg(that.binding);
                 that.binding.dataTermin.StartDatum = new Date(that.binding.dataTermin.StartDatum).toISOString();
                 that.binding.dataTermin.EndDatum = new Date(that.binding.dataTermin.EndDatum).toISOString();
-                Log.call(Log.l.trace, "SiteEventsTermin.Controller.");
-                AppData.setErrorMsg(that.binding);
                 if (typeof that.binding.dataTermin.MailBCC === "undefined") {
                     that.binding.dataTermin.MailBCC = null;
                 }
@@ -107,7 +107,11 @@
                         pMailReplyTo: that.binding.dataTermin.MailReplyTo
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
+                        AppBar.modified = false;
                         AppBar.busy = false;
+                        if (that.binding.VeranstaltungTerminID === 0) {
+                            Application.navigateById("siteevents");
+                        }
                     }, function (errorResponse) {
                         Log.print(Log.l.error, "call error");
                         AppBar.busy = false;
@@ -127,7 +131,9 @@
                 },
                 clickSave: function (event) {
                     Log.call(Log.l.trace, "SiteEventsTermin.Controller.");
+                    if (that.binding.dataTermin && AppBar.modified && !AppBar.busy) {
                     that.saveTermin();
+                    }
                     Log.ret(Log.l.trace);
                 },
                 clickTopButton: function (event) {
@@ -161,10 +167,10 @@
                     }
                 },
                 clickSave: function () {
-                    if (that.binding.VeranstaltungName && that.binding.dataTermin.FairVeranstalterID) {
+                    if (that.binding.dataTermin.VeranstaltungName && that.binding.dataTermin.FairVeranstalterID && !AppBar.busy) {
                         return false;
                     } else {
-                        return false;
+                        return true;
                     }
                 }
             }
@@ -203,6 +209,7 @@
                 if (terminData.EndDatum) {
                     that.binding.dataTermin.EndDatum = that.getDateObject(terminData.EndDatum);
                 }
+                AppBar.triggerDisableHandlers();
             }
             this.setTerminData = setTerminData;
 
@@ -227,6 +234,7 @@
                             });
                             if (initServer && initServer.winControl) {
                                 initServer.winControl.data = that.remoteServerList;
+                                initServer.selectedIndex = 0;
                             }
                         }
                     }, function (errorResponse) {
