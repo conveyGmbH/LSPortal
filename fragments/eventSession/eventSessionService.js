@@ -51,6 +51,10 @@
                 var ret = EventSession._BBBSessionView.map;
                 Log.ret(Log.l.trace);
                 return ret;
+            },
+            defaultValue: {
+                Status: "",
+                sessionEndBtn: false
             }
         },
         _eventId: null,

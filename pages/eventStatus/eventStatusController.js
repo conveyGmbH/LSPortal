@@ -31,21 +31,32 @@
                 Log.call(Log.l.trace, "EventStatus.Controller.");
                 var eventSessionFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("eventSession"));
                 if (eventSessionFragmentControl && eventSessionFragmentControl.controller) {
-                    return eventSessionFragmentControl.controller.getSessionEndData();
+                    return eventSessionFragmentControl.controller.binding.selectedData;
                 }
                 Log.call(Log.l.trace, "EventStatus.Controller.");
             }
             this.requestSessionEndData = requestSessionEndData;
 
+            var getModeratorData = function () {
+                Log.call(Log.l.trace, "EventStatus.Controller.");
+                var eventSessionFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("eventSession"));
+                if (eventSessionFragmentControl && eventSessionFragmentControl.controller) {
+                    return eventSessionFragmentControl.controller.binding.moderatorData;
+                }
+                Log.call(Log.l.trace, "EventStatus.Controller.");
+            }
+            this.getModeratorData = getModeratorData;
+
             var requestSessionEnd = function (complete, error) {
                 Log.call(Log.l.trace, "Contact.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var sessionEndData = that.requestSessionEndData();
-                if (sessionEndData) {
+                var moderatorData = that.getModeratorData();
+                if (sessionEndData && sessionEndData.VeranstaltungID && moderatorData && moderatorData.UserToken) {
                     AppData.setErrorMsg(that.binding);
                     AppData.call("PRC_RequestSessionEnd", {
                         pVeranstaltungID: sessionEndData.VeranstaltungID,
-                        pUserToken: sessionEndData.modToken
+                        pUserToken: moderatorData.UserToken
                     }, function (json) {
                         AppBar.busy = false;
                         Log.print(Log.l.trace, "PRC_RequestSessionEnd success!");

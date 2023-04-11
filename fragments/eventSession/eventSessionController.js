@@ -20,13 +20,12 @@
             Fragments.Controller.apply(this, [fragmentElement, {
                 recordID: 0,
                 btnLabel: getResourceText("voucheradministrationlist.btnlabelO"),
-                selectedData: { Status: "", sessionEndBtn: false },
+                selectedData: EventSession.BBBSessionODataView.defaultValue,
                 moderatorData: null,
                 eventName: "",
                 showEventNameStatus: null,
                 eventStatusState: "",
                 dwlink: null,
-                sessionEndBtn: null,
                 sessionEndData: [],
                 sessiondownloadData: [],
                 oldPlayback: false
@@ -147,24 +146,6 @@
                 Log.ret(Log.l.trace);
             }
             this.setDownloadLink = setDownloadLink;
-
-            var setSesssionEndButton = function (vid) {
-                Log.call(Log.l.trace, "EventSession.Controller.");
-                if (vid) {
-                    that.binding.sessionEndBtn = 1;
-                } else {
-                    that.binding.sessionEndBtn = null;
-                }
-                that.binding.sessionEndData.VeranstaltungID = vid;
-                that.binding.sessionEndData.modToken = that.binding.moderatorData.UserToken;
-                Log.ret(Log.l.trace);
-            }
-            this.setSesssionEndButton = setSesssionEndButton;
-
-            var getSessionEndData = function () {
-                return that.binding.sessionEndData;
-            }
-            this.getSessionEndData = getSessionEndData;
 
             var getModeratorData = function (veranstId) {
                 Log.call(Log.l.trace, "EventSession.Controller.");
@@ -287,7 +268,6 @@
                                 listControl.selection.getItems().done(function (items) {
                                     var item = items[0];
                                     that.binding.moderatorData = null;
-                                    that.binding.sessionEndBtn = null;
                                     that.binding.dwlink = null;
                                     that.binding.sessionEndData = [];
                                     that.binding.sessiondownloadData = [];
@@ -393,8 +373,7 @@
                 that.binding.moderatorData = null;
                 that.binding.dwlink = null;
                 that.binding.oldPlayback = false;
-                that.binding.selectedData = null;
-                that.binding.sessionEndBtn = null;
+                that.binding.selectedData = EventSession.BBBSessionODataView.defaultValue;
                 that.statuscounter = 0;
                 that.binding.sessiondownloadData = [];
                 that.binding.eventName = AppBar.scope.binding.eventName;
