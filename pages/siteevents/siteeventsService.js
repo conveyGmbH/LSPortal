@@ -72,7 +72,11 @@
             LastExportTS: "",
             FBStatus: "",
             NumSentEmails: "",
-            PortalLoginTS: ""
+            PortalLoginTS: "",
+            FairMandant_CustomerID: "",
+            StandSize: "",
+            DUNSNumber: "",
+            Auswertungsvariante: ""
         },
         defaultHeaderLabelRestriction: {
             FairMandant_NameLabel: "",
@@ -90,7 +94,11 @@
             LastExportTSLabel: "",
             FBStatusLabel: "",
             NumSentEmailsLabel: "",
-            PortalLoginTSLabel: ""
+            PortalLoginTSLabel: "",
+            FairMandant_CustomerID: "",
+            StandSize: "",
+            DUNSNumber: "",
+            Auswertungsvariante: ""
         },
         _registrationView: {
             get: function () {

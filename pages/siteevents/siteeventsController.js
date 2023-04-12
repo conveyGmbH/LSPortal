@@ -106,7 +106,11 @@
                 that.binding.dataSiteeventsHeaderText.FBStatus = getResourceText("siteevents.questionnairestatus");
                 that.binding.dataSiteeventsHeaderText.NumSentEmails = getResourceText("siteevents.numberofemailssent");
                 that.binding.dataSiteeventsHeaderText.PortalLoginTS = getResourceText("siteevents.lastlogintotheportal");
-                //value part
+                that.binding.dataSiteeventsHeaderText.FairMandant_CustomerID = getResourceText("siteevents.customerid");
+                that.binding.dataSiteeventsHeaderText.StandSize = getResourceText("siteevents.standsize");
+                that.binding.dataSiteeventsHeaderText.DUNSNumber = getResourceText("siteevents.dunsnumber");
+                that.binding.dataSiteeventsHeaderText.Auswertungsvariante = getResourceText("siteevents.auswertungsvariante");
+               //value part
                 that.binding.dataSiteeventsHeaderValue.FairMandant_Name = 1;
                 that.binding.dataSiteeventsHeaderValue.FairMandant_Ansprechpartner = 2;
                 that.binding.dataSiteeventsHeaderValue.StandHall = 3;
@@ -123,6 +127,10 @@
                 that.binding.dataSiteeventsHeaderValue.FBStatus = 14;
                 that.binding.dataSiteeventsHeaderValue.NumSentEmails = 15;
                 that.binding.dataSiteeventsHeaderValue.PortalLoginTS = 16;
+                that.binding.dataSiteeventsHeaderValue.FairMandant_CustomerID = 17;
+                that.binding.dataSiteeventsHeaderValue.StandSize = 18;
+                that.binding.dataSiteeventsHeaderValue.DUNSNumber = 19;
+                that.binding.dataSiteeventsHeaderValue.Auswertungsvariante = 20;
             }
             this.setInitialHeaderTextValue = setInitialHeaderTextValue;
 
@@ -177,6 +185,18 @@
                     }
                     if (cells[i].title === "16") {
                         cells[i].title = getResourceText("siteevents.lastlogintotheportal");
+                    }
+                    if (cells[i].title === "17") {
+                        cells[i].title = getResourceText("siteevents.customerid");
+                    }
+                    if (cells[i].title === "18") {
+                        cells[i].title = getResourceText("siteevents.standsize");
+                    }
+                    if (cells[i].title === "19") {
+                        cells[i].title = getResourceText("siteevents.dunsnumber");
+                    }
+                    if (cells[i].title === "20") {
+                        cells[i].title = getResourceText("siteevents.auswertungsvariante");
                     }
                 }
             }
