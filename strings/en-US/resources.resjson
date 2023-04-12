@@ -947,6 +947,10 @@
     "siteevents.eventpermuser"   : "Do you want to convert this exhibitor to a regular customer?",
     "siteevents.search"   : "Search",
     "siteevents.searchplaceholder"   : "What are you looking for?",
+    "siteevents.customerid" : "Customer number",
+    "siteevents.standsize" : "Booth size",
+    "siteevents.dunsnumber" : "DUNS number",
+    "siteevents.auswertungsvariante" : "Evaluation variant",
 		
     "siteevents.exhibitorname" : "Exhibitor name",
     "siteevents.contact" : "Contact",

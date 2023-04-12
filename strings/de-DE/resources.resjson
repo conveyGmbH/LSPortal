@@ -963,6 +963,10 @@
     "siteevents.questionnairestatus" : "Fragebogen Status",
     "siteevents.numberofemailssent" : "Anzahl versendete E-Mails",
     "siteevents.lastlogintotheportal" : "Letzte Anmeldung im Portal",
+    "siteevents.customerid" : "Kundennummer",
+    "siteevents.standsize" : "Standgröße",
+    "siteevents.dunsnumber" : "DUNS Nummer",
+    "siteevents.auswertungsvariante" : "Auswertungsvariante",
 
 
     "siteeventsneuaus.title" : "Neuer Aussteller",

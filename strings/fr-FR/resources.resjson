@@ -946,6 +946,10 @@
     "siteevents.eventpermuser"   : "Voulez-vous convertir cet exposant en client régulier?",
     "siteevents.search"   : "Recherche",
     "siteevents.searchplaceholder"   : "Que cherchez-vous ?",
+    "siteevents.customerid" : "Variante d'évaluation",
+    "siteevents.standsize" : "Taille du stand",
+    "siteevents.dunsnumber" : "DUNS Numéro",
+    "siteevents.auswertungsvariante" : "Variante d'évaluation",
 
     "siteevents.exhibitorname" : "Nom de l'exposant",
     "siteevents.contact" : "Personne de contact",

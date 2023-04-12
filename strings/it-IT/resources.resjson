@@ -963,6 +963,10 @@
     "siteevents.questionnairestatus" : "Stato del questionario",
     "siteevents.numberofemailssent" : "Numero di e-mail inviate",
     "siteevents.lastlogintotheportal" : "Ultimo accesso al portale",
+    "siteevents.customerid" : "Numero cliente",
+    "siteevents.standsize" : "Dimensioni dello stand",
+    "siteevents.dunsnumber" : "DUNS Numero",
+    "siteevents.auswertungsvariante" : "Variante di valutazione",
 
     "siteeventsneuaus.title" : "Nuovo espositore",
     "siteeventsneuaus.veranstaltungsname" : "nome dell'evento",
