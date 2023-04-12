@@ -777,6 +777,7 @@
                 },
                 clickExportExhibitorList: function() {
                     Log.call(Log.l.trace, "SiteEvents.Controller.");
+                    AppBar.busy = true;
                     var ret;
                     var recordId = AppData.getRecordId("VeranstaltungTermin");
                     if (recordId) {
@@ -1243,6 +1244,13 @@
                         return false;
                     } else {
                         return true;
+                    }
+                },
+                clickExportExhibitorList: function () {
+                    if (AppBar.busy) {
+                        return true;
+                    } else {
+                        return false;
                     }
                 }
             }
