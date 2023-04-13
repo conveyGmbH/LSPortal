@@ -370,6 +370,7 @@
                 Log.call(Log.l.trace, "EventSession.");
                 var eventId = AppBar.scope.binding.eventId;
                 that.sessions = [];
+                that.binding.recordID = 0;
                 that.binding.moderatorData = null;
                 that.binding.dwlink = null;
                 that.binding.oldPlayback = false;
