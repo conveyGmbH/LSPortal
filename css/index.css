@@ -499,6 +499,7 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
 }
 
 .event-name {
+    display:inline-block;
     width: 100%;
 }
 
@@ -506,7 +507,7 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
     z-index: 9900;
 }
 .publish-button {
-    display: inline-block;
+    display: block;
     background-color: #f2f2f2;
     color: red;
     width: 300px;
