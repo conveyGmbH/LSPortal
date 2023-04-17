@@ -759,6 +759,8 @@
                     : "");
                 data.on = getResourceText("settings.on");
                 data.off = getResourceText("settings.off");
+                data.yes = getResourceText("settings.yes");
+                data.no = getResourceText("settings.no");
                 data.filterOn = getResourceText("reporting.filterOn");
                 data.filterOff = getResourceText("reporting.filterOff");
                 data.dark = getResourceText("settings.dark");
