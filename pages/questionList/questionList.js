@@ -99,7 +99,8 @@
                     if (result) {
                         if (that.controller) {
                             return that.controller.publish(function(response) {
-                             complete(response);
+                                AppData.getUserData();
+                                complete(response);
                         },
                         function(errorResponse) {
                              error(errorResponse);
