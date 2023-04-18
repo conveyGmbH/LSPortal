@@ -6,12 +6,36 @@
 /// <reference path="~/www/lib/convey/scripts/logging.js" />
 /// <reference path="~/www/lib/convey/scripts/navigator.js" />
 /// <reference path="~/www/lib/convey/scripts/appbar.js" />
-/// <reference path="~/www/pages/event/eventController.js" />
 
 (function () {
     "use strict";
 
-    var pageName = Application.getPagePath("event");
+    WinJS.Namespace.define("Application.EventListLayout", {
+        EventListLayout: WinJS.Class.define(function (options) {
+            this._site = null;
+            this._surface = null;
+        }, {
+                // This sets up any state and CSS layout on the surface of the custom layout
+                initialize: function (site) {
+                    this._site = site;
+                    this._surface = this._site.surface;
+
+                    // Add a CSS class to control the surface level layout
+                    WinJS.Utilities.addClass(this._surface, "eventListLayout");
+
+                    return WinJS.UI.Orientation.vertical;
+                },
+
+                // Reset the layout to its initial state
+                uninitialize: function () {
+                    WinJS.Utilities.removeClass(this._surface, "eventListLayout");
+                    this._site = null;
+                    this._surface = null;
+                }
+            })
+    });
+
+    var pageName = Application.getPagePath("eventList");
 
     WinJS.UI.Pages.define(pageName, {
         // This function is called whenever a user navigates to this page. It
@@ -19,16 +43,20 @@
         ready: function (element, options) {
             Log.call(Log.l.trace, pageName + ".");
             // TODO: Initialize the page here.
+            this.inResize = 0;
+            this.prevWidth = 0;
+            this.prevHeight = 0;
+
             // add page specific commands to AppBar
             var commandList = [
                 { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" },
-                { id: "clickOk", label: getResourceText("command.ok"), tooltip: getResourceText("tooltip.ok"), section: "primary", svg: "navigate_check", key: WinJS.Utilities.Key.enter },
                 { id: "clickDelete", label: getResourceText("command.delete"), tooltip: getResourceText("tooltip.deleteevent"), section: "primary", svg: "garbage_can" },
+                { id: "copyQuestionnaire", label: getResourceText("command.copyQuestionnaire"), tooltip: getResourceText("tooltip.copyQuestionnaire"), section: "primary", svg: "copy" },
                 { id: "clickNew", label: getResourceText("command.new"), tooltip: getResourceText("tooltip.newevent"), section: "primary", svg: "plus" },
-                { id: "clickChange", label: getResourceText("command.eventchange"), tooltip: getResourceText("tooltip.eventchange"), section: "primary", svg: "va_wechsel" }
+                { id: "clickChange", label: getResourceText("command.ok"), tooltip: getResourceText("tooltip.eventchange"), section: "primary", svg: "navigate_check" }
             ];
 
-            this.controller = new Event.Controller(element, commandList);
+            this.controller = new EventList.Controller(element, commandList);
             if (this.controller.eventHandlers) {
                 // general event listener for hardware back button, too!
                 this.controller.addRemovableEventListener(document, "backbutton", this.controller.eventHandlers.clickBack.bind(this.controller));
@@ -41,26 +69,7 @@
             // TODO: Respond to navigations away from this page.
             Log.ret(Log.l.trace);
         },
-        canUnload: function (complete, error) {
-            Log.call(Log.l.trace, pageName + ".");
-            var ret;
-            if (this.controller) {
-                ret = this.controller.saveData(function (response) {
-                    // called asynchronously if ok
-                    complete(response);
-                }, function (errorResponse) {
-                    error(errorResponse);
-                });
-            } else {
-                ret = WinJS.Promise.as().then(function () {
-                    var err = { status: 500, statusText: "fatal: page already deleted!" };
-                    error(err);
-                });
-            }
-            Log.ret(Log.l.trace);
-            return ret;
-        },
-
+        
         updateLayout: function (element, viewState, lastViewState) {
             /// <param name="element" domElement="true" />
             // TODO: Respond to changes in viewState.

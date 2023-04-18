@@ -1578,5 +1578,14 @@
     "eventSession.sessionStatus"			: "Status: ",
     "eventSession.event"			: "Veranstaltung",
     "eventSession.mod"			: "Moderator/en",
-    "eventSession.sessionlink"			: "Session Link"
+    "eventSession.sessionlink"			: "Session Link",
+	
+    "eventCopy.title"			: "Veranstaltung kopieren",
+    "eventCopy.questionnaire"			: "Fragebogen",
+    "eventCopy.mails"			: "Mails",
+    "eventCopy.colors"			: "Farben",
+    "eventCopy.options"			: "Optionen",
+    "eventCopy.all"			: "Alles",
+    "eventCopy.success"			: "Daten Erfolgreich übernommen!",
+    "eventCopy.error"			: "Daten konnten nicht erfolgreich übernommen werden!"
 }		

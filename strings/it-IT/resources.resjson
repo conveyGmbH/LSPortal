@@ -1575,5 +1575,14 @@
     "eventSession.sessionStatus"			: "Stato: ",
     "eventSession.event"			: "Evento",
     "eventSession.mod"			: "Moderatore/i",
-    "eventSession.sessionlink"			: "Collegamento alla sessione"
+    "eventSession.sessionlink"			: "Collegamento alla sessione",
+	
+    "eventCopy.title"			: "Copia dell'evento",
+    "eventCopy.questionnaire"			: "Questionario",
+    "eventCopy.mails"			: "Mails",
+    "eventCopy.colors"			: "Colori",
+    "eventCopy.options"			: "Opzioni",
+    "eventCopy.all"			: "Tutti",
+    "eventCopy.success"			: "I dati sono stati trasferiti con successo!",
+    "eventCopy.error"			: "Non è stato possibile trasferire i dati con successo!"
 }

@@ -174,6 +174,72 @@
             };
             this.getRecordId = getRecordId;
 
+            var changeEvent = function (eventID) {
+                Log.call(Log.l.trace, "LocalEvents.Controller.");
+                AppData.setErrorMsg(that.binding);
+                AppData.call("PRC_ChangeUserVeranstaltung", {
+                    pNewVeranstaltungID: eventID,
+                    pLoginName: AppData._persistentStates.odata.login
+                }, function (json) {
+                    Log.print(Log.l.info, "call success! ");
+                    AppData.prevLogin = AppData._persistentStates.odata.login;
+                    AppData.prevPassword = AppData._persistentStates.odata.password;
+                    Application.navigateById("login");
+                }, function (error) {
+                    Log.print(Log.l.error, "call error");
+                });
+                Log.ret(Log.l.trace);
+            }
+            this.changeEvent = changeEvent;
+
+            var getDeleteEventData = function (eventID) {
+                Log.call(Log.l.trace, "LocalEvents.Controller.");
+                AppData.setErrorMsg(that.binding);
+                var ret = new WinJS.Promise.as()/*.then(function () {
+                    return LocalEvents.VeranstaltungView.select(function (json) {
+                        // this callback will be called asynchronously
+                        // when the response is available
+                        Log.print(Log.l.info, "MAILERZEILENView select: success!");
+                        if (json && json.d && json.d.results && json.d.results.length > 0) {
+                            that.deleteEventData = json.d.results[0];
+                        }
+
+                    }, function (errorResponse) {
+                        Log.print(Log.l.error, "error selecting mailerzeilen");
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                        }, { VeranstaltungVIEWID: eventID});
+                })*/.then(function () {
+                        // var curScope = that.deleteEventData;
+                        var curScope = that.binding.dataEvent;
+                        if (curScope) {
+                            var confirmTitle = getResourceText("localevents.labelDelete") + ": " + curScope.Name +
+                                "\r\n" + getResourceText("localevents.eventDelete");
+                            confirm(confirmTitle, function (result) {
+                                if (result) {
+                                    AppBar.busy = true;
+                                    AppData.setErrorMsg(that.binding);
+                                    AppData.call("PRC_DeleteVeranstaltung", {
+                                        pVeranstaltungID: eventID
+                                    }, function (json) {
+                                        Log.print(Log.l.info, "call success! ");
+                                        AppBar.busy = false;
+                                        var master = Application.navigator.masterControl;
+                                        master.controller.loadData();
+                                    }, function (error) {
+                                        AppBar.busy = false;
+                                        Log.print(Log.l.error, "call error");
+                                    });
+                                } else {
+                                    Log.print(Log.l.trace, "clickDelete: event choice CANCEL");
+                                }
+                            });
+                        }
+                    });
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+            this.getDeleteEventData = getDeleteEventData;
+
             var changeAppSetting = function (toggleId, checked) {
                 Log.call(Log.l.trace, "Settings.Controller.", "toggleId=" + toggleId + " checked=" + checked);
                 var pOptionTypeId = null;
@@ -375,6 +441,27 @@
                     }
                     Log.ret(Log.l.trace);
                 },
+                clickDelete: function (event) {
+                    Log.call(Log.l.trace, "LocalEvents.Controller.");
+                    var recordId = that.getEventId();
+                    if (recordId) {
+                        that.getDeleteEventData(recordId);
+                    }
+                    Log.ret(Log.l.trace);
+                },
+                clickNew: function (event) {
+                    Log.call(Log.l.trace, "LocalEvents.Controller.");
+                    Application.navigateById("localeventsCreate", event);
+                    Log.ret(Log.l.trace);
+                },
+                clickChange: function (event) {
+                    Log.call(Log.l.trace, "LocalEvents.Controller.");
+                    var recordId = that.getEventId();
+                    if (recordId) {
+                        that.changeEvent(recordId);
+                    }
+                    Log.ret(Log.l.trace);
+                },
                 clickOk: function (event) {
                     Log.call(Log.l.trace, "Event.Controller.");
                     that.saveData(function (response) {
@@ -465,6 +552,18 @@
             }
             this.resultConverter = resultConverter;
 
+            var getEventId = function () {
+                Log.print(Log.l.trace, "getEventId Event._eventId=" + Event._eventId);
+                return Event._eventId;
+            }
+            this.getEventId = getEventId;
+
+            var setEventId = function (value) {
+                Log.print(Log.l.trace, "setEventId Event._eventId=" + value);
+                Event._eventId = value;
+            }
+            this.setEventId = setEventId;
+
             var loadData = function () {
                 Log.call(Log.l.trace, "Event.Controller.");
                 AppData.setErrorMsg(that.binding);
@@ -537,7 +636,7 @@
                         AppData.setErrorMsg(that.binding, errorResponse);
                     });
                 }).then(function () {
-                    var recordId = getRecordId();
+                    var recordId = getEventId();
                     if (recordId) {
                         //load of format relation record data
                         Log.print(Log.l.trace, "calling select eventView...");
@@ -567,6 +666,7 @@
             var saveData = function (complete, error) {
                 Log.call(Log.l.trace, "Event.Controller.");
                 AppData.setErrorMsg(that.binding);
+                AppBar.busy = false;
                 var err = null;
                 var ret;
                 var dataEvent = that.binding.dataEvent;
@@ -574,7 +674,7 @@
                     var visitorFlowInterval = changeAppSetting("visitorFlowInterval", that.binding.visitorFlowInterval);
                     dataEvent.Startdatum = getDateData(that.binding.dataEvent.dateBegin);
                     dataEvent.Enddatum = getDateData(that.binding.dataEvent.dateEnd);
-                    var recordId = getRecordId();
+                    var recordId = getEventId();
                     if (recordId) {
                         AppBar.busy = true;
                         AppBar.triggerDisableHandlers();

@@ -262,7 +262,8 @@
         { id: "startTileAdministration", group: 61, disabled: false },
         { id: "ticketLimits", group: -67, disabled: false },
         { id: "dashboardFN", group: -70, disabled: false },
-        { id: "eventStatus", group: 73, disabled: false }
+        { id: "eventStatus", group: 73, disabled: false },
+        { id: "eventCopy", group: 2, disabled: false }
     ];
 
 

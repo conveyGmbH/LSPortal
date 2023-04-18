@@ -7,9 +7,10 @@
     "use strict";
 
     WinJS.Namespace.define("Event", {
+        _eventId: 0,
         _eventView: {
             get: function () {
-                return AppData.getFormatView("Veranstaltung", 0, false);
+                return AppData.getFormatView("Veranstaltung2", 0);
             }
         },
         eventView: {
