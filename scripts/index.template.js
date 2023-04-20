@@ -304,7 +304,10 @@
         { id: "mailingList", master: "mailingVSList" },
         { id: "ticketLimits", master: "ticketLimitsList" },
         { id: "contactResultsList", master: "eventsList" },
-        { id: "eventStatus", master: "eventStatusList" }
+        { id: "eventStatus", master: "eventStatusList" },
+        { id: "event", master: "eventList" },
+        { id: "eventCopy", master: "eventList" },
+        //{ id: "siteeventsImport", master: "siteEventsList" }
     ];
 
     // init page for app startup
