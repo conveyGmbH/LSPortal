@@ -1,4 +1,4 @@
-﻿.content-record {
+﻿.eventCopy .content-record {
     display: flex;
     flex-direction: column; /* Stack divs vertically */
 }

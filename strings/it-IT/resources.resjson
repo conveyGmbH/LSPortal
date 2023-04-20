@@ -617,6 +617,7 @@
     "label.dashboardFNPremium" : "Dashboard Premium",
     "label.dashboardFNSupreme" : "Dashboard Professional",
     "label.eventStatus" : "Stato della sessione",
+	"label.eventCopy": "Copia evento",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annulla",

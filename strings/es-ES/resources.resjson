@@ -582,6 +582,7 @@
     "label.startPremiumStandard" : "Standard",
 	"label.startPremium1": "Premium 1",
 	"label.startPremium2": "Premium 2",
+	"label.eventCopy" : "Veranstaltung kopieren",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Abbrechen",

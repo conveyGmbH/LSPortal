@@ -244,7 +244,7 @@
         { id: "mailingTemplate", group: 13, disabled: false },
         { id: "clientManagement", group: 14, disabled: false },
         { id: "clientManagementLicenses", group: 14, disabled: false },
-        //{ id: "mailingTracking", group: 13, disabled: false }
+        { id: "mailingTracking", group: 13, disabled: false },
         { id: "voucherAdministration", group: -16, disabled: false },
         { id: "resourcesAdministration", group: -17, disabled: false },
         { id: "esStaffAdministration", group: -18, disabled: false },
@@ -306,7 +306,7 @@
         { id: "contactResultsList", master: "eventsList" },
         { id: "eventStatus", master: "eventStatusList" },
         { id: "event", master: "eventList" },
-        { id: "eventCopy", master: "eventList" },
+        { id: "eventCopy", master: "eventList" }
         //{ id: "siteeventsImport", master: "siteEventsList" }
     ];
 
