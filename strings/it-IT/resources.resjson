@@ -618,6 +618,7 @@
     "label.dashboardFNSupreme" : "Dashboard Professional",
     "label.eventStatus" : "Stato della sessione",
 	"label.eventCopy": "Copia evento",
+    "label.siteeventsImport" : "Importazione espositori",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annulla",
@@ -1585,5 +1586,15 @@
     "eventCopy.options"			: "Opzioni",
     "eventCopy.all"			: "Tutti",
     "eventCopy.success"			: "I dati sono stati trasferiti con successo!",
-    "eventCopy.error"			: "Non è stato possibile trasferire i dati con successo!"
+    "eventCopy.error"			: "Non è stato possibile trasferire i dati con successo!",
+
+    "siteeventsimport.title"			: "Importazione",
+    "siteeventsimport.filename"			: "Nome del file",
+    "siteeventsimport.creator"			: "Creatore",
+    "siteeventsimport.timeofupload"			: "Tempo di caricamento",
+    "siteeventsimport.startofimport"			: "Inizio dell'importazione",
+    "siteeventsimport.endofupload"			: "Fine dell'importazione",
+    "siteeventsimport.generalstatus"			: "Stato generale",
+    "siteeventsimport.numberoflineswitherror"			: "Numero di righe con errore",
+    "siteeventsimport.numberoflineswithouterror"			: "Numero di righe senza errori"
 }

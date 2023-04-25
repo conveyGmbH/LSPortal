@@ -618,6 +618,7 @@
     "label.dashboardFNSupreme" : "Dashboard Professional",
     "label.eventStatus" : "Session Status",
 	"label.eventCopy" : "Veranstaltung kopieren",
+    "label.siteeventsImport" : "Aussteller Import",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Abbrechen",
@@ -1588,5 +1589,15 @@
     "eventCopy.options"			: "Optionen",
     "eventCopy.all"			: "Alles",
     "eventCopy.success"			: "Daten Erfolgreich übernommen!",
-    "eventCopy.error"			: "Daten konnten nicht erfolgreich übernommen werden!"
+    "eventCopy.error"			: "Daten konnten nicht erfolgreich übernommen werden!",
+
+    "siteeventsimport.title"			: "Import",
+    "siteeventsimport.filename"			: "Dateiname",
+    "siteeventsimport.creator"			: "Erfasser",
+    "siteeventsimport.timeofupload"			: "Zeitpunkt des Uploads",
+    "siteeventsimport.startofimport"			: "Beginn des Imports",
+    "siteeventsimport.endofupload"			: "Ende des Imports",
+    "siteeventsimport.generalstatus"			: "Genereller Status",
+    "siteeventsimport.numberoflineswitherror"			: "Anzahl Zeilen mit Fehler",
+    "siteeventsimport.numberoflineswithouterror"			: "Anzahl Zeilen ohne Fehler"
 }		

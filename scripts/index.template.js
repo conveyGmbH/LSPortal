@@ -263,7 +263,8 @@
         { id: "ticketLimits", group: -67, disabled: false },
         { id: "dashboardFN", group: -70, disabled: false },
         { id: "eventStatus", group: 73, disabled: false },
-        { id: "eventCopy", group: 2, disabled: false }
+        { id: "eventCopy", group: 2, disabled: false },
+        { id: "siteeventsImport", group: 13, disabled: false }
     ];
 
 
@@ -306,8 +307,8 @@
         { id: "contactResultsList", master: "eventsList" },
         { id: "eventStatus", master: "eventStatusList" },
         { id: "event", master: "eventList" },
-        { id: "eventCopy", master: "eventList" }
-        //{ id: "siteeventsImport", master: "siteEventsList" }
+        { id: "eventCopy", master: "eventList" },
+        { id: "siteeventsImport", master: "siteEventsList" }
     ];
 
     // init page for app startup

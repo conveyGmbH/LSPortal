@@ -219,9 +219,13 @@
                                     if (item.data && item.data.VeranstaltungTerminVIEWID) {
                                         // called asynchronously if ok
                                         var curPageId = Application.getPageId(nav.location);
-                                        if (curPageId === "siteevents" || curPageId === "siteEventsList" || curPageId === "mailingTypes") {
+                                        if (curPageId === "siteevents" || curPageId === "siteEventsList" || curPageId === "mailingTypes" || curPageId === "siteeventsImport") {
                                             AppBar.scope.binding.saveFlag = true;
                                             //AppBar.scope.saveData();
+                                            if (curPageId === "siteeventsImport") {
+                                                AppBar.scope.loadData(item.data.VeranstaltungTerminVIEWID);
+                                                AppData.setRecordId("VeranstaltungTermin", item.data.VeranstaltungTerminVIEWID);
+                                            }
                                             if (AppBar.scope._element &&
                                                 AppBar.scope._element.id === "siteeventsController") {
                                             if (typeof AppBar.scope.loadData === "function") {
