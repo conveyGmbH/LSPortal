@@ -158,6 +158,7 @@
                     }
                     if (cells[i].title === "7") {
                         cells[i].title = getResourceText("siteevents.numberofblockedcontacts");
+                        cells[i].style.color = "red";
                     }
                     if (cells[i].title === "8") {
                         cells[i].title = getResourceText("siteevents.numberofusersused");
