@@ -134,7 +134,36 @@
             }
             this.setInitialHeaderTextValue = setInitialHeaderTextValue;
 
-            var setCellTitle = function () {
+            var setTableCellRed = function() {
+                Log.print(Log.l.trace, "Processing blocked users in table!");
+                // Get the table element by its id
+                var table = pageElement.querySelector("#tableId");
+
+                // Check if the table exists
+                if (table) {
+                    for (var i = 0; i < table.rows.length; i++) {
+                        // Get the 5th cell 
+                        var cell7 = table.rows[i].cells[6];
+
+                        // Get the cell value as a number
+                        var value = parseFloat(cell7.textContent);
+
+                        // Check if the value is greater than 0
+                        if (value > 0) {
+                            //Set Border-LEFT red
+                            table.rows[i].style.borderTop = "thick solid red";
+                            table.rows[i].style.borderBottom = "thick solid red";
+                            // Set the text color of the cell to red and bold
+                            cell7.style.color = "white";
+                            cell7.style.backgroundColor = "red";
+                            cell7.style.fontWeight = "900";
+                        }
+                    }
+                }
+            }
+            this.setTableCellRed = setTableCellRed;
+
+            var setCellTitle = function() {
                 Log.print(Log.l.trace, "Setting up initial Title of the cells!");
                 var cells = pageElement.querySelectorAll("td");
                 for (var i = 0; i < cells.length; i++) {
@@ -158,7 +187,6 @@
                     }
                     if (cells[i].title === "7") {
                         cells[i].title = getResourceText("siteevents.numberofblockedcontacts");
-                        cells[i].style.color = "red";
                     }
                     if (cells[i].title === "8") {
                         cells[i].title = getResourceText("siteevents.numberofusersused");
@@ -1328,6 +1356,7 @@
                             that.addBodyRowHandlers();
                             that.addHeaderRowHandlers();
                             that.setCellTitle();
+                            that.setTableCellRed();
                         } else {
                             that.binding.count = 0;
                             that.nextUrl = null;
