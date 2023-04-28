@@ -240,7 +240,7 @@
                         var files = pageElement.querySelector("#myFile").files;
                         if (files[0].name.match(/\.(csv)/g) != null) {
                             var newFileUploadId = that.binding.newFileID;
-                            newFileUploadId.INITImportFileTypeID = 1;
+                            newFileUploadId.INITImportfiletypeID = 1;
                             newFileUploadId.Import_Title = files[0].name;
                             newFileUploadId.EventID = that.vidID;
                             that.imageName = files[0].name;

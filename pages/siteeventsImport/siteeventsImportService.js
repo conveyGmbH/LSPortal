@@ -20,7 +20,7 @@
                 return ret;
             },
             defaultRestriction: {
-                INITImportFileTypeID: 1,
+                INITImportfiletypeID: 1,
                 Import_Title: "",
                 EventID: 0
             }
@@ -42,7 +42,8 @@
                 wFormat: 0,
                 szOriFileNameDOC1: "",
                 DocContentDOCCNT1: "",
-                ContentEncoding: 0
+                ContentEncoding: 0,
+                INITImportfiletypeID: 1
             }
         },
         _Import_FileVIEW: {
