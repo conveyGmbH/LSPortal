@@ -44,9 +44,6 @@
             var contentArea = pageElement.querySelector(".contentarea");
             var suggestionBox = pageElement.querySelector("#suggestionBox");
             var autosuggestbox = pageElement.querySelector(".win-autosuggestbox");
-            var fileinputbox = pageElement.querySelector(".fileinputbox");
-            var inputbox = pageElement.querySelector("#myFile");
-            var inputmsg = pageElement.querySelector("#inputmsg");
             var searchInput = pageElement.querySelector("#searchInput");
 
             var prevMasterLoadPromise = null;
@@ -596,60 +593,6 @@
             }
             this.getCsvData = getCsvData;
 
-            var uploadCsvData = function (newFileUploadData) {
-                Log.call(Log.l.trace, "SiteEvents.Controller.");
-                AppData.setErrorMsg(that.binding);
-                newFileUploadData.DocContentDOCCNT1 = that.createCsvString(newFileUploadData.DocContentDOCCNT1);
-                AppBar.busy = true;
-                var ret = SiteEvents.doc3import_file.insert(function (json) {
-                    AppBar.busy = false;
-                    // this callback will be called asynchronously
-                    // when the response is available
-                    Log.print(Log.l.info, "doc3import_file insert: success!");
-                    // doc3import_file returns object already parsed from json file in response
-                    if (json && json.d) {
-                        Log.print(Log.l.info, "doc3import_file insert: success!");
-                        that.showMessage(true);
-                    }
-                    AppBar.modified = true;
-                }, function (errorResponse) {
-                    Log.print(Log.l.error, "error inserting csv");
-                    that.showMessage(false);
-                    AppBar.busy = false;
-                    AppData.setErrorMsg(that.binding, errorResponse);
-                },
-                    newFileUploadData);
-                return ret;
-            }
-            this.uploadCsvData = uploadCsvData;
-
-            var uploadCsv = function (newFileUploadId) {
-                Log.call(Log.l.trace, "SiteEvents.Controller.");
-                AppData.setErrorMsg(that.binding);
-                AppBar.busy = true;
-                var ret = SiteEvents.importfileView.insert(function (json) {
-                    AppBar.busy = false;
-                    // this callback will be called asynchronously
-                    // when the response is available
-                    Log.print(Log.l.info, "importfileView insert: success!");
-                    // importfileView returns object already parsed from json file in response
-                    if (json && json.d) {
-                        Log.print(Log.l.info, "importfileView insert: success!");
-                        var importFileViewId = json.d.Import_FileVIEWID;
-                        var newFileUploadData = that.getCsvData(importFileViewId);
-                        that.uploadCsvData(newFileUploadData);
-                    }
-                    AppBar.modified = true;
-                }, function (errorResponse) {
-                    Log.print(Log.l.error, "error inserting csv");
-                    AppBar.busy = false;
-                    AppData.setErrorMsg(that.binding, errorResponse);
-                },
-                    newFileUploadId);
-                return ret;
-            }
-            this.uploadCsv = uploadCsv;
-
             var exportData = function (dbView, fileName) {
                 Log.call(Log.l.trace, "SiteEvents.Controller.");
                 var dbViewTitle = null;
@@ -957,33 +900,6 @@
                         }
                     });
                     Log.ret(Log.l.trace);
-                },
-                ondateiupload: function () {
-                    Log.call(Log.l.trace, "SiteEvents.Controller.");
-                    var files = pageElement.querySelector("#myFile").files;
-                    if (files[0].name.match(/\.(csv)/g) != null) {
-                        var newFileUploadId = that.binding.newFileID;
-                        newFileUploadId.INITImportFileTypeID = 1;
-                        newFileUploadId.Import_Title = files[0].name;
-                        newFileUploadId.EventID = that.vidID;
-                        that.imageName = files[0].name;
-                        that.imageLength = files[0].size;
-                        if (files && files[0]) {
-                            var reader = new FileReader();
-                            reader.addEventListener(
-                                "load",
-                                function () {
-                                    that.imageData = reader.result;
-                                    Log.call(Log.l.trace, "SiteEvents.Controller.");
-                                    that.uploadCsv(newFileUploadId);
-                                });
-                            reader.readAsDataURL(files[0]);
-                            Log.call(Log.l.trace, "SiteEvents.Controller.");
-                        }
-                    } else {
-                        alert('Wrong file extension! File input is cleared.');
-                        inputbox.value = null;
-                    }
                 },
                 changeSearchField: function (event) {
                     Log.call(Log.l.trace, "Event.Controller.");
@@ -1298,8 +1214,6 @@
 
             var loadData = function (vid, sortIdx, sortType) {
                 Log.call(Log.l.trace, "LocalEvents.Controller.");
-                inputmsg.textContent = " ";
-                inputbox.value = null;
                 that.siteeventsdata = null;
                 that.siteeventsdataraw = null;
                 that.loading = true;
