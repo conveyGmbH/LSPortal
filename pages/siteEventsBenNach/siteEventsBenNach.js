@@ -23,7 +23,7 @@
             var commandList = [
                 { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" },
                 { id: "clickChange", label: getResourceText("command.ok"), tooltip: getResourceText("tooltip.eventchange"), section: "primary", svg: "va_wechsel" },
-                { id: "clickShowNewDevices", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "plus" }
+                { id: "clickShowNewDevices", label: getResourceText("command.newdevices"), tooltip: getResourceText("tooltip.newdevices"), section: "primary", svg: "plus" }
             ];
 
             this.controller = new SiteEventsBenNach.Controller(element, commandList);

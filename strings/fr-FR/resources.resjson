@@ -61,7 +61,9 @@
     "command.sendWallet"  : "Envoyer un ticket wallet",	
     "command.deleteTicket"  : "Supprimer un ticket",
     "command.exportexhibitorList"  : "Liste des exposants",
-	"command.showevents"    : "Ereignisse anzeigen",
+	"command.showevents"    : "Ereignisse anzeigen",	
+    "command.eventchange"  : "Changer",
+    "command.newdevices"  : "ajouter des licences",
 
     "tooltip.backward"      : "Page présédente",
     "tooltip.edit"          : "Modifier le contact en cours",
@@ -145,6 +147,7 @@
     "tooltip.multchoice" : "Ce type de réponse permet de sélectionner une ou plusieurs réponses",
     "tooltip.rating" : "Avec ce type de réponse une seule réponse peut être sélectionnée. La réponse ne peut pas contenir de texte, mais seulement un à six étoiles",
     "tooltip.dropdown" : "Avec ce type de réponse, une seule réponse peut être sélectionnée. Les réponses peuvent être affichées dans une liste déroulante",
+    "tooltip.newdevices"  : "ajouter des licences",
 
     "home.title"            : "Start",
     "home.info"             : "Instructions importantes",

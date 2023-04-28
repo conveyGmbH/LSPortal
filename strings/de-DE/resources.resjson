@@ -61,7 +61,9 @@
     "command.sendWallet"  : "Wallet senden",
     "command.deleteTicket"  : "Ausweis löschen",
     "command.exportexhibitorList"  : "Austellerliste",
-	"command.showevents"    : "Ereignisse anzeigen",
+	"command.showevents"    : "Ereignisse anzeigen",	
+    "command.eventchange"  : "Wechseln",
+    "command.newdevices"  : "Lizenzen hinzufügen",
 
     "tooltip.backward"      : "Zurück blättern",
     "tooltip.edit"          : "Aktuellen Datensatz bearbeiten",
@@ -145,6 +147,7 @@
 	"tooltip.multchoice" : "Bei dieser Antwortart können eine oder mehrere Antworten ausgewählt werden",
 	"tooltip.rating" : "Bei dieser Antwortart kann nur eine Antwort ausgewählt werden. Die Antwort darf keinen Text enthalten, sondern nur ein bis sechs Sternsymbole",
 	"tooltip.dropdown" : "Bei dieser Antwortart kann nur eine der Antworten ausgewählt werden. Die Antworten werden innerhalb eine Drop Down Box angezeigt",
+    "tooltip.newdevices"  : "Lizenzen hinzufügen",
 
     "home.title"            : "Start",
     "home.info"             : "Wichtige Hinweise",

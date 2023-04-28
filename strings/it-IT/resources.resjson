@@ -62,6 +62,8 @@
     "command.deleteTicket"  : "Cancellare il biglietto",
     "command.exportexhibitorList"  : "Elenco espositori",
 	"command.showevents"    : "Ereignisse anzeigen",
+    "command.eventchange"  : "Cambiamento",
+    "command.newdevices"  : "Aggiungi licenze",
 
     "tooltip.backward"      : "Pagina precedente",
     "tooltip.edit"          : "Modifica Record attuale",
@@ -145,6 +147,7 @@
     "tooltip.multchoice" : "Con questo tipo di risposta è possibile selezionare una o più risposte",
     "tooltip.rating" : "Con questo tipo di risposta è possibile selezionare una sola risposta. La risposta non può contenere testo, ma solo da uno a sei simboli stella",
     "tooltip.dropdown" : "Con questo tipo di risposta, è possibile selezionare solo una delle risposte. Le risposte sono visualizzate in una casella a discesa",
+    "tooltip.newdevices"  : "Aggiungi licenze",
 
     "home.title"            : "Start",
     "home.info"             : "Informazioni importanti",

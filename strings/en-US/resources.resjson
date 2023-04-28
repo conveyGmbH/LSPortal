@@ -61,7 +61,9 @@
     "command.sendWallet"  : "Send Wallet ticket",	
     "command.deleteTicket"  : "Delete ticket",
     "command.exportexhibitorList"  : "Exhibitor list",
-	"command.showevents"    : "Ereignisse anzeigen",
+	"command.showevents"    : "Ereignisse anzeigen",	
+    "command.eventchange"  : "Change",
+    "command.newdevices"  : "Add licenses",
 
     "tooltip.backward"      : "Browse back",
     "tooltip.edit"          : "Edit current record",
@@ -145,6 +147,7 @@
     "tooltip.multchoice" : "With this answer type one or more of the answers can be selected",
     "tooltip.rating" : "With this answer type only one answer can be selected. The answer cannot contain text, just one to six star symbols",
     "tooltip.dropdown" : "With this answer type, only one of the answers can be selected. The answers are displayed inside a drop down box",
+    "tooltip.newdevices"  : "Add licenses",
 
     "home.title"            : "Start",
     "home.info"             : "Important information",
