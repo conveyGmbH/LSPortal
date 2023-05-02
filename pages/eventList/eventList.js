@@ -71,8 +71,39 @@
         },
         
         updateLayout: function (element, viewState, lastViewState) {
+            var ret = null;
+            var that = this;
             /// <param name="element" domElement="true" />
+            Log.call(Log.l.u1, pageName + ".");
             // TODO: Respond to changes in viewState.
+            if (element && !that.inResize) {
+                that.inResize = 1;
+                ret =  WinJS.Promise.timeout(0).then(function () {
+                    var contactList = element.querySelector("#eventList.listview");
+                    if (contactList && contactList.style) {
+                        var contentarea = element.querySelector(".contentarea");
+                        if (contentarea) {
+                            var width = contentarea.clientWidth;
+                            var height = contentarea.clientHeight - 8;
+                            var contentheader = element.querySelector(".content-header");
+                            if (contentheader) {
+                                height -= contentheader.clientHeight;
+                            }
+                            if (width !== that.prevWidth) {
+                                that.prevWidth = width;
+                                contactList.style.width = width.toString() + "px";
+                            }
+                            if (height !== that.prevHeight) {
+                                that.prevHeight = height;
+                                contactList.style.height = height.toString() + "px";
+                            }
+                        }
+                    }
+                    that.inResize = 0;
+                });
+            }
+            Log.ret(Log.l.u1);
+            return ret;
         }
     });
 })();
