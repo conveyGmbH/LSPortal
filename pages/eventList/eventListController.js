@@ -390,7 +390,7 @@
                                 listView.winControl.itemDataSource = that.records.dataSource;
                             }
                             Log.print(Log.l.trace, "Data loaded");
-                            AppData.setRecordId("VeranstaltungVIEW_20542", AppData.getRecordId("Veranstaltung"));
+                            /*AppData.setRecordId("VeranstaltungVIEW_20542", AppData.getRecordId("Veranstaltung"));
                             var recordId = AppData.getRecordId("Veranstaltung");
                             if (recordId) {
                                 that.selectRecordId(recordId);
@@ -398,7 +398,7 @@
                                 if (listView && listView.winControl) {
                                     listView.winControl.selection.set(0);
                                 }
-                            }
+                            }*/
                         } else {
                             that.binding.count = 0;
                             that.nextUrl = null;
