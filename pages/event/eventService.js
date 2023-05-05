@@ -32,7 +32,7 @@
         },
         _CR_VERANSTOPTION_View: {
             get: function () {
-                return AppData.getFormatView("CR_VERANSTOPTION", 0, false);
+                return AppData.getFormatView("CR_VERANSTOPTION", 20668, false);
             }
         },
         CR_VERANSTOPTION_ODataView: {
@@ -48,6 +48,24 @@
                 Log.ret(Log.l.trace);
                 return ret;
 
+            },
+            defaultValue: {
+                isQuestionnaireVisible: "0",
+                isSketchVisible: "0",
+                isCameraVisible: "0",
+                isBarcodeScanVisible: "0",
+                isDBSyncVisible: "0",
+                isPrivacyPolicySVGVisible: "0",
+                isSendMailPrivacypolicy: "0",
+                showQRCode: "0",
+                isvisitorFlowVisible: "0",
+                isvisitorFlowVisibleAndLeadSuccess: "0",
+                showNameInHeader: "0",
+                visitorFlowFeature: "0",
+                visitorFlowPremium: "0",
+                visitorFlowInterval: "",
+                dashboardMesagoFeature: false,
+                isDashboardPremium: false,
             }
         },
         _appListSpecView: {

@@ -16,6 +16,7 @@
             Log.call(Log.l.trace, "Event.Controller.");
             Application.Controller.apply(this, [pageElement, {
                 dataEvent: getEmptyDefaultValue(Event.eventView.defaultValue),
+                veranstOption: getEmptyDefaultValue(Event.CR_VERANSTOPTION_ODataView.defaultValue),
                 isQuestionnaireVisible: !AppData._persistentStates.hideQuestionnaire,
                 isSketchVisible: !AppData._persistentStates.hideSketch,
                 isCameraVisible: !AppData._persistentStates.hideCameraScan,
@@ -143,8 +144,6 @@
                 that.binding.dataEvent = newDataEvent;
                 if (that.binding.dataEvent.DatenschutzText === null) {
                     that.binding.dataEvent.DatenschutzText = "";
-                    //that.binding.dataEvent.privacyPolicyStandartText = getResourceText("event.privacyPolicyStandartText");
-                    //that.binding.dataEvent.DatenschutzText = getResourceText("event.privacyPolicyStandartText");
                 }
                 if (textComment) {
                     if (that.binding.dataEvent.DatenschutzText) {
@@ -195,50 +194,162 @@
             var getDeleteEventData = function (eventID) {
                 Log.call(Log.l.trace, "LocalEvents.Controller.");
                 AppData.setErrorMsg(that.binding);
-                var ret = new WinJS.Promise.as()/*.then(function () {
-                    return LocalEvents.VeranstaltungView.select(function (json) {
-                        // this callback will be called asynchronously
-                        // when the response is available
-                        Log.print(Log.l.info, "MAILERZEILENView select: success!");
-                        if (json && json.d && json.d.results && json.d.results.length > 0) {
-                            that.deleteEventData = json.d.results[0];
-                        }
-
-                    }, function (errorResponse) {
-                        Log.print(Log.l.error, "error selecting mailerzeilen");
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                        }, { VeranstaltungVIEWID: eventID});
-                })*/.then(function () {
-                        // var curScope = that.deleteEventData;
-                        var curScope = that.binding.dataEvent;
-                        if (curScope) {
-                            var confirmTitle = getResourceText("localevents.labelDelete") + ": " + curScope.Name +
-                                "\r\n" + getResourceText("localevents.eventDelete");
-                            confirm(confirmTitle, function (result) {
-                                if (result) {
-                                    AppBar.busy = true;
-                                    AppData.setErrorMsg(that.binding);
-                                    AppData.call("PRC_DeleteVeranstaltung", {
-                                        pVeranstaltungID: eventID
-                                    }, function (json) {
-                                        Log.print(Log.l.info, "call success! ");
-                                        AppBar.busy = false;
-                                        var master = Application.navigator.masterControl;
-                                        master.controller.loadData();
-                                    }, function (error) {
-                                        AppBar.busy = false;
-                                        Log.print(Log.l.error, "call error");
-                                    });
-                                } else {
-                                    Log.print(Log.l.trace, "clickDelete: event choice CANCEL");
-                                }
-                            });
-                        }
-                    });
+                var ret = new WinJS.Promise.as().then(function () {
+                    // var curScope = that.deleteEventData;
+                    var curScope = that.binding.dataEvent;
+                    if (curScope) {
+                        var confirmTitle = getResourceText("localevents.labelDelete") + ": " + curScope.Name +
+                            "\r\n" + getResourceText("localevents.eventDelete");
+                        confirm(confirmTitle, function (result) {
+                            if (result) {
+                                AppBar.busy = true;
+                                AppData.setErrorMsg(that.binding);
+                                AppData.call("PRC_DeleteVeranstaltung", {
+                                    pVeranstaltungID: eventID
+                                }, function (json) {
+                                    Log.print(Log.l.info, "call success! ");
+                                    AppBar.busy = false;
+                                    var master = Application.navigator.masterControl;
+                                    master.controller.loadData();
+                                }, function (error) {
+                                    AppBar.busy = false;
+                                    Log.print(Log.l.error, "call error");
+                                });
+                            } else {
+                                Log.print(Log.l.trace, "clickDelete: event choice CANCEL");
+                            }
+                        });
+                    }
+                });
                 Log.ret(Log.l.trace);
                 return ret;
             }
             this.getDeleteEventData = getDeleteEventData;
+
+            var changeSetting = function (toggleId, checked) {
+                Log.call(Log.l.trace, "Settings.Controller.", "toggleId=" + toggleId + " checked=" + checked);
+                var pOptionTypeId = null;
+                var pageProperty = null;
+                var hidePageItem = false;
+                var pValue;
+                var pValueIsSet = false;
+                var callChangeAppSettingNext = false;
+                var toggleIdNext = null;
+                var checkedNext = null;
+                switch (toggleId) {
+                    case "showQuestionnaire":
+                        pOptionTypeId = 20;
+                        that.binding.veranstOption.isQuestionnaireVisible = checked;
+                        hidePageItem = true;
+                        break;
+                    case "showSketch":
+                        pOptionTypeId = 21;
+                        that.binding.veranstOption.isSketchVisible = checked;
+                        hidePageItem = true;
+                        break;
+                    case "showBarcodeScan":
+                        pOptionTypeId = 23;
+                        that.binding.veranstOption.isBarcodeScanVisible = checked;
+                        hidePageItem = true;
+                        break;
+                    case "showCamera":
+                        pOptionTypeId = 24;
+                        that.binding.veranstOption.isCameraVisible = checked;
+                        hidePageItem = true;
+                        break;
+                    case "showPrivacyPolicySVG":
+                        pOptionTypeId = 34;
+                        that.binding.veranstOption.isPrivacyPolicySVGVisible = checked;
+                        if (!checked) {
+                            that.binding.dataEvent.DatenschutzText = "";
+                            that.binding.dataEvent.DatenschutzSVG = null;
+                            callChangeAppSettingNext = true;
+                            toggleIdNext = "sendMailPrivacypolicy";
+                            checkedNext = checked;
+                        } else {
+                            that.binding.dataEvent.DatenschutzText = getResourceText("event.privacyPolicyStandartText");
+                        }
+                        if (!AppBar.modified) {
+                            AppBar.modified = true;
+                        }
+                        break;
+                    case "showQRCode":
+                        pOptionTypeId = 38;
+                        that.binding.veranstOption.showQRCode = checked;
+                        break;
+                    case "showNameInHeader":
+                        pOptionTypeId = 39;
+                        that.binding.veranstOption.showNameInHeader = checked;
+                        break;
+                    case "showvisitorFlowCombo":
+                        pOptionTypeId = 44;
+                        that.binding.veranstOption.isvisitorFlowVisible = checked;
+                        pValue = that.binding.veranstOption.isvisitorFlowVisible;
+                        pValueIsSet = true;
+                        break;
+                    case "visitorFlowPremium":
+                        pOptionTypeId = 45;
+                        that.binding.veranstOption.visitorFlowPremium = checked;
+                        break;
+                    case "showdashboardMesagoCombo":
+                        pOptionTypeId = 47;
+                        that.binding.veranstOption.isDashboardPremium = parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 1 ? true : false;
+                        if (!that.binding.veranstOption.isDashboardPremium) {
+                        }
+                        pValue = checked;
+                        pValueIsSet = true;
+                        break;
+                    case "showPremiumDashboardCombo":
+                        pOptionTypeId = 48;
+                        pValue = checked;
+                        pValueIsSet = true;
+                        break;
+                    case "sendMailPrivacypolicy":
+                        pOptionTypeId = 49;
+                        that.binding.veranstOption.isSendMailPrivacypolicy = checked;
+                        break;
+                    case "visitorFlowInterval":
+                        pOptionTypeId = 50;
+                        that.binding.veranstOption.visitorFlowInterval = checked;
+                        pValueIsSet = true;
+                        pValue = checked;
+                        break;
+                }
+                if (pOptionTypeId) {
+                    // value: show => pValue: hide!
+                    if (!pValueIsSet) {
+                        if (hidePageItem) {
+                            if (!checked) {
+                                pValue = "1";
+                            } else {
+                                pValue = "0";
+                            }
+                        } else {
+                            if (checked) {
+                                pValue = "1";
+                            } else {
+                                pValue = "0";
+                            }
+                        }
+                    }
+                    var eventId = that.getEventId();
+                    AppData.call("PRC_SETVERANSTOPTION", {
+                        pVeranstaltungID: eventId, // Hier muss die ID aus Liste kommen
+                        pOptionTypeID: pOptionTypeId,
+                        pValue: pValue
+                    }, function (json) {
+                        Log.print(Log.l.info, "call success! ");
+                    }, function (error) {
+                        Log.print(Log.l.error, "call error");
+                    }).then(function () {
+                        // rufe nochmal funktion changeAppSetting - Bedingung muss erfüllt sein
+                        if (callChangeAppSettingNext && toggleIdNext) {
+                            that.changeSetting(toggleIdNext, checkedNext);
+                        }
+                    });
+                }
+            };
+            this.changeSetting = changeSetting;
 
             var changeAppSetting = function (toggleId, checked) {
                 Log.call(Log.l.trace, "Settings.Controller.", "toggleId=" + toggleId + " checked=" + checked);
@@ -254,32 +365,32 @@
                     case "showQuestionnaire":
                         pOptionTypeId = 20;
                         pageProperty = "questionnaire";
-                        that.binding.isQuestionnaireVisible = checked;
+                        that.binding.veranstOption.isQuestionnaireVisible = checked;
                         AppData._persistentStates.hideQuestionnaire = !checked;
                         hidePageItem = true;
                         break;
                     case "showSketch":
                         pOptionTypeId = 21;
                         pageProperty = "sketch";
-                        that.binding.isSketchVisible = checked;
+                        that.binding.veranstOption.isSketchVisible = checked;
                         AppData._persistentStates.hideSketch = !checked;
                         hidePageItem = true;
                         break;
                     case "showBarcodeScan":
                         pOptionTypeId = 23;
-                        that.binding.isBarcodeScanVisible = checked;
+                        that.binding.veranstOption.isBarcodeScanVisible = checked;
                         AppData._persistentStates.hideBarcodeScan = !checked;
                         hidePageItem = true;
                         break;
                     case "showCamera":
                         pOptionTypeId = 24;
-                        that.binding.isCameraVisible = checked;
+                        that.binding.veranstOption.isCameraVisible = checked;
                         AppData._persistentStates.hideCameraScan = !checked;
                         hidePageItem = true;
                         break;
                     case "showPrivacyPolicySVG":
                         pOptionTypeId = 34;
-                        that.binding.isPrivacyPolicySVGVisible = checked;
+                        that.binding.veranstOption.isPrivacyPolicySVGVisible = checked;
                         AppData._persistentStates.privacyPolicySVGVisible = checked;
                         if (!checked) {
                             that.binding.dataEvent.DatenschutzText = "";
@@ -296,73 +407,33 @@
                         break;
                     case "showQRCode":
                         pOptionTypeId = 38;
-                        that.binding.showQRCode = checked;
+                        that.binding.veranstOption.showQRCode = checked;
                         AppData._persistentStates.showQRCode = checked;
                         break;
                     case "showNameInHeader":
                         pOptionTypeId = 39;
-                        that.binding.showNameInHeader = checked;
+                        that.binding.veranstOption.showNameInHeader = checked;
                         AppData._persistentStates.showNameInHeader = checked;
-                        WinJS.Promise.timeout(0).then(function() {
+                        WinJS.Promise.timeout(0).then(function () {
                             AppData.getUserData();
                         });
                         break;
-                        /*case "showvisitorFlow":
-                            pOptionTypeId = 44;
-                            that.binding.isvisitorFlowVisible = checked;
-                            AppData._persistentStates.showvisitorFlow = checked;
-                            //var pValue;
-                            if (!that.binding.isvisitorFlowVisible) {
-                                that.binding.isvisitorFlowVisibleAndLeadSuccess = checked;
-                                AppData._persistentStates.showvisitorFlowAndLeadSuccess = checked;
-                                pValue = "0";
-                            } else {
-                                pValue = "1";
-                            }
-                            /*if (pValue === "1") {
-                                NavigationBar.enablePage("visitorFlowDashboard");
-                                NavigationBar.enablePage("visitorFlowEntExt"); 
-                                NavigationBar.enablePage("employeeVisitorFlow");
-                            } else {
-                                NavigationBar.disablePage("visitorFlowDashboard");
-                                NavigationBar.disablePage("visitorFlowEntExt");
-                                NavigationBar.disablePage("employeeVisitorFlow");
-                            }
-                            //AppData._persistentStates.showvisitorFlowAndLeadSuccess = checked;
-                            break;
-                        case "showvisitorFlowAndLeadSuccess":
-                            pOptionTypeId = 44;
-                            that.binding.isvisitorFlowVisibleAndLeadSuccess = checked;
-                            AppData._persistentStates.showvisitorFlowAndLeadSuccess = checked;
-                            //AppData._persistentStates.showvisitorFlowAndLeadSuccess = checked;
-                            if (that.binding.isvisitorFlowVisibleAndLeadSuccess) {
-                                pValue = "2";
-                            } else {
-                                if (that.binding.isvisitorFlowVisible) {
-                                pValue = "1";
-                                } else {
-                                    pValue = "0";
-                            }
-                            }
-                            pValueIsSet = true;
-                            break;*/
                     case "showvisitorFlowCombo":
                         pOptionTypeId = 44;
-                        that.binding.isvisitorFlowVisible = checked;
+                        that.binding.veranstOption.isvisitorFlowVisible = checked;
                         AppData._persistentStates.showvisitorFlowAndLeadSuccess = checked;
                         pValue = that.binding.isvisitorFlowVisible;
                         pValueIsSet = true;
                         break;
                     case "visitorFlowPremium":
                         pOptionTypeId = 45;
-                        that.binding.visitorFlowPremium = checked;
+                        that.binding.veranstOption.visitorFlowPremium = checked;
                         AppData._persistentStates.visitorFlowPremium = checked;
                         break;
                     case "showdashboardMesagoCombo":
                         pOptionTypeId = 47;
-                        //that.binding.visitorFlowPremium = checked;
                         AppData._persistentStates.showdashboardMesagoCombo = checked;
-                        that.binding.isDashboardPremium = parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 1 ? true : false;
+                        that.binding.veranstOption.sDashboardPremium = parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 1 ? true : false;
                         if (!that.binding.isDashboardPremium) {
                             AppData._persistentStates.showPremiumDashboardCombo = null;
                         }
@@ -371,21 +442,18 @@
                         break;
                     case "showPremiumDashboardCombo":
                         pOptionTypeId = 48;
-                        //that.binding.visitorFlowPremium = checked;
                         AppData._persistentStates.showPremiumDashboardCombo = checked;
-                        //that.binding.isDashboardPremium = parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 1 ? true : false;
                         pValue = checked;
                         pValueIsSet = true;
                         break;
                     case "sendMailPrivacypolicy":
                         pOptionTypeId = 49;
-                        /*****/
-                        that.binding.isSendMailPrivacypolicy = checked;
+                        that.binding.veranstOption.isSendMailPrivacypolicy = checked;
                         AppData._persistentStates.sendMailPrivacypolicy = checked;
                         break;
                     case "visitorFlowInterval":
                         pOptionTypeId = 50;
-                        that.binding.visitorFlowInterval = checked;
+                        that.binding.veranstOption.visitorFlowInterval = checked;
                         AppData._persistentStates.visitorFlowInterval = checked;
                         pValueIsSet = true;
                         pValue = checked;
@@ -409,14 +477,14 @@
                         }
                     }
                     AppData.call("PRC_SETVERANSTOPTION", {
-                        pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                        pVeranstaltungID: AppData.getRecordId("Veranstaltung"), // AppData.getRecordId("Veranstaltung") Hier muss die ID aus Liste kommen
                         pOptionTypeID: pOptionTypeId,
                         pValue: pValue
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
                     }, function (error) {
                         Log.print(Log.l.error, "call error");
-                    }).then(function() {
+                    }).then(function () {
                         // rufe nochmal funktion changeAppSetting - Bedingung muss erfüllt sein
                         if (callChangeAppSettingNext && toggleIdNext) {
                             that.changeAppSetting(toggleIdNext, checkedNext);
@@ -485,6 +553,7 @@
                 clickChangeAppSetting: function (event) {
                     Log.call(Log.l.trace, "Event.Controller.");
                     var target = event.currentTarget || event.target;
+                    //AppBar.modified = true;
                     if (target) {
                         var toggle = target.winControl;
                         //var target = event.target || event.currentTarget;
@@ -496,7 +565,7 @@
                             } else {
                                 value = toggle.checked;
                             }
-                            that.changeAppSetting(target.id, value);
+                            that.changeSetting(target.id, value);
                         }
                     }
                     Log.ret(Log.l.trace);
@@ -540,17 +609,149 @@
                 clickOk: function () {
                     // always enabled!
                     return false;
+                },
+                clickChange: function() {
+
                 }
             };
-            var resultConverter = function (item, index) {
-                var property = AppData.getPropertyFromInitoptionTypeID(item);
-                /*if (property && property !== "individualColors" && (!item.pageProperty) && item.LocalValue) {
-                    item.colorValue = "#" + item.LocalValue;
-                    AppData.applyColorSetting(property, item.colorValue);
-                }*/
 
+            var resultConverterOption = function (item, index) {
+                that.getPropertyFromInitoptionTypeID(item);
             }
-            this.resultConverter = resultConverter;
+            this.resultConverterOption = resultConverterOption;
+
+            var getPropertyFromInitoptionTypeID = function (item) {
+                Log.call(Log.l.u1, "AppData.");
+                var color;
+                var property = "";
+                switch (item.INITOptionTypeID) {
+                    case 19:
+                        if (item.LocalValue === "1") {
+                            //AppData._persistentStates.hideCameraQuestionnaire = true;
+                        } else {
+                            //AppData._persistentStates.hideCameraQuestionnaire = false;
+                        }
+                        break;
+                    case 20:
+                        item.pageProperty = "questionnaire";
+                        if (item.LocalValue === "1") {
+                            that.binding.veranstOption.isQuestionnaireVisible = false;
+                        } else {
+                            that.binding.veranstOption.isQuestionnaireVisible = true;
+                        }
+                        break;
+                    case 21:
+                        item.pageProperty = "sketch";
+                        if (item.LocalValue === "1") {
+                            that.binding.veranstOption.isSketchVisible = false;
+                        } else {
+                            that.binding.veranstOption.isSketchVisible = true;
+                        }
+                        break;
+                    case 23:
+                        if (item.LocalValue === "1") {
+                            that.binding.veranstOption.isBarcodeScanVisible = false;
+                        } else {
+                            that.binding.veranstOption.isBarcodeScanVisible = true;
+                        }
+                        break;
+                    case 24:
+                        if (item.LocalValue === "1") {
+                            that.binding.veranstOption.isCameraVisible = false;
+                        } else {
+                            that.binding.veranstOption.isCameraVisible = true;
+                        }
+                        break;
+                    case 30:
+                        if (item.LocalValue === "1") {
+                            that.binding.veranstOption.productMailOn = true;
+                        } else {
+                            that.binding.veranstOption.productMailOn = false;
+                        }
+                        break;
+                    case 31:
+                        if (item.LocalValue === "1") {
+                            that.binding.veranstOption.thankYouMailOn = true;
+                        } else {
+                            that.binding.veranstOption.thankYouMailOn = false;
+                        }
+                        break;
+                    case 34:
+                        if (item.LocalValue === "1") {
+                            that.binding.veranstOption.isPrivacyPolicySVGVisible = true;
+                        } else {
+                            that.binding.veranstOption.isPrivacyPolicySVGVisible = false;
+                        }
+                        break;
+                    case 35:
+                        if (item.LocalValue === "1") {
+                            that.binding.veranstOption.nachbearbeitetFlagAutoSetToNull = true;
+                        } else {
+                            that.binding.veranstOption.nachbearbeitetFlagAutoSetToNull = false;
+                        }
+                        break;
+                    case 38:
+                        if (item.LocalValue === "1") {
+                            that.binding.veranstOption.showQRCode = true;
+                        } else {
+                            that.binding.veranstOption.showQRCode = false;
+                        }
+                        break;
+                    case 39:
+                        if (item.LocalValue === "1") {
+                            that.binding.veranstOption.showNameInHeader = true;
+                        } else {
+                            that.binding.veranstOption.showNameInHeader = false;
+                        }
+                        break;
+                    case 44:
+                        // Enable bzw. disable wird hier behandelt, da umgekehrte Logik mit Anzeigewert
+                        if (parseInt(item.LocalValue) === 1 || parseInt(item.LocalValue) === 2) {
+                            that.binding.veranstOption.showvisitorFlow = parseInt(item.LocalValue);
+                            //AppData._persistentStates.showvisitorFlow = parseInt(item.LocalValue);
+                            // NavigationBar.enablePage("employee");
+                            /* NavigationBar.enablePage("visitorFlowDashboard");
+                            NavigationBar.enablePage("visitorFlowEntExt");
+                            NavigationBar.enablePage("employeeVisitorFlow");/*pagename muss wahrscheinlich nochmal geändert werden, jenachdem wie die seite heisst*/
+                        } else {
+                            that.binding.veranstOption.showvisitorFlow = 0;
+                            //NavigationBar.disablePage("employeeVisitoFlow");
+                            /*NavigationBar.disablePage("visitorFlowDashboard");
+                            NavigationBar.disablePage("visitorFlowEntExt");
+                            NavigationBar.disablePage("employeeVisitorFlow");*/
+                        }
+                        break;
+                    case 45:
+                        if (item.LocalValue === "1") {
+                            that.binding.veranstOption.visitorFlowPremium = true;
+                        } else {
+                            that.binding.veranstOption.visitorFlowPremium = false;
+                        }
+                        break;
+                    case 47:
+                        if (parseInt(item.LocalValue) === 1 || parseInt(item.LocalValue) === 2 || parseInt(item.LocalValue) === 3 || parseInt(item.LocalValue) === 4) {
+                            that.binding.veranstOption.showdashboardMesagoCombo = parseInt(item.LocalValue);
+                        } else {
+                            that.binding.veranstOption.showdashboardMesagoCombo = 0;
+                        }
+                        break;
+                    case 49:
+                        if (item.LocalValue === "1") {
+                            that.binding.veranstOption.sendMailPrivacypolicy = true;
+                        } else {
+                            that.binding.veranstOption.sendMailPrivacypolicy = false;
+                        }
+                        break;
+                    case 50:
+                        that.binding.veranstOption.visitorFlowInterval = item.LocalValue;
+                        break;
+                    default:
+                    // defaultvalues
+                }
+                Log.ret(Log.l.u1, property);
+                return property;
+            }
+            this.getPropertyFromInitoptionTypeID = getPropertyFromInitoptionTypeID;
 
             var getEventId = function () {
                 Log.print(Log.l.trace, "getEventId Event._eventId=" + Event._eventId);
@@ -595,26 +796,25 @@
                     }
                 }).then(function () {
                     return Event.iNOptionTypeValueView.select(function (json) {
-                            // this callback will be called asynchronously
-                            // when the response is available
-                            Log.print(Log.l.trace, "initLandView: success!");
-                            if (json && json.d && json.d.results) {
-                                // Now, we call WinJS.Binding.List to get the bindable list
-                                var results = json.d.results;
-                                if (dashboardMesagoCombo && dashboardMesagoCombo.winControl) {
-                                    dashboardMesagoCombo.winControl.data = new WinJS.Binding.List(results);
-                                    dashboardMesagoCombo.selectedIndex = parseInt(AppData._userData.IsSupreme) - 1;
-                                }
+                        // this callback will be called asynchronously
+                        // when the response is available
+                        Log.print(Log.l.trace, "initLandView: success!");
+                        if (json && json.d && json.d.results) {
+                            // Now, we call WinJS.Binding.List to get the bindable list
+                            var results = json.d.results;
+                            if (dashboardMesagoCombo && dashboardMesagoCombo.winControl) {
+                                dashboardMesagoCombo.winControl.data = new WinJS.Binding.List(results);
+                                dashboardMesagoCombo.selectedIndex = parseInt(AppData._userData.IsSupreme) - 1;
                             }
-                        }, function (errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        }, { LanguageSpecID: AppData.getLanguageId()});
+                        }
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    }, { LanguageSpecID: AppData.getLanguageId() });
                 }).then(function () {
                     //load of format relation record data
                     that.remoteServerList = new WinJS.Binding.List([Event.remoteKonfigurationView.defaultValue]);
-                    // that.employees = new WinJS.Binding.List([Search.employeeView.defaultValue]);
                     initServer.winControl.data = new WinJS.Binding.List();
                     Log.print(Log.l.trace, "calling select eventView...");
                     return Event.remoteKonfigurationView.select(function (json) {
@@ -623,9 +823,7 @@
                         if (json && json.d) {
                             // now always edit!
                             var results = json.d.results;
-                            //that.setDataEvent(json.d);
                             results.forEach(function (item, index) {
-                                //that.resultConverter(item, index);
                                 that.remoteServerList.push(item);
                             });
                             if (initServer && initServer.winControl) {
@@ -654,6 +852,29 @@
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
+                    var recordId = getEventId();
+                    if (recordId) {
+                        return Event.CR_VERANSTOPTION_ODataView.select(function (json) {
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            Log.print(Log.l.trace, "Account: success!");
+                            // CR_VERANSTOPTION_ODataView returns object already parsed from json file in response
+                            // Mit neuen VIEW vorher prüfen ob das die VeranstaltungID in der ich gerade angemeldet bin oder irgendeine andere vom Mandant.
+                            if (json && json.d && json.d.results && json.d.results.length > 1) {
+                                var results = json.d.results;
+                                results.forEach(function (item, index) {
+                                    that.resultConverterOption(item, index);
+                                });
+                            }
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        }, { VeranstaltungID: recordId });
+                    } else {
+                        return WinJS.Promise.as();
+                    }
+                }).then(function () {
                     AppBar.notifyModified = true;
                     return WinJS.Promise.as();
                 });
@@ -671,7 +892,8 @@
                 var ret;
                 var dataEvent = that.binding.dataEvent;
                 if (dataEvent && AppBar.modified && !AppBar.busy) {
-                    var visitorFlowInterval = changeAppSetting("visitorFlowInterval", that.binding.visitorFlowInterval);
+                    /*Erstmal ignorieren!*/
+                    var visitorFlowInterval = changeSetting("visitorFlowInterval", that.binding.visitorFlowInterval);
                     dataEvent.Startdatum = getDateData(that.binding.dataEvent.dateBegin);
                     dataEvent.Enddatum = getDateData(that.binding.dataEvent.dateEnd);
                     var recordId = getEventId();
@@ -707,26 +929,25 @@
                         //complete(dataEvent);
                     }).then(function () {
                         if (!err) {
+                            var recordId = getEventId();
                             // load color settings
-                            // AppData._persistentStates.hideQuestionnaire = false;
-                            // AppData._persistentStates.hideSketch = false;
                             return Event.CR_VERANSTOPTION_ODataView.select(function (json) {
                                 // this callback will be called asynchronously
                                 // when the response is available
                                 Log.print(Log.l.trace, "Account: success!");
                                 // CR_VERANSTOPTION_ODataView returns object already parsed from json file in response
+                                // Mit neuen VIEW vorher prüfen ob das die VeranstaltungID in der ich gerade angemeldet bin oder irgendeine andere vom Mandant.
                                 if (json && json.d && json.d.results && json.d.results.length > 1) {
                                     var results = json.d.results;
                                     results.forEach(function (item, index) {
-                                        that.resultConverter(item, index);
+                                        that.resultConverterOption(item, index);
                                     });
-                                    Application.pageframe.savePersistentStates();
                                 }
                             }, function (errorResponse) {
                                 // called asynchronously if an error occurs
                                 // or server returns response with an error status.
                                 AppData.setErrorMsg(that.binding, errorResponse);
-                            }).then(function () {
+                            }, { VeranstaltungID: recordId }).then(function () {
                                 Colors.updateColors();
                                 return WinJS.Promise.as();
                             });
@@ -742,7 +963,6 @@
                                 // this callback will be called asynchronously
                                 // when the response is available
                                 Log.print(Log.l.trace, "appListSpecView: success!");
-                                // kontaktanzahlView returns object already parsed from json file in response
                                 if (json && json.d && json.d.results) {
                                     NavigationBar.showGroupsMenu(json.d.results, true);
                                 } else {

@@ -59,8 +59,8 @@
                             <div class="input_field toggle-switch-parent">
                                 <div id="showQuestionnaire" class="input_field"
                                      data-win-control="WinJS.UI.ToggleSwitch"
-                                     data-win-bind="winControl.checked: isQuestionnaireVisible; winControl.labelOn: generalData.yes; winControl.labelOff: generalData.no"
-                                     onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
+                                     data-win-bind="winControl.checked: veranstOption.isQuestionnaireVisible; winControl.labelOn: generalData.yes; winControl.labelOff: generalData.no"
+                                     onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
                                 </div>
                             </div>
                         </div>
@@ -70,8 +70,8 @@
                             <div class="input_field toggle-switch-parent">
                                 <div id="showSketch" class="input_field"
                                      data-win-control="WinJS.UI.ToggleSwitch"
-                                     data-win-bind="winControl.checked: isSketchVisible; winControl.labelOn: generalData.yes; winControl.labelOff: generalData.no"
-                                     onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
+                                     data-win-bind="winControl.checked: veranstOption.isSketchVisible; winControl.labelOn: generalData.yes; winControl.labelOff: generalData.no"
+                                     onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
                                 </div>
                             </div>
                         </div>
@@ -82,8 +82,8 @@
                             <div class="input_field toggle-switch-parent">
                                 <div id="showCamera" class="input_field"
                                      data-win-control="WinJS.UI.ToggleSwitch"
-                                     data-win-bind="winControl.checked: isCameraVisible; winControl.labelOn: generalData.yes; winControl.labelOff: generalData.no"
-                                     onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
+                                     data-win-bind="winControl.checked: veranstOption.isCameraVisible; winControl.labelOn: generalData.yes; winControl.labelOff: generalData.no"
+                                     onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
                                 </div>
                             </div>
                         </div>
@@ -93,8 +93,8 @@
                             <div class="input_field toggle-switch-parent">
                                 <div id="showBarcodeScan" class="input_field"
                                      data-win-control="WinJS.UI.ToggleSwitch"
-                                     data-win-bind="winControl.checked: isBarcodeScanVisible; winControl.labelOn: generalData.yes; winControl.labelOff: generalData.no"
-                                     onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
+                                     data-win-bind="winControl.checked: veranstOption.isBarcodeScanVisible; winControl.labelOn: generalData.yes; winControl.labelOff: generalData.no"
+                                     onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
                                 </div>
                             </div>
                         </div>
@@ -107,7 +107,7 @@
                                 <div id="showvisitorFlow" class="input_field"
                                      data-win-control="WinJS.UI.ToggleSwitch"
                                      data-win-bind="winControl.checked: isvisitorFlowVisible; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                     onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
+                                     onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
                                 </div>
                             </div>
                         </div>
@@ -118,7 +118,7 @@
                                 <div id="showvisitorFlowAndLeadSuccess" class="input_field"
                                      data-win-control="WinJS.UI.ToggleSwitch"
                                      data-win-bind="winControl.checked: isvisitorFlowVisibleAndLeadSuccess; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                     onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
+                                     onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
                                 </div>
                             </div>
                         </div>
@@ -131,7 +131,7 @@
                                 <select id="showvisitorFlowCombo"
                                         class="input_field input_half_left win-dropdown"
                                         data-win-control="WinJS.UI.Repeater"
-                                        data-win-bind="value: isvisitorFlowVisible"
+                                        data-win-bind="value: veranstOption.isvisitorFlowVisible"
                                         onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
                                     <!---->
                                     <option data-win-bind="value: value; textContent: TITLE"></option>
@@ -140,24 +140,15 @@
                             <div class="field_line field_line_even">
                                 <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'event.visitorFlowPremium'}"></span>
                                 <span class="label win-type-caption portrait_only_half" data-win-res="{textContent: 'event.visitorFlowInterval'}"></span>
-                                <!--<span class="label landscape_only" data-win-res="{textContent: 'event.visitorFlowPremium'}"></span>
-                                <div class="input_field toggle-switch-parent">
-                                    <div id="visitorFlowPremium" class="input_field"
-                                         data-win-control="WinJS.UI.ToggleSwitch"
-                                         data-win-bind="winControl.checked: visitorFlowPremium; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                         onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
-                                    </div>
-                                </div>-->
                                 <div class="label landscape_only">
                                     <span data-win-res="{textContent: 'event.visitorFlowPremium'}"></span> / <span data-win-res="{textContent: 'event.visitorFlowInterval'}"></span>
                                 </div>
                                 <div class="input_group">
                                     <div id="visitorFlowPremium" class="input_half_left"
                                          data-win-control="WinJS.UI.ToggleSwitch"
-                                         data-win-bind="winControl.checked: visitorFlowPremium; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                         onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
+                                         data-win-bind="winControl.checked: veranstOption.visitorFlowPremium; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                                         onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
                                     </div>
-                                    <!--<input class="input_small_left win-textbox" type="text" data-win-bind="value: dataEvent.PLZ Binding.Mode.twoway"/>-->
                                     <input id="VisitorFlowInterval" class="input_half_right win-textbox" type="text" data-win-bind="value: visitorFlowInterval Binding.Mode.twoway"/>
                                 </div>
                             </div>
@@ -167,7 +158,6 @@
                             <div class="field_line field_line_odd">
                                 <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'event.dashboardMesago'}"></span>
                                 <span class="label landscape_only" data-win-res="{textContent: 'event.dashboardMesago'}"></span>
-                                <!--data-win-bind="value: isdashboardMesagoVisible"-->
                                 <select id="showdashboardMesagoCombo"
                                         class="input_field input_half_left win-dropdown"
                                         data-win-control="WinJS.UI.Repeater"
@@ -178,7 +168,6 @@
                             <div class="field_line field_line_even" style="display: None">
                                 <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'event.dashboardPremium'}"></span>
                                 <span class="label landscape_only" data-win-res="{textContent: 'event.dashboardPremium'}"></span>
-                                <!--data-win-bind="value: isdashboardMesagoVisible"-->
                                 <select id="showPremiumDashboardCombo"
                                         class="input_field input_half_left win-dropdown"
                                         data-win-control="WinJS.UI.Repeater"
@@ -194,8 +183,8 @@
                             <div class="input_field toggle-switch-parent">
                                 <div id="showCameraQuestionaire" class="input_field"
                                      data-win-control="WinJS.UI.ToggleSwitch"
-                                     data-win-bind="winControl.checked: isCameraQuestionnaireVisible; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                     onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
+                                     data-win-bind="winControl.checked: veranstOption.isCameraQuestionnaireVisible; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                                     onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
                                 </div>
                             </div>
                         </div>
@@ -214,8 +203,8 @@
                             <div class="input_field toggle-switch-parent">
                                 <div id="showNameInHeader" class="input_field"
                                      data-win-control="WinJS.UI.ToggleSwitch"
-                                     data-win-bind="winControl.checked: showNameInHeader; winControl.labelOn: generalData.yes; winControl.labelOff: generalData.no"
-                                     onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
+                                     data-win-bind="winControl.checked: veranstOption.showNameInHeader; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                                     onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
                                 </div>
                             </div>
                         </div>
@@ -225,8 +214,8 @@
                             <div class="input_field toggle-switch-parent">
                                 <div id="showQRCode" class="input_field"
                                      data-win-control="WinJS.UI.ToggleSwitch"
-                                     data-win-bind="winControl.checked: showQRCode; winControl.labelOn: generalData.yes; winControl.labelOff: generalData.no"
-                                     onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
+                                     data-win-bind="winControl.checked: veranstOption.showQRCode; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                                     onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
                                 </div>
                             </div>
                         </div>
@@ -245,32 +234,14 @@
                             <div class="input_field toggle-switch-parent">
                                 <div id="showPrivacyPolicySVG" class="input_field"
                                      data-win-control="WinJS.UI.ToggleSwitch"
-                                     data-win-bind="winControl.checked: isPrivacyPolicySVGVisible; winControl.labelOn: generalData.yes; winControl.labelOff: generalData.no"
-                                     onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
+                                     data-win-bind="winControl.checked: veranstOption.isPrivacyPolicySVGVisible; winControl.labelOn: generalData.yes; winControl.labelOff: generalData.no"
+                                     onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
                                 </div>
                             </div>
                         </div>
-                        <!--<div class="field_line field_line_odd" style="overflow-y: hidden">
-                            <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'event.privacypolicy'}"></span>
-                            <span class="label win-type-caption portrait_only_half" data-win-bind="style.display: isPrivacyPolicySVGVisible Binding.Converter.toDisplay" data-win-res="{textContent: 'event.sendMailPrivacypolicy'}"></span>
-                            <div class="label landscape_only"><span data-win-res="{textContent: 'event.privacypolicy'}"></span> / <span data-win-res="{textContent: 'event.sendMailPrivacypolicy'}"></span></div>
-                            <div class="input_group toggle-switch-parent">
-                                <div id="showPrivacyPolicySVG" class="input_half_left"
-                                     data-win-control="WinJS.UI.ToggleSwitch"
-                                     data-win-bind="winControl.checked: isPrivacyPolicySVGVisible; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                     onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
-                                </div>                                
-                                <div id="sendMailPrivacypolicy" class="input_half_right"
-                                     data-win-control="WinJS.UI.ToggleSwitch"
-                                     data-win-bind="winControl.checked: isSendMailPrivacypolicy; style.display: isPrivacyPolicySVGVisible Binding.Converter.toDisplay; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                     onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
-                                </div>                                
-                            </div>
-                        </div>-->
-                        <div class="field_line field_line_even" data-win-bind="style.display: isPrivacyPolicySVGVisible Binding.Converter.toDisplay">
+                        <div class="field_line field_line_even" data-win-bind="style.display: veranstOption.isPrivacyPolicySVGVisible Binding.Converter.toDisplay">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'event.privacyPolicyText'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'event.privacyPolicyText'}"></span>
-                            <!--<input class="input_field win-textbox" type="text" data-win-bind="value: dataEvent.DatenschutzText Binding.Mode.twoway" />-->
                             <textarea class="input_field win-textarea input_text_comment" data-win-bind="value: dataEvent.DatenschutzText Binding.Mode.twoway" onfocusin="AppBar.handleEvent('focusin', 'blockEnterKey', event)" onfocusout="AppBar.handleEvent('focusout', 'releaseEnterKey', event)"></textarea>
                         </div>
                         <div class="header-separator float-left"></div>
@@ -321,8 +292,8 @@
                             <input class="input_field win-textbox" type="text" data-win-bind="value: dataEvent.WebAdresse Binding.Mode.twoway" />
                         </div>
                         <div data-win-bind="style.display: isDBSyncVisible Binding.Converter.toDisplay">
-                            <div class="header-separator float-left" data-win-bind="style.display: isBarcodeScanVisible Binding.Converter.toDisplay"></div>
-                            <div class="content-header float-left" data-win-bind="style.display: isBarcodeScanVisible Binding.Converter.toDisplay">
+                            <div class="header-separator float-left" data-win-bind="style.display: veranstOption.isBarcodeScanVisible Binding.Converter.toDisplay"></div>
+                            <div class="content-header float-left" data-win-bind="style.display: veranstOption.isBarcodeScanVisible Binding.Converter.toDisplay">
                                 <div class="half-circle half-circle-textcolor">&nbsp;</div>
                                 <div class="idAndDate win-type-caption">
                                     <span class="id-field"></span>

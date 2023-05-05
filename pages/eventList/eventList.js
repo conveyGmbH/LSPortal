@@ -78,7 +78,7 @@
             // TODO: Respond to changes in viewState.
             if (element && !that.inResize) {
                 that.inResize = 1;
-                ret =  WinJS.Promise.timeout(0).then(function () {
+                ret = WinJS.Promise.timeout(0).then(function () {
                     var eventList = element.querySelector("#eventList.listview");
                     if (eventList && eventList.style) {
                         var contentarea = element.querySelector(".contentarea");

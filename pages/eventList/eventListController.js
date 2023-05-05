@@ -228,20 +228,22 @@
                                             that.curRecId = newRecId;
                                             that.binding.eventId = newRecId;
 
-                                            if (AppBar.scope && typeof AppBar.scope.saveData === "function") {
+                                            if (AppBar.modified && AppBar.scope && typeof AppBar.scope.saveData === "function") {
                                                 //=== "function" save wird nicht aufgerufen wenn selectionchange
                                                 // current detail view has saveData() function
                                                 AppBar.scope.saveData(function (response) {
                                                     // called asynchronously if ok
                                                     if (curPageId === "eventCopy" &&
-                                                        typeof AppBar.scope.loadData === "function") {
-                                                        AppData.setRecordId("VeranstaltungVIEW_20542", item.data.VeranstaltungVIEWID);
+                                                        typeof AppBar.scope.loadData === "function" &&
+                                                        typeof AppBar.scope.setEventId === "function") {
+                                                        //AppData.setRecordId("VeranstaltungVIEW_20542", item.data.VeranstaltungVIEWID);
+                                                        AppBar.scope.setEventId(that.binding.eventId);
                                                         AppBar.scope.loadData();
                                                     }
                                                     else if (curPageId === "event" &&
                                                         typeof AppBar.scope.loadData === "function" &&
                                                         typeof AppBar.scope.setEventId === "function") {
-                                                        AppBar.scope.setEventId(item.data.VeranstaltungVIEWID);
+                                                        AppBar.scope.setEventId(that.binding.eventId);
                                                         AppBar.scope.loadData();
                                                     } else {
                                                         Application.navigateById("event");
@@ -255,14 +257,15 @@
                                             } else {
                                                 // current detail view has NO saveData() function - is list
                                                 if (curPageId === "eventCopy" &&
-                                                    typeof AppBar.scope.loadData === "function") {
-                                                    AppData.setRecordId("VeranstaltungVIEW_20542", item.data.VeranstaltungVIEWID);
+                                                    typeof AppBar.scope.loadData === "function" &&
+                                                    typeof AppBar.scope.setEventId === "function") {
+                                                    AppBar.scope.setEventId(that.binding.eventId);
                                                     AppBar.scope.loadData();
-                                                } 
+                                                }
                                                 else if (curPageId === "event" &&
                                                     typeof AppBar.scope.loadData === "function" &&
                                                     typeof AppBar.scope.setEventId === "function") {
-                                                    AppBar.scope.setEventId(item.data.VeranstaltungVIEWID);
+                                                    AppBar.scope.setEventId(that.binding.eventId);
                                                     AppBar.scope.loadData();
                                                 } else {
                                                     Application.navigateById("event");
@@ -390,7 +393,7 @@
                                 listView.winControl.itemDataSource = that.records.dataSource;
                             }
                             Log.print(Log.l.trace, "Data loaded");
-                            /*AppData.setRecordId("VeranstaltungVIEW_20542", AppData.getRecordId("Veranstaltung"));
+                            //AppData.setRecordId("VeranstaltungVIEW_20542", AppData.getRecordId("Veranstaltung"));
                             var recordId = AppData.getRecordId("Veranstaltung");
                             if (recordId) {
                                 that.selectRecordId(recordId);
@@ -398,7 +401,7 @@
                                 if (listView && listView.winControl) {
                                     listView.winControl.selection.set(0);
                                 }
-                            }*/
+                            }
                         } else {
                             that.binding.count = 0;
                             that.nextUrl = null;
@@ -433,7 +436,7 @@
                         that.loading = false;
                     }, {
 
-                    });
+                        });
                 });
                 Log.ret(Log.l.trace);
                 return ret;
@@ -449,8 +452,8 @@
             });
             Log.ret(Log.l.trace);
         }, {
-            nextUrl: null,
-            loading: false
-        })
+                nextUrl: null,
+                loading: false
+            })
     });
 })();
