@@ -610,8 +610,17 @@
                     // always enabled!
                     return false;
                 },
-                clickChange: function() {
-
+                clickChange: function () {
+                    var master = Application.navigator.masterControl;
+                    if (master &&
+                        master.controller &&
+                        master.controller.binding &&
+                        master.controller.binding.count &&
+                        master.controller.binding.count > 1) {
+                        return false;
+                    } else {
+                        return true;
+                    }
                 }
             };
 
@@ -626,6 +635,7 @@
                 var property = "";
                 switch (item.INITOptionTypeID) {
                     case 19:
+                        // feature obsolete
                         if (item.LocalValue === "1") {
                             //AppData._persistentStates.hideCameraQuestionnaire = true;
                         } else {
@@ -708,6 +718,7 @@
                         // Enable bzw. disable wird hier behandelt, da umgekehrte Logik mit Anzeigewert
                         if (parseInt(item.LocalValue) === 1 || parseInt(item.LocalValue) === 2) {
                             that.binding.veranstOption.showvisitorFlow = parseInt(item.LocalValue);
+                            that.binding.veranstOption.isvisitorFlowVisible = parseInt(item.LocalValue);
                             //AppData._persistentStates.showvisitorFlow = parseInt(item.LocalValue);
                             // NavigationBar.enablePage("employee");
                             /* NavigationBar.enablePage("visitorFlowDashboard");
@@ -715,6 +726,7 @@
                             NavigationBar.enablePage("employeeVisitorFlow");/*pagename muss wahrscheinlich nochmal geändert werden, jenachdem wie die seite heisst*/
                         } else {
                             that.binding.veranstOption.showvisitorFlow = 0;
+                            that.binding.veranstOption.isvisitorFlowVisible = 0;
                             //NavigationBar.disablePage("employeeVisitoFlow");
                             /*NavigationBar.disablePage("visitorFlowDashboard");
                             NavigationBar.disablePage("visitorFlowEntExt");
@@ -859,7 +871,6 @@
                             // when the response is available
                             Log.print(Log.l.trace, "Account: success!");
                             // CR_VERANSTOPTION_ODataView returns object already parsed from json file in response
-                            // Mit neuen VIEW vorher prüfen ob das die VeranstaltungID in der ich gerade angemeldet bin oder irgendeine andere vom Mandant.
                             if (json && json.d && json.d.results && json.d.results.length > 1) {
                                 var results = json.d.results;
                                 results.forEach(function (item, index) {
@@ -931,6 +942,9 @@
                         if (!err) {
                             var recordId = getEventId();
                             // load color settings
+                            // beim reload prüfen ob die Veranstaltung in der ich gerade bin oder nicht
+                            // wenn ja dann nehme funktion von generaldata, sonst diese hier
+
                             return Event.CR_VERANSTOPTION_ODataView.select(function (json) {
                                 // this callback will be called asynchronously
                                 // when the response is available
