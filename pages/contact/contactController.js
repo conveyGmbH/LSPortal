@@ -56,6 +56,13 @@
             var imageOffsetX = 0;
             var imageOffsetY = 0;
 
+            var imgDoc = pageElement.querySelector(".doc-container");
+            var imgDoc2 = pageElement.querySelector(".photoview");
+            var contentarea = pageElement.querySelector(".contentarea");
+            var contentrec = pageElement.querySelector(".content-record");
+
+            var prevScrollpos = pageElement.offsetTop;;
+
             var imgWidth = 0;
             var imgHeight = 0;
             var imgLeft = 0;
@@ -594,6 +601,18 @@
             };
             this.deleteData = deleteData;
 
+            var getOffset = function(el) {
+                var _x = 0;
+                var _y = 0;
+                while (el && !isNaN(el.offsetLeft) && !isNaN(el.offsetTop)) {
+                    _x += el.offsetLeft - el.scrollLeft;
+                    _y += el.offsetTop - el.scrollTop;
+                    el = el.offsetParent;
+                }
+                return { top: _y, left: _x };
+            }
+            this.getOffset = getOffset;
+
             var resultMandatoryConverter = function (item, index) {
                 if (item.FieldFlag) {
                     var inputfield = null;
@@ -756,6 +775,62 @@
                     AppBar.triggerDisableHandlers();
                     Log.ret(Log.l.trace);
                 },
+                scrollContainer: function () {
+                    if (contentrec.offsetWidth >= 699) {
+                        // Get the new scroll position
+                        var currentScrollPos = that.getOffset(contentrec).top;
+                        if (currentScrollPos < 0) {
+                            currentScrollPos = currentScrollPos * -1;
+                        }
+
+                        // Check if the user is scrolling up or down
+                        if (prevScrollpos > currentScrollPos) {
+                            console.log('User is scrolling up');
+                            // Do something when scrolling up
+                            var docContainerRect = imgDoc2.getBoundingClientRect();
+                            var isFullyVisible = (
+                                docContainerRect.top >= 0 &&
+                                docContainerRect.left >= 0 &&
+                                docContainerRect.bottom <= window.innerHeight &&
+                                docContainerRect.right <= window.innerWidth
+                            );
+
+                            if (!isFullyVisible) {
+                                if (contentrec.offsetWidth >= 700) {
+                                    imgDoc.style.marginTop = 15 + "%"; //currentScrollPos + 150 + "px";
+                                } else {
+                                    imgDoc.style.marginTop = 0 + "%"; //currentScrollPos + 150 + "px";
+                                }
+                                
+                            } else {
+                                imgDoc.style.position = "static";
+                            }
+                        } else {
+                            console.log('User is scrolling down');
+                            // Do something when scrolling down
+                            var docContainerRect = imgDoc2.getBoundingClientRect();
+                            var isFullyVisible = (
+                                docContainerRect.top >= 0 
+                            );
+
+                            if (!isFullyVisible) {
+                                if (contentrec.offsetWidth >= 700) {
+                                    imgDoc.style.marginTop = 60 + "%";
+                                } else {
+                                    imgDoc.style.marginTop = 30 + "%";
+                                }
+                                 //currentScrollPos + 150 + "px";
+                            } else {
+                                imgDoc2.style.position = "static";
+                            }
+                        }
+
+                        // Set the previous scroll position to the current scroll position
+                        prevScrollpos = currentScrollPos;
+                    }
+                     
+                    Log.ret(Log.l.trace);
+                },
                 clickChangeUserState: function (event) {
                     Log.call(Log.l.trace, "Contact.Controller.");
                     Application.navigateById("userinfo", event);
@@ -857,6 +932,10 @@
                 clickForward: function () {
                     return AppBar.busy;
                 }
+            }
+
+            if (contentarea) {
+                this.addRemovableEventListener(contentarea, "scroll", this.eventHandlers.scrollContainer.bind(this));
             }
 
             var loadInitSelection = function () {
