@@ -79,7 +79,7 @@
                 ];
                 if (visitorFlow && visitorFlow.winControl) {
                     visitorFlow.winControl.data = new WinJS.Binding.List(exhibitorCategory);
-                    visitorFlow.selectedIndex = AppData._persistentStates.showvisitorFlow;
+                    //visitorFlow.selectedIndex = AppData._persistentStates.showvisitorFlow;
                 }
             };
             this.creatingVisitorFlowCategory = creatingVisitorFlowCategory;
@@ -133,10 +133,31 @@
                 ];
                 if (premiumDashboardCombo && premiumDashboardCombo.winControl) {
                     premiumDashboardCombo.winControl.data = new WinJS.Binding.List(premiumDashboardComboCategory);
-                    premiumDashboardCombo.selectedIndex = AppData._persistentStates.showPremiumDashboardCombo;
+                    //premiumDashboardCombo.selectedIndex = that.binding.veranstOption.showdashboardMesagoCombo;
                 }
             };
             this.creatingPremiumDashboardComboCategory = creatingPremiumDashboardComboCategory;
+
+            var getEventId = function () {
+                Log.print(Log.l.trace, "getEventId Event._eventId=" + Event._eventId);
+                return Event._eventId;
+            }
+            this.getEventId = getEventId;
+
+            var setEventId = function (value) {
+                Log.print(Log.l.trace, "setEventId Event._eventId=" + value);
+                Event._eventId = value;
+            }
+            this.setEventId = setEventId;
+
+
+            var master = Application.navigator.masterControl;
+            if (master &&
+                master.controller &&
+                master.controller.binding &&
+                master.controller.binding.eventId) {
+                that.setEventId(master.controller.binding.eventId);
+            }
 
             var setDataEvent = function (newDataEvent) {
                 var prevNotifyModified = AppBar.notifyModified;
@@ -283,8 +304,9 @@
                         break;
                     case "showvisitorFlowCombo":
                         pOptionTypeId = 44;
-                        that.binding.veranstOption.isvisitorFlowVisible = checked;
-                        pValue = that.binding.veranstOption.isvisitorFlowVisible;
+                        //that.binding.veranstOption.showvisitorFlow = parseInt(item.LocalValue);
+                        that.binding.veranstOption.isvisitorFlowVisible = parseInt(item.LocalValue);
+                        pValue = item.LocalValue;
                         pValueIsSet = true;
                         break;
                     case "visitorFlowPremium":
@@ -293,14 +315,18 @@
                         break;
                     case "showdashboardMesagoCombo":
                         pOptionTypeId = 47;
-                        that.binding.veranstOption.isDashboardPremium = parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 1 ? true : false;
-                        if (!that.binding.veranstOption.isDashboardPremium) {
+                        //AppData._persistentStates.showdashboardMesagoCombo
+                        //that.binding.veranstOption.isDashboardPremium = parseInt(that.binding.veranstOption.showdashboardMesagoCombo) === 1 ? true : false;
+                        if (dashboardMesagoCombo && dashboardMesagoCombo.winControl) {
+                            //dashboardMesagoCombo.winControl.data = new WinJS.Binding.List(dashboardMesagoComboCategory);
+                            //dashboardMesagoCombo.selectedIndex = AppData._persistentStates.showdashboardMesagoCombo;
                         }
                         pValue = checked;
                         pValueIsSet = true;
                         break;
                     case "showPremiumDashboardCombo":
                         pOptionTypeId = 48;
+                        that.binding.veranstOption.showPremiumDashboardCombo = checked;
                         pValue = checked;
                         pValueIsSet = true;
                         break;
@@ -433,7 +459,7 @@
                     case "showdashboardMesagoCombo":
                         pOptionTypeId = 47;
                         AppData._persistentStates.showdashboardMesagoCombo = checked;
-                        that.binding.veranstOption.sDashboardPremium = parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 1 ? true : false;
+                        that.binding.veranstOption.isDashboardPremium = parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 1 ? true : false;
                         if (!that.binding.isDashboardPremium) {
                             AppData._persistentStates.showPremiumDashboardCombo = null;
                         }
@@ -617,7 +643,11 @@
                         master.controller.binding &&
                         master.controller.binding.count &&
                         master.controller.binding.count > 1) {
+                        if (master.controller.binding.eventId && AppData.generalData.eventId !== master.controller.binding.eventId) {
                         return false;
+                    } else {
+                        return true;
+                    }
                     } else {
                         return true;
                     }
@@ -732,6 +762,10 @@
                             NavigationBar.disablePage("visitorFlowEntExt");
                             NavigationBar.disablePage("employeeVisitorFlow");*/
                         }
+                        /*if (visitorFlow && visitorFlow.winControl) {
+                            // visitorFlow.winControl.data = new WinJS.Binding.List(exhibitorCategory);
+                            visitorFlow.selectedIndex = AppData._persistentStates.showvisitorFlow;
+                        }*/
                         break;
                     case 45:
                         if (item.LocalValue === "1") {
@@ -765,21 +799,10 @@
             }
             this.getPropertyFromInitoptionTypeID = getPropertyFromInitoptionTypeID;
 
-            var getEventId = function () {
-                Log.print(Log.l.trace, "getEventId Event._eventId=" + Event._eventId);
-                return Event._eventId;
-            }
-            this.getEventId = getEventId;
-
-            var setEventId = function (value) {
-                Log.print(Log.l.trace, "setEventId Event._eventId=" + value);
-                Event._eventId = value;
-            }
-            this.setEventId = setEventId;
-
             var loadData = function () {
                 Log.call(Log.l.trace, "Event.Controller.");
                 AppData.setErrorMsg(that.binding);
+                that.binding.veranstOption = getEmptyDefaultValue(Event.CR_VERANSTOPTION_ODataView.defaultValue);
                 var ret = new WinJS.Promise.as().then(function () {
                     if (!AppData.initLandView.getResults().length) {
                         Log.print(Log.l.trace, "calling select initLandData...");
@@ -816,7 +839,7 @@
                             var results = json.d.results;
                             if (dashboardMesagoCombo && dashboardMesagoCombo.winControl) {
                                 dashboardMesagoCombo.winControl.data = new WinJS.Binding.List(results);
-                                dashboardMesagoCombo.selectedIndex = parseInt(AppData._userData.IsSupreme) - 1;
+                                //dashboardMesagoCombo.selectedIndex = parseInt(AppData._userData.IsSupreme) - 1;
                             }
                         }
                     }, function (errorResponse) {
@@ -1027,14 +1050,12 @@
             this.changeMenuLabel = changeMenuLabel;
 
             that.processAll().then(function () {
+                that.creatingVisitorFlowCategory();
+            })/*.then(function () {
+                that.creatingPremiumDashboardComboCategory();
+            })*/.then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
-            }).then(function () {
-                that.creatingVisitorFlowCategory();
-            }).then(function () {
-                //that.creatingDashboardMesagoComboCategory();
-            }).then(function () {
-                that.creatingPremiumDashboardComboCategory();
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 AppBar.notifyModified = true;

@@ -24,10 +24,25 @@
             var eventTyp = pageElement.querySelector("#eventTyp");
             
             var getEventId = function () {
-                return AppData.getRecordId("VeranstaltungVIEW_20542");
+                Log.print(Log.l.trace, "getEventId EventCopy._eventId=" + EventCopy._eventId);
+                return EventCopy._eventId;
             }
             this.getEventId = getEventId;
             
+            var setEventId = function (value) {
+                Log.print(Log.l.trace, "setEventId EventCopy._eventId=" + value);
+                EventCopy._eventId = value;
+            }
+            this.setEventId = setEventId;
+
+            var master = Application.navigator.masterControl;
+            if (master &&
+                master.controller &&
+                master.controller.binding &&
+                master.controller.binding.eventId) {
+                that.setEventId(master.controller.binding.eventId);
+            }
+
             var addHyphenAfterWordsExceptLast = function(textstring) {
                 // Split the input string into words
                 var words = textstring.split(" ");
@@ -71,23 +86,23 @@
 
                 // Check if each checkbox is checked and push its value to the checkboxData array if it is
                 if (checkbox1.checked) {
-                    checkboxData += "QUESTIONNAIRE ";
+                    checkboxData += "QUESTIONNAIRE|";
                 }
                 if (checkbox2.checked) {
-                    checkboxData += "MAILS ";
+                    checkboxData += "MAILS|";
                 }
                 if (checkbox3.checked) {
-                    checkboxData += "COLORS ";
+                    checkboxData += "COLORS|";
                 }
                 if (checkbox4.checked) {
-                    checkboxData += "OPTIONS ";
+                    checkboxData += "OPTIONS|";
                 }
                 if (checkbox5.checked) {
                     checkboxData += "ALL ";
                 }
 
                 // Return the checkbox data as an array
-                return that.addHyphenAfterWordsExceptLast(checkboxData);
+                return checkboxData;
             }
             this.getCheckboxData = getCheckboxData;
             
@@ -214,6 +229,13 @@
                 },
                 clickGotoPublish: function () {
                     return false;
+                },
+                clickCopy: function() {
+                    return !(checkbox1.checked ||
+                        checkbox2.checked ||
+                        checkbox3.checked ||
+                        checkbox4.checked ||
+                        checkbox5.checked);
                 }
             };
 

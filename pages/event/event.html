@@ -133,7 +133,6 @@
                                         data-win-control="WinJS.UI.Repeater"
                                         data-win-bind="value: veranstOption.isvisitorFlowVisible"
                                         onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
-                                    <!---->
                                     <option data-win-bind="value: value; textContent: TITLE"></option>
                                 </select>
                             </div>
@@ -161,6 +160,7 @@
                                 <select id="showdashboardMesagoCombo"
                                         class="input_field input_half_left win-dropdown"
                                         data-win-control="WinJS.UI.Repeater"
+                                        data-win-bind="value: veranstOption.showdashboardMesagoCombo"
                                         onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
                                     <option data-win-bind="value: NumberValue; textContent: TypeValueName"></option>
                                 </select>
@@ -177,7 +177,7 @@
                             </div>
                             <div class="line-separator"></div>
                         </div>
-                        <div class="field_line field_line_odd" data-win-bind="style.display: isSketchVisible Binding.Converter.toDisplayNone">
+                        <div class="field_line field_line_odd" data-win-bind="style.display: veranstOption.isSketchVisible Binding.Converter.toDisplay">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'event.showHideCameraQuestionnaire'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'event.showHideCameraQuestionnaire'}"></span>
                             <div class="input_field toggle-switch-parent">
@@ -208,7 +208,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="field_line field_line_even" data-win-bind="style.display: isBarcodeScanVisible Binding.Converter.toDisplay">
+                        <div class="field_line field_line_even" data-win-bind="style.display: veranstOption.isBarcodeScanVisible Binding.Converter.toDisplay">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'event.show2D-Code'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'event.show2D-Code'}"></span>
                             <div class="input_field toggle-switch-parent">
@@ -301,18 +301,18 @@
                                     <span class="date-field"></span>
                                 </div>
                             </div>
-                            <div class="field_line field_line_odd" data-win-bind="style.display: isBarcodeScanVisible Binding.Converter.toDisplay">
+                            <div class="field_line field_line_odd" data-win-bind="style.display: veranstOption.isBarcodeScanVisible Binding.Converter.toDisplay">
                                 <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'event.dbSyncLogin'}"></span>
                                 <span class="label landscape_only" data-win-res="{textContent: 'event.dbSyncLogin'}"></span>
                                 <input class="input_field win-textbox" type="text" data-win-bind="value: dataEvent.DBSYNCLogin Binding.Mode.twoway" />
                             </div>
-                            <div class="field_line field_line_even" data-win-bind="style.display: isBarcodeScanVisible Binding.Converter.toDisplay">
+                            <div class="field_line field_line_even" data-win-bind="style.display: veranstOption.isBarcodeScanVisible Binding.Converter.toDisplay">
                                 <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'event.dbSyncPassword'}"></span>
                                 <span class="label landscape_only" data-win-res="{textContent: 'event.dbSyncPassword'}"></span>
                                 <input class="input_field win-textbox" type="text" data-win-bind="value: dataEvent.DBSYNCPassword Binding.Mode.twoway" />
                             </div>
                             <div class="line-separator"></div>
-                            <div class="field_line field_line_odd" data-win-bind="style.display: isBarcodeScanVisible Binding.Converter.toDisplay">
+                            <div class="field_line field_line_odd" data-win-bind="style.display: veranstOption.isBarcodeScanVisible Binding.Converter.toDisplay">
                                 <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'event.serverList'}"></span>
                                 <span class="label landscape_only" data-win-res="{textContent: 'event.serverList'}"></span>
                                 <select id="InitServer"

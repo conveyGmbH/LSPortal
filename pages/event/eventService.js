@@ -66,6 +66,7 @@
                 visitorFlowInterval: "",
                 dashboardMesagoFeature: false,
                 isDashboardPremium: false,
+                showdashboardMesagoCombo: "0"
             }
         },
         _appListSpecView: {
