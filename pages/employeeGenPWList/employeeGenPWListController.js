@@ -391,8 +391,9 @@
                         }
                         that.loading = false;
                     }, {
-                        GenPassword: ['NOT NULL']
-                    }
+                            GenPassword: ['NOT NULL'],
+                            VeranstaltungID: AppData.getRecordId("Veranstaltung")
+                       }
                     );
                 });
                 Log.ret(Log.l.trace);
