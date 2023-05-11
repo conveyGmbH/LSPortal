@@ -341,6 +341,7 @@
                                     that.nextUrl = Mandatory.manquestView.getNextUrl(json);
                                     var results = json.d.results;
                                     results.forEach(function (item) {
+                                        that.resultConverter(item, that.binding.count);
                                         that.binding.count = that.questions.push(item);
                                     });
                                 } else {
