@@ -84,6 +84,15 @@
             }
             that.binding.restriction = restriction;
 
+            var endeMailingTracking = function(enabled) {
+                if (enabled) {
+                    NavigationBar.enablePage("mailingTracking");
+                } else {
+                    NavigationBar.disablePage("mailingTracking");
+                }
+            }
+            this.endeMailingTracking = endeMailingTracking;
+
             var setInitialHeaderTextValue = function () {
                 Log.print(Log.l.trace, "Setting up initial header texts and value shown in header of table");
                 //text part
@@ -727,6 +736,7 @@
                                                 that.reorderId = that.curRecId;
                                                 AppData.setRecordId("VeranstaltungAnlage", that.reorderId);
                                                 AppBar.triggerDisableHandlers();
+                                                that.endeMailingTracking(true);
                                             }
                                         }
                                     }
@@ -1214,6 +1224,7 @@
 
             var loadData = function (vid, sortIdx, sortType) {
                 Log.call(Log.l.trace, "LocalEvents.Controller.");
+                that.endeMailingTracking(false);
                 that.siteeventsdata = null;
                 that.siteeventsdataraw = null;
                 that.loading = true;

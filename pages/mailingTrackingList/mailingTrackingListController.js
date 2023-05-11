@@ -280,69 +280,77 @@
                 }
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
-                    return MailingTrackingList.ExhibitorMailingStatusVIView.select(function (json) {
-                        // this callback will be called asynchronously
-                        // when the response is available
-                        AppData.setErrorMsg(that.binding);
-                        Log.print(Log.l.trace, "MailingList: success!");
-                        // employeeView returns object already parsed from json file in response
-                        if (json && json.d && json.d.results && json.d.results.length > 0) {
-                            that.nextUrl = MailingTrackingList.ExhibitorMailingStatusVIView.getNextUrl(json);
-                            var results = json.d.results;
+                    if (veranstid) {
+                        return MailingTrackingList.ExhibitorMailingStatusVIView.select(function(json) {
+                                // this callback will be called asynchronously
+                                // when the response is available
+                                AppData.setErrorMsg(that.binding);
+                                Log.print(Log.l.trace, "MailingList: success!");
+                                // employeeView returns object already parsed from json file in response
+                                if (json && json.d && json.d.results && json.d.results.length > 0) {
+                                    that.nextUrl = MailingTrackingList.ExhibitorMailingStatusVIView.getNextUrl(json);
+                                    var results = json.d.results;
 
-                            that.binding.count = results.length;
+                                    that.binding.count = results.length;
 
-                            that.maildocuments = new WinJS.Binding.List(results);
+                                    that.maildocuments = new WinJS.Binding.List(results);
 
-                            if (listView.winControl) {
-                                // add ListView dataSource
-                                listView.winControl.itemDataSource = that.maildocuments.dataSource;
+                                    if (listView.winControl) {
+                                        // add ListView dataSource
+                                        listView.winControl.itemDataSource = that.maildocuments.dataSource;
+                                    }
+                                    Log.print(Log.l.trace, "Data loaded");
+                                    if (that.binding.selIdx >= json.d.results.length) {
+                                        that.binding.selIdx = json.d.results.length - 1;
+                                    }
+                                    if (results[that.binding.selIdx] &&
+                                        results[that.binding.selIdx].ExhibitorMailingStatusVIEWID) {
+                                        WinJS.Promise.timeout(0).then(function() {
+                                            that.selectRecordId(results[that.binding.selIdx]
+                                                .ExhibitorMailingStatusVIEWID);
+                                        });
+                                    }
+                                } else {
+                                    that.binding.count = 0;
+                                    AppData.setRestriction("ExhibitorMailingStatus", 0);
+                                    that.nextUrl = null;
+                                    that.maildocuments = null;
+                                    if (listView.winControl) {
+                                        // add ListView dataSource
+                                        listView.winControl.itemDataSource = null;
+                                    }
+                                    progress = listView.querySelector(".list-footer .progress");
+                                    counter = listView.querySelector(".list-footer .counter");
+                                    if (progress && progress.style) {
+                                        progress.style.display = "none";
+                                    }
+                                    if (counter && counter.style) {
+                                        counter.style.display = "inline";
+                                    }
+                                    that.loading = false;
+                                }
+                            },
+                            function(errorResponse) {
+                                // called asynchronously if an error occurs
+                                // or server returns response with an error status.
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                                progress = listView.querySelector(".list-footer .progress");
+                                counter = listView.querySelector(".list-footer .counter");
+                                if (progress && progress.style) {
+                                    progress.style.display = "none";
+                                }
+                                if (counter && counter.style) {
+                                    counter.style.display = "inline";
+                                }
+                                that.loading = false;
+                            },
+                            {
+                                FairMandantVeranstID: veranstid
                             }
-                            Log.print(Log.l.trace, "Data loaded");
-                            if (that.binding.selIdx >= json.d.results.length) {
-                                that.binding.selIdx = json.d.results.length - 1;
-                            }
-                            if (results[that.binding.selIdx] && results[that.binding.selIdx].ExhibitorMailingStatusVIEWID) {
-                                WinJS.Promise.timeout(0).then(function () {
-                                    that.selectRecordId(results[that.binding.selIdx].ExhibitorMailingStatusVIEWID);
-                                });
-                            }
-                        } else {
-                            that.binding.count = 0;
-                            AppData.setRestriction("ExhibitorMailingStatus", 0);
-                            that.nextUrl = null;
-                            that.maildocuments = null;
-                            if (listView.winControl) {
-                                // add ListView dataSource
-                                listView.winControl.itemDataSource = null;
-                            }
-                            progress = listView.querySelector(".list-footer .progress");
-                            counter = listView.querySelector(".list-footer .counter");
-                            if (progress && progress.style) {
-                                progress.style.display = "none";
-                            }
-                            if (counter && counter.style) {
-                                counter.style.display = "inline";
-                            }
-                            that.loading = false;
-                        }
-                    }, function (errorResponse) {
-                        // called asynchronously if an error occurs
-                        // or server returns response with an error status.
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                        progress = listView.querySelector(".list-footer .progress");
-                        counter = listView.querySelector(".list-footer .counter");
-                        if (progress && progress.style) {
-                            progress.style.display = "none";
-                        }
-                        if (counter && counter.style) {
-                            counter.style.display = "inline";
-                        }
-                        that.loading = false;
-                    }, {
-                        FairMandantVeranstID: veranstid
+                        );
+                    } else {
+                        
                     }
-                    );
                 });
                 Log.ret(Log.l.trace);
                 return ret;
