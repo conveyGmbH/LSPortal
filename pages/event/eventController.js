@@ -33,6 +33,8 @@
                 visitorFlowInterval: AppData._persistentStates.visitorFlowInterval || "",
                 dashboardMesagoFeature: AppHeader.controller.binding.userData.SiteAdmin,
                 isDashboardPremium: AppData._persistentStates.showdashboardMesagoCombo === 1 ? true : false,
+                qrcodetext: getResourceText("event.show2D-Code"),
+                barcodetext: getResourceText("event.showBar-Code"),
                 actualYear: new Date().getFullYear()
             }, commandList]);
 
