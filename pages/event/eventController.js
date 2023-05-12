@@ -35,6 +35,8 @@
                 isDashboardPremium: AppData._persistentStates.showdashboardMesagoCombo === 1 ? true : false,
                 qrcodetext: getResourceText("event.show2D-Code"),
                 barcodetext: getResourceText("event.showBar-Code"),
+                nametext: getResourceText("event.showNameInHeader"),
+                userNametext: getResourceText("event.showUsernameInHeader"),
                 actualYear: new Date().getFullYear()
             }, commandList]);
 
