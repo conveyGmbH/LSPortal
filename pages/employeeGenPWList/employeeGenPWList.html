@@ -16,60 +16,33 @@
                 <div class="contentarea win-type-body">
                     <div class="content-header">
                         <div class="header-separator"></div>
-                    <div class="half-circle half-circle-textcolor">&nbsp;</div>
-                    <div class="content-header-line win-type-caption">
-                        <span class="id-field"></span>
-                        <span class="caption-field" data-win-res="{textContent: 'employeegenpwlist.title'}"></span>
-                        <span class="date-field"></span>
-                    </div>
-                </div>
-                    <div class="headerFooterPlaceholder">
-                        <div class="list-header">
-                            <div class="list-landscape-only list-header-columns">
-                                <div class="list-field-small-relative" data-win-res="{textContent: 'employeegenpwlist.name'}"></div>
-                                <div class="list-field-small-relative" data-win-res="{textContent: 'employeegenpwlist.login'}"></div>
-                                <div class="list-field-small-relative" data-win-res="{textContent: 'employeegenpwlist.password'}"></div>
-                                <div class="list-field-small-relative" data-win-res="{textContent: 'employeegenpwlist.barcode'}"></div>
-                            </div>
-                           <!-- <div class="list-only-small-screen list-header-columns">
-                                <div class="list-field-small-fixed" data-win-res="{textContent: 'employeegenpwlist.name'}"></div>
-                                <div class="list-field-small-fixed" data-win-res="{textContent: 'employeegenpwlist.login'}"></div>
-                                <div class="list-field-small-fixed" data-win-res="{textContent: 'employeegenpwlist.password'}"></div>
-                                <div class="list-field-small-fixed" data-win-res="{textContent: 'employeegenpwlist.barcode'}"></div>
-                            </div>-->
-                            <div class="list-portrait-only list-header-columns">
-                                <div class="list-field-small-relative" data-win-res="{textContent: 'employeegenpwlist.name'}"></div>
-                                <div class="list-field-small-relative" data-win-res="{textContent: 'employeegenpwlist.login'}"></div>
-                                <div class="list-field-small-relative" data-win-res="{textContent: 'employeegenpwlist.password'}"></div>
-                                <div class="list-field-small-relative" data-win-res="{textContent: 'employeegenpwlist.barcode'}"></div>
-                            </div>
+                        <div class="half-circle half-circle-textcolor">&nbsp;</div>
+                        <div class="content-header-line win-type-caption">
+                            <span class="id-field"></span>
+                            <span class="caption-field" data-win-res="{textContent: 'employeegenpwlist.title'}"></span>
+                            <span class="date-field"></span>
                         </div>
                     </div>
-                    <div class="employeegenpwlist-template"
-                         data-win-control="WinJS.Binding.Template" style="display: none">
-                        <div class="list-portrait-only">
-                            <div class="row-bkg-gray"
-                                 data-win-bind="style.display: index Binding.Converter.oddToDisplay"></div>
-                            <div class="list-field-small-fixed win-type-ellipsis"
-                                 data-win-bind="textContent: Name"></div>
-                            <div class="list-field-small-fixed win-type-ellipsis"
-                                 data-win-bind="textContent: Login"></div>
-                            <div class="list-field-small-fixed win-type-ellipsis"
-                                 data-win-bind="textContent: GenPassword"></div>
-                            <div class="list-field-small-fixed userinfo-qrcode-container"></div> 
-                            </div>
-                        <div class="list-landscape-only">
-                            <div class="row-bkg-gray"
-                                 data-win-bind="style.display: index Binding.Converter.oddToDisplay"></div>
-                            <div class="list-field-small-fixed win-type-ellipsis"
-                                 data-win-bind="textContent: Name"></div>
-                            <div class="list-field-small-fixed win-type-ellipsis"
-                                 data-win-bind="textContent: Login"></div>
-                            <div class="list-field-small-fixed win-type-ellipsis"
-                                 data-win-bind="textContent: GenPassword"></div>
-                            <div class="list-field-small-fixed userinfo-qrcode-container">
-                    </div>
-                        </div>
+                    
+                    <div class="field_line scroll-line">
+                        <table  id="tableId">
+                            <thead  class="table-header">
+                                <tr>
+                                    <th data-win-bind="value: dataEmployeegenpwlistHeaderValue.Name; textContent: dataEmployeegenpwlistHeaderText.Name"></th>
+                                    <th data-win-bind="value: dataEmployeegenpwlistHeaderValue.Login; textContent: dataEmployeegenpwlistHeaderText.Login"></th>
+                                    <th data-win-bind="value: dataEmployeegenpwlistHeaderValue.GenPassword; textContent: dataEmployeegenpwlistHeaderText.GenPassword"></th>
+                                    <th data-win-bind="value: dataEmployeegenpwlistHeaderValue.Barcode; textContent: dataEmployeegenpwlistHeaderText.Barcode"></th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-body" data-win-control="WinJS.UI.Repeater">
+                                <tr data-win-bind="value: VeranstaltungVIEWID">
+                                    <td title="1" data-win-bind="textContent: Name"></td>
+                                    <td title="2" data-win-bind="textContent: Login"></td>
+                                    <td title="3" data-win-bind="textContent: GenPassword"></td>
+                                    <td title="4"><div class="list-field-small-fixed userinfo-qrcode-container"></div></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                     <div class="headerFooterPlaceholder">
                         <div class="list-footer">
@@ -80,16 +53,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div id="employeegenpwlist"
-                         class="listview win-selectionstylefilled"
-                         data-win-control="WinJS.UI.ListView"
-                         data-win-options="{
-                             layout : { type: WinJS.UI.ListLayout },
-                             itemTemplate: select('.employeegenpwlist-template'),
-                             header: select('.list-header'),
-                             footer: select('.list-footer')
-                         }">
                     </div>
                 </div>
                 <div class="error-message"

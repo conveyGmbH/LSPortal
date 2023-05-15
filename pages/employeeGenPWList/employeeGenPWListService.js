@@ -70,6 +70,18 @@
             getDbView: function () {
                 return EmployeeGenPWList._employeePWExportView;
             }
+        },
+        defaultHeaderRestriction: {
+            Name: "",
+            Login: "",
+            GenPassword: 0,
+            Barcode: ""
+        },
+        defaultHeaderLabelRestriction: {
+            Name: "",
+            Login: "",
+            GenPassword: 0,
+            Barcode: ""
         }
     });
 })();
