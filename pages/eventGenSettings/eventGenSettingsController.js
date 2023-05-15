@@ -73,7 +73,8 @@
 
             var formatTime = function (time) {
                 var currentTime = time;
-                var gmt = -(new Date()).getTimezoneOffset() / 60;
+                var date = new Date(currentTime);
+                var gmt = -(date).getTimezoneOffset() / 60;
                 var totalSeconds = Math.floor(currentTime / 1000);
                 var seconds = ('0' + totalSeconds % 60).slice(-2);
                 var totalMinutes = Math.floor(totalSeconds / 60);

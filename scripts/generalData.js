@@ -243,6 +243,11 @@
                                 Application.navigateById("login");
                             });
                         }
+                        if (errorResponse.status === 404) {
+                            WinJS.Promise.timeout(0).then(function () {
+                                Application.navigateById("login");
+                            });
+                        }
                         AppData._curGetUserDataId = 0;
                     }, userId);
                 });
