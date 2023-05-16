@@ -147,7 +147,46 @@
                 }
             }
             this.addBodyRowHandlers = addBodyRowHandlers;
-            
+
+            var generateQRCodes = function () {
+                if (that.employeePWListdata) {
+                    //if (that.employeePWListdata) {
+
+                    var barcodeImage = pageElement.querySelectorAll(".userinfo-qrcode-container");
+                    if (barcodeImage && barcodeImage.length > 0) {
+                        for (var y = 0; y < barcodeImage.length; y++) {
+                            if (barcodeImage[y].childElementCount > 0) {
+                                var oldElement = barcodeImage[y].firstElementChild;
+                                if (oldElement) {
+                                    barcodeImage[y].removeChild(oldElement);
+                                }
+                            }
+                            var value = "#LI:" +
+                                that.employeePWListdata.getAt(y).Login +
+                                "/" +
+                                that.employeePWListdata.getAt(y)
+                                    .GenPassword; // barcodeImage.barcode.substring(9, 13)
+                            var qrcodeViewer = document.createElement("div");
+                            WinJS.Utilities.addClass(qrcodeViewer, "userinfo-qrcode");
+                            $(qrcodeViewer).qrcode({
+                                text: value,
+                                width: 50,
+                                height: 50,
+                                correctLevel: 0 //QRErrorCorrectLevel.M
+                            });
+                            barcodeImage[y].appendChild(qrcodeViewer);
+                        }
+                    }
+                    that.loading = false;
+                    // load SVG images
+                    Colors.loadSVGImageElements(table, "action-image", 40, Colors.textColor);
+                    Colors.loadSVGImageElements(table, "action-image-flag", 40);
+                    that.loadNextUrl();
+                }
+                Log.ret(Log.l.trace);
+            }
+            this.generateQRCodes = generateQRCodes;
+
             var loadNextUrl = function () {
                 Log.call(Log.l.trace, "LocalEvents.Controller.");
                 if (that.employeePWListdata && that.nextUrl) {
@@ -168,6 +207,7 @@
                                 that.resultConverter(item, that.binding.count);
                                 that.binding.count = that.employeePWListdata.push(item);
                             });
+                            that.generateQRCodes();
                             //that.barcodeRecords = new WinJS.Binding.List(results);
                         }
                         that.loading = false;
@@ -186,46 +226,7 @@
                 Log.ret(Log.l.trace);
             }
             this.loadNextUrl = loadNextUrl;
-
-            var generateQRCodes = function() {
-                if (that.employeePWListdata) {
-                    //if (that.employeePWListdata) {
-                        
-                            var barcodeImage = pageElement.querySelectorAll(".userinfo-qrcode-container");
-                            if (barcodeImage && barcodeImage.length > 0) {
-                                for (var y = 0; y < barcodeImage.length; y++) {
-                                    if (barcodeImage[y].childElementCount > 0) {
-                                        var oldElement = barcodeImage[y].firstElementChild;
-                                        if (oldElement) {
-                                            barcodeImage[y].removeChild(oldElement);
-                                        }
-                                    }
-                                    var value = "#LI:" +
-                                        that.employeePWListdata.getAt(y).Login +
-                                        "/" +
-                                        that.employeePWListdata.getAt(y)
-                                            .GenPassword; // barcodeImage.barcode.substring(9, 13)
-                                    var qrcodeViewer = document.createElement("div");
-                                    WinJS.Utilities.addClass(qrcodeViewer, "userinfo-qrcode");
-                                    $(qrcodeViewer).qrcode({
-                                        text: value,
-                                        width: 50,
-                                        height: 50,
-                                        correctLevel: 0 //QRErrorCorrectLevel.M
-                                    });
-                                    barcodeImage[y].appendChild(qrcodeViewer);
-                                }
-                            }
-                    that.loading = false;
-                    // load SVG images
-                    Colors.loadSVGImageElements(table, "action-image", 40, Colors.textColor);
-                    Colors.loadSVGImageElements(table, "action-image-flag", 40);
-                    that.loadNextUrl();
-                }
-                Log.ret(Log.l.trace);
-            }
-            this.generateQRCodes = generateQRCodes;
-
+            
             // define handlers
             this.eventHandlers = {
                 clickBack: function (event) {
@@ -301,51 +302,53 @@
                 Log.call(Log.l.trace, "EmployeeGenPWList.Controller.");
                 that.loading = true;
                 AppData.setErrorMsg(that.binding);
-                var ret = new WinJS.Promise.as().then(function () {
-                    return EmployeeGenPWList.employeePWView.select(function (json) {
-                        // this callback will be called asynchronously
-                        // when the response is available
-                        AppData.setErrorMsg(that.binding);
-                        Log.print(Log.l.trace, "EmployeeGenPWList: success!");
-                        // employeeView returns object already parsed from json file in response
-                        if (json && json.d && json.d.results) {
-                            that.nextUrl = EmployeeGenPWList.employeePWView.getNextUrl(json);
-                            var results = json.d.results;
-                            results.forEach(function (item, index) {
-                                that.resultConverter(item, index);
-                            });
-                            that.binding.count = results.length;
+                var ret = new WinJS.Promise.as().then(function() {
+                    return EmployeeGenPWList.employeePWView.select(function(json) {
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            AppData.setErrorMsg(that.binding);
+                            Log.print(Log.l.trace, "EmployeeGenPWList: success!");
+                            // employeeView returns object already parsed from json file in response
+                            if (json && json.d && json.d.results) {
+                                that.nextUrl = EmployeeGenPWList.employeePWView.getNextUrl(json);
+                                var results = json.d.results;
+                                results.forEach(function(item, index) {
+                                    that.resultConverter(item, index);
+                                });
+                                that.binding.count = results.length;
 
-                            that.employeePWListdata = new WinJS.Binding.List(results);
-                            
-                            if (tableBody.winControl) {
-                                // add ListView dataSource
-                                tableBody.winControl.data = that.employeePWListdata;
+                                that.employeePWListdata = new WinJS.Binding.List(results);
+
+                                if (tableBody.winControl) {
+                                    // add ListView dataSource
+                                    tableBody.winControl.data = that.employeePWListdata;
+                                }
+                                Log.print(Log.l.trace, "Data loaded");
+                                //that.addBodyRowHandlers();
+                                //that.addHeaderRowHandlers();
+                                that.generateQRCodes();
+                                that.setCellTitle();
+                            } else {
+                                that.binding.count = 0;
+                                that.nextUrl = null;
+                                that.employeePWListdata = null;
+                                if (tableBody.winControl) {
+                                    // add ListView dataSource
+                                    tableBody.winControl.data = null;
+                                }
+                                that.loading = false;
                             }
-                            Log.print(Log.l.trace, "Data loaded");
-                            //that.addBodyRowHandlers();
-                            //that.addHeaderRowHandlers();
-                            that.setCellTitle();
-                            that.generateQRCodes();
-                        } else {
-                            that.binding.count = 0;
-                            that.nextUrl = null;
-                            that.employeePWListdata = null;
-                            if (tableBody.winControl) {
-                                // add ListView dataSource
-                                tableBody.winControl.data = null;
-                            }
+                        },
+                        function(errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
                             that.loading = false;
-                        }
-                    }, function (errorResponse) {
-                        // called asynchronously if an error occurs
-                        // or server returns response with an error status.
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                        that.loading = false;
-                    }, {
+                        },
+                        {
                             GenPassword: ['NOT NULL'],
                             VeranstaltungID: AppData.getRecordId("Veranstaltung")
-                       }
+                        }
                     );
                 });
                 Log.ret(Log.l.trace);
