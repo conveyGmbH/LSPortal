@@ -1019,7 +1019,8 @@
 	"siteeventsTermin.mailBCC" : "BCC",
 	"siteeventsTermin.mailCC" : "CC",
 	"siteeventsTermin.mailFrom" : "Absender",
-	"siteeventsTermin.mailReplyTo" : "Antwort an",
+	"siteeventsTermin.mailReplyTo" : "Antwort an",	
+    "siteeventsTermin.eventclosed" : "Clôturer l'événement",
 	
     "reorderlist.posno" : "PosNo.",
     "reorderlist.eventname" : "événement",

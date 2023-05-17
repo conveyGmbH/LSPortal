@@ -120,8 +120,13 @@
                             </select>
                             <!--<span class="input_field" data-win-bind="textContent: InitLandItem.TITLE; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>-->
                         </div>
-                        <div class="field_line field_line_even">
-
+                        <div class="line-separator"></div>
+                        <div class="field_line field_line_odd">
+                            <label class="list-role-field">
+                                <input type="checkbox" class="win-checkbox" value="1"
+                                       data-win-bind="checked: dataTermin.TerminClosed" />
+                                <span data-win-bind="textContent: eventclosedtext"></span>
+                            </label>
                         </div>
                     </div>
                 </div>

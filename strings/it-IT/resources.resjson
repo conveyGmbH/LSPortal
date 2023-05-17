@@ -1020,6 +1020,7 @@
 	"siteeventsTermin.mailCC" : "CC",
 	"siteeventsTermin.mailFrom" : "Absender",
 	"siteeventsTermin.mailReplyTo" : "Antwort an",
+    "siteeventsTermin.eventclosed" : "Chiudere l'evento",
 	
     "reorderlist.posno" : "PosNo.",
     "reorderlist.eventname" : "evento",

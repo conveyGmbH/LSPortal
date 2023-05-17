@@ -18,3 +18,12 @@
     left: 375px;
     height: 4px;
 }*/
+input[type=checkbox] {
+    vertical-align: middle;
+    position: relative;
+    bottom: 1px;
+}
+          
+label {
+    display: block;
+}

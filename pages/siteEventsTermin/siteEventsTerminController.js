@@ -17,7 +17,8 @@
             Application.Controller.apply(this, [pageElement, {
                 dataTermin: SiteEventsTermin.defaultValue,
                 InitFairVeranstalterItem: { FairVeranstalterID: 0, Name: "" },
-                VeranstaltungTerminID: 0
+                VeranstaltungTerminID: 0,
+                eventclosedtext: getResourceText("siteeventsTermin.eventclosed")
             }, commandList]);
             
             var fairVeranstalter = pageElement.querySelector("#FairVeranstalter");
@@ -70,6 +71,12 @@
                 AppData.setErrorMsg(that.binding);
                 that.binding.dataTermin.StartDatum = new Date(that.binding.dataTermin.StartDatum).toISOString();
                 that.binding.dataTermin.EndDatum = new Date(that.binding.dataTermin.EndDatum).toISOString();
+                var field = pageElement.querySelector('input[type="checkbox"]');
+                if (field.checked) {
+                    that.binding.dataTermin.TerminClosed = 1;
+                } else {
+                    that.binding.dataTermin.TerminClosed = 0;
+                }
                 if (typeof that.binding.dataTermin.MailBCC === "undefined") {
                     that.binding.dataTermin.MailBCC = null;
                 }
@@ -104,7 +111,8 @@
                         pMailBCC: that.binding.dataTermin.MailBCC,
                         pMailCC: that.binding.dataTermin.MailCC,
                         pMailFrom: that.binding.dataTermin.MailFrom,
-                        pMailReplyTo: that.binding.dataTermin.MailReplyTo
+                        pMailReplyTo: that.binding.dataTermin.MailReplyTo,
+                        pTerminStatus: that.binding.dataTermin.TerminClosed
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
                         AppBar.modified = false;

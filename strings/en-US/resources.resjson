@@ -1021,6 +1021,7 @@
 	"siteeventsTermin.mailCC" : "CC",
 	"siteeventsTermin.mailFrom" : "Absender",
 	"siteeventsTermin.mailReplyTo" : "Antwort an",
+    "siteeventsTermin.eventclosed" : "Close event",
 
     "reorderlist.posno" : "PosNo.",
     "reorderlist.eventname" : "Event",
