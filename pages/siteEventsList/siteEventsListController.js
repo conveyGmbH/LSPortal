@@ -233,7 +233,6 @@
                                                     AppData.setRecordId("VeranstaltungTermin",
                                                         item.data.VeranstaltungTerminVIEWID);
                                                 }
-                                                AppBar.scope.checkId();
                                             }
                                         } else {
                                             Application.navigateById("siteeventsList");

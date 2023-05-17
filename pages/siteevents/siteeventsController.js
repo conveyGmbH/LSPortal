@@ -296,15 +296,6 @@
             };
             this.getDateObject = getDateObject;
 
-            var checkId = function () {
-                if (that.vidID) {
-                    fileinputbox.style.display = "block";
-                } else {
-                    fileinputbox.style.display = "none";
-                }
-            }
-            this.checkId = checkId;
-
             var resetSearchFilter = function () {
                 that.binding.dataEvents = getEmptyDefaultValue(SiteEvents.VeranstaltungView.defaultValue),
                 that.binding.restriction = getEmptyDefaultValue(SiteEvents.defaultRestriction);
@@ -1322,12 +1313,6 @@
                 return that.loadData(AppData.getRecordId("VeranstaltungTermin"));
             }).then(function () {
                 AppBar.notifyModified = true;
-                Log.print(Log.l.trace, "Binding wireup page complete");
-            }).then(function () {
-                that.checkId();
-                Log.print(Log.l.trace, "Binding wireup page complete");
-            }).then(function () {
-
                 Log.print(Log.l.trace, "Binding wireup page complete");
             });
             Log.ret(Log.l.trace);
