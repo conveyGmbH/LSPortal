@@ -140,6 +140,54 @@
             }
             this.setInitialHeaderTextValue = setInitialHeaderTextValue;
 
+            var setResName = function(sortname) {
+                Log.print(Log.l.trace, "Set Res name for sorting!");
+                switch (sortname) {
+                    case getResourceText("siteevents.exhibitorname"):
+                        return "FairMandant_Name";
+                    case getResourceText("siteevents.contact"):
+                        return "FairMandant_Ansprechpartner";
+                    case getResourceText("siteevents.hall"):
+                        return "StandHall";
+                    case getResourceText("siteevents.stand"):
+                        return "StandNo";
+                    case getResourceText("siteevents.numberofusers"):
+                        return "NumUsers";
+                    case getResourceText("siteevents.numberofregisteredusers"):
+                        return "NumUsedUsers";
+                    case getResourceText("siteevents.numberofblockedcontacts"):
+                        return "NumLockedContacts";
+                    case getResourceText("siteevents.numberofusersused"):
+                        return "NumActiveUsers";
+                    case getResourceText("siteevents.numberofcontactsBRQR"):
+                        return "NumContactsBC";
+                    case getResourceText("siteevents.numberofcontactsBC"):
+                        return "NumContactsVC";
+                    case getResourceText("siteevents.numberofcontactsMA"):
+                        return "NumContactsMan";
+                    case getResourceText("siteevents.numberofexports"):
+                        return "NumExports";
+                    case getResourceText("siteevents.lastexportdateandtime"):
+                        return "LastExportTS";
+                    case getResourceText("siteevents.questionnairestatus"):
+                        return "FBStatus";
+                    case getResourceText("siteevents.numberofemailssent"):
+                        return "NumSentEmails";
+                    case getResourceText("siteevents.lastlogintotheportal"):
+                        return "PortalLoginTS";
+                    case getResourceText("siteevents.customerid"):
+                        return "FairMandant_CustomerID";
+                    case getResourceText("siteevents.standsize"):
+                        return "StandSize";
+                    case getResourceText("siteevents.dunsnumber"):
+                        return "DUNSNumber";
+                    case getResourceText("siteevents.auswertungsvariante"):
+                        return "Auswertungsvariante";
+                default:
+                }
+            }
+            this.setResName = setResName;
+
             var setTableCellRed = function() {
                 Log.print(Log.l.trace, "Processing blocked users in table!");
                 // Get the table element by its id
@@ -247,16 +295,17 @@
                                 return function () {
                                     var restriction = SiteEvents.defaultRestriction;
                                     var sortId = myrow.value;
-                                    var sorttext = myrow.textContent;
-                                    if (restriction.OrderAttribute !== sortId) {
+                                    var sorttextold = myrow.textContent;
+                                    var sorttextnew = that.setResName(sorttextold);
+                                    if (restriction.OrderAttribute !== sorttextnew) {
                                         restriction.VeranstaltungTerminID = that.binding.restriction.VeranstaltungTerminID;
-                                        restriction.OrderAttribute = sortId;
+                                        restriction.OrderAttribute = sorttextnew;
                                         if (restriction.OrderDesc === "D") {
                                             restriction.OrderDesc = "A";
                                         } else {
                                             restriction.OrderDesc = "D";
                                         }
-                                        that.loadData(restriction.VeranstaltungID, sortId, restriction.OrderDesc);
+                                        that.loadData(restriction.VeranstaltungID, sorttextnew, restriction.OrderDesc);
                                         Log.call(Log.l.trace, "ContactResultsList.Controller.");
                                     } else {
                                         if (restriction.OrderDesc === "D") {
@@ -265,7 +314,7 @@
                                             restriction.OrderDesc = "D";
                                         }
                                         restriction.VeranstaltungTerminID = that.binding.restriction.VeranstaltungTerminID;
-                                        that.loadData(restriction.VeranstaltungTerminID, sortId, restriction.OrderDesc);
+                                        that.loadData(restriction.VeranstaltungTerminID, sorttextnew, restriction.OrderDesc);
                                         Log.call(Log.l.trace, "ContactResultsList.Controller.");
                                     }
                                 };
@@ -1220,7 +1269,7 @@
                 that.siteeventsdataraw = null;
                 that.loading = true;
                 if (!sortIdx) {
-                    sortIdx = 0;
+                    sortIdx = "";
                 }
                 if (!sortType) {
                     sortType = "A";
@@ -1245,7 +1294,7 @@
                     ret = AppData.call("PRC_GetExhibitorList", {
                         pVeranstaltungTerminID: recordId,
                         pSearchString: that.searchStringData,
-                        pSortIdx: sortIdx,
+                        pSortField: sortIdx,
                         pSortType: sortType
 
                     }, function (json) {
@@ -1313,6 +1362,9 @@
                 return that.loadData(AppData.getRecordId("VeranstaltungTermin"));
             }).then(function () {
                 AppBar.notifyModified = true;
+                Log.print(Log.l.trace, "Binding wireup page complete");
+            }).then(function () {
+                
                 Log.print(Log.l.trace, "Binding wireup page complete");
             });
             Log.ret(Log.l.trace);
