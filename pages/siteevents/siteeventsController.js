@@ -55,6 +55,7 @@
             var progress = null;
             var counter = null;
             var layout = null;
+            var memSearchText = "";
 
             //picturedata
             this.imageData = "";
@@ -300,18 +301,32 @@
                                     if (restriction.OrderAttribute !== sorttextnew) {
                                         restriction.VeranstaltungTerminID = that.binding.restriction.VeranstaltungTerminID;
                                         restriction.OrderAttribute = sorttextnew;
-                                        if (restriction.OrderDesc === "D") {
-                                            restriction.OrderDesc = "A";
+                                        if (memSearchText !== sorttextnew) {
+                                                restriction.OrderDesc = "D";
+                                                memSearchText = sorttextnew;
                                         } else {
-                                            restriction.OrderDesc = "D";
+                                          if (restriction.OrderDesc === "D") {
+                                                restriction.OrderDesc = "A";
+                                                memSearchText = sorttextnew;
+                                        } else {
+                                                restriction.OrderDesc = "D";
+                                                memSearchText = sorttextnew;
+                                        }
                                         }
                                         that.loadData(restriction.VeranstaltungID, sorttextnew, restriction.OrderDesc);
                                         Log.call(Log.l.trace, "ContactResultsList.Controller.");
                                     } else {
-                                        if (restriction.OrderDesc === "D") {
-                                            restriction.OrderDesc = "A";
+                                        if (memSearchText !== sorttextnew) {
+                                                restriction.OrderDesc = "D";
+                                                memSearchText = sorttextnew;
                                         } else {
-                                            restriction.OrderDesc = "D";
+                                            if (restriction.OrderDesc === "D") {
+                                                restriction.OrderDesc = "A";
+                                                memSearchText = sorttextnew;
+                                            } else {
+                                                restriction.OrderDesc = "D";
+                                                memSearchText = sorttextnew;
+                                            }
                                         }
                                         restriction.VeranstaltungTerminID = that.binding.restriction.VeranstaltungTerminID;
                                         that.loadData(restriction.VeranstaltungTerminID, sorttextnew, restriction.OrderDesc);
