@@ -64,6 +64,7 @@
 	"command.showevents"    : "Ereignisse anzeigen",
     "command.eventchange"  : "Cambiamento",
     "command.newdevices"  : "Aggiungi licenze",
+    "command.changeLogin": "Cambia login",
 
     "tooltip.backward"      : "Pagina precedente",
     "tooltip.edit"          : "Modifica Record attuale",
@@ -148,6 +149,7 @@
     "tooltip.rating" : "Con questo tipo di risposta è possibile selezionare una sola risposta. La risposta non può contenere testo, ma solo da uno a sei simboli stella",
     "tooltip.dropdown" : "Con questo tipo di risposta, è possibile selezionare solo una delle risposte. Le risposte sono visualizzate in una casella a discesa",
     "tooltip.newdevices"  : "Aggiungi licenze",
+    "tooltip.changeLogin": "Modifica login dipendente",
 
     "home.title"            : "Start",
     "home.info"             : "Informazioni importanti",
@@ -751,6 +753,7 @@
     "employee.comment"      : "Gestisci i dati di accesso dei tuoi dipendenti qui.",
 	"employee.alertNewLoginPassword" : "Effettuare il login con la nuova password",
 	"employee.alertPasswordShort": "La password deve contenere almeno 5 caratteri",
+    "employee.changeUserLogin": "Se desideri modificare il login, assicurati che tutti i dati raccolti da questo utente siano stati caricati ed elaborati",
 
     "empList.title"         : "Utenti",
     "empList.count"         : "Numero",

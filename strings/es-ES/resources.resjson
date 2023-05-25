@@ -55,6 +55,7 @@
     "command.newmod"        : "Neuer Moderator",
     "command.newquestion"   : "Neue Frage",
 	"command.showevents"    : "Ereignisse anzeigen",
+    "command.changeLogin" : "Login ändern",
 
     "tooltip.backward"      : "Zurück blättern",
     "tooltip.edit"          : "Aktuellen Datensatz bearbeiten",
@@ -127,6 +128,7 @@
     "tooltip.deleteevent"   : "Veranstaltung löschen",
     "tooltip.newmod"        : "Neuer Moderator",
 	"tooltip.showEvents"    : "Ereignisse anzeigen",
+    "tooltip.changeLogin" : "Mitarbeiter Login ändern",
 
     "home.title"            : "Start",
     "home.info"             : "Wichtige Hinweise",
@@ -709,6 +711,8 @@
     "employee.comment"      : "Verwalten Sie hier Ihre Mitarbeiter Zugangsdaten.",
 	"employee.alertNewLoginPassword" : "Bitte melden Sie sich mit dem neuen Passwort an",
     "employee.alertPasswordShort": "Passwort muss mindestens 5 Zeichen enthalten",
+    "employee.changeUserLogin" : "Wenn Sie das Login ändern möchten, stellen Sie sicher das alle Daten die von diesem User erfasst wurden hochgeladen und verarbeitet wurden",
+
 
     "empList.title"         : "Benutzerkonten",
     "empList.count"         : "Anzahl",

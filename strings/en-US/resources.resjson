@@ -64,6 +64,7 @@
 	"command.showevents"    : "Ereignisse anzeigen",	
     "command.eventchange"  : "Change",
     "command.newdevices"  : "Add licenses",
+    "command.changeLogin": "Change Login",
 
     "tooltip.backward"      : "Browse back",
     "tooltip.edit"          : "Edit current record",
@@ -148,6 +149,7 @@
     "tooltip.rating" : "With this answer type only one answer can be selected. The answer cannot contain text, just one to six star symbols",
     "tooltip.dropdown" : "With this answer type, only one of the answers can be selected. The answers are displayed inside a drop down box",
     "tooltip.newdevices"  : "Add licenses",
+    "tooltip.changeLogin": "Change employee login",
 
     "home.title"            : "Start",
     "home.info"             : "Important information",
@@ -751,7 +753,7 @@
     "employee.comment"      : "Manage your employee access data here.",
     "employee.alertNewLoginPassword" : "Please log in with the new password",
    	"employee.alertPasswordShort": "Password must contain at least 5 characters",
-
+    "employee.changeUserLogin": "If you want to change the login, make sure that all data collected from this user has been uploaded and processed",
 
     "empList.title"         : "User accounts",
     "empList.count"         : "Count",

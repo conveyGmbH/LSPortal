@@ -64,6 +64,7 @@
 	"command.showevents"    : "Ereignisse anzeigen",	
     "command.eventchange"  : "Changer",
     "command.newdevices"  : "ajouter des licences",
+    "command.changeLogin": "Modifier la connexion",
 
     "tooltip.backward"      : "Page présédente",
     "tooltip.edit"          : "Modifier le contact en cours",
@@ -142,12 +143,13 @@
     "tooltip.sendPDF"  : "Envoyer un ticket PDF",
     "tooltip.sendWallet"  : "Envoyer un ticket wallet",	
     "tooltip.deleteTicket"  : "Supprimer un ticket",
-	  "tooltip.showEvents"    : "Ereignisse anzeigen",
+	"tooltip.showEvents"    : "Ereignisse anzeigen",
     "tooltip.singlechoice" : "Avec ce type de réponse, une seule réponse peut être sélectionnée",
     "tooltip.multchoice" : "Ce type de réponse permet de sélectionner une ou plusieurs réponses",
     "tooltip.rating" : "Avec ce type de réponse une seule réponse peut être sélectionnée. La réponse ne peut pas contenir de texte, mais seulement un à six étoiles",
     "tooltip.dropdown" : "Avec ce type de réponse, une seule réponse peut être sélectionnée. Les réponses peuvent être affichées dans une liste déroulante",
     "tooltip.newdevices"  : "ajouter des licences",
+    "tooltip.changeLogin": "Modifier l'identifiant de l'employé",
 
     "home.title"            : "Start",
     "home.info"             : "Instructions importantes",
@@ -751,6 +753,7 @@
     "employee.comment"      : "Gérez vos données d'accès des employés ici.",
 	"employee.alertNewLoginPassword" : "Veuillez vous connecter avec le nouveau mot de passe",
     "employee.alertPasswordShort": "Le mot de passe doit contenir au moins 5 caractères",
+    "employee.changeUserLogin": "Si vous souhaitez modifier l'identifiant, assurez-vous que toutes les données collectées auprès de cet utilisateur ont été téléchargées et traitées",
 
     "empList.title"         : "Comptes utilisateurs",
     "empList.count"         : "Combre",
