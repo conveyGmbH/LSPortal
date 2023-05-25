@@ -11,7 +11,12 @@
 #employeeList .win-listview .win-itembox {
     background-color: transparent;
 }
-
+.empList .content-header {
+    height: auto !important;
+}
+.empList .master-list-header {
+    height: auto !important
+}
 #employeeList .listview {
     position: relative;
     left: 0;
@@ -120,4 +125,25 @@
     float: left;
     margin-right: 5px;
     margin-top: -5px
+}
+.empList .list-div-left {
+    width: 100%
+}
+.empList .list-symbol-IDw {
+    float: right
+}
+.empList .list-compressed {
+    width: calc(100% - 100px)
+}
+.empList .licence-warning-text {
+    color: red;
+    font-size: large;
+    font-weight: bold;
+}
+.empList .list-header {
+    display: inline-block;
+    min-height: 10px;
+    height: auto !important;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }

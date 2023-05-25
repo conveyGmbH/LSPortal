@@ -51,7 +51,7 @@
                 Login: "",
                 Names: "",
                 OrderAttribute: ["NichtLizenzierteApp", "Nachname"],
-                OrderDesc: true
+                OrderDesc: false
             }
         },
         _employeePWExportView: {

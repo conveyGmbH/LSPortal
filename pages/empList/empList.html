@@ -9,7 +9,7 @@
     <script type="text/javascript" src="exportXlsx.js"></script>
 </head>
 <body class="win-type-body">
-    <div class="settings fragment">
+    <div class="empList fragment">
         <div id="emplistController" class="data-container">
             <section aria-label="Main content" role="main" class="animationElement">
                 <div class="contentarea win-type-body">
@@ -19,36 +19,59 @@
                              <span data-win-res="{textContent: 'infodeskEmpList.title'}"></span>
                             <input class="input_half_right win-textbox" type="text" data-win-bind="placeholder: mitarbeiterText; value: Names Binding.Mode.twoway" oninput="AppBar.handleEvent('oninput', 'changeSearchField', event)" />-->
                             <div>
-                                <button class="list-button-left win-button" id="btn_employee_Name" data-win-res="{textContent: 'employee.nameDesc'}" onclick="AppBar.handleEvent('onclick', 'clickOrderLastname', event)"></button>
-                                <button class="list-button-left win-button" id="btn_employee_firstName" data-win-res="{textContent: 'employee.firstNameDesc'}" onclick="AppBar.handleEvent('onclick', 'clickOrderFirstname', event)"></button>
+	                            <button class="list-button-left win-button" id="btn_employee_Name" data-win-res="{textContent: 'employee.nameDesc'}" onclick="AppBar.handleEvent('onclick', 'clickOrderLastname', event)"></button>
+	                            <button class="list-button-left win-button" id="btn_employee_firstName" data-win-res="{textContent: 'employee.firstNameDesc'}" onclick="AppBar.handleEvent('onclick', 'clickOrderFirstname', event)"></button>
+                            </div>
+                            <div class="list-header">
+	                            <span class="licence-warning-text">Achtung Sie haben Lizenzen überschritten!! </span>
                             </div>
                         </div>
                     </div>
                     <div class="employeeList-template"
                          data-win-control="WinJS.Binding.Template" style="display: none">
-                        <div class="list-portrait-only" data-win-bind="disabled: disabled">
-                            <div class="row-separator"></div>
-                            <div class="list-div-left">
-                                <div class="list-symbol-ID">
-                                    <div data-win-bind="name: recordIcon" class="action-image"></div>
-                                </div>
-                                <div class="list-symbol-IDw" data-win-bind="style.display: NichtLizenzierteApp Binding.Converter.toDisplay">
-                                    <div id="about" class="warning-image"></div>
-                                </div>
-                                <div class="list-compressed">
-                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
-                                          data-win-bind="textContent: fullName"></span>
-                                    <span class="list-compressed-title win-type-ellipsis"
-                                          data-win-bind="textContent: Login"></span>
-                                    <span id ="Seriennummer" 
-                                          class="list-compressed-title win-type-ellipsis"
-                                          data-win-bind="textContent: CS1504SerienNr; style.display: CS1504SerienNr Binding.Converter.toDisplay"></span>
-                                </div>
-                            </div>
-                        </div>
+	                    <div class="list-portrait-only" data-win-bind="disabled: disabled">
+		                    <div class="row-separator"></div>
+		                    <div class="list-div-left">
+			                    <div class="list-symbol-ID">
+				                    <div data-win-bind="name: recordIcon" class="action-image"></div>
+			                    </div>
+			                    <div class="list-compressed">
+				                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
+				                          data-win-bind="textContent: fullName"></span>
+				                    <span class="list-compressed-title win-type-ellipsis"
+				                          data-win-bind="textContent: Login"></span>
+				                    <span id="Seriennummer"
+				                          class="list-compressed-title win-type-ellipsis"
+				                          data-win-bind="textContent: CS1504SerienNr; style.display: CS1504SerienNr Binding.Converter.toDisplay"></span>
+			                    </div>
+			                    <div class="list-symbol-IDw" data-win-bind="style.display: NichtLizenzierteApp Binding.Converter.toDisplay">
+				                    <div id="about" class="warning-image"></div>
+			                    </div>
+		                    </div>
+	                    </div>
+	                    <div class="list-landscape-only">
+		                    <div class="row-separator"></div>
+		                    <div class="list-div-left">
+			                    <div class="list-symbol-ID">
+				                    <div data-win-bind="name: recordIcon" class="action-image"></div>
+			                    </div>
+			                    <div class="list-compressed">
+				                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
+				                          data-win-bind="textContent: fullName"></span>
+				                    <span class="list-compressed-title win-type-ellipsis"
+				                          data-win-bind="textContent: Login"></span>
+				                    <span id="Seriennummer"
+				                          class="list-compressed-title win-type-ellipsis"
+				                          data-win-bind="textContent: CS1504SerienNr; style.display: CS1504SerienNr Binding.Converter.toDisplay"></span>
+			                    </div>
+			                    <div class="list-symbol-IDw" data-win-bind="style.display: NichtLizenzierteApp Binding.Converter.toDisplay">
+				                    <div id="about" class="warning-image"></div>
+			                    </div>
+		                    </div>
+	                    </div>
                     </div>
                     <div class="headerFooterPlaceholder">
-                        <div class="list-footer">
+	                    <div class="list-footer">
                             <div class="status">
                                 <progress class="win-progress-bar progress"></progress>
                                 <div class="counter">

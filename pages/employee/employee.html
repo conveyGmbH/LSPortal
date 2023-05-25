@@ -8,7 +8,7 @@
     <script type="text/javascript" src="employee.js"></script>
 </head>
 <body class="win-type-body">
-    <div class="settings fragment">
+    <div class="employee fragment">
         <div id="employeeController" class="data-container">
             <section aria-label="Main content" role="main" class="animationElement">
                 <div class="contentarea win-type-body">
@@ -39,7 +39,7 @@
                         <div class="field_line field_line_odd" data-win-bind="style.display: dataEmployee.LogInNameAfterAtSymbole Binding.Converter.toDisplayNone"> 
                                 <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'employee.login'}"></span>
                                 <span class="label landscape_only" data-win-res="{textContent: 'employee.login'}"></span>
-                                <input class="input_field win-textbox" type="text" oninput="AppBar.handleEvent('change', 'changeLogin', event)" data-win-bind="value: dataEmployee.Login Binding.Mode.twoway" />
+                                <input id="loginName"class="input_field win-textbox" type="text" oninput="AppBar.handleEvent('change', 'changeLogin', event)" data-win-bind="value: dataEmployee.Login Binding.Mode.twoway" />
                             </div>
                             <div class="line-separator"></div>
                         <div class="field_line field_line_odd" data-win-bind="style.display: dataEmployee.LogInNameAfterAtSymbole Binding.Converter.toDisplay">

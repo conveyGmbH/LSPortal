@@ -89,6 +89,28 @@
             };
             this.cutSerialnumer = cutSerialnumer;
 
+            var scrollToRecordId = function (recordId) {
+                Log.call(Log.l.trace, "QuestionList.Controller.", "recordId=" + recordId);
+                if (that.loading) {
+                    WinJS.Promise.timeout(50).then(function () {
+                        that.scrollToRecordId(recordId);
+                    });
+                } else {
+                    if (recordId && listView && listView.winControl && that.employees) {
+                        for (var i = 0; i < that.employees.length; i++) {
+                            var employee = that.employees.getAt(i);
+                            if (employee && typeof employee === "object" &&
+                                employee.MitarbeiterVIEWID === recordId) {
+                                listView.winControl.indexOfFirstVisible = i;
+                                break;
+                            }
+                        }
+                    }
+                }
+                Log.ret(Log.l.trace);
+            }
+            this.scrollToRecordId = scrollToRecordId;
+
             var selectRecordId = function (recordId) {
                 Log.call(Log.l.trace, "EmpList.Controller.", "recordId=" + recordId);
                 if (recordId && listView && listView.winControl && listView.winControl.selection && that.employees) {
@@ -96,7 +118,11 @@
                         var employee = that.employees.getAt(i);
                         if (employee && typeof employee === "object" &&
                             employee.MitarbeiterVIEWID === recordId) {
-                            listView.winControl.selection.set(i);
+                            listView.winControl.selection.set(i).done(function () {
+                                WinJS.Promise.timeout(50).then(function () {
+                                    that.scrollToRecordId(recordId);
+                                });
+                            });
                             that.binding.hasContacts = employee.HatKontakte;
                             //setSelIndex(i);
                             break;
@@ -456,7 +482,11 @@
                                 var employee = json.d;
                                 that.resultConverter(employee);
                                 var objectrec = scopeFromRecordId(recordId);
-                                that.employees.setAt(objectrec.index, employee);
+                                if (objectrec && objectrec.index) {
+                                    that.employees.setAt(objectrec.index, employee);
+                                } else {
+                                    that.employees.setAt(0, employee);
+                                }
                             }
                         }
                     }, function (errorResponse) {

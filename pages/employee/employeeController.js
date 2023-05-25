@@ -21,12 +21,16 @@
                 restriction: getEmptyDefaultValue(Employee.employeeView.defaultRestriction),
                 isEmpRolesVisible: AppHeader.controller.binding.userData.SiteAdmin, // || AppHeader.controller.binding.userData.HasLocalEvents,
                 noLicence: null,
+                allowEditLogin: null,
                 noLicenceText: getResourceText("info.nolicenceemployee")
             }, commandList]);
 
             var that = this;
 
+            var loginName = pageElement.querySelector("#loginName");
             var domain = pageElement.querySelector("#domain");
+            var loginFirstPart = pageElement.querySelector("#loginFirstPart");
+
             var prevMasterLoadPromise = null;
             var prevLogin = null;
             var prevPassword;
@@ -46,7 +50,6 @@
                 that.binding.dataEmployee.Password2 = newDataEmployee.Password;
                 AppBar.modified = false;
                 AppBar.notifyModified = prevNotifyModified;
-                AppBar.triggerDisableHandlers();
             }
             this.setDataEmployee = setDataEmployee;
 
@@ -168,6 +171,32 @@
                         } else {
                             that.binding.noLicence = null;
                         }
+                        // neues Flag UserIsActive -> wenn user bereits eingelogt ist dann sollte das Feld Login und Passwort static sein 
+                        // wenn user den Ändern will dann klicke explizit auf das icon für Ändern user und bestätige die Alertbox 
+                        that.binding.allowEditLogin = AppHeader.controller.binding.userData.SiteAdmin || !result.UserIsActive;
+                        if (that.binding.allowEditLogin) {
+                            if (loginFirstPart) {
+                                loginFirstPart.disabled = false;
+                            }
+                            if (domain) {
+                                domain.disabled = false;
+                            }
+                            if (loginName) {
+                                loginName.disabled = false;
+                            }
+                        } else {
+                            if (loginFirstPart) {
+                                loginFirstPart.disabled = true;
+                            }
+                            if (domain) {
+                                domain.disabled = true;
+                            }
+                            if (loginName) {
+                                loginName.disabled = true;
+                            }
+                        }
+                        AppBar.triggerDisableHandlers();
+                        return WinJS.Promise.as();
                     }, function (errorResponse) {
                         Log.print(Log.l.error, "error selecting mailerzeilen");
                         AppData.setErrorMsg(that.binding, errorResponse);
@@ -178,12 +207,18 @@
             }
             this.checkingLicence = checkingLicence;
 
-            var checkingReadonlyFlag = function() {
+            var checkingReadonlyFlag = function () {
                 Log.call(Log.l.trace, "Employee.Controller.");
-                if (domain && (AppHeader.controller.binding.userData.SiteAdmin || !AppHeader.controller.binding.userData.HasLocalEvents)) {
-                    domain.disabled = false;
-                } else {
-                    domain.disabled = true;
+                if (AppHeader.controller.binding.userData.SiteAdmin) {
+                    if (loginFirstPart) {
+                        loginFirstPart.disabled = false;
+                    }
+                    if (domain) {
+                        domain.disabled = false;
+                    }
+                    if (loginName) {
+                        loginName.disabled = false;
+                    }
                 }
                 Log.ret(Log.l.trace);
             }
@@ -205,24 +240,37 @@
                         Log.print(Log.l.trace, "eployee saved");
                         var newEmployee = getEmptyDefaultValue(Employee.employeeView.defaultValue);
                         //var newEmployee = copyByValue(Employee.employeeView.defaultValue);
-                        Employee.employeeView.insert(function(json) {
+                        /* var restriction = {
+                             OrderAttribute: ["Nachname"],
+                             OrderDesc: false
+                         };
+                         AppData.setRestriction("Employee", restriction);*/
+                        return Employee.employeeView.insert(function (json) {
                             AppBar.busy = false;
                             // this callback will be called asynchronously
                             // when the response is available
                             Log.print(Log.l.info, "employeeView insert: success!");
                             // employeeView returns object already parsed from json file in response
+                            var employee = null;
+                            that.binding.noLicence = null;
+                            that.binding.allowEditLogin = null;
                             if (json && json.d) {
-                                json.d.Login = AppData.generalData.userName;
-                                that.setDataEmployee(json.d);
+                                employee = json.d;
+                                employee.Login = AppData.generalData.userName;
+                                that.setDataEmployee(employee);
                                 that.binding.dataEmployee.LogInNameBeforeAtSymbole = "";
                             }
+
+                            var master = Application.navigator.masterControl;
+                            if (master && master.controller && master.controller.binding) {
+                                master.controller.employees.setAt(0, employee);
+                            }
                             AppBar.modified = true;
-                        }, function(errorResponse) {
+                        }, function (errorResponse) {
                             Log.print(Log.l.error, "error inserting employee");
                             AppBar.busy = false;
                             AppData.setErrorMsg(that.binding, errorResponse);
-                        }, newEmployee).then(function () {
-                            /* Mitarbeiter Liste neu laden und Selektion auf neue Zeile setzen */
+                        }, newEmployee)/*.then(function () {
                             var master = Application.navigator.masterControl;
                             if (master && master.controller && master.controller.binding) {
                                 master.controller.binding.employeeId = that.binding.dataEmployee.MitarbeiterVIEWID;
@@ -232,7 +280,7 @@
                                     //});
                                 });
                             }
-                        });
+                        })*/;
                     }, function (errorResponse) {
                         Log.print(Log.l.error, "error saving employee");
                     });
@@ -248,11 +296,11 @@
                                 /* Mitarbeiter Liste neu laden und Selektion auf neue Zeile setzen */
                                 var master = Application.navigator.masterControl;
                                 if (master && master.controller && master.controller.binding) {
-                                    var prevSelIdx = master.controller.binding.selIdx;
-                                    master.controller.loadData().then(function () {
+                                    //var prevSelIdx = master.controller.binding.selIdx;
+                                    master.controller.loadData()/*.then(function () {
                                         Log.print(Log.l.info, "master.controller.loadData: success!");
                                         master.controller.setSelIndex(prevSelIdx);
-                                    });
+                                    })*/;
                                 }
                             }, function (errorResponse) {
                                 // delete ERROR
@@ -280,14 +328,14 @@
                     Log.call(Log.l.trace, "Employee.Controller.");
                     that.saveData(function (response) {
                         Log.print(Log.l.trace, "employee saved");
-                        var master = Application.navigator.masterControl;
+                        /*var master = Application.navigator.masterControl;
                         if (master && master.controller && master.controller.binding && typeof master.controller.selectRecordId !== "undefined") {
                             master.controller.binding.employeeId = that.binding.dataEmployee.MitarbeiterVIEWID;
-                            master.controller.loadData().then(function () {
+                            master.controller.loadData(master.controller.binding.employeeId).then(function () {
                                 Log.print(Log.l.info, "master.controller.loadData: success!");
                                 master.controller.selectRecordId(that.binding.dataEmployee.MitarbeiterVIEWID);
                             });
-                        }
+                        }*/
                     }, function (errorResponse) {
                         Log.print(Log.l.error, "error saving employee");
                     });
@@ -440,18 +488,38 @@
                     }
                     Application.navigateById("login", event);
                     Log.ret(Log.l.trace);
+                },
+                clickChangeLogin: function (event) {
+                    Log.call(Log.l.trace, "Employee.Controller.");
+                    var confirmTitle = getResourceText("employee.changeUserLogin");
+                    return confirm(confirmTitle, function (result) {
+                        // called asynchronously if user-choice
+                        if (result) {
+                            if (loginFirstPart) {
+                                loginFirstPart.disabled = false;
+                            }
+                            if (domain) {
+                                domain.disabled = false;
+                            }
+                            if (loginName) {
+                                loginName.disabled = false;
+                            }
+                            that.binding.allowEditLogin = 1;
+                        }
+                        Log.ret(Log.l.trace);
+                    });
                 }
             };
 
             this.disableHandlers = {
-                clickBack: function() {
+                clickBack: function () {
                     if (WinJS.Navigation.canGoBack === true) {
                         return false;
                     } else {
                         return true;
                     }
                 },
-                clickNew: function() {
+                clickNew: function () {
                     if (!AppBar.busy) {
                         var master = Application.navigator.masterControl;
                         if (master && master.controller && master.controller.binding &&
@@ -464,7 +532,7 @@
                         return true;
                     }
                 },
-                clickDelete: function() {
+                clickDelete: function () {
                     if (that.binding.dataEmployee && that.binding.dataEmployee.MitarbeiterVIEWID && !AppBar.busy &&
                         that.binding.dataEmployee.MitarbeiterVIEWID !== AppData.getRecordId("Mitarbeiter")) {
                         var master = Application.navigator.masterControl;
@@ -479,8 +547,11 @@
                         return true;
                     }
                 },
-                clickOk: function() {
+                clickOk: function () {
                     return AppBar.busy;
+                },
+                clickChangeLogin: function () {
+                    return that.binding.allowEditLogin;
                 }
             };
 
@@ -497,7 +568,7 @@
                             Log.print(Log.l.trace, "saveData completed...");
                             var master = Application.navigator.masterControl;
                             if (master && master.controller) {
-                                master.controller.loadData().then(function () {
+                                master.controller.loadData(recordId).then(function () {
                                     master.controller.selectRecordId(recordId);
                                 });
                             }
@@ -520,14 +591,18 @@
                                 that.setDataEmployee(json.d);
                                 if (that.binding.dataEmployee.Login) {
                                     Log.print(Log.l.trace, "Checking for licence!");
-                                    that.checkingLicence(recordId);
-                                    that.checkingReadonlyFlag();
                                     AppBar.busy = false;
                                 }
                             }
                         }, function (errorResponse) {
                             AppData.setErrorMsg(that.binding, errorResponse);
                         }, recordId);
+                    } else {
+                        return WinJS.Promise.as();
+                    }
+                }).then(function () {
+                    if (recordId) {
+                        that.checkingLicence(recordId);
                     } else {
                         return WinJS.Promise.as();
                     }
@@ -568,11 +643,10 @@
                         var recordId = getRecordId();
                         if (recordId) {
                             AppBar.busy = true;
-                            ret = Employee.employeeView.update(function(response) {
+                            ret = Employee.employeeView.update(function (response) {
                                 AppBar.busy = false;
                                 // called asynchronously if ok
                                 Log.print(Log.l.info, "employeeData update: success!");
-                                AppBar.modified = false;
                                 var recordid = AppData.getRecordId("Mitarbeiter");
                                 if (recordid === dataEmployee.MitarbeiterVIEWID) {
                                     AppData._persistentStates.privacyPolicyFlag = false;
@@ -594,9 +668,10 @@
                                             AppData.getUserData();
                                         }
                                         loadData(recordId).then(function () {
+                                            AppBar.modified = false;
                                             complete(response);
                                         });
-                                    }, function(errorResponse) {
+                                    }, function (errorResponse) {
                                         Log.print(Log.l.error, "saveData error...");
                                         AppData.setErrorMsg(that.binding, errorResponse);
                                     });
@@ -605,7 +680,7 @@
                                         complete(response);
                                     });
                                 }
-                            }, function(errorResponse) {
+                            }, function (errorResponse) {
                                 AppBar.busy = false;
                                 // called asynchronously if an error occurs
                                 // or server returns response with an error status.
@@ -617,13 +692,13 @@
                                 var recordid = AppData.getRecordId("Mitarbeiter");
                                 if (recordid === dataEmployee.MitarbeiterVIEWID)
                                     if (AppData._persistentStates.odata.login !== that.binding.dataEmployee.Login || AppData._persistentStates.odata.password !== that.binding.dataEmployee.Password) {
-                                            AppData._persistentStates.privacyPolicyFlag = false;
-                                            if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
-                                                AppHeader.controller.binding.userData = {};
-                                                if (!AppHeader.controller.binding.userData.VeranstaltungName) {
-                                                    AppHeader.controller.binding.userData.VeranstaltungName = "";
-                                                }
+                                        AppData._persistentStates.privacyPolicyFlag = false;
+                                        if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
+                                            AppHeader.controller.binding.userData = {};
+                                            if (!AppHeader.controller.binding.userData.VeranstaltungName) {
+                                                AppHeader.controller.binding.userData.VeranstaltungName = "";
                                             }
+                                        }
                                     }
                             })*/;
                         } else {
@@ -651,7 +726,7 @@
             }
             this.saveData = saveData;
 
-            that.processAll().then(function() {
+            that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData(getRecordId());
             }).then(function () {
