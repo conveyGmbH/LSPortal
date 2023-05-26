@@ -34,6 +34,7 @@
             var listView = pageElement.querySelector("#employeeList.listview");
             var btnFirstName = document.getElementById("btn_employee_firstName");
             var btnName = document.getElementById("btn_employee_Name");
+            var btnEmployeeLicence = pageElement.querySelector("#btn_employee_licence");
 
             this.dispose = function () {
                 if (listView && listView.winControl) {
@@ -408,13 +409,20 @@
                         }
                         btnName.textContent = getResourceText("employee.name");
                     }
-                } else {
+                    btnEmployeeLicence.textContent = getResourceText("employee.licence");
+                } else if (restriction.OrderAttribute === "Nachname") {
                     if (btnFirstName) {
                         if (restriction.btn_textContent) {
                             btnName.textContent = restriction.btn_textContent;
                         }
                         btnFirstName.textContent = getResourceText("employee.firstName");
                     }
+                    btnEmployeeLicence.textContent = getResourceText("employee.licence");
+
+                } else if (restriction.OrderAttribute === "NichtLizenzierteApp" ) {
+                    // getResrestriction or defaultrestriction
+                    btnName.textContent = getResourceText("employee.name");
+                    btnFirstName.textContent = getResourceText("employee.firstName");
                 }
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
@@ -427,6 +435,11 @@
                         if (json && json.d && json.d.results.length > 0) {
                             var results = json.d.results;
                             that.binding.licenceWarning = true;
+                            /*restriction.OrderDesc = true;
+                            restriction.OrderAttribute = "NichtLizenzierteApp";
+                            btnName.textContent = getResourceText("employee.name");
+                            btnFirstName.textContent = getResourceText("employee.firstName");*/
+                            //change order for the next select - list
                         } else {
                             that.binding.licenceWarning = false;
                         }

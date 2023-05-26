@@ -49,7 +49,7 @@
                 Nachname: "",
                 Login: "",
                 Names: "",
-                OrderAttribute: ["NichtLizenzierteApp", "Nachname"],
+                OrderAttribute: "NichtLizenzierteApp",
                 OrderDesc: false
             }
         },
