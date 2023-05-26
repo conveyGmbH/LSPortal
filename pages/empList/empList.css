@@ -141,9 +141,9 @@
     font-weight: bold;
 }
 .empList .list-header {
+    width: calc(100% - 25px);
     display: inline-block;
-    min-height: 10px;
     height: auto !important;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding-top: 2.5px;
+    padding-bottom: 2.5px;
 }

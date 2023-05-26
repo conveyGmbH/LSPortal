@@ -717,6 +717,7 @@
     "empList.title"         : "Benutzerkonten",
     "empList.count"         : "Anzahl",
     "empList.exportbutton"  : "Benutzer exportieren",
+    "empList.licenceWarning": "Achtung Sie haben Lizenzen überschritten!! ",
 
     "publish.title"         : "Fragebogen publizieren",
     "publish.comment"       : "Sind Sie sicher, dass Sie den Fragebogen publizieren möchten?",

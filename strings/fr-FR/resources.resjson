@@ -758,6 +758,7 @@
     "empList.title"         : "Comptes utilisateurs",
     "empList.count"         : "Combre",
     "empList.exportbutton"  : "Comptes exportation",
+    "empList.licenceWarning": "Attention, vous avez dépassé le nombre de licences !! ",
 
     "publish.title"         : "Publier le questionnaire",
     "publish.comment"       : "Êtes-vous sûre de vouloir publier le questionnaire?",

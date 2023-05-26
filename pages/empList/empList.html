@@ -22,8 +22,8 @@
 	                            <button class="list-button-left win-button" id="btn_employee_Name" data-win-res="{textContent: 'employee.nameDesc'}" onclick="AppBar.handleEvent('onclick', 'clickOrderLastname', event)"></button>
 	                            <button class="list-button-left win-button" id="btn_employee_firstName" data-win-res="{textContent: 'employee.firstNameDesc'}" onclick="AppBar.handleEvent('onclick', 'clickOrderFirstname', event)"></button>
                             </div>
-                            <div class="list-header">
-	                            <span class="licence-warning-text">Achtung Sie haben Lizenzen überschritten!! </span>
+                            <div class="list-header" data-win-bind="style.visibility: licenceWarning Binding.Converter.toVisibility">
+	                            <span class="licence-warning-text" data-win-res="{textContent: 'empList.licenceWarning'}"></span>
                             </div>
                         </div>
                     </div>

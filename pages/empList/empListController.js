@@ -22,6 +22,7 @@
                 employeeId: 0,//AppData.getRecordId("Mitarbeiter")
                 hasContacts: null,
                 hasLocalevents: null,
+                licenceWarning: false
             }, commandList, true]);
             this.nextUrl = null;
             this.loading = false;
@@ -163,7 +164,7 @@
                 item.index = index;
                 that.binding.hasLocalevents = AppHeader.controller.binding.userData.HasLocalEvents;
                 item.Names = "",
-                item.fullName = (item.Vorname ? (item.Vorname + " ") : "") + (item.Nachname ? item.Nachname : "");
+                    item.fullName = (item.Vorname ? (item.Vorname + " ") : "") + (item.Nachname ? item.Nachname : "");
                 if (typeof cutSerialnumer !== "undefined" && typeof item.CS1504SerienNr !== "undefined") {
                     item.CS1504SerienNr = that.cutSerialnumer(item.CS1504SerienNr);
                 }
@@ -439,6 +440,32 @@
                 }
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
+                    // only licence user select 
+                    return EmpList.employeeView.select(function (json) {
+                        // this callback will be called asynchronously
+                        // when the response is available
+                        Log.print(Log.l.trace, "licenceView: success!");
+                        // licenceUserView returns object already parsed from json file in response
+                        if (json && json.d && json.d.results.length > 0) {
+                            //that.nextUrl = EmpList.employeeView.getNextUrl(json);
+                            var results = json.d.results;
+                            that.binding.licenceWarning = true;
+                            //that.dataLicenceUser = new WinJS.Binding.List(results);
+                            if (listView.winControl) {
+                                // add ListView dataSource
+                                listView.winControl.itemDataSource = that.dataLicenceUser.dataSource;
+                            }
+                        } else {
+                            that.binding.licenceWarning = false;
+                        }
+                        return WinJS.Promise.as();
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                        return WinJS.Promise.as();
+                    }, { NichtLizenzierteApp: 1 });
+                }).then(function () {
                     return EmpList.employeeView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
@@ -509,14 +536,14 @@
             };
             this.loadData = loadData;
 
-            that.processAll().then(function() {
+            that.processAll().then(function () {
                 if (!AppData._persistentStates.showvisitorFlow) {
                     NavigationBar.disablePage("employeeVisitorFlow");
-                } 
+                }
             }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
-            }).then(function() {
+            }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 return that.selectRecordId(that.binding.employeeId);
             }).then(function () {

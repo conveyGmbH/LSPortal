@@ -1,13 +1,12 @@
 ﻿#reorderList.listview {
     width: 100%;
-    height: 600px;
 }
 
 #reorderList .win-surface {
     margin: 0
 }
 
-.confirm-button {
+.reorderList .confirm-button {
     position: absolute;
     height: 100%;
 }
@@ -18,20 +17,20 @@ body {
     padding-left: 20px;
 }*/
 
-.list-field-small-fixed {
+.reorderList .list-field-small-fixed {
     width: 200px;
     padding-left: 20px;
 }
 
-.status {
+.reorderList .status {
     padding-left: 20px;
 }
 
-.list-header {
+.reorderList .list-header {
     padding-left: 27px;
     font-weight: bold;
 }
-.list-role-item {
+.reorderList .list-role-item {
     width: 100%;
     min-width: 200px;
     height: 48px;
