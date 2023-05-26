@@ -91,7 +91,7 @@
             this.cutSerialnumer = cutSerialnumer;
 
             var scrollToRecordId = function (recordId) {
-                Log.call(Log.l.trace, "QuestionList.Controller.", "recordId=" + recordId);
+                Log.call(Log.l.trace, "EmpList.Controller.", "recordId=" + recordId);
                 if (that.loading) {
                     WinJS.Promise.timeout(50).then(function () {
                         that.scrollToRecordId(recordId);
@@ -125,13 +125,9 @@
                                 });
                             });
                             that.binding.hasContacts = employee.HatKontakte;
-                            //setSelIndex(i);
                             break;
                             break;
-                        } /*else {
-                            var firstEmployee = that.employees.getAt(0);
-                            //listView.winControl.selection.set(0);
-                        }*/
+                        }
                     }
                 }
                 Log.ret(Log.l.trace);
@@ -298,24 +294,6 @@
                                 }
                                 that.loading = false;
                             }
-                            /*var i;
-                            if (that.employees) {
-                                for (i = 0; i < that.employees.length; i++) {
-                                    var employee = that.employees.getAt(i);
-                                    if (employee.Gesperrt === 1) {
-                                        var itemElement = listView.winControl.elementFromIndex(i);
-                                        itemElement.oncontextmenu = function (e) { e.stopPropagation(); };
-                                        // disable touch selection
-                                        itemElement.addEventListener('MSPointerDown', function (e) {
-                                            e.stopPropagation();
-                                        });
-                                        itemElement.addEventListener('pointerdown', function (e) {
-                                            e.stopPropagation();
-                                        });
-                                        itemElement.style.backgroundColor = "grey";
-                                    }
-                                }
-                            }*/
                         }
                     }
                     Log.ret(Log.l.trace);
@@ -447,14 +425,8 @@
                         Log.print(Log.l.trace, "licenceView: success!");
                         // licenceUserView returns object already parsed from json file in response
                         if (json && json.d && json.d.results.length > 0) {
-                            //that.nextUrl = EmpList.employeeView.getNextUrl(json);
                             var results = json.d.results;
                             that.binding.licenceWarning = true;
-                            //that.dataLicenceUser = new WinJS.Binding.List(results);
-                            if (listView.winControl) {
-                                // add ListView dataSource
-                                listView.winControl.itemDataSource = that.dataLicenceUser.dataSource;
-                            }
                         } else {
                             that.binding.licenceWarning = false;
                         }
@@ -463,7 +435,6 @@
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
-                        return WinJS.Promise.as();
                     }, { NichtLizenzierteApp: 1 });
                 }).then(function () {
                     return EmpList.employeeView.select(function (json) {
