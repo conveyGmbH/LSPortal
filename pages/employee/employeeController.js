@@ -469,6 +469,26 @@
                     master.controller.loadData();
                     Log.ret(Log.l.trace);
                 },
+                clickOrderLicence: function(event) {
+                    Log.call(Log.l.trace, "Employee.Controller.");
+                    var master = Application.navigator.masterControl;
+                    that.binding.restriction.OrderAttribute = "NichtLizenzierteApp";
+                    //that.binding.restriction.OrderDesc = !that.binding.restriction.OrderDesc;
+                    AppData.setRestriction("Employee", that.binding.restriction);
+                    if (event.target.textContent === getResourceText("employee.licenceDesc")) {
+                        event.target.textContent = getResourceText("employee.licenceAsc");
+                        that.binding.restriction.btn_textContent = event.target.textContent;
+                        that.binding.restriction.OrderDesc = false;
+                    } else {
+                        event.target.textContent = getResourceText("employee.licenceDesc");
+                        that.binding.restriction.btn_textContent = event.target.textContent;
+                        that.binding.restriction.OrderDesc = true;
+                    }
+
+                    that.saveRestriction();
+                    master.controller.loadData();
+                    Log.ret(Log.l.trace);
+                },
                 clickTopButton: function (event) {
                     Log.call(Log.l.trace, "Contact.Controller.");
                     var anchor = document.getElementById("menuButton");
