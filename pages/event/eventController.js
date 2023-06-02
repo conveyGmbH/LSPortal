@@ -309,13 +309,13 @@
                     case "showvisitorFlowCombo":
                         pOptionTypeId = 44;
                         //that.binding.veranstOption.showvisitorFlow = parseInt(item.LocalValue);
-                        that.binding.veranstOption.isvisitorFlowVisible = parseInt(item.LocalValue);
-                        pValue = item.LocalValue;
+                        //that.binding.veranstOption.isvisitorFlowVisible = parseInt(checked);
+                        pValue = checked;
                         pValueIsSet = true;
                         break;
                     case "visitorFlowPremium":
                         pOptionTypeId = 45;
-                        that.binding.veranstOption.visitorFlowPremium = checked;
+                        //that.binding.veranstOption.visitorFlowPremium = checked;
                         break;
                     case "showdashboardMesagoCombo":
                         pOptionTypeId = 47;
@@ -648,10 +648,10 @@
                         master.controller.binding.count &&
                         master.controller.binding.count > 1) {
                         if (master.controller.binding.eventId && AppData.generalData.eventId !== master.controller.binding.eventId) {
-                        return false;
-                    } else {
-                        return true;
-                    }
+                            return false;
+                        } else {
+                            return true;
+                        }
                     } else {
                         return true;
                     }
