@@ -24,11 +24,11 @@
                     <div class="content-record">
                         <div class="eventSelectContainer">
                             <div class="targetEvent">
-                                <label id="targetEventLabel" for="targetEventText">Ihre aktuelle Veranstaltung:</label>
+                                <label id="targetEventLabel" for="targetEventText" data-win-res="{textContent: 'eventCopy.targetEvent'}" ></label>
                                 <span id="targetEventText" data-win-bind="textContent: dataDestEventCombo.Name"></span>
                             </div>
                             <div class="srcEvent">
-                                <label id="srcEventLabel" for="eventTyp">Aus Veranstaltung kopieren:</label>
+                                <label id="srcEventLabel" for="eventTyp" data-win-res="{textContent: 'eventCopy.srcEvent'}" ></label>
                                 <select id="eventTyp"
                                         class="input_field win-dropdown"
                                         data-win-control="WinJS.UI.Repeater"
@@ -51,23 +51,23 @@
                         </div>
                         <div class="checkboxContainer">
                             <div class="checkboxContainerTitle">
-                                <span>Was wollen Sie übernehmen?</span>
+                                <span data-win-res="{textContent: 'eventCopy.categories'}" ></span>
                             </div>
                             <div class="checkboxContainerBoxes">
                                 <label>
-                                    <input id="checkbox1" type="checkbox" class="win-checkbox" value="1" />
+                                    <input id="checkbox1" type="checkbox" class="win-checkbox" value="1" onchange="AppBar.handleEvent('change', 'clickdisableCheckboxes', event)"/>
                                     <span data-win-res="{textContent: 'eventCopy.questionnaire'}"></span>
                                 </label>
                                 <label>
-                                    <input id="checkbox2" type="checkbox" class="win-checkbox" value="1" />
+                                    <input id="checkbox2" type="checkbox" class="win-checkbox" value="1" onchange="AppBar.handleEvent('change', 'clickdisableCheckboxes', event)"/>
                                     <span data-win-res="{textContent: 'eventCopy.mails'}"></span>
                                 </label>
                                 <label>
-                                    <input id="checkbox3" type="checkbox" class="win-checkbox" value="1" />
+                                    <input id="checkbox3" type="checkbox" class="win-checkbox" value="1" onchange="AppBar.handleEvent('change', 'clickdisableCheckboxes', event)"/>
                                     <span data-win-res="{textContent: 'eventCopy.colors'}"></span>
                                 </label>
                                 <label>
-                                    <input id="checkbox4" type="checkbox" class="win-checkbox" value="1" />
+                                    <input id="checkbox4" type="checkbox" class="win-checkbox" value="1" onchange="AppBar.handleEvent('change', 'clickdisableCheckboxes', event)"/>
                                     <span data-win-res="{textContent: 'eventCopy.options'}"></span>
                                 </label>
                                 <label>

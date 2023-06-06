@@ -65,6 +65,7 @@
     "command.eventchange"  : "Wechseln",
     "command.newdevices"  : "Lizenzen hinzufügen",
 	"command.changeLogin" : "Login ändern",
+	"command.copyEvent"    : "Kopieren",
 
     "tooltip.backward"      : "Zurück blättern",
     "tooltip.edit"          : "Aktuellen Datensatz bearbeiten",
@@ -150,6 +151,7 @@
 	"tooltip.dropdown" : "Bei dieser Antwortart kann nur eine der Antworten ausgewählt werden. Die Antworten werden innerhalb eine Drop Down Box angezeigt",
     "tooltip.newdevices"  : "Lizenzen hinzufügen",
     "tooltip.changeLogin" : "Mitarbeiter Login ändern",
+    "tooltip.copyEvent"     : "Einstellungen übernehmen",
 
     "home.title"            : "Start",
     "home.info"             : "Wichtige Hinweise",
@@ -1596,13 +1598,16 @@
     "eventSession.sessionlink"			: "Session Link",
 	
     "eventCopy.title"			: "Veranstaltung kopieren",
-    "eventCopy.questionnaire"			: "Fragebogen",
+    "eventCopy.questionnaire"   : "Fragebogen",
     "eventCopy.mails"			: "Mails",
     "eventCopy.colors"			: "Farben",
     "eventCopy.options"			: "Optionen",
-    "eventCopy.all"			: "Alles",
+    "eventCopy.all"			    : "Alles",
     "eventCopy.success"			: "Daten Erfolgreich übernommen!",
     "eventCopy.error"			: "Daten konnten nicht erfolgreich übernommen werden!",
+	"eventCopy.targetEvent"		: "Ihre aktuelle Veranstaltung (Ziel): ",
+    "eventCopy.srcEvent"        : "Aus Veranstaltung kopieren (Quelle): ",
+    "eventCopy.categories"      : "Was wollen Sie übernehmen?",
 
     "siteeventsimport.title"			: "Import",
     "siteeventsimport.filename"			: "Dateiname",

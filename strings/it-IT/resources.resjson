@@ -65,6 +65,7 @@
     "command.eventchange"  : "Cambiamento",
     "command.newdevices"  : "Aggiungi licenze",
     "command.changeLogin": "Cambia login",
+    "command.copyEvent"    : "Kopieren",
 
     "tooltip.backward"      : "Pagina precedente",
     "tooltip.edit"          : "Modifica Record attuale",
@@ -150,6 +151,7 @@
     "tooltip.dropdown" : "Con questo tipo di risposta, è possibile selezionare solo una delle risposte. Le risposte sono visualizzate in una casella a discesa",
     "tooltip.newdevices"  : "Aggiungi licenze",
     "tooltip.changeLogin": "Modifica login dipendente",
+    "tooltip.copyEvent"     : "Salva le impostazioni",
 
     "home.title"            : "Start",
     "home.info"             : "Informazioni importanti",
@@ -1600,6 +1602,9 @@
     "eventCopy.all"			: "Tutti",
     "eventCopy.success"			: "I dati sono stati trasferiti con successo!",
     "eventCopy.error"			: "Non è stato possibile trasferire i dati con successo!",
+    "eventCopy.targetEvent": "Il tuo evento attuale (target): ",
+    "eventCopy.srcEvent": "Copia da evento (fonte): ",
+    "eventCopy.categories": "Cosa vuoi rilevare?",
 
     "siteeventsimport.title"			: "Importazione",
     "siteeventsimport.filename"			: "Nome del file",

@@ -65,6 +65,7 @@
     "command.eventchange"  : "Changer",
     "command.newdevices"  : "ajouter des licences",
     "command.changeLogin": "Modifier la connexion",
+    "command.copyEvent"    : "Kopieren",
 
     "tooltip.backward"      : "Page présédente",
     "tooltip.edit"          : "Modifier le contact en cours",
@@ -150,6 +151,7 @@
     "tooltip.dropdown" : "Avec ce type de réponse, une seule réponse peut être sélectionnée. Les réponses peuvent être affichées dans une liste déroulante",
     "tooltip.newdevices"  : "ajouter des licences",
     "tooltip.changeLogin": "Modifier l'identifiant de l'employé",
+    "tooltip.copyEvent"     : "enregistrer les paramètres",
 
     "home.title"            : "Start",
     "home.info"             : "Instructions importantes",
@@ -622,7 +624,7 @@
     "label.dashboardFNPremium" : "Dashboard Premium",
     "label.dashboardFNSupreme" : "Dashboard Professional",
     "label.eventStatus" : "Statut de la session",
-	"label.eventCopy" : "Copier l'événement"
+	"label.eventCopy" : "Copier l'événement",
     "label.siteeventsImport" : "Exposant Import",
 
     "flyout.ok"             : "OK",
@@ -1601,6 +1603,9 @@
     "eventCopy.all"			: "Tout",
     "eventCopy.success"			: "Données Reprises avec succès !",
     "eventCopy.error"			: "Les données n'ont pas pu être transférées avec succès !",
+    "eventCopy.targetEvent": "Votre événement actuel (cible): ",
+    "eventCopy.srcEvent": "Copier depuis l'événement (source): ",
+    "eventCopy.categories": "Que voulez-vous prendre en charge ?",
 
     "siteeventsimport.title"			: "Importation",
     "siteeventsimport.filename"			: "Nom de fichier",

@@ -25,7 +25,7 @@
             // add page specific commands to AppBar
             var commandList = [
                 { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" },
-                { id: "clickCopy", label: getResourceText("command.copy"), tooltip: getResourceText("tooltip.copy"), section: "primary", svg: "navigate_check" }
+                { id: "clickCopy", label: getResourceText("command.copyEvent"), tooltip: getResourceText("tooltip.copyEvent"), section: "primary", svg: "navigate_check" }
             ];
             this.controller = new EventCopy.Controller(element, commandList);
             if (this.controller.eventHandlers) {

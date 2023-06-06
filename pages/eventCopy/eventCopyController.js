@@ -22,13 +22,18 @@
             var that = this;
 
             var eventTyp = pageElement.querySelector("#eventTyp");
-            
+            var checkbox1 = pageElement.querySelector('#checkbox1');
+            var checkbox2 = pageElement.querySelector('#checkbox2');
+            var checkbox3 = pageElement.querySelector('#checkbox3');
+            var checkbox4 = pageElement.querySelector('#checkbox4');
+            var checkbox5 = pageElement.querySelector('#checkbox5');
+
             var getEventId = function () {
                 Log.print(Log.l.trace, "getEventId EventCopy._eventId=" + EventCopy._eventId);
                 return EventCopy._eventId;
             }
             this.getEventId = getEventId;
-            
+
             var setEventId = function (value) {
                 Log.print(Log.l.trace, "setEventId EventCopy._eventId=" + value);
                 EventCopy._eventId = value;
@@ -70,19 +75,13 @@
                         checkboxes[i].disabled = false;
                     }
                 }
+                AppBar.triggerDisableHandlers();
             }
             this.disableCheckboxes = disableCheckboxes;
 
             var getCheckboxData = function () {
                 // Create an array to store the checkbox data
                 var checkboxData = "";
-
-                // Get references to the checkboxes using their IDs
-                var checkbox1 = pageElement.querySelector('#checkbox1');
-                var checkbox2 = pageElement.querySelector('#checkbox2');
-                var checkbox3 = pageElement.querySelector('#checkbox3');
-                var checkbox4 = pageElement.querySelector('#checkbox4');
-                var checkbox5 = pageElement.querySelector('#checkbox5');
 
                 // Check if each checkbox is checked and push its value to the checkboxData array if it is
                 if (checkbox1.checked) {
@@ -98,7 +97,7 @@
                     checkboxData += "OPTIONS|";
                 }
                 if (checkbox5.checked) {
-                    checkboxData += "ALL ";
+                    checkboxData += "ALL";
                 }
 
                 // Return the checkbox data as an array

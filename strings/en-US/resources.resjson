@@ -65,6 +65,7 @@
     "command.eventchange"  : "Change",
     "command.newdevices"  : "Add licenses",
     "command.changeLogin": "Change Login",
+    "command.copyEvent"    : "Kopieren",
 
     "tooltip.backward"      : "Browse back",
     "tooltip.edit"          : "Edit current record",
@@ -150,6 +151,7 @@
     "tooltip.dropdown" : "With this answer type, only one of the answers can be selected. The answers are displayed inside a drop down box",
     "tooltip.newdevices"  : "Add licenses",
     "tooltip.changeLogin": "Change employee login",
+    "tooltip.copyEvent"     : "save settings",
 
     "home.title"            : "Start",
     "home.info"             : "Important information",
@@ -1601,7 +1603,10 @@
     "eventCopy.options"			: "Options",
     "eventCopy.all"			: "All",
     "eventCopy.success"			: "Data successfully transferred!",
-    "eventCopy.error"			: "Data could not be successfully transferred!",
+    "eventCopy.error"			: "Data could not be successfully transferred!",	
+    "eventCopy.targetEvent": "Your current event: (target)",
+    "eventCopy.srcEvent": "Copy from event: (source)",
+    "eventCopy.categories": "What do you want to take over?",
 
     "siteeventsimport.title"			: "Import",
     "siteeventsimport.filename"			: "Filename",
