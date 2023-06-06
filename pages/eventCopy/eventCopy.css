@@ -21,16 +21,17 @@
 }
 .srcEvent {
     margin-top: 20px;
-    width: 50% !important;
+    width: 50%;
 }
 #srcEventLabel {
     font-size: small;
     font-weight: bold;
 }
-.view-size-medium .srcEvent {
-    float: none !important;
-    margin-right: 0px !important;
-    width: 50% !important;
+.view-size-medium .eventCopy .input_field {
+    float: left;
+    margin-right: 0px;
+    width: 100%;
+    min-width: 100%
 }
 #eventTyp {
     width: 100px;

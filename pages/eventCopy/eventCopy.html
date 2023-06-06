@@ -23,10 +23,6 @@
                     </div>
                     <div class="content-record">
                         <div class="eventSelectContainer">
-                            <div class="targetEvent">
-                                <label id="targetEventLabel" for="targetEventText" data-win-res="{textContent: 'eventCopy.targetEvent'}" ></label>
-                                <span id="targetEventText" data-win-bind="textContent: dataDestEventCombo.Name"></span>
-                            </div>
                             <div class="srcEvent">
                                 <label id="srcEventLabel" for="eventTyp" data-win-res="{textContent: 'eventCopy.srcEvent'}" ></label>
                                 <select id="eventTyp"
@@ -35,6 +31,10 @@
                                         data-win-bind="value: dataEventCopy Binding.Mode.twoway">
                                     <option data-win-bind="value: VeranstaltungVIEWID; textContent: Name"></option>
                                 </select>
+                            </div>
+                            <div class="targetEvent">
+                                <label id="targetEventLabel" for="targetEventText" data-win-res="{textContent: 'eventCopy.targetEvent'}"></label>
+                                <span id="targetEventText" data-win-bind="textContent: dataDestEventCombo.Name"></span>
                             </div>
                         </div>
                         <div id="successModal" class="modal">
