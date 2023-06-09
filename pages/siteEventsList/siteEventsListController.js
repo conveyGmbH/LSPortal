@@ -230,8 +230,9 @@
                                                 AppBar.scope._element.id === "siteeventsController") {
                                             if (typeof AppBar.scope.loadData === "function") {
                                                 AppBar.scope.loadData(item.data.VeranstaltungTerminVIEWID);
-                                                    AppData.setRecordId("VeranstaltungTermin",
-                                                        item.data.VeranstaltungTerminVIEWID);
+                                                AppBar.scope.binding.searchString = "";
+                                                AppBar.scope.searchStringData = "";
+                                                AppData.setRecordId("VeranstaltungTermin", item.data.VeranstaltungTerminVIEWID);
                                                 }
                                             }
                                         } else {
