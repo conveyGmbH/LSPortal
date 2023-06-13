@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="580px" height="580px" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="nonzero" clip-rule="nonzero" viewBox="0 0 5800 5800" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>max_to_left icon</title>
+	<desc>max_to_left icon from the IconExperience.com I-Collection. Copyright by INCORS GmbH (www.incors.com).</desc>
+		<path id="curve28" fill="#000000" d="m 1620,2200 -670,661.085 670,661.085 142,-139.9017 -530,-521.1833 530,-521.1833 z" />
+		<path id="curve29" fill="#000000" d="M 5500,700 V 5100 H 5300 V 700 Z" />
+		<path id="curve30" fill="#000000" d="M 500,700 V 5100 H 700 V 700 Z" />
+		<path id="curve31" fill="#000000" d="M 500,500 V 700 H 5500 V 500 h -5000 z" />
+		<path id="curve32" fill="#000000" d="m 500,5100 v 200 h 5000 v -200 h -5000 z" />
+</svg>

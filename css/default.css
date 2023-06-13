@@ -1703,6 +1703,16 @@ button.win-button {
     position: absolute !important;
     right: 6px;
     z-index: 20000 !important;
+    top: 0;
+}
+.navigationbar-container .resize-helper-command-container {
+    right: 0 !important;
+}
+.navigationbar-container .resize-helper-command-container button.win-command {
+    height: 47px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: gray;
 }
 
 .resize-helper-command-container.win-commandingsurface .win-commandingsurface-actionarea {
