@@ -734,6 +734,7 @@
     "reporting.filterOff"   : "Filtrer",
     "reporting.filter"      : "Filtrer",
     "reporting.comment"      : "Gérez vos données d'accès des employés ici.",
+    "reporting.pdfZipDownloadText"      : "Votre téléchargement est prêt : ",
 
     "employee.title"        : "Utilisateurs",
     "employee.firstname"    : "Prénom",

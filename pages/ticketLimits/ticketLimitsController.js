@@ -21,6 +21,13 @@
             
             // Then, do anything special on this page
 
+            var isHtml = function (input) {
+                var parser = new DOMParser();
+                var text = parser.parseFromString(input, 'text/html');
+                return text.outerHTML;
+            }
+            this.isHtml = isHtml;
+
             this.eventHandlers = {
                 clickASave: function (event) {
                     Log.call(Log.l.trace, "TicketLimits.Controller.");
@@ -148,6 +155,7 @@
                             // startContact returns object already parsed from json file in response
                             if (json && json.d && json.d.results) {
                                 that.binding.dataTicketLimits = json.d.results[0];
+                                that.binding.dataTicketLimits.BucketInfo = that.isHtml(that.binding.dataTicketLimits.BucketInfo);
                                 Log.print(Log.l.trace, "TicketLimits: success!");
                             }
                         }, function(errorResponse) {

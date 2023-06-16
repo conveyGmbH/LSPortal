@@ -734,6 +734,7 @@
     "reporting.filterOff"   : "Filtro disattivato",
     "reporting.filter"      : "Filtro",
     "reporting.comment"      : "Gestisci i dati di accesso dei tuoi dipendenti qui.",
+    "reporting.pdfZipDownloadText"      : "Il download è pronto: ",
 
     "employee.title"        : "Utente",
     "employee.firstname"    : "Nome",

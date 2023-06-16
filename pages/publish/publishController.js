@@ -30,16 +30,31 @@
                 clickPublish: function (event) {
                     Log.call(Log.l.trace, "Publish.Controller.");
                     that.saveData(function (response) {
-                        AppData.getUserData();
-                        //that.loadData();
-                        if (WinJS.Navigation.canGoBack === true) {
-                            WinJS.Navigation.back(1).done();
-                        } else {
-                            Navigator.navigateById(Application.startPageId);
-                        }
-                    }, function(errorResponse) {
-                        // error already shown
-                    });
+                            AppData.getUserData();
+                            //that.loadData();
+                            if (WinJS.Navigation.canGoBack === true) {
+                                WinJS.Navigation.back(1).done();
+                            } else {
+                                Navigator.navigateById(Application.startPageId);
+                            }
+                        },
+                        function (errorResponse) {
+                            // delete ERROR
+                            var message = null;
+                            Log.print(Log.l.error,
+                                "error status=" + errorResponse.status + " statusText=" + errorResponse.statusText);
+                            if (errorResponse.data && errorResponse.data.error) {
+                                Log.print(Log.l.error, "error code=" + errorResponse.data.error.code);
+                                if (errorResponse.data.error.message) {
+                                    Log.print(Log.l.error, "error message=" + errorResponse.data.error.message.value);
+                                    message = errorResponse.data.error.message.value;
+                                }
+                            }
+                            if (!message) {
+                                message = getResourceText("error.delete");
+                            }
+                            alert(message);
+                        });
                     Log.ret(Log.l.trace);
                 },
                 clickChangeUserState: function (event) {

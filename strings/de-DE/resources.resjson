@@ -734,6 +734,7 @@
     "reporting.filterOff"   : "Filter aus",
 	"reporting.filter"      : "Filter",
     "reporting.comment"      : "Exportieren Sie Ihre Kontakte in Excel/PDF",
+    "reporting.pdfZipDownloadText"      : "Ihr Download steht bereit: ",
 
     "employee.title"        : "Benutzer",
     "employee.firstname"    : "Vorname",

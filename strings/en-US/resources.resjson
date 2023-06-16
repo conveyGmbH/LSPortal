@@ -734,6 +734,7 @@
     "reporting.filterOff"   : "Filter off",
     "reporting.filter"      : "Filter",
     "reporting.comment"      : "Manage your employee access data here.",
+    "reporting.pdfZipDownloadText"      : "Your download is ready: ",
 
     "employee.title"        : "Users",
     "employee.firstname"    : "First name",

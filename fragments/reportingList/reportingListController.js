@@ -68,22 +68,14 @@
 
             var resultConverter = function (item, index) {
                 item.index = index;
-                if (item.OLELetterID && item.OLELetterID !== 32) {
+                if (item.TypeName) {
                     that.reportingItem.push(item);
                 } else {
-                    Log.print(Log.l.trace, "OLELetterID 32 blocked!");
+                    Log.print(Log.l.trace, "TypeName ++ blocked!");
                 }
-                if (item.OLELetterID === 31) {
+                if (item.TypeName === "KontaktlistePDF") {
                     item.exportTypeIcon = "audi_pdf_excel";
-                } else if (item.OLELetterID === 32 ||
-                    item.OLELetterID === 26 ||
-                    item.OLELetterID === 13 ||
-                    item.OLELetterID === 8 ||
-                    item.OLELetterID === 34 ||
-                    item.OLELetterID === 33 ||
-                    item.OLELetterID === 35 ||
-                    item.OLELetterID === 36 ||
-                    item.OLELetterID === 1) {
+                } else if (item.TypeName) {
                     item.exportTypeIcon = "excel";
                 } else {
                     item.exportTypeIcon = "";
@@ -119,10 +111,10 @@
                             }
                             var commandList = [];
                             for (var i = 0; i < results.length; i++) {
-                                var id = results[i].OLELetterID;
+                                var id = results[i].TypeName;
                                     commandList.push({
                                         id: "clickOLELetterID" + id,
-                                        label: results[i].Text,
+                                        label: results[i].Title,
                                         section: "secondary"
                                     });
                                     createEventHandler(id);

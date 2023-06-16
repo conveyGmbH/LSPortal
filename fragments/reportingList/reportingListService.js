@@ -9,17 +9,17 @@
     WinJS.Namespace.define("ReportingList", {
         _analysisListView: {
             get: function () {
-                return AppData.getFormatView("OLELetter", 20458);
+                return AppData.getFormatView("ExportType", 20669);
             }
         },
         analysisListView: {
             select: function (complete, error) {
                 Log.call(Log.l.trace, "Reporting.");
                 var ret = ReportingList._analysisListView.select(complete, error, {
-                    LanguageID: AppData.getLanguageId()
+                    LanguageSpecID: AppData.getLanguageId()
                 }, {
                     ordered: true,
-                    orderAttribute: "RevisionNumber"
+                        orderAttribute: "Title"
                 });
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);

@@ -15,6 +15,7 @@
 /// <reference path="~/www/lib/OpenXml/scripts/jszip-deflate.js" />
 /// <reference path="~/www/lib/OpenXml/scripts/FileSaver.js" />
 /// <reference path="~/www/pages/pdfExport/pdfexportXlsx.js" />
+/// <reference path="~/www/lib/moment/scripts/moment-with-locales.js" />
 
 (function () {
     "use strict";
@@ -29,8 +30,8 @@
             Application.Controller.apply(this, [
                 pageElement, {
                     restriction: {
-                        ErfasserID: null,
-                        InitLandID: null,
+                        MitarbeiterVIEWID: null,
+                        INITLandID: null,
                         Erfassungsdatum: null,
                         showErfassungsdatum: false,
                         AenderungsDatum: null,
@@ -77,6 +78,8 @@
             var erfassungsdatum = pageElement.querySelector("#ReportingExcelErfassungsdatum.win-datepicker");
             var pdfErfassungsdatum = pageElement.querySelector("#ReportingPDFErfassungsdatum.win-datepicker");
             var modifiedTs = pageElement.querySelector("#ModifiedTs.win-datepicker");
+            var pdfZipDownload = pageElement.querySelector(".pdfZipDownload");
+            var pdfZipDownloadData = pageElement.querySelector(".pdfZipDownloadData");
             
             this.dispose = function () {
                 if (that.audioIddata) {
@@ -106,6 +109,18 @@
                 }
             }
             this.langSet = langSet;
+
+            var setpdfZipDownloadData = function(aktiv, data) {
+                Log.call(Log.l.trace, "Reporting.Controller.");
+                if (aktiv) {
+                    pdfZipDownload.style.display = "block";
+                    pdfZipDownloadData.href = data;
+                } else {
+                    pdfZipDownload.style.display = "none";
+                    pdfZipDownloadData.href = "";
+                }
+            }
+            this.setpdfZipDownloadData = setpdfZipDownloadData;
 
             //audio
             var showProgress = function (percent, text, max) {
@@ -145,6 +160,14 @@
                 Log.call(Log.l.trace, "Initialdate set");
             }
             this.setInitialDate = setInitialDate;
+
+            var restrictionDate = function (date) {
+                if (date !== "null") {
+                    return moment(date).format('YYYY-MM-DD');
+                }
+                
+            }
+            this.restrictionDate = restrictionDate;
 
             var showDateRestrictions = function() {
                 if (typeof that.binding.showExcelExportErfassungsdatum === "undefined") {
@@ -200,19 +223,19 @@
 
             var setRestriction = function () {
                 var reportingRestriction = {};
-                if (that.binding.restriction.InitLandID === "null") {
-                    that.binding.restriction.InitLandID = null;
+                if (that.binding.restriction.INITLandID === "null") {
+                    that.binding.restriction.INITLandID = "null";
                 }
-                    reportingRestriction.Land = that.binding.restriction.InitLandID ? that.binding.restriction.InitLandID : null;
-                if (that.binding.restriction.ErfasserID === "null") {
-                    that.binding.restriction.ErfasserID = null;
+                reportingRestriction.Land = that.binding.restriction.INITLandID ? that.binding.restriction.INITLandID : "null";
+                if (that.binding.restriction.MitarbeiterVIEWID === "null") {
+                    that.binding.restriction.MitarbeiterVIEWID = null;
                 }
-                reportingRestriction.Mitarbeiter = that.binding.restriction.ErfasserID ? that.binding.restriction.ErfasserID : null;
+                reportingRestriction.Mitarbeiter = that.binding.restriction.MitarbeiterVIEWID ? that.binding.restriction.MitarbeiterVIEWID : "null";
                 if (that.binding.showErfassungsdatum && that.binding.restriction.Erfassungsdatum) {
                         reportingRestriction.Erfassungsdatum = that.binding.restriction.Erfassungsdatum;
                     reportingRestriction.ErfassungsdatumValue = that.binding.restriction.Erfassungsdatum;
                 } else {
-                    reportingRestriction.Erfassungsdatum = null;
+                    reportingRestriction.Erfassungsdatum = "null";
                     reportingRestriction.ErfassungsdatumValue = null;
                 }
                 if (that.binding.showModifiedTS && that.binding.restriction.AenderungsDatum) {
@@ -221,7 +244,7 @@
                     reportingRestriction.KontaktModifiedTS = that.binding.restriction.AenderungsDatum;
                 } else {
                     reportingRestriction.AenderungsDatumValue = null;
-                    reportingRestriction.AenderungsDatum = null;
+                    reportingRestriction.AenderungsDatum = "null";
                     reportingRestriction.KontaktModifiedTS = null;
 
                 }
@@ -520,364 +543,78 @@
             }
             this.exportDbExcel = exportDbExcel;
 
+            var exportPdfExcelZip = function (recordId) {
+                Log.call(Log.l.trace, "Reporting.Controller.");
+                AppData.setErrorMsg(that.binding);
+                var ret;
+                if (recordId) {
+                    AppBar.busy = true;
+                    ret = Reporting.ExportPDFView.select(function (json) {
+                        Log.print(Log.l.trace, "ExportPDFViewView: success!");
+                        if (json && json.d) {
+                            var results = json.d.results[0];
+                            if (!results.DownloadLink) {
+                                setTimeout(function () {
+                                    console.log("Function called after 15 seconds.");
+                                    exportPdfExcelZip(results.ExportPDFVIEWID); // Call itself to repeat after 15 seconds
+                                }, 15000);
+                            } else {
+                                that.setpdfZipDownloadData(true, results.DownloadLink);
+                                that.disableReportingList(false);
+                                that.showDashboardLoadingText(false);
+                                AppBar.busy = false;
+                            }
+                        }
+                    }, function (errorResponse) {
+                        AppBar.busy = false;
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                        if (typeof error === "function") {
+                            error(errorResponse);
+                        }
+                    }, { ExportPDFVIEWID: recordId });
+                } else {
+                    var err = { status: 0, statusText: "no record selected" };
+                    error(err);
+                    ret = WinJS.Promise.as();
+                }
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+            this.exportPdfExcelZip = exportPdfExcelZip;
+
             var exportData = function(exportselection) {
                 Log.call(Log.l.trace, "Reporting.Controller.");
-                var dbViewTitle = null;
-                var dbView = null;
-                var fileName = null;
-                var restriction = null;
-                var hasRestriction = false;
-                var tempRestriction = null;
-                var prop = null;
                 that.binding.progress.showOther = false;
+                var reportingRestriction = that.setRestriction();
                 // ExportXlsx.restriction = that.getRestriction();
-                var exportselectionId = parseInt(exportselection);
-                switch (exportselectionId) {
-                    case 1:
-                        if (AppData.getLanguageId() === 1031) {
-                            dbView = Reporting.xLAuswertungView;
-                            fileName = "Kontakte";
+                var exportselectionId = exportselection;
+                if (exportselectionId) {
+                    AppData.setErrorMsg(that.binding);
+                    that.showDashboardLoadingText(true);
+                    return AppData.call("PRC_ExcelRequest", {
+                        pRecordID: AppData.getRecordId("Veranstaltung"),
+                        pLanguageSpecID: that.langSet(),
+                        pExportType: exportselectionId,
+                        pFilterCreateDate: that.restrictionDate(reportingRestriction.Erfassungsdatum), // YYYY - MM - DD
+                        pFilterModDate: that.restrictionDate(reportingRestriction.AenderungsDatum),
+                        pFilterLandID: reportingRestriction.Land,
+                        pFilterErfasserID: reportingRestriction.Mitarbeiter,
+                        psyncRun: 1
+                    }, function (json) {
+                        Log.print(Log.l.info, "call success!");
+                        if (json && json.d.results[0].DOC3ExportPdfID && json.d.results[0].DownloadFlag === 0) {
+                            that.exportDbExcel(json.d.results[0].DOC3ExportPdfID);
+                        } else if (json && json.d.results[0].DOC3ExportPdfID && json.d.results[0].DownloadFlag === 1){
+                            that.exportPdfExcelZip(json.d.results[0].DOC3ExportPdfID);
                         } else {
-                            dbView = Reporting.xLReportView;
-                            fileName = "Contacts";
+                            Log.print(Log.l.error, "call error DOC3ExportPDFID is null");
+                            that.showDashboardLoadingText(false);
                         }
-                        break;
-                    case 8:
-                        if (AppData.getLanguageId() === 1031) {
-                            dbView = Reporting.landHistoDe;
-                            fileName = "Landstatistik";
-                        } else {
-                            dbView = Reporting.landHistoEn;
-                            fileName = "Countrystatistics";
-                        }
-                        hasRestriction = false;
-                        tempRestriction = that.setRestriction();
-                        for (prop in tempRestriction) {
-                            if (tempRestriction.hasOwnProperty(prop)) {
-                                hasRestriction = true;
-                                if (!restriction) {
-                                    restriction = {};
-                                }
-                                switch (prop) {
-                                    case "ErfassungsdatumValue":
-                                    case "RecordDate":
-                                        restriction["Datum"] = tempRestriction[prop];
-                                        break;
-                                    default:
-                                        restriction[prop] = tempRestriction[prop];
-                                }
-                            }
-                        }
-                        break;
-                    case 10:
-                        if (AppData.getLanguageId() === 1031) {
-                            dbView = Reporting.xLAuswertungViewNoQuest;
-                            dbViewTitle = Reporting.xLAuswertungViewNoQuestTitle;
-                            fileName = "KontakteKeineFragen";
-                            //restriction["KontaktVIEWID"] = ["<0", ">0"];
-                          /*  if (!that.binding.showErfassungsdatum) {
-                                restriction.Erfassungsdatum = "NOT NULL";
-                            }*/
-                        } else {
-                            dbView = Reporting.xLReportViewNoQuest;
-                            dbViewTitle = Reporting.xLReportViewNoQuestTitle;
-                            fileName = "ContactsNoQuestion";
-                            //ExportXlsx.restriction.ContactID = [-2,-1];
-                            if (!that.binding.showErfassungsdatum) {
-                                restriction.RecordDate = "NOT NULL";
-                            }
-                        }
-                        restriction.bUseOr = true;
-                        break;
+                    }, function (error) {
 
-                    case 13:
-                        if (AppData.getLanguageId() === 1031) {
-                            dbView = Reporting.mitarbeiterHistoDe;
-                            fileName = "Mitarbeiterstatistik";
-                        } else {
-                            dbView = Reporting.mitarbeiterHistoEn;
-                            fileName = "Employeestatistics";
-                        }
-                        hasRestriction = false;
-                        tempRestriction = that.setRestriction();
-                        for (prop in tempRestriction) {
-                            if (tempRestriction.hasOwnProperty(prop)) {
-                                hasRestriction = true;
-                                if (!restriction) {
-                                    restriction = {};
-                                }
-                                switch (prop) {
-                                    case "ErfassungsdatumValue":
-                                    case "RecordDate":
-                                        restriction["Datum"] = tempRestriction[prop];
-                                        break;
-                                    default:
-                                        restriction[prop] = tempRestriction[prop];
-                                }
-                            }
-                        }
-                        break;
-                    case 26:
-                        if (AppData.getLanguageId() === 1031) {
-                            dbView = Reporting.KontaktReport;
-                            fileName = "BenutzerdefinierterReport";
-                        } else {
-                            dbView = Reporting.KontaktReport;
-                            fileName = "CostumReport";
-                        }
-                        hasRestriction = false;
-                        tempRestriction = that.setRestriction();
-                        for (prop in tempRestriction) {
-                            if (tempRestriction.hasOwnProperty(prop)) {
-                                hasRestriction = true;
-                                if (!restriction) {
-                                    restriction = {};
-                                }
-                                switch (prop) {
-                                    case "Erfassungsdatum":
-                                    case "RecordDate":
-                                        restriction["ErfassungsdatumValue"] = [null, tempRestriction[prop]]; //[null, tempRestriction[prop]]
-                                        break;
-                                    case "AenderungsDatum":
-                                    case "ModificationDate":
-                                        restriction["AenderungsDatumValue"] = [null, tempRestriction[prop]];//[null, tempRestriction[prop]]
-                                        break;
-                                    default:
-                                        restriction[prop] = [null, tempRestriction[prop]];
-                                }
-                            }
-                        }
-                        if (hasRestriction) {
-                            restriction["KontaktVIEWID"] = ["<0", ">0"];
-                            restriction.bAndInEachRow = true;
-                            restriction.bExact = true;
-                        }
-                        break;
-                    case 31:
-                        if (AppData.getLanguageId() === 1031) {
-                            //dbView = Reporting.KontaktPDF;
-                            fileName = "KontaktemitPDF";
-                        } else {
-                            //dbView = Reporting.KontaktPDF;
-                            fileName = "ContactswithPDF";
-                        }
-                        hasRestriction = false;
-                        tempRestriction = that.setRestriction();
-                        for (prop in tempRestriction) {
-                            if (tempRestriction.hasOwnProperty(prop)) {
-                                hasRestriction = true;
-                                if (!restriction) {
-                                    restriction = {};
-                                }
-                                switch (prop) {
-                                case "Erfassungsdatum":
-                                case "RecordDate":
-                                    restriction["ErfassungsdatumValue"] = [null, tempRestriction[prop]];
-                                    break;
-                                case "AenderungsDatum":
-                                case "ModificationDate":
-                                    restriction["AenderungsDatumValue"] = [null, tempRestriction[prop]];
-                                    break;
-                                default:
-                                    restriction[prop] = [null, tempRestriction[prop]];
-                                }
-                            }
-                        }
-                        if (hasRestriction) {
-                            restriction["KontaktVIEWID"] = ["<0", ">0"];
-                            restriction.bAndInEachRow = true;
-                            restriction.bExact = true;
-                        }
-                        break;
-                    case 32:
-                        if (AppData.getLanguageId() === 1031) {
-                            dbView = Reporting.Fragenstatistik;
-                            fileName = "Fragenstatistik";
-                        } else {
-                            dbView = Reporting.FragenstatistikEN;
-                            fileName = "Questionstatistics";
-                        }
-                        that.templatestr = that.binding.templatexlsx;
-                        hasRestriction = false;
-                        tempRestriction = that.setRestriction();
-                        for (prop in tempRestriction) {
-                            if (tempRestriction.hasOwnProperty(prop)) {
-                                hasRestriction = true;
-                                if (!restriction) {
-                                    restriction = {};
-                                }
-                                switch (prop) {
-                                case "Erfassungsdatum":
-                                case "RecordDate":
-                                    restriction["ErfassungsdatumValue"] = [null, tempRestriction[prop]];
-                                    break;
-                                case "AenderungsDatum":
-                                case "ModificationDate":
-                                    restriction["AenderungsDatumValue"] = [null, tempRestriction[prop]];
-                                    break;
-                                default:
-                                    restriction[prop] = [null, tempRestriction[prop]];
-                                }
-                            }
-                        }
-                        if (hasRestriction) {
-                            restriction["KontaktVIEWID"] = ["<0", ">0"];
-                            restriction.bAndInEachRow = true;
-                            restriction.bExact = true;
-                        }
-                        break;
-                    case 33:
-                            AppData.setErrorMsg(that.binding);
-                            that.showDashboardLoadingText(true);
-                            return AppData.call("PRC_DBExcelRequest", {
-                                pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
-                                pLanguageSpecID: that.langSet(),
-                                pExportType: "DASHBOARD",
-                                psyncRun: 1
-                            }, function (json) {
-                                Log.print(Log.l.info, "call success!");
-                                if (json && json.d.results[0]) {
-                                    that.exportDbExcel(json.d.results[0]);
-                                } else {
-                                    Log.print(Log.l.error, "call error DOC3ExportPDFID is null");
-                                    that.showDashboardLoadingText(false);
-                                }
-                            }, function (error) {
-                                Log.print(Log.l.error, "call error");
-                                that.showDashboardLoadingText(false);
-                            });
-                        break;
-                    case 34:
-                            AppData.setErrorMsg(that.binding);
-                            that.showDashboardLoadingText(true);
-                            return AppData.call("PRC_DBExcelRequest", {
-                                pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
-                                pLanguageSpecID: that.langSet(),
-                                pExportType: "Advanced",
-                                psyncRun: 1
-                            }, function (json) {
-                                Log.print(Log.l.info, "call success!");
-                                if (json && json.d.results[0]) {
-                                    that.exportDbExcel(json.d.results[0]);
-                                } else {
-                                    Log.print(Log.l.error, "call error DOC3ExportPDFID is null");
-                                    that.showDashboardLoadingText(false);
-                                }
-                            }, function (error) {
-                                Log.print(Log.l.error, "call error");
-                                that.showDashboardLoadingText(false);
-                            });
-                        break;
-                    case 35:
-                        AppData.setErrorMsg(that.binding);
-                        that.showDashboardLoadingText(true);
-                        return AppData.call("PRC_DBExcelRequest", {
-                            pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
-                            pLanguageSpecID: that.langSet(),
-                            pExportType: "LBKontakt",
-                            psyncRun: 1
-                        }, function (json) {
-                            Log.print(Log.l.info, "call success!");
-                            if (json && json.d.results[0]) {
-                                that.exportDbExcel(json.d.results[0]);
-                            } else {
-                                Log.print(Log.l.error, "call error DOC3ExportPDFID is null");
-                                that.showDashboardLoadingText(false);
-                            }
-                        }, function (error) {
-                            Log.print(Log.l.error, "call error");
-                            that.showDashboardLoadingText(false);
-                        });
-                        break;
-                    case 36:
-                        AppData.setErrorMsg(that.binding);
-                        that.showDashboardLoadingText(true);
-                        return AppData.call("PRC_DBExcelRequest", {
-                            pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
-                            pLanguageSpecID: that.langSet(),
-                            pExportType: "LBChat",
-                            psyncRun: 1
-                        }, function (json) {
-                            Log.print(Log.l.info, "call success!");
-                            if (json && json.d.results[0]) {
-                                that.exportDbExcel(json.d.results[0]);
-                            } else {
-                                Log.print(Log.l.error, "call error DOC3ExportPDFID is null");
-                                that.showDashboardLoadingText(false);
-                            }
-                        }, function (error) {
-                            Log.print(Log.l.error, "call error");
-                            that.showDashboardLoadingText(false);
-                        });
-                        break;
-                    default:
-                        Log.print(Log.l.error, "curOLELetterID=" + that.binding.curOLELetterID + "not supported");
-                }
-                if (dbView) {
-                    //var exporter = ExportXlsx.exporter;
-                    //if (!exporter) {
-                    var exporter = new ExportXlsx.ExporterClass(that.binding.progress);/*that.binding.progress*/
-                    //}
-                    //exporter.showProgress(0);
-                    //that.disableReportingList(true);
-                    if (!restriction) {
-                        restriction = that.setRestriction();
-                    }
-                    if (!restriction) {
-                        dbViewTitle = null;
-                        restriction = {};
-                    }
-                    if (dbView) {
-                    if (that.binding.showFilter) {
-                        exporter.saveXlsxFromView(dbView,
-                            fileName,
-                            function (result) {
-                                that.disableReportingList(false);
-                                AppBar.busy = false;
-                                AppBar.triggerDisableHandlers();
-                            },
-                            function (errorResponse) {
-                                that.disableReportingList(false);
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                                AppBar.busy = false;
-                                AppBar.triggerDisableHandlers();
-                            },
-                            restriction,
-                            dbViewTitle,
-                            that.templatestr);
-                    } else {
-                            exporter.saveXlsxFromView(dbView,
-                                fileName,
-                                function(result) {
-                        that.disableReportingList(false);
-                        AppBar.busy = false;
-                        AppBar.triggerDisableHandlers();
-                                },
-                                function(errorResponse) {
-                        that.disableReportingList(false);
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                        AppBar.busy = false;
-                        AppBar.triggerDisableHandlers();
-                                },
-                                {},
-                                dbViewTitle,
-                                that.templatestr);
-                        }
-                    }
-                } else {
-                    //that.disableReportingList(true);
-                    WinJS.Promise.timeout(1000).then(function () {
-                        if (exportselectionId !== 34) {
-                            that.getAudioIdDaten();
-                        }
-                    }).then(function () {
-                        if (exportselectionId !== 34) {
-                            that.insertExcelFiletoZip();
-                        }
+                        Log.print(Log.l.error, "call error");
+                        that.showDashboardLoadingText(false);
                     });
-                    //disableReportingList(false);
-                    AppBar.busy = false;
-                    AppBar.triggerDisableHandlers();
                 }
                 Log.ret(Log.l.trace);
                // return WinJS.Promise.as();
@@ -1478,32 +1215,30 @@
                             return WinJS.Promise.as();
                         }
                     }
-                }).then(function() {
-                    if (!AppData.initLandView.getResults().length) {
+                }).then(function () {
+                    if (!Reporting.initLandView.getResults().length) {
                         Log.print(Log.l.trace, "calling select initLandData...");
                         //@nedra:25.09.2015: load the list of INITLand for Combobox
-                        return AppData.initLandView.select(function(json) {
+                        return Reporting.initLandView.select(function (json) {
                             // this callback will be called asynchronously
                             // when the response is available
-                            Log.print(Log.l.trace, "initLandDataView: success!");
+                            Log.print(Log.l.trace, "initLandView: success!");
                             if (json && json.d && json.d.results) {
                                 // Now, we call WinJS.Binding.List to get the bindable list
                                 if (initLand && initLand.winControl) {
                                     initLand.winControl.data = new WinJS.Binding.List(json.d.results);
-                                    initLand.value = json.d.results[0];
                                 }
                             }
-                        }, function(errorResponse) {
+                        }, function (errorResponse) {
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
                             AppData.setErrorMsg(that.binding, errorResponse);
                         });
                     } else {
                         if (initLand && initLand.winControl &&
-                        (!initLand.winControl.data || !initLand.winControl.data.length)) {
-                            initLand.winControl.data = new WinJS.Binding.List(AppData.initLandView.getResults());
+                            (!initLand.winControl.data || !initLand.winControl.data.length)) {
+                            initLand.winControl.data = new WinJS.Binding.List(Reporting.initLandView.getResults());
                         }
-                        initLand.selectedIndex = 0;
                         return WinJS.Promise.as();
                     }
                 }).then(function() {
@@ -1627,9 +1362,10 @@
             that.showDateRestrictions();
             that.processAll().then(function() {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.loadData();
+                return that.setpdfZipDownloadData(false);
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
+                return that.loadData();
             });
             Log.ret(Log.l.trace);
 })

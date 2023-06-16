@@ -9,7 +9,7 @@
     WinJS.Namespace.define("Reporting", {
         _initLandView: {
             get: function () {
-                return AppData.getLgntInit("LGNTINITLand");
+                return AppData.getLgntInit("LGNTINITLand", false, false, 20671);
             }
         },
         initLandView: {
@@ -636,7 +636,7 @@
             }
         },
         defaultrestriction: {
-            ErfasserID: null,
+            MitarbeiterVIEWID: null,
             InitLandID: null,
             Erfassungsdatum: null,
             showErfassungsdatum: false,
@@ -773,6 +773,25 @@
             select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, "Reporting.");
                 var ret = Reporting._DOC3ExportPDF.select(complete,
+                    error,
+                    restriction,
+                    {
+                        ordered: false
+                    });
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+        },
+        _ExportPDFView: {
+            get: function () {
+                return AppData.getFormatView("ExportPDF", 20672);
+            }
+        },
+        ExportPDFView: {
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, "Reporting.");
+                var ret = Reporting._ExportPDFView.select(complete,
                     error,
                     restriction,
                     {
