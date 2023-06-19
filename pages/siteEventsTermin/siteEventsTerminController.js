@@ -112,7 +112,7 @@
                         pMailCC: that.binding.dataTermin.MailCC,
                         pMailFrom: that.binding.dataTermin.MailFrom,
                         pMailReplyTo: that.binding.dataTermin.MailReplyTo,
-                        pTerminStatus: that.binding.dataTermin.TerminClosed
+                        pTerminCLosed: that.binding.dataTermin.TerminClosed
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
                         AppBar.modified = false;
