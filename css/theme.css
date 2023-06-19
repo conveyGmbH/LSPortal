@@ -86,6 +86,9 @@ body.cnv-ui-dark, body.cnv-ui-dark * {
 .cnv-ui-dark #navigationbar_horizontal.win-listview {
     border-bottom-color: #525252;
 }
+.navigationbar-container .resize-helper-command-container button.win-command {
+    border-bottom-color: #e6e6e6;
+}
 .cnv-ui-dark .navigationbar-container .resize-helper-command-container button.win-command {
     border-bottom-color: #525252;
 }
