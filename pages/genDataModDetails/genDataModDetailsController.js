@@ -162,10 +162,19 @@
                             // this callback will be called asynchronously
                             // when the response is available
                             AppBar.busy = false;
-                            AppBar.modified = false;
+                            //AppBar.modified = false;
                             Log.print(Log.l.trace, "adresseDOC update: success!");
-                            that.loadData();
-                            complete(response);
+                            //that.loadData();
+                            WinJS.Promise.as().then(function () {
+                                that.saveData(function (response) {
+                                    Log.print(Log.l.trace, "prev Mail saved");
+                                    //AppBar.modified = true;
+                                }, function (errorResponse) {
+                                    Log.print(Log.l.error, "error saving mail");
+                                });
+                            }).then(function () {
+                                that.loadData();
+                            });
                         }, function (errorResponse) {
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
