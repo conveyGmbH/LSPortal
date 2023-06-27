@@ -684,6 +684,7 @@
 	"optQuestionList.optQuestion" : "Bitte wählen Sie hier die Frage, die optional angezeigt werden soll",
 	"optQuestionList.selectedQuestion": "Frage",
 	"optQuestionList.selectedAnswer": "Antwort",
+    "optQuestionList.selectedQuestionText": "Bitte wählen Sie die Frage und die Antwort, die ausgewählt werden muss, um die optionale Frage anzuzeigen",
 
     "questionList.title"    : "Messebericht",
     "questionList.count"    : "Anzahl",

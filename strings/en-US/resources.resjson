@@ -684,6 +684,7 @@
 	"optQuestionList.optQuestion" : "Please select here the question to be displayed optionally",
 	"optQuestionList.selectedQuestion": "Question",
 	"optQuestionList.selectedAnswer": "Answer",
+    "optQuestionList.selectedQuestionText": "Please choose the question and answer that needs to be selected in order to show the optional question",
 
     "questionList.title"    : "Fair report",
     "questionList.count"    : "Count",

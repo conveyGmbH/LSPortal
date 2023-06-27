@@ -684,6 +684,7 @@
 	"optQuestionList.optQuestion" : "Sélectionnez la question à faire figurer en option ici",
 	"optQuestionList.selectedQuestion": "Question",
 	"optQuestionList.selectedAnswer": "Réponse",
+    "optQuestionList.selectedQuestionText": "Choisissez la question et la réponse à sélectionner pour afficher la question facultative",
 
     "questionList.title"    : "Rapport juste",
     "questionList.count"    : "Nombre",

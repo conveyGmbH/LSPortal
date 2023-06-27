@@ -684,6 +684,7 @@
 	"optQuestionList.optQuestion" : "Selezionare la domanda da visualizzare facoltativamente qui",
 	"optQuestionList.selectedQuestion": "Domanda",
 	"optQuestionList.selectedAnswer": "Risposta",
+    "optQuestionList.selectedQuestionText": "Scegliere la domanda e la risposta che deve essere selezionata per mostrare la domanda opzionale",
 
     "questionList.title"    : "Rapporto equo",
     "questionList.count"    : "Numero",
