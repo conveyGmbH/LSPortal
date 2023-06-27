@@ -7,6 +7,7 @@
 /// <reference path="~/www/lib/convey/scripts/pageController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/pages/contactResultsList/contactResultsListService.js" />
+/// <reference path="~/www/lib/moment/scripts/moment-with-locales.min.js" />
 
 (function () {
     "use strict";
@@ -78,9 +79,10 @@
                 var dateString = date.replace("\/Date(", "").replace(")\/", "");
                 var milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
                 var time = new Date(milliseconds);
-                var formdate = ("0" + time.getDate()).slice(-2) + "." + ("0" + (time.getMonth() + 1)).slice(-2) + "." + time.getFullYear() + " " + that.addZero(time.getUTCHours()) + ":" + that.addZero(time.getMinutes());
+                //var formdate = ("0" + time.getDate()).slice(-2) + "." + ("0" + (time.getMonth() + 1)).slice(-2) + "." + time.getFullYear() + " " + that.addZero(time.getUTCHours()) + ":" + that.addZero(time.getMinutes());
+                var localdate = moment(time).local().format('DD.MM.YYYY HH:mm');
                 Log.ret(Log.l.trace);
-                return formdate;
+                return localdate;
             };
             this.getDateObject = getDateObject;
 
