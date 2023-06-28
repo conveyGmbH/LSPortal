@@ -129,8 +129,8 @@
                     Log.call(Log.l.trace, "EventSession.Controller.");
                     var a = moment(new Date(start));
                     var b = moment(new Date(end));
-                    var diffs = moment.duration(b.diff(a));
-                    return diffs.minutes();
+                    var diff = b.diff(a);
+                    return moment.utc(diff).format("HH:mm:ss");
                 } else {
                     ret = "";
                 }
