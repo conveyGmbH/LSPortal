@@ -194,17 +194,17 @@
                 that.binding.dataContactHeaderText.Typ = getResourceText("contactResultsList.headerkontakttyp");
                 that.binding.dataContactHeaderText.Status = getResourceText("contactResultsList.headerstatus");
                 //value part
-                that.binding.dataContactHeaderValue.Name = getResourceText("contactResultsList.headername");
-                that.binding.dataContactHeaderValue.Vorname = getResourceText("contactResultsList.headervorname");
-                that.binding.dataContactHeaderValue.Firmenname = getResourceText("contactResultsList.headerfirmenname");
-                that.binding.dataContactHeaderValue.EMail = getResourceText("contactResultsList.headeremail");
-                that.binding.dataContactHeaderValue.Land = getResourceText("contactResultsList.headerland");
-                that.binding.dataContactHeaderValue.Erfassungsdatum = getResourceText("contactResultsList.headererfassungsdatum");
-                that.binding.dataContactHeaderValue.ModifiedTS = getResourceText("contactResultsList.headeränderungsdatum");
-                that.binding.dataContactHeaderValue.MailVersandTS = getResourceText("contactResultsList.headeremailversandtzeit");
-                that.binding.dataContactHeaderValue.Prio = getResourceText("contactResultsList.headerkontaktprio");
-                that.binding.dataContactHeaderValue.Typ = getResourceText("contactResultsList.headerkontakttyp");
-                that.binding.dataContactHeaderValue.Status = getResourceText("contactResultsList.headerstatus");
+                that.binding.dataContactHeaderValue.Name = "Name";
+                that.binding.dataContactHeaderValue.Vorname = "Vorname";
+                that.binding.dataContactHeaderValue.Firmenname = "Firmenname";
+                that.binding.dataContactHeaderValue.EMail = "EMail";
+                that.binding.dataContactHeaderValue.Land = "Land";
+                that.binding.dataContactHeaderValue.Erfassungsdatum = "Erfassungsdatum";
+                that.binding.dataContactHeaderValue.ModifiedTS = "ModifiedTS";
+                that.binding.dataContactHeaderValue.MailVersandTS = "MailVersandTS";
+                that.binding.dataContactHeaderValue.Prio = "Prio";
+                that.binding.dataContactHeaderValue.Typ = "Typ";
+                that.binding.dataContactHeaderValue.Status = "Status";
             }
             this.setInitialHeaderTextValue = setInitialHeaderTextValue;
 
