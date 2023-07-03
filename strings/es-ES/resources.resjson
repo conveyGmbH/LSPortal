@@ -690,6 +690,7 @@
     "reporting.filterOff"   : "Filter aus",
 	"reporting.filter"      : "Filter",
     "reporting.comment"      : "Exportieren Sie Ihre Kontakte in Excel/PDF",
+    "reporting.noFileAvailable" : "Es konnte kein Export erstellt werden. Bitte prüfen Sie Ihre Daten!",
 
     "employee.title"        : "Benutzer",
     "employee.firstname"    : "Vorname",

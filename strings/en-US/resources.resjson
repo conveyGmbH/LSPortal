@@ -736,6 +736,7 @@
     "reporting.filter"      : "Filter",
     "reporting.comment"      : "Manage your employee access data here.",
     "reporting.pdfZipDownloadText"      : "Your download is ready: ",
+    "reporting.noFileAvailable" : "No export could be created. Please check your data!",
 
     "employee.title"        : "Users",
     "employee.firstname"    : "First name",

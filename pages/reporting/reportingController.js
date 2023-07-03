@@ -57,7 +57,7 @@
                     showPdfReportingFilter: false
                 }
             ]);
-            
+
             this.audiozip = null;
             this.audioIddata = [];
             this.nextUrl = null;
@@ -80,7 +80,7 @@
             var modifiedTs = pageElement.querySelector("#ModifiedTs.win-datepicker");
             var pdfZipDownload = pageElement.querySelector(".pdfZipDownload");
             var pdfZipDownloadData = pageElement.querySelector(".pdfZipDownloadData");
-            
+
             this.dispose = function () {
                 if (that.audioIddata) {
                     that.audioIddata = null;
@@ -110,7 +110,7 @@
             }
             this.langSet = langSet;
 
-            var setpdfZipDownloadData = function(aktiv, data) {
+            var setpdfZipDownloadData = function (aktiv, data) {
                 Log.call(Log.l.trace, "Reporting.Controller.");
                 if (aktiv) {
                     pdfZipDownload.style.display = "block";
@@ -138,15 +138,15 @@
             }
             this.showProgress = showProgress;
 
-            var resultConverter = function(item, index) {
+            var resultConverter = function (item, index) {
                 item.index = index;
                 item.fullName = (item.Nachname ? (item.Nachname + ", ") : "") + (item.Vorname ? item.Vorname : "");
                 item.fullNameValue = (item.Nachname ? (item.Nachname + ", ") : "") + (item.Vorname ? item.Vorname : "");
             }
             this.resultConverter = resultConverter;
 
-            var title = function(t) {
-                return  getResourceText(t);
+            var title = function (t) {
+                return getResourceText(t);
             }
             this.title = title;
 
@@ -165,11 +165,11 @@
                 if (date !== "null") {
                     return moment(date).format('YYYY-MM-DD');
                 }
-                
+
             }
             this.restrictionDate = restrictionDate;
 
-            var showDateRestrictions = function() {
+            var showDateRestrictions = function () {
                 if (typeof that.binding.showExcelExportErfassungsdatum === "undefined") {
                     that.binding.showExcelExportErfassungsdatum = false;
                 }
@@ -194,7 +194,7 @@
             this.showDateRestrictions = showDateRestrictions;
 
             var saveRestriction = function (complete, error) {
-                var ret = WinJS.Promise.as().then(function() {
+                var ret = WinJS.Promise.as().then(function () {
                     if (!that.binding.showErfassungsdatum &&
                         typeof that.binding.showErfassungsdatum !== "undefined") {
                         delete that.binding.showErfassungsdatum;
@@ -232,7 +232,7 @@
                 }
                 reportingRestriction.Mitarbeiter = that.binding.restriction.MitarbeiterVIEWID ? that.binding.restriction.MitarbeiterVIEWID : "null";
                 if (that.binding.showErfassungsdatum && that.binding.restriction.Erfassungsdatum) {
-                        reportingRestriction.Erfassungsdatum = that.binding.restriction.Erfassungsdatum;
+                    reportingRestriction.Erfassungsdatum = that.binding.restriction.Erfassungsdatum;
                     reportingRestriction.ErfassungsdatumValue = that.binding.restriction.Erfassungsdatum;
                 } else {
                     reportingRestriction.Erfassungsdatum = "null";
@@ -301,10 +301,10 @@
                             var results = json.d.results;
                             that.audioIddata(results);
                         }
-                        }, function (errorResponse) {
+                    }, function (errorResponse) {
                         Log.print(Log.l.error, "error selecting audiofiles");
                         AppData.setErrorMsg(that.binding, errorResponse);
-                    }, {  });
+                    }, {});
                 });
                 Log.ret(Log.l.trace);
                 return ret;
@@ -324,10 +324,10 @@
                 AppBar.busy = false;
             }
             this.exportContactAudio = exportContactAudio;
-            
-            var disableReportingList = function(disableFlag) {
+
+            var disableReportingList = function (disableFlag) {
                 var reportingListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("ReportingList"));
-                if (reportingListFragmentControl && 
+                if (reportingListFragmentControl &&
                     reportingListFragmentControl.controller) {
                     reportingListFragmentControl.controller.disableList(disableFlag);
                 }
@@ -380,14 +380,14 @@
                                 that.binding.restrictionAudio["LandName"] = that.binding.restrictionAudio[prop];
                                 break;
                             default:
-                                //that.binding.restrictionAudio[prop] = that.binding.restrictionAudio[prop];
+                            //that.binding.restrictionAudio[prop] = that.binding.restrictionAudio[prop];
                         }
                     }
                 }
                 that.showDateRestrictions();
                 AppData.setErrorMsg(that.binding);
                 if (that.binding.showFilter) {
-                var ret = Reporting.exportAudioDataView.select(function (json) {
+                    var ret = Reporting.exportAudioDataView.select(function (json) {
                         Log.print(Log.l.trace, "exportTemplate: success!");
                         if (json && json.d && json.d.results && json.d.results.length > 0) {
                             var results = json.d.results;
@@ -424,7 +424,7 @@
                         AppData.setErrorMsg(that.binding, errorResponse);
                     },
                         {}
-                );
+                    );
                 }
 
                 Log.ret(Log.l.trace);
@@ -514,7 +514,7 @@
                     AppBar.busy = true;
                     ret = Reporting.DOC3ExportPDFView.select(function (json) {
                         Log.print(Log.l.trace, "exportKontaktDataView: success!");
-                        if (json && json.d) {
+                        if (json && json.d && json.d.results.length > 0) {
                             var results = json.d.results[0];
                             var excelDataraw = results.DocContentDOCCNT1;
                             var sub = excelDataraw.search("\r\n\r\n");
@@ -525,6 +525,15 @@
                             that.disableReportingList(false);
                             that.showDashboardLoadingText(false);
                             AppBar.busy = false;
+                        } else {
+                            Log.print(Log.l.error, "call error result of DOC3ExportPDFView is null");
+                            that.disableReportingList(false);
+                            that.showDashboardLoadingText(false);
+                            var errorResponse = {
+                                status: 204,
+                                statusText: getResourceText("reporting.noFileAvailable")
+                            };
+                            AppData.setErrorMsg(that.binding, errorResponse);
                         }
                     }, function (errorResponse) {
                         AppBar.busy = false;
@@ -582,7 +591,7 @@
             }
             this.exportPdfExcelZip = exportPdfExcelZip;
 
-            var exportData = function(exportselection) {
+            var exportData = function (exportselection) {
                 Log.call(Log.l.trace, "Reporting.Controller.");
                 that.binding.progress.showOther = false;
                 var reportingRestriction = that.setRestriction();
@@ -604,11 +613,17 @@
                         Log.print(Log.l.info, "call success!");
                         if (json && json.d.results[0].DOC3ExportPdfID && json.d.results[0].DownloadFlag === 0) {
                             that.exportDbExcel(json.d.results[0].DOC3ExportPdfID);
-                        } else if (json && json.d.results[0].DOC3ExportPdfID && json.d.results[0].DownloadFlag === 1){
+                        } else if (json && json.d.results[0].DOC3ExportPdfID && json.d.results[0].DownloadFlag === 1) {
                             that.exportPdfExcelZip(json.d.results[0].DOC3ExportPdfID);
                         } else {
                             Log.print(Log.l.error, "call error DOC3ExportPDFID is null");
+                            that.disableReportingList(false);
                             that.showDashboardLoadingText(false);
+                            var errorResponse = {
+                                status: 204,
+                                statusText: getResourceText("reporting.noFileAvailable")
+                            };
+                            AppData.setErrorMsg(that.binding, errorResponse);
                         }
                     }, function (error) {
 
@@ -617,11 +632,11 @@
                     });
                 }
                 Log.ret(Log.l.trace);
-               // return WinJS.Promise.as();
+                // return WinJS.Promise.as();
             }
             that.exportData = exportData;
 
-            
+
             this.employeeChart = null;
             this.barChartWidth = 0;
             this.employeetitle = that.title("reporting.employeechart");
@@ -702,40 +717,40 @@
                 Log.ret(Log.l.trace);
             };
             this.showemployeeChart = showemployeeChart;
-            
+
 
             this.country = "";
             this.res = [];
             this.resi = 0;
             this.countryID = 0;
-            var clickCountrySlice = function(event, index) {
+            var clickCountrySlice = function (event, index) {
                 Log.call(Log.l.trace, "Reporting.Controller.", "index=" + index);
                 if (event && index >= 0) {
                     that.country = event[index];
                     that.country = that.country[0];
                     if (that.country > "") {
                         return AppData.initLandView.select(function (json) {
-                                // this callback will be called asynchronously
-                                // when the response is available
-                                Log.print(Log.l.trace, "initLandView: success!");
-                                if (json && json.d && json.d.results) {
-                                    that.res = json.d.results;
-                                    that.resi = json.d.results.length;
-                                    if (that.resi > 0) {
-                                    for (var i = 0; i < that.resi ; i++) {
-                                            if (that.res[i].TITLE === that.country) {
-                                                that.countryID = that.res[i].INITLandID;
-                                            }
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            Log.print(Log.l.trace, "initLandView: success!");
+                            if (json && json.d && json.d.results) {
+                                that.res = json.d.results;
+                                that.resi = json.d.results.length;
+                                if (that.resi > 0) {
+                                    for (var i = 0; i < that.resi; i++) {
+                                        if (that.res[i].TITLE === that.country) {
+                                            that.countryID = that.res[i].INITLandID;
                                         }
                                     }
-                                    that.binding.restriction.INITLandID = that.countryID;
-                                    Application.navigateById("contact");
                                 }
-                            }, function(errorResponse) {
-                                // called asynchronously if an error occurs
-                                // or server returns response with an error status.
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                            });
+                                that.binding.restriction.INITLandID = that.countryID;
+                                Application.navigateById("contact");
+                            }
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        });
                     }
                 }
                 Log.ret(Log.l.trace);
@@ -782,7 +797,7 @@
                 that.binding.restrictionExcel = {};
                 // rufe setrestriction auf 
                 that.binding.restrictionPdf = setRestriction();
-                that.binding.restrictionPdf.LandTitle = that.binding.restriction.InitLandID ? that.binding.restriction.InitLandID:null;
+                that.binding.restrictionPdf.LandTitle = that.binding.restriction.InitLandID ? that.binding.restriction.InitLandID : null;
                 that.binding.restrictionPdf.Erfasser = that.binding.restriction.ErfasserID; // mögliches Problem?!
                 for (var prop in that.binding.restrictionPdf) {
                     if (that.binding.restrictionPdf.hasOwnProperty(prop)) {
@@ -800,7 +815,7 @@
                                 that.binding.restrictionExcel["AenderungsDatumValue"] = [null, that.binding.restrictionPdf[prop]];
                                 break;
                             default:
-                                //that.binding.restrictionExcel[prop] = [null, that.binding.restrictionPdf[prop]];
+                            //that.binding.restrictionExcel[prop] = [null, that.binding.restrictionPdf[prop]];
                         }
                         //that.binding.restrictionExcel["Land"] = that.binding.restrictionPdf.Land;
                         that.binding.restrictionExcel["Land"] = [null, that.binding.restrictionPdf.Land];
@@ -831,15 +846,15 @@
                             //that.binding.restrictionExcel
                         }, that.binding.restrictionExcel, null, null);
                 } else {
-                exporter.saveXlsxFromView(dbView, fileName, function (result) {
-                    AppBar.busy = false;
-                    AppBar.triggerDisableHandlers();
-                    that.xlsxblob = result;
-                    that.getPdfIdDaten();
-                }, function (errorResponse) {
-                    AppData.setErrorMsg(that.binding, errorResponse);
-                    AppBar.busy = false;
-                    AppBar.triggerDisableHandlers();
+                    exporter.saveXlsxFromView(dbView, fileName, function (result) {
+                        AppBar.busy = false;
+                        AppBar.triggerDisableHandlers();
+                        that.xlsxblob = result;
+                        that.getPdfIdDaten();
+                    }, function (errorResponse) {
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                        AppBar.busy = false;
+                        AppBar.triggerDisableHandlers();
                     }, {}, null, null);
                 }
 
@@ -849,7 +864,7 @@
 
             var getPdfIdDaten = function () {
                 /*that.pdfzip = null;*/
-                that.pdfIddata =[];
+                that.pdfIddata = [];
                 that.nextUrl = null;
                 that.curPdfIdx = -1;
                 that.binding.progress.showOther = true;
@@ -865,8 +880,8 @@
                             // store result for next use
                             that.nextUrl = Reporting.contactView.getNextUrl(json);
                             that.pdfIddata = json.d.results;
-                                that.binding.progress.max = that.pdfIddata.length;
-                            }
+                            that.binding.progress.max = that.pdfIddata.length;
+                        }
                         that.getNextPdfData();
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
@@ -880,8 +895,8 @@
                             // store result for next use
                             that.nextUrl = Reporting.contactView.getNextUrl(json);
                             that.pdfIddata = json.d.results;
-                                that.binding.progress.max = that.pdfIddata.length;
-                            }
+                            that.binding.progress.max = that.pdfIddata.length;
+                        }
                         that.getNextPdfData();
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
@@ -960,7 +975,7 @@
                         //that.disablePdfExportList(false);
                         //that.binding.progress.show = null;
                         that.binding.progress.count = that.binding.progress.max;
-                    }).then(function() {
+                    }).then(function () {
                         var reportingListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("ReportingList"));
                         if (reportingListFragmentControl && reportingListFragmentControl.controller) {
                             reportingListFragmentControl.controller.disableList(false);
@@ -1003,14 +1018,14 @@
 
             // define handlers
             this.eventHandlers = {
-                clickBack: function(event) {
+                clickBack: function (event) {
                     Log.call(Log.l.trace, "Reporting.Controller.");
                     if (WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done( /* Your success and error handlers */);
                     }
                     Log.ret(Log.l.trace);
                 },
-                clickOk: function(event) {
+                clickOk: function (event) {
                     Log.call(Log.l.trace, "Reporting.Controller.");
                     if (event.currentTarget.id === "clickOk") {
                         AppBar.barControl.opened = true;
@@ -1020,7 +1035,7 @@
                     }
                     Log.ret(Log.l.trace);
                 },
-                clickExport: function(event) {
+                clickExport: function (event) {
                     Log.call(Log.l.trace, "Reporting.Controller.");
                     if (event && event.currentTarget) {
                         that.pdfzip = new JSZip();
@@ -1058,37 +1073,37 @@
                         that.disableFlag = event.currentTarget.index;
                         AppBar.busy = true;
                         AppBar.triggerDisableHandlers();
-                       // that.disablePdfExportList(true);
+                        // that.disablePdfExportList(true);
 
                     }
 
-                            WinJS.Promise.timeout(1000).then(function () {
+                    WinJS.Promise.timeout(1000).then(function () {
                         that.getAudioIdDaten();
                     }).then(function () {
-                                that.insertExcelFiletoZip();
-                    }).then(function() {
+                        that.insertExcelFiletoZip();
+                    }).then(function () {
 
-                            });
+                    });
                     Log.ret(Log.l.trace);
                 },
-                clickChangeUserState: function(event) {
+                clickChangeUserState: function (event) {
                     Log.call(Log.l.trace, "Reporting.Controller.");
                     Application.navigateById("userinfo", event);
                     Log.ret(Log.l.trace);
                 },
-                clickGotoPublish: function(event) {
+                clickGotoPublish: function (event) {
                     Log.call(Log.l.trace, "Reporting.Controller.");
                     Application.navigateById("publish", event);
                     Log.ret(Log.l.trace);
                 },
-                clickErfassungsdatum: function(event) {
+                clickErfassungsdatum: function (event) {
                     if (event.currentTarget) {
                         that.binding.showErfassungsdatum = event.currentTarget.checked;
                         that.binding.restriction.Erfassungsdatum = new Date();
                     }
                     that.showDateRestrictions();
                 },
-                clickModifiedTs: function(event) {
+                clickModifiedTs: function (event) {
                     if (event.currentTarget) {
                         that.binding.showModifiedTS = event.currentTarget.checked;
                         that.binding.restriction.AenderungsDatum = new Date();
@@ -1096,7 +1111,7 @@
                     }
                     that.showDateRestrictions();
                 },
-                changeModifiedTS: function(event) {
+                changeModifiedTS: function (event) {
                     if (event.currentTarget) {
                         that.binding.restriction.ModifiedTs = event.currentTarget.current;
                     }
@@ -1132,14 +1147,14 @@
             };
 
             this.disableHandlers = {
-                clickBack: function() {
+                clickBack: function () {
                     if (WinJS.Navigation.canGoBack === true) {
                         return false;
                     } else {
                         return true;
                     }
                 },
-                clickOk: function() {
+                clickOk: function () {
                     var ret = true;
                     if (!AppBar.busy) {
                         ret = false;
@@ -1199,18 +1214,18 @@
             }
             this.getNextData = getNextData;
 
-            var loadData = function() {
+            var loadData = function () {
                 Log.call(Log.l.trace, "Reporting.Controller.");
                 AppData.setErrorMsg(that.binding);
                 //that.templatecall();
-                var ret = new WinJS.Promise.as().then(function() {
+                var ret = new WinJS.Promise.as().then(function () {
                     var reportingListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("ReportingList"));
                     if (reportingListFragmentControl && reportingListFragmentControl.controller) {
                         return reportingListFragmentControl.controller.loadData();
                     } else {
                         var parentElement = pageElement.querySelector("#reportingListhost");
                         if (parentElement) {
-                            return Application.loadFragmentById(parentElement, "ReportingList", { });
+                            return Application.loadFragmentById(parentElement, "ReportingList", {});
                         } else {
                             return WinJS.Promise.as();
                         }
@@ -1241,10 +1256,10 @@
                         }
                         return WinJS.Promise.as();
                     }
-                }).then(function() {
+                }).then(function () {
                     if (!that.employees || !that.employees.length) {
                         that.employees = new WinJS.Binding.List([Reporting.employeeView.defaultValue]);
-                        return Reporting.employeeView.select(function(json) {
+                        return Reporting.employeeView.select(function (json) {
                             // this callback will be called asynchronously
                             // when the response is available
                             Log.print(Log.l.trace, "Reporting: success!");
@@ -1252,7 +1267,7 @@
                             if (json && json.d) {
                                 that.nextUrl = Reporting.employeeView.getNextUrl(json);
                                 var results = json.d.results;
-                                results.forEach(function(item, index) {
+                                results.forEach(function (item, index) {
                                     that.resultConverter(item, index);
                                     that.employees.push(item);
                                 });
@@ -1264,13 +1279,13 @@
                                 that.nextUrl = null;
                                 that.employees = null;
                             }
-                        }, function(errorResponse) {
+                        }, function (errorResponse) {
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
                             AppData.setErrorMsg(that.binding, errorResponse);
                         }, {
-                            VeranstaltungID: AppData.getRecordId("Veranstaltung")
-                        });
+                                VeranstaltungID: AppData.getRecordId("Veranstaltung")
+                            });
                     } else {
                         if (erfasserID && erfasserID.winControl) {
                             erfasserID.winControl.data = that.employees;
@@ -1324,7 +1339,7 @@
                     var savedRestriction = AppData.getRestriction("Kontakt");
                     if (!savedRestriction) {
                         savedRestriction = {};
-                    } 
+                    }
                     var defaultRestriction = Reporting.defaultrestriction;
                     var prop;
                     for (prop in defaultRestriction) {
@@ -1360,7 +1375,7 @@
 
             that.setInitialDate();
             that.showDateRestrictions();
-            that.processAll().then(function() {
+            that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.setpdfZipDownloadData(false);
             }).then(function () {
@@ -1368,6 +1383,6 @@
                 return that.loadData();
             });
             Log.ret(Log.l.trace);
-})
+        })
     });
 })();

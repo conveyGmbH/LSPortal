@@ -690,6 +690,7 @@
     "reporting.filterOff"   : "Filter off",
     "reporting.filter"      : "Filter",
     "reporting.comment"      : "Manage your employee access data here.",
+    "reporting.noFileAvailable" : "No export could be created. Please check your data!",
 
     "employee.title"        : "Users",
     "employee.firstname"    : "First name",

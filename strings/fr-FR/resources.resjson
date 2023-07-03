@@ -736,6 +736,7 @@
     "reporting.filter"      : "Filtrer",
     "reporting.comment"      : "Gérez vos données d'accès des employés ici.",
     "reporting.pdfZipDownloadText"      : "Votre téléchargement est prêt : ",
+    "reporting.noFileAvailable" : "Aucune exportation n'a pu être créée. Veuillez vérifier vos données !",
 
     "employee.title"        : "Utilisateurs",
     "employee.firstname"    : "Prénom",
