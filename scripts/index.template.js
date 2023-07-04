@@ -104,52 +104,21 @@
     Application.navigationBarGroups = [
         //Home-Startseite
         { id: "home", group: 1, svg: "home", disabled: true },
-        //Administration Sideadmin ONLY
-        { id: "administrationGrp", group: 41, svg: "administration", disabled: true, popup: true },
-        { id: "siteevents", group: 13, svg: "mandant", disabled: true, predecGroup: 41 },
-        { id: "clientManagement", group: 14, svg: "standpersonal", disabled: true, predecGroup: 41 },
-        // { id: "startTileAdministration", group: 61, svg: "home", disabled: true, predecGroup: 41 },
-        //EventSuccess
-        { id: "esStaffAdministration", group: 18, svg: "id_card", disabled: true },
-        { id: "ticketLimits", group: 16, svg: "id_card", disabled: true },
-        { id: "voucherAdministration", group: 16, svg: "gutschein1.1", disabled: true },
-        { id: "esVoucherUsers", group: 19, svg: "voucher_contact", disabled: true },
-        //Dashboards
-        { id: "dashBoard", group: 19, svg: "dashboard", disabled: true },
-        // only visible in deimos and lstest, not in lsmain
-        { id: "startPremium", group: 57, svg: "dashboard", disabled: true },
-        { id: "dashboardFN", group: 57, svg: "dashboard", disabled: true },
-        //VisitorFlow
-        { id: "visitorFlowGrp", group: 28, svg: "lsvFlow", disabled: true, popup: true },
-        { id: "visitorFlowDashboard", group: 20, svg: "dashboardVisitorFlow", disabled: true, predecGroup: 28 },
-        { id: "visitorFlowEntExt", group: 22, svg: "window_gear", disabled: true, predecGroup: 28 },
         //MasterData
         { id: "masterDataGrp", group: 23, svg: "stammdaten", disabled: true, popup: true },
-		//{ id: "eventStarts", group: 55, svg: "Stammdaten", disabled: true, predecGroup: 23 },
+        //{ id: "eventStarts", group: 55, svg: "Stammdaten", disabled: true, predecGroup: 23 },
         //{ id: "eventStartLang", group: 55, svg: "Stammdaten", disabled: true, predecGroup: 23 },
         { id: "eventBaseLink", group: 55, svg: "stammdaten", disabled: true, predecGroup: 23, label: "label.eventBaseLink", tooltip: "tooltip.eventBaseLink" },
         //{ id: "startResourceAdministration", group: 55, svg: "Stammdaten", disabled: true, predecGroup: 23, label: "label.eventStarts", tooltip: "label.eventStarts" },
         //{ id: "startMediaAdministration", group: 55, svg: "Stammdaten", disabled: true, predecGroup: 23 },
         { id: "eventSeries", group: 52, svg: "stammdaten", disabled: true, predecGroup: 23 },
         { id: "genDataModDetails", group: 54, svg: "stammdaten", disabled: true, predecGroup: 23 },
-		{ id: "genDataAnswers", group: 56, svg: "stammdaten", disabled: true, predecGroup: 23 },
+        { id: "genDataAnswers", group: 56, svg: "stammdaten", disabled: true, predecGroup: 23 },
         { id: "skills", group: 24, svg: "user_skills", disabled: true, predecGroup: 23 },
-        //Employee
-        { id: "employeeGrp", group: 25, svg: "benutzerkonten", disabled: true, popup: true },
-        { id: "employee", group: 5, svg: "keys", disabled: true, predecGroup: 25 },
-        { id: "skills", group: 24, svg: "user_skills", disabled: true, predecGroup: 25 },
-        //MyEvent
-        { id: "myEvents", group: 53, svg: "keys", disabled: true, popup: true },
-        //{ id: "localevents", group: 12, svg: "keys", disabled: true, predecGroup: 53 },
-        { id: "eventGenSettings", group: 44, svg: "calendar_1", disabled: true, predecGroup: 53 },
-        { id: "eventStatus", group: 73, svg: "calendar_1", disabled: true, predecGroup: 53 },
         //MyEventsLS
         { id: "MyEventsLSGrp", group: 62, svg: "keys", disabled: true, popup: true },
         { id: "localevents", group: 12, svg: "keys", disabled: true, predecGroup: 62 },
         { id: "events", group: 2, svg: "calendar_1", disabled: true, predecGroup: 62 },
-        //{ id: "eventResourceAdministration", group: 44, svg: "calendar_1", disabled: true, predecGroup: 53 },
-        //{ id: "eventMediaAdministration", group: 44, svg: "calendar_1", disabled: true, predecGroup: 53 },
-		//{ id: "eventSeriesAdministration", group: 44, svg: "calendar_1", disabled: true, predecGroup: 53 },
         //Leadsuccess Settings
         { id: "settingLeadsuccessGrp", group: 27, svg: "handshake", disabled: true, popup: true },
         //{ id: "localevents", group: 12, svg: "keys", disabled: true, predecGroup: 27 },
@@ -165,6 +134,31 @@
         { id: "mailingGrp", group: 31, svg: "mailing", disabled: true, popup: true },
         { id: "mailing", group: 32, svg: "productmail", disabled: true, predecGroup: 31 },
         { id: "mailingOptions", group: 33, svg: "mailsettings", disabled: true, predecGroup: 31 },
+        //Dashboards
+        { id: "dashBoard", group: 19, svg: "dashboard", disabled: true },
+        // only visible in deimos and lstest, not in lsmain
+        { id: "startPremium", group: 57, svg: "dashboard", disabled: true },
+        { id: "dashboardFN", group: 57, svg: "dashboard", disabled: true },
+        //EventSuccess
+        { id: "esStaffAdministration", group: 18, svg: "id_card", disabled: true },
+        { id: "ticketLimits", group: 16, svg: "id_card", disabled: true },
+        { id: "voucherAdministration", group: 16, svg: "gutschein1.1", disabled: true },
+        { id: "esVoucherUsers", group: 19, svg: "voucher_contact", disabled: true },
+        //VisitorFlow
+        { id: "visitorFlowGrp", group: 28, svg: "lsvFlow", disabled: true, popup: true },
+        { id: "visitorFlowDashboard", group: 20, svg: "dashboardVisitorFlow", disabled: true, predecGroup: 28 },
+        { id: "visitorFlowEntExt", group: 22, svg: "window_gear", disabled: true, predecGroup: 28 },
+        //Employee
+        { id: "employeeGrp", group: 25, svg: "benutzerkonten", disabled: true, popup: true },
+        { id: "employee", group: 5, svg: "keys", disabled: true, predecGroup: 25 },
+        { id: "skills", group: 24, svg: "user_skills", disabled: true, predecGroup: 25 },
+        //MyEvent
+        { id: "myEvents", group: 53, svg: "keys", disabled: true, popup: true },
+        //{ id: "localevents", group: 12, svg: "keys", disabled: true, predecGroup: 53 },
+        { id: "eventGenSettings", group: 44, svg: "calendar_1", disabled: true, predecGroup: 53 },
+        //{ id: "eventResourceAdministration", group: 44, svg: "calendar_1", disabled: true, predecGroup: 53 },
+        //{ id: "eventMediaAdministration", group: 44, svg: "calendar_1", disabled: true, predecGroup: 53 },
+        //{ id: "eventSeriesAdministration", group: 44, svg: "calendar_1", disabled: true, predecGroup: 53 },
         //AutomaticMails
         { id: "AutomaticMailsGrp", group: 63, svg: "mailing", disabled: true, popup: true },
         { id: "mailingList", group: -50, svg: "standardmail", disabled: true, predecGroup: 63 },
@@ -181,10 +175,15 @@
         { id: "settings", group: 38, svg: "design", disabled: true, predecGroup: 36 },
         { id: "account", group: 39, svg: "konto", disabled: false, predecGroup: 36 },
         //Support
-        { id: "support", group: -11, svg: "user_headset", disabled: true } /*40*/
+        { id: "support", group: -11, svg: "user_headset", disabled: true }, /*40*/
         //{ id: "resourcesAdministration", group: 17, svg: "user_headset", disabled: true },
         //{ id: "search", group: 7, svg: "magnifying_glass", disabled: true },
         //{ id: "info", group: 10, svg: "gearwheel", disabled: true },
+        //Administration Sideadmin ONLY
+        { id: "administrationGrp", group: 41, svg: "administration", disabled: true, popup: true },
+        { id: "siteevents", group: 13, svg: "mandant", disabled: true, predecGroup: 41 },
+        { id: "clientManagement", group: 14, svg: "standpersonal", disabled: true, predecGroup: 41 }
+        // { id: "startTileAdministration", group: 61, svg: "home", disabled: true, predecGroup: 41 },
     ];
 
     // static array of pages for the navigation bar
