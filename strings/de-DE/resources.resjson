@@ -1034,6 +1034,7 @@
 	"siteeventsTermin.mailFrom" : "Absender",
 	"siteeventsTermin.mailReplyTo" : "Antwort an",
     "siteeventsTermin.eventclosed" : "Veranstaltung abschließen",
+	"siteeventsTermin.titleUpdate" : "Veranstaltungtermin ändern",
 
     "reorderlist.posno" : "Pos Nummer",
     "reorderlist.eventname" : "Veranstaltung",

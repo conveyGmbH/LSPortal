@@ -1030,9 +1030,10 @@
 	"siteeventsTermin.defRemoteKonfigID" : "Barcode Server",
 	"siteeventsTermin.mailBCC" : "BCC",
 	"siteeventsTermin.mailCC" : "CC",
-	"siteeventsTermin.mailFrom" : "Absender",
-	"siteeventsTermin.mailReplyTo" : "Antwort an",
+    "siteeventsTermin.mailFrom" : "Sender",
+    "siteeventsTermin.mailReplyTo" : "Reply To",
     "siteeventsTermin.eventclosed" : "Close event",
+    "siteeventsTermin.titleUpdate" : "Change event date",
 
     "reorderlist.posno" : "PosNo.",
     "reorderlist.eventname" : "Event",

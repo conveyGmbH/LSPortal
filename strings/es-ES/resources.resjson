@@ -959,6 +959,7 @@
 	"siteeventsTermin.mailCC" : "CC",
 	"siteeventsTermin.mailFrom" : "Absender",
 	"siteeventsTermin.mailReplyTo" : "Antwort an",
+    "siteeventsTermin.titleUpdate" : "Veranstaltungtermin ändern",
 	
     "reorderlist.posno" : "Pos Nummer",
     "reorderlist.eventname" : "Veranstaltung",

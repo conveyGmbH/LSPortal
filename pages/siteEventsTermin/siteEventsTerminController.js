@@ -175,7 +175,7 @@
                     }
                 },
                 clickSave: function () {
-                    if (that.binding.dataTermin.VeranstaltungName && that.binding.dataTermin.FairVeranstalterID && !AppBar.busy) {
+                    if (that.binding.dataTermin.VeranstaltungName && that.binding.dataTermin.FairVeranstalterID && AppBar.modified && !AppBar.busy) {
                         return false;
                     } else {
                         return true;
@@ -300,15 +300,23 @@
                 Log.print(Log.l.trace, "getRecordId loaded!");
                 return that.getRecordId();
             }).then(function () {
+                var caption_field = pageElement.querySelector(".caption-field");
+                if (!caption_field) {
+                    return WinJS.Promise.as();
+                }
+                if (that.binding.VeranstaltungTerminID !== 0) {
+                    caption_field.textContent = getResourceText("siteeventsTermin.titleUpdate");
+
+                } else {
+                    caption_field.textContent = getResourceText("siteeventsTermin.title");
+                }
+            }).then(function () {
                 AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Binding wireup page complete");
             }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
-            })/*.then(function () {
-                that.loadData();
-                Log.print(Log.l.trace, "loadData loaded!");
-            })*/;
+            });
             Log.ret(Log.l.trace);
         }, {
                 eventChangeId: null
