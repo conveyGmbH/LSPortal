@@ -589,7 +589,7 @@
                 Log.call(Log.l.trace, "SiteEvents.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret;
-                var recordId = exhId;
+                var recordId = exhId.DOC3ExportPdfID;
                 if (recordId) {
                     AppBar.busy = true;
                     ret = SiteEvents.DOC3ExportPDFView.select(function (json) {
