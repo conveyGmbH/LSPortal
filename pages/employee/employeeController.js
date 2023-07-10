@@ -584,7 +584,6 @@
                 }
                 var ret = new WinJS.Promise.as().then(function () {
                     if (AppBar.modified) {
-                        return that.saveData(function () {
                             Log.print(Log.l.trace, "saveData completed...");
                             var master = Application.navigator.masterControl;
                             if (master && master.controller) {
@@ -592,10 +591,6 @@
                                     master.controller.selectRecordId(recordId);
                                 });
                             }
-                        }, function (errorResponse) {
-                            Log.print(Log.l.error, "saveData error...");
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        });
                     } else {
                         return WinJS.Promise.as();
                     }
