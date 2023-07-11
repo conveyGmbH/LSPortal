@@ -980,6 +980,7 @@
     "siteevents.numberofregisteredusers" : "Nombre d'utilisateurs inscrits",
     "siteevents.numberofblockedcontacts" : "Nombre de contacts bloqués",
     "siteevents.numberofusersused" : "Nombre d'utilisateurs utilisés",
+    "siteevents.numberofcontacts" : "Nombre de contacts",
     "siteevents.numberofcontactsBRQR" : "Nombre de contacts - codes-barres/codes QR",
     "siteevents.numberofcontactsBC" : "Nombre de contacts - Cartes de visite",
     "siteevents.numberofcontactsMA" : "Nombre de contacts - Manuel",

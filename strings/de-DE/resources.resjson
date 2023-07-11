@@ -976,6 +976,7 @@
     "siteevents.numberofregisteredusers" : "Anzahl angemeldeter Users",
     "siteevents.numberofblockedcontacts" : "Anzahl gesperrte Kontakte",
     "siteevents.numberofusersused" : "Anzahl benutzte Users",
+    "siteevents.numberofcontacts" : "Anzahl Kontakte",
     "siteevents.numberofcontactsBRQR" : "Anzahl Kontakte - Barcodes/QR-Codes",
     "siteevents.numberofcontactsBC" : "Anzahl Kontakte - Visitenkarten",
     "siteevents.numberofcontactsMA" : "Anzahl Kontakte - Manuell",

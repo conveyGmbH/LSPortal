@@ -976,6 +976,7 @@
     "siteevents.numberofregisteredusers" : "Numero di utenti registrati",
     "siteevents.numberofblockedcontacts" : "Numero di contatti bloccati",
     "siteevents.numberofusersused" : "Numero di utenti utilizzati",
+    "siteevents.numberofcontacts" : "Numero di contatti",
     "siteevents.numberofcontactsBRQR" : "Numero di contatti - Codici a barre/codici QR",
     "siteevents.numberofcontactsBC" : "Numero di contatti - Biglietti da visita",
     "siteevents.numberofcontactsMA" : "Numero di contatti - Manuale",

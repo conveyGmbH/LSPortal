@@ -103,6 +103,7 @@
                 that.binding.dataSiteeventsHeaderText.StandNo = getResourceText("siteevents.stand");
                 that.binding.dataSiteeventsHeaderText.NumUsers = getResourceText("siteevents.numberofusers");
                 that.binding.dataSiteeventsHeaderText.NumUsedUsers = getResourceText("siteevents.numberofregisteredusers");
+                that.binding.dataSiteeventsHeaderText.NumContacts = getResourceText("siteevents.numberofcontacts");
                 that.binding.dataSiteeventsHeaderText.NumLockedContacts = getResourceText("siteevents.numberofblockedcontacts");
                 that.binding.dataSiteeventsHeaderText.NumActiveUsers = getResourceText("siteevents.numberofusersused");
                 that.binding.dataSiteeventsHeaderText.NumContactsBC = getResourceText("siteevents.numberofcontactsBRQR");
@@ -126,18 +127,19 @@
                 that.binding.dataSiteeventsHeaderValue.NumUsedUsers = 6;
                 that.binding.dataSiteeventsHeaderValue.NumLockedContacts = 7;
                 that.binding.dataSiteeventsHeaderValue.NumActiveUsers = 8;
-                that.binding.dataSiteeventsHeaderValue.NumContactsBC = 9;
-                that.binding.dataSiteeventsHeaderValue.NumContactsVC = 10;
-                that.binding.dataSiteeventsHeaderValue.NumContactsMan = 11;
-                that.binding.dataSiteeventsHeaderValue.NumExports = 12;
-                that.binding.dataSiteeventsHeaderValue.LastExportTS = 13;
-                that.binding.dataSiteeventsHeaderValue.FBStatus = 14;
-                that.binding.dataSiteeventsHeaderValue.NumSentEmails = 15;
-                that.binding.dataSiteeventsHeaderValue.PortalLoginTS = 16;
-                that.binding.dataSiteeventsHeaderValue.FairMandant_CustomerID = 17;
-                that.binding.dataSiteeventsHeaderValue.StandSize = 18;
-                that.binding.dataSiteeventsHeaderValue.DUNSNumber = 19;
-                that.binding.dataSiteeventsHeaderValue.Auswertungsvariante = 20;
+                that.binding.dataSiteeventsHeaderValue.NumContacts = 9;
+                that.binding.dataSiteeventsHeaderValue.NumContactsBC = 10;
+                that.binding.dataSiteeventsHeaderValue.NumContactsVC = 11;
+                that.binding.dataSiteeventsHeaderValue.NumContactsMan = 12;
+                that.binding.dataSiteeventsHeaderValue.NumExports = 13;
+                that.binding.dataSiteeventsHeaderValue.LastExportTS = 14;
+                that.binding.dataSiteeventsHeaderValue.FBStatus = 15;
+                that.binding.dataSiteeventsHeaderValue.NumSentEmails = 16;
+                that.binding.dataSiteeventsHeaderValue.PortalLoginTS = 17;
+                that.binding.dataSiteeventsHeaderValue.FairMandant_CustomerID = 18;
+                that.binding.dataSiteeventsHeaderValue.StandSize = 19;
+                that.binding.dataSiteeventsHeaderValue.DUNSNumber = 20;
+                that.binding.dataSiteeventsHeaderValue.Auswertungsvariante = 21;
             }
             this.setInitialHeaderTextValue = setInitialHeaderTextValue;
 
@@ -156,6 +158,8 @@
                         return "NumUsers";
                     case getResourceText("siteevents.numberofregisteredusers"):
                         return "NumUsedUsers";
+                    case getResourceText("siteevents.numberofcontacts"):
+                        return "NumContacts";
                     case getResourceText("siteevents.numberofblockedcontacts"):
                         return "NumLockedContacts";
                     case getResourceText("siteevents.numberofusersused"):
@@ -247,39 +251,42 @@
                         cells[i].title = getResourceText("siteevents.numberofusersused");
                     }
                     if (cells[i].title === "9") {
-                        cells[i].title = getResourceText("siteevents.numberofcontactsBRQR");
+                        cells[i].title = getResourceText("siteevents.numberofcontacts");
                     }
                     if (cells[i].title === "10") {
-                        cells[i].title = getResourceText("siteevents.numberofcontactsBC");
+                        cells[i].title = getResourceText("siteevents.numberofcontactsBRQR");
                     }
                     if (cells[i].title === "11") {
-                        cells[i].title = getResourceText("siteevents.numberofcontactsMA");
+                        cells[i].title = getResourceText("siteevents.numberofcontactsBC");
                     }
                     if (cells[i].title === "12") {
-                        cells[i].title = getResourceText("siteevents.numberofexports");
+                        cells[i].title = getResourceText("siteevents.numberofcontactsMA");
                     }
                     if (cells[i].title === "13") {
-                        cells[i].title = getResourceText("siteevents.lastexportdateandtime");
+                        cells[i].title = getResourceText("siteevents.numberofexports");
                     }
                     if (cells[i].title === "14") {
-                        cells[i].title = getResourceText("siteevents.questionnairestatus");
+                        cells[i].title = getResourceText("siteevents.lastexportdateandtime");
                     }
                     if (cells[i].title === "15") {
-                        cells[i].title = getResourceText("siteevents.numberofemailssent");
+                        cells[i].title = getResourceText("siteevents.questionnairestatus");
                     }
                     if (cells[i].title === "16") {
-                        cells[i].title = getResourceText("siteevents.lastlogintotheportal");
+                        cells[i].title = getResourceText("siteevents.numberofemailssent");
                     }
                     if (cells[i].title === "17") {
-                        cells[i].title = getResourceText("siteevents.customerid");
+                        cells[i].title = getResourceText("siteevents.lastlogintotheportal");
                     }
                     if (cells[i].title === "18") {
-                        cells[i].title = getResourceText("siteevents.standsize");
+                        cells[i].title = getResourceText("siteevents.customerid");
                     }
                     if (cells[i].title === "19") {
-                        cells[i].title = getResourceText("siteevents.dunsnumber");
+                        cells[i].title = getResourceText("siteevents.standsize");
                     }
                     if (cells[i].title === "20") {
+                        cells[i].title = getResourceText("siteevents.dunsnumber");
+                    }
+                    if (cells[i].title === "21") {
                         cells[i].title = getResourceText("siteevents.auswertungsvariante");
                     }
                 }
