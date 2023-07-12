@@ -265,6 +265,9 @@
                             if (master && master.controller && master.controller.binding) {
                                 master.controller.employees.setAt(0, employee);
                             }
+                            if (employee && employee.MitarbeiterVIEWID) {
+                                master.controller.selectRecordId(employee.MitarbeiterVIEWID);
+                            }
                             AppBar.modified = true;
                         }, function (errorResponse) {
                             Log.print(Log.l.error, "error inserting employee");
@@ -647,7 +650,7 @@
                 var ret;
                 var dataEmployee = that.binding.dataEmployee;
                 if (dataEmployee && AppBar.modified && !AppBar.busy) {
-                    if (dataEmployee.Password.length < 5) {
+                    if (!dataEmployee.Password && dataEmployee.Password.length < 5) {
                         Log.print(Log.l.error, "password must be min length 5");
                         alert(getResourceText("employee.alertPasswordShort"));
                         return WinJS.Promise.as();
