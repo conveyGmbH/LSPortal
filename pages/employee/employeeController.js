@@ -587,9 +587,7 @@
                             Log.print(Log.l.trace, "saveData completed...");
                             var master = Application.navigator.masterControl;
                             if (master && master.controller) {
-                                master.controller.loadData(recordId).then(function () {
-                                    master.controller.selectRecordId(recordId);
-                                });
+                            master.controller.loadData(recordId);
                             }
                     } else {
                         return WinJS.Promise.as();
