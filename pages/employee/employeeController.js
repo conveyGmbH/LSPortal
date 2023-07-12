@@ -650,7 +650,7 @@
                 var ret;
                 var dataEmployee = that.binding.dataEmployee;
                 if (dataEmployee && AppBar.modified && !AppBar.busy) {
-                    if (!dataEmployee.Password && dataEmployee.Password.length < 5) {
+                    if (!dataEmployee.Password || dataEmployee.Password.length < 5) {
                         Log.print(Log.l.error, "password must be min length 5");
                         alert(getResourceText("employee.alertPasswordShort"));
                         return WinJS.Promise.as();
