@@ -263,6 +263,7 @@
                             var master = Application.navigator.masterControl;
                             if (master && master.controller && master.controller.binding && employee && employee.MitarbeiterVIEWID) {
                                 AppData.setRecordId("MitarbeiterVIEW_20471", employee.MitarbeiterVIEWID);
+                                master.controller.binding.employeeId = employee.MitarbeiterVIEWID;
                                 master.controller.loadData(employee.MitarbeiterVIEWID);
                             }
                             //AppBar.modified = true;
