@@ -72,8 +72,8 @@
                     if (empList && empList.style) {
                         var contentarea = element.querySelector(".contentarea");
                         if (contentarea) {
-                            var width = contentarea.clientWidth;
-                            var height = contentarea.clientHeight - 8;
+                            var width = contentarea.offsetWidth;
+                            var height = contentarea.offsetHeight - 8;
                             var contentheader = element.querySelector(".content-header");
                             if (contentheader) {
                                 height -= contentheader.clientHeight;

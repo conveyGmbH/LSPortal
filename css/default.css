@@ -350,7 +350,6 @@ section[role=main] {
     -webkit-transform: translateZ(0);
     /*
     background-color: rgba(64, 255, 64, 0.2);
-    width: calc(100% - 48px);
     */
     width: 100%;
     height: calc(100% - 8px);
@@ -860,6 +859,12 @@ button.win-button {
 .list-portrait-only{
     display: none;
 }
+.list-portrait-only {
+    display: none;
+}
+.list-compact-only {
+    display: none;
+}
 
 .list-field-small-relative-10 {
     text-align: left;
@@ -988,7 +993,7 @@ button.win-button {
 #pagePhoto.rotate270{
     -webkit-transform: rotate(270deg)translate(0%,-60%)scale(0.5,0.5); 
     -ms-transform: rotate(270deg)translate(0%,-50%)scale(0.5,0.5); 
-    -moz-transform:rotate(270deg)translateY(0%,-65%);
+    -moz-transform:rotate(270deg)translate(0%,-65%);
     -o-transform:rotate(270deg)translate(0%,-65%);
     /*transform: rotate(270deg)translate(0%,-65%)scale(1,1);*/
 }
@@ -1424,11 +1429,6 @@ button.win-button {
     left: 10px;
     width: calc(100% - 10px);
 }
-.contentarea.view-size-small {
-    /*
-    width: calc(100% - 16px);
-    */
-}
 
 .view-size-small .centerarea {
     width: 100%;
@@ -1588,6 +1588,15 @@ button.win-button {
     margin-top: -32px;
     */
     padding-top: 6px;
+}
+
+.view-size-smallest .list-portrait-only {
+    display: none;
+}
+
+.view-size-smallest .list-compact-only {
+    display: block;
+    width: 65px;
 }
 
 .mandatory-bkg {

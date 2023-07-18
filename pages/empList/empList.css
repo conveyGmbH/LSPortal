@@ -61,6 +61,15 @@
     padding-top: 4px;
     padding-bottom: 4px;
 }
+
+.view-size-smallest #employeeList .win-item {
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
 .employeelist-button {
     float: right;
     margin-right: 20px;

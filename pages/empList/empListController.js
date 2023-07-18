@@ -160,8 +160,11 @@
             var resultConverter = function (item, index) {
                 item.index = index;
                 that.binding.hasLocalevents = AppHeader.controller.binding.userData.HasLocalEvents;
-                item.Names = "",
-                    item.fullName = (item.Vorname ? (item.Vorname + " ") : "") + (item.Nachname ? item.Nachname : "");
+                item.Names = "";
+                item.fullName = (item.Vorname ? (item.Vorname + " ") : "") + (item.Nachname ? item.Nachname : "");
+                item.nameInitial = (item.Vorname && item.Nachname)
+                    ? item.Vorname.substr(0, 1) + item.Nachname.substr(0, 1)
+                    : (item.Vorname ? item.Vorname.substr(0, 2) : item.Nachname ? item.Nachname.substr(0, 2) : "");
                 if (typeof cutSerialnumer !== "undefined" && typeof item.CS1504SerienNr !== "undefined") {
                     item.CS1504SerienNr = that.cutSerialnumer(item.CS1504SerienNr);
                 }
