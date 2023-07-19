@@ -238,8 +238,8 @@
                     that.saveData(function (response) {
                         AppBar.busy = true;
                         Log.print(Log.l.trace, "eployee saved");
-                        var newEmployee = getEmptyDefaultValue(Employee.employeeView.defaultValue);
-                        //var newEmployee = copyByValue(Employee.employeeView.defaultValue);
+                        //var newEmployee = getEmptyDefaultValue(Employee.employeeView.defaultValue);
+                        var newEmployee = copyByValue(Employee.employeeView.defaultValue);
                         /* var restriction = {
                              OrderAttribute: ["Nachname"],
                              OrderDesc: false
