@@ -4,6 +4,8 @@
 /// <reference path="~/www/lib/convey/scripts/appSettings.js" />
 /// <reference path="~/www/lib/convey/scripts/dataService.js" />
 /// <reference path="~/www/lib/convey/scripts/appbar.js" />
+/// <reference path="~/www/lib/convey/scripts/colors.js" />
+/// <reference path="~/www/lib/convey/scripts/colorPicker.js" />
 /// <reference path="~/www/lib/convey/scripts/pageController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/pages/eventGenSettings/eventGenSettingsService.js" />
@@ -42,6 +44,36 @@
             this.dispose = function () {
 
             }
+            var createColorPicker = function (colorProperty) {
+                Log.call(Log.l.trace, "Settings.Controller.");
+                var id = "#" + colorProperty + "_picker";
+                var element = pageElement.querySelector(id);
+                if (element) {
+                    var colorPicker = new ColorPicker.ColorPickerClass(
+                        element, 10, 28,
+                        Colors[colorProperty],
+                        function (color) { // callback function for change of color property!
+                            if (this.triggerElement) {
+                                if (this.triggerElement && this.triggerElement.style) {
+                                    if (colorProperty === "textColor") {
+                                        this.triggerElement.style.borderColor = color;
+                                    } else {
+                                        this.triggerElement.style.borderColor = Colors.textColor;
+                                    }
+                                }
+                            }
+                        }
+                    );
+                    var triggerElement = colorPicker.triggerElement;
+                    if (triggerElement && triggerElement.style) {
+                        triggerElement.style.borderColor = Colors.textColor;
+                    }
+                }
+                Log.ret(Log.l.trace);
+            };
+            this.createColorPicker = createColorPicker;
+
+            this.createColorPicker("videoBackgroundColor");
 
             var getDateObject = function (dateData) {
                 var ret;
