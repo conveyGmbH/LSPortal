@@ -1459,6 +1459,7 @@
     "eventGenSettings.registergroupheader"			: "ENREGISTREMENT",
     "eventGenSettings.speakergroupheader"			: "SPEAKER",
     "eventGenSettings.sessiongroupheader"			: "SESSION",
+    "eventGenSettings.videobackgroundcolor"			: "couleur d'arrière-plan de la vidéo",
 
     "eventSpeakerAdministration.speaker"    : "Membre",
     "eventSpeakerAdministration.speakerDelete": "Souhaitez-vous supprimer le devoir",

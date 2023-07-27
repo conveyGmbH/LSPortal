@@ -1438,6 +1438,8 @@
     "eventGenSettings.registergroupheader"			: "REGISTRIERUNG",
     "eventGenSettings.speakergroupheader"			: "SPEAKER",
     "eventGenSettings.sessiongroupheader"			: "SESSION",
+    "eventGenSettings.videobackgroundcolor"			: "Video Hintergrundfarbe",
+    
     
 	"eventSeries.title" : "Serienseite",
     "eventSeries.language" : "Sprache",

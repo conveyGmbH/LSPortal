@@ -1458,6 +1458,7 @@
     "eventGenSettings.registergroupheader"			: "ISCRIZIONE",
     "eventGenSettings.speakergroupheader"			: "ALTOPARLANTE",
     "eventGenSettings.sessiongroupheader"			: "SESSIONE",
+    "eventGenSettings.videobackgroundcolor"			: "Colore sfondo video",
 
     "eventSpeakerAdministration.speaker": "Membro",
     "eventSpeakerAdministration.speakerDelete": "Vuoi eliminare il compito",

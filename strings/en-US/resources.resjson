@@ -1459,6 +1459,7 @@
     "eventGenSettings.registergroupheader"			: "REGISTRATION",
     "eventGenSettings.speakergroupheader"			: "SPEAKER",
     "eventGenSettings.sessiongroupheader"			: "SESSION",
+    "eventGenSettings.videobackgroundcolor"			: "Videobackgroundcolor",
 
 	"eventSpeakerAdministration.speaker"    : "Member",
 	"eventSpeakerAdministration.speakerDelete": "Would you like to delete the assignment",

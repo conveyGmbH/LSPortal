@@ -6,6 +6,7 @@
 /// <reference path="~/www/lib/convey/scripts/logging.js" />
 /// <reference path="~/www/lib/convey/scripts/navigator.js" />
 /// <reference path="~/www/lib/convey/scripts/appbar.js" />
+/// <reference path="~/www/lib/convey/scripts/colors.js" />
 /// <reference path="~/www/pages/eventGenSettings/eventGenSettingsController.js" />
 
 (function () {
@@ -19,6 +20,8 @@
         ready: function (element, options) {
             Log.call(Log.l.trace, pageName + ".");
             // TODO: Initialize the page here.
+            Colors.changeCSS(".color_picker_trigger", "border-width", AppData._persistentStates.inputBorder + "px");
+            Colors.changeCSS(".color_picker_trigger", "border-radius", AppData._persistentStates.inputBorderRadius + "px");
             // add page specific commands to AppBar
             var commandList = [
                 { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" },

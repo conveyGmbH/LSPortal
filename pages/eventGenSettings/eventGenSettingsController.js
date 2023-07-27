@@ -7,6 +7,7 @@
 /// <reference path="~/www/lib/convey/scripts/colors.js" />
 /// <reference path="~/www/lib/convey/scripts/colorPicker.js" />
 /// <reference path="~/www/lib/convey/scripts/pageController.js" />
+/// <reference path="~/www/lib/convey/scripts/strings.js"/>
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/pages/eventGenSettings/eventGenSettingsService.js" />
 /// <reference path="~/www/lib/moment/scripts/moment-with-locales.js" />
@@ -54,14 +55,9 @@
                         Colors[colorProperty],
                         function (color) { // callback function for change of color property!
                             if (this.triggerElement) {
-                                if (this.triggerElement && this.triggerElement.style) {
-                                    if (colorProperty === "textColor") {
-                                        this.triggerElement.style.borderColor = color;
-                                    } else {
-                                        this.triggerElement.style.borderColor = Colors.textColor;
-                                    }
-                                }
+                                AppBar.modified = true;
                             }
+                            that.changeColorSetting(colorProperty, color);
                         }
                     );
                     var triggerElement = colorPicker.triggerElement;
@@ -72,6 +68,17 @@
                 Log.ret(Log.l.trace);
             };
             this.createColorPicker = createColorPicker;
+
+            var changeColorSetting = function (colorProperty, color) {
+                Log.call(Log.l.trace, "Settings.Controller.", "colorProperty=" + colorProperty + " color=" + color);
+                if (color) {
+                    var pValue = color.replace("#", "");
+                    that.binding.dataEvent.VideoBackgroundColor = pValue;
+                    Log.call(Log.l.trace, "EventGenSettings.Controller.");
+                }
+                Log.ret(Log.l.trace);
+            }
+            this.changeColorSetting = changeColorSetting;
 
             this.createColorPicker("videoBackgroundColor");
 
@@ -526,6 +533,43 @@
                         showbox.style.display = "block";
                     }
                 },
+                ChangeColorPicker: function (event) {
+                    Log.call(Log.l.trace, "Settings.Controller.");
+                    if (event.currentTarget) {
+                        var colorProperty = event.currentTarget.id;
+                        var childElement = pageElement.querySelector("#" + colorProperty);
+                        if (childElement) {
+                            var colorPicker = null;
+                            var color = childElement.value || "";
+                            // HIER -> überprüfe ob Farbzahl gültig ist
+                            // hier raus und in den resultconverter
+                            function isHexaColor(sNum) {
+                                return (typeof sNum === "string") && (sNum.length === 6 || sNum.length === 3)
+                                    && !isNaN(parseInt(sNum, 16));
+                            };
+                            var pickerParent = pageElement.querySelector("#" + colorProperty + "_picker");
+                            if (pickerParent) {
+                                var colorcontainer = pickerParent.querySelector(".color_container");
+                                if (colorcontainer) {
+                                    colorPicker = colorcontainer.colorPicker;
+                                    if (colorPicker && isHexaColor(color.replace("#", ""))) {
+                                        colorPicker.color = color;
+                                    }
+                                }
+                            }
+                            if (color && isHexaColor(color.replace("#", ""))) {
+                                that.changeColorSetting(colorProperty, color);
+                            } else if (colorPicker && colorPicker.color) {
+                                that.changeColorSetting(colorProperty, colorPicker.color);
+                                if (that.binding && that.binding.generalData &&
+                                    that.binding.generalData.colorSettings) {
+                                    that.binding.generalData.colorSettings[colorProperty] = colorPicker.color;
+                                }
+                            }
+                        }
+                    }
+                    Log.ret(Log.l.trace);
+                },
                 onClickSave: function () {
                     Log.call(Log.l.trace, "EventGenSettings.Controller.");
                     that.insertNewEvent();
@@ -643,6 +687,24 @@
             }
             this.setConferenceId = setConferenceId;
 
+            var colorPickerContainer = function(color) {
+                var pickerParent = pageElement.querySelector("#" + "videoBackgroundColor" + "_picker");
+                if (pickerParent) {
+                    var colorcontainer = pickerParent.querySelector(".color_container");
+                    if (colorcontainer) {
+                        var colorPicker = colorcontainer.colorPicker;
+                        if (colorPicker) {
+                            if (that.binding.dataEvent.VideoBackgroundColor) {
+                                colorPicker.color = "#" + that.binding.dataEvent.VideoBackgroundColor;
+                            } else {
+                                colorPicker.color = "#" + "000000"; //black
+                            }
+                        }
+                    }
+                }
+            }
+            this.colorPickerContainer = colorPickerContainer;
+
             var resultConverter = function (item, index) {
                 var property = AppData.getPropertyFromInitoptionTypeID(item);
                 /*if (property && property !== "individualColors" && (!item.pageProperty) && item.LocalValue) {
@@ -678,6 +740,7 @@
                         if (json && json.d) {
                             // now always edit!
                             that.setDataEvent(json.d.results[0]);
+                            that.colorPickerContainer(json.d.results[0].VideoBackgroundColor);
                         }
                     }, function (errorResponse) {
                         AppData.setErrorMsg(that.binding, errorResponse);
@@ -713,6 +776,7 @@
                 AppData.setErrorMsg(that.binding);
                 var ret;
                 var dataEvent = that.binding.dataEvent;
+                var color = dataEvent.VideoBackgroundColor;
                 if (AppBar.modified && that.checkifFieldIsEmpty() && !AppBar.busy) {
                     error({});
                     return WinJS.Promise.as();
