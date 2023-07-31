@@ -188,6 +188,12 @@
             }
             this.createMandantVaText = createMandantVaText;
 
+            var setSpeakerVideosPinnedOn = function() {
+                Log.call(Log.l.trace, "EventGenSettings.Controller.");
+                that.binding.dataEvent.SpeakerVideosPinned = 1;
+            }
+            this.setSpeakerVideosPinnedOn = setSpeakerVideosPinnedOn;
+
             var insertNewEvent = function () {
                 Log.call(Log.l.trace, "EventGenSettings.Controller.");
                 AppData.setErrorMsg(that.binding);
@@ -205,6 +211,7 @@
                         that.setEventId(veranstaltungId);                        
                         if (master && master.controller && typeof master.controller.loadData === "function") {
                             master.controller.loadData();
+                            that.setSpeakerVideosPinnedOn();
                         };
                     } else {
                         Log.print(Log.l.error, "call error veranstaltungId is null");
