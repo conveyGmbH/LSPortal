@@ -663,7 +663,7 @@
 	"event.ticketCodeServer" : "Ticketcode-Server",
 	"event.dbSyncLogin"     : "DBSYNCLogin",
 	"event.dbSyncPassword"  : "DBSYNCPassword",
-	"event.serverList"      : "Serverlist",
+	"event.serverList"      : "Server Adressdaten",
     "event.FairVeranstalter" : "Veranstalter",
     "event.comment" : "Ihre Veranstaltung vorbereiten.",
 	"event.activeApplications" : "Aktive Anwendungen",
