@@ -8,6 +8,17 @@
     min-width: calc(100% - 12px);
     margin-left: 5px;
 }
+.listView .siteEventsListLayout {
+    position: static;
+}
+
+.listView .siteEventsListLayout .win-surface {
+    margin-left: 0;
+}
+
+#siteEventsList .win-container {
+    margin: 0;
+}
 .view-size-small #siteEventsList .portrait_only {
     display: none;
 }
@@ -30,4 +41,24 @@
     margin-left: 5px;
     font-size: 16px;
     top: 0px;
+}
+.view-size-smallest #siteEventsList .win-item {
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+.view-size-smallest #siteEventsList #eventTyp {
+    display: none !important;
+}
+
+.view-size-smallest #siteEventsList .master-list-header {
+    display: none !important;
+}
+.siteEventsList .list-div-left {
+    width: 100%
+}
+.siteEventsList .list-compressed {
+    width: calc(100% - 100px)
 }

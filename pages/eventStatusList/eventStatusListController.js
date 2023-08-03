@@ -154,6 +154,9 @@
                         item.timeRangeString += " - " + curMoment.format("HH:mm");
                     }
                 }
+                item.nameInitial = (item.Name)
+                    ? item.Name.substr(0, 2)
+                    : (item.Name ? item.Name.substr(0, 2) : "");
             }
             this.resultConverter = resultConverter;
 
@@ -194,7 +197,7 @@
                         }
                         if (listView.winControl.loadingState === "itemsLoading") {
                             if (!layout) {
-                                layout = Application.EventStatusListLayout.EventStatusListLayout;
+                                layout = Application.EventStatusListLayout.eventStatusListLayout;
                                 listView.winControl.layout = { type: layout };
                             }
                         } else if (listView.winControl.loadingState === "complete") {

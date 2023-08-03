@@ -11,7 +11,18 @@
 .eventslist .semibold {
     font-weight: 600;
 }
+/* Styles used for the custom layout */
+.listView .eventslistLayout {
+    position: static;
+}
 
+    .listView .eventslistLayout .win-surface {
+        margin-left: 0;
+    }
+
+#eventslist .win-container {
+    margin: 0;
+}
 #eventslist .win-itembox {
     width: 100%;
     min-height: 60px;
@@ -37,4 +48,16 @@
     top: 0;
     width: 100%;
     height: calc(100% - 72px);
+}
+.view-size-smallest #eventslist .win-item {
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    text-align: center;
+}
+
+.view-size-smallest #siteEventsList .win-container {
+    width: 100% !important;
 }

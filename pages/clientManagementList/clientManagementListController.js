@@ -195,6 +195,9 @@
                 if (!item.recordIcon) {
                     item.recordIcon = "user";
                 }
+                item.nameInitial = (item.Name)
+                    ? item.Name.substr(0, 2)
+                    : (item.Name ? item.Name.substr(0, 2) : "");
             }
             this.resultConverter = resultConverter;
 

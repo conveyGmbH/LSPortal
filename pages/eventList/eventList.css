@@ -1,23 +1,34 @@
-﻿.eventslist .list-div-left,
-.eventslist .list-div-right {
+﻿.eventlist .list-div-left,
+.eventlist .list-div-right {
     width: calc(100% - 32px);
     margin: 0 16px;
 }
 
-.eventslist .grayed-out {
+.eventlist .grayed-out {
     opacity: 0.6;
 }
 
-.eventslist .semibold {
+.eventlist .semibold {
     font-weight: 600;
 }
 
-#eventslist .win-itembox {
+#eventlist .win-itembox {
     width: 100%;
     min-height: 60px;
 }
+/* Styles used for the custom layout */
+.listView .eventlistLayout {
+    position: static;
+}
 
-#eventslist .win-container {
+    .listView .eventlistLayout .win-surface {
+        margin-left: 0;
+    }
+
+#eventlist .win-container {
+    margin: 0;
+}
+#eventlist .win-container {
     width: 100%;
     height: auto;
     margin: 0;
@@ -26,15 +37,28 @@
     background-color: transparent;
 }
 
-#eventslist .win-surface {
+#eventlist .win-surface {
     margin-top: 0;
     margin-left: 0;
 }
 
-#eventslist.listview {
+#eventlist.listview {
     position: relative;
     left: 0;
     top: 0;
     width: 100%;
     height: calc(100% - 72px);
+}
+.view-size-smallest #eventlist .win-item {
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+#eventlist .list-div-left {
+    width: 100%
+}
+#eventlist .list-compressed {
+    width: calc(100% - 100px)
 }

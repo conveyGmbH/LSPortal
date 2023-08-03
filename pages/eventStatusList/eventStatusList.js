@@ -22,14 +22,14 @@
                     this._surface = this._site.surface;
 
                     // Add a CSS class to control the surface level layout
-                    WinJS.Utilities.addClass(this._surface, "EventStatusListLayout");
+                    WinJS.Utilities.addClass(this._surface, "eventStatusListLayout");
 
                     return WinJS.UI.Orientation.vertical;
                 },
 
                 // Reset the layout to its initial state
                 uninitialize: function () {
-                    WinJS.Utilities.removeClass(this._surface, "EventStatusListLayout");
+                    WinJS.Utilities.removeClass(this._surface, "eventStatusListLayout");
                     this._site = null;
                     this._surface = null;
                 }
@@ -76,8 +76,8 @@
                     if (contactList && contactList.style) {
                         var contentarea = element.querySelector(".contentarea");
                         if (contentarea) {
-                            var width = contentarea.clientWidth;
-                            var height = contentarea.clientHeight - 8;
+                            var width = contentarea.offsetWidth;
+                            var height = contentarea.offsetHeight - 8;
                             var contentheader = element.querySelector(".content-header");
                             if (contentheader) {
                                 height -= contentheader.clientHeight;

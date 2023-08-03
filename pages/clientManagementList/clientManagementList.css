@@ -1,2 +1,29 @@
 ﻿body {
 }
+/* Styles used for the custom layout */
+.listView .clientManagementListLayout {
+    position: static;
+}
+
+    .listView .clientManagementListLayout .win-surface {
+        margin-left: 0;
+    }
+
+#clientManagementList .win-container {
+    margin: 0;
+}
+.view-size-smallest #clientManagementList .win-item {
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.view-size-smallest #clientManagementList .status {
+    display: none !important;
+}
+
+.view-size-smallest .clientManagementList .list-div-left {
+    width: 100%
+}

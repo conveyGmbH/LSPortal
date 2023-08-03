@@ -11,7 +11,18 @@
 .eventStatusList .semibold {
     font-weight: 600;
 }
+/* Styles used for the custom layout */
+.listView .eventStatusListLayout {
+    position: static;
+}
 
+    .listView .eventStatusListLayout .win-surface {
+        margin-left: 0;
+    }
+
+#eventStatusList .win-container {
+    margin: 0;
+}
 #eventStatusList .win-itembox {
     width: 100%;
     min-height: 60px;
@@ -37,4 +48,17 @@
     top: 0;
     width: 100%;
     height: calc(100% - 72px);
+}
+.view-size-smallest #eventStatusList .win-item {
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+.view-size-smallest #eventStatusList .status {
+    display: none !important;
+}
+.view-size-smallest .eventStatusList .list-div-left {
+    width: 100%
 }
