@@ -46,6 +46,13 @@
                     </div>
                     <div class="genDataModList-template"
                          data-win-control="WinJS.Binding.Template" style="display: none">
+                        <div class="list-compact-only" data-win-bind="disabled: disabled">
+                            <div class="row-separator"></div>
+                            <div class="list-div-left">
+                                <span class="win-type-title win-type-ellipsis"
+                                      data-win-bind="textContent: nameInitial"></span>
+                            </div>
+                        </div>
                         <div class="list-landscape-only">
                             <div class="row-bkg-gray"
                                  data-win-bind="style.display: index Binding.Converter.oddToDisplay"></div>

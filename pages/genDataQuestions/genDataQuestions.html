@@ -22,6 +22,14 @@
                     </div>
                     <div class="genDataQuestions-template"
                          data-win-control="WinJS.Binding.Template" style="display: none">
+                        <div class="list-compact-only" data-win-bind="disabled: disabled">
+                            <div class="row-separator"></div>
+                            <div class="list-div-left">
+                                <span class="win-type-title win-type-ellipsis"
+                                      data-win-bind="textContent: nameInitial"></span>
+                            </div>
+                        </div>
+                        <div class="list-portrait-only" data-win-bind="disabled: disabled">
                         <div class="list-div-right grayed-out">
                             <span class="win-type-body"
                                   data-win-bind="textContent: QuestionGroupID"></span>
@@ -29,6 +37,17 @@
                         <div class="list-div-left">
                             <span class="list-item-left win-type-subtitle semibold"
                                   data-win-bind="textContent: QuestionTitle"></span>
+                        </div>
+                    </div>
+                        <div class="list-landscape-only" data-win-bind="disabled: disabled">
+                            <div class="list-div-right grayed-out">
+                                <span class="win-type-body"
+                                      data-win-bind="textContent: QuestionGroupID"></span>
+                            </div>
+                            <div class="list-div-left">
+                                <span class="list-item-left win-type-subtitle semibold"
+                                      data-win-bind="textContent: QuestionTitle"></span>
+                            </div>
                         </div>
                     </div>
                     <div class="headerFooterPlaceholder">

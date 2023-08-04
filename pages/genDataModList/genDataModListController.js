@@ -85,6 +85,9 @@
 
             var resultConverter = function (item, index) {
                 item.index = index;
+                item.nameInitial = (item.PersonFirstName && item.PersonLastName)
+                    ? item.PersonFirstName.substr(0, 1) + item.PersonLastName.substr(0, 1)
+                    : (item.PersonFirstName ? item.PersonFirstName.substr(0, 2) : item.PersonLastName ? item.PersonLastName.substr(0, 2) : "");
 
             }
             this.resultConverter = resultConverter;

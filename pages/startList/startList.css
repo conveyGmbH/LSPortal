@@ -11,7 +11,18 @@
 .startList .semibold {
     font-weight: 600;
 }
+/* Styles used for the custom layout */
+.listView .startListLayout {
+    position: static;
+}
 
+    .listView .startListLayout .win-surface {
+        margin-left: 0;
+    }
+
+#startList .win-container {
+    margin: 0;
+}
 #startList .win-itembox {
     width: 100%;
     min-height: 60px;

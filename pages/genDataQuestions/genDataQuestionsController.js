@@ -98,6 +98,10 @@
 
             var resultConverter = function (item, index) {
                 Log.call(Log.l.trace, "EventSeries.Controller.");
+                item.index = index;
+                item.nameInitial = (item.QuestionTitle)
+                    ? item.QuestionTitle.substr(0, 2)
+                    : (item.QuestionTitle ? item.QuestionTitle.substr(0, 2) : "");
                 Log.ret(Log.l.trace);
             }
             this.resultConverter = resultConverter;

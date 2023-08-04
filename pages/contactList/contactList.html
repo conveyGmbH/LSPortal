@@ -66,7 +66,14 @@
                     </div>
                     <div class="contactList-template"
                          data-win-control="WinJS.Binding.Template" style="display: none">
-                        <div class="list-landscape-only">
+                        <div class="list-compact-only" data-win-bind="disabled: disabled">
+                            <div class="row-separator"></div>
+                            <div class="list-div-left">
+                                <span class="win-type-title win-type-ellipsis"
+                                      data-win-bind="textContent: nameInitial"></span>
+                            </div>
+                        </div>
+                        <div class="list-landscape-only" data-win-bind="disabled: disabled">
                             <div class="row-bkg-gray"
                                  data-win-bind="style.display: index Binding.Converter.oddToDisplay"></div>
                             <div class="list-field-small-fixed-right"
@@ -101,7 +108,7 @@
                             <div class="list-field-small-relative-10 win-type-ellipsis"
                                  data-win-bind="textContent: mitarbeiterFullName"></div>
                         </div>
-                        <div class="list-portrait-only">
+                        <div class="list-portrait-only" data-win-bind="disabled: disabled">
                             <div class="row-separator"></div>
                             <div class="list-item-header-full">
                                 <div class="list-item-label-left win-type-caption">

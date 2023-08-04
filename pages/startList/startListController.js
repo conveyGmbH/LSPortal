@@ -154,6 +154,9 @@
                         item.timeRangeString += " - " + curMoment.format("HH:mm");
                     }
                 }
+                item.nameInitial = (item.Titel)
+                    ? item.Titel.substr(0, 2)
+                    : (item.Titel ? item.Titel.substr(0, 2) : "");
             }
             this.resultConverter = resultConverter;
 

@@ -283,6 +283,9 @@
                         }
                     }
                     item.index = index;
+                    item.nameInitial = (item.Vorname && item.Nachname)
+                        ? item.Vorname.substr(0, 1) + item.Nachname.substr(0, 1)
+                        : (item.Vorname ? item.Vorname.substr(0, 2) : item.Nachname ? item.Nachname.substr(0, 2) : "");
                     item.company = ((item.Firmenname ? (item.Firmenname + " ") : ""));
                     item.fullName =
                     ((item.Title ? (item.Title + " ") : "") +
