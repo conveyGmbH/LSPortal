@@ -49,3 +49,13 @@
     width: 100%;
     height: calc(100% - 72px);
 }
+.view-size-smallest #startList .win-item {
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+.startList .list-div-left {
+    width: 100%
+}
