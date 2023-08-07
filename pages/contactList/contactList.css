@@ -149,8 +149,9 @@
     padding-top: 4px;
     padding-bottom: 4px;
 }
-.contactList .list-div-left {
-    width: 100%
+.view-size-smallest .contactList .list-div-left {
+    width: 100%;
+    margin: 0;
 }
 .contactList #nameInitialcircle {
     display: inline-block;

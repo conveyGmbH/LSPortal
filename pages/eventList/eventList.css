@@ -1,68 +1,73 @@
-﻿.eventlist .list-div-left,
-.eventlist .list-div-right {
-    width: calc(100% - 32px);
-    margin: 0 16px;
+﻿#eventList .win-itemcontainer .win-itembox,
+#eventList .win-listview .win-itembox {
+    background-color: transparent;
+}
+.eventlist .contentarea {
+    overflow-y: hidden !important;
+}
+.eventlist .content-header {
+    height: auto !important;
+    min-height: 48px;
+}
+.eventlist .master-list-header {
+    height: auto !important;
+}
+.eventlist .master-list-header.list-compact-only {
+    padding-top: 48px;
+}
+#eventList .listview {
+    position: relative;
+    left: 0;
+    top: 0;
+    width: 100%;
+    min-height: 60px;
+    height: calc(100% - 72px);
 }
 
 .eventlist .grayed-out {
     opacity: 0.6;
 }
-
 .eventlist .semibold {
     font-weight: 600;
 }
-
-#eventlist .win-itembox {
+.eventlist .list-div-left,
+.eventlist .list-div-right {
+    width: calc(100% - 32px);
+    margin: 0 16px;
+}
+.eventlist .list-compressed {
     width: 100%;
-    min-height: 60px;
 }
 /* Styles used for the custom layout */
 .listView .eventlistLayout {
     position: static;
 }
-
-    .listView .eventlistLayout .win-surface {
-        margin-left: 0;
-    }
-
-#eventlist .win-container {
-    margin: 0;
+.listView .eventlistLayout .win-surface {
+    margin-left: 0;
 }
-#eventlist .win-container {
+
+#eventList .win-container {
     width: 100%;
     height: auto;
     margin: 0;
-    margin-bottom: 0;
     border-radius: 0;
     background-color: transparent;
 }
 
-#eventlist .win-surface {
-    margin-top: 0;
-    margin-left: 0;
-}
-
-#eventlist.listview {
-    position: relative;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: calc(100% - 72px);
-}
-.view-size-smallest #eventlist .win-item {
+.view-size-smallest #eventList .win-item {
     width: 100%;
     padding-left: 0;
     padding-right: 0;
     padding-top: 4px;
     padding-bottom: 4px;
 }
-#eventlist .list-div-left {
-    width: 100%
+.view-size-smallest .eventlist .list-div-left,
+.view-size-smallest .eventlist .list-div-right {
+    width: 100%;
+    margin: 0;
 }
-#eventlist .list-compressed {
-    width: calc(100% - 100px)
-}
-.eventlist #nameInitialcircle {
+
+#eventList #nameInitialcircle {
     display: inline-block;
     width: 45px;
     height: 45px;
@@ -72,4 +77,19 @@
     text-align: center;
     line-height: 45px;
     font-weight: bold;
+}
+#eventList .list-field-small-relative {
+    text-align: left;
+    width: calc(100% - 270px);
+    display: inline-block;
+    position: relative;
+    top: 0;
+    min-height: 32px;
+    padding-top: 8px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+#eventList .list-field-small-fixed {
+    width: 110px;
 }

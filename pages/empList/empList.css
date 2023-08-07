@@ -31,7 +31,11 @@
     margin-left: 0;
 }
 #employeeList .win-container {
+    width: 100%;
+    height: auto;
     margin: 0;
+    border-radius: 0;
+    background-color: transparent;
 }
 
 #employeeList .win-item {
@@ -88,13 +92,13 @@
     margin-top: -5px
 }
 .empList .list-div-left {
-    width: 100%
+    width: 100%;
 }
 .empList .list-symbol-IDw {
-    float: right
+    float: right;
 }
 .empList .list-compressed {
-    width: calc(100% - 100px)
+    width: calc(100% - 100px);
 }
 .empList .licence-warning-text {
     color: red;
@@ -114,9 +118,6 @@
     height: auto !important;
     padding-top: 2.5px;
     padding-bottom: 2.5px;
-}
-#eventlist .list-div-left {
-    width: 100%
 }
 .empList #nameInitialcircle {
     display: inline-block;

@@ -6,7 +6,7 @@
 /// <reference path="~/www/lib/convey/scripts/appbar.js" />
 /// <reference path="~/www/lib/convey/scripts/pageController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
-/// <reference path="~/www/pages/eventsList/eventsListService.js" />
+/// <reference path="~/www/pages/eventList/eventListService.js" />
 /// <reference path="~/www/lib/moment/scripts/moment-with-locales.min.js" />
 
 (function () {
