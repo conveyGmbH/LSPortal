@@ -61,7 +61,8 @@
 .view-size-smallest #siteEventsList .win-container {
     width: 100% !important;
 }
-#nameInitialcircle {
+
+.eventslist #nameInitialcircle {
     display: inline-block;
     width: 45px;
     height: 45px;

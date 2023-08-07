@@ -59,7 +59,7 @@
 .genDataQuestions .list-div-left {
     width: 100%
 }
-#nameInitialcircle {
+.genDataModList #nameInitialcircle {
     display: inline-block;
     width: 45px;
     height: 45px;

@@ -62,7 +62,7 @@
 #eventlist .list-compressed {
     width: calc(100% - 100px)
 }
-#nameInitialcircle {
+.eventlist #nameInitialcircle {
     display: inline-block;
     width: 45px;
     height: 45px;

@@ -62,7 +62,10 @@
 .view-size-smallest .eventStatusList .list-div-left {
     width: 100%
 }
-#nameInitialcircle {
+.eventStatusList .list-compressed {
+    width: calc(100% - 100px)
+}
+.eventStatusList #nameInitialcircle {
     display: inline-block;
     width: 45px;
     height: 45px;

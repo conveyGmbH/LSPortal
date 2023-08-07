@@ -27,7 +27,7 @@
 .view-size-smallest .clientManagementList .list-div-left {
     width: 100%
 }
-#nameInitialcircle {
+.clientManagementList #nameInitialcircle {
     display: inline-block;
     width: 45px;
     height: 45px;

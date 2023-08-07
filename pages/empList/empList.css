@@ -118,7 +118,7 @@
 #eventlist .list-div-left {
     width: 100%
 }
-#nameInitialcircle {
+.empList #nameInitialcircle {
     display: inline-block;
     width: 45px;
     height: 45px;
