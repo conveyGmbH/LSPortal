@@ -2,6 +2,9 @@
 #employeeList .win-listview .win-itembox {
     background-color: transparent;
 }
+.empList .contentarea {
+    overflow-y: hidden !important;
+}
 .empList .content-header {
     height: auto !important;
     min-height: 48px;
