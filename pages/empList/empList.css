@@ -4,9 +4,13 @@
 }
 .empList .content-header {
     height: auto !important;
+    min-height: 48px;
 }
 .empList .master-list-header {
-    height: auto !important
+    height: auto !important;
+}
+.empList .master-list-header.list-compact-only {
+    padding-top: 48px;
 }
 #employeeList .listview {
     position: relative;
@@ -93,6 +97,13 @@
     color: red;
     font-size: large;
     font-weight: bold;
+}
+.view-size-smallest .empList .licence-warning-text {
+    font-size: smaller;
+    font-weight: normal;
+    width: 54px;
+    overflow: hidden;
+    display: inline-block;
 }
 .empList .list-header {
     width: calc(100% - 25px);
