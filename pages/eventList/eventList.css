@@ -62,3 +62,14 @@
 #eventlist .list-compressed {
     width: calc(100% - 100px)
 }
+#nameInitialcircle {
+    display: inline-block;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-color: rgba(254,54,0,1);
+    color: black;
+    text-align: center;
+    line-height: 45px;
+    font-weight: bold;
+}

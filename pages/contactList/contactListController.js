@@ -530,6 +530,9 @@
                                     }
                                 }
                             } else if (listView.winControl.loadingState === "complete") {
+                                //smallest List color change
+                                var circleElement = pageElement.querySelector('#nameInitialcircle');
+                                circleElement.style.backgroundColor = Colors.accentColor;
                                 // load SVG images
                                 Colors.loadSVGImageElements(listView, "action-image-right", 40, Colors.textColor, "name", null, {
                                     "barcode-qr": { useStrokeColor: false }

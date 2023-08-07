@@ -209,6 +209,9 @@
 
 
                         } else if (listView.winControl.loadingState === "complete") {
+                            //smallest List color change
+                            var circleElement = pageElement.querySelector('#nameInitialcircle');
+                            circleElement.style.backgroundColor = Colors.accentColor;
                             if (that.loading) {
                                 progress = listView.querySelector(".list-footer .progress");
                                 counter = listView.querySelector(".list-footer .counter");
