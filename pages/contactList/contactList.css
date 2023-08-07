@@ -11,6 +11,22 @@
 #contactList .win-listview .win-itembox {
     background-color: transparent;
 }
+.contactList .contentarea {
+    overflow-y: hidden !important;
+}
+
+.contactList .content-header {
+    height: auto !important;
+    min-height: 48px;
+}
+
+.contactList .master-list-header {
+    height: auto !important;
+}
+
+.contactList .master-list-header.list-compact-only {
+    padding-top: 48px;
+}
 
 #contactList .listview {
     position: relative;
