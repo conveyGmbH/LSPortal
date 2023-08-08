@@ -11,7 +11,19 @@
 .listView .siteEventsListLayout {
     position: static;
 }
-
+.siteEventsList .contentarea {
+    overflow-y: hidden !important;
+}
+.siteEventsList .content-header {
+    height: auto !important;
+    min-height: 48px;
+}
+.siteEventsList .master-list-header {
+    height: auto !important;
+}
+    .siteEventsList .master-list-header.list-compact-only {
+    padding-top: 48px;
+}
 .listView .siteEventsListLayout .win-surface {
     margin-left: 0;
 }
@@ -61,4 +73,23 @@
 }
 .siteEventsList .list-compressed {
     width: calc(100% - 100px)
+}
+view-size-smallest #siteEventsList .win-container {
+    width: 100% !important;
+}
+
+.view-size-smallest .siteEventsList .list-div-left {
+    width: 100%;
+    margin: 0;
+}
+.siteEventsList #nameInitialcircle {
+    display: inline-block;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-color: rgba(254,54,0,1);
+    color: black;
+    text-align: center;
+    line-height: 45px;
+    font-weight: bold;
 }

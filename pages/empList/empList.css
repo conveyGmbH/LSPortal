@@ -119,6 +119,9 @@
     padding-top: 2.5px;
     padding-bottom: 2.5px;
 }
+#eventlist .list-div-left {
+    width: 100%
+}
 .empList #nameInitialcircle {
     display: inline-block;
     width: 45px;
