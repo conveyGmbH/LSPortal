@@ -13,6 +13,7 @@
             <section aria-label="Main content" role="main" class="animationElement">
                 <div class="contentarea win-type-body">
                     <div class="content-header">
+                        <div class="win-type-subtitle master-list-header list-portrait-only">
                         <div class="win-type-subtitle master-list-header">
                             <span data-win-res="{textContent: 'siteEventsList.title'}"></span>
                         </div>
@@ -25,6 +26,20 @@
                             <option data-win-bind="value: value; textContent: title"></option>
                         </select>
                     </div>
+                        <div class="win-type-subtitle master-list-header list-landscape-only">
+                            <div class="win-type-subtitle master-list-header">
+                                <span data-win-res="{textContent: 'siteEventsList.title'}"></span>
+                            </div>
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'siteEventsList.eventcombotitle'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'siteEventsList.eventcombotitle'}"></span>
+                            <select id="eventTyp"
+                                    class="input_field win-dropdown"
+                                    data-win-control="WinJS.UI.Repeater"
+                                    data-win-bind="value: eventTypID">
+                                <option data-win-bind="value: value; textContent: title"></option>
+                            </select>
+                        </div>
+                        </div>
                     <div class="headerFooterPlaceholder">
                         <div class="list-header">
                         </div>
@@ -34,7 +49,7 @@
                         <div class="list-compact-only" data-win-bind="disabled: disabled">
                             <div class="row-separator"></div>
                             <div class="list-div-left">
-                                <span class="win-type-title win-type-ellipsis"
+                                    <span id="nameInitialcircle" class="win-type-title win-type-ellipsis"
                                       data-win-bind="textContent: nameInitial"></span>
                             </div>
                         </div>

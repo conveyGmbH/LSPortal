@@ -58,10 +58,13 @@
     text-align: center;
 }
 
-.view-size-smallest #siteEventsList .win-container {
+.view-size-smallest #eventslist .win-container {
     width: 100% !important;
 }
-
+.view-size-smallest .eventslist .list-div-left {
+    width: 100%;
+    margin: 0;
+}
 .eventslist #nameInitialcircle {
     display: inline-block;
     width: 45px;

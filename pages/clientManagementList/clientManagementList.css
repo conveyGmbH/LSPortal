@@ -23,9 +23,13 @@
 .view-size-smallest #clientManagementList .status {
     display: none !important;
 }
+view-size-smallest #clientManagementList .win-container {
+    width: 100% !important;
+}
 
 .view-size-smallest .clientManagementList .list-div-left {
-    width: 100%
+    width: 100%;
+    margin: 0;
 }
 .clientManagementList #nameInitialcircle {
     display: inline-block;
