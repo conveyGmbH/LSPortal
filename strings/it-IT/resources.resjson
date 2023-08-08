@@ -1565,6 +1565,7 @@
     "eventbaselink.title" : "Link alla base",
     "eventbaselink.starturl" : "Percorso dell'URL",
     "eventbaselink.titlebaselink" : "Titolo",
+    "eventbaselink.teamurl" : "Team Link", 
 
     "ticketLimitsList.title" : "Elenco dei biglietti",
 

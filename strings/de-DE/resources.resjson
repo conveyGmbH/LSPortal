@@ -1569,6 +1569,7 @@
     "eventbaselink.title" : "Basis Link",
     "eventbaselink.starturl" : "URL Pfad",
     "eventbaselink.titlebaselink" : "Titel",
+    "eventbaselink.teamurl" : "Team Link", 
 
     "ticketLimitsList.title" : "Ausweis Einstellungen",
 

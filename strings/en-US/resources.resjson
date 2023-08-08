@@ -1567,6 +1567,7 @@
     "eventbaselink.title" : "Base Link",
     "eventbaselink.starturl" : "URL Path",
     "eventbaselink.titlebaselink" : "Title",
+    "eventbaselink.teamurl" : "Team Link", 
 
     "ticketLimitsList.title" : "Passes Settings",
 

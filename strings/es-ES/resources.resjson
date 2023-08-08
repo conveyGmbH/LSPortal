@@ -1324,5 +1324,10 @@
     "startList.count"  : "Anzahl",
 
 	"support.title" : "Support",
-	"support.url" : "https://www.convey.de/kontakt/"
+	"support.url" : "https://www.convey.de/kontakt/",
+
+    "eventbaselink.title" : "Basis Link",
+    "eventbaselink.starturl" : "URL Pfad",
+    "eventbaselink.titlebaselink" : "Titel",
+    "eventbaselink.teamurl" : "Team Link"
 }			

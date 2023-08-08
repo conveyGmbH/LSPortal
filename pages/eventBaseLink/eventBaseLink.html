@@ -29,6 +29,11 @@
                         <input name="title" class="input_field win-textbox" type="text" data-win-bind="value: eventMandantStartData.Titel Binding.Mode.twoway" />
                     </div>
                     <div class="line-separator"></div>
+                    <div class="field_line field_line_odd">
+                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventbaselink.teamurl'}"></span>
+                        <span class="label landscape_only" data-win-res="{textContent: 'eventbaselink.teamurl'}"></span>
+                        <input name="teamurl" class="input_field win-textbox" type="text" data-win-bind="value: eventMandantStartData.TeamUrl Binding.Mode.twoway" />
+                    </div>
                 </div>
                 <div class="error-message"
                      data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
