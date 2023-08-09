@@ -726,8 +726,7 @@
     "reporting.countrychart": "Statistiche paesi di provenienza (contatti per nazione)",
     "reporting.nocountry"   : "Nessuna Nazione",
     "reporting.pdfExportPath" : "Esportazione link",
-    "reportingColumnList.title"       : "Costume Export",
-	"reporting.outOf": "su",
+    "reporting.outOf": "su",
     "reporting.audioexport"       : "Export di:",
     "reporting.audiobutton"       : "I dati audio",
     "reporting.exportAll"   : "PDF Export/Tutto",
@@ -738,6 +737,9 @@
     "reporting.pdfZipDownloadText"      : "Il file di esportazione PDF e audio è stato creato. Fare clic sul pulsante Download per scaricare il file zip: ",
     "reporting.noFileAvailable" : "Non è stato possibile creare un'esportazione. Controllare i dati!",
 
+    "reportingColumnList.title"       : "Costume Export",
+    "reportingColumnList.optionText"       : "Scegliere qui le colonne che si desidera esportare. Nota bene: questo influisce solo sull'esportazione Excel elenco contatti, non sulle altre esportazioni.",
+	
     "employee.title"        : "Utente",
     "employee.firstname"    : "Nome",
     "employee.lastname"     : "Cognome",

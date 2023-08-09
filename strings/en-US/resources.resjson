@@ -726,8 +726,7 @@
     "reporting.countrychart": "Country statistics (contacts per country)",
     "reporting.nocountry"   : "No country",
     "reporting.pdfExportPath" : "Export link",
-    "reportingColumnList.title"       : "Custom Export",
-	"reporting.outOf": "out of",
+    "reporting.outOf": "out of",
     "reporting.audioexport"       : "Export of:",
     "reporting.audiobutton"       : "Audiodata",
     "reporting.exportAll"   : "PDF Export/All",
@@ -737,6 +736,9 @@
     "reporting.comment"      : "Manage your employee access data here.",
     "reporting.pdfZipDownloadText"      : "Your PDF and audio export-file has been created. Please click on the Download button to download the zip file: ",
     "reporting.noFileAvailable" : "No export could be created. Please check your data!",
+
+	"reportingColumnList.title"       : "Custom Export",
+    "reportingColumnList.optionText"       : "Please choose here the columns you want to have exported. Please note: this will affect only the contact list Excel Export, not the other exports.",
 
     "employee.title"        : "Users",
     "employee.firstname"    : "First name",

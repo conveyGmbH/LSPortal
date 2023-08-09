@@ -62,4 +62,6 @@
 .view-size-medium-small #pdfExportListhost {
     height: 300px;
 }
-
+.optionTextContainer {
+    display: flex;
+}

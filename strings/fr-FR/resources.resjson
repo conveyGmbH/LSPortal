@@ -725,7 +725,6 @@
     "reporting.employeechart"  : "Statistiques Employés (contacts par employé)",
     "reporting.countrychart": "Statistiques nationales (contacts par pays)",
     "reporting.nocountry"   : "Aucun pays",
-    "reporting.pdfExportPath" : "Lien d'export",
     "reportingColumnList.title"       : "Coutume Export",
 	"reporting.outOf": "sur",
     "reporting.audioexport"       : "Export de:",
@@ -737,6 +736,10 @@
     "reporting.comment"      : "Gérez vos données d'accès des employés ici.",
     "reporting.pdfZipDownloadText"      : "Votre fichier d'exportation PDF et audio a été créé. Veuillez cliquer sur le bouton Télécharger pour télécharger le fichier zip : ",
     "reporting.noFileAvailable" : "Aucune exportation n'a pu être créée. Veuillez vérifier vos données !",
+
+	"reporting.pdfExportPath" : "Lien d'export",
+    "reportingColumnList.optionText"       : "Choisissez ici les colonnes que vous souhaitez exporter. Remarque : cela n'affectera que l'exportation Excel de la liste de contacts, et non les autres exportations.",
+
 
     "employee.title"        : "Utilisateurs",
     "employee.firstname"    : "Prénom",
