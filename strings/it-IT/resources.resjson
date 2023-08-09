@@ -735,7 +735,7 @@
     "reporting.filterOff"   : "Filtro disattivato",
     "reporting.filter"      : "Filtro",
     "reporting.comment"      : "Gestisci i dati di accesso dei tuoi dipendenti qui.",
-    "reporting.pdfZipDownloadText"      : "Il download è pronto: ",
+    "reporting.pdfZipDownloadText"      : "Il file di esportazione PDF e audio è stato creato. Fare clic sul pulsante Download per scaricare il file zip: ",
     "reporting.noFileAvailable" : "Non è stato possibile creare un'esportazione. Controllare i dati!",
 
     "employee.title"        : "Utente",

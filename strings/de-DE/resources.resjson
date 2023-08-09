@@ -735,7 +735,7 @@
     "reporting.filterOff"   : "Filter aus",
 	"reporting.filter"      : "Filter",
     "reporting.comment"      : "Exportieren Sie Ihre Kontakte in Excel/PDF",
-    "reporting.pdfZipDownloadText"      : "Ihr Download steht bereit: ",
+    "reporting.pdfZipDownloadText"      : "Ihre PDF- und Audio-Exportdatei wurde erstellt. Bitte klicken Sie auf dem Download Button, um die Zip-Datei herunterzuladen: ",
 	"reporting.noFileAvailable" : "Es konnte kein Export erstellt werden. Bitte prüfen Sie Ihre Daten!",
 
     "employee.title"        : "Benutzer",

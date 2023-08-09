@@ -735,7 +735,7 @@
     "reporting.filterOff"   : "Filter off",
     "reporting.filter"      : "Filter",
     "reporting.comment"      : "Manage your employee access data here.",
-    "reporting.pdfZipDownloadText"      : "Your download is ready: ",
+    "reporting.pdfZipDownloadText"      : "Your PDF and audio export-file has been created. Please click on the Download button to download the zip file: ",
     "reporting.noFileAvailable" : "No export could be created. Please check your data!",
 
     "employee.title"        : "Users",
