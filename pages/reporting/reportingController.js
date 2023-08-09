@@ -113,7 +113,7 @@
             var setpdfZipDownloadData = function (aktiv, data) {
                 Log.call(Log.l.trace, "Reporting.Controller.");
                 if (aktiv) {
-                    pdfZipDownload.style.display = "block";
+                    pdfZipDownload.style.display = "flex";
                     pdfZipDownloadData.href = data;
                 } else {
                     pdfZipDownload.style.display = "none";
