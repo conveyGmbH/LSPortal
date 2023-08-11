@@ -558,6 +558,7 @@
     "label.pdfExport"       : "Export PDF",
     "label.employeeGenPWList"     : "Prégénérée",
     "label.optQuestionList" : "quest. / répo. facultatives",
+    "label.optMandatoryFieldList" : "optional Kontaktpflichtfeld",
     "label.support"     : "Support",
 	"label.siteevents"	: "Liste des exposants",
 	"label.mailingTypes"	: "MailTypes",
@@ -676,6 +677,15 @@
     "optQuestionList.count"   : "Nombre",
     "optQuestionList.labelDelete": "En option Question/Réponse",
     "optQuestionList.questionDelete": "Voulez-vous supprimer cet en option Questions/Réponses?",
+
+    "optMandatoryFieldList.title"   : "Kontaktpflichtfeld",
+    "optMandatoryFieldList.count"   : "Anzahl",
+    "optMandatoryFieldList.labelDelete": "Kontaktpflichtfeld löschen",
+    "optMandatoryFieldList.questionDelete": "Möchten Sie diese optionale Kontaktpflichtfeld löschen?",
+    "optMandatoryFieldList.optQuestion" : "Bitte wählen Sie hier das Kontaktpflichtfeld aus",
+    "optMandatoryFieldList.selectedQuestion": "Selektierte Frage",
+    "optMandatoryFieldList.selectedAnswer": "Antwort",
+    "optMandatoryFieldList.selectedQuestionText": "Bitte wählen Sie die Frage und die Antwort, die ausgewählt werden muss, die mit einem Kontaktpflichtfeld verknüpft wird",
 
     "questiongroup.title"   : "Groupe de questions",
     "questiongroup.count"   : "Nombre",
