@@ -645,9 +645,10 @@
 
     "optMandatoryFieldList.title"   : "Kontaktpflichtfeld",
     "optMandatoryFieldList.count"   : "Anzahl",
-    "optMandatoryFieldList.labelDelete": "Kontaktpflichtfeld löschen",
-    "optMandatoryFieldList.questionDelete": "Möchten Sie diese optionale Kontaktpflichtfeld löschen?",
-    "optMandatoryFieldList.optQuestion" : "Bitte wählen Sie hier das Kontaktpflichtfeld aus",
+    "optMandatoryFieldList.newMandatoryfield" : " New contact mandatory field",
+    "optMandatoryFieldList.tooltipDelete": "Kontaktpflichtfeld löschen",
+    "optMandatoryFieldList.mandatoryfieldDelete": "Möchten Sie diese Kontaktpflichtfeld löschen?",
+    "optMandatoryFieldList.mandatoryfield" : "Bitte wählen Sie hier das Kontaktpflichtfeld aus",
     "optMandatoryFieldList.selectedQuestion": "Selektierte Frage",
     "optMandatoryFieldList.selectedAnswer": "Antwort",
     "optMandatoryFieldList.selectedQuestionText": "Bitte wählen Sie die Frage und die Antwort, die ausgewählt werden muss, die mit einem Kontaktpflichtfeld verknüpft wird",

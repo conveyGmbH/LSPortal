@@ -175,8 +175,8 @@
                     // or server returns response with an error status.
                     AppData.setErrorMsg(that.binding, errorResponse);
                 }, {
-                        LanguageSpecID: AppData.getLanguageId()
-                    });
+                    LanguageSpecID: AppData.getLanguageId()
+                });
                 Log.ret(Log.l.trace);
                 return ret;
             }
@@ -333,7 +333,7 @@
                     if (recordId) {
                         var curScope = that.scopeFromRecordId(that.curRecId);
                         if (curScope && curScope.item) {
-                            var confirmTitle = getResourceText("optQuestionList.questionDelete");
+                            var confirmTitle = getResourceText("optMandatoryFieldList.mandatoryfieldDelete");
                             confirm(confirmTitle, function (result) {
                                 if (result) {
                                     Log.print(Log.l.trace, "clickDelete: user choice OK");
