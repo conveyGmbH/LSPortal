@@ -17,14 +17,13 @@
             var listView = pageElement.querySelector("#optMandatoryFieldList.listview");
 
             Application.RecordsetController.apply(this, [pageElement, {
-                //dataOptQuestionAnswer: getEmptyDefaultValue(OptMandatoryFieldList.CR_OptFragenAntwortenVIEW.defaultValue),
+                dataOptQuestionAnswer: getEmptyDefaultValue(OptMandatoryFieldList.CR_OptFragenAntwortenVIEW.defaultValue),
                 count: 0
-            }, commandList, false, OptMandatoryFieldList.CR_OptFragenAntwortenVIEW, null, listView]); // VIEW ändern
+            }, commandList, false, OptMandatoryFieldList.CR_OptFragenAntwortenVIEW, null, listView]);
 
-            this.optQuestions = null; // selektierte Frage
-            this.initoptionQuestion = null; //optionale Frage
+            this.initQuestion = null; //selektierte Frage
             this.optAnswer = []; // Antwort
-            this.initPflichtfeld = null;
+            this.initPflichtfeld = null; //KontaktFelder
 
             var that = this;
 
@@ -62,14 +61,14 @@
             }
             this.resultAnswerConverter = resultAnswerConverter;
 
-            var fillOptAnswer = function (value) {
+            var fillAnswer = function (value) {
                 var questionId = parseInt(value);
                 that.optAnswer = [];
-                that.initoptionQuestion.forEach(function (questionItem, index) {
+                that.initQuestion.forEach(function (questionItem, index) {
                     that.resultAnswerConverter(questionItem, index, questionId);
                 });
             }
-            this.fillOptAnswer = fillOptAnswer;
+            this.fillAnswer = fillAnswer;
 
 
             // get field entries
@@ -79,7 +78,7 @@
                 if (listView && listView.winControl) {
                     var element = listView.winControl.elementFromIndex(index);
                     if (element) {
-                        var optQuestion = element.querySelector('#InitFragenopt');
+                        var optQuestion = element.querySelector('#InitPFeldTyp');
                         var fragenId = parseInt(optQuestion.value);
                         ret["INITPFeldTypID"] = fragenId;
 
@@ -108,7 +107,7 @@
                     };
                     if (target.id === "SelektFragenopt") { // kommt nicht hin da es ein updateFall ist
                         optFrage.SelektierteFragenID = parseInt(target.value);
-                    } else if (target.id === "InitFragenopt" && parseInt(target.value)) {
+                    } else if (target.id === "InitPFeldTyp" && parseInt(target.value)) {
                         optFrage.INITPFeldTypID = target.value; // String FragenID
                     } else if (target.id === "SelektAntwortopt") { // kommt nicht hin da es ein updateFall ist
                         optFrage.SortIndex = target.value;
@@ -163,21 +162,19 @@
 
                     if (json && json.d) {
                         that.binding.count = json.d.results.length;
-                        //that.nextUrl = OptMandatoryFieldList.mandatoryView.getNextUrl(json);
+                        that.nextUrl = OptMandatoryFieldList.mandatoryView.getNextUrl(json);
                         var results = json.d.results;
                         results.forEach(function (item, index) {
                             item.pflichtfeld = item.Sortierung + ". " + item.PflichtFeldTITLE;
                             that.initPflichtfeld.push(item);
-                            //that.optQuestions.push(item);
                         });
                         Log.print(Log.l.trace, "Data loaded initPflichtfeld.count=" + that.initPflichtfeld.length);
                     }
-                },
-                    function (errorResponse) {
-                        // called asynchronously if an error occurs
-                        // or server returns response with an error status.
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                    }, {
+                }, function (errorResponse) {
+                    // called asynchronously if an error occurs
+                    // or server returns response with an error status.
+                    AppData.setErrorMsg(that.binding, errorResponse);
+                }, {
                         LanguageSpecID: AppData.getLanguageId()
                     });
                 Log.ret(Log.l.trace);
@@ -188,30 +185,26 @@
             var loadQuestion = function () {
                 Log.call(Log.l.trace, "OptMandatoryFieldList.Controller.");
                 AppData.setErrorMsg(that.binding);
-                that.initoptionQuestion = new WinJS.Binding.List([{ FragenAntwortenVIEWID: 0, frage: "" }]);
-                that.optQuestions = new WinJS.Binding.List([{ FragenAntwortenVIEWID: 0, frage: "" }]);
+                that.initQuestion = new WinJS.Binding.List([{ FragenAntwortenVIEWID: 0, frage: "" }]);
                 var ret = OptMandatoryFieldList.questionListView.select(function (json) {
                     // this callback will be called asynchronously
                     // when the response is available
                     Log.print(Log.l.trace, "questionListView: success!");
-
                     if (json && json.d) {
                         that.binding.count = json.d.results.length;
                         that.nextUrl = OptMandatoryFieldList.questionListView.getNextUrl(json);
                         var results = json.d.results;
                         results.forEach(function (item, index) {
                             item.frage = item.Sortierung + ". " + item.Fragestellung;
-                            that.initoptionQuestion.push(item);
-                            that.optQuestions.push(item);
+                            that.initQuestion.push(item);
                         });
-                        Log.print(Log.l.trace, "Data loaded initoptionQuestion.count=" + that.initoptionQuestion.length);
+                        Log.print(Log.l.trace, "Data loaded initQuestion.count=" + that.initQuestion.length);
                     }
-                },
-                    function (errorResponse) {
-                        // called asynchronously if an error occurs
-                        // or server returns response with an error status.
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                    });
+                }, function (errorResponse) {
+                    // called asynchronously if an error occurs
+                    // or server returns response with an error status.
+                    AppData.setErrorMsg(that.binding, errorResponse);
+                });
                 Log.ret(Log.l.trace);
                 return ret;
             }
@@ -227,73 +220,21 @@
                         that.saveData(function (response) {
                             AppBar.busy = false;
                             Log.print(Log.l.trace, "question saved");
-                        },
-                            function (errorResponse) {
-                                AppBar.busy = false;
-                                Log.print(Log.l.error, "error saving question");
-                            });
+                        }, function (errorResponse) {
+                            AppBar.busy = false;
+                            Log.print(Log.l.error, "error saving question");
+                        });
                     }
                     Log.ret(Log.l.trace);
                 },
-                /*changeSelektedQuestion: function (event) {
-                    Log.call(Log.l.trace, "OptQuestionList.Controller.");
-                    if (event.currentTarget && event.currentTarget.value) {
-                        Log.print(Log.l.trace, "event changeSelektedQuestion: value=" + event.currentTarget.value + "Fragestellung=" + event.currentTarget.textContent);
-                        var crossItem = that.records.getAt(that.currentlistIndex);
-                        if (crossItem) {
-                            if (crossItem.FragenID === parseInt(event.currentTarget.value)) {
-                                event.currentTarget.value = crossItem.SelektierteFragenID;
-                            }
-                            if (event.currentTarget.value !== crossItem.SelektierteFragenID) {
-                                that.fillOptAnswer(event.currentTarget.value);
-                                var element = listView.winControl.elementFromIndex(that.currentlistIndex);
-                                if (element) {
-                                    var comboSelektAntwortopt = element.querySelector("#SelektAntwortopt.win-dropdown");
-                                    if (comboSelektAntwortopt && comboSelektAntwortopt.winControl) {
-                                        if (that.optAnswer.length > 0) {
-                                            comboSelektAntwortopt.winControl.data = new WinJS.Binding.List(that.optAnswer);
-                                            comboSelektAntwortopt.value = that.optAnswer[0] ? that.optAnswer[0].index : 0;
-                                        } else {
-                                            comboSelektAntwortopt.winControl.data = new WinJS.Binding.List([{ index: 0, antwort: "" }]);
-                                            comboSelektAntwortopt.value = 0;
-                                        }
-                                    }
-                                }
-                                if (event.currentTarget.value) {
-                                    AppBar.busy = true;
-                                    that.saveData(function (response) {
-                                        AppBar.busy = false;
-                                        Log.print(Log.l.trace, "question saved");
-                                    },
-                                    function (errorResponse) {
-                                        AppBar.busy = false;
-                                        Log.print(Log.l.error, "error saving question");
-                                    });
-                                }
-                            }
-                        }
-                    }
-                    Log.ret(Log.l.trace);
-                },*/
                 changeSelektedQuestion: function (event) {
                     Log.call(Log.l.trace, "OptMandatoryFieldList.Controller.");
                     if (event.currentTarget && event.currentTarget.value) {
                         var crossItem = that.records.getAt(that.currentlistIndex);
                         if (crossItem) {
                             //Cross Tabelle heisst sie SelektierteFragenID
-                            //Cross odata view heisst FragenID
                             if (crossItem.SelektierteFragenID === parseInt(event.currentTarget.value)) {
                                 event.currentTarget.value = crossItem.FragenID;
-                            } else {
-                                for (var i = 0; i < that.records.length; i++) {
-                                    if (i !== that.currentlistIndex) {
-                                        var otherCrossItem = that.records.getAt(i);
-                                        if (otherCrossItem.SelektierteFragenID === parseInt(event.currentTarget.value)) {
-                                            event.currentTarget.value = crossItem.FragenID;
-                                            break;
-                                        }
-                                    }
-                                }
                             }
                         }
                         if (event.currentTarget.value) {
@@ -302,11 +243,10 @@
                                 that.saveData(function (response) {
                                     AppBar.busy = false;
                                     Log.print(Log.l.trace, "question saved");
-                                },
-                                    function (errorResponse) {
-                                        AppBar.busy = false;
-                                        Log.print(Log.l.error, "error saving question");
-                                    });
+                                }, function (errorResponse) {
+                                    AppBar.busy = false;
+                                    Log.print(Log.l.error, "error saving question");
+                                });
                             } else {
                                 that.insertOptQuestion(event.currentTarget);
                             }
@@ -320,7 +260,7 @@
                                 event.currentTarget.value = crossItem.SelektierteFragenID;
                             }
                             if (event.currentTarget.value !== crossItem.SelektierteFragenID) {
-                                that.fillOptAnswer(event.currentTarget.value);
+                                that.fillAnswer(event.currentTarget.value);
                                 var element = listView.winControl.elementFromIndex(that.currentlistIndex);
                                 if (element) {
                                     var comboSelektAntwortopt = element.querySelector("#SelektAntwortopt.win-dropdown");
@@ -334,17 +274,6 @@
                                         }
                                     }
                                 }
-                                /*if (event.currentTarget.value) {
-                                    AppBar.busy = true;
-                                    that.saveData(function (response) {
-                                        AppBar.busy = false;
-                                        Log.print(Log.l.trace, "question saved");
-                                    },
-                                        function (errorResponse) {
-                                            AppBar.busy = false;
-                                            Log.print(Log.l.error, "error saving question");
-                                        });
-                                }*/
                             }
                         }
                     }
@@ -357,17 +286,7 @@
                         if (crossItem) {
                             if (crossItem.INITPFeldTypID === parseInt(event.currentTarget.value)) {
                                 event.currentTarget.value = crossItem.INITPFeldTypID;
-                            } /*else {
-                                for (var i = 0; i < that.records.length; i++) {
-                                    if (i !== that.currentlistIndex) {
-                                        var otherCrossItem = that.records.getAt(i);
-                                        if (otherCrossItem.INITPFeldTypID === parseInt(event.currentTarget.value)) {
-                                            event.currentTarget.value = crossItem.INITPFeldTypID;
-                                            break;
-                                        }
-                                    }
-                                }
-                            }*/
+                            }
                         }
                         if (event.currentTarget.value) {
                             if (crossItem && crossItem.CR_PFFragenAntwortenVIEWID) {
@@ -379,9 +298,7 @@
                                     AppBar.busy = false;
                                     Log.print(Log.l.error, "error saving question");
                                 });
-                            } /*else {
-                                that.insertOptQuestion(event.currentTarget);
-                            }*/
+                            }
                         }
                     }
                     Log.ret(Log.l.trace);
@@ -508,7 +425,7 @@
                             }
                             var element;
                             if (that.records) {
-                                if (that.initoptionQuestion && that.optQuestions) {
+                                if (that.initQuestion && that.initPflichtfeld) {
                                     for (var i = 0; i < that.records.length; i++) {
                                         var item = that.records.getAt(i);
                                         if (item) {
@@ -518,7 +435,7 @@
                                                 if (comboSelektFragenopt && comboSelektFragenopt.winControl) {
                                                     if (!comboSelektFragenopt.winControl.data ||
                                                         comboSelektFragenopt.winControl.data && !comboSelektFragenopt.winControl.data.length) {
-                                                        comboSelektFragenopt.winControl.data = that.initoptionQuestion;
+                                                        comboSelektFragenopt.winControl.data = that.initQuestion;
                                                         comboSelektFragenopt.value = item.SelektierteFragenID;
                                                     }
                                                     var comboSelektAntwortopt = element.querySelector("#SelektAntwortopt.win-dropdown");
@@ -527,7 +444,7 @@
                                                             comboSelektAntwortopt.winControl.data && !comboSelektAntwortopt.winControl.data.length) {
                                                             if (item.SelektierteFragenID) {
                                                                 // load the answer of optional Question
-                                                                that.fillOptAnswer(item.SelektierteFragenID);
+                                                                that.fillAnswer(item.SelektierteFragenID);
                                                                 if (that.optAnswer.length > 0) {
                                                                     comboSelektAntwortopt.winControl.data = new WinJS.Binding.List(that.optAnswer);
                                                                 } else {
@@ -538,13 +455,13 @@
                                                         }
                                                     }
                                                 }
-                                                var comboInitFragengruppe = element.querySelector("#InitFragenopt.win-dropdown");
+                                                var comboInitFragengruppe = element.querySelector("#InitPFeldTyp.win-dropdown");
                                                 if (comboInitFragengruppe && comboInitFragengruppe.winControl) {
                                                     if (!comboInitFragengruppe.winControl.data ||
                                                         comboInitFragengruppe.winControl.data &&
                                                         !comboInitFragengruppe.winControl.data.length) {
-                                                        comboInitFragengruppe.winControl.data = that.initPflichtfeld; //that.optQuestions
-                                                        comboInitFragengruppe.value = item.INITPFeldTypID; //item.FragenID
+                                                        comboInitFragengruppe.winControl.data = that.initPflichtfeld;
+                                                        comboInitFragengruppe.value = item.INITPFeldTypID;
                                                     }
                                                 }
 
@@ -739,20 +656,20 @@
             }
             this.saveData = saveData;
 
-            this.baseLoadData = this.loadData;
+            /*this.baseLoadData = this.loadData;
 
             var loadData = function (restriction, options, itemRenderer, complete, error) {
                 Log.call(Log.l.trace, "OptMandatoryFieldList.Controller.");
                 var ret = that.baseLoadData(restriction, options, itemRenderer, complete, error).then(function () {
                     if (that.records &&
                         that.records.length > 0 &&
-                        that.optQuestions &&
-                        that.optQuestions.length > 0) {
-                        function setQuestionTitle(crossItem, index) {
-                            for (var j = 0; j < that.optQuestions.length; j++) {
-                                var optQuestion = that.optQuestions.getAt(j);
-                                if (optQuestion && optQuestion.FragenAntwortenVIEWID === crossItem.FragenID) {
-                                    crossItem.frage = optQuestion.frage;
+                        that.initPflichtfeld &&
+                        that.initPflichtfeld.length > 0) {
+                        function setPflichtfeldTitle(crossItem, index) {
+                            for (var j = 0; j < that.initPflichtfeld.length; j++) {
+                                var mandatoryField = that.initPflichtfeld.getAt(j);
+                                if (mandatoryField && mandatoryField.PflichtfeldTypID === crossItem.INITPFeldTypID) {
+                                    crossItem.pflichtfeld = mandatoryField.PflichtFeldTITLE;
                                     that.records.setAt(index, crossItem);
                                     break;
                                 }
@@ -761,7 +678,7 @@
                         for (var i = 0; i < that.records.length; i++) {
                             var item = that.records.getAt(i);
                             if (item) {
-                                setQuestionTitle(item, i);
+                                setPflichtfeldTitle(item, i);
                             }
                         };
                     }
@@ -770,7 +687,7 @@
                 Log.ret(Log.l.trace);
                 return ret;
             }
-            this.loadData = loadData;
+            this.loadData = loadData;*/
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Load Question");
