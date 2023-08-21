@@ -124,8 +124,15 @@
     justify-content: center;
 }
 .pdfZipDownload {
-    left: 25%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: inline-block;
+    text-align: center;
+}
+
+.pdfZipDownloadText {
+    display: block;
+}
+
+.pdfZipDownloadData {
+    display: block;
+    margin-top: 15px; /* Adjust the margin as needed */
 }
