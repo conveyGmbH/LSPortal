@@ -803,7 +803,19 @@
                     AppData.setRecordId("Kontakt", recordId);
 
                     if (that.contacts.length !== 1) {
-                        that.contacts.splice(index, 1);
+                        if (listView.winControl) {
+                            var listControl = listView.winControl;
+                            var dataSource = listControl.itemDataSource;
+                            if (listControl.selection.count() > 0) {
+                                listControl.selection.getItems().done(function (items) {
+                                    dataSource.beginEdits();
+                                    items.forEach(function (item) {
+                                        dataSource.remove(item.key);
+                                    });
+                                    dataSource.endEdits();
+                                });
+                            }                        }
+                        //that.contacts.splice(index, 1);
                     } else {
                         that.contacts.length = 0;
                         AppData.setRecordId("Kontakt", 0);
