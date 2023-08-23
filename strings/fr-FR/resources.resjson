@@ -1562,7 +1562,7 @@
     "startPremium.tipLocal" : "at your booth",
     "startPremium.tipEvent" : "on the exhibition grounds",
     "startPremium.exportDashboardExcel" : "Exporter le tableau de bord vers Excel",
-    "startPremium.overlayText" : "Excel est en cours de création. Veuillez patienter...",
+    "startPremium.overlayText" : "Fichier est en cours de création. Veuillez patienter...",
 
     "diaIndustries.tooltipPremium" : "for example: From which top 5 industries (departments/functions etc.) do your scanned visitors come in relation to their age group?",
     "diaIndustries.tooltipSupreme1" : "in general: blue circle = scanned visitors at your booth, red circle = all visitors who were on exhibition grounds",

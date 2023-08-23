@@ -1560,7 +1560,7 @@
     "startPremium.tipLocal" : "at your booth",
     "startPremium.tipEvent" : "on the exhibition grounds",
     "startPremium.exportDashboardExcel" : "Esportazione del cruscotto in Excel",
-    "startPremium.overlayText" : "Excel viene creato. Attendere prego...",
+    "startPremium.overlayText" : "File viene creato. Attendere prego...",
 
     "diaIndustries.tooltipPremium" : "for example: From which top 5 industries (departments/functions etc.) do your scanned visitors come in relation to their age group?",
     "diaIndustries.tooltipSupreme1" : "in general: blue circle = scanned visitors at your booth, red circle = all visitors who were on exhibition grounds",
