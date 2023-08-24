@@ -554,6 +554,7 @@
 
             var exportPdfExcelZip = function (recordId) {
                 Log.call(Log.l.trace, "Reporting.Controller.");
+                pdfZipDownload.style.display = "none";
                 AppData.setErrorMsg(that.binding);
                 var ret;
                 if (recordId) {
