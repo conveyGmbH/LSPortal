@@ -223,10 +223,10 @@
 
             var setRestriction = function () {
                 var reportingRestriction = {};
-                if (that.binding.restriction.INITLandID === "null") {
-                    that.binding.restriction.INITLandID = "null";
+                if (that.binding.restriction.INITLandID === "null" || that.binding.restriction.INITLandID === "0") {
+                    that.binding.restriction.INITLandID = null;
                 }
-                reportingRestriction.Land = that.binding.restriction.INITLandID ? that.binding.restriction.INITLandID : "null";
+                reportingRestriction.Land = that.binding.restriction.INITLandID ? that.binding.restriction.INITLandID : null;
                 if (that.binding.restriction.MitarbeiterVIEWID === "null") {
                     that.binding.restriction.MitarbeiterVIEWID = null;
                 }
