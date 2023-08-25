@@ -25,23 +25,23 @@
                          data-win-bind="style.display: dataEmployee.MitarbeiterVIEWID Binding.Converter.toDisplay">
                         <div class="line-separator"></div>
                         <div class="win-type-body text-lightcolorU" data-win-bind="innerHTML: noLicenceText; style.display: noLicence Binding.Converter.toDisplay"></div>
-                            <div class="field_line field_line_odd">
-                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'employee.firstname'}"></span>
-                                <span class="label landscape_only" data-win-res="{textContent: 'employee.firstname'}"></span>
-                                <input class="input_field win-textbox" type="text" data-win-bind="value: dataEmployee.Vorname Binding.Mode.twoway" />
-                            </div>
-                            <div class="field_line field_line_even">
-                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'employee.lastname'}"></span>
-                                <span class="label landscape_only" data-win-res="{textContent: 'employee.lastname'}"></span>
-                                <input class="input_field win-textbox" type="text" data-win-bind="value: dataEmployee.Nachname Binding.Mode.twoway" />
-                            </div>
-                            <div class="line-separator"></div>
-                        <div class="field_line field_line_odd" data-win-bind="style.display: dataEmployee.LogInNameAfterAtSymbole Binding.Converter.toDisplayNone"> 
-                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'employee.login'}"></span>
-                                <span class="label landscape_only" data-win-res="{textContent: 'employee.login'}"></span>
-                                <input id="loginName"class="input_field win-textbox" type="text" oninput="AppBar.handleEvent('change', 'changeLogin', event)" data-win-bind="value: dataEmployee.Login Binding.Mode.twoway" />
-                            </div>
-                            <div class="line-separator"></div>
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'employee.firstname'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'employee.firstname'}"></span>
+                            <input class="input_field win-textbox" type="text" data-win-bind="value: dataEmployee.Vorname Binding.Mode.twoway" />
+                        </div>
+                        <div class="field_line field_line_even">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'employee.lastname'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'employee.lastname'}"></span>
+                            <input class="input_field win-textbox" type="text" data-win-bind="value: dataEmployee.Nachname Binding.Mode.twoway" />
+                        </div>
+                        <div class="line-separator"></div>
+                        <div class="field_line field_line_odd" data-win-bind="style.display: dataEmployee.LogInNameAfterAtSymbole Binding.Converter.toDisplayNone">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'employee.login'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'employee.login'}"></span>
+                            <input id="loginName" class="input_field win-textbox" type="text" oninput="AppBar.handleEvent('change', 'changeLogin', event)" data-win-bind="value: dataEmployee.Login Binding.Mode.twoway" />
+                        </div>
+                        <div class="line-separator"></div>
                         <div class="field_line field_line_odd" data-win-bind="style.display: dataEmployee.LogInNameAfterAtSymbole Binding.Converter.toDisplay">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'employee.login'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'employee.login'}"></span>
@@ -53,25 +53,47 @@
                             <input id="domain" class="input_field win-textbox" oninput="AppBar.handleEvent('change', 'changeLogin', event)" type="text" data-win-bind="value: dataEmployee.LogInNameAfterAtSymbole Binding.Mode.twoway" />
                         </div>
                         <div class="line-separator"></div>
-                            <div class="field_line field_line_odd">
-                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'employee.password'}"></span>
-                                <span class="label landscape_only" data-win-res="{textContent: 'employee.password'}"></span>
-                                <input class="input_field win-textbox" id="password" oninput="AppBar.handleEvent('change', 'changePassword', event)" type="password" data-win-bind="value: dataEmployee.Password Binding.Mode.twoway" />
-                            </div>
-                            <div class="field_line field_line_even">
-                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'employee.password2'}"></span>
-                                <span class="label landscape_only" data-win-res="{textContent: 'employee.password2'}"></span>
-                                <input class="input_field win-textbox" id="password2" type="password" data-win-bind="value: dataEmployee.Password2 Binding.Mode.twoway" />
-                            </div>
-                            <div class="line-separator"></div>
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'employee.password'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'employee.password'}"></span>
+                            <input class="input_field win-textbox" id="password" oninput="AppBar.handleEvent('change', 'changePassword', event)" type="password" data-win-bind="value: dataEmployee.Password Binding.Mode.twoway" />
+                        </div>
+                        <div class="field_line field_line_even">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'employee.password2'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'employee.password2'}"></span>
+                            <input class="input_field win-textbox" id="password2" type="password" data-win-bind="value: dataEmployee.Password2 Binding.Mode.twoway" />
+                        </div>
+                        <div class="line-separator"></div>
                         <div data-win-bind="style.display: isEmpRolesVisible Binding.Converter.toDisplay">
                             <div class="field_line" data-win-bind="style.display: dataEmployee.UserSpecID Binding.Converter.toDisplay">
                                 <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'employee.roles'}"></span>
                                 <span class="label landscape_only" data-win-res="{textContent: 'employee.roles'}"></span>
                                 <div id="emproleshost" class="input_field fragmenthost"></div>
                             </div>
+                        </div>
+                        <div class="line-separator"></div>
+                        <div class="field_line field_line_full" data-win-bind="style.display: isVeranstaltungComboboxVisible Binding.Converter.toDisplay">
+                            <span class="label win-type-caption portrait_only label_bold" data-win-res="{textContent: 'employee.eventActual'}"></span>
+                            <span class="label landscape_only label_bold" data-win-res="{textContent: 'employee.eventActual'}"></span>
+                            <span class="input_field label_bold" data-win-bind="textContent: eventname"></span>
+                        </div>
+                        <div class="line-separator"></div>
+                        <div class="field_line field_line_odd" data-win-bind="style.display: isVeranstaltungComboboxVisible Binding.Converter.toDisplay">
+                            <span class="label win-type-caption portrait_only label_bold" data-win-res="{textContent: 'employee.eventTarget'}"></span>
+                            <span class="label landscape_only label_bold" data-win-res="{textContent: 'employee.eventTarget'}"></span>
+                            <select id="VeranstaltungCombobox"
+                                    class="input_field win-dropdown"
+                                    data-win-control="WinJS.UI.Repeater"
+                                    data-win-bind="value: actualEventID Binding.Mode.twoway">
+                                <option data-win-bind="value: VeranstaltungVIEWID; textContent: Name"></option>
+                            </select>
+                        </div>
+                        <div class="field_line field_line_even" data-win-bind="style.display: isVeranstaltungComboboxVisible Binding.Converter.toDisplay">
+                            <span class="label win-type-caption portrait_only label_bold" data-win-res="{textContent: 'employee.userStatus'}"></span>
+                            <span class="label landscape_only label_bold" data-win-res="{textContent: 'employee.userStatus'}"></span>
+                            <span class="input_field label_bold" data-win-bind="textContent: userStatus"></span>
+                        </div>
                     </div>
-                </div>
                 </div>
                 <div class="error-message"
                      data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>

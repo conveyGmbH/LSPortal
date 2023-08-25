@@ -56,6 +56,7 @@
     "command.newquestion": "New question",
 	"command.showevents"    : "Ereignisse anzeigen",
     "command.changeLogin": "Change Login",
+    "command.copyMitarbeiter" : "Veranstaltung wechseln",
 
     "tooltip.backward"      : "Browse back",
     "tooltip.edit"          : "Edit current record",
@@ -129,6 +130,7 @@
     "tooltip.newmod": "New moderator",
 	"tooltip.showEvents"    : "Ereignisse anzeigen",
     "tooltip.changeLogin": "Change employee login",
+    "tooltip.copyMitarbeiter" : "Veranstaltung wechseln",
 
     "home.title"            : "Start",
     "home.info"             : "Important information",
@@ -727,7 +729,9 @@
 	"employee.alertNewLoginPassword" : "Please log in with the new password",
 	"employee.alertPasswordShort": "Password must contain at least 5 characters",
     "employee.changeUserLogin": "If you want to change the login, make sure that all data collected from this user has been uploaded and processed",
-
+    "employee.userStatus" : "Status",
+    "employee.eventTarget" : "Target Event",
+    "employee.eventActual" : "Current event",
 
     "empList.title"         : "User accounts",
     "empList.count"         : "Count",

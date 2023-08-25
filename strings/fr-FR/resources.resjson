@@ -66,6 +66,7 @@
     "command.newdevices"  : "ajouter des licences",
     "command.changeLogin": "Modifier la connexion",
     "command.copyEvent"    : "Kopieren",
+    "command.copyMitarbeiter" : "Veranstaltung wechseln",
 
     "tooltip.backward"      : "Page présédente",
     "tooltip.edit"          : "Modifier le contact en cours",
@@ -152,6 +153,7 @@
     "tooltip.newdevices"  : "ajouter des licences",
     "tooltip.changeLogin": "Modifier l'identifiant de l'employé",
     "tooltip.copyEvent"     : "enregistrer les paramètres",
+    "tooltip.copyMitarbeiter" : "Veranstaltung wechseln",
 
     "home.title"            : "Start",
     "home.info"             : "Instructions importantes",
@@ -776,6 +778,9 @@
 	"employee.alertNewLoginPassword" : "Veuillez vous connecter avec le nouveau mot de passe",
     "employee.alertPasswordShort": "Le mot de passe doit contenir au moins 5 caractères",
     "employee.changeUserLogin": "Si vous souhaitez modifier l'identifiant, assurez-vous que toutes les données collectées auprès de cet utilisateur ont été téléchargées et traitées",
+    "employee.userStatus" : "Status",
+    "employee.eventTarget" : "Cible Evénement",
+    "employee.eventActual" : "Événement en cours",
 
     "empList.title"         : "Comptes utilisateurs",
     "empList.count"         : "Combre",

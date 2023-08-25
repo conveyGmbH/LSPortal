@@ -66,6 +66,7 @@
     "command.newdevices"  : "Aggiungi licenze",
     "command.changeLogin": "Cambia login",
     "command.copyEvent"    : "Kopieren",
+	"command.copyMitarbeiter" : "Veranstaltung wechseln",
 
     "tooltip.backward"      : "Pagina precedente",
     "tooltip.edit"          : "Modifica Record attuale",
@@ -152,6 +153,7 @@
     "tooltip.newdevices"  : "Aggiungi licenze",
     "tooltip.changeLogin": "Modifica login dipendente",
     "tooltip.copyEvent"     : "Salva le impostazioni",
+    "tooltip.copyMitarbeiter" : "Veranstaltung wechseln",
 
     "home.title"            : "Start",
     "home.info"             : "Informazioni importanti",
@@ -775,6 +777,9 @@
 	"employee.alertNewLoginPassword" : "Effettuare il login con la nuova password",
 	"employee.alertPasswordShort": "La password deve contenere almeno 5 caratteri",
     "employee.changeUserLogin": "Se desideri modificare il login, assicurati che tutti i dati raccolti da questo utente siano stati caricati ed elaborati",
+    "employee.userStatus" : "Status",
+    "employee.eventTarget" : "Target Event",
+    "employee.eventActual" : "Evento attuale",
 
     "empList.title"         : "Utenti",
     "empList.count"         : "Numero",

@@ -17,10 +17,14 @@
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "Employee.Controller.");
             Application.Controller.apply(this, [pageElement, {
+                actualEventID: 0,
                 dataEmployee: getEmptyDefaultValue(Employee.employeeView.defaultValue),
                 restriction: getEmptyDefaultValue(Employee.employeeView.defaultRestriction),
                 isEmpRolesVisible: AppHeader.controller.binding.userData.SiteAdmin, // || AppHeader.controller.binding.userData.HasLocalEvents,
+                isVeranstaltungComboboxVisible: false,
+                eventname: AppData._userData.VeranstaltungName,
                 noLicence: null,
+                userStatus: null,
                 allowEditLogin: null,
                 noLicenceText: getResourceText("info.nolicenceemployee")
             }, commandList]);
@@ -30,6 +34,7 @@
             var loginName = pageElement.querySelector("#loginName");
             var domain = pageElement.querySelector("#domain");
             var loginFirstPart = pageElement.querySelector("#loginFirstPart");
+            var veranstaltungCombobox = pageElement.querySelector("#VeranstaltungCombobox");
 
             var prevMasterLoadPromise = null;
             var prevLogin = null;
@@ -97,6 +102,31 @@
                 Log.ret(Log.l.trace);
             }
             this.getErrorMsgFromErrorStack = getErrorMsgFromErrorStack;
+
+            var copyMitarbeiter = function () {
+                Log.call(Log.l.trace, "Employee.Controller.");
+                AppData.setErrorMsg(that.binding);
+                AppData.call("PRC_CopyAppMitarbeiter", {
+                    pMitarbeiterID: that.binding.dataEmployee.MitarbeiterVIEWID,
+                    pNewVeranstaltungID: parseInt(that.binding.actualEventID)
+                }, function (json) {
+                    Log.print(Log.l.info, "call success! ");
+                    AppBar.modified = false;
+                    if (json.d.results[0]) {
+                        if (json.d.results[0].ResultCode === 0) {
+                            that.binding.isVeranstaltungComboboxVisible = false;
+                        } else {
+                            that.binding.userStatus = json.d.results[0].ResultMessage;
+                        }
+                    }
+                }, function (error) {
+                    Log.print(Log.l.error, "call error");
+                    AppBar.modified = false;
+
+                });
+                Log.ret(Log.l.trace);
+            }
+            this.copyMitarbeiter = copyMitarbeiter;
 
             var saveRestriction = function () {
                 if (that.binding.restriction.Names && that.binding.restriction.Names.length > 0) {
@@ -170,6 +200,11 @@
                             that.binding.noLicence = result.NichtLizenzierteApp;
                         } else {
                             that.binding.noLicence = null;
+                        }
+                        if (result && result.UserStatus) {
+                            that.binding.userStatus = result.UserStatus;
+                        } else {
+                            that.binding.userStatus = null;
                         }
                         // neues Flag UserIsActive -> wenn user bereits eingelogt ist dann sollte das Feld Login und Passwort static sein 
                         // wenn user den Ändern will dann klicke explizit auf das icon für Ändern user und bestätige die Alertbox 
@@ -474,7 +509,7 @@
                     master.controller.loadData();
                     Log.ret(Log.l.trace);
                 },
-                clickOrderLicence: function(event) {
+                clickOrderLicence: function (event) {
                     Log.call(Log.l.trace, "Employee.Controller.");
                     var master = Application.navigator.masterControl;
                     that.binding.restriction.OrderAttribute = "NichtLizenzierteApp";
@@ -533,6 +568,12 @@
                         }
                         Log.ret(Log.l.trace);
                     });
+                }, clickCopyMitarbeiter: function () {
+                    Log.call(Log.l.trace, "Employee.Controller.");
+                    if (that.binding.isVeranstaltungComboboxVisible)
+                        that.copyMitarbeiter();
+                    that.binding.isVeranstaltungComboboxVisible = true;
+                    Log.ret(Log.l.trace);
                 }
             };
 
@@ -577,6 +618,9 @@
                 },
                 clickChangeLogin: function () {
                     return that.binding.allowEditLogin;
+                },
+                clickCopyMitarbeiter: function () {
+                    return !AppHeader.controller.binding.userData.SiteAdmin && !isVeranstaltungComboboxVisible;
                 }
             };
 
@@ -589,11 +633,11 @@
                 }
                 var ret = new WinJS.Promise.as().then(function () {
                     if (AppBar.modified) {
-                            Log.print(Log.l.trace, "saveData completed...");
-                            var master = Application.navigator.masterControl;
-                            if (master && master.controller) {
+                        Log.print(Log.l.trace, "saveData completed...");
+                        var master = Application.navigator.masterControl;
+                        if (master && master.controller) {
                             master.controller.loadData(recordId);
-                            }
+                        }
                     } else {
                         return WinJS.Promise.as();
                     }
@@ -636,6 +680,40 @@
                             return WinJS.Promise.as();
                         }
                     }
+                }).then(function () {
+                    that.eventList = new WinJS.Binding.List([Employee.VeranstaltungView.defaultValue]);
+                    veranstaltungCombobox.winControl.data = new WinJS.Binding.List();
+                    Log.print(Log.l.trace, "calling select eventView...");
+                    return Employee.VeranstaltungView.select(function (json) {
+                        // this callback will be called asynchronously
+                        // when the response is available
+                        AppData.setErrorMsg(that.binding);
+                        Log.print(Log.l.trace, "Events: success!");
+                        // employeeView returns object already parsed from json file in response
+                        if (json && json.d && json.d.results && json.d.results.length > 1) {
+                            that.nextUrl = Employee.VeranstaltungView.getNextUrl(json);
+                            var results = json.d.results.filter(function (item, index) {
+                                return (item && item.VeranstaltungVIEWID !== AppData.getRecordId("Veranstaltung")); /*&& item.INITAktenstatusID !== 2 && item.INITGwGStatusID !== 21*/
+                            });
+                            that.binding.isVeranstaltungComboboxVisible = that.binding.isVeranstaltungComboboxVisible  && (results && results.length > 1 ? true : false);
+                            results.forEach(function (item, index) {
+                                that.eventList.push(item);
+                            });
+                            Log.print(Log.l.trace, "Data loaded");
+                            if (veranstaltungCombobox && veranstaltungCombobox.winControl) {
+                                veranstaltungCombobox.winControl.data = that.eventList;
+                            }
+                            veranstaltungCombobox.selectedIndex = 0;
+                        }
+                        return WinJS.Promise.as();
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                        that.loading = false;
+                    }, {
+
+                        });
                 }).then(function () {
                     AppBar.notifyModified = true;
                     return WinJS.Promise.as();
@@ -687,6 +765,7 @@
                                         }
                                         loadData(recordId).then(function () {
                                             AppBar.modified = false;
+                                            that.copyMitarbeiter();
                                             complete(response);
                                         });
                                     }, function (errorResponse) {

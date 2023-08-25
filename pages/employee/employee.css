@@ -4,6 +4,7 @@
 
 #emproleshost.fragmenthost {
     height: 120px;
+    padding-bottom: 10px;
 }
 
 .view-size-medium #emproleshost.fragmenthost {
@@ -20,4 +21,7 @@
 }
 .employee input[type="text"]:disabled {
     background-color: grey
+}
+.employee .label_bold {
+    font-weight: bold;
 }

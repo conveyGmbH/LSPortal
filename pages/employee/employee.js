@@ -28,7 +28,8 @@
                 { id: "clickNew", label: getResourceText("command.new"), tooltip: getResourceText("tooltip.newEmployee"), section: "primary", svg: "user_plus" },
                 { id: "clickOk", label: getResourceText("command.ok"), tooltip: getResourceText("tooltip.ok"), section: "primary", svg: "navigate_check", key: WinJS.Utilities.Key.enter },
                 { id: "clickDelete", label: getResourceText("command.delete"), tooltip: getResourceText("tooltip.deleteEmployee"), section: "primary", svg: "garbage_can" },
-                { id: "clickChangeLogin", label: getResourceText("command.changeLogin"), tooltip: getResourceText("tooltip.changeLogin"), section: "primary", svg: "benutzer" }
+                { id: "clickChangeLogin", label: getResourceText("command.changeLogin"), tooltip: getResourceText("tooltip.changeLogin"), section: "primary", svg: "benutzer" },
+                { id: "clickCopyMitarbeiter", label: getResourceText("command.copyMitarbeiter"), tooltip: getResourceText("tooltip.copyMitarbeiter"), section: "primary", svg: "va_wechsel" }
             ];
 
             this.controller = new Employee.Controller(element, commandList);

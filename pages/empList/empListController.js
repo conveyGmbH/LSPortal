@@ -195,6 +195,9 @@
                                 // Only one item is selected, show the page
                                 listControl.selection.getItems().done(function (items) {
                                     var item = items[0];
+                                    if (AppBar.scope && AppBar.scope.binding.isVeranstaltungComboboxVisible) {
+                                        AppBar.scope.binding.isVeranstaltungComboboxVisible = false;
+                                    }
                                     if (item.data && item.data.MitarbeiterVIEWID &&
                                         item.data.MitarbeiterVIEWID !== that.binding.employeeId && item.data.Gesperrt !== 1) {
                                         if (AppBar.scope &&
