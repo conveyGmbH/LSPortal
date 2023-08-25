@@ -173,7 +173,8 @@
                         }
                         // neues Flag UserIsActive -> wenn user bereits eingelogt ist dann sollte das Feld Login und Passwort static sein 
                         // wenn user den Ändern will dann klicke explizit auf das icon für Ändern user und bestätige die Alertbox 
-                        that.binding.allowEditLogin = AppHeader.controller.binding.userData.SiteAdmin || !result.UserIsActive;
+                        // -> result.HatKontakte ist dirty Trick um festzustellen ob normale Admin oder nicht
+                        that.binding.allowEditLogin = AppHeader.controller.binding.userData.SiteAdmin || !result.HatKontakte || !result.UserIsActive;
                         if (that.binding.allowEditLogin) {
                             if (loginFirstPart) {
                                 loginFirstPart.disabled = false;
@@ -372,6 +373,8 @@
                     if (event.currentTarget && AppBar.notifyModified) {
                         pageElement.querySelector("#password").value = "";
                         pageElement.querySelector("#password2").value = "";
+                        that.binding.dataEmployee.Password = "";
+                        that.binding.dataEmployee.Password2 = "";
                     }
                     if (event.currentTarget.id === "loginFirstPart") {
                         if (event.currentTarget.value && event.currentTarget.value.indexOf("@") > 0) {
@@ -390,6 +393,7 @@
                     Log.call(Log.l.trace, "Employee.Controller.");
                     if (event.currentTarget && AppBar.notifyModified) {
                         pageElement.querySelector("#password2").value = "";
+                        that.binding.dataEmployee.Password2 = "";
                     }
                     Log.ret(Log.l.trace);
                 },
