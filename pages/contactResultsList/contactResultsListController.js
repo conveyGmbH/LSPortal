@@ -299,6 +299,7 @@
                                     var restriction = ContactResultsList.KontaktReport.defaultRestriction;
                                     var sortname = myrow.value;
                                     var sorttext = myrow.textContent;
+                                    if (sorttext !== "Status") {
                                     if (restriction.OrderAttribute !== sortname) {
                                         restriction.VeranstaltungID = that.getEventId();
                                         restriction.OrderAttribute = sortname;
@@ -313,6 +314,7 @@
                                         that.setHeaderText(myrow.value, sorttext);
                                         Log.call(Log.l.trace, "ContactResultsList.Controller.");
                                     }
+                                    } 
                                 };
                             }(cell);
                         }
