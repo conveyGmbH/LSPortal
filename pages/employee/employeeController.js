@@ -620,7 +620,7 @@
                     return that.binding.allowEditLogin;
                 },
                 clickCopyMitarbeiter: function () {
-                    return !AppHeader.controller.binding.userData.SiteAdmin && !isVeranstaltungComboboxVisible;
+                    return !AppHeader.controller.binding.userData.SiteAdmin && !that.binding.isVeranstaltungComboboxVisible;
                 }
             };
 
@@ -752,9 +752,11 @@
                                             AppHeader.controller.binding.userData.VeranstaltungName = "";
                                         }
                                     }
-                                    alert(getResourceText("employee.alertNewLoginPassword"));
-                                    Application.navigateById("login", event);
-                                    return WinJS.Promise.as();
+                                    alert(getResourceText("employee.alertNewLoginPassword"), function (response) {
+                                        // always call 
+                                        Application.navigateById("login");
+                                        complete(response);
+                                    });
                                 }
                                 var empRolesFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("empRoles"));
                                 if (empRolesFragmentControl && empRolesFragmentControl.controller) {
