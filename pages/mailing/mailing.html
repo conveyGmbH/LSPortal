@@ -106,17 +106,21 @@
                         </div>
                         <div class="line-separator"></div>
                         <!--id="sendMailPrivacypolicySignature" -->
-                        <div class="field_line field_line_odd" data-win-bind="style.display: isPrivacyPolicySVGVisible Binding.Converter.toDisplay">
+                        <div class="field_line field_line_odd">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'event.sendMailPrivacypolicy'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'event.sendMailPrivacypolicy'}"></span>
                             <div class="toggle-switch-parent">
                                 <div id="sendMailPrivacypolicySignature"
                                      data-win-control="WinJS.UI.ToggleSwitch"
-                                     data-win-bind="winControl.checked: dataMail.GDPR_Flag; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                                     data-win-bind="winControl.disabled: isPrivacyPolicyToggleDisabled; winControl.checked: dataMail.GDPR_Flag; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
                                      onclick="AppBar.handleEvent('click', 'clickChangeSendMailPrivacypolicySignature', event)">
                                 </div>
                             </div>
                         </div>
+                        <div class="field_line field_line_even">
+
+                        </div>
+                        <div class="line-separator"></div>
                         <div class="field_line field_line_full" data-win-bind="style.display: isPrivacyPolicySVGVisible Binding.Converter.toDisplayNone">
                             <span class="large_field"
                                   data-win-res="{textContent: 'mailing.GDPRInfo'}"></span>

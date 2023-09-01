@@ -261,6 +261,9 @@
                 var callChangeAppSettingNext = false;
                 var toggleIdNext = null;
                 var checkedNext = null;
+                if (!AppBar.modified) {
+                    AppBar.modified = true;
+                }
                 switch (toggleId) {
                     case "showQuestionnaire":
                         pOptionTypeId = 20;
@@ -293,9 +296,6 @@
                             checkedNext = checked;
                         } else {
                             that.binding.dataEvent.DatenschutzText = getResourceText("event.privacyPolicyStandartText");
-                        }
-                        if (!AppBar.modified) {
-                            AppBar.modified = true;
                         }
                         break;
                     case "showQRCode":
@@ -659,7 +659,15 @@
             };
 
             var resultConverterOption = function (item, index) {
+                if (AppData.getRecordId("Veranstaltung") === that.binding.dataEvent.VeranstaltungVIEWID) {
+                    var property = AppData.getPropertyFromInitoptionTypeID(item);
+                    /*if (property && property !== "individualColors" && (!item.pageProperty) && item.LocalValue) {
+                        item.colorValue = "#" + item.LocalValue;
+                        AppData.applyColorSetting(property, item.colorValue);
+                    }*/
+                }
                 that.getPropertyFromInitoptionTypeID(item);
+
             }
             this.resultConverterOption = resultConverterOption;
 
@@ -988,13 +996,13 @@
                                 // called asynchronously if an error occurs
                                 // or server returns response with an error status.
                                 AppData.setErrorMsg(that.binding, errorResponse);
-                            }, { VeranstaltungID: recordId }).then(function () {
-                                Colors.updateColors();
-                                return WinJS.Promise.as();
-                            });
+                            }, { VeranstaltungID: recordId });
                         } else {
                             return WinJS.Promise.as();
                         }
+                    }).then(function () {
+                        Colors.updateColors();
+                        return WinJS.Promise.as();
                     }).then(function () {
                         if (!err) {
                             if (typeof Home === "object" && Home._actionsList) {
@@ -1032,6 +1040,16 @@
                         } else {
                             return WinJS.Promise.as();
                         }
+                    }).then(function () {
+                        if (!err) {
+                            if (AppHeader && AppHeader.controller) {
+                                return AppHeader.controller.loadData();
+                            } else {
+                                return WinJS.Promise.as();
+                            }
+                        } else {
+                            return WinJS.Promise.as();
+                        }
                     });
                 }
                 Log.ret(Log.l.trace);
@@ -1058,12 +1076,12 @@
             })/*.then(function () {
                 that.creatingPremiumDashboardComboCategory();
             })*/.then(function () {
-                Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.loadData();
-            }).then(function () {
-                Log.print(Log.l.trace, "Data loaded");
-                AppBar.notifyModified = true;
-            });
+                    Log.print(Log.l.trace, "Binding wireup page complete");
+                    return that.loadData();
+                }).then(function () {
+                    Log.print(Log.l.trace, "Data loaded");
+                    AppBar.notifyModified = true;
+                });
             Log.ret(Log.l.trace);
         })
     });

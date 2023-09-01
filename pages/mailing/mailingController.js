@@ -23,7 +23,8 @@
                 sendTestMailShowFlag: 0,
                 testMailShowPanelFlag: 0,
                 testMailSuccessMsgFlag: 0,
-                isPrivacyPolicySVGVisible: AppData._persistentStates.privacyPolicySVGVisible
+                isPrivacyPolicySVGVisible: AppData._persistentStates.privacyPolicySVGVisible,
+                isPrivacyPolicyToggleDisabled: !AppData._persistentStates.privacyPolicySVGVisible
             }, commandList]);
 
             var that = this;
