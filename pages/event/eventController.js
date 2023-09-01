@@ -261,9 +261,7 @@
                 var callChangeAppSettingNext = false;
                 var toggleIdNext = null;
                 var checkedNext = null;
-                if (!AppBar.modified) {
-                    AppBar.modified = true;
-                }
+
                 switch (toggleId) {
                     case "showQuestionnaire":
                         pOptionTypeId = 20;
@@ -1042,6 +1040,7 @@
                         }
                     }).then(function () {
                         if (!err) {
+                            AppData.getUserData();
                             if (AppHeader && AppHeader.controller) {
                                 return AppHeader.controller.loadData();
                             } else {
