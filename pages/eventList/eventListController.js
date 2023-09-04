@@ -391,6 +391,12 @@
                             });
                             that.binding.count = results.length;
 
+                            if (results.length <= 1) {
+                                NavigationBar.disablePage("eventCopy");
+                            } else {
+                                NavigationBar.enablePage("eventCopy");
+                            }
+
                             that.records = new WinJS.Binding.List(results);
 
                             if (listView.winControl) {
