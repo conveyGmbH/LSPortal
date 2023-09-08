@@ -1102,7 +1102,7 @@
     "mailingtracking.schedultedsendtsdate" : "Send on:",
     "mailingtracking.schedultedsendtstime" : "Send to:",
     "mailingtracking.language" : "Language",
-    "mailingtracking.sendtxt" : "Posted on",
+    "mailingtracking.sendtxt" : "Latest sent:",
     "mailingtracking.onlyonetxt" : "Only this mail",
     "mailingtracking.alltxt" : "All mails of this person",
 
