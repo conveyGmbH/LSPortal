@@ -395,6 +395,7 @@
                                 // add ListView dataSource
                                 listView.winControl.itemDataSource = that.sessions.dataSource;
                             }
+                            listView.winControl.selection.set(0);
                         } else {
                             if (listView.winControl) {
                                 // add ListView dataSource
