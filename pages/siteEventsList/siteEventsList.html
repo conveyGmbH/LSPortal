@@ -13,6 +13,7 @@
             <section aria-label="Main content" role="main" class="animationElement">
                 <div class="contentarea win-type-body">
                     <div class="content-header">
+                        <div class="win-type-subtitle master-list-header list-portrait-only">
                         <div class="win-type-subtitle master-list-header">
                             <span data-win-res="{textContent: 'siteEventsList.title'}"></span>
                         </div>
@@ -25,16 +26,22 @@
                             <option data-win-bind="value: value; textContent: title"></option>
                         </select>
                     </div>
+                        <div class="win-type-subtitle master-list-header list-landscape-only">
+                            <div class="win-type-subtitle master-list-header">
+                                <span data-win-res="{textContent: 'siteEventsList.title'}"></span>
+                            </div>
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'siteEventsList.eventcombotitle'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'siteEventsList.eventcombotitle'}"></span>
+                            <select id="eventTyp"
+                                    class="input_field win-dropdown"
+                                    data-win-control="WinJS.UI.Repeater"
+                                    data-win-bind="value: eventTypID">
+                                <option data-win-bind="value: value; textContent: title"></option>
+                            </select>
+                        </div>
+                        </div>
                     <div class="headerFooterPlaceholder">
                         <div class="list-header">
-                            <div class="list-landscape-only">
-                                <div class="list-field-big-2 win-type-ellipsis"
-                                     data-win-res="{textContent: 'event.name'}"></div>
-                                <div class="list-field-small-fixed win-type-ellipsis"
-                                     data-win-res="{textContent: 'event.begin'}"></div>
-                                <div class="list-field-small-fixed win-type-ellipsis"
-                                     data-win-res="{textContent: 'event.end'}"></div>
-                            </div>
                         </div>
                     </div>
                     <div class="siteEventsList-template"
@@ -48,13 +55,14 @@
                         </div>
                         <div class="list-landscape-only">
                             <div class="row-bkg-gray"
-                                 data-win-bind="style.display: index Binding.Converter.evenToDisplay"></div>
-                            <div class="list-field-big-2 win-type-ellipsis"
+                                 data-win-bind="style.display: index Binding.Converter.oddToDisplay"></div>
+                            <div class="list-field-small-fixed win-type-ellipsis"
                                  data-win-bind="textContent: DisplayName"></div>
                             <div class="list-field-small-fixed win-type-ellipsis"
                                  data-win-bind="textContent: StartDatum"></div>
                             <div class="list-field-small-fixed win-type-ellipsis"
                                  data-win-bind="textContent: EndDatum"></div>
+
                         </div>
                         <div class="list-portrait-only">
                             <div class="row-separator"></div>
@@ -66,11 +74,10 @@
                                     <!--list-siteEventsList-->
                                     <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
                                           data-win-bind="textContent: DisplayName"></span>
-                                    <div class="list-compressed-title win-type-subtitle win-type-ellipsis">
-                                        <span data-win-bind="textContent: StartDatum"></span>
-                                        <span data-win-bind="style.display: EndDatum Binding.Converter.toDisplay">&nbsp;-&nbsp;</span>
-                                        <span data-win-bind="textContent: EndDatum"></span>
-                                    </div>
+                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
+                                          data-win-bind="textContent: StartDatum"></span>
+                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
+                                          data-win-bind="textContent: EndDatum"></span>
                                 </div>
                             </div>
                         </div>
