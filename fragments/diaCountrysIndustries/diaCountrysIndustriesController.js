@@ -455,7 +455,6 @@
                                 scales: {
                                     y:
                                     {
-
                                         grid: {
                                             display: false,
                                             drawOnChartArea: false,
@@ -464,6 +463,13 @@
                                         },
                                         stacked: false,
                                         ticks: {
+                                            callback: function (value) {
+                                                if (countryIndustriesLabels[value].length > 25) {
+                                                    return countryIndustriesLabels[value].substr(0, 25) + '...'; //truncate
+                                                } else {
+                                                    return countryIndustriesLabels[value];
+                                                }
+                                            },
                                             color: Colors.textColor
                                         }
                                     },
