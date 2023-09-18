@@ -66,7 +66,8 @@
     "command.newdevices"  : "Lizenzen hinzufügen",
 	"command.changeLogin" : "Login ändern",
 	"command.copyEvent"    : "Kopieren",
-	"command.copyMitarbeiter" : "Veranstaltung wechseln",
+    "command.newExhibitor"    : "Neuer Austeller",
+    "command.newNachbestellungen"    : "Nachbestellung",
 
     "tooltip.backward"      : "Zurück blättern",
     "tooltip.edit"          : "Aktuellen Datensatz bearbeiten",

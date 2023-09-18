@@ -67,6 +67,8 @@
     "command.changeLogin": "Cambia login",
     "command.copyEvent"    : "Kopieren",
 	"command.copyMitarbeiter" : "Veranstaltung wechseln",
+    "command.newExhibitor"    : "Nuovo espositore",
+    "command.newNachbestellungen"    : "Riordino",
 
     "tooltip.backward"      : "Pagina precedente",
     "tooltip.edit"          : "Modifica Record attuale",
