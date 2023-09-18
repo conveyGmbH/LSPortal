@@ -519,6 +519,8 @@
                     }).then(function () {
                         that.eventHandlers.onItemInserted();
                         return WinJS.Promise.as();
+                    }).then(function () {
+                        return that.colorStatus();
                     });
                 }
                 Log.ret(Log.l.trace);
