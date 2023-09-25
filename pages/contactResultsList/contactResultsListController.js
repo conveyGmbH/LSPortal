@@ -28,6 +28,7 @@
 
             var that = this;
             var table = pageElement.querySelector("#tableId");
+            var tablescroll = pageElement.querySelector("#table-scroll");
             var tableHeader = pageElement.querySelector(".table-header");
             var tableBody = pageElement.querySelector(".table-body");
             var contentArea = pageElement.querySelector(".contentarea");
@@ -421,14 +422,10 @@
                 },
                 onContentScroll: function(eventInfo) {
                     Log.call(Log.l.trace, "ContactResultList.Controller.");
-                    if (contentArea && that.nextUrl) {
-                        var scrollMax = contentArea.scrollHeight - contentArea.clientHeight;
-                        var scrollPos = contentArea.scrollTop;
-                        if (scrollPos === scrollMax) {
+                    if (tablescroll.scrollHeight === tablescroll.scrollTop + tablescroll.clientHeight) {
                             that.loadNextUrl();
                         }
-                    }
-                    Log.ret(Log.l.trace);
+                    
                 }
             };
 
@@ -445,8 +442,8 @@
                 }
             };
 
-            if (contentArea) {
-                this.addRemovableEventListener(contentArea, "scroll", this.eventHandlers.onContentScroll.bind(this));
+            if (tablescroll) {
+                this.addRemovableEventListener(tablescroll, "scroll", this.eventHandlers.onContentScroll.bind(this));
             }
 
             if (selectAll) {

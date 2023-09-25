@@ -1,47 +1,85 @@
-﻿
-.contactResultsList .scroll-line {
-    overflow-x: auto;
-    overflow-y: hidden;
-}
-
-.contactResultsList * {
-    box-sizing: border-box;
-}
-
-.contactResultsList table {
-    border-collapse: collapse;
+﻿.table-scroll {
+    position: relative;
     width: 100%;
-    overflow: hidden;
+    z-index: 1;
+    margin: auto;
+    overflow: auto;
+    height: 80%;
+    border: 1px solid #000;
 }
-
-.contactResultsList td, 
-.contactResultsList th {
-    padding: 5px 15px;
-    text-align: left;
-    height: 35px;
+.table-scroll table {
+    width: 100%;
+    min-width: 1200px;
+    margin: auto;
+    border-collapse: separate;
+    border-spacing: 0;
 }
-
-.contactResultsList table {
+.table-wrap {
+    position: relative;
+}
+.table-scroll th,
+.table-scroll td {
+    padding: 5px 10px;
     border: 1px solid grey;
+    background: #fff;
+    vertical-align: top;
 }
-.contactResultsList td,
-.contactResultsList th {
-    border-bottom: 1px solid grey;
-    border-top: 1px solid grey;
+.table-scroll thead {
+    background: #333;
+    color: #333;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
 }
-.contactResultsList .table-body tr:hover {
-    background: #f8f9fb;
+@media screen and (max-width: 600px) {
+    .table-scroll table {
+        width: 100%;
+        min-width: 400px;
+        margin: auto;
+        border-collapse: separate;
+        border-spacing: 0;
 }
-.contactResultsList #counter {
-    margin-left: 25px;
+
+    table caption {
+        font-size: 1.3em;
 }
-.contactResultsList table,
-.contactResultsList tr,
-.contactResultsList #status {
-    border-right: 0px !important;
+
+    table thead {
+        border: none;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        margin: -1px;
+    overflow: hidden;
+        padding: 0;
+        position: absolute !important;
+        width: 1px;
 }
-.contactResultsList table,
-.contactResultsList tr,
-.contactResultsList #datacheckbox {
-    border-left: 0px !important;
+
+    table tr {
+        border-bottom: 3px solid #ddd;
+        display: block;
+        margin-bottom: .625em;
+}
+
+    table td {
+        border-bottom: 1px solid #ddd;
+        display: block;
+        font-size: .8em;
+        text-align: right;
+}
+  
+    table td::before {
+        /*
+    * aria-label has no advantage, it won't be read inside a table
+    content: attr(aria-label);
+    */
+        content: attr(data-label);
+        float: left;
+        font-weight: bold;
+        text-transform: uppercase;
+}
+  
+    table td:last-child {
+        border-bottom: 0;
+}
 }
