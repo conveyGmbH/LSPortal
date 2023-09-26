@@ -152,8 +152,9 @@
                         var eventdataset = that.eventdatasets.getAt(i);
                         if (eventdataset && typeof eventdataset === "object" &&
                             eventdataset.VeranstaltungTerminVIEWID === recordId) {
-                            
                             listView.winControl.selection.set(i);
+                            AppData.setRecordId("VeranstaltungTermin", recordId);
+                            that.binding.eventId = recordId;
                             break;
                         }
                     }
