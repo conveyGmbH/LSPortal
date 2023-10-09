@@ -41,7 +41,7 @@
                 var daycombo = fragmentElement.querySelector("#daydropdown");
                 var select = fragmentElement.querySelectorAll("select");
 
-                var surpremebarcolor = "#cc5b87";
+                var surpremebarcolor = "#092052";
 
                 var titlecategorys = [{ TITLE: getResourceText("diaVisitors.day"), VALUE: 1 }, { TITLE: getResourceText("diaVisitors.hour"), VALUE: 0 }];
 

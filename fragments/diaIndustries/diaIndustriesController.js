@@ -80,7 +80,7 @@
                 }
                 this.getColor = getColor;
 
-                var supremeColor = "#cc5b87";
+                var supremeColor = "#092052";
 
                 var centerDoughnutPlugin = {
                     beforeDraw: function (chart) {
