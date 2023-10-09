@@ -579,7 +579,7 @@
                 if (that.isSupreme === 2) {
                     var event = pageElement.querySelector(".circle-with-text-event-dot");
                     event.style.backgroundColor = Colors.dashboardColor;
-                    var surpremeColor = "#113557";
+                    var surpremeColor = "#092052";
                     var global = pageElement.querySelector(".circle-with-text-global-dot");
                     global.style.backgroundColor = surpremeColor;
                     var eventText = pageElement.querySelector(".circle-with-text-event-text");
