@@ -1141,7 +1141,16 @@
                     Log.call(Log.l.trace, "Event.Controller.");
                     if (event.currentTarget) {
                         var toggle = event.currentTarget.winControl;
+                        if (toggle.checked) {
                         that.binding.showFilter = toggle.checked;
+                        } else {
+                            that.binding.showFilter = toggle.checked;
+                            that.binding.restriction.INITLandID = "null";
+                            that.binding.restriction.MitarbeiterVIEWID = "null";
+                            that.binding.showErfassungsdatum = false;
+                            that.binding.showModifiedTS = false;
+                            that.setRestriction();
+                        }
                     }
                     Log.ret(Log.l.trace);
                 }
