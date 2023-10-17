@@ -517,9 +517,9 @@
                     break;
                 case 19:
                     if (item.LocalValue === "1") {
-                        AppData._persistentStates.hideCameraQuestionnaire = true;
+                        AppData._persistentStates.showCameraQuestionnaire = true;
                     } else {
-                        AppData._persistentStates.hideCameraQuestionnaire = false;
+                        AppData._persistentStates.showCameraQuestionnaire = false;
                     }
                     break;
                 case 20:
