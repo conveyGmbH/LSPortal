@@ -120,7 +120,10 @@
         iNOptionTypeValueView: {
             select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, "iNOptionTypeValueView.");
-                var ret = Event._iNOptionTypeValueView.select(complete, error, restriction);
+                var ret = Event._iNOptionTypeValueView.select(complete, error, restriction, {
+                    ordered: true,
+                    orderAttribute: "Idx"
+                });
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
