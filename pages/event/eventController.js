@@ -300,6 +300,9 @@
                         } else {
                             that.binding.dataEvent.DatenschutzText = getResourceText("event.privacyPolicyStandartText");
                         }
+                        if (!AppBar.modified) {
+                            AppBar.modified = true;
+                        }
                         break;
                     case "showQRCode":
                         pOptionTypeId = 38;
