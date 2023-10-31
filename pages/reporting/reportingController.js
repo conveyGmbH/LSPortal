@@ -1142,6 +1142,15 @@
                     if (event.currentTarget) {
                         var toggle = event.currentTarget.winControl;
                         that.binding.showFilter = toggle.checked;
+                        if (!that.binding.showFilter) {
+                            that.binding.restriction.INITLandID = null;
+                            that.binding.restriction.MitarbeiterVIEWID = null;
+                            that.binding.restriction.Erfassungsdatum = "null";
+                            that.binding.restriction.ErfassungsdatumValue = null;
+                            that.binding.restriction.AenderungsDatumValue = null;
+                            that.binding.restriction.AenderungsDatum = "null";
+                            that.binding.restriction.KontaktModifiedTS = null;
+                        }
                     }
                     Log.ret(Log.l.trace);
                 }
@@ -1377,6 +1386,17 @@
             that.setInitialDate();
             that.showDateRestrictions();
             that.processAll().then(function () {
+                //reset filter if showFilter false - möglicherweiße unnötig (siehe Zeile 32) workaround 11.11.2023
+                if (!that.binding.showFilter) {
+                    that.binding.restriction.INITLandID = null;
+                    that.binding.restriction.MitarbeiterVIEWID = null;
+                    that.binding.restriction.Erfassungsdatum = "null";
+                    that.binding.restriction.ErfassungsdatumValue = null;
+                    that.binding.restriction.AenderungsDatumValue = null;
+                    that.binding.restriction.AenderungsDatum = "null";
+                    that.binding.restriction.KontaktModifiedTS = null;
+                }
+            }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.setpdfZipDownloadData(false);
             }).then(function () {

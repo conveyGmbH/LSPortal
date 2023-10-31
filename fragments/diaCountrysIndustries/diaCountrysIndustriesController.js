@@ -414,7 +414,7 @@
                 }
                 this.exportChartToPdf = exportChartToPdf;
 
-                var surpremeColor = "#cc5b87";
+                var surpremeColor = "#092052";
 
                 var countryIndustriesSupremeData = {
                     labels: countryIndustriesLabels,

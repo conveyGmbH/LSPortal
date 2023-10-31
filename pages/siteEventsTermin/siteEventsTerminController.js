@@ -175,7 +175,7 @@
                     }
                 },
                 clickSave: function () {
-                    if (that.binding.dataTermin.VeranstaltungName && that.binding.dataTermin.FairVeranstalterID && AppBar.modified && !AppBar.busy) {
+                    if (that.binding.dataTermin.VeranstaltungName && AppBar.modified && !AppBar.busy) {
                         return false;
                     } else {
                         return true;

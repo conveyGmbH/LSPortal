@@ -209,7 +209,7 @@
                         // neues Flag UserIsActive -> wenn user bereits eingelogt ist dann sollte das Feld Login und Passwort static sein 
                         // wenn user den Ändern will dann klicke explizit auf das icon für Ändern user und bestätige die Alertbox 
                         // -> result.HatKontakte ist dirty Trick um festzustellen ob normale Admin oder nicht
-                        that.binding.allowEditLogin = AppHeader.controller.binding.userData.SiteAdmin || !result.HatKontakte || !result.UserIsActive;
+                        that.binding.allowEditLogin = AppHeader.controller.binding.userData.SiteAdmin;
                         if (that.binding.allowEditLogin) {
                             if (loginFirstPart) {
                                 loginFirstPart.disabled = false;
@@ -251,6 +251,16 @@
                     }
                     if (domain) {
                         domain.disabled = false;
+                    }
+                    if (loginName) {
+                        loginName.disabled = false;
+                    }
+                } else {
+                    if (loginFirstPart) {
+                        loginFirstPart.disabled = false;
+                    }
+                    if (domain) {
+                        domain.disabled = true;
                     }
                     if (loginName) {
                         loginName.disabled = false;
@@ -559,7 +569,7 @@
                                 loginFirstPart.disabled = false;
                             }
                             if (domain) {
-                                domain.disabled = false;
+                                domain.disabled = true;
                             }
                             if (loginName) {
                                 loginName.disabled = false;

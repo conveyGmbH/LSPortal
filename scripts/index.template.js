@@ -34,10 +34,10 @@
                 accentColor: "#fe3600"
             }, {
                 // Mesago Dashboard (Premium)
-                accentColor: "#74b2e1"
+                accentColor: "#fe3600" //"#74b2e1"
             }, {
                 // Mesago Dashboard (Supreme)
-                accentColor: "#b26086"
+                accentColor: "#fe3600" //"#b26086"
             }
         ],
         colorSettings: {

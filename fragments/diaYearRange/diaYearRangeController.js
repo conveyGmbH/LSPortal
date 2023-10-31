@@ -502,8 +502,8 @@
                     labels: yearRangeChartDataLabels5,
                     datasets: [{
                         data: yearRangeChartDataRaw5,
-                        backgroundColor: ["#cc5b87", "#efedee "],
-                        hoverBackgroundColor: ["#cc5b87", "#efedee "]
+                        backgroundColor: ["#092052", "#efedee "],
+                        hoverBackgroundColor: ["#092052", "#efedee "]
                     }]
                 };
 
@@ -566,8 +566,8 @@
                     labels: yearRangeChartDataLabels6,
                     datasets: [{
                         data: yearRangeChartDataRaw6,
-                        backgroundColor: ["#cc5b87", "#efedee "],
-                        hoverBackgroundColor: ["#cc5b87", "#efedee "]
+                        backgroundColor: ["#092052", "#efedee "],
+                        hoverBackgroundColor: ["#092052", "#efedee "]
                     }]
                 };
 
@@ -630,8 +630,8 @@
                     labels: yearRangeChartDataLabels7,
                     datasets: [{
                         data: yearRangeChartDataRaw7,
-                        backgroundColor: ["#cc5b87", "#efedee "],
-                        hoverBackgroundColor: ["#cc5b87", "#efedee "]
+                        backgroundColor: ["#092052", "#efedee "],
+                        hoverBackgroundColor: ["#092052", "#efedee "]
                     }]
                 };
 
@@ -694,8 +694,8 @@
                     labels: yearRangeChartDataLabels8,
                     datasets: [{
                         data: yearRangeChartDataRaw8,
-                        backgroundColor: ["#cc5b87", "#efedee "],
-                        hoverBackgroundColor: ["#cc5b87", "#efedee "]
+                        backgroundColor: ["#092052", "#efedee "],
+                        hoverBackgroundColor: ["#092052", "#efedee "]
                     }]
                 };
 

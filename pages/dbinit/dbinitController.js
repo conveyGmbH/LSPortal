@@ -117,7 +117,13 @@
                             }, function (errorResponse) {
                                 // called asynchronously if an error occurs
                                 // or server returns response with an error status.
-                                AppData.setErrorMsg(that.binding, errorResponse);
+                                //AppData.setErrorMsg(that.binding, errorResponse);
+                                Log.print(Log.l.error, "error in select CR_VERANSTOPTION_ODataView statusText=" + errorResponse.statusText);
+                                if (errorResponse.status === 401 || errorResponse.status === 404) {
+                                    WinJS.Promise.timeout(0).then(function () {
+                                        Application.navigateById("login");
+                                    });
+                                }
                             }).then(function () {
                                 var colors = Colors.updateColors();
                                 return (colors && colors._loadCssPromise) || WinJS.Promise.as();

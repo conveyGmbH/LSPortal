@@ -18,6 +18,7 @@
                 dataEvent: getEmptyDefaultValue(Event.eventView.defaultValue),
                 veranstOption: getEmptyDefaultValue(Event.CR_VERANSTOPTION_ODataView.defaultValue),
                 isQuestionnaireVisible: !AppData._persistentStates.hideQuestionnaire,
+                showCameraQuestionnaire: AppData._persistentStates.showCameraQuestionnaire,
                 isSketchVisible: !AppData._persistentStates.hideSketch,
                 isCameraVisible: !AppData._persistentStates.hideCameraScan,
                 isBarcodeScanVisible: !AppData._persistentStates.hideBarcodeScan,
@@ -263,6 +264,10 @@
                 var checkedNext = null;
 
                 switch (toggleId) {
+                    case "showCameraQuestionaire":
+                        pOptionTypeId = 19;
+                        that.binding.veranstOption.showCameraQuestionnaire = checked;
+                        break;
                     case "showQuestionnaire":
                         pOptionTypeId = 20;
                         that.binding.veranstOption.isQuestionnaireVisible = checked;
@@ -294,6 +299,9 @@
                             checkedNext = checked;
                         } else {
                             that.binding.dataEvent.DatenschutzText = getResourceText("event.privacyPolicyStandartText");
+                        }
+                        if (!AppBar.modified) {
+                            AppBar.modified = true;
                         }
                         break;
                     case "showQRCode":
@@ -678,8 +686,11 @@
                         // feature obsolete
                         if (item.LocalValue === "1") {
                             //AppData._persistentStates.hideCameraQuestionnaire = true;
+                            that.binding.veranstOption.showCameraQuestionnaire = true;
                         } else {
                             //AppData._persistentStates.hideCameraQuestionnaire = false;
+                            that.binding.veranstOption.showCameraQuestionnaire = false;
+
                         }
                         break;
                     case 20:
