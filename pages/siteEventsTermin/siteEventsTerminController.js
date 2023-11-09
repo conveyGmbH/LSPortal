@@ -95,6 +95,9 @@
                 if (typeof that.binding.dataTermin.DefRemoteKonfigID === "string") {
                     that.binding.dataTermin.DefRemoteKonfigID = parseInt(that.binding.dataTermin.DefRemoteKonfigID);
                 }
+                if (that.binding.dataTermin.FairVeranstalterID === null) {
+                    that.binding.dataTermin.FairVeranstalterID = 0;
+                }
                 AppData.call("PRC_CreateVATerminPortal",
                     {
                         pShortName: that.binding.dataTermin.VeranstaltungName,
