@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="genFragEvents.css" rel="stylesheet" />
+    <script type="text/javascript" src="genFragEventsService.js"></script>
+    <script type="text/javascript" src="genFragEventsController.js"></script>
+    <script type="text/javascript" src="genFragEvents.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="genFragEvents fragment">
+        <div id="eventSessionController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="contentarea win-type-body">
+                    <div class="headerFooterPlaceholder">
+                        <div class="list-header">
+                            <div class="row-separator"></div>
+                            <div class="list-landscape-only">
+                                <div class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'genFragEvents.event'}"></div>
+                                <div class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'genFragEvents.eventstart'}"></div>
+                                <div class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'genFragEvents.eventaktiv'}"></div>
+                                <div class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'genFragEvents.eventinfomail'}"></div>
+                            </div>
+                            <div class="row-separator"></div>
+                        </div>
+                    </div>
+                    <div class="data-template" data-win-control="WinJS.Binding.Template">
+                        <div class="list-landscape-only">
+                            <div class="row-bkg-gray"
+                                 data-win-bind="style.display: index Binding.Converter.oddToDisplay"></div>
+                            <div class="list-field-small-fixed win-type-ellipsis"
+                                 data-win-bind="textContent: VeranstaltungName"></div>
+                            <div class="list-field-small-fixed win-type-ellipsis"
+                                 data-win-bind="textContent: EndStartDatum"></div>
+                            <div class="list-field-small-fixed win-type-ellipsis">
+                                <div class="content-record"
+                                     data-win-bind="style.display: UserStatusID Binding.Converter.toDisplay">X</div>
+                                <div class="content-record"
+                                     data-win-bind="style.display: AktivButtonShowFlag Binding.Converter.toDisplay">
+                                    <button data-win-res="{textContent: 'genFragEvents.eventsetactive'}" onclick="AppBar.handleEvent('click', 'clickChangeEvent', event)"></button>
+                                </div> 
+                                <div class="content-record"
+                                     data-win-bind="style.display: UserStatusShowFlag Binding.Converter.toDisplay">
+                                    <div class="list-field-small-fixed win-type-ellipsis"
+                                         data-win-bind="textContent: UserStatus"></div>
+                                </div>
+                            </div>
+                                <div class="list-field-small-fixed win-type-ellipsis">
+                                    <button data-win-res="{textContent: 'genFragEvents.eventsendinfomail'}"></button>
+                                </div>
+                            </div>
+                        <div class="list-portrait-only">
+                            <div class="row-separator"></div>
+                            <div class="list-div-left">
+                                <div class="list-compressed">
+                                    <!--list-voucherAdministrationList-->
+                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
+                                          data-win-bind="textContent: VeranstaltungName"></span>
+                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
+                                          data-win-bind="textContent: Startdatum"></span>
+                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis">
+                                        <div class="content-record"
+                                             data-win-bind="style.display: UserID Binding.Converter.toDisplay">X</div>
+                                        <div class="content-record"
+                                             data-win-bind="style.display: AktivButtonShowFlag Binding.Converter.toDisplay">
+                                            <button data-win-res="{textContent: 'genFragEvents.eventsetactive'}" onclick="AppBar.handleEvent('click', 'clickChangeEvent', event)"></button>
+                                        </div>
+                                        <div class="content-record"
+                                             data-win-bind="style.display: UserStatusShowFlag Binding.Converter.toDisplay">
+                                            <div class="list-field-small-fixed win-type-ellipsis"
+                                                 data-win-bind="textContent: UserStatus"></div>
+                                        </div>
+                                    </span>
+                                    <div class="list-field-small-fixed win-type-ellipsis">
+                                        <button data-win-res="{textContent: 'genFragEvents.eventsendinfomail'}"></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="genFragEvents"
+                         class="listview win-selectionstylefilled"
+                         data-win-control="WinJS.UI.ListView"
+                         data-win-options="{
+                            header : select('.list-header'),
+                            itemTemplate: select('.data-template')
+                            }">
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,71 @@
+﻿/**
+    employee page styles
+*/
+
+#emproleshost.fragmenthost {
+    height: 120px;
+}
+
+.view-size-medium #emproleshost.fragmenthost {
+    height: 120px;
+}
+
+.view-size-small #emproleshost.fragmenthost {
+    height: 360px;
+}
+.text-lightcolorU {
+    font-weight: bold;
+    color: red;
+    text-align: center
+}
+.employee input[type="text"]:disabled {
+    background-color: grey
+}
+.addEventForminput-fields {
+    display: flex;
+}
+
+.addEventFormfield {
+    margin-right: 20px;
+}
+
+.centered-text {
+    width: 150px;
+    text-align: center;
+    padding: 10px;
+    font-weight: bold;
+}
+
+.addEventForminput-fields label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.addEventForminput-fields select {
+    width: 500px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 25px;
+}
+.addEventForminput-fields button {
+    background-color: whitesmoke;
+    width: 200px;
+    height: 30px;
+    border: none;
+    color: black;
+    padding: 1px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 4px 2px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    margin-top: 25px;
+    font-weight: bold;
+}
+.addEventForminput-fields  button:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    opacity: 1;
+}

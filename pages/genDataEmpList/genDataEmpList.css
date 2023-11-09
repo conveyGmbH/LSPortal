@@ -1,0 +1,135 @@
+﻿#genDataEmpList .win-itemcontainer .win-itembox,
+#genDataEmpList .win-listview .win-itembox {
+    background-color: transparent;
+}
+.genDataEmpList .contentarea {
+    overflow-y: hidden !important;
+}
+.genDataEmpList .content-header {
+    height: auto !important;
+    min-height: 48px;
+}
+.genDataEmpList .master-list-header {
+    height: auto !important;
+}
+    .genDataEmpList .master-list-header.list-compact-only {
+        padding-top: 48px;
+    }
+#genDataEmpList .listview {
+    position: relative;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: calc(100% - 56px);
+}
+
+/* Styles used for the custom layout */
+.listView .genDataEmpListLayout {
+    position: static;
+}
+    .listView .genDataEmpListLayout .win-surface {
+        margin-left: 0;
+    }
+#genDataEmpList .win-container {
+    width: 100%;
+    height: auto;
+    margin: 0;
+    border-radius: 0;
+    background-color: transparent;
+}
+
+#genDataEmpList .win-item {
+    width: calc(100% - 52px);
+    padding-left: 26px;
+    padding-right: 26px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+ 
+#Seriennummer {
+    text-align: right;
+    width: 118%;
+}
+
+.view-size-bigger #genDataEmpList .win-item {
+    width: calc(100% - 52px);
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.view-size-medium #genDataEmpList .win-item {
+    width: calc(100% - 36px);
+    padding-left: 18px;
+    padding-right: 18px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.view-size-small #genDataEmpList .win-item {
+    width: calc(100% - 20px);
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.view-size-smallest #genDataEmpList .win-item {
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.genDataEmpList-button {
+    float: right;
+    margin-right: 20px;
+    margin-top: -5px
+}
+.list-button-left {
+    float: left;
+    margin-right: 5px;
+    margin-top: -5px
+}
+.genDataEmpList .list-div-left {
+    width: 100%;
+}
+.genDataEmpList .list-symbol-IDw {
+    float: right;
+}
+.genDataEmpList .list-compressed {
+    width: calc(100% - 100px);
+}
+.genDataEmpList .licence-warning-text {
+    color: red;
+    font-size: large;
+    font-weight: bold;
+}
+.view-size-smallest .genDataEmpList .licence-warning-text {
+    font-size: smaller;
+    font-weight: normal;
+    width: 54px;
+    overflow: hidden;
+    display: inline-block;
+}
+.genDataEmpList .list-header {
+    width: calc(100% - 25px);
+    display: inline-block;
+    height: auto !important;
+    padding-top: 2.5px;
+    padding-bottom: 2.5px;
+}
+#genDataEmpList .list-div-left {
+    width: 100%
+}
+.genDataEmpList #nameInitialcircle {
+    display: inline-block;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-color: rgba(254,54,0,1);
+    color: black;
+    text-align: center;
+    line-height: 45px;
+    font-weight: bold;
+}

@@ -116,6 +116,7 @@
         { id: "esVoucherUsers", group: 19, svg: "voucher_contact", disabled: true },
         //MasterData
         { id: "masterDataGrp", group: 23, svg: "stammdaten", disabled: true, popup: true },
+        { id: "genDataEmployee", group: 74, svg: "Stammdaten", disabled: true, predecGroup: 23 },  
 		    // { id: "eventStarts", group: 55, svg: "Stammdaten", disabled: true, predecGroup: 23 },
         //{ id: "eventStartLang", group: 55, svg: "Stammdaten", disabled: true, predecGroup: 23 },
         { id: "eventBaseLink", group: 55, svg: "stammdaten", disabled: true, predecGroup: 23, label: "label.eventBaseLink", tooltip: "tooltip.eventBaseLink" },
@@ -201,6 +202,7 @@
         { id: "eventBaseLink", group: 55, disabled: false },
         { id: "startResourceAdministration", group: 55, disabled: false },
         { id: "startMediaAdministration", group: 55, disabled: false },
+        { id: "GenDataEmployee", group: 74, disabled: false },
 		    { id: "genDataModDetails", group: 54, disabled: false },
 		    //{ id: "genDataModAnswers", group: 56, disabled: false },
 	      { id: "genDataModHisto", group: 54, disabled: false },
@@ -309,7 +311,9 @@
         { id: "eventStatus", master: "eventStatusList" },
         { id: "event", master: "eventList" },
         { id: "eventCopy", master: "eventList" },
-        { id: "siteeventsImport", master: "siteEventsList" }
+        { id: "siteeventsImport", master: "siteEventsList" },
+        { id: "start", master: "eventList" },
+        { id: "genDataEmployee", master: "genDataEmpList" }
     ];
 
     // init page for app startup

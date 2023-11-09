@@ -69,6 +69,7 @@
     "command.copyMitarbeiter" : "Veranstaltung wechseln",
     "command.newExhibitor"    : "New exhibitor",
     "command.newNachbestellungen"    : "Reorder",
+    "command.addEvent" : "Change event",
 
     "tooltip.backward"      : "Browse back",
     "tooltip.edit"          : "Edit current record",
@@ -631,6 +632,8 @@
     "label.eventStatus" : "Session Status",
 	"label.eventCopy" : "Copy Event",
     "label.siteeventsImport" : "Exhibitor Import",
+	"label.genDataEmployee" : "User accounts",
+    "label.genDataEmpList" : "User accounts",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Cancel",
@@ -1643,5 +1646,17 @@
     "siteeventsimport.endofupload"			: "End of import",
     "siteeventsimport.generalstatus"			: "General status",
     "siteeventsimport.numberoflineswitherror"			: "Number of lines with error",
-    "siteeventsimport.numberoflineswithouterror"			: "Number of lines without errors"
+    "siteeventsimport.numberoflineswithouterror"			: "Number of lines without errors",
+	
+    "genFragEvents.event"			: "Event",
+    "genFragEvents.eventstart"			: "Start",
+    "genFragEvents.eventend"			: "End",
+    "genFragEvents.eventaktiv"			: "Aktive",
+    "genFragEvents.eventinfomail"			: "Info Mail",
+    "genFragEvents.eventsetactive"			: "Set active",
+    "genFragEvents.eventsendinfomail"			: "Send info mail",
+
+    "genDataEmployee.event"			: "Events",
+    "genDataEmployee.addevent"			: "Event",
+    "genDataEmployee.addeventbtn"			: "Add"
 }
