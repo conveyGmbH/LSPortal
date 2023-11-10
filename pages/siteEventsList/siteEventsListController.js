@@ -22,7 +22,8 @@
                 selIdx: AppData.getRecordId("VeranstaltungTermin") - 1,
                 eventText: getResourceText("siteEventsList.event"),
                 eventTypID: null,
-                preveventTypID: null
+                preveventTypID: null,
+                searchString: ""
             }, commandList, true]);
             this.nextUrl = null;
 
@@ -31,6 +32,7 @@
             // ListView control
             var listView = pageElement.querySelector("#siteEventsList.listview");
             var eventTypDropdown = pageElement.querySelector("#eventTyp");
+            var searchInput = pageElement.querySelector("#searchInput");
             var progress = null;
             var counter = null;
             var layout = null;
@@ -202,12 +204,52 @@
                 },
                 onSelectionDropDownChanged: function(event) {
                     Log.call(Log.l.trace, "SiteEventsList.Controller.");
+                    that.binding.searchString = "";
                     var target = event.currentTarget || event.target;
                     if (target) {
                         that.binding.eventTypID = target.value;
                     }
                     that.loadData();
                     Log.ret(Log.l.trace);
+                },
+                onSearchInput: function (event) {
+                    Log.call(Log.l.trace, "SiteEventsList.Controller.");
+                    if (that.binding.eventTypID === null) {
+                        that.binding.eventTypID = 0;
+                    }
+                    if (searchInput.value.length >= 3) {
+                        return AppData.call("PRC_GetEventList",
+                            {
+                                pSearchString: searchInput.value,
+                                pTerminTyp: parseInt(that.binding.eventTypID)
+                            },
+                            function(json) {
+                                Log.print(Log.l.info, "call success! ");
+                                if (json && json.d && json.d.results.length > 0) {
+                                    var results = json.d.results;
+                                    results.forEach(function (item, index) {
+                                        that.resultConverter(item, index);
+                                    });
+
+                                    that.binding.count = results.length;
+                                    that.eventdatasets = new WinJS.Binding.List(results);
+                                    that.selectRecordId(results[0].VeranstaltungTerminVIEWID);
+
+                                    if (listView.winControl) {
+                                        // add ListView dataSource
+                                        listView.winControl.itemDataSource = that.eventdatasets.dataSource;
+                                    }
+                                } else {
+
+                                }
+                            },
+                            function(error) {
+                                Log.print(Log.l.error, "call error");
+                            });
+                    } else {
+                        Log.print(Log.l.error, "searchString under 3 Digits long");
+                        that.loadData();
+                    }
                 },
                 onSelectionChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "SiteEventsList.Controller.");
@@ -340,6 +382,9 @@
                 this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
                 this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
             }
+            if (searchInput) {
+                this.addRemovableEventListener(searchInput, "keyup", this.eventHandlers.onSearchInput.bind(this));
+            }
             if (eventTypDropdown) {
                 this.addRemovableEventListener(eventTypDropdown, "change", this.eventHandlers.onSelectionDropDownChanged.bind(this));
             }
@@ -383,6 +428,7 @@
                            
                             that.binding.count = results.length;
                             that.eventdatasets = new WinJS.Binding.List(results);
+                            that.selectRecordId(results[0].VeranstaltungTerminVIEWID);
                             
                             if (listView.winControl) {
                                 // add ListView dataSource

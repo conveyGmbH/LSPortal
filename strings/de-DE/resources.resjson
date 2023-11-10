@@ -974,6 +974,7 @@
     "siteEventsList.customerEvents" : "Dauerkunden-Messen",
     "siteEventsList.siteEvents" : "Standort-Messen",
     "siteEventsList.eventcombotitle" : "Welche Messen anzeigen?",
+    "siteEventsList.searchtxt" : "Suche",
 
     "siteevents.title" : "Aussteller",
     "siteevents.event" : "Aussteller",
