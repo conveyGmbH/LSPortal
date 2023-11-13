@@ -191,6 +191,7 @@
                 that.binding.dataContactHeaderText.Erfassungsdatum = getResourceText("contactResultsList.headererfassungsdatum");
                 that.binding.dataContactHeaderText.ModifiedTS = getResourceText("contactResultsList.headeränderungsdatum");
                 that.binding.dataContactHeaderText.MailVersandTS = getResourceText("contactResultsList.headeremailversandtzeit");
+                that.binding.dataContactHeaderText.WelcomeMailTS = getResourceText("contactResultsList.headerwelcomeemailversandtzeit");
                 that.binding.dataContactHeaderText.Prio = getResourceText("contactResultsList.headerkontaktprio");
                 that.binding.dataContactHeaderText.Typ = getResourceText("contactResultsList.headerkontakttyp");
                 that.binding.dataContactHeaderText.Status = getResourceText("contactResultsList.headerstatus");
@@ -203,6 +204,7 @@
                 that.binding.dataContactHeaderValue.Erfassungsdatum = "Erfassungsdatum";
                 that.binding.dataContactHeaderValue.ModifiedTS = "ModifiedTS";
                 that.binding.dataContactHeaderValue.MailVersandTS = "MailVersandTS";
+                that.binding.dataContactHeaderValue.WelcomeMailTS = "WelcomeMailTS";
                 that.binding.dataContactHeaderValue.Prio = "Prio";
                 that.binding.dataContactHeaderValue.Typ = "Typ";
                 that.binding.dataContactHeaderValue.Status = "Status";
@@ -473,6 +475,9 @@
                 }
                 if (item.MailVersandTS) {
                     item.MailVersandTS = that.getDateObject(item.MailVersandTS);
+                }
+                if (item.WelcomeMailTS) {
+                    item.WelcomeMailTS = that.getDateObject(item.WelcomeMailTS);
                 }
                     if (tableBody &&
                         tableBody.winControl &&

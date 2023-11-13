@@ -1303,6 +1303,7 @@
     "contactResultsList.headerkontaktprio"			: "KontaktPrio",
     "contactResultsList.headerkontakttyp"			: "KontaktTyp",
     "contactResultsList.headerstatus"			: "Status",
+    "contactResultsList.headerwelcomeemailversandtzeit"			: "Willkommen EMail Versand",
 	    
     "contactResultsEdit.title"         : "Erfasste Kontaktdaten",
     "contactResultsEdit.comment"       : "Verwenden Sie die Zurück-Schaltfläche auf dieser Seite um zurück zu gehen!",

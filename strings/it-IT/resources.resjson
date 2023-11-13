@@ -1301,6 +1301,7 @@
     "contactResultsList.headerkontaktprio"			: "ContattoPrio",
     "contactResultsList.headerkontakttyp"			: "Tipo di contatto",
     "contactResultsList.headerstatus"			: "Stato",
+    "contactResultsList.headerwelcomeemailversandtzeit"			: "Invio EMail di benvenuto",
 	    
     "contactResultsEdit.title"         : "Dati di contatto registrati",
     "contactResultsEdit.comment"       : "Utilizzare il tasto indietro di questa pagina per tornare indietro!",

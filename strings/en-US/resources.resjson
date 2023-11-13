@@ -1302,6 +1302,7 @@
     "contactResultsList.headerkontaktprio"			: "ContactPrio",
     "contactResultsList.headerkontakttyp"			: "ContactType",
     "contactResultsList.headerstatus"			: "Status",
+    "contactResultsList.headerwelcomeemailversandtzeit"			: "Welcome EMail dispatch",
 	    
     "contactResultsEdit.title"         : "Recorded contact details",
     "contactResultsEdit.comment"       : "Use the back button on this page to go back!",

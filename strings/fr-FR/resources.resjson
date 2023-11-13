@@ -1302,6 +1302,7 @@
     "contactResultsList.headerkontaktprio"			: "ContacterPrio",
     "contactResultsList.headerkontakttyp"			: "Type de contact",
     "contactResultsList.headerstatus"			: "Statut",
+    "contactResultsList.headerwelcomeemailversandtzeit"			: "Bienvenue à l'envoi d'e-mails",
 	    
     "contactResultsEdit.title"         : "Coordonnées enregistrées",
     "contactResultsEdit.comment"       : "Utilisez le bouton Retour de cette page pour revenir en arrière !",

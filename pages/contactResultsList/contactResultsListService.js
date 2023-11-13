@@ -55,6 +55,7 @@
                 Erfassungsdatum: "",
                 ModifiedTS: "",
                 MailVersandTS: "",
+                WelcomeMailTS: "",
                 Prio: "",
                 Typ: "", 
                 OrderAttribute: "Name",
@@ -70,6 +71,7 @@
                 Erfassungsdatum: "",
                 ModifiedTS: "",
                 MailVersandTS: "",
+                WelcomeMailTS: "",
                 Prio: "", 
                 Typ: "", 
                 Status: ""
