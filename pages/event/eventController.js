@@ -35,6 +35,7 @@
                 dashboardMesagoFeature: AppHeader.controller.binding.userData.SiteAdmin,
                 isDashboardPremium: AppData._persistentStates.showdashboardMesagoCombo === 1 ? true : false,
                 leadsuccessFeatureStandard: AppData._persistentStates.leadsuccessFeatureStandard,
+                isLeadsuccessFeatureStandardVisible: AppHeader.controller.binding.userData.SiteAdmin,
                 qrcodetext: getResourceText("event.show2D-Code"),
                 barcodetext: getResourceText("event.showBar-Code"),
                 nametext: getResourceText("event.showNameInHeader"),
