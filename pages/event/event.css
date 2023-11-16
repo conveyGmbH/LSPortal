@@ -29,7 +29,8 @@
 #showvisitorFlow .win-toggleswitch-header,
 #visitorFlowPremium .win-toggleswitch-header,
 #shopAppBkg .win-toggleswitch-header,
-#sendMailPrivacypolicy .win-toggleswitch-header {
+#sendMailPrivacypolicy .win-toggleswitch-header,
+#leadsuccessFeatureStandard .win-toggleswitch-header {
     display: none;
 }
 

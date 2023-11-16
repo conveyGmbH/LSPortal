@@ -34,6 +34,7 @@
                 visitorFlowInterval: AppData._persistentStates.visitorFlowInterval || "",
                 dashboardMesagoFeature: AppHeader.controller.binding.userData.SiteAdmin,
                 isDashboardPremium: AppData._persistentStates.showdashboardMesagoCombo === 1 ? true : false,
+                leadsuccessFeatureStandard: AppData._persistentStates.leadsuccessFeatureStandard,
                 qrcodetext: getResourceText("event.show2D-Code"),
                 barcodetext: getResourceText("event.showBar-Code"),
                 nametext: getResourceText("event.showNameInHeader"),
@@ -350,6 +351,10 @@
                         pValueIsSet = true;
                         pValue = checked;
                         break;
+                    case "leadsuccessFeatureStandard":
+                        pOptionTypeId = 51;
+                        that.binding.veranstOption.leadsuccessFeatureStandard = checked;
+                        break;
                 }
                 if (pOptionTypeId) {
                     // value: show => pValue: hide!
@@ -493,6 +498,11 @@
                         AppData._persistentStates.visitorFlowInterval = checked;
                         pValueIsSet = true;
                         pValue = checked;
+                        break;
+                    case "leadsuccessFeatureStandard":
+                        pOptionTypeId = 51;
+                        that.binding.veranstOption.leadsuccessFeatureStandard = checked;
+                        AppData._persistentStates.leadsuccessFeatureStandard = checked;
                         break;
                 }
                 if (pOptionTypeId) {
@@ -811,6 +821,13 @@
                         break;
                     case 50:
                         that.binding.veranstOption.visitorFlowInterval = item.LocalValue;
+                        break;
+                    case 51:
+                        if (item.LocalValue === "1") {
+                            that.binding.veranstOption.leadsuccessFeatureStandard = true;
+                        } else {
+                            that.binding.veranstOption.leadsuccessFeatureStandard = false;
+                        }
                         break;
                     default:
                     // defaultvalues

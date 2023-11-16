@@ -679,6 +679,7 @@
     "event.dashboardMesago"   : "Dashboard",
 	"event.dashboardPremium"    : "Premium Typ",
     "event.visitorFlowInterval" : "VisitorFlow Interval",
+    "event.leadsuccessFeatureStandard" : "LeadSuccess Standard",
 
 	"optQuestionList.title"   : "Optional Questions/Answers",
     "optQuestionList.count"   : "Count",

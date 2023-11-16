@@ -644,6 +644,13 @@
                         AppData._persistentStates.visitorFlowInterval = false;
                     }*/
                     break;
+                case 51:
+                    if (item.LocalValue === "1") {
+                        AppData._persistentStates.leadsuccessFeatureStandard = true;
+                    } else {
+                        AppData._persistentStates.leadsuccessFeatureStandard = false;
+                    }
+                    break;
                 default:
                     // defaultvalues
             }

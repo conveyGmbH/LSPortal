@@ -165,7 +165,7 @@
                                     <option data-win-bind="value: NumberValue; textContent: TypeValueName"></option>
                                 </select>
                             </div>
-                            <div class="field_line field_line_even" style="display: None">
+                            <!--<div class="field_line field_line_even" style="display: None">
                                 <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'event.dashboardPremium'}"></span>
                                 <span class="label landscape_only" data-win-res="{textContent: 'event.dashboardPremium'}"></span>
                                 <select id="showPremiumDashboardCombo"
@@ -174,6 +174,17 @@
                                         onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
                                     <option data-win-bind="value: value; textContent: TITLE"></option>
                                 </select>
+                            </div>-->
+                            <div class="field_line field_line_even">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'event.leadsuccessFeatureStandard'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'event.leadsuccessFeatureStandard'}"></span>
+                                <div class="input_field toggle-switch-parent">
+                                    <div id="leadsuccessFeatureStandard" class="input_field"
+                                         data-win-control="WinJS.UI.ToggleSwitch"
+                                         data-win-bind="winControl.checked: veranstOption.leadsuccessFeatureStandard; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                                         onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
+                                    </div>
+                                </div>
                             </div>
                             <div class="line-separator"></div>
                         </div>

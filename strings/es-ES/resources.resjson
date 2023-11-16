@@ -631,6 +631,7 @@
     "event.dashboardMesago"   : "Dashboard Mesago",
 	"event.dashboardPremium"    : "Premium Typ",
     "event.visitorFlowInterval" : "VisitorFlow Interval",
+	"event.leadsuccessFeatureStandard" : "LeadSuccess Standard",
 
     "questiongroup.title"   : "Fragengruppen",
     "questiongroup.count"   : "Anzahl",
