@@ -151,6 +151,7 @@
                 Log.call(Log.l.trace, "MediaList.Controller.");
                 if (item) {
                     var doc = item;
+                    item.showPdf = AppData.isPdf(doc.DocGroup, doc.DocFormat);
                     item.showSvg = AppData.isSvg(doc.DocGroup, doc.DocFormat);
                     item.showImg = AppData.isImg(doc.DocGroup, doc.DocFormat);
                     item.showAudio = AppData.isAudio(doc.DocGroup, doc.DocFormat);
@@ -172,6 +173,9 @@
                         }
                     } else if (item.showSvg) {
                         item.srcSvg = doc.OvwContentDOCCNT3;
+                    } else if (item.showPdf) {
+                        item.nameIcon = "document_pdf";
+                        item.showIcon = true;
                     } else if (item.showAudio) {
                         item.nameIcon = "music";
                         item.showIcon = true;

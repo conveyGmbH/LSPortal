@@ -24,6 +24,7 @@
                         
             Application.Controller.apply(this, [pageElement, {
                 docId: 0,
+                showPdf: false,
                 showSvg: false,
                 showPhoto: false,
                 showAudio: false,
@@ -46,6 +47,7 @@
                     that.binding.moreDocs = false;
                     if (!count) {
                         that.binding.docId = 0;
+                        that.binding.showPdf = false;
                         that.binding.showSvg = false;
                         that.binding.showPhoto = false;
                         that.binding.showAudio = false;
@@ -89,16 +91,25 @@
                 var docViewer;
                 Log.call(Log.l.trace, "EventMediaAdministration.Controller.", "docGroup=" + docGroup + " docFormat=" + docFormat);
                 if (AppData.isSvg(docGroup, docFormat)) {
+                    that.binding.showPdf = false;
                     that.binding.showSvg = true;
                     that.binding.showPhoto = false;
                     that.binding.showAudio = false;
                     docViewer = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("svgMedia"));
+                } else if (AppData.isPdf(docGroup, docFormat)) {
+                    that.binding.showPdf = true;
+                    that.binding.showSvg = false;
+                    that.binding.showPhoto = false;
+                    that.binding.showAudio = false;
+                    docViewer = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("pdfMedia"));
                 } else if (AppData.isImg(docGroup, docFormat)) {
+                    that.binding.showPdf = false;
                     that.binding.showPhoto = true;
                     that.binding.showSvg = false;
                     that.binding.showAudio = false;
                     docViewer = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("imgMedia"));
                 } else if (AppData.isAudio(docGroup, docFormat)) {
+                    that.binding.showPdf = false;
                     that.binding.showAudio = true;
                     that.binding.showSvg = false;
                     that.binding.showPhoto = false;
@@ -146,21 +157,35 @@
                             bUpdateCommands = true;
                             ret = that.docViewer.controller.loadData(docId);
                         } else if (AppData.isSvg(docGroup, docFormat)) {
+                            that.binding.showPdf = false;
                             that.binding.showSvg = true;
                             that.binding.showPhoto = false;
                             that.binding.showAudio = false;
-                            Log.print(Log.l.trace, "load new svgSketch!");
+                            Log.print(Log.l.trace, "load new svgMedia!");
                             parentElement = pageElement.querySelector("#svgMediahost");
                             if (parentElement) {
                                 bGetNewDocViewer = true;
                                 bUpdateCommands = true;
                                 ret = Application.loadFragmentById(parentElement, "svgMedia", { docId: docId });
                             }
+                        } else if (AppData.isPdf(docGroup, docFormat)) {
+                            that.binding.showPdf = true;
+                            that.binding.showSvg = false;
+                            that.binding.showPhoto = false;
+                            that.binding.showAudio = false;
+                            Log.print(Log.l.trace, "load new pdfMedia!");
+                            parentElement = pageElement.querySelector("#pdfMediahost");
+                            if (parentElement) {
+                                bGetNewDocViewer = true;
+                                bUpdateCommands = true;
+                                ret = Application.loadFragmentById(parentElement, "pdfMedia", { docId: docId });
+                            }
                         } else if (AppData.isImg(docGroup, docFormat)) {
+                            that.binding.showPdf = false;
                             that.binding.showPhoto = true;
                             that.binding.showSvg = false;
                             that.binding.showAudio = false;
-                            Log.print(Log.l.trace, "load new imgSketch!");
+                            Log.print(Log.l.trace, "load new imgMedia!");
                             parentElement = pageElement.querySelector("#imgMediahost");
                             if (parentElement) {
                                 bGetNewDocViewer = true;
@@ -168,6 +193,7 @@
                                 ret = Application.loadFragmentById(parentElement, "imgMedia", { docId: docId });
                             }
                         } else if (AppData.isAudio(docGroup, docFormat)) {
+                            that.binding.showPdf = false;
                             that.binding.showAudio = true;
                             that.binding.showSvg = false;
                             that.binding.showPhoto = false;
@@ -181,6 +207,7 @@
                         }
                     } else {
                         that.binding.showUpload = !!docId;
+                        that.binding.showPdf = false;
                         that.binding.showSvg = false;
                         that.binding.showPhoto = false;
                         that.binding.showAudio = false;

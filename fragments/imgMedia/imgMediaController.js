@@ -470,7 +470,7 @@
             }*/
 
             var loadData = function (docId) {
-                var ret;
+                var ret = null;
                 Log.call(Log.l.trace, "ImgMedia.Controller.", "docId=" + docId);
                 if (docId) {
                     AppData.setErrorMsg(that.binding);
@@ -497,7 +497,7 @@
                     docId);
                 }
                 Log.ret(Log.l.trace);
-                return ret;
+                return ret || WinJS.Promise.as();
             };
             this.loadData = loadData;
 
