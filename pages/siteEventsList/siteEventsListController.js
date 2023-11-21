@@ -217,7 +217,8 @@
                     if (that.binding.eventTypID === null) {
                         that.binding.eventTypID = 0;
                     }
-                    if (searchInput.value.length >= 3) {
+                    if (event.keyCode === 13) {
+                        if (searchInput.value) {
                         return AppData.call("PRC_GetEventList",
                             {
                                 pSearchString: searchInput.value,
@@ -247,9 +248,11 @@
                                 Log.print(Log.l.error, "call error");
                             });
                     } else {
-                        Log.print(Log.l.error, "searchString under 3 Digits long");
+                            Log.print(Log.l.error, "searchString empty!");
                         that.loadData();
                     }
+                    }
+                    
                 },
                 onSelectionChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "SiteEventsList.Controller.");
@@ -402,7 +405,7 @@
                 }
                 AppData.setErrorMsg(that.binding);
                 var restriction = "";
-                if (that.binding.eventTypID === null || that.binding.eventTypID === "null") {
+                if (that.binding.eventTypID === null || that.binding.eventTypID === "null" || that.binding.eventTypID === 0) {
                     restriction = "";
                     that.binding.preveventTypID = null;
                 } else if (that.binding.eventTypID === that.binding.preveventTypID) {
