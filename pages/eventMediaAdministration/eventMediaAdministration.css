@@ -18,6 +18,14 @@
     display: inline-block;
     position: absolute;
 }
+.eventMediaAdministration .doc-url {
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 80px;
+}
 .eventMediaAdministration .listfragmenthost {
     position: absolute;
     width: 100%;

@@ -18,6 +18,13 @@
     });
     WinJS.Namespace.define("EventMediaAdministration", {
         mediaTable: {
+            select: function (complete, error, recordId) {
+                Log.call(Log.l.trace, "mediaTable.");
+                var ret = EventMediaAdministration._mediaTable.selectById(complete, error, recordId);
+                Log.ret(Log.l.trace);
+                return ret;
+
+            },
             deleteRecord: function (complete, error, recordId) {
                 Log.call(Log.l.trace, "mediaTable.");
                 var ret = EventMediaAdministration._mediaTable.deleteRecord(complete, error, recordId);

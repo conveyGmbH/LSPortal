@@ -26,7 +26,7 @@
                 docId: 0,
                 showSvg: false,
                 showPhoto: false,
-                showAudio: false,
+                showVideo: false,
                 showUpload: false,
                 moreDocs: false,
                 userHidesList: false,
@@ -48,7 +48,7 @@
                         that.binding.docId = 0;
                         that.binding.showSvg = false;
                         that.binding.showPhoto = false;
-                        that.binding.showAudio = false;
+                        that.binding.showVideo = false;
                         that.binding.showUpload = false;
                         that.binding.flagInsert = null;
                         that.binding.addIndex = null;
@@ -91,15 +91,15 @@
                 if (AppData.isSvg(docGroup, docFormat)) {
                     that.binding.showSvg = true;
                     that.binding.showPhoto = false;
-                    that.binding.showAudio = false;
+                    that.binding.showVideo = false;
                     docViewer = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("svgMedia"));
                 } else if (AppData.isImg(docGroup, docFormat)) {
                     that.binding.showPhoto = true;
                     that.binding.showSvg = false;
-                    that.binding.showAudio = false;
+                    that.binding.showVideo = false;
                     docViewer = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("imgMedia"));
-                } else if (AppData.isAudio(docGroup, docFormat)) {
-                    that.binding.showAudio = true;
+                } else if (AppData.isVideo(docGroup, docFormat)) {
+                    that.binding.showVideo = true;
                     that.binding.showSvg = false;
                     that.binding.showPhoto = false;
                     docViewer = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("videoMedia"));
@@ -148,7 +148,7 @@
                         } else if (AppData.isSvg(docGroup, docFormat)) {
                             that.binding.showSvg = true;
                             that.binding.showPhoto = false;
-                            that.binding.showAudio = false;
+                            that.binding.showVideo = false;
                             Log.print(Log.l.trace, "load new svgSketch!");
                             parentElement = pageElement.querySelector("#svgMediahost");
                             if (parentElement) {
@@ -159,7 +159,7 @@
                         } else if (AppData.isImg(docGroup, docFormat)) {
                             that.binding.showPhoto = true;
                             that.binding.showSvg = false;
-                            that.binding.showAudio = false;
+                            that.binding.showVideo = false;
                             Log.print(Log.l.trace, "load new imgSketch!");
                             parentElement = pageElement.querySelector("#imgMediahost");
                             if (parentElement) {
@@ -167,8 +167,8 @@
                                 bUpdateCommands = true;
                                 ret = Application.loadFragmentById(parentElement, "imgMedia", { docId: docId });
                             }
-                        } else if (AppData.isAudio(docGroup, docFormat)) {
-                            that.binding.showAudio = true;
+                        } else if (AppData.isVideo(docGroup, docFormat)) {
+                            that.binding.showVideo = true;
                             that.binding.showSvg = false;
                             that.binding.showPhoto = false;
                             Log.print(Log.l.trace, "load new videoMedia!");
@@ -183,7 +183,7 @@
                         that.binding.showUpload = !!docId;
                         that.binding.showSvg = false;
                         that.binding.showPhoto = false;
-                        that.binding.showAudio = false;
+                        that.binding.showVideo = false;
                         bUpdateCommands = true;
                         if (that.binding.showUpload) {
                             ret = that.loadUpload(docId);

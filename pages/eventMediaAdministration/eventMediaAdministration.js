@@ -79,20 +79,24 @@
                     var myDocFragments = element.querySelectorAll(".docfragmenthost");
                     var myTextFragment = element.querySelector(".textfragmenthost");
                     var myMediaList = element.querySelector(".listfragmenthost");
-                    if (myMediaContainer && myTextUsage && myMediaList && myDocFragments && myTextFragment) {
+                    var mydocUrl = element.querySelector(".doc-url");
+                    if (myMediaContainer && myTextUsage && myMediaList && myDocFragments && myTextFragment && mydocUrl) {
                         var contentarea = element.querySelector(".contentarea");
                         if (contentarea) {
                             var bHalfSize = false;
                             var contentHeader = element.querySelector(".content-header");
                             var width = contentarea.clientWidth;
                             var height = contentarea.clientHeight - (contentHeader ? contentHeader.clientHeight : 0);
-
+                            var showUrl = false;
                             if (width > Application.maxViewSize.mediumSmall) {
                                 bHalfSize = true;
                             }
                             height -= myTextUsage.clientHeight;
-                            if (that.controller && that.controller.binding && that.controller.binding.showList) {
-                                height -= myMediaList.clientHeight;
+                            if (that.controller && that.controller.binding) {
+                                if (that.controller.binding.showList) {
+                                    height -= myMediaList.clientHeight;
+                                }
+                                showUrl = that.controller.binding.showUrl;
                             }
                             if (width !== that.prevWidth || height !== that.prevHeight) {
                                 if (myMediaContainer.style) {
@@ -132,11 +136,14 @@
                                     }
                                     if (bHalfSize) {
                                         myMediaContainer.style.overflowY = "hidden";
+                                        if (mydocUrl.style) {
+                                            mydocUrl.style.top = "0";
+                                        }
                                         if (myTextFragment.style) {
                                             myTextFragment.style.left = "0";
-                                            myTextFragment.style.top = "0";
+                                            myTextFragment.style.top = showUrl ? "80px" : "0";
                                             myTextFragment.style.width = "50%";
-                                            myTextFragment.style.height = "100%";
+                                            myTextFragment.style.height = showUrl ? "calc(100% - 80px)" : "100%";
                                         }
                                         for (i = 0; i < myDocFragments.length; i++) {
                                             myDocFragment = myDocFragments[i];
@@ -158,9 +165,12 @@
                                                 myDocFragment.style.height = "370px";
                                             }
                                         }
+                                        if (mydocUrl.style) {
+                                            mydocUrl.style.top = "370px";
+                                        }
                                         if (myTextFragment.style) {
                                             myTextFragment.style.left = "0";
-                                            myTextFragment.style.top = "370px";
+                                            myTextFragment.style.top = showUrl ? "450px" : "370px";
                                             myTextFragment.style.width = "100%";
                                             myTextFragment.style.height = "";
                                         }

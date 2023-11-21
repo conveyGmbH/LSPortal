@@ -17,8 +17,16 @@
                         <div id="pdfMediahost" class="docfragmenthost" data-win-bind="style.display: showPdf Binding.Converter.toDisplay"></div>
                         <div id="svgMediahost" class="docfragmenthost" data-win-bind="style.display: showSvg Binding.Converter.toDisplay"></div>
                         <div id="imgMediahost" class="docfragmenthost" data-win-bind="style.display: showPhoto Binding.Converter.toDisplay"></div>
-                        <div id="videoMediahost" class="docfragmenthost" data-win-bind="style.display: showAudio Binding.Converter.toDisplay"></div>
+                        <div id="videoMediahost" class="docfragmenthost" data-win-bind="style.display: showVideo Binding.Converter.toDisplay"></div>
                         <div id="uploadMediahost" class="docfragmenthost" data-win-bind="style.display: showUpload Binding.Converter.toDisplay"></div>
+                        <div class="doc-url" data-win-bind="style.display: showUrl Binding.Converter.toDisplay">
+                            <div class="field_line field_line_odd">
+                                <span class="label win-type-caption" data-win-res="{textContent: 'eventbaselink.starturl'}"></span>
+                                <input class="input_field win-textbox" type="text"
+                                       data-win-bind="value: url Binding.Mode.twoway;" />
+                            </div>
+
+                        </div>
                         <div id="mediaTexthost" class="textfragmenthost" data-win-bind="style.display: docId Binding.Converter.toDisplay"></div>
                     </div>
                     <div id="mediaListhost" class="listfragmenthost" data-win-bind="style.display: showList Binding.Converter.toDisplay"></div>

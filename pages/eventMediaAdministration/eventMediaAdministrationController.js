@@ -14,26 +14,31 @@
     var b64 = window.base64js;
 
     WinJS.Namespace.define("EventMediaAdministration", {
+        videoExtList: [
+            "mpg", "mpeg", "m1v", "mp2", "mpe", "mpv2", "mp4", "m4v",
+            "mp4v", "ogg", "ogv", "asf", "avi", "mov", "wmv"
+        ],
         getClassNameOffline: function (useOffline) {
             return (useOffline ? "field_line field_line_even" : "hide-element");
         },
-        
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "EventMediaAdministration.Controller.");
             var that = this;
-                        
+
             Application.Controller.apply(this, [pageElement, {
                 docId: 0,
                 showPdf: false,
                 showSvg: false,
                 showPhoto: false,
-                showAudio: false,
+                showVideo: false,
                 showUpload: false,
+                showUrl: false,
                 moreDocs: false,
                 userHidesList: false,
                 showList: false,
                 flagInsert: null,
-                addIndex: null
+                addIndex: null,
+                url: ""
             }, commandList]);
 
             this.pageElement = pageElement;
@@ -50,8 +55,9 @@
                         that.binding.showPdf = false;
                         that.binding.showSvg = false;
                         that.binding.showPhoto = false;
-                        that.binding.showAudio = false;
+                        that.binding.showVideo = false;
                         that.binding.showUpload = false;
+                        that.binding.showUrl = false;
                         that.binding.flagInsert = null;
                         that.binding.addIndex = null;
                         var uploadMediaFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("uploadMedia"));
@@ -94,25 +100,29 @@
                     that.binding.showPdf = false;
                     that.binding.showSvg = true;
                     that.binding.showPhoto = false;
-                    that.binding.showAudio = false;
+                    that.binding.showVideo = false;
+                    that.binding.showUrl = false;
                     docViewer = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("svgMedia"));
                 } else if (AppData.isPdf(docGroup, docFormat)) {
                     that.binding.showPdf = true;
                     that.binding.showSvg = false;
                     that.binding.showPhoto = false;
-                    that.binding.showAudio = false;
+                    that.binding.showVideo = false;
+                    that.binding.showUrl = false;
                     docViewer = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("pdfMedia"));
                 } else if (AppData.isImg(docGroup, docFormat)) {
                     that.binding.showPdf = false;
                     that.binding.showPhoto = true;
                     that.binding.showSvg = false;
-                    that.binding.showAudio = false;
+                    that.binding.showVideo = false;
+                    that.binding.showUrl = false;
                     docViewer = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("imgMedia"));
-                } else if (AppData.isAudio(docGroup, docFormat)) {
+                } else if (AppData.isVideo(docGroup, docFormat) || AppData.isAudio(docGroup, docFormat) || that.binding.url) {
                     that.binding.showPdf = false;
-                    that.binding.showAudio = true;
+                    that.binding.showVideo = true;
                     that.binding.showSvg = false;
                     that.binding.showPhoto = false;
+                    that.binding.showUrl = true;
                     docViewer = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("videoMedia"));
                 } else {
                     docViewer = null;
@@ -131,6 +141,7 @@
                 if (inLoadDoc) {
                     if (docId === prevDocId) {
                         Log.print(Log.l.trace, "extra ignored");
+                        ret = WinJS.Promise.as();
                     } else {
                         Log.print(Log.l.trace, "busy - try later again");
                         ret = WinJS.Promise.timeout(50).then(function () {
@@ -142,117 +153,148 @@
                     inLoadDoc = true;
                     prevDocId = docId;
                     that.binding.docId = docId;
-                    // check for need of command update in AppBar
-                    var bGetNewDocViewer = false;
-                    var bUpdateCommands = false;
-                    var prevDocViewer = that.docViewer;
-                    var newDocViewer = null;
-                    var prevShowUpload = that.binding.showUpload;
-                    if (docGroup && docFormat) {
-                        that.binding.showUpload = false;
-                        newDocViewer = getDocViewer(docGroup, docFormat);
-                        if (newDocViewer && newDocViewer.controller) {
-                            Log.print(Log.l.trace, "found docViewer!");
-                            that.docViewer = newDocViewer;
-                            bUpdateCommands = true;
-                            ret = that.docViewer.controller.loadData(docId);
-                        } else if (AppData.isSvg(docGroup, docFormat)) {
-                            that.binding.showPdf = false;
-                            that.binding.showSvg = true;
-                            that.binding.showPhoto = false;
-                            that.binding.showAudio = false;
-                            Log.print(Log.l.trace, "load new svgMedia!");
-                            parentElement = pageElement.querySelector("#svgMediahost");
-                            if (parentElement) {
-                                bGetNewDocViewer = true;
-                                bUpdateCommands = true;
-                                ret = Application.loadFragmentById(parentElement, "svgMedia", { docId: docId });
-                            }
-                        } else if (AppData.isPdf(docGroup, docFormat)) {
-                            that.binding.showPdf = true;
-                            that.binding.showSvg = false;
-                            that.binding.showPhoto = false;
-                            that.binding.showAudio = false;
-                            Log.print(Log.l.trace, "load new pdfMedia!");
-                            parentElement = pageElement.querySelector("#pdfMediahost");
-                            if (parentElement) {
-                                bGetNewDocViewer = true;
-                                bUpdateCommands = true;
-                                ret = Application.loadFragmentById(parentElement, "pdfMedia", { docId: docId });
-                            }
-                        } else if (AppData.isImg(docGroup, docFormat)) {
-                            that.binding.showPdf = false;
-                            that.binding.showPhoto = true;
-                            that.binding.showSvg = false;
-                            that.binding.showAudio = false;
-                            Log.print(Log.l.trace, "load new imgMedia!");
-                            parentElement = pageElement.querySelector("#imgMediahost");
-                            if (parentElement) {
-                                bGetNewDocViewer = true;
-                                bUpdateCommands = true;
-                                ret = Application.loadFragmentById(parentElement, "imgMedia", { docId: docId });
-                            }
-                        } else if (AppData.isAudio(docGroup, docFormat)) {
-                            that.binding.showPdf = false;
-                            that.binding.showAudio = true;
-                            that.binding.showSvg = false;
-                            that.binding.showPhoto = false;
-                            Log.print(Log.l.trace, "load new videoMedia!");
-                            parentElement = pageElement.querySelector("#videoMediahost");
-                            if (parentElement) {
-                                bGetNewDocViewer = true;
-                                bUpdateCommands = true;
-                                ret = Application.loadFragmentById(parentElement, "videoMedia", { docId: docId });
+                    Log.print(Log.l.trace, "calling select mediaTable...");
+                    ret = EventMediaAdministration.mediaTable.select(function(json) {
+                        Log.print(Log.l.trace, "mediaTable: success!");
+                        var url = null;
+                        if (json && json.d &&
+                            typeof json.d.Url === "string") {
+                            var extPos = json.d.Url.lastIndexOf(".");
+                            if (extPos > 0) {
+                                var ext = json.d.Url.substr(extPos + 1);
+                                if (EventMediaAdministration.videoExtList.indexOf(ext) >= 0) {
+                                    url = json.d.Url;
+                                }
                             }
                         }
-                    } else {
-                        that.binding.showUpload = !!docId;
-                        that.binding.showPdf = false;
-                        that.binding.showSvg = false;
-                        that.binding.showPhoto = false;
-                        that.binding.showAudio = false;
-                        bUpdateCommands = true;
-                        if (that.binding.showUpload) {
-                            ret = that.loadUpload(docId);
+                        that.binding.url = url;
+                    }, function(errorResponse) {
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    }, docId).then(function() {
+                        // check for need of command update in AppBar
+                        var bGetNewDocViewer = false;
+                        var bUpdateCommands = false;
+                        var prevDocViewer = that.docViewer;
+                        var newDocViewer = null;
+                        var prevShowUpload = that.binding.showUpload;
+                        var loadPromise = WinJS.Promise.as();
+                        if (docGroup && docFormat || that.binding.url) {
+                            that.binding.showUpload = false;
+                            newDocViewer = getDocViewer(docGroup, docFormat);
+                            if (newDocViewer && newDocViewer.controller) {
+                                Log.print(Log.l.trace, "found docViewer!");
+                                that.docViewer = newDocViewer;
+                                bUpdateCommands = true;
+                                loadPromise = that.docViewer.controller.loadData(docId, that.binding.url);
+                            } else if (AppData.isSvg(docGroup, docFormat)) {
+                                that.binding.showPdf = false;
+                                that.binding.showSvg = true;
+                                that.binding.showPhoto = false;
+                                that.binding.showVideo = false;
+                                that.binding.showUrl = false;
+                                Log.print(Log.l.trace, "load new svgMedia!");
+                                parentElement = pageElement.querySelector("#svgMediahost");
+                                if (parentElement) {
+                                    bGetNewDocViewer = true;
+                                    bUpdateCommands = true;
+                                    loadPromise = Application.loadFragmentById(parentElement, "svgMedia", { docId: docId });
+                                }
+                            } else if (AppData.isPdf(docGroup, docFormat)) {
+                                that.binding.showPdf = true;
+                                that.binding.showSvg = false;
+                                that.binding.showPhoto = false;
+                                that.binding.showVideo = false;
+                                that.binding.showUrl = false;
+                                Log.print(Log.l.trace, "load new pdfMedia!");
+                                parentElement = pageElement.querySelector("#pdfMediahost");
+                                if (parentElement) {
+                                    bGetNewDocViewer = true;
+                                    bUpdateCommands = true;
+                                    loadPromise = Application.loadFragmentById(parentElement, "pdfMedia", { docId: docId });
+                                }
+                            } else if (AppData.isImg(docGroup, docFormat)) {
+                                that.binding.showPdf = false;
+                                that.binding.showPhoto = true;
+                                that.binding.showSvg = false;
+                                that.binding.showVideo = false;
+                                that.binding.showUrl = false;
+                                Log.print(Log.l.trace, "load new imgMedia!");
+                                parentElement = pageElement.querySelector("#imgMediahost");
+                                if (parentElement) {
+                                    bGetNewDocViewer = true;
+                                    bUpdateCommands = true;
+                                    loadPromise = Application.loadFragmentById(parentElement, "imgMedia", { docId: docId });
+                                }
+                            } else if (AppData.isVideo(docGroup, docFormat) || AppData.isAudio(docGroup, docFormat) || that.binding.url) {
+                                that.binding.showPdf = false;
+                                that.binding.showVideo = true;
+                                that.binding.showSvg = false;
+                                that.binding.showPhoto = false;
+                                that.binding.showUrl = true;
+                                Log.print(Log.l.trace, "load new videoMedia!");
+                                parentElement = pageElement.querySelector("#videoMediahost");
+                                if (parentElement) {
+                                    bGetNewDocViewer = true;
+                                    bUpdateCommands = true;
+                                    loadPromise = Application.loadFragmentById(parentElement, "videoMedia", { docId: docId, url: that.binding.url });
+                                }
+                            }
                         } else {
-                            ret = WinJS.Promise.as();
-                        }
-                    }
-                    // do command update if needed
-                    var js = {
-                        doc: ret || WinJS.Promise.as(),
-                        text: that.loadText(docId)
-                    }
-                    ret = WinJS.Promise.join(js).then(function () {
-                        if (bUpdateCommands) {
-                            var uploadMediaFragmentControl;
+                            that.binding.showUpload = !!docId;
+                            that.binding.showPdf = false;
+                            that.binding.showSvg = false;
+                            that.binding.showPhoto = false;
+                            that.binding.showVideo = false;
+                            that.binding.showUrl = that.binding.flagInsert;
+                            bUpdateCommands = true;
                             if (that.binding.showUpload) {
-                                if (prevShowUpload !== that.binding.showUpload) {
-                                    uploadMediaFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("uploadMedia"));
-                                    if (uploadMediaFragmentControl && uploadMediaFragmentControl.controller) {
-                                        uploadMediaFragmentControl.controller.updateCommands(prevDocViewer && prevDocViewer.controller);
-                                    }
-                                }
-                            } else {
-                                if (bGetNewDocViewer) {
-                                    that.docViewer = getDocViewer(docGroup, docFormat);
-                                }
-                                if (that.docViewer && that.docViewer.controller) {
+                                loadPromise = that.loadUpload(docId);
+                            }
+                        }
+                        var updateLayoutPromise = WinJS.Promise.as();
+                        var pageControl = pageElement.winControl;
+                        if (pageControl && pageControl.updateLayout) {
+                            pageControl.prevWidth = 0;
+                            pageControl.prevHeight = 0;
+                            updateLayoutPromise = pageControl.updateLayout.call(pageControl, pageElement);
+                        }
+                        // do command update if needed
+                        var js = {
+                            doc: loadPromise,
+                            text: that.loadText(docId),
+                            layout: updateLayoutPromise
+                        }
+                        return WinJS.Promise.join(js).then(function () {
+                            if (bUpdateCommands) {
+                                var uploadMediaFragmentControl;
+                                if (that.binding.showUpload) {
                                     if (prevShowUpload !== that.binding.showUpload) {
                                         uploadMediaFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("uploadMedia"));
-                                        that.docViewer.controller.updateCommands(uploadMediaFragmentControl && uploadMediaFragmentControl.controller);
-                                    } else if (prevDocViewer !== that.docViewer) {
-                                        that.docViewer.controller.updateCommands(prevDocViewer && prevDocViewer.controller);
+                                        if (uploadMediaFragmentControl && uploadMediaFragmentControl.controller) {
+                                            uploadMediaFragmentControl.controller.updateCommands(prevDocViewer && prevDocViewer.controller);
+                                        }
+                                    }
+                                } else {
+                                    if (bGetNewDocViewer) {
+                                        that.docViewer = getDocViewer(docGroup, docFormat);
+                                    }
+                                    if (that.docViewer && that.docViewer.controller) {
+                                        if (prevShowUpload !== that.binding.showUpload) {
+                                            uploadMediaFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("uploadMedia"));
+                                            that.docViewer.controller.updateCommands(uploadMediaFragmentControl && uploadMediaFragmentControl.controller);
+                                        } else if (prevDocViewer !== that.docViewer) {
+                                            that.docViewer.controller.updateCommands(prevDocViewer && prevDocViewer.controller);
+                                        }
                                     }
                                 }
                             }
-                        }
-                        if (prevDocViewer !== that.docViewer && prevDocViewer && prevDocViewer.controller) {
-                            prevDocViewer.controller.removeDoc();
-                        }
-                        // reset semaphore
-                        inLoadDoc = false;
-                        AppBar.triggerDisableHandlers();
+                            if ((that.binding.showUpload || prevDocViewer !== that.docViewer) && prevDocViewer && prevDocViewer.controller) {
+                                prevDocViewer.controller.removeDoc();
+                            }
+                            // reset semaphore
+                            inLoadDoc = false;
+                            AppBar.triggerDisableHandlers();
+                        });
                     });
                 }
                 Log.ret(Log.l.trace);
@@ -542,25 +584,46 @@
             var saveData = function(complete, error) {
                 var ret;
                 Log.call(Log.l.trace, "EventMediaAdministration.Controller.");
-                var mediaTextFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("mediaText"));
-                if (mediaTextFragmentControl && mediaTextFragmentControl.controller) {
-                    ret = mediaTextFragmentControl.controller.saveData(function (response) {
-                        Log.print(Log.l.trace, "media saved");
-                        if (typeof complete === "function") {
-                            complete(response);
-                        }
+                AppBar.busy = true;
+                if (that.binding.showUrl) {
+                    ret = AppData.call("PRC_SetMandantDocumentUrl", {
+                        pMandantDokumentID: that.binding.docId,
+                        pUrl: that.binding.url
+                    }, function (json) {
+                        Log.print(Log.l.info, "call PRC_SetMandantDocumentUrl: success!");
                     }, function (errorResponse) {
-                        Log.print(Log.l.error, "error saving media");
+                        AppBar.busy = false;
+                        Log.print(Log.l.error, "call PRC_SetMandantDocumentUrl: error");
                         if (typeof error === "function") {
                             error(errorResponse);
                         }
                     });
                 } else {
-                    if (typeof complete === "function") {
-                        complete({});
-                    }
                     ret = WinJS.Promise.as();
                 }
+                ret = ret.then(function() {
+                    var mediaTextFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("mediaText"));
+                    if (mediaTextFragmentControl && mediaTextFragmentControl.controller) {
+                        ret = mediaTextFragmentControl.controller.saveData(function (response) {
+                            Log.print(Log.l.trace, "media saved");
+                            AppBar.busy = false;
+                            if (typeof complete === "function") {
+                                complete(response);
+                            }
+                        }, function (errorResponse) {
+                            Log.print(Log.l.error, "error saving media");
+                            AppBar.busy = false;
+                            if (typeof error === "function") {
+                                error(errorResponse);
+                            }
+                        });
+                    } else {
+                        AppBar.busy = false;
+                        if (typeof complete === "function") {
+                            complete({});
+                        }
+                    }
+                });
                 Log.ret(Log.l.trace);
                 return ret;
             }
@@ -572,6 +635,7 @@
                 var ret = new WinJS.Promise.as().then(function() {
                     if (that.binding.docId && that.binding.flagInsert) {
                         AppBar.busy = true;
+                        that.binding.Url = "";
                         return AppData.call("Prc_CopyFromMandantDokument", {
                             pPrevMandantDokumentID: that.binding.docId,
                             pLanguageSpecID: 0
