@@ -12,6 +12,10 @@
     "use strict";
 
     WinJS.Namespace.define("MediaList", {
+        videoExtList: [
+            "mpg", "mpeg", "m1v", "mp2", "mpe", "mpv2", "mp4", "m4v",
+            "mp4v", "ogg", "ogv", "asf", "avi", "mov", "wmv"
+        ],
         Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options) {
             Log.call(Log.l.trace, "MediaList.Controller.");
             if (options) {
@@ -155,7 +159,27 @@
                     item.showSvg = AppData.isSvg(doc.DocGroup, doc.DocFormat);
                     item.showImg = AppData.isImg(doc.DocGroup, doc.DocFormat);
                     item.showAudio = AppData.isAudio(doc.DocGroup, doc.DocFormat);
-                    item.showVideo = AppData.isVideo(doc.DocGroup, doc.DocFormat);
+                    item.showPlay = false;
+                    if (typeof item.Url === "string" &&
+                        (item.Url.indexOf("https://") === 0 || item.Url.indexOf("http://") === 0)) {
+                        item.showVideo = false;
+                        var extPos = item.Url.lastIndexOf(".");
+                        if (extPos > 0) {
+                            var ext = item.Url.substr(extPos + 1);
+                            if (MediaList.videoExtList.indexOf(ext) >= 0) {
+                                item.showVideo = true;
+                            }
+                        }
+                        if (!item.showVideo) {
+                            var posServer = item.Url.indexOf("://");
+                            var server = item.Url.substr(posServer + 3).split("/")[0];
+                            if (server === "www.youtube.com" || server === "youtu.be") {
+                                item.showPlay = true;
+                            }
+                        }
+                    } else {
+                        item.showVideo = AppData.isVideo(doc.DocGroup, doc.DocFormat);
+                    }
                     item.showIcon = false;
                     item.nameIcon = "";
                     item.srcImg = "";
@@ -181,6 +205,9 @@
                         item.showIcon = true;
                     } else if (item.showVideo) {
                         item.nameIcon = "movie";
+                        item.showIcon = true;
+                    } else if (item.showPlay) {
+                        item.nameIcon = "media_play";
                         item.showIcon = true;
                     } else {
                         item.nameIcon = "document_empty";
