@@ -158,11 +158,19 @@
                         Log.print(Log.l.trace, "mediaTable: success!");
                         var url = null;
                         if (json && json.d &&
-                            typeof json.d.Url === "string") {
+                            typeof json.d.Url === "string" &&
+                            (json.d.Url.indexOf("https://") === 0 || json.d.Url.indexOf("http://") === 0)) {
                             var extPos = json.d.Url.lastIndexOf(".");
                             if (extPos > 0) {
                                 var ext = json.d.Url.substr(extPos + 1);
                                 if (EventMediaAdministration.videoExtList.indexOf(ext) >= 0) {
+                                    url = json.d.Url;
+                                }
+                            }
+                            if (!url) {
+                                var posServer = json.d.Url.indexOf("://");
+                                var server = json.d.Url.substr(posServer + 3).split("/")[0];
+                                if (server === "www.youtube.com" || server === "youtu.be") {
                                     url = json.d.Url;
                                 }
                             }
@@ -498,6 +506,8 @@
                     }, function (errorResponse) {
                         AppBar.busy = false;
                         Log.print(Log.l.error, "error saving media text");
+                    }).then(function() {
+                        return that.loadData();
                     });
                     Log.ret(Log.l.trace);
                 },
@@ -585,7 +595,7 @@
                 var ret;
                 Log.call(Log.l.trace, "EventMediaAdministration.Controller.");
                 AppBar.busy = true;
-                if (that.binding.showUrl) {
+                if (that.binding.showUrl && AppBar.modified) {
                     ret = AppData.call("PRC_SetMandantDocumentUrl", {
                         pMandantDokumentID: that.binding.docId,
                         pUrl: that.binding.url
@@ -607,6 +617,7 @@
                         ret = mediaTextFragmentControl.controller.saveData(function (response) {
                             Log.print(Log.l.trace, "media saved");
                             AppBar.busy = false;
+                            AppBar.modified = false;
                             if (typeof complete === "function") {
                                 complete(response);
                             }
@@ -619,6 +630,7 @@
                         });
                     } else {
                         AppBar.busy = false;
+                        AppBar.modified = false;
                         if (typeof complete === "function") {
                             complete({});
                         }

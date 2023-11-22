@@ -1,7 +1,9 @@
 ﻿#videoMediaController .doc-container {
     float: left;
+    width: 100%;
 }
 
+#noteFrame.player,
 #noteVideo.player,
 #noteAudio.player {
     width: 100%;

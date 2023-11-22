@@ -12,6 +12,9 @@
     <div id="videoMediaController" class="data-container">
         <section aria-label="Main content" role="main" class="animationElement">
             <div class="contentarea win-type-body">
+                <div class="doc-container" data-win-bind="style.display: showFrame Binding.Converter.toDisplay">
+                    <iframe id="noteFrame" class="player" src=""></iframe>
+                </div>
                 <div class="doc-container" data-win-bind="style.display: showVideo Binding.Converter.toDisplay">
                     <video controls autoplay src="" id="noteVideo" class="player">
                         <span data-win-res="{textContent: 'sketch.noPlayer'}"></span>

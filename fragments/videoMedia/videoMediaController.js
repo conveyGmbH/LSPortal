@@ -28,10 +28,17 @@
                     mediaData: ""
                 },
                 showVideo: false,
-                showAudio: false
+                showAudio: false,
+                showFrame: false
             }, commandList]);
 
             var that = this;
+
+            var getVideoId = function (url) {
+                var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+                var match = url ?.match(regExp);
+                return (match && match[2].length === 11) ? match[2] : null;
+            }
 
             var getDocData = function () {
                 if (that.binding && that.binding.dataSketch && that.binding.dataSketch.mediaData) {
@@ -101,12 +108,17 @@
                     }
                     video.src = "";
                 }
+                var frame = fragmentElement.querySelector("#noteFrame");
+                if (frame) {
+                    frame.src = "";
+                }
                 if (that.binding) {
                     that.binding.dataSketch = {
                         mediaData: ""
                     };
                     that.binding.showVideo = false;
                     that.binding.showAudio = false;
+                    that.binding.showFrame = false;
                 }
             }
             this.removeMedia = removeMedia;
@@ -116,7 +128,9 @@
                 if (typeof url === "string" || that.binding.dataSketch) {
                     var isVideo = false;
                     var isAudio = false;
-                    if (typeof url === "string") {
+                    var isFrame = false;
+                    if (typeof url === "string" &&
+                        (url.indexOf("https://") === 0 || url.indexOf("http://") === 0)) {
                         var extPos = url.lastIndexOf(".");
                         if (extPos > 0) {
                             var ext = url.substr(extPos + 1);
@@ -127,15 +141,28 @@
                                 isAudio = true;
                             }
                         }
+                        if (!isVideo && !isAudio) {
+                            var posServer = url.indexOf("://");
+                            var server = url.substr(posServer + 3).split("/")[0];
+                            if (server === "www.youtube.com" || server === "youtu.be") {
+                                var videoId = getVideoId(url);
+                                if (videoId) {
+                                    var url = "https://www.youtube.com/embed/" + videoId;
+                                    isFrame = true;
+                                }
+                            }
+                        }
                     }
-                    if (!isVideo && !isAudio) {
+                    if (!isVideo && !isAudio && !isFrame) {
                         url = null;
                     }
+                    var audio, video, frame;
                     if (isVideo || AppData.isVideo(that.binding.dataSketch.DocGroup, that.binding.dataSketch.DocFormat)) {
-                        var video = fragmentElement.querySelector("#noteVideo");
+                        video = fragmentElement.querySelector("#noteVideo");
                         if (video && (url || hasDoc())) {
                             that.binding.showVideo = true;
                             that.binding.showAudio = false;
+                            that.binding.showFrame = false;
                             try {
                                 video.src = url || getDocData();
                                 if (typeof video.load === "function") {
@@ -145,16 +172,28 @@
                                     video.play();
                                 }
                             } catch (e) {
-                                Log.print(Log.L.error, "audio returned error:" + e);
+                                Log.print(Log.L.error, "video returned error:" + e);
+                            }
+                            audio = fragmentElement.querySelector("#noteAudio");
+                            if (audio) {
+                                if (typeof audio.pause === "function") {
+                                    audio.pause();
+                                }
+                                audio.src = "";
+                            }
+                            frame = fragmentElement.querySelector("#noteFrame");
+                            if (frame) {
+                                frame.src = "";
                             }
                         } else {
                             that.removeMedia();
                         }
                     } else if (isAudio || AppData.isAudio(that.binding.dataSketch.DocGroup, that.binding.dataSketch.DocFormat)) {
-                        var audio = fragmentElement.querySelector("#noteAudio");
+                        audio = fragmentElement.querySelector("#noteAudio");
                         if (audio && (url || hasDoc())) {
                             that.binding.showVideo = false;
                             that.binding.showAudio = true;
+                            that.binding.showFrame = false;
                             try {
                                 audio.src = url || getDocData();
                                 if (typeof audio.load === "function") {
@@ -165,6 +204,45 @@
                                 }
                             } catch (e) {
                                 Log.print(Log.L.error, "audio returned error:" + e);
+                            }
+                            video = fragmentElement.querySelector("#noteVideo");
+                            if (video) {
+                                if (typeof video.pause === "function") {
+                                    video.pause();
+                                }
+                                video.src = "";
+                            }
+                            frame = fragmentElement.querySelector("#noteFrame");
+                            if (frame) {
+                                frame.src = "";
+                            }
+                        } else {
+                            that.removeMedia();
+                        }
+                    } else if (isFrame) {
+                        frame = fragmentElement.querySelector("#noteFrame");
+                        if (frame && url) {
+                            that.binding.showVideo = false;
+                            that.binding.showAudio = false;
+                            that.binding.showFrame = true;
+                            try {
+                                frame.src = url;
+                            } catch (e) {
+                                Log.print(Log.L.error, "frame returned error:" + e);
+                            }
+                            audio = fragmentElement.querySelector("#noteAudio");
+                            if (audio) {
+                                if (typeof audio.pause === "function") {
+                                    audio.pause();
+                                }
+                                audio.src = "";
+                            }
+                            video = fragmentElement.querySelector("#noteVideo");
+                            if (video) {
+                                if (typeof video.pause === "function") {
+                                    video.pause();
+                                }
+                                video.src = "";
                             }
                         } else {
                             that.removeMedia();
