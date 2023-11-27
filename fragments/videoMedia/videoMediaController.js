@@ -37,7 +37,7 @@
             var getVideoId = function (url) {
                 var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
                 var match = url ? url.match(regExp) : null;
-                return (match && match[2].length === 11) ? match[2] : null;
+                return (match && match[2] && match[2].length === 11) ? match[2] : null;
             }
 
             var getDocData = function () {
