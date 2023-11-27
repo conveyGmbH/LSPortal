@@ -752,7 +752,7 @@
     "reporting.filterOn"    : "Filter on",
     "reporting.filterOff"   : "Filter off",
     "reporting.filter"      : "Filter",
-    "reporting.comment"      : "Manage your employee access data here.",
+    "reporting.comment"      : "Export your data to Excel or as PDF.",
     "reporting.pdfZipDownloadText"      : "Your PDF and audio export-file has been created. Please click on the Download button to download the zip file: ",
     "reporting.noFileAvailable" : "No export could be created. Please check your data!",
 

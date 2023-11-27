@@ -248,7 +248,7 @@
     "photo.title"           : "Carte de visite",
     "photo.comment"         : "Utilisez le bouton Retour sur cette page pour y retourner!",
 
-    "questionnaire.title"   : "Répondre aux questions",
+    "questionnaire.title"   : "Questionnaire ",
     "questionnaire.comment" : "Utilisez le bouton Retour sur cette page pour y retourner!",
     "questionnaire.textarea": "S'il vous plaît entrer votre commentaire ici",
     "questionnaire.count"   : "Nombre",
@@ -726,7 +726,7 @@
     "questionList.textarea" : "S'il vous plaît entrer votre commentaire ici",
     "questionList.comment" : "Personnalisez vos questions et réponses.",
 
-    "reporting.title"  : "Exports",
+    "reporting.title"  : "Exportations",
     "reporting.titleExcel"  : "Excel Export",
 	"reporting.titleOther"  : "Autres exportations",
     "reporting.with"        : "Excel export with title",
@@ -752,7 +752,7 @@
     "reporting.filterOn"    : "Filtrer sur",
     "reporting.filterOff"   : "Filtrer",
     "reporting.filter"      : "Filtrer",
-    "reporting.comment"      : "Gérez vos données d'accès des employés ici.",
+    "reporting.comment"      : "Exportez vos données au format Excel ou PDF.",
     "reporting.pdfZipDownloadText"      : "Votre fichier d'exportation PDF et audio a été créé. Veuillez cliquer sur le bouton Télécharger pour télécharger le fichier zip : ",
     "reporting.noFileAvailable" : "Aucune exportation n'a pu être créée. Veuillez vérifier vos données !",
 
