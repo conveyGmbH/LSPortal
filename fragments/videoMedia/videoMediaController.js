@@ -147,7 +147,7 @@
                             if (server === "www.youtube.com" || server === "youtu.be") {
                                 var videoId = getVideoId(url);
                                 if (videoId) {
-                                    var url = "https://www.youtube.com/embed/" + videoId;
+                                    url = "https://www.youtube.com/embed/" + videoId;
                                     isFrame = true;
                                 }
                             }
