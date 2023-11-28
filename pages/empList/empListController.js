@@ -127,7 +127,6 @@
                             });
                             that.binding.hasContacts = employee.HatKontakte;
                             break;
-                            break;
                         }
                     }
                 }
@@ -207,7 +206,7 @@
                                                 that.binding.employeeId = item.data.MitarbeiterVIEWID;
                                                 that.binding.hasContacts = item.data.HatKontakte;
                                                 that.binding.selIdx = item.index;
-                                                AppData.setRecordId("MitarbeiterVIEW_20471", that.binding.employeeId);
+                                                //AppData.setRecordId("MitarbeiterVIEW_20471", that.binding.employeeId);
                                                 var curPageId = Application.getPageId(nav.location);
                                                 if ((curPageId === "employee" || curPageId === "skillentry" || curPageId === "employeeVisitorFlow") &&
                                                     typeof AppBar.scope.loadData === "function") {
@@ -505,7 +504,8 @@
                                 if (objectrec && objectrec.index) {
                                     that.employees.setAt(objectrec.index, employee);
                                 } else {
-                                    that.employees.setAt(0, employee);
+                                    that.binding.count = that.employees.splice(0, 0, employee);
+                                    that.selectRecordId(employee.MitarbeiterVIEWID);
                                 }
                             }
                         }
