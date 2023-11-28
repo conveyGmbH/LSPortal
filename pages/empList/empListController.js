@@ -477,7 +477,13 @@
                                     // add ListView dataSource
                                     listView.winControl.itemDataSource = that.employees.dataSource;
                                 }
+                                //var recordId = AppData.getRecordId("Mitarbeiter");
+                                if (that.binding.employeeId) {
+                                    that.selectRecordId(recordId);
+                                } else {
                                 that.selectRecordId(json.d.results[0].MitarbeiterVIEWID);
+                                }
+                                
                             } else {
                                 that.binding.count = 0;
                                 that.nextUrl = null;
@@ -536,10 +542,10 @@
             }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
-            }).then(function () {
+            })/*.then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 return that.selectRecordId(that.binding.employeeId);
-            }).then(function () {
+            })*/.then(function () {
                 Log.print(Log.l.trace, "Record selected");
             });
             Log.ret(Log.l.trace);
