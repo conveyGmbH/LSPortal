@@ -202,7 +202,7 @@
         { id: "eventBaseLink", group: 55, disabled: false },
         { id: "startResourceAdministration", group: 55, disabled: false },
         { id: "startMediaAdministration", group: 55, disabled: false },
-        { id: "GenDataEmployee", group: 74, disabled: false },
+        { id: "genDataEmployee", group: 74, disabled: false },
 		    { id: "genDataModDetails", group: 54, disabled: false },
 		    //{ id: "genDataModAnswers", group: 56, disabled: false },
 	      { id: "genDataModHisto", group: 54, disabled: false },
@@ -312,7 +312,7 @@
         { id: "event", master: "eventList" },
         { id: "eventCopy", master: "eventList" },
         { id: "siteeventsImport", master: "siteEventsList" },
-        { id: "start", master: "eventList" },
+        //{ id: "start", master: "eventList" },
         { id: "genDataEmployee", master: "genDataEmpList" }
     ];
 
