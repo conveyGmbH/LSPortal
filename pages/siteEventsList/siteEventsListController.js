@@ -21,8 +21,7 @@
                 eventId: 0,
                 selIdx: AppData.getRecordId("VeranstaltungTermin") - 1,
                 eventText: getResourceText("siteEventsList.event"),
-                eventTypID: null,
-                preveventTypID: null,
+                eventTypID: 0,
                 searchString: ""
             }, commandList, true]);
             this.nextUrl = null;
@@ -55,7 +54,7 @@
                 Log.call(Log.l.trace, "SiteEventsList.Controller.");
                 var exhibitorCategory = [
                     {
-                        value: null,
+                        value: 0,
                         title: getResourceText("siteEventsList.allEvents")
                     },
                     {
@@ -204,12 +203,42 @@
                 },
                 onSelectionDropDownChanged: function(event) {
                     Log.call(Log.l.trace, "SiteEventsList.Controller.");
-                    that.binding.searchString = "";
                     var target = event.currentTarget || event.target;
                     if (target) {
-                        that.binding.eventTypID = target.value;
+                        that.binding.eventTypID = parseInt(target.value);
                     }
+                    if (that.binding.eventTypID === 0 && that.binding.searchString === '') {
                     that.loadData();
+                    } else {
+                        return AppData.call("PRC_GetEventList",
+                            {
+                                pSearchString: that.binding.searchString,
+                                pTerminTyp: that.binding.eventTypID
+                            },
+                            function (json) {
+                                Log.print(Log.l.info, "call success! ");
+                                if (json && json.d && json.d.results.length > 0) {
+                                    var results = json.d.results;
+                                    results.forEach(function (item, index) {
+                                        that.resultConverter(item, index);
+                                    });
+
+                                    that.binding.count = results.length;
+                                    that.eventdatasets = new WinJS.Binding.List(results);
+                                    that.selectRecordId(results[0].VeranstaltungTerminVIEWID);
+
+                                    if (listView.winControl) {
+                                        // add ListView dataSource
+                                        listView.winControl.itemDataSource = that.eventdatasets.dataSource;
+                                    }
+                                } else {
+
+                                }
+                            },
+                            function (error) {
+                                Log.print(Log.l.error, "call error");
+                            });
+                    }
                     Log.ret(Log.l.trace);
                 },
                 onSearchInput: function (event) {
@@ -404,17 +433,7 @@
                     counter.style.display = "none";
                 }
                 AppData.setErrorMsg(that.binding);
-                var restriction = "";
-                if (that.binding.eventTypID === null || that.binding.eventTypID === "null" || that.binding.eventTypID === 0) {
-                    restriction = "";
-                    that.binding.preveventTypID = 0;
-                } else if (that.binding.eventTypID === that.binding.preveventTypID) {
-                    Log.call(Log.l.trace, "SiteEventsList.Controller.");
-                    return WinJS.Promise.as();
-                } else {
-                    restriction = { TerminTyp: parseInt(that.binding.eventTypID) };
-                    that.binding.preveventTypID = that.binding.eventTypID;
-                }
+
                 var ret = new WinJS.Promise.as().then(function () {
                     return SiteEventsList.VeranstaltungView.select(function (json) {
                         // this callback will be called asynchronously
@@ -484,7 +503,7 @@
                             counter.style.display = "inline";
                         }
                         that.loading = false;
-                        }, restriction);
+                    }, null);
                 });
                 Log.ret(Log.l.trace);
                 return ret;
