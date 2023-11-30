@@ -407,7 +407,7 @@
                 var restriction = "";
                 if (that.binding.eventTypID === null || that.binding.eventTypID === "null" || that.binding.eventTypID === 0) {
                     restriction = "";
-                    that.binding.preveventTypID = null;
+                    that.binding.preveventTypID = 0;
                 } else if (that.binding.eventTypID === that.binding.preveventTypID) {
                     Log.call(Log.l.trace, "SiteEventsList.Controller.");
                     return WinJS.Promise.as();
