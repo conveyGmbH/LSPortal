@@ -744,6 +744,14 @@
                         }
                     }
                 }.bind(this), true);
+                this.addRemovableEventListener(listView, "contextmenu", function (e) {
+                    var targetTagName = e.target &&
+                        e.target.tagName &&
+                        e.target.tagName.toLowerCase();
+                    if (targetTagName === "textarea" || targetTagName === "input") {
+                        e.stopImmediatePropagation();
+                    }
+                }.bind(this), true);
                 this.addRemovableEventListener(listView, "selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
                 this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
                 this.addRemovableEventListener(listView, "headervisibilitychanged", this.eventHandlers.onHeaderVisibilityChanged.bind(this));

@@ -493,19 +493,27 @@
 
                 // register ListView event handler
                 if (listView) {
-                this.addRemovableEventListener(listView, "keydown", function (e) {
-                    if (!e.ctrlKey && !e.altKey) {
-                        switch (e.keyCode) {
-                        case WinJS.Utilities.Key.end:
-                        case WinJS.Utilities.Key.home:
-                        case WinJS.Utilities.Key.leftArrow:
-                        case WinJS.Utilities.Key.rightArrow:
-                        case WinJS.Utilities.Key.space:
-                            e.stopImmediatePropagation();
-                            break;
+                    this.addRemovableEventListener(listView, "keydown", function (e) {
+                        if (!e.ctrlKey && !e.altKey) {
+                            switch (e.keyCode) {
+                            case WinJS.Utilities.Key.end:
+                            case WinJS.Utilities.Key.home:
+                            case WinJS.Utilities.Key.leftArrow:
+                            case WinJS.Utilities.Key.rightArrow:
+                            case WinJS.Utilities.Key.space:
+                                e.stopImmediatePropagation();
+                                break;
+                            }
                         }
-                    }
-                }.bind(this), true);
+                    }.bind(this), true);
+                    this.addRemovableEventListener(listView, "contextmenu", function (e) {
+                        var targetTagName = e.target &&
+                            e.target.tagName &&
+                            e.target.tagName.toLowerCase();
+                        if (targetTagName === "textarea" || targetTagName === "input") {
+                            e.stopImmediatePropagation();
+                        }
+                    }.bind(this), true);
                     this.addRemovableEventListener(listView, "iteminvoked", this.eventHandlers.onItemInvoked.bind(this));
                     this.addRemovableEventListener(listView, "selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
                     this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
