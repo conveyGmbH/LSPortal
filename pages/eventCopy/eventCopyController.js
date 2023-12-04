@@ -16,7 +16,8 @@
             Application.Controller.apply(this, [pageElement, {
                 dataDestEventCombo: getEmptyDefaultValue(EventCopy.VeranstaltungView.defaultValue),
                 dataSrcEventCombo: getEmptyDefaultValue(EventCopy.VeranstaltungView.defaultValue),
-                dataEventCopy: 0
+                dataEventCopy: 0,
+                leadSuccessStandard: AppHeader.controller.binding.userData.SiteAdmin || AppData._persistentStates.leadsuccessFeatureStandard
             }, commandList]);
 
             var that = this;

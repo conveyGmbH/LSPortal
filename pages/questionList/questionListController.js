@@ -25,7 +25,8 @@
                 count: 0,
                 questionId: AppData.getRecordId("FragenAntworten"),
                 questiongroupflag: false,
-                dataPublish: getEmptyDefaultValue(QuestionList.questionPublishView.defaultValue)
+                dataPublish: getEmptyDefaultValue(QuestionList.questionPublishView.defaultValue),
+                leadSuccessStandard: AppHeader.controller.binding.userData.SiteAdmin || AppData._persistentStates.leadsuccessFeatureStandard
             }, commandList]);
             this.nextUrl = null;
             this.loading = false;
@@ -1187,7 +1188,7 @@
                 },
                 clickForward: function () {
                     // never disabled!
-                    return false;
+                        return false;
                 },
                 clickLineUp: function () {
                     var ret = true;
@@ -1346,7 +1347,13 @@
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.loadData();
+                if (AppHeader.controller.binding.userData.SiteAdmin ||
+                    AppData._persistentStates.leadsuccessFeatureStandard) {
+                    return that.loadData();
+                } else {
+                    var alertTitle = getResourceText("general.leadsuccessbasic");
+                    alert(alertTitle);
+                }
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 return that.selectRecordId(that.binding.questionId);

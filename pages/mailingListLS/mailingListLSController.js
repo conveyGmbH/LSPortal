@@ -19,7 +19,8 @@
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
                 mailingId: 0,
-                selIdx: 0
+                selIdx: 0,
+                leadSuccessStandard: AppHeader.controller.binding.userData.SiteAdmin || AppData._persistentStates.leadsuccessFeatureStandard
             }, commandList, true]);
             this.nextUrl = null;
             this.loading = false;
@@ -104,8 +105,8 @@
                         }
                         that.loading = false;
                     },
-                    null,
-                    nextUrl);
+                        null,
+                        nextUrl);
                 } else {
                     if (progress && progress.style) {
                         progress.style.display = "none";
@@ -360,8 +361,8 @@
                         }
                         that.loading = false;
                     }, {
-                        SpecType: ["NULL", 1]
-                    }
+                            SpecType: ["NULL", 1]
+                        }
                     );
                 }).then(function () {
                     if (that.binding.count === 0) {

@@ -16,11 +16,13 @@
             Application.Controller.apply(this, [pageElement, {
                 isProductMailOn: AppData._persistentStates.productMailOn,
                 isNachbearbeitetFlagAutoSetToNull: AppData._persistentStates.nachbearbeitetFlagAutoSetToNull,
-                isThankMailOn: AppData._persistentStates.thankYouMailOn
+                isThankMailOn: AppData._persistentStates.thankYouMailOn,
+                showContent: true,
+                leadSuccessStandard: AppHeader.controller.binding.userData.SiteAdmin || AppData._persistentStates.leadsuccessFeatureStandard
             }, commandList]);
 
             var that = this;
-            
+
             var changeAppSetting = function (toggleId, checked) {
                 Log.call(Log.l.trace, "MailingOptions.Controller.", "toggleId=" + toggleId + " checked=" + checked);
                 var pOptionTypeId = null;
@@ -123,8 +125,10 @@
                     Log.ret(Log.l.trace);
                 }
             };
-            
+
             that.processAll().then(function () {
+                return that.loadData();
+            }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 AppBar.notifyModified = true;
             });

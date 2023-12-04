@@ -28,7 +28,12 @@
                 { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" },
                 { id: "clickOk", label: getResourceText("command.ok"), tooltip: getResourceText("tooltip.ok"), section: "primary", svg: "navigate_check", key: WinJS.Utilities.Key.enter }
             ];
-
+            if (!AppHeader.controller.binding.userData.SiteAdmin &&
+                !AppData._persistentStates.leadsuccessFeatureStandard) {
+                commandList = [
+                    { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" }
+                ];
+            }
             this.controller = new Settings.Controller(element, commandList);
 			if (this.controller.eventHandlers) {
 			    // general event listener for hardware back button, too!

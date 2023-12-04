@@ -24,7 +24,9 @@
                 version: Application.version,
                 environment: "Platform: " + navigator.appVersion,
                 timezone: timezone && ("Timezone: " + timezone.name()),
-                expandSubMenuMode: (AppData.generalData.expandSubMenuMode || Application.expandSubMenuModes.single)
+                showContent: true,
+                expandSubMenuMode: (AppData.generalData.expandSubMenuMode || Application.expandSubMenuModes.single),
+                leadSuccessStandard: AppHeader.controller.binding.userData.SiteAdmin || AppData._persistentStates.leadsuccessFeatureStandard
             }, commandList]);
 
             var expandSubMenuModeSelect = pageElement.querySelector("#expandSubMenuModeSelect");
@@ -59,13 +61,13 @@
             };
             this.setPortalInfo = setPortalInfo;
 
-            var loadData = function() {
+            var loadData = function () {
                 Log.call(Log.l.trace, "Info.Controller.");
                 AppData.setErrorMsg(that.binding);
-                var ret = new WinJS.Promise.as().then(function() {
+                var ret = new WinJS.Promise.as().then(function () {
                     if (expandSubMenuModeSelect && expandSubMenuModeSelect.winControl) {
                         var expandSubMenuModeList = new WinJS.Binding.List([
-                            { mode: Application.expandSubMenuModes.all, label: getResourceText("info.expandSubMenuModeAll")  },
+                            { mode: Application.expandSubMenuModes.all, label: getResourceText("info.expandSubMenuModeAll") },
                             { mode: Application.expandSubMenuModes.toggle, label: getResourceText("info.expandSubMenuModeToggle") },
                             { mode: Application.expandSubMenuModes.single, label: getResourceText("info.expandSubMenuModeSingle") }
                         ]);
@@ -208,7 +210,7 @@
                         that.binding && that.binding.generalData) {
                         that.binding.generalData.expandSubMenuMode = event.currentTarget.value;
                         Log.print(Log.l.trace, "expandSubMenuMode=" + that.binding.generalData.expandSubMenuMode);
-                        WinJS.Promise.timeout(0).then(function() {
+                        WinJS.Promise.timeout(0).then(function () {
                             NavigationBar.groups = Application.navigationBarGroups;
                         });
                     }

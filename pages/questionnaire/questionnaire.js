@@ -14,25 +14,25 @@
             this._site = null;
             this._surface = null;
         },
-        {
-            // This sets up any state and CSS layout on the surface of the custom layout
-            initialize: function (site) {
-                this._site = site;
-                this._surface = this._site.surface;
+            {
+                // This sets up any state and CSS layout on the surface of the custom layout
+                initialize: function (site) {
+                    this._site = site;
+                    this._surface = this._site.surface;
 
-                // Add a CSS class to control the surface level layout
-                WinJS.Utilities.addClass(this._surface, "questionnaireLayout");
+                    // Add a CSS class to control the surface level layout
+                    WinJS.Utilities.addClass(this._surface, "questionnaireLayout");
 
-                return WinJS.UI.Orientation.vertical;
-            },
+                    return WinJS.UI.Orientation.vertical;
+                },
 
-            // Reset the layout to its initial state
-            uninitialize: function () {
-                WinJS.Utilities.removeClass(this._surface, "questionnaireLayout");
-                this._site = null;
-                this._surface = null;
-            }
-        })
+                // Reset the layout to its initial state
+                uninitialize: function () {
+                    WinJS.Utilities.removeClass(this._surface, "questionnaireLayout");
+                    this._site = null;
+                    this._surface = null;
+                }
+            })
     });
 
     var pageName = Application.getPagePath("questionnaire");
@@ -52,7 +52,12 @@
                 { id: 'clickBack', label: getResourceText('command.backward'), tooltip: getResourceText('tooltip.backward'), section: 'primary', svg: 'navigate_left' },
                 { id: 'clickForward', label: getResourceText('command.ok'), tooltip: getResourceText('tooltip.ok'), section: 'primary', svg: 'navigate_check', key: WinJS.Utilities.Key.enter }
             ];
-
+            if (!AppHeader.controller.binding.userData.SiteAdmin &&
+                !AppData._persistentStates.leadsuccessFeatureStandard) {
+                commandList = [
+                    { id: 'clickBack', label: getResourceText('command.backward'), tooltip: getResourceText('tooltip.backward'), section: 'primary', svg: 'navigate_left' }
+                ];
+            }
             this.controller = new Questionnaire.Controller(element, commandList);
             if (this.controller.eventHandlers) {
                 // general event listener for hardware back button, too!
@@ -92,11 +97,11 @@
             // TODO: Respond to changes in viewState.
             var ret = null;
             var that = this;
-            var refreshFlipViewDelayed = function(flipView) {
-                return WinJS.Promise.timeout(50).then(function() {
+            var refreshFlipViewDelayed = function (flipView) {
+                return WinJS.Promise.timeout(50).then(function () {
                     return that.updateLayout(element, viewState, lastViewState);
-                }).then(function() {
-                    return WinJS.Promise.timeout(50).then(function() {
+                }).then(function () {
+                    return WinJS.Promise.timeout(50).then(function () {
                         if (flipView.winControl) {
                             flipView.winControl.forceLayout();
                         }

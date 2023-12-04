@@ -40,7 +40,8 @@
                 barcodetext: getResourceText("event.showBar-Code"),
                 nametext: getResourceText("event.showNameInHeader"),
                 userNametext: getResourceText("event.showUsernameInHeader"),
-                actualYear: new Date().getFullYear()
+                actualYear: new Date().getFullYear(),
+                leadSuccessStandard: AppHeader.controller.binding.userData.SiteAdmin || AppData._persistentStates.leadsuccessFeatureStandard
             }, commandList]);
 
             var that = this;
@@ -1101,9 +1102,7 @@
 
             that.processAll().then(function () {
                 that.creatingVisitorFlowCategory();
-            })/*.then(function () {
-                that.creatingPremiumDashboardComboCategory();
-            })*/.then(function () {
+            }).then(function () {
                     Log.print(Log.l.trace, "Binding wireup page complete");
                     return that.loadData();
                 }).then(function () {

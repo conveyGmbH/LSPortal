@@ -18,7 +18,8 @@
 
             Application.RecordsetController.apply(this, [pageElement, {
                 dataOptQuestionAnswer: getEmptyDefaultValue(OptMandatoryFieldList.CR_OptFragenAntwortenVIEW.defaultValue),
-                count: 0
+                count: 0,
+                leadSuccessStandard: AppHeader.controller.binding.userData.SiteAdmin || AppData._persistentStates.leadsuccessFeatureStandard
             }, commandList, false, OptMandatoryFieldList.CR_OptFragenAntwortenVIEW, null, listView]);
 
             this.initQuestion = null; //selektierte Frage
@@ -175,8 +176,8 @@
                     // or server returns response with an error status.
                     AppData.setErrorMsg(that.binding, errorResponse);
                 }, {
-                    LanguageSpecID: AppData.getLanguageId()
-                });
+                        LanguageSpecID: AppData.getLanguageId()
+                    });
                 Log.ret(Log.l.trace);
                 return ret;
             }
@@ -603,13 +604,18 @@
                 clickNew: function () {
                     // never disabled!
                     var bHasNew = false;
-                    if (that.records && that.records.length > 0) {
-                        var item = that.records.getAt(that.records.length - 1);
-                        if (item && !item.CR_PFFragenAntwortenVIEWID) {
-                            bHasNew = true;
+                    if (AppHeader.controller.binding.userData.SiteAdmin ||
+                        AppData._persistentStates.leadsuccessFeatureStandard) {
+                        if (that.records && that.records.length > 0) {
+                            var item = that.records.getAt(that.records.length - 1);
+                            if (item && !item.CR_PFFragenAntwortenVIEWID) {
+                                bHasNew = true;
+                            }
                         }
+                        return bHasNew || AppBar.busy;
+                    } else {
+                        return true;
                     }
-                    return bHasNew || AppBar.busy;
                 },
                 clickOk: function () {
                     return !that.curRecId || AppBar.busy;
@@ -698,6 +704,17 @@
             this.loadData = loadData;*/
 
             that.processAll().then(function () {
+                if (AppHeader.controller.binding.userData.SiteAdmin ||
+                    AppData._persistentStates.leadsuccessFeatureStandard) {
+                    // do nothing
+                } else {
+                    var alertTitle = getResourceText("general.leadsuccessbasic");
+                    alert(alertTitle,
+                        function () {
+                            return WinJS.Promise.as();
+                        });
+                }
+            }).then(function () {
                 Log.print(Log.l.trace, "Load Question");
                 return that.loadQuestion();
             }).then(function () {

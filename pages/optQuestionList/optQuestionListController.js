@@ -15,7 +15,7 @@
             Log.call(Log.l.trace, "OptQuestionList.Controller.");
             // ListView control
             var listView = pageElement.querySelector("#optQuestionList.listview");
-            
+
             Application.RecordsetController.apply(this, [pageElement, {
                 dataOptQuestionAnswer: getEmptyDefaultValue(OptQuestionList.CR_OptFragenAntwortenVIEW.defaultValue),
                 count: 0
@@ -169,11 +169,11 @@
                         Log.print(Log.l.trace, "Data loaded initoptionQuestion.count=" + that.initoptionQuestion.length);
                     }
                 },
-                function (errorResponse) {
-                    // called asynchronously if an error occurs
-                    // or server returns response with an error status.
-                    AppData.setErrorMsg(that.binding, errorResponse);
-                });
+                    function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    });
                 Log.ret(Log.l.trace);
                 return ret;
             }
@@ -190,10 +190,10 @@
                             AppBar.busy = false;
                             Log.print(Log.l.trace, "question saved");
                         },
-                        function (errorResponse) {
-                            AppBar.busy = false;
-                            Log.print(Log.l.error, "error saving question");
-                        });
+                            function (errorResponse) {
+                                AppBar.busy = false;
+                                Log.print(Log.l.error, "error saving question");
+                            });
                     }
                     Log.ret(Log.l.trace);
                 },
@@ -227,10 +227,10 @@
                                         AppBar.busy = false;
                                         Log.print(Log.l.trace, "question saved");
                                     },
-                                    function (errorResponse) {
-                                        AppBar.busy = false;
-                                        Log.print(Log.l.error, "error saving question");
-                                    });
+                                        function (errorResponse) {
+                                            AppBar.busy = false;
+                                            Log.print(Log.l.error, "error saving question");
+                                        });
                                 }
                             }
                         }
@@ -260,9 +260,9 @@
                             if (crossItem && crossItem.CR_OptFragenAntwortenVIEWID) {
                                 AppBar.busy = true;
                                 that.saveData(function (response) {
-                                        AppBar.busy = false;
-                                        Log.print(Log.l.trace, "question saved");
-                                    },
+                                    AppBar.busy = false;
+                                    Log.print(Log.l.trace, "question saved");
+                                },
                                     function (errorResponse) {
                                         AppBar.busy = false;
                                         Log.print(Log.l.error, "error saving question");
@@ -573,13 +573,18 @@
                 clickNew: function () {
                     // never disabled!
                     var bHasNew = false;
-                    if (that.records && that.records.length > 0) {
-                        var item = that.records.getAt(that.records.length - 1);
-                        if (item && !item.CR_OptFragenAntwortenVIEWID) {
-                            bHasNew = true;
+                    if (AppHeader.controller.binding.userData.SiteAdmin ||
+                        AppData._persistentStates.leadsuccessFeatureStandard) {
+                        if (that.records && that.records.length > 0) {
+                            var item = that.records.getAt(that.records.length - 1);
+                            if (item && !item.CR_PFFragenAntwortenVIEWID) {
+                                bHasNew = true;
+                            }
                         }
+                        return bHasNew || AppBar.busy;
+                    } else {
+                        return true;
                     }
-                    return bHasNew || AppBar.busy;
                 },
                 clickOk: function () {
                     return !that.curRecId || AppBar.busy;
@@ -628,7 +633,7 @@
 
             this.baseLoadData = this.loadData;
 
-            var loadData = function(restriction, options, itemRenderer, complete, error) {
+            var loadData = function (restriction, options, itemRenderer, complete, error) {
                 Log.call(Log.l.trace, "OptQuestionList.Controller.");
                 var ret = that.baseLoadData(restriction, options, itemRenderer, complete, error).then(function () {
                     if (that.records &&
@@ -671,10 +676,10 @@
             });
             Log.ret(Log.l.trace);
         }, {
-            prevRecId: 0,
-            curRecId: 0,
-            cursorPos: { x: 0, y: 0 }
-        })
+                prevRecId: 0,
+                curRecId: 0,
+                cursorPos: { x: 0, y: 0 }
+            })
     });
 })();
 

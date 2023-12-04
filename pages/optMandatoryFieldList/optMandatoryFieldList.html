@@ -11,7 +11,7 @@
     <div class="optMandatoryFieldList fragment">
         <div id="optMandatoryFieldListController" class="data-container">
             <section aria-label="Main content" role="main" class="animationElement">
-                <div class="contentarea win-type-body">
+                <div class="contentarea win-type-body" data-win-bind="style.display: leadSuccessStandard Binding.Converter.toDisplay">
                     <div class="content-header">
                         <div class="header-separator"></div>
                         <div class="half-circle half-circle-textcolor">&nbsp;</div>
@@ -58,7 +58,7 @@
                                     onchange="AppBar.handleEvent('change', 'changePflichtfeld', event)">
                                 <option data-win-bind="value: PflichtfeldTypID; textContent: PflichtFeldTITLE"></option>
                             </select>
-                           <!-- <span class="input_field win-type-subtitle" data-win-bind="textContent: pflichtfeld; style.display: INITPFeldTypID Binding.Converter.toDisplay"></span>-->
+                            <!-- <span class="input_field win-type-subtitle" data-win-bind="textContent: pflichtfeld; style.display: INITPFeldTypID Binding.Converter.toDisplay"></span>-->
                         </div>
                         <!--<div class="field_line selectedquestiontext" data-win-bind="style.display: INITPFeldTypID Binding.Converter.toDisplay">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'optMandatoryFieldList.selectedQuestionText'}"></span>
@@ -83,6 +83,12 @@
                              itemTemplate: select('.optMandatoryFieldList-template'),
                              footer: select('.list-footer')
                          }">
+                    </div>
+                </div>
+                <div class="contentarea win-type-body" data-win-bind="style.display: leadSuccessStandard Binding.Converter.toDisplayNone">
+                    <div class="field_line">
+                        <span class="large_field"
+                              data-win-res="{textContent:'general.leadsuccessbasic'}"></span>
                     </div>
                 </div>
                 <div class="error-message"

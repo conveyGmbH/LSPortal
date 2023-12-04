@@ -11,7 +11,7 @@
     <div class="start fragment">
         <div id="startController" class="data-container">
             <section aria-label="Main content" role="main" class="animationElement">
-                <div class="contentarea win-type-body">
+                <div class="contentarea win-type-body" data-win-bind="style.display: leadSuccessStandard Binding.Converter.toDisplay">
                     <div class="header-separator"></div>
                     <div class="content-header">
                         <div class="half-circle half-circle-textcolor">&nbsp;</div>
@@ -32,13 +32,13 @@
                                 </div>
                                 <div class="field_line field_tile">
                                     <div id="startQuestionshost" class="fragmenthost"></div>
-                                    </div>
+                                </div>
                                 <div class="field_line field_tile">
                                     <div id="startContactspDhost" class="fragmenthost"></div>
                                 </div>
                                 <div class="field_line field_tile">
                                     <div id="startTop10Countryshost" class="fragmenthost"></div>
-                                    </div>
+                                </div>
                                 <div class="field_line field_tile">
                                     <div id="startTop10Usershost" class="fragmenthost"></div>
                                 </div>
@@ -60,43 +60,48 @@
                                 </div>
                             </div>
                         </div>
-                            </div>
-                        <div id="info" name="info" class="tile tile-navigationcolor tile-bottom">
-                            <div class="tile-button-color">
-                                <div class="half-circle half-circle-lightcolor">&nbsp;</div>
-                                <div class="content-header-line win-type-caption">
-                                    <span class="id-field"></span>
-                                    <span class="caption-field text-lightcolor"
-                                          data-win-res="{textContent: 'start.info'}"></span>
-                                    <span class="date-field"></span>
-                                </div>
-                            </div>
-                            <div class="field_line field_line_full no-border"
-                                 data-win-bind="style.display: dataLicence.UserAnzahl Binding.Converter.toDisplay">
-                                <div class="win-type-caption text-lightcolor"
-                                     data-win-bind="textContent: noLicence">
-                                </div>
-                                <div class="dataLicenceUserList-template"
-                                     data-win-control="WinJS.Binding.Template" style="display: none">
-                                    <button class="dataLicenceUser-button win-button"
-                                            data-win-bind="style.backgroundColor: buttonColor; style.color: buttonTitle; textContent: Login; value: MitarbeiterVIEWID;"
-                                            onclick="AppBar.handleEvent('click', 'clickLicenceUser', event)"></button>
-                                </div>
-                                <div id="dataLicenceUserList"
-                                     class="listview win-selectionstylefilled"
-                                     data-win-control="WinJS.UI.ListView"
-                                     data-win-options="{
-                                        itemTemplate: select('.dataLicenceUserList-template')
-                                    }">
-                                </div>
-                            </div>
-                            <div class="field_line field_line_full no-border">
-                                <span class="win-type-body text-lightcolor"
-                                      data-win-bind="innerHTML: comment"></span>
+                    </div>
+                    <div id="info" name="info" class="tile tile-navigationcolor tile-bottom">
+                        <div class="tile-button-color">
+                            <div class="half-circle half-circle-lightcolor">&nbsp;</div>
+                            <div class="content-header-line win-type-caption">
+                                <span class="id-field"></span>
+                                <span class="caption-field text-lightcolor"
+                                      data-win-res="{textContent: 'start.info'}"></span>
+                                <span class="date-field"></span>
                             </div>
                         </div>
+                        <div class="field_line field_line_full no-border"
+                             data-win-bind="style.display: dataLicence.UserAnzahl Binding.Converter.toDisplay">
+                            <div class="win-type-caption text-lightcolor"
+                                 data-win-bind="textContent: noLicence">
+                            </div>
+                            <div class="dataLicenceUserList-template"
+                                 data-win-control="WinJS.Binding.Template" style="display: none">
+                                <button class="dataLicenceUser-button win-button"
+                                        data-win-bind="style.backgroundColor: buttonColor; style.color: buttonTitle; textContent: Login; value: MitarbeiterVIEWID;"
+                                        onclick="AppBar.handleEvent('click', 'clickLicenceUser', event)"></button>
+                            </div>
+                            <div id="dataLicenceUserList"
+                                 class="listview win-selectionstylefilled"
+                                 data-win-control="WinJS.UI.ListView"
+                                 data-win-options="{
+                                        itemTemplate: select('.dataLicenceUserList-template')
+                                    }">
+                            </div>
+                        </div>
+                        <div class="field_line field_line_full no-border">
+                            <span class="win-type-body text-lightcolor"
+                                  data-win-bind="innerHTML: comment"></span>
+                        </div>
                     </div>
-
+                </div>
+                <div class="contentarea win-type-body" data-win-bind="style.display: leadSuccessStandard Binding.Converter.toDisplayNone">
+                    <div class="field_line">
+                        <span class="large_field"
+                              data-win-res="{textContent:'general.leadsuccessbasic'}"></span>
+                    </div>
+                </div>
                 <div class="error-message"
                      data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
 

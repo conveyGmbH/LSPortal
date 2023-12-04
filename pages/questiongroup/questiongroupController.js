@@ -17,7 +17,8 @@
             var listView = pageElement.querySelector("#questiongroup.listview");
 
             Application.RecordsetController.apply(this, [pageElement, {
-                count: 0
+                count: 0,
+                leadSuccessStandard: AppHeader.controller.binding.userData.SiteAdmin || AppData._persistentStates.leadsuccessFeatureStandard
             }, commandList, false, Questiongroup.CR_V_FragengruppeView, null, listView]);
 
             var that = this;
@@ -254,7 +255,12 @@
                 },
                 clickNew: function () {
                     // never disabled!
-                    return AppBar.busy;
+                    if (AppHeader.controller.binding.userData.SiteAdmin ||
+                        AppData._persistentStates.leadsuccessFeatureStandard) {
+                        return AppBar.busy;
+                    } else {
+                        return true;
+                    }
                 },
                 clickOk: function () {
                     return !that.curRecId || AppBar.busy;

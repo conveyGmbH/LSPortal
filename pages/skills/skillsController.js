@@ -15,7 +15,8 @@
             Log.call(Log.l.trace, "Skills.Controller.");
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
-                questionId: AppData.generalData.getRecordId("SkillTypeSkills")
+                questionId: AppData.generalData.getRecordId("SkillTypeSkills"),
+                leadSuccessStandard: AppHeader.controller.binding.userData.SiteAdmin || AppData._persistentStates.leadsuccessFeatureStandard
             }, commandList]);
             this.nextUrl = null;
             this.loading = false;
@@ -806,7 +807,7 @@
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.loadData();
+                    return that.loadData();
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                return that.selectRecordId(that.binding.questionId);

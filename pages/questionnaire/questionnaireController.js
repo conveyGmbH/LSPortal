@@ -21,7 +21,8 @@
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "Questionnaire.Controller.");
             Application.Controller.apply(this, [pageElement, {
-                count: 0
+                count: 0,
+                leadSuccessStandard: AppHeader.controller.binding.userData.SiteAdmin || AppData._persistentStates.leadsuccessFeatureStandard
             }, commandList]);
             this.nextUrl = null;
             this.loading = false;

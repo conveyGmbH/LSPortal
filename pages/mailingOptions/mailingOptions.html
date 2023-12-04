@@ -11,7 +11,7 @@
     <div class="settings fragment">
         <div id="mailingOptionsController" class="data-container">
             <section aria-label="Main content" role="main" class="animationElement">
-                <div class="contentarea win-type-body">
+                <div class="contentarea win-type-body" data-win-bind="style.display: leadSuccessStandard Binding.Converter.toDisplay">
                     <div class="header-separator"></div>
                     <div class="content-header">
                         <div class="half-circle half-circle-textcolor">&nbsp;</div>
@@ -21,7 +21,7 @@
                             <span class="date-field"></span>
                         </div>
                     </div>
-                    <div class="fields-container">
+                    <div class="fields-container" data-win-bind="style.display: showContent Binding.Converter.toDisplay">
                         <!--<div class="field_line field_line_odd">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingoptions.productMail'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'mailingoptions.productMail'}"></span>
@@ -56,6 +56,12 @@
                                 </div>
                             </div>
                         </div>-->
+                    </div>
+                </div>
+                <div class="contentarea win-type-body" data-win-bind="style.display: leadSuccessStandard Binding.Converter.toDisplayNone">
+                    <div class="field_line">
+                        <span class="large_field"
+                              data-win-res="{textContent:'general.leadsuccessbasic'}"></span>
                     </div>
                 </div>
                 <div class="error-message"

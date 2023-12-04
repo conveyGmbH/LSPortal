@@ -12,7 +12,7 @@
     <div class="empList fragment">
         <div id="emplistController" class="data-container">
             <section aria-label="Main content" role="main" class="animationElement">
-                <div class="contentarea win-type-body">
+                <div class="contentarea win-type-body" data-win-bind="style.display: leadSuccessStandard Binding.Converter.toDisplay">
                     <div class="content-header">
                         <!--<div class="win-type-subtitle master-list-header list-compact-only">
                             <div class="list-header" data-win-bind="style.visibility: licenceWarning Binding.Converter.toVisibility">
@@ -49,49 +49,49 @@
                                       data-win-bind="textContent: nameInitial"></span>
                             </div>
                         </div>
-	                    <div class="list-portrait-only" data-win-bind="disabled: disabled">
-		                    <div class="row-separator"></div>
-		                    <div class="list-div-left">
-			                    <div class="list-symbol-ID">
-				                    <div data-win-bind="name: recordIcon" class="action-image"></div>
-			                    </div>
-			                    <div class="list-compressed">
-				                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
-				                          data-win-bind="textContent: fullName"></span>
-				                    <span class="list-compressed-title win-type-ellipsis"
-				                          data-win-bind="textContent: Login"></span>
-				                    <span id="Seriennummer"
-				                          class="list-compressed-title win-type-ellipsis"
-				                          data-win-bind="textContent: CS1504SerienNr; style.display: CS1504SerienNr Binding.Converter.toDisplay"></span>
-			                    </div>
-			                    <div class="list-symbol-IDw" data-win-bind="style.display: NichtLizenzierteApp Binding.Converter.toDisplay">
-				                    <div id="about" class="warning-image"></div>
-			                    </div>
-		                    </div>
-	                    </div>
-	                    <div class="list-landscape-only" data-win-bind="disabled: disabled">
-		                    <div class="row-separator"></div>
-		                    <div class="list-div-left">
-			                    <div class="list-symbol-ID">
-				                    <div data-win-bind="name: recordIcon" class="action-image"></div>
-			                    </div>
-			                    <div class="list-compressed">
-				                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
-				                          data-win-bind="textContent: fullName"></span>
-				                    <span class="list-compressed-title win-type-ellipsis"
-				                          data-win-bind="textContent: Login"></span>
-				                    <span id="Seriennummer"
-				                          class="list-compressed-title win-type-ellipsis"
-				                          data-win-bind="textContent: CS1504SerienNr; style.display: CS1504SerienNr Binding.Converter.toDisplay"></span>
-			                    </div>
-			                    <div class="list-symbol-IDw" data-win-bind="style.display: NichtLizenzierteApp Binding.Converter.toDisplay">
-				                    <div id="about" class="warning-image"></div>
-			                    </div>
-		                    </div>
-	                    </div>
+                        <div class="list-portrait-only" data-win-bind="disabled: disabled">
+                            <div class="row-separator"></div>
+                            <div class="list-div-left">
+                                <div class="list-symbol-ID">
+                                    <div data-win-bind="name: recordIcon" class="action-image"></div>
+                                </div>
+                                <div class="list-compressed">
+                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
+                                          data-win-bind="textContent: fullName"></span>
+                                    <span class="list-compressed-title win-type-ellipsis"
+                                          data-win-bind="textContent: Login"></span>
+                                    <span id="Seriennummer"
+                                          class="list-compressed-title win-type-ellipsis"
+                                          data-win-bind="textContent: CS1504SerienNr; style.display: CS1504SerienNr Binding.Converter.toDisplay"></span>
+                                </div>
+                                <div class="list-symbol-IDw" data-win-bind="style.display: NichtLizenzierteApp Binding.Converter.toDisplay">
+                                    <div id="about" class="warning-image"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-landscape-only" data-win-bind="disabled: disabled">
+                            <div class="row-separator"></div>
+                            <div class="list-div-left">
+                                <div class="list-symbol-ID">
+                                    <div data-win-bind="name: recordIcon" class="action-image"></div>
+                                </div>
+                                <div class="list-compressed">
+                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
+                                          data-win-bind="textContent: fullName"></span>
+                                    <span class="list-compressed-title win-type-ellipsis"
+                                          data-win-bind="textContent: Login"></span>
+                                    <span id="Seriennummer"
+                                          class="list-compressed-title win-type-ellipsis"
+                                          data-win-bind="textContent: CS1504SerienNr; style.display: CS1504SerienNr Binding.Converter.toDisplay"></span>
+                                </div>
+                                <div class="list-symbol-IDw" data-win-bind="style.display: NichtLizenzierteApp Binding.Converter.toDisplay">
+                                    <div id="about" class="warning-image"></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="headerFooterPlaceholder">
-	                    <div class="list-footer">
+                        <div class="list-footer">
                             <div class="status">
                                 <progress class="win-progress-bar progress"></progress>
                                 <div class="counter">
@@ -108,6 +108,12 @@
                              itemTemplate: select('.employeeList-template'),
                              footer: select('.list-footer')
                          }">
+                    </div>
+                </div>
+                <div class="contentarea win-type-body" data-win-bind="style.display: leadSuccessStandard Binding.Converter.toDisplayNone">
+                    <div class="field_line">
+                        <span class="large_field"
+                              data-win-res="{textContent:'general.leadsuccessbasic'}"></span>
                     </div>
                 </div>
                 <div class="error-message"

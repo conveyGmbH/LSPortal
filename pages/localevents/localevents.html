@@ -11,7 +11,7 @@
     <div class="localevents fragment">
         <div id="localeventsController" class="data-container">
             <section aria-label="Main content" role="main" class="animationElement">
-                <div class="contentarea win-type-body">
+                <div class="contentarea win-type-body" data-win-bind="style.display: leadSuccessStandard Binding.Converter.toDisplay">
                     <div class="content-header">
                         <div class="win-type-subtitle master-list-header">
                             <span data-win-res="{textContent: 'localevents.title'}"></span>
@@ -76,6 +76,12 @@
                                 itemTemplate: select('.localevents-template'),
                                 footer: select('.list-footer')
                          }">
+                    </div>
+                </div>
+                <div class="contentarea win-type-body" data-win-bind="style.display: leadSuccessStandard Binding.Converter.toDisplayNone">
+                    <div class="field_line">
+                        <span class="large_field"
+                              data-win-res="{textContent:'general.leadsuccessbasic'}"></span>
                     </div>
                 </div>
                 <div class="error-message"

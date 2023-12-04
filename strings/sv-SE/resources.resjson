@@ -15,6 +15,7 @@
     "general.november"      : "Nov",
     "general.december"      : "Dec",
 	"general.unauthorizedUser" : "Invalid username/password!\nlogon denied!\nPassword may have been changed, please login again",
+    "general.leadsuccessbasic" : "This application is not available with the free package. To get access to the other functions, please upgrade your package in the exhibitor shop. If you need any information do not hesitate to contact us at multimedia-shop@messefrankfurt.com",
 
     "command.backward"      : "Back",
     "command.edit"          : "Edit",

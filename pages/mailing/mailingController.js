@@ -24,7 +24,9 @@
                 testMailShowPanelFlag: 0,
                 testMailSuccessMsgFlag: 0,
                 isPrivacyPolicySVGVisible: AppData._persistentStates.privacyPolicySVGVisible,
-                isPrivacyPolicyToggleDisabled: !AppData._persistentStates.privacyPolicySVGVisible
+                isPrivacyPolicyToggleDisabled: !AppData._persistentStates.privacyPolicySVGVisible,
+                showContent: true,
+                leadSuccessStandard: AppHeader.controller.binding.userData.SiteAdmin || AppData._persistentStates.leadsuccessFeatureStandard
             }, commandList]);
 
             var that = this;
@@ -192,7 +194,7 @@
             var insertMailing = function () {
                 Log.call(Log.l.trace, "Mailing.Controller.");
                 var dataMail = Mailing.MaildokumentView.defaultValue;
-                    dataMail.VeranstaltungID = AppData.getRecordId("Veranstaltung");
+                dataMail.VeranstaltungID = AppData.getRecordId("Veranstaltung");
                 Mailing.MaildokumentView.insert(function (json) {
                     AppBar.busy = false;
                     // this callback will be called asynchronously
@@ -556,8 +558,8 @@
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, {
-                        SORTIERUNG: 1
-                    });
+                            SORTIERUNG: 1
+                        });
                 }).then(function () {
                     if (recordId) {
                         // AppData.setRecordId("Maildokument", recordId);
@@ -571,12 +573,12 @@
                             }
                             // startContact returns object already parsed from json file in response
                         },
-                        function (errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
+                            function (errorResponse) {
+                                // called asynchronously if an error occurs
+                                // or server returns response with an error status.
 
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        }, recordId);
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                            }, recordId);
                     } else {
                         return WinJS.Promise.as();
                     }
@@ -644,6 +646,6 @@
             });
             Log.ret(Log.l.trace);
         }, {
-        })
+            })
     });
 })();

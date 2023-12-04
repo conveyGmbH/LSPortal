@@ -15,6 +15,7 @@
     "general.november"      : "Nov",
     "general.december"      : "Dez",
 	"general.unauthorizedUser" : "Benutzername/Passwort ungültig!\nAnmeldung ungültig!\nPasswort ist möglicherweise geändert worden, Bitte melden Sie sich neu an",
+	"general.leadsuccessbasic" : "Diese Anwendung ist mit dem kostenlosen Paket nicht verfügbar. Um Zugang zu den anderen Funktionen zu erhalten, upgraden Sie bitte Ihr Paket im Austellershop. Wenn Sie weitere Informationen benötigen, zögern Sie nicht, uns unter multimedia-shop@messefrankfurt.com zu kontaktieren.",
 
     "command.backward"      : "Zurück",
     "command.edit"          : "Bearbeiten",

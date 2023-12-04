@@ -22,7 +22,8 @@
                 employeeId: 0,//AppData.getRecordId("Mitarbeiter")
                 hasContacts: null,
                 hasLocalevents: null,
-                licenceWarning: false
+                licenceWarning: false,
+                leadSuccessStandard: AppHeader.controller.binding.userData.SiteAdmin || AppData._persistentStates.leadsuccessFeatureStandard
             }, commandList, true]);
             this.nextUrl = null;
             this.loading = false;
@@ -481,7 +482,7 @@
                                 if (that.binding.employeeId) {
                                     that.selectRecordId(recordId);
                                 } else {
-                                that.selectRecordId(json.d.results[0].MitarbeiterVIEWID);
+                                    that.selectRecordId(json.d.results[0].MitarbeiterVIEWID);
                                 }
                                 
                             } else {

@@ -21,7 +21,8 @@
                 veranstaltungId: 0,
                 fairmandantId: 0,
                 firstentry: 0,
-                active: null
+                active: null,
+                leadSuccessStandard: AppHeader.controller.binding.userData.SiteAdmin || AppData._persistentStates.leadsuccessFeatureStandard
             }, commandList]);
             this.nextUrl = null;
 
@@ -54,7 +55,7 @@
                 }
             };
             this.background = background;
-            
+
             var loadNextUrl = function () {
                 Log.call(Log.l.trace, "LocalEvents.Controller.");
                 progress = listView.querySelector(".list-footer .progress");
@@ -176,7 +177,7 @@
             }
             this.changeEvent = changeEvent;
 
-            var getDeleteEventData = function(eventID) {
+            var getDeleteEventData = function (eventID) {
                 Log.call(Log.l.trace, "LocalEvents.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as()/*.then(function () {
@@ -192,32 +193,32 @@
                         Log.print(Log.l.error, "error selecting mailerzeilen");
                         AppData.setErrorMsg(that.binding, errorResponse);
                         }, { VeranstaltungVIEWID: eventID});
-                })*/.then(function() {
-                    // var curScope = that.deleteEventData;
-                    var curScope = that.actualSelectedItem;
-                    if (curScope) {
-                        var confirmTitle = getResourceText("localevents.labelDelete") + ": " + curScope.Name +
-                            "\r\n" + getResourceText("localevents.eventDelete");
-                        confirm(confirmTitle, function (result) {
-                            if (result) {
-                                AppBar.busy = true;
-                                AppData.setErrorMsg(that.binding);
-                                AppData.call("PRC_DeleteVeranstaltung", {
-                                    pVeranstaltungID: eventID
-                                }, function (json) {
-                                    Log.print(Log.l.info, "call success! ");
-                                    AppBar.busy = false;
-                                    that.loadData();
-                                }, function (error) {
-                                    AppBar.busy = false;
-                                    Log.print(Log.l.error, "call error");
-                                });
-                            } else {
-                                Log.print(Log.l.trace, "clickDelete: event choice CANCEL");
-                            }
-                        });
-                    }
-                });
+                })*/.then(function () {
+                        // var curScope = that.deleteEventData;
+                        var curScope = that.actualSelectedItem;
+                        if (curScope) {
+                            var confirmTitle = getResourceText("localevents.labelDelete") + ": " + curScope.Name +
+                                "\r\n" + getResourceText("localevents.eventDelete");
+                            confirm(confirmTitle, function (result) {
+                                if (result) {
+                                    AppBar.busy = true;
+                                    AppData.setErrorMsg(that.binding);
+                                    AppData.call("PRC_DeleteVeranstaltung", {
+                                        pVeranstaltungID: eventID
+                                    }, function (json) {
+                                        Log.print(Log.l.info, "call success! ");
+                                        AppBar.busy = false;
+                                        that.loadData();
+                                    }, function (error) {
+                                        AppBar.busy = false;
+                                        Log.print(Log.l.error, "call error");
+                                    });
+                                } else {
+                                    Log.print(Log.l.trace, "clickDelete: event choice CANCEL");
+                                }
+                            });
+                        }
+                    });
                 Log.ret(Log.l.trace);
                 return ret;
             }
@@ -243,7 +244,7 @@
                     Log.call(Log.l.trace, "LocalEvents.Controller.");
                     var recordId = that.curRecId;
                     if (recordId) {
-                    that.getDeleteEventData(recordId);
+                        that.getDeleteEventData(recordId);
                     }
                     Log.ret(Log.l.trace);
                 },
@@ -446,7 +447,7 @@
                         if (that.curRecId !== AppData.getRecordId("Veranstaltung") && !that.binding.active && !AppBar.busy) {
                             return false;
                         } else {
-                        return true;
+                            return true;
                         }
                     } else {
                         return true;
@@ -553,7 +554,7 @@
                         that.loading = false;
                     }, {
 
-                    }
+                        }
                     );
                 });
                 Log.ret(Log.l.trace);
@@ -570,10 +571,10 @@
             });
             Log.ret(Log.l.trace);
         }, {
-            nextUrl: null,
-            loading: false,
-            localeventsdata: null,
-            deleteEventData: null
-        })
+                nextUrl: null,
+                loading: false,
+                localeventsdata: null,
+                deleteEventData: null
+            })
     });
 })();

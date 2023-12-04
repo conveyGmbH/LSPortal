@@ -18,7 +18,9 @@
             Log.call(Log.l.trace, "Settings.Controller.");
             Application.Controller.apply(this, [pageElement, {
                 showSettingsFlag: false,
-                themeId: 2
+                themeId: 2,
+                showContent: true,
+                leadSuccessStandard: AppHeader.controller.binding.userData.SiteAdmin || AppData._persistentStates.leadsuccessFeatureStandard
             }, commandList]);
 
             var themeSelect = pageElement.querySelector("#themeSelect");
@@ -549,7 +551,17 @@
                 AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Binding wireup page complete");
             }).then(function () {
-                return that.loadData();
+                if (AppHeader.controller.binding.userData.SiteAdmin ||
+                    AppData._persistentStates.leadsuccessFeatureStandard) {
+                    return that.loadData();
+                } else {
+                    var alertTitle = getResourceText("general.leadsuccessbasic");
+                    that.binding.showContent = false;
+                    alert(alertTitle,
+                        function () {
+                            return WinJS.Promise.as();
+                        });
+                }
             });
             Log.ret(Log.l.trace);
         }),

@@ -56,6 +56,12 @@
                 { id: "clickLineDown", label: getResourceText("command.lineDown"), tooltip: getResourceText("tooltip.lineDown"), section: "primary", svg: "navigate_down2" },
                 { id: "clickDelete", label: getResourceText("command.delete"), tooltip: getResourceText("tooltip.deleteQuestionsAnswers"), section: "primary", svg: "garbage_can" }
             ];
+            if (!AppHeader.controller.binding.userData.SiteAdmin &&
+                !AppData._persistentStates.leadsuccessFeatureStandard) {
+                commandList = [
+                    { id: 'clickBack', label: getResourceText('command.backward'), tooltip: getResourceText('tooltip.backward'), section: 'primary', svg: 'navigate_left' }
+                ];
+            }
             this.controller = new QuestionList.Controller(element, commandList);
             if (this.controller.eventHandlers) {
                 // general event listener for hardware back button, too!
@@ -100,7 +106,7 @@
                         if (that.controller) {
                             return that.controller.publish(function(response) {
                                 AppData.getUserData();
-                                complete(response);
+                             complete(response);
                         },
                         function(errorResponse) {
                              error(errorResponse);

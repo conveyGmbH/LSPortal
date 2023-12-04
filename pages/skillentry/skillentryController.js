@@ -15,7 +15,8 @@
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "Skillentry.Controller.");
             Application.Controller.apply(this, [pageElement, {
-                countSkills: 0
+                countSkills: 0,
+                leadSuccessStandard: AppHeader.controller.binding.userData.SiteAdmin || AppData._persistentStates.leadsuccessFeatureStandard
             }, commandList]);
             this.nextUrl = null;
             this.recordId = null;
@@ -615,7 +616,7 @@
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.loadData(getRecordId());
+                    return that.loadData(getRecordId());
             }).then(function () {
                 AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Record selected");

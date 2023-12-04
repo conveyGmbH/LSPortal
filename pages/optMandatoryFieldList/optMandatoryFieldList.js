@@ -16,25 +16,25 @@
             this._site = null;
             this._surface = null;
         },
-        {
-            // This sets up any state and CSS layout on the surface of the custom layout
-            initialize: function (site) {
-                this._site = site;
-                this._surface = this._site.surface;
+            {
+                // This sets up any state and CSS layout on the surface of the custom layout
+                initialize: function (site) {
+                    this._site = site;
+                    this._surface = this._site.surface;
 
-                // Add a CSS class to control the surface level layout
-                WinJS.Utilities.addClass(this._surface, "optMandatoryFieldListLayout");
+                    // Add a CSS class to control the surface level layout
+                    WinJS.Utilities.addClass(this._surface, "optMandatoryFieldListLayout");
 
-                return WinJS.UI.Orientation.horizontal;
-            },
+                    return WinJS.UI.Orientation.horizontal;
+                },
 
-            // Reset the layout to its initial state
-            uninitialize: function () {
-                WinJS.Utilities.removeClass(this._surface, "optMandatoryFieldListLayout");
-                this._site = null;
-                this._surface = null;
-            }
-        })
+                // Reset the layout to its initial state
+                uninitialize: function () {
+                    WinJS.Utilities.removeClass(this._surface, "optMandatoryFieldListLayout");
+                    this._site = null;
+                    this._surface = null;
+                }
+            })
     });
 
     var pageName = Application.getPagePath("optMandatoryFieldList");
@@ -56,7 +56,12 @@
                 { id: "clickDelete", label: getResourceText("command.delete"), tooltip: getResourceText("optMandatoryFieldList.tooltipDelete"), section: "primary", svg: "garbage_can" },
                 { id: "clickOk", label: getResourceText("command.ok"), tooltip: getResourceText("tooltip.ok"), section: "primary", svg: "navigate_check", key: WinJS.Utilities.Key.enter }
             ];
-
+            if (!AppHeader.controller.binding.userData.SiteAdmin &&
+                !AppData._persistentStates.leadsuccessFeatureStandard) {
+                commandList = [
+                    { id: 'clickBack', label: getResourceText('command.backward'), tooltip: getResourceText('tooltip.backward'), section: 'primary', svg: 'navigate_left' }
+                ];
+            }
             this.controller = new OptMandatoryFieldList.Controller(element, commandList);
             if (this.controller.eventHandlers) {
                 // general event listener for hardware back button, too!
