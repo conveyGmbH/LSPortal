@@ -704,16 +704,6 @@
             this.loadData = loadData;*/
 
             that.processAll().then(function () {
-                if (AppHeader.controller.binding.userData.SiteAdmin ||
-                    AppData._persistentStates.leadsuccessFeatureStandard) {
-                    // do nothing
-                } else {
-                    var alertTitle = getResourceText("general.leadsuccessbasic");
-                    alert(alertTitle,
-                        function () {
-                            return WinJS.Promise.as();
-                        });
-                }
             }).then(function () {
                 Log.print(Log.l.trace, "Load Question");
                 return that.loadQuestion();

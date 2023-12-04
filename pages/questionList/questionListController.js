@@ -63,7 +63,7 @@
                 //Tooltips Multi
                 var multi = pageElement.querySelectorAll("#multi");
                 for (var i = 0; i < multi.length; i++) {
-                    multi[i].title = getResourceText("tooltip.multchoice"); 
+                    multi[i].title = getResourceText("tooltip.multchoice");
                 }
                 //Tooltips multiRating
                 var multirating = pageElement.querySelectorAll("#singleRating");
@@ -77,7 +77,7 @@
                 }
                 //Anwser Text
                 var answer = pageElement.querySelectorAll(".answer-type-container");
-                
+
             }
             this.setTooltips = setTooltips;
 
@@ -234,7 +234,7 @@
                         if (newRecord[prop] !== prevRecord[prop]) {
                             prevRecord[prop] = newRecord[prop];
                             ret = true;
-                        }  
+                        }
                     }
                 }
                 Log.ret(Log.l.trace, ret);
@@ -655,9 +655,9 @@
                         Log.print(Log.l.trace, "question saved");
                         that.binding.questionId = recordId;
                         if (AppBar.modified) {
-                        that.loadData().then(function () {
-                            that.selectRecordId(that.binding.questionId);
-                        });
+                            that.loadData().then(function () {
+                                that.selectRecordId(that.binding.questionId);
+                            });
                         }
                     }, function (errorResponse) {
                         Log.print(Log.l.error, "error saving question");
@@ -744,16 +744,16 @@
                     }
                     Log.ret(Log.l.trace);
                 },
-                changedShowText: function(event) {
+                changedShowText: function (event) {
                     Log.call(Log.l.trace, "QuestionList.Controller.");
-                    if (event.currentTarget && AppBar.notifyModified && 
-                        listView && listView.winControl && 
+                    if (event.currentTarget && AppBar.notifyModified &&
+                        listView && listView.winControl &&
                         (listView.winControl.loadingState === "complete" || listView.winControl.loadingState === "itemsLoaded") &&
                         that.curRecId && !that.prevRecId && !that.inAnswerCountFromRange) {
                         var toggle = event.currentTarget.winControl;
                         if (toggle) {
                             var curScope = that.scopeFromRecordId(that.curRecId);
-                            if (curScope && curScope.item && 
+                            if (curScope && curScope.item &&
                                 curScope.item.showText !== toggle.checked) {
                                 curScope.item.showText = toggle.checked;
                                 var newRecord = that.getFieldEntries(curScope.index, curScope.item);
@@ -769,16 +769,16 @@
                     }
                     Log.ret(Log.l.trace);
                 },
-                changedShowDate: function(event) {
+                changedShowDate: function (event) {
                     Log.call(Log.l.trace, "QuestionList.Controller.");
-                    if (event.currentTarget && AppBar.notifyModified && 
-                        listView && listView.winControl && 
+                    if (event.currentTarget && AppBar.notifyModified &&
+                        listView && listView.winControl &&
                         (listView.winControl.loadingState === "complete" || listView.winControl.loadingState === "itemsLoaded") &&
                         that.curRecId && !that.prevRecId && !that.inAnswerCountFromRange) {
                         var toggle = event.currentTarget.winControl;
                         if (toggle) {
                             var curScope = that.scopeFromRecordId(that.curRecId);
-                            if (curScope && curScope.item && 
+                            if (curScope && curScope.item &&
                                 curScope.item.showDate !== toggle.checked) {
                                 curScope.item.showDate = toggle.checked;
                                 var newRecord = that.getFieldEntries(curScope.index, curScope.item);
@@ -1188,7 +1188,7 @@
                 },
                 clickForward: function () {
                     // never disabled!
-                        return false;
+                    return false;
                 },
                 clickLineUp: function () {
                     var ret = true;
@@ -1331,15 +1331,15 @@
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, {
-                        
-                    }, recordId);
+
+                        }, recordId);
                 }).then(function () {
                     AppBar.notifyModified = true;
                     AppBar.triggerDisableHandlers();
                     return WinJS.Promise.as();
-                    }).then(function () {
+                }).then(function () {
                     that.setTooltips();
-                }); 
+                });
                 Log.ret(Log.l.trace);
                 return ret;
             };
@@ -1347,13 +1347,7 @@
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                if (AppHeader.controller.binding.userData.SiteAdmin ||
-                    AppData._persistentStates.leadsuccessFeatureStandard) {
-                    return that.loadData();
-                } else {
-                    var alertTitle = getResourceText("general.leadsuccessbasic");
-                    alert(alertTitle);
-                }
+                return that.loadData();
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 return that.selectRecordId(that.binding.questionId);
@@ -1365,10 +1359,10 @@
             });
             Log.ret(Log.l.trace);
         }, {
-            prevRecId: 0,
-            curRecId: 0,
-            cursorPos: { x: 0, y: 0 }
-        })
+                prevRecId: 0,
+                curRecId: 0,
+                cursorPos: { x: 0, y: 0 }
+            })
     });
 })();
 

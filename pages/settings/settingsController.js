@@ -106,7 +106,7 @@
                             pOptionTypeId = 46;
                             break;
                         default:
-                            // defaultvalues
+                        // defaultvalues
                     }
                     if (pOptionTypeId) {
                         AppData.call("PRC_SETVERANSTOPTION", {
@@ -114,27 +114,27 @@
                             pOptionTypeID: pOptionTypeId,
                             pValue: pValue
                         },
-                        function(json) {
-                            Log.print(Log.l.info, "call success! ");
-                            that.binding.generalData.colorSettings[colorProperty] = color;
-                            Application.pageframe.savePersistentStates();
-                            AppData.applyColorSetting(colorProperty, color);
-                            WinJS.Promise.timeout(0).then(function () {
-                                if (colorProperty === "accentColor") {
-                                    that.createColorPicker("backgroundColor");
-                                    that.createColorPicker("textColor");
-                                    that.createColorPicker("labelColor");
-                                    that.createColorPicker("tileTextColor");
-                                    that.createColorPicker("tileBackgroundColor");
-                                    that.createColorPicker("navigationColor");
-                                    that.createColorPicker("dashboardColor");
-                                }
+                            function (json) {
+                                Log.print(Log.l.info, "call success! ");
+                                that.binding.generalData.colorSettings[colorProperty] = color;
+                                Application.pageframe.savePersistentStates();
+                                AppData.applyColorSetting(colorProperty, color);
+                                WinJS.Promise.timeout(0).then(function () {
+                                    if (colorProperty === "accentColor") {
+                                        that.createColorPicker("backgroundColor");
+                                        that.createColorPicker("textColor");
+                                        that.createColorPicker("labelColor");
+                                        that.createColorPicker("tileTextColor");
+                                        that.createColorPicker("tileBackgroundColor");
+                                        that.createColorPicker("navigationColor");
+                                        that.createColorPicker("dashboardColor");
+                                    }
+                                });
+                            },
+                            function (error) {
+                                Log.print(Log.l.error, "call error");
+                                that.loadData();
                             });
-                        },
-                        function(error) {
-                            Log.print(Log.l.error, "call error");
-                            that.loadData();
-                        });
                     }
                 }
                 Log.ret(Log.l.trace);
@@ -261,7 +261,7 @@
                                     var colorSettings = copyByValue(AppData.persistentStatesDefaults.colorSettings);
                                     var colors = new Colors.ColorsClass(colorSettings);
                                     var promise = colors._loadCssPromise || WinJS.Promise.timeout(0);
-                                    promise.then(function() {
+                                    promise.then(function () {
                                         that.createColorPicker("accentColor");
                                         that.createColorPicker("backgroundColor");
                                         that.createColorPicker("textColor");
@@ -497,7 +497,7 @@
             var loadData = function (complete, error) {
                 AppData._persistentStates.hideQuestionnaire = false;
                 AppData._persistentStates.hideSketch = false;
-                var ret = new WinJS.Promise.as().then(function() {
+                var ret = new WinJS.Promise.as().then(function () {
                     if (themeSelect && themeSelect.winControl) {
                         var themeSelectList = new WinJS.Binding.List([
                             { themeId: 0, label: that.binding.generalData.light },
@@ -505,12 +505,12 @@
                             { themeId: 2, label: that.binding.generalData.system }
                         ]);
                         themeSelect.winControl.data = themeSelectList;
-                        that.binding.themeId = that.binding.generalData.manualTheme ? 
+                        that.binding.themeId = that.binding.generalData.manualTheme ?
                             (that.binding.generalData.isDarkTheme ? 1 : 0) : 2;
                     }
                     return WinJS.Promise.as();
                 }).then(function () {
-                    return Settings.CR_VERANSTOPTION_ODataView.select(function(json) {
+                    return Settings.CR_VERANSTOPTION_ODataView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
                         Log.print(Log.l.trace, "Reporting: success!");
@@ -518,12 +518,12 @@
 
                         if (json && json.d && json.d.results && json.d.results.length > 0) {
                             var results = json.d.results;
-                            results.forEach(function(item, index) {
+                            results.forEach(function (item, index) {
                                 that.resultConverter(item, index);
                             });
                             Application.pageframe.savePersistentStates();
                         }
-                    }, function(errorResponse) {
+                    }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
@@ -551,17 +551,8 @@
                 AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Binding wireup page complete");
             }).then(function () {
-                if (AppHeader.controller.binding.userData.SiteAdmin ||
-                    AppData._persistentStates.leadsuccessFeatureStandard) {
-                    return that.loadData();
-                } else {
-                    var alertTitle = getResourceText("general.leadsuccessbasic");
-                    that.binding.showContent = false;
-                    alert(alertTitle,
-                        function () {
-                            return WinJS.Promise.as();
-                        });
-                }
+                return that.loadData();
+
             });
             Log.ret(Log.l.trace);
         }),
