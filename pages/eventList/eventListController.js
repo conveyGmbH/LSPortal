@@ -20,7 +20,8 @@
             Application.Controller.apply(this, [pageElement, {
                 eventId: 0,
                 count: 0,
-                active: null
+                active: null,
+                leadSuccessStandard: AppHeader.controller.binding.userData.SiteAdmin || AppData._persistentStates.leadsuccessFeatureStandard
             }, commandList, isMaster]);
             this.nextUrl = null;
             this.records = null;
@@ -458,7 +459,7 @@
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.loadData();
+                    return that.loadData();
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 AppBar.notifyModified = true;

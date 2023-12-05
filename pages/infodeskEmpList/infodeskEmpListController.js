@@ -20,7 +20,8 @@
                 dataEmployee: getEmptyDefaultValue(InfodeskEmpList.defaultValue),
                 mitarbeiterText: getResourceText("infodesk.employee"),
                 count: 0,
-                employeeId: AppData.getRecordId("Benutzer")
+                employeeId: AppData.getRecordId("Benutzer"),
+                leadSuccessStandard: AppHeader.controller.binding.userData.SiteAdmin || AppData._persistentStates.leadsuccessFeatureStandard
             }, commandList, true]);
             this.nextUrl = null;
             this.refreshPromise = null;

@@ -356,6 +356,10 @@
                     case "leadsuccessFeatureStandard":
                         pOptionTypeId = 51;
                         that.binding.veranstOption.leadsuccessFeatureStandard = checked;
+                        if (!checked) {
+                            that.changeSetting("showCamera", 0);
+                            that.changeSetting("showSketch", 0);
+                        }
                         break;
                 }
                 if (pOptionTypeId) {
