@@ -1748,3 +1748,10 @@ button.win-button {
 .win-splitview-pane-closed .win-splitview-pane .resize-helper-gripper {
     display: none;
 }
+
+.label-text-message {
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
