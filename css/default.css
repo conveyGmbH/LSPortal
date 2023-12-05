@@ -1750,6 +1750,7 @@ button.win-button {
 }
 
 .label-text-message {
+    text-align: justify;
     margin-left: 25px;
     margin-right: 25px;
     margin-top: 25px;
