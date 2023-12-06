@@ -48,6 +48,10 @@
                         title: "SERVICE"
                     },
                     {
+                        value: "FREE",
+                        title: "FREE"
+                    },
+                    {
                         value: "RTW",
                         title: "RTW"
                     },
