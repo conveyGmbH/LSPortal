@@ -681,6 +681,7 @@
     "event.dashboardPremium"    : "Premium Typ",
 	"event.visitorFlowInterval" : "VisitorFlow Interval",
     "event.leadsuccessFeatureStandard" : "LeadSuccess Standard",
+	"event.showHideManually" : "Manuelle Erfassung in der App ermöglichen",
 
     "questiongroup.title"   : "Fragengruppen",
     "questiongroup.count"   : "Anzahl",

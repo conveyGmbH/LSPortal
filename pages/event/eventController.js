@@ -21,6 +21,7 @@
                 showCameraQuestionnaire: AppData._persistentStates.showCameraQuestionnaire,
                 isSketchVisible: !AppData._persistentStates.hideSketch,
                 isCameraVisible: !AppData._persistentStates.hideCameraScan,
+                isManuallyVisible: !AppData._persistentStates.hideManually,
                 isBarcodeScanVisible: !AppData._persistentStates.hideBarcodeScan,
                 isDBSyncVisible: AppHeader.controller.binding.userData.SiteAdmin,
                 isPrivacyPolicySVGVisible: AppData._persistentStates.privacyPolicySVGVisible,
@@ -356,11 +357,24 @@
                     case "leadsuccessFeatureStandard":
                         pOptionTypeId = 51;
                         that.binding.veranstOption.leadsuccessFeatureStandard = checked;
-                        if (!checked) {
+                        if (checked) {
+                            that.changeSetting("showCamera", 1);
+                            that.changeSetting("showSketch", 1);
+                            that.changeSetting("showManually", 1);
+                        } else {
                             that.changeSetting("showCamera", 0);
                             that.changeSetting("showSketch", 0);
+                            that.changeSetting("showManually", 0);
                         }
                         break;
+                    case "showManually":
+                        pOptionTypeId = 52;
+                        that.binding.veranstOption.isManuallyVisible = checked;
+                        hidePageItem = true;
+                        break;
+                    default:
+                        
+
                 }
                 if (pOptionTypeId) {
                     // value: show => pValue: hide!
@@ -835,6 +849,13 @@
                             that.binding.veranstOption.leadsuccessFeatureStandard = false;
                         }
                         break;
+                    case 52:
+                        if (item.LocalValue === "1") {
+                            that.binding.veranstOption.isManuallyVisible = false;
+                        } else {
+                            that.binding.veranstOption.isManuallyVisible = true;
+                        }
+                        break;
                     default:
                     // defaultvalues
                 }
@@ -1107,12 +1128,12 @@
             that.processAll().then(function () {
                 that.creatingVisitorFlowCategory();
             }).then(function () {
-                    Log.print(Log.l.trace, "Binding wireup page complete");
+                Log.print(Log.l.trace, "Binding wireup page complete");
                     return that.loadData();
-                }).then(function () {
-                    Log.print(Log.l.trace, "Data loaded");
-                    AppBar.notifyModified = true;
-                });
+            }).then(function () {
+                Log.print(Log.l.trace, "Data loaded");
+                AppBar.notifyModified = true;
+            });
             Log.ret(Log.l.trace);
         })
     });

@@ -52,6 +52,7 @@
             defaultValue: {
                 isQuestionnaireVisible: "0",
                 showCameraQuestionnaire: "0",
+                isManuallyVisible: "0",
                 isSketchVisible: "0",
                 isCameraVisible: "0",
                 isBarcodeScanVisible: "0",

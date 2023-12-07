@@ -99,6 +99,21 @@
                 </div>
             </div>
             <div class="line-separator"></div>
+            <div class="field_line field_line_odd">
+                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'event.showHideManually'}"></span>
+                <span class="label landscape_only" data-win-res="{textContent: 'event.showHideManually'}"></span>
+                <div class="input_field toggle-switch-parent">
+                    <div id="showManually" class="input_field"
+                         data-win-control="WinJS.UI.ToggleSwitch"
+                         data-win-bind="winControl.checked: veranstOption.isManuallyVisible; winControl.labelOn: generalData.yes; winControl.labelOff: generalData.no"
+                         onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
+                    </div>
+                </div>
+            </div>
+            <div class="field_line field_line_even">
+
+            </div>
+            <div class="line-separator"></div>
             <!--<div data-win-bind="style.display: visitorFlowFeature Binding.Converter.toDisplay">
                 <div class="field_line field_line_odd">
                     <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'event.visitorFlow'}"></span>

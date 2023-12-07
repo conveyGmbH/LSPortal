@@ -651,6 +651,13 @@
                         AppData._persistentStates.leadsuccessFeatureStandard = false;
                     }
                     break;
+                case 52:
+                    if (item.LocalValue === "1") {
+                        AppData._persistentStates.hideManually = true;
+                    } else {
+                        AppData._persistentStates.hideManually = false;
+                    }
+                    break;
                 default:
                     // defaultvalues
             }

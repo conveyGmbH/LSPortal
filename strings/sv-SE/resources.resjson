@@ -633,6 +633,7 @@
 	"event.dashboardPremium"    : "Premium Typ",
     "event.visitorFlowInterval" : "VisitorFlow Interval",
     "event.leadsuccessFeatureStandard" : "LeadSuccess Standard",
+    "event.showHideManually" : "Enable manual entry in the app",
 
 	"optQuestionList.title"   : "Optional Questions/Answers",
     "optQuestionList.count"   : "Count",

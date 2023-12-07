@@ -681,6 +681,7 @@
 	"event.dashboardPremium"    : "Premium Typ",
     "event.visitorFlowInterval" : "VisitorFlow Interval",
     "event.leadsuccessFeatureStandard" : "LeadSuccess Standard",
+    "event.showHideManually" : "Abilitare la registrazione manuale nell'app",
 
     "optQuestionList.title"   : "opzionale Domande/Risposte",
     "optQuestionList.count"   : "Numero",
