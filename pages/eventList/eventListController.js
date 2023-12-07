@@ -25,6 +25,7 @@
             }, commandList, isMaster]);
             this.nextUrl = null;
             this.records = null;
+            this.disabledindexes = [];
 
             var that = this;
 
@@ -155,6 +156,12 @@
                 item.nameInitial = (item.Name)
                     ? item.Name.substr(0, 2)
                     : (item.Name ? item.Name.substr(0, 2) : "");
+                if (item.Disabled) {
+                    item.disabled = true;
+                    that.disabledindexes.push(index);
+                } else {
+                    item.disabled = false;
+                }
             }
             this.resultConverter = resultConverter;
 
@@ -206,6 +213,34 @@
                             Colors.loadSVGImageElements(listView, "action-image", 40, Colors.textColor);
                             Colors.loadSVGImageElements(listView, "action-image-flag", 40);
                             that.loadNextUrl();
+                        } else if (listView.winControl.loadingState === "itemsLoaded") {
+                            if (that.disabledindexes && that.disabledindexes.length > 0) {
+                                var indexOfFirstVisible = listView.winControl.indexOfFirstVisible;
+                                var indexOfLastVisible = listView.winControl.indexOfLastVisible;
+                                for (var i = 0; i <= that.disabledindexes.length; i++) {
+                                    var element = listView.winControl.elementFromIndex(that.disabledindexes[i]);
+                                    if (element) {
+                                        if (element.firstElementChild) {
+                                            if (element.firstElementChild.disabled) {
+                                                element.style.backgroundColor = "grey";
+                                                //if (AppHeader.controller.binding.userData.SiteAdmin) {
+                                                    if (WinJS.Utilities.hasClass(element, "win-nonselectable")) {
+                                                        WinJS.Utilities.removeClass(element, "win-nonselectable");
+                                                    }
+                                                //} else {
+                                                    if (!WinJS.Utilities.hasClass(element, "win-nonselectable")) {
+                                                        WinJS.Utilities.addClass(element, "win-nonselectable");
+                                                    }
+                                                //}
+                                            } else {
+                                                if (WinJS.Utilities.hasClass(element, "win-nonselectable")) {
+                                                    WinJS.Utilities.removeClass(element, "win-nonselectable");
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                     Log.ret(Log.l.trace);
