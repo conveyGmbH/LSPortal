@@ -362,11 +362,13 @@
                             that.changeSetting("showSketch", 1);
                             that.changeSetting("showManually", 1);
                             that.changeSetting("showQRCode", 0);
+                            that.changeSetting("showPrivacyPolicySVG", 1);
                         } else {
                             that.changeSetting("showCamera", 0);
                             that.changeSetting("showSketch", 0);
                             that.changeSetting("showManually", 0);
                             that.changeSetting("showQRCode", 1);
+                            that.changeSetting("showPrivacyPolicySVG", 0);
                         }
                         break;
                     case "showManually":
