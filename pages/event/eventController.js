@@ -361,10 +361,12 @@
                             that.changeSetting("showCamera", 1);
                             that.changeSetting("showSketch", 1);
                             that.changeSetting("showManually", 1);
+                            that.changeSetting("showQRCode", 0);
                         } else {
                             that.changeSetting("showCamera", 0);
                             that.changeSetting("showSketch", 0);
                             that.changeSetting("showManually", 0);
+                            that.changeSetting("showQRCode", 1);
                         }
                         break;
                     case "showManually":
