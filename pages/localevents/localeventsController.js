@@ -22,7 +22,7 @@
                 fairmandantId: 0,
                 firstentry: 0,
                 active: null,
-                leadSuccessBasic: AppHeader.controller.binding.userData.SiteAdmin || AppData._persistentStates.leadsuccessBasic
+                leadSuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic
             }, commandList]);
             this.nextUrl = null;
 

@@ -42,7 +42,7 @@
                 nametext: getResourceText("event.showNameInHeader"),
                 userNametext: getResourceText("event.showUsernameInHeader"),
                 actualYear: new Date().getFullYear(),
-                leadSuccessBasic: AppHeader.controller.binding.userData.SiteAdmin || AppData._persistentStates.leadsuccessBasic
+                leadSuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic
             }, commandList]);
 
             var that = this;

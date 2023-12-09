@@ -20,7 +20,7 @@
                 count: 0,
                 mailingId: 0,
                 selIdx: 0,
-                leadSuccessBasic: AppHeader.controller.binding.userData.SiteAdmin || AppData._persistentStates.leadsuccessBasic
+                leadSuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic
             }, commandList, true]);
             this.nextUrl = null;
             this.loading = false;

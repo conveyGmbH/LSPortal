@@ -23,39 +23,73 @@
 
             // now do anything...
             var listView = fragmentElement.querySelector("#reportingList.listview");
-            
+            var maxLeadingPages = 0;
+            var maxTrailingPages = 0;
+
             var eventHandlers = {
             }
             this.eventHandlers = eventHandlers;
 
-            var createEventHandler = function(id) {
+            var createEventHandler = function (id) {
                 Log.call(Log.l.trace, "ReportingList.Controller.", "id=" + id);
-                    eventHandlers["clickOLELetterID" + id] = function (event) {
-                        Log.call(Log.l.trace, "ReportingList.Controller.");
-                        if (event && event.currentTarget) {
-                            event.currentTarget.value = id;
-                            AppBar.handleEvent('click', 'clickExport', event);
-                        }
-                        Log.ret(Log.l.trace);
-                    }  
+                eventHandlers["clickOLELetterID" + id] = function (event) {
+                    Log.call(Log.l.trace, "ReportingList.Controller.");
+                    if (event && event.currentTarget) {
+                        event.currentTarget.value = id;
+                        AppBar.handleEvent('click', 'clickExport', event);
+                    }
+                    Log.ret(Log.l.trace);
+                }
                 Log.ret(Log.l.trace);
             }
-
-            var disableList = function (disableFlag) {
+            var disableButton = function () {
                 if (that.reportingItem) {
                     for (var i = 0; i < that.reportingItem.length; i++) {
+                        var item = that.reportingItem.getItem(i);
                         var element = listView.winControl.elementFromIndex(i);
-                        if (element) {
+                        if (item && item.data.disabled) {
                             var reportingButton = element.querySelector(".reporting-button");
                             if (reportingButton) {
-                                reportingButton.disabled = disableFlag;
+                                reportingButton.disabled = item.data.disabled;
                             }
-                            if (disableFlag) {
+                            if (item.data.disabled) {
                                 if (!WinJS.Utilities.hasClass(element, "win-nonselectable")) {
                                     WinJS.Utilities.addClass(element, "win-nonselectable");
                                 }
                             } else {
                                 if (WinJS.Utilities.hasClass(element, "win-nonselectable")) {
+                                    WinJS.Utilities.removeClass(element, "win-nonselectable");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            this.disableButton = disableButton;
+
+            var disableList = function (disableFlag) {
+                if (that.reportingItem) {
+                    for (var i = 0; i < that.reportingItem.length; i++) {
+                        var element = listView.winControl.elementFromIndex(i);
+                        var item = that.reportingItem.getItem(i);
+                        if (element) {
+                            var reportingButton = element.querySelector(".reporting-button");
+                            if (item.data.disabled) {
+                                if (reportingButton) {
+                                    reportingButton.disabled = item.data.disabled;
+                                }
+                            } else {
+                                if (reportingButton) {
+                                    reportingButton.disabled = disableFlag;
+                                }
+                            }
+
+                            if (disableFlag) {
+                                if (!WinJS.Utilities.hasClass(element, "win-nonselectable")) {
+                                    WinJS.Utilities.addClass(element, "win-nonselectable");
+                                }
+                            } else {
+                                if (WinJS.Utilities.hasClass(element, "win-nonselectable") && !item.data.disabled) {
                                     WinJS.Utilities.removeClass(element, "win-nonselectable");
                                 }
                             }
@@ -68,6 +102,15 @@
 
             var resultConverter = function (item, index) {
                 item.index = index;
+                //[3, 4, 5, 7]
+                if (!AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic) {
+                    if (item.SortIdx === 2 ||
+                        item.SortIdx === 3 ||
+                        item.SortIdx === 4 ||
+                        item.SortIdx === 5) {
+                        item.disabled = true;
+                    }
+                }
                 if (item.TypeName) {
                     that.reportingItem.push(item);
                 } else {
@@ -111,14 +154,25 @@
                             }
                             var commandList = [];
                             for (var i = 0; i < results.length; i++) {
+                                var item = results[i];
+                                /*if (!AppHeader.controller.binding.userData.SiteAdmin &&
+                                    AppData._persistentStates.leadsuccessBasic) {
+                                    if (item.SortIdx === 3 ||
+                                        item.SortIdx === 4 ||
+                                        item.SortIdx === 5 ||
+                                        item.SortIdx === 7) {
+                                        // ignore handler
+                                    }
+                                } else {*/
                                 var id = results[i].TypeName;
-                                    commandList.push({
-                                        id: "clickOLELetterID" + id,
-                                        label: results[i].Title,
-                                        section: "secondary"
-                                    });
-                                    createEventHandler(id);
-                                }
+                                commandList.push({
+                                    id: "clickOLELetterID" + id,
+                                    label: results[i].Title,
+                                    section: "secondary"
+                                });
+                                createEventHandler(id);
+                                //}
+                            }
                             that.eventHandlers = eventHandlers;
                             that.commandList = commandList;
                         } else {
@@ -133,11 +187,11 @@
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, {
-                        
+
                         }).then(function () {
-                       
-                        Log.print(Log.l.trace, "Data loaded");
-                    });
+
+                            Log.print(Log.l.trace, "Data loaded");
+                        });
                 });
                 Log.ret(Log.l.trace);
                 return ret;
@@ -145,6 +199,23 @@
             this.loadData = loadData;
 
             this.eventHandlers = {
+                /*onLoadingStateChanged: function (eventInfo) {
+                    var i;
+                    Log.call(Log.l.trace, "EmpList.Controller.");
+                    if (listView && listView.winControl) {
+                        Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
+
+                        if (listView.winControl.loadingState === "itemsLoading") {
+                            //that.disableButton();
+                        } else if (listView.winControl.loadingState === "itemsLoaded") {
+                            
+                        } else if (listView.winControl.loadingState === "complete") {
+                            //smallest List color change
+                            
+                        }
+                    }
+                    Log.ret(Log.l.trace);
+                }*/
                 onLoadingStateChanged: function (eventInfo) {
                     var i;
                     Log.call(Log.l.trace, "EmpList.Controller.");
@@ -159,7 +230,7 @@
                             listView.winControl.tapBehavior = WinJS.UI.TapBehavior.directSelect;
                         }
                         // Double the size of the buffers on both sides
-                        /*if (!maxLeadingPages) {
+                        if (!maxLeadingPages) {
                             maxLeadingPages = listView.winControl.maxLeadingPages * 4;
                             listView.winControl.maxLeadingPages = maxLeadingPages;
                         }
@@ -167,19 +238,22 @@
                             maxTrailingPages = listView.winControl.maxTrailingPages * 4;
                             listView.winControl.maxTrailingPages = maxTrailingPages;
                         }
+                        Colors.loadSVGImageElements(listView, "action-image", null, "#ffffff", "name");
+                        that.disableButton();
                         if (listView.winControl.loadingState === "itemsLoading") {
-                            /*if (!layout) {
+                           /* if (!layout) {
                                 layout = Application.EmpListLayout.EmployeesLayout;
                                 listView.winControl.layout = { type: layout };
                             }*/
-                        Colors.loadSVGImageElements(listView, "action-image", null, "#ffffff", "name");
-                    } else if (listView.winControl.loadingState === "itemsLoaded") {
-
-                    } else if (listView.winControl.loadingState === "complete") {
-                        // load SVG images
-                        //Colors.loadSVGImageElements(listView, "action-image", 40, Colors.textColor, "name");
+                            // load SVG images
+                            //Colors.loadSVGImageElements(listView, "action-image", null, "#ffffff", "name");
+                        } else if (listView.winControl.loadingState === "itemsLoaded") {
+                            //that.disableButton();
+                        } else if (listView.winControl.loadingState === "complete") {
+                            //that.disableButton();
+                        }
+                        Log.ret(Log.l.trace);
                     }
-                    Log.ret(Log.l.trace);
                 }
             };
 
@@ -204,6 +278,6 @@
         }, {
                 reportingItem: null,
                 disableFlag: 0
-        })
+            })
     });
 })();

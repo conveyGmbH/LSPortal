@@ -23,7 +23,7 @@
                 hasContacts: null,
                 hasLocalevents: null,
                 licenceWarning: false,
-                leadSuccessBasic: AppHeader.controller.binding.userData.SiteAdmin || AppData._persistentStates.leadsuccessBasic
+                leadSuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic
             }, commandList, true]);
             this.nextUrl = null;
             this.loading = false;

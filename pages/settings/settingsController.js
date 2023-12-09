@@ -20,7 +20,7 @@
                 showSettingsFlag: false,
                 themeId: 2,
                 showContent: true,
-                leadSuccessBasic: AppHeader.controller.binding.userData.SiteAdmin || AppData._persistentStates.leadsuccessBasic
+                leadSuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic
             }, commandList]);
 
             var themeSelect = pageElement.querySelector("#themeSelect");

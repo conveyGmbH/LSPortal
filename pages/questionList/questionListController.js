@@ -26,7 +26,7 @@
                 questionId: AppData.getRecordId("FragenAntworten"),
                 questiongroupflag: false,
                 dataPublish: getEmptyDefaultValue(QuestionList.questionPublishView.defaultValue),
-                leadSuccessBasic: AppHeader.controller.binding.userData.SiteAdmin || AppData._persistentStates.leadsuccessBasic
+                leadSuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic
             }, commandList]);
             this.nextUrl = null;
             this.loading = false;

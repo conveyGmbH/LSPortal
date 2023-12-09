@@ -19,7 +19,7 @@
             Application.RecordsetController.apply(this, [pageElement, {
                 dataOptQuestionAnswer: getEmptyDefaultValue(OptQuestionList.CR_OptFragenAntwortenVIEW.defaultValue),
                 count: 0,
-                leadSuccessBasic: AppHeader.controller.binding.userData.SiteAdmin || AppData._persistentStates.leadsuccessBasic
+                leadSuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic
             }, commandList, false, OptQuestionList.CR_OptFragenAntwortenVIEW, null, listView]); // VIEW ändern
 
             this.optQuestions = null; // selektierte Frage

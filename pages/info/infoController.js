@@ -26,7 +26,7 @@
                 timezone: timezone && ("Timezone: " + timezone.name()),
                 showContent: true,
                 expandSubMenuMode: (AppData.generalData.expandSubMenuMode || Application.expandSubMenuModes.single),
-                leadSuccessBasic: AppHeader.controller.binding.userData.SiteAdmin || AppData._persistentStates.leadsuccessBasic
+                leadSuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic
             }, commandList]);
 
             var expandSubMenuModeSelect = pageElement.querySelector("#expandSubMenuModeSelect");
