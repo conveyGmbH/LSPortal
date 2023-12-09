@@ -6,6 +6,7 @@
 /// <reference path="~/www/lib/convey/scripts/logging.js" />
 /// <reference path="~/www/lib/convey/scripts/navigator.js" />
 /// <reference path="~/www/lib/convey/scripts/appbar.js" />
+/// <reference path="~/www/pages/localevents/localeventsController.js" />
 
 (function () {
     "use strict";
@@ -58,12 +59,6 @@
                 { id: "clickChange", label: getResourceText("command.ok"), tooltip: getResourceText("tooltip.eventchange"), section: "primary", svg: "navigate_check" }
             ];
 
-            if (!AppHeader.controller.binding.userData.SiteAdmin &&
-                AppData._persistentStates.leadsuccessBasic) {
-                commandList = [
-                    { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" }
-                ];
-            }
             this.controller = new LocalEvents.Controller(element, commandList);
             if (this.controller.eventHandlers) {
                 // general event listener for hardware back button, too!
