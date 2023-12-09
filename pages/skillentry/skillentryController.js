@@ -16,7 +16,7 @@
             Log.call(Log.l.trace, "Skillentry.Controller.");
             Application.Controller.apply(this, [pageElement, {
                 countSkills: 0,
-                leadSuccessStandard: AppHeader.controller.binding.userData.SiteAdmin || AppData._persistentStates.leadsuccessFeatureStandard
+                leadSuccessBasic: AppHeader.controller.binding.userData.SiteAdmin || AppData._persistentStates.leadsuccessBasic
             }, commandList]);
             this.nextUrl = null;
             this.recordId = null;

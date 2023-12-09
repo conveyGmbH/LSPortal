@@ -31,7 +31,7 @@
                 dataLicence: null,
                 countContacts: true,
                 dataLicenceUser: getEmptyDefaultValue(Start.licenceUserView.defaultValue),
-                leadSuccessStandard: AppHeader.controller.binding.userData.SiteAdmin || AppData._persistentStates.leadsuccessFeatureStandard
+                leadSuccessBasic: AppHeader.controller.binding.userData.SiteAdmin || AppData._persistentStates.leadsuccessBasic
                 // add dynamic scripts to page element, src is either a file or inline text:
             }, commandList]);
             this.applist = null;

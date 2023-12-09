@@ -30,7 +30,7 @@
 #visitorFlowPremium .win-toggleswitch-header,
 #shopAppBkg .win-toggleswitch-header,
 #sendMailPrivacypolicy .win-toggleswitch-header,
-#leadsuccessFeatureStandard .win-toggleswitch-header,
+#leadsuccessBasic .win-toggleswitch-header,
 #showManually .win-toggleswitch-header{
     display: none;
 }

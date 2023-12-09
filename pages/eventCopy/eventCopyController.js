@@ -17,7 +17,7 @@
                 dataDestEventCombo: getEmptyDefaultValue(EventCopy.VeranstaltungView.defaultValue),
                 dataSrcEventCombo: getEmptyDefaultValue(EventCopy.VeranstaltungView.defaultValue),
                 dataEventCopy: 0,
-                leadSuccessStandard: AppHeader.controller.binding.userData.SiteAdmin || AppData._persistentStates.leadsuccessFeatureStandard
+                leadSuccessBasic: AppHeader.controller.binding.userData.SiteAdmin || AppData._persistentStates.leadsuccessBasic
             }, commandList]);
 
             var that = this;

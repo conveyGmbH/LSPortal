@@ -11,7 +11,7 @@
     <div class="event fragment">
         <div id="eventController" class="data-container">
             <section aria-label="Main content" role="main" class="animationElement">
-            <div class="contentarea win-type-body" data-win-bind="style.display: leadSuccessStandard Binding.Converter.toDisplay">
+            <div class="contentarea win-type-body" data-win-bind="style.display: leadSuccessBasic Binding.Converter.toDisplayNone">
             <div class="header-separator"></div>
             <div class="content-header">
                 <div class="half-circle half-circle-textcolor">&nbsp;</div>
@@ -191,12 +191,12 @@
                     </select>
                 </div>-->
                 <div class="field_line field_line_even" data-win-bind="style.display: isLeadsuccessFeatureStandardVisible Binding.Converter.toDisplay">
-                    <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'event.leadsuccessFeatureStandard'}"></span>
-                    <span class="label landscape_only" data-win-res="{textContent: 'event.leadsuccessFeatureStandard'}"></span>
+                    <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'event.leadsuccessBasic'}"></span>
+                    <span class="label landscape_only" data-win-res="{textContent: 'event.leadsuccessBasic'}"></span>
                     <div class="input_field toggle-switch-parent">
-                        <div id="leadsuccessFeatureStandard" class="input_field"
+                        <div id="leadsuccessBasic" class="input_field"
                              data-win-control="WinJS.UI.ToggleSwitch"
-                             data-win-bind="winControl.checked: veranstOption.leadsuccessFeatureStandard; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                             data-win-bind="winControl.checked: veranstOption.leadsuccessBasic; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
                              onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
                         </div>
                     </div>
@@ -370,7 +370,7 @@
             <div class="line-separator"></div>
             </div>
             </div>
-            <div class="contentarea win-type-body" data-win-bind="style.display: leadSuccessStandard Binding.Converter.toDisplayNone">
+            <div class="contentarea win-type-body" data-win-bind="style.display: leadSuccessBasic Binding.Converter.toDisplay">
                 <div class="label-text-message">
                     <span class="large_field"
                           data-win-res="{textContent:'general.leadsuccessbasic'}"></span>

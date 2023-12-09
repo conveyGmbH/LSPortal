@@ -19,7 +19,7 @@
             Application.RecordsetController.apply(this, [pageElement, {
                 dataOptQuestionAnswer: getEmptyDefaultValue(OptMandatoryFieldList.CR_OptFragenAntwortenVIEW.defaultValue),
                 count: 0,
-                leadSuccessStandard: AppHeader.controller.binding.userData.SiteAdmin || AppData._persistentStates.leadsuccessFeatureStandard
+                leadSuccessBasic: AppHeader.controller.binding.userData.SiteAdmin || AppData._persistentStates.leadsuccessBasic
             }, commandList, false, OptMandatoryFieldList.CR_OptFragenAntwortenVIEW, null, listView]);
 
             this.initQuestion = null; //selektierte Frage
@@ -605,7 +605,7 @@
                     // never disabled!
                     var bHasNew = false;
                     if (AppHeader.controller.binding.userData.SiteAdmin ||
-                        AppData._persistentStates.leadsuccessFeatureStandard) {
+                        AppData._persistentStates.leadsuccessBasic) {
                         if (that.records && that.records.length > 0) {
                             var item = that.records.getAt(that.records.length - 1);
                             if (item && !item.CR_PFFragenAntwortenVIEWID) {

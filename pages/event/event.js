@@ -28,7 +28,7 @@
                 { id: "clickChange", label: getResourceText("command.eventchange"), tooltip: getResourceText("tooltip.eventchange"), section: "primary", svg: "va_wechsel" }
             ];
             if (!AppHeader.controller.binding.userData.SiteAdmin &&
-                !AppData._persistentStates.leadsuccessFeatureStandard) {
+                AppData._persistentStates.leadsuccessBasic) {
                 commandList = [
                     { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" }
                 ];

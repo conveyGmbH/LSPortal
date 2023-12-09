@@ -69,7 +69,7 @@
                 dashboardMesagoFeature: false,
                 isDashboardPremium: false,
                 showdashboardMesagoCombo: "0",
-                leadsuccessFeatureStandard: "0"
+                leadsuccessBasic: "0"
             }
         },
         _appListSpecView: {

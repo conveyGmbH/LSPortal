@@ -35,14 +35,14 @@
                 visitorFlowInterval: AppData._persistentStates.visitorFlowInterval || "",
                 dashboardMesagoFeature: AppHeader.controller.binding.userData.SiteAdmin,
                 isDashboardPremium: AppData._persistentStates.showdashboardMesagoCombo === 1 ? true : false,
-                leadsuccessFeatureStandard: AppData._persistentStates.leadsuccessFeatureStandard,
+                leadsuccessBasic: AppData._persistentStates.leadsuccessBasic,
                 isLeadsuccessFeatureStandardVisible: AppHeader.controller.binding.userData.SiteAdmin,
                 qrcodetext: getResourceText("event.show2D-Code"),
                 barcodetext: getResourceText("event.showBar-Code"),
                 nametext: getResourceText("event.showNameInHeader"),
                 userNametext: getResourceText("event.showUsernameInHeader"),
                 actualYear: new Date().getFullYear(),
-                leadSuccessStandard: AppHeader.controller.binding.userData.SiteAdmin || AppData._persistentStates.leadsuccessFeatureStandard
+                leadSuccessBasic: AppHeader.controller.binding.userData.SiteAdmin || AppData._persistentStates.leadsuccessBasic
             }, commandList]);
 
             var that = this;
@@ -354,21 +354,21 @@
                         pValueIsSet = true;
                         pValue = checked;
                         break;
-                    case "leadsuccessFeatureStandard":
+                    case "leadsuccessBasic":
                         pOptionTypeId = 51;
-                        that.binding.veranstOption.leadsuccessFeatureStandard = checked;
+                        that.binding.veranstOption.leadsuccessBasic = checked;
                         if (checked) {
-                            that.changeSetting("showCamera", 1);
-                            that.changeSetting("showSketch", 1);
-                            that.changeSetting("showManually", 1);
-                            that.changeSetting("showQRCode", 0);
-                            that.changeSetting("showPrivacyPolicySVG", 1);
-                        } else {
                             that.changeSetting("showCamera", 0);
                             that.changeSetting("showSketch", 0);
                             that.changeSetting("showManually", 0);
                             that.changeSetting("showQRCode", 1);
                             that.changeSetting("showPrivacyPolicySVG", 0);
+                        } else {
+                            that.changeSetting("showCamera", 1);
+                            that.changeSetting("showSketch", 1);
+                            that.changeSetting("showManually", 1);
+                            that.changeSetting("showQRCode", 0);
+                            that.changeSetting("showPrivacyPolicySVG", 1);
                         }
                         break;
                     case "showManually":
@@ -523,10 +523,10 @@
                         pValueIsSet = true;
                         pValue = checked;
                         break;
-                    case "leadsuccessFeatureStandard":
+                    case "leadsuccessBasic":
                         pOptionTypeId = 51;
-                        that.binding.veranstOption.leadsuccessFeatureStandard = checked;
-                        AppData._persistentStates.leadsuccessFeatureStandard = checked;
+                        that.binding.veranstOption.leadsuccessBasic = checked;
+                        AppData._persistentStates.leadsuccessBasic = checked;
                         break;
                 }
                 if (pOptionTypeId) {
@@ -848,9 +848,9 @@
                         break;
                     case 51:
                         if (item.LocalValue === "1") {
-                            that.binding.veranstOption.leadsuccessFeatureStandard = true;
+                            that.binding.veranstOption.leadsuccessBasic = true;
                         } else {
-                            that.binding.veranstOption.leadsuccessFeatureStandard = false;
+                            that.binding.veranstOption.leadsuccessBasic = false;
                         }
                         break;
                     case 52:

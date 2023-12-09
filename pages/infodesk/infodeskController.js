@@ -23,7 +23,7 @@
                 dataBenutzer: getEmptyDefaultValue(Infodesk.benutzerView.defaultValue),
                 employeeId: null,
                 photoData: "",
-                leadSuccessStandard: AppHeader.controller.binding.userData.SiteAdmin || AppData._persistentStates.leadsuccessFeatureStandard
+                leadSuccessBasic: AppHeader.controller.binding.userData.SiteAdmin || AppData._persistentStates.leadsuccessBasic
             }, commandList]);
 
             var prevMasterLoadPromise = null;

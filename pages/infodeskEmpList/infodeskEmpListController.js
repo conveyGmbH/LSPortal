@@ -21,7 +21,7 @@
                 mitarbeiterText: getResourceText("infodesk.employee"),
                 count: 0,
                 employeeId: AppData.getRecordId("Benutzer"),
-                leadSuccessStandard: AppHeader.controller.binding.userData.SiteAdmin || AppData._persistentStates.leadsuccessFeatureStandard
+                leadSuccessBasic: AppHeader.controller.binding.userData.SiteAdmin || AppData._persistentStates.leadsuccessBasic
             }, commandList, true]);
             this.nextUrl = null;
             this.refreshPromise = null;

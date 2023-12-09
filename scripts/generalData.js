@@ -646,9 +646,9 @@
                     break;
                 case 51:
                     if (item.LocalValue === "1") {
-                        AppData._persistentStates.leadsuccessFeatureStandard = true;
+                        AppData._persistentStates.leadsuccessBasic = true;
                     } else {
-                        AppData._persistentStates.leadsuccessFeatureStandard = false;
+                        AppData._persistentStates.leadsuccessBasic = false;
                     }
                     break;
                 case 52:

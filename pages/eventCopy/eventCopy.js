@@ -28,7 +28,7 @@
                 { id: "clickCopy", label: getResourceText("command.copyEvent"), tooltip: getResourceText("tooltip.copyEvent"), section: "primary", svg: "navigate_check" }
             ];
             if (!AppHeader.controller.binding.userData.SiteAdmin &&
-                !AppData._persistentStates.leadsuccessFeatureStandard) {
+                AppData._persistentStates.leadsuccessBasic) {
                 commandList = [
                     { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" }
                 ];

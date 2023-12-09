@@ -57,7 +57,7 @@
                 { id: "clickDelete", label: getResourceText("command.delete"), tooltip: getResourceText("tooltip.deleteQuestionsAnswers"), section: "primary", svg: "garbage_can" }
             ];
             if (!AppHeader.controller.binding.userData.SiteAdmin &&
-                !AppData._persistentStates.leadsuccessFeatureStandard) {
+                AppData._persistentStates.leadsuccessBasic) {
                 commandList = [
                     { id: 'clickBack', label: getResourceText('command.backward'), tooltip: getResourceText('tooltip.backward'), section: 'primary', svg: 'navigate_left' }
                 ];

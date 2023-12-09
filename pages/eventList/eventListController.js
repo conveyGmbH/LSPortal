@@ -21,7 +21,7 @@
                 eventId: 0,
                 count: 0,
                 active: null,
-                leadSuccessStandard: AppHeader.controller.binding.userData.SiteAdmin || AppData._persistentStates.leadsuccessFeatureStandard
+                leadSuccessBasic: AppHeader.controller.binding.userData.SiteAdmin || AppData._persistentStates.leadsuccessBasic
             }, commandList, isMaster]);
             this.nextUrl = null;
             this.records = null;

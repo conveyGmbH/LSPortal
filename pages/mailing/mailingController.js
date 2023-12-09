@@ -26,7 +26,7 @@
                 isPrivacyPolicySVGVisible: AppData._persistentStates.privacyPolicySVGVisible,
                 isPrivacyPolicyToggleDisabled: !AppData._persistentStates.privacyPolicySVGVisible,
                 showContent: true,
-                leadSuccessStandard: AppHeader.controller.binding.userData.SiteAdmin || AppData._persistentStates.leadsuccessFeatureStandard
+                leadSuccessBasic: AppHeader.controller.binding.userData.SiteAdmin || AppData._persistentStates.leadsuccessBasic
             }, commandList]);
 
             var that = this;

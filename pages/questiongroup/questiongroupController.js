@@ -18,7 +18,7 @@
 
             Application.RecordsetController.apply(this, [pageElement, {
                 count: 0,
-                leadSuccessStandard: AppHeader.controller.binding.userData.SiteAdmin || AppData._persistentStates.leadsuccessFeatureStandard
+                leadSuccessBasic: AppHeader.controller.binding.userData.SiteAdmin || AppData._persistentStates.leadsuccessBasic
             }, commandList, false, Questiongroup.CR_V_FragengruppeView, null, listView]);
 
             var that = this;
@@ -256,7 +256,7 @@
                 clickNew: function () {
                     // never disabled!
                     if (AppHeader.controller.binding.userData.SiteAdmin ||
-                        AppData._persistentStates.leadsuccessFeatureStandard) {
+                        AppData._persistentStates.leadsuccessBasic) {
                         return AppBar.busy;
                     } else {
                         return true;

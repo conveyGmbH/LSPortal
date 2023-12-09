@@ -632,7 +632,7 @@
     "event.dashboardMesago"   : "Dashboard Mesago",
 	"event.dashboardPremium"    : "Premium Typ",
     "event.visitorFlowInterval" : "VisitorFlow Interval",
-    "event.leadsuccessFeatureStandard" : "LeadSuccess Standard",
+    "event.leadsuccessBasic" : "LeadSuccess Basic",
     "event.showHideManually" : "Enable manual entry in the app",
 
 	"optQuestionList.title"   : "Optional Questions/Answers",

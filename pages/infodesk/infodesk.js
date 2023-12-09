@@ -31,7 +31,7 @@
                 { id: "clickSendMessage", label: getResourceText("command.ok"), tooltip: getResourceText("tooltip.sendMessage"), section: "primary", svg: "paper_jet2", key: WinJS.Utilities.Key.enter }
             ];
             if (!AppHeader.controller.binding.userData.SiteAdmin &&
-                !AppData._persistentStates.leadsuccessFeatureStandard) {
+                AppData._persistentStates.leadsuccessBasic) {
                 commandList = [
                     { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" }
                 ];
