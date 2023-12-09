@@ -18,7 +18,7 @@
                 isNachbearbeitetFlagAutoSetToNull: AppData._persistentStates.nachbearbeitetFlagAutoSetToNull,
                 isThankMailOn: AppData._persistentStates.thankYouMailOn,
                 showContent: true,
-                leadSuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic
+                leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic
             }, commandList]);
 
             var that = this;

@@ -18,7 +18,7 @@
 
             Application.RecordsetController.apply(this, [pageElement, {
                 count: 0,
-                leadSuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic
+                leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic
             }, commandList, false, Questiongroup.CR_V_FragengruppeView, null, listView]);
 
             var that = this;

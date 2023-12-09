@@ -16,7 +16,7 @@
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
                 questionId: AppData.generalData.getRecordId("SkillTypeSkills"),
-                leadSuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic
+                leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic
             }, commandList]);
             this.nextUrl = null;
             this.loading = false;

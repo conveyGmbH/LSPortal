@@ -35,14 +35,13 @@
                 visitorFlowInterval: AppData._persistentStates.visitorFlowInterval || "",
                 dashboardMesagoFeature: AppHeader.controller.binding.userData.SiteAdmin,
                 isDashboardPremium: AppData._persistentStates.showdashboardMesagoCombo === 1 ? true : false,
-                leadsuccessBasic: AppData._persistentStates.leadsuccessBasic,
                 isLeadsuccessFeatureStandardVisible: AppHeader.controller.binding.userData.SiteAdmin,
                 qrcodetext: getResourceText("event.show2D-Code"),
                 barcodetext: getResourceText("event.showBar-Code"),
                 nametext: getResourceText("event.showNameInHeader"),
                 userNametext: getResourceText("event.showUsernameInHeader"),
                 actualYear: new Date().getFullYear(),
-                leadSuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic
+                leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic
             }, commandList]);
 
             var that = this;
