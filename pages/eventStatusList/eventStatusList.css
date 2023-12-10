@@ -1,7 +1,32 @@
-﻿.eventStatusList .list-div-left,
-.eventStatusList .list-div-right {
-    width: calc(100% - 32px);
-    margin: 0 16px;
+﻿#eventstatuslist .win-itemcontainer .win-itembox,
+#eventstatuslist .win-listview .win-itembox {
+    background-color: transparent;
+}
+
+.eventStatusList .contentarea {
+    overflow-y: hidden !important;
+}
+
+.eventStatusList .content-header {
+    height: auto !important;
+    min-height: 48px;
+}
+
+.eventStatusList .master-list-header {
+    min-height: 40px;
+    padding-left: 0;
+}
+
+.eventStatusList .master-list-header {
+    height: auto !important;
+}
+
+    .eventStatusList .master-list-header.list-compact-only {
+        padding-top: 48px;
+    }
+
+#eventstatuslist .list-header {
+    font-weight: bold;
 }
 
 .eventStatusList .grayed-out {
@@ -11,61 +36,66 @@
 .eventStatusList .semibold {
     font-weight: 600;
 }
+
+.eventStatusList .list-compressed {
+    width: calc(100% - 18px);
+}
 /* Styles used for the custom layout */
-.listView .eventStatusListLayout {
-    position: static;
-}
-
-    .listView .eventStatusListLayout .win-surface {
-        margin-left: 0;
-    }
-
-#eventStatusList .win-container {
+#eventstatuslist .win-container {
     margin: 0;
 }
-#eventStatusList .win-itembox {
-    width: 100%;
-    min-height: 60px;
+
+#eventstatuslist .win-item,
+#eventstatuslist .list-header {
+    padding-left: 26px;
+    padding-right: 26px;
 }
 
-#eventStatusList .win-container {
-    width: 100%;
-    height: auto;
-    margin: 0;
-    margin-bottom: 0;
-    border-radius: 0;
-    background-color: transparent;
+.view-size-medium #eventstatuslist .win-item,
+.view-size-medium #eventstatuslist .list-header {
+    padding-left: 18px;
+    padding-right: 18px;
 }
 
-#eventStatusList .win-surface {
-    margin-top: 0;
-    margin-left: 0;
+.view-size-small #eventstatuslist .win-item,
+.view-size-small #eventstatuslist .list-header {
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
-#eventStatusList.listview {
-    position: relative;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: calc(100% - 72px);
-}
-.view-size-smallest #eventStatusList .win-item {
+.view-size-smallest #eventstatuslist .win-item,
+.view-size-smallest #eventstatuslist .list-header {
     width: 100%;
     padding-left: 0;
     padding-right: 0;
     padding-top: 4px;
     padding-bottom: 4px;
 }
-.view-size-smallest #eventStatusList .status {
+
+.eventStatusList .content-header .master-list-header {
+    margin-top: 16px;
+}
+
+.view-size-smallest .eventStatusList .content-header .field_line {
     display: none !important;
 }
-.view-size-smallest .eventStatusList .list-div-left {
-    width: 100%
+
+.eventStatusList .list-compressed-title.win-type-body {
+    line-height: 1;
 }
-.eventStatusList .list-compressed {
-    width: calc(100% - 100px)
+
+view-size-smallest #eventstatuslist .win-container {
+    width: 100% !important;
+    padding-left: 0;
 }
-.eventStatusList #nameInitialcircle {
+
+.view-size-smallest .eventStatusList .list-div-left,
+.view-size-smallest .eventStatusList .list-div-right {
+    width: 100%;
+    margin: 0;
+}
+
+#eventstatuslist #nameInitialcircle {
     display: inline-block;
     width: 45px;
     height: 45px;
@@ -75,4 +105,20 @@
     text-align: center;
     line-height: 45px;
     font-weight: bold;
+}
+
+#eventstatuslist .list-field-small-relative {
+    text-align: left;
+    width: calc(100% - 286px);
+    display: inline-block;
+    position: relative;
+    top: 0;
+    min-height: 32px;
+    padding-top: 8px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+#eventstatuslist .list-field-small-fixed {
+    width: 110px;
 }

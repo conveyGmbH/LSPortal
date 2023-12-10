@@ -197,7 +197,7 @@
                         }
                         if (listView.winControl.loadingState === "itemsLoading") {
                             if (!layout) {
-                                layout = Application.EventStatusListLayout.eventStatusListLayout;
+                                layout = Application.EventStatusListLayout.EventStatusListLayout;
                                 listView.winControl.layout = { type: layout };
                             }
                         } else if (listView.winControl.loadingState === "complete") {

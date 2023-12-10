@@ -21,9 +21,9 @@
     height: auto !important;
 }
 
-    .eventslist .master-list-header.list-compact-only {
-        padding-top: 48px;
-    }
+.eventslist .master-list-header.list-compact-only {
+    padding-top: 48px;
+}
 
 #eventslist .list-header {
     font-weight: bold;
