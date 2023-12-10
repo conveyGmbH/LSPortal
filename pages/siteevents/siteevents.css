@@ -14,7 +14,7 @@
     height: calc(100% - 280px);
 }
 
-.list-header {
+#siteevents .list-header {
     margin-left: 5px;
     font-weight: bold;
 }

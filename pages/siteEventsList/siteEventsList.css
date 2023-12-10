@@ -2,12 +2,6 @@
     float: left;
     width: 90%;
 }
-#eventTyp.input_field {
-    float: left;
-    width: calc(100% - 12px);
-    min-width: calc(100% - 12px);
-    margin-left: 5px;
-}
 .listView .siteEventsListLayout {
     position: static;
 }
@@ -19,42 +13,49 @@
     min-height: 48px;
 }
 .siteEventsList .master-list-header {
-    height: auto !important;
+    min-height: 40px;
+    padding-left: 0;
 }
-    .siteEventsList .master-list-header.list-compact-only {
+.siteEventsList .master-list-header.list-compact-only {
     padding-top: 48px;
 }
-.listView .siteEventsListLayout .win-surface {
-    margin-left: 0;
+
+#siteEventsList .list-header {
+    font-weight: bold;
+}
+#siteEventsList .list-field-big-2 {
+    text-align: left;
+    width: calc(100% - 272px);
+    display: inline-block;
+    position: relative;
+    top: 0;
+    min-height: 32px;
+    padding-bottom: 8px;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 #siteEventsList .win-container {
     margin: 0;
 }
-.view-size-small #siteEventsList .portrait_only {
-    display: none;
+
+#siteEventsList .win-item,
+#siteEventsList .list-header {
+    padding-left: 26px;
+    padding-right: 26px;
 }
-.view-size-medium #siteEventsList .landscape_only {
-    display: inline;
-    top: 0px;
-    margin-left: 5px;
+.view-size-medium #siteEventsList .win-item,
+.view-size-medium #siteEventsList .list-header {
+    padding-left: 18px;
+    padding-right: 18px;
 }
-#siteEventsListController .view-size-medium .input_field {
-    float: left;
-    width: calc(100% - 12px);
-    min-width: calc(100% - 12px);
+.view-size-small #siteEventsList .win-item,
+.view-size-small #siteEventsList .list-header {
+    padding-left: 10px;
+    padding-right: 10px;
 }
-#siteEventsListController .win-type-caption {
-    font-size: 16px;
-    margin-left: 5px;
-}
-#siteEventsListController .label {
-    width: auto;
-    margin-left: 5px;
-    font-size: 16px;
-    top: 0px;
-}
-.view-size-smallest #siteEventsList .win-item {
+.view-size-smallest #siteEventsList .win-item,
+.view-size-smallest #siteEventsList .list-header {
     width: 100%;
     padding-left: 0;
     padding-right: 0;
@@ -65,7 +66,7 @@
     display: none !important;
 }
 
-.view-size-smallest #siteEventsList .master-list-header {
+.view-size-smallest .content-header .field_line {
     display: none !important;
 }
 .siteEventsList .list-div-left {
@@ -76,6 +77,7 @@
 }
 view-size-smallest #siteEventsList .win-container {
     width: 100% !important;
+    padding-left: 0;
 }
 
 .view-size-smallest .siteEventsList .list-div-left {
