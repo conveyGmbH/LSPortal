@@ -283,14 +283,12 @@
                         }
                     }
                     item.index = index;
-                    item.nameInitial = (item.Vorname && item.Nachname)
-                        ? item.Vorname.substr(0, 1) + item.Nachname.substr(0, 1)
-                        : (item.Vorname ? item.Vorname.substr(0, 2) : item.Nachname ? item.Nachname.substr(0, 2) : "");
+                    item.nameInitial = (item.Vorname && item.Name)
+                        ? item.Vorname.substr(0, 1) + item.Name.substr(0, 1)
+                        : (item.Vorname ? item.Vorname.substr(0, 2) : item.Name ? item.Name.substr(0, 2) : "");
                     item.company = ((item.Firmenname ? (item.Firmenname + " ") : ""));
-                    item.fullName =
-                    ((item.Title ? (item.Title + " ") : "") +
-                        (item.Vorname ? (item.Vorname + " ") : "") +
-                        (item.Name ? item.Name : ""));
+                    item.fullName = ((item.Title ? (item.Title + " ") : "") +
+                        (item.Vorname ? (item.Vorname + " ") : "") + (item.Name ? item.Name : ""));
                     /*item.address =
                         ((item.Strasse ? (item.Strasse + "\r\n") : "") +
                             ((item.PLZ || item.Stadt)
