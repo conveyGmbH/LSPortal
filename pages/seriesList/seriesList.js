@@ -10,8 +10,8 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("Application.EventsListLayout", {
-        EventsListLayout: WinJS.Class.define(function (options) {
+    WinJS.Namespace.define("Application.SeriesListLayout", {
+        SeriesListLayout: WinJS.Class.define(function (options) {
             this._site = null;
             this._surface = null;
         }, {
@@ -21,14 +21,14 @@
                 this._surface = this._site.surface;
 
                 // Add a CSS class to control the surface level layout
-                WinJS.Utilities.addClass(this._surface, "eventsListLayout");
+                WinJS.Utilities.addClass(this._surface, "seriesListLayout");
 
                 return WinJS.UI.Orientation.vertical;
             },
 
             // Reset the layout to its initial state
             uninitialize: function () {
-                WinJS.Utilities.removeClass(this._surface, "eventsListLayout");
+                WinJS.Utilities.removeClass(this._surface, "seriesListLayout");
                 this._site = null;
                 this._surface = null;
             }
@@ -71,8 +71,39 @@
         },
 
         updateLayout: function (element, viewState, lastViewState) {
+            var ret = null;
+            var that = this;
             /// <param name="element" domElement="true" />
+            Log.call(Log.l.u1, pageName + ".");
             // TODO: Respond to changes in viewState.
+            if (element && !that.inResize) {
+                that.inResize = 1;
+                ret = WinJS.Promise.timeout(0).then(function () {
+                    var contactList = element.querySelector("#seriesList.listview");
+                    if (contactList && contactList.style) {
+                        var contentarea = element.querySelector(".contentarea");
+                        if (contentarea) {
+                            var width = contentarea.offsetWidth;
+                            var height = contentarea.offsetHeight - 8;
+                            var contentheader = element.querySelector(".content-header");
+                            if (contentheader) {
+                                height -= contentheader.clientHeight;
+                            }
+                            if (width !== that.prevWidth) {
+                                that.prevWidth = width;
+                                contactList.style.width = width.toString() + "px";
+                            }
+                            if (height !== that.prevHeight) {
+                                that.prevHeight = height;
+                                contactList.style.height = height.toString() + "px";
+                            }
+                        }
+                    }
+                    that.inResize = 0;
+                });
+            }
+            Log.ret(Log.l.u1);
+            return ret;
         }
     });
 })();

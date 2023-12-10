@@ -1,7 +1,32 @@
-﻿.seriesList .list-div-left,
-.seriesList .list-div-right {
-    width: calc(100% - 32px);
-    margin: 0 16px;
+﻿#seriesList .win-itemcontainer .win-itembox,
+#seriesList .win-listview .win-itembox {
+    background-color: transparent;
+}
+
+.seriesList .contentarea {
+    overflow-y: hidden !important;
+}
+
+.seriesList .content-header {
+    height: auto !important;
+    min-height: 48px;
+}
+
+.seriesList .master-list-header {
+    min-height: 40px;
+    padding-left: 0;
+}
+
+.seriesList .master-list-header {
+    height: auto !important;
+}
+
+.seriesList .master-list-header.list-compact-only {
+    padding-top: 48px;
+}
+
+#seriesList .list-header {
+    font-weight: bold;
 }
 
 .seriesList .grayed-out {
@@ -12,29 +37,73 @@
     font-weight: 600;
 }
 
-#seriesList .win-itembox {
-    width: 100%;
-    min-height: 60px;
-}
-
+/* Styles used for the custom layout */
 #seriesList .win-container {
-    width: 100%;
-    height: auto;
     margin: 0;
-    margin-bottom: 0;
-    border-radius: 0;
-    background-color: transparent;
 }
 
-#seriesList .win-surface {
-    margin-top: 0;
-    margin-left: 0;
+#seriesList .win-item,
+#seriesList .list-header {
+    padding-left: 26px;
+    padding-right: 26px;
+    min-height: 48px;
+    padding-top: 4px;
+    width: auto;
 }
 
-#seriesList.listview {
-    position: relative;
-    left: 0;
-    top: 0;
+.view-size-medium #seriesList .win-item,
+.view-size-medium #seriesList .list-header {
+    padding-left: 18px;
+    padding-right: 18px;
+}
+
+.view-size-small #seriesList .win-item,
+.view-size-small #seriesList .list-header {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.view-size-smallest #seriesList .win-item,
+.view-size-smallest #seriesList .list-header {
     width: 100%;
-    height: calc(100% - 72px);
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 4px;
+    padding-bottom: 4px;
 }
+
+.seriesList .content-header .master-list-header {
+    margin-top: 16px;
+}
+
+.view-size-smallest .seriesList .content-header .field_line {
+    display: none !important;
+}
+
+.seriesList .list-compressed-title.win-type-body {
+    line-height: 1;
+}
+
+view-size-smallest #seriesList .win-container {
+    width: 100% !important;
+    padding-left: 0;
+}
+
+.view-size-smallest .seriesList .list-div-left,
+.view-size-smallest .seriesList .list-div-right {
+    width: 100%;
+    margin: 0;
+}
+
+#seriesList #nameInitialcircle {
+    display: inline-block;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-color: rgba(254,54,0,1);
+    color: black;
+    text-align: center;
+    line-height: 45px;
+    font-weight: bold;
+}
+

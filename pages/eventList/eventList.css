@@ -30,7 +30,7 @@
     font-weight: 600;
 }
 .eventList .list-compressed {
-    width: calc(100% - 18px);
+    width: 100%;
 }
 /* Styles used for the custom layout */
 #eventList .win-container {
@@ -41,6 +41,7 @@
 #eventList .list-header {
     padding-left: 26px;
     padding-right: 26px;
+    width: auto;
 }
 
 .view-size-medium #eventList .win-item,
@@ -98,7 +99,7 @@ view-size-smallest #eventList .win-container {
 }
 #eventList .list-field-small-relative {
     text-align: left;
-    width: calc(100% - 286px);
+    width: calc(100% - 260px);
     display: inline-block;
     position: relative;
     top: 0;

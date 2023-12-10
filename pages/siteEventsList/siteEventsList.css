@@ -22,7 +22,7 @@
 }
 #siteEventsList .list-field-big-2 {
     text-align: left;
-    width: calc(100% - 272px);
+    width: calc(100% - 220px);
     display: inline-block;
     position: relative;
     top: 0;
@@ -40,6 +40,7 @@
 #siteEventsList .list-header {
     padding-left: 26px;
     padding-right: 26px;
+    width: auto;
 }
 .view-size-medium #siteEventsList .win-item,
 .view-size-medium #siteEventsList .list-header {
@@ -71,9 +72,6 @@
 }
 .siteEventsList .list-div-left {
     width: 100%
-}
-.siteEventsList .list-compressed {
-    width: calc(100% - 100px)
 }
 .siteEventsList .list-compressed-title.win-type-body {
     line-height: 1;

@@ -153,9 +153,7 @@
                     endMoment.locale(Application.language);
                     item.Enddatum = endMoment.format("ll");
                 }
-                item.nameInitial = (item.Name)
-                    ? item.Name.substr(0, 2)
-                    : (item.Name ? item.Name.substr(0, 2) : "");
+                item.nameInitial = item.Name ? item.Name.substr(0, 2) : "";
                 if (item.Disabled) {
                     item.disabled = true;
                     that.disabledindexes.push(index);

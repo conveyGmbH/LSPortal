@@ -186,9 +186,7 @@
                 }
                 item.StartDatum = that.getDateObject(item.StartDatum);
                 item.EndDatum = that.getDateObject(item.EndDatum);
-                item.nameInitial = (item.DisplayName)
-                    ? item.DisplayName.substr(0, 2)
-                    : (item.DisplayName ? item.DisplayName.substr(0, 2) : "");
+                item.nameInitial = item.DisplayName ? item.DisplayName.substr(0, 2) : "";
             }
             this.resultConverter = resultConverter;
 
