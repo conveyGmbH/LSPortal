@@ -1,7 +1,32 @@
-﻿.eventslist .list-div-left,
-.eventslist .list-div-right {
-    width: calc(100% - 32px);
-    margin: 0 16px;
+﻿#eventslist .win-itemcontainer .win-itembox,
+#eventslist .win-listview .win-itembox {
+    background-color: transparent;
+}
+
+.eventslist .contentarea {
+    overflow-y: hidden !important;
+}
+
+.eventslist .content-header {
+    height: auto !important;
+    min-height: 48px;
+}
+
+.eventslist .master-list-header {
+    min-height: 40px;
+    padding-left: 0;
+}
+
+.eventslist .master-list-header {
+    height: auto !important;
+}
+
+    .eventslist .master-list-header.list-compact-only {
+        padding-top: 48px;
+    }
+
+#eventslist .list-header {
+    font-weight: bold;
 }
 
 .eventslist .grayed-out {
@@ -11,61 +36,66 @@
 .eventslist .semibold {
     font-weight: 600;
 }
+
+.eventslist .list-compressed {
+    width: calc(100% - 18px);
+}
 /* Styles used for the custom layout */
-.listView .eventslistLayout {
-    position: static;
-}
-
-    .listView .eventslistLayout .win-surface {
-        margin-left: 0;
-    }
-
 #eventslist .win-container {
     margin: 0;
 }
-#eventslist .win-itembox {
-    width: 100%;
-    min-height: 60px;
+
+#eventslist .win-item,
+#eventslist .list-header {
+    padding-left: 26px;
+    padding-right: 26px;
 }
 
-#eventslist .win-container {
-    width: 100%;
-    height: auto;
-    margin: 0;
-    margin-bottom: 0;
-    border-radius: 0;
-    background-color: transparent;
+.view-size-medium #eventslist .win-item,
+.view-size-medium #eventslist .list-header {
+    padding-left: 18px;
+    padding-right: 18px;
 }
 
-#eventslist .win-surface {
-    margin-top: 0;
-    margin-left: 0;
+.view-size-small #eventslist .win-item,
+.view-size-small #eventslist .list-header {
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
-#eventslist.listview {
-    position: relative;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: calc(100% - 72px);
-}
-.view-size-smallest #eventslist .win-item {
+.view-size-smallest #eventslist .win-item,
+.view-size-smallest #eventslist .list-header {
     width: 100%;
     padding-left: 0;
     padding-right: 0;
     padding-top: 4px;
     padding-bottom: 4px;
-    text-align: center;
 }
 
-.view-size-smallest #eventslist .win-container {
-    width: 100% !important;
+.eventslist .content-header .master-list-header {
+    margin-top: 16px;
 }
-.view-size-smallest .eventslist .list-div-left {
+
+.view-size-smallest .eventslist .content-header .field_line {
+    display: none !important;
+}
+
+.eventslist .list-compressed-title.win-type-body {
+    line-height: 1;
+}
+
+view-size-smallest #eventslist .win-container {
+    width: 100% !important;
+    padding-left: 0;
+}
+
+.view-size-smallest .eventslist .list-div-left,
+.view-size-smallest .eventslist .list-div-right {
     width: 100%;
     margin: 0;
 }
-.eventslist #nameInitialcircle {
+
+#eventslist #nameInitialcircle {
     display: inline-block;
     width: 45px;
     height: 45px;
@@ -75,4 +105,20 @@
     text-align: center;
     line-height: 45px;
     font-weight: bold;
+}
+
+#eventslist .list-field-small-relative {
+    text-align: left;
+    width: calc(100% - 286px);
+    display: inline-block;
+    position: relative;
+    top: 0;
+    min-height: 32px;
+    padding-top: 8px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+#eventslist .list-field-small-fixed {
+    width: 110px;
 }

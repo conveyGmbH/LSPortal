@@ -30,7 +30,7 @@
     font-weight: 600;
 }
 .eventList .list-compressed {
-    width: 100%;
+    width: calc(100% - 18px);
 }
 /* Styles used for the custom layout */
 #eventList .win-container {
@@ -69,10 +69,6 @@
 
 .view-size-smallest .eventList .content-header .field_line {
     display: none !important;
-}
-
-.eventList .list-compressed {
-    width: calc(100% - 100px)
 }
 
 .eventList .list-compressed-title.win-type-body {

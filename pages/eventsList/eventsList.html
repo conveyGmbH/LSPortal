@@ -13,7 +13,7 @@
             <section aria-label="Main content" role="main" class="animationElement">
                 <div class="contentarea win-type-body">
                     <div class="content-header">
-                        <div class="win-type-subtitle master-list-header">
+                        <div class="field_line field_line_odd win-type-subtitle master-list-header">
                             <span data-win-res="{textContent: 'eventslist.title'}"></span>
                         </div>
                     </div>
@@ -27,20 +27,41 @@
                             </div>
                         </div>
                         <div class="list-portrait-only" data-win-bind="disabled: disabled">
-                        <div class="list-div-right grayed-out">
-                            <span class="win-type-body"
-                                  data-win-bind="textContent: currentDateString"></span>
-                            <span class="win-type-body"
-                                  data-win-bind="textContent: timeRangeString"></span>
+                            <div class="list-compressed">
+                                <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
+                                      data-win-bind="textContent: Name"></span>
+                                <div class="list-compressed-title win-type-body win-type-ellipsis">
+                                    <span data-win-bind="textContent: currentDateString"></span>
+                                    <span data-win-bind="style.display: timeRangeString Binding.Converter.toDisplay">&nbsp;</span>
+                                    <span data-win-bind="textContent: timeRangeString"></span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="list-div-left">
-                            <span class="list-item-left win-type-subtitle semibold"
-                                  data-win-bind="textContent: Name"></span>
+                        <div class="list-landscape-only" data-win-bind="disabled: disabled">
+                            <div class="row-bkg-gray"
+                                 data-win-bind="style.display: index Binding.Converter.evenToDisplay"></div>
+                            <div class="list-field-small-relative"
+                                 data-win-bind="textContent: Name"></div>
+                            <div class="list-field-small-fixed"
+                                 data-win-bind="textContent: currentDateString"></div>
+                            <div class="list-field-small-fixed"
+                                 data-win-bind="textContent: timeRangeString"></div>
                         </div>
                     </div>
-                           
-                        </div>
                     <div class="headerFooterPlaceholder">
+                        <div class="list-header">
+                            <div class="list-landscape-only">
+                                <div class="list-field-small-relative"
+                                     data-win-res="{textContent: 'event.name'}"></div>
+                                <div class="list-field-small-fixed"
+                                     data-win-res="{textContent: 'eventGenSettings.startdate'}"></div>
+                                <div class="list-field-small-fixed">
+                                    <span data-win-res="{textContent: 'event.begin'}"></span>
+                                    <span>-</span>
+                                    <span data-win-res="{textContent: 'event.end'}"></span>
+                                </div>
+                            </div>
+                        </div>
                         <div class="list-footer">
                             <div class="status">
                                 <progress class="win-progress-bar progress"></progress>
@@ -55,6 +76,7 @@
                          data-win-control="WinJS.UI.ListView"
                          data-win-options="{
                                 itemTemplate: select('.eventslist-template'),
+                                header: select('.list-header'),
                                 footer: select('.list-footer')
                          }">
                     </div>
