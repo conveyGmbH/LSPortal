@@ -2,71 +2,93 @@
 #eventList .win-listview .win-itembox {
     background-color: transparent;
 }
-.eventlist .contentarea {
+.eventList .contentarea {
     overflow-y: hidden !important;
 }
-.eventlist .content-header {
+.eventList .content-header {
     height: auto !important;
     min-height: 48px;
 }
-.eventlist .master-list-header {
+.eventList .master-list-header {
+    min-height: 40px;
+    padding-left: 0;
+}
+.eventList .master-list-header {
     height: auto !important;
 }
-.eventlist .master-list-header.list-compact-only {
+.eventList .master-list-header.list-compact-only {
     padding-top: 48px;
 }
-#eventList .listview {
-    position: relative;
-    left: 0;
-    top: 0;
-    width: 100%;
-    min-height: 60px;
-    height: calc(100% - 72px);
+#eventList .list-header {
+    font-weight: bold;
 }
 
-.eventlist .grayed-out {
+.eventList .grayed-out {
     opacity: 0.6;
 }
-.eventlist .semibold {
+.eventList .semibold {
     font-weight: 600;
 }
-.eventlist .list-div-left,
-.eventlist .list-div-right {
-    width: calc(100% - 32px);
-    margin: 0 16px;
-}
-.eventlist .list-compressed {
+.eventList .list-compressed {
     width: 100%;
 }
 /* Styles used for the custom layout */
-.listView .eventlistLayout {
-    position: static;
-}
-.listView .eventlistLayout .win-surface {
-    margin-left: 0;
-}
-
 #eventList .win-container {
-    width: 100%;
-    height: auto;
     margin: 0;
-    border-radius: 0;
-    background-color: transparent;
 }
 
-.view-size-smallest #eventList .win-item {
+#eventList .win-item,
+#eventList .list-header {
+    padding-left: 26px;
+    padding-right: 26px;
+}
+
+.view-size-medium #eventList .win-item,
+.view-size-medium #eventList .list-header {
+    padding-left: 18px;
+    padding-right: 18px;
+}
+
+.view-size-small #eventList .win-item,
+.view-size-small #eventList .list-header {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.view-size-smallest #eventList .win-item,
+.view-size-smallest #eventList .list-header {
     width: 100%;
     padding-left: 0;
     padding-right: 0;
     padding-top: 4px;
     padding-bottom: 4px;
 }
-.view-size-smallest .eventlist .list-div-left,
-.view-size-smallest .eventlist .list-div-right {
+.eventList .content-header .master-list-header {
+    margin-top: 16px;
+}
+
+.view-size-smallest .eventList .content-header .field_line {
+    display: none !important;
+}
+
+.eventList .list-compressed {
+    width: calc(100% - 100px)
+}
+
+.eventList .list-compressed-title.win-type-body {
+    line-height: 1;
+}
+
+view-size-smallest #eventList .win-container {
+    width: 100% !important;
+    padding-left: 0;
+}
+
+.view-size-smallest .eventList .list-div-left,
+.view-size-smallest .eventList .list-div-right {
     width: 100%;
     margin: 0;
 }
-
 #eventList #nameInitialcircle {
     display: inline-block;
     width: 45px;
@@ -80,7 +102,7 @@
 }
 #eventList .list-field-small-relative {
     text-align: left;
-    width: calc(100% - 270px);
+    width: calc(100% - 286px);
     display: inline-block;
     position: relative;
     top: 0;

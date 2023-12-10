@@ -8,18 +8,12 @@
     <script type="text/javascript" src="eventList.js"></script>
 </head>
 <body class="win-type-body">
-    <div class="eventlist fragment">
+    <div class="eventList fragment">
         <div id="eventListController" class="data-container">
             <section aria-label="Main content" role="main" class="animationElement">
                 <div class="contentarea win-type-body" data-win-bind="style.display: leadsuccessBasic Binding.Converter.toDisplayNone">
                     <div class="content-header">
-                        <div class="win-type-subtitle master-list-header list-compact-only">
-                            <!--<span data-win-res="{textContent: 'eventslist.title'}"></span>-->
-                        </div>
-                        <div class="win-type-subtitle master-list-header list-portrait-only">
-                            <span data-win-res="{textContent: 'eventslist.title'}"></span>
-                        </div>
-                        <div class="win-type-subtitle master-list-header list-landscape-only">
+                        <div class="field_line field_line_odd win-type-subtitle master-list-header">
                             <span data-win-res="{textContent: 'eventslist.title'}"></span>
                         </div>
                     </div>
@@ -35,23 +29,19 @@
                         <div class="list-portrait-only" data-win-bind="disabled: disabled">
                             <div class="list-div-left">
                                 <div class="list-compressed">
-                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis semibold"
+                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
                                           data-win-bind="textContent: Name"></span>
-                                </div>
-                            </div>
-                            <div class="list-div-right grayed-out">
-                                <div class="list-compressed">
-                                    <span class="list-compressed-content"
-                                          data-win-bind="textContent: Startdatum"></span>
-                                    <span class="list-compressed-content">&nbsp;-&nbsp;</span>
-                                    <span class="list-compressed-content"
-                                          data-win-bind="textContent: Enddatum"></span>
+                                    <div class="list-compressed-title win-type-body win-type-ellipsis">
+                                        <span data-win-bind="textContent: Startdatum"></span>
+                                        <span data-win-bind="style.display: Enddatum Binding.Converter.toDisplay">&nbsp;-&nbsp;</span>
+                                        <span data-win-bind="textContent: Enddatum"></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="list-landscape-only" data-win-bind="disabled: disabled">
                             <div class="row-bkg-gray"
-                                 data-win-bind="style.display: index Binding.Converter.oddToDisplay"></div>
+                                 data-win-bind="style.display: index Binding.Converter.evenToDisplay"></div>
                             <div class="list-field-small-relative"
                                  data-win-bind="textContent: Name"></div>
                             <div class="list-field-small-fixed"
@@ -61,8 +51,8 @@
                         </div>
                     </div>
                     <div class="headerFooterPlaceholder">
-                        <div class="list-header box-bkg">
-                            <div class="list-landscape-only list-header-columns">
+                        <div class="list-header">
+                            <div class="list-landscape-only">
                                 <div class="list-field-small-relative"
                                      data-win-res="{textContent: 'event.name'}"></div>
                                 <div class="list-field-small-fixed"
