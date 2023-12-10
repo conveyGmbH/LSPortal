@@ -75,6 +75,9 @@
 .siteEventsList .list-compressed {
     width: calc(100% - 100px)
 }
+.siteEventsList .list-compressed-title.win-type-body {
+    line-height: 1;
+}
 view-size-smallest #siteEventsList .win-container {
     width: 100% !important;
     padding-left: 0;
