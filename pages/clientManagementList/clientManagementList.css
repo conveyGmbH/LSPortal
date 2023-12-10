@@ -1,36 +1,78 @@
-﻿body {
-}
-/* Styles used for the custom layout */
-.listView .clientManagementListLayout {
-    position: static;
+﻿/* Styles used for the custom layout */
+#clientManagementList .list-header {
+    font-weight: bold;
 }
 
-    .listView .clientManagementListLayout .win-surface {
-        margin-left: 0;
-    }
+#clientManagementList .list-field-big-60 {
+    text-align: left;
+    width: calc(40% + 178px);
+    display: inline-block;
+    position: relative;
+    top: 0;
+    min-height: 32px;
+    padding-top: 8px;
+    overflow: hidden;
+    white-space: nowrap;
+}
 
 #clientManagementList .win-container {
     margin: 0;
 }
-.view-size-smallest #clientManagementList .win-item {
+
+#clientManagementList .win-item,
+#clientManagementList .list-header {
+    padding-left: 26px;
+    padding-right: 26px;
+}
+
+.view-size-medium #clientManagementList .win-item,
+.view-size-medium #clientManagementList .list-header {
+    padding-left: 18px;
+    padding-right: 18px;
+}
+
+.view-size-small #clientManagementList .win-item,
+.view-size-small #clientManagementList .list-header {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.view-size-smallest #clientManagementList .win-item,
+.view-size-smallest #clientManagementList .list-header {
     width: 100%;
     padding-left: 0;
     padding-right: 0;
     padding-top: 4px;
     padding-bottom: 4px;
 }
-
-.view-size-smallest #clientManagementList .status {
+.clientManagementList .content-header .master-list-header {
+    margin-top: 16px;
+}
+.view-size-smallest .clientManagementList .content-header .field_line {
     display: none !important;
 }
+.clientManagementList .list-div-left {
+    width: 100%
+}
+
+.clientManagementList .list-compressed {
+    width: calc(100% - 100px)
+}
+
+.clientManagementList .list-compressed-title.win-type-body {
+    line-height: 1;
+}
+
 view-size-smallest #clientManagementList .win-container {
     width: 100% !important;
+    padding-left: 0;
 }
 
 .view-size-smallest .clientManagementList .list-div-left {
     width: 100%;
     margin: 0;
 }
+
 .clientManagementList #nameInitialcircle {
     display: inline-block;
     width: 45px;

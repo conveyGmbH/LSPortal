@@ -13,13 +13,24 @@
             <section aria-label="Main content" role="main" class="animationElement">
                 <div class="contentarea win-type-body">
                     <div class="content-header">
-                        <div class="win-type-subtitle master-list-header">
+                        <div class="field_line field_line_odd win-type-subtitle master-list-header">
                             <span data-win-res="{textContent: 'clientmanagementlist.title'}"></span>
+                        </div>
+                    </div>
+                    <div class="headerFooterPlaceholder">
+                        <div class="list-header">
+                            <div class="list-landscape-only">
+                                <div class="list-field-big-60 win-type-ellipsis"
+                                     data-win-res="{textContent: 'clientmanagement.companyname'}"></div>
+                                <div class="list-field-small-relative-30 win-type-ellipsis"
+                                     data-win-res="{textContent: 'clientmanagement.contactperson'}"></div>
+                                <div class="list-field-small-relative-30 win-type-ellipsis"
+                                     data-win-res="{textContent: 'clientmanagement.email'}"></div>
+                            </div>
                         </div>
                     </div>
                     <div class="clientManagementList-template"
                          data-win-control="WinJS.Binding.Template" style="display: none">
-                        <div class="row-separator"></div>
                         <div class="list-compact-only" data-win-bind="disabled: disabled">
                             <div class="row-separator"></div>
                             <div class="list-div-left">
@@ -27,7 +38,19 @@
                                       data-win-bind="textContent: nameInitial"></span>
                             </div>
                         </div>
+                        <div class="list-landscape-only">
+                            <div class="row-bkg-gray"
+                                 data-win-bind="style.display: index Binding.Converter.evenToDisplay"></div>
+                            <div class="list-field-big-60 win-type-ellipsis"
+                                 data-win-bind="textContent: Name"></div>
+                            <div class="list-field-small-relative-30 win-type-ellipsis"
+                                 data-win-bind="textContent: Ansprechpartner"></div>
+                            <div class="list-field-small-relative-30 win-type-ellipsis"
+                                 data-win-bind="textContent: EMail"></div>
+
+                        </div>
                         <div class="list-portrait-only" data-win-bind="disabled: disabled">
+                            <div class="row-separator"></div>
                             <div class="list-div-left">
                                 <div class="list-symbol-ID">
                                     <div data-win-bind="name: recordIcon" class="action-image"></div>
@@ -57,8 +80,10 @@
                          class="listview win-selectionstylefilled"
                          data-win-control="WinJS.UI.ListView"
                          data-win-options="{
-                                itemTemplate: select('.clientManagementList-template'),
-                                footer: select('.list-footer')
+                             layout : { type: WinJS.UI.ListLayout },
+                             itemTemplate: select('.clientManagementList-template'),
+                             header: select('.list-header'),
+                             footer: select('.list-footer')
                          }">
                     </div>
                     <div class="error-message"

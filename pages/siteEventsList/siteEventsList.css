@@ -2,9 +2,6 @@
     float: left;
     width: 90%;
 }
-.listView .siteEventsListLayout {
-    position: static;
-}
 .siteEventsList .contentarea {
     overflow-y: hidden !important;
 }
@@ -66,7 +63,10 @@
     display: none !important;
 }
 
-.view-size-smallest .content-header .field_line {
+.siteEventsList .content-header .master-list-header {
+    margin-top: 16px;
+}
+.view-size-smallest .siteEventsList .content-header .field_line {
     display: none !important;
 }
 .siteEventsList .list-div-left {
