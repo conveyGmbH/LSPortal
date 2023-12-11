@@ -75,18 +75,19 @@
 
 
             var cutSerialnumer = function (serialnumer) {
+                var ret = "";
                 Log.call(Log.l.trace, "GenDataEmpList.Controller.");
                 AppData.setErrorMsg(that.binding);
-                if (serialnumer === null) {
-                    return "";
-                } else {
+                if (serialnumer) {
                     var serialnumernew = serialnumer;
                     if (serialnumernew) {
                         var sub = serialnumernew.search("0000000000");
                         serialnumernew = serialnumernew.substr(sub + 10);
                     }
-                    return serialnumernew;
+                    ret = serialnumernew;
                 }
+                Log.ret(Log.l.trace, ret);
+                return ret;
             };
             this.cutSerialnumer = cutSerialnumer;
 

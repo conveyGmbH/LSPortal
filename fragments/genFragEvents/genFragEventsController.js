@@ -64,7 +64,7 @@
                 }
             };
             this.scopeFromRecordId = scopeFromRecordId;
-            
+
             var getDateObject = function (dateData, type) {
                 var ret;
                 if (dateData) {
@@ -79,14 +79,14 @@
                         ret = moment(milliseconds).format("DD.MM.YYYY");//new Date(milliseconds).toLocaleTimeString().slice(0, -3);
                         //.toLocaleString('de-DE').substr(0, 10);
                     }
-                    
+
                 } else {
                     ret = "";
                 }
                 return ret;
             };
             this.getDateObject = getDateObject;
-            
+
             var eventHandlers = {
                 onSelectionChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "EmpList.Controller.");
@@ -149,7 +149,7 @@
                             }
                         }
                         if (listView.winControl.loadingState === "itemsLoaded") {
-                            Log.call(Log.l.trace, "EventSession.Controller.");
+                            //
                         } else if (listView.winControl.loadingState === "complete") {
                             if (that.loading) {
                                 that.loading = false;
@@ -161,7 +161,7 @@
                     Log.ret(Log.l.trace);
                 },
                 onScroll: function (eventInfo) {
-                   
+
                 }
             }
             this.eventHandlers = eventHandlers;
@@ -250,7 +250,7 @@
             });
             Log.ret(Log.l.trace);
         }, {
-            
+
             })
     });
 })();

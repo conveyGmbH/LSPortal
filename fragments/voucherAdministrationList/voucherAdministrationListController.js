@@ -22,7 +22,7 @@
                 OpenVoucherSecondary: 'block'
             }]);
             var that = this;
-            
+
             this.voucherEvent = [];
             this.voucherSubItem = [];
             this.voucherMainItem = [];
@@ -34,12 +34,12 @@
 
             // now do anything...
             var listView = fragmentElement.querySelector("#voucherAdministrationList.listview");
-           
+
             this.dispose = function () {
                 if (listView && listView.winControl) {
                     listView.winControl.itemDataSource = null;
                 }
-                
+
                 if (that.orderItem) {
                     that.orderItem = null;
                 }
@@ -87,7 +87,7 @@
                 Log.ret(Log.l.trace);
             }
             this.selectRecordId = selectRecordId;
-            
+
             var getRecordId = function () {
                 Log.call(Log.l.trace, "VoucherAdministrationList.Controller.");
                 that.binding.recordID = AppData.getRecordId("VeranstaltungAnlage");
@@ -163,7 +163,7 @@
                             }
                         }
                         if (listView.winControl.loadingState === "itemsLoaded") {
-                            Log.call(Log.l.trace, "VoucherAdministrationList.Controller.");
+                            //
                         } else if (listView.winControl.loadingState === "complete") {
                             if (that.loading) {
                                 that.loading = false;
@@ -191,7 +191,7 @@
                 this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
                 this.addRemovableEventListener(listView, "groupheaderinvoked", this.eventHandlers.onGroupHeaderInvoked.bind(this));
             }
-            
+
             var resultConverter = function (item, index) {
                 item.index = index;
                 if (!that.voucherHeaderItem) {
