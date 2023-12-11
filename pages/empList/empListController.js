@@ -407,7 +407,7 @@
                 }
                 var restriction = AppData.getRestriction("Employee");
                 Log.call(Log.l.trace, "EmpList.Controller. restriction Employee:" + restriction);
-                var defaultrestriction = copyByValue(GenDataEmpList.employeeView.defaultRestriction);
+                var defaultrestriction = copyByValue(EmpList.employeeView.defaultRestriction);
                 if (!restriction) {
                     restriction = defaultrestriction;
                 }
