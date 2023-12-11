@@ -636,8 +636,8 @@
                     recordId = getRecordId();
                 }
                 var ret = new WinJS.Promise.as().then(function () {
-                    if (AppBar.modified) {
-                        Log.print(Log.l.trace, "saveData completed...");
+                    if (recordId && AppBar.modified) {
+                        Log.print(Log.l.trace, "is modified...");
                         var master = Application.navigator.masterControl;
                         if (master && master.controller) {
                             return master.controller.loadData(recordId);

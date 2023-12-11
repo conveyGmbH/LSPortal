@@ -6,12 +6,20 @@
     height: 120px;
 }
 
-.view-size-medium #emproleshost.fragmenthost {
-    height: 120px;
+.view-size-biggest #emproleshost.fragmenthost {
+    height: 180px;
 }
 
-.view-size-small #emproleshost.fragmenthost {
+.view-size-bigger #emproleshost.fragmenthost {
+    height: 240px;
+}
+
+.view-size-medium #emproleshost.fragmenthost {
     height: 360px;
+}
+
+.view-size-medium-small #emproleshost.fragmenthost {
+    height: 720px;
 }
 .text-lightcolorU {
     font-weight: bold;
