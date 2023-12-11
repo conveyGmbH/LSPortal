@@ -56,12 +56,12 @@
                 Login: "",
                 Names: "",
                 OrderAttribute: "Nachname",
-                OrderDesc: true
+                OrderDesc: false
             }
         },
         _licenceBView: {
             get: function () {
-                return AppData.getFormatView("Mitarbeiter", 20471);
+                return AppData.getFormatView("Mitarbeiter", 20678);
             }
         },
         licenceBView: {

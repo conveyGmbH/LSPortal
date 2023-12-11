@@ -161,11 +161,14 @@
                 item.index = index;
                 that.binding.hasLocalevents = AppHeader.controller.binding.userData.HasLocalEvents;
                 item.Names = "";
-                item.fullName = (item.Vorname ? (item.Vorname + " ") : "") + (item.Nachname ? item.Nachname : "");
+                item.fullName = (item.Vorname && item.Nachname)
+                    ? (item.Vorname + " " + item.Nachname)
+                    : (item.Vorname ? item.Vorname
+                    : (item.Nachname ? item.Nachname : ""));
                 item.nameInitial = (item.Vorname && item.Nachname)
                     ? item.Vorname.substr(0, 1) + item.Nachname.substr(0, 1)
                     : (item.Vorname ? item.Vorname.substr(0, 2) : item.Nachname ? item.Nachname.substr(0, 2) : "");
-                if (typeof cutSerialnumer !== "undefined" && typeof item.CS1504SerienNr !== "undefined") {
+                if (typeof item.CS1504SerienNr === "string") {
                     item.CS1504SerienNr = that.cutSerialnumer(item.CS1504SerienNr);
                 }
                 if (item.Gesperrt === 1) {
@@ -204,7 +207,7 @@
                                                 that.binding.employeeId = item.data.MitarbeiterVIEWID;
                                                 that.binding.hasContacts = item.data.HatKontakte;
                                                 that.binding.selIdx = item.index;
-                                                AppData.setRecordId("MitarbeiterVIEW_20471", that.binding.employeeId);
+                                                //AppData.setRecordId("MitarbeiterVIEW_20471", that.binding.employeeId);
                                                 var curPageId = Application.getPageId(nav.location);
                                                 if ((curPageId === "genDataEmployee") &&
                                                     typeof AppBar.scope.loadData === "function") {
@@ -392,7 +395,7 @@
             }
 
             var loadData = function (recordId) {
-                Log.call(Log.l.trace, "GenDataEmpList.Controller.");
+                Log.call(Log.l.trace, "GenDataEmpList.Controller.", "recordId=" + recordId);
                 that.loading = true;
                 progress = pageElement.querySelector(".list-footer .progress");
                 counter = pageElement.querySelector(".list-footer .counter");
@@ -404,36 +407,58 @@
                 }
                 var restriction = AppData.getRestriction("Employee");
                 Log.call(Log.l.trace, "GenDataEmpList.Controller. restriction Employee:" + restriction);
-                var defaultrestriction = GenDataEmpList.employeeView.defaultRestriction;
+                var defaultrestriction = copyByValue(GenDataEmpList.employeeView.defaultRestriction);
                 if (!restriction) {
                     restriction = defaultrestriction;
                 }
                 if (restriction.OrderAttribute === "Vorname") {
-                    if (btnName) {
-                        if (restriction.btn_textContent) {
-                            btnFirstName.textContent = restriction.btn_textContent;
+                    if (btnFirstName) {
+                        if (restriction.OrderDesc) {
+                            btnFirstName.textContent = getResourceText("employee.firstNameDesc");
+                        } else {
+                            btnFirstName.textContent = getResourceText("employee.firstNameAsc");
                         }
+                    }
+                    if (btnName) {
                         btnName.textContent = getResourceText("employee.name");
                     }
-                    btnEmployeeLicence.textContent = getResourceText("employee.licence");
+                    if (btnEmployeeLicence) {
+                        btnEmployeeLicence.textContent = getResourceText("employee.licence");
+                    }
                 } else if (restriction.OrderAttribute === "Nachname") {
                     if (btnFirstName) {
-                        if (restriction.btn_textContent) {
-                            btnName.textContent = restriction.btn_textContent;
-                        }
                         btnFirstName.textContent = getResourceText("employee.firstName");
                     }
-                    btnEmployeeLicence.textContent = getResourceText("employee.licence");
-
+                    if (btnName) {
+                        if (restriction.OrderDesc) {
+                            btnName.textContent = getResourceText("employee.nameDesc");
+                        } else {
+                            btnName.textContent = getResourceText("employee.nameAsc");
+                        }
+                    }
+                    if (btnEmployeeLicence) {
+                        btnEmployeeLicence.textContent = getResourceText("employee.licence");
+                    }
                 } else if (restriction.OrderAttribute === "NichtLizenzierteApp" ) {
                     // getResrestriction or defaultrestriction
-                    btnName.textContent = getResourceText("employee.name");
-                    btnFirstName.textContent = getResourceText("employee.firstName");
+                    if (btnFirstName) {
+                        btnFirstName.textContent = getResourceText("employee.firstName");
+                    }
+                    if (btnName) {
+                        btnName.textContent = getResourceText("employee.name");
+                    }
+                    if (btnEmployeeLicence) {
+                        if (restriction.OrderDesc) {
+                            btnEmployeeLicence.textContent = getResourceText("employee.licenceDesc");
+                        } else {
+                            btnEmployeeLicence.textContent = getResourceText("employee.licenceAsc");
+                        }
+                    }
                 }
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                     // only licence user select 
-                    return GenDataEmpList.employeeView.select(function (json) {
+                    /*return GenDataEmpList.employeeView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
                         Log.print(Log.l.trace, "licenceView: success!");
@@ -441,10 +466,6 @@
                         if (json && json.d && json.d.results.length > 0) {
                             var results = json.d.results;
                             that.binding.licenceWarning = true;
-                            /*restriction.OrderDesc = true;
-                            restriction.OrderAttribute = "NichtLizenzierteApp";
-                            btnName.textContent = getResourceText("employee.name");
-                            btnFirstName.textContent = getResourceText("employee.firstName");*/
                             //change order for the next select - list
                         } else {
                             that.binding.licenceWarning = false;
@@ -455,7 +476,7 @@
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, { NichtLizenzierteApp: 1 });
-                }).then(function () {
+                }).then(function () {*/
                     return GenDataEmpList.employeeView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available

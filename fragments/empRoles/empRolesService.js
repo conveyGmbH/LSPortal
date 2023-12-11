@@ -63,18 +63,9 @@
         },
         getRestriction: function () {
             var ret = null;
-           /* var empRolesFragmentControl =
-                Application.navigator.getFragmentControlFromLocation(
-                    Application.getFragmentPath("empRoles"));
-            if (empRolesFragmentControl &&
-                empRolesFragmentControl.controller &&
-                empRolesFragmentControl.controller.binding ) {
-                ret = {
-                    MitarbeiterID: empRolesFragmentControl.controller.binding.employeeId,
-                };
-            }*/
             var master = Application.navigator.masterControl;
             if (master && master.controller && master.controller.binding) {
+                Log.print(Log.l.trace, "employeeId=" + master.controller.binding.employeeId);
                 ret = {
                     MitarbeiterID: master.controller.binding.employeeId
                 };

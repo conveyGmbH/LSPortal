@@ -12,9 +12,9 @@
 .genDataEmpList .master-list-header {
     height: auto !important;
 }
-    .genDataEmpList .master-list-header.list-compact-only {
-        padding-top: 48px;
-    }
+.genDataEmpList .master-list-header.list-compact-only {
+    padding-top: 48px;
+}
 #genDataEmpList .listview {
     position: relative;
     left: 0;
@@ -27,9 +27,9 @@
 .listView .genDataEmpListLayout {
     position: static;
 }
-    .listView .genDataEmpListLayout .win-surface {
-        margin-left: 0;
-    }
+.listView .genDataEmpListLayout .win-surface {
+    margin-left: 0;
+}
 #genDataEmpList .win-container {
     width: 100%;
     height: auto;

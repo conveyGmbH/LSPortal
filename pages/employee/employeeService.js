@@ -56,7 +56,7 @@
                 Login: "",
                 Names: "",
                 OrderAttribute: "Nachname",
-                OrderDesc: true
+                OrderDesc: false
             }
         },
         _licenceBView: {

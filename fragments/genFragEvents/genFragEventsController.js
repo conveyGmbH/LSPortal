@@ -110,24 +110,36 @@
                 },
                 clickChangeEvent: function(event) {
                     Log.call(Log.l.trace, "EventSession.Controller.");
-                    return AppData.call("PRC_CopyAppMitarbeiter", {
+                    var newEmployeeId = null;
+                    AppData.call("PRC_CopyAppMitarbeiter", {
                         pMitarbeiterID: that.binding.ecRecordID,
                         pNewVeranstaltungID: that.binding.ecEventID
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
                         if (json && json.d && json.d.results.length > 0) {
-                            var results = json.d.results[0];
-                            var master = Application.navigator.masterControl;
-                            if (master && master.controller && master.controller.binding) {
-                                AppData.setRecordId("MitarbeiterVIEW_20471", results.NewMitarbeiterID);
-                                master.controller.binding.employeeId = results.NewMitarbeiterID;
-                                master.controller.loadData(results.NewMitarbeiterID);
-                            }
+                            newEmployeeId = json.d.results[0] ? json.d.results[0].NewMitarbeiterID : null;
                         } else {
                             Log.print(Log.l.error, "ERROR: No Data found!");
                         }
                     }, function (error) {
                         Log.print(Log.l.error, "call error");
+                    }).then(function () {
+                        var master = Application.navigator.masterControl;
+                        if (master && master.controller && master.controller.binding && newEmployeeId) {
+                            //AppData.setRecordId("MitarbeiterVIEW_20471", newEmployeeId);
+                            master.controller.binding.employeeId = newEmployeeId;
+                            return master.controller.loadData();
+                        } else {
+                            return WinJS.Promise.as();
+                        }
+                    }).then(function () {
+                        var master = Application.navigator.masterControl;
+                        if (master && master.controller && master.controller.binding) {
+                            master.controller.binding.employeeId = newEmployeeId;
+                            return master.controller.selectRecordId(master.controller.binding.employeeId);
+                        } else {
+                            return WinJS.Promise.as();
+                        }
                     });
                 },
                 onLoadingStateChanged: function (eventInfo) {
@@ -201,8 +213,14 @@
             this.resultConverter = resultConverter;
 
             var loadData = function (recordId) {
-                Log.call(Log.l.trace, "EventSession.");
-                var eventId = AppBar.scope.binding.eventId;
+                Log.call(Log.l.trace, "EventSession.", "recordId=" + recordId);
+                if (!recordId) {
+                    var master = Application.navigator.masterControl;
+                    if (master && master.controller && master.controller.binding) {
+                        Log.print(Log.l.trace, "employeeId=" + master.controller.binding.employeeId);
+                        recordId = master.controller.binding.employeeId;
+                    }
+                }
                 AppData.setErrorMsg(that.binding);
                 if (recordId) {
                     var ret = new WinJS.Promise.as().then(function () {

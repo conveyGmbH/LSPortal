@@ -19,7 +19,7 @@
             Application.Controller.apply(this, [pageElement, {
                 actualEventID: 0,
                 dataEmployee: getEmptyDefaultValue(Employee.employeeView.defaultValue),
-                restriction: getEmptyDefaultValue(Employee.employeeView.defaultRestriction),
+                restriction: copyByValue(Employee.employeeView.defaultRestriction),
                 isEmpRolesVisible: AppHeader.controller.binding.userData.SiteAdmin, // || AppHeader.controller.binding.userData.HasLocalEvents,
                 isVeranstaltungComboboxVisible: false,
                 eventname: AppData._userData.VeranstaltungName,
@@ -41,6 +41,7 @@
             var prevPassword;
 
             var setDataEmployee = function (newDataEmployee) {
+                Log.call(Log.l.trace, "Employee.Controller.");
                 var prevNotifyModified = AppBar.notifyModified;
                 AppBar.notifyModified = false;
                 prevLogin = newDataEmployee.Login;
@@ -55,6 +56,7 @@
                 that.binding.dataEmployee.Password2 = newDataEmployee.Password;
                 AppBar.modified = false;
                 AppBar.notifyModified = prevNotifyModified;
+                Log.ret(Log.l.trace);
             }
             this.setDataEmployee = setDataEmployee;
 
@@ -129,14 +131,14 @@
             this.copyMitarbeiter = copyMitarbeiter;
 
             var saveRestriction = function () {
-                if (that.binding.restriction.Names && that.binding.restriction.Names.length > 0) {
+                /*if (that.binding.restriction.Names && that.binding.restriction.Names.length > 0) {
                     that.binding.restriction.Aktiv = ["X", "X", "X"];
                 } else {
                     that.binding.restriction.Aktiv = ["X", "X", "X"];
                 }
                 that.binding.restriction.bAndInEachRow = true;
                 that.binding.restriction.bUseOr = false;
-                Log.print("restriction number:" + that.binding.restriction.countCombobox + ", restriction: " + that.binding.restriction);
+                Log.print("restriction number:" + that.binding.restriction.countCombobox + ", restriction: " + that.binding.restriction);*/
                 AppData.setRestriction("Employee", that.binding.restriction);
             }
             this.saveRestriction = saveRestriction;
@@ -190,54 +192,52 @@
             var checkingLicence = function (recordId) {
                 Log.call(Log.l.trace, "Employee.Controller.");
                 AppData.setErrorMsg(that.binding);
-                var ret = new WinJS.Promise.as().then(function () {
-                    return Employee.licenceBView.select(function (json) {
-                        // this callback will be called asynchronously
-                        // when the response is available
-                        Log.print(Log.l.info, "licenceBView select: success!");
-                        var result = json.d;
-                        if (result && result.NichtLizenzierteApp) {
-                            that.binding.noLicence = result.NichtLizenzierteApp;
-                        } else {
-                            that.binding.noLicence = null;
+                var ret = Employee.licenceBView.select(function (json) {
+                    // this callback will be called asynchronously
+                    // when the response is available
+                    Log.print(Log.l.info, "licenceBView select: success!");
+                    var result = json.d;
+                    if (result && result.NichtLizenzierteApp) {
+                        that.binding.noLicence = result.NichtLizenzierteApp;
+                    } else {
+                        that.binding.noLicence = null;
+                    }
+                    if (result && result.UserStatus) {
+                        that.binding.userStatus = result.UserStatus;
+                    } else {
+                        that.binding.userStatus = null;
+                    }
+                    // neues Flag UserIsActive -> wenn user bereits eingelogt ist dann sollte das Feld Login und Passwort static sein 
+                    // wenn user den Ändern will dann klicke explizit auf das icon für Ändern user und bestätige die Alertbox 
+                    // -> result.HatKontakte ist dirty Trick um festzustellen ob normale Admin oder nicht
+                    that.binding.allowEditLogin = AppHeader.controller.binding.userData.SiteAdmin || AppHeader.controller.binding.userData.HasLocalEvents;
+                    if (that.binding.allowEditLogin) {
+                        if (loginFirstPart) {
+                            loginFirstPart.disabled = false;
                         }
-                        if (result && result.UserStatus) {
-                            that.binding.userStatus = result.UserStatus;
-                        } else {
-                            that.binding.userStatus = null;
+                        if (domain) {
+                            domain.disabled = false;
                         }
-                        // neues Flag UserIsActive -> wenn user bereits eingelogt ist dann sollte das Feld Login und Passwort static sein 
-                        // wenn user den Ändern will dann klicke explizit auf das icon für Ändern user und bestätige die Alertbox 
-                        // -> result.HatKontakte ist dirty Trick um festzustellen ob normale Admin oder nicht
-                        that.binding.allowEditLogin = AppHeader.controller.binding.userData.SiteAdmin || AppHeader.controller.binding.userData.HasLocalEvents;
-                        if (that.binding.allowEditLogin) {
-                            if (loginFirstPart) {
-                                loginFirstPart.disabled = false;
-                            }
-                            if (domain) {
-                                domain.disabled = false;
-                            }
-                            if (loginName) {
-                                loginName.disabled = false;
-                            }
-                        } else {
-                            if (loginFirstPart) {
-                                loginFirstPart.disabled = true;
-                            }
-                            if (domain) {
-                                domain.disabled = true;
-                            }
-                            if (loginName) {
-                                loginName.disabled = true;
-                            }
+                        if (loginName) {
+                            loginName.disabled = false;
                         }
-                        AppBar.triggerDisableHandlers();
-                        return WinJS.Promise.as();
-                    }, function (errorResponse) {
-                        Log.print(Log.l.error, "error selecting mailerzeilen");
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                    }, recordId);
-                });
+                    } else {
+                        if (loginFirstPart) {
+                            loginFirstPart.disabled = true;
+                        }
+                        if (domain) {
+                            domain.disabled = true;
+                        }
+                        if (loginName) {
+                            loginName.disabled = true;
+                        }
+                    }
+                    AppBar.triggerDisableHandlers();
+                    return WinJS.Promise.as();
+                }, function (errorResponse) {
+                    Log.print(Log.l.error, "error selecting mailerzeilen");
+                    AppData.setErrorMsg(that.binding, errorResponse);
+                }, recordId);
                 Log.ret(Log.l.trace);
                 return ret;
             }
@@ -284,6 +284,9 @@
                     that.saveData(function (response) {
                         AppBar.busy = true;
                         Log.print(Log.l.trace, "eployee saved");
+                    }, function (errorResponse) {
+                        Log.print(Log.l.error, "error saving employee");
+                    }).then(function () {
                         //var newEmployee = getEmptyDefaultValue(Employee.employeeView.defaultValue);
                         var newEmployee = {
                             Vorname: "",
@@ -316,20 +319,28 @@
                                 that.setDataEmployee(employee);
                                 that.binding.dataEmployee.LogInNameBeforeAtSymbole = "";
                             }
-                            var master = Application.navigator.masterControl;
-                            if (master && master.controller && master.controller.binding && employee && employee.MitarbeiterVIEWID) {
-                                //AppData.setRecordId("MitarbeiterVIEW_20471", employee.MitarbeiterVIEWID);
-                                master.controller.binding.employeeId = employee.MitarbeiterVIEWID;
-                                master.controller.loadData(employee.MitarbeiterVIEWID);
-                            }
-                            AppBar.modified = true;
+                            //AppBar.modified = true;
                         }, function (errorResponse) {
                             Log.print(Log.l.error, "error inserting employee");
                             AppBar.busy = false;
                             AppData.setErrorMsg(that.binding, errorResponse);
                         }, newEmployee);
-                    }, function (errorResponse) {
-                        Log.print(Log.l.error, "error saving employee");
+                    }).then(function () {
+                        var master = Application.navigator.masterControl;
+                        if (master && master.controller && master.controller.binding) {
+                            master.controller.binding.employeeId = that.binding.dataEmployee.MitarbeiterVIEWID;
+                            return master.controller.loadData();
+                        } else {
+                            return WinJS.Promise.as();
+                        }
+                    }).then(function () {
+                        var master = Application.navigator.masterControl;
+                        if (master && master.controller && master.controller.binding) {
+                            master.controller.binding.employeeId = that.binding.dataEmployee.MitarbeiterVIEWID;
+                            return master.controller.selectRecordId(master.controller.binding.employeeId);
+                        } else {
+                            return WinJS.Promise.as();
+                        }
                     });
                     Log.ret(Log.l.trace);
                 },
@@ -481,62 +492,46 @@
                 clickOrderFirstname: function (event) {
                     Log.call(Log.l.trace, "Employee.Controller.");
                     that.binding.restriction.OrderAttribute = "Vorname";
-                    //that.binding.restriction.OrderDesc = !that.binding.restriction.OrderDesc;
-                    AppData.setRestriction("Employee", that.binding.restriction);
-
-                    if (event.target.textContent === getResourceText("employee.firstNameDesc")) {
-                        event.target.textContent = getResourceText("employee.firstNameAsc");
-                        that.binding.restriction.btn_textContent = event.target.textContent;
-                        that.binding.restriction.OrderDesc = false;
-                    } else {
-                        event.target.textContent = getResourceText("employee.firstNameDesc");
-                        that.binding.restriction.btn_textContent = event.target.textContent;
+                    if (event.target.textContent === getResourceText("employee.firstNameAsc")) {
                         that.binding.restriction.OrderDesc = true;
+                    } else {
+                        that.binding.restriction.OrderDesc = false;
                     }
-
                     that.saveRestriction();
                     var master = Application.navigator.masterControl;
-                    master.controller.loadData();
+                    if (master && master.controller) {
+                        master.controller.loadData();
+                    }
                     Log.ret(Log.l.trace);
                 },
                 clickOrderLastname: function (event) {
                     Log.call(Log.l.trace, "Employee.Controller.");
-                    var master = Application.navigator.masterControl;
                     that.binding.restriction.OrderAttribute = "Nachname";
-                    //that.binding.restriction.OrderDesc = !that.binding.restriction.OrderDesc;
-                    AppData.setRestriction("Employee", that.binding.restriction);
-                    if (event.target.textContent === getResourceText("employee.nameDesc")) {
-                        event.target.textContent = getResourceText("employee.nameAsc");
-                        that.binding.restriction.btn_textContent = event.target.textContent;
-                        that.binding.restriction.OrderDesc = false;
-                    } else {
-                        event.target.textContent = getResourceText("employee.nameDesc");
-                        that.binding.restriction.btn_textContent = event.target.textContent;
+                    if (event.target.textContent === getResourceText("employee.nameAsc")) {
                         that.binding.restriction.OrderDesc = true;
+                    } else {
+                        that.binding.restriction.OrderDesc = false;
                     }
-
                     that.saveRestriction();
-                    master.controller.loadData();
+                    var master = Application.navigator.masterControl;
+                    if (master && master.controller) {
+                        master.controller.loadData();
+                    }
                     Log.ret(Log.l.trace);
                 },
                 clickOrderLicence: function (event) {
                     Log.call(Log.l.trace, "Employee.Controller.");
-                    var master = Application.navigator.masterControl;
                     that.binding.restriction.OrderAttribute = "NichtLizenzierteApp";
-                    //that.binding.restriction.OrderDesc = !that.binding.restriction.OrderDesc;
-                    AppData.setRestriction("Employee", that.binding.restriction);
-                    if (event.target.textContent === getResourceText("employee.licenceDesc")) {
-                        event.target.textContent = getResourceText("employee.licenceAsc");
-                        that.binding.restriction.btn_textContent = event.target.textContent;
-                        that.binding.restriction.OrderDesc = false;
-                    } else {
-                        event.target.textContent = getResourceText("employee.licenceDesc");
-                        that.binding.restriction.btn_textContent = event.target.textContent;
+                    if (event.target.textContent === getResourceText("employee.licenceAsc")) {
                         that.binding.restriction.OrderDesc = true;
+                    } else {
+                        that.binding.restriction.OrderDesc = false;
                     }
-
                     that.saveRestriction();
-                    master.controller.loadData();
+                    var master = Application.navigator.masterControl;
+                    if (master && master.controller) {
+                        master.controller.loadData();
+                    }
                     Log.ret(Log.l.trace);
                 },
                 clickTopButton: function (event) {
@@ -637,16 +632,17 @@
             var loadData = function (recordId) {
                 Log.call(Log.l.trace, "Employee.Controller.");
                 AppData.setErrorMsg(that.binding);
-                /*var id = AppData.getRecordId("MitarbeiterVIEW_20471");
-                if (id) {
-                    recordId = id;
-                }*/
+                if (!recordId) {
+                    recordId = getRecordId();
+                }
                 var ret = new WinJS.Promise.as().then(function () {
                     if (AppBar.modified) {
                         Log.print(Log.l.trace, "saveData completed...");
                         var master = Application.navigator.masterControl;
                         if (master && master.controller) {
-                            master.controller.loadData(recordId);
+                            return master.controller.loadData(recordId);
+                        } else {
+                            return WinJS.Promise.as();
                         }
                     } else {
                         return WinJS.Promise.as();
@@ -661,10 +657,6 @@
                             if (json && json.d) {
                                 // now always edit!
                                 that.setDataEmployee(json.d);
-                                if (that.binding.dataEmployee.Login) {
-                                    Log.print(Log.l.trace, "Checking for licence!");
-                                    AppBar.busy = false;
-                                }
                             }
                         }, function (errorResponse) {
                             AppData.setErrorMsg(that.binding, errorResponse);
@@ -674,21 +666,26 @@
                     }
                 }).then(function () {
                     if (recordId) {
+                        Log.print(Log.l.trace, "Checking for licence!");
                         that.checkingLicence(recordId);
                     } else {
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
-                    var empRolesFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("empRoles"));
-                    if (empRolesFragmentControl && empRolesFragmentControl.controller) {
-                        return empRolesFragmentControl.controller.loadData(recordId);
-                    } else {
-                        var parentElement = pageElement.querySelector("#emproleshost");
-                        if (parentElement) {
-                            return Application.loadFragmentById(parentElement, "empRoles", { employeeId: recordId });
+                    if (recordId) {
+                        var empRolesFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("empRoles"));
+                        if (empRolesFragmentControl && empRolesFragmentControl.controller) {
+                            return empRolesFragmentControl.controller.loadData(recordId);
                         } else {
-                            return WinJS.Promise.as();
+                            var parentElement = pageElement.querySelector("#emproleshost");
+                            if (parentElement) {
+                                return Application.loadFragmentById(parentElement, "empRoles", { employeeId: recordId });
+                            } else {
+                                return WinJS.Promise.as();
+                            }
                         }
+                    } else {
+                        return WinJS.Promise.as();
                     }
                 }).then(function () {
                     that.eventList = new WinJS.Binding.List([Employee.VeranstaltungView.defaultValue]);
@@ -722,8 +719,7 @@
                         AppData.setErrorMsg(that.binding, errorResponse);
                         that.loading = false;
                     }, {
-
-                        });
+                    });
                 }).then(function () {
                     AppBar.notifyModified = true;
                     return WinJS.Promise.as();
@@ -753,8 +749,7 @@
                                 AppBar.busy = false;
                                 // called asynchronously if ok
                                 Log.print(Log.l.info, "employeeData update: success!");
-                                var recordid = AppData.getRecordId("Mitarbeiter");
-                                if (recordid === dataEmployee.MitarbeiterVIEWID) {
+                                if (AppData.getRecordId("Mitarbeiter") === dataEmployee.MitarbeiterVIEWID) {
                                     AppData._persistentStates.privacyPolicyFlag = false;
                                     if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
                                         AppHeader.controller.binding.userData = {};
@@ -762,24 +757,35 @@
                                             AppHeader.controller.binding.userData.VeranstaltungName = "";
                                         }
                                     }
-                                    alert(getResourceText("employee.alertNewLoginPassword"), function (response) {
+                                    alert(getResourceText("employee.alertNewLoginPassword"), function(response) {
                                         // always call 
                                         Application.navigateById("login");
                                         complete(response);
                                     });
-                                }
-                                var empRolesFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("empRoles"));
-                                if (empRolesFragmentControl && empRolesFragmentControl.controller) {
-                                    empRolesFragmentControl.controller.saveData(function () {
-                                        Log.print(Log.l.trace, "saveData completed...");
-                                        if (AppData.getRecordId("Mitarbeiter") === recordId) {
-                                            AppData.getUserData();
-                                        }
-                                        /*loadData(recordId).then(function () {
-                                            AppBar.modified = false;
-                                            //that.copyMitarbeiter();
-                                            complete(response);
-                                        });*/
+                                } else {
+                                    var empRolesFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("empRoles"));
+                                    if (empRolesFragmentControl && empRolesFragmentControl.controller) {
+                                        empRolesFragmentControl.controller.saveData(function () {
+                                            Log.print(Log.l.trace, "saveData completed...");
+                                            if (AppData.getRecordId("Mitarbeiter") === recordId) {
+                                                AppData.getUserData();
+                                            }
+                                            var master = Application.navigator.masterControl;
+                                            if (master && master.controller && master.controller.binding) {
+                                                master.controller.binding.employeeId = that.binding.dataEmployee.MitarbeiterVIEWID;
+                                                master.controller.loadData().then(function () {
+                                                    //master.controller.loadData(master.controller.binding.employeeId).then(function () {
+                                                    AppBar.modified = false;
+                                                    complete(response);
+                                                    master.controller.selectRecordId(master.controller.binding.employeeId);
+                                                    //});
+                                                });
+                                            }
+                                        }, function (errorResponse) {
+                                            Log.print(Log.l.error, "saveData error...");
+                                            AppData.setErrorMsg(that.binding, errorResponse);
+                                        });
+                                    } else {
                                         var master = Application.navigator.masterControl;
                                         if (master && master.controller && master.controller.binding) {
                                             master.controller.binding.employeeId = that.binding.dataEmployee.MitarbeiterVIEWID;
@@ -791,24 +797,6 @@
                                                 //});
                                             });
                                         }
-                                    }, function (errorResponse) {
-                                        Log.print(Log.l.error, "saveData error...");
-                                        AppData.setErrorMsg(that.binding, errorResponse);
-                                    });
-                                } else {
-                                    /*loadData(recordId).then(function () {
-                                        complete(response);
-                                    });*/
-                                    var master = Application.navigator.masterControl;
-                                    if (master && master.controller && master.controller.binding) {
-                                        master.controller.binding.employeeId = that.binding.dataEmployee.MitarbeiterVIEWID;
-                                        master.controller.loadData().then(function () {
-                                            //master.controller.loadData(master.controller.binding.employeeId).then(function () {
-                                            AppBar.modified = false;
-                                            complete(response);
-                                            master.controller.selectRecordId(master.controller.binding.employeeId);
-                                            //});
-                                        });
                                     }
                                 }
                             }, function (errorResponse) {
@@ -819,19 +807,7 @@
                                 //AppData.setErrorMsg(that.binding, errorResponse);
                                 //error(errorResponse);
                                 ;
-                            }, recordId, dataEmployee)/*.then(function () {
-                                var recordid = AppData.getRecordId("Mitarbeiter");
-                                if (recordid === dataEmployee.MitarbeiterVIEWID)
-                                    if (AppData._persistentStates.odata.login !== that.binding.dataEmployee.Login || AppData._persistentStates.odata.password !== that.binding.dataEmployee.Password) {
-                                        AppData._persistentStates.privacyPolicyFlag = false;
-                                        if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
-                                            AppHeader.controller.binding.userData = {};
-                                            if (!AppHeader.controller.binding.userData.VeranstaltungName) {
-                                                AppHeader.controller.binding.userData.VeranstaltungName = "";
-                                            }
-                                        }
-                                    }
-                            })*/;
+                            }, recordId, dataEmployee);
                         } else {
                             Log.print(Log.l.info, "not supported");
                             ret = WinJS.Promise.as();
@@ -858,9 +834,11 @@
             }
             this.saveData = saveData;
 
+            that.saveRestriction();
+
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.loadData(getRecordId());
+                return that.loadData();
             }).then(function () {
                 AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Data loaded");

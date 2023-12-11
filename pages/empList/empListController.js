@@ -165,7 +165,7 @@
                 item.nameInitial = (item.Vorname && item.Nachname)
                     ? item.Vorname.substr(0, 1) + item.Nachname.substr(0, 1)
                     : (item.Vorname ? item.Vorname.substr(0, 2) : item.Nachname ? item.Nachname.substr(0, 2) : "");
-                if (typeof cutSerialnumer !== "undefined" && typeof item.CS1504SerienNr !== "undefined") {
+                if (typeof item.CS1504SerienNr === "string") {
                     item.CS1504SerienNr = that.cutSerialnumer(item.CS1504SerienNr);
                 }
                 if (item.Gesperrt === 1) {
@@ -407,31 +407,53 @@
                 }
                 var restriction = AppData.getRestriction("Employee");
                 Log.call(Log.l.trace, "EmpList.Controller. restriction Employee:" + restriction);
-                var defaultrestriction = EmpList.employeeView.defaultRestriction;
+                var defaultrestriction = copyByValue(GenDataEmpList.employeeView.defaultRestriction);
                 if (!restriction) {
                     restriction = defaultrestriction;
                 }
                 if (restriction.OrderAttribute === "Vorname") {
-                    if (btnName) {
-                        if (restriction.btn_textContent) {
-                            btnFirstName.textContent = restriction.btn_textContent;
+                    if (btnFirstName) {
+                        if (restriction.OrderDesc) {
+                            btnFirstName.textContent = getResourceText("employee.firstNameDesc");
+                        } else {
+                            btnFirstName.textContent = getResourceText("employee.firstNameAsc");
                         }
+                    }
+                    if (btnName) {
                         btnName.textContent = getResourceText("employee.name");
                     }
-                    btnEmployeeLicence.textContent = getResourceText("employee.licence");
+                    if (btnEmployeeLicence) {
+                        btnEmployeeLicence.textContent = getResourceText("employee.licence");
+                    }
                 } else if (restriction.OrderAttribute === "Nachname") {
                     if (btnFirstName) {
-                        if (restriction.btn_textContent) {
-                            btnName.textContent = restriction.btn_textContent;
-                        }
                         btnFirstName.textContent = getResourceText("employee.firstName");
                     }
-                    btnEmployeeLicence.textContent = getResourceText("employee.licence");
-
-                } else if (restriction.OrderAttribute === "NichtLizenzierteApp" ) {
+                    if (btnName) {
+                        if (restriction.OrderDesc) {
+                            btnName.textContent = getResourceText("employee.nameDesc");
+                        } else {
+                            btnName.textContent = getResourceText("employee.nameAsc");
+                        }
+                    }
+                    if (btnEmployeeLicence) {
+                        btnEmployeeLicence.textContent = getResourceText("employee.licence");
+                    }
+                } else if (restriction.OrderAttribute === "NichtLizenzierteApp") {
                     // getResrestriction or defaultrestriction
-                    btnName.textContent = getResourceText("employee.name");
-                    btnFirstName.textContent = getResourceText("employee.firstName");
+                    if (btnFirstName) {
+                        btnFirstName.textContent = getResourceText("employee.firstName");
+                    }
+                    if (btnName) {
+                        btnName.textContent = getResourceText("employee.name");
+                    }
+                    if (btnEmployeeLicence) {
+                        if (restriction.OrderDesc) {
+                            btnEmployeeLicence.textContent = getResourceText("employee.licenceDesc");
+                        } else {
+                            btnEmployeeLicence.textContent = getResourceText("employee.licenceAsc");
+                        }
+                    }
                 }
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {

@@ -229,7 +229,7 @@
             }
             this.resultConverter = resultConverter;
 
-            var loadData = function (curRecordId) {
+            var loadData = function () {
                 Log.call(Log.l.trace, "EmpRoles.");
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
@@ -284,9 +284,7 @@
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
-                    }, /*{
-                        MitarbeiterID: curRecordId
-                    }*/null);
+                    });
                 });
                 Log.ret(Log.l.trace);
                 return ret;

@@ -49,8 +49,8 @@
                 Nachname: "",
                 Login: "",
                 Names: "",
-                OrderAttribute: "NichtLizenzierteApp",
-                OrderDesc: true
+                OrderAttribute: "Nachname",
+                OrderDesc: false
             }
         },
         _employeePWExportView: {
