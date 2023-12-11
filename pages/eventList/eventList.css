@@ -42,6 +42,8 @@
     padding-left: 26px;
     padding-right: 26px;
     width: auto;
+    padding-top: 4px;
+    padding-bottom: 4px;
 }
 
 .view-size-medium #eventList .win-item,
@@ -61,8 +63,6 @@
     width: 100%;
     padding-left: 0;
     padding-right: 0;
-    padding-top: 4px;
-    padding-bottom: 4px;
 }
 .eventList .content-header .master-list-header {
     margin-top: 16px;

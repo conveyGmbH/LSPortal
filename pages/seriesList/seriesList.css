@@ -46,9 +46,10 @@
 #seriesList .list-header {
     padding-left: 26px;
     padding-right: 26px;
-    min-height: 48px;
-    padding-top: 4px;
+    min-height: 40px;
     width: auto;
+    padding-top: 4px;
+    padding-bottom: 4px;
 }
 
 .view-size-medium #seriesList .win-item,
@@ -68,8 +69,6 @@
     width: 100%;
     padding-left: 0;
     padding-right: 0;
-    padding-top: 4px;
-    padding-bottom: 4px;
 }
 
 .seriesList .content-header .master-list-header {
