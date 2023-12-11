@@ -70,7 +70,7 @@
             if (element && !that.inResize) {
                 that.inResize = 1;
                 ret = WinJS.Promise.timeout(0).then(function () {
-                    var empList = element.querySelector("#genFragEventsList.listview");
+                    var empList = element.querySelector("#genFragEvents.listview");
                     if (empList && empList.style) {
                         var contentarea = element.querySelector(".contentarea");
                         if (contentarea) {

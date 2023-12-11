@@ -16,7 +16,7 @@
                         <div class="list-header">
                             <div class="row-separator"></div>
                             <div class="list-landscape-only">
-                                <div class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'genFragEvents.event'}"></div>
+                                <div class="list-field-big-variable win-type-ellipsis" data-win-res="{textContent: 'genFragEvents.event'}"></div>
                                 <div class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'genFragEvents.eventstart'}"></div>
                                 <div class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'genFragEvents.eventaktiv'}"></div>
                                 <div class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'genFragEvents.eventinfomail'}"></div>
@@ -28,27 +28,21 @@
                         <div class="list-landscape-only">
                             <div class="row-bkg-gray"
                                  data-win-bind="style.display: index Binding.Converter.oddToDisplay"></div>
-                            <div class="list-field-small-fixed win-type-ellipsis"
+                            <div class="list-field-big-variable win-type-ellipsis"
                                  data-win-bind="textContent: VeranstaltungName"></div>
                             <div class="list-field-small-fixed win-type-ellipsis"
                                  data-win-bind="textContent: EndStartDatum"></div>
+                            <div class="list-field-small-fixed">
+                                <span data-win-bind="style.display: UserStatusID Binding.Converter.toDisplay">X</span>
+                                <button data-win-bind="style.display: AktivButtonShowFlag Binding.Converter.toDisplay"
+                                    data-win-res="{textContent: 'genFragEvents.eventsetactive'}" 
+                                    onclick="AppBar.handleEvent('click', 'clickChangeEvent', event)"></button>
+                                <span data-win-bind="style.display: UserStatusShowFlag Binding.Converter.toDisplay; textContent: UserStatus"></span>
+                            </div>
                             <div class="list-field-small-fixed win-type-ellipsis">
-                                <div class="content-record"
-                                     data-win-bind="style.display: UserStatusID Binding.Converter.toDisplay">X</div>
-                                <div class="content-record"
-                                     data-win-bind="style.display: AktivButtonShowFlag Binding.Converter.toDisplay">
-                                    <button data-win-res="{textContent: 'genFragEvents.eventsetactive'}" onclick="AppBar.handleEvent('click', 'clickChangeEvent', event)"></button>
-                                </div> 
-                                <div class="content-record"
-                                     data-win-bind="style.display: UserStatusShowFlag Binding.Converter.toDisplay">
-                                    <div class="list-field-small-fixed win-type-ellipsis"
-                                         data-win-bind="textContent: UserStatus"></div>
-                                </div>
+                                <button data-win-res="{textContent: 'genFragEvents.eventsendinfomail'}"></button>
                             </div>
-                                <div class="list-field-small-fixed win-type-ellipsis">
-                                    <button data-win-res="{textContent: 'genFragEvents.eventsendinfomail'}"></button>
-                                </div>
-                            </div>
+                        </div>
                         <div class="list-portrait-only">
                             <div class="row-separator"></div>
                             <div class="list-div-left">
@@ -56,24 +50,13 @@
                                     <!--list-voucherAdministrationList-->
                                     <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
                                           data-win-bind="textContent: VeranstaltungName"></span>
-                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
-                                          data-win-bind="textContent: Startdatum"></span>
-                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis">
-                                        <div class="content-record"
-                                             data-win-bind="style.display: UserID Binding.Converter.toDisplay">X</div>
-                                        <div class="content-record"
-                                             data-win-bind="style.display: AktivButtonShowFlag Binding.Converter.toDisplay">
-                                            <button data-win-res="{textContent: 'genFragEvents.eventsetactive'}" onclick="AppBar.handleEvent('click', 'clickChangeEvent', event)"></button>
-                                        </div>
-                                        <div class="content-record"
-                                             data-win-bind="style.display: UserStatusShowFlag Binding.Converter.toDisplay">
-                                            <div class="list-field-small-fixed win-type-ellipsis"
-                                                 data-win-bind="textContent: UserStatus"></div>
-                                        </div>
-                                    </span>
-                                    <div class="list-field-small-fixed win-type-ellipsis">
-                                        <button data-win-res="{textContent: 'genFragEvents.eventsendinfomail'}"></button>
-                                    </div>
+                                    <span class="list-compressed-title win-type-ellipsis"
+                                          data-win-bind="textContent: EndStartDatum"></span>
+                                    <button data-win-bind="style.display: AktivButtonShowFlag Binding.Converter.toDisplay"
+                                            data-win-res="{textContent: 'genFragEvents.eventsetactive'}" 
+                                            onclick="AppBar.handleEvent('click', 'clickChangeEvent', event)"></button>
+                                    <span data-win-bind="style.display: UserStatusShowFlag Binding.Converter.toDisplay; textContent: UserStatus"></span>
+                                    <button data-win-res="{textContent: 'genFragEvents.eventsendinfomail'}"></button>
                                 </div>
                             </div>
                         </div>

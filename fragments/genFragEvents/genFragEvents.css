@@ -1,13 +1,4 @@
-﻿
-#genFragEvents .listview .win-selectionstylefilled {
-    position: relative;
-    left: 0px;
-    top: 0px;
-    width: auto;
-    height: auto;
-}
-
-#genFragEvents .win-itemcontainer .win-itembox,
+﻿#genFragEvents .win-itemcontainer .win-itembox,
 #genFragEvents .win-listview .win-itembox {
     background-color: transparent;
 }
@@ -17,7 +8,15 @@
 }
 .genFragEvents .list-field-small-fixed {
     width: 200px;
-    padding-left: 20px;
+    height: 32px;
+    float: left;
+}
+.genFragEvents .list-field-big-variable {
+    width: calc(100% - 640px);
+    height: 32px;
+    float: left;
+    padding-top: 8px;
+    padding-left: 8px;
 }
 .genFragEvents .row-bkg-gray {
     width: auto;
@@ -39,101 +38,37 @@
     height: 100%;
 }
 
-/* Styles used for the custom layout */
-.listView .genFragEventsLayout {
-    position: static;
+#genFragEvents .list-compressed {
+    width: 100%;
 }
 
-    .listView .genFragEventsLayout .win-surface {
-        margin-left: 0;
-    }
-
-.listView .genFragEventsLayout .win-surface {
-        margin-left: 0;
-    }
-
-genFragEvents .win-container {
+/* Styles used for the custom layout */
+#genFragEvents .win-container {
     margin: 0;
 }
-/*
-#mailingList .win-item {
-    padding: 4px 8px;
-    width: calc(100% - 20px);
-    border-style: solid;
-    border-width: 2px;
-    border-color: transparent;
-}
-*/
-#genFragEvents .win-item {
-    width: 100%;
+
+#genFragEvents .win-item,
+#genFragEvents .list-header {
     padding-left: 26px;
     padding-right: 26px;
-    padding-top: 2px;
-    padding-bottom: 2px;
-}
-
-
-/*
-    margins/paddings for bigger size screens 
-
-    @media (max-width:1099px) {
-    }
-
-    is now signalled by additional class: view-size-bigger
-*/
-
-/*
-.view-size-bigger #mailingList .win-container {
-    margin-left: 0;
-    margin-right: 0;
-    margin-top: 0;
-    margin-bottom: 16px;
-}
-*/
-.view-size-bigger #genFragEvents .win-item {
-    width: calc(100% - 60px);
-    padding-top: 8px;
-    padding-bottom: 8px;
-}
-
-/*
-    margins/paddings for middle sized screens 
-
-
-    is now signalled by additional class: view-size-medium
-
-    @media (max-width:899px) {
-    }
-*/
-
-
-.view-size-medium #genFragEvents .win-item {
-    width: calc(100% - 36px);
-    padding-left: 18px;
-    padding-right: 18px;
-    padding-top: 8px;
-    padding-bottom: 8px;
-}
-
-/*
-    margins/paddings for small sized screens 
-
-
-    is now signalled by additional class: view-size-small
-
-    @media (max-width:499px) {
-    }
-*/
-#genFragEvents .win-disposable {
-    width: 100% !important;
-}
-.view-size-small #genFragEvents .win-item {
-    width: calc(100% - 20px);
-    padding-left: 10px;
-    padding-right: 10px;
+    width: auto;
     padding-top: 4px;
     padding-bottom: 4px;
 }
+
+
+.view-size-medium #genFragEvents .win-item,
+.view-size-medium #genFragEvents .list-header {
+    padding-left: 18px;
+    padding-right: 18px;
+}
+
+.view-size-small #genFragEvents .win-item,
+.view-size-small #genFragEvents .list-header {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
 #genFragEvents {
     position: relative;
     overflow: auto;
@@ -147,6 +82,8 @@ genFragEvents .win-container {
     /* Add any other styles you need for the header */
 }
 .genFragEvents button {
+    position: relative;
+    top: -8px;
     background-color: whitesmoke;
     width: 200px;
     height: 30px;
@@ -163,7 +100,7 @@ genFragEvents .win-container {
     transition-duration: 0.4s;
     font-weight: bold;
 }
-    .genFragEvents button:hover {
-        box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-        opacity: 1;
-    }
+.genFragEvents button:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    opacity: 1;
+}
