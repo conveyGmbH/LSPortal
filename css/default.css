@@ -1758,3 +1758,7 @@ button.win-button {
     margin-top: 25px;
     margin-bottom: 25px;
 }
+
+.win-toggleswitch .win-toggleswitch-values {
+     max-width: calc(100% - 50px);
+}
