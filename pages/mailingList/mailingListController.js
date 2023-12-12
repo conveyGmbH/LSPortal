@@ -282,11 +282,11 @@
                 var headervaluedown = headervalue.concat(down);
                 if (headervalue === "Name") {
                     if (headertext === headervalueup) {
-                        that.binding.dataContactHeaderText.Name = headervaluedown;
+
                     } else if (headertext === headervaluedown) {
-                        that.binding.dataContactHeaderText.Name = headervalueup;
+
                     } else {
-                        that.binding.dataContactHeaderText.Name = headervaluedown;
+
                     }
                 }
                 if (headervalue === "Vorname") {
