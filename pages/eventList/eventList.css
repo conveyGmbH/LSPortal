@@ -36,6 +36,9 @@
 #eventList .win-container {
     margin: 0;
 }
+#eventList .win-container.win-disabled {
+    opacity: 0.4;
+}
 
 #eventList .win-item,
 #eventList .list-header {

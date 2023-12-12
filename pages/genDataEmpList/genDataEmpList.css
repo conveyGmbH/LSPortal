@@ -37,6 +37,9 @@
     border-radius: 0;
     background-color: transparent;
 }
+#genDataEmpList .win-container.win-disabled {
+    opacity: 0.4;
+}
 
 #genDataEmpList .win-item {
     width: calc(100% - 52px);

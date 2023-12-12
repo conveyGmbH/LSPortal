@@ -1762,3 +1762,15 @@ button.win-button {
 .win-toggleswitch .win-toggleswitch-values {
      max-width: calc(100% - 50px);
 }
+
+html.win-hoverable .win-listview.win-selectionstylefilled .win-container.win-disabled:hover .win-itembox,
+html.win-hoverable .win-itemcontainer.win-selectionstylefilled.win-container.win-disabled:hover .win-itembox {
+    background-color: inherit;
+    color: inherit;
+}
+.win-listview:not(.win-selectionstylefilled) .win-container.win-selected.win-disabled .win-selectionborder,
+.win-itemcontainer:not(.win-selectionstylefilled).win-container.win-selected.win-disabled .win-selectionborder {
+    border-color: inherit;
+    color: inherit;
+}
+

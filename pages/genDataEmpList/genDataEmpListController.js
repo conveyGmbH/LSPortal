@@ -264,22 +264,22 @@
                                 var indexOfLastVisible = listView.winControl.indexOfLastVisible;
                                 for (i = indexOfFirstVisible; i <= indexOfLastVisible; i++) {
                                     var element = listView.winControl.elementFromIndex(i);
-                                    if (element) {
+                                    if (element && element.parentElement && element.parentElement.parentElement) {
                                         if (element.firstElementChild) {
-                                            if (element.firstElementChild.disabled) {
-                                                element.style.backgroundColor = "grey";
-                                                if (AppHeader.controller.binding.userData.SiteAdmin) {
-                                                    if (WinJS.Utilities.hasClass(element, "win-nonselectable")) {
-                                                        WinJS.Utilities.removeClass(element, "win-nonselectable");
-                                                    }
-                                                } else {
-                                                    if (!WinJS.Utilities.hasClass(element, "win-nonselectable")) {
-                                                        WinJS.Utilities.addClass(element, "win-nonselectable");
-                                                    }
+                                            if (element.firstElementChild.disabled &&
+                                                !AppHeader.controller.binding.userData.SiteAdmin) {
+                                                if (!WinJS.Utilities.hasClass(element, "win-nonselectable")) {
+                                                    WinJS.Utilities.addClass(element, "win-nonselectable");
+                                                }
+                                                if (!WinJS.Utilities.hasClass(element.parentElement.parentElement, "win-disabled")) {
+                                                    WinJS.Utilities.addClass(element.parentElement.parentElement, "win-disabled");
                                                 }
                                             } else {
                                                 if (WinJS.Utilities.hasClass(element, "win-nonselectable")) {
                                                     WinJS.Utilities.removeClass(element, "win-nonselectable");
+                                                }
+                                                if (WinJS.Utilities.hasClass(element.parentElement.parentElement, "win-disabled")) {
+                                                    WinJS.Utilities.removeClass(element.parentElement.parentElement, "win-disabled");
                                                 }
                                             }
                                         }
