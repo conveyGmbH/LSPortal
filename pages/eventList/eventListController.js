@@ -279,6 +279,12 @@
                                                         AppBar.scope.setEventId(that.binding.eventId);
                                                         AppBar.scope.loadData();
                                                     }
+                                                    else if (curPageId === "eventProducts" &&
+                                                        typeof AppBar.scope.loadData === "function" &&
+                                                        typeof AppBar.scope.setVeranstaltungId === "function") {
+                                                        AppBar.scope.setVeranstaltungId(that.binding.eventId);
+                                                        AppBar.scope.loadData();
+                                                    }
                                                     else if (curPageId === "event" &&
                                                         typeof AppBar.scope.loadData === "function" &&
                                                         typeof AppBar.scope.setEventId === "function") {

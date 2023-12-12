@@ -70,6 +70,8 @@
     "command.newExhibitor"    : "Neuer Austeller",
     "command.newNachbestellungen"    : "Nachbestellung",
     "command.addEvent"    : "Veranstaltung wechseln",
+    "command.addProduct"    : "Produkt hinzufügen",
+    "command.removeProduct"    : "Produkt löschen",
 
 
     "tooltip.backward"      : "Zurück blättern",
@@ -158,6 +160,8 @@
     "tooltip.changeLogin" : "Mitarbeiter Login ändern",
     "tooltip.copyEvent"     : "Einstellungen übernehmen",
     "tooltip.copyMitarbeiter" : "Veranstaltung wechseln",
+    "tooltip.addProduct" : "Produkt hinzufügen",
+    "tooltip.removeProduct"    : "Produkt löschen",
 
     "home.title"            : "Start",
     "home.info"             : "Wichtige Hinweise",
@@ -635,6 +639,7 @@
     "label.siteeventsImport" : "Aussteller Import",
     "label.genDataEmployee" : "Benutzerkonten",
     "label.genDataEmpList" : "Benutzerkonten",
+    "label.eventProducts" : "Produkte",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Abbrechen",
@@ -1665,5 +1670,11 @@
 
     "genDataEmployee.event"			: "Veranstaltungen",
     "genDataEmployee.addevent"			: "Veranstaltung",
-    "genDataEmployee.addeventbtn"			: "Hinzufügen"
+    "genDataEmployee.addeventbtn"			: "Hinzufügen",
+
+    "eventProducts.title"			: "Produkte",
+    "eventProducts.ProductTitle"			: "Produkt Name",
+    "eventProducts.ProductInfo"			: "Produkt Info",
+    "eventProducts.productcombotitle"			: "Produkt",
+    "eventProducts.productaddbtntitle"			: "Hinzufügen"
 }		

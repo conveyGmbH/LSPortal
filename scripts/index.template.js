@@ -267,6 +267,7 @@
         { id: "dashboardFN", group: -70, disabled: false },
         { id: "eventStatus", group: 73, disabled: false },
         { id: "eventCopy", group: 2, disabled: false },
+        { id: "eventProducts", group: 2, disabled: false },
         { id: "siteeventsImport", group: 13, disabled: false }
     ];
 
@@ -313,7 +314,8 @@
         { id: "eventCopy", master: "eventList" },
         { id: "siteeventsImport", master: "siteEventsList" },
         //{ id: "start", master: "eventList" },
-        { id: "genDataEmployee", master: "genDataEmpList" }
+        { id: "genDataEmployee", master: "genDataEmpList" },
+        { id: "eventProducts", master: "eventList" }
     ];
 
     // init page for app startup
