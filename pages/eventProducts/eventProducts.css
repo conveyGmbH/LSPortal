@@ -53,7 +53,11 @@
 }
 .selected {
     border: solid;
+    border-color: darkgray;
+    background-color: darkgray;
 }
     .selected:hover {
         border: solid;
+        border-color: darkgray;
+        background-color: darkgray;
     }
