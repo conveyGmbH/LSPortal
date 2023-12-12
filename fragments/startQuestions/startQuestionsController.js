@@ -20,8 +20,7 @@
         Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options) {
             Log.call(Log.l.trace, "StartQuestions.Controller.");
             Fragments.Controller.apply(this, [fragmentElement, {
-                questions: getEmptyDefaultValue(StartQuestions.questionView.defaultValue),
-                anwsers: null
+                qbez: 0
             }]);
 
             var that = this;
@@ -249,7 +248,6 @@
                 item.index = index;
                 item.buttonColor = Colors.dashboardColor;
                 item.buttonTitle = Colors.tileTextColor;
-                that.binding.questions.qbez = item.index + 1;
                 if (item.SumAntwort === null) {
                     item.SumAntwort = 0;
                 }
@@ -272,6 +270,7 @@
                                 that.resultConverter(item, index);
                             });
                             //that.fields = results;
+                            that.binding.qbez = results.length;
                             that.questions = new WinJS.Binding.List(results);
                             if (questionList.winControl) {
                                 if (questionList.winControl.selectionMode !== WinJS.UI.SelectionMode.single) {
