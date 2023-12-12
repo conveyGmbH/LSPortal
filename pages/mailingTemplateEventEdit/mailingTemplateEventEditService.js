@@ -64,7 +64,8 @@
             getRestriction: {
                 Subject: "",
                 MailText: "",
-                TextName: ""
+                TextName: "",
+                AddICSVariant: 0
             },    
             setRestriction: {
                 TextName: "",

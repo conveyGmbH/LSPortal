@@ -44,9 +44,9 @@
                     that.binding.dataLayoutValue.Subject = "";
                 }
                 if (layoutdata.Mailtext) {
-                    that.binding.dataLayoutValue.LayoutText = layoutdata.Mailtext;
+                    that.binding.dataLayoutValue.Mailtext = layoutdata.Mailtext;
                 } else {
-                    that.binding.dataLayoutValue.LayoutText = "";
+                    that.binding.dataLayoutValue.Mailtext = "";
                 }
             }
             this.setLayoutData = setLayoutData;
