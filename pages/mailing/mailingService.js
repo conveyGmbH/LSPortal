@@ -54,7 +54,7 @@
                 MemoSpec: "",
                 SpecType: "",
                 ReplyTo: "",
-                VeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                VeranstaltungID: 0,
                 INITSpracheID: 0,
                 MailFooter: "",
                 GDPR_Flag: null
