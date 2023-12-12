@@ -21,19 +21,7 @@
 .genFragEvents .row-bkg-gray {
     width: auto;
 }
-.genFragEvents .list-role-item {
-    width: 100%;
-    min-width: 200px;
-    height: 45px;
-    overflow: hidden;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-}
 #genFragEvents .listview {
-    position: relative;
-    left: 0;
-    top: 0;
     width: 100%;
     height: 100%;
 }

@@ -1,30 +1,75 @@
-﻿body {
+﻿#localevents .win-itemcontainer .win-itembox,
+#localevents .win-listview .win-itembox {
+    background-color: transparent;
 }
-#localevents .win-itemscontainer {
-    padding-left: 20px;
-}
-.localEvents-big {
-    text-align: left;
-    width: 80px;
-    display: inline-block;
-    position: relative;
-    top: 0;
-    min-height: 32px;
-    padding-top: 8px;
-    padding-left: 8px;
-    width: 300px;
-    padding-left: 20px;
-}
-.status {
-    padding-left: 20px;
-}
-#localevents {
-    height: 100%;
-}
-#localevents .list-header {
+
+.localevents .list-header {
     padding-left: 27px;
     font-weight: bold;
 }
+#localevents .list-field-small-fixed {
+    width: 150px;
+    height: 32px;
+    float: left;
+}
+#localevents .list-field-big-variable {
+    width: calc(100% - 340px);
+    height: 32px;
+    float: left;
+    padding-top: 8px;
+    padding-left: 8px;
+}
+.localevents .row-bkg-gray {
+    width: auto;
+}
+
+#localevents .listview {
+    width: 100%;
+    height: 100%;
+}
+
+/* Styles used for the custom layout */
+#localevents .win-container {
+    margin: 0;
+}
+
+#localevents .win-item,
+#localevents .list-header,
+#localevents .list-footer {
+    padding-left: 26px;
+    padding-right: 26px;
+    width: auto;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+
+.view-size-medium #localevents .win-item,
+.view-size-medium #localevents .list-header,
+.view-size-medium #localevents .list-footer {
+    padding-left: 18px;
+    padding-right: 18px;
+}
+
+.view-size-small #localevents .win-item,
+.view-size-small #localevents .list-header,
+.view-size-small #localevents .list-footer {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.localevents .list-div-left {
+    width: 100%
+}
+#localevents .win-headercontainer {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: #f0f0f0;
+    /* Add any other styles you need for the header */
+}
+
+
 #localevents .confirm-button {
     position: absolute;
     height: 100%;
