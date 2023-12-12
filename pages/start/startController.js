@@ -175,7 +175,9 @@
                         // kontaktanzahlView returns object already parsed from json file in response
                         if (json && json.d && json.d.results.length > 0) {
                             that.binding.dataLicence = json.d.results[0];
-                            that.binding.dataLicence.UserListe = that.binding.dataLicence.UserListe.replace(/,/gi, " ");
+                            if (that.binding.dataLicence.UserListe) {
+                                that.binding.dataLicence.UserListe = that.binding.dataLicence.UserListe.replace(/,/gi, " ");
+                            }
                         }
                         return WinJS.Promise.as();
                     },
