@@ -26,9 +26,15 @@
             // select combo
             var initSprache = pageElement.querySelector("select[name=InitMailTemplateSprache]"); //querySelector('input[name="pwd"]');
 
+            var resultConverter = function (item, index) {
+                // for future to add item-members here
+            }
+            this.resultConverter = resultConverter;
+
             var setDataMailLayout = function (newDataMailLayout) {
                 var prevNotifyModified = AppBar.notifyModified;
                 AppBar.notifyModified = false;
+                that.resultConverter(newDataMailLayout);
                 that.binding.dataMailLayout = newDataMailLayout;
                 if (newDataMailLayout.LanguageSpecID) {
                     that.binding.LanguageID = newDataMailLayout.LanguageSpecID;
