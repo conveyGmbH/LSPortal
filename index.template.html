@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -124,7 +124,8 @@
     <!-- Page-Navigationbar Templates -->
     <div class="navigationbar-horizontal-template"
          data-win-control="WinJS.Binding.Template" style="display: none">
-        <div class="navigationbar-item navigationbar-horizontal-item win-type-subtitle">
+        <div class="navigationbar-item navigationbar-horizontal-item win-type-subtitle"
+             data-win-bind="disabled: disabled">
             <div class="navigationbar-text navigationbar-horizontal-text"
                  data-win-bind="style.display: disabled Binding.Converter.toDisplayNone">
                 <span class="navigationbar-inner-text" 
@@ -139,7 +140,8 @@
     </div>
     <div class="navigationbar-vertical-template"
          data-win-control="WinJS.Binding.Template" style="display: none">
-        <div class="navigationbar-item navigationbar-vertical-item win-type-subtitle">
+        <div class="navigationbar-item navigationbar-vertical-item win-type-subtitle"
+             data-win-bind="disabled: disabled">
             <div class="navigationbar-text navigationbar-vertical-text"
                  data-win-bind="style.display: disabled Binding.Converter.toDisplayNone">
                 <span class="navigationbar-inner-text"
