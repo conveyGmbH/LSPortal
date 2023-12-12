@@ -98,26 +98,6 @@
                 }
             }
 
-            var getDateObject = function (modifyDate, editDate) {
-                var dateString, milliseconds, time;
-                if (modifyDate) {
-                    dateString = modifyDate.replace("\/Date(", "").replace(")\/", "");
-                    milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
-                    time = new Date(milliseconds);
-                    that.binding.modifyData = ("0" + time.getDate()).slice(-2) + "." + ("0" + (time.getMonth() + 1)).slice(-2) + "." + time.getFullYear();
-                    Log.call(Log.l.trace, "Contact.Controller.");
-                }
-                if (editDate) {
-                    dateString = editDate.replace("\/Date(", "").replace(")\/", "");
-                    milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
-                    time = new Date(milliseconds);
-                    that.binding.editData = ("0" + time.getDate()).slice(-2) + "." + ("0" + (time.getMonth() + 1)).slice(-2) + "." + time.getFullYear();
-                    Log.call(Log.l.trace, "Contact.Controller.");
-                }
-                Log.call(Log.l.trace, "Contact.Controller.");
-            };
-            this.getDateObject = getDateObject;
-
             this.dispose = function () {
                 if (initAnrede && initAnrede.winControl) {
                     initAnrede.winControl.data = null;
@@ -384,23 +364,37 @@
                 AppBar.triggerDisableHandlers();
             }
 
+            var getDateObject = function (date) {
+                var ret = null;
+                if (date) {
+                    var dateString = date.replace("\/Date(", "").replace(")\/", "");
+                    var milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
+                    var time = new Date(milliseconds);
+                    ret = ("0" + time.getDate()).slice(-2) + "." + ("0" + (time.getMonth() + 1)).slice(-2) + "." + time.getFullYear();
+                }
+                return ret;
+            };
+            this.getDateObject = getDateObject;
+
+            var resultConverter = function (item, index) {
+                item.modifyData = that.getDateObject(item.ModifiedTS);
+                item.editData = that.getDateObject(item.Erfassungsdatum);
+                if (item.Bemerkungen === null) {
+                    item.Bemerkungen = "";
+                }
+                if (!item.KontaktVIEWID) {
+                    item.Nachbearbeitet = 1;
+                }
+                item.Mitarbeiter_Fullname = (item.Mitarbeiter_Vorname ? (item.Mitarbeiter_Vorname + " ") : "") + (item.Mitarbeiter_Nachname ? item.Mitarbeiter_Nachname : "");
+                item.Bearbeiter_Fullname = (item.Bearbeiter_Vorname ? (item.Bearbeiter_Vorname + " ") : "") + (item.Bearbeiter_Nachname ? item.Bearbeiter_Nachname : "");
+            }
+            this.resultConverter = resultConverter;
+
             var setDataContact = function(newDataContact) {
                 var prevNotifyModified = AppBar.notifyModified;
                 AppBar.notifyModified = false;
-                // Bug: textarea control shows 'null' string on null value in Internet Explorer!
-                if (newDataContact.ModifiedTS) {
-                    that.getDateObject(newDataContact.ModifiedTS, null);
-                }
-                if (newDataContact.Erfassungsdatum) {
-                    that.getDateObject(null, newDataContact.Erfassungsdatum);
-                }
-                if (newDataContact.Bemerkungen === null) {
-                    newDataContact.Bemerkungen = "";
-                }
+                that.resultConverter(newDataContact);
                 that.binding.dataContact = newDataContact;
-                if (!that.binding.dataContact.KontaktVIEWID) {
-                    that.binding.dataContact.Nachbearbeitet = 1;
-                }
                 if (that.binding.dataContact.Erfassungsdatum === that.binding.dataContact.ModifiedTS) {
                     that.binding.showModified = false;
                 } else {
@@ -413,8 +407,6 @@
                         WinJS.Utilities.removeClass(textComment, "input_text_comment_big");
                     }
                 }
-                that.binding.dataContact.Mitarbeiter_Fullname = (that.binding.dataContact.Mitarbeiter_Vorname ? (that.binding.dataContact.Mitarbeiter_Vorname + " ") : "") + (that.binding.dataContact.Mitarbeiter_Nachname ? that.binding.dataContact.Mitarbeiter_Nachname : "");
-                that.binding.dataContact.Bearbeiter_Fullname = (that.binding.dataContact.Bearbeiter_Vorname ? (that.binding.dataContact.Bearbeiter_Vorname + " ") : "") + (that.binding.dataContact.Bearbeiter_Nachname ? that.binding.dataContact.Bearbeiter_Nachname : "");
                 AppBar.modified = false;
                 AppBar.notifyModified = prevNotifyModified;
                 AppBar.triggerDisableHandlers();
