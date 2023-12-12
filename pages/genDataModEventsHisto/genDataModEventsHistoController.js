@@ -58,19 +58,24 @@
             }
             this.getDateTime = getDateTime;
 
+            var resultConverterDataContact = function (item, index) {
+                item.fullName = "";
+                if (item.Anrede) {
+                    item.fullName += item.Anrede + " ";
+                }
+                if (item.FirstName) {
+                    item.fullName += item.FirstName + " ";
+                }
+                if (item.LastName) {
+                    item.fullName += item.LastName;
+                }
+            }
+            this.resultConverterDataContact = resultConverterDataContact;
+
             var setDataContact = function (data) {
                 Log.call(Log.l.trace, "ContactResultsEvents.Controller.");
+                that.resultConverterDataContact(data);
                 that.binding.dataContact = data;
-                that.binding.dataContact.fullName = "";
-                if (data.Anrede) {
-                    that.binding.dataContact.fullName = data.Anrede + " ";
-                }
-                if (data.FirstName) {
-                    that.binding.dataContact.fullName += data.FirstName + " ";
-                }
-                if (data.LastName) {
-                    that.binding.dataContact.fullName += data.LastName;
-                }
                 Log.ret(Log.l.trace);
             }
             this.setDataContact = setDataContact;
