@@ -45,15 +45,15 @@
                 var prevNotifyModified = AppBar.notifyModified;
                 AppBar.notifyModified = false;
                 prevLogin = newDataEmployee.Login;
-                that.binding.dataEmployee = newDataEmployee;
                 if (newDataEmployee.Login && newDataEmployee.Login.indexOf("@") > 0) {
                     var firstLoginPart = newDataEmployee.Login.substr(0, newDataEmployee.Login.indexOf("@"));
                     var secondLoginPart = newDataEmployee.Login.substr(newDataEmployee.Login.lastIndexOf("@"), newDataEmployee.Login.length - 1);
-                    that.binding.dataEmployee.LogInNameBeforeAtSymbole = firstLoginPart;
-                    that.binding.dataEmployee.LogInNameAfterAtSymbole = secondLoginPart;
+                    newDataEmployee.LogInNameBeforeAtSymbole = firstLoginPart;
+                    newDataEmployee.LogInNameAfterAtSymbole = secondLoginPart;
                 }
                 prevPassword = newDataEmployee.Password;
-                that.binding.dataEmployee.Password2 = newDataEmployee.Password;
+                newDataEmployee.Password2 = newDataEmployee.Password;
+                that.binding.dataEmployee = newDataEmployee;
                 AppBar.modified = false;
                 AppBar.notifyModified = prevNotifyModified;
                 Log.ret(Log.l.trace);
@@ -426,13 +426,11 @@
                 },
                 changeLogin: function (event) {
                     Log.call(Log.l.trace, "Employee.Controller.");
-                    if (event.currentTarget && AppBar.notifyModified) {
-                        pageElement.querySelector("#password").value = "";
-                        pageElement.querySelector("#password2").value = "";
+                    if (AppBar.notifyModified) {
                         that.binding.dataEmployee.Password = "";
                         that.binding.dataEmployee.Password2 = "";
                     }
-                    if (event.currentTarget.id === "loginFirstPart") {
+                    if (event.currentTarget && event.currentTarget.id === "loginFirstPart") {
                         if (event.currentTarget.value && event.currentTarget.value.indexOf("@") > 0) {
                             that.binding.dataEmployee.LogInNameBeforeAtSymbole = event.currentTarget.value.substr(0, event.currentTarget.value.indexOf("@"));
                         } else {
@@ -447,8 +445,7 @@
                 },
                 changePassword: function (event) {
                     Log.call(Log.l.trace, "Employee.Controller.");
-                    if (event.currentTarget && AppBar.notifyModified) {
-                        pageElement.querySelector("#password2").value = "";
+                    if (AppBar.notifyModified) {
                         that.binding.dataEmployee.Password2 = "";
                     }
                     Log.ret(Log.l.trace);
