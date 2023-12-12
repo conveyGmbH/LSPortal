@@ -201,25 +201,25 @@
             this.getDateObject = getDateObject;
 
             var setTerminData = function (terminData) {
-                that.binding.dataTermin = terminData;
-                if (typeof that.binding.dataTermin.MailBCC === "undefined") {
-                    that.binding.dataTermin.MailBCC = null;
+                if (typeof terminData.MailBCC === "undefined") {
+                    terminData.MailBCC = null;
                 }
-                if (typeof that.binding.dataTermin.MailCC === "undefined") {
-                    that.binding.dataTermin.MailCC = null;
+                if (typeof terminData.MailCC === "undefined") {
+                    terminData.MailCC = null;
                 }
-                if (typeof that.binding.dataTermin.MailFrom === "undefined") {
-                    that.binding.dataTermin.MailFrom = null;
+                if (typeof terminData.MailFrom === "undefined") {
+                    terminData.MailFrom = null;
                 }
-                if (typeof that.binding.dataTermin.MailReplyTo === "undefined") {
-                    that.binding.dataTermin.MailReplyTo = null;
+                if (typeof terminData.MailReplyTo === "undefined") {
+                    terminData.MailReplyTo = null;
                 }
                 if (terminData.StartDatum) {
-                    that.binding.dataTermin.StartDatum = that.getDateObject(terminData.StartDatum);
+                    terminData.StartDatum = that.getDateObject(terminData.StartDatum);
                 }
                 if (terminData.EndDatum) {
-                    that.binding.dataTermin.EndDatum = that.getDateObject(terminData.EndDatum);
+                    terminData.EndDatum = that.getDateObject(terminData.EndDatum);
                 }
+                that.binding.dataTermin = terminData;
                 AppBar.triggerDisableHandlers();
             }
             this.setTerminData = setTerminData;

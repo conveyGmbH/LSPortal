@@ -71,7 +71,8 @@
             StatusID: null,
             HostReference: null,
             EventSuccessID: null,
-            DefRemoteKonfigID: 0
+            DefRemoteKonfigID: 0,
+            TerminClosed: 0
         },
         _remoteKonfigurationView: {
             get: function () {
