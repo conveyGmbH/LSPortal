@@ -19,7 +19,7 @@
             Application.RecordsetController.apply(this, [pageElement, {
                 count: 0,
                 Anzahl: 0,
-                dataQuestion: "",
+                dataQuestion: getEmptyDefaultValue(GenDataAnswers.questionTable.defaultValue),
                 lang: 0,
                 answerid: 0
             }, commandList]);
@@ -475,7 +475,7 @@
                         if (result) {
                             AppData.setErrorMsg(that.binding);
                             Log.print(Log.l.trace, "clickDelete: user choice OK");
-                            that.binding.dataQuestion = "";
+                            that.binding.dataQuestion = getEmptyDefaultValue(GenDataAnswers.questionTable.defaultValue);
                             var questionId = that.getQuestionId();
                             var master = Application.navigator.masterControl;
                             if (master && master.controller && master.controller.binding) {
@@ -670,7 +670,8 @@
                     }
                 },
                 clickDelete: function () {
-                    if (that.binding.dataQuestion) {
+                    if (that.binding.dataQuestion &&
+                        that.binding.dataQuestion.QuestionVIEWID) {
                         return false;
                     } else {
                         return true;
