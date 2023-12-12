@@ -368,17 +368,24 @@
                 AppBar.triggerDisableHandlers();
             }
 
-            var setDataContact = function(newDataContact) {
+            var resultConverter = function (item, index) {
+                // Bug: textarea control shows 'null' string on null value in Internet Explorer!
+                if (item.Bemerkungen === null) {
+                    item.Bemerkungen = "";
+                }
+                if (!item.KontaktVIEWID) {
+                    item.Nachbearbeitet = 1;
+                }
+                item.Mitarbeiter_Fullname = (item.Mitarbeiter_Vorname ? (item.Mitarbeiter_Vorname + " ") : "") + (item.Mitarbeiter_Nachname ? item.Mitarbeiter_Nachname : "");
+                item.Bearbeiter_Fullname = (item.Bearbeiter_Vorname ? (item.Bearbeiter_Vorname + " ") : "") + (item.Bearbeiter_Nachname ? item.Bearbeiter_Nachname : "");
+            }
+            this.resultConverter = resultConverter;
+
+            var setDataContact = function (newDataContact) {
                 var prevNotifyModified = AppBar.notifyModified;
                 AppBar.notifyModified = false;
-                // Bug: textarea control shows 'null' string on null value in Internet Explorer!
-                if (newDataContact.Bemerkungen === null) {
-                    newDataContact.Bemerkungen = "";
-                }
+                that.resultConverter(newDataContact);
                 that.binding.dataContact = newDataContact;
-                if (!that.binding.dataContact.KontaktVIEWID) {
-                    that.binding.dataContact.Nachbearbeitet = 1;
-                }
                 if (that.binding.dataContact.Erfassungsdatum === that.binding.dataContact.ModifiedTS) {
                     that.binding.showModified = false;
                 } else {
@@ -391,8 +398,6 @@
                         WinJS.Utilities.removeClass(textComment, "input_text_comment_big");
                     }
                 }
-                that.binding.dataContact.Mitarbeiter_Fullname = (that.binding.dataContact.Mitarbeiter_Vorname ? (that.binding.dataContact.Mitarbeiter_Vorname + " ") : "") + (that.binding.dataContact.Mitarbeiter_Nachname ? that.binding.dataContact.Mitarbeiter_Nachname : "");
-                that.binding.dataContact.Bearbeiter_Fullname = (that.binding.dataContact.Bearbeiter_Vorname ? (that.binding.dataContact.Bearbeiter_Vorname + " ") : "") + (that.binding.dataContact.Bearbeiter_Nachname ? that.binding.dataContact.Bearbeiter_Nachname : "");
                 AppBar.modified = false;
                 AppBar.notifyModified = prevNotifyModified;
                 AppBar.triggerDisableHandlers();
