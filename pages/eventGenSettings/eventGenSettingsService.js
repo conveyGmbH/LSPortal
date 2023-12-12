@@ -45,7 +45,8 @@
                 return ret;
             },
             defaultValue: {
-                Name: ""
+                Name: "",
+                VideoBackgroundColor: ""
             },
             newEventDefault: {
                 VeranstaltungName: ""

@@ -124,31 +124,36 @@
             }
             this.formatTime = formatTime;
 
+            var resultConverter = function (item, index) {
+                // convert LiveStartTS
+                if (item.LiveStartTS) {
+                    item.LiveStartDate = that.formatDate(that.getDateObject(item.LiveStartTS));
+                    item.LiveStartTime = that.formatTime(that.getDateObject(item.LiveStartTS));
+                }
+                if (item.LiveEndTS) {
+                    // convert LiveDuration
+                    item.LiveEndDate = that.formatDate(that.getDateObject(item.LiveEndTS));
+                    item.LiveEndTime = that.formatTime(that.getDateObject(item.LiveEndTS));
+                }
+                if (item.ListShowTS) {
+                    // convert ListShowTS
+                    item.ListShowDate = that.formatDate(that.getDateObject(item.ListShowTS));
+                    item.ListShowTime = that.formatTime(that.getDateObject(item.ListShowTS));
+                }
+                if (item.ListRemoveTS) {
+                    // convert ListRemoveTS
+                    item.ListRemoveDate = that.formatDate(that.getDateObject(item.ListRemoveTS));
+                    item.ListRemoveTime = that.formatTime(that.getDateObject(item.ListRemoveTS));
+                }
+            }
+            this.resultConverter = resultConverter;
+
             var setDataEvent = function (newDataEvent) {
                 var prevNotifyModified = AppBar.notifyModified;
                 AppBar.notifyModified = false;
                 that.binding.newEventData.VeranstaltungName = "";
+                that.resultConverter(newDataEvent);
                 that.binding.dataEvent = newDataEvent;
-                // convert LiveStartTS
-                if (newDataEvent.LiveStartTS) {
-                    that.binding.dataEvent.LiveStartDate = that.formatDate(that.getDateObject(newDataEvent.LiveStartTS));
-                    that.binding.dataEvent.LiveStartTime = that.formatTime(that.getDateObject(newDataEvent.LiveStartTS));
-                }
-                if (newDataEvent.LiveEndTS) {
-                    // convert LiveDuration
-                    that.binding.dataEvent.LiveEndDate = that.formatDate(that.getDateObject(newDataEvent.LiveEndTS));
-                    that.binding.dataEvent.LiveEndTime = that.formatTime(that.getDateObject(newDataEvent.LiveEndTS));
-                }
-                if (newDataEvent.ListShowTS) {
-                    // convert ListShowTS
-                    that.binding.dataEvent.ListShowDate = that.formatDate(that.getDateObject(newDataEvent.ListShowTS));
-                    that.binding.dataEvent.ListShowTime = that.formatTime(that.getDateObject(newDataEvent.ListShowTS));
-                }
-                if (newDataEvent.ListRemoveTS) {
-                    // convert ListRemoveTS
-                    that.binding.dataEvent.ListRemoveDate = that.formatDate(that.getDateObject(newDataEvent.ListRemoveTS));
-                    that.binding.dataEvent.ListRemoveTime = that.formatTime(that.getDateObject(newDataEvent.ListRemoveTS));
-                }
                 AppBar.modified = false;
                 AppBar.notifyModified = prevNotifyModified;
                 AppBar.triggerDisableHandlers();
@@ -548,8 +553,6 @@
                         if (childElement) {
                             var colorPicker = null;
                             var color = childElement.value || "";
-                            // HIER -> überprüfe ob Farbzahl gültig ist
-                            // hier raus und in den resultconverter
                             function isHexaColor(sNum) {
                                 return (typeof sNum === "string") && (sNum.length === 6 || sNum.length === 3)
                                     && !isNaN(parseInt(sNum, 16));
@@ -711,15 +714,6 @@
                 }
             }
             this.colorPickerContainer = colorPickerContainer;
-
-            var resultConverter = function (item, index) {
-                var property = AppData.getPropertyFromInitoptionTypeID(item);
-                /*if (property && property !== "individualColors" && (!item.pageProperty) && item.LocalValue) {
-                    item.colorValue = "#" + item.LocalValue;
-                    AppData.applyColorSetting(property, item.colorValue);
-                }*/
-            }
-            this.resultConverter = resultConverter;
 
             var loadData = function (recordId) {
                 Log.call(Log.l.trace, "EventGenSettings.Controller.");
