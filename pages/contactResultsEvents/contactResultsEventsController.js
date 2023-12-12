@@ -56,19 +56,24 @@
             }
             this.getDateTime = getDateTime;
 
+            var resultConverter = function (item, index) {
+                item.fullName = "";
+                if (item.Anrede) {
+                    item.fullName += item.Anrede + " ";
+                }
+                if (item.Vorname) {
+                    item.fullName += item.Vorname + " ";
+                }
+                if (item.Name) {
+                    item.fullName += item.Name;
+                }
+            }
+            this.resultConverter = resultConverter;
+
             var setDataContact = function (data) {
                 Log.call(Log.l.trace, "ContactResultsEvents.Controller.");
+                that.resultConverter(data);
                 that.binding.dataContact = data;
-                that.binding.dataContact.fullName = "";
-                if (data.Anrede) {
-                    that.binding.dataContact.fullName = data.Anrede + " ";
-                }
-                if (data.Vorname) {
-                    that.binding.dataContact.fullName += data.Vorname + " ";
-                }
-                if (data.Name) {
-                    that.binding.dataContact.fullName += data.Name;
-                }
                 Log.ret(Log.l.trace);
             }
             this.setDataContact = setDataContact;
@@ -235,7 +240,7 @@
                 }
             };
 
-            var resultConverter = function (item, index) {
+            var addContactTableItem = function (item, index) {
                 item.index = index;
                 if (item.CreatorName === null) {
                     item.CreatorName = "auto";
@@ -249,7 +254,7 @@
                     that.binding.count = tableBody.winControl.data.push(item);
                 }
             }
-            this.resultConverter = resultConverter;
+            this.addContactTableItem = addContactTableItem;
 
             var loadData = function () {
                 Log.call(Log.l.trace, "ContactResultsCriteria.Controller.");
@@ -280,7 +285,7 @@
                             if (json && json.d && json.d.results) {
                                 var results = json.d.results;
                                 results.forEach(function (item, index) {
-                                    that.resultConverter(item, index);
+                                    that.addContactTableItem(item, index);
                                 });
                             }
                         }, function (errorResponse) {

@@ -35,13 +35,13 @@
             var resultConverter = function (item, index) {
                 item.fullName = "";
                 if (item.Anrede) {
-                    item.fullName += data.Anrede + " ";
+                    item.fullName += item.Anrede + " ";
                 }
                 if (item.Vorname) {
-                    item.fullName += data.Vorname + " ";
+                    item.fullName += item.Vorname + " ";
                 }
                 if (item.Name) {
-                    item.fullName += data.Name;
+                    item.fullName += item.Name;
                 }
             }
             this.resultConverter = resultConverter;
