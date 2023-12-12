@@ -47,26 +47,23 @@
                 }
             }
 
-            var setDataMailingTypeData = function (newDataMailingTypeData) {
-                var prevNotifyModified = AppBar.notifyModified;
-                AppBar.notifyModified = false;
-                that.binding.dataMailingTypeData = newDataMailingTypeData;
-                if (that.binding.dataMailingTypeData.SendLater === "N") {
-                    that.binding.dataMailingTypeData.SendLater = null;
+            var resultConverter = function (item, index) {
+                if (item.SendLater === "N") {
+                    item.SendLater = null;
                 }
                 if (sendDayHook && sendDayHook.winControl) {
                     if (!sendDayHook.winControl.data ||
                         sendDayHook.winControl.data && !sendDayHook.winControl.data.length) {
                         sendDayHook.winControl.data = that.sendDayHookList;
-                        sendDayHook.value = newDataMailingTypeData.SendDayHook;
+                        sendDayHook.value = item.SendDayHook;
                     }
                 }
-                    if (that.binding.dataMailingTypeData.Enabled === "f")
-                        that.binding.dataMailingTypeData.Enabled = null;
-              
-                if (that.binding.dataMailingTypeData.SendStartTime) {
-                    that.binding.dataMailingTypeData.useSendStartTime = true;
-                    var dateString = that.binding.dataMailingTypeData.SendStartTime.replace("\/Date(", "").replace(")\/", "");
+                if (item.Enabled === "f") {
+                    item.Enabled = null;
+                }
+                if (item.SendStartTime) {
+                    item.useSendStartTime = true;
+                    var dateString = item.SendStartTime.replace("\/Date(", "").replace(")\/", "");
                     var milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
 
                     // milliseconds to hour, minute
@@ -82,11 +79,19 @@
                     var rest = milliseconds - minutes * 60000;
 
                     if (rest === 0) {
-                        that.binding.dataMailingTypeData.SendStartTime = hour + ":" + minutes;
+                        item.SendStartTime = hour + ":" + minutes;
                     }
                 } else {
-                    that.binding.dataMailingTypeData.useSendStartTime = false;
+                    item.useSendStartTime = false;
                 }
+            }
+            this.resultConverter = resultConverter;
+
+            var setDataMailingTypeData = function (newDataMailingTypeData) {
+                var prevNotifyModified = AppBar.notifyModified;
+                AppBar.notifyModified = false;
+                that.resultConverter(newDataMailingTypeData);
+                that.binding.dataMailingTypeData = newDataMailingTypeData;
                 AppBar.modified = false;
                 AppBar.notifyModified = prevNotifyModified;
                 AppBar.triggerDisableHandlers();
