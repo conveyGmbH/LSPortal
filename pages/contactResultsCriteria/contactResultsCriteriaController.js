@@ -32,19 +32,24 @@
             }
             this.getRecordId = getRecordId;
 
+            var resultConverter = function (item, index) {
+                item.fullName = "";
+                if (item.Anrede) {
+                    item.fullName += data.Anrede + " ";
+                }
+                if (item.Vorname) {
+                    item.fullName += data.Vorname + " ";
+                }
+                if (item.Name) {
+                    item.fullName += data.Name;
+                }
+            }
+            this.resultConverter = resultConverter;
+
             var setDataContact = function (data) {
                 Log.call(Log.l.trace, "ContactResultsCriteria.Controller.");
+                that.resultConverter(data);
                 that.binding.dataContact = data;
-                that.binding.dataContact.fullName = "";
-                if (data.Anrede) {
-                    that.binding.dataContact.fullName = data.Anrede + " ";
-                }
-                if (data.Vorname) {
-                    that.binding.dataContact.fullName += data.Vorname + " ";
-                }
-                if (data.Name) {
-                    that.binding.dataContact.fullName += data.Name;
-                }
             }
             this.setDataContact = setDataContact;
 
@@ -155,11 +160,6 @@
                 return ret;
             }
             this.saveData = saveData;
-
-            var resultConverter = function (item, index) {
-                item.index = index;
-            }
-            this.resultConverter = resultConverter;
 
             var loadData = function () {
                 Log.call(Log.l.trace, "ContactResultsCriteria.Controller.");
