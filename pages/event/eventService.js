@@ -27,7 +27,9 @@
                 return ret;
             },
             defaultValue: {
-                Name: ""
+                Name: "",
+                dateBegin: "",
+                dateEnd: ""
             }
         },
         _CR_VERANSTOPTION_View: {
@@ -56,20 +58,21 @@
                 isSketchVisible: "0",
                 isCameraVisible: "0",
                 isBarcodeScanVisible: "0",
-                isDBSyncVisible: "0",
                 isPrivacyPolicySVGVisible: "0",
                 isSendMailPrivacypolicy: "0",
                 showQRCode: "0",
+                showvisitorFlow: "0",
                 isvisitorFlowVisible: "0",
-                isvisitorFlowVisibleAndLeadSuccess: "0",
                 showNameInHeader: "0",
-                visitorFlowFeature: "0",
                 visitorFlowPremium: "0",
-                visitorFlowInterval: "",
-                dashboardMesagoFeature: false,
-                isDashboardPremium: false,
+                visitorFlowInterval: "0",
+                isDashboardPremium: "0",
                 showdashboardMesagoCombo: "0",
-                leadsuccessBasic: "0"
+                showPremiumDashboardCombo: "0",
+                leadsuccessBasic: "0",
+                productMailOn: "0",
+                thankYouMailOn: "0",
+                nachbearbeitetFlagAutoSetToNull: "0"
             }
         },
         _appListSpecView: {

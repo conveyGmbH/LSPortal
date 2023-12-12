@@ -43,19 +43,24 @@
                 titlecombo.winControl.data = new WinJS.Binding.List(titlecategorys);
             }
 
+            var resultConverter = function (item, index) {
+                if (item.Login && item.Login.indexOf("@") > 0) {
+                    var firstLoginPart = item.Login.substr(0, item.Login.indexOf("@"));
+                    var secondLoginPart = item.Login.substr(item.Login.lastIndexOf("@"), item.Login.length - 1);
+                    item.LogInNameBeforeAtSymbole = firstLoginPart;
+                    item.LogInNameAfterAtSymbole = secondLoginPart;
+                }
+                item.Password2 = item.Password;
+            }
+            this.resultConverter = resultConverter;
+
             var setDataEmployee = function (newDataEmployee) {
                 var prevNotifyModified = AppBar.notifyModified;
                 AppBar.notifyModified = false;
                 prevLogin = newDataEmployee.Login;
-                that.binding.dataEmployee = newDataEmployee;
-                if (newDataEmployee.Login && newDataEmployee.Login.indexOf("@") > 0) {
-                    var firstLoginPart = newDataEmployee.Login.substr(0, newDataEmployee.Login.indexOf("@"));
-                    var secondLoginPart = newDataEmployee.Login.substr(newDataEmployee.Login.lastIndexOf("@"), newDataEmployee.Login.length - 1);
-                    that.binding.dataEmployee.LogInNameBeforeAtSymbole = firstLoginPart;
-                    that.binding.dataEmployee.LogInNameAfterAtSymbole = secondLoginPart;
-                }
                 prevPassword = newDataEmployee.Password;
-                that.binding.dataEmployee.Password2 = newDataEmployee.Password;
+                that.resultConverter(newDataEmployee);
+                that.binding.dataEmployee = newDataEmployee;
                 AppBar.modified = false;
                 AppBar.notifyModified = prevNotifyModified;
                 AppBar.triggerDisableHandlers();
@@ -564,9 +569,9 @@
                 },
                 changeLogin: function (event) {
                     Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
-                    if (event.currentTarget && AppBar.notifyModified) {
-                        pageElement.querySelector("#password").value = "";
-                        pageElement.querySelector("#password2").value = "";
+                    if (AppBar.notifyModified) {
+                        that.binding.dataEmployee.Password = "";
+                        that.binding.dataEmployee.Password2 = "";
                     }
                     if (event.currentTarget.id === "loginFirstPart") {
                         if (event.currentTarget.value && event.currentTarget.value.indexOf("@") > 0) {
@@ -583,8 +588,8 @@
                 },
                 changePassword: function (event) {
                     Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
-                    if (event.currentTarget && AppBar.notifyModified) {
-                        pageElement.querySelector("#password2").value = "";
+                    if (AppBar.notifyModified) {
+                        that.binding.dataEmployee.Password2 = "";
                     }
                     Log.ret(Log.l.trace);
                 },

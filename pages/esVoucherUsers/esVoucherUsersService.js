@@ -48,7 +48,10 @@
                 Name: "",
                 Firmenname: "",
                 OrderAttribute: "Name",
-                OrderDesc: true
+                OrderDesc: true,
+                Aktiv: [],
+                bAndInEachRow: true,
+                bUseOr: false
             }
         },
         _voucherUsersAllView: {

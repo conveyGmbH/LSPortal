@@ -52,7 +52,10 @@
                 Names: "",
                 Firma: "",
                 OrderAttribute: "Nachname",
-                OrderDesc: true
+                OrderDesc: true,
+                Aktiv: [],
+                bAndInEachRow: true,
+                bUseOr: false
             }
         },
         _pdfView: {

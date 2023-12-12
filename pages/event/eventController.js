@@ -17,24 +17,10 @@
             Application.Controller.apply(this, [pageElement, {
                 dataEvent: getEmptyDefaultValue(Event.eventView.defaultValue),
                 veranstOption: getEmptyDefaultValue(Event.CR_VERANSTOPTION_ODataView.defaultValue),
-                isQuestionnaireVisible: !AppData._persistentStates.hideQuestionnaire,
-                showCameraQuestionnaire: AppData._persistentStates.showCameraQuestionnaire,
-                isSketchVisible: !AppData._persistentStates.hideSketch,
-                isCameraVisible: !AppData._persistentStates.hideCameraScan,
-                isManuallyVisible: !AppData._persistentStates.hideManually,
-                isBarcodeScanVisible: !AppData._persistentStates.hideBarcodeScan,
                 isDBSyncVisible: AppHeader.controller.binding.userData.SiteAdmin,
-                isPrivacyPolicySVGVisible: AppData._persistentStates.privacyPolicySVGVisible,
-                isSendMailPrivacypolicy: AppData._persistentStates.sendMailPrivacypolicy,
-                showQRCode: AppData._persistentStates.showQRCode,
-                isvisitorFlowVisible: AppData._persistentStates.showvisitorFlow,
                 isvisitorFlowVisibleAndLeadSuccess: AppData._persistentStates.showvisitorFlowAndLeadSuccess,
-                showNameInHeader: AppData._persistentStates.showNameInHeader,
                 visitorFlowFeature: AppHeader.controller.binding.userData.SiteAdmin,
-                visitorFlowPremium: AppData._persistentStates.visitorFlowPremium,
-                visitorFlowInterval: AppData._persistentStates.visitorFlowInterval || "",
                 dashboardMesagoFeature: AppHeader.controller.binding.userData.SiteAdmin,
-                isDashboardPremium: AppData._persistentStates.showdashboardMesagoCombo === 1 ? true : false,
                 isLeadsuccessFeatureStandardVisible: AppHeader.controller.binding.userData.SiteAdmin,
                 qrcodetext: getResourceText("event.show2D-Code"),
                 barcodetext: getResourceText("event.showBar-Code"),
@@ -45,6 +31,23 @@
             }, commandList]);
 
             var that = this;
+
+            that.binding.veranstOption.isQuestionnaireVisible = !AppData._persistentStates.hideQuestionnaire;
+            that.binding.veranstOption.showCameraQuestionnaire = AppData._persistentStates.showCameraQuestionnaire;
+            that.binding.veranstOption.isSketchVisible = !AppData._persistentStates.hideSketch;
+            that.binding.veranstOption.isCameraVisible = !AppData._persistentStates.hideCameraScan;
+            that.binding.veranstOption.isManuallyVisible = !AppData._persistentStates.hideManually;
+            that.binding.veranstOption.isBarcodeScanVisible = !AppData._persistentStates.hideBarcodeScan;
+            that.binding.veranstOption.isPrivacyPolicySVGVisible = AppData._persistentStates.privacyPolicySVGVisible;
+            that.binding.veranstOption.isSendMailPrivacypolicy = AppData._persistentStates.sendMailPrivacypolicy;
+            that.binding.veranstOption.showQRCode = AppData._persistentStates.showQRCode;
+            that.binding.veranstOption.isvisitorFlowVisible = AppData._persistentStates.showvisitorFlow;
+            that.binding.veranstOption.showNameInHeader = AppData._persistentStates.showNameInHeader;
+            that.binding.veranstOption.visitorFlowPremium = AppData._persistentStates.visitorFlowPremium;
+            that.binding.veranstOption.visitorFlowInterval = AppData._persistentStates.visitorFlowInterval || "";
+            that.binding.veranstOption.isDashboardPremium =
+                AppData._persistentStates.showdashboardMesagoCombo === 1 ? true : false;
+
 
             //select combo
             var initLand = pageElement.querySelector("#InitLand");
@@ -167,13 +170,26 @@
                 that.setEventId(master.controller.binding.eventId);
             }
 
+            var resultConverter = function (item, index) {
+                // Bug: textarea control shows 'null' string on null value in Internet Explorer!
+                if (item.DatenschutzText === null) {
+                    item.DatenschutzText = "";
+                }
+                if (!item.KontaktVIEWID) {
+                    item.Nachbearbeitet = 1;
+                }
+                // convert Startdatum 
+                item.dateBegin = getDateObject(item.Startdatum);
+                // convert Enddatum 
+                item.dateEnd = getDateObject(item.Enddatum);
+            }
+            this.resultConverter = resultConverter;
+
             var setDataEvent = function (newDataEvent) {
                 var prevNotifyModified = AppBar.notifyModified;
                 AppBar.notifyModified = false;
+                that.resultConverter(newDataEvent);
                 that.binding.dataEvent = newDataEvent;
-                if (that.binding.dataEvent.DatenschutzText === null) {
-                    that.binding.dataEvent.DatenschutzText = "";
-                }
                 if (textComment) {
                     if (that.binding.dataEvent.DatenschutzText) {
                         WinJS.Utilities.addClass(textComment, "input_text_comment_big");
@@ -181,10 +197,6 @@
                         WinJS.Utilities.removeClass(textComment, "input_text_comment_big");
                     }
                 }
-                // convert Startdatum 
-                that.binding.dataEvent.dateBegin = getDateObject(newDataEvent.Startdatum);
-                // convert Enddatum 
-                that.binding.dataEvent.dateEnd = getDateObject(newDataEvent.Enddatum);
                 AppBar.modified = false;
                 AppBar.notifyModified = prevNotifyModified;
                 AppBar.triggerDisableHandlers();
@@ -837,9 +849,9 @@
                         break;
                     case 49:
                         if (item.LocalValue === "1") {
-                            that.binding.veranstOption.sendMailPrivacypolicy = true;
+                            that.binding.veranstOption.isSendMailPrivacypolicy = true;
                         } else {
-                            that.binding.veranstOption.sendMailPrivacypolicy = false;
+                            that.binding.veranstOption.isSendMailPrivacypolicy = false;
                         }
                         break;
                     case 50:
@@ -995,7 +1007,7 @@
                 var dataEvent = that.binding.dataEvent;
                 if (dataEvent && AppBar.modified && !AppBar.busy) {
                     /*Erstmal ignorieren!*/
-                    var visitorFlowInterval = changeSetting("visitorFlowInterval", that.binding.visitorFlowInterval);
+                    var visitorFlowInterval = changeSetting("visitorFlowInterval", that.binding.veranstOption.visitorFlowInterval);
                     dataEvent.Startdatum = getDateData(that.binding.dataEvent.dateBegin);
                     dataEvent.Enddatum = getDateData(that.binding.dataEvent.dateEnd);
                     var recordId = getEventId();
@@ -1117,7 +1129,7 @@
             that.binding.dataEvent.dateBegin = getDateObject();
             that.binding.dataEvent.dateEnd = getDateObject();
 
-            function changeMenuLabel(myEntry, myLabel) {
+            var changeMenuLabel = function (myEntry, myLabel) {
                 for (var i = 0; i < Application.navigationBarGroups.length; i++) {
                     if (Application.navigationBarGroups[i].id === myEntry) {
                         Application.navigationBarGroups[i].label = myLabel;
