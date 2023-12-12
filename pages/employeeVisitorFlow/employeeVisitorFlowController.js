@@ -25,9 +25,15 @@
             var cr_V_bereich = pageElement.querySelector("#cr_V_bereich");
             //var initLand = pageElement.querySelector("#InitLand");
 
+            var resultConverter = function (item, index) {
+                // for future item-elements to add here!
+            }
+            this.resultConverter = resultConverter;
+
             var setDataEmployee = function (newDataEmployee) {
                 var prevNotifyModified = AppBar.notifyModified;
                 AppBar.notifyModified = false;
+                that.resultConverter(newDataEmployee);
                 that.binding.dataEmployee = newDataEmployee;
                 AppBar.modified = false;
                 AppBar.notifyModified = prevNotifyModified;
