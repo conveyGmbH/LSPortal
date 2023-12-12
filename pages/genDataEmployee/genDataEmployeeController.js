@@ -48,19 +48,24 @@
                 }
             }
 
+            var resultConverter = function (item, index) {
+                if (item.Login && item.Login.indexOf("@") > 0) {
+                    var firstLoginPart = item.Login.substr(0, item.Login.indexOf("@"));
+                    var secondLoginPart = item.Login.substr(item.Login.lastIndexOf("@"), item.Login.length - 1);
+                    item.LogInNameBeforeAtSymbole = firstLoginPart;
+                    item.LogInNameAfterAtSymbole = secondLoginPart;
+                }
+                item.Password2 = item.Password;
+            }
+            this.resultConverter = resultConverter;
+
             var setDataEmployee = function (newDataEmployee) {
                 Log.call(Log.l.trace, "GenDataEmployee.Controller.");
                 var prevNotifyModified = AppBar.notifyModified;
                 AppBar.notifyModified = false;
                 prevLogin = newDataEmployee.Login;
-                if (newDataEmployee.Login && newDataEmployee.Login.indexOf("@") > 0) {
-                    var firstLoginPart = newDataEmployee.Login.substr(0, newDataEmployee.Login.indexOf("@"));
-                    var secondLoginPart = newDataEmployee.Login.substr(newDataEmployee.Login.lastIndexOf("@"), newDataEmployee.Login.length - 1);
-                    newDataEmployee.LogInNameBeforeAtSymbole = firstLoginPart;
-                    newDataEmployee.LogInNameAfterAtSymbole = secondLoginPart;
-                }
                 prevPassword = newDataEmployee.Password;
-                newDataEmployee.Password2 = newDataEmployee.Password;
+                that.resultConverter(newDataEmployee);
                 that.binding.dataEmployee = newDataEmployee;
                 AppBar.modified = false;
                 AppBar.notifyModified = prevNotifyModified;
