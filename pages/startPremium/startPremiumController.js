@@ -295,7 +295,7 @@
                         var width = doc.internal.pageSize.width;
                         var height = doc.internal.pageSize.height;*/
                         // diaCountrys chart
-                        that.binding.progress.statusText = getResourceText('diaCountrys.top10');
+                        that.binding.progress.text = getResourceText('diaCountrys.top10');
                         return html2canvas(document.getElementById("diaCountryshost"),
                             {
                                 scale: 1,
