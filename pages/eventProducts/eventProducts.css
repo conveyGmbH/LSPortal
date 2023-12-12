@@ -1,0 +1,59 @@
+﻿.eventProducts .scroll-line {
+    overflow-x: auto;
+    overflow-y: auto;
+}
+
+.eventProducts * {
+    box-sizing: border-box;
+}
+
+.eventProducts table {
+    border-collapse: collapse;
+    width: 100%;
+    overflow: hidden;
+}
+
+.eventProducts td,
+.eventProducts th {
+    padding: 5px 15px;
+    text-align: left;
+    height: 35px;
+}
+
+.eventProducts table {
+    border: 1px solid grey;
+}
+
+.eventProducts td,
+.eventProducts th {
+    border-bottom: 1px solid grey;
+    border-top: 1px solid grey;
+}
+
+.eventProducts .table-body tr:hover {
+    background: #f8f9fb;
+}
+
+.eventProducts #counter {
+    margin-left: 25px;
+}
+
+.eventProducts table,
+.eventProducts tr,
+.eventProducts #status {
+    border-right: 0px !important;
+}
+
+.eventProducts table,
+.eventProducts tr {
+    border-left: 0px !important;
+}
+#btn_add_product {
+    margin-top: 24px;
+}
+.selected {
+    border: solid;
+}
+    .selected:hover {
+        border: solid;
+    }

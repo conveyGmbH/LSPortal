@@ -71,6 +71,8 @@
     "command.newExhibitor"    : "Nuovo espositore",
     "command.newNachbestellungen"    : "Riordino",
     "command.addEvent" : "Modifica evento",
+    "command.addProduct"    : "Aggiungi prodotto",
+    "command.removeProduct"    : "Cancellare il prodotto",
 
     "tooltip.backward"      : "Pagina precedente",
     "tooltip.edit"          : "Modifica Record attuale",
@@ -158,6 +160,8 @@
     "tooltip.changeLogin": "Modifica login dipendente",
     "tooltip.copyEvent"     : "Salva le impostazioni",
     "tooltip.copyMitarbeiter" : "Veranstaltung wechseln",
+    "tooltip.addProduct" : "Aggiungi prodotto",
+    "tooltip.removeProduct"    : "Cancellare il prodotto",
 
     "home.title"            : "Start",
     "home.info"             : "Informazioni importanti",
@@ -635,6 +639,7 @@
     "label.siteeventsImport" : "Importazione espositori",
 	"label.genDataEmployee" : "Account utente",
     "label.genDataEmpList" : "Account utente",
+    "label.eventProducts" : "Prodotti",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annulla",
@@ -1661,5 +1666,11 @@
 
     "genDataEmployee.event" : "Eventi",
     "genDataEmployee.addevent" : "Evento",
-    "genDataEmployee.addeventbtn" : "Aggiungi"
+    "genDataEmployee.addeventbtn" : "Aggiungi",
+
+    "eventProducts.title"			: "Prodotti",
+    "eventProducts.ProductTitle"			: "Nome del prodotto",
+    "eventProducts.ProductInfo"			: "Prodotto Info",
+    "eventProducts.productcombotitle"			: "Prodotto",
+    "eventProducts.productaddbtntitle"			: "Aggiungi"
 }

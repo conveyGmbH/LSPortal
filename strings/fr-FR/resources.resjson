@@ -71,6 +71,8 @@
     "command.newExhibitor"    : "Nouvel exposant",
     "command.newNachbestellungen"    : "Réassort",
     "command.addEvent" : "Changer d'événement",
+    "command.addProduct"    : "Ajouter un produit",
+    "command.removeProduct"    : "Supprimer un produit",
 
     "tooltip.backward"      : "Page présédente",
     "tooltip.edit"          : "Modifier le contact en cours",
@@ -158,6 +160,8 @@
     "tooltip.changeLogin": "Modifier l'identifiant de l'employé",
     "tooltip.copyEvent"     : "enregistrer les paramètres",
     "tooltip.copyMitarbeiter" : "Veranstaltung wechseln",
+    "tooltip.addProduct" : "Ajouter un produit",
+    "tooltip.removeProduct"    : "Supprimer un produit",
 
     "home.title"            : "Start",
     "home.info"             : "Instructions importantes",
@@ -635,6 +639,7 @@
     "label.siteeventsImport" : "Exposant Import",
 	"label.genDataEmployee" : "Comptes d'utilisateurs",
     "label.genDataEmpList" : "Comptes d'utilisateurs",
+    "label.eventProducts" : "Produits",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annuler",
@@ -1663,5 +1668,11 @@
 
     "genDataEmployee.event" : "Événements",
     "genDataEmployee.addevent" : "événement",
-    "genDataEmployee.addeventbtn" : "Ajouter"
+    "genDataEmployee.addeventbtn" : "Ajouter",
+
+    "eventProducts.title"			: "Produits",
+    "eventProducts.ProductTitle"			: "Nom du produit",
+    "eventProducts.ProductInfo"			: "Produit Info",
+    "eventProducts.productcombotitle"			: "Produit",
+    "eventProducts.productaddbtntitle"			: "Ajouter"
 }

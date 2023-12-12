@@ -71,6 +71,8 @@
     "command.newExhibitor"    : "New exhibitor",
     "command.newNachbestellungen"    : "Reorder",
     "command.addEvent" : "Change event",
+    "command.addProduct"    : "Add Product",
+    "command.removeProduct"    : "Delete product",
 
     "tooltip.backward"      : "Browse back",
     "tooltip.edit"          : "Edit current record",
@@ -158,6 +160,8 @@
     "tooltip.changeLogin": "Change employee login",
     "tooltip.copyEvent"     : "save settings",
     "tooltip.copyMitarbeiter" : "Veranstaltung wechseln",
+    "tooltip.addProduct" : "Add Product",
+    "tooltip.removeProduct"    : "Delete product",
 
     "home.title"            : "Start",
     "home.info"             : "Important information",
@@ -1663,5 +1667,11 @@
 
     "genDataEmployee.event"			: "Events",
     "genDataEmployee.addevent"			: "Event",
-    "genDataEmployee.addeventbtn"			: "Add"
+    "genDataEmployee.addeventbtn"			: "Add",
+
+    "eventProducts.title"			: "Products",
+    "eventProducts.ProductTitle"			: "Product Name",
+    "eventProducts.ProductInfo"			: "product Info",
+    "eventProducts.productcombotitle"			: "Product",
+    "eventProducts.productaddbtntitle"			: "Add"
 }
