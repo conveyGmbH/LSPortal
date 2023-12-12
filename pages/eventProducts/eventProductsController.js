@@ -23,6 +23,7 @@
             }, commandList]);
             this.products = null;
             this.deselectRowId = null;
+            this.selectedRow = null;
 
             var that = this;
 
@@ -336,6 +337,21 @@
                                 Log.print(Log.l.error, "call error");
                             });
                 },
+                ontableselect : function(event) {
+                    if (event.target.tagName === "TD") {
+                        // Get the clicked row
+                        var clickedRow = event.target.parentNode;
+                        // Deselect the previously selected row
+                        if (that.selectedRow) {
+                            that.selectedRow.classList.remove("selected");
+                        }
+                        clickedRow.classList.add("selected");
+                        that.deselectRowId = parseInt(clickedRow.value);
+                        AppBar.modified = true;
+                        that.selectedRow = clickedRow;
+                        
+                    }
+                },
                 onItemInvoked: function (eventInfo) {
                     Log.call(Log.l.trace, "EventProducts.Controller.");
                     Application.showDetail();
@@ -380,6 +396,9 @@
             };
 
             // register ListView event handler
+            if (table) {
+                this.addRemovableEventListener(table, "click", this.eventHandlers.ontableselect.bind(this));
+            }
             
             var loadData = function () {
                 Log.call(Log.l.trace, "EventProducts.Controller.");
@@ -411,7 +430,7 @@
                                         tableBody.winControl.data = new WinJS.Binding.List(json.d.results);
                                     }
 
-                                    that.addBodyRowHandlers();
+                                    //that.addBodyRowHandlers();
                                 } else {
                                     Log.call(Log.l.trace, "No VeranstaltungID found!");
                                 }
@@ -435,7 +454,7 @@
                 that.creatingProductsCategory();
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
-                that.addBodyRowHandlers();
+                //that.addBodyRowHandlers();
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 AppBar.notifyModified = true;
