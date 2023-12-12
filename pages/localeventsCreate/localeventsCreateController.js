@@ -24,17 +24,26 @@
 
             var that = this;
 
+            var resultConverter = function (item, index) {
+                // Bug: textarea control shows 'null' string on null value in Internet Explorer!
+                if (item.DatenschutzText === null) {
+                    item.DatenschutzText = "";
+                }
+                // convert Startdatum 
+                item.dateBegin = getDateObject(item.Startdatum);
+                // convert Enddatum 
+                item.dateEnd = getDateObject(item.Enddatum);
+                if (item.dateBegin) {
+                    item.actualYear = item.dateBegin.getFullYear();
+                } 
+            }
+            this.resultConverter = resultConverter;
+
             var setDataEvent = function (newDataEvent) {
                 var prevNotifyModified = AppBar.notifyModified;
                 AppBar.notifyModified = false;
+                that.resultConverter(newDataEvent);
                 that.binding.eventData = newDataEvent;
-                // convert StartDatum 
-                that.binding.eventData.dateBegin = getDateObject(newDataEvent.StartDatum);
-                // convert EndDatum 
-                that.binding.eventData.dateEnd = getDateObject(newDataEvent.EndDatum);
-                if (that.binding.eventData.dateBegin) {
-                    that.binding.actualYear = that.binding.eventData.dateBegin.getFullYear();
-                } 
                 AppBar.modified = false;
                 AppBar.notifyModified = prevNotifyModified;
                 AppBar.triggerDisableHandlers();

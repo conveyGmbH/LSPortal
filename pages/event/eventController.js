@@ -175,9 +175,6 @@
                 if (item.DatenschutzText === null) {
                     item.DatenschutzText = "";
                 }
-                if (!item.KontaktVIEWID) {
-                    item.Nachbearbeitet = 1;
-                }
                 // convert Startdatum 
                 item.dateBegin = getDateObject(item.Startdatum);
                 // convert Enddatum 
