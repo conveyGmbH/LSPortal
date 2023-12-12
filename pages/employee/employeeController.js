@@ -736,12 +736,12 @@
                 var ret;
                 var dataEmployee = that.binding.dataEmployee;
                 if (dataEmployee && AppBar.modified && !AppBar.busy) {
-                    if (typeof dataEmployee.Password === "string" && dataEmployee.Password.length < 5) {
+                    if (dataEmployee.Login && typeof dataEmployee.Password === "string" && dataEmployee.Password.length < 5) {
                         Log.print(Log.l.error, "password must be min length 5");
                         alert(getResourceText("employee.alertPasswordShort"));
                         return WinJS.Promise.as();
                     }
-                    if (dataEmployee.Password2 && dataEmployee.Password && dataEmployee.Password2 === dataEmployee.Password) {
+                    if (!dataEmployee.Login || dataEmployee.Password2 && dataEmployee.Password && dataEmployee.Password2 === dataEmployee.Password) {
                         var recordId = getRecordId();
                         if (recordId) {
                             AppBar.busy = true;
