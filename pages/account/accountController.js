@@ -188,7 +188,6 @@
                 },
                 clickPrivacyPolicy: function (event) {
                     Log.call(Log.l.trace, "Login.Controller.");
-                    that.binding.dataLogin.privacyPolicyFlag = event.currentTarget.checked;
                     AppData._persistentStates.privacyPolicyFlag = event.currentTarget.checked;
                     AppBar.triggerDisableHandlers();
                     Log.ret(Log.l.trace);
