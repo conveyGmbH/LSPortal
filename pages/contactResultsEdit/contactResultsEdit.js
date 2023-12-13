@@ -85,7 +85,7 @@
                             var fieldWidth;
                             if (that.controller.hasDoc()) {
                                 if (width > Application.maxViewSize.medium) {
-                                    fieldWidth = width / 2 - 16;
+                                    fieldWidth = Math.floor(width / 2) - 16;
                                 } else {
                                     fieldWidth = width;
                                 }
