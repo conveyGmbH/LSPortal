@@ -20,6 +20,8 @@
             Log.call(Log.l.trace, pageName + ".");
             // TODO: Initialize the page here.
             this.inResize = 0;
+            this.prevWidth = 0;
+            this.prevHeight = 0;
 
             // add page specific commands to AppBar
             var commandList = [
@@ -67,8 +69,34 @@
         },
 
         updateLayout: function (element, viewState, lastViewState) {
+            var ret = null;
+            var that = this;
             /// <param name="element" domElement="true" />
+            Log.call(Log.l.trace, pageName + ".");
             // TODO: Respond to changes in viewState.
+            if (element && !that.inResize) {
+                that.inResize = 1;
+                ret = WinJS.Promise.timeout(0).then(function () {
+                    var contentarea = element.querySelector(".contentarea");
+                    if (contentarea) {
+                        var width = contentarea.clientWidth;
+                        var height = contentarea.clientHeight;
+                        if (width !== that.prevWidth) {
+                            that.prevWidth = width;
+                            if (that.controller &&
+                                typeof that.controller.resizeGenFragEvents === "function") {
+                                that.controller.resizeGenFragEvents();
+                            }
+                        }
+                        if (height !== that.prevHeight) {
+                            that.prevHeight = height;
+                        }
+                    }
+                    that.inResize = 0;
+                });
+            }
+            Log.ret(Log.l.u1);
+            return ret;
         }
     });
 })();

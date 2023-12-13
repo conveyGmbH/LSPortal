@@ -22,7 +22,8 @@
                 btnLabel: getResourceText("voucheradministrationlist.btnlabelO"),
                 eventData: null,
                 ecRecordID: 0,
-                ecEventID: 0
+                ecEventID: 0,
+                count: 0
             }]);
             var that = this;
 
@@ -238,18 +239,21 @@
                                 if (listView.winControl) {
                                     // add ListView dataSource
                                     listView.winControl.itemDataSource = that.events.dataSource;
+                                    that.binding.count = that.events.length;
                                 }
                                 listView.winControl.selection.set(0);
                             } else {
                                 if (listView.winControl) {
                                     // add ListView dataSource
                                     listView.winControl.itemDataSource = null;
+                                    that.binding.count = 0;
                                 }
                             }
                         }, function (errorResponse) {
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
                             AppData.setErrorMsg(that.binding, errorResponse);
+                            that.binding.count = 0;
                         }, { MitarbeiterID: recordId });
                     });
                     Log.ret(Log.l.trace);

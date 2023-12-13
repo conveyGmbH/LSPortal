@@ -672,6 +672,35 @@
                 }
             };
 
+            var resizeGenFragEvents = function () {
+                var genFragEventsFragmentControl = null;
+                var ret = WinJS.Promise.timeout(0).then(function () {
+                    var genFragEventsHost = pageElement.querySelector("#genfrageventshost");
+                    genFragEventsFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("genFragEvents"));
+                    if (genFragEventsHost && genFragEventsHost.style &&
+                        genFragEventsFragmentControl && genFragEventsFragmentControl._element) {
+                        var genFragEventsHeaderContainer =
+                            genFragEventsFragmentControl._element.querySelector(".win-headercontainer");
+                        var genFragEventsSurface =
+                            genFragEventsFragmentControl._element.querySelector(".win-surface");
+                        var genFragEventsFooterContainer =
+                            genFragEventsFragmentControl._element.querySelector(".win-footercontainer");
+                        var height = (genFragEventsHeaderContainer ? genFragEventsHeaderContainer.offsetHeight : 0) +
+                            (genFragEventsSurface ? genFragEventsSurface.offsetHeight : 0) +
+                            (genFragEventsFooterContainer ? genFragEventsFooterContainer.offsetHeight : 0) + 8;
+                        genFragEventsHost.style.height = height.toString() + "px";
+                    }
+                    return WinJS.Promise.timeout(0);
+                }).then(function () {
+                    if (genFragEventsFragmentControl &&
+                        typeof genFragEventsFragmentControl.updateLayout === "function") {
+                        genFragEventsFragmentControl.updateLayout.call(genFragEventsFragmentControl, genFragEventsFragmentControl._element);
+                    }
+                });
+                return ret;
+            }
+            this.resizeGenFragEvents = resizeGenFragEvents;
+
             var loadData = function (recordId) {
                 Log.call(Log.l.trace, "GenDataEmployee.Controller.", "recordId=" + recordId);
                 AppData.setErrorMsg(that.binding);
@@ -769,6 +798,7 @@
                 }).then(function () {
                     Log.print(Log.l.trace, "Data loaded");
                     AppBar.notifyModified = true;
+                    that.resizeGenFragEvents();
                 });
                 Log.ret(Log.l.trace);
                 return ret;
