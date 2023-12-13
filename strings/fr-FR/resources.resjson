@@ -348,7 +348,7 @@
     "settings.tiletextcolor": "Icône de départ",
     "settings.tilebkgcolor" : "Fond de départ",
     "settings.shopAppBkg"   : "Image de Fond",
-    "settings.theme"        : "Couleur de Thème",
+    "settings.theme"        : "Thème de couleur",
     "settings.light"        : "Clair",
     "settings.dark"         : "Foncé",
     "settings.system"       : "Système",

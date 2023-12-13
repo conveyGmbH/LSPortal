@@ -63,7 +63,7 @@
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'info.turnThumbsLeft'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'info.turnThumbsLeft'}"></span>
                             <div class="input_field toggle-switch-parent">
-                                <div id="turnThumbsLeft" class="input_field"
+                                <div id="turnThumbsLeft"
                                      data-win-control="WinJS.UI.ToggleSwitch"
                                      data-win-bind="winControl.checked: generalData.turnThumbsLeft Binding.Mode.twoway; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off">
                                 </div>
@@ -73,7 +73,7 @@
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'info.showBackButton'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'info.showBackButton'}"></span>
                             <div class="input_field toggle-switch-parent">
-                                <div id="showBackButton" class="input_field"
+                                <div id="showBackButton"
                                      data-win-control="WinJS.UI.ToggleSwitch"
                                      data-win-bind="winControl.checked: generalData.showBackButton Binding.Mode.twoway; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off">
                                 </div>
@@ -83,15 +83,13 @@
                         <div class="field_line field_line_odd">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'info.expandSubMenuMode'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'info.expandSubMenuMode'}"></span>
-                            <div class="input_field toggle-switch-parent">
-                                <select id="expandSubMenuModeSelect"
-                                        class="input_field win-dropdown"
-                                        data-win-control="WinJS.UI.Repeater"
-                                        data-win-bind="value: expandSubMenuMode"
-                                        onchange="AppBar.handleEvent('change', 'changedExpandSubMenuMode', event)">
-                                    <option data-win-bind="value: mode; textContent: label"></option>
-                                </select>
-                            </div>
+                            <select id="expandSubMenuModeSelect"
+                                    class="input_field win-dropdown"
+                                    data-win-control="WinJS.UI.Repeater"
+                                    data-win-bind="value: expandSubMenuMode"
+                                    onchange="AppBar.handleEvent('change', 'changedExpandSubMenuMode', event)">
+                                <option data-win-bind="value: mode; textContent: label"></option>
+                            </select>
                         </div>
                         <div class="line-separator"></div>
                         <div class="header-separator float-left"></div>
@@ -107,7 +105,7 @@
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'info.logenabled'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'info.logenabled'}"></span>
                             <div class="input_field toggle-switch-parent">
-                                <div id="logEnabled" class="input_field"
+                                <div id="logEnabled"
                                      data-win-control="WinJS.UI.ToggleSwitch"
                                      data-win-bind="winControl.checked: generalData.logEnabled Binding.Mode.twoway; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off">
                                     <!--onchange="AppBar.handleEvent('change', 'clickLogEnabled', event)"-->
@@ -117,21 +115,19 @@
                         <div class="field_line field_line_even" data-win-bind="style.display: generalData.logEnabled Binding.Converter.toDisplay">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'info.loglevel'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'info.loglevel'}"></span>
-                            <div class="input_field toggle-switch-parent">
-                                <span class="input_field" data-win-bind="textContent: generalData.logLevel Binding.Converter.toLogLevelName"></span>
-                                <input class="input_field win-range"
-                                       type="range" min="1" max="6" step="1"
-                                       data-win-bind="value: generalData.logLevel"
-                                       onchange="AppBar.handleEvent('change', 'changedLogLevel', event)"
-                                       oninput="AppBar.handleEvent('change', 'changedLogLevel', event)" />
-                            </div>
+                            <span class="input_field" data-win-bind="textContent: generalData.logLevel Binding.Converter.toLogLevelName"></span>
+                            <input class="input_field win-range"
+                                   type="range" min="1" max="6" step="1"
+                                   data-win-bind="value: generalData.logLevel"
+                                   onchange="AppBar.handleEvent('change', 'changedLogLevel', event)"
+                                   oninput="AppBar.handleEvent('change', 'changedLogLevel', event)" />
                         </div>
                         <div class="line-separator"></div>
                         <div class="field_line field_line_odd" data-win-bind="style.display: generalData.logEnabled Binding.Converter.toDisplay">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'info.loggroup'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'info.loggroup'}"></span>
                             <div class="input_field toggle-switch-parent">
-                                <div id="logGroup" class="input_field"
+                                <div id="logGroup"
                                      data-win-control="WinJS.UI.ToggleSwitch"
                                      data-win-bind="winControl.checked: generalData.logGroup Binding.Mode.twoway; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off">
                                 </div>
@@ -141,7 +137,7 @@
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'info.lognostack'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'info.lognostack'}"></span>
                             <div class="input_field toggle-switch-parent">
-                                <div id="logNoStack" class="input_field"
+                                <div id="logNoStack"
                                      data-win-control="WinJS.UI.ToggleSwitch"
                                      data-win-bind="winControl.checked: generalData.logNoStack; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
                                      onchange="AppBar.handleEvent('change', 'clickLogNoStack', event)">

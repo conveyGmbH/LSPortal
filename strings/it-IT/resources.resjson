@@ -348,7 +348,7 @@
     "settings.tiletextcolor": "Simboli pagina iniziale",
     "settings.tilebkgcolor" : "Sfondo pagina iniziale",
     "settings.shopAppBkg"   : "Immagine sfondo",
-    "settings.theme"        : "Colore tema",
+    "settings.theme"        : "Tema del colore",
     "settings.light"        : "Chiaro",
     "settings.dark"         : "Scuro",
     "settings.system"       : "Sistema",

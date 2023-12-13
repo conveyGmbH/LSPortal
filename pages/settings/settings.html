@@ -27,22 +27,20 @@
             <div class="field_line field_line_odd">
                 <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'settings.theme'}"></span>
                 <span class="label landscape_only" data-win-res="{textContent: 'settings.theme'}"></span>
-                <div class="input_field toggle-switch-parent">
-                    <select id="themeSelect"
-                            class="input_field win-dropdown"
-                            data-win-control="WinJS.UI.Repeater"
-                            data-win-bind="value: themeId"
-                            onchange="AppBar.handleEvent('change', 'changedTheme', event)">
-                        <option data-win-bind="value: themeId; textContent: label"></option>
-                    </select>
-                </div>
+                <select id="themeSelect"
+                        class="input_field win-dropdown"
+                        data-win-control="WinJS.UI.Repeater"
+                        data-win-bind="value: themeId"
+                        onchange="AppBar.handleEvent('change', 'changedTheme', event)">
+                    <option data-win-bind="value: themeId; textContent: label"></option>
+                </select>
             </div>
             <div class="individualColor" data-win-bind="style.display: showSettingsFlag Binding.Converter.toDisplay">
                 <div class="field_line field_line_even">
                     <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'settings.individual'}"></span>
                     <span class="label landscape_only" data-win-res="{textContent: 'settings.individual'}"></span>
                     <div class="input_field toggle-switch-parent">
-                        <div id="individualColors" class="input_field"
+                        <div id="individualColors"
                              data-win-control="WinJS.UI.ToggleSwitch"
                              data-win-bind="winControl.checked: generalData.individualColors; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
                              onchange="AppBar.handleEvent('change', 'clickIndividualColors', event)">
@@ -81,7 +79,7 @@
                     <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'settings.shopAppBkg'}"></span>
                     <span class="label landscape_only" data-win-res="{textContent: 'settings.shopAppBkg'}"></span>
                     <div class="input_field toggle-switch-parent">
-                        <div id="shopAppBkg" class="input_field"
+                        <div id="shopAppBkg"
                              data-win-control="WinJS.UI.ToggleSwitch"
                              data-win-bind="winControl.checked: generalData.showAppBkg; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
                              onchange="AppBar.handleEvent('change', 'clickShowAppBkg', event)">
@@ -195,7 +193,7 @@
                     <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'settings.inputBorderBottom'}"></span>
                     <span class="label landscape_only" data-win-res="{textContent: 'settings.inputBorderBottom'}"></span>
                     <div class="input_field toggle-switch-parent">
-                        <div id="inputBorderBottom" class="input_field"
+                        <div id="inputBorderBottom"
                              data-win-control="WinJS.UI.ToggleSwitch"
                              data-win-bind="winControl.checked: generalData.inputBorderBottom; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
                              onchange="AppBar.handleEvent('change', 'clickInputBorderBottom', event)">
