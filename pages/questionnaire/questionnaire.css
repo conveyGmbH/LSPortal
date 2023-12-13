@@ -184,7 +184,7 @@
 
 /*General Styles used for all FlipViews*/
 #imgListQuestionnaire.flipview {
-    background-image: url("/www/images/bkgtexture.png");
+    background-image: url("../../images/bkgtexture.png");
     left: 0;
     padding: 0;
     width: calc(100% - 16px);
