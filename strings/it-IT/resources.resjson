@@ -162,6 +162,7 @@
     "tooltip.copyMitarbeiter" : "Veranstaltung wechseln",
     "tooltip.addProduct" : "Aggiungi prodotto",
     "tooltip.removeProduct"    : "Cancellare il prodotto",
+    "tooltip.addEvent" : "Aggiungi all'evento",
 
     "home.title"            : "Start",
     "home.info"             : "Informazioni importanti",

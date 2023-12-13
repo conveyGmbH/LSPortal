@@ -162,6 +162,7 @@
     "tooltip.copyMitarbeiter" : "Veranstaltung wechseln",
     "tooltip.addProduct" : "Add Product",
     "tooltip.removeProduct"    : "Delete product",
+    "tooltip.addEvent" : "Add to event",
 
     "home.title"            : "Start",
     "home.info"             : "Important information",
