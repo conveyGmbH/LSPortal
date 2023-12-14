@@ -33,8 +33,13 @@
 
             // now do anything...
             var listView = fragmentElement.querySelector("#genFragEvents.listview");
+            var refreshDataPromise = null;
 
             this.dispose = function () {
+                if (refreshDataPromise) {
+                    refreshDataPromise.cancel();
+                    refreshDataPromise = null;
+                }
                 if (listView && listView.winControl) {
                     listView.winControl.itemDataSource = null;
                 }
@@ -217,7 +222,12 @@
 
             var loadData = function (recordId) {
                 var ret = null;
+                var newRecordId = null;
                 Log.call(Log.l.trace, "EventSession.", "recordId=" + recordId);
+                if (refreshDataPromise) {
+                    refreshDataPromise.cancel();
+                    refreshDataPromise = null;
+                }
                 if (!recordId) {
                     var master = Application.navigator.masterControl;
                     if (master && master.controller && master.controller.binding) {
@@ -231,20 +241,56 @@
                     ret = GenFragEvents.BenutzerODataView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
-                        Log.print(Log.l.trace, "voucherOrderView: success!");
+                        Log.print(Log.l.trace, "BenutzerODataView: success!");
                         // startContact returns object already parsed from json file in response
                         if (json && json.d && json.d.results) {
                             var results = json.d.results;
                             results.forEach(function (item, index) {
                                 that.resultConverter(item, index);
                             });
-                            that.events = new WinJS.Binding.List(results);
-                            if (listView.winControl) {
-                                // add ListView dataSource
-                                listView.winControl.itemDataSource = that.events.dataSource;
-                                that.binding.count = that.events.length;
+                            var selIdx = -1;
+                            var bModified = false;
+                            if (results.length > 0) {
+                                for (var i = 0; i < results.length; i++) {
+                                    var prevResult = that.events && that.events.getAt(i);
+                                    var result = results[i];
+                                    if (!bModified) {
+                                        if (!prevResult) {
+                                            Log.print(Log.l.trace, "no prevResult");
+                                            bModified = true;
+                                        } else {
+                                            for (var prop in GenFragEvents.BenutzerODataView.defaultValue) {
+                                                if (GenFragEvents.BenutzerODataView.defaultValue.hasOwnProperty(prop)) {
+                                                    if (result[prop] !== prevResult[prop]) {
+                                                        Log.print(Log.l.trace, "changed " + prop + ": " + prevResult[prop] + " -> " + result[prop]);
+                                                        bModified = true;
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    if (result && result.BenutzerVIEWID === result.MitarbeiterID) {
+                                        Log.print(Log.l.trace, "found active MitarbeiterID=" + result.MitarbeiterID + " at i=" + i);
+                                        if (result.MitarbeiterID !== recordId) {
+                                            newRecordId = result.MitarbeiterID;
+                                        }
+                                        selIdx = i;
+                                    }
+                                }
+                            } else {
+                                Log.print(Log.l.trace, "empty results");
+                                bModified = true;
                             }
-                            listView.winControl.selection.set(0);
+                            if (bModified) {
+                                that.events = new WinJS.Binding.List(results);
+                                if (listView.winControl) {
+                                    // add ListView dataSource
+                                    listView.winControl.itemDataSource = that.events.dataSource;
+                                    that.binding.count = that.events.length;
+                                    listView.winControl.selection.set(selIdx);
+                                }
+                            }
                         } else {
                             if (listView.winControl) {
                                 // add ListView dataSource
@@ -257,7 +303,33 @@
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
                         that.binding.count = 0;
-                    }, { MitarbeiterID: recordId });
+                    }, { MitarbeiterID: recordId }).then(function () {
+                        if (newRecordId) {
+                            var master = Application.navigator.masterControl;
+                            if (master && master.controller && master.controller.binding) {
+                                master.controller.binding.employeeId = newRecordId;
+                                return master.controller.loadData();
+                            } else {
+                                return WinJS.Promise.as();
+                            }
+                            
+                        } else {
+                            refreshDataPromise = WinJS.Promise.timeout(10000).then(function () {
+                                that.loadData();
+                            });
+                            return WinJS.Promise.as();
+                        }
+                    }).then(function () {
+                        if (newRecordId) {
+                            var master = Application.navigator.masterControl;
+                            if (master && master.controller && master.controller.binding) {
+                                master.controller.binding.employeeId = newRecordId;
+                                return master.controller.selectRecordId(master.controller.binding.employeeId);
+                            } else {
+                                return WinJS.Promise.as();
+                            }
+                        }
+                    });
                 } else {
                     Log.print(Log.l.trace, "No recordId set!");
                 }

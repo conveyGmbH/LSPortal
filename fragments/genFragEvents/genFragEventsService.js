@@ -40,54 +40,22 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            getResults: function () {
-                Log.call(Log.l.trace, "GenFragEvents.BenutzerView.");
-                var ret = GenFragEvents._BenutzerView.results;
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            getMap: function () {
-                Log.call(Log.l.trace, "GenFragEvents.BenutzerView.");
-                var ret = GenFragEvents._BenutzerView.map;
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            defaultValue: {
-                Status: "",
-                sessionEndBtn: false
-            }
-        },
-        _eventId: null,
-        _eventName: null,
-        _questionView: {
-            get: function () {
-                var ret = AppData.getFormatView("Fragebogen", 20597);
-                return ret;
-            }
-        },
-        questionView: {
-            select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "questionView.");
-                var ret = GenFragEvents._questionView.select(complete, error, restriction, { ordered: true, orderAttribute: "FragebogenVIEWID" });
-                // this will return a promise to controller
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            getNextUrl: function (response) {
-                Log.call(Log.l.trace, "questionView.");
-                var ret = GenFragEvents._questionView.getNextUrl(response);
-                Log.ret(Log.l.trace);
-                return ret;
-            },
             selectNext: function (complete, error, response, nextUrl) {
                 Log.call(Log.l.trace, "questionView.");
-                var ret = GenFragEvents._questionView.selectNext(complete, error, response, nextUrl);
+                var ret = GenFragEvents._BenutzerView.selectNext(complete, error, response, nextUrl);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
             },
             defaultValue: {
-
+                BenutzerVIEWID: 0,
+                VeranstaltungName: "",
+                EndStartDatum: "",
+                UserStatusID: "",
+                AktivButtonShowFlag: "",
+                UserStatusShowFlag: "",
+                UserStatus: "",
+                MitarbeiterID: 0
             }
         }
     });
