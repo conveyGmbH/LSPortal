@@ -130,23 +130,6 @@
                         }
                     }, function (error) {
                         Log.print(Log.l.error, "call error");
-                    }).then(function () {
-                        var master = Application.navigator.masterControl;
-                        if (master && master.controller && master.controller.binding && newEmployeeId) {
-                            //AppData.setRecordId("MitarbeiterVIEW_20471", newEmployeeId);
-                            master.controller.binding.employeeId = newEmployeeId;
-                            return master.controller.loadData();
-                        } else {
-                            return WinJS.Promise.as();
-                        }
-                    }).then(function () {
-                        var master = Application.navigator.masterControl;
-                        if (master && master.controller && master.controller.binding) {
-                            master.controller.binding.employeeId = newEmployeeId;
-                            return master.controller.selectRecordId(master.controller.binding.employeeId);
-                        } else {
-                            return WinJS.Promise.as();
-                        }
                     });
                 },
                 onLoadingStateChanged: function (eventInfo) {
