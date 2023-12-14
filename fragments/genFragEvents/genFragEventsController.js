@@ -309,17 +309,6 @@
                             });
                             return WinJS.Promise.as();
                         }
-                    }).then(function () {
-                        if (newRecordId) {
-                            Log.print(Log.l.trace, "reselect master newRecordId=" + newRecordId);
-                            var master = Application.navigator.masterControl;
-                            if (master && master.controller && master.controller.binding) {
-                                master.controller.binding.employeeId = newRecordId;
-                                return master.controller.selectRecordId(master.controller.binding.employeeId);
-                            } else {
-                                return WinJS.Promise.as();
-                            }
-                        }
                     });
                 } else {
                     Log.print(Log.l.trace, "No recordId set!");

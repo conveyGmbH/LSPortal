@@ -18,7 +18,7 @@
             Log.call(Log.l.trace, "GenDataEmpList.Controller.");
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
-                employeeId: 0,//AppData.getRecordId("Mitarbeiter")
+                employeeId: 0,
                 hasContacts: null,
                 hasLocalevents: null,
                 licenceWarning: false
@@ -207,7 +207,6 @@
                                                 that.binding.employeeId = item.data.MitarbeiterVIEWID;
                                                 that.binding.hasContacts = item.data.HatKontakte;
                                                 that.binding.selIdx = item.index;
-                                                //AppData.setRecordId("MitarbeiterVIEW_20471", that.binding.employeeId);
                                                 var curPageId = Application.getPageId(nav.location);
                                                 if ((curPageId === "genDataEmployee") &&
                                                     typeof AppBar.scope.loadData === "function") {
@@ -490,13 +489,15 @@
                                 results.forEach(function (item, index) {
                                     that.resultConverter(item, index);
                                 });
+                                if (!that.binding.employeeId) {
+                                    that.binding.employeeId = results[0].MitarbeiterVIEWID;
+                                }
                                 that.employees = new WinJS.Binding.List(results);
-
                                 if (listView.winControl) {
                                     // add ListView dataSource
                                     listView.winControl.itemDataSource = that.employees.dataSource;
                                 }
-                                that.selectRecordId(json.d.results[0].MitarbeiterVIEWID);
+                                that.selectRecordId(that.binding.employeeId);
                             } else {
                                 that.binding.count = 0;
                                 that.nextUrl = null;

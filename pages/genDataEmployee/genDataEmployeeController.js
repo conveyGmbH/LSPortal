@@ -132,13 +132,11 @@
             this.saveRestriction = saveRestriction;
 
             var getRecordId = function () {
+                var recordId = null;
                 Log.call(Log.l.trace, "GenDataEmployee.Controller.");
-                var recordId = that.binding.dataEmployee && that.binding.dataEmployee.MitarbeiterVIEWID;
-                if (!recordId) {
-                    var master = Application.navigator.masterControl;
-                    if (master && master.controller && master.controller.binding) {
-                        recordId = master.controller.binding.employeeId;
-                    }
+                var master = Application.navigator.masterControl;
+                if (master && master.controller && master.controller.binding) {
+                    recordId = master.controller.binding.employeeId;
                 }
                 Log.ret(Log.l.trace, recordId);
                 return recordId;
@@ -254,14 +252,6 @@
                         } else {
                             return WinJS.Promise.as();
                         }
-                    }).then(function () {
-                        var master = Application.navigator.masterControl;
-                        if (master && master.controller && master.controller.binding && newEmployeeId) {
-                            master.controller.binding.employeeId = newEmployeeId;
-                            return master.controller.selectRecordId(master.controller.binding.employeeId);
-                        } else {
-                            return WinJS.Promise.as();
-                        }
                     });
                 },
                 clickAddEvent: function (event) {
@@ -275,6 +265,7 @@
                 },
                 clickNew: function (event) {
                     Log.call(Log.l.trace, "GenDataEmployee.Controller.");
+                    var newEmployeeId = null;
                     that.saveData(function (response) {
                         AppBar.busy = true;
                         Log.print(Log.l.trace, "eployee saved");
@@ -301,6 +292,7 @@
                                 employee.Login = AppData.generalData.userName;
                                 that.setDataEmployee(employee);
                                 that.binding.dataEmployee.LogInNameBeforeAtSymbole = "";
+                                newEmployeeId = that.binding.dataEmployee.MitarbeiterVIEWID;
                             }
                             //AppBar.modified = true;
                         }, function (errorResponse) {
@@ -311,16 +303,8 @@
                     }).then(function () {
                         var master = Application.navigator.masterControl;
                         if (master && master.controller && master.controller.binding) {
-                            master.controller.binding.employeeId = that.binding.dataEmployee.MitarbeiterVIEWID;
+                            master.controller.binding.employeeId = newEmployeeId;
                             return master.controller.loadData();
-                        } else {
-                            return WinJS.Promise.as();
-                        }
-                    }).then(function() {
-                        var master = Application.navigator.masterControl;
-                        if (master && master.controller && master.controller.binding) {
-                            master.controller.binding.employeeId = that.binding.dataEmployee.MitarbeiterVIEWID;
-                            return master.controller.selectRecordId(master.controller.binding.employeeId);
                         } else {
                             return WinJS.Promise.as();
                         }
@@ -369,14 +353,6 @@
                     Log.call(Log.l.trace, "GenDataEmployee.Controller.");
                     that.saveData(function (response) {
                         Log.print(Log.l.trace, "employee saved");
-                        /*var master = Application.navigator.masterControl;
-                        if (master && master.controller && master.controller.binding && typeof master.controller.selectRecordId !== "undefined") {
-                            master.controller.binding.employeeId = that.binding.dataEmployee.MitarbeiterVIEWID;
-                            master.controller.loadData(master.controller.binding.employeeId).then(function () {
-                                Log.print(Log.l.info, "master.controller.loadData: success!");
-                                master.controller.selectRecordId(that.binding.dataEmployee.MitarbeiterVIEWID);
-                            });
-                        }*/
                     }, function (errorResponse) {
                         Log.print(Log.l.error, "error saving employee");
                     });
@@ -453,20 +429,6 @@
                         delete that.binding.restriction.bUseOr;
                     }
                     that.saveRestriction();
-                    var master = Application.navigator.masterControl;
-                    if (master && master.controller && master.controller.binding) {
-                        if (prevMasterLoadPromise &&
-                            typeof prevMasterLoadPromise.cancel === "function") {
-                            prevMasterLoadPromise.cancel();
-                        }
-                        //master.controller.binding.contactId = that.binding.dataContact.KontaktVIEWID;
-                        prevMasterLoadPromise = master.controller.loadData().then(function () {
-                            prevMasterLoadPromise = null;
-                            if (master && master.controller && that.binding.employeeId) {
-                                master.controller.selectRecordId(that.binding.employeeId);
-                            }
-                        });
-                    }
                     Log.ret(Log.l.trace);
                 },
                 clickOrderFirstname: function (event) {
@@ -867,14 +829,10 @@
                                             }
                                             var master = Application.navigator.masterControl;
                                             if (master && master.controller && master.controller.binding) {
-                                                master.controller.binding.employeeId =
-                                                    that.binding.dataEmployee.MitarbeiterVIEWID;
+                                                master.controller.binding.employeeId = recordId;
                                                 master.controller.loadData().then(function () {
-                                                    //master.controller.loadData(master.controller.binding.employeeId).then(function () {
                                                     AppBar.modified = false;
                                                     complete(response);
-                                                    master.controller.selectRecordId(master.controller.binding.employeeId);
-                                                    //});
                                                 });
                                             } else {
                                                 AppBar.modified = false;
@@ -887,13 +845,10 @@
                                     } else {
                                         var master = Application.navigator.masterControl;
                                         if (master && master.controller && master.controller.binding) {
-                                            master.controller.binding.employeeId = that.binding.dataEmployee.MitarbeiterVIEWID;
+                                            master.controller.binding.employeeId = recordId;
                                             master.controller.loadData().then(function () {
-                                                //master.controller.loadData(master.controller.binding.employeeId).then(function () {
                                                 AppBar.modified = false;
                                                 complete(response);
-                                                master.controller.selectRecordId(master.controller.binding.employeeId);
-                                                //});
                                             });
                                         } else {
                                             AppBar.modified = false;
