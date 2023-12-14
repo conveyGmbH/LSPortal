@@ -117,14 +117,13 @@
                 },
                 clickChangeEvent: function(event) {
                     Log.call(Log.l.trace, "EventSession.Controller.");
-                    var newEmployeeId = null;
                     AppData.call("PRC_CopyAppMitarbeiter", {
                         pMitarbeiterID: that.binding.ecRecordID,
                         pNewVeranstaltungID: that.binding.ecEventID
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
                         if (json && json.d && json.d.results.length > 0) {
-                            newEmployeeId = json.d.results[0] ? json.d.results[0].NewMitarbeiterID : null;
+                            that.loadData();
                         } else {
                             Log.print(Log.l.error, "ERROR: No Data found!");
                         }
