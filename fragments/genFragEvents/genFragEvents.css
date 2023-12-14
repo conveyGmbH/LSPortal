@@ -21,9 +21,12 @@
 .genFragEvents .row-bkg-gray {
     width: auto;
 }
+
+/* listview viewport will be resized by page controller! */
 #genFragEvents.listview {
     width: 100%;
     height: 100%;
+    overflow: hidden
 }
 
 /* listview viewport will be resized by page controller! */
