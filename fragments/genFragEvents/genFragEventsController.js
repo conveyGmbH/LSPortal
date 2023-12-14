@@ -252,11 +252,11 @@
                                             }
                                         }
                                     }
-                                    if (result && result.BenutzerVIEWID === result.MitarbeiterID) {
-                                        Log.print(Log.l.trace, "found active MitarbeiterID=" + result.MitarbeiterID + " at i=" + i);
-                                        if (result.MitarbeiterID !== recordId) {
-                                            newRecordId = result.MitarbeiterID;
-                                        }
+                                    if (result && (!result.UserStatus || result.UserStatus === "ACTIVE" || result.UserStatus === "CHANGE")) {
+                                        Log.print(Log.l.trace, "found active BenutzerVIEWID=" + result.BenutzerVIEWID + " at i=" + i);
+                                        selIdx = i;
+                                    } else if (results.length === 1) {
+                                        Log.print(Log.l.trace, "found only BenutzerVIEWID=" + result.BenutzerVIEWID + " at i=" + i);
                                         selIdx = i;
                                     }
                                 }
