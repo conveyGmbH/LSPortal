@@ -683,7 +683,7 @@
                         ret = WinJS.Promise.timeout(20).then(function() {
                             return that.resizeGenFragEvents();
                         });
-                        Log.ret(Log.l.trace, "listview layout not yet completed");
+                        Log.ret(Log.l.u1, "listview layout not yet completed");
                         return ret;
                     }
                 }
