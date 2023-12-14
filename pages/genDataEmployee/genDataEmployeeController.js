@@ -355,6 +355,8 @@
                         Log.print(Log.l.trace, "employee saved");
                     }, function (errorResponse) {
                         Log.print(Log.l.error, "error saving employee");
+                    }).then(function() {
+                        that.loadData();
                     });
                     Log.ret(Log.l.trace);
                 },
@@ -687,18 +689,6 @@
                     recordId = getRecordId();
                 }
                 var ret = new WinJS.Promise.as().then(function () {
-                    if (recordId && AppBar.modified) {
-                        Log.print(Log.l.trace, "is modified...");
-                        var master = Application.navigator.masterControl;
-                        if (master && master.controller) {
-                            return master.controller.loadData(recordId);
-                        } else {
-                            return WinJS.Promise.as();
-                        }
-                    } else {
-                        return WinJS.Promise.as();
-                    }
-                }).then(function () {
                     if (recordId) {
                         that.events = null;
                         return AppData.call("PRC_MAWeitereVeranstaltungen", {
@@ -779,6 +769,10 @@
                     if (recordId) {
                         Log.print(Log.l.trace, "Data loaded");
                         that.resizeGenFragEvents();
+                        var master = Application.navigator.masterControl;
+                        if (master && master.controller) {
+                            master.controller.scrollToRecordId(recordId);
+                        }
                     }
                 });
                 Log.ret(Log.l.trace);
