@@ -931,6 +931,8 @@
     "mandatory.doQuestionnaireMandatory"  : "Hinweis anzeigen",
     "mandatory.doContactMandatory"  : "Hinweis anzeigen",
     "mandatory.count"       : "Anzahl",
+    "mandatory.noticeOn"       : "Hinweise anzeigen aber weitere Bearbeitung möglich",
+    "mandatory.noticeOff"       : "Weitere Bearbeitung NICHT zulassen",
 
     "barcodeAdministration.title" : "Barcode",
     "barcodeAdministration.count" : "Anzahl",

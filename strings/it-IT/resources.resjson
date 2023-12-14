@@ -931,6 +931,8 @@
     "mandatory.doQuestionnaireMandatory"  : "Show message for mandatory fields in questionnaire",
     "mandatory.doContactMandatory"  : "Show message for mandatory fields in contact",
     "mandatory.count"  : "Totale",
+    "mandatory.noticeOn" : "Mostra gli avvisi ma è possibile modificarli ulteriormente",
+    "mandatory.noticeOff" : "NON consentire ulteriori modifiche",
 
     "barcodeAdministration.title" : "Barcode",
     "barcodeAdministration.count" : "Totale",

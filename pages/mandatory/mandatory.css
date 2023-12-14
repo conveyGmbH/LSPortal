@@ -43,3 +43,9 @@
 .toggle-switch-parent {
     height: 50px;
 }
+#mandatoryquestion .win-toggleswitch-value-on {
+    width: 500px !important;
+}
+#mandatoryquestion .win-toggleswitch-value-off {
+    width: 500px !important;
+}
