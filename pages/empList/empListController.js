@@ -19,7 +19,7 @@
             Log.call(Log.l.trace, "EmpList.Controller.");
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
-                employeeId: 0,//AppData.getRecordId("Mitarbeiter")
+                employeeId: 0,
                 hasContacts: null,
                 hasLocalevents: null,
                 licenceWarning: false,
@@ -495,18 +495,11 @@
                                     that.resultConverter(item, index);
                                 });
                                 that.employees = new WinJS.Binding.List(results);
-
                                 if (listView.winControl) {
                                     // add ListView dataSource
                                     listView.winControl.itemDataSource = that.employees.dataSource;
                                 }
-                                //var recordId = AppData.getRecordId("Mitarbeiter");
-                                if (that.binding.employeeId) {
-                                    that.selectRecordId(recordId);
-                                } else {
-                                    that.selectRecordId(json.d.results[0].MitarbeiterVIEWID);
-                                }
-                                
+                                that.selectRecordId(that.binding.employeeId || results[0].MitarbeiterVIEWID);
                             } else {
                                 that.binding.count = 0;
                                 that.nextUrl = null;

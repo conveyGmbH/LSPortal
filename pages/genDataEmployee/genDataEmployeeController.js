@@ -24,7 +24,10 @@
                 allowEditLogin: null,
                 noLicenceText: getResourceText("info.nolicenceemployee"),
                 addEventFormFlag: "",
-                eventId: null
+                eventId: null,
+                disableLoginName: false,
+                disableLoginFirstPart: false,
+                disableDomain: false
             }, commandList]);
 
             var that = this;
@@ -36,6 +39,10 @@
             var counter = null;
             var layout = null;
             this.events = null;
+
+            var loginName = pageElement.querySelector('input[name="loginName"]');
+            var domain = pageElement.querySelector('input[name="domain"]');
+            var loginFirstPart = pageElement.querySelector('input[name="loginFirstPart"]');
 
             var addEventFormfieldcombo = pageElement.querySelector("#addEventFormEventData");
 
@@ -50,10 +57,8 @@
 
             var resultConverter = function (item, index) {
                 if (item.Login && item.Login.indexOf("@") > 0) {
-                    var firstLoginPart = item.Login.substr(0, item.Login.indexOf("@"));
-                    var secondLoginPart = item.Login.substr(item.Login.lastIndexOf("@"), item.Login.length - 1);
-                    item.LogInNameBeforeAtSymbole = firstLoginPart;
-                    item.LogInNameAfterAtSymbole = secondLoginPart;
+                    item.LogInNameBeforeAtSymbol = item.Login.substr(0, item.Login.indexOf("@"));
+                    item.LogInNameAfterAtSymbol = item.Login.substr(item.Login.lastIndexOf("@"), item.Login.length - 1);
                 }
                 item.Password2 = item.Password;
             }
@@ -188,14 +193,23 @@
                     } else {
                         that.binding.noLicence = null;
                     }
+                    if (result && result.UserStatus) {
+                        that.binding.userStatus = result.UserStatus;
+                    } else {
+                        that.binding.userStatus = null;
+                    }
                     // neues Flag UserIsActive -> wenn user bereits eingelogt ist dann sollte das Feld Login und Passwort static sein 
                     // wenn user den Ändern will dann klicke explizit auf das icon für Ändern user und bestätige die Alertbox 
                     // -> result.HatKontakte ist dirty Trick um festzustellen ob normale Admin oder nicht
-                    that.binding.allowEditLogin = AppHeader.controller.binding.userData.SiteAdmin || !result.HatKontakte || !result.UserIsActive;
+                    that.binding.allowEditLogin = AppHeader.controller.binding.userData.SiteAdmin || AppHeader.controller.binding.userData.HasLocalEvents;
                     if (that.binding.allowEditLogin) {
-                       
+                        that.binding.disableLoginFirstPart = false;
+                        that.binding.disableDomain = false;
+                        that.binding.disableLoginName = false;
                     } else {
-                        
+                        that.binding.disableLoginFirstPart = true;
+                        that.binding.disableDomain = true;
+                        that.binding.disableLoginName = true;
                     }
                     AppBar.triggerDisableHandlers();
                     return WinJS.Promise.as();
@@ -211,9 +225,13 @@
             var checkingReadonlyFlag = function () {
                 Log.call(Log.l.trace, "GenDataEmployee.Controller.");
                 if (AppHeader.controller.binding.userData.SiteAdmin) {
-                    if (loginFirstPart) {
-                        loginFirstPart.disabled = false;
-                    }
+                    that.binding.disableLoginFirstPart = false;
+                    that.binding.disableDomain = false;
+                    that.binding.disableLoginName = false;
+                } else {
+                    that.binding.disableLoginFirstPart = false;
+                    that.binding.disableDomain = true;
+                    that.binding.disableLoginName = true;
                 }
                 Log.ret(Log.l.trace);
             }
@@ -291,7 +309,7 @@
                                 var employee = json.d;
                                 employee.Login = AppData.generalData.userName;
                                 that.setDataEmployee(employee);
-                                that.binding.dataEmployee.LogInNameBeforeAtSymbole = "";
+                                that.binding.dataEmployee.LogInNameBeforeAtSymbol = "";
                                 newEmployeeId = that.binding.dataEmployee.MitarbeiterVIEWID;
                             }
                             //AppBar.modified = true;
@@ -390,17 +408,31 @@
                     if (event.currentTarget && AppBar.notifyModified) {
                         that.binding.dataEmployee.Password = "";
                         that.binding.dataEmployee.Password2 = "";
+                        that.binding.dataEmployee.LogInNameBeforeAtSymbol = item.Login.substr(0, event.currentTarget.value.indexOf("@"));
+                        that.binding.dataEmployee.LogInNameAfterAtSymbol = item.Login.substr(event.currentTarget.value.lastIndexOf("@"), event.currentTarget.value.length - 1);
                     }
-                    if (event.currentTarget.id === "loginFirstPart") {
+                    Log.ret(Log.l.trace);
+                },
+                changeLogInNameBeforeAtSymbol: function (event) {
+                    Log.call(Log.l.trace, "GenDataEmployee.Controller.");
+                    if (event.currentTarget && AppBar.notifyModified) {
+                        that.binding.dataEmployee.Password = "";
+                        that.binding.dataEmployee.Password2 = "";
                         if (event.currentTarget.value && event.currentTarget.value.indexOf("@") > 0) {
-                            that.binding.dataEmployee.LogInNameBeforeAtSymbole = event.currentTarget.value.substr(0, event.currentTarget.value.indexOf("@"));
+                            that.binding.dataEmployee.LogInNameBeforeAtSymbol = event.currentTarget.value.substr(0, event.currentTarget.value.indexOf("@"));
                         } else {
-                            that.binding.dataEmployee.LogInNameBeforeAtSymbole = event.currentTarget.value;
+                            that.binding.dataEmployee.LogInNameBeforeAtSymbol = event.currentTarget.value;
                         }
-                        that.binding.dataEmployee.Login = that.binding.dataEmployee.LogInNameBeforeAtSymbole + that.binding.dataEmployee.LogInNameAfterAtSymbole;
+                        that.binding.dataEmployee.Login = that.binding.dataEmployee.LogInNameBeforeAtSymbol + that.binding.dataEmployee.LogInNameAfterAtSymbol;
                     }
-                    if (event.currentTarget.id === "domain") {
-                        that.binding.dataEmployee.Login = that.binding.dataEmployee.LogInNameBeforeAtSymbole + event.currentTarget.value;
+                    Log.ret(Log.l.trace);
+                },
+                changeLogInNameAfterAtSymbol: function (event) {
+                    Log.call(Log.l.trace, "GenDataEmployee.Controller.");
+                    if (event.currentTarget && AppBar.notifyModified) {
+                        that.binding.dataEmployee.Password = "";
+                        that.binding.dataEmployee.Password2 = "";
+                        that.binding.dataEmployee.Login = that.binding.dataEmployee.LogInNameBeforeAtSymbol + event.currentTarget.value;
                     }
                     Log.ret(Log.l.trace);
                 },
@@ -490,10 +522,9 @@
                     Log.call(Log.l.trace, "Account.Controller.");
                     AppData._persistentStates.privacyPolicyFlag = false;
                     if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
-                        AppHeader.controller.binding.userData = {};
-                        if (!AppHeader.controller.binding.userData.VeranstaltungName) {
-                            AppHeader.controller.binding.userData.VeranstaltungName = "";
-                        }
+                        AppHeader.controller.binding.userData = {
+                            VeranstaltungName: ""
+                        };
                     }
                     Application.navigateById("login", event);
                     Log.ret(Log.l.trace);
@@ -504,7 +535,9 @@
                     return confirm(confirmTitle, function (result) {
                         // called asynchronously if user-choice
                         if (result) {
-                            
+                            that.binding.disableLoginFirstPart = false;
+                            that.binding.disableDomain = true;
+                            that.binding.disableLoginName = false;
                             that.binding.allowEditLogin = 1;
                         }
                         Log.ret(Log.l.trace);
@@ -784,101 +817,96 @@
             var saveData = function (complete, error) {
                 Log.call(Log.l.trace, "GenDataEmployee.Controller.");
                 AppData.setErrorMsg(that.binding);
-                var ret;
+                var recordId = getRecordId();
                 var dataEmployee = that.binding.dataEmployee;
-                if (dataEmployee && AppBar.modified && !AppBar.busy) {
-                    if (dataEmployee.Login && typeof dataEmployee.Password === "string" && dataEmployee.Password.length < 5) {
-                        Log.print(Log.l.error, "password must be min length 5");
-                        alert(getResourceText("employee.alertPasswordShort"));
-                        return WinJS.Promise.as();
-                    }
-                    if (!dataEmployee.Login || dataEmployee.Password2 && dataEmployee.Password && dataEmployee.Password2 === dataEmployee.Password) {
-                        var recordId = getRecordId();
-                        if (recordId) {
-                            AppBar.busy = true;
-                            ret = GenDataEmployee.employeeView.update(function (response) {
-                                AppBar.busy = false;
-                                // called asynchronously if ok
-                                Log.print(Log.l.info, "employeeData update: success!");
-                                if (AppData.getRecordId("Mitarbeiter") === dataEmployee.MitarbeiterVIEWID) {
-                                    AppData._persistentStates.privacyPolicyFlag = false;
-                                    if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
-                                        AppHeader.controller.binding.userData = {};
-                                        if (!AppHeader.controller.binding.userData.VeranstaltungName) {
-                                            AppHeader.controller.binding.userData.VeranstaltungName = "";
-                                        }
-                                    }
-                                    alert(getResourceText("employee.alertNewLoginPassword"), function(response) {
-                                        // always call 
-                                        Application.navigateById("login");
-                                        complete(response);
-                                    });
-                                } else {
-                                    var empRolesFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("empRoles"));
-                                    if (empRolesFragmentControl && empRolesFragmentControl.controller) {
-                                        empRolesFragmentControl.controller.saveData(function () {
-                                            Log.print(Log.l.trace, "saveData completed...");
-                                            if (AppData.getRecordId("Mitarbeiter") === recordId) {
-                                                AppData.getUserData();
-                                            }
-                                            var master = Application.navigator.masterControl;
-                                            if (master && master.controller && master.controller.binding) {
-                                                master.controller.binding.employeeId = recordId;
-                                                master.controller.loadData().then(function () {
-                                                    AppBar.modified = false;
-                                                    complete(response);
-                                                });
-                                            } else {
-                                                AppBar.modified = false;
-                                                complete(response);
-                                            }
-                                        }, function (errorResponse) {
-                                            Log.print(Log.l.error, "saveData error...");
-                                            AppData.setErrorMsg(that.binding, errorResponse);
-                                        });
-                                    } else {
-                                        var master = Application.navigator.masterControl;
-                                        if (master && master.controller && master.controller.binding) {
-                                            master.controller.binding.employeeId = recordId;
-                                            master.controller.loadData().then(function () {
-                                                AppBar.modified = false;
-                                                complete(response);
-                                            });
-                                        } else {
-                                            AppBar.modified = false;
-                                            complete(response);
-                                        }
-                                    }
-                                }
-                            }, function (errorResponse) {
-                                AppBar.busy = false;
-                                // called asynchronously if an error occurs
-                                // or server returns response with an error status.
-                                AppData.getErrorMsgFromErrorStack(errorResponse);
-                                //AppData.setErrorMsg(that.binding, errorResponse);
-                                //error(errorResponse);
-                                ;
-                            }, recordId, dataEmployee);
-                        } else {
-                            Log.print(Log.l.info, "not supported");
-                            ret = WinJS.Promise.as();
-                        }
-                    } else {
-                        Log.print(Log.l.error, "incorrect password confirmation");
-                        alert(getResourceText("employee.alertPassword"));
-                        ret = WinJS.Promise.as();
-                    }
-                } else if (AppBar.busy) {
-                    ret = WinJS.Promise.timeout(100).then(function () {
-                        return that.saveData(complete, error);
-                    });
-                } else {
-                    ret = new WinJS.Promise.as().then(function () {
+                if (!dataEmployee || !AppBar.modified || !recordId) {
+                    Log.ret(Log.l.error, "not modified");
+                    return new WinJS.Promise.as().then(function () {
                         if (typeof complete === "function") {
                             complete(dataEmployee);
                         }
                     });
                 }
+                if (AppBar.busy) {
+                    Log.ret(Log.l.error, "busy - try again...");
+                    return  WinJS.Promise.timeout(100).then(function () {
+                        return that.saveData(complete, error);
+                    });
+                }
+                if (dataEmployee.Login && typeof dataEmployee.Password === "string" && dataEmployee.Password.length < 5) {
+                    Log.print(Log.l.error, "password must be min length 5");
+                    alert(getResourceText("employee.alertPasswordShort"));
+                    return WinJS.Promise.as();
+                }
+                if (dataEmployee.Login &&
+                    (!dataEmployee.Password || !dataEmployee.Password2 ||
+                        dataEmployee.Password2 !== dataEmployee.Password)) {
+                    Log.print(Log.l.error, "incorrect password confirmation");
+                    alert(getResourceText("employee.alertPassword"));
+                    return WinJS.Promise.as();
+                }
+                AppBar.busy = true;
+                var ret = GenDataEmployee.employeeView.update(function (response) {
+                    // called asynchronously if ok
+                    Log.print(Log.l.info, "employeeData update: success!");
+                }, function (errorResponse) {
+                    AppBar.busy = false;
+                    // called asynchronously if an error occurs
+                    // or server returns response with an error status.
+                    AppData.getErrorMsgFromErrorStack(errorResponse);
+                    //AppData.setErrorMsg(that.binding, errorResponse);
+                    //error(errorResponse);
+                    ;
+                }, recordId, dataEmployee).then(function() {
+                    if (AppData.getRecordId("Mitarbeiter") === recordId) {
+                        AppData._persistentStates.privacyPolicyFlag = false;
+                        if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
+                            AppHeader.controller.binding.userData = {
+                                VeranstaltungName: ""
+                            };
+                        }
+                        alert(getResourceText("employee.alertNewLoginPassword"), function (response) {
+                            // always call 
+                            Application.navigateById("login");
+                            if (typeof complete === "function") {
+                                complete(dataEmployee);
+                            }
+                        });
+                        return WinJS.Promise.as();
+                    } else {
+                        var empRolesFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("empRoles"));
+                        if (empRolesFragmentControl && empRolesFragmentControl.controller) {
+                            return empRolesFragmentControl.controller.saveData(function () {
+                                Log.print(Log.l.trace, "saveData completed...");
+                            }, function (errorResponse) {
+                                AppBar.busy = false;
+                                Log.print(Log.l.error, "saveData error...");
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                            });
+                        } else {
+                            return WinJS.Promise.as();
+                        }
+                    }
+                }).then(function () {
+                    AppBar.modified = false;
+                    AppBar.busy = false;
+                    if (AppData.getRecordId("Mitarbeiter") === recordId) {
+                        // ignore that
+                    } else {
+                        var master = Application.navigator.masterControl;
+                        if (master && master.controller && master.controller.binding) {
+                            master.controller.loadData(recordId).then(function () {
+                                if (typeof complete === "function") {
+                                    complete(dataEmployee);
+                                }
+                            });
+                        } else {
+                            if (typeof complete === "function") {
+                                complete(dataEmployee);
+                            }
+                        }
+                    }
+                });
                 Log.ret(Log.l.trace);
                 return ret;
             }

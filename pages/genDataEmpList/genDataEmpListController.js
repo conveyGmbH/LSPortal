@@ -457,7 +457,7 @@
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                     // only licence user select 
-                    /*return GenDataEmpList.employeeView.select(function (json) {
+                    return GenDataEmpList.employeeView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
                         Log.print(Log.l.trace, "licenceView: success!");
@@ -475,7 +475,7 @@
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, { NichtLizenzierteApp: 1 });
-                }).then(function () {*/
+                }).then(function () {
                     return GenDataEmpList.employeeView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
