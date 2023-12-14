@@ -932,6 +932,8 @@
     "mandatory.doQuestionnaireMandatory"  : "afficher message",
     "mandatory.doContactMandatory"  : "afficher message",
     "mandatory.count"  : "Nombre",
+    "mandatory.noticeOn" : "Afficher les remarques mais permettre la poursuite de l'édition",
+    "mandatory.noticeOff" : "NE PAS autoriser la poursuite du traitement",
 
 	"barcodeAdministration.title" : "Barcode",
 	"barcodeAdministration.count" : "Nombre",

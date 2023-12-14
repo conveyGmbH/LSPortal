@@ -17,7 +17,10 @@
             Log.call(Log.l.trace, "Mandatory.Controller.");
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
-                leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic
+                leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic,
+                doMandatoryShowFlag: null,
+                noticeOn: getResourceText("mandatory.noticeOn"),
+                noticeOff: getResourceText("mandatory.noticeOff")
             }, commandList]);
             this.nextUrl = null;
             this.loading = false;
@@ -169,6 +172,19 @@
             };
             this.changeMandatorySetting = changeMandatorySetting;
 
+            var validateCb = function() {
+                Log.call(Log.l.trace, "Mandatory.Controller.");
+                that.binding.doMandatoryShowFlag = null;
+                var combBox = pageElement.querySelectorAll(".reqCB");
+                for (var i = 0; i < combBox.length; i++) {
+                    if (combBox[i].checked === true) {
+                        that.binding.doMandatoryShowFlag = 1;
+                    }
+                }
+                Log.call(Log.l.trace, "Mandatory.Controller.");
+            }
+            this.validateCb = validateCb;
+
             // define handlers
             this.eventHandlers = {
                 clickBack: function (event) {
@@ -206,6 +222,11 @@
                 clickChangeUserState: function (event) {
                     Log.call(Log.l.trace, "Event.Controller.");
                     Application.navigateById("userinfo", event);
+                    Log.ret(Log.l.trace);
+                },
+                clickReqManCb: function(event) {
+                    Log.call(Log.l.trace, "Mandatory.Controller.");
+                    that.validateCb();
                     Log.ret(Log.l.trace);
                 },
                 onSelectionChanged: function (eventInfo) {
@@ -535,6 +556,7 @@
                                 // called asynchronously if ok
                                 AppData.getUserData();
                                 AppBar.modified = false;
+                                that.validateCb();
                                 if (typeof complete === "function") {
                                     complete({});
                                 }
@@ -564,6 +586,9 @@
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
+            }).then(function () {
+                Log.print(Log.l.trace, "Binding wireup page complete");
+                return that.validateCb();
             }).then(function () {
                 AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Data loaded");

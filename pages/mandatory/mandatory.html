@@ -41,8 +41,9 @@
                          data-win-control="WinJS.Binding.Template" style="display: none">
                         <div class="list-manquest-item">
                             <label class="list-manquest-field">
-                                <input type="checkbox" class="win-checkbox" value="1"
-                                       data-win-bind="checked: PflichtFlag"/>
+                                <input type="checkbox" class="win-checkbox reqCB" value="1"
+                                       data-win-bind="checked: PflichtFlag"
+                                       onchange="AppBar.handleEvent('change', 'clickReqManCb', event)"/>
                                 <span data-win-bind="textContent: QuestionWithNumber"></span>
                             </label>
                         </div>
@@ -56,13 +57,13 @@
                                 </div>
                             </div>
                             <div class="line-separator"></div>
-                            <div class="field_line field_line_odd">
+                            <div class="field_line field_line_odd" data-win-bind="style.display: doMandatoryShowFlag Binding.Converter.toDisplay">
                                 <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mandatory.doQuestionnaireMandatory'}"></span>
                                 <span class="label landscape_only" data-win-res="{textContent: 'mandatory.doQuestionnaireMandatory'}"></span>
                                 <div class="input_field toggle-switch-parent">
                                     <div id="confirmMandatoryQuestionnaire" class="input_field"
                                          data-win-control="WinJS.UI.ToggleSwitch"
-                                         data-win-bind="winControl.checked: doMandatory; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                                         data-win-bind="winControl.checked: doMandatory; winControl.labelOn: noticeOn; winControl.labelOff: noticeOff"
                                          onchange="AppBar.handleEvent('change', 'clickDoMandatory', event)">
                                     </div>
                                 </div>

@@ -930,6 +930,8 @@
     "mandatory.doQuestionnaireMandatory"  : "Show message",
     "mandatory.doContactMandatory"  : "Show message",
     "mandatory.count"  : "Count",
+	"mandatory.noticeOn" : "Show notices but further editing possible",
+    "mandatory.noticeOff" : "Do NOT allow further editing",
 
     "barcodeAdministration.title" : "Barcode",
     "barcodeAdministration.count" : "Count",
