@@ -23,7 +23,8 @@
                 eventData: null,
                 ecRecordID: 0,
                 ecEventID: 0,
-                count: 0
+                count: 0,
+                loadingState: null
             }]);
             var that = this;
 
@@ -170,6 +171,7 @@
                         }
                         var header = fragmentElement.querySelector(".list-header");
                         header.classList.toggle("sticky", window.scrollY > 0);
+                        that.binding.loadingState = listView.winControl.loadingState;
                     }
                     Log.ret(Log.l.trace);
                 },
@@ -225,38 +227,37 @@
                 }
                 AppData.setErrorMsg(that.binding);
                 if (recordId) {
-                    ret = new WinJS.Promise.as().then(function () {
-                        return GenFragEvents.BenutzerODataView.select(function (json) {
-                            // this callback will be called asynchronously
-                            // when the response is available
-                            Log.print(Log.l.trace, "voucherOrderView: success!");
-                            // startContact returns object already parsed from json file in response
-                            if (json && json.d && json.d.results) {
-                                var results = json.d.results;
-                                results.forEach(function (item, index) {
-                                    that.resultConverter(item, index);
-                                });
-                                that.events = new WinJS.Binding.List(results);
-                                if (listView.winControl) {
-                                    // add ListView dataSource
-                                    listView.winControl.itemDataSource = that.events.dataSource;
-                                    that.binding.count = that.events.length;
-                                }
-                                listView.winControl.selection.set(0);
-                            } else {
-                                if (listView.winControl) {
-                                    // add ListView dataSource
-                                    listView.winControl.itemDataSource = null;
-                                    that.binding.count = 0;
-                                }
+                    that.binding.loadingState = null;
+                    ret = GenFragEvents.BenutzerODataView.select(function (json) {
+                        // this callback will be called asynchronously
+                        // when the response is available
+                        Log.print(Log.l.trace, "voucherOrderView: success!");
+                        // startContact returns object already parsed from json file in response
+                        if (json && json.d && json.d.results) {
+                            var results = json.d.results;
+                            results.forEach(function (item, index) {
+                                that.resultConverter(item, index);
+                            });
+                            that.events = new WinJS.Binding.List(results);
+                            if (listView.winControl) {
+                                // add ListView dataSource
+                                listView.winControl.itemDataSource = that.events.dataSource;
+                                that.binding.count = that.events.length;
                             }
-                        }, function (errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                            that.binding.count = 0;
-                        }, { MitarbeiterID: recordId });
-                    });
+                            listView.winControl.selection.set(0);
+                        } else {
+                            if (listView.winControl) {
+                                // add ListView dataSource
+                                listView.winControl.itemDataSource = null;
+                                that.binding.count = 0;
+                            }
+                        }
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                        that.binding.count = 0;
+                    }, { MitarbeiterID: recordId });
                 } else {
                     Log.print(Log.l.trace, "No recordId set!");
                 }

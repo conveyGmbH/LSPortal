@@ -673,12 +673,25 @@
             };
 
             var resizeGenFragEvents = function () {
-                var genFragEventsFragmentControl = null;
-                var ret = WinJS.Promise.timeout(20).then(function () {
-                    var genFragEventsHost = pageElement.querySelector("#genfrageventshost");
-                    genFragEventsFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("genFragEvents"));
-                    if (genFragEventsHost && genFragEventsHost.style &&
-                        genFragEventsFragmentControl && genFragEventsFragmentControl._element) {
+                var ret = null;
+                Log.call(Log.l.trace, "GenDataEmployee.Controller.");
+                var genFragEventsFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("genFragEvents"));
+                if (genFragEventsFragmentControl) {
+                    if (genFragEventsFragmentControl.binding &&
+                        genFragEventsFragmentControl.binding.loadingState !== "complete") {
+                        ret = WinJS.Promise.timeout(20).then(function() {
+                            return that.resizeGenFragEvents();
+                        });
+                        Log.ret(Log.l.trace, "listview layout not yet completed");
+                        return ret;
+                    }
+                }
+                var genFragEventsHost = pageElement.querySelector("#genfrageventshost");
+                ret = WinJS.Promise.timeout(0).then(function () {
+                    if (genFragEventsHost &&
+                        genFragEventsHost.style &&
+                        genFragEventsFragmentControl &&
+                        genFragEventsFragmentControl._element) {
                         var genFragEventsHeaderContainer =
                             genFragEventsFragmentControl._element.querySelector(".win-headercontainer");
                         var genFragEventsSurface =
@@ -699,6 +712,7 @@
                         genFragEventsFragmentControl.updateLayout.call(genFragEventsFragmentControl, genFragEventsFragmentControl._element);
                     }
                 });
+                Log.ret(Log.l.trace);
                 return ret;
             }
             this.resizeGenFragEvents = resizeGenFragEvents;
