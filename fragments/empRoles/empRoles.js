@@ -77,9 +77,11 @@
                             if (height !== that.prevHeight) {
                                 that.prevHeight = height;
                                 empList.style.height = height.toString() + "px";
-                                if (empList.winControl) {
-                                    empList.winControl.forceLayout();
-                                }
+                                WinJS.Promise.timeout(10).then(function() {
+                                    if (empList.winControl) {
+                                        empList.winControl.forceLayout();
+                                    }
+                                });
                             }
                         }
                     }
