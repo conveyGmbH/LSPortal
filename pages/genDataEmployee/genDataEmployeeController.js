@@ -676,9 +676,10 @@
                 var ret = null;
                 Log.call(Log.l.trace, "GenDataEmployee.Controller.");
                 var genFragEventsFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("genFragEvents"));
-                if (genFragEventsFragmentControl) {
-                    if (genFragEventsFragmentControl.binding &&
-                        genFragEventsFragmentControl.binding.loadingState !== "complete") {
+                if (genFragEventsFragmentControl &&
+                    genFragEventsFragmentControl.controller) {
+                    if (genFragEventsFragmentControl.controller.binding &&
+                        genFragEventsFragmentControl.controller.binding.loadingState !== "complete") {
                         ret = WinJS.Promise.timeout(20).then(function() {
                             return that.resizeGenFragEvents();
                         });
@@ -812,9 +813,11 @@
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
-                    Log.print(Log.l.trace, "Data loaded");
                     AppBar.notifyModified = true;
-                    that.resizeGenFragEvents();
+                    if (recordId) {
+                        Log.print(Log.l.trace, "Data loaded");
+                        that.resizeGenFragEvents();
+                    }
                 });
                 Log.ret(Log.l.trace);
                 return ret;
