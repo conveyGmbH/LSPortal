@@ -26,9 +26,11 @@
     color: red;
     text-align: center
 }
+/*
 .employee input[type="text"]:disabled {
     background-color: grey
 }
+*/
 .addEventForminput-fields {
     display: flex;
 }

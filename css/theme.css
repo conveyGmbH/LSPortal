@@ -182,4 +182,14 @@ body.cnv-ui-dark, body.cnv-ui-dark * {
     background-color: #ffffff;
 }
 
-
+.win-textbox:disabled,
+.win-textarea:disabled {
+    border-color: #e6e6e6;
+    color: GrayText;
+    background-color: rgba(0,0,0,0.1);
+}
+.cnv-ui-dark .win-textbox:disabled,
+.cnv-ui-dark .win-textarea:disabled {
+    border-color: #393939;
+    background-color: rgba(255,255,255,0.1);
+}

@@ -24,12 +24,15 @@
 #titlecombotext {
     margin-left: 4%;
 }
+/*
 input[type="text"]:disabled {
     background: #dddddd;
 }
 input[type="email"]:disabled {
     background: #dddddd;
 }
+
+*/
 .warning {
     font-weight: bold;
     color: red;
