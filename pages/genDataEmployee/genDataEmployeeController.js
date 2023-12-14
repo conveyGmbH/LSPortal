@@ -674,7 +674,7 @@
 
             var resizeGenFragEvents = function () {
                 var genFragEventsFragmentControl = null;
-                var ret = WinJS.Promise.timeout(0).then(function () {
+                var ret = WinJS.Promise.timeout(50).then(function () {
                     var genFragEventsHost = pageElement.querySelector("#genfrageventshost");
                     genFragEventsFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("genFragEvents"));
                     if (genFragEventsHost && genFragEventsHost.style &&
@@ -690,7 +690,7 @@
                             (genFragEventsFooterContainer ? genFragEventsFooterContainer.offsetHeight : 0) + 8;
                         genFragEventsHost.style.height = height.toString() + "px";
                     }
-                    return WinJS.Promise.timeout(0);
+                    return WinJS.Promise.timeout(20);
                 }).then(function () {
                     if (genFragEventsFragmentControl &&
                         typeof genFragEventsFragmentControl.updateLayout === "function") {

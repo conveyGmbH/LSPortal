@@ -214,6 +214,7 @@
             this.resultConverter = resultConverter;
 
             var loadData = function (recordId) {
+                var ret = null;
                 Log.call(Log.l.trace, "EventSession.", "recordId=" + recordId);
                 if (!recordId) {
                     var master = Application.navigator.masterControl;
@@ -224,7 +225,7 @@
                 }
                 AppData.setErrorMsg(that.binding);
                 if (recordId) {
-                    var ret = new WinJS.Promise.as().then(function () {
+                    ret = new WinJS.Promise.as().then(function () {
                         return GenFragEvents.BenutzerODataView.select(function (json) {
                             // this callback will be called asynchronously
                             // when the response is available
@@ -256,11 +257,11 @@
                             that.binding.count = 0;
                         }, { MitarbeiterID: recordId });
                     });
-                    Log.ret(Log.l.trace);
-                    return ret;
                 } else {
                     Log.print(Log.l.trace, "No recordId set!");
                 }
+                Log.ret(Log.l.trace);
+                return ret || WinJS.Promise.as();
             };
             this.loadData = loadData;
 
