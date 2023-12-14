@@ -16,7 +16,7 @@
 
     WinJS.Namespace.define("GenFragEvents", {
         Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options) {
-            Log.call(Log.l.trace, "EventSession.Controller.");
+            Log.call(Log.l.trace, "GenFragEvents.Controller.");
             Fragments.Controller.apply(this, [fragmentElement, {
                 recordID: 0,
                 btnLabel: getResourceText("voucheradministrationlist.btnlabelO"),
@@ -96,7 +96,7 @@
 
             var eventHandlers = {
                 onSelectionChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "EmpList.Controller.");
+                    Log.call(Log.l.trace, "GenFragEvents.Controller.");
                     if (listView && listView.winControl) {
                         var listControl = listView.winControl;
                         if (listControl.selection) {
@@ -116,7 +116,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickChangeEvent: function(event) {
-                    Log.call(Log.l.trace, "EventSession.Controller.");
+                    Log.call(Log.l.trace, "GenFragEvents.Controller.");
                     AppData.call("PRC_CopyAppMitarbeiter", {
                         pMitarbeiterID: that.binding.ecRecordID,
                         pNewVeranstaltungID: that.binding.ecEventID
@@ -132,7 +132,7 @@
                     });
                 },
                 onLoadingStateChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "EventSession.Controller.");
+                    Log.call(Log.l.trace, "GenFragEvents.Controller.");
                     if (listView && listView.winControl) {
                         Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
                         // single list selection
@@ -205,7 +205,7 @@
             var loadData = function (recordId) {
                 var ret = null;
                 var newRecordId = null;
-                Log.call(Log.l.trace, "EventSession.", "recordId=" + recordId);
+                Log.call(Log.l.trace, "GenFragEvents.", "recordId=" + recordId);
                 if (refreshDataPromise) {
                     refreshDataPromise.cancel();
                     refreshDataPromise = null;

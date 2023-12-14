@@ -290,9 +290,6 @@
                     that.saveData(function (response) {
                         AppBar.busy = true;
                         Log.print(Log.l.trace, "eployee saved");
-                    }, function (errorResponse) {
-                        Log.print(Log.l.error, "error saving employee");
-                    }).then(function () {
                         //var newEmployee = getEmptyDefaultValue(GenDataEmployee.employeeView.defaultValue);
                         var newEmployee = copyByValue(GenDataEmployee.employeeView.defaultValue);
                         /* var restriction = {
@@ -325,15 +322,17 @@
                             Log.print(Log.l.error, "error inserting employee");
                             AppBar.busy = false;
                             AppData.setErrorMsg(that.binding, errorResponse);
-                        }, newEmployee);
-                    }).then(function () {
-                        var master = Application.navigator.masterControl;
-                        if (master && master.controller && master.controller.binding) {
-                            master.controller.binding.employeeId = newEmployeeId;
-                            return master.controller.loadData();
-                        } else {
-                            return WinJS.Promise.as();
-                        }
+                        }, newEmployee).then(function () {
+                            var master = Application.navigator.masterControl;
+                            if (master && master.controller && master.controller.binding) {
+                                master.controller.binding.employeeId = newEmployeeId;
+                                return master.controller.loadData();
+                            } else {
+                                return WinJS.Promise.as();
+                            }
+                        });
+                    }, function (errorResponse) {
+                        Log.print(Log.l.error, "error saving employee");
                     });
                     Log.ret(Log.l.trace);
                 },
@@ -379,10 +378,9 @@
                     Log.call(Log.l.trace, "GenDataEmployee.Controller.");
                     that.saveData(function (response) {
                         Log.print(Log.l.trace, "employee saved");
+                        that.loadData();
                     }, function (errorResponse) {
                         Log.print(Log.l.error, "error saving employee");
-                    }).then(function() {
-                        that.loadData();
                     });
                     Log.ret(Log.l.trace);
                 },
@@ -830,6 +828,7 @@
 
             // save data
             var saveData = function (complete, error) {
+                var errorMessage;
                 Log.call(Log.l.trace, "GenDataEmployee.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var recordId = getRecordId();
@@ -849,15 +848,23 @@
                     });
                 }
                 if (dataEmployee.Login && typeof dataEmployee.Password === "string" && dataEmployee.Password.length < 5) {
-                    Log.print(Log.l.error, "password must be min length 5");
-                    alert(getResourceText("employee.alertPasswordShort"));
-                    return WinJS.Promise.as();
+                    errorMessage = getResourceText("employee.alertPasswordShort");
+                    Log.print(Log.l.error, errorMessage);
+                    alert(errorMessage);
+                    if (typeof error === "function") {
+                        error(errorMessage);
+                    }
+                    return WinJS.Promise.wrapError(errorMessage);
                 }
                 if (dataEmployee.Login && (!dataEmployee.Password || !dataEmployee.Password2 ||
-                        dataEmployee.Password2 !== dataEmployee.Password)) {
-                    Log.print(Log.l.error, "incorrect password confirmation");
-                    alert(getResourceText("employee.alertPassword"));
-                    return WinJS.Promise.as();
+                    dataEmployee.Password2 !== dataEmployee.Password)) {
+                    errorMessage = getResourceText("employee.alertPassword");
+                    Log.print(Log.l.error, errorMessage);
+                    alert(errorMessage);
+                    if (typeof error === "function") {
+                        error(errorMessage);
+                    }
+                    return WinJS.Promise.wrapError(errorMessage);
                 }
                 AppBar.busy = true;
                 var ret = GenDataEmployee.employeeView.update(function (response) {
@@ -869,8 +876,9 @@
                     // or server returns response with an error status.
                     AppData.getErrorMsgFromErrorStack(errorResponse);
                     //AppData.setErrorMsg(that.binding, errorResponse);
-                    //error(errorResponse);
-                    ;
+                    if (typeof error === "function") {
+                        error(errorResponse);
+                    }
                 }, recordId, dataEmployee).then(function() {
                     if (AppData.getRecordId("Mitarbeiter") === recordId) {
                         AppData._persistentStates.privacyPolicyFlag = false;
@@ -881,10 +889,10 @@
                         }
                         alert(getResourceText("employee.alertNewLoginPassword"), function (response) {
                             // always call 
-                            Application.navigateById("login");
                             if (typeof complete === "function") {
                                 complete(dataEmployee);
                             }
+                            Application.navigateById("login");
                         });
                         return WinJS.Promise.as();
                     } else {
