@@ -58,7 +58,10 @@
             var resultConverter = function (item, index) {
                 if (item.Login && item.Login.indexOf("@") > 0) {
                     item.LogInNameBeforeAtSymbol = item.Login.substr(0, item.Login.indexOf("@"));
-                    item.LogInNameAfterAtSymbol = item.Login.substr(item.Login.lastIndexOf("@"), item.Login.length - 1);
+                    item.LogInNameAfterAtSymbol = item.Login.substr(item.Login.lastIndexOf("@"));
+                } else {
+                    item.LogInNameBeforeAtSymbol = item.Login;
+                    item.LogInNameAfterAtSymbol = "";
                 }
                 item.Password2 = item.Password;
             }
@@ -307,9 +310,14 @@
                             that.binding.allowEditLogin = null;
                             if (json && json.d) {
                                 var employee = json.d;
-                                employee.Login = AppData.generalData.userName;
                                 that.setDataEmployee(employee);
-                                that.binding.dataEmployee.LogInNameBeforeAtSymbol = "";
+                                if (!AppHeader.controller.binding.userData.SiteAdmin) {
+                                    var userName = AppData.generalData.userName;
+                                    if (userName && userName("@") > 0) {
+                                        item.LogInNameAfterAtSymbol = userName.substr(item.Login.lastIndexOf("@"));
+                                    }
+                                    that.binding.dataEmployee.LogInNameBeforeAtSymbol = "";
+                                }
                                 newEmployeeId = that.binding.dataEmployee.MitarbeiterVIEWID;
                             }
                             //AppBar.modified = true;
@@ -408,8 +416,14 @@
                     if (event.currentTarget && AppBar.notifyModified) {
                         that.binding.dataEmployee.Password = "";
                         that.binding.dataEmployee.Password2 = "";
-                        that.binding.dataEmployee.LogInNameBeforeAtSymbol = item.Login.substr(0, event.currentTarget.value.indexOf("@"));
-                        that.binding.dataEmployee.LogInNameAfterAtSymbol = item.Login.substr(event.currentTarget.value.lastIndexOf("@"), event.currentTarget.value.length - 1);
+                        var value = event.currentTarget.value;
+                        if (value && value.indexOf("@") > 0) {
+                            that.binding.dataEmployee.LogInNameBeforeAtSymbol = value.substr(0, value.indexOf("@"));
+                            that.binding.dataEmployee.LogInNameAfterAtSymbol = value.substr(value.lastIndexOf("@"));
+                        } else {
+                            that.binding.dataEmployee.LogInNameBeforeAtSymbol = value;
+                            that.binding.dataEmployee.LogInNameAfterAtSymbol = "";
+                        }
                     }
                     Log.ret(Log.l.trace);
                 },
@@ -418,10 +432,11 @@
                     if (event.currentTarget && AppBar.notifyModified) {
                         that.binding.dataEmployee.Password = "";
                         that.binding.dataEmployee.Password2 = "";
-                        if (event.currentTarget.value && event.currentTarget.value.indexOf("@") > 0) {
-                            that.binding.dataEmployee.LogInNameBeforeAtSymbol = event.currentTarget.value.substr(0, event.currentTarget.value.indexOf("@"));
+                        var value = event.currentTarget.value;
+                        if (value && value.indexOf("@") > 0) {
+                            that.binding.dataEmployee.LogInNameBeforeAtSymbol = value.substr(0, value.indexOf("@"));
                         } else {
-                            that.binding.dataEmployee.LogInNameBeforeAtSymbol = event.currentTarget.value;
+                            that.binding.dataEmployee.LogInNameBeforeAtSymbol = value;
                         }
                         that.binding.dataEmployee.Login = that.binding.dataEmployee.LogInNameBeforeAtSymbol + that.binding.dataEmployee.LogInNameAfterAtSymbol;
                     }
@@ -838,8 +853,7 @@
                     alert(getResourceText("employee.alertPasswordShort"));
                     return WinJS.Promise.as();
                 }
-                if (dataEmployee.Login &&
-                    (!dataEmployee.Password || !dataEmployee.Password2 ||
+                if (dataEmployee.Login && (!dataEmployee.Password || !dataEmployee.Password2 ||
                         dataEmployee.Password2 !== dataEmployee.Password)) {
                     Log.print(Log.l.error, "incorrect password confirmation");
                     alert(getResourceText("employee.alertPassword"));
