@@ -674,7 +674,7 @@
 
             var resizeGenFragEvents = function () {
                 var ret = null;
-                Log.call(Log.l.trace, "GenDataEmployee.Controller.");
+                Log.call(Log.l.u1, "GenDataEmployee.Controller.");
                 var genFragEventsFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("genFragEvents"));
                 if (genFragEventsFragmentControl &&
                     genFragEventsFragmentControl.controller) {
@@ -713,7 +713,7 @@
                         genFragEventsFragmentControl.updateLayout.call(genFragEventsFragmentControl, genFragEventsFragmentControl._element);
                     }
                 });
-                Log.ret(Log.l.trace);
+                Log.ret(Log.l.u1);
                 return ret;
             }
             this.resizeGenFragEvents = resizeGenFragEvents;

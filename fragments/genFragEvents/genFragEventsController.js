@@ -254,9 +254,15 @@
                                     }
                                     if (result && (!result.UserStatus || result.UserStatus === "ACTIVE" || result.UserStatus === "CHANGE")) {
                                         Log.print(Log.l.trace, "found active BenutzerVIEWID=" + result.BenutzerVIEWID + " at i=" + i);
+                                        if (result.BenutzerVIEWID !== recordId) {
+                                            newRecordId = result.BenutzerVIEWID;
+                                        }
                                         selIdx = i;
                                     } else if (results.length === 1) {
                                         Log.print(Log.l.trace, "found only BenutzerVIEWID=" + result.BenutzerVIEWID + " at i=" + i);
+                                        if (result.BenutzerVIEWID !== recordId) {
+                                            newRecordId = result.BenutzerVIEWID;
+                                        }
                                         selIdx = i;
                                     }
                                 }
@@ -287,6 +293,7 @@
                         that.binding.count = 0;
                     }, { MitarbeiterID: recordId }).then(function () {
                         if (newRecordId) {
+                            Log.print(Log.l.trace, "reload master newRecordId=" + newRecordId);
                             var master = Application.navigator.masterControl;
                             if (master && master.controller && master.controller.binding) {
                                 master.controller.binding.employeeId = newRecordId;
@@ -296,6 +303,7 @@
                             }
                             
                         } else {
+                            Log.print(Log.l.trace, "schedule refreshDataPromise");
                             refreshDataPromise = WinJS.Promise.timeout(10000).then(function () {
                                 that.loadData();
                             });
@@ -303,6 +311,7 @@
                         }
                     }).then(function () {
                         if (newRecordId) {
+                            Log.print(Log.l.trace, "reselect master newRecordId=" + newRecordId);
                             var master = Application.navigator.masterControl;
                             if (master && master.controller && master.controller.binding) {
                                 master.controller.binding.employeeId = newRecordId;
