@@ -17,20 +17,6 @@
                             <span data-win-res="{textContent: 'localevents.title'}"></span>
                         </div>
                     </div>
-                    <div class="headerFooterPlaceholder">
-                        <div class="list-header">
-                            <div class="row-separator"></div>
-                            <div class="list-landscape-only">
-                                <div class="list-field-big-variable win-type-ellipsis" 
-                                     data-win-res="{textContent: 'localevents.event'}"></div>
-                                <div class="list-field-small-fixed win-type-ellipsis" 
-                                     data-win-res="{textContent: 'localevents.begin'}"></div>
-                                <div class="list-field-small-fixed win-type-ellipsis" 
-                                     data-win-res="{textContent: 'localevents.end'}"></div>
-                            </div>
-                            <div class="row-separator"></div>
-                        </div>
-                    </div>
                     <div class="localevents-template"
                          data-win-control="WinJS.Binding.Template" style="display: none">
                         <div class="list-landscape-only">
@@ -63,6 +49,16 @@
                         </div>
                     </div>
                     <div class="headerFooterPlaceholder">
+                        <div class="list-header contenthost-background">
+                            <div class="list-landscape-only">
+                                <div class="list-field-big-variable win-type-ellipsis"
+                                     data-win-res="{textContent: 'localevents.event'}"></div>
+                                <div class="list-field-small-fixed win-type-ellipsis"
+                                     data-win-res="{textContent: 'localevents.begin'}"></div>
+                                <div class="list-field-small-fixed win-type-ellipsis"
+                                     data-win-res="{textContent: 'localevents.end'}"></div>
+                            </div>
+                        </div>
                         <div class="list-footer">
                             <div class="status">
                                 <progress class="win-progress-bar progress"></progress>

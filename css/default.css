@@ -835,7 +835,7 @@ button.win-button {
 .list-header-columns {
     margin: 0;
     padding: 0;
-    height: 70px;
+    height: 40px;
     width: 100%;
     /*
     background-color: #f3f3f3;
@@ -1079,6 +1079,11 @@ button.win-button {
     font-weight: 500;
     opacity: 1.0;
     min-height: 36px;
+}
+.list-compressed-title.win-type-subsubtitle {
+    font-weight: 500;
+    opacity: 1.0;
+    min-height: 26px;
 }
 
 .list-compressed-content-container {
@@ -1571,7 +1576,7 @@ button.win-button {
 .view-size-small .list-compressed-content,
 .view-size-small .list-compressed-title,
 .view-size-small .counter {
-    min-height: 20px;
+    min-height: 16px;
     font-size: 12px;
     line-height: 1.167;
 }
@@ -1581,6 +1586,12 @@ button.win-button {
     font-size: 16px;
     letter-spacing: 0.1px;
 }
+.view-size-small .list-compressed-title.win-type-caption {
+    min-height: 12px;
+    font-size: 10px;
+    line-height: 0.85;
+}
+
 .view-size-small .list-item-label-left {
     width: 90px;
 }

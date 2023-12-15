@@ -74,7 +74,6 @@
     position: sticky;
     top: 0;
     z-index: 1;
-    background-color: #f0f0f0;
     /* Add any other styles you need for the header */
 }
 .genFragEvents button {

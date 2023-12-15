@@ -13,11 +13,6 @@
             <section aria-label="Main content" role="main" class="animationElement">
                 <div class="contentarea win-type-body">
                     <div class="content-header">
-                        <!--<div class="win-type-subtitle master-list-header list-compact-only">
-                            <div class="list-header" data-win-bind="style.visibility: licenceWarning Binding.Converter.toVisibility">
-                                <span class="licence-warning-text" data-win-res="{textContent: 'empList.licenceWarning'}"></span>
-                            </div>
-                        </div>-->
                         <div class="win-type-subtitle master-list-header list-portrait-only">
                             <div>
                                 <button class="list-button-left win-button" 
@@ -30,7 +25,7 @@
                                         data-win-bind="textContent: btnEmployeeLicenceText"
                                         onclick="AppBar.handleEvent('onclick', 'clickOrderLicence', event)"></button>
                             </div>
-                            <div class="list-header" data-win-bind="style.visibility: licenceWarning Binding.Converter.toVisibility">
+                            <div data-win-bind="style.visibility: licenceWarning Binding.Converter.toVisibility">
                                 <span class="licence-warning-text" data-win-res="{textContent: 'empList.licenceWarning'}"></span>
                             </div>
                         </div>
@@ -46,7 +41,7 @@
                                         data-win-bind="textContent: btnEmployeeLicenceText"
                                         onclick="AppBar.handleEvent('onclick', 'clickOrderLicence', event)"></button>
                             </div>
-                            <div class="list-header" data-win-bind="style.visibility: licenceWarning Binding.Converter.toVisibility">
+                            <div data-win-bind="style.visibility: licenceWarning Binding.Converter.toVisibility">
 	                            <span class="licence-warning-text" data-win-res="{textContent: 'empList.licenceWarning'}"></span>
                             </div>
                         </div>
@@ -71,37 +66,59 @@
 				                          data-win-bind="textContent: fullName"></span>
 				                    <span class="list-compressed-title win-type-ellipsis"
 				                          data-win-bind="textContent: Login"></span>
-				                    <span class="list-compressed-title win-type-ellipsis"
-				                          data-win-bind="textContent: CS1504SerienNr; style.display: CS1504SerienNr Binding.Converter.toDisplay"></span>
+                                    <span class="list-compressed-title win-type-subsubtitle win-type-ellipsis"
+                                          data-win-bind="textContent: VeranstaltungName"></span>
+                                    <div class="list-compressed-title win-type-caption win-type-ellipsis">
+                                        <span data-win-bind="textContent: Startdatum"></span>
+                                        <span data-win-bind="style.display: Enddatum Binding.Converter.toDisplay">&nbsp;-&nbsp;</span>
+                                        <span data-win-bind="textContent: Enddatum"></span>
+                                    </div>
 			                    </div>
 			                    <div class="list-symbol-IDw" data-win-bind="style.display: NichtLizenzierteApp Binding.Converter.toDisplay">
 				                    <div id="about" class="warning-image"></div>
 			                    </div>
 		                    </div>
 	                    </div>
-	                    <div class="list-landscape-only" data-win-bind="disabled: disabled">
-		                    <div class="row-separator"></div>
-		                    <div class="list-div-left">
-			                    <div class="list-symbol-ID">
-				                    <div data-win-bind="name: recordIcon" class="action-image"></div>
-			                    </div>
-			                    <div class="list-compressed">
-				                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
-				                          data-win-bind="textContent: fullName"></span>
-				                    <span class="list-compressed-title win-type-ellipsis"
-				                          data-win-bind="textContent: Login"></span>
-				                    <span id="Seriennummer"
-				                          class="list-compressed-title win-type-ellipsis"
-				                          data-win-bind="textContent: CS1504SerienNr; style.display: CS1504SerienNr Binding.Converter.toDisplay"></span>
-			                    </div>
-			                    <div class="list-symbol-IDw" data-win-bind="style.display: NichtLizenzierteApp Binding.Converter.toDisplay">
-				                    <div id="about" class="warning-image"></div>
-			                    </div>
-		                    </div>
-	                    </div>
+                        <div class="list-landscape-only" data-win-bind="disabled: disabled">
+                            <div class="row-bkg-gray"
+                                 data-win-bind="style.display: index Binding.Converter.evenToDisplay"></div>
+                            <div class="list-field-image-fixed win-type-ellipsis">
+                                <div data-win-bind="name: recordIcon" class="action-image"></div>
+                            </div>
+                            <div class="list-field-small-relative-15 win-type-ellipsis"
+                                 data-win-bind="textContent: Vorname"></div>
+                            <div class="list-field-small-relative-15 win-type-ellipsis"
+                                 data-win-bind="textContent: Nachname"></div>
+                            <div class="list-field-small-relative-30 win-type-ellipsis"
+                                 data-win-bind="textContent: Login"></div>
+                            <div class="list-field-big-variable win-type-ellipsis"
+                                 data-win-bind="textContent: Name; title: VeranstaltungName"></div>
+                            <div class="list-field-small-fixed win-type-ellipsis"
+                                 data-win-bind="textContent: Startdatum"></div>
+                            <div class="list-field-small-fixed win-type-ellipsis"
+                                 data-win-bind="textContent: Enddatum"></div>
+                        </div>
                     </div>
                     <div class="headerFooterPlaceholder">
-	                    <div class="list-footer">
+                        <div class="list-header masterhost-background">
+                            <div class="list-landscape-only">
+                                <div class="list-field-image-fixed win-type-ellipsis"
+                                     data-win-res="{textContent: 'employee.roles'}"></div>
+                                <div class="list-field-small-relative-15 win-type-ellipsis"
+                                     data-win-res="{textContent: 'employee.firstname'}"></div>
+                                <div class="list-field-small-relative-15 win-type-ellipsis"
+                                     data-win-res="{textContent: 'employee.lastname'}"></div>
+                                <div class="list-field-small-relative-30 win-type-ellipsis"
+                                     data-win-res="{textContent: 'employee.login'}"></div>
+                                <div class="list-field-big-variable win-type-ellipsis"
+                                     data-win-res="{textContent: 'genFragEvents.event'}"></div>
+                                <div class="list-field-small-fixed win-type-ellipsis"
+                                     data-win-res="{textContent: 'genFragEvents.eventstart'}"></div>
+                                <div class="list-field-small-fixed win-type-ellipsis"
+                                     data-win-res="{textContent: 'genFragEvents.eventend'}"></div>
+                            </div>
+                        </div>
+                        <div class="list-footer">
                             <div class="status">
                                 <progress class="win-progress-bar progress"></progress>
                                 <div class="counter">
@@ -116,6 +133,7 @@
                          data-win-options="{
                              layout : { type: WinJS.UI.ListLayout },
                              itemTemplate: select('.genDataEmpList-template'),
+                             header: select('.list-header'),
                              footer: select('.list-footer')
                          }">
                     </div>

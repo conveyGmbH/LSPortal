@@ -27,7 +27,15 @@
 
 #eventslist .list-header {
     font-weight: bold;
+    display: flex;
 }
+#eventslist .win-headercontainer {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    /* Add any other styles you need for the header */
+}
+
 
 .eventslist .grayed-out {
     opacity: 0.6;

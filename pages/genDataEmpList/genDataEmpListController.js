@@ -183,6 +183,20 @@
                 if (!item.recordIcon) {
                     item.recordIcon = "user";
                 }
+                // convert Startdatum
+                if (item.Startdatum) {
+                    item.Startdatum = getDateObject(item.Startdatum);
+                    var startMoment = moment(item.Startdatum);
+                    startMoment.locale(Application.language);
+                    item.Startdatum = startMoment.format("ll");
+                }
+                //convert Enddatum
+                if (item.Enddatum) {
+                    item.Enddatum = getDateObject(item.Enddatum);
+                    var endMoment = moment(item.Enddatum);
+                    endMoment.locale(Application.language);
+                    item.Enddatum = endMoment.format("ll");
+                }
             }
             this.resultConverter = resultConverter;
 

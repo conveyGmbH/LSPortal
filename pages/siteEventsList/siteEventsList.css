@@ -19,7 +19,15 @@
 
 #siteEventsList .list-header {
     font-weight: bold;
+    display: flex;
 }
+#siteEventsList .win-headercontainer {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    /* Add any other styles you need for the header */
+}
+
 #siteEventsList .list-field-big-2 {
     text-align: left;
     width: calc(100% - 220px);

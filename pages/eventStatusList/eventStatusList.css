@@ -27,6 +27,14 @@
 
 #eventstatuslist .list-header {
     font-weight: bold;
+    display: flex;
+}
+
+#eventstatuslist .win-headercontainer {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    /* Add any other styles you need for the header */
 }
 
 .eventStatusList .grayed-out {

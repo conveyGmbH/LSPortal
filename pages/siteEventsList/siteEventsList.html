@@ -33,18 +33,6 @@
                             <input id="searchInput" class="input_field win-textbox" data-win-res="{placeholder: 'siteEventsList.searchtxt'}" type="text" data-win-bind="value: searchString Binding.Mode.twoway" />
                         </div>
                     </div>
-                    <div class="headerFooterPlaceholder">
-                        <div class="list-header">
-                            <div class="list-landscape-only">
-                                <div class="list-field-big-2 win-type-ellipsis"
-                                     data-win-res="{textContent: 'event.name'}"></div>
-                                <div class="list-field-small-fixed win-type-ellipsis"
-                                     data-win-res="{textContent: 'event.begin'}"></div>
-                                <div class="list-field-small-fixed win-type-ellipsis"
-                                     data-win-res="{textContent: 'event.end'}"></div>
-                            </div>
-                        </div>
-                    </div>
                     <div class="siteEventsList-template"
                          data-win-control="WinJS.Binding.Template" style="display: none">
                         <div class="list-compact-only" data-win-bind="disabled: disabled">
@@ -85,6 +73,16 @@
                         </div>
                     </div>
                     <div class="headerFooterPlaceholder">
+                        <div class="list-header masterhost-background">
+                            <div class="list-landscape-only">
+                                <div class="list-field-big-2 win-type-ellipsis"
+                                     data-win-res="{textContent: 'event.name'}"></div>
+                                <div class="list-field-small-fixed win-type-ellipsis"
+                                     data-win-res="{textContent: 'event.begin'}"></div>
+                                <div class="list-field-small-fixed win-type-ellipsis"
+                                     data-win-res="{textContent: 'event.end'}"></div>
+                            </div>
+                        </div>
                         <div class="list-footer">
                             <div class="status">
                                 <progress class="win-progress-bar progress"></progress>
