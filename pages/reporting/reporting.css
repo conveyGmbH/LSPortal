@@ -136,3 +136,10 @@
     display: block;
     margin-top: 15px; /* Adjust the margin as needed */
 }
+#showExcelReporting .win-toggleswitch-value-on {
+    width: 500px !important;
+}
+
+#showExcelReporting .win-toggleswitch-value-off {
+    width: 500px !important;
+}
