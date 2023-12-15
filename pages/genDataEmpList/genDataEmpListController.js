@@ -21,7 +21,10 @@
                 employeeId: 0,
                 hasContacts: null,
                 hasLocalevents: null,
-                licenceWarning: false
+                licenceWarning: false,
+                btnFirstNameText: getResourceText("employee.firstName"),
+                btnNameText: getResourceText("employee.name"),
+                btnEmployeeLicenceText: getResourceText("employee.licence")
             }, commandList, true]);
             this.nextUrl = null;
             this.loading = false;
@@ -31,9 +34,6 @@
 
             // ListView control
             var listView = pageElement.querySelector("#genDataEmpList.listview");
-            var btnFirstName = document.getElementById("btn_employee_firstName");
-            var btnName = document.getElementById("btn_employee_Name");
-            var btnEmployeeLicence = pageElement.querySelector("#btn_employee_licence");
 
             this.dispose = function () {
                 if (listView && listView.winControl) {
@@ -411,47 +411,28 @@
                     restriction = defaultrestriction;
                 }
                 if (restriction.OrderAttribute === "Vorname") {
-                    if (btnFirstName) {
-                        if (restriction.OrderDesc) {
-                            btnFirstName.textContent = getResourceText("employee.firstNameDesc");
-                        } else {
-                            btnFirstName.textContent = getResourceText("employee.firstNameAsc");
-                        }
+                    if (restriction.OrderDesc) {
+                        that.binding.btnFirstNameText = getResourceText("employee.firstNameDesc");
+                    } else {
+                        that.binding.btnFirstNameText = getResourceText("employee.firstNameAsc");
                     }
-                    if (btnName) {
-                        btnName.textContent = getResourceText("employee.name");
-                    }
-                    if (btnEmployeeLicence) {
-                        btnEmployeeLicence.textContent = getResourceText("employee.licence");
-                    }
+                    that.binding.btnNameText = getResourceText("employee.name");
+                    that.binding.btnEmployeeLicenceText = getResourceText("employee.licence");
                 } else if (restriction.OrderAttribute === "Nachname") {
-                    if (btnFirstName) {
-                        btnFirstName.textContent = getResourceText("employee.firstName");
+                    that.binding.btnFirstNameText = getResourceText("employee.firstName");
+                    if (restriction.OrderDesc) {
+                        that.binding.btnNameText = getResourceText("employee.nameDesc");
+                    } else {
+                        that.binding.btnNameText = getResourceText("employee.nameAsc");
                     }
-                    if (btnName) {
-                        if (restriction.OrderDesc) {
-                            btnName.textContent = getResourceText("employee.nameDesc");
-                        } else {
-                            btnName.textContent = getResourceText("employee.nameAsc");
-                        }
-                    }
-                    if (btnEmployeeLicence) {
-                        btnEmployeeLicence.textContent = getResourceText("employee.licence");
-                    }
+                    that.binding.btnEmployeeLicenceText = getResourceText("employee.licence");
                 } else if (restriction.OrderAttribute === "NichtLizenzierteApp" ) {
-                    // getResrestriction or defaultrestriction
-                    if (btnFirstName) {
-                        btnFirstName.textContent = getResourceText("employee.firstName");
-                    }
-                    if (btnName) {
-                        btnName.textContent = getResourceText("employee.name");
-                    }
-                    if (btnEmployeeLicence) {
-                        if (restriction.OrderDesc) {
-                            btnEmployeeLicence.textContent = getResourceText("employee.licenceDesc");
-                        } else {
-                            btnEmployeeLicence.textContent = getResourceText("employee.licenceAsc");
-                        }
+                    that.binding.btnFirstNameText = getResourceText("employee.firstName");
+                    that.binding.btnNameText = getResourceText("employee.name");
+                    if (restriction.OrderDesc) {
+                        that.binding.btnEmployeeLicenceText = getResourceText("employee.licenceDesc");
+                    } else {
+                        that.binding.btnEmployeeLicenceText = getResourceText("employee.licenceAsc");
                     }
                 }
                 AppData.setErrorMsg(that.binding);

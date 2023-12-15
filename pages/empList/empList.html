@@ -21,9 +21,15 @@
                         </div>-->
                         <div class="win-type-subtitle master-list-header list-portrait-only">
                             <div>
-                                <button class="list-button-left win-button" id="btn_employee_Name" data-win-res="{textContent: 'employee.nameDesc'}" onclick="AppBar.handleEvent('onclick', 'clickOrderLastname', event)"></button>
-                                <button class="list-button-left win-button" id="btn_employee_firstName" data-win-res="{textContent: 'employee.firstNameDesc'}" onclick="AppBar.handleEvent('onclick', 'clickOrderFirstname', event)"></button>
-                                <button class="list-button-left win-button" id="btn_employee_licence" data-win-res="{textContent: 'employee.licenceDesc'}" onclick="AppBar.handleEvent('onclick', 'clickOrderLicence', event)"></button>
+                                <button class="list-button-left win-button"
+                                        data-win-bind="textContent: btnNameText"
+                                        onclick="AppBar.handleEvent('onclick', 'clickOrderLastname', event)"></button>
+                                <button class="list-button-left win-button"
+                                        data-win-bind="textContent: btnFirstNameText"
+                                        onclick="AppBar.handleEvent('onclick', 'clickOrderFirstname', event)"></button>
+                                <button class="list-button-left win-button"
+                                        data-win-bind="textContent: btnEmployeeLicenceText"
+                                        onclick="AppBar.handleEvent('onclick', 'clickOrderLicence', event)"></button>
                             </div>
                             <div class="list-header" data-win-bind="style.visibility: licenceWarning Binding.Converter.toVisibility">
                                 <span class="licence-warning-text" data-win-res="{textContent: 'empList.licenceWarning'}"></span>
@@ -31,9 +37,15 @@
                         </div>
                         <div class="win-type-subtitle master-list-header list-landscape-only">
                             <div>
-                                <button class="list-button-left win-button" id="btn_employee_Name" data-win-res="{textContent: 'employee.nameDesc'}" onclick="AppBar.handleEvent('onclick', 'clickOrderLastname', event)"></button>
-                                <button class="list-button-left win-button" id="btn_employee_firstName" data-win-res="{textContent: 'employee.firstNameDesc'}" onclick="AppBar.handleEvent('onclick', 'clickOrderFirstname', event)"></button>
-                                <button class="list-button-left win-button" id="btn_employee_licence" data-win-res="{textContent: 'employee.licenceDesc'}" onclick="AppBar.handleEvent('onclick', 'clickOrderLicence', event)"></button>
+                                <button class="list-button-left win-button"
+                                        data-win-bind="textContent: btnNameText"
+                                        onclick="AppBar.handleEvent('onclick', 'clickOrderLastname', event)"></button>
+                                <button class="list-button-left win-button"
+                                        data-win-bind="textContent: btnFirstNameText"
+                                        onclick="AppBar.handleEvent('onclick', 'clickOrderFirstname', event)"></button>
+                                <button class="list-button-left win-button"
+                                        data-win-bind="textContent: btnEmployeeLicenceText"
+                                        onclick="AppBar.handleEvent('onclick', 'clickOrderLicence', event)"></button>
                             </div>
                             <div class="list-header" data-win-bind="style.visibility: licenceWarning Binding.Converter.toVisibility">
                                 <span class="licence-warning-text" data-win-res="{textContent: 'empList.licenceWarning'}"></span>
