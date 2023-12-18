@@ -6,8 +6,9 @@
     overflow-y: hidden !important;
 }
 .genDataEmpList .content-header {
-    height: auto !important;
+    height: auto;
     min-height: 48px;
+    display: inline-block;
 }
 .genDataEmpList .master-list-header {
     height: auto !important;
@@ -59,13 +60,15 @@
     white-space: nowrap;
 }
 
-#genDataEmpList .listview {
-    position: relative;
+/*
+    #genDataEmpList.listview {
+    position: absolute;
     left: 0;
     top: 0;
     width: 100%;
-    height: calc(100% - 56px);
+    height: 100%;
 }
+*/
 
 /* Styles used for the custom layout */
 .listView .genDataEmpListLayout {

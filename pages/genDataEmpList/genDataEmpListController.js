@@ -19,6 +19,8 @@
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
                 employeeId: 0,
+                eventId: null,
+                searchString: "",
                 hasContacts: null,
                 hasLocalevents: null,
                 licenceWarning: false,
@@ -29,8 +31,11 @@
             this.nextUrl = null;
             this.loading = false;
             this.employees = null;
+            this.events = null;
 
             var that = this;
+
+            var eventsDropdown = pageElement.querySelector("#events");
 
             // ListView control
             var listView = pageElement.querySelector("#genDataEmpList.listview");
@@ -42,8 +47,12 @@
                 if (that.employees) {
                     that.employees = null;
                 }
+                if (that.events) {
+                    that.events = null;
+                }
             }
 
+            var licenceWarningSelected = false;
             var progress = null;
             var counter = null;
             var layout = null;
@@ -451,25 +460,58 @@
                 }
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
-                    // only licence user select 
-                    return GenDataEmpList.employeeView.select(function (json) {
-                        // this callback will be called asynchronously
-                        // when the response is available
-                        Log.print(Log.l.trace, "licenceView: success!");
-                        // licenceUserView returns object already parsed from json file in response
-                        if (json && json.d && json.d.results.length > 0) {
-                            var results = json.d.results;
-                            that.binding.licenceWarning = true;
-                            //change order for the next select - list
-                        } else {
-                            that.binding.licenceWarning = false;
-                        }
+                    if (!that.events) {
+                        return GenDataEmpList.eventView.select(function(json) {
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            Log.print(Log.l.trace, "eventView: success!");
+                            // eventView returns object already parsed from json file in response
+                            if (json && json.d && json.d.results.length > 0) {
+                                var results = [{
+                                    VeranstaltungVIEWID: "",
+                                    Name: ""
+                                }].concat(json.d.results);
+                                that.events = new WinJS.Binding.List(results);
+                                if (eventsDropdown && eventsDropdown.winControl) {
+                                    eventsDropdown.winControl.data = that.events;
+                                    eventsDropdown.selectedIndex = 0;
+                                }
+                            }
+                        },
+                        function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        });
+                    } else {
                         return WinJS.Promise.as();
-                    }, function (errorResponse) {
-                        // called asynchronously if an error occurs
-                        // or server returns response with an error status.
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                    }, { NichtLizenzierteApp: 1 });
+                    }
+                }).then(function () {
+                    if (!licenceWarningSelected) {
+                        // only licence user select 
+                        return GenDataEmpList.employeeView.select(function(json) {
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            Log.print(Log.l.trace, "licenceView: success!");
+                            // licenceUserView returns object already parsed from json file in response
+                            if (json && json.d && json.d.results.length > 0) {
+                                var results = json.d.results;
+                                that.binding.licenceWarning = true;
+                                //change order for the next select - list
+                            } else {
+                                that.binding.licenceWarning = false;
+                            }
+                            licenceWarningSelected = true;
+                        },
+                        function(errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        },
+                        { NichtLizenzierteApp: 1 });
+                    } else {
+                        return WinJS.Promise.as();
+                    }
                 }).then(function () {
                     return GenDataEmpList.employeeView.select(function (json) {
                         // this callback will be called asynchronously

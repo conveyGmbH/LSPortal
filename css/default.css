@@ -494,6 +494,12 @@ section[role=main] {
     word-break: normal;
     overflow-wrap: break-word;
 }
+.view-size-medium .label {
+    letter-spacing: -1px;
+}
+.view-size-medium-small .label {
+    letter-spacing: normal;
+}
 
 .short-label {
     width: 50px;

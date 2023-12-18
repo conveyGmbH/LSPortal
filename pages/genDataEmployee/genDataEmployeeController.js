@@ -40,10 +40,6 @@
             var layout = null;
             this.events = null;
 
-            var loginName = pageElement.querySelector('input[name="loginName"]');
-            var domain = pageElement.querySelector('input[name="domain"]');
-            var loginFirstPart = pageElement.querySelector('input[name="loginFirstPart"]');
-
             var addEventFormfieldcombo = pageElement.querySelector("#addEventFormEventData");
 
             var maxLeadingPages = 0;
@@ -476,6 +472,24 @@
                         delete that.binding.restriction.bUseOr;
                     }
                     that.saveRestriction();
+                    var master = Application.navigator.masterControl;
+                    if (master && master.controller) {
+                        master.controller.loadData();
+                    }
+                    Log.ret(Log.l.trace);
+                },
+                changeEventId: function (event) {
+                    Log.call(Log.l.trace, "Event.Controller.");
+                    if (event.target.value) {
+                        that.binding.restriction.VeranstaltungID = event.target.value;
+                    } else {
+                        delete that.binding.restriction.VeranstaltungID;
+                    }
+                    that.saveRestriction();
+                    var master = Application.navigator.masterControl;
+                    if (master && master.controller) {
+                        master.controller.loadData();
+                    }
                     Log.ret(Log.l.trace);
                 },
                 clickOrderFirstname: function (event) {
@@ -632,7 +646,7 @@
                         }
                     }
                     Log.ret(Log.l.trace);
-                },
+                }
             };
 
             this.disableHandlers = {
