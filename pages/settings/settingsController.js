@@ -19,7 +19,6 @@
             Application.Controller.apply(this, [pageElement, {
                 showSettingsFlag: false,
                 themeId: 2,
-                showContent: true,
                 leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic
             }, commandList]);
 

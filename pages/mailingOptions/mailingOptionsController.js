@@ -17,7 +17,6 @@
                 isProductMailOn: AppData._persistentStates.productMailOn,
                 isNachbearbeitetFlagAutoSetToNull: AppData._persistentStates.nachbearbeitetFlagAutoSetToNull,
                 isThankMailOn: AppData._persistentStates.thankYouMailOn,
-                showContent: true,
                 leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic
             }, commandList]);
 

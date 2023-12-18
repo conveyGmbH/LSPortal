@@ -137,7 +137,7 @@
 
             var scopeFromRecordId = function (recordId) {
                 var i;
-                Log.call(Log.l.trace, "Questiongroup.Controller.", "recordId=" + recordId);
+                Log.call(Log.l.trace, "EmpList.Controller.", "recordId=" + recordId);
                 var item = null;
                 for (i = 0; i < that.employees.length; i++) {
                     var employee = that.employees.getAt(i);

@@ -136,7 +136,6 @@
                             });
                             that.binding.hasContacts = employee.HatKontakte;
                             break;
-                            break;
                         }
                     }
                 }
@@ -146,7 +145,7 @@
 
             var scopeFromRecordId = function (recordId) {
                 var i;
-                Log.call(Log.l.trace, "Questiongroup.Controller.", "recordId=" + recordId);
+                Log.call(Log.l.trace, "GenDataEmpList.Controller.", "recordId=" + recordId);
                 var item = null;
                 for (i = 0; i < that.employees.length; i++) {
                     var employee = that.employees.getAt(i);

@@ -25,7 +25,6 @@
                 testMailSuccessMsgFlag: 0,
                 isPrivacyPolicySVGVisible: AppData._persistentStates.privacyPolicySVGVisible,
                 isPrivacyPolicyToggleDisabled: !AppData._persistentStates.privacyPolicySVGVisible,
-                showContent: true,
                 leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic
             }, commandList]);
 

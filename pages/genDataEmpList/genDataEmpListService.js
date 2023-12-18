@@ -60,7 +60,7 @@
         },
         eventView: {
             fetchNext: function (results, url, complete, error) {
-                Log.call(Log.l.trace, "AppData.formatViewData.", "nextUrl=" + nextUrl);
+                Log.call(Log.l.trace, "GenDataEmpList.eventView.", "nextUrl=" + nextUrl);
                 var nextJson = null;
                 var ret = GenDataEmpList._eventView.selectNext(function (json) {
                     nextJson = json;
@@ -84,7 +84,7 @@
                 return ret;
             },
             fetchAll: function (json, complete, error) {
-                Log.call(Log.l.trace, "AppData.formatViewData.", "");
+                Log.call(Log.l.trace, "GenDataEmpList.eventView.", "");
                 var retNext;
                 var nextUrl = GenDataEmpList._eventView.getNextUrl(json);
                 if (nextUrl) {
