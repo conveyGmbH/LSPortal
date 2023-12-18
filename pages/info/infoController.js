@@ -24,7 +24,6 @@
                 version: Application.version,
                 environment: "Platform: " + navigator.appVersion,
                 timezone: timezone && ("Timezone: " + timezone.name()),
-                showContent: true,
                 expandSubMenuMode: (AppData.generalData.expandSubMenuMode || Application.expandSubMenuModes.single),
                 leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic
             }, commandList]);

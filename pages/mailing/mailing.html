@@ -21,148 +21,146 @@
                             <span class="date-field"></span>
                         </div>
                     </div>
-                    <div data-win-bind="style.display: showContent Binding.Converter.toDisplay">
-                        <div class="row-separator"></div>
-                        <!--<div class="email">
-                            <span data-win-res="{textContent: 'mailing.contactinfo'}"></span>
-                            <a href="mailto:leadsuccess@convey.de">E-Mail</a>
-                        </div>-->
-                        <div class="fields-container" data-win-bind="style.display: dataMail.MaildokumentVIEWID Binding.Converter.toDisplay">
-                            <div class="field_line">
-                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailing.info'}"></span>
-                                <span class="label landscape_only" data-win-res="{textContent: 'mailing.info'}"></span>
-                                <input class="input_field win-textbox" type="text" data-win-bind="value: dataMail.Beschreibung Binding.Mode.twoway" data-win-bind-onevent="oninput" data-win-res="{placeholder: 'mailing.infoplaceholder'}" />
-                            </div>
-                            <div class="line-separator"></div>
-                            <div class="field_line field_line_odd">
-                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailing.sender'}"></span>
-                                <span class="label landscape_only" data-win-res="{textContent: 'mailing.sender'}"></span>
-                                <input class="input_field win-textbox" type="text" data-win-bind="value: dataMail.Sender Binding.Mode.twoway" data-win-bind-onevent="oninput" data-win-res="{placeholder: 'mailing.senderplaceholder'}" />
-                            </div>
-                            <div class="field_line field_line_even">
-                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailing.reply'}"></span>
-                                <span class="label landscape_only" data-win-res="{textContent: 'mailing.reply'}"></span>
-                                <input class="input_field win-textbox" type="text" data-win-bind="value: dataMail.ReplyTo Binding.Mode.twoway" data-win-bind-onevent="oninput" data-win-res="{placeholder: 'mailing.replyplaceholder'}" />
-                            </div>
-                            <div class="line-separator"></div>
-                            <div class="field_line field_line_odd">
-                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailing.cc'}"></span>
-                                <span class="label landscape_only" data-win-res="{textContent: 'mailing.cc'}"></span>
-                                <input class="input_field win-textbox" type="text" data-win-bind="value: dataMail.CCAddr Binding.Mode.twoway" data-win-bind-onevent="oninput" data-win-res="{placeholder: 'mailing.ccplaceholder'}" />
-                            </div>
-                            <div class="field_line field_line_even">
-                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailing.bcc'}"></span>
-                                <span class="label landscape_only" data-win-res="{textContent: 'mailing.bcc'}"></span>
-                                <input class="input_field win-textbox" type="text" data-win-bind="value: dataMail.BCCAddr Binding.Mode.twoway" data-win-bind-onevent="oninput" data-win-res="{placeholder: 'mailing.bccplaceholder'}" />
-                            </div>
-                            <div class="line-separator"></div>
-                            <div class="field_line field_line_odd">
-                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailing.language'}"></span>
-                                <span class="label landscape_only" data-win-res="{textContent: 'mailing.language'}"></span>
-                                <select id="InitSprache"
-                                        class="input_field win-dropdown"
-                                        data-win-control="WinJS.UI.Repeater"
-                                        data-win-bind="value: dataMail.INITSpracheID Binding.Mode.twoway">
-                                    <option data-win-bind="value: INITSpracheID; textContent: TITLE"></option>
-                                </select>
-                            </div>
-                            <div class="field_line field_line_even">
-                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailing.subject'}"></span>
-                                <span class="label landscape_only" data-win-res="{textContent: 'mailing.subject'}"></span>
-                                <input class="input_field win-textbox" type="text" data-win-bind="value: dataMail.Subject Binding.Mode.twoway" data-win-bind-onevent="oninput" data-win-res="{placeholder: 'mailing.subjectplaceholder'}"/>
-                            </div>
-                            <div class="line-separator"></div>
-                            <div class="field_line">
-                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailing.mailtext'}"></span>
-                                <span class="label landscape_only" data-win-res="{textContent: 'mailing.mailtext'}"></span>
-                                <textarea class="input_field win-textarea input_text_comment" data-win-bind="value: dataMail.Mailtext Binding.Mode.twoway" data-win-bind-onevent="oninput" data-win-res="{placeholder: 'mailing.mailtextplaceholder'}"></textarea>
-                            </div>
-                            <div class="line-separator"></div>
-                            <div class="field_line field_line_odd">
-                                <!--<span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailing.firstquestionmemo'}"></span>
-                                <span class="label landscape_only" data-win-res="{textContent: 'mailing.firstquestionmemo'}"></span>-->
-                                <div class="toggle-switch-parent">
-                                    <div id="memoSpec"
-                                         data-win-control="WinJS.UI.ToggleSwitch"
-                                         data-win-bind="winControl.checked: dataMail.SpecType; winControl.labelOn: firstquestionbez; winControl.labelOff: memobez"
-                                         onclick="AppBar.handleEvent('click', 'clickFirstQuestion', event)">
-                                    </div>
+                    <div class="row-separator"></div>
+                    <!--<div class="email">
+                        <span data-win-res="{textContent: 'mailing.contactinfo'}"></span>
+                        <a href="mailto:leadsuccess@convey.de">E-Mail</a>
+                    </div>-->
+                    <div class="fields-container" data-win-bind="style.display: dataMail.MaildokumentVIEWID Binding.Converter.toDisplay">
+                        <div class="field_line">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailing.info'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'mailing.info'}"></span>
+                            <input class="input_field win-textbox" type="text" data-win-bind="value: dataMail.Beschreibung Binding.Mode.twoway" data-win-bind-onevent="oninput" data-win-res="{placeholder: 'mailing.infoplaceholder'}" />
+                        </div>
+                        <div class="line-separator"></div>
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailing.sender'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'mailing.sender'}"></span>
+                            <input class="input_field win-textbox" type="text" data-win-bind="value: dataMail.Sender Binding.Mode.twoway" data-win-bind-onevent="oninput" data-win-res="{placeholder: 'mailing.senderplaceholder'}" />
+                        </div>
+                        <div class="field_line field_line_even">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailing.reply'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'mailing.reply'}"></span>
+                            <input class="input_field win-textbox" type="text" data-win-bind="value: dataMail.ReplyTo Binding.Mode.twoway" data-win-bind-onevent="oninput" data-win-res="{placeholder: 'mailing.replyplaceholder'}" />
+                        </div>
+                        <div class="line-separator"></div>
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailing.cc'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'mailing.cc'}"></span>
+                            <input class="input_field win-textbox" type="text" data-win-bind="value: dataMail.CCAddr Binding.Mode.twoway" data-win-bind-onevent="oninput" data-win-res="{placeholder: 'mailing.ccplaceholder'}" />
+                        </div>
+                        <div class="field_line field_line_even">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailing.bcc'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'mailing.bcc'}"></span>
+                            <input class="input_field win-textbox" type="text" data-win-bind="value: dataMail.BCCAddr Binding.Mode.twoway" data-win-bind-onevent="oninput" data-win-res="{placeholder: 'mailing.bccplaceholder'}" />
+                        </div>
+                        <div class="line-separator"></div>
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailing.language'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'mailing.language'}"></span>
+                            <select id="InitSprache"
+                                    class="input_field win-dropdown"
+                                    data-win-control="WinJS.UI.Repeater"
+                                    data-win-bind="value: dataMail.INITSpracheID Binding.Mode.twoway">
+                                <option data-win-bind="value: INITSpracheID; textContent: TITLE"></option>
+                            </select>
+                        </div>
+                        <div class="field_line field_line_even">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailing.subject'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'mailing.subject'}"></span>
+                            <input class="input_field win-textbox" type="text" data-win-bind="value: dataMail.Subject Binding.Mode.twoway" data-win-bind-onevent="oninput" data-win-res="{placeholder: 'mailing.subjectplaceholder'}" />
+                        </div>
+                        <div class="line-separator"></div>
+                        <div class="field_line">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailing.mailtext'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'mailing.mailtext'}"></span>
+                            <textarea class="input_field win-textarea input_text_comment" data-win-bind="value: dataMail.Mailtext Binding.Mode.twoway" data-win-bind-onevent="oninput" data-win-res="{placeholder: 'mailing.mailtextplaceholder'}"></textarea>
+                        </div>
+                        <div class="line-separator"></div>
+                        <div class="field_line field_line_odd">
+                            <!--<span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailing.firstquestionmemo'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'mailing.firstquestionmemo'}"></span>-->
+                            <div class="toggle-switch-parent">
+                                <div id="memoSpec"
+                                     data-win-control="WinJS.UI.ToggleSwitch"
+                                     data-win-bind="winControl.checked: dataMail.SpecType; winControl.labelOn: firstquestionbez; winControl.labelOff: memobez"
+                                     onclick="AppBar.handleEvent('click', 'clickFirstQuestion', event)">
                                 </div>
                             </div>
-                            <div class="field_line field_line_even"
-                                 data-win-bind="style.display: dataMail.SpecType Binding.Converter.toDisplayNone">
-                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailing.memo'}"></span>
-                                <span class="label landscape_only" data-win-res="{textContent: 'mailing.memo'}"></span>
-                                <input class="input_field win-textbox" type="text" data-win-bind="value: dataMail.MemoSpec Binding.Mode.twoway" data-win-bind-onevent="oninput" data-win-res="{placeholder: 'mailing.memoplaceholder'}">
-                            </div>
-                            <div class="field_line field_line_even"
-                                 data-win-bind="style.display: dataMail.SpecType Binding.Converter.toDisplay">
-                                <span class="list-question-field label-color" id="erstefragelabel"></span>
-                                <select id="firstquestioncombo"
-                                        class="input_field win-dropdown"
-                                        data-win-control="WinJS.UI.Repeater"
-                                        data-win-bind="value: dataMail.MemoSpec Binding.Mode.twoway">
-                                    <option data-win-bind="value: value; textContent: title"></option>
-                                </select>
-                            </div>
-                            <div class="line-separator"></div>
-                            <!--id="sendMailPrivacypolicySignature" -->
-                            <div class="field_line field_line_odd">
-                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'event.sendMailPrivacypolicy'}"></span>
-                                <span class="label landscape_only" data-win-res="{textContent: 'event.sendMailPrivacypolicy'}"></span>
-                                <div class="toggle-switch-parent">
-                                    <div id="sendMailPrivacypolicySignature"
-                                         data-win-control="WinJS.UI.ToggleSwitch"
-                                         data-win-bind="winControl.disabled: isPrivacyPolicyToggleDisabled; winControl.checked: dataMail.GDPR_Flag; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                         onclick="AppBar.handleEvent('click', 'clickChangeSendMailPrivacypolicySignature', event)">
-                                    </div>
+                        </div>
+                        <div class="field_line field_line_even"
+                             data-win-bind="style.display: dataMail.SpecType Binding.Converter.toDisplayNone">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailing.memo'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'mailing.memo'}"></span>
+                            <input class="input_field win-textbox" type="text" data-win-bind="value: dataMail.MemoSpec Binding.Mode.twoway" data-win-bind-onevent="oninput" data-win-res="{placeholder: 'mailing.memoplaceholder'}">
+                        </div>
+                        <div class="field_line field_line_even"
+                             data-win-bind="style.display: dataMail.SpecType Binding.Converter.toDisplay">
+                            <span class="list-question-field label-color" id="erstefragelabel"></span>
+                            <select id="firstquestioncombo"
+                                    class="input_field win-dropdown"
+                                    data-win-control="WinJS.UI.Repeater"
+                                    data-win-bind="value: dataMail.MemoSpec Binding.Mode.twoway">
+                                <option data-win-bind="value: value; textContent: title"></option>
+                            </select>
+                        </div>
+                        <div class="line-separator"></div>
+                        <!--id="sendMailPrivacypolicySignature" -->
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'event.sendMailPrivacypolicy'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'event.sendMailPrivacypolicy'}"></span>
+                            <div class="toggle-switch-parent">
+                                <div id="sendMailPrivacypolicySignature"
+                                     data-win-control="WinJS.UI.ToggleSwitch"
+                                     data-win-bind="winControl.disabled: isPrivacyPolicyToggleDisabled; winControl.checked: dataMail.GDPR_Flag; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                                     onclick="AppBar.handleEvent('click', 'clickChangeSendMailPrivacypolicySignature', event)">
                                 </div>
                             </div>
-                            <div class="field_line field_line_even">
+                        </div>
+                        <div class="field_line field_line_even">
 
-                            </div>
-                            <div class="line-separator"></div>
-                            <div class="field_line field_line_full" data-win-bind="style.display: isPrivacyPolicySVGVisible Binding.Converter.toDisplayNone">
-                                <span class="large_field"
-                                      data-win-res="{textContent: 'mailing.GDPRInfo'}"></span>
-                            </div>
-                            <div class="line-separator"></div>
-                            <div class="Testmail" data-win-bind="style.display: sendTestMailShowFlag Binding.Converter.toDisplay">
-                                <div class="TestmailPanel" data-win-bind="style.display: testMailShowPanelFlag Binding.Converter.toDisplay">
-                                    <div class="field_line">
-                                        <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'mailing.foa'}"></span>
-                                        <select id="InitMailingAnrede"
-                                                class="input_small_left win-dropdown"
-                                                data-win-control="WinJS.UI.Repeater"
-                                                data-win-bind="value: dataTestMail.AnredeID Binding.Mode.twoway; style.display: dataTestMail.Flag_NoEdit Binding.Converter.toDisplayNone">
-                                            <option data-win-bind="value: INITAnredeID; textContent: TITLE"></option>
-                                        </select>
-                                    </div><br />
-                                    <div class="field_line">
-                                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailing.firstname'}"></span>
-                                        <span class="label landscape_only" data-win-res="{textContent: 'mailing.firstname'}"></span>
-                                        <input class="input_field win-textbox" type="text" data-win-bind="value: dataTestMail.Vorname Binding.Mode.twoway" data-win-bind-onevent="oninput" />
-                                    </div><br />
-                                    <div class="field_line">
-                                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailing.surname'}"></span>
-                                        <span class="label landscape_only" data-win-res="{textContent: 'mailing.surname'}"></span>
-                                        <input class="input_field win-textbox" type="text" data-win-bind="value: dataTestMail.Nachname Binding.Mode.twoway" data-win-bind-onevent="oninput" />
-                                    </div><br />
-                                    <div class="field_line">
-                                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailing.email'}"></span>
-                                        <span class="label landscape_only" data-win-res="{textContent: 'mailing.email'}"></span>
-                                        <input class="input_field win-textbox" type="text" data-win-bind="value: dataTestMail.TargetAddr Binding.Mode.twoway" data-win-bind-onevent="oninput" />
-                                    </div><br />
-                                    <div class="field_line">
-                                        <button class="sendtestmail-button win-button"
-                                                data-win-bind="textContent: sendtstmailLabel;"
-                                                onclick="AppBar.handleEvent('click', 'clickSendTestMail', event)" autofocus="autofocus"></button>
-                                    </div>
+                        </div>
+                        <div class="line-separator"></div>
+                        <div class="field_line field_line_full" data-win-bind="style.display: isPrivacyPolicySVGVisible Binding.Converter.toDisplayNone">
+                            <span class="large_field"
+                                  data-win-res="{textContent: 'mailing.GDPRInfo'}"></span>
+                        </div>
+                        <div class="line-separator"></div>
+                        <div class="Testmail" data-win-bind="style.display: sendTestMailShowFlag Binding.Converter.toDisplay">
+                            <div class="TestmailPanel" data-win-bind="style.display: testMailShowPanelFlag Binding.Converter.toDisplay">
+                                <div class="field_line">
+                                    <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'mailing.foa'}"></span>
+                                    <select id="InitMailingAnrede"
+                                            class="input_small_left win-dropdown"
+                                            data-win-control="WinJS.UI.Repeater"
+                                            data-win-bind="value: dataTestMail.AnredeID Binding.Mode.twoway; style.display: dataTestMail.Flag_NoEdit Binding.Converter.toDisplayNone">
+                                        <option data-win-bind="value: INITAnredeID; textContent: TITLE"></option>
+                                    </select>
+                                </div><br />
+                                <div class="field_line">
+                                    <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailing.firstname'}"></span>
+                                    <span class="label landscape_only" data-win-res="{textContent: 'mailing.firstname'}"></span>
+                                    <input class="input_field win-textbox" type="text" data-win-bind="value: dataTestMail.Vorname Binding.Mode.twoway" data-win-bind-onevent="oninput" />
+                                </div><br />
+                                <div class="field_line">
+                                    <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailing.surname'}"></span>
+                                    <span class="label landscape_only" data-win-res="{textContent: 'mailing.surname'}"></span>
+                                    <input class="input_field win-textbox" type="text" data-win-bind="value: dataTestMail.Nachname Binding.Mode.twoway" data-win-bind-onevent="oninput" />
+                                </div><br />
+                                <div class="field_line">
+                                    <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailing.email'}"></span>
+                                    <span class="label landscape_only" data-win-res="{textContent: 'mailing.email'}"></span>
+                                    <input class="input_field win-textbox" type="text" data-win-bind="value: dataTestMail.TargetAddr Binding.Mode.twoway" data-win-bind-onevent="oninput" />
+                                </div><br />
+                                <div class="field_line">
+                                    <button class="sendtestmail-button win-button"
+                                            data-win-bind="textContent: sendtstmailLabel;"
+                                            onclick="AppBar.handleEvent('click', 'clickSendTestMail', event)" autofocus="autofocus"></button>
                                 </div>
-                                <div class="TestmailSuccessMsg" data-win-bind="style.display: testMailSuccessMsgFlag Binding.Converter.toDisplay">
-                                    <div class="field_line field_line_odd">
-                                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailing.testmailsuccessmsg'}"></span>
-                                    </div>
+                            </div>
+                            <div class="TestmailSuccessMsg" data-win-bind="style.display: testMailSuccessMsgFlag Binding.Converter.toDisplay">
+                                <div class="field_line field_line_odd">
+                                    <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailing.testmailsuccessmsg'}"></span>
                                 </div>
                             </div>
                         </div>
