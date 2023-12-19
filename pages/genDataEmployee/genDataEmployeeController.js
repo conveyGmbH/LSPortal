@@ -306,7 +306,7 @@
                                 that.setDataEmployee(employee);
                                 if (!AppHeader.controller.binding.userData.SiteAdmin) {
                                     var userName = AppData.generalData.userName;
-                                    if (userName && userName("@") > 0) {
+                                    if (userName && userName.indexOf("@") > 0) {
                                         item.LogInNameAfterAtSymbol = userName.substr(item.Login.lastIndexOf("@"));
                                     }
                                     that.binding.dataEmployee.LogInNameBeforeAtSymbol = "";
