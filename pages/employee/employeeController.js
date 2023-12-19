@@ -240,7 +240,7 @@
                         AppBar.busy = true;
                         Log.print(Log.l.trace, "eployee saved");
                         //var newEmployee = getEmptyDefaultValue(GenDataEmployee.employeeView.defaultValue);
-                        var newEmployee = copyByValue(GenDataEmployee.employeeView.defaultValue);
+                        var newEmployee = copyByValue(Employee.employeeView.defaultValue);
                         /* var restriction = {
                              OrderAttribute: ["Nachname"],
                              OrderDesc: false
