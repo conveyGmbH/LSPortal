@@ -406,17 +406,8 @@
                     }
                     that.saveRestriction();
                     var master = Application.navigator.masterControl;
-                    if (master && master.controller && master.controller.binding) {
-                        if (prevMasterLoadPromise &&
-                            typeof prevMasterLoadPromise.cancel === "function") {
-                            prevMasterLoadPromise.cancel();
-                        }
-                        prevMasterLoadPromise = master.controller.loadData().then(function () {
-                            prevMasterLoadPromise = null;
-                            if (master && master.controller && that.binding.employeeId) {
-                                master.controller.selectRecordId(that.binding.employeeId);
-                            }
-                        });
+                    if (master && master.controller) {
+                        master.controller.loadData();
                     }
                     Log.ret(Log.l.trace);
                 },

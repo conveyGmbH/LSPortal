@@ -519,6 +519,9 @@
                         // employeeView returns object already parsed from json file in response
                         if (!recordId) {
                             if (json && json.d && json.d.results.length > 0) {
+                                if (that.binding.count !== json.d.results.length) {
+                                    licenceWarningSelected = false;
+                                }
                                 that.binding.count = json.d.results.length;
                                 that.nextUrl = GenDataEmpList.employeeView.getNextUrl(json);
                                 var results = json.d.results;
@@ -554,10 +557,11 @@
                                 var employee = json.d;
                                 that.resultConverter(employee);
                                 var objectrec = scopeFromRecordId(recordId);
-                                if (objectrec && objectrec.index) {
+                                if (objectrec && objectrec.index >= 0) {
                                     that.employees.setAt(objectrec.index, employee);
                                 } else {
-                                    that.employees.setAt(0, employee);
+                                    licenceWarningSelected = false;
+                                    that.loadData();
                                 }
                             }
                         }

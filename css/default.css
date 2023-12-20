@@ -497,7 +497,7 @@ section[role=main] {
 .view-size-medium .label {
     letter-spacing: -1px;
 }
-.view-size-medium-small .label {
+.view-size-small .label {
     letter-spacing: normal;
 }
 

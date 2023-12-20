@@ -20,6 +20,7 @@
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
                 employeeId: 0,
+                searchString: "",
                 hasContacts: null,
                 hasLocalevents: null,
                 licenceWarning: false,
@@ -46,6 +47,7 @@
                 }
             }
 
+            var licenceWarningSelected = false;
             var progress = null;
             var counter = null;
             var layout = null;
@@ -161,7 +163,10 @@
                 item.index = index;
                 that.binding.hasLocalevents = AppHeader.controller.binding.userData.HasLocalEvents;
                 item.Names = "";
-                item.fullName = (item.Vorname ? (item.Vorname + " ") : "") + (item.Nachname ? item.Nachname : "");
+                item.fullName = (item.Vorname && item.Nachname)
+                    ? (item.Vorname + " " + item.Nachname)
+                    : (item.Vorname ? item.Vorname
+                        : (item.Nachname ? item.Nachname : ""));
                 item.nameInitial = (item.Vorname && item.Nachname)
                     ? item.Vorname.substr(0, 1) + item.Nachname.substr(0, 1)
                     : (item.Vorname ? item.Vorname.substr(0, 2) : item.Nachname ? item.Nachname.substr(0, 2) : "");
@@ -437,24 +442,28 @@
                 }
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
-                    // only licence user select 
-                    return EmpList.employeeView.select(function (json) {
-                        // this callback will be called asynchronously
-                        // when the response is available
-                        Log.print(Log.l.trace, "licenceView: success!");
-                        // licenceUserView returns object already parsed from json file in response
-                        if (json && json.d && json.d.results.length > 0) {
-                            var results = json.d.results;
-                            that.binding.licenceWarning = true;
-                        } else {
-                            that.binding.licenceWarning = false;
-                        }
+                    if (!licenceWarningSelected) {
+                        // only licence user select 
+                        return EmpList.employeeView.select(function (json) {
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            Log.print(Log.l.trace, "licenceView: success!");
+                            // licenceUserView returns object already parsed from json file in response
+                            if (json && json.d && json.d.results.length > 0) {
+                                var results = json.d.results;
+                                that.binding.licenceWarning = true;
+                            } else {
+                                that.binding.licenceWarning = false;
+                            }
+                            return WinJS.Promise.as();
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        }, { NichtLizenzierteApp: 1 });
+                    } else {
                         return WinJS.Promise.as();
-                    }, function (errorResponse) {
-                        // called asynchronously if an error occurs
-                        // or server returns response with an error status.
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                    }, { NichtLizenzierteApp: 1 });
+                    }
                 }).then(function () {
                     return EmpList.employeeView.select(function (json) {
                         // this callback will be called asynchronously
@@ -463,6 +472,9 @@
                         // employeeView returns object already parsed from json file in response
                         if (!recordId) {
                             if (json && json.d && json.d.results.length > 0) {
+                                if (that.binding.count !== json.d.results.length) {
+                                    licenceWarningSelected = false;
+                                }
                                 that.binding.count = json.d.results.length;
                                 that.nextUrl = EmpList.employeeView.getNextUrl(json);
                                 var results = json.d.results;
@@ -498,11 +510,11 @@
                                 var employee = json.d;
                                 that.resultConverter(employee);
                                 var objectrec = scopeFromRecordId(recordId);
-                                if (objectrec && objectrec.index) {
+                                if (objectrec && objectrec.index >= 0) {
                                     that.employees.setAt(objectrec.index, employee);
                                 } else {
-                                    that.binding.count = that.employees.splice(0, 0, employee);
-                                    that.selectRecordId(employee.MitarbeiterVIEWID);
+                                    licenceWarningSelected = false;
+                                    that.loadData();
                                 }
                             }
                         }

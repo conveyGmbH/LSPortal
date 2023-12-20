@@ -68,9 +68,6 @@
     padding-top: 4px;
     padding-bottom: 4px;
 }
-.view-size-smallest #siteEventsList #eventTyp {
-    display: none !important;
-}
 
 .siteEventsList .content-header .master-list-header {
     margin-top: 16px;

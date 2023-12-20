@@ -6,22 +6,40 @@
     overflow-y: hidden !important;
 }
 .empList .content-header {
-    height: auto !important;
+    height: auto;
     min-height: 48px;
+    display: inline-block;
 }
 .empList .master-list-header {
-    height: auto !important;
+    width: auto !important;
+    padding: 0;
 }
+
 .empList .master-list-header.list-compact-only {
     padding-top: 48px;
 }
-#employeeList .listview {
-    position: relative;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: calc(100% - 56px);
+
+.empList .content-header .field_line {
+    min-height: 32px;
 }
+
+.view-size-smallest .empList .content-header .field_line {
+    display: none !important;
+}
+
+
+.empList .list-header {
+    font-weight: bold;
+    display: flex;
+}
+
+#employeeList .win-headercontainer {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    /* Add any other styles you need for the header */
+}
+
 
 /* Styles used for the custom layout */
 .listView .contactListLayout {
@@ -49,31 +67,28 @@
     padding-bottom: 2px;
 }
  
-#Seriennummer {
-    text-align: right;
-    width: 118%;
+#employeeList .win-item,
+#employeeList .list-header,
+#employeeList .list-footer {
+    padding-left: 26px;
+    padding-right: 26px;
+    width: auto;
+    padding-top: 2px;
+    padding-bottom: 2px;
 }
 
-.view-size-bigger #employeeList .win-item {
-    width: calc(100% - 52px);
-    padding-top: 8px;
-    padding-bottom: 8px;
-}
-
-.view-size-medium #employeeList .win-item {
-    width: calc(100% - 36px);
+.view-size-medium #employeeList .win-item,
+.view-size-medium #employeeList .list-header,
+.view-size-medium #employeeList .list-footer {
     padding-left: 18px;
     padding-right: 18px;
-    padding-top: 8px;
-    padding-bottom: 8px;
 }
 
-.view-size-small #employeeList .win-item {
-    width: calc(100% - 20px);
+.view-size-small #employeeList .win-item,
+.view-size-small #employeeList .list-header,
+.view-size-small #employeeList .list-footer {
     padding-left: 10px;
     padding-right: 10px;
-    padding-top: 4px;
-    padding-bottom: 4px;
 }
 
 .view-size-smallest #employeeList .win-item {
@@ -84,15 +99,11 @@
     padding-bottom: 4px;
 }
 
-.employeelist-button {
-    float: right;
-    margin-right: 20px;
-    margin-top: -5px
-}
 .list-button-left {
-    float: left;
-    margin-right: 5px;
-    margin-top: -5px
+    min-width: 100px;
+    padding: 4px;
+    height: 18px;
+    margin-bottom: 2px;
 }
 .empList .list-div-left {
     width: 100%;
@@ -108,20 +119,7 @@
     font-size: large;
     font-weight: bold;
 }
-.view-size-smallest .empList .licence-warning-text {
-    font-size: smaller;
-    font-weight: normal;
-    width: 54px;
-    overflow: hidden;
-    display: inline-block;
-}
-.empList .list-header {
-    width: calc(100% - 25px);
-    display: inline-block;
-    height: auto !important;
-    padding-top: 2.5px;
-    padding-bottom: 2.5px;
-}
+
 #eventlist .list-div-left {
     width: 100%
 }
@@ -136,3 +134,9 @@
     line-height: 45px;
     font-weight: bold;
 }
+
+#Seriennummer {
+    text-align: right;
+    width: 118%;
+}
+

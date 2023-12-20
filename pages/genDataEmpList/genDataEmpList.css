@@ -11,10 +11,17 @@
     display: inline-block;
 }
 .genDataEmpList .master-list-header {
-    height: auto !important;
+    width: auto !important;
+    padding: 0;
 }
 .genDataEmpList .master-list-header.list-compact-only {
     padding-top: 48px;
+}
+.genDataEmpList .content-header .field_line {
+    min-height: 32px;
+}
+.view-size-smallest .genDataEmpList .content-header .field_line {
+    display: none !important;
 }
 
 .genDataEmpList .list-header {
@@ -59,16 +66,6 @@
     overflow: hidden;
     white-space: nowrap;
 }
-
-/*
-    #genDataEmpList.listview {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-}
-*/
 
 /* Styles used for the custom layout */
 .listView .genDataEmpListLayout {
@@ -121,15 +118,11 @@
 }
 
 
-.genDataEmpList-button {
-    float: right;
-    margin-right: 20px;
-    margin-top: -5px
-}
 .list-button-left {
-    float: left;
-    margin-right: 5px;
-    margin-top: -5px
+    min-width: 100px;
+    padding: 4px;
+    height: 18px;
+    margin-bottom: 2px;
 }
 .genDataEmpList .list-div-left {
     width: 100%;
@@ -145,13 +138,6 @@
     color: red;
     font-size: large;
     font-weight: bold;
-}
-.view-size-smallest .genDataEmpList .licence-warning-text {
-    font-size: smaller;
-    font-weight: normal;
-    width: 54px;
-    overflow: hidden;
-    display: inline-block;
 }
 
 #genDataEmpList .list-div-left {
