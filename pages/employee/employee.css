@@ -24,11 +24,7 @@
     color: red;
     text-align: center
 }
-/*
-.employee input[type="text"]:disabled {
-    background-color: grey
-}
-*/
+
 .employee .label_bold {
     font-weight: bold;
 }

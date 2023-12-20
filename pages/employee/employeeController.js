@@ -20,7 +20,7 @@
                 actualEventID: 0,
                 dataEmployee: getEmptyDefaultValue(Employee.employeeView.defaultValue),
                 restriction: copyByValue(Employee.employeeView.defaultRestriction),
-                isEmpRolesVisible: AppHeader.controller.binding.userData.SiteAdmin, // || AppHeader.controller.binding.userData.HasLocalEvents,
+                isEmpRolesVisible: AppHeader.controller.binding.userData.SiteAdmin,
                 eventname: AppData._userData.VeranstaltungName,
                 noLicence: null,
                 userStatus: null,
@@ -109,14 +109,6 @@
             this.getErrorMsgFromErrorStack = getErrorMsgFromErrorStack;
 
             var saveRestriction = function () {
-                /*if (that.binding.restriction.Names && that.binding.restriction.Names.length > 0) {
-                    that.binding.restriction.Aktiv = ["X", "X", "X"];
-                } else {
-                    that.binding.restriction.Aktiv = ["X", "X", "X"];
-                }
-                that.binding.restriction.bAndInEachRow = true;
-                that.binding.restriction.bUseOr = false;
-                Log.print("restriction number:" + that.binding.restriction.countCombobox + ", restriction: " + that.binding.restriction);*/
                 AppData.setRestriction("Employee", that.binding.restriction);
             }
             this.saveRestriction = saveRestriction;
@@ -238,18 +230,11 @@
                     var newEmployeeId = null;
                     that.saveData(function (response) {
                         AppBar.busy = true;
-                        Log.print(Log.l.trace, "eployee saved");
-                        //var newEmployee = getEmptyDefaultValue(GenDataEmployee.employeeView.defaultValue);
+                        Log.print(Log.l.trace, "employee saved");
                         var newEmployee = copyByValue(Employee.employeeView.defaultValue);
-                        /* var restriction = {
-                             OrderAttribute: ["Nachname"],
-                             OrderDesc: false
-                         };
-                         AppData.setRestriction("Employee", restriction);*/
                         return Employee.employeeView.insert(function (json) {
                             AppBar.busy = false;
-                            // this callback will be called asynchronously
-                            // when the response is available
+                            // this callback will be called asynchronously when the response is available
                             Log.print(Log.l.info, "employeeView insert: success!");
                             // employeeView returns object already parsed from json file in response
                             var employee = null;
@@ -267,7 +252,6 @@
                                 }
                                 newEmployeeId = that.binding.dataEmployee.MitarbeiterVIEWID;
                             }
-                            //AppBar.modified = true;
                         }, function (errorResponse) {
                             Log.print(Log.l.error, "error inserting employee");
                             AppBar.busy = false;
@@ -293,14 +277,9 @@
                         if (result) {
                             Log.print(Log.l.trace, "clickDelete: user choice OK");
                             deleteData(function (response) {
-                                /* Mitarbeiter Liste neu laden und Selektion auf neue Zeile setzen */
                                 var master = Application.navigator.masterControl;
                                 if (master && master.controller && master.controller.binding) {
-                                    //var prevSelIdx = master.controller.binding.selIdx;
-                                    master.controller.loadData()/*.then(function () {
-                                        Log.print(Log.l.info, "master.controller.loadData: success!");
-                                        master.controller.setSelIndex(prevSelIdx);
-                                    })*/;
+                                    master.controller.loadData();
                                 }
                             }, function (errorResponse) {
                                 // delete ERROR
@@ -360,7 +339,7 @@
                     Log.ret(Log.l.trace);
                 },
                 changeLogin: function (event) {
-                    Log.call(Log.l.trace, "GenDataEmployee.Controller.");
+                    Log.call(Log.l.trace, "Employee.Controller.");
                     if (event.currentTarget && AppBar.notifyModified) {
                         that.binding.dataEmployee.Password = "";
                         that.binding.dataEmployee.Password2 = "";
@@ -376,7 +355,7 @@
                     Log.ret(Log.l.trace);
                 },
                 changeLogInNameBeforeAtSymbol: function (event) {
-                    Log.call(Log.l.trace, "GenDataEmployee.Controller.");
+                    Log.call(Log.l.trace, "Employee.Controller.");
                     if (event.currentTarget && AppBar.notifyModified) {
                         that.binding.dataEmployee.Password = "";
                         that.binding.dataEmployee.Password2 = "";
@@ -391,7 +370,7 @@
                     Log.ret(Log.l.trace);
                 },
                 changeLogInNameAfterAtSymbol: function (event) {
-                    Log.call(Log.l.trace, "GenDataEmployee.Controller.");
+                    Log.call(Log.l.trace, "Employee.Controller.");
                     if (event.currentTarget && AppBar.notifyModified) {
                         that.binding.dataEmployee.Password = "";
                         that.binding.dataEmployee.Password2 = "";
@@ -407,7 +386,7 @@
                     Log.ret(Log.l.trace);
                 },
                 changeSearchField: function (event) {
-                    Log.call(Log.l.trace, "Event.Controller.");
+                    Log.call(Log.l.trace, "Employee.Controller.");
                     that.binding.restriction.Vorname = [];
                     that.binding.restriction.Nachname = [];
                     that.binding.restriction.Login = [];
@@ -432,7 +411,6 @@
                             typeof prevMasterLoadPromise.cancel === "function") {
                             prevMasterLoadPromise.cancel();
                         }
-                        //master.controller.binding.contactId = that.binding.dataContact.KontaktVIEWID;
                         prevMasterLoadPromise = master.controller.loadData().then(function () {
                             prevMasterLoadPromise = null;
                             if (master && master.controller && that.binding.employeeId) {
@@ -488,7 +466,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickTopButton: function (event) {
-                    Log.call(Log.l.trace, "Contact.Controller.");
+                    Log.call(Log.l.trace, "Employee.Controller.");
                     var anchor = document.getElementById("menuButton");
                     var menu = document.getElementById("menu1").winControl;
                     var placement = "bottom";
@@ -496,7 +474,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickLogoff: function (event) {
-                    Log.call(Log.l.trace, "Account.Controller.");
+                    Log.call(Log.l.trace, "Employee.Controller.");
                     AppData._persistentStates.privacyPolicyFlag = false;
                     if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
                         AppHeader.controller.binding.userData = {
@@ -750,6 +728,3 @@
         })
     });
 })();
-
-
-
