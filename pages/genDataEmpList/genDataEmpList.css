@@ -57,7 +57,7 @@
 
 #genDataEmpList .list-field-big-variable {
     text-align: left;
-    width: calc(40% - 80px);
+    width: calc(40% - 120px);
     display: inline-block;
     position: relative;
     top: 0;

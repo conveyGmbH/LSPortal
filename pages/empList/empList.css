@@ -40,6 +40,22 @@
     /* Add any other styles you need for the header */
 }
 
+#employeeList .list-field-image-fixed {
+    text-align: left;
+    width: 60px;
+    display: inline-block;
+    position: relative;
+    top: 0;
+    min-height: 32px;
+    padding-top: 8px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+#employeeList .list-field-image-fixed .action-image > svg {
+    width: 28px;
+    height: 28px;
+}
 
 /* Styles used for the custom layout */
 .listView .contactListLayout {
