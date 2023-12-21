@@ -31,7 +31,7 @@
             var mailsendoptiondata = pageElement.querySelector("#mailsendopt");
 
             var stati = [{ TITLE: 'READY' }, { TITLE: 'SENT' }];
-            var exhibitorcategorys = [{ TITLE: "APP" }, { TITLE: "SERVICE" }, { TITLE: "IPAD" }, { TITLE: "RTW" }];
+            var exhibitorcategorys = [{ TITLE: "APP" }, { TITLE: "SERVICE" }, { TITLE: "FREE" }, { TITLE: "IPAD" }, { TITLE: "RTW" }];
             var mailsendoptions = [{ TITLE: all, VALUE: null }, { TITLE: once, VALUE: 1 }];
 
             // select combo
