@@ -1673,9 +1673,9 @@
     "genDataEmployee.addevent" : "événement",
     "genDataEmployee.addeventbtn" : "Ajouter",
 
-    "eventProducts.title"			: "Produits",
-    "eventProducts.ProductTitle"			: "Nom du produit",
-    "eventProducts.ProductInfo"			: "Produit Info",
-    "eventProducts.productcombotitle"			: "Produit",
+    "eventProducts.title"			: "Fonctionnalités",
+    "eventProducts.ProductTitle"			: "Nom du Fonctionnalité",
+    "eventProducts.ProductInfo"			: "Fonctionnalité Info",
+    "eventProducts.productcombotitle"			: "Fonctionnalité",
     "eventProducts.productaddbtntitle"			: "Ajouter"
 }
