@@ -257,7 +257,11 @@
                                                             AppBar.scope.loadData();
                                                         }
                                                     } else {
-                                                        Application.navigateById("eventGenSettings");
+                                                        var newPageId = Application.getPageId(this._nextPage);
+                                                        if (newPageId !== "eventGenSettings" &&
+                                                            newPageId !== "contactResultsList") {
+                                                            Application.navigateById("eventGenSettings");
+                                                        }
                                                     }
                                                 }, function (errorResponse) {
                                                     if ((curPageId === "eventGenSettings" ||
@@ -265,6 +269,7 @@
                                                          curPageId === "eventMediaAdministration" || 
                                                          curPageId === "eventSeriesAdministration" ||
                                                          curPageId === "eventSpeakerAdministration" ||
+                                                         curPageId === "eventQuestionnaire" ||
                                                          curPageId === "contactResultsList") &&
                                                         typeof AppBar.scope.getEventId === "function") {
                                                         that.selectRecordId(AppBar.scope.getEventId());
@@ -276,6 +281,7 @@
                                                      curPageId === "eventResourceAdministration"  || 
                                                      curPageId === "eventMediaAdministration" || 
                                                      curPageId === "eventSeriesAdministration" ||
+                                                     curPageId === "eventSpeakerAdministration" ||
                                                      curPageId === "eventQuestionnaire" ||
                                                      curPageId === "eventSpeakerAdministration") &&
                                                     typeof AppBar.scope.loadData === "function" &&
@@ -283,7 +289,11 @@
                                                     AppBar.scope.setEventId(item.data.VeranstaltungVIEWID);
                                                     AppBar.scope.loadData();
                                                 } else {
-                                                    Application.navigateById("eventGenSettings");
+                                                    var newPageId = Application.getPageId(this._nextPage);
+                                                    if (newPageId !== "eventGenSettings" &&
+                                                        newPageId !== "contactResultsList") {
+                                                        Application.navigateById("eventGenSettings");
+                                                    }
                                                 }
                                             }
                                             AppBar.triggerDisableHandlers();
