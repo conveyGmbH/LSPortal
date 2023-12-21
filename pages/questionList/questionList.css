@@ -380,6 +380,9 @@ textarea:-ms-input-placeholder { font-style:italic; } /* ie */
 }
 
 .view-size-medium #listQuestionList .landscape_only {
+    display: none;
+}
+.view-size-medium #listQuestionList .portrait_only {
     display: inline;
 }
 /*
