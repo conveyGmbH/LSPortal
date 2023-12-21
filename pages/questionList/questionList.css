@@ -379,7 +379,7 @@ textarea:-ms-input-placeholder { font-style:italic; } /* ie */
     padding-left: 15px;
 }
 
-.view-size-medium .landscape_only {
+.view-size-medium #listQuestionList .landscape_only {
     display: inline;
 }
 /*
