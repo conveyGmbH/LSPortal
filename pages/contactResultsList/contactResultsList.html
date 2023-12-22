@@ -19,52 +19,150 @@
                             <span class="caption-field" data-win-res="{textContent: 'contactResultsList.title'}"></span>
                             <span class="date-field"></span>
                         </div>
+                        <div class="field_line field_line_even">
+                            <span id="counter" data-win-res="{textContent: 'contactResultsList.count'}"></span><span>: </span><span data-win-bind="textContent: noctcount"></span>
+                        </div>
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'siteevents.search'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'siteevents.search'}"></span>
+                            <input id="searchInput" class="input_field win-textbox" type="text" 
+                                   data-win-bind="value: searchString Binding.Mode.twoway" 
+                                   oninput="AppBar.handleEvent('change', 'changeSearchField', event)" />
+                        </div>
                     </div>
-                    <div class="field_line field_line_even">
-                        <span id="counter" data-win-res="{textContent: 'contactResultsList.count'}"></span><span>: </span><span data-win-bind="textContent: noctcount"></span>
+                    <div class="headerFooterPlaceholder">
+                        <div class="list-header">
+                            <div class="list-landscape-only list-header-columns">
+                                <div class="list-field-small-relative-10 bkgcolor-hoverable bkgcolor-activatable" id="Name"
+                                     data-win-res="{textContent: 'contactResultsList.headername'}"
+                                     onclick="AppBar.handleEvent('click', 'clickOrderBy', event)"></div>
+                                <div class="list-field-small-relative-10 bkgcolor-hoverable bkgcolor-activatable" id="Vorname"
+                                     data-win-res="{textContent: 'contactResultsList.headervorname'}"
+                                     onclick="AppBar.handleEvent('click', 'clickOrderBy', event)"></div>
+                                <div class="list-field-small-relative-20 bkgcolor-hoverable bkgcolor-activatable" id="Firmenname"
+                                     data-win-res="{textContent: 'contactResultsList.headerfirmenname'}"
+                                     onclick="AppBar.handleEvent('click', 'clickOrderBy', event)"></div>
+                                <div class="list-field-small-relative-10 bkgcolor-hoverable bkgcolor-activatable" id="EMail"
+                                     data-win-res="{textContent: 'contactResultsList.headeremail'}"
+                                     onclick="AppBar.handleEvent('click', 'clickOrderBy', event)"></div>
+                                <div class="list-field-small-relative-10 bkgcolor-hoverable bkgcolor-activatable" id="Land"
+                                     data-win-res="{textContent: 'contactResultsList.headerland'}"
+                                     onclick="AppBar.handleEvent('click', 'clickOrderBy', event)"></div>
+                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="Erfassungsdatum"
+                                     data-win-res="{textContent: 'contactResultsList.headererfassungsdatum'}"
+                                     onclick="AppBar.handleEvent('click', 'clickOrderBy', event)"></div>
+                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="ModifiedTS"
+                                     data-win-res="{textContent: 'contactResultsList.headeränderungsdatum'}"
+                                     onclick="AppBar.handleEvent('click', 'clickOrderBy', event)"></div>
+                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="MailVersandTS"
+                                     data-win-res="{textContent: 'contactResultsList.headeremailversandtzeit'}"
+                                     onclick="AppBar.handleEvent('click', 'clickOrderBy', event)"></div>
+                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="WelcomeMailTS"
+                                     data-win-res="{textContent: 'contactResultsList.headerwelcomeemailversandtzeit'}"
+                                     onclick="AppBar.handleEvent('click', 'clickOrderBy', event)"></div>
+                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="Prio"
+                                     data-win-res="{textContent: 'contactResultsList.headerkontaktprio'}"
+                                     onclick="AppBar.handleEvent('click', 'clickOrderBy', event)"></div>
+                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="Typ"
+                                     data-win-res="{textContent: 'contactResultsList.headerkontakttyp'}"
+                                     onclick="AppBar.handleEvent('click', 'clickOrderBy', event)"></div>
+                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="Status"
+                                     data-win-res="{textContent: 'contactResultsList.headerstatus'}"
+                                     onclick="AppBar.handleEvent('click', 'clickOrderBy', event)"></div>
+                            </div>
+                        </div>
+                        <div class="list-footer">
+                            <div class="status">
+                                <progress class="win-progress-bar progress"></progress>
+                                <div class="counter">
+                                    <span data-win-res="{textContent: 'contactList.count'}"></span><span>: </span><span data-win-bind="textContent: count"></span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="field_line field_line_odd">
-                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'siteevents.search'}"></span>
-                        <span class="label landscape_only" data-win-res="{textContent: 'siteevents.search'}"></span>
-                        <input id="searchInput" class="input_field win-textbox" type="text" data-win-bind="value: searchString Binding.Mode.twoway" data-win-res="{placeholder: 'siteevents.searchplaceholder'}" />
+                    <div class="list-template"
+                         data-win-control="WinJS.Binding.Template" style="display: none">
+                        <div class="list-compact-only" data-win-bind="disabled: disabled">
+                            <div class="row-separator"></div>
+                            <div class="list-div-left">
+                                <span id="nameInitialcircle" class="win-type-title win-type-ellipsis"
+                                      data-win-bind="textContent: nameInitial"></span>
+                            </div>
+                        </div>
+                        <div class="list-landscape-only" data-win-bind="disabled: disabled">
+                            <div class="row-bkg-gray"
+                                 data-win-bind="style.display: index Binding.Converter.evenToDisplay"></div>
+                            <div class="list-field-small-relative-10"
+                                 data-win-bind="textContent: Name"></div>
+                            <div class="list-field-small-relative-10"
+                                 data-win-bind="textContent: Vorname"></div>
+                            <div class="list-field-small-relative-20"
+                                 data-win-bind="textContent: Firmenname"></div>
+                            <div class="list-field-small-relative-10"
+                                 data-win-bind="textContent: EMail"></div>
+                            <div class="list-field-small-relative-10"
+                                 data-win-bind="textContent: Land"></div>
+                            <div class="list-field-small-fixed"
+                                 data-win-bind="textContent: Erfassungsdatum ContactResultsList.Binding.Converter.toLocalDateTimeString"></div>
+                            <div class="list-field-small-fixed"
+                                 data-win-bind="textContent: ModifiedTS ContactResultsList.Binding.Converter.toLocalDateTimeString"></div>
+                            <div class="list-field-small-fixed"
+                                 data-win-bind="textContent: MailVersandTS ContactResultsList.Binding.Converter.toLocalDateTimeString"></div>
+                            <div class="list-field-small-fixed"
+                                 data-win-bind="textContent: WelcomeMailTS ContactResultsList.Binding.Converter.toLocalDateTimeString"></div>
+                            <div class="list-field-small-fixed"
+                                 data-win-bind="textContent: Prio"></div>
+                            <div class="list-field-small-fixed"
+                                data-win-bind="textContent: Typ"></div>
+                            <div class="list-field-small-fixed"
+                                 data-win-bind="textContent: Status; style.color: Status ContactResultsList.Binding.Converter.toStatusColor"></div>
+                        </div>
+                        <div class="list-portrait-only" data-win-bind="disabled: disabled">
+                            <div class="row-separator"></div>
+                            <div class="list-item-header-full">
+                                <div class="list-item-label-left win-type-caption">
+                                    <span data-win-bind="textContent: globalContactId"></span>
+                                </div>
+                                <div class="list-item-label-right win-type-caption">
+                                    <span data-win-bind="textContent: Erfassungsdatum Binding.Converter.toDateString"></span>
+                                </div>
+                            </div>
+                            <div class="list-compressed-content-container"
+                                 data-win-bind="style.display: showDoc Binding.Converter.toDisplayNone">
+                                <span class="list-compressed-title"
+                                      data-win-bind="textContent: company"></span>
+                                <span class="list-compressed-title win-type-subtitle"
+                                      data-win-bind="textContent: fullName">
+                                </span>
+                                <span class="list-compressed-content"
+                                      data-win-bind="textContent: address"></span>
+                            </div>
+                            <div class="list-compressed-content-doc-container"
+                                 data-win-bind="style.display: showDoc Binding.Converter.toDisplay">
+                                <span class="list-compressed-title"
+                                      data-win-bind="textContent: company"></span>
+                                <span class="list-compressed-title win-type-subtitle"
+                                      data-win-bind="textContent: fullName"></span>
+                                <span class="list-compressed-content"
+                                      data-win-bind="textContent: address"></span>
+                            </div>
+                            <div class="list-compressed-doc-container" data-win-bind="style.display: OvwContentDOCCNT3 Binding.Converter.toDisplay">
+                                <img class="list-compressed-doc" data-win-bind="src: OvwContentDOCCNT3">
+                            </div>
+                            <div class="list-compressed-doc-container" data-win-bind="style.display: svgSource Binding.Converter.toDisplay">
+                                <div data-win-bind="name: svgSource" class="action-image-right"></div>
+                            </div>
+                        </div>
                     </div>
-                    <div id="table-scroll" class="table-scroll">
-                        <table id="tableId">
-                            <thead class="table-header">
-                                <tr>
-                                    <th id="datacheckbox"><input id="selectAll" type="checkbox" class="win-checkbox checkbox" value="1" /></th>
-                                    <th data-win-bind="value: dataContactHeaderValue.Name; textContent: dataContactHeaderText.Name"></th>
-                                    <th data-win-bind="value: dataContactHeaderValue.Vorname; textContent: dataContactHeaderText.Vorname"></th>
-                                    <th data-win-bind="value: dataContactHeaderValue.Firmenname; textContent: dataContactHeaderText.Firmenname"></th>
-                                    <th data-win-bind="value: dataContactHeaderValue.EMail; textContent: dataContactHeaderText.EMail"></th>
-                                    <th data-win-bind="value: dataContactHeaderValue.Land; textContent: dataContactHeaderText.Land"></th>
-                                    <th data-win-bind="value: dataContactHeaderValue.Erfassungsdatum; textContent: dataContactHeaderText.Erfassungsdatum"></th>
-                                    <th data-win-bind="value: dataContactHeaderValue.ModifiedTS; textContent: dataContactHeaderText.ModifiedTS"></th>
-                                    <th data-win-bind="value: dataContactHeaderValue.MailVersandTS; textContent: dataContactHeaderText.MailVersandTS"></th>
-                                    <th data-win-bind="value: dataContactHeaderValue.WelcomeMailTS; textContent: dataContactHeaderText.WelcomeMailTS"></th>
-                                    <!--<th data-win-bind="value: dataContactHeaderValue.Prio; textContent: dataContactHeaderText.Prio"></th>-->
-                                    <!--<th data-win-bind="value: dataContactHeaderValue.Typ; textContent: dataContactHeaderText.Typ"></th>-->
-                                    <th id="status" data-win-bind="value: dataContactHeaderValue.Status; textContent: dataContactHeaderText.Status"></th>
-                                </tr>
-                            </thead>
-                            <tbody class="table-body" data-win-control="WinJS.UI.Repeater">
-                                <tr data-win-bind="value: KontaktVIEWID">
-                                    <td id="datacheckbox"><input type="checkbox" class="win-checkbox checkbox" value="1" /> </td>
-                                    <td data-win-bind="textContent: Name"></td>
-                                    <td data-win-bind="textContent: Vorname"></td>
-                                    <td data-win-bind="textContent: Firmenname"></td>
-                                    <td data-win-bind="textContent: EMail"></td>
-                                    <td data-win-bind="textContent: Land"></td>
-                                    <td data-win-bind="textContent: Erfassungsdatum"></td>
-                                    <td data-win-bind="textContent: ModifiedTS"></td>
-                                    <td data-win-bind="textContent: MailVersandTS"></td>
-                                    <td data-win-bind="textContent: WelcomeMailTS"></td>
-                                    <!--<td data-win-bind="textContent: Prio"></td>-->
-                                    <!--<td data-win-bind="textContent: Typ"></td>-->
-                                    <td id="status" data-win-bind="textContent: Status"></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div id="contactResultsList"
+                         class="listview win-selectionstylefilled"
+                         data-win-control="WinJS.UI.ListView"
+                         data-win-options="{
+                             layout : { type: WinJS.UI.ListLayout },
+                             itemTemplate: select('.list-template'),
+                             header: select('.list-header'),
+                             footer: select('.list-footer')
+                         }">
                     </div>
                 </div>
                 <div class="error-message"

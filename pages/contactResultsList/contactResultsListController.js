@@ -7,7 +7,6 @@
 /// <reference path="~/www/lib/convey/scripts/pageController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/pages/contactResultsList/contactResultsListService.js" />
-/// <reference path="~/www/lib/moment/scripts/moment-with-locales.min.js" />
 
 (function () {
     "use strict";
@@ -15,339 +14,95 @@
     var nav = WinJS.Navigation;
 
     WinJS.Namespace.define("ContactResultsList", {
-        Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
+        Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList, isMaster) {
             Log.call(Log.l.trace, "ContactResultsList.Controller.");
-            Application.Controller.apply(this, [pageElement, {
+            // ListView control
+            var listView = pageElement.querySelector("#contactResultsList.listview");
+
+            Application.RecordsetController.apply(this, [pageElement, {
                 count: 0,
-                dataContactHeaderValue: getEmptyDefaultValue(ContactResultsList.KontaktReport.defaultContactHeader),
-                dataContactHeaderText: getEmptyDefaultValue(ContactResultsList.KontaktReport.defaultContactHeader),
+                contactId: null,
                 noctcount: 0,
                 searchString: ""
-            }, commandList]);
-            this.nextUrl = null;
+            }, commandList, isMaster, null, ContactResultsList.contactResultsView, listView]);
 
             var that = this;
-            var table = pageElement.querySelector("#tableId");
-            var tablescroll = pageElement.querySelector("#table-scroll");
-            var tableHeader = pageElement.querySelector(".table-header");
-            var tableBody = pageElement.querySelector(".table-body");
-            var contentArea = pageElement.querySelector(".contentarea");
-            var selectAll = pageElement.querySelector("#selectAll");
-            var searchInput = pageElement.querySelector("#searchInput");
-            
+
             this.dispose = function () {
-                if (tableBody && tableBody.winControl) {
-                    tableBody.winControl.data = null;
+                if (listView && listView.winControl) {
+                    listView.winControl.itemDataSource = null;
                 }
             }
 
             var getEventId = function () {
-                Log.print(Log.l.trace, "getEventId ContactResultsList._eventId=" + ContactResultsList._eventId);
+                Log.print(Log.l.trace, "ContactResultsList.getEventId returned eventId=" + ContactResultsList._eventId);
                 return ContactResultsList._eventId;
             }
             this.getEventId = getEventId;
 
             var setEventId = function (value) {
-                Log.print(Log.l.trace, "setEventId ContactResultsList._eventId=" + value);
+                Log.print(Log.l.trace, "ContactResultsList.setEventId eventId=" + value);
                 ContactResultsList._eventId = value;
             }
             this.setEventId = setEventId;
 
-            var colorStatus = function() {
-                var statusrow = pageElement.querySelectorAll("#status");
-                for (var i = 1; i < statusrow.length; i++) {
-                    if (statusrow[i].textContent === getResourceText("contactResultsCriteria.incomplete")) {
-                        statusrow[i].style.color = "red";
-                    } else if (statusrow[i].textContent === getResourceText("contactResultsCriteria.partialcomplete")) {
-                        statusrow[i].style.color = "orange";
-                    } else {
-                        statusrow[i].style.color = "green";
-                    }
+            var progress = null;
+            var counter = null;
+            var layout = null;
+
+            var maxLeadingPages = 0;
+            var maxTrailingPages = 0;
+            
+            var resultConverter = function (item, index) {
+                item.index = index;
+                if (!item.Name) {
+                    item.Name = "";
                 }
+                if (!item.Vorname) {
+                    item.Vorname = "";
+                }
+                if (!item.Firmenname) {
+                    item.Firmenname = "";
+                }
+                if (!item.EMail) {
+                    item.EMail = "";
+                }
+                if (!item.Prio) {
+                    item.Prio = "";
+                }
+                if (!item.Typ) {
+                    item.Typ = "";
+                }
+                if (!item.Name && !item.Vorname && !item.Firmenname) {
+                    item.Status = getResourceText("contactResultsCriteria.incomplete");
+                } else if (!item.EMail) {
+                    item.Status = getResourceText("contactResultsCriteria.partialcomplete");
+                } else {
+                    item.Status = getResourceText("contactResultsCriteria.complete");
+                }
+                if (item.Anzahl) {
+                    that.binding.noctcount = item.Anzahl;
+                }
+                item.nameInitial = (item.Vorname && item.Name)
+                    ? item.Vorname.substr(0, 1) + item.Name.substr(0, 1)
+                    : (item.Vorname ? item.Vorname.substr(0, 2) : item.Name ? item.Name.substr(0, 2) : "");
+                item.company = ((item.Firmenname ? (item.Firmenname + " ") : ""));
+                item.fullName = ((item.Title ? (item.Title + " ") : "") +
+                    (item.Vorname ? (item.Vorname + " ") : "") + (item.Name ? item.Name : ""));
+                item.address = item.EMail;
+                item.globalContactId = item.CreatorSiteID + "/" + item.CreatorRecID;
+                item.mitarbeiterFullName = (item.Mitarbeiter_Vorname ? (item.Mitarbeiter_Vorname + " ") : "") +
+                    (item.Mitarbeiter_Nachname ? item.Mitarbeiter_Nachname : "");
+                if (item.SHOW_Barcode || item.IMPORT_CARDSCANID && !item.SHOW_Visitenkarte) {
+                    item.svgSource = item.IMPORT_CARDSCANID ? "barcode-qr" : "barcode";
+                } else if (!item.SHOW_Barcode && item.IMPORT_CARDSCANID && item.SHOW_Visitenkarte) {
+                    item.svgSource = "";
+                } else {
+                    item.svgSource = "manuel_Portal";
+                }
+                item.OvwContentDOCCNT3 = "";
             }
-            this.colorStatus = colorStatus;
-
-            var addZero = function (i) {
-                if (i < 10) {
-                    i = "0" + i;
-                }
-                return i;
-            }
-            this.addZero = addZero;
-
-            var getDateObject = function (date) {
-                Log.call(Log.l.trace, "MailingList.Controller.");
-                var dateString = date.replace("\/Date(", "").replace(")\/", "");
-                var milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
-                var time = new Date(milliseconds);
-                //var formdate = ("0" + time.getDate()).slice(-2) + "." + ("0" + (time.getMonth() + 1)).slice(-2) + "." + time.getFullYear() + " " + that.addZero(time.getUTCHours()) + ":" + that.addZero(time.getMinutes());
-                var localdate = moment(time).local().format('DD.MM.YYYY HH:mm');
-                Log.ret(Log.l.trace);
-                return localdate;
-            };
-            this.getDateObject = getDateObject;
-
-            var resizableGrid = function () {
-                var row = tableHeader ? tableHeader.querySelector("tr") : null,
-                    cols = row ? row.children : null;
-                if (!cols) return;
-
-                var tableHeight = table.offsetHeight;
-                
-                function createDiv(height) {
-                    var div = document.createElement("div");
-                    div.style.top = 0;
-                    div.style.right = 0;
-                    div.style.width = "5px";
-                    div.style.position = "absolute";
-                    div.style.cursor = "col-resize";
-                    div.style.userSelect = "none";
-                    div.style.height = height + "px";
-                    return div;
-                }
-
-                function getStyleVal(elm, css) {
-                    return (window.getComputedStyle(elm, null).getPropertyValue(css));
-                }
-
-                function paddingDiff(col) {
-                    if (getStyleVal(col, "box-sizing") === "border-box") {
-                        return 0;
-                    }
-                    var padLeft = getStyleVal(col, "padding-left");
-                    var padRight = getStyleVal(col, "padding-right");
-                    return (parseInt(padLeft) + parseInt(padRight));
-
-                }
-
-                function setListeners(div) {
-                    var pageX, curCol, nxtCol, curColWidth, nxtColWidth;
-
-                    div.addEventListener("mousedown", function (e) {
-                        curCol = e.target.parentElement;
-                        nxtCol = curCol.nextElementSibling;
-                        pageX = e.pageX;
-
-                        var padding = paddingDiff(curCol);
-
-                        curColWidth = curCol.offsetWidth - padding;
-                        if (nxtCol)
-                            nxtColWidth = nxtCol.offsetWidth - padding;
-                    });
-
-                    div.addEventListener("mouseover",
-                        function(e) {
-                            e.target.style.borderRight = "2px solid #0000ff";
-                        });
-
-                    div.addEventListener("mouseout",
-                        function(e) {
-                            e.target.style.borderRight = "";
-                        });
-
-                    pageElement.addEventListener("mousemove", function (e) {
-                        if (curCol) {
-                            var diffX = e.pageX - pageX;
-
-                            if (nxtCol)
-                                nxtCol.style.width = (nxtColWidth - (diffX)) + "px";
-
-                            curCol.style.width = (curColWidth + diffX) + "px";
-                        }
-                    });
-
-                    pageElement.addEventListener("mouseup", function (e) {
-                        curCol = undefined;
-                        nxtCol = undefined;
-                        pageX = undefined;
-                        nxtColWidth = undefined;
-                        curColWidth = undefined;
-                    });
-
-                }
-
-                for (var i = 0; i < cols.length; i++) {
-                    var columnSelector = cols[i].querySelector("div");
-                    if (columnSelector && columnSelector.style) {
-                        columnSelector.style.height = tableHeight + "px";
-                    } else {
-                        var div = createDiv(tableHeight);
-                        cols[i].appendChild(div);
-                        cols[i].style.position = "relative";
-                        setListeners(div);
-                    }
-                }
-            }
-            this.resizableGrid = resizableGrid;
-
-            var setInitialHeaderTextValue = function() {
-                Log.print(Log.l.trace, "Setting up initial header texts and value shown in header of table");
-                //text part
-                that.binding.dataContactHeaderText.Name = getResourceText("contactResultsList.headername");
-                that.binding.dataContactHeaderText.Vorname = getResourceText("contactResultsList.headervorname");
-                that.binding.dataContactHeaderText.Firmenname = getResourceText("contactResultsList.headerfirmenname");
-                that.binding.dataContactHeaderText.EMail = getResourceText("contactResultsList.headeremail");
-                that.binding.dataContactHeaderText.Land = getResourceText("contactResultsList.headerland");
-                that.binding.dataContactHeaderText.Erfassungsdatum = getResourceText("contactResultsList.headererfassungsdatum");
-                that.binding.dataContactHeaderText.ModifiedTS = getResourceText("contactResultsList.headeränderungsdatum");
-                that.binding.dataContactHeaderText.MailVersandTS = getResourceText("contactResultsList.headeremailversandtzeit");
-                that.binding.dataContactHeaderText.WelcomeMailTS = getResourceText("contactResultsList.headerwelcomeemailversandtzeit");
-                that.binding.dataContactHeaderText.Prio = getResourceText("contactResultsList.headerkontaktprio");
-                that.binding.dataContactHeaderText.Typ = getResourceText("contactResultsList.headerkontakttyp");
-                that.binding.dataContactHeaderText.Status = getResourceText("contactResultsList.headerstatus");
-                //value part
-                that.binding.dataContactHeaderValue.Name = "Name";
-                that.binding.dataContactHeaderValue.Vorname = "Vorname";
-                that.binding.dataContactHeaderValue.Firmenname = "Firmenname";
-                that.binding.dataContactHeaderValue.EMail = "EMail";
-                that.binding.dataContactHeaderValue.Land = "Land";
-                that.binding.dataContactHeaderValue.Erfassungsdatum = "Erfassungsdatum";
-                that.binding.dataContactHeaderValue.ModifiedTS = "ModifiedTS";
-                that.binding.dataContactHeaderValue.MailVersandTS = "MailVersandTS";
-                that.binding.dataContactHeaderValue.WelcomeMailTS = "WelcomeMailTS";
-                that.binding.dataContactHeaderValue.Prio = "Prio";
-                that.binding.dataContactHeaderValue.Typ = "Typ";
-                that.binding.dataContactHeaderValue.Status = "Status";
-            }
-            this.setInitialHeaderTextValue = setInitialHeaderTextValue;
-
-            var setHeaderText = function (headervalue, headertext) {
-                var up = " ↑";
-                var down = " ↓";
-                var headervalueup = headervalue.concat(up);
-                var headervaluedown = headervalue.concat(down);
-                if (headervalue === "Name") {
-                    if (headertext === headervalueup) {
-                        that.binding.dataContactHeaderText.Name = headervaluedown;
-                    } else if (headertext === headervaluedown) {
-                        that.binding.dataContactHeaderText.Name = headervalueup;
-                    } else {
-                        that.binding.dataContactHeaderText.Name = headervaluedown;
-                    }
-                }
-                if (headervalue === "Vorname") {
-                    if (headertext === headervalueup) {
-                        that.binding.dataContactHeaderText.Vorname = headervaluedown;
-                    } else if (headertext === headervaluedown) {
-                        that.binding.dataContactHeaderText.Vorname = headervalueup;
-                    } else {
-                        that.binding.dataContactHeaderText.Vorname = headervaluedown;
-                    }
-                }
-                if (headervalue === "Firmenname") {
-                    if (headertext === headervalueup) {
-                        that.binding.dataContactHeaderText.Firmenname = headervaluedown;
-                    } else if (headertext === headervaluedown) {
-                        that.binding.dataContactHeaderText.Firmenname = headervalueup;
-                    } else {
-                        that.binding.dataContactHeaderText.Firmenname = headervaluedown;
-                    }
-                }
-                if (headervalue === "EMail") {
-                    if (headertext === headervalueup) {
-                        that.binding.dataContactHeaderText.EMail = headervaluedown;
-                    } else if (headertext === headervaluedown) {
-                        that.binding.dataContactHeaderText.EMail = headervalueup;
-                    } else {
-                        that.binding.dataContactHeaderText.EMail = headervaluedown;
-                    }
-                }
-                if (headervalue === "Stadt") {
-                    if (headertext === headervalueup) {
-                        that.binding.dataContactHeaderText.Stadt = headervaluedown;
-                    } else if (headertext === headervaluedown) {
-                        that.binding.dataContactHeaderText.Stadt = headervalueup;
-                    } else {
-                        that.binding.dataContactHeaderText.Stadt = headervaluedown;
-                    }
-                }
-                if (headervalue === "Land") {
-                    if (headertext === headervalueup) {
-                        that.binding.dataContactHeaderText.Land = headervaluedown;
-                    } else if (headertext === headervaluedown) {
-                        that.binding.dataContactHeaderText.Land = headervalueup;
-                    } else {
-                        that.binding.dataContactHeaderText.Land = headervaluedown;
-                    }
-                }
-                if (headervalue === "Prio") {
-                    if (headertext === headervalueup) {
-                        that.binding.dataContactHeaderText.Prio = headervaluedown;
-                    } else if (headertext === headervaluedown) {
-                        that.binding.dataContactHeaderText.Prio = headervalueup;
-                    } else {
-                        that.binding.dataContactHeaderText.Prio = headervaluedown;
-                    }
-                }
-                if (headervalue === "Typ") {
-                    if (headertext === headervalueup) {
-                        that.binding.dataContactHeaderText.Typ = headervaluedown;
-                    } else if (headertext === headervaluedown) {
-                        that.binding.dataContactHeaderText.Typ = headervalueup;
-                    } else {
-                        that.binding.dataContactHeaderText.Typ = headervaluedown;
-                    }
-                }
-            }
-            this.setHeaderText = setHeaderText;
-
-            var addHeaderRowHandlers = function () {
-                if (tableHeader) {
-                    var cells = tableHeader.getElementsByTagName("th");
-                    for (var i = 1; i < cells.length; i++) {
-                        var cell = cells[i];
-                        if (!cell.onclick) {
-                            cell.onclick = function (myrow) {
-                                return function () {
-                                    var restriction = ContactResultsList.KontaktReport.defaultRestriction;
-                                    var sortname = myrow.value;
-                                    var sorttext = myrow.textContent;
-                                    if (sorttext !== "Status") {
-                                    if (restriction.OrderAttribute !== sortname) {
-                                        restriction.VeranstaltungID = that.getEventId();
-                                        restriction.OrderAttribute = sortname;
-                                        restriction.OrderDesc = false;
-                                        that.loadData(restriction);
-                                        that.setHeaderText(myrow.value, sorttext);
-                                        Log.call(Log.l.trace, "ContactResultsList.Controller.");
-                                    } else {
-                                        restriction.OrderDesc = !restriction.OrderDesc;
-                                        restriction.VeranstaltungID = that.getEventId();
-                                        that.loadData(restriction);
-                                        that.setHeaderText(myrow.value, sorttext);
-                                        Log.call(Log.l.trace, "ContactResultsList.Controller.");
-                                    }
-                                    } 
-                                };
-                            }(cell);
-                        }
-                    }
-                }
-            }
-            this.addHeaderRowHandlers = addHeaderRowHandlers;
-
-            var addBodyRowHandlers = function () {
-                if (tableBody) {
-                    var rows = tableBody.getElementsByTagName("tr");
-                    for (var i = 0; i < rows.length; i++) {
-                        var row = rows[i];
-                        if (!row.onclick) {
-                            row.ondblclick = function (myrow) {
-                                return function () {
-                                    var id = myrow.value;
-                                    AppData.setRecordId("Kontakt", id);
-                                    if (that.getEventId()) {
-                                        Application.navigateById("contactResultsEvents");
-                                    } else {
-                                        Application.navigateById("contactResultsEdit");
-                                    }
-                                };
-                            }(row);
-                        }
-                    }
-                }
-            }
-            this.addBodyRowHandlers = addBodyRowHandlers;
+            this.resultConverter = resultConverter;
 
             // define handlers
             this.eventHandlers = {
@@ -358,31 +113,26 @@
                     }
                     Log.ret(Log.l.trace);
                 },
-                onSearchInput: function (event) {
+                changeSearchField: function (event) {
                     Log.call(Log.l.trace, "ContactResultsList.Controller.");
-                    if (event.keyCode === 13) {
-                        if (event.currentTarget.value.length > 2) {
-                            that.searchKontaktListe(event.currentTarget.value);
-                        }
-                        if (event.currentTarget.value.length === 0) {
-                            that.loadData();
-                        }
+                    if (event && event.currentTarget) {
+                        that.binding.searchString = event.currentTarget.value;
+                        that.loadData(that.binding.searchString);
                     }
+                    Log.ret(Log.l.trace);
                 },
-                onSelectAll: function(event) {
+                clickOrderBy: function(event) {
                     Log.call(Log.l.trace, "ContactResultsList.Controller.");
-                    var selectBoxData = pageElement.querySelectorAll(".checkbox");
-                    if (selectAll.checked) {
-                        Log.call(Log.l.trace, "ContactResultsList.Controller.");
-                        for (var i = 0; i < selectBoxData.length; i++) {
-                            selectBoxData[i].checked = true;
+                    if (event && event.currentTarget) {
+                        if (event.currentTarget.id === ContactResultsList._orderAttribute) {
+                            ContactResultsList._orderDesc = !ContactResultsList._orderDesc;
+                        } else {
+                            ContactResultsList._orderAttribute = event.currentTarget.id;
+                            ContactResultsList._orderDesc = false;
                         }
-                    } else {
-                        Log.call(Log.l.trace, "ContactResultsList.Controller.");
-                        for (var i = 0; i < selectBoxData.length; i++) {
-                            selectBoxData[i].checked = false;
-                        }
+                        that.loadData(that.binding.searchString);
                     }
+                    Log.ret(Log.l.trace);
                 },
                 clickChangeUserState: function (event) {
                     Log.call(Log.l.trace, "ContactResultsList.Controller.");
@@ -392,6 +142,131 @@
                 clickGotoPublish: function (event) {
                     Log.call(Log.l.trace, "ContactResultsList.Controller.");
                     Application.navigateById("publish", event);
+                    Log.ret(Log.l.trace);
+                },
+                onSelectionChanged: function (eventInfo) {
+                    Log.call(Log.l.trace, "ContactResultsList.Controller.");
+                    that.selectionChanged().then(function () {
+                        if (that.getEventId()) {
+                            Application.navigateById("contactResultsEvents");
+                        } else {
+                            Application.navigateById("contactResultsEdit");
+                        }
+                    });
+                    Log.ret(Log.l.trace);
+                },
+                onLoadingStateChanged: function (eventInfo) {
+                    var i;
+                    Log.call(Log.l.trace, "ContactResultsList.Controller.");
+                    if (listView && listView.winControl) {
+                        Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
+                        // single list selection
+                        if (listView.winControl.selectionMode !== WinJS.UI.SelectionMode.single) {
+                            listView.winControl.selectionMode = WinJS.UI.SelectionMode.single;
+                        }
+                        // direct selection on each tap
+                        if (listView.winControl.tapBehavior !== WinJS.UI.TapBehavior.directSelect) {
+                            listView.winControl.tapBehavior = WinJS.UI.TapBehavior.directSelect;
+                        }
+                        // Double the size of the buffers on both sides
+                        if (!maxLeadingPages) {
+                            maxLeadingPages = listView.winControl.maxLeadingPages * 4;
+                            listView.winControl.maxLeadingPages = maxLeadingPages;
+                        }
+                        if (!maxTrailingPages) {
+                            maxTrailingPages = listView.winControl.maxTrailingPages * 4;
+                            listView.winControl.maxTrailingPages = maxTrailingPages;
+                        }
+                        if (listView.winControl.loadingState === "itemsLoading") {
+                            if (!layout) {
+                                layout = Application.ContactResultsListLayout.ContactResultsListLayout;
+                                listView.winControl.layout = { type: layout };
+                            }
+                        } else if (listView.winControl.loadingState === "complete") {
+                            var listHeader = listView.querySelector(".list-header");
+                            if (listHeader) {
+                                listHeader.style.backgroundColor = Colors.backgroundColor;
+                            }
+                            //set list-order column
+                            var headerListFields = listView.querySelectorAll(".list-header-columns > div");
+                            if (headerListFields) for (i = 0; i < headerListFields.length; i++) {
+                                if (headerListFields[i].id === ContactResultsList._orderAttribute &&
+                                    !that.binding.searchString) {
+                                    if (ContactResultsList._orderDesc) {
+                                        WinJS.Utilities.removeClass(headerListFields[i], "order-asc");
+                                        WinJS.Utilities.addClass(headerListFields[i], "order-desc");
+                                    } else {
+                                        WinJS.Utilities.addClass(headerListFields[i], "order-asc");
+                                        WinJS.Utilities.removeClass(headerListFields[i], "order-desc");
+                                    }
+                                } else {
+                                    WinJS.Utilities.removeClass(headerListFields[i], "order-asc");
+                                    WinJS.Utilities.removeClass(headerListFields[i], "order-desc");
+                                }
+                            }
+                            //smallest List color change
+                            var circleElements = listView.querySelectorAll('#nameInitialcircle');
+                            if (circleElements) for (i = 0; i < circleElements.length; i++) {
+                                circleElements[i].style.backgroundColor = Colors.navigationColor;
+                            }
+                            // load SVG images
+                            Colors.loadSVGImageElements(listView, "action-image-right", 40, Colors.textColor, "name", null, {
+                                "barcode-qr": { useStrokeColor: false }
+                            });
+                            if (that.loading) {
+                                progress = listView.querySelector(".list-footer .progress");
+                                counter = listView.querySelector(".list-footer .counter");
+                                if (progress && progress.style) {
+                                    progress.style.display = "none";
+                                }
+                                if (counter && counter.style) {
+                                    counter.style.display = "inline";
+                                }
+                                that.loading = false;
+                            }
+                        }
+                    }
+                    Log.ret(Log.l.trace);
+                },
+                onFooterVisibilityChanged: function (eventInfo) {
+                    Log.call(Log.l.trace, "ContactResultsList.Controller.");
+                    if (eventInfo && eventInfo.detail) {
+                        progress = listView.querySelector(".list-footer .progress");
+                        counter = listView.querySelector(".list-footer .counter");
+                        var visible = eventInfo.detail.visible;
+                        if (visible && that.nextUrl) {
+                            that.loading = true;
+                            if (progress && progress.style) {
+                                progress.style.display = "inline";
+                            }
+                            if (counter && counter.style) {
+                                counter.style.display = "none";
+                            }
+                            that.loadNext(function (json) {
+                                // this callback will be called asynchronously
+                                // when the response is available
+                                Log.print(Log.l.trace, "ContactResultsList.contactResultsView: success!");
+                            }, function (errorResponse) {
+                                // called asynchronously if an error occurs
+                                // or server returns response with an error status.
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                                if (progress && progress.style) {
+                                    progress.style.display = "none";
+                                }
+                                if (counter && counter.style) {
+                                    counter.style.display = "inline";
+                                }
+                            });
+                        } else {
+                            if (progress && progress.style) {
+                                progress.style.display = "none";
+                            }
+                            if (counter && counter.style) {
+                                counter.style.display = "inline";
+                            }
+                            that.loading = false;
+                        }
+                    }
                     Log.ret(Log.l.trace);
                 },
                 clickTopButton: function (event) {
@@ -413,21 +288,6 @@
                     }
                     Application.navigateById("login", event);
                     Log.ret(Log.l.trace);
-                },
-                onItemInserted: function(eventInfo) {
-                    var index = eventInfo && eventInfo.detail && eventInfo.detail.index;
-                    Log.call(Log.l.trace, "ContactResultList.Controller.", "index="+index);
-                    that.resizableGrid();
-                    that.addHeaderRowHandlers();
-                    that.addBodyRowHandlers();
-                    Log.ret(Log.l.trace);
-                },
-                onContentScroll: function(eventInfo) {
-                    Log.call(Log.l.trace, "ContactResultList.Controller.");
-                    if (tablescroll.scrollHeight === tablescroll.scrollTop + tablescroll.clientHeight) {
-                            that.loadNextUrl();
-                        }
-                    
                 }
             };
 
@@ -444,254 +304,21 @@
                 }
             };
 
-            if (tablescroll) {
-                this.addRemovableEventListener(tablescroll, "scroll", this.eventHandlers.onContentScroll.bind(this));
+            // register ListView event handler
+            if (listView) {
+                this.addRemovableEventListener(listView, "selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
+                this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
+                this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
             }
-
-            if (selectAll) {
-                this.addRemovableEventListener(selectAll, "change", this.eventHandlers.onSelectAll.bind(this));
-            }
-            if (searchInput) {
-                this.addRemovableEventListener(searchInput, "keydown", this.eventHandlers.onSearchInput.bind(this));
-            }
-
-            var resultConverter = function (item, index) {
-                item.index = index;
-                    if (!item.Name && !item.Vorname && !item.Firmenname) {
-                        item.Status = getResourceText("contactResultsCriteria.incomplete");
-                    } else if (!item.EMail) {
-                        item.Status = getResourceText("contactResultsCriteria.partialcomplete");
-                    } else {
-                        item.Status = getResourceText("contactResultsCriteria.complete");
-                }
-                if (item.Anzahl) {
-                    that.binding.noctcount = item.Anzahl;
-                }
-                if (item.Erfassungsdatum) {
-                    item.Erfassungsdatum = that.getDateObject(item.Erfassungsdatum);
-                }
-                if (item.ModifiedTS) {
-                    item.ModifiedTS = that.getDateObject(item.ModifiedTS);
-                }
-                if (item.MailVersandTS) {
-                    item.MailVersandTS = that.getDateObject(item.MailVersandTS);
-                }
-                if (item.WelcomeMailTS) {
-                    item.WelcomeMailTS = that.getDateObject(item.WelcomeMailTS);
-                }
-                    if (tableBody &&
-                        tableBody.winControl &&
-                        tableBody.winControl.data) {
-                        that.binding.count = tableBody.winControl.data.push(item);
-                    }
-            }
-            this.resultConverter = resultConverter;
-
-            var loadNextUrl = function () {
-                var ret = null;
-                Log.call(Log.l.trace, "ContactResultsList.Controller.");
-                if (that.nextUrl) {
-                    AppData.setErrorMsg(that.binding);
-                    Log.print(Log.l.trace, "calling select ContactResultsList.contactView...");
-                    var nextUrl = that.nextUrl;
-                    that.nextUrl = null;
-                    ret = ContactResultsList.KontaktReport.selectNext(function(json) { //json is undefined
-                        // this callback will be called asynchronously
-                        // when the response is available
-                        Log.print(Log.l.trace, "ContactResultsList.KontaktReport: success!");
-                        // startContact returns object already parsed from json file in response
-                        if (json && json.d && json.d.results.length > 0) {
-                            that.nextUrl = ContactResultsList.KontaktReport.getNextUrl(json);
-                            var results = json.d.results;
-                            results.forEach(function(item, index) {
-                                that.resultConverter(item, index);
-                            });
-                        }
-                    },
-                    function(errorResponse) {
-                        // called asynchronously if an error occurs
-                        // or server returns response with an error status.
-                        Log.print(Log.l.error, "ContactResultsList.KontaktReport: error!");
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                        that.loading = false;
-                    },
-                    null,
-                    nextUrl).then(function () {
-                        return WinJS.Promise.timeout(100);
-                    }).then(function () {
-                        that.eventHandlers.onItemInserted();
-                        return WinJS.Promise.as();
-                    }).then(function () {
-                        return that.colorStatus();
-                    });
-                }
-                Log.ret(Log.l.trace);
-                return ret || WinJS.Promise.as();
-            }
-            this.loadNextUrl = loadNextUrl;
-
-            var saveData = function (complete, error) {
-                Log.call(Log.l.trace, "ContactResultsList.Controller.");
-                // Dummy Save Data Function
-                AppData.setErrorMsg(that.binding);
-                var ret = new WinJS.Promise.as().then(function () {
-                    if (typeof complete === "function") {
-                        complete({});
-                    }
-                });
-                Log.ret(Log.l.trace);
-                return ret;
-            };
-            this.saveData = saveData;
-
-            var searchKontaktListe = function (searchString) {
-                Log.call(Log.l.trace, "ContactResultsList.Controller.");
-                AppData.setErrorMsg(that.binding);
-                var sid = that.getEventId();
-                if (!sid) {
-                    sid = AppData.getRecordId("Veranstaltung");
-                }
-                if (tableBody && tableBody.winControl) {
-                    if (tableBody.winControl.data) {
-                        tableBody.winControl.data.length = 0;
-                    } else {
-                        tableBody.winControl.data = WinJS.Binding.List([]);
-                    }
-                }
-                AppData.call("PRC_SearchKontaktListe", {
-                    pAttributeIdx: 0,
-                    pVeranstaltungId: sid, // Für Alle suchen 0 eintragen!
-                    pSuchText: searchString
-                }, function (json) {
-                    Log.print(Log.l.info, "call success! ");
-                    AppBar.busy = false;
-                    var results = json.d.results;
-                    results.forEach(function (item, index) {
-                        that.resultConverter(item, index);
-                    });
-                    that.addBodyRowHandlers();
-                }, function (errorResponse) {
-                    Log.print(Log.l.error, "call error");
-                    AppBar.busy = false;
-                    AppData.setErrorMsg(that.binding, errorResponse);
-                });
-                Log.ret(Log.l.trace);
-            }
-            this.searchKontaktListe = searchKontaktListe;
-
-            var loadData = function (restr) {
-                Log.call(Log.l.trace, "ContactResultsList.Controller.");
-                AppData.setErrorMsg(that.binding);
-                that.binding.noctcount = 0;
-                that.nextUrl = null;
-                var varanstId = that.getEventId();
-                if (tableBody && tableBody.winControl) {
-                    if (tableBody.winControl.data) {
-                        tableBody.winControl.data.length = 0;
-                    } else {
-                        tableBody.winControl.data = WinJS.Binding.List([]);
-                    }
-                }
-                var ret = new WinJS.Promise.as().then(function () {
-                    Log.print(Log.l.trace, "calling select MailingTypes...");
-                    if (restr) {
-                        return ContactResultsList.KontaktReport.select(function (json) {
-                            AppData.setErrorMsg(that.binding);
-                            Log.print(Log.l.trace, "MailingTypes: success!");
-                            if (json && json.d && json.d.results.length > 0) {
-                                that.nextUrl = ContactResultsList.KontaktReport.getNextUrl(json);
-                                // now always edit!
-                                var results = json.d.results;
-                                AppData.setRecordId("KontaktEventID", results[0].VeranstaltungID);
-                                results.forEach(function (item, index) {
-                                    that.resultConverter(item, index);
-                                });
-                            }
-                        },
-                            function (errorResponse) {
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                            }, restr);
-                    } else if (varanstId) {
-                        return ContactResultsList.KontaktReport.select(function(json) {
-                                AppData.setErrorMsg(that.binding);
-                                Log.print(Log.l.trace, "MailingTypes: success!");
-                                if (json && json.d && json.d.results.length > 0) {
-                                    that.nextUrl = ContactResultsList.KontaktReport.getNextUrl(json);
-                                    // now always edit!
-                                    var results = json.d.results;
-                                    AppData.setRecordId("KontaktEventID", results[0].VeranstaltungID);
-                                    results.forEach(function(item, index) {
-                                        that.resultConverter(item, index);
-                                    });
-                                }
-                            },
-                            function(errorResponse) {
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                            },
-                            {
-                                VeranstaltungID: varanstId
-                            });
-                    } else {
-                        return ContactResultsList.KontaktReport.select(function (json) {
-                                AppData.setErrorMsg(that.binding);
-                                Log.print(Log.l.trace, "MailingTypes: success!");
-                                if (json && json.d && json.d.results.length > 0) {
-                                    that.nextUrl = ContactResultsList.KontaktReport.getNextUrl(json);
-                                    // now always edit!
-                                    var results = json.d.results;
-                                    AppData.setRecordId("KontaktEventID", results[0].VeranstaltungID);
-                                    results.forEach(function (item, index) {
-                                        that.resultConverter(item, index);
-                                    });
-                                }
-                            },
-                            function (errorResponse) {
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                            },
-                            {
-                                VeranstaltungID: AppData.getRecordId("Veranstaltung")
-                            });
-                    }
-                }).then(function () {
-                    return WinJS.Promise.timeout(100);
-                }).then(function () {
-                    return that.colorStatus();
-                }).then(function () {
-                    that.eventHandlers.onItemInserted();
-                    AppBar.notifyModified = true;
-                    return WinJS.Promise.as();
-                });
-                Log.ret(Log.l.trace);
-                return ret;
-            }
-            this.loadData = loadData;
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.loadData();
-            }).then(function () {
-                Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.resizableGrid();
-            }).then(function () {
-                Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.setInitialHeaderTextValue();
-            }).then(function () {
-                Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.addHeaderRowHandlers();
-            }).then(function () {
-                Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.addBodyRowHandlers();
-            }).then(function () {
-                Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.colorStatus();
+                return that.loadData(that.binding.searchString);
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 AppBar.notifyModified = true;
             });
             Log.ret(Log.l.trace);
-        }, {
-                headerdata: null,
-                bodydata: null
         })
     });
 })(); 
