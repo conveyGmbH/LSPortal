@@ -20,6 +20,7 @@
             var listView = pageElement.querySelector("#contactResultsList.listview");
 
             Application.RecordsetController.apply(this, [pageElement, {
+                loading: true,
                 count: 0,
                 contactId: null,
                 noctcount: 0,
@@ -46,8 +47,6 @@
             }
             this.setEventId = setEventId;
 
-            var progress = null;
-            var counter = null;
             var layout = null;
 
             var maxLeadingPages = 0;
@@ -117,7 +116,10 @@
                     Log.call(Log.l.trace, "ContactResultsList.Controller.");
                     if (event && event.currentTarget) {
                         that.binding.searchString = event.currentTarget.value;
-                        that.loadData(that.binding.searchString);
+                        that.binding.loading = true;
+                        that.loadData(that.binding.searchString).then(function() {
+                            that.binding.loading = false;
+                        });
                     }
                     Log.ret(Log.l.trace);
                 },
@@ -130,7 +132,10 @@
                             ContactResultsList._orderAttribute = event.currentTarget.id;
                             ContactResultsList._orderDesc = false;
                         }
-                        that.loadData(that.binding.searchString);
+                        that.binding.loading = true;
+                        that.loadData(that.binding.searchString).then(function () {
+                            that.binding.loading = false;
+                        });
                     }
                     Log.ret(Log.l.trace);
                 },
@@ -213,17 +218,6 @@
                             Colors.loadSVGImageElements(listView, "action-image-right", 40, Colors.textColor, "name", null, {
                                 "barcode-qr": { useStrokeColor: false }
                             });
-                            if (that.loading) {
-                                progress = listView.querySelector(".list-footer .progress");
-                                counter = listView.querySelector(".list-footer .counter");
-                                if (progress && progress.style) {
-                                    progress.style.display = "none";
-                                }
-                                if (counter && counter.style) {
-                                    counter.style.display = "inline";
-                                }
-                                that.loading = false;
-                            }
                         }
                     }
                     Log.ret(Log.l.trace);
@@ -231,17 +225,9 @@
                 onFooterVisibilityChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "ContactResultsList.Controller.");
                     if (eventInfo && eventInfo.detail) {
-                        progress = listView.querySelector(".list-footer .progress");
-                        counter = listView.querySelector(".list-footer .counter");
                         var visible = eventInfo.detail.visible;
                         if (visible && that.nextUrl) {
-                            that.loading = true;
-                            if (progress && progress.style) {
-                                progress.style.display = "inline";
-                            }
-                            if (counter && counter.style) {
-                                counter.style.display = "none";
-                            }
+                            that.binding.loading = true;
                             that.loadNext(function (json) {
                                 // this callback will be called asynchronously
                                 // when the response is available
@@ -250,21 +236,11 @@
                                 // called asynchronously if an error occurs
                                 // or server returns response with an error status.
                                 AppData.setErrorMsg(that.binding, errorResponse);
-                                if (progress && progress.style) {
-                                    progress.style.display = "none";
-                                }
-                                if (counter && counter.style) {
-                                    counter.style.display = "inline";
-                                }
+                            }).then(function() {
+                                that.binding.loading = false;
                             });
                         } else {
-                            if (progress && progress.style) {
-                                progress.style.display = "none";
-                            }
-                            if (counter && counter.style) {
-                                counter.style.display = "inline";
-                            }
-                            that.loading = false;
+                            that.binding.loading = false;
                         }
                     }
                     Log.ret(Log.l.trace);
@@ -316,6 +292,7 @@
                 return that.loadData(that.binding.searchString);
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
+                that.binding.loading = false;
                 AppBar.notifyModified = true;
             });
             Log.ret(Log.l.trace);

@@ -111,7 +111,8 @@
 }
 */
 #contactResultsList .win-item,
-.contactResultsList .list-header {
+#contactResultsList .list-header,
+#contactResultsList .list-footer {
     width: 100%;
     padding-left: 26px;
     padding-right: 26px;
@@ -121,6 +122,7 @@
     border-top-color: gray;
     border-top-width: 1px;
 }
+
 
 #contactResultsList .row-bkg {
     display: inline-block;
@@ -148,7 +150,8 @@
 }
 */
 .view-size-bigger #contactResultsList .win-item,
-.view-size-bigger .contactResultsList .list-header {
+.view-size-bigger #contactResultsList .list-header,
+.view-size-bigger #contactResultsList .list-footer {
 }
 
 .view-size-bigger .action-image-right {
@@ -168,14 +171,16 @@
 
 
 .view-size-medium #contactResultsList .win-item,
-.view-size-medium .contactResultsList .list-header {
+.view-size-medium #contactResultsList .list-header,
+.view-size-medium #contactResultsList .list-footer {
     width: auto;
     padding-left: 18px;
     padding-right: 18px;
 }
 
 .view-size-medium-small #contactResultsList .win-item,
-.view-size-medium-small .contactResultsList .list-header {
+.view-size-medium-small .contactResultsList .list-header,
+.view-size-medium-small #contactResultsList .list-footer {
     padding-top: 8px;
     padding-bottom: 8px;
     border: none;
@@ -190,7 +195,8 @@
     }
 */
 .view-size-small #contactResultsList .win-item,
-.view-size-small .contactResultsList .list-header {
+.view-size-small .contactResultsList .list-header,
+.view-size-small #contactResultsList .list-footer {
     padding-left: 10px;
     padding-right: 10px;
     padding-top: 4px;
