@@ -220,10 +220,6 @@
     margin: 0;
 }
 
-#contactResultsList .list-landscape-only {
-    display: flex;
-    flex-direction: row;
-}
 .view-size-bigger #contactResultsList .list-portrait-only,
 .view-size-medium-small #contactResultsList .list-landscape-only {
     display: none;
