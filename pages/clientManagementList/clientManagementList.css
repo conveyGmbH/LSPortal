@@ -1,4 +1,18 @@
-﻿/* Styles used for the custom layout */
+﻿#clientManagementList .win-itemcontainer .win-itembox,
+#clientManagementList .win-listview .win-itembox {
+    background-color: transparent;
+}
+
+.clientManagementList .contentarea {
+    overflow-y: hidden !important;
+}
+
+.clientManagementList .content-header {
+    height: auto !important;
+    min-height: 48px;
+}
+
+/* Styles used for the custom layout */
 #clientManagementList .list-header {
     font-weight: bold;
     display: flex;
@@ -45,13 +59,15 @@
     padding-right: 10px;
 }
 
+.view-size-smallest #clientManagementList .win-headercontainer {
+    display: none;
+}
+
 .view-size-smallest #clientManagementList .win-item,
 .view-size-smallest #clientManagementList .list-header {
     width: 100%;
-    padding-left: 0;
-    padding-right: 0;
-    padding-top: 4px;
-    padding-bottom: 4px;
+    padding: 0;
+    height: 48px;
 }
 .clientManagementList .content-header .master-list-header {
     margin-top: 16px;
@@ -74,17 +90,17 @@ view-size-smallest #clientManagementList .win-container {
 
 .view-size-smallest .clientManagementList .list-div-left {
     width: 100%;
-    margin: 0;
+    margin: 4px;
 }
 
 .clientManagementList #nameInitialcircle {
     display: inline-block;
-    width: 45px;
-    height: 45px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
     background-color: rgba(254,54,0,1);
     color: black;
     text-align: center;
-    line-height: 45px;
+    line-height: 42px;
     font-weight: bold;
 }

@@ -74,11 +74,15 @@
     padding-right: 10px;
 }
 
+.view-size-smallest #eventstatuslist .win-headercontainer {
+    display: none;
+}
+
 .view-size-smallest #eventstatuslist .win-item,
 .view-size-smallest #eventstatuslist .list-header {
     width: 100%;
-    padding-left: 0;
-    padding-right: 0;
+    padding: 0;
+    height: 48px;
 }
 
 .eventStatusList .content-header .master-list-header {
@@ -101,18 +105,18 @@ view-size-smallest #eventstatuslist .win-container {
 .view-size-smallest .eventStatusList .list-div-left,
 .view-size-smallest .eventStatusList .list-div-right {
     width: 100%;
-    margin: 0;
+    margin: 4px;
 }
 
 #eventstatuslist #nameInitialcircle {
     display: inline-block;
-    width: 45px;
-    height: 45px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
     background-color: rgba(254,54,0,1);
     color: black;
     text-align: center;
-    line-height: 45px;
+    line-height: 42px;
     font-weight: bold;
 }
 

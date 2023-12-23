@@ -13,21 +13,23 @@
             <section aria-label="Main content" role="main" class="animationElement">
                 <div class="contentarea win-type-body">
                     <div class="content-header">
+                        <!--
                         <div class="half-circle half-circle-textcolor">&nbsp;</div>
                         <div class="content-header-line win-type-caption">
                             <span class="id-field"></span>
                             <span class="caption-field" data-win-res="{textContent: 'contactResultsList.title'}"></span>
                             <span class="date-field"></span>
                         </div>
-                        <div class="field_line field_line_even">
-                            <span id="counter" data-win-res="{textContent: 'contactResultsList.count'}"></span><span>: </span><span data-win-bind="textContent: noctcount"></span>
-                        </div>
+                        -->
                         <div class="field_line field_line_odd">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'siteevents.search'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'siteevents.search'}"></span>
-                            <input id="searchInput" class="input_field win-textbox" type="text" 
-                                   data-win-bind="value: searchString Binding.Mode.twoway" 
+                            <input id="searchInput" class="input_field win-textbox" type="text"
+                                   data-win-bind="value: searchString Binding.Mode.twoway"
                                    oninput="AppBar.handleEvent('change', 'changeSearchField', event)" />
+                        </div>
+                        <div class="field_line field_line_even">
+                            <span id="counter" data-win-res="{textContent: 'contactResultsList.count'}"></span><span>: </span><span data-win-bind="textContent: noctcount"></span>
                         </div>
                     </div>
                     <div class="headerFooterPlaceholder">

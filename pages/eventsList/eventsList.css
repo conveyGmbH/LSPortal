@@ -35,8 +35,6 @@
     z-index: 1;
     /* Add any other styles you need for the header */
 }
-
-
 .eventslist .grayed-out {
     opacity: 0.6;
 }
@@ -78,8 +76,8 @@
 .view-size-smallest #eventslist .win-item,
 .view-size-smallest #eventslist .list-header {
     width: 100%;
-    padding-left: 0;
-    padding-right: 0;
+    padding: 0;
+    height: 48px;
 }
 
 .eventslist .content-header .master-list-header {
@@ -94,6 +92,10 @@
     line-height: 1;
 }
 
+.view-size-smallest #eventslist .win-headercontainer {
+    display: none;
+}
+
 view-size-smallest #eventslist .win-container {
     width: 100% !important;
     padding-left: 0;
@@ -102,18 +104,18 @@ view-size-smallest #eventslist .win-container {
 .view-size-smallest .eventslist .list-div-left,
 .view-size-smallest .eventslist .list-div-right {
     width: 100%;
-    margin: 0;
+    margin: 4px;
 }
 
 #eventslist #nameInitialcircle {
     display: inline-block;
-    width: 45px;
-    height: 45px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
     background-color: rgba(254,54,0,1);
     color: black;
     text-align: center;
-    line-height: 45px;
+    line-height: 42px;
     font-weight: bold;
 }
 

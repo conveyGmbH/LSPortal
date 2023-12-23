@@ -66,11 +66,15 @@
     padding-right: 10px;
 }
 
+.view-size-smallest #mailingvslist .win-headercontainer {
+    display: none;
+}
+
 .view-size-smallest #mailingvslist .win-item,
 .view-size-smallest #mailingvslist .list-header {
     width: 100%;
-    padding-left: 0;
-    padding-right: 0;
+    padding: 0;
+    height: 48px;
 }
 
 .mailingVSList .content-header .master-list-header {
@@ -93,18 +97,18 @@ view-size-smallest #mailingvslist .win-container {
 .view-size-smallest .mailingVSList .list-div-left,
 .view-size-smallest .mailingVSList .list-div-right {
     width: 100%;
-    margin: 0;
+    margin: 4px;
 }
 
 #mailingvslist #nameInitialcircle {
     display: inline-block;
-    width: 45px;
-    height: 45px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
     background-color: rgba(254,54,0,1);
     color: black;
     text-align: center;
-    line-height: 45px;
+    line-height: 42px;
     font-weight: bold;
 }
 

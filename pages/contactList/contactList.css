@@ -151,25 +151,38 @@
 #konanz {
     font-size: small;
 }
+
+.view-size-smallest #contactList .win-headercontainer {
+    display: none;
+}
+
 .view-size-smallest #contactList .win-item {
     width: 100%;
-    padding-left: 0;
-    padding-right: 0;
-    padding-top: 4px;
-    padding-bottom: 4px;
+    padding: 0;
+    height: 48px;
 }
+
+.contactList .list-compressed-title.win-type-body {
+    line-height: 1;
+}
+
+view-size-smallest #contactList .win-container {
+    width: 100% !important;
+    padding-left: 0;
+}
+
 .view-size-smallest .contactList .list-div-left {
     width: 100%;
-    margin: 0;
+    margin: 4px;
 }
 .contactList #nameInitialcircle {
     display: inline-block;
-    width: 45px;
-    height: 45px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
     background-color: rgba(254,54,0,1);
     color: black;
     text-align: center;
-    line-height: 45px;
+    line-height: 42px;
     font-weight: bold;
 }

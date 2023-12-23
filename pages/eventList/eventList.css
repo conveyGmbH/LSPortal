@@ -68,11 +68,15 @@
     padding-right: 10px;
 }
 
+.view-size-smallest #eventList .win-headercontainer {
+    display: none;
+}
+
 .view-size-smallest #eventList .win-item,
 .view-size-smallest #eventList .list-header {
     width: 100%;
-    padding-left: 0;
-    padding-right: 0;
+    padding: 0;
+    height: 48px;
 }
 .eventList .content-header .master-list-header {
     margin-top: 16px;
@@ -94,17 +98,17 @@ view-size-smallest #eventList .win-container {
 .view-size-smallest .eventList .list-div-left,
 .view-size-smallest .eventList .list-div-right {
     width: 100%;
-    margin: 0;
+    margin: 4px;
 }
 #eventList #nameInitialcircle {
     display: inline-block;
-    width: 45px;
-    height: 45px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
     background-color: rgba(254,54,0,1);
     color: black;
     text-align: center;
-    line-height: 45px;
+    line-height: 42px;
     font-weight: bold;
 }
 #eventList .list-field-small-relative {
