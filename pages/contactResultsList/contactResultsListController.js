@@ -187,6 +187,8 @@
                                 layout = Application.ContactResultsListLayout.ContactResultsListLayout;
                                 listView.winControl.layout = { type: layout };
                             }
+                        } else if (listView.winControl.loadingState === "itemsLoaded") {
+                            that.fitColumnWidthToContent();
                         } else if (listView.winControl.loadingState === "complete") {
                             var listHeader = listView.querySelector(".list-header");
                             if (listHeader) {
@@ -286,6 +288,65 @@
                 this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
                 this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
             }
+
+            // add list-column style classes for resize
+            var addListColumnStyles = function () {
+                var i;
+                var cssText = "";
+                var listHeaders = pageElement.querySelectorAll(".list-header .list-landscape-only > div");
+                if (listHeaders) for (i = 0; i < listHeaders.length; i++) {
+                    var className = "list-column-" + i.toString();
+                    cssText += "#contactResultsList ." + className + "{ flex: 100px; }\n";
+                    WinJS.Utilities.addClass(listHeaders[i], className);
+                }
+                if (cssText) {
+                    var style = document.createElement("style");
+                    style.type = 'text/css';
+                    if (style.styleSheet) {
+                        style.styleSheet.cssText = cssText;
+                    } else {
+                        style.appendChild(document.createTextNode(cssText));
+                    }
+                    document.getElementsByTagName("head")[0].appendChild(style);
+                }
+                var listFields = pageElement.querySelectorAll(".list-template .list-landscape-only > div:not(.row-bkg-gray)");
+                if (listFields) for (i = 0; i < listFields.length; i++) {
+                    WinJS.Utilities.addClass(listFields[i], "list-column-" + i.toString());
+                }
+            }
+            addListColumnStyles();
+
+            var columnWidths = [];
+            var fitColumnWidthToContent = function() {
+                if (listView && listView.winControl) {
+                    var row, col, columnIndexes = [];
+                    var indexOfFirstVisible = listView.winControl.indexOfFirstVisible;
+                    var indexOfLastVisible = listView.winControl.indexOfLastVisible;
+                    for (row = indexOfFirstVisible; row <= indexOfLastVisible; row++) {
+                        var element = listView.winControl.elementFromIndex(row);
+                        if (element) {
+                            var listFields = element.querySelectorAll(".list-landscape-only > div:not(.row-bkg-gray)");
+                            if (listFields) for (col = 0; col < listFields.length; col++) {
+                                var listField = listFields[col];
+                                if (listField.firstElementChild &&
+                                    listField.firstElementChild.clientWidth > (columnWidths[col] || 100) + 16) {
+                                    columnWidths[col] = listField.firstElementChild.clientWidth;
+                                    if (columnIndexes.indexOf(col) < 0) {
+                                        columnIndexes.push(col);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    for (var i = 0; i < columnIndexes.length; i++) {
+                        col = columnIndexes[i];
+                        var className = "list-column-" + col.toString();
+                        var cssSelector = "#contactResultsList ." + className;
+                        Colors.changeCSS(cssSelector, "flex", columnWidths[col] + "px");
+                    }
+                }
+            }
+            this.fitColumnWidthToContent = fitColumnWidthToContent;
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");

@@ -238,31 +238,20 @@
     border-right-width: 1px;
 }
 
-#contactResultsList .list-field-small-relative-10 {
-    flex: 1 1 100px;
-    line-height: 1;
-    padding: 8px;
-}
-
-#contactResultsList .list-field-small-relative-20 {
-    flex: 2 2 100px;
+#contactResultsList .wrap-text {
     white-space: pre-wrap;
     word-break: normal;
     overflow-wrap: normal;
-    line-height: 1;
-    padding: 8px;
 }
 
 #contactResultsList .list-field-small-fixed {
-    flex: 1 1 100px;
     line-height: 1;
     padding: 8px;
 }
-#contactResultsList .list-field-small-fixed:last-child,
-#contactResultsList .list-header .list-field-small-fixed {
-    white-space: pre-wrap;
-    word-break: normal;
-    overflow-wrap: normal;
+#contactResultsList .list-field-small-fixed > span {
+    display: inline-block;
+    height: auto;
+    width: auto;
 }
 
 .contactResultsList #nameInitialcircle {

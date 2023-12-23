@@ -35,19 +35,19 @@
                     <div class="headerFooterPlaceholder">
                         <div class="list-header">
                             <div class="list-landscape-only list-header-columns">
-                                <div class="list-field-small-relative-10 bkgcolor-hoverable bkgcolor-activatable" id="Name"
+                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="Name"
                                      data-win-res="{textContent: 'contactResultsList.headername'}"
                                      onclick="AppBar.handleEvent('click', 'clickOrderBy', event)"></div>
-                                <div class="list-field-small-relative-10 bkgcolor-hoverable bkgcolor-activatable" id="Vorname"
+                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="Vorname"
                                      data-win-res="{textContent: 'contactResultsList.headervorname'}"
                                      onclick="AppBar.handleEvent('click', 'clickOrderBy', event)"></div>
-                                <div class="list-field-small-relative-20 bkgcolor-hoverable bkgcolor-activatable" id="Firmenname"
+                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="Firmenname"
                                      data-win-res="{textContent: 'contactResultsList.headerfirmenname'}"
                                      onclick="AppBar.handleEvent('click', 'clickOrderBy', event)"></div>
-                                <div class="list-field-small-relative-10 bkgcolor-hoverable bkgcolor-activatable" id="EMail"
+                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="EMail"
                                      data-win-res="{textContent: 'contactResultsList.headeremail'}"
                                      onclick="AppBar.handleEvent('click', 'clickOrderBy', event)"></div>
-                                <div class="list-field-small-relative-10 bkgcolor-hoverable bkgcolor-activatable" id="Land"
+                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="Land"
                                      data-win-res="{textContent: 'contactResultsList.headerland'}"
                                      onclick="AppBar.handleEvent('click', 'clickOrderBy', event)"></div>
                                 <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="Erfassungsdatum"
@@ -56,10 +56,10 @@
                                 <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="ModifiedTS"
                                      data-win-res="{textContent: 'contactResultsList.headeränderungsdatum'}"
                                      onclick="AppBar.handleEvent('click', 'clickOrderBy', event)"></div>
-                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="MailVersandTS"
+                                <div class="list-field-small-fixed wrap-text bkgcolor-hoverable bkgcolor-activatable" id="MailVersandTS"
                                      data-win-res="{textContent: 'contactResultsList.headeremailversandtzeit'}"
                                      onclick="AppBar.handleEvent('click', 'clickOrderBy', event)"></div>
-                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="WelcomeMailTS"
+                                <div class="list-field-small-fixed wrap-text bkgcolor-hoverable bkgcolor-activatable" id="WelcomeMailTS"
                                      data-win-res="{textContent: 'contactResultsList.headerwelcomeemailversandtzeit'}"
                                      onclick="AppBar.handleEvent('click', 'clickOrderBy', event)"></div>
                                 <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="Prio"
@@ -99,30 +99,43 @@
                         <div class="list-landscape-only" data-win-bind="disabled: disabled">
                             <div class="row-bkg-gray"
                                  data-win-bind="style.display: index Binding.Converter.evenToDisplay"></div>
-                            <div class="list-field-small-relative-10"
-                                 data-win-bind="textContent: Name"></div>
-                            <div class="list-field-small-relative-10"
-                                 data-win-bind="textContent: Vorname"></div>
-                            <div class="list-field-small-relative-20"
-                                 data-win-bind="textContent: Firmenname"></div>
-                            <div class="list-field-small-relative-10"
-                                 data-win-bind="textContent: EMail"></div>
-                            <div class="list-field-small-relative-10"
-                                 data-win-bind="textContent: Land"></div>
+                            <div class="list-field-small-fixed">
+                                <span class="wrap-text" data-win-bind="textContent: Name"></span>
+                            </div>
+                            <div class="list-field-small-fixed">
+                                <span class="wrap-text" data-win-bind="textContent: Vorname"></span>
+                            </div>
+                            <div class="list-field-small-fixed">
+                                <span class="wrap-text" data-win-bind="textContent: Firmenname"></span>
+                            </div>
+                            <div class="list-field-small-fixed">
+                                <span data-win-bind="textContent: EMail"></span>
+                            </div>
+                            <div class="list-field-small-fixed">
+                                <span class="wrap-text" data-win-bind="textContent: Land"></span>
+                            </div>
+                            <div class="list-field-small-fixed">
+                                <span data-win-bind="textContent: Erfassungsdatum ContactResultsList.Binding.Converter.toLocalDateTimeString"></span>
+                            </div>
+                            <div class="list-field-small-fixed">
+                                <span data-win-bind="textContent: ModifiedTS ContactResultsList.Binding.Converter.toLocalDateTimeString"></span>
+                            </div>
+                            <div class="list-field-small-fixed">
+                                <span data-win-bind="textContent: MailVersandTS ContactResultsList.Binding.Converter.toLocalDateTimeString"></span>
+                            </div>
+                            <div class="list-field-small-fixed">
+                                <span data-win-bind="textContent: WelcomeMailTS ContactResultsList.Binding.Converter.toLocalDateTimeString"></span>
+                            </div>
+                            <div class="list-field-small-fixed">
+                                <span class="wrap-text" data-win-bind="textContent: Prio"></span>
+                            </div>
+                            <div class="list-field-small-fixed">
+                                <span class="wrap-text" data-win-bind="textContent: Typ"></span>
+                            </div>
                             <div class="list-field-small-fixed"
-                                 data-win-bind="textContent: Erfassungsdatum ContactResultsList.Binding.Converter.toLocalDateTimeString"></div>
-                            <div class="list-field-small-fixed"
-                                 data-win-bind="textContent: ModifiedTS ContactResultsList.Binding.Converter.toLocalDateTimeString"></div>
-                            <div class="list-field-small-fixed"
-                                 data-win-bind="textContent: MailVersandTS ContactResultsList.Binding.Converter.toLocalDateTimeString"></div>
-                            <div class="list-field-small-fixed"
-                                 data-win-bind="textContent: WelcomeMailTS ContactResultsList.Binding.Converter.toLocalDateTimeString"></div>
-                            <div class="list-field-small-fixed"
-                                 data-win-bind="textContent: Prio"></div>
-                            <div class="list-field-small-fixed"
-                                data-win-bind="textContent: Typ"></div>
-                            <div class="list-field-small-fixed"
-                                 data-win-bind="textContent: Status; style.color: Status ContactResultsList.Binding.Converter.toStatusColor"></div>
+                                 data-win-bind="style.color: Status ContactResultsList.Binding.Converter.toStatusColor">
+                                <span class="wrap-text" data-win-bind="textContent: Status"></span>
+                            </div>
                         </div>
                         <div class="list-portrait-only" data-win-bind="disabled: disabled">
                             <div class="row-separator"></div>
