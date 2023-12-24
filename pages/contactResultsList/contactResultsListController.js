@@ -34,6 +34,7 @@
                     listView.winControl.itemDataSource = null;
                 }
                 ContactResultsList._prevJson = null;
+                ContactResultsList._collator = null;
             }
 
             var getEventId = function () {

@@ -13,6 +13,7 @@
         _orderDesc: true,
         _prevRestriction: "",
         _prevJson: null,
+        _collator: null,
         _contactResultsView: {
             get: function () {
                 var ret = AppData.getFormatView("Kontakt", 20662);
@@ -27,6 +28,12 @@
                 var ret;
                 Log.call(Log.l.trace, "ContactResultsList.");
                 if (restriction && typeof restriction === "string") {
+                    var mainLanguage = Application.language.split("-")[0];
+                    if (!ContactResultsList._collator) {
+                        ContactResultsList._collator = new Intl.Collator(mainLanguage, {
+                            sensitivity: "base"
+                        });
+                    }
                     if (ContactResultsList._prevJson &&
                         ContactResultsList._prevRestriction === restriction) {
                         Log.print(Log.l.info, "re-use previous PRC_SearchKontaktListe results!");
@@ -164,10 +171,18 @@
                     if (typeof value2 === "string") {
                         value2 = value2.toUpperCase();
                     }
-                    if (value1 < value2) {
-                        return (ContactResultsList._orderDesc ? 1: -1);
-                    } else if (value1 > value2) {
-                        return (ContactResultsList._orderDesc ? -1 : 1);
+                    if (ContactResultsList._collator) {
+                        if (ContactResultsList._orderDesc) {
+                            return ContactResultsList._collator.compare(value2, value1);
+                        } else {
+                            return ContactResultsList._collator.compare(value1, value2);
+                        }
+                    } else {
+                        if (value1 < value2) {
+                            return (ContactResultsList._orderDesc ? 1 : -1);
+                        } else if (value1 > value2) {
+                            return (ContactResultsList._orderDesc ? -1 : 1);
+                        }
                     }
                 }
                 return 0;
