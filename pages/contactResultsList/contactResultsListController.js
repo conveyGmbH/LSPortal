@@ -33,6 +33,7 @@
                 if (listView && listView.winControl) {
                     listView.winControl.itemDataSource = null;
                 }
+                ContactResultsList._prevJson = null;
             }
 
             var getEventId = function () {
@@ -176,8 +177,7 @@
                             //set list-order column
                             var headerListFields = listView.querySelectorAll(".list-header-columns > div");
                             if (headerListFields) for (i = 0; i < headerListFields.length; i++) {
-                                if (headerListFields[i].id === ContactResultsList._orderAttribute &&
-                                    !that.binding.searchString) {
+                                if (headerListFields[i].id === ContactResultsList._orderAttribute) {
                                     if (ContactResultsList._orderDesc) {
                                         WinJS.Utilities.removeClass(headerListFields[i], "order-asc");
                                         WinJS.Utilities.addClass(headerListFields[i], "order-desc");

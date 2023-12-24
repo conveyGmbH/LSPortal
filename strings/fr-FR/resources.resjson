@@ -1308,7 +1308,7 @@
     "contactResultsList.headerstadt"			: "Ville",
     "contactResultsList.headerland"			: "Pays",
     "contactResultsList.headererfassungsdatum"			: "Date de saisie",
-    "contactResultsList.headeränderungsdatum"			: "Date de modification",
+    "contactResultsList.headeraenderungsdatum"			: "Date de modification",
     "contactResultsList.headeremailversandtzeit"			: "Horaire d’envoie Mail-Produit",
     "contactResultsList.headerkontaktprio"			: "ContacterPrio",
     "contactResultsList.headerkontakttyp"			: "Type de contact",
