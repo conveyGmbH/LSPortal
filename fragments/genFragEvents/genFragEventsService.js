@@ -12,7 +12,7 @@
                 return AppData.getFormatView("Benutzer", 20677);
             }
         },
-        _BenutzerODataView: {
+        _BenutzerTable: {
             get: function () {
                 return AppData.getFormatView("Benutzer", 0);
             }
@@ -29,8 +29,8 @@
                 return ret;
             },
             update: function (complete, error, recordId, viewResponse) {
-                Log.call(Log.l.trace, "GenFragEvents.BenutzerODataView.");
-                var ret = GenFragEvents._BenutzerODataView.update(complete, error, recordId, viewResponse);
+                Log.call(Log.l.trace, "GenFragEvents._BenutzerTable.");
+                var ret = GenFragEvents._BenutzerTable.update(complete, error, recordId, viewResponse);
                 Log.ret(Log.l.trace);
                 return ret;
             },
@@ -41,10 +41,24 @@
                 return ret;
             },
             selectNext: function (complete, error, response, nextUrl) {
-                Log.call(Log.l.trace, "questionView.");
+                Log.call(Log.l.trace, "GenFragEvents.BenutzerView.");
                 var ret = GenFragEvents._BenutzerView.selectNext(complete, error, response, nextUrl);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
+                return ret;
+            },
+            relationName: GenFragEvents._BenutzerView.relationName,
+            pkName: GenFragEvents._BenutzerView.oDataPkName,
+            getRecordId: function (record) {
+                var ret = null;
+                if (record) {
+                    if (GenFragEvents._BenutzerView.oDataPkName) {
+                        ret = record[GenFragEvents._BenutzerView.oDataPkName];
+                    }
+                    if (!ret && GenFragEvents._BenutzerView.pkName) {
+                        ret = record[GenFragEvents._BenutzerView.pkName];
+                    }
+                }
                 return ret;
             },
             defaultValue: {

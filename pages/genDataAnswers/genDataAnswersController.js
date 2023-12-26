@@ -15,87 +15,64 @@
 
     WinJS.Namespace.define("GenDataAnswers", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
-            Log.call(Log.l.trace, "GenDataanswerHisto.Controller.");
-            Application.RecordsetController.apply(this, [pageElement, {
-                count: 0,
-                Anzahl: 0,
-                dataQuestion: getEmptyDefaultValue(GenDataAnswers.questionTable.defaultValue),
-                lang: 0,
-                answerid: 0
+            Log.call(Log.l.trace, "GenDataAnswers.Controller.");
+            Application.Controller.apply(this, [pageElement, {
+                dataQuestion: getEmptyDefaultValue(GenDataAnswers.questionView.defaultValue),
+                answerCount: 0,
+                languageId: 0
             }, commandList]);
 
             // ListView control
-            var listView = pageElement.querySelector("#genDataAnswers.listview");
             var initSprache = pageElement.querySelector("#InitSprache");
-            var questiongroup = pageElement.querySelector("#questiongroup");
-
-
-            this.nextUrl = null;
-            this.nextDocUrl = null;
-            this.loading = false;
-            this.answerData = null;
-
-            this.firstanswerDataIndex = 0;
+            var questionGroup = pageElement.querySelector("#questiongroup");
 
             var that = this;
 
-            var mouseDown = false;
-
-            this.dispose = function () {
-                if (listView && listView.winControl) {
-                    listView.winControl.itemDataSource = null;
+            var getRecordId = function () {
+                var recordId = null;
+                Log.call(Log.l.trace, "GenDataAnswers.Controller.");
+                var master = Application.navigator.masterControl;
+                if (master && master.controller) {
+                    recordId = master.controller.curRecId;
                 }
-                if (that.answerData) {
-                    that.answerData = null;
-                }
-                listView = null;
+                Log.ret(Log.l.trace, recordId);
+                return recordId;
             }
-
-            var progress = null;
-            var counter = null;
-            var layout = null;
-
-            var maxLeadingPages = 0;
-            var maxTrailingPages = 0;
-
-            var background = function (index) {
-                if (index % 2 === 0) {
-                    return 1;
-                } else {
-                    return null;
-                }
-            };
-            this.background = background;
-
-            var setAnswers = function (count) {
-                Log.call(Log.l.trace, "QuestionList.Controller.", "count=" + count);
-                var questionid = that.getQuestionId();
-                that.binding.lang = parseInt(that.binding.lang);
-                AppData.setErrorMsg(that.binding);
-                AppData.call("PRC_GetAnswers", {
-                    pQuestionID: questionid,
-                    pLanguageSpecID: that.binding.lang,
-                    pNumAnswers: count
-                }, function (json) {
-                    Log.print(Log.l.info, "call success!");
-                    that.getAnswers();
-                }, function (error) {
-                    Log.print(Log.l.error, "call error");
-                });
-            }
-            this.setAnswers = setAnswers;
+            this.getRecordId = getRecordId;
 
             var setAnswerCount = function (value) {
-                Log.call(Log.l.trace, "QuestionList.Controller.", "value=" + value);
-                that.binding.Anzahl = parseInt(value);
+                Log.call(Log.l.trace, "GenDataAnswers.Controller.", "value=" + value);
+                that.binding.answerCount = parseInt(value);
                 Log.ret(Log.l.trace);
             };
             this.setAnswerCount = setAnswerCount;
 
+            var createAnswers = function () {
+                Log.call(Log.l.trace, "GenDataAnswers.Controller.", "answerCount=" + that.binding.answerCount);
+                AppData.setErrorMsg(that.binding);
+                AppData.call("PRC_GetAnswers", {
+                    pQuestionID: getRecordId(),
+                    pLanguageSpecID: that.binding.languageId,
+                    pNumAnswers: that.binding.answerCount
+                }, function (json) {
+                    Log.print(Log.l.info, "call success!");
+                }, function (error) {
+                    Log.print(Log.l.error, "call error");
+                }).then(function() {
+                    var genFragAnswersFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("genFragAnswers"));
+                    if (genFragAnswersFragmentControl && genFragAnswersFragmentControl.controller) {
+                        return genFragAnswersFragmentControl.controller.loadData();
+                    } else {
+                        return WinJS.Promise.as();
+                    }
+                });
+            }
+            this.createAnswers = createAnswers;
+
             this.inAnswerCountFromRange = false;
             var answerCountFromRange = function (range) {
-                Log.call(Log.l.trace, "QuestionList.Controller.", "range=" + range);
-                if (mouseDown) {
+                Log.call(Log.l.trace, "GenDataAnswers.Controller.", "range=" + range);
+                if (that.mouseDown) {
                     Log.print(Log.l.trace, "mouseDown is set!");
                     WinJS.Promise.timeout(250).then(function () {
                         that.answerCountFromRange(range);
@@ -106,7 +83,7 @@
                         Log.print(Log.l.trace, "value=", value);
                         WinJS.Promise.timeout(50).then(function () {
                             that.setAnswerCount(value);
-                            that.setAnswers(parseInt(value));
+                            that.createAnswers();
                             that.inAnswerCountFromRange = false;
                         });
                     } else {
@@ -117,347 +94,53 @@
             };
             this.answerCountFromRange = answerCountFromRange;
 
-            var saveAnswer = function (answerid, answerdata) {
-                Log.call(Log.l.trace, "QuestionList.Controller.", "answerid=" + answerid);
-                AppData.setErrorMsg(that.binding);
-                var ret;
-                if (answerdata && AppBar.modified && !AppBar.busy) {
-                    var recordId = answerid;
-                    if (recordId) {
-                        AppBar.busy = true;
-                        ret = GenDataAnswers.answerTable.update(function (response) {
-                            AppBar.busy = false;
-                            // called asynchronously if ok
-                            Log.print(Log.l.info, "contactData update: success!");
-                            AppBar.modified = false;
-                        }, function (errorResponse) {
-                            AppBar.busy = false;
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        }, recordId, answerdata).then(function () {
-                            //load of format relation record data
-                            Log.print(Log.l.trace, "calling select contactView...");
-                        });
-                    }
-                } else {
-                    ret = new WinJS.Promise.as().then(function () {
-                        if (typeof complete === "function") {
-                            complete(answerdata);//dataContact
-                        }
-                    });
-                }
-                Log.ret(Log.l.trace);
-                return ret;
-            }
-            this.saveAnswer = saveAnswer;
-
-            var getRestriction = function () {
-                var restriction = AppData.getRestriction("Kontakt");
-                if (!restriction) {
-                    restriction = {};
-                }
-                return restriction;
-            }
-            this.getRestriction = getRestriction;
-
-            var loadNextUrl = function (recordId) {
-                Log.call(Log.l.trace, "QuestionList.Controller.", "recordId=" + recordId);
-                if (that.answerData && that.nextUrl && listView) {
-                    progress = listView.querySelector(".list-footer .progress");
-                    counter = listView.querySelector(".list-footer .counter");
-                    that.loading = true;
-                    if (progress && progress.style) {
-                        progress.style.display = "inline";
-                    }
-                    if (counter && counter.style) {
-                        counter.style.display = "none";
-                    }
-                    AppData.setErrorMsg(that.binding);
-                    Log.print(Log.l.trace, "calling select GenDataanswerHisto.personAdresseView...");
-                    var nextUrl = that.nextUrl;
-                    that.nextUrl = null;
-                    GenDataAnswers.answerView.selectNext(function (json) { //json is undefined
-                        // this callback will be called asynchronously
-                        // when the response is available
-                        Log.print(Log.l.trace, "GenDataanswerHisto.personAdresseView: success!");
-                        // startContact returns object already parsed from json file in response
-                        if (json && json.d && that.answerData) {
-                            that.nextUrl = GenDataAnswers.answerView.getNextUrl(json);
-                            var results = json.d.results;
-                            results.forEach(function (item, index) {
-                                that.resultConverter(item, that.binding.count);
-                                that.binding.count = that.answerData.push(item);
-                            });
-                        }
-                        if (recordId) {
-                            that.selectRecordId(recordId);
-                        }
-                    }, function (errorResponse) {
-                        // called asynchronously if an error occurs
-                        // or server returns response with an error status.
-                        Log.print(Log.l.error, "GenDataanswerHisto.personAdresseView: error!");
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                        if (progress && progress.style) {
-                            progress.style.display = "none";
-                        }
-                        if (counter && counter.style) {
-                            counter.style.display = "inline";
-                        }
-                        that.loading = false;
-                    }, null, nextUrl);
-                }
-                Log.ret(Log.l.trace);
-            }
-            this.loadNextUrl = loadNextUrl;
-
-            var scopeFromRecordId = function (recordId) {
-                var i;
-                Log.call(Log.l.trace, "Questiongroup.Controller.", "recordId=" + recordId);
-                var item = null;
-                if (that.answerData) {
-                    for (i = 0; i < that.answerData.length; i++) {
-                        var answer = that.answerData.getAt(i);
-                        if (answer && typeof answer === "object" &&
-                            answer.AnswerVIEWID === recordId) {
-                            item = answer;
-                            break;
-                        }
-                    }
-                }
-                if (item) {
-                    Log.ret(Log.l.trace, "i=" + i);
-                    return { index: i, item: item };
-                } else {
-                    Log.ret(Log.l.trace, "not found");
-                    return null;
-                }
-            };
-            this.scopeFromRecordId = scopeFromRecordId;
-
-            var scrollToRecordId = function (recordId) {
-                Log.call(Log.l.trace, "QuestionList.Controller.", "recordId=" + recordId);
-                if (that.loading) {
-                    WinJS.Promise.timeout(50).then(function () {
-                        that.scrollToRecordId(recordId);
-                    });
-                } else {
-                    if (recordId && listView && listView.winControl && that.answerData) {
-                        for (var i = 0; i < that.answerData.length; i++) {
-                            var answer = that.answerData.getAt(i);
-                            if (answer && typeof answer === "object" &&
-                                answer.AnswerVIEWID === recordId) {
-                                listView.winControl.indexOfFirstVisible = i - 1;
-                                break;
-                            }
-                        }
-                    }
-                }
-                Log.ret(Log.l.trace);
-            }
-            this.scrollToRecordId = scrollToRecordId;
-
-            var selectRecordId = function (recordId) {
-                var answer;
-                Log.call(Log.l.trace, "GenDataanswerHisto.Controller.", "recordId=" + recordId);
-                var recordIdNotFound = true;
-                if (recordId && listView && listView.winControl && listView.winControl.selection && that.answerData) {
-                    for (var i = 0; i < that.answerData.length; i++) {
-                        answer = that.answerData.getAt(i);
-                        if (answer &&
-                            typeof answer === "object" &&
-                            answer.AnswerVIEWID === recordId) {
-                            AppData.setRecordId("Kontakt", recordId);
-                            listView.winControl.selection.set(i).done(function () {
-                                WinJS.Promise.timeout(50).then(function () {
-                                    that.scrollToRecordId(recordId);
-                                });
-                            });
-                            recordIdNotFound = false;
-                            break;
-                        }
-                    }
-                    if (recordIdNotFound) {
-                        that.loadNextUrl(recordId);
-                    }
-                }
-                Log.ret(Log.l.trace);
-            }
-            this.selectRecordId = selectRecordId;
-
-            var resultConverter = function (item, index) {
-                item.index = index;
-                if (item.QuestionGroupID) {
-                    for (var i = 0; i < that.questiongroupdata.length; i++) {
-                        if (item.QuestionGroupID === that.questiongroupdata[i].GroupText) {
-                            item.QuestionGroupID = that.questiongroupdata[i].QuestionGroupVIEWID;
-                        }
-                    }
-                }
-                Log.ret(Log.l.trace);
-            }
-            this.resultConverter = resultConverter;
-
-            var getAnswers = function () {
-                Log.call(Log.l.trace, "GenDataanswerHisto.Controller.");
-                var ret;
-                var lang = that.binding.lang;
-                if (lang) {
-                    return GenDataAnswers.answerView.select(function (json) {
-                        // this callback will be called asynchronously
-                        // when the response is available
-                        Log.print(Log.l.trace, "questionnaireDocView: success!");
-                        if (json && json.d && json.d.results && json.d.results.length) {
-                            //that.nextUrl = EventsList.VeranstaltungView.getNextUrl(json);
-                            var results = json.d.results;
-                            results.forEach(function (item, index) {
-                                that.resultConverter(item, index);
-                            });
-                            that.binding.count = results.length;
-                            that.binding.Anzahl = results.length;
-                            that.answerData = new WinJS.Binding.List(results);
-                            if (listView.winControl) {
-                                // add ListView dataSource
-                                listView.winControl.itemDataSource = that.answerData.dataSource;
-                            }
-                            Log.print(Log.l.trace, "Data loaded");
-
-                        } else {
-                            that.binding.count = 0;
-                            that.binding.Anzahl = 0;
-                            that.nextUrl = null;
-                            that.records = null;
-                            if (listView.winControl) {
-                                // add ListView dataSource
-                                listView.winControl.itemDataSource = null;
-                            }
-                            progress = listView.querySelector(".list-footer .progress");
-                            counter = listView.querySelector(".list-footer .counter");
-                            if (progress && progress.style) {
-                                progress.style.display = "none";
-                            }
-                            if (counter && counter.style) {
-                                counter.style.display = "inline";
-                            }
-                            that.loading = false;
-                        }
-                    }, function (errorResponse) {
-                        // called asynchronously if an error occurs
-                        // or server returns response with an error status.
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                    }, { LanguageSpecID: lang, QuestionID: that.getQuestionId() });
-                } else {
-                    // ret = new WinJS.Promise.as().then(function () {
-                    that.binding.count = 0;
-                    that.binding.Anzahl = 0;
-                    that.nextUrl = null;
-                    that.records = null;
-                    that.binding.lang = 0;
-                    if (listView.winControl) {
-                        // add ListView dataSource
-                        listView.winControl.itemDataSource = null;
-                    }
-                    progress = listView.querySelector(".list-footer .progress");
-                    counter = listView.querySelector(".list-footer .counter");
-                    if (progress && progress.style) {
-                        progress.style.display = "none";
-                    }
-                    if (counter && counter.style) {
-                        counter.style.display = "inline";
-                    }
-                    that.loading = false;
-                    return WinJS.Promise.as();
-                    //});
-                }
-                Log.ret(Log.l.trace);
-            }
-            this.getAnswers = getAnswers;
-
             // define handlers
             this.eventHandlers = {
                 clickBack: function (event) {
-                    Log.call(Log.l.trace, "GenDataanswerHisto.Controller.");
+                    Log.call(Log.l.trace, "GenDataAnswers.Controller.");
                     if (WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done();
                     }
                     Log.ret(Log.l.trace);
                 },
-                onPointerDown: function (e) {
-                    Log.call(Log.l.trace, "Questiongroup.Controller.");
-                    that.cursorPos = { x: e.pageX, y: e.pageY };
-                    mouseDown = true;
+                clickOk: function (event) {
+                    Log.call(Log.l.trace, "GenDataEmployee.Controller.");
+                    that.saveData(function (response) {
+                        Log.print(Log.l.trace, "employee saved");
+                        that.loadData();
+                    }, function (errorResponse) {
+                        Log.print(Log.l.error, "error saving employee");
+                    });
                     Log.ret(Log.l.trace);
                 },
-                onMouseDown: function (e) {
-                    Log.call(Log.l.trace, "Questiongroup.Controller.");
-                    that.cursorPos = { x: e.pageX, y: e.pageY };
-                    mouseDown = true;
+                changedQuestion: function (event) {
+                    Log.call(Log.l.trace, "GenDataEmployee.Controller.");
+                    that.saveData(function (response) {
+                        Log.print(Log.l.trace, "employee saved");
+                        that.loadData();
+                    }, function (errorResponse) {
+                        Log.print(Log.l.error, "error saving employee");
+                    });
                     Log.ret(Log.l.trace);
                 },
-                onPointerUp: function (e) {
-                    Log.call(Log.l.trace, "Questiongroup.Controller.");
-                    mouseDown = false;
-                    Log.ret(Log.l.trace);
-                },
-                onMouseUp: function (e) {
-                    Log.call(Log.l.trace, "Questiongroup.Controller.");
-                    mouseDown = false;
-                    Log.ret(Log.l.trace);
-                },
-                onLanguageChange: function (event) {
-                    Log.call(Log.l.trace, "QuestionList.Controller.");
-                    that.binding.lang = parseInt(event.currentTarget.value);
-                    that.getAnswers(that.binding.lang);
-                    Log.ret(Log.l.trace);
-                },
-                onfocusoutQuestion: function (parameters) {
-                    Log.call(Log.l.trace, "QuestionList.Controller.");
-                    AppData.setErrorMsg(that.binding);
-                    var ret;
-                    var dataQuestion = that.binding.dataQuestion;
-                    if (dataQuestion.QuestionGroupID) {
-                        dataQuestion.QuestionGroupID = parseInt(dataQuestion.QuestionGroupID);
-                    }
-                    if (dataQuestion && AppBar.modified && !AppBar.busy) {
-                        var recordId = that.getQuestionId();
-                        if (recordId) {
-                            AppBar.busy = true;
-                            ret = GenDataAnswers.questionTable.update(function (response) {
-                                AppBar.busy = false;
-                                // called asynchronously if ok
-                                Log.print(Log.l.info, "dataQuestion update: success!");
-                                AppBar.modified = false;
-                                var master = Application.navigator.masterControl;
-                                if (master && master.controller && master.controller.binding) {
-                                    master.controller.binding.questionId = that.binding.dataQuestion.QuestionVIEWID;
-                                    master.controller.loadData().then(function () {
-                                        //master.controller.loadData(master.controller.binding.employeeId).then(function () {
-                                        master.controller.selectRecordId(master.controller.binding.questionId);
-                                        //});
-                                    });
-                                }
-                            },
-                                function (errorResponse) {
-                                    AppBar.busy = false;
-                                    // called asynchronously if an error occurs
-                                    // or server returns response with an error status.
-                                    AppData.setErrorMsg(that.binding, errorResponse);
-                                },
-                                recordId,
-                                dataQuestion);
-                        }
-                    } else {
-                        ret = new WinJS.Promise.as().then(function () {
-                            if (typeof complete === "function") {
-                                complete(dataQuestion);//dataContact
-                            }
-                        });
+                changedLanguage: function (event) {
+                    Log.call(Log.l.trace, "GenDataAnswers.Controller.");
+                    if (event && event.currentTarget) {
+                        that.binding.languageId = parseInt(event.currentTarget.value);
+                        that.createAnswers();
                     }
                     Log.ret(Log.l.trace);
-                    return ret;
+                },
+                changedQuestionGroup: function (event) {
+                    Log.call(Log.l.trace, "GenDataAnswers.Controller.");
+                    if (event && event.currentTarget && that.binding.dataQuestion) {
+                        that.binding.dataQuestion.QuestionGroupID = parseInt(event.currentTarget.value);
+                        that.saveData();
+                    }
+                    Log.ret(Log.l.trace);
                 },
                 changedAnswerCount: function (event) {
-                    Log.call(Log.l.trace, "QuestionList.Controller.");
+                    Log.call(Log.l.trace, "GenDataAnswers.Controller.");
                     if (event.target && AppBar.notifyModified) {
                         if (that.inAnswerCountFromRange) {
                             Log.print(Log.l.trace, "extra ignored");
@@ -468,6 +151,14 @@
                     }
                     Log.ret(Log.l.trace);
                 },
+                clickNew: function (event) {
+                    Log.call(Log.l.trace, "GenDataAnswers.Controller.");
+                    AppData.setErrorMsg(that.binding);
+                    that.insertData().then(function () {
+                        AppBar.triggerDisableHandlers();
+                    });
+                    Log.ret(Log.l.trace);
+                },
                 clickDelete: function (event) {
                     Log.call(Log.l.trace, "GenDataAnswers.Controller.");
                     var confirmTitle = getResourceText("genDataAnswers.questionDelete");
@@ -475,190 +166,15 @@
                         if (result) {
                             AppData.setErrorMsg(that.binding);
                             Log.print(Log.l.trace, "clickDelete: user choice OK");
-                            that.binding.dataQuestion = getEmptyDefaultValue(GenDataAnswers.questionTable.defaultValue);
-                            var questionId = that.getQuestionId();
-                            var master = Application.navigator.masterControl;
-                            if (master && master.controller && master.controller.binding) {
-                                master.controller.binding.questionId = that.binding.dataQuestion.QuestionVIEWID;
-                                master.controller.deleteQuestion(questionId);
-                            }
+                            that.deleteData().then(function () {
+                                AppBar.triggerDisableHandlers();
+                            });
                         } else {
                             Log.print(Log.l.trace, "clickDelete: user choice CANCEL");
                         }
                     });
                     Log.ret(Log.l.trace);
-                },
-                clickNewQuestion: function (event) {
-                    Log.call(Log.l.trace, "GenDataanswerHisto.Controller.");
-                    AppBar.busy = true;
-                    Log.print(Log.l.trace, "eployee saved");
-                    var newQuestion = getEmptyDefaultValue(GenDataAnswers.questionTable.defaultValue);
-                    //var newEmployee = copyByValue(Employee.employeeView.defaultValue);
-                    GenDataAnswers.questionTable.insert(function (json) {
-                        AppBar.busy = false;
-                        // this callback will be called asynchronously
-                        // when the response is available
-                        Log.print(Log.l.info, "employeeView insert: success!");
-                        // employeeView returns object already parsed from json file in response
-                        if (json && json.d) {
-                            that.binding.dataQuestion = json.d;
-                        }
-                        AppBar.modified = true;
-                    }, function (errorResponse) {
-                        Log.print(Log.l.error, "error inserting employee");
-                        AppBar.busy = false;
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                    }, newQuestion).then(function () {
-                        /* Mitarbeiter Liste neu laden und Selektion auf neue Zeile setzen */
-                        var master = Application.navigator.masterControl;
-                        if (master && master.controller && master.controller.binding) {
-                            master.controller.binding.questionId = that.binding.dataQuestion.QuestionVIEWID;
-                            master.controller.loadData().then(function () {
-                                //master.controller.loadData(master.controller.binding.employeeId).then(function () {
-                                master.controller.selectRecordId(master.controller.binding.questionId);
-                                //});
-                            });
-                        }
-                    });
-                    Log.ret(Log.l.trace);
-                },
-                onfocusout: function (event) {
-                    Log.call(Log.l.trace, "Questiongroup.Controller.");
-                    var listControl = listView.winControl;
-                    listControl.selection.getItems().done(function (items) {
-                        var item = items[0];
-                        if (item.data &&
-                            item.data.AnswerVIEWID &&
-                            item.data.AnswerVIEWID !== that.binding.answerid) {
-                            var answerdata = {};
-                            answerdata.AnswerText = item.data.AnswerText;
-                            that.saveAnswer(item.data.AnswerVIEWID, item.data);
-                        }
-                    });
-                    Log.ret(Log.l.trace);
-                },
-                onItemInvoked: function (eventInfo) {
-                    Log.call(Log.l.trace, "Questiongroup.Controller.");
-                    if (eventInfo && eventInfo.target) {
-                        var comboInputFocus = eventInfo.target.querySelector(".win-dropdown:focus");
-                        if (comboInputFocus) {
-                            eventInfo.preventDefault();
-                        } else {
-                            // set focus into textarea if current mouse cursor is inside of element position
-                            var setFocusOnElement = function (element) {
-                                WinJS.Promise.timeout(0).then(function () {
-                                    // set focus async!
-                                    element.focus();
-                                });
-                            };
-                            var textInputs = eventInfo.target.querySelectorAll(".win-textbox");
-                            if (textInputs && textInputs.length > 0) {
-                                for (var i = 0; i < textInputs.length; i++) {
-                                    var textInput = textInputs[i];
-                                    var position = WinJS.Utilities.getPosition(textInput);
-                                    if (position) {
-                                        var left = position.left;
-                                        var top = position.top;
-                                        var width = position.width;
-                                        var height = position.height;
-                                        if (that.cursorPos.x >= left && that.cursorPos.x <= left + width &&
-                                            that.cursorPos.y >= top && that.cursorPos.y <= top + height) {
-                                            setFocusOnElement(textInput);
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    Log.ret(Log.l.trace);
-                },
-                onLoadingStateChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "GenDataanswerHisto.Controller.");
-                    if (listView && listView.winControl) {
-                        Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
-                        // single list selection
-                        if (listView.winControl.selectionMode !== WinJS.UI.SelectionMode.single) {
-                            listView.winControl.selectionMode = WinJS.UI.SelectionMode.single;
-                        }
-                        // direct selection on each tap
-                        if (listView.winControl.tapBehavior !== WinJS.UI.TapBehavior.directSelect) {
-                            listView.winControl.tapBehavior = WinJS.UI.TapBehavior.directSelect;
-                        }
-                        // Double the size of the buffers on both sides
-                        if (!maxLeadingPages) {
-                            maxLeadingPages = listView.winControl.maxLeadingPages * 4;
-                            listView.winControl.maxLeadingPages = maxLeadingPages;
-                        }
-                        if (!maxTrailingPages) {
-                            maxTrailingPages = listView.winControl.maxTrailingPages * 4;
-                            listView.winControl.maxTrailingPages = maxTrailingPages;
-                        }
-                        if (listView.winControl.loadingState === "itemsLoading") {
-                            if (!layout) {
-                                layout = Application.GenDataAnswersLayout.GenDataAnswersLayout;
-                                listView.winControl.layout = { type: layout };
-                            }
-                        } else if (listView.winControl.loadingState === "itemsLoaded") {
-
-
-                        } else if (listView.winControl.loadingState === "complete") {
-                            if (that.loading) {
-                                progress = listView.querySelector(".list-footer .progress");
-                                counter = listView.querySelector(".list-footer .counter");
-                                if (progress && progress.style) {
-                                    progress.style.display = "none";
-                                }
-                                if (counter && counter.style) {
-                                    counter.style.display = "inline";
-                                }
-                                that.loading = false;
-                            }
-                        }
-                    }
-                    Log.ret(Log.l.trace);
-                },
-                onHeaderVisibilityChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "GenDataanswerHisto.Controller.");
-                    if (eventInfo && eventInfo.detail && listView) {
-                        var visible = eventInfo.detail.visible;
-                        if (visible) {
-                            var contentHeader = listView.querySelector(".content-header");
-                            if (contentHeader) {
-                                var halfCircle = contentHeader.querySelector(".half-circle");
-                                if (halfCircle && halfCircle.style) {
-                                    if (halfCircle.style.visibility === "hidden") {
-                                        halfCircle.style.visibility = "";
-                                        WinJS.UI.Animation.enterPage(halfCircle);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    Log.ret(Log.l.trace);
-                },
-                onFooterVisibilityChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "GenDataanswerHisto.Controller.");
-                    if (listView) {
-                        progress = listView.querySelector(".list-footer .progress");
-                        counter = listView.querySelector(".list-footer .counter");
-                        var visible = eventInfo.detail.visible;
-
-                        if (visible && that.answerData && that.nextUrl) {
-                            that.loadNextUrl();
-                        } else {
-                            if (progress && progress.style) {
-                                progress.style.display = "none";
-                            }
-                            if (counter && counter.style) {
-                                counter.style.display = "inline";
-                            }
-                            that.loading = false;
-                        }
-                    }
-                    Log.ret(Log.l.trace);
                 }
-
             };
 
             this.disableHandlers = {
@@ -668,6 +184,9 @@
                     } else {
                         return true;
                     }
+                },
+                clickOk: function () {
+                    return AppBar.busy;
                 },
                 clickDelete: function () {
                     if (that.binding.dataQuestion &&
@@ -679,70 +198,58 @@
                 }
             };
 
-            // register ListView event handler
-            if (listView) {
-                this.addRemovableEventListener(listView, "keydown", function (e) {
-                    if (!e.ctrlKey && !e.altKey) {
-                        switch (e.keyCode) {
-                            case WinJS.Utilities.Key.end:
-                            case WinJS.Utilities.Key.home:
-                            case WinJS.Utilities.Key.leftArrow:
-                            case WinJS.Utilities.Key.rightArrow:
-                            case WinJS.Utilities.Key.space:
-                                e.stopImmediatePropagation();
-                                break;
-                        }
+            var resizeGenFragAnswers = function () {
+                var ret = null;
+                Log.call(Log.l.u1, "GenDataAnswers.Controller.");
+                var genFragAnswersFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("genFragAnswers"));
+                if (genFragAnswersFragmentControl &&
+                    genFragAnswersFragmentControl.controller) {
+                    if (genFragAnswersFragmentControl.controller.binding &&
+                        genFragAnswersFragmentControl.controller.binding.loadingState !== "complete") {
+                        ret = WinJS.Promise.timeout(20).then(function () {
+                            return that.resizeGenFragAnswers();
+                        });
+                        Log.ret(Log.l.u1, "listview layout not yet completed");
+                        return ret;
                     }
-                }.bind(this), true);
-                this.addRemovableEventListener(listView, "contextmenu", function (e) {
-                    var targetTagName = e.target &&
-                        e.target.tagName &&
-                        e.target.tagName.toLowerCase();
-                    if (targetTagName === "textarea" || targetTagName === "input") {
-                        e.stopImmediatePropagation();
+                }
+                var genFragAnswersHost = pageElement.querySelector("#genfraganswershost");
+                ret = WinJS.Promise.timeout(0).then(function () {
+                    if (genFragAnswersHost &&
+                        genFragAnswersHost.style &&
+                        genFragAnswersFragmentControl &&
+                        genFragAnswersFragmentControl._element) {
+                        var genFragAnswersHeaderContainer =
+                            genFragAnswersFragmentControl._element.querySelector(".win-headercontainer");
+                        var genFragAnswersSurface =
+                            genFragAnswersFragmentControl._element.querySelector(".win-surface");
+                        var genFragAnswersFooterContainer =
+                            genFragAnswersFragmentControl._element.querySelector(".win-footercontainer");
+                        var height = (genFragAnswersHeaderContainer ? genFragAnswersHeaderContainer.offsetHeight : 0) +
+                            (genFragAnswersSurface ? genFragAnswersSurface.offsetHeight : 0) +
+                            (genFragAnswersFooterContainer ? genFragAnswersFooterContainer.offsetHeight : 0) + 8;
+                        genFragAnswersHost.style.height = height.toString() + "px";
                     }
-                }.bind(this), true);
-                this.addRemovableEventListener(listView, "iteminvoked", this.eventHandlers.onItemInvoked.bind(this));
-                this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
-                this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
-                this.addRemovableEventListener(listView, "focusout", this.eventHandlers.onfocusout.bind(this));
+                    return WinJS.Promise.timeout(0);
+                }).then(function () {
+                    if (genFragAnswersFragmentControl &&
+                        typeof genFragAnswersFragmentControl.updateLayout === "function") {
+                        genFragAnswersFragmentControl.prevWidth = 0;
+                        genFragAnswersFragmentControl.prevHeight = 0;
+                        genFragAnswersFragmentControl.updateLayout.call(genFragAnswersFragmentControl, genFragAnswersFragmentControl._element);
+                    }
+                });
+                Log.ret(Log.l.u1);
+                return ret;
             }
+            this.resizeGenFragAnswers = resizeGenFragAnswers;
 
-            if (initSprache) {
-                this.addRemovableEventListener(initSprache, "change", this.eventHandlers.onLanguageChange.bind(this));
-            }
-
-            if (questiongroup) {
-                this.addRemovableEventListener(questiongroup, "mouseup", this.eventHandlers.onfocusoutQuestion.bind(this));
-            }
-
-            Log.print(Log.l.trace, "calling select GenDataanswerHisto.personAdresseView...");
-
-            var getQuestionId = function () {
-                return GenDataAnswers._questionID;
-            }
-            that.getQuestionId = getQuestionId;
-
-            var setQuestionId = function (value) {
-                Log.print(Log.l.trace, "personId=" + value);
-                GenDataAnswers._questionID = value;
-            }
-            that.setQuestionId = setQuestionId;
-
-            var getAnswerId = function () {
-                return GenDataAnswers._answerId;
-            }
-            that.getAnswerId = getAnswerId;
-
-            var setAnswerId = function (value) {
-                Log.print(Log.l.trace, "personId=" + value);
-                GenDataAnswers._answerId = value;
-            }
-            that.setAnswerId = setAnswerId;
-
-            var loadData = function () {
-                Log.call(Log.l.trace, "Contact.Controller.");
+            var loadData = function (recordId) {
+                Log.call(Log.l.trace, "GenDataAnswers.Controller.", "recordId=" + recordId);
                 AppData.setErrorMsg(that.binding);
+                if (!recordId) {
+                    recordId = getRecordId();
+                }
                 var ret = new WinJS.Promise.as().then(function () {
                     if (!GenDataAnswers.initSpracheView.getResults().length) {
                         Log.print(Log.l.trace, "calling select initSpracheView...");
@@ -755,7 +262,6 @@
                                 if (initSprache && initSprache.winControl) {
                                     initSprache.winControl.data = new WinJS.Binding.List(results);
                                 }
-                                that.binding.lang = 1031;
                             }
                         }, function (errorResponse) {
                             // called asynchronously if an error occurs
@@ -767,27 +273,24 @@
                             (!initSprache.winControl.data || !initSprache.winControl.data.length)) {
                             var results = GenDataAnswers.initSpracheView.getResults();
                             initSprache.winControl.data = new WinJS.Binding.List(results);
-                            that.binding.lang = 1031;
-                        }
-                        if (initSprache && initSprache.winControl &&
-                            (initSprache.winControl.data || initSprache.winControl.data.length)) {
-                            that.binding.lang = 1031;
                         }
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
+                    if (!that.binding.languageId) {
+                        that.binding.languageId = 1031;
+                    }
                     Log.print(Log.l.trace, "calling select questionGroupTable...");
                     //@nedra:25.09.2015: load the list of INITAnrede for Combobox
                     return GenDataAnswers.questionGroupTable.select(function (json) {
                         Log.print(Log.l.trace, "questionGroupTable: success!");
                         if (json && json.d && json.d.results) {
                             var results = json.d.results;
-                            that.questiongroupdata = results;
                             // Now, we call WinJS.Binding.List to get the bindable list
-                            if (questiongroup && questiongroup.winControl) {
-                                questiongroup.winControl.data = new WinJS.Binding.List(results);
+                            if (questionGroup && questionGroup.winControl) {
+                                questionGroup.winControl.data = new WinJS.Binding.List(results);
                             }
-                            questiongroup.selectedIndex = 0;
+                            questionGroup.selectedIndex = -1;
                         }
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
@@ -795,52 +298,212 @@
                         AppData.setErrorMsg(that.binding, errorResponse);
                     });
                 }).then(function () {
+                    if (recordId) {
+                        Log.print(Log.l.trace, "calling select questionView...");
+                        return GenDataAnswers.questionView.select(function (json) {
+                            Log.print(Log.l.trace, "questionView: success!");
+                            if (json && json.d) {
+                                that.binding.dataQuestion = json.d;
+                                that.binding.answerCount = that.binding.dataQuestion.NumAnswers;
+                            }
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        }, recordId);
+                    } else {
+                        return WinJS.Promise.as();
+                    }
                     //load of format relation record data
-                    Log.print(Log.l.trace, "calling select contactView...");
-                    return GenDataAnswers.questionView.select(function (json) {
-                        AppData.setErrorMsg(that.binding);
-                        Log.print(Log.l.trace, "contactView: success!");
-                        if (json && json.d && json.d.results && json.d.results.length > 0) {
-                            var results = json.d.results;
-                            results.forEach(function(item, index) {
-                                that.resultConverter(item, index);
-                            });
-
-                            that.binding.dataQuestion = json.d.results[0];
-                            that.setQuestionId(that.binding.dataQuestion.QuestionVIEWID);
-                        } else {
-                            that.setQuestionId(0);
-                        }
-                    }, function (errorResponse) {
-                        // called asynchronously if an error occurs
-                        // or server returns response with an error status.
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                    });
                 }).then(function () {
-                    that.getAnswers();
+                    var genFragAnswersFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("genFragAnswers"));
+                    if (genFragAnswersFragmentControl && genFragAnswersFragmentControl.controller) {
+                        return genFragAnswersFragmentControl.controller.loadData();
+                    } else {
+                        var parentElement = pageElement.querySelector("#genfraganswershost");
+                        if (parentElement) {
+                            return Application.loadFragmentById(parentElement, "genFragAnswers", {});
+                        } else {
+                            return WinJS.Promise.as();
+                        }
+                    }
                 }).then(function () {
                     AppBar.notifyModified = true;
-                    return WinJS.Promise.as();
                 });
                 Log.ret(Log.l.trace);
                 return ret;
             }
             this.loadData = loadData;
 
+            // save data
+            var saveData = function (complete, error) {
+                var errorMessage;
+                Log.call(Log.l.trace, "GenDataEmployee.Controller.");
+                AppData.setErrorMsg(that.binding);
+                var recordId = getRecordId();
+                var dataQuestion = that.binding.dataQuestion;
+                if (!dataQuestion || !AppBar.modified || !recordId) {
+                    Log.ret(Log.l.error, "not modified");
+                    return new WinJS.Promise.as().then(function () {
+                        if (typeof complete === "function") {
+                            complete(dataQuestion);
+                        }
+                    });
+                }
+                if (AppBar.busy) {
+                    Log.ret(Log.l.error, "busy - try again...");
+                    return WinJS.Promise.timeout(100).then(function () {
+                        return that.saveData(complete, error);
+                    });
+                }
+                AppBar.busy = true;
+                var ret = GenDataAnswers.questionView.update(function (response) {
+                    // called asynchronously if ok
+                    Log.print(Log.l.info, "questionView update: success!");
+                }, function (errorResponse) {
+                    AppBar.busy = false;
+                    // called asynchronously if an error occurs
+                    // or server returns response with an error status.
+                    AppData.getErrorMsgFromErrorStack(errorResponse);
+                    //AppData.setErrorMsg(that.binding, errorResponse);
+                    if (typeof error === "function") {
+                        error(errorResponse);
+                    }
+                }, recordId, dataQuestion).then(function () {
+                    AppBar.modified = false;
+                    AppBar.busy = false;
+                    var master = Application.navigator.masterControl;
+                    if (master && master.controller && master.controller.binding) {
+                        master.controller.loadData(recordId).then(function () {
+                            if (typeof complete === "function") {
+                                complete(dataQuestion);
+                            }
+                        });
+                    } else {
+                        if (typeof complete === "function") {
+                            complete(dataQuestion);
+                        }
+                    }
+                });
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+            this.saveData = saveData;
+
+            var insertData = function (complete, error) {
+                Log.call(Log.l.trace, "GenDataEmployee.Controller.");
+                AppBar.busy = true;
+                AppData.setErrorMsg(that.binding);
+                var ret = that.saveData(function (response) {
+                    Log.print(Log.l.trace, "record saved");
+                    var newDataQuestion = getEmptyDefaultValue(GenDataAnswers.questionView.defaultValue);
+                    return GenDataAnswers.questionView.insert(function (json) {
+                        // this callback will be called asynchronously
+                        // when the response is available
+                        Log.print(Log.l.info, "record insert: success!");
+                        // contactData returns object already parsed from json file in response
+                        AppBar.busy = false;
+                        var recordId = null;
+                        if (json && json.d) {
+                            recordId = GenDataAnswers.questionView.getRecordId(json.d);
+                            Log.print(Log.l.trace, "inserted recordId=" + recordId);
+                            var master = Application.navigator.masterControl;
+                            if (master && master.controller) {
+                                master.controller.curRecId = recordId;
+                                master.controller.loadData().then(function () {
+                                    if (typeof complete === "function") {
+                                        complete(dataQuestion);
+                                    }
+                                });
+                            } else {
+                                if (typeof complete === "function") {
+                                    complete(dataQuestion);
+                                }
+                            }
+                        } else {
+                            if (typeof complete === "function") {
+                                complete(dataQuestion);
+                            }
+                        }
+                    }, function (errorResponse) {
+                        AppBar.busy = false;
+                        if (typeof error === "function") {
+                            error(errorResponse);
+                        } else {
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        }
+                        }, newDataQuestion);
+                }, function (errorResponse) {
+                    AppBar.busy = false;
+                    if (typeof error === "function") {
+                        error(errorResponse);
+                    } else {
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    }
+                });
+                Log.ret(Log.l.trace, ret);
+                return ret;
+            }
+            this.insertData = insertData;
+
+            var deleteData = function (complete, error) {
+                Log.call(Log.l.trace, "GenDataEmployee.Controller.");
+                var recordId = getRecordId();
+                AppBar.busy = true;
+                AppData.setErrorMsg(that.binding);
+                var ret = GenDataAnswers.questionView.deleteRecord(function (response) {
+                    AppBar.busy = false;
+                    // called asynchronously if ok
+                    that.binding.dataQuestion = getEmptyDefaultValue(GenDataAnswers.questionView.defaultValue);
+                    var master = Application.navigator.masterControl;
+                    if (master && master.controller && master.controller.binding) {
+                        master.controller.curRecId = null;
+                        master.controller.loadData().then(function () {
+                            if (typeof complete === "function") {
+                                complete(that.binding.dataQuestion);
+                            }
+                        });
+                    } else {
+                        if (typeof complete === "function") {
+                            complete(that.binding.dataQuestion);
+                        }
+                    }
+                }, function (errorResponse) {
+                    AppBar.busy = false;
+                    if (typeof error === "function") {
+                        error(errorResponse);
+                    } else {
+                        // delete ERROR
+                        var message = null;
+                        Log.print(Log.l.error, "error status=" + errorResponse.status + " statusText=" + errorResponse.statusText);
+                        if (errorResponse.data && errorResponse.data.error) {
+                            Log.print(Log.l.error, "error code=" + errorResponse.data.error.code);
+                            if (errorResponse.data.error.message) {
+                                Log.print(Log.l.error, "error message=" + errorResponse.data.error.message.value);
+                                message = errorResponse.data.error.message.value;
+                            }
+                        }
+                        if (!message) {
+                            message = getResourceText("error.delete");
+                        }
+                        AppData.setErrorMsg(that.binding, message);
+                    }
+                }, recordId);
+                Log.ret(Log.l.trace, ret);
+                return ret;
+            }
+            this.deleteData = deleteData;
+
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                that.loading = true;
                 return that.loadData();
             }).then(function () {
-                AppBar.notifyanswerified = true;
+                AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Record selected");
             });
             Log.ret(Log.l.trace);
         }, {
-                cursorPos: { x: 0, y: 0 },
-                indexold: 0,
-                questiongroupdata: ""
-            })
+        })
     });
 })();
 

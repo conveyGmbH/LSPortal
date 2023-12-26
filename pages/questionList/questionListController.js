@@ -122,8 +122,6 @@
             var maxLeadingPages = 0;
             var maxTrailingPages = 0;
 
-            var mouseDown = false;
-
             var resultConverter = function (item, index) {
                 var prevQuestion = null;
 
@@ -377,7 +375,7 @@
             this.inAnswerCountFromRange = false;
             var answerCountFromRange = function (range) {
                 Log.call(Log.l.trace, "QuestionList.Controller.", "range=" + range);
-                if (mouseDown) {
+                if (that.mouseDown) {
                     Log.print(Log.l.trace, "mouseDown is set!");
                     WinJS.Promise.timeout(250).then(function () {
                         that.answerCountFromRange(range);
@@ -906,28 +904,6 @@
                 clickGotoPublish: function (event) {
                     Log.call(Log.l.trace, "QuestionList.Controller.");
                     Application.navigateById("publish", event);
-                    Log.ret(Log.l.trace);
-                },
-                onPointerDown: function (e) {
-                    Log.call(Log.l.trace, "QuestionList.Controller.");
-                    that.cursorPos = { x: e.pageX, y: e.pageY };
-                    mouseDown = true;
-                    Log.ret(Log.l.trace);
-                },
-                onMouseDown: function (e) {
-                    Log.call(Log.l.trace, "QuestionList.Controller.");
-                    that.cursorPos = { x: e.pageX, y: e.pageY };
-                    mouseDown = true;
-                    Log.ret(Log.l.trace);
-                },
-                onPointerUp: function (e) {
-                    Log.call(Log.l.trace, "QuestionList.Controller.");
-                    mouseDown = false;
-                    Log.ret(Log.l.trace);
-                },
-                onMouseUp: function (e) {
-                    Log.call(Log.l.trace, "QuestionList.Controller.");
-                    mouseDown = false;
                     Log.ret(Log.l.trace);
                 },
                 onSelectionChanged: function (eventInfo) {

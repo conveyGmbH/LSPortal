@@ -11,16 +11,7 @@
             get: function () {
                 return AppData.getFormatView("PersonAdresse", 20636);
             }
-        },
-        _personAdresseTable: {
-            get: function () {
-                return AppData.getFormatView("PersonAdresse", 0);
-            }
-        },
-        _personAdresseId: 0,
-        _personId: 0,
-        _adresseId: 0,
-        _initPersonKategorieId: 0,
+        }
     });
     WinJS.Namespace.define("GenDataModList", {
         personAdresseView: {
@@ -33,7 +24,7 @@
                 if (!options) {
                     options = {
                         ordered: true,
-                        orderAttribute: "PersonAdresseVIEWID",
+                        orderAttribute: "PersonLastName",
                         desc: false
                     };
                 }
@@ -66,43 +57,6 @@
                     }
                     if (!ret && GenDataModList._personAdresseView.pkName) {
                         ret = record[GenDataModList._personAdresseView.pkName];
-                    }
-                }
-                return ret;
-            }
-        },
-        personAdresseTable: {
-            update: function (complete, error, recordId, viewResponse) {
-                Log.call(Log.l.trace, "EventResourceAdministration.eventTable.");
-                var ret = GenDataModList._personAdresseTable.update(complete, error, recordId, viewResponse);
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            deleteRecord: function (complete, error, recordId) {
-                var ret;
-                Log.call(Log.l.trace, "EventSeries.seriesTable.");
-                if (recordId) {
-                    ret = GenDataModList._personAdresseTable.deleteRecord(function () {
-                        if (typeof complete === "function") {
-                            complete();
-                        }
-                    }, error, recordId);
-                } else {
-                    ret = WinJS.Promise.as();
-                }
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            relationName: GenDataModList._personAdresseTable.relationName,
-            pkName: GenDataModList._personAdresseTable.oDataPkName,
-            getRecordId: function (record) {
-                var ret = null;
-                if (record) {
-                    if (GenDataModList._personAdresseTable.oDataPkName) {
-                        ret = record[GenDataModList._personAdresseTable.oDataPkName];
-                    }
-                    if (!ret && GenDataModList._personAdresseTable.pkName) {
-                        ret = record[GenDataModList._personAdresseTable.pkName];
                     }
                 }
                 return ret;

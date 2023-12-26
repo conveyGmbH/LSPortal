@@ -1,0 +1,106 @@
+﻿#genFragAnswers .win-itemcontainer .win-itembox,
+#genFragAnswers .win-listview .win-itembox {
+    background-color: transparent;
+}
+.genFragAnswers .list-header {
+    padding-left: 27px;
+    font-weight: bold;
+}
+.genFragAnswers .list-field-small-fixed {
+    width: 200px;
+    height: 32px;
+    float: left;
+}
+.genFragAnswers .list-field-big-variable {
+    width: calc(100% - 640px);
+    height: 32px;
+    float: left;
+    padding-top: 8px;
+    padding-left: 8px;
+}
+.genFragAnswers .row-bkg-gray {
+    width: auto;
+}
+
+/* listview viewport will be resized by page controller! */
+#genFragAnswers.listview {
+    width: 100%;
+    height: 100%;
+    overflow: hidden
+}
+
+/* listview viewport will be resized by page controller! */
+#genFragAnswers .win-viewport {
+    overflow-y: hidden
+}
+
+/* Styles used for the custom layout */
+#genFragEvents .win-container {
+    margin: 0;
+}
+
+/* Styles used for the custom layout */
+#genFragAnswers .win-container {
+    margin: 0;
+}
+
+#genFragAnswers .win-item,
+#genFragAnswers .list-header {
+    padding-left: 26px;
+    padding-right: 26px;
+    width: auto;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+#genFragAnswers .list-landscape-only > input,
+#genFragAnswers .list-portrait-only > input {
+    width: 100%;
+}
+
+.view-size-medium #genFragAnswers .win-item,
+.view-size-medium #genFragAnswers .list-header {
+    padding-left: 18px;
+    padding-right: 18px;
+}
+
+.view-size-small #genFragAnswers .win-item,
+.view-size-small #genFragAnswers .list-header {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#genFragAnswers {
+    position: relative;
+    overflow: auto;
+    max-height: 400px; /* Set a maximum height or adjust as needed */
+}
+.win-headercontainer {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    /* Add any other styles you need for the header */
+}
+.genFragAnswers button {
+    position: relative;
+    top: -8px;
+    background-color: whitesmoke;
+    width: 200px;
+    height: 30px;
+    border: none;
+    color: black;
+    padding: 1px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 4px 2px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    font-weight: bold;
+}
+.genFragAnswers button:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    opacity: 1;
+}

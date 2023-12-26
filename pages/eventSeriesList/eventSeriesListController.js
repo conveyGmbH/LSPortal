@@ -25,98 +25,15 @@
             var listView = pageElement.querySelector("#eventSeriesList.listview");
 
             Application.RecordsetController.apply(this, [pageElement, {
-                count: 0
             }, commandList, false, EventSeriesList.SerienView, null, listView]);
 
-            var progress = null;
-            var counter = null;
             var layout = null;
 
-            var maxLeadingPages = 0;
-            var maxTrailingPages = 0;
-
             this.dispose = function () {
-                if (listView && listView.winControl) {
-                    listView.winControl.itemDataSource = null;
-                }
                 if (that.seriesdata) {
                     that.seriesdata = null;
                 }
-                listView = null;
             }
-
-            var background = function (index) {
-                if (index % 2 === 0) {
-                    return 1;
-                } else {
-                    return null;
-                }
-            };
-            this.background = background;
-
-            var loadNextUrl = function () {
-                Log.call(Log.l.trace, "EventSeriesList.Controller.");
-                progress = listView.querySelector(".list-footer .progress");
-                counter = listView.querySelector(".list-footer .counter");
-                if (that.seriesdata && that.nextUrl && listView) {
-                    that.loading = true;
-                    if (progress && progress.style) {
-                        progress.style.display = "inline";
-                    }
-                    if (counter && counter.style) {
-                        counter.style.display = "none";
-                    }
-                    AppData.setErrorMsg(that.binding);
-                    Log.print(Log.l.trace, "calling select EventSeriesList.SerienView...");
-                    var nextUrl = that.nextUrl;
-                    that.nextUrl = null;
-                    EventSeriesList.SerienView.selectNext(function (json) { //json is undefined
-                        // this callback will be called asynchronously
-                        // when the response is available
-                        Log.print(Log.l.trace, "EventSeriesList.SerienView: success!");
-                        // startContact returns object already parsed from json file in response
-                        if (json && json.d && json.d.results && that.seriesdata) {
-                            that.nextUrl = EventSeriesList.SerienView.getNextUrl(json);
-                            var results = json.d.results;
-                            results.forEach(function (item, index) {
-                                that.resultConverter(item, that.binding.count);
-                                that.binding.count = that.seriesdata.push(item);
-                            });
-                        }
-                        if (progress && progress.style) {
-                            progress.style.display = "none";
-                        }
-                        if (counter && counter.style) {
-                            counter.style.display = "inline";
-                        }
-                        that.loading = false;
-                    }, function (errorResponse) {
-                        // called asynchronously if an error occurs
-                        // or server returns response with an error status.
-                        //Log.print(Log.l.error, "ContactList.contactView: error!");
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                        if (progress && progress.style) {
-                            progress.style.display = "none";
-                        }
-                        if (counter && counter.style) {
-                            counter.style.display = "inline";
-                        }
-                        that.loading = false;
-                    },
-                        null,
-                        nextUrl);
-                } else {
-                    if (progress && progress.style) {
-                        progress.style.display = "none";
-                    }
-                    if (counter && counter.style) {
-                        counter.style.display = "inline";
-                    }
-                    that.loading = false;
-                }
-                Log.ret(Log.l.trace);
-            }
-            this.loadNextUrl = loadNextUrl;
 
             var selectRecordId = function (recordId) {
                 Log.call(Log.l.trace, "EventSeriesList.Controller.", "recordId=" + recordId);
@@ -157,23 +74,6 @@
                     Log.call(Log.l.trace, "EventSeriesList.Controller.");
                     if (listView && listView.winControl) {
                         Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
-                        // single list selection
-                        if (listView.winControl.selectionMode !== WinJS.UI.SelectionMode.single) {
-                            listView.winControl.selectionMode = WinJS.UI.SelectionMode.single;
-                        }
-                        // direct selection on each tap
-                        if (listView.winControl.tapBehavior !== WinJS.UI.TapBehavior.directSelect) {
-                            listView.winControl.tapBehavior = WinJS.UI.TapBehavior.directSelect;
-                        }
-                        // Double the size of the buffers on both sides
-                        if (!maxLeadingPages) {
-                            maxLeadingPages = listView.winControl.maxLeadingPages * 4;
-                            listView.winControl.maxLeadingPages = maxLeadingPages;
-                        }
-                        if (!maxTrailingPages) {
-                            maxTrailingPages = listView.winControl.maxTrailingPages * 4;
-                            listView.winControl.maxTrailingPages = maxTrailingPages;
-                        }
                         if (listView.winControl.loadingState === "itemsLoading") {
                             if (!layout) {
                                 layout = Application.EventsListLayout.EventsListLayout;
@@ -186,70 +86,29 @@
                             that.loadNextUrl();
                         }
                     }
+                    that.loadingStateChanged(eventInfo);
                     Log.ret(Log.l.trace);
                 },
                 onSelectionChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "EventSeriesList.Controller.");
-                    if (listView && listView.winControl) {
-                        var listControl = listView.winControl;
-                        if (listControl.selection) {
-                            var selectionCount = listControl.selection.count();
-                            if (selectionCount === 1) {
-                                // Only one item is selected, show the page
-                                listControl.selection.getItems().done(function (items) {
-                                    var item = items[0];
-                                    var curPageId = Application.getPageId(nav.location);
-                                    that.binding.active = null;
-                                    if (item.data.Aktiv) {
-                                        that.binding.active = 1;
-                                    }
-                                    that.actualSelectedItem = item.data;
-                                    if (item.data && item.data.MandantSerieVIEWID) {
-                                        var newRecId = item.data.MandantSerieVIEWID;
-                                        Log.print(Log.l.trace, "newRecId:" + newRecId + " curRecId:" + that.curRecId);
-                                        if (newRecId !== 0 && newRecId !== that.curRecId) {
-                                            if (that.curRecId) {
-                                                that.prevRecId = that.curRecId;
-                                            }
-                                            that.curRecId = newRecId;
-
-                                            if (AppBar.scope && typeof AppBar.scope.saveData === "function") {
-                                                //=== "function" save wird nicht aufgerufen wenn selectionchange
-                                                // current detail view has saveData() function
-                                                AppBar.scope.saveData(function (response) {
-                                                    // called asynchronously if ok
-                                                    if (curPageId === "eventSeries" &&
-                                                        typeof AppBar.scope.loadData === "function" &&
-                                                        typeof AppBar.scope.setSeriesId === "function") {
-                                                        AppBar.scope.setSeriesId(item.data.MandantSerieVIEWID);
-                                                        AppBar.scope.loadData();
-                                                    } else {
-                                                        Application.navigateById("eventSeries");
-                                                    }
-                                                }, function (errorResponse) {
-                                                    if (curPageId === "eventSeries" &&
-                                                        typeof AppBar.scope.getSeriesId === "function") {
-                                                        that.selectRecordId(AppBar.scope.getSeriesId());
-                                                    }
-                                                });
-                                            } else {
-                                                // current detail view has NO saveData() function - is list
-                                                if (curPageId === "eventSeries" &&
-                                                    typeof AppBar.scope.loadData === "function" &&
-                                                    typeof AppBar.scope.setSeriesId === "function") {
-                                                    AppBar.scope.setSeriesId(item.data.VeranstaltungVIEWID);
-                                                    AppBar.scope.loadData();
-                                                } else {
-                                                    Application.navigateById("eventSeries");
-                                                }
-                                            }
-                                            AppBar.triggerDisableHandlers();
-                                        }
-                                    }
-                                });
-                            }
+                    var curPageId = Application.getPageId(nav.location);
+                    that.selectionChanged(function() {
+                        if (curPageId === "eventSeries" &&
+                            typeof AppBar.scope.loadData === "function" &&
+                            typeof AppBar.scope.setSeriesId === "function") {
+                            AppBar.scope.setSeriesId(item.data.MandantSerieVIEWID);
+                            AppBar.scope.loadData();
+                        } else {
+                            Application.navigateById("eventSeries");
                         }
-                    }
+                    }, function() {
+                        if (curPageId === "eventSeries" &&
+                            typeof AppBar.scope.getSeriesId === "function") {
+                            that.selectRecordId(AppBar.scope.getSeriesId());
+                        }
+                    }).then(function () {
+                        AppBar.triggerDisableHandlers();
+                    });
                     Log.ret(Log.l.trace);
                 },
                 onHeaderVisibilityChanged: function (eventInfo) {
@@ -274,20 +133,9 @@
                 onFooterVisibilityChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "EventSeriesList.Controller.");
                     if (eventInfo && eventInfo.detail) {
-                        progress = listView.querySelector(".list-footer .progress");
-                        counter = listView.querySelector(".list-footer .counter");
                         var visible = eventInfo.detail.visible;
-                        if (visible && that.seriesdata && that.nextUrl) {
-                            that.loading = true;
-                            that.loadNextUrl();
-                        } else {
-                            if (progress && progress.style) {
-                                progress.style.display = "none";
-                            }
-                            if (counter && counter.style) {
-                                counter.style.display = "inline";
-                            }
-                            that.loading = false;
+                        if (visible && that.nextUrl) {
+                            that.loadNext();
                         }
                     }
                     Log.ret(Log.l.trace);

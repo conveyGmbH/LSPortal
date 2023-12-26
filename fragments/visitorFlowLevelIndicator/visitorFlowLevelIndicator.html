@@ -43,6 +43,19 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="list-footer">
+                            <div class="status">
+                                <div class="progress"
+                                     data-win-bind="style.display: loading Binding.Converter.toDisplay">
+                                    <progress class="win-ring win-medium wait-circle"></progress>
+                                </div>
+                                <div class="counter"
+                                     data-win-bind="style.display: loading Binding.Converter.toDisplayNone">
+                                    <span data-win-res="{textContent: 'contactList.count'}"></span><span>: </span>
+                                    <span data-win-bind="textContent: count"></span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="visitorFlowLevelIndicatorList-template"
                          data-win-control="WinJS.Binding.Template" style="display: none">
@@ -64,13 +77,15 @@
                         </div>
                     </div>
                     <div id="visitorFlowLevelIndicatorList"
-                         class="listview win-selectionstylefilled"
+                         class="listview"
                          data-win-control="WinJS.UI.ListView"
                          data-win-options="{
-                                layout : { type: WinJS.UI.ListLayout },
-                                itemTemplate: select('.visitorFlowLevelIndicatorList-template'),
-                                header: select('.list-header')
-                             }">
+                             itemTemplate: select('.visitorFlowLevelIndicatorList-template'),
+                             header: select('.list-header'),
+                             footer: select('.list-footer'),
+                             selectionMode: 'none',
+                             tapBehavior: 'none'
+                         }">
                     </div>
                 </div>
             </section>

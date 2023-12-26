@@ -11,7 +11,7 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("Application.eventQuestionnaireLayout", {
+    WinJS.Namespace.define("Application.EventQuestionnaireLayout", {
         EventQuestionnaireLayout: WinJS.Class.define(function (options) {
                 this._site = null;
                 this._surface = null;

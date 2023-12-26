@@ -50,7 +50,8 @@
             this.prevWidth = 0;
             this.prevHeight = 0;
 
-            this.controller = new GenDataQuestions.Controller(element);
+            var isMaster = Application.navigator && Application.navigator._nextMaster === pageName;
+            this.controller = new GenDataQuestions.Controller(element, null, isMaster);
             Log.ret(Log.l.trace);
         },
 

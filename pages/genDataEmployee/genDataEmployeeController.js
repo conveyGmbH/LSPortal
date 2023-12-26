@@ -147,7 +147,6 @@
             }
             this.getRecordId = getRecordId;
 
-
             var deleteData = function (complete, error) {
                 Log.call(Log.l.trace, "GenDataEmployee.Controller.");
                 AppData.setErrorMsg(that.binding);
@@ -704,7 +703,7 @@
                     genFragEventsFragmentControl.controller) {
                     if (genFragEventsFragmentControl.controller.binding &&
                         genFragEventsFragmentControl.controller.binding.loadingState !== "complete") {
-                        ret = WinJS.Promise.timeout(20).then(function() {
+                        ret = WinJS.Promise.timeout(50).then(function() {
                             return that.resizeGenFragEvents();
                         });
                         Log.ret(Log.l.u1, "listview layout not yet completed");
@@ -712,7 +711,7 @@
                     }
                 }
                 var genFragEventsHost = pageElement.querySelector("#genfrageventshost");
-                ret = WinJS.Promise.timeout(0).then(function () {
+                ret = WinJS.Promise.timeout(20).then(function () {
                     if (genFragEventsHost &&
                         genFragEventsHost.style &&
                         genFragEventsFragmentControl &&
@@ -728,7 +727,7 @@
                             (genFragEventsFooterContainer ? genFragEventsFooterContainer.offsetHeight : 0) + 8;
                         genFragEventsHost.style.height = height.toString() + "px";
                     }
-                    return WinJS.Promise.timeout(0);
+                    return WinJS.Promise.timeout(20);
                 }).then(function () {
                     if (genFragEventsFragmentControl &&
                         typeof genFragEventsFragmentControl.updateLayout === "function") {
@@ -828,7 +827,6 @@
                     AppBar.notifyModified = true;
                     if (recordId) {
                         Log.print(Log.l.trace, "Data loaded");
-                        that.resizeGenFragEvents();
                         var master = Application.navigator.masterControl;
                         if (master && master.controller) {
                             master.controller.scrollToRecordId(recordId);

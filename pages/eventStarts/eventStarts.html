@@ -25,12 +25,24 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="list-footer">
+                            <div class="status">
+                                <div class="progress"
+                                     data-win-bind="style.display: loading Binding.Converter.toDisplay">
+                                    <progress class="win-ring win-medium wait-circle"></progress>
+                                </div>
+                                <div class="counter"
+                                     data-win-bind="style.display: loading Binding.Converter.toDisplayNone">
+                                    <span data-win-res="{textContent: 'contactList.count'}"></span><span>: </span>
+                                    <span data-win-bind="textContent: count"></span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="eventStarts-template"
                          data-win-control="WinJS.Binding.Template" style="display: none">
                         <div class="field_line field_line_odd">
-                            <!--MandantStartTitel-->
-                            <span class="label win-type-caption" data-win-bind="textContent: MandantSerieTitel"></span>
+                            <span class="label win-type-caption" data-win-bind="textContent: MandantStartTitel"></span>
                             <input class="input_field win-textbox" type="text"
                                    data-win-bind="value: Titel"
                                    data-field-entry="Titel" />
@@ -38,19 +50,13 @@
                                 <span class="label win-type-caption" data-win-bind="textContent: LGNTINITSpracheTitle"></span>
                             </div>
                         </div>
-                       <!-- <div class="field_line field_line_even">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventSeries.sortierung'}"></span>
-                            <span class="label landscape_only" data-win-res="{textContent: 'eventSeries.sortierung'}"></span>
-                            <input name="Sortierung" class="input_field win-textbox" type="number" data-win-bind="value: Sortierung Binding.Mode.twoway" data-field-entry="StartSortierung" />
-                        </div>
-                        <div class="field-separator"></div>-->
                     </div>
                     <div id="eventStartsList"
                          class="listview win-selectionstylefilled"
                          data-win-control="WinJS.UI.ListView"
                          data-win-options="{
-                             layout : { type: WinJS.UI.ListLayout },
                              itemTemplate: select('.eventStarts-template'),
+                             footer: select('.list-footer'),
                              header: select('.list-header')
                          }">
                     </div>

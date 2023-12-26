@@ -11,7 +11,7 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("Application.eventResourceAdministrationLayout", {
+    WinJS.Namespace.define("Application.EventResourceAdministrationLayout", {
         EventTextLayout: WinJS.Class.define(function (options) {
                 this._site = null;
                 this._surface = null;

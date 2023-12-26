@@ -108,6 +108,7 @@
                 return ret;
             },
             relationName: ContactResultsList._contactResultsView.relationName,
+            pkName: ContactResultsList._contactResultsView.oDataPkName,
             getRecordId: function (record) {
                 var ret = null;
                 if (record) {

@@ -50,10 +50,10 @@
             // add page specific commands to AppBar
             var commandList = [
                 { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" },
-                { id: "clickDelete", label: getResourceText("command.delete"), tooltip: getResourceText("tooltip.deletequestion"), section: "primary", svg: "garbage_can" },
-                { id: "clickNewQuestion", label: getResourceText("command.newquestion"), tooltip: getResourceText("tooltip.newquestion"), section: "primary", svg: "plus" }
+                { id: "clickNew", label: getResourceText("command.newquestion"), tooltip: getResourceText("tooltip.newquestion"), section: "primary", svg: "plus" },
+                { id: "clickOk", label: getResourceText("command.ok"), tooltip: getResourceText("tooltip.ok"), section: "primary", svg: "navigate_check", key: WinJS.Utilities.Key.enter },
+                { id: "clickDelete", label: getResourceText("command.delete"), tooltip: getResourceText("tooltip.deletequestion"), section: "primary", svg: "garbage_can" }
             ];
-            var isMaster = Application.navigator && Application.navigator._nextMaster === pageName;
             this.controller = new GenDataAnswers.Controller(element, commandList);
             Log.ret(Log.l.trace);
         },
@@ -73,24 +73,19 @@
             if (element && !that.inResize) {
                 that.inResize = 1;
                 ret =  WinJS.Promise.timeout(0).then(function () {
-                    var contactList = element.querySelector("#genDataAnswersList.listview");
-                    if (contactList && contactList.style) {
-                        var contentarea = element.querySelector(".contentarea");
-                        if (contentarea) {
-                            var width = contentarea.clientWidth;
-                            var height = contentarea.clientHeight - 8;
-                            var contentheader = element.querySelector(".content-header");
-                            if (contentheader) {
-                                height -= contentheader.clientHeight;
+                    var contentarea = element.querySelector(".contentarea");
+                    if (contentarea) {
+                        var width = contentarea.clientWidth;
+                        var height = contentarea.clientHeight;
+                        if (width !== that.prevWidth) {
+                            that.prevWidth = width;
+                            if (that.controller &&
+                                typeof that.controller.resizeGenFragAnswers === "function") {
+                                that.controller.resizeGenFragAnswers();
                             }
-                            if (width !== that.prevWidth) {
-                                that.prevWidth = width;
-                                contactList.style.width = width.toString() + "px";
-                            }
-                            if (height !== that.prevHeight) {
-                                that.prevHeight = height;
-                                contactList.style.height = height.toString() + "px";
-                            }
+                        }
+                        if (height !== that.prevHeight) {
+                            that.prevHeight = height;
                         }
                     }
                     that.inResize = 0;

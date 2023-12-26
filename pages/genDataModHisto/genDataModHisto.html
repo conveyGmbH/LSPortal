@@ -46,14 +46,13 @@
                             <div class="list-field-small-relative-30 win-type-ellipsis"
                                  data-win-bind="textContent: PersonKategorie"></div>
                             <div class="list-field-small-relative-30-list-star win-type-ellipsis">
-                                <div id="modRating"
-                                     data-win-control="WinJS.UI.Rating"
+                                <div data-win-control="WinJS.UI.Rating" 
                                      data-win-options="{maxRating : 5}"
-                                     onclick="AppBar.handleEvent('click', 'clickUpdateRating', event)"
-                                     data-win-bind="winControl.userRating: Rating" ></div>
+                                     data-win-bind="winControl.userRating: Rating" data-field-entry="Rating"></div>
                             </div>
                             <div class="list-field-small-relative-20 win-type-ellipsis">
-                                <input id="modRatingText" class="input_field win-textbox" type="text" data-win-bind="value: RatingText" onfocusout="AppBar.handleEvent('focusout', 'clickUpdateRatingText', event)"/>
+                                <input class="input_field win-textbox" type="text"
+                                       data-win-bind="value: RatingText" data-field-entry="RatingText">
                             </div>
                         </div>
                         <div class="list-portrait-only">
@@ -72,9 +71,14 @@
                     <div class="headerFooterPlaceholder">
                         <div class="list-footer">
                             <div class="status">
-                                <progress class="win-progress-bar progress"></progress>
-                                <div class="counter">
-                                    <span data-win-res="{textContent: 'contactList.count'}"></span><span>: </span><span data-win-bind="textContent: count"></span>
+                                <div class="progress"
+                                     data-win-bind="style.display: loading Binding.Converter.toDisplay">
+                                    <progress class="win-ring win-medium wait-circle"></progress>
+                                </div>
+                                <div class="counter"
+                                     data-win-bind="style.display: loading Binding.Converter.toDisplayNone">
+                                    <span data-win-res="{textContent: 'contactList.count'}"></span><span>: </span>
+                                    <span data-win-bind="textContent: count"></span>
                                 </div>
                             </div>
                         </div>

@@ -15,93 +15,61 @@
                     <div class="content-header">
                         <div class="win-type-subtitle master-list-header">
                             <span data-win-res="{textContent: 'genDataAnswers.title'}"></span><br />
-
                         </div>
                     </div>
-                <div class="content-record"
-                     data-win-bind="style.display: dataQuestion.QuestionVIEWID Binding.Converter.toDisplay">
-                    <div class="field_line field_line_odd" style="overflow-y: hidden">
-                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'genDataAnswers.question'}"></span>
-                        <span class="label landscape_only" data-win-res="{textContent: 'genDataAnswers.question'}"></span>
-                        <input name="Question" class="input_field win-textbox" type="text" data-win-bind="value: dataQuestion.QuestionTitle Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone" onfocusout="AppBar.handleEvent('focusout', 'onfocusoutQuestion', event)" />
-                        <span class="input_field" data-win-bind="textContent: dataQuestion.QuestionTitle; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
-                    </div>
-                    <div class="field_line field_line_even">
-                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'genDataAnswers.questiongroup'}"></span>
-                        <span class="label landscape_only" data-win-res="{textContent: 'genDataAnswers.questiongroup'}"></span>
-                        <select id="questiongroup"
-                                class="input_field win-dropdown"
-                                data-win-control="WinJS.UI.Repeater"
-                                data-win-bind="value: dataQuestion.QuestionGroupID Binding.Mode.twoway">
-                            <option data-win-bind="value: QuestionGroupVIEWID; textContent: GroupText"></option>
-                        </select>
-                    </div>
-                    <div class="line-separator"></div>
-                    <div class="field_line field_line_odd">
-                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailing.language'}"></span>
-                        <span class="label landscape_only" data-win-res="{textContent: 'mailing.language'}"></span>
-                        <select id="InitSprache"
-                                class="input_field win-dropdown"
-                                data-win-control="WinJS.UI.Repeater"
-                                data-win-bind="value: lang Binding.Mode.twoway">
-                            <option data-win-bind="value: LanguageID; textContent: TITLE"></option>
-                        </select>
-                    </div>
-                    <div class="line-separator"></div>
-                    <div class="field_line field_line_odd" style="overflow-y: hidden">
-                        <div class="answer-count-container">
-                            <span class="answer-count-label win-type-caption"
-                                  data-win-res="{textContent: 'questionList.answercnt'}"></span>
-                            <input class="answer-count-range win-range"
-                                   name="range2"
-                                   type="range" min="0" max="20" step="1"
-                                   data-win-bind="value: Anzahl"
-                                   oninput="AppBar.handleEvent('change', 'changedAnswerCount', event)"
-                                   onchange="AppBar.handleEvent('change', 'changedAnswerCount', event)" />
-                            <span class="answer-count range_output" data-win-bind="textContent: Anzahl"></span>
+                    <div class="content-record"
+                         data-win-bind="style.display: dataQuestion.QuestionVIEWID Binding.Converter.toDisplay">
+                        <div class="field_line field_line_odd" style="overflow-y: hidden">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'genDataAnswers.question'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'genDataAnswers.question'}"></span>
+                            <input name="Question" class="input_field win-textbox" type="text" 
+                                   data-win-bind="value: dataQuestion.QuestionTitle Binding.Mode.twoway" data-win-bind-onevent="oninput"
+                                   onchange="AppBar.handleEvent('change', 'changedQuestion', event)" />
                         </div>
-                    </div>
-                    <div class="line-separator"></div>
-                    <div class="genDataAnswersList-template"
-                         data-win-control="WinJS.Binding.Template" style="display: none">
-                        <div class="list-landscape-only">
-                            <div class="row-bkg-gray"
-                                 data-win-bind="style.display: index Binding.Converter.oddToDisplay"></div>
-                            <div class="field_line_full">
-                                <input id="answertext" class="input_field win-textbox" type="text" data-win-bind="value: AnswerText Binding.Mode.twoway" />
+                        <div class="field_line field_line_even">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'genDataAnswers.questiongroup'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'genDataAnswers.questiongroup'}"></span>
+                            <select id="questiongroup"
+                                    class="input_field win-dropdown"
+                                    data-win-control="WinJS.UI.Repeater"
+                                    data-win-bind="value: dataQuestion.QuestionGroupID"
+                                    onchange="AppBar.handleEvent('change', 'changedQuestionGroup', event)">
+                                <option data-win-bind="value: QuestionGroupVIEWID; textContent: GroupText"></option>
+                            </select>
+                        </div>
+                        <div class="line-separator"></div>
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailing.language'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'mailing.language'}"></span>
+                            <select id="InitSprache"
+                                    class="input_field win-dropdown"
+                                    data-win-control="WinJS.UI.Repeater"
+                                    data-win-bind="value: languageId"
+                                    onchange="AppBar.handleEvent('change', 'changedLanguage', event)">
+                                <option data-win-bind="value: LanguageID; textContent: TITLE"></option>
+                            </select>
+                        </div>
+                        <div class="line-separator"></div>
+                        <div class="field_line field_line_odd">
+                            <div class="answer-count-container">
+                                <span class="answer-count-label win-type-caption"
+                                      data-win-res="{textContent: 'questionList.answercnt'}"></span>
+                                <input class="answer-count-range win-range"
+                                       name="range2"
+                                       type="range" min="0" max="20" step="1"
+                                       data-win-bind="value: answerCount"
+                                       oninput="AppBar.handleEvent('change', 'changedAnswerCount', event)"
+                                       onchange="AppBar.handleEvent('change', 'changedAnswerCount', event)" />
+                                <span class="answer-count range_output" data-win-bind="textContent: answerCount"></span>
                             </div>
                         </div>
-                        <div class="list-portrait-only">
-                            <div class="row-separator"></div>
-                            <div class="list-compressed-content-container">
-                                <div class="field_line_full">
-                                    <input class="input_field win-textbox" type="text" data-win-bind="value: AnswerText Binding.Mode.twoway" />
-                                </div>
-                            </div>
+                        <div class="line-separator"></div>
+                        <div class="field_line" data-win-bind="style.display: answerCount Binding.Converter.toDisplay">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'skills.answercnt'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'skills.answercnt'}"></span>
+                            <div id="genfraganswershost" class="input_field fragmenthost"></div>
                         </div>
                     </div>
-                    <div class="headerFooterPlaceholder">
-                        <div class="list-footer">
-                            <div class="status">
-                                <progress class="win-progress-bar progress"></progress>
-                                <div class="counter">
-                                    <span data-win-res="{textContent: 'contactList.count'}"></span><span>: </span><span data-win-bind="textContent: count"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="field_line" style="overflow-y: hidden">
-                        <div id="genDataAnswers"
-                             class="listview win-selectionstylefilled"
-                             data-win-control="WinJS.UI.ListView"
-                             data-win-options="{
-                             layout : { type: WinJS.UI.ListLayout },
-                             itemTemplate: select('.genDataAnswersList-template'),
-                             footer: select('.list-footer')
-                         }">
-                        </div>
-                    </div>
-                </div>
                 </div>
                 <div class="error-message"
                      data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>

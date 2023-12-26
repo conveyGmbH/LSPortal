@@ -11,7 +11,7 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("Application.eventSeriesLayout", {
+    WinJS.Namespace.define("Application.EventSeriesLayout", {
         EventSeriesLayout: WinJS.Class.define(function (options) {
                 this._site = null;
                 this._surface = null;
@@ -30,7 +30,7 @@
 
                 // Reset the layout to its initial state
                 uninitialize: function () {
-                    WinJS.Utilities.removeClass(this._surface, "eventTextLayout");
+                    WinJS.Utilities.removeClass(this._surface, "eventSeriesLayout");
                     this._site = null;
                     this._surface = null;
                 }

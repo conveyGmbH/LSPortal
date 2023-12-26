@@ -11,8 +11,8 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("Application.QuestiongroupLayout", {
-        QuestionsLayout: WinJS.Class.define(function (options) {
+    WinJS.Namespace.define("Application.BarcodeAdministrationLayout", {
+        BarcodeAdministrationLayout: WinJS.Class.define(function (options) {
             this._site = null;
             this._surface = null;
         },
@@ -23,14 +23,14 @@
                 this._surface = this._site.surface;
 
                 // Add a CSS class to control the surface level layout
-                WinJS.Utilities.addClass(this._surface, "questiongroupLayout");
+                WinJS.Utilities.addClass(this._surface, "barcodeAdministrationLayout");
 
                 return WinJS.UI.Orientation.vertical;
             },
 
             // Reset the layout to its initial state
             uninitialize: function () {
-                WinJS.Utilities.removeClass(this._surface, "questiongroupLayout");
+                WinJS.Utilities.removeClass(this._surface, "barcodeAdministrationLayout");
                 this._site = null;
                 this._surface = null;
             }

@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="genFragAnswers.css" rel="stylesheet" />
+    <script type="text/javascript" src="genFragAnswersService.js"></script>
+    <script type="text/javascript" src="genFragAnswersController.js"></script>
+    <script type="text/javascript" src="genFragAnswers.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="genFragAnswers fragment">
+        <div id="genFragAnswersController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="contentarea win-type-body">
+                    <div class="data-template"
+                         data-win-control="WinJS.Binding.Template" style="display: none">
+                        <div class="list-landscape-only">
+                            <div class="row-bkg-gray"
+                                 data-win-bind="style.display: index Binding.Converter.oddToDisplay"></div>
+                            <input class="win-textbox" type="text" data-field-entry="AnswerText"
+                                   data-win-bind="value: AnswerText" />
+                        </div>
+                        <div class="list-portrait-only">
+                            <div class="row-separator"></div>
+                            <input class="win-textbox" type="text" data-field-entry="AnswerText" 
+                                   data-win-bind="value: AnswerText" />
+                        </div>
+                    </div>
+                    <div id="genFragAnswers"
+                         class="listview win-selectionstylefilled"
+                         data-win-control="WinJS.UI.ListView"
+                         data-win-options="{
+                             itemTemplate: select('.data-template')
+                         }">
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

@@ -14,20 +14,20 @@
     var nav = WinJS.Navigation;
 
     WinJS.Namespace.define("ContactResultsList", {
-        Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList, isMaster) {
+        Controller: WinJS.Class.derive(Application.RecordsetController, function Controller(pageElement, commandList, isMaster) {
             Log.call(Log.l.trace, "ContactResultsList.Controller.");
             // ListView control
             var listView = pageElement.querySelector("#contactResultsList.listview");
 
             Application.RecordsetController.apply(this, [pageElement, {
-                loading: true,
-                count: 0,
                 contactId: null,
                 noctcount: 0,
                 searchString: ""
             }, commandList, isMaster, null, ContactResultsList.contactResultsView, listView]);
 
             var that = this;
+
+            var layout = null;
 
             this.dispose = function () {
                 if (listView && listView.winControl) {
@@ -48,8 +48,6 @@
                 ContactResultsList._eventId = value;
             }
             this.setEventId = setEventId;
-
-            var layout = null;
 
             var resultConverter = function (item, index) {
                 item.index = index;
@@ -115,10 +113,7 @@
                     Log.call(Log.l.trace, "ContactResultsList.Controller.");
                     if (event && event.currentTarget) {
                         that.binding.searchString = event.currentTarget.value;
-                        that.binding.loading = true;
-                        that.loadData(that.binding.searchString).then(function() {
-                            that.binding.loading = false;
-                        });
+                        that.loadData(that.binding.searchString);
                     }
                     Log.ret(Log.l.trace);
                 },
@@ -131,10 +126,7 @@
                             ContactResultsList._orderAttribute = event.currentTarget.id;
                             ContactResultsList._orderDesc = false;
                         }
-                        that.binding.loading = true;
-                        that.loadData(that.binding.searchString).then(function () {
-                            that.binding.loading = false;
-                        });
+                        that.loadData(that.binding.searchString);
                     }
                     Log.ret(Log.l.trace);
                 },
@@ -151,6 +143,7 @@
                 onSelectionChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "ContactResultsList.Controller.");
                     that.selectionChanged().then(function () {
+                        AppBar.triggerDisableHandlers();
                         if (that.getEventId()) {
                             Application.navigateById("contactResultsEvents");
                         } else {
@@ -162,7 +155,6 @@
                 onLoadingStateChanged: function (eventInfo) {
                     var i;
                     Log.call(Log.l.trace, "ContactResultsList.Controller.");
-                    that.loadingStateChanged(eventInfo);
                     if (listView && listView.winControl) {
                         Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
                         if (listView.winControl.loadingState === "itemsLoading") {
@@ -202,6 +194,7 @@
                             });
                         }
                     }
+                    that.loadingStateChanged(eventInfo);
                     Log.ret(Log.l.trace);
                 },
                 onFooterVisibilityChanged: function (eventInfo) {
@@ -209,20 +202,7 @@
                     if (eventInfo && eventInfo.detail) {
                         var visible = eventInfo.detail.visible;
                         if (visible && that.nextUrl) {
-                            that.binding.loading = true;
-                            that.loadNext(function (json) {
-                                // this callback will be called asynchronously
-                                // when the response is available
-                                Log.print(Log.l.trace, "ContactResultsList.contactResultsView: success!");
-                            }, function (errorResponse) {
-                                // called asynchronously if an error occurs
-                                // or server returns response with an error status.
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                            }).then(function() {
-                                that.binding.loading = false;
-                            });
-                        } else {
-                            that.binding.loading = false;
+                            that.loadNext();
                         }
                     }
                     Log.ret(Log.l.trace);
@@ -274,7 +254,6 @@
                 return that.loadData(that.binding.searchString);
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
-                that.binding.loading = false;
                 AppBar.notifyModified = true;
             });
             Log.ret(Log.l.trace);

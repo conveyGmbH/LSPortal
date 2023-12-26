@@ -6,92 +6,7 @@
 
 (function () {
     "use strict";
-    WinJS.Namespace.define("GenDataAnswers", {
-        _answerView: {
-            get: function () {
-                return AppData.getFormatView("Answer", 20649);
-            }
-        },
-        _answerTable: {
-            get: function () {
-                return AppData.getFormatView("Answer", 0);
-            }
-        },
-        _questionID: 0
-    });
-    WinJS.Namespace.define("GenDataAnswers", {
-        answerView: {
-            select: function (complete, error, restriction, options) {
-                if (!restriction) {
-                    restriction = {
-                        QuestionID: GenDataAnswers._questionID,
-                        LanguageSpecID: AppData.getLanguageId()
-                    };
-                }
-                if (!options) {
-                    options = {
-                        ordered: true,
-                        orderAttribute: "AnswerVIEWID",
-                        desc: false
-                    };
-                }
-                Log.call(Log.l.trace, "GenDataModHisto._benutzerView.");
-                   
-                var ret = GenDataAnswers._answerView.select(complete, error, restriction, options);
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            getNextUrl: function (response) {
-                Log.call(Log.l.trace, "GenDataModHisto._benutzerView.");
-                var ret = GenDataAnswers._answerView.getNextUrl(response);
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            selectNext: function (complete, error, response, nextUrl) {
-                Log.call(Log.l.trace, "GenDataModHisto._benutzerView.");
-                var ret = GenDataAnswers._answerView.selectNext(complete, error, response, nextUrl);
-                // this will return a promise to controller
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            relationName: GenDataAnswers._answerView.relationName,
-            pkName: GenDataAnswers._answerView.oDataPkName,
-            getRecordId: function (record) {
-                var ret = null;
-                if (record) {
-                    if (GenDataAnswers._answerView.oDataPkName) {
-                        ret = record[GenDataAnswers._answerView.oDataPkName];
-                    }
-                    if (!ret && GenDataAnswers._answerView.pkName) {
-                        ret = record[GenDataAnswers._answerView.pkName];
-                    }
-                }
-                return ret;
-            }
-        },
-        answerTable: {
-            update: function (complete, error, recordId, viewResponse) {
-                Log.call(Log.l.trace, "GenDataModHisto._benutzerTable.");
-                var ret = GenDataAnswers._answerTable.update(complete, error, recordId, viewResponse);
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            relationName: GenDataAnswers._answerTable.relationName,
-            pkName: GenDataAnswers._answerTable.oDataPkName,
-            getRecordId: function (record) {
-                var ret = null;
-                if (record) {
-                    if (GenDataAnswers._answerTable.oDataPkName) {
-                        ret = record[GenDataAnswers._answerTable.oDataPkName];
-                    }
-                    if (!ret && GenDataAnswers._answerTable.pkName) {
-                        ret = record[GenDataAnswers._answerTable.pkName];
-                    }
-                }
-                return ret;
-            }
-        }
-    });
+
     WinJS.Namespace.define("GenDataAnswers", {
         _questionView: {
             get: function () {
@@ -103,72 +18,36 @@
                 return AppData.getFormatView("Question", 0);
             }
         },
-        _questionID: 0
+        _questionId: 0
     });
     WinJS.Namespace.define("GenDataAnswers", {
         questionView: {
-            select: function (complete, error, restriction, options) {
-                if (!restriction) {
-                    restriction = {
-                        QuestionVIEWID: GenDataAnswers._questionID
-                    };
-                }
-                if (!options) {
-                    options = {
-                        ordered: true,
-                        orderAttribute: "QuestionVIEWID",
-                        desc: false
-                    };
-                }
-                Log.call(Log.l.trace, "GenDataModHisto._benutzerView.");
-
-                var ret = GenDataAnswers._questionView.select(complete, error, restriction, options);
+            select: function (complete, error, recordId) {
+                Log.call(Log.l.trace, "GenDataAnswers.questionView.");
+                var ret = GenDataAnswers._questionView.selectById(complete, error, recordId);
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            getNextUrl: function (response) {
-                Log.call(Log.l.trace, "GenDataModHisto._benutzerView.");
-                var ret = GenDataAnswers._questionView.getNextUrl(response);
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            selectNext: function (complete, error, response, nextUrl) {
-                Log.call(Log.l.trace, "GenDataModHisto._benutzerView.");
-                var ret = GenDataAnswers._questionView.selectNext(complete, error, response, nextUrl);
-                // this will return a promise to controller
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            relationName: GenDataAnswers._questionView.relationName,
-            pkName: GenDataAnswers._questionView.oDataPkName,
-            getRecordId: function (record) {
-                var ret = null;
-                if (record) {
-                    if (GenDataAnswers._questionView.oDataPkName) {
-                        ret = record[GenDataAnswers._questionView.oDataPkName];
-                    }
-                    if (!ret && GenDataAnswers._questionView.pkName) {
-                        ret = record[GenDataAnswers._questionView.pkName];
-                    }
-                }
-                return ret;
-            }
-        },
-        questionTable: {
             update: function (complete, error, recordId, viewResponse) {
-                Log.call(Log.l.trace, "GenDataModHisto._benutzerTable.");
+                Log.call(Log.l.trace, "GenDataAnswers.questionView.");
                 var ret = GenDataAnswers._questionTable.update(complete, error, recordId, viewResponse);
                 Log.ret(Log.l.trace);
                 return ret;
             },
             insert: function (complete, error, viewResponse) {
-                Log.call(Log.l.trace, "employeeView.");
+                Log.call(Log.l.trace, "GenDataAnswers.questionView.");
                 var ret = GenDataAnswers._questionTable.insert(complete, error, viewResponse);
                 Log.ret(Log.l.trace);
                 return ret;
             },
+            deleteRecord: function (complete, error, recordId) {
+                Log.call(Log.l.trace, "GenDataAnswers.questionView.");
+                var ret = GenDataAnswers._questionTable.deleteRecord(complete, error, recordId);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
             relationName: GenDataAnswers._questionTable.relationName,
-            pkName: GenDataAnswers._questionTable.oDataPkName,
+            pkName: GenDataAnswers._questionTable.pkName,
             getRecordId: function (record) {
                 var ret = null;
                 if (record) {
@@ -182,7 +61,11 @@
                 return ret;
             },
             defaultValue: {
-                QuestionTitle: ""
+                QuestionCode: "",
+                QuestionTitle: "",
+                InActive: "",
+                NumAnswers: 0,
+                GroupText: ""
             }
         },
         _initSpracheView: {
@@ -191,9 +74,9 @@
             }
         },
         initSpracheView: {
-            select: function (complete, error, restriction) {
+            select: function (complete, error) {
                 Log.call(Log.l.trace, "Mailing._initSpracheView.");
-                var ret = GenDataAnswers._initSpracheView.select(complete, error, restriction, { ordered: true });
+                var ret = GenDataAnswers._initSpracheView.select(complete, error);
                 Log.ret(Log.l.trace);
                 return ret;
             },

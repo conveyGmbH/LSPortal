@@ -12,6 +12,21 @@
         <div id="eventSeriesAdministrationController" class="data-container">
             <section aria-label="Main content" role="main" class="animationElement">
                 <div class="contentarea win-type-body">
+                    <div class="headerFooterPlaceholder" style="display: none">
+                        <div class="list-footer">
+                            <div class="status">
+                                <div class="progress"
+                                     data-win-bind="style.display: loading Binding.Converter.toDisplay">
+                                    <progress class="win-ring win-medium wait-circle"></progress>
+                                </div>
+                                <div class="counter"
+                                     data-win-bind="style.display: loading Binding.Converter.toDisplayNone">
+                                    <span data-win-res="{textContent: 'contactList.count'}"></span><span>: </span>
+                                    <span data-win-bind="textContent: count"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="eventSerie-template"
                          data-win-control="WinJS.Binding.Template" style="display: none">
                         <div class="field_line field_line_odd">
@@ -27,18 +42,6 @@
                             <span class="label landscape_only"></span>
                         </div>
                         <div class="line-separator"></div>
-                        <!--<div class="field_line field_line_odd">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventSeriesAdministration.startAnzeige'}"></span>
-                            <span class="label landscape_only" data-win-res="{textContent: 'eveneventSeriesAdministrationtSeries.startAnzeige'}"></span>
-                            <div class="input_field toggle-switch-parent" data-field-entry="StartAnzeige">
-                                <div class="input_field"
-                                     data-win-control="WinJS.UI.ToggleSwitch"
-                                     data-win-bind="winControl.checked: StartAnzeige Binding.Mode.twoway"
-                                     data-field-entry="StartAnzeige"
-                                     onclick="AppBar.handleEvent('click', 'clickForward', event)">
-                                </div>
-                            </div>
-                        </div>-->
                         <div class="field_line field_line_odd">
                             <div class="list-serieFlagcon-item">
                                 <label class="list-serieFlagcon-field">
@@ -53,21 +56,9 @@
                         <div class="field_line field_line_even" data-win-bind="style.visibility: StartAnzeige Binding.Converter.toVisibility">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventSeriesAdministration.startSortierung'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'eventSeriesAdministration.startSortierung'}"></span>
-                            <input name="startSortierung" class="input_field win-textbox" type="number" data-win-bind="value: StartSortierung Binding.Mode.twoway" data-field-entry="StartSortierung"/>
+                            <input name="startSortierung" class="input_field win-textbox" type="number" data-win-bind="value: StartSortierung Binding.Mode.twoway" data-field-entry="StartSortierung" />
                         </div>
                         <div class="field-separator"></div>
-                        <!--<div class="field_line field_line_odd">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventSeriesAdministration.serieAnzeige'}"></span>
-                            <span class="label landscape_only" data-win-res="{textContent: 'eventSeriesAdministration.serieAnzeige'}"></span>
-                            <div class="input_field toggle-switch-parent" data-field-entry="SerieAnzeige">
-                                <div class="input_field"
-                                     data-win-control="WinJS.UI.ToggleSwitch"
-                                     data-win-bind="winControl.checked: SerieAnzeige Binding.Mode.twoway"
-                                     data-field-entry="SerieAnzeige"
-                                     onclick="AppBar.handleEvent('click', 'clickForward', event)">
-                                </div>
-                            </div>
-                        </div>-->
                         <div class="field_line field_line_odd">
                             <div class="list-serieFlagcon-item">
                                 <label class="list-mandcon-field">
@@ -82,7 +73,7 @@
                         <div class="field_line field_line_even" data-win-bind="style.visibility: SerieAnzeige Binding.Converter.toVisibility">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventSeriesAdministration.serieSortierung'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'eventSeriesAdministration.serieSortierung'}"></span>
-                            <input name="serieSortierung" class="input_field win-textbox" type="number" data-win-bind="value: SerieSortierung Binding.Mode.twoway" data-field-entry="SerieSortierung"/>
+                            <input name="serieSortierung" class="input_field win-textbox" type="number" data-win-bind="value: SerieSortierung Binding.Mode.twoway" data-field-entry="SerieSortierung" />
                         </div>
                         <div class="field-separator"></div>
                     </div>
@@ -91,6 +82,7 @@
                          data-win-control="WinJS.UI.ListView"
                          data-win-options="{
                              layout : { type: WinJS.UI.ListLayout },
+                             footer: select('.list-footer'),
                              itemTemplate: select('.eventSerie-template')
                          }">
                     </div>

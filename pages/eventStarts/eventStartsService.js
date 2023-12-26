@@ -39,19 +39,19 @@
         },
         _langStartsTable: {
             get: function () {
-                return AppData.getFormatView("LangMandantSerie", 0); //LangMandantStart?
+                return AppData.getFormatView("LangMandantStart", 0); 
             }
         },
         _langStartsView: {
             get: function () {
-                return AppData.getFormatView("LangMandantSerie", 20629); //LangMandantStart..?
+                return AppData.getFormatView("LangMandantStart", 20679); 
             }
         }
     });
     WinJS.Namespace.define("EventStarts", {
         startsView: {
             select: function (complete, error, restriction, options) {
-                Log.call(Log.l.trace, "EventStarts.seriesView.");
+                Log.call(Log.l.trace, "EventStarts.startsView.");
                 if (!restriction) {
                     restriction = {
                         NameLanguageID: AppData.getLanguageId(),
@@ -68,13 +68,13 @@
                 return ret;
             },
             getNextUrl: function (response) {
-                Log.call(Log.l.trace, "EventStarts.seriesView.");
+                Log.call(Log.l.trace, "EventStarts.startsView.");
                 var ret = EventStarts._langStartsView.getNextUrl(response);
                 Log.ret(Log.l.trace);
                 return ret;
             },
             selectNext: function (complete, error, response, nextUrl) {
-                Log.call(Log.l.trace, "EventStarts.seriesView.");
+                Log.call(Log.l.trace, "EventStarts.startsView.");
                 var ret = EventStarts._langStartsView.selectNext(complete, error, response, nextUrl);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);

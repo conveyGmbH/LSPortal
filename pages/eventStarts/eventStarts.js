@@ -11,8 +11,8 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("Application.eventSeriesLayout", {
-        EventSeriesLayout: WinJS.Class.define(function (options) {
+    WinJS.Namespace.define("Application.EventStartsLayout", {
+        EventStartsLayout: WinJS.Class.define(function (options) {
                 this._site = null;
                 this._surface = null;
             },
@@ -23,14 +23,14 @@
                     this._surface = this._site.surface;
 
                     // Add a CSS class to control the surface level layout
-                    WinJS.Utilities.addClass(this._surface, "eventSeriesLayout");
+                    WinJS.Utilities.addClass(this._surface, "eventStartsLayout");
 
                     return WinJS.UI.Orientation.vertical;
                 },
 
                 // Reset the layout to its initial state
                 uninitialize: function () {
-                    WinJS.Utilities.removeClass(this._surface, "eventTextLayout");
+                    WinJS.Utilities.removeClass(this._surface, "eventStartsLayout");
                     this._site = null;
                     this._surface = null;
                 }

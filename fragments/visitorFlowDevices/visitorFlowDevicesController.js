@@ -28,8 +28,11 @@
 
             var layout = null;
 
-            var maxLeadingPages = 0;
-            var maxTrailingPages = 0;
+            this.dispose = function () {
+                if (listView && listView.winControl) {
+                    listView.winControl.itemDataSource = null;
+                }
+            }
 
             // now do anything...
             /*var dotdevice = fragmentElement.querySelectorAll(".dotdev");
@@ -149,27 +152,17 @@
 
             // define handlers
             this.eventHandlers = {
+                onSelectionChanged: function (eventInfo) {
+                    Log.call(Log.l.trace, "VisitorFlowDevices.Controller.");
+                    that.selectionChanged().then(function () {
+                        AppBar.triggerDisableHandlers();
+                    });
+                    Log.ret(Log.l.trace);
+                },
                 onLoadingStateChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "VisitorFlowDevices.Controller.");
                     if (listView && listView.winControl) {
                         Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
-                        // single list selection
-                        if (listView.winControl.selectionMode !== WinJS.UI.SelectionMode.single) {
-                            listView.winControl.selectionMode = WinJS.UI.SelectionMode.single;
-                        }
-                        // direct selection on each tap
-                        if (listView.winControl.tapBehavior !== WinJS.UI.TapBehavior.directSelect) {
-                            listView.winControl.tapBehavior = WinJS.UI.TapBehavior.directSelect;
-                        }
-                        // Double the size of the buffers on both sides
-                        if (!maxLeadingPages) {
-                            maxLeadingPages = listView.winControl.maxLeadingPages * 4;
-                            listView.winControl.maxLeadingPages = maxLeadingPages;
-                        }
-                        if (!maxTrailingPages) {
-                            maxTrailingPages = listView.winControl.maxTrailingPages * 4;
-                            listView.winControl.maxTrailingPages = maxTrailingPages;
-                        }
                         if (listView.winControl.loadingState === "itemsLoading") {
                             if (!layout) {
                                 layout = Application.VisitorFlowDevicesLayout.VisitorFlowDevicesLayout;
@@ -191,45 +184,15 @@
                             }*/
                         }
                     }
+                    that.loadingStateChanged(eventInfo);
                     Log.ret(Log.l.trace);
                 },
                 onFooterVisibilityChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "VisitorFlowDevices.Controller.");
                     if (eventInfo && eventInfo.detail) {
-                        progress = listView.querySelector(".list-footer .progress");
-                        counter = listView.querySelector(".list-footer .counter");
                         var visible = eventInfo.detail.visible;
                         if (visible && that.nextUrl) {
-                            that.loading = true;
-                            if (progress && progress.style) {
-                                progress.style.display = "inline";
-                            }
-                            if (counter && counter.style) {
-                                counter.style.display = "none";
-                            }
-                            that.loadNext(function (json) {
-                                // this callback will be called asynchronously
-                                // when the response is available
-                                Log.print(Log.l.trace, "VisitorFlowDevices.visitorDeviceView: success!");
-                            }, function (errorResponse) {
-                                // called asynchronously if an error occurs
-                                // or server returns response with an error status.
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                                if (progress && progress.style) {
-                                    progress.style.display = "none";
-                                }
-                                if (counter && counter.style) {
-                                    counter.style.display = "inline";
-                                }
-                            });
-                        } else {
-                            if (progress && progress.style) {
-                                progress.style.display = "none";
-                            }
-                            if (counter && counter.style) {
-                                counter.style.display = "inline";
-                            }
-                            that.loading = false;
+                            that.loadNext();
                         }
                     }
                     Log.ret(Log.l.trace);
@@ -238,55 +201,10 @@
 
             // register ListView event handler
             if (listView) {
-                //this.addRemovableEventListener(listView, "iteminvoked", this.eventHandlers.onItemInvoked.bind(this));
+                this.addRemovableEventListener(listView, "selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
                 this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
                 this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
-                //this.addRemovableEventListener(listView, "headervisibilitychanged", this.eventHandlers.onHeaderVisibilityChanged.bind(this));
             }
-
-            /*var loadData = function () {
-                Log.call(Log.l.trace, "VisitorFlowDevices.");
-                AppData.setErrorMsg(that.binding);
-                var ret = new WinJS.Promise.as().then(function () {
-                        Log.print(Log.l.trace, "calling selectvisitorView...");
-                    VisitorFlowDevices.visitorDeviceView.select(function (json) {
-                            // this callback will be called asynchronously
-                            // when the response is available
-                            Log.print(Log.l.trace, "mitarbeiterView: success!");
-                            // mitarbeiterView returns object already parsed from json file in response
-                            if (json && json.d && json.d.results && json.d.results.length > 0) {
-                                var results = json.d.results;
-                                that.binding.devicetime = results;
-                                results.forEach(function (item, index) {
-                                    that.resultConverter(item, index);
-                                });
-                                that.deviceItem = new WinJS.Binding.List(results);
-                                if (listView && listView.winControl) {
-                                    // add ListView dataSource
-                                    listView.winControl.itemDataSource = that.deviceItem.dataSource;
-                                }
-                            } else {
-                                that.deviceItem = null;
-                                if (listView && listView.winControl) {
-                                    // add ListView dataSource
-                                    listView.winControl.itemDataSource = null;
-                                }
-                            }
-                        return WinJS.Promise.as();
-                        }, function (errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                            WinJS.Promise.timeout(3000).then(function () {
-                                
-                            });
-                            return WinJS.Promise.as();
-                        });
-                });
-                Log.ret(Log.l.trace);
-                return ret;
-            };
-            this.loadData = loadData;*/
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");

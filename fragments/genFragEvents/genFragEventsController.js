@@ -23,7 +23,6 @@
                 eventData: null,
                 ecRecordID: 0,
                 ecEventID: 0,
-                count: 0,
                 loadingState: null
             }]);
             var that = this;
@@ -155,9 +154,10 @@
                             if (that.loading) {
                                 that.loading = false;
                             }
+                            if (AppBar.scope && typeof AppBar.scope.resizeGenFragAnswers === "function") {
+                                AppBar.scope.resizeGenFragAnswers();
+                            }
                         }
-                        var header = fragmentElement.querySelector(".list-header");
-                        header.classList.toggle("sticky", window.scrollY > 0);
                         that.binding.loadingState = listView.winControl.loadingState;
                     }
                     Log.ret(Log.l.trace);

@@ -19,7 +19,6 @@
             var listView = pageElement.querySelector("#eventSpeakerList.listview");
 
             Application.RecordsetController.apply(this, [pageElement, {
-                count: 0,
                 sendentrytmailLabel: getResourceText("eventSpeakerAdministration.send"),
                 sendOk : null
             }, commandList, false,
@@ -31,12 +30,7 @@
             // superset of speaker entries in combobox
             this.speaker = null;
 
-            var progress = null;
-            var counter = null;
             var layout = null;
-
-            var maxLeadingPages = 0;
-            var maxTrailingPages = 0;
 
             // force reload on fieldEntry value change, to refill combobox!
             var forceReload = false;
@@ -120,10 +114,7 @@
             this.getFieldEntries = getFieldEntries;
 
             var resultConverter = function (item, index) {
-                Log.call(Log.l.trace, "EventSpeakerAdministration.Controller.", "index=", index);
-                var ret = item;
-                // reset mapped speaker on any result received
-                Log.ret(Log.l.trace, ret);
+                item.index = index;
             }
             this.resultConverter = resultConverter;
 
@@ -290,40 +281,12 @@
                     Log.call(Log.l.trace, "EventSpeakerAdministration.Controller.");
                     if (listView && listView.winControl) {
                         Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
-                        // single list selection
-                        if (listView.winControl.selectionMode !== WinJS.UI.SelectionMode.single) {
-                            listView.winControl.selectionMode = WinJS.UI.SelectionMode.single;
-                        }
-                        // direct selection on each tap
-                        if (listView.winControl.tapBehavior !== WinJS.UI.TapBehavior.directSelect) {
-                            listView.winControl.tapBehavior = WinJS.UI.TapBehavior.directSelect;
-                        }
-                        // Double the size of the buffers on both sides
-                        if (!maxLeadingPages) {
-                            maxLeadingPages = listView.winControl.maxLeadingPages * 4;
-                            listView.winControl.maxLeadingPages = maxLeadingPages;
-                        }
-                        if (!maxTrailingPages) {
-                            maxTrailingPages = listView.winControl.maxTrailingPages * 4;
-                            listView.winControl.maxTrailingPages = maxTrailingPages;
-                        }
                         if (listView.winControl.loadingState === "itemsLoading") {
                             if (!layout) {
                                 layout = Application.eventSpeakerAdministrationLayout.EventSpeakerLayout;
                                 listView.winControl.layout = { type: layout };
                             }
                         } else if (listView.winControl.loadingState === "complete") {
-                            if (that.loading) {
-                                progress = listView.querySelector(".list-footer .progress");
-                                counter = listView.querySelector(".list-footer .counter");
-                                if (progress && progress.style) {
-                                    progress.style.display = "none";
-                                }
-                                if (counter && counter.style) {
-                                    counter.style.display = "inline";
-                                }
-                                that.loading = false;
-                            }
                             if (that.records) {
                                 for (var i = 0; i < that.records.length; i++) {
                                     var item = that.records.getAt(i);
@@ -340,6 +303,7 @@
                             }
                         }
                     }
+                    that.loadingStateChanged(eventInfo);
                     Log.ret(Log.l.trace);
                 },
                 onHeaderVisibilityChanged: function (eventInfo) {
@@ -350,40 +314,9 @@
                 onFooterVisibilityChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "EventSpeakerAdministration.Controller.");
                     if (eventInfo && eventInfo.detail) {
-                        progress = listView.querySelector(".list-footer .progress");
-                        counter = listView.querySelector(".list-footer .counter");
                         var visible = eventInfo.detail.visible;
                         if (visible && that.nextUrl) {
-                            that.loading = true;
-                            if (progress && progress.style) {
-                                progress.style.display = "inline";
-                            }
-                            if (counter && counter.style) {
-                                counter.style.display = "none";
-                            }
-                            that.loadNext(function (json) {
-                                // this callback will be called asynchronously
-                                // when the response is available
-                                Log.print(Log.l.trace, "EventSpeakerAdministration.CR_V_FragengruppeView: success!");
-                            }, function (errorResponse) {
-                                // called asynchronously if an error occurs
-                                // or server returns response with an error status.
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                                if (progress && progress.style) {
-                                    progress.style.display = "none";
-                                }
-                                if (counter && counter.style) {
-                                    counter.style.display = "inline";
-                                }
-                            });
-                        } else {
-                            if (progress && progress.style) {
-                                progress.style.display = "none";
-                            }
-                            if (counter && counter.style) {
-                                counter.style.display = "inline";
-                            }
-                            that.loading = false;
+                            that.loadNext();
                         }
                     }
                     Log.ret(Log.l.trace);

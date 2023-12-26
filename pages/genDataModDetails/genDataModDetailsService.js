@@ -41,15 +41,16 @@
                 return AppData.getFormatView("Adresse", 0);
             }
         },
-        _adresseId: 0,
         _initPersonKategorieId: 0
     });
     WinJS.Namespace.define("GenDataModDetails", {
         adresseView: {
             select: function (complete, error, restriction, options) {
                 if (!restriction) {
+                    var master = Application.navigator.masterControl;
+                    var addressId = master.controller && master.controller.binding && master.controller.binding.addressId;
                     restriction = {
-                        AdresseVIEWID: GenDataModDetails._adresseId,
+                        AdresseVIEWID: addressId || 0,
                         LanguageSpecID: AppData.getLanguageId()
                     };
                 }
@@ -60,20 +61,19 @@
                         desc: false
                     };
                 }
-                Log.call(Log.l.trace, "EventResourceAdministration.eventView.");
-                   
+                Log.call(Log.l.trace, "GenDataModDetails.adresseView.");
                 var ret = GenDataModDetails._adresseView.select(complete, error, restriction, options);
                 Log.ret(Log.l.trace);
                 return ret;
             },
             getNextUrl: function (response) {
-                Log.call(Log.l.trace, "Events.eventView.");
+                Log.call(Log.l.trace, "GenDataModDetails.adresseView.");
                 var ret = GenDataModDetails._adresseView.getNextUrl(response);
                 Log.ret(Log.l.trace);
                 return ret;
             },
             selectNext: function (complete, error, response, nextUrl) {
-                Log.call(Log.l.trace, "Events.eventView.");
+                Log.call(Log.l.trace, "GenDataModDetails.adresseView.");
                 var ret = GenDataModDetails._adresseView.selectNext(complete, error, response, nextUrl);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
@@ -102,7 +102,7 @@
         },
         adresseTable: {
             update: function (complete, error, recordId, viewResponse) {
-                Log.call(Log.l.trace, "EventResourceAdministration.eventTable.");
+                Log.call(Log.l.trace, "GenDataModDetails.adresseTable.");
                 var ret = GenDataModDetails._adresseTable.update(complete, error, recordId, viewResponse);
                 Log.ret(Log.l.trace);
                 return ret;
@@ -146,25 +146,31 @@
             get: function () {
                 return AppData.getFormatView("PersonAdresse", 0);
             }
-        },
-        _personAdresseId: 0
+        }
     });
     WinJS.Namespace.define("GenDataModDetails", {
         personAdresseTable: {
             select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, "GenDataModDetails.personAdresseTable.");
                 if (!restriction) {
+                    var master = Application.navigator.masterControl;
+                    var recordId = master.controller && master.controller.curRecId;
                     restriction = {
-                        PersonAdresseVIEWID: GenDataModDetails._personAdresseId
+                        PersonAdresseVIEWID: recordId || 0
                     };
                 }
-                Log.call(Log.l.trace, "EventResourceAdministration.eventView.");
-                   
                 var ret = GenDataModDetails._adressePersonTable.select(complete, error, restriction);
                 Log.ret(Log.l.trace);
                 return ret;
             },
+            deleteRecord: function (complete, error, recordId) {
+                Log.call(Log.l.trace, "GenDataModDetails.personAdresseTable.");
+                var ret = GenDataModDetails._adressePersonTable.deleteRecord(complete, error, recordId);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
             update: function (complete, error, recordId, viewResponse) {
-                Log.call(Log.l.trace, "EventResourceAdministration.eventTable.");
+                Log.call(Log.l.trace, "GenDataModDetails.personAdresseTable.");
                 var ret = GenDataModDetails._adressePersonTable.update(complete, error, recordId, viewResponse);
                 Log.ret(Log.l.trace);
                 return ret;
@@ -196,8 +202,10 @@
         adresseDOC: {
             select: function (complete, error, restriction) {
                 if (!restriction) {
+                    var master = Application.navigator.masterControl;
+                    var addressId = master.controller && master.controller.binding && master.controller.binding.addressId;
                     restriction = {
-                        DOC1AdresseVIEWID: GenDataModDetails._adresseId
+                        DOC1AdresseVIEWID: addressId || 0
                     };
                 }
                 Log.call(Log.l.trace, "GenDataModDetails.adresseDOC.");

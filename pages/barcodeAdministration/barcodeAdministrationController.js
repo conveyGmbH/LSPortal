@@ -31,7 +31,6 @@
             var listView = pageElement.querySelector("#barcodeAdministration.listview");
 
             Application.RecordsetController.apply(this, [pageElement, {
-                count: 0
             }, commandList, false, BarcodeAdministration.fragebogenZeileBCView, null, listView]);
             this.questionslistBarcode = null;
 
@@ -47,16 +46,7 @@
                 }
             }
 
-            var progress = null;
-            var counter = null;
             var layout = null;
-            var printmode = false;
-
-            var maxLeadingPages = 0;
-            var maxTrailingPages = 0;
-
-            // First, we call WinJS.Binding.as to get the bindable proxy object
-            this.binding = WinJS.Binding.as(this.pageData);
 
             function PrintElem(elem) {
                 var mywindow = window.open('', 'PRINT', 'resizable=1,height=800,width=1200');
@@ -224,147 +214,90 @@
                     PrintElem("barcodeAdministration");
                     Log.ret(Log.l.trace);
                 },
-            /*clickafterprint: function (event) {
-                Log.call(Log.l.trace, "BarcodeAdministration.Controller.");
-                /*var printSurface = document.querySelector(".barcode-print-surface");
-                if (printSurface) {
-                    document.body.removeChild(printSurface);
-                    printSurface.innerHTML = "";
-                }
-            },*/
-
-            clickChangeUserState: function (event) {
-                Log.call(Log.l.trace, "BarcodeAdministration.Controller.");
-                Application.navigateById("userinfo", event);
-                Log.ret(Log.l.trace);
-            },
-            clickGotoPublish: function (event) {
-                Log.call(Log.l.trace, "BarcodeAdministration.Controller.");
-                Application.navigateById("publish", event);
-                Log.ret(Log.l.trace);
-            },
-            onLoadingStateChanged: function (eventInfo) {
-                Log.call(Log.l.trace, "BarcodeAdministration.Controller.");
-                if (listView && listView.winControl) {
-                    Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
-                    // single list selection
-                    if (listView.winControl.selectionMode !== WinJS.UI.SelectionMode.single) {
-                        listView.winControl.selectionMode = WinJS.UI.SelectionMode.single;
+                /*clickafterprint: function (event) {
+                    Log.call(Log.l.trace, "BarcodeAdministration.Controller.");
+                    /*var printSurface = document.querySelector(".barcode-print-surface");
+                    if (printSurface) {
+                        document.body.removeChild(printSurface);
+                        printSurface.innerHTML = "";
                     }
-                    // direct selection on each tap
-                    if (listView.winControl.tapBehavior !== WinJS.UI.TapBehavior.directSelect) {
-                        listView.winControl.tapBehavior = WinJS.UI.TapBehavior.directSelect;
-                    }
-                    // Double the size of the buffers on both sides
-                    if (!maxLeadingPages) {
-                        maxLeadingPages = listView.winControl.maxLeadingPages * 4;
-                        listView.winControl.maxLeadingPages = maxLeadingPages;
-                    }
-                    if (!maxTrailingPages) {
-                        maxTrailingPages = listView.winControl.maxTrailingPages * 4;
-                        listView.winControl.maxTrailingPages = maxTrailingPages;
-                    }
-                    if (listView.winControl.loadingState === "itemsLoading") {
-                        if (!layout) {
-                            layout = Application.QuestiongroupLayout.QuestionsLayout;
-                            listView.winControl.layout = { type: layout };
-                        }
-                    } else if (listView.winControl.loadingState === "complete") {
-                        if (that.records) {
-                            progress = listView.querySelector(".list-footer .progress");
-                            counter = listView.querySelector(".list-footer .counter");
-                            if (progress && progress.style) {
-                                progress.style.display = "none";
+                },*/
+                clickChangeUserState: function (event) {
+                    Log.call(Log.l.trace, "BarcodeAdministration.Controller.");
+                    Application.navigateById("userinfo", event);
+                    Log.ret(Log.l.trace);
+                },
+                clickGotoPublish: function (event) {
+                    Log.call(Log.l.trace, "BarcodeAdministration.Controller.");
+                    Application.navigateById("publish", event);
+                    Log.ret(Log.l.trace);
+                },
+                onLoadingStateChanged: function (eventInfo) {
+                    Log.call(Log.l.trace, "BarcodeAdministration.Controller.");
+                    if (listView && listView.winControl) {
+                        Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
+                        if (listView.winControl.loadingState === "itemsLoading") {
+                            if (!layout) {
+                                layout = Application.BarcodeAdministration.BarcodeAdministrationLayout;
+                                listView.winControl.layout = { type: layout };
                             }
-                            if (counter && counter.style) {
-                                counter.style.display = "inline";
-                            }
-                            for (var i = 0; i < that.records.length; i++) {
-                                var itemElement = listView.winControl.elementFromIndex(i);
-                                if (itemElement) {
-                                    var barcodeImages = itemElement.querySelectorAll(".barcode-image");
-                                    if (barcodeImages) {
-                                        for (var j = 0; j < barcodeImages.length; j++) {
-                                            var barcodeImage = barcodeImages[j];
-                                            if (barcodeImage && barcodeImage.barcode) {
-                                                var name = "barcode_" + i + "_" + j;
-                                                barcodeImage.setAttribute("name", name);
-                                                var value = barcodeImage.barcode.substring(9, 13);
-                                                JsBarcode("[name=" + name + "]",
-                                                    value,
-                                                    { height: 50, displayValue: false });
+                        } else if (listView.winControl.loadingState === "complete") {
+                            if (that.records) {
+                                for (var i = 0; i < that.records.length; i++) {
+                                    var itemElement = listView.winControl.elementFromIndex(i);
+                                    if (itemElement) {
+                                        var barcodeImages = itemElement.querySelectorAll(".barcode-image");
+                                        if (barcodeImages) {
+                                            for (var j = 0; j < barcodeImages.length; j++) {
+                                                var barcodeImage = barcodeImages[j];
+                                                if (barcodeImage && barcodeImage.barcode) {
+                                                    var name = "barcode_" + i + "_" + j;
+                                                    barcodeImage.setAttribute("name", name);
+                                                    var value = barcodeImage.barcode.substring(9, 13);
+                                                    JsBarcode("[name=" + name + "]",
+                                                        value,
+                                                        { height: 50, displayValue: false });
+                                                }
                                             }
                                         }
                                     }
                                 }
                             }
-                            that.loading = false;
                         }
                     }
-                }
-                Log.ret(Log.l.trace);
-            },
-            onHeaderVisibilityChanged: function (eventInfo) {
-                Log.call(Log.l.trace, "BarcodeAdministration.Controller.");
-                if (eventInfo && eventInfo.detail) {
-                    var visible = eventInfo.detail.visible;
-                    if (visible) {
-                        var contentHeader = listView.querySelector(".content-header");
-                        if (contentHeader) {
-                            var halfCircle = contentHeader.querySelector(".half-circle");
-                            if (halfCircle && halfCircle.style) {
-                                if (halfCircle.style.visibility === "hidden") {
-                                    halfCircle.style.visibility = "";
-                                    WinJS.UI.Animation.enterPage(halfCircle);
+                    that.loadingStateChanged(eventInfo);
+                    Log.ret(Log.l.trace);
+                },
+                onFooterVisibilityChanged: function (eventInfo) {
+                    Log.call(Log.l.trace, "BarcodeAdministration.Controller.");
+                    if (eventInfo && eventInfo.detail) {
+                        var visible = eventInfo.detail.visible;
+                        if (visible && that.nextUrl) {
+                            that.loadNext();
+                        }
+                    }
+                    Log.ret(Log.l.trace);
+                },
+                onHeaderVisibilityChanged: function (eventInfo) {
+                    Log.call(Log.l.trace, "BarcodeAdministration.Controller.");
+                    if (eventInfo && eventInfo.detail) {
+                        var visible = eventInfo.detail.visible;
+                        if (visible) {
+                            var contentHeader = listView.querySelector(".content-header");
+                            if (contentHeader) {
+                                var halfCircle = contentHeader.querySelector(".half-circle");
+                                if (halfCircle && halfCircle.style) {
+                                    if (halfCircle.style.visibility === "hidden") {
+                                        halfCircle.style.visibility = "";
+                                        WinJS.UI.Animation.enterPage(halfCircle);
+                                    }
                                 }
                             }
                         }
                     }
-                }
-                Log.ret(Log.l.trace);
-            },
-            onFooterVisibilityChanged: function (eventInfo) {
-                Log.call(Log.l.trace, "BarcodeAdministration.Controller.");
-                if (eventInfo && eventInfo.detail) {
-                    progress = listView.querySelector(".list-footer .progress");
-                    counter = listView.querySelector(".list-footer .counter");
-                    var visible = eventInfo.detail.visible;
-                    if (visible && that.nextUrl) { //
-                        that.loading = true;
-                        if (progress && progress.style) {
-                            progress.style.display = "inline";
-                        }
-                        if (counter && counter.style) {
-                            counter.style.display = "none";
-                        }
-                        that.loadNext(function (json) {
-                            // this callback will be called asynchronously
-                            // when the response is available
-                            Log.print(Log.l.trace, "BarcodeAdministration.NCHRFragenAntworten: success!");
-                        }, function (errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                            if (progress && progress.style) {
-                                progress.style.display = "none";
-                            }
-                            if (counter && counter.style) {
-                                counter.style.display = "inline";
-                            }
-                        });
-                    } else {
-                        if (progress && progress.style) {
-                            progress.style.display = "none";
-                        }
-                        if (counter && counter.style) {
-                            counter.style.display = "inline";
-                        }
-                        that.loading = false;
-
-                    }
-                }
-                Log.ret(Log.l.trace);
-                }, clickTopButton: function (event) {
+                    Log.ret(Log.l.trace);
+                },
+                clickTopButton: function (event) {
                     Log.call(Log.l.trace, "Contact.Controller.");
                     var anchor = document.getElementById("menuButton");
                     var menu = document.getElementById("menu1").winControl;
@@ -384,52 +317,51 @@
                     Application.navigateById("login", event);
                     Log.ret(Log.l.trace);
                 }
-        };
+            };
 
-    // register ListView event handler
-    if (listView) {
-        this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
-        this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
-        this.addRemovableEventListener(listView, "headervisibilitychanged", this.eventHandlers.onHeaderVisibilityChanged.bind(this));
-        //this.addRemovableEventListener(listView, "onkeyup", this.eventHandlers.KeyPress.bind(this));
-    }
+            this.disableHandlers = {
+                clickOk: function () {
+                    // always enabled!
+                    return false;
+                },
+                clickBack: function () {
+                    // always enabled!
+                    return false;
+                },
+                clickPdf: function () {
+                    if (that.checkingQuestionareBarcodePDFFlag === false) {
+                         return true;
+                    } else {
+                         return false;
+                    }
+                },
+                clickafterprint: function () {
+                    return false;
+                },
+                clickbeforeprint: function() {
+                    return false;
+                }
+            };
 
-    this.disableHandlers = {
-        clickOk: function () {
-            // always enabled!
-            return false;
-        },
-        clickBack: function () {
-            // always enabled!
-            return false;
-        },
-        clickPdf: function () {
-            if (that.checkingQuestionareBarcodePDFFlag === false) {
-                 return true;
-            } else {
-                 return false;
+            // register ListView event handler
+            if (listView) {
+                this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
+                this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
+                this.addRemovableEventListener(listView, "headervisibilitychanged", this.eventHandlers.onHeaderVisibilityChanged.bind(this));
             }
-        },
-        clickafterprint: function () {
-            return false;
-        },
-        clickbeforeprint: function() {
-            return false;
-        }
-    };
 
-    // Finally, wire up binding
-    that.processAll().then(function () {
-        Log.print(Log.l.trace, "Binding wireup page complete");
-        return that.loadData();
-    }).then(function () {
-        that.checkingQuestionnaireBarcodePdf();
-        Log.print(Log.l.trace, "Binding wireup page complete");
-    }).then(function () {
-        AppBar.notifyModified = true;
-        Log.print(Log.l.trace, "Binding wireup page complete");
+            // Finally, wire up binding
+            that.processAll().then(function () {
+                Log.print(Log.l.trace, "Binding wireup page complete");
+                return that.loadData();
+            }).then(function () {
+                that.checkingQuestionnaireBarcodePdf();
+                Log.print(Log.l.trace, "Binding wireup page complete");
+            }).then(function () {
+                AppBar.notifyModified = true;
+                Log.print(Log.l.trace, "Binding wireup page complete");
+            });
+            Log.ret(Log.l.trace);
+        })
     });
-    Log.ret(Log.l.trace);
-})
-});
 })();

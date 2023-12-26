@@ -35,6 +35,20 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
+            relationName: BarcodeAdministration._fragebogenZeileBCView.relationName,
+            pkName: BarcodeAdministration._fragebogenZeileBCView.oDataPkName,
+            getRecordId: function (record) {
+                var ret = null;
+                if (record) {
+                    if (BarcodeAdministration._fragebogenZeileBCView.oDataPkName) {
+                        ret = record[BarcodeAdministration._fragebogenZeileBCView.oDataPkName];
+                    }
+                    if (!ret && BarcodeAdministration._fragebogenZeileBCView.pkName) {
+                        ret = record[BarcodeAdministration._fragebogenZeileBCView.pkName];
+                    }
+                }
+                return ret;
+            },
             defaultValue: {
                 Antwort01: "",
                 Antwort02: "",

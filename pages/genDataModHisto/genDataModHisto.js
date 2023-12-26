@@ -63,6 +63,26 @@
             Log.ret(Log.l.trace);
         },
 
+        canUnload: function (complete, error) {
+            Log.call(Log.l.trace, pageName + ".");
+            var ret;
+            if (this.controller) {
+                ret = this.controller.saveData(function (response) {
+                    // called asynchronously if ok
+                    complete(response);
+                }, function (errorResponse) {
+                    error(errorResponse);
+                });
+            } else {
+                ret = WinJS.Promise.as().then(function () {
+                    var err = { status: 500, statusText: "fatal: page already deleted!" };
+                    error(err);
+                });
+            }
+            Log.ret(Log.l.trace);
+            return ret;
+        },
+
         updateLayout: function (element, viewState, lastViewState) {
             var ret = null;
             var that = this;
@@ -72,7 +92,7 @@
             if (element && !that.inResize) {
                 that.inResize = 1;
                 ret =  WinJS.Promise.timeout(0).then(function () {
-                    var contactList = element.querySelector("#genDataModList.listview");
+                    var contactList = element.querySelector("#genDataModHisto.listview");
                     if (contactList && contactList.style) {
                         var contentarea = element.querySelector(".contentarea");
                         if (contentarea) {
