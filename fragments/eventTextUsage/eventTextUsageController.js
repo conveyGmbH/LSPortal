@@ -10,9 +10,11 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("EventTextUsage", {
+    var namespaceName = "EventTextUsage";
+
+    WinJS.Namespace.define(namespaceName, {
         Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options) {
-            Log.call(Log.l.trace, "EventTextUsage.Controller.");
+            Log.call(Log.l.trace, namespaceName + ".Controller.");
             Fragments.Controller.apply(this, [fragmentElement, {
             }]);
 
@@ -50,7 +52,7 @@
 
             var eventHandlers = {
                 onSelectionChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "EventTextUsage.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (listView && listView.winControl) {
                         var listControl = listView.winControl;
                         if (listControl.selection) {
@@ -87,7 +89,7 @@
                     Log.ret(Log.l.trace);
                 },
                 onLoadingStateChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "EventTextUsage.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (listView && listView.winControl) {
                         Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
                         if (listView.winControl.loadingState === "itemsLoading") {
@@ -112,6 +114,7 @@
                     Log.ret(Log.l.trace);
                 },
                 wheelHandler: function(eventInfo) {
+                    Log.call(Log.l.u1, namespaceName + ".Controller.");
                     if (eventInfo && listView && listView.winControl) {
                         var wheelWithinListView = eventInfo.target && (listView.contains(eventInfo.target) || listView === eventInfo.target);
                         if (wheelWithinListView) {
@@ -149,25 +152,15 @@
 
                             touchPhysics.processMove(MANIPULATION_PROCESSOR_MANIPULATIONS.MANIPULATION_TRANSLATE_X, wheelScrollAdd*wheelValueFactor, 0);
                             that.checkForWheelEnd(eventInfo);
-                            /*
-                            if (waitingForMouseScroll) {
-                                return;
-                            }
-                            waitingForMouseScroll = true;
-                            listView.winControl.scrollPosition += wheelScrollAdd / 2;
-                            wheelScrollAdd = 0;
-                            WinJS.Promise.timeout(20).then(function() {
-                                waitingForMouseScroll = false;
-                            });
-                            */
                         }
                     }
+                    Log.ret(Log.l.u1);
                 }
             }
             this.eventHandlers = eventHandlers;
 
             var scrollIntoView = function (curIndex) {
-                Log.call(Log.l.u1, "EventTextUsage.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 if (listView && listView.winControl) {
                     var listControl = listView.winControl;
                     var containers = listView.querySelectorAll(".win-container");
@@ -228,7 +221,7 @@
             }
 
             var loadData = function () {
-                Log.call(Log.l.trace, "EventTextUsage.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                     if (that.textUsage.length === 0) {

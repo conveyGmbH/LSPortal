@@ -11,9 +11,11 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("UploadMedia", {
+    var namespaceName = "UploadMedia";
+
+    WinJS.Namespace.define(namespaceName, {
         Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options, commandList) {
-            Log.call(Log.l.trace, "UploadMedia.Controller.", "docId=" + (options && options.docId));
+            Log.call(Log.l.trace, namespaceName + ".Controller.", "noteId=" + (options && options.noteId));
 
             Fragments.Controller.apply(this, [fragmentElement, {
                 docId: options && options.docId,
@@ -56,7 +58,7 @@
                 var prevEdge = 1920;
                 var prevLength = 0;
                 var err = null;
-                Log.call(Log.l.trace, "UploadMedia.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
 
                 var img = new Image();
@@ -193,7 +195,7 @@
                 var prevEdge = 1920;
                 var prevLength = 0;
                 var err = null;
-                Log.call(Log.l.trace, "UploadMedia.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 var doc = {};
                 doc['src'] = result;
@@ -290,7 +292,7 @@
             function getFileData(file, name, type, size) {
                 var posExt = name.lastIndexOf(".");
                 var ext = (posExt >= 0) ? name.substr(posExt + 1) : "";
-                Log.call(Log.l.trace, "UploadMedia.Controller.", "name=" + name + " ext=" + ext + " type=" + type + " size=" + size);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "name=" + name + " ext=" + ext + " type=" + type + " size=" + size);
                 that.binding.fileInfo = name + " (" + type + ") - " + size + " bytes";
 
                 var fileExtensions = UploadMedia.docFormatList.map(function(item) {
@@ -341,6 +343,7 @@
 
             var eventHandlers = {
                 handleFileChoose: function (event) {
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     that.binding.showLoadingCircle = true;
                     if (event && event.target) {
                         // FileList-Objekt des input-Elements auslesen, auf dem 
@@ -350,8 +353,10 @@
                             getFileData(files[i], files[i].name, files[i].type, files[i].size);
                         }
                     }
+                    Log.ret(Log.l.trace);
                 },
                 onDragOver: function(event) {
+                    Log.call(Log.l.u1, namespaceName + ".Controller.");
                     if (event) {
                         event.stopPropagation();
                         event.preventDefault();
@@ -359,8 +364,10 @@
                             event.dataTransfer.dropEffect = "copy";
                         }
                     }
+                    Log.ret(Log.l.u1);
                 },
                 onDrop: function(event) {
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     that.binding.showLoadingCircle = true;
                     if (event) {
                         event.stopPropagation();
@@ -372,11 +379,14 @@
                             }
                         }
                     }
+                    Log.ret(Log.l.trace);
                 },
                 clickUpload: function(event) {
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (fileOpener) {
                         fileOpener.click();
                     }
+                    Log.ret(Log.l.trace);
                 }
             };
             this.eventHandlers = eventHandlers;

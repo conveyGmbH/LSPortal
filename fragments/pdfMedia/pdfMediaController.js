@@ -11,10 +11,11 @@
 (function () {
     "use strict";
 
+    var namespaceName = "PdfMedia";
+
     WinJS.Namespace.define("PdfMedia", {
         Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options, commandList) {
-            Log.call(Log.l.trace, "PdfMedia.Controller.", "docId=" + (options && options.docId));
-
+            Log.call(Log.l.trace, namespaceName + ".Controller.", "docId=" + (options && options.docId));
             Fragments.Controller.apply(this, [fragmentElement, {
                 docId: null,
                 dataDoc: {}
@@ -36,7 +37,6 @@
             }
 
             var resultConverter = function (item, index) {
-                Log.call(Log.l.trace, "PdfMedia.Controller.");
                 if (item) {
                     that.binding.docId = item.MandantDokumentVIEWID;
                     if (item.DocContentDOCCNT1 && AppData.isPdf(item.DocGroup, item.DocFormat) && item.ContentEncoding === 4096) {
@@ -52,22 +52,23 @@
                     }
                     item.DocContentDOCCNT1 = "";
                 }
-                Log.ret(Log.l.trace);
             }
             this.resultConverter = resultConverter;
 
             var removePdf = function () {
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 if (that.iFrame) {
                     if (that.iFrame.style) {
                         that.iFrame.style.display = "none";
                     }
                     that.iFrame.src = "";
                 }
+                Log.ret(Log.l.trace);
             }
             this.removePdf = removePdf;
 
             var showPdf = function () {
-                Log.call(Log.l.trace, "PdfMedia.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 if (that.iFrame) {
                     if (getDocData()) {
                         that.iFrame.src = getDocData();
@@ -83,7 +84,7 @@
 
             var loadData = function (docId) {
                 var ret = null;
-                Log.call(Log.l.trace, "ImgMedia.Controller.", "docId=" + docId);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "docId=" + docId);
                 if (docId) {
                     AppData.setErrorMsg(that.binding);
                     ret = ImgMedia.docView.select(function (json) {
@@ -113,7 +114,7 @@
             this.loadData = loadData;
 
             var removeDoc = function() {
-                Log.call(Log.l.trace, "ImgMedia.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 that.binding.dataDoc = {};
                 that.removePdf();
                 Log.ret(Log.l.trace);

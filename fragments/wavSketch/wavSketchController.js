@@ -274,7 +274,7 @@
                         AppBar.busy = false;
                     }
                 }
-                
+
                 var fileExtPos = fileName.lastIndexOf(".");
                 if (fileExtPos >= 0) {
                     fileExt = fileName.substr(fileExtPos + 1);
@@ -329,7 +329,7 @@
                                     audio.play();
                                 }
                             } catch (e) {
-                                Log.print(Log.L.error, "audio returned error:" + e);
+                                Log.print(Log.l.error, "audio returned error:" + e);
                             }
                         } else {
                             that.removeAudio();

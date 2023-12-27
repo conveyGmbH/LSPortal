@@ -10,11 +10,12 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("MandatoryList", {
+    var namespaceName = "MandatoryList";
+
+    WinJS.Namespace.define(namespaceName, {
         Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options) {
-            Log.call(Log.l.trace, "MandatoryList.Controller.");
+            Log.call(Log.l.trace, namespaceName + ".Controller.");
             Fragments.Controller.apply(this, [fragmentElement, {
-                
             }]);
             var that = this;
             this.curRecId = 0;
@@ -29,7 +30,7 @@
 
             // get field entries
             var getFieldEntries = function (index) {
-                Log.call(Log.l.trace, "MandatoryList.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "index=" + index);
                 var ret = {};
                 if (listView && listView.winControl) {
                     var element = listView.winControl.elementFromIndex(index);
@@ -44,7 +45,7 @@
             this.getFieldEntries = getFieldEntries;
 
             var mergeRecord = function (prevRecord, newRecord) {
-                Log.call(Log.l.trace, "MandatoryList.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var ret = false;
                 for (var prop in newRecord) {
                     if (newRecord.hasOwnProperty(prop)) {
@@ -60,7 +61,7 @@
             this.mergeRecord = mergeRecord;
 
             var selectRecordId = function (recordId) {
-                Log.call(Log.l.trace, "MandatoryList.Controller.", "recordId=" + recordId);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
                 if (recordId && listView && listView.winControl && listView.winControl.selection) {
                     if (fields) {
                         for (var i = 0; i < that.fields.length; i++) {
@@ -80,7 +81,7 @@
 
             var scopeFromRecordId = function (recordId) {
                 var i;
-                Log.call(Log.l.trace, "MandatoryList.Controller.", "recordId=" + recordId);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
                 var item = null;
                 for (i = 0; i < that.fields.length; i++) {
                     var field = that.fields.getAt(i);
@@ -102,7 +103,7 @@
 
             var saveData = function (complete, error) {
                 var ret = null;
-                Log.call(Log.l.trace, "MandatoryList.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 // standard call via modify
                 var recordId = that.prevRecId;
@@ -149,7 +150,7 @@
 
             var eventHandlers = {
                 onSelectionChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "MandatoryList.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (listView && listView.winControl) {
                         var listControl = listView.winControl;
                         if (listControl.selection) {
@@ -186,7 +187,7 @@
                     Log.ret(Log.l.trace);
                 },
                 onLoadingStateChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "MandatoryList.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (listView && listView.winControl) {
                         Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
                         // single list selection
@@ -225,18 +226,13 @@
 
             // register ListView event handler
             if (listView) {
-                this.addRemovableEventListener(listView,
-                    "selectionchanged",
-                    this.eventHandlers.onSelectionChanged.bind(this));
-                this.addRemovableEventListener(listView,
-                    "loadingstatechanged",
-                    this.eventHandlers.onLoadingStateChanged.bind(this));
+                this.addRemovableEventListener(listView, "selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
+                this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
             }
 
             var loadData = function (curRecordId) {
-                Log.call(Log.l.trace, "MandatoryList.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
-
                 var ret = new WinJS.Promise.as().then(function () {
                     return MandatoryList.mandatoryView.select(function(json) {
                         // this callback will be called asynchronously
@@ -261,7 +257,6 @@
                     }, {
                         LanguageSpecID: AppData.getLanguageId()
                     });
-
                 }).then(function () {
                     AppBar.notifyModified = true;
                     AppBar.triggerDisableHandlers();

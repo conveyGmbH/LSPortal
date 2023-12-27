@@ -10,9 +10,11 @@
     (function () {
         "use strict";
 
-        WinJS.Namespace.define("MailingProductLine", {
+        var namespaceName = "MailingProductLine";
+
+        WinJS.Namespace.define(namespaceName, {
             Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options) {
-                Log.call(Log.l.trace, "EmpRoles.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 Fragments.Controller.apply(this, [fragmentElement, {
                     mailingLine: options.mailingLine,
                     count: 0
@@ -25,14 +27,12 @@
                 var counter = null;
                 var layout = null;
 
-                var mouseDown = false;
-
                 // now do anything...
                 var listView = fragmentElement.querySelector("#mailingProductLineList.listview");
 
                 // get field entries
                 var getFieldEntries = function (index) {
-                    Log.call(Log.l.trace, "MailingProductLine.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.", "index=" + index);
                     var ret = {};
                     if (listView && listView.winControl) {
                         var element = listView.winControl.elementFromIndex(index);
@@ -47,7 +47,7 @@
                 this.getFieldEntries = getFieldEntries;
 
                 var mergeRecord = function (prevRecord, newRecord) {
-                    Log.call(Log.l.trace, "MailingProductLine.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var ret = false;
                     for (var prop in newRecord) {
                         if (newRecord.hasOwnProperty(prop)) {
@@ -64,7 +64,7 @@
 
                 var scopeFromRecordId = function (mailDocumentId) {
                     var i;
-                     Log.call(Log.l.trace, "MailingProductLine.Controller.", "recordId=" + mailDocumentId);
+                    Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + mailDocumentId);
                     var item = null;
                     for (i = 0; i < that.mailingLine.length; i++) {
                         var line = that.mailingLine.getAt(i);
@@ -86,7 +86,7 @@
 
                 var saveData = function (complete, error) {
                     var ret = null;
-                    Log.call(Log.l.trace, "MailingProductLine.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     AppData.setErrorMsg(that.binding);
                     // standard call via modify
                     var recordId = that.prevRecId;
@@ -132,30 +132,8 @@
                 this.saveData = saveData;
 
                 var eventHandlers = {
-                    onPointerDown: function (e) {
-                        Log.call(Log.l.trace, "Questiongroup.Controller.");
-                        that.cursorPos = { x: e.pageX, y: e.pageY };
-                        mouseDown = true;
-                        Log.ret(Log.l.trace);
-                    },
-                    onMouseDown: function (e) {
-                        Log.call(Log.l.trace, "Questiongroup.Controller.");
-                        that.cursorPos = { x: e.pageX, y: e.pageY };
-                        mouseDown = true;
-                        Log.ret(Log.l.trace);
-                    },
-                    onPointerUp: function (e) {
-                        Log.call(Log.l.trace, "Questiongroup.Controller.");
-                        mouseDown = false;
-                        Log.ret(Log.l.trace);
-                    },
-                    onMouseUp: function (e) {
-                        Log.call(Log.l.trace, "Questiongroup.Controller.");
-                        mouseDown = false;
-                        Log.ret(Log.l.trace);
-                    },
                     onSelectionChanged: function (eventInfo) {
-                        Log.call(Log.l.trace, "MailingProductLine.Controller.");
+                        Log.call(Log.l.trace, namespaceName + ".Controller.");
                         if (listView && listView.winControl) {
                             var listControl = listView.winControl;
                             if (listControl.selection) {
@@ -192,7 +170,7 @@
                         Log.ret(Log.l.trace);
                     },
                     onLoadingStateChanged: function (eventInfo) {
-                        Log.call(Log.l.trace, "MailingProductLine.Controller.");
+                        Log.call(Log.l.trace, namespaceName + ".Controller.");
                         if (listView && listView.winControl) {
                             Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
                             // single list selection
@@ -216,12 +194,8 @@
                         }
                         Log.ret(Log.l.trace);
                     },
-                    onHeaderVisibilityChanged: function (eventInfo) {
-                        Log.call(Log.l.trace, "Questionnaire.Controller.");
-                        Log.ret(Log.l.trace);
-                    },
                     onFooterVisibilityChanged: function (eventInfo) {
-                        Log.call(Log.l.trace, "Questionnaire.Controller.");
+                        Log.call(Log.l.trace, namespaceName + ".Controller.");
                         if (eventInfo && eventInfo.detail) {
                             progress = listView.querySelector(".list-footer .progress");
                             counter = listView.querySelector(".list-footer .counter");
@@ -278,7 +252,7 @@
                         Log.ret(Log.l.trace);
                     },
                     onItemInvoked: function (eventInfo) {
-                        Log.call(Log.l.trace, "Questionnaire.Controller.");
+                        Log.call(Log.l.trace, namespaceName + ".Controller.");
                         if (eventInfo && eventInfo.target) {
                             var comboInputFocus = eventInfo.target.querySelector(".win-dropdown:focus");
                             if (comboInputFocus) {
@@ -301,13 +275,11 @@
                                                 // set focus async!
                                                 freitextInput.focus();
                                             });
-                                            /* Log.call(Log.l.trace, "Questionnaire.Controller.");
-                                             for (var i = 0; i < AppBar.commandList.length; i++) {
+                                            /* for (var i = 0; i < AppBar.commandList.length; i++) {
                                                  if (AppBar.commandList[i].id === "clickForward")
                                                      AppBar.commandList[i].key = null;
                                              }*/
                                         }/* else {
-                                        Log.call(Log.l.trace, "Questionnaire.Controller.");
                                         for (var j = 0; j < AppBar.commandList.length; j++) {
                                             if (AppBar.commandList[j].id === "clickForward")
                                                 AppBar.commandList[j].key = WinJS.Utilities.Key.enter;
@@ -330,11 +302,6 @@
 
                 // register ListView event handler
                 if (listView) {
-                    this.addRemovableEventListener(listView, "selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
-                    this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
-                    this.addRemovableEventListener(listView, "headervisibilitychanged", this.eventHandlers.onHeaderVisibilityChanged.bind(this));
-                    this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
-                    this.addRemovableEventListener(listView, "iteminvoked", this.eventHandlers.onItemInvoked.bind(this));
                     // prevent some keyboard actions from listview to navigate within controls!
                     this.addRemovableEventListener(listView, "keydown", function (e) {
                         if (!e.ctrlKey && !e.altKey) {
@@ -347,6 +314,18 @@
                             }
                         }
                     }.bind(this), true);
+                    this.addRemovableEventListener(listView, "contextmenu", function (e) {
+                        var targetTagName = e.target &&
+                            e.target.tagName &&
+                            e.target.tagName.toLowerCase();
+                        if (targetTagName === "textarea" || targetTagName === "input") {
+                            e.stopImmediatePropagation();
+                        }
+                    }.bind(this), true);
+                    this.addRemovableEventListener(listView, "selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
+                    this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
+                    this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
+                    this.addRemovableEventListener(listView, "iteminvoked", this.eventHandlers.onItemInvoked.bind(this));
                 }
 
                 var resultConverter = function (item, index) {
@@ -358,7 +337,7 @@
                 this.resultConverter = resultConverter;
 
                 var loadData = function (curMailingLine) {
-                    Log.call(Log.l.trace, "MailingProductLine.", "curMailingLine=" + curMailingLine);
+                    Log.call(Log.l.trace, namespaceName + ".Controller.", "curMailingLine=" + curMailingLine);
                     AppData.setErrorMsg(that.binding);
                     var ret = new WinJS.Promise.as().then(function () {
                         return MailingProductLine.MAILERZEILENView.select(function(json) {
@@ -403,7 +382,6 @@
                                                     }
                                                 }
                                         }
-                                        Log.ret(Log.l.trace);
                                         return focusElement;
                                     }
                                     var trySetActive = function(element, scroller) {
@@ -516,8 +494,8 @@
                             // or server returns response with an error status.
                             AppData.setErrorMsg(that.binding, errorResponse);
                         }, {
-                                MaildokumentID: curMailingLine
-                            });
+                            MaildokumentID: curMailingLine
+                        });
                     });
                     Log.ret(Log.l.trace);
                     return ret;

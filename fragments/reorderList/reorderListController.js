@@ -13,9 +13,11 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("ReorderList", {
+    var namespaceName = "ReorderList";
+
+    WinJS.Namespace.define(namespaceName, {
         Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options) {
-            Log.call(Log.l.trace, "ReorderList.Controller.");
+            Log.call(Log.l.trace, namespaceName + ".Controller.");
             Fragments.Controller.apply(this, [fragmentElement, {
                 recordID: 0,
                 btnLabel: getResourceText("reorderlist.btnlabelO"),
@@ -43,7 +45,7 @@
             }
 
             var getRecordId = function () {
-                Log.call(Log.l.trace, "SiteEventsNeuAus.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 that.binding.recordID = AppData.getRecordId("VeranstaltungAnlage");
                 Log.ret(Log.l.trace, that.binding.recordID);
                 return that.binding.recordID;
@@ -51,7 +53,7 @@
             this.getRecordId = getRecordId;
 
             var selectRecordId = function (recordId) {
-                Log.call(Log.l.trace, "LocalEvents.Controller.", "recordId=" + recordId);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
                 if (recordId && listView && listView.winControl && listView.winControl.selection) {
                     for (var i = 0; i < that.orderItem.length; i++) {
                         var orderItem = that.orderItem.getAt(i);
@@ -82,7 +84,7 @@
 
             var eventHandlers = {
                 onLoadingStateChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "MailingProductLine.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (listView && listView.winControl) {
                         Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
                         // single list selection
@@ -121,9 +123,9 @@
             this.resultConverter = resultConverter;
 
             var createEventHandler = function (id) {
-                Log.call(Log.l.trace, "ReorderList.Controller.", "id=" + id);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "id=" + id);
                 eventHandlers["clickBestellungVIEWID" + id] = function (event) {
-                    Log.call(Log.l.trace, "ReorderList.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (event && event.currentTarget) {
                         event.currentTarget.value = id;
                         AppBar.handleEvent('click', 'clickOrder', event);
@@ -134,7 +136,7 @@
             }
 
             var loadData = function () {
-                Log.call(Log.l.trace, "ReorderList.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                     return ReorderList.VeranstaltunganlageView.select(function (json) {

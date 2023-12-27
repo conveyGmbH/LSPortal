@@ -14,9 +14,11 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("GenFragEvents", {
+    var namespaceName = "GenFragEvents";
+
+    WinJS.Namespace.define(namespaceName, {
         Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options) {
-            Log.call(Log.l.trace, "GenFragEvents.Controller.");
+            Log.call(Log.l.trace, namespaceName + ".Controller.");
             Fragments.Controller.apply(this, [fragmentElement, {
                 recordID: 0,
                 btnLabel: getResourceText("voucheradministrationlist.btnlabelO"),
@@ -50,7 +52,7 @@
 
             var scopeFromRecordId = function (recordId) {
                 var i;
-                Log.call(Log.l.trace, "MandatoryList.Controller.", "recordId=" + recordId);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
                 var item = null;
                 var recordidint = parseInt(recordId);
                 for (i = 0; i < that.listView.length; i++) {
@@ -95,7 +97,7 @@
 
             var eventHandlers = {
                 onSelectionChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "GenFragEvents.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (listView && listView.winControl) {
                         var listControl = listView.winControl;
                         if (listControl.selection) {
@@ -115,23 +117,24 @@
                     Log.ret(Log.l.trace);
                 },
                 clickChangeEvent: function(event) {
-                    Log.call(Log.l.trace, "GenFragEvents.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     AppData.call("PRC_CopyAppMitarbeiter", {
                         pMitarbeiterID: that.binding.ecRecordID,
                         pNewVeranstaltungID: that.binding.ecEventID
                     }, function (json) {
-                        Log.print(Log.l.info, "call success! ");
+                        Log.print(Log.l.info, "call PRC_CopyAppMitarbeiter success! ");
                         if (json && json.d && json.d.results.length > 0) {
                             that.loadData();
                         } else {
                             Log.print(Log.l.error, "ERROR: No Data found!");
                         }
                     }, function (error) {
-                        Log.print(Log.l.error, "call error");
+                        Log.print(Log.l.error, "call PRC_CopyAppMitarbeiter error");
                     });
+                    Log.ret(Log.l.trace);
                 },
                 onLoadingStateChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "GenFragEvents.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (listView && listView.winControl) {
                         Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
                         // single list selection
@@ -161,9 +164,6 @@
                         that.binding.loadingState = listView.winControl.loadingState;
                     }
                     Log.ret(Log.l.trace);
-                },
-                onScroll: function (eventInfo) {
-
                 }
             }
             this.eventHandlers = eventHandlers;
@@ -172,7 +172,6 @@
             if (listView) {
                 this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
                 this.addRemovableEventListener(listView, "selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
-                this.addRemovableEventListener(listView, "scroll", this.eventHandlers.onScroll.bind(this));
             }
 
             var resultConverter = function (item, index) {
@@ -205,7 +204,7 @@
             var loadData = function (recordId) {
                 var ret = null;
                 var newRecordId = null;
-                Log.call(Log.l.trace, "GenFragEvents.", "recordId=" + recordId);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
                 if (refreshDataPromise) {
                     refreshDataPromise.cancel();
                     refreshDataPromise = null;

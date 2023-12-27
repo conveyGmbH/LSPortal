@@ -10,9 +10,11 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("StartContacts", {
+    var namespaceName = "StartContacts";
+
+    WinJS.Namespace.define(namespaceName, {
         Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options) {
-            Log.call(Log.l.trace, "StartContacts.Controller.");
+            Log.call(Log.l.trace, namespaceName + ".Controller.");
             Fragments.Controller.apply(this, [fragmentElement, {
                 startcontactdata: getEmptyDefaultValue(StartContacts.mitarbeiterView.defaultValue)
             }]);
@@ -30,7 +32,7 @@
             this.resultConverter = resultConverter;
 
             var loadData = function () {
-                Log.call(Log.l.trace, "StartContacts.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                     var recordId = getRecordId();
@@ -73,7 +75,6 @@
             });
             Log.ret(Log.l.trace);
         }, {
-                
-            })
+        })
     });
 })();

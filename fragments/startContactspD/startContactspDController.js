@@ -17,18 +17,19 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("StartContactspD", {
+    var namespaceName = "StartContactspD";
+
+    WinJS.Namespace.define(namespaceName, {
         Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options) {
-            Log.call(Log.l.trace, "StartContactspD.Controller.");
+            Log.call(Log.l.trace, namespaceName + ".Controller.");
             Fragments.Controller.apply(this, [fragmentElement, {
-                
             }]);
 
             var that = this;
             this.kontaktanzahldata = null;
 
             var clickBarSlice = function (event, index) {
-                Log.call(Log.l.trace, "Start.Controller.", "index=" + index);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "index=" + index);
                 if (that.isClicked) {
                     Log.ret(Log.l.trace, "extra ignored");
                     return;
@@ -61,8 +62,7 @@
             this.barChart = null;
             this.barChartWidth = 0;
             var showBarChart = function (barChartId, bAnimated) {
-                Log.call(Log.l.trace, "StartContactspD.Controller.");
-                
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 WinJS.Promise.timeout(0).then(function () {
                     if (!that.kontaktanzahldata || !that.kontaktanzahldata.length) {
                         Log.print(Log.l.trace, "extra ignored");
@@ -183,21 +183,22 @@
             this.getRecordId = getRecordId;
 
             var setMarginChart = function (chartlength) {
-                Log.call(Log.l.trace, "StartTop10Users.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var dchart = fragmentElement.querySelector("#visitorsPerDayChart");
                 if (dchart) {
-                switch (chartlength) {
-                case 1:
-                        //dchart.style.width = "200px";
-                        dchart.style.marginLeft = "30%";
-                        break;
-                    /*case 2:
-                        dchart.style.width = "400px";
-                            dchart.style.marginLeft = "5%";
-                            break;*/
-                default:
+                    switch (chartlength) {
+                        case 1:
+                            //dchart.style.width = "200px";
+                            dchart.style.marginLeft = "30%";
+                            break;
+                        /*case 2:
+                            dchart.style.width = "400px";
+                                dchart.style.marginLeft = "5%";
+                                break;*/
+                        default:
+                    }
                 }
-            }
+                Log.ret(Log.l.trace);
             }
             this.setMarginChart = setMarginChart;
 
@@ -207,30 +208,29 @@
             this.resultConverter = resultConverter;
 
             var loadData = function () {
-                Log.call(Log.l.trace, "StartContactspD.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                     return StartContactspD.kontaktanzahlView.select(function (json) {
-                            // this callback will be called asynchronously
-                            // when the response is available
-                            Log.print(Log.l.trace, "kontaktanzahlView: success!");
-                            // kontaktanzahlView returns object already parsed from json file in response
-                            if (json && json.d) {
-                                that.kontaktanzahldata = json.d.results;
-                                var chartlength = that.kontaktanzahldata.length;
-                                //that.setMarginChart(chartlength);
-                                that.barChartWidth = 0;
-                                that.showBarChart("visitorsPerDayChart", true);
-                            }
-                            return WinJS.Promise.as();
-                        },
-                        function (errorResponse) {
-                            that.kontaktanzahldata = null;
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                            return WinJS.Promise.as();
-                        });
+                        // this callback will be called asynchronously
+                        // when the response is available
+                        Log.print(Log.l.trace, "kontaktanzahlView: success!");
+                        // kontaktanzahlView returns object already parsed from json file in response
+                        if (json && json.d) {
+                            that.kontaktanzahldata = json.d.results;
+                            var chartlength = that.kontaktanzahldata.length;
+                            //that.setMarginChart(chartlength);
+                            that.barChartWidth = 0;
+                            that.showBarChart("visitorsPerDayChart", true);
+                        }
+                        return WinJS.Promise.as();
+                    }, function (errorResponse) {
+                        that.kontaktanzahldata = null;
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                        return WinJS.Promise.as();
+                    });
                 });
                 Log.ret(Log.l.trace);
                 return ret;
@@ -245,7 +245,6 @@
             });
             Log.ret(Log.l.trace);
         }, {
-
-            })
+        })
     });
 })();

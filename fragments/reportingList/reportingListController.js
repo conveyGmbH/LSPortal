@@ -13,11 +13,12 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("ReportingList", {
-        Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options) {
-            Log.call(Log.l.trace, "ReportingList.Controller.");
-            Fragments.Controller.apply(this, [fragmentElement, {
+    var namespaceName = "ReportingList";
 
+    WinJS.Namespace.define(namespaceName, {
+        Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options) {
+            Log.call(Log.l.trace, namespaceName + ".Controller.");
+            Fragments.Controller.apply(this, [fragmentElement, {
             }]);
             var that = this;
 
@@ -31,9 +32,9 @@
             this.eventHandlers = eventHandlers;
 
             var createEventHandler = function (id) {
-                Log.call(Log.l.trace, "ReportingList.Controller.", "id=" + id);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "id=" + id);
                 eventHandlers["clickOLELetterID" + id] = function (event) {
-                    Log.call(Log.l.trace, "ReportingList.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (event && event.currentTarget) {
                         event.currentTarget.value = id;
                         AppBar.handleEvent('click', 'clickExport', event);
@@ -127,7 +128,7 @@
             this.resultConverter = resultConverter;
 
             var loadData = function () {
-                Log.call(Log.l.trace, "ReportingList.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 that.reportingItem = new WinJS.Binding.List();
                 var ret = new WinJS.Promise.as().then(function () {
@@ -199,26 +200,9 @@
             this.loadData = loadData;
 
             this.eventHandlers = {
-                /*onLoadingStateChanged: function (eventInfo) {
-                    var i;
-                    Log.call(Log.l.trace, "EmpList.Controller.");
-                    if (listView && listView.winControl) {
-                        Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
-
-                        if (listView.winControl.loadingState === "itemsLoading") {
-                            //that.disableButton();
-                        } else if (listView.winControl.loadingState === "itemsLoaded") {
-                            
-                        } else if (listView.winControl.loadingState === "complete") {
-                            //smallest List color change
-                            
-                        }
-                    }
-                    Log.ret(Log.l.trace);
-                }*/
                 onLoadingStateChanged: function (eventInfo) {
                     var i;
-                    Log.call(Log.l.trace, "EmpList.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (listView && listView.winControl) {
                         Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
                         // single list selection
@@ -261,12 +245,8 @@
 
             // register ListView event handler
             if (listView) {
-                //this.addRemovableEventListener(listView, "iteminvoked", this.eventHandlers.onItemInvoked.bind(this));
-                //this.addRemovableEventListener(listView, "selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
                 this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
-                //this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
             }
-
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
@@ -276,8 +256,8 @@
             });
             Log.ret(Log.l.trace);
         }, {
-                reportingItem: null,
-                disableFlag: 0
-            })
+            reportingItem: null,
+            disableFlag: 0
+        })
     });
 })();

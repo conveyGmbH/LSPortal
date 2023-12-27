@@ -16,11 +16,12 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("StartTop10Users", {
+    var namespaceName = "StartTop10Users";
+
+    WinJS.Namespace.define(namespaceName, {
         Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options) {
-            Log.call(Log.l.trace, "StartTop10Users.Controller.");
+            Log.call(Log.l.trace, namespaceName + ".Controller.");
             Fragments.Controller.apply(this, [fragmentElement, {
-                
             }]);
 
             var that = this;
@@ -32,7 +33,7 @@
             this.resi = 0;
             this.employeeID = 0;
             var clickEmployeeSlice = function (event, index) {
-                Log.call(Log.l.trace, "StartTop10Users.Controller.", "index=" + index);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "index=" + index);
                 if (event && index >= 0) {
                     that.employee = event[index];
                     //that.employee = that.employee[0];
@@ -75,7 +76,7 @@
             this.employeeticks = [];
             var employeeResult = null, ei = 0, el = 0;
             var showemployeeChart = function (barChartId, bAnimated) {
-                Log.call(Log.l.trace, "StartTop10Users.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 if (employeeResult && typeof employeeResult !== "undefined") {
                 var employeeWithMostContacts = Math.max.apply(Math, employeeResult.map(function (employee) { return employee.Anzahl; }));
                 }
@@ -195,7 +196,7 @@
             this.showemployeeChart = showemployeeChart;
 
             var setMarginChart = function(chartlength) {
-                Log.call(Log.l.trace, "StartTop10Users.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var t10chart = fragmentElement.querySelector("#employeeChart");
                 switch (chartlength) {
                     case 1:
@@ -207,8 +208,9 @@
                     case 3:
                         t10chart.style.marginTop = "70px";
                         break;
-                default:
+                    default:
                 }
+                Log.ret(Log.l.trace);
             }
             this.setMarginChart = setMarginChart;
 
@@ -239,7 +241,7 @@
             this.resultConverter = resultConverter;
 
             var loadData = function () {
-                Log.call(Log.l.trace, "StartTop10Users.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                     that.employeedata = [];
@@ -291,6 +293,6 @@
         }, {
             employees: null,
             employeechart: null
-            })
+        })
     });
 })();

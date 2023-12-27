@@ -17,9 +17,11 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("Home", {
+    var namespaceName = "Home";
+
+    WinJS.Namespace.define(namespaceName, {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
-            Log.call(Log.l.trace, "Home.Controller.");
+            Log.call(Log.l.trace, namespaceName + ".Controller.");
 
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
@@ -59,24 +61,24 @@
             // define handlers
             this.eventHandlers = {
                 clickBack: function (event) {
-                    Log.call(Log.l.trace, "Home.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done( /* Your success and error handlers */);
                     }
                     Log.ret(Log.l.trace);
                 },
                 clickChangeUserState: function (event) {
-                    Log.call(Log.l.trace, "Home.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     Application.navigateById("userinfo", event);
                     Log.ret(Log.l.trace);
                 },
                 clickGotoPublish: function (event) {
-                    Log.call(Log.l.trace, "Home.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     Application.navigateById("publish", event);
                     Log.ret(Log.l.trace);
                 },
                 clickTopButton: function (event) {
-                    Log.call(Log.l.trace, "Home.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var anchor = document.getElementById("menuButton");
                     var menu = document.getElementById("menu1").winControl;
                     var placement = "bottom";
@@ -84,7 +86,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickLogoff: function (event) {
-                    Log.call(Log.l.trace, "Home.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     AppData._persistentStates.privacyPolicyFlag = false;
                     if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
                         AppHeader.controller.binding.userData = {};
@@ -96,7 +98,7 @@
                     Log.ret(Log.l.trace);
                 },
                 onItemInvoked: function (eventInfo) {
-                    Log.call(Log.l.trace, "Home.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (eventInfo && eventInfo.detail) {
                         Log.print(Log.l.trace, "itemIndex=" + eventInfo.detail.itemIndex);
                         var item = Home.actionsView.getAt(eventInfo.detail.itemIndex);
@@ -107,7 +109,7 @@
                     Log.ret(Log.l.trace);
                 },
                 onLoadingStateChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "Home.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (listView && listView.winControl) {
                         var i;
                         Log.print(Log.l.trace, "onLoadingStateChanged called loadingState=" + listView.winControl.loadingState);
@@ -148,7 +150,7 @@
             }
 
             var resizeTileContainer = function(tilecount) {
-                Log.call(Log.l.trace, "LocalEvents.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 if (tilecount === 1 || tilecount === 2) {
                     tileContainer.style.height = "120px";
                 }
@@ -174,7 +176,7 @@
             this.resultConverter = resultConverter;
 
             var loadData = function () {
-                Log.call(Log.l.trace, "LocalEvents.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 if (Home._actions) {
                     Home._actions = [];

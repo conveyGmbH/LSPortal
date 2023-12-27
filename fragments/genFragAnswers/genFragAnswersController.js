@@ -11,9 +11,11 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("GenFragAnswers", {
+    var namespaceName = "GenFragAnswers";
+
+    WinJS.Namespace.define(namespaceName, {
         Controller: WinJS.Class.derive(Fragments.RecordsetController, function Controller(fragmentElement, options) {
-            Log.call(Log.l.trace, "GenFragAnswers.Controller.");
+            Log.call(Log.l.trace, namespaceName + ".Controller.");
             var listView = fragmentElement.querySelector("#genFragAnswers.listview");
             Fragments.RecordsetController.apply(this, [fragmentElement, {
                 loadingState: null
@@ -30,14 +32,14 @@
 
             var eventHandlers = {
                 onSelectionChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "GenFragAnswers.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     that.selectionChanged().then(function () {
                         AppBar.triggerDisableHandlers();
                     });
                     Log.ret(Log.l.trace);
                 },
                 onLoadingStateChanged: function (eventInfo) {
-                    Log.call(Log.l.u1, "GenFragAnswers.Controller.");
+                    Log.call(Log.l.u1, namespaceName + ".Controller.");
                     if (listView && listView.winControl) {
                         Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
                         if (listView.winControl.loadingState === "itemsLoading") {
@@ -56,12 +58,12 @@
                     Log.ret(Log.l.u1);
                 },
                 onFocusOut: function (event) {
-                    Log.call(Log.l.trace, "GenFragAnswers.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     that.saveData();
                     Log.ret(Log.l.trace);
                 },
                 onItemInvoked: function (eventInfo) {
-                    Log.call(Log.l.trace, "GenDataAnswers.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     that.setFocusOnItemInvoked(eventInfo);
                     Log.ret(Log.l.trace);
                 }

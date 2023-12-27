@@ -11,13 +11,15 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("MediaList", {
+    var namespaceName = "MediaList";
+
+    WinJS.Namespace.define(namespaceName, {
         videoExtList: [
             "mpg", "mpeg", "m1v", "mp2", "mpe", "mpv2", "mp4", "m4v",
             "mp4v", "ogg", "ogv", "asf", "avi", "mov", "wmv"
         ],
         Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options) {
-            Log.call(Log.l.trace, "MediaList.Controller.");
+            Log.call(Log.l.trace, namespaceName + ".Controller.");
             if (options) {
                 MediaList._eventTextUsageId = options.eventTextUsageId;
                 MediaList._eventId = options.eventId;
@@ -65,7 +67,7 @@
             this.checkForWheelEnd = checkForWheelEnd;
 
             var scaleItemsAfterResize = function() {
-                Log.call(Log.l.trace, "MediaList.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 if (listView && fragmentElement && 
                     fragmentElement.winControl &&
                     fragmentElement.winControl.prevWidth &&
@@ -152,7 +154,6 @@
 
 
             var resultConverter = function (item, index) {
-                Log.call(Log.l.trace, "MediaList.Controller.");
                 if (item) {
                     var doc = item;
                     item.showPdf = AppData.isPdf(doc.DocGroup, doc.DocFormat);
@@ -226,13 +227,12 @@
                     }
                     item.currentTitle = item.Titel || item.LabelTitle;
                 }
-                Log.ret(Log.l.trace);
             }
             this.resultConverter = resultConverter;
 
             var eventHandlers = {
                 onSelectionChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "MediaList.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     //if current doc is saved successfully, change selection
                     if (listView && listView.winControl) {
                         var listControl = listView.winControl;
@@ -302,7 +302,7 @@
                     Log.ret(Log.l.trace);
                 },
                 onLoadingStateChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "MediaList.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (listView && listView.winControl) {
                         Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
                         if (listView.winControl.loadingState === "complete") {
@@ -368,7 +368,7 @@
             this.eventHandlers = eventHandlers;
 
             var scrollIntoView = function (curIndex) {
-                Log.call(Log.l.u1, "MediaList.Controller.");
+                Log.call(Log.l.u1, namespaceName + ".Controller.");
                 if (listView && listView.winControl) {
                     var listControl = listView.winControl;
                     var containers = listView.querySelectorAll(".win-container");
@@ -429,7 +429,7 @@
             }
 
             var saveData = function (complete, error) {
-                Log.call(Log.l.trace, "MediaList.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var ret = new WinJS.Promise.as().then(function () {
                     if (typeof complete === "function") {
                         complete({});
@@ -444,7 +444,7 @@
             var inLoadData = false;
             var loadData = function (docId, curOptions) {
                 var i, selIdx = -1, reloadDocView = false;
-                Log.call(Log.l.trace, "MediaList.", "docId=" + docId);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "docId=" + docId);
                 if (inLoadData) {
                     if (curOptions && prevOptions &&
                         prevOptions.eventTextUsageId === curOptions.eventTextUsageId &&
@@ -586,7 +586,7 @@
             this.loadData = loadData;
 
             var forceLayout = function() {
-                Log.call(Log.l.trace, "MediaList.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 if (listView && listView.winControl) {
                     listView.winControl.forceLayout();
                 }

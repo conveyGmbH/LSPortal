@@ -14,11 +14,12 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("StartTop10Countrys", {
+    var namespaceName = "StartTop10Countrys";
+
+    WinJS.Namespace.define(namespaceName, {
         Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options) {
-            Log.call(Log.l.trace, "StartTop10Countrys.Controller.");
+            Log.call(Log.l.trace, namespaceName + ".Controller.");
             Fragments.Controller.apply(this, [fragmentElement, {
-                
             }]);
 
             var that = this;
@@ -26,7 +27,7 @@
 
             this.isClicked = false;
             var clickDonutSlice = function (event, index) {
-                Log.call(Log.l.trace, "Start.Controller.", "index=" + index);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "index=" + index);
                 var data = event[2];
                 if (that.isClicked) {
                     Log.ret(Log.l.trace, "extra ignored");
@@ -54,7 +55,7 @@
             this.countrydata = [];
             this.countryColors = [];
             var showDonutChart = function (countryChartId, bAnimated) {
-                Log.call(Log.l.trace, "Start.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "countryChartId=" + countryChartId);
                 WinJS.Promise.timeout(0).then(function () {
                     if (!that.countrydata || !that.countrydata.length) {
                         Log.print(Log.l.trace, "extra ignored");
@@ -158,25 +159,24 @@
             this.resultConverter = resultConverter;
 
             var loadData = function (recordId) {
-                Log.call(Log.l.trace, "StartTop10Countrys.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                     return StartTop10Countrys.startTop10CountrysmitarbeiterView.select(function (json) {
-                            // this callback will be called asynchronously
-                            // when the response is available
-                            Log.print(Log.l.trace, "mitarbeiterView: success!");
-                            // mitarbeiterView returns object already parsed from json file in response
-                            if (json && json.d) {
-                                var results = json.d;
-                                that.dataCountryTop10Data = results;
-                                }
-                            }, function (errorResponse) {
-                                that.dataCountryTop10Data = {};
-                                // called asynchronously if an error occurs
-                                // or server returns response with an error status.
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                                return WinJS.Promise.as();
-                        }, recordId);
+                        // this callback will be called asynchronously
+                        // when the response is available
+                        Log.print(Log.l.trace, "startTop10CountrysmitarbeiterView: success!");
+                        // mitarbeiterView returns object already parsed from json file in response
+                        if (json && json.d) {
+                            var results = json.d;
+                            that.dataCountryTop10Data = results;
+                        }
+                    }, function (errorResponse) {
+                        that.dataCountryTop10Data = {};
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    }, recordId);
                 }).then(function () {
                     return StartTop10Countrys.reportLand.select(function (json) {
                         Log.print(Log.l.trace, "reportLand: success!");
@@ -206,13 +206,11 @@
                             that.countryChartWidth = 0;
                             that.showDonutChart("countryPie", true);
                         }
-
-                    },
-                        function (errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        });
+                    },  function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    });
                 });
                 Log.ret(Log.l.trace);
                 return ret;
@@ -233,6 +231,6 @@
             Log.ret(Log.l.trace);
         }, {
             dataCountryTop10Data: {}
-            })
+        })
     });
 })();

@@ -14,9 +14,11 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("StartCountrys", {
+    var namespaceName = "StartCountrys";
+
+    WinJS.Namespace.define(namespaceName, {
         Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options) {
-            Log.call(Log.l.trace, "StartCountrys.Controller.");
+            Log.call(Log.l.trace, namespaceName + ".Controller.");
             var lang = AppData.getLanguageId();
             var srcDatamaps;
             switch (lang) {
@@ -58,7 +60,7 @@
             this.isotoInitlandId = isotoInitlandId;
 
             var marginWorlfmap = function() {
-                Log.call(Log.l.trace, "StartCountrys.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var worldmap = fragmentElement.querySelector(".start-map-chart");
                 var contentarea = fragmentElement.querySelector(".contentarea");
                 var worldButtonContainer = fragmentElement.querySelector(".worldbutton");
@@ -72,7 +74,7 @@
             this.marginWorlfmap = marginWorlfmap;
 
             var setWorldbuttonStyle = function() {
-                Log.call(Log.l.trace, "StartCountrys.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var worldbutton1 = fragmentElement.querySelector("#worldbutton1");
                 var worldbutton2 = fragmentElement.querySelector("#worldbutton2");
                 var worldbutton3 = fragmentElement.querySelector("#worldbutton3");
@@ -128,7 +130,7 @@
             this.goToWorld = goToWorld;
 
             var worldChart = function (bAnimated) {
-                Log.call(Log.l.trace, "StartCountrys.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var ret = new WinJS.Promise.as().then(function () {
                     if (!that.countryKeyData) {
                         Log.print(Log.l.trace, "extra ignored");
@@ -241,7 +243,7 @@
             };
 
             var loadData = function () {
-                Log.call(Log.l.trace, "StartContacts.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                     if (!AppData.initLandView.getResults().length) {
@@ -312,7 +314,6 @@
             });
             Log.ret(Log.l.trace);
         }, {
-
-            })
+        })
     });
 })();

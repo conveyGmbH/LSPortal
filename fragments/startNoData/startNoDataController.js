@@ -10,11 +10,12 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("StartNoData", {
-        Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options) {
-            Log.call(Log.l.trace, "StartNoData.Controller.");
-            Fragments.Controller.apply(this, [fragmentElement, {
+    var namespaceName = "StartNoData";
 
+    WinJS.Namespace.define(namespaceName, {
+        Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options) {
+            Log.call(Log.l.trace, namespaceName + ".Controller.");
+            Fragments.Controller.apply(this, [fragmentElement, {
             }]);
 
             var that = this;
@@ -25,25 +26,21 @@
             this.resultConverter = resultConverter;
 
             var loadData = function () {
-                Log.call(Log.l.trace, "StartNoData.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
-                var ret = new WinJS.Promise.as().then(function () {
-                    
-                });
                 Log.ret(Log.l.trace);
-                return ret;
+                return WinJS.Promise.as();
             };
             this.loadData = loadData;
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                //return that.loadData();
+                return that.loadData();
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
             });
             Log.ret(Log.l.trace);
         }, {
-
-            })
+        })
     });
 })();

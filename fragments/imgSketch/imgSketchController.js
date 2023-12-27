@@ -14,9 +14,11 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("ImgSketch", {
+    var namespaceName = "ImgSketch";
+
+    WinJS.Namespace.define(namespaceName, {
         Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options, commandList) {
-            Log.call(Log.l.trace, "ImgSketch.Controller.", "noteId=" + (options && options.noteId));
+            Log.call(Log.l.trace, namespaceName + ".Controller.", "noteId=" + (options && options.noteId));
 
             var imgWidth = 0;
             var imgHeight = 0;
@@ -53,7 +55,6 @@
             }
 
             var resultConverter = function (item, index) {
-                Log.call(Log.l.trace, "ImgSketch.Controller.");
                 if (item) {
                     if (item.DocContentDOCCNT1 && item.DocGroup === AppData.DocGroup.Image) {
                         var key1 = "Content-Type:";
@@ -72,11 +73,11 @@
                     }
                     item.DocContentDOCCNT1 = "";
                 }
-                Log.ret(Log.l.trace);
             }
             this.resultConverter = resultConverter;
 
             var removePhoto = function () {
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 if (fragmentElement) {
                     var photoItemBox = fragmentElement.querySelector("#notePhoto .win-itembox");
                     if (photoItemBox) {
@@ -87,6 +88,7 @@
                         }
                     }
                 }
+                Log.ret(Log.l.trace);
             }
             this.removePhoto = removePhoto;
 
@@ -213,7 +215,7 @@
             this.calcImagePosition = calcImagePosition;
 
             var showPhoto = function () {
-                Log.call(Log.l.trace, "ImgSketch.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 if (fragmentElement) {
                     var photoItemBox = fragmentElement.querySelector("#notePhoto .win-itembox");
                     if (photoItemBox) {
@@ -456,7 +458,7 @@
             }
 
             var showPhotoAfterResize = function () {
-                Log.call(Log.l.trace, "ImgSketch.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var fragmentControl = fragmentElement.winControl;
                 if (fragmentControl && fragmentControl.updateLayout) {
                     fragmentControl.prevWidth = 0;
@@ -472,7 +474,7 @@
             var insertCameradata = function (imageData, width, height) {
                 var ovwEdge = 256;
                 var err = null;
-                Log.call(Log.l.trace, "ImgSketch.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 var dataSketch = that.binding.dataSketch;
                 var ret = new WinJS.Promise.as().then(function () {
@@ -567,7 +569,7 @@
             this.insertCameradata = insertCameradata;
 
             var onPhotoDataSuccess = function (imageData) {
-                Log.call(Log.l.trace, "Questionnaire.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 // Get image handle
                 //
                 var cameraImage = new Image();
@@ -586,7 +588,7 @@
             };
 
             var onPhotoDataFail = function (errorMessage) {
-                Log.call(Log.l.error, "Questionnaire.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 //message: The message is provided by the device's native code
                 var err = JSON.stringify(errorMessage);
                 //message: The message is provided by the device's native code
@@ -604,7 +606,7 @@
             //start native Camera async
             AppData.setErrorMsg(that.binding);
             var takePhoto = function () {
-                Log.call(Log.l.trace, "ImgSketch.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 if (navigator.camera &&
                     typeof navigator.camera.getPicture === "function") {
                     // shortcuts for camera definitions
@@ -635,7 +637,7 @@
 
             var loadData = function (noteId) {
                 var ret;
-                Log.call(Log.l.trace, "ImgSketch.Controller.", "noteId=" + noteId);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "noteId=" + noteId);
                 if (noteId) {
                     AppData.setErrorMsg(that.binding);
                     ret = ImgSketch.sketchDocView.select(function (json) {
@@ -676,7 +678,7 @@
             this.loadData = loadData;
 
             var removeDoc = function() {
-                Log.call(Log.l.trace, "ImgSketch.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 that.binding.dataSketch = {};
                 that.removePhoto();
                 Log.ret(Log.l.trace);
@@ -685,7 +687,7 @@
 
             var saveData = function (complete, error) {
                 //img can't be changed
-                Log.call(Log.l.trace, "ImgSketch.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var ret = new WinJS.Promise.as().then(function () {
                     if (typeof complete === "function") {
                         complete(that.binding.dataSketch);
@@ -697,7 +699,7 @@
             this.saveData = saveData;
 
             var deleteData = function() {
-                Log.call(Log.l.trace, "ImgSketch.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var ret= WinJS.Promise.as().then(function () {
                     if (options && options.isLocal) {
                         return ImgSketch.sketchView.deleteRecord(function (response) {
@@ -739,7 +741,7 @@
             // define handlers
             this.eventHandlers = {
                 clickZoomIn: function (event) {
-                    Log.call(Log.l.trace, "ImgSketch.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (that.hasDoc() && imgScale * scaleIn < 1) {
                         that.calcImagePosition({
                             scale: imgScale * scaleIn
@@ -753,7 +755,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickZoomOut: function (event) {
-                    Log.call(Log.l.trace, "ImgSketch.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (that.hasDoc() &&
                         ((imgRotation === 0 || imgRotation === 180) && imgWidth * imgScale * scaleOut > 100 ||
                          (imgRotation === 90 || imgRotation === 270) && imgHeight * imgScale * scaleOut > 100)) {
@@ -775,7 +777,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickRotateLeft: function (event) {
-                    Log.call(Log.l.trace, "ImgSketch.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var rotate = imgRotation - 90;
                     if (rotate < 0) {
                         rotate = 270;
@@ -787,7 +789,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickRotateRight: function (event) {
-                    Log.call(Log.l.trace, "ImgSketch.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var rotate = imgRotation + 90;
                     if (rotate >= 360) {
                         rotate = 0;

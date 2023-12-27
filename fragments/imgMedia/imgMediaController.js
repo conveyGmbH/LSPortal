@@ -11,9 +11,11 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("ImgMedia", {
+    var namespaceName = "ImgMedia";
+
+    WinJS.Namespace.define(namespaceName, {
         Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options, commandList) {
-            Log.call(Log.l.trace, "ImgMedia.Controller.", "docId=" + (options && options.docId));
+            Log.call(Log.l.trace, namespaceName + ".Controller.", "docId=" + (options && options.docId));
 
             var imgWidth = 0;
             var imgHeight = 0;
@@ -49,7 +51,6 @@
             }
 
             var resultConverter = function (item, index) {
-                Log.call(Log.l.trace, "ImgMedia.Controller.");
                 if (item) {
                     that.binding.docId = item.MandantDokumentVIEWID;
                     if (item.DocContentDOCCNT1 && item.DocGroup === AppData.DocGroup.Image && item.ContentEncoding === 4096) {
@@ -69,11 +70,11 @@
                     }
                     item.DocContentDOCCNT1 = "";
                 }
-                Log.ret(Log.l.trace);
             }
             this.resultConverter = resultConverter;
 
             var removeImage = function () {
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 if (fragmentElement) {
                     var imageItemBox = fragmentElement.querySelector("#imgDoc .win-itembox");
                     if (imageItemBox) {
@@ -84,6 +85,7 @@
                         }
                     }
                 }
+                Log.ret(Log.l.trace);
             }
             this.removeImage = removeImage;
 
@@ -220,7 +222,7 @@
             this.calcImagePosition = calcImagePosition;
 
             var showImage = function () {
-                Log.call(Log.l.trace, "ImgMedia.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 if (fragmentElement) {
                     var imageItemBox = fragmentElement.querySelector("#imgDoc .win-itembox");
                     if (imageItemBox) {
@@ -456,7 +458,7 @@
             }
 
             /*var showImageAfterResize = function () {
-                Log.call(Log.l.trace, "ImgMedia.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var fragmentControl = fragmentElement.winControl;
                 if (fragmentControl && fragmentControl.updateLayout) {
                     fragmentControl.prevWidth = 0;
@@ -471,7 +473,7 @@
 
             var loadData = function (docId) {
                 var ret = null;
-                Log.call(Log.l.trace, "ImgMedia.Controller.", "docId=" + docId);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "docId=" + docId);
                 if (docId) {
                     AppData.setErrorMsg(that.binding);
                     ret = ImgMedia.docView.select(function (json) {
@@ -502,7 +504,7 @@
             this.loadData = loadData;
 
             var removeDoc = function() {
-                Log.call(Log.l.trace, "ImgMedia.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 that.binding.dataDoc = {};
                 that.removeImage();
                 Log.ret(Log.l.trace);
@@ -512,7 +514,7 @@
             // define handlers
             this.eventHandlers = {
                 clickZoomIn: function (event) {
-                    Log.call(Log.l.trace, "ImgMedia.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (that.hasDoc() && imgScale * scaleIn < 1) {
                         that.calcImagePosition({
                             scale: imgScale * scaleIn
@@ -526,7 +528,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickZoomOut: function (event) {
-                    Log.call(Log.l.trace, "ImgMedia.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (that.hasDoc() &&
                         ((imgRotation === 0 || imgRotation === 180) && imgWidth * imgScale * scaleOut > 100 ||
                          (imgRotation === 90 || imgRotation === 270) && imgHeight * imgScale * scaleOut > 100)) {
@@ -548,7 +550,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickRotateLeft: function (event) {
-                    Log.call(Log.l.trace, "ImgMedia.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var rotate = imgRotation - 90;
                     if (rotate < 0) {
                         rotate = 270;
@@ -560,7 +562,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickRotateRight: function (event) {
-                    Log.call(Log.l.trace, "ImgMedia.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var rotate = imgRotation + 90;
                     if (rotate >= 360) {
                         rotate = 0;

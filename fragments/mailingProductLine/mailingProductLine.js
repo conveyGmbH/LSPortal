@@ -49,12 +49,6 @@
             this.prevHeight = 0;
 
             this.controller = new MailingProductLine.Controller(element, options);
-            if (this.controller.eventHandlers) {
-                this.controller.addRemovableEventListener(document, "mousedown", this.controller.eventHandlers.onMouseDown.bind(this.controller));
-                this.controller.addRemovableEventListener(document, "pointerdown", this.controller.eventHandlers.onPointerDown.bind(this.controller));
-                this.controller.addRemovableEventListener(document, "mouseup", this.controller.eventHandlers.onMouseUp.bind(this.controller));
-                this.controller.addRemovableEventListener(document, "pointerup", this.controller.eventHandlers.onPointerUp.bind(this.controller));
-            }
             Log.ret(Log.l.trace);
         },
 

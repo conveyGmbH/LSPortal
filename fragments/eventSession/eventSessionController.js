@@ -14,9 +14,11 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("EventSession", {
+    var namespaceName = "EventSession";
+
+    WinJS.Namespace.define(namespaceName, {
         Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options) {
-            Log.call(Log.l.trace, "EventSession.Controller.");
+            Log.call(Log.l.trace, namespaceName + ".Controller.");
             Fragments.Controller.apply(this, [fragmentElement, {
                 recordID: 0,
                 btnLabel: getResourceText("voucheradministrationlist.btnlabelO"),
@@ -55,13 +57,15 @@
 
             var scopeFromRecordId = function (recordId) {
                 var i;
-                Log.call(Log.l.trace, "MandatoryList.Controller.", "recordId=" + recordId);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
                 var item = null;
-                var recordidint = parseInt(recordId);
+                if (typeof recordId === "string") {
+                    recordId = parseInt(recordId);
+                }
                 for (i = 0; i < that.listView.length; i++) {
                     var field = that.listView.getAt(i);
                     if (field && typeof field === "object" &&
-                        field.BBBSessionVIEWID === recordidint) {
+                        field.BBBSessionVIEWID === recordId) {
                         item = field;
                         break;
                     }
@@ -77,7 +81,7 @@
             this.scopeFromRecordId = scopeFromRecordId;
 
             var selectRecordId = function (recordId) {
-                Log.call(Log.l.trace, "MandatoryList.Controller.", "recordId=" + recordId);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
                 if (recordId && listView && listView.winControl && listView.winControl.selection) {
                     if (fields) {
                         for (var i = 0; i < that.fields.length; i++) {
@@ -126,7 +130,6 @@
                     //.toLocaleString('de-DE').substr(0, 10);
                 }
                 if (start && end) {
-                    Log.call(Log.l.trace, "EventSession.Controller.");
                     var a = moment(new Date(start));
                     var b = moment(new Date(end));
                     var diff = b.diff(a);
@@ -139,7 +142,7 @@
             this.getDurationObject = getDurationObject;
 
             var setDownloadLink = function (link) {
-                Log.call(Log.l.trace, "EventSession.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 if (link) {
                     that.binding.dwlink = link;
                 }
@@ -148,20 +151,17 @@
             this.setDownloadLink = setDownloadLink;
 
             var getModeratorData = function (veranstId) {
-                Log.call(Log.l.trace, "EventSession.Controller.");
-                return AppData.call("PRC_GetLBModerator",
-                    {
-                        pVeranstaltungID: veranstId
-                    },
-                    function (json) {
-                        Log.print(Log.l.info, "call success! ");
-                        that.binding.moderatorData = json.d.results[0];
-                        Log.print(Log.l.info, "call success! ");
-                    },
-                    function (error) {
-                        Log.print(Log.l.error, "call error");
-                    });
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
+                var ret = AppData.call("PRC_GetLBModerator", {
+                    pVeranstaltungID: veranstId
+                }, function (json) {
+                    Log.print(Log.l.info, "call PRC_GetLBModerator success! ");
+                    that.binding.moderatorData = json.d.results[0];
+                }, function (error) {
+                    Log.print(Log.l.error, "call PRC_GetLBModerator error");
+                });
                 Log.ret(Log.l.trace);
+                return ret;
             }
             this.getModeratorData = getModeratorData;
 
@@ -175,7 +175,7 @@
             this.converterToArray = converterToArray;
 
             var createButtonFromArray = function (url) {
-                Log.call(Log.l.trace, "EventSession.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 that.binding.dwlink = true;
                 if (url) {
                     if (that.binding.sessiondownloadData.length !== 0) {
@@ -196,11 +196,13 @@
                         linkcontainer.appendChild(newB);
                     }
                 }
+                Log.ret(Log.l.trace);
             }
             this.createButtonFromArray = createButtonFromArray;
 
             var getSessionDownloadFiles = function (rawurl) {
-                Log.call(Log.l.trace, "EventSession.Controller.");
+                var ret = null;
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "rawurl=" + rawurl);
                 if (rawurl) {
                     if (rawurl.search("/recording/") > 0) {
                         var urlsuffix = rawurl.substring(rawurl.indexOf("/recording/") + 11, rawurl.length);
@@ -209,38 +211,22 @@
                         var url2 = AppData.getBaseURL(AppData.appSettings.odata.onlinePort) + "/recording/" + urlsuffix2;
                         var options = AppData.initXhrOptions("GET", url, false);
                         Log.print(Log.l.info, "calling xhr method=GET url=" + options.url);
-                        WinJS.xhr(options).then(function xhrSuccess(response) {
-                            Log.print(Log.l.info, "AppData.call xhr", "method=GET" + options.url);
+                        ret = WinJS.xhr(options).then(function xhrSuccess(response) {
+                            Log.print(Log.l.info, "AppData.call xhr success! method=GET" + options.url);
                             try {
                                 var result = response.responseText;
                                 var breakfinal = result.split(/\r?\n|\r|\n/g);
                                 that.converterToArray(breakfinal);
                                 that.createButtonFromArray(url2);
-                                return WinJS.Promise.as();
                             } catch (exception) {
                                 Log.print(Log.l.error, "resource parse error " + (exception && exception.message));
+                                AppData.setErrorMsg(AppBar.scope.binding, (exception && exception.message));
                             }
-                            Log.ret(Log.l.info);
-                            return WinJS.Promise.as();
-                        }, function (errorResponse) {
+                        }, function xhrError(errorResponse) {
                             Log.print(Log.l.error, "error=" + AppData.getErrorMsgFromResponse(errorResponse));
                             AppData.setErrorMsg(AppBar.scope.binding, errorResponse);
-                            if (errorResponse.status === 401) {
-                                // user is not authorized to access this service
-                                AppBar.scope.binding.generalData.notAuthorizedUser = true;
-                                var errorMessage = getResourceText("general.unauthorizedUser");
-                                alert(errorMessage);
-                                //AppData.setErrorMsg(AppBar.scope.binding, err);
-                                // user is not authorized to access this service
-                                WinJS.Promise.timeout(1000).then(function () {
-
-                                });
-                            }
-                            return WinJS.Promise.as();
                         });
-                        Log.call(Log.l.trace, "EventSession.Controller.");
-                    } 
-                    else if (rawurl.search("/playback/") > 0) {
+                    } else if (rawurl.search("/playback/") > 0) {
                         that.binding.oldPlayback = true;
                         if (oldRecordingLink) {
                             oldRecordingLink.innerHTML = "<a target=\"_blank\" href=" + rawurl + ">" + getResourceText("eventSession.sessionlink") + "</a>";
@@ -251,14 +237,16 @@
                         that.createButtonFromArray(rawurl);
                     }
                 } else {
-                    Log.call(Log.l.trace, "EventSession.Controller.");
+                    Log.print(Log.l.trace, "null param");
                 }
+                Log.ret(Log.l.trace);
+                return ret || WinJS.Promise.as();
             }
             this.getSessionDownloadFiles = getSessionDownloadFiles;
 
             var eventHandlers = {
                 onSelectionChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "EmpList.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (listView && listView.winControl) {
                         var listControl = listView.winControl;
                         if (listControl.selection) {
@@ -292,7 +280,7 @@
                     Log.ret(Log.l.trace);
                 },
                 onLoadingStateChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "EventSession.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (listView && listView.winControl) {
                         Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
                         // single list selection
@@ -327,7 +315,6 @@
                 this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
                 this.addRemovableEventListener(listView, "selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
             }
-            this.addRemovableEventListener(listView, "selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
 
             var resultConverter = function (item, index) {
                 item.index = index;
@@ -367,7 +354,7 @@
             this.resultConverter = resultConverter;
 
             var loadData = function () {
-                Log.call(Log.l.trace, "EventSession.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var eventId = AppBar.scope.binding.eventId;
                 that.sessions = [];
                 that.binding.recordID = 0;
@@ -421,8 +408,8 @@
             });
             Log.ret(Log.l.trace);
         }, {
-                statuscounter: 0,
-                linkname: ""
-            })
+            statuscounter: 0,
+            linkname: ""
+        })
     });
 })();

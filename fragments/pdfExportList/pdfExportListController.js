@@ -13,11 +13,12 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("PdfExportList", {
-        Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options) {
-            Log.call(Log.l.trace, "PdfExportList.Controller.");
-            Fragments.Controller.apply(this, [fragmentElement, {
+    var namespaceName = "PdfExportList";
 
+    WinJS.Namespace.define(namespaceName, {
+        Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options) {
+            Log.call(Log.l.trace, namespaceName + ".Controller.");
+            Fragments.Controller.apply(this, [fragmentElement, {
             }]);
             var that = this;
 
@@ -30,9 +31,9 @@
             this.eventHandlers = eventHandlers;
 
             var createEventHandler = function (id) {
-                Log.call(Log.l.trace, "PdfExportList.Controller.", "id=" + id);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "id=" + id);
                 eventHandlers["clickOLELetterID" + id] = function (event) {
-                    Log.call(Log.l.trace, "ReportingList.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (event && event.currentTarget) {
                         event.currentTarget.value = id;
                         AppBar.handleEvent('click', 'clickExport', event);
@@ -68,7 +69,7 @@
             this.disableList = disableList;
 
             var loadData = function () {
-                Log.call(Log.l.trace, "PdfExportList.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                     return PdfExportList.pdfExportListView.select(function (json) {
@@ -108,11 +109,9 @@
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, {
-
-                        }).then(function () {
-
-                            Log.print(Log.l.trace, "Data loaded");
-                        });
+                    }).then(function () {
+                        Log.print(Log.l.trace, "Data loaded");
+                    });
                 });
                 Log.ret(Log.l.trace);
                 return ret;
@@ -127,8 +126,8 @@
             });
             Log.ret(Log.l.trace);
         }, {
-                reportingItem: null,
-                disableFlag: 0
-            })
+            reportingItem: null,
+            disableFlag: 0
+        })
     });
 })();

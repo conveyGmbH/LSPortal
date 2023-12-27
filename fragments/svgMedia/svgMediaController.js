@@ -11,9 +11,11 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("SvgMedia", {
+    var namespaceName = "SvgMedia";
+
+    WinJS.Namespace.define(namespaceName, {
         Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options, commandList) {
-            Log.call(Log.l.trace, "SvgMedia.Controller.", "noteId=" + (options && options.noteId));
+            Log.call(Log.l.trace, namespaceName + ".Controller.", "noteId=" + (options && options.noteId));
 
             // instanciate SVGEditor class
             var svgEditor = new SVGEditor.SVGEditorClass();
@@ -56,7 +58,7 @@
             // check modify state
             // modified==true when startDrag() in svg.js is called!
             var isModified = function () {
-                Log.call(Log.l.trace, "SvgMediaController.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 if (that.svgEditor) {
                     Log.ret(Log.l.trace, "modified=" + that.svgEditor.modified);
                     return that.svgEditor.modified;
@@ -67,7 +69,7 @@
             this.isModified = isModified;
 
             var resultConverter = function (item) {
-                Log.call(Log.l.trace, "SvgMedia.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 if (item) {
                     if (item.DocGroup === AppData.DocGroup.Text && item.DocFormat === 75) {
                         item.ExecAppTypeID = 15;
@@ -82,7 +84,7 @@
             this.resultConverter = resultConverter;
 
             var showSvgAfterResize = function () {
-                Log.call(Log.l.trace, "SvgMedia.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var ret = WinJS.Promise.timeout(0).then(function () {
                     var promise = null;
                     var fragmentControl = fragmentElement.winControl;
@@ -127,7 +129,7 @@
             
             var loadData = function (noteId) {
                 var ret;
-                Log.call(Log.l.trace, "SvgMedia.Controller.", "noteId=" + noteId);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "noteId=" + noteId);
                 AppData.setErrorMsg(that.binding);
                 var docContainer = fragmentElement.querySelector(".doc-container");
                 if (docContainer) {
@@ -190,8 +192,8 @@
             this.loadData = loadData;
 
             var saveData = function (complete, error) {
-                Log.call(Log.l.trace, "SvgMedia.Controller.");
                 var ret;
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 var dataSketch = that.binding.dataSketch;
                 if (dataSketch && that.binding.isLocal && isModified()) {
@@ -326,7 +328,7 @@
             this.saveData = saveData;
 
             var deleteData = function() {
-                Log.call(Log.l.trace, "SvgMedia.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var ret = WinJS.Promise.as().then(function () {
                     if (options && options.isLocal) {
                         if (that.svgEditor) {
@@ -359,35 +361,35 @@
 
             var eventHandlers = {
                 clickUndo: function (event) {
-                    Log.call(Log.l.trace, "SvgMedia.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (that.svgEditor) {
                         that.svgEditor.fnUndoSVG(event);
                     }
                     Log.ret(Log.l.trace);
                 },
                 clickRedo: function (event) {
-                    Log.call(Log.l.trace, "SvgMedia.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (that.svgEditor) {
                         that.svgEditor.fnRedoSVG(event);
                     }
                     Log.ret(Log.l.trace);
                 },
                 clickShapes: function (event) {
-                    Log.call(Log.l.trace, "SvgMedia.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (that.svgEditor) {
                         that.svgEditor.toggleToolbox("shapesToolbar");
                     }
                     Log.ret(Log.l.trace);
                 },
                 clickColors: function (event) {
-                    Log.call(Log.l.trace, "SvgMedia.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (that.svgEditor) {
                         that.svgEditor.toggleToolbox("colorsToolbar");
                     }
                     Log.ret(Log.l.trace);
                 },
                 clickWidths: function (event) {
-                    Log.call(Log.l.trace, "SvgMedia.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (that.svgEditor) {
                         that.svgEditor.toggleToolbox("widthsToolbar");
                     }
@@ -395,7 +397,7 @@
                 },
                 // Eventhandler for tools
                 clickTool: function (event) {
-                    Log.call(Log.l.trace, "SvgMedia.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var tool = event.currentTarget;
                     if (tool && tool.id && that.svgEditor) {
                         if (tool.id.length > 4) {
@@ -413,7 +415,7 @@
                 },
                 // Eventhandler for colors
                 clickColor: function (event) {
-                    Log.call(Log.l.trace, "SvgMedia.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var color = event.currentTarget;
                     if (color && color.id && that.svgEditor) {
                         if (color.id.length > 10) {
@@ -432,7 +434,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickWidth: function (event) {
-                    Log.call(Log.l.trace, "SvgMedia.Controller.", "selected width=" + that.binding.width);
+                    Log.call(Log.l.trace, namespaceName + ".Controller.", "selected width=" + that.binding.width);
                     if (that.svgEditor) {
                         that.svgEditor.hideToolbox("widthsToolbar");
                         if (options && options.isLocal) {
@@ -442,7 +444,7 @@
                     Log.ret(Log.l.trace);
                 },
                 changedWidth: function (event) {
-                    Log.call(Log.l.trace, "SvgMedia.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (event.currentTarget) {
                         var range = event.currentTarget;
                         if (range) {
@@ -476,7 +478,7 @@
 
 
             var removeDoc = function () {
-                Log.call(Log.l.trace, "SvgMedia.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 that.binding.noteId = null;
                 that.binding.dataSketch = {};
                 if (that.svgEditor) {

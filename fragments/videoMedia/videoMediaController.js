@@ -172,7 +172,7 @@
                                     video.play();
                                 }
                             } catch (e) {
-                                Log.print(Log.L.error, "video returned error:" + e);
+                                Log.print(Log.l.error, "video returned error:" + e);
                             }
                             audio = fragmentElement.querySelector("#noteAudio");
                             if (audio) {
@@ -203,7 +203,7 @@
                                     audio.play();
                                 }
                             } catch (e) {
-                                Log.print(Log.L.error, "audio returned error:" + e);
+                                Log.print(Log.l.error, "audio returned error:" + e);
                             }
                             video = fragmentElement.querySelector("#noteVideo");
                             if (video) {
@@ -228,7 +228,7 @@
                             try {
                                 frame.src = url;
                             } catch (e) {
-                                Log.print(Log.L.error, "frame returned error:" + e);
+                                Log.print(Log.l.error, "frame returned error:" + e);
                             }
                             audio = fragmentElement.querySelector("#noteAudio");
                             if (audio) {

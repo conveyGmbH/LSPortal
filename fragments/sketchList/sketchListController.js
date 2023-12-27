@@ -11,9 +11,11 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("SketchList", {
+    var namespaceName = "SketchList";
+
+    WinJS.Namespace.define(namespaceName, {
         Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options) {
-            Log.call(Log.l.trace, "SketchList.Controller.");
+            Log.call(Log.l.trace, namespaceName + ".Controller.");
             Fragments.Controller.apply(this, [fragmentElement, {
                 contactId: options.contactId,
                 isLocal: options.isLocal,
@@ -27,14 +29,37 @@
             this.nextUrl = null;
             this.records = null;
 
-            var waitingForMouseScroll = false;
-            var wheelScrollAdd = 0;
-
             // now do anything...
             var listView = fragmentElement.querySelector("#sketchList.listview");
 
+            var doScrollIntoViewAnimation = false;
+            var initialScrollPosition = 0;
+            var wheelValueFactor = 100;
+            var waitingForMouseScroll = false;
+            var wheelScrollAdd = 0;
+            var checkForWheelEndPromise = null;
+
+            var onTouch = function (eventId, x, y) {
+                if (listView && listView.winControl) {
+                    listView.winControl.scrollPosition = initialScrollPosition + x / 4;
+                }
+            };
+            var touchPhysics = new TouchPhysics.TouchPhysics(onTouch);
+            var checkForWheelEnd = function (eventInfo) {
+                if (checkForWheelEndPromise) {
+                    checkForWheelEndPromise.cancel();
+                }
+                checkForWheelEndPromise = WinJS.Promise.timeout(TouchPhysics.wheelEndTimerMs).then(function () {
+                    waitingForMouseScroll = false;
+                    checkForWheelEndPromise = null;
+                    touchPhysics.processUp(MANIPULATION_PROCESSOR_MANIPULATIONS.MANIPULATION_TRANSLATE_X, wheelScrollAdd * wheelValueFactor, 0);
+                    wheelScrollAdd = 0;
+                });
+            }
+            this.checkForWheelEnd = checkForWheelEnd;
+
             var scaleItemsAfterResize = function() {
-                Log.call(Log.l.trace, "SketchList.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 if (listView && fragmentElement && 
                     fragmentElement.winControl &&
                     fragmentElement.winControl.prevWidth &&
@@ -121,7 +146,6 @@
 
 
             var resultConverter = function (item, index) {
-                Log.call(Log.l.trace, "SketchList.Controller.");
                 if (item) {
                     var doc = item;
                     item.showSvg = AppData.isSvg(doc.DocGroup, doc.DocFormat);
@@ -170,13 +194,12 @@
                         item.date = "";
                     }
                 }
-                Log.ret(Log.l.trace);
             }
             this.resultConverter = resultConverter;
 
             var eventHandlers = {
                 onSelectionChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "SketchList.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     //if current sketch is saved successfully, change selection
                     if (listView && listView.winControl) {
                         var listControl = listView.winControl;
@@ -217,7 +240,7 @@
                     Log.ret(Log.l.trace);
                 },
                 onLoadingStateChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "SketchList.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (listView && listView.winControl) {
                         Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
                         // single list selection
@@ -228,8 +251,6 @@
                         if (listView.winControl.tapBehavior !== WinJS.UI.TapBehavior.directSelect) {
                             listView.winControl.tapBehavior = WinJS.UI.TapBehavior.directSelect;
                         }
-                        
-                        
                         if (listView.winControl.loadingState === "itemsLoading") {
                             if (!layout) {
                                 layout = new WinJS.UI.GridLayout();
@@ -244,12 +265,31 @@
                     Log.ret(Log.l.trace);
                 },
                 wheelHandler: function(eventInfo) {
-                    Log.call(Log.l.u1, "SketchList.Controller.");
-                    
+                    Log.call(Log.l.u1, namespaceName + ".Controller.");
                     if (eventInfo && listView && listView.winControl) {
                         var wheelWithinListView = eventInfo.target && (listView.contains(eventInfo.target) || listView === eventInfo.target);
                         if (wheelWithinListView) {
+                            eventInfo.stopPropagation();
+                            eventInfo.preventDefault();
+
                             var wheelValue;
+                            if (!waitingForMouseScroll) {
+                                waitingForMouseScroll = true;
+                                initialScrollPosition = listView.winControl.scrollPosition;
+                                if (typeof eventInfo.deltaY === 'number') {
+                                    wheelValue = Math.abs(eventInfo.deltaX || eventInfo.deltaY || 0);
+                                } else {
+                                    wheelValue = Math.abs(eventInfo.wheelDelta || 0);
+                                }
+                                if (wheelValue) {
+                                    wheelValueFactor = 10000 / wheelValue;
+                                }
+                                touchPhysics.processDown(MANIPULATION_PROCESSOR_MANIPULATIONS.MANIPULATION_TRANSLATE_X, 0, 0);
+                                WinJS.Promise.timeout(TouchPhysics.wheelStartTimerMs).then(function () {
+                                    that.eventHandlers.wheelHandler(eventInfo);
+                                });
+                                return;
+                            }
                             var wheelingForward;
 
                             if (typeof eventInfo.deltaY === 'number') {
@@ -260,16 +300,9 @@
                                 wheelValue = Math.abs(eventInfo.wheelDelta || 0);
                             }
                             wheelScrollAdd += wheelingForward ? wheelValue : -wheelValue;
-                            if (waitingForMouseScroll) {
-                                Log.ret(Log.l.u1, "extra ignored");
-                                return;
-                            }
-                            waitingForMouseScroll = true;
-                            listView.winControl.scrollPosition += wheelScrollAdd / 2;
-                            wheelScrollAdd = 0;
-                            WinJS.Promise.timeout(20).then(function() {
-                                waitingForMouseScroll = false;
-                            });
+
+                            touchPhysics.processMove(MANIPULATION_PROCESSOR_MANIPULATIONS.MANIPULATION_TRANSLATE_X, wheelScrollAdd * wheelValueFactor, 0);
+                            that.checkForWheelEnd(eventInfo);
                         }
                     }
                     Log.ret(Log.l.u1);
@@ -286,7 +319,7 @@
             }
 
             var saveData = function (complete, error) {
-                Log.call(Log.l.trace, "SketchList.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var ret = new WinJS.Promise.as().then(function () {
                     if (typeof complete === "function") {
                         complete({});
@@ -300,8 +333,7 @@
 
             var loadData = function (contactId, noteId) {
                 var i, selIdx = -1, ret, reloadDocView = false, row;
-               
-                Log.call(Log.l.trace, "SketchList.", "contactId=" + contactId + " noteId=" + noteId);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "contactId=" + contactId + " noteId=" + noteId);
                 if (contactId) {
                     that.binding.contactId = contactId;
                 }
@@ -320,7 +352,7 @@
                     ret = SketchList.sketchlistView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
-                        Log.print(Log.l.trace, "SketchList.sketchlistView: success!");
+                        Log.print(Log.l.trace, namespaceName + ".sketchlistView: success!");
                         // select returns object already parsed from json file in response
                         if (json && json.d) {
                             that.resultConverter(json.d, selIdx);
@@ -338,7 +370,7 @@
                     ret = SketchList.sketchlistView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
-                        Log.print(Log.l.trace, "SketchList.sketchlistView: success!");
+                        Log.print(Log.l.trace, namespaceName + ".sketchlistView: success!");
                         // select returns object already parsed from json file in response
                         if (json && json.d && json.d.results && json.d.results.length > 0) {
                             that.nextUrl = SketchList.sketchlistView.getNextUrl(json, that.binding.isLocal);
@@ -368,7 +400,7 @@
                                         }
                                     }
                                 }
-                                Log.print(Log.l.trace, "SketchList.sketchlistView: selIdx=" + selIdx);
+                                Log.print(Log.l.trace, namespaceName + ".sketchlistView: selIdx=" + selIdx);
                             }
                         } else {
                             that.binding.noteId = null;
@@ -432,7 +464,7 @@
             this.loadData = loadData;
 
             var forceLayout = function() {
-                Log.call(Log.l.trace, "MediaList.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 if (listView && listView.winControl) {
                     listView.winControl.forceLayout();
                 }

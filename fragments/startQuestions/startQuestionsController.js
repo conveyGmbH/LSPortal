@@ -16,9 +16,11 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("StartQuestions", {
+    var namespaceName = "StartQuestions";
+
+    WinJS.Namespace.define(namespaceName, {
         Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options) {
-            Log.call(Log.l.trace, "StartQuestions.Controller.");
+            Log.call(Log.l.trace, namespaceName + ".Controller.");
             Fragments.Controller.apply(this, [fragmentElement, {
                 qbez: 0
             }]);
@@ -32,7 +34,7 @@
             var questionList = fragmentElement.querySelector("#questionButtonList.listview");
 
             /*var selectRecordId = function (recordId) {
-                Log.call(Log.l.trace, "StartQuestions.Controller.", "recordId=" + recordId);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
                 if (recordId && questionList && questionList.winControl && questionList.winControl.selection) {
                     if (fields) {
                         for (var i = 0; i < that.fields.length; i++) {
@@ -52,7 +54,7 @@
 
             var scopeFromRecordId = function (recordId) {
                 var i;
-                Log.call(Log.l.trace, "StartQuestions.Controller.", "recordId=" + recordId);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
                 var item = null;
                 for (i = 0; i < that.fields.length; i++) {
                     var field = that.fields.getAt(i);
@@ -74,7 +76,8 @@
             */
 
             var tooltipformater = function(tooltiptext) {
-                Log.call(Log.l.trace, "StartTop10Users.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
+                Log.ret(Log.l.trace);
                 return tooltiptext[0] + " , " + tooltiptext[1];
             }
             this.tooltipformater = tooltipformater;
@@ -88,7 +91,7 @@
             this.answerticks = [];
             var answerResult = null, ei = 0, el = 0;
             var showanswerChart = function (barChartId, bAnimated) {
-                Log.call(Log.l.trace, "StartTop10Users.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var questionWithMostAnswser = Math.max.apply(Math, answerResult.map(function (answer) { return answer.SumAntwort; }));
                 WinJS.Promise.timeout(0).then(function () {
                     if (!that.answerdata || !that.answerdata.length) {
@@ -255,7 +258,7 @@
             this.resultConverter = resultConverter;
 
             var loadData = function () {
-                Log.call(Log.l.trace, "StartQuestions.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                     return StartQuestions.questionView.select(function (json) {
@@ -293,16 +296,13 @@
                             }
                         }
                         return WinJS.Promise.as();
-                    },
-                        function (errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                            return WinJS.Promise.as();
-                        },
-                        {
-
-                        });
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                        return WinJS.Promise.as();
+                    }, {
+                    });
                 });
                 Log.ret(Log.l.trace);
                 return ret;
@@ -312,7 +312,7 @@
             // define handlers
             var eventHandlers = {
                 onSelectionChanged: function (event) {
-                    Log.call(Log.l.trace, "Start.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (questionList && questionList.winControl) {
                         var listControl = questionList.winControl;
                         if (listControl.selection) {
@@ -325,37 +325,34 @@
                                         that.answerdata = [];
                                         that.answerticks = [];
                                         that.answerdataID = [];
-                                        AppData.call("PRC_SumAntwort",
-                                            {
+                                        AppData.call("PRC_SumAntwort", {
                                                 pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
                                                 pFragenNr: parseInt(item.data.FragebogenVIEWID)
-
-                                            },
-                                            function (json) {
-                                                Log.print(Log.l.info, "call success! ");
-                                                AppBar.busy = false;
-                                                that.anwsersquestiontext = [];
-                                                that.anwserssumantwort = [];
-                                                var results = json.d.results;
-                                                that.anwsercount = results.length;
-                                                answerResult = results;
-                                                results.forEach(function (item, index) {
-                                                    that.resultAnwserConverter(item, index);
-                                                });
-                                                that.answerdata = results;
-                                                that.barChartWidth = 0;
-                                                that.showanswerChart("answerChart", true);
-                                            },
-                                            function (errorResponse) {
-                                                Log.print(Log.l.error, "call error");
-                                                AppBar.busy = false;
-                                                AppData.setErrorMsg(that.binding, errorResponse);
+                                        }, function (json) {
+                                            Log.print(Log.l.info, "call success! ");
+                                            AppBar.busy = false;
+                                            that.anwsersquestiontext = [];
+                                            that.anwserssumantwort = [];
+                                            var results = json.d.results;
+                                            that.anwsercount = results.length;
+                                            answerResult = results;
+                                            results.forEach(function (item, index) {
+                                                that.resultAnwserConverter(item, index);
                                             });
+                                            that.answerdata = results;
+                                            that.barChartWidth = 0;
+                                            that.showanswerChart("answerChart", true);
+                                        }, function (errorResponse) {
+                                            Log.print(Log.l.error, "call error");
+                                            AppBar.busy = false;
+                                            AppData.setErrorMsg(that.binding, errorResponse);
+                                        });
                                     }
                                 });
                             }
                         }
                     }
+                    Log.ret(Log.l.trace);
                 }
             }
             this.eventHandlers = eventHandlers;
@@ -375,6 +372,6 @@
         }, {
             answer: null,
             answerchart: null
-            })
+        })
     });
 })();

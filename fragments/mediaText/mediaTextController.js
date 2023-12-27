@@ -11,9 +11,12 @@
 
 (function () {
     "use strict";
-    WinJS.Namespace.define("MediaText", {
+
+    var namespaceName = "MediaText";
+
+    WinJS.Namespace.define(namespaceName, {
         Controller: WinJS.Class.derive(Fragments.RecordsetController, function Controller(fragmentElement, options, commandList) {
-            Log.call(Log.l.trace, "MediaText.Controller.");
+            Log.call(Log.l.trace, namespaceName + ".Controller.");
             if (options) {
                 MediaText._docId = options.docId;
             }
@@ -43,7 +46,7 @@
 
             // get field entries
             var getFieldEntries = function (index) {
-                Log.call(Log.l.trace, "Questiongroup.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var ret = {};
                 if (listView && listView.winControl) {
                     var element = listView.winControl.elementFromIndex(index);
@@ -70,7 +73,6 @@
 
             var eventTextPlaceholder = getResourceText("eventResourceAdministration.eventTextPlaceholder");
             var resultConverter = function(item, index) {
-                Log.call(Log.l.trace, "MediaText.Controller.");
                 if (!item.NameTitle) {
                     item.NameTitle = "";
                 }
@@ -100,13 +102,12 @@
                 item.heightBody = item.Body ? "196px" : "";
 
                 that.binding.eventSeriesTitle = item.SerieTitel;
-                Log.ret(Log.l.trace);
             }
             this.resultConverter = resultConverter;
 
             this.eventHandlers = {
                 pressEnterKey: function (event) {
-                    Log.call(Log.l.trace, "MediaText.Controller.");
+                    Log.call(Log.l.u2, namespaceName + ".Controller.");
                     if (event && event.keyCode === WinJS.Utilities.Key.enter &&
                         event.target && event.target.tagName &&
                         event.target.tagName.toLowerCase() === "textarea") {
@@ -116,37 +117,37 @@
                             event.cancelBubble = true;
                         }
                     }
-                    Log.ret(Log.l.trace);
+                    Log.ret(Log.l.u2);
                 },
                 activateEnterKey: function (event) {
-                    Log.call(Log.l.trace, "MediaText.Controller.");
+                    Log.call(Log.l.u2, namespaceName + ".Controller.");
                     for (var i = 0; i < AppBar.commandList.length; i++) {
                         if (AppBar.commandList[i].id === "clickForward") {
                             AppBar.commandList[i].key = WinJS.Utilities.Key.enter;
                             break;
                         }
                     }
-                    Log.ret(Log.l.trace);
+                    Log.ret(Log.l.u2);
                 },
                 deactivateEnterKey: function (event) {
-                    Log.call(Log.l.trace, "MediaText.Controller.");
+                    Log.call(Log.l.u2, namespaceName + ".Controller.");
                     for (var i = 0; i < AppBar.commandList.length; i++) {
                         if (AppBar.commandList[i].id === "clickForward") {
                             AppBar.commandList[i].key = null;
                             break;
                         }
                     }
-                    Log.ret(Log.l.trace);
+                    Log.ret(Log.l.u2);
                 },
                 onSelectionChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "MediaText.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     that.selectionChanged().then(function() {
                         AppBar.triggerDisableHandlers();
                     });
                     Log.ret(Log.l.trace);
                 },
                 onLoadingStateChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "MediaText.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (listView && listView.winControl) {
                         Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
                         if (listView.winControl.loadingState === "itemsLoading") {
@@ -160,7 +161,7 @@
                     Log.ret(Log.l.trace);
                 },
                 onFooterVisibilityChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "MediaText.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (eventInfo && eventInfo.detail) {
                         var visible = eventInfo.detail.visible;
                         if (visible && that.nextUrl) {
@@ -170,12 +171,12 @@
                     Log.ret(Log.l.trace);
                 },
                 onItemInvoked: function (eventInfo) {
-                    Log.call(Log.l.trace, "MediaText.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     that.setFocusOnItemInvoked(eventInfo);
                     Log.ret(Log.l.trace);
                 },
                 changedLanguage: function (event) {
-                    Log.call(Log.l.trace, "MediaText.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (event.currentTarget && AppBar.notifyModified) {
                         var combobox = event.currentTarget;
                         MediaText._languageId = parseInt(combobox.value);
@@ -251,7 +252,7 @@
 
             var setLanguageComboResults = function(results) {
                 var i;
-                Log.call(Log.l.trace, "EventResourceAdministration.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 that.binding.multipleLanguages = (results && results.length > 1);
                 if (initEventTextSprache && initEventTextSprache.winControl) {
                     initEventTextSprache.winControl.data = new WinJS.Binding.List(results ? results : []);
@@ -274,7 +275,7 @@
                 Log.ret(Log.l.trace);
             }
             var loadInitLanguageData = function () {
-                Log.call(Log.l.trace, "EventResourceAdministration.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                     var results = MediaText.initSpracheView.getResults();
