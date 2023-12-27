@@ -18,7 +18,6 @@
 
             Application.RecordsetController.apply(this, [pageElement, {
                 dataOptQuestionAnswer: getEmptyDefaultValue(OptMandatoryFieldList.CR_OptFragenAntwortenVIEW.defaultValue),
-                count: 0,
                 leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic
             }, commandList, false, OptMandatoryFieldList.CR_OptFragenAntwortenVIEW, null, listView]);
 
@@ -28,20 +27,7 @@
 
             var that = this;
 
-            this.dispose = function () {
-                if (listView && listView.winControl) {
-                    listView.winControl.itemDataSource = null;
-                }
-            }
-
-            var progress = null;
-            var counter = null;
             var layout = null;
-
-            var maxLeadingPages = 0;
-            var maxTrailingPages = 0;
-
-            var mouseDown = false;
 
             var resultAnswerConverter = function (item, index, value) {
                 Log.call(Log.l.trace, "OptMandatoryFieldList.Controller." + value);
@@ -213,10 +199,10 @@
 
             // define handlers
             this.eventHandlers = {
-                changeSelektedAnswer: function (event) {
+                changeSelectedAnswer: function (event) {
                     Log.call(Log.l.trace, "OptMandatoryFieldList.Controller.");
                     if (event.currentTarget && event.currentTarget.value) {
-                        Log.print(Log.l.trace, "event changeSelektedAnswer: value=" + event.currentTarget.value + "Antwort=" + event.currentTarget.textContent);
+                        Log.print(Log.l.trace, "event changeSelectedAnswer: value=" + event.currentTarget.value + "Antwort=" + event.currentTarget.textContent);
                         AppBar.busy = true;
                         that.saveData(function (response) {
                             AppBar.busy = false;
@@ -228,7 +214,7 @@
                     }
                     Log.ret(Log.l.trace);
                 },
-                changeSelektedQuestion: function (event) {
+                changeSelectedQuestion: function (event) {
                     Log.call(Log.l.trace, "OptMandatoryFieldList.Controller.");
                     if (event.currentTarget && event.currentTarget.value) {
                         var crossItem = that.records.getAt(that.currentlistIndex);
@@ -254,7 +240,7 @@
                         }
                     }
                     if (event.currentTarget && event.currentTarget.value) {
-                        Log.print(Log.l.trace, "event changeSelektedQuestion: value=" + event.currentTarget.value + "Fragestellung=" + event.currentTarget.textContent);
+                        Log.print(Log.l.trace, "event changeSelectedQuestion: value=" + event.currentTarget.value + "Fragestellung=" + event.currentTarget.textContent);
                         var crossItem = that.records.getAt(that.currentlistIndex);
                         if (crossItem) {
                             if (crossItem.FragenID === parseInt(event.currentTarget.value)) {
@@ -357,28 +343,6 @@
                     Application.navigateById("publish", event);
                     Log.ret(Log.l.trace);
                 },
-                onPointerDown: function (e) {
-                    Log.call(Log.l.trace, "OptMandatoryFieldList.Controller.");
-                    that.cursorPos = { x: e.pageX, y: e.pageY };
-                    mouseDown = true;
-                    Log.ret(Log.l.trace);
-                },
-                onMouseDown: function (e) {
-                    Log.call(Log.l.trace, "OptMandatoryFieldList.Controller.");
-                    that.cursorPos = { x: e.pageX, y: e.pageY };
-                    mouseDown = true;
-                    Log.ret(Log.l.trace);
-                },
-                onPointerUp: function (e) {
-                    Log.call(Log.l.trace, "OptMandatoryFieldList.Controller.");
-                    mouseDown = false;
-                    Log.ret(Log.l.trace);
-                },
-                onMouseUp: function (e) {
-                    Log.call(Log.l.trace, "OptMandatoryFieldList.Controller.");
-                    mouseDown = false;
-                    Log.ret(Log.l.trace);
-                },
                 onSelectionChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "OptMandatoryFieldList.Controller.");
                     that.selectionChanged().then(function () {
@@ -390,47 +354,18 @@
                     Log.call(Log.l.trace, "OptMandatoryFieldList.Controller.");
                     if (listView && listView.winControl) {
                         Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
-                        // single list selection
-                        if (listView.winControl.selectionMode !== WinJS.UI.SelectionMode.single) {
-                            listView.winControl.selectionMode = WinJS.UI.SelectionMode.single;
-                        }
-                        // direct selection on each tap
-                        if (listView.winControl.tapBehavior !== WinJS.UI.TapBehavior.directSelect) {
-                            listView.winControl.tapBehavior = WinJS.UI.TapBehavior.directSelect;
-                        }
-                        // Double the size of the buffers on both sides
-                        if (!maxLeadingPages) {
-                            maxLeadingPages = listView.winControl.maxLeadingPages * 4;
-                            listView.winControl.maxLeadingPages = maxLeadingPages;
-                        }
-                        if (!maxTrailingPages) {
-                            maxTrailingPages = listView.winControl.maxTrailingPages * 4;
-                            listView.winControl.maxTrailingPages = maxTrailingPages;
-                        }
                         if (listView.winControl.loadingState === "itemsLoading") {
                             if (!layout) {
                                 layout = Application.OptMandatoryFieldListLayout.QuestionsLayout;
                                 listView.winControl.layout = { type: layout };
                             }
                         } else if (listView.winControl.loadingState === "complete") {
-                            if (that.loading) {
-                                progress = listView.querySelector(".list-footer .progress");
-                                counter = listView.querySelector(".list-footer .counter");
-                                if (progress && progress.style) {
-                                    progress.style.display = "none";
-                                }
-                                if (counter && counter.style) {
-                                    counter.style.display = "inline";
-                                }
-                                that.loading = false;
-                            }
-                            var element;
                             if (that.records) {
                                 if (that.initQuestion && that.initPflichtfeld) {
                                     for (var i = 0; i < that.records.length; i++) {
                                         var item = that.records.getAt(i);
                                         if (item) {
-                                            element = listView.winControl.elementFromIndex(i);
+                                            var element = listView.winControl.elementFromIndex(i);
                                             if (element) {
                                                 var comboSelektFragenopt = element.querySelector("#SelektFragenopt.win-dropdown");
                                                 if (comboSelektFragenopt && comboSelektFragenopt.winControl) {
@@ -473,102 +408,22 @@
                             }
                         }
                     }
-                    Log.ret(Log.l.trace);
-                },
-                onHeaderVisibilityChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "OptMandatoryFieldList.Controller.");
-                    if (eventInfo && eventInfo.detail) {
-                        var visible = eventInfo.detail.visible;
-                        if (visible) {
-                            var contentHeader = listView.querySelector(".content-header");
-                            if (contentHeader) {
-                                var halfCircle = contentHeader.querySelector(".half-circle");
-                                if (halfCircle && halfCircle.style) {
-                                    if (halfCircle.style.visibility === "hidden") {
-                                        halfCircle.style.visibility = "";
-                                        WinJS.UI.Animation.enterPage(halfCircle);
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    that.loadingStateChanged(eventInfo);
                     Log.ret(Log.l.trace);
                 },
                 onFooterVisibilityChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "OptMandatoryFieldList.Controller.");
                     if (eventInfo && eventInfo.detail) {
-                        progress = listView.querySelector(".list-footer .progress");
-                        counter = listView.querySelector(".list-footer .counter");
                         var visible = eventInfo.detail.visible;
                         if (visible && that.nextUrl) {
-                            that.loading = true;
-                            if (progress && progress.style) {
-                                progress.style.display = "inline";
-                            }
-                            if (counter && counter.style) {
-                                counter.style.display = "none";
-                            }
-                            that.loadNext(function (json) {
-                                // this callback will be called asynchronously
-                                // when the response is available
-                                Log.print(Log.l.trace, "OptMandatoryFieldList.CR_OptFragenAntwortenVIEW: success!");
-                            }, function (errorResponse) {
-                                // called asynchronously if an error occurs
-                                // or server returns response with an error status.
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                                if (progress && progress.style) {
-                                    progress.style.display = "none";
-                                }
-                                if (counter && counter.style) {
-                                    counter.style.display = "inline";
-                                }
-                            });
-                        } else {
-                            if (progress && progress.style) {
-                                progress.style.display = "none";
-                            }
-                            if (counter && counter.style) {
-                                counter.style.display = "inline";
-                            }
-                            that.loading = false;
+                            that.loadNext();
                         }
                     }
                     Log.ret(Log.l.trace);
                 },
                 onItemInvoked: function (eventInfo) {
                     Log.call(Log.l.trace, "OptMandatoryFieldList.Controller.");
-                    if (eventInfo && eventInfo.target) {
-                        var comboInputFocus = eventInfo.target.querySelector(".win-dropdown:focus");
-                        if (comboInputFocus) {
-                            eventInfo.preventDefault();
-                        } else {
-                            // set focus into textarea if current mouse cursor is inside of element position
-                            var setFocusOnElement = function (element) {
-                                WinJS.Promise.timeout(0).then(function () {
-                                    // set focus async!
-                                    element.focus();
-                                });
-                            };
-                            var textInputs = eventInfo.target.querySelectorAll(".win-textbox");
-                            if (textInputs && textInputs.length > 0) {
-                                for (var i = 0; i < textInputs.length; i++) {
-                                    var textInput = textInputs[i];
-                                    var position = WinJS.Utilities.getPosition(textInput);
-                                    if (position) {
-                                        var left = position.left;
-                                        var top = position.top;
-                                        var width = position.width;
-                                        var height = position.height;
-                                        if (that.cursorPos.x >= left && that.cursorPos.x <= left + width &&
-                                            that.cursorPos.y >= top && that.cursorPos.y <= top + height) {
-                                            setFocusOnElement(textInput);
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    that.setFocusOnItemInvoked(eventInfo);
                     Log.ret(Log.l.trace);
                 },
                 clickTopButton: function (event) {
@@ -652,11 +507,10 @@
                 this.addRemovableEventListener(listView, "selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
                 this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
                 this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
-                this.addRemovableEventListener(listView, "headervisibilitychanged", this.eventHandlers.onHeaderVisibilityChanged.bind(this));
                 this.addRemovableEventListener(listView, "iteminvoked", this.eventHandlers.onItemInvoked.bind(this));
             }
-            this.baseSaveData = this.saveData;
 
+            this.baseSaveData = this.saveData;
             var saveData = function (complete, error) {
                 Log.call(Log.l.trace, "OptMandatoryFieldList.Controller.");
                 var ret = that.baseSaveData(function (result) {
@@ -669,39 +523,6 @@
                 return ret;
             }
             this.saveData = saveData;
-
-            /*this.baseLoadData = this.loadData;
-
-            var loadData = function (restriction, options, itemRenderer, complete, error) {
-                Log.call(Log.l.trace, "OptMandatoryFieldList.Controller.");
-                var ret = that.baseLoadData(restriction, options, itemRenderer, complete, error).then(function () {
-                    if (that.records &&
-                        that.records.length > 0 &&
-                        that.initPflichtfeld &&
-                        that.initPflichtfeld.length > 0) {
-                        function setPflichtfeldTitle(crossItem, index) {
-                            for (var j = 0; j < that.initPflichtfeld.length; j++) {
-                                var mandatoryField = that.initPflichtfeld.getAt(j);
-                                if (mandatoryField && mandatoryField.PflichtfeldTypID === crossItem.INITPFeldTypID) {
-                                    crossItem.pflichtfeld = mandatoryField.PflichtFeldTITLE;
-                                    that.records.setAt(index, crossItem);
-                                    break;
-                                }
-                            }
-                        }
-                        for (var i = 0; i < that.records.length; i++) {
-                            var item = that.records.getAt(i);
-                            if (item) {
-                                setPflichtfeldTitle(item, i);
-                            }
-                        };
-                    }
-                    return WinJS.Promise.as();
-                });
-                Log.ret(Log.l.trace);
-                return ret;
-            }
-            this.loadData = loadData;*/
 
             that.processAll().then(function () {
             }).then(function () {
@@ -719,10 +540,7 @@
             });
             Log.ret(Log.l.trace);
         }, {
-                prevRecId: 0,
-                curRecId: 0,
-                cursorPos: { x: 0, y: 0 }
-            })
+        })
     });
 })();
 

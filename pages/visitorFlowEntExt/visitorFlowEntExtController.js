@@ -22,25 +22,8 @@
 
             var that = this;
 
-            this.nextUrl = null;
-            this.loading = false;
-            this.listView = listView;
-
-            this.dispose = function () {
-                if (listView && listView.winControl) {
-                    listView.winControl.itemDataSource = null;
-                }
-            }
-
-            var progress = null;
-            var counter = null;
             var layout = null;
             var isAreaModified = false;
-
-            var maxLeadingPages = 0;
-            var maxTrailingPages = 0;
-
-            var mouseDown = false;
 
             this.newEntry = false;
 
@@ -98,29 +81,7 @@
                     }
                     Log.ret(Log.l.trace);
                 },
-                onPointerDown: function (e) {
-                    Log.call(Log.l.trace, "Questiongroup.Controller.");
-                    that.cursorPos = { x: e.pageX, y: e.pageY };
-                    mouseDown = true;
-                    Log.ret(Log.l.trace);
-                },
-                onMouseDown: function (e) {
-                    Log.call(Log.l.trace, "Questiongroup.Controller.");
-                    that.cursorPos = { x: e.pageX, y: e.pageY };
-                    mouseDown = true;
-                    Log.ret(Log.l.trace);
-                },
-                onPointerUp: function (e) {
-                    Log.call(Log.l.trace, "Questiongroup.Controller.");
-                    mouseDown = false;
-                    Log.ret(Log.l.trace);
-                },
-                onMouseUp: function (e) {
-                    Log.call(Log.l.trace, "Questiongroup.Controller.");
-                    mouseDown = false;
-                    Log.ret(Log.l.trace);
-                }/*,
-                onSelectionChanged: function (eventInfo) {
+                /*onSelectionChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "VisitorFlowEntExt.Controller.");
                     var currentlistIndex = that.currentlistIndex;
                     that.selectionChanged(function() {
@@ -152,16 +113,16 @@
                         AppBar.triggerDisableHandlers();
                     });;
                     Log.ret(Log.l.trace);
-                }*/,
+                },*/
                 onSelectionChanged: function(eventInfo) {
-                    Log.call(Log.l.trace, "OptQuestionList.Controller.");
+                    Log.call(Log.l.trace, "VisitorFlowEntExt.Controller.");
                     that.selectionChanged().then(function () {
                         AppBar.triggerDisableHandlers();
                     });
                     Log.ret(Log.l.trace);
                 },
                 clickNew: function (event) {
-                    Log.call(Log.l.trace, "MailingTypes.Controller.");
+                    Log.call(Log.l.trace, "VisitorFlowEntExt.Controller.");
                     that.saveData(function (response) {
                         that.newEntry = true;
                         AppBar.busy = true;
@@ -255,144 +216,39 @@
                     Log.call(Log.l.trace, "VisitorFlowEntExt.Controller.");
                     if (listView && listView.winControl) {
                         Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
-                        // single list selection
-                        if (listView.winControl.selectionMode !== WinJS.UI.SelectionMode.single) {
-                            listView.winControl.selectionMode = WinJS.UI.SelectionMode.single;
-                        }
-                        // direct selection on each tap
-                        if (listView.winControl.tapBehavior !== WinJS.UI.TapBehavior.directSelect) {
-                            listView.winControl.tapBehavior = WinJS.UI.TapBehavior.directSelect;
-                        }
-                        // Double the size of the buffers on both sides
-                        if (!maxLeadingPages) {
-                            maxLeadingPages = listView.winControl.maxLeadingPages * 4;
-                            listView.winControl.maxLeadingPages = maxLeadingPages;
-                        }
-                        if (!maxTrailingPages) {
-                            maxTrailingPages = listView.winControl.maxTrailingPages * 4;
-                            listView.winControl.maxTrailingPages = maxTrailingPages;
-                        }
                         if (listView.winControl.loadingState === "itemsLoading") {
                             if (!layout) {
                                 layout = Application.VisitorFlowEntExtLayout.VisitorFlowEntExtLayout;
                                 listView.winControl.layout = { type: layout };
                             }
                         } else if (listView.winControl.loadingState === "complete") {
-                            var count = listView.winControl.selection._focused.index;
-                            if (that.loading) {
-                                progress = listView.querySelector(".list-footer .progress");
-                                counter = listView.querySelector(".list-footer .counter");
-                                if (progress && progress.style) {
-                                    progress.style.display = "none";
-                                }
-                                if (counter && counter.style) {
-                                    counter.style.display = "inline";
-                                }
+                            if (that.binding.loading) {
+                                var count = listView.winControl.selection._focused &&
+                                    listView.winControl.selection._focused.index;
                                 that.selectEntry(count);
-                                that.loading = false;
                             }
                         }
                     }
-                    Log.ret(Log.l.trace);
-                },
-                onHeaderVisibilityChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "VisitorFlowEntExt.Controller.");
-                    if (eventInfo && eventInfo.detail) {
-                        var visible = eventInfo.detail.visible;
-                        if (visible) {
-                            var contentHeader = listView.querySelector(".content-header");
-                            if (contentHeader) {
-                                var halfCircle = contentHeader.querySelector(".half-circle");
-                                if (halfCircle && halfCircle.style) {
-                                    if (halfCircle.style.visibility === "hidden") {
-                                        halfCircle.style.visibility = "";
-                                        WinJS.UI.Animation.enterPage(halfCircle);
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    that.loadingStateChanged(eventInfo);
                     Log.ret(Log.l.trace);
                 },
                 onFooterVisibilityChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "VisitorFlowEntExt.Controller.");
                     if (eventInfo && eventInfo.detail) {
-                        progress = listView.querySelector(".list-footer .progress");
-                        counter = listView.querySelector(".list-footer .counter");
                         var visible = eventInfo.detail.visible;
                         if (visible && that.nextUrl) {
-                            that.loading = true;
-                            if (progress && progress.style) {
-                                progress.style.display = "inline";
-                            }
-                            if (counter && counter.style) {
-                                counter.style.display = "none";
-                            }
-                            that.loadNext(function (json) {
-                                // this callback will be called asynchronously
-                                // when the response is available
-                                Log.print(Log.l.trace, "VisitorFlowEntExt.CR_V_BereichView: success!");
-                            }, function (errorResponse) {
-                                // called asynchronously if an error occurs
-                                // or server returns response with an error status.
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                                if (progress && progress.style) {
-                                    progress.style.display = "none";
-                                }
-                                if (counter && counter.style) {
-                                    counter.style.display = "inline";
-                                }
-                            });
-                        } else {
-                            if (progress && progress.style) {
-                                progress.style.display = "none";
-                            }
-                            if (counter && counter.style) {
-                                counter.style.display = "inline";
-                            }
-                            that.loading = false;
+                            that.loadNext();
                         }
                     }
                     Log.ret(Log.l.trace);
                 },
                 onItemInvoked: function (eventInfo) {
-                    Log.call(Log.l.trace, "Questiongroup.Controller.");
-                    if (eventInfo && eventInfo.target) {
-                        var comboInputFocus = eventInfo.target.querySelector(".win-dropdown:focus");
-                        if (comboInputFocus) {
-                            eventInfo.preventDefault();
-                        } else {
-                            // set focus into textarea if current mouse cursor is inside of element position
-                            var setFocusOnElement = function (element) {
-                                WinJS.Promise.timeout(0).then(function () {
-                                    // set focus async!
-                                    element.focus();
-                                });
-                            };
-                            var textInputs = eventInfo.target.querySelectorAll(".win-textbox");
-                            if (textInputs && textInputs.length > 0) {
-                                for (var i = 0; i < textInputs.length; i++) {
-                                    var textInput = textInputs[i];
-                                    var position = WinJS.Utilities.getPosition(textInput);
-                                    if (position) {
-                                        var left = position.left;
-                                        var top = position.top;
-                                        var width = position.width;
-                                        var height = position.height;
-                                        if (that.cursorPos.x >= left && that.cursorPos.x <= left + width &&
-                                            that.cursorPos.y >= top && that.cursorPos.y <= top + height) {
-                                            setFocusOnElement(textInput);
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    Log.call(Log.l.trace, "VisitorFlowEntExt.Controller.");
+                    that.setFocusOnItemInvoked(eventInfo);
                     Log.ret(Log.l.trace);
                 },
                 clickTopButton: function (event) {
-                    Log.call(Log.l.trace, "Contact.Controller.");
+                    Log.call(Log.l.trace, "VisitorFlowEntExt.Controller.");
                     var anchor = document.getElementById("menuButton");
                     var menu = document.getElementById("menu1").winControl;
                     var placement = "bottom";
@@ -400,7 +256,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickLogoff: function (event) {
-                    Log.call(Log.l.trace, "Account.Controller.");
+                    Log.call(Log.l.trace, "VisitorFlowEntExt.Controller.");
                     AppData._persistentStates.privacyPolicyFlag = false;
                     if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
                         AppHeader.controller.binding.userData = {};
@@ -464,96 +320,14 @@
                 this.addRemovableEventListener(listView, "selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
                 this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
                 this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
-                this.addRemovableEventListener(listView, "headervisibilitychanged", this.eventHandlers.onHeaderVisibilityChanged.bind(this));
                 this.addRemovableEventListener(listView, "iteminvoked", this.eventHandlers.onItemInvoked.bind(this));
             }
-
-           /* var saveData = function (complete, error) {
-                var ret = null;
-                Log.call(Log.l.trace, "VisitorFlowEntExt.Controller.");
-                AppData.setErrorMsg(that.binding);
-                // standard call via modify
-                var recordId = that.prevRecId;
-                if (!recordId) {
-                    // called via canUnload
-                    recordId = that.curRecId;
-                }
-                that.prevRecId = 0;
-                if (recordId) {
-                    var curScope = that.scopeFromRecordId(recordId);
-                    if (curScope && curScope.item) {
-                        var newRecord = that.getFieldEntries(curScope.index);
-                        var limitOld = (typeof curScope.item.Limit === "string") ? parseInt(curScope.item.Limit) : curScope.item.Limit;
-                        var limitNew = (typeof newRecord.Limit === "string") ? parseInt(newRecord.Limit) : newRecord.Limit;
-                        var offsetOld = (typeof curScope.item.Offset === "string") ? parseInt(curScope.item.Offset) : curScope.item.Offset;
-                        var offsettNew = (typeof newRecord.Offset === "string") ? parseInt(newRecord.Offset) : newRecord.Offset;
-                        var warnlimitOld = (typeof curScope.item.WarnLimit === "string") ? parseInt(curScope.item.WarnLimit) : curScope.item.WarnLimit;
-                        var warnlimitNew = (typeof newRecord.WarnLimit === "string") ? parseInt(newRecord.WarnLimit) : newRecord.WarnLimit;
-                        if (newRecord.TITLE && newRecord.Limit &&
-                            (curScope.item.TITLE !== newRecord.TITLE || limitOld !== limitNew || warnlimitOld !== warnlimitNew || offsetOld !== offsettNew)) {
-                            if (that.records) for (var i=0; i<that.records.length; i++) {
-                                var item = that.records.getAt(i);
-                                if (item.CR_V_BereichVIEWID !== recordId &&
-                                    item.TITLE === newRecord.TITLE) {
-                                    limitOld = (typeof item.Limit === "string") ? parseInt(item.Limit) : item.Limit;
-                                    if (limitOld !== limitNew) {
-                                        isAreaModified = true;
-                                        break;
-                                    }
-                                    warnlimitOld = (typeof item.WarnLimit === "string") ? parseInt(item.WarnLimit) : item.WarnLimit;
-                                    if (warnlimitOld !== warnlimitNew) {
-                                        isAreaModified = true;
-                                        break;
-                                    }
-                                    offsetOld = (typeof item.Offset === "string") ? parseInt(item.Offset) : item.Offset;
-                                    if (offsetOld !== offsettNew) {
-                                        isAreaModified = true;
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                        var mergedItem = copyByValue(curScope.item);
-                        if (that.mergeRecord(mergedItem, newRecord) || AppBar.modified) {
-                            Log.print(Log.l.trace, "save changes of recordId:" + recordId);
-                            ret = VisitorFlowEntExt.CR_V_BereichView.update(function (response) {
-                                Log.print(Log.l.info, "VisitorFlowEntExt.Controller. update: success!");
-                                that.records.setAt(curScope.index, mergedItem);
-                                // called asynchronously if ok
-                                AppBar.modified = false;
-                                if (typeof complete === "function") {
-                                    complete(response);
-                                }
-                            }, function (errorResponse) {
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                                if (typeof error === "function") {
-                                    error(errorResponse);
-                                }
-                            }, recordId, mergedItem);
-                        } else {
-                            Log.print(Log.l.trace, "no changes in recordId:" + recordId);
-                        }
-                    }
-                }
-                if (!ret) {
-                    ret = new WinJS.Promise.as().then(function () {
-                        if (typeof complete === "function") {
-                            complete({});
-                        }
-                    });
-                }
-                Log.ret(Log.l.trace, ret);
-                return ret;
-            };
-            this.saveData = saveData;*/
 
             that.processAll().then(function() {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
             }).then(function () {
                 AppBar.notifyModified = true;
-                Log.print(Log.l.trace, "Data loaded");
-            }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 that.selectEntry(0);
             });

@@ -29,7 +29,7 @@
                             <select id="SelektFragenopt"
                                     class="input_field win-dropdown"
                                     data-win-control="WinJS.UI.Repeater"
-                                    onchange="AppBar.handleEvent('change', 'changeSelektedQuestion', event)">
+                                    onchange="AppBar.handleEvent('change', 'changeSelectedQuestion', event)">
                                 <option data-win-bind="value: FragenAntwortenVIEWID; textContent: frage"></option>
                             </select>
                         </div>
@@ -39,7 +39,7 @@
                             <select id="SelektAntwortopt"
                                     class="input_field win-dropdown"
                                     data-win-control="WinJS.UI.Repeater"
-                                    onchange="AppBar.handleEvent('change', 'changeSelektedAnswer', event)">
+                                    onchange="AppBar.handleEvent('change', 'changeSelectedAnswer', event)">
                                 <option data-win-bind="value: index; textContent: antwort"></option>
                             </select>
                         </div>
@@ -68,9 +68,14 @@
                     <div class="headerFooterPlaceholder">
                         <div class="list-footer">
                             <div class="status">
-                                <progress class="win-progress-bar progress"></progress>
-                                <div class="counter">
-                                    <span data-win-res="{textContent: 'optMandatoryFieldList.count'}"></span><span>: </span><span data-win-bind="textContent: count"></span>
+                                <div class="progress"
+                                     data-win-bind="style.display: loading Binding.Converter.toDisplay">
+                                    <progress class="win-ring win-medium wait-circle"></progress>
+                                </div>
+                                <div class="counter"
+                                     data-win-bind="style.display: loading Binding.Converter.toDisplayNone">
+                                    <span data-win-res="{textContent: 'contactList.count'}"></span><span>: </span>
+                                    <span data-win-bind="textContent: count"></span>
                                 </div>
                             </div>
                         </div>

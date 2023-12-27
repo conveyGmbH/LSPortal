@@ -61,10 +61,6 @@
             if (this.controller.eventHandlers) {
                 // general event listener for hardware back button, too!
                 this.controller.addRemovableEventListener(document, "backbutton", this.controller.eventHandlers.clickBack.bind(this.controller));
-                this.controller.addRemovableEventListener(document, "mousedown", this.controller.eventHandlers.onMouseDown.bind(this.controller));
-                this.controller.addRemovableEventListener(document, "pointerdown", this.controller.eventHandlers.onPointerDown.bind(this.controller));
-                this.controller.addRemovableEventListener(document, "mouseup", this.controller.eventHandlers.onMouseUp.bind(this.controller));
-                this.controller.addRemovableEventListener(document, "pointerup", this.controller.eventHandlers.onPointerUp.bind(this.controller));
             }
             Log.ret(Log.l.trace);
         },

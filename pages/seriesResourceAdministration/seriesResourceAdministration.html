@@ -12,7 +12,52 @@
         <div id="seriesResourceAdministrationController" class="data-container">
             <section aria-label="Main content" role="main" class="animationElement">
                 <div class="contentarea win-type-body">
+                    <!--<div id="eventTextUsageHostResource" class="fragmenthost"></div>-->
+                    <div class="list-header">
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption" data-win-res="{textContent: 'account.language'}"></span>
+                            <div data-win-bind="style.display: multipleLanguages Binding.Converter.toDisplay">
+                                <select id="InitEventTextSprache"
+                                        class="input_field win-dropdown"
+                                        data-win-control="WinJS.UI.Repeater"
+                                        onchange="AppBar.handleEvent('change', 'changedLanguage', event)">
+                                    <option data-win-bind="value: LanguageID; textContent: TITLE"></option>
+                                </select>
+                            </div>
+                            <!--<div data-win-bind="style.display: multipleLanguages Binding.Converter.toDisplayNone">
+                                <span class="input_field" data-win-bind="textContent: eventLanguageItem.TITLE"></span>
+                            </div>-->
+                        </div>
+                        <!--<div class="field_line field_line_even"
+                             data-win-bind="style.display: showSeries Binding.Converter.toDisplay">
+                            <span class="label win-type-caption" data-win-res="{textContent: 'label.eventSeries'}"></span>
+                            <div data-win-bind="style.display: multipleSeries Binding.Converter.toDisplay">
+                                <select id="eventSeries"
+                                        class="input_field win-dropdown"
+                                        data-win-control="WinJS.UI.Repeater"
+                                        onchange="AppBar.handleEvent('change', 'changedSeries', event)">
+                                    <option data-win-bind="value: MandantSerieID; textContent: Titel"></option>
+                                </select>
+                            </div>
+                            <div data-win-bind="style.display: multipleSeries Binding.Converter.toDisplayNone">
+                                <span class="input_field" data-win-bind="textContent: eventSeriesItem.Titel"></span>
+                            </div>
+                        </div>-->
+                    </div>
                     <div class="headerFooterPlaceholder" style="display: none">
+                        <div class="list-footer">
+                            <div class="status">
+                                <div class="progress"
+                                     data-win-bind="style.display: loading Binding.Converter.toDisplay">
+                                    <progress class="win-ring win-medium wait-circle"></progress>
+                                </div>
+                                <div class="counter"
+                                     data-win-bind="style.display: loading Binding.Converter.toDisplayNone">
+                                    <span data-win-res="{textContent: 'contactList.count'}"></span><span>: </span>
+                                    <span data-win-bind="textContent: count"></span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="eventText-template"
                          data-win-control="WinJS.Binding.Template" style="display: none">
@@ -100,44 +145,13 @@
                             </div>
                         </div>
                     </div>
-                    <!--<div id="eventTextUsageHostResource" class="fragmenthost"></div>-->
-                    <div class="list-header">
-                        <div class="field_line field_line_odd">
-                            <span class="label win-type-caption" data-win-res="{textContent: 'account.language'}"></span>
-                            <div data-win-bind="style.display: multipleLanguages Binding.Converter.toDisplay">
-                                <select id="InitEventTextSprache"
-                                        class="input_field win-dropdown"
-                                        data-win-control="WinJS.UI.Repeater"
-                                        onchange="AppBar.handleEvent('change', 'changedLanguage', event)">
-                                    <option data-win-bind="value: LanguageID; textContent: TITLE"></option>
-                                </select>
-                            </div>
-                            <!--<div data-win-bind="style.display: multipleLanguages Binding.Converter.toDisplayNone">
-                                <span class="input_field" data-win-bind="textContent: eventLanguageItem.TITLE"></span>
-                            </div>-->
-                        </div>
-                        <!--<div class="field_line field_line_even"
-                             data-win-bind="style.display: showSeries Binding.Converter.toDisplay">
-                            <span class="label win-type-caption" data-win-res="{textContent: 'label.eventSeries'}"></span>
-                            <div data-win-bind="style.display: multipleSeries Binding.Converter.toDisplay">
-                                <select id="eventSeries"
-                                        class="input_field win-dropdown"
-                                        data-win-control="WinJS.UI.Repeater"
-                                        onchange="AppBar.handleEvent('change', 'changedSeries', event)">
-                                    <option data-win-bind="value: MandantSerieID; textContent: Titel"></option>
-                                </select>
-                            </div>
-                            <div data-win-bind="style.display: multipleSeries Binding.Converter.toDisplayNone">
-                                <span class="input_field" data-win-bind="textContent: eventSeriesItem.Titel"></span>
-                            </div>
-                        </div>-->
-                    </div>
                     <div id="eventTextList"
                          class="listview"
                          data-win-control="WinJS.UI.ListView"
                          data-win-options="{
                              layout : { type: WinJS.UI.ListLayout },
                              itemTemplate: select('.eventText-template'),
+                             footer: select('.list-footer')
                          }">
                     </div>
                     <div class="error-message"
