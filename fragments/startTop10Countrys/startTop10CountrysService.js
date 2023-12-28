@@ -6,7 +6,9 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("StartTop10Countrys", {
+    var namespaceName = "StartTop10Countrys";
+
+    WinJS.Namespace.define(namespaceName, {
         _startTop10CountrysmitarbeiterView: {
             get: function () {
                 return AppData.getFormatView("Mitarbeiter", 20453);
@@ -14,7 +16,7 @@
         },
         startTop10CountrysmitarbeiterView: {
             select: function (complete, error, recordId) {
-                Log.call(Log.l.trace, "mitarbeiterView.", "recordId=" + recordId);
+                Log.call(Log.l.trace, namespaceName + ".startTop10CountrysmitarbeiterView.", "recordId=" + recordId);
                 var ret = StartTop10Countrys._startTop10CountrysmitarbeiterView.selectById(complete, error, recordId);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
@@ -30,7 +32,7 @@
         },
         reportLand: {
             select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "Start.");
+                Log.call(Log.l.trace, namespaceName + ".reportLand.");
                 if (!restriction) {
                     restriction = {};
                 }
@@ -45,14 +47,14 @@
                 return ret;
             },
             selectNext: function (complete, error, response, nextUrl) {
-                Log.call(Log.l.trace, "Start.");
+                Log.call(Log.l.trace, namespaceName + ".reportLand.");
                 var ret = StartTop10Countrys._reportLand.selectNext(complete, error, response, nextUrl);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
             },
             getNextUrl: function (response) {
-                Log.call(Log.l.trace, "Start._reportLand.");
+                Log.call(Log.l.trace, namespaceName + ".reportLand.");
                 var ret = StartTop10Countrys._reportLand.getNextUrl(response);
                 Log.ret(Log.l.trace);
                 return ret;

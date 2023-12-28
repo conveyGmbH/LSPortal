@@ -6,7 +6,9 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("GenFragAnswers", {
+    var namespaceName = "GenFragAnswers";
+
+    WinJS.Namespace.define(namespaceName, {
         _answerView: {
             get: function () {
                 return AppData.getFormatView("Answer", 20649);
@@ -18,10 +20,10 @@
             }
         }
     });
-    WinJS.Namespace.define("GenFragAnswers", {
+    WinJS.Namespace.define(namespaceName, {
         answerView: {
             select: function (complete, error, restriction, options) {
-                Log.call(Log.l.trace, "GenFragAnswers.answerView.");
+                Log.call(Log.l.trace, namespaceName + ".answerView.");
                 if (!restriction) {
                     var master = Application.navigator.masterControl;
                     var recordId = master.controller && master.controller.curRecId;
@@ -58,7 +60,7 @@
         },
         answerTable: {
             update: function (complete, error, recordId, viewResponse) {
-                Log.call(Log.l.trace, "GenFragAnswers._answerTable.");
+                Log.call(Log.l.trace, namespaceName + ".answerTable.");
                 var ret = GenFragAnswers._answerTable.update(complete, error, recordId, viewResponse);
                 Log.ret(Log.l.trace);
                 return ret;

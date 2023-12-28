@@ -22,7 +22,7 @@
             Fragments.Controller.apply(this, [fragmentElement, {
                 recordID: 0,
                 btnLabel: getResourceText("voucheradministrationlist.btnlabelO"),
-                selectedData: EventSession.BBBSessionODataView.defaultValue,
+                selectedData: EventSession.BBBSessionView.defaultValue,
                 moderatorData: null,
                 eventName: "",
                 showEventNameStatus: null,
@@ -361,16 +361,16 @@
                 that.binding.moderatorData = null;
                 that.binding.dwlink = null;
                 that.binding.oldPlayback = false;
-                that.binding.selectedData = EventSession.BBBSessionODataView.defaultValue;
+                that.binding.selectedData = EventSession.BBBSessionView.defaultValue;
                 that.statuscounter = 0;
                 that.binding.sessiondownloadData = [];
                 that.binding.eventName = AppBar.scope.binding.eventName;
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
-                    return EventSession.BBBSessionODataView.select(function (json) {
+                    return EventSession.BBBSessionView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
-                        Log.print(Log.l.trace, "voucherOrderView: success!");
+                        Log.print(Log.l.trace, "BBBSessionView: success!");
                         // startContact returns object already parsed from json file in response
                         if (json && json.d && json.d.results) {
                             var results = json.d.results;
@@ -392,6 +392,7 @@
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
+                        Log.print(Log.l.error, "BBBSessionView: error!");
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, { VeranstaltungID: eventId });
                 });

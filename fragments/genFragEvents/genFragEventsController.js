@@ -219,10 +219,10 @@
                 AppData.setErrorMsg(that.binding);
                 if (recordId) {
                     that.binding.loadingState = null;
-                    ret = GenFragEvents.BenutzerODataView.select(function (json) {
+                    ret = GenFragEvents.BenutzerView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
-                        Log.print(Log.l.trace, "BenutzerODataView: success!");
+                        Log.print(Log.l.trace, "BenutzerView: success!");
                         // startContact returns object already parsed from json file in response
                         if (json && json.d && json.d.results) {
                             var results = json.d.results;
@@ -240,8 +240,8 @@
                                             Log.print(Log.l.trace, "no prevResult");
                                             bModified = true;
                                         } else {
-                                            for (var prop in GenFragEvents.BenutzerODataView.defaultValue) {
-                                                if (GenFragEvents.BenutzerODataView.defaultValue.hasOwnProperty(prop)) {
+                                            for (var prop in GenFragEvents.BenutzerView.defaultValue) {
+                                                if (GenFragEvents.BenutzerView.defaultValue.hasOwnProperty(prop)) {
                                                     if (result[prop] !== prevResult[prop]) {
                                                         Log.print(Log.l.trace, "changed " + prop + ": " + prevResult[prop] + " -> " + result[prop]);
                                                         bModified = true;

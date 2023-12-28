@@ -6,7 +6,9 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("MediaList", {
+    var namespaceName = "MediaList";
+
+    WinJS.Namespace.define(namespaceName, {
         _eventDocView: {
             get: function() {
                 return AppData.getFormatView("MandantDokument", 20633);
@@ -31,12 +33,12 @@
             }
         }
     });
-
-    WinJS.Namespace.define("MediaList", {
+    WinJS.Namespace.define(namespaceName, {
         eventDocView: {
             select: function (complete, error, restriction, options) {
                 var ret;
                 if (typeof restriction === "number") {
+                    Log.call(Log.l.trace, namespaceName + ".evenvtDocView.", "MandantDokumentVIEWID=" + restriction);
                     ret = MediaList._eventDocView.selectById(complete, error, restriction);
                 } else {
                     if (!restriction) {
@@ -70,22 +72,23 @@
                             desc: true
                         };
                     }
-                    Log.call(Log.l.trace, "MediaText.evenvtDocView.",
-                        "DokVerwendungID=" + restriction.DokVerwendungID,
-                        "VeranstaltungID=" + restriction.VeranstaltungID);
+                    Log.call(Log.l.trace, namespaceName + ".evenvtDocView.",
+                        "DokVerwendungID=" + restriction.DokVerwendungID +
+                        " MandantSerieID=" + restriction.MandantSerieID +
+                        " VeranstaltungID=" + restriction.VeranstaltungID);
                     ret = MediaList._eventDocView.select(complete, error, restriction, options);
                 }
                 Log.ret(Log.l.trace);
                 return ret;
             },
             getNextUrl: function (response) {
-                Log.call(Log.l.trace, "MediaText.eventDocView.");
+                Log.call(Log.l.trace, namespaceName + ".eventDocView.");
                 var ret = MediaList._eventDocView.getNextUrl(response);
                 Log.ret(Log.l.trace);
                 return ret;
             },
             selectNext: function (complete, error, response, nextUrl) {
-                Log.call(Log.l.trace, "MediaText.eventDocView.");
+                Log.call(Log.l.trace, namespaceName + ".eventDocView.");
                 var ret = MediaList._eventDocView.selectNext(complete, error, response, nextUrl);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);

@@ -6,7 +6,9 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("PdfExportList", {
+    var namespaceName = "PdfExportList";
+
+    WinJS.Namespace.define(namespaceName, {
         _pdfExportListView: {
             get: function () {
                 return AppData.getFormatView("OLELetter", 20546);
@@ -14,7 +16,7 @@
         },
         pdfExportListView: {
             select: function (complete, error) {
-                Log.call(Log.l.trace, "PdfExportList.");
+                Log.call(Log.l.trace, namespaceName + ".pdfExportListView.");
                 var ret = PdfExportList._pdfExportListView.select(complete, error, {
                     LanguageID: AppData.getLanguageId(),
                     OLELetterID: 29
@@ -28,19 +30,19 @@
                 return ret;
             },
             getNextUrl: function (response) {
-                Log.call(Log.l.trace, "PdfExportList.pdfExportListView.");
+                Log.call(Log.l.trace, namespaceName + ".pdfExportListView.");
                 var ret = PdfExportList._pdfExportListView.getNextUrl(response);
                 Log.ret(Log.l.trace);
                 return ret;
             },
             getResults: function () {
-                Log.call(Log.l.trace, "PdfExportList.pdfExportListView.");
+                Log.call(Log.l.trace, namespaceName + ".pdfExportListView.");
                 var ret = PdfExportList._pdfExportListView.results;
                 Log.ret(Log.l.trace);
                 return ret;
             },
             getMap: function () {
-                Log.call(Log.l.trace, "PdfExportList.pdfExportListView.");
+                Log.call(Log.l.trace, namespaceName + ".pdfExportListView.");
                 var ret = PdfExportList._pdfExportListView.map;
                 Log.ret(Log.l.trace);
                 return ret;

@@ -6,7 +6,9 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("ReportingList", {
+    var namespaceName = "ReportingList";
+
+    WinJS.Namespace.define(namespaceName, {
         _analysisListView: {
             get: function () {
                 return AppData.getFormatView("ExportType", 20669);
@@ -14,7 +16,7 @@
         },
         analysisListView: {
             select: function (complete, error) {
-                Log.call(Log.l.trace, "Reporting.");
+                Log.call(Log.l.trace, namespaceName + ".analysisListView.");
                 var ret = ReportingList._analysisListView.select(complete, error, {
                     LanguageSpecID: AppData.getLanguageId()
                 }, {
@@ -26,19 +28,19 @@
                 return ret;
             },
             getNextUrl: function (response) {
-                Log.call(Log.l.trace, "Reporting._analysisListView.");
+                Log.call(Log.l.trace, namespaceName + ".analysisListView.");
                 var ret = ReportingList._analysisListView.getNextUrl(response);
                 Log.ret(Log.l.trace);
                 return ret;
             },
             getResults: function () {
-                Log.call(Log.l.trace, "EmpRoles.LGNTINITAPUserRole.");
+                Log.call(Log.l.trace, namespaceName + ".analysisListView.");
                 var ret = ReportingList._analysisListView.results;
                 Log.ret(Log.l.trace);
                 return ret;
             },
             getMap: function () {
-                Log.call(Log.l.trace, "EmpRoles.LGNTINITAPUserRole.");
+                Log.call(Log.l.trace, namespaceName + ".analysisListView.");
                 var ret = ReportingList._analysisListView.map;
                 Log.ret(Log.l.trace);
                 return ret;

@@ -6,7 +6,9 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("MandatoryList", {
+    var namespaceName = "MandatoryList";
+
+    WinJS.Namespace.define(namespaceName, {
         _mandatoryView: {
             get: function () {
                 return AppData.getFormatView("PflichtFelder", 20502, false);
@@ -14,7 +16,7 @@
         },
         mandatoryView: {
             select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "MandatoryList.");
+                Log.call(Log.l.trace, namespaceName + ".mandatoryView.");
                 var ret = MandatoryList._mandatoryView.select(complete, error, restriction, {
                     ordered: true,
                     orderAttribute: "PflichtFelderVIEWID"
@@ -31,7 +33,7 @@
         },
         mandatoryUpdate: {
             select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "mandatoryView.");
+                Log.call(Log.l.trace, namespaceName + ".mandatoryUpdate.");
                 var ret = MandatoryList._mandatoryUpdate.select(complete, error, restriction, {
                     ordered: true,
                     orderAttribute: "PflichtFelderVIEWID"
@@ -42,7 +44,7 @@
             },
             //one row
             update: function (complete, error, recordId, viewResponse) {
-                Log.call(Log.l.trace, "mandatoryView.");
+                Log.call(Log.l.trace, namespaceName + ".mandatoryUpdate.");
                 var ret = MandatoryList._mandatoryUpdate.update(complete, error, recordId, viewResponse);
                 Log.ret(Log.l.trace);
                 return ret;

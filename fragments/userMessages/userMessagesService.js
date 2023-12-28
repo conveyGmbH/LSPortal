@@ -6,16 +6,22 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("UserMessages", {
+    var namespaceName = "UserMessages";
+
+    WinJS.Namespace.define(namespaceName, {
         _userId: 0,
         _userMessageView: {
             get: function () {
                 return AppData.getFormatView("BenutzerNachricht", 20595, false);
             }
         },
+        _userMessageTable: {
+            get: function () {
+                return AppData.getFormatView("BenutzerNachricht", 0, false);
+            }
+        },
         userMessageView: {
             select: function(complete, error, restriction, options) {
-                Log.call(Log.l.trace, "eventView.");
                 if (!restriction) {
                     restriction = {
                         BenutzerID: UserMessages._userId,
@@ -29,37 +35,31 @@
                         desc: true
                     };
                 }
+                Log.call(Log.l.trace, namespaceName + ".userMessageView.", "restriction=" + JSON.stringify(restriction));
                 var ret = UserMessages._userMessageView.select(complete, error, restriction, options);
                 Log.ret(Log.l.trace);
                 return ret;
             },
+            insert: function (complete, error, viewResponse) {
+                Log.call(Log.l.trace, namespaceName + ".userMessageTable.");
+                var ret = UserMessages._userMessageTable.insert(complete, error, viewResponse);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
             getNextUrl: function(response) {
-                Log.call(Log.l.trace, "ContactList.");
+                Log.call(Log.l.trace, namespaceName + ".userMessageView.");
                 var ret = UserMessages._userMessageView.getNextUrl(response);
                 Log.ret(Log.l.trace);
                 return ret;
             },
             selectNext: function(complete, error, response, nextUrl) {
-                Log.call(Log.l.trace, "ContactList.");
+                Log.call(Log.l.trace, namespaceName + ".userMessageView.");
                 var ret = UserMessages._userMessageView.selectNext(complete, error, response, nextUrl);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
             }
         },
-        _userMessageTable: {
-            get: function () {
-                return AppData.getFormatView("BenutzerNachricht", 0, false);
-            }
-        },
-        userMessageTable: {
-            insert: function (complete, error, viewResponse) {
-                Log.call(Log.l.trace, "loginView.");
-                var ret = UserMessages._userMessageTable.insert(complete, error, viewResponse);
-                Log.ret(Log.l.trace);
-                return ret;
-            }
-        }
     });
 })();
 

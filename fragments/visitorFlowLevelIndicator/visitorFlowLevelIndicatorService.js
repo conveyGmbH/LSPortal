@@ -6,7 +6,9 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("VisitorFlowLevelIndicator", {
+    var namespaceName = "VisitorFlowLevelIndicator";
+
+    WinJS.Namespace.define(namespaceName, {
         _bereichhourView: {
             get: function () {
                 return AppData.getFormatView("CR_V_Bereich", 20614);
@@ -19,6 +21,7 @@
         },
         timeselectupdate: 60,
         getRestriction: function() {
+            Log.call(Log.l.trace, namespaceName);
             var ret = null;
             var visitorFlowOverviewFragmentControl =
                 Application.navigator.getFragmentControlFromLocation(
@@ -32,17 +35,17 @@
                     bExact: true
                 };
             }    
+            Log.ret(Log.l.trace);
             return ret;
         }
     });
-
-    WinJS.Namespace.define("VisitorFlowLevelIndicator", {
+    WinJS.Namespace.define(namespaceName, {
         visitorFlowLevelView: {
             select: function (complete, error, restriction) {
                 if (!restriction) {
                     restriction = VisitorFlowLevelIndicator.getRestriction();
                 }
-                Log.call(Log.l.trace, "visitorFlowLevelView.", "restriction=" + restriction);
+                Log.call(Log.l.trace, namespaceName + ".visitorFlowLevelView.", "restriction=" + (restriction ? JSON.stringify(restriction) : ""));
                 var curView;
                 var timeselectupdate = (typeof VisitorFlowLevelIndicator.timeselectupdate === "number") ? VisitorFlowLevelIndicator.timeselectupdate : parseInt(VisitorFlowLevelIndicator.timeselectupdate);
                 if (timeselectupdate === 30) {
@@ -50,7 +53,6 @@
                 } else {
                     curView = VisitorFlowLevelIndicator._bereichhourView;
                 }
-
                 var ret = curView.select(complete, error, restriction);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);

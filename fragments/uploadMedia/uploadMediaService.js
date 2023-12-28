@@ -6,7 +6,9 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("UploadMedia", {
+    var namespaceName = "UploadMedia";
+
+    WinJS.Namespace.define(namespaceName, {
         docExtList: [
             "jpg", "jpeg", "jpe", "gif", "png", "svg", "svgz", "pdf", "txt", "htm",
             "html", "mpg", "mpeg", "m1v", "mp2", "mpa", "mpe", "mpv2", "mp4", "m4v",
@@ -40,7 +42,7 @@
         docView: {
             //only insert needed, will delete previous DOCxMandantDokument records in before trigger
             insert: function (complete, error, viewResponse, docId, docGroup) {
-                Log.call(Log.l.trace, "docView.", "docId=" + docId + " docGroup=" + docGroup);
+                Log.call(Log.l.trace, namespaceName + ".docView.", "docId=" + docId + " docGroup=" + docGroup);
                 if (viewResponse) {
                     var pkName = "DOC" + docGroup + "MandantDokumentVIEWID";
                     viewResponse[pkName] = docId;

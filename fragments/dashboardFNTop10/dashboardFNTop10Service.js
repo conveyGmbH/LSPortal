@@ -6,7 +6,9 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("DashboardFNTop10", {
+    var namespaceName = "DashboardFNTop10";
+
+    WinJS.Namespace.define(namespaceName, {
         _reportLand: {
             get: function () {
                 var ret = AppData.getFormatView("Kontakt", 20473);
@@ -16,7 +18,7 @@
         },
         reportLand: {
             select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "Start.");
+                Log.call(Log.l.trace, namespaceName + ".reportLand.");
                 if (!restriction) {
                     restriction = {};
                 }
@@ -31,14 +33,14 @@
                 return ret;
             },
             selectNext: function (complete, error, response, nextUrl) {
-                Log.call(Log.l.trace, "Start.");
+                Log.call(Log.l.trace, namespaceName + ".reportLand.");
                 var ret = DashboardFNTop10._reportLand.selectNext(complete, error, response, nextUrl);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
             },
             getNextUrl: function (response) {
-                Log.call(Log.l.trace, "Start._reportLand.");
+                Log.call(Log.l.trace, namespaceName + ".reportLand.");
                 var ret = DashboardFNTop10._reportLand.getNextUrl(response);
                 Log.ret(Log.l.trace);
                 return ret;
@@ -55,7 +57,7 @@
         },
         veranstaltungView: {
             select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "mitarbeiterView.");
+                Log.call(Log.l.trace, namespaceName + ".veranstaltungView.");
                 var ret = DashboardFNTop10._veranstaltungView.select(complete, error, restriction);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
@@ -69,7 +71,7 @@
         },
         mitarbeiterView: {
             select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "mitarbeiterView.", "restriction=" + restriction);
+                Log.call(Log.l.trace, namespaceName + ".mitarbeiterView.", "restriction=" + (restriction ? JSON.stringify(restriction) : ""));
                 var ret = DashboardFNTop10._mitarbeiterView.select(complete, error, restriction);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);

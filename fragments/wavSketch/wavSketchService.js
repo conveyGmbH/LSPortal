@@ -6,13 +6,15 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("WavSketch", {
+    var namespaceName = "WavSketch";
+
+    WinJS.Namespace.define(namespaceName, {
         getSketchDocView: function (isLocal) {
                 return AppData.getFormatView("KontaktNotiz", 20505, isLocal);
         },
         sketchDocView: {
             select: function (complete, error, recordId, isLocal) {
-                Log.call(Log.l.trace, "wavSketchView.");
+                Log.call(Log.l.trace, namespaceName + ".sketchDocView.");
                 var ret = WavSketch.getSketchDocView(isLocal).selectById(complete, error, recordId);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
@@ -25,13 +27,13 @@
         },
         sketchView: {
             insert: function (complete, error, viewResponse, isLocal) {
-                Log.call(Log.l.trace, "wavSketchView.");
+                Log.call(Log.l.trace, namespaceName + ".sketchView.");
                 var ret = WavSketch.getSketchView(isLocal).insert(complete, error, viewResponse);
                 Log.ret(Log.l.trace);
                 return ret;
             },
             deleteRecord: function (complete, error, recordId, isLocal) {
-                Log.call(Log.l.trace, "wavSketchView.");
+                Log.call(Log.l.trace, namespaceName + ".sketchView.");
                 var ret = WavSketch.getSketchView(isLocal).deleteRecord(complete, error, recordId);
                 Log.ret(Log.l.trace);
                 return ret;

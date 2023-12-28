@@ -6,7 +6,9 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("EmpRoles", {
+    var namespaceName = "EmpRoles";
+
+    WinJS.Namespace.define(namespaceName, {
         _initAPUserRoleView: {
             get: function () {
                 return AppData.getLgntInit("LGNTINITAPUserRole");
@@ -14,7 +16,7 @@
         },
         initAPUserRoleView: {
             select: function (complete, error, recordId) {
-                Log.call(Log.l.trace, "EmpRoles.LGNTINITAPUserRole.");
+                Log.call(Log.l.trace, namespaceName + ".initAPUserRoleView.");
                 var ret = EmpRoles._initAPUserRoleView.select(complete, error, recordId, {
                      ordered: true
                 });
@@ -22,13 +24,13 @@
                 return ret;
             },
             getResults: function () {
-                Log.call(Log.l.trace, "EmpRoles.LGNTINITAPUserRole.");
+                Log.call(Log.l.trace, namespaceName + ".initAPUserRoleView.");
                 var ret = EmpRoles._initAPUserRoleView.results;
                 Log.ret(Log.l.trace);
                 return ret;
             },
             getMap: function () {
-                Log.call(Log.l.trace, "EmpRoles.LGNTINITAPUserRole.");
+                Log.call(Log.l.trace, namespaceName + ".initAPUserRoleView.");
                 var ret = EmpRoles._initAPUserRoleView.map;
                 Log.ret(Log.l.trace);
                 return ret;
@@ -44,8 +46,7 @@
                 if (!restriction) {
                     restriction = EmpRoles.getRestriction();
                 }
-               // Log.call(Log.l.trace, "visitorFlowLevelView.", "restriction=" + restriction);
-                Log.call(Log.l.trace, "employeeView.", "restriction=" + restriction);
+                Log.call(Log.l.trace, namespaceName + ".CR_MA_APUSERRoleView.", "restriction=" + (restriction ? JSON.stringify(restriction) : ""));
                 var ret = EmpRoles._CR_MA_APUSERRoleView.select(complete, error, restriction, {
                     ordered: true,
                     orderAttribute: "INITAPUserRoleID"
@@ -55,13 +56,14 @@
 
             },
             update: function (complete, error, recordId, viewResponse) {
-                Log.call(Log.l.trace, "employeeView.");
+                Log.call(Log.l.trace, namespaceName + ".CR_MA_APUSERRoleView.");
                 var ret = EmpRoles._CR_MA_APUSERRoleView.update(complete, error, recordId, viewResponse);
                 Log.ret(Log.l.trace);
                 return ret;
             }
         },
         getRestriction: function () {
+            Log.call(Log.l.trace, namespaceName);
             var ret = null;
             var master = Application.navigator.masterControl;
             if (master && master.controller && master.controller.binding) {
@@ -70,6 +72,7 @@
                     MitarbeiterID: master.controller.binding.employeeId
                 };
             }
+            Log.ret(Log.l.trace);
             return ret;
         }
     });

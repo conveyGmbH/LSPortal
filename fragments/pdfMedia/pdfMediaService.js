@@ -6,7 +6,9 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("PdfMedia", {
+    var namespaceName = "PdfMedia";
+
+    WinJS.Namespace.define(namespaceName, {
         _docView: {
             get: function () {
                 return AppData.getFormatView("MandantDokument", 20635);
@@ -14,7 +16,7 @@
         },
         docView: {
             select: function (complete, error, recordId) {
-                Log.call(Log.l.trace, "pdfMediaView.");
+                Log.call(Log.l.trace, namespaceName + ".docView.");
                 var ret = PdfMedia._docView.selectById(complete, error, recordId);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);

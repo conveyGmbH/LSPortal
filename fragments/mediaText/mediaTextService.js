@@ -10,7 +10,9 @@
      * neue view LangMandantDokumentVIEW_20634 
      * LangMandantDokument_odataView darauf update
      */
-    WinJS.Namespace.define("MediaText", {
+    var namespaceName = "MediaText";
+
+    WinJS.Namespace.define(namespaceName, {
         _initSpracheView: {
             get: function () {
                 return AppData.getLgntInit("LGNTINITSprache", false, true);
@@ -18,19 +20,19 @@
         },
         initSpracheView: {
             select: function (complete, error, recordId) {
-                Log.call(Log.l.trace, "AppData._initSpracheView.");
+                Log.call(Log.l.trace, namespaceName + ".initSpracheView.");
                 var ret = MediaText._initSpracheView.select(complete, error, recordId, { ordered: true });
                 Log.ret(Log.l.trace);
                 return ret;
             },
             getResults: function () {
-                Log.call(Log.l.trace, "AppData._initSpracheView.");
+                Log.call(Log.l.trace, namespaceName + ".initSpracheView.");
                 var ret = MediaText._initSpracheView.results;
                 Log.ret(Log.l.trace);
                 return ret;
             },
             getMap: function () {
-                Log.call(Log.l.trace, "AppData._initSpracheView.");
+                Log.call(Log.l.trace, namespaceName + ".initSpracheView.");
                 var ret = MediaText._initSpracheView.map;
                 Log.ret(Log.l.trace);
                 return ret;
@@ -79,22 +81,23 @@
                         desc: false
                     };
                 }
-                Log.call(Log.l.trace, "MediaText.eventTextView.",
-                    "NameLanguageID=" + restriction.NameLanguageID,
-                    "LanguageSpecID=" + restriction.LanguageSpecID,
-                    "MandantDokumentID=" + restriction.MandantDokumentID);
+                Log.call(Log.l.trace, namespaceName + ".eventTextView.",
+                    "LangMandantDokumentVIEWID=" + restriction.LangMandantDokumentVIEWID +
+                    " NameLanguageID=" + restriction.NameLanguageID +
+                    " LanguageSpecID=" + restriction.LanguageSpecID +
+                    " MandantDokumentID=" + restriction.MandantDokumentID);
                 var ret = MediaText._eventTextView.select(complete, error, restriction, options);
                 Log.ret(Log.l.trace);
                 return ret;
             },
             getNextUrl: function (response) {
-                Log.call(Log.l.trace, "MediaText.eventTextView.");
+                Log.call(Log.l.trace, namespaceName + ".eventTextView.");
                 var ret = MediaText._eventTextView.getNextUrl(response);
                 Log.ret(Log.l.trace);
                 return ret;
             },
             selectNext: function (complete, error, response, nextUrl) {
-                Log.call(Log.l.trace, "MediaText.eventTextView.");
+                Log.call(Log.l.trace, namespaceName + ".eventTextView.");
                 var ret = MediaText._eventTextView.selectNext(complete, error, response, nextUrl);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
@@ -117,7 +120,7 @@
         },
         eventTextTable: {
             update: function (complete, error, recordId, viewResponse) {
-                Log.call(Log.l.trace, "MediaText.eventTextTable.");
+                Log.call(Log.l.trace, namespaceName + ".eventTextTable.");
                 var ret = MediaText._eventTextTable.update(complete, error, recordId, viewResponse);
                 Log.ret(Log.l.trace);
                 return ret;

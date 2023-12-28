@@ -6,7 +6,9 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("StartContactspD", {
+    var namespaceName = "StartContactspD";
+
+    WinJS.Namespace.define(namespaceName, {
         _kontaktanzahlView: {
             get: function () {
                 var ret = AppData.getFormatView("Kontakt", 20455);
@@ -16,13 +18,12 @@
         },
         kontaktanzahlView: {
             select: function (complete, error) {
-                Log.call(Log.l.trace, "kontaktanzahlView.");
+                Log.call(Log.l.trace, namespaceName + ".kontaktanzahlView.");
                 var ret = StartContactspD._kontaktanzahlView.select(complete, error, null, {
                     ordered: true,
                     orderAttribute: "Datum",
                     asc: true
                 });
-
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;

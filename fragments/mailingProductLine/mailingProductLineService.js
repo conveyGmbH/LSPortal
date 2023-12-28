@@ -6,7 +6,9 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("MailingProductLine", {
+    var namespaceName = "MailingProductLine";
+
+    WinJS.Namespace.define(namespaceName, {
         _MaildokumentView: {
             get: function () {
                 return AppData.getFormatView("Maildokument", 20513);
@@ -14,7 +16,7 @@
         },
         MaildokumentView: {
             select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "MailingProduct.");
+                Log.call(Log.l.trace, namespaceName + ".MaildokumentView.");
                 var ret = MailingProductLine._MaildokumentView.select(complete, error, restriction, { ordered: true });
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
@@ -33,26 +35,23 @@
         },
         MAILERZEILENView: {
             select: function(complete, error, restriction) {
-                Log.call(Log.l.trace, "MailingProductLine.");
-                var ret = MailingProductLine._MAILERZEILENView.select(complete,
-                    error,
-                    restriction,
-                    {
-                        ordered: true,
-                        orderAttribute: "Sortierung"
-                    });
+                Log.call(Log.l.trace, namespaceName + ".MAILERZEILENView.");
+                var ret = MailingProductLine._MAILERZEILENView.select(complete, error, restriction, {
+                    ordered: true,
+                    orderAttribute: "Sortierung"
+                });
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
             },
             getNextUrl: function(response) {
-                Log.call(Log.l.trace, "MailingProductLine.");
+                Log.call(Log.l.trace, namespaceName + ".MAILERZEILENView.");
                 var ret = MailingProductLine._MAILERZEILENView.getNextUrl(response);
                 Log.ret(Log.l.trace);
                 return ret;
             },
             selectNext: function(complete, error, response, nextUrl) {
-                Log.call(Log.l.trace, "MailingProductLine.");
+                Log.call(Log.l.trace, namespaceName + ".MAILERZEILENView.");
                 var ret = MailingProductLine._MAILERZEILENView.selectNext(complete, error, response, nextUrl);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
@@ -67,7 +66,7 @@
                 ProduktID: null
             },
             update: function (complete, error, recordId, viewResponse) {
-                Log.call(Log.l.trace, "MailingProduct.");
+                Log.call(Log.l.trace, namespaceName + ".MAILERZEILENView.");
                 var ret = MailingProductLine._MAILERZEILENTable.update(complete, error, recordId, viewResponse);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);

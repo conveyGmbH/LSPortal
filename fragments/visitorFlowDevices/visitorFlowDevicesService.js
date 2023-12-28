@@ -6,18 +6,19 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("VisitorFlowDevices", {
+    var namespaceName = "VisitorFlowDevices";
+
+    WinJS.Namespace.define(namespaceName, {
         _visitorDeviceView: {
             get: function () {
                 return AppData.getFormatView("DeviceLastCall", 20616);
             }
         }
     });
-
-    WinJS.Namespace.define("VisitorFlowDevices", {
+    WinJS.Namespace.define(namespaceName, {
         visitorDeviceView: {
             select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "visitorDeviceView.", "recordId=" + restriction);
+                Log.call(Log.l.trace, namespaceName + ".visitorDeviceView.", "recordId=" + restriction);
                 var ret = VisitorFlowDevices._visitorDeviceView.select(complete, error, restriction,
                     {
                         ordered: true,

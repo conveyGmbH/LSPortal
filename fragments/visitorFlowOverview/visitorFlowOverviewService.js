@@ -6,7 +6,9 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("VisitorFlowOverview", {
+    var namespaceName = "VisitorFlowOverview";
+
+    WinJS.Namespace.define(namespaceName, {
         _visitorView: {
             get: function () {
                 return AppData.getFormatView("CR_V_Bereich", 20613);
@@ -14,7 +16,7 @@
         },
         visitorView: {
             select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "mitarbeiterView.", "recordId=" + restriction);
+                Log.call(Log.l.trace, namespaceName + ".visitorView.", "restriction=" + (restriction ? JSON.stringify(restriction): ""));
                 var ret = VisitorFlowOverview._visitorView.select(complete, error, restriction);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);

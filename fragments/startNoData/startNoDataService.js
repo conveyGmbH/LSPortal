@@ -6,7 +6,9 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("StartNoData", {
+    var namespaceName = "StartNoData";
+
+    WinJS.Namespace.define(namespaceName, {
         
     });
 })();

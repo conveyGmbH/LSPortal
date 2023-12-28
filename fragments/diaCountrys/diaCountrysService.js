@@ -6,7 +6,9 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("DiaCountrys", {
+    var namespaceName = "DiaCountrys";
+
+    WinJS.Namespace.define(namespaceName, {
         _reportLand: {
             get: function () {
                 var ret = AppData.getFormatView("Kontakt", 20473);
@@ -15,7 +17,7 @@
         },
         reportLand: {
             select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "Start.");
+                Log.call(Log.l.trace, namespaceName + ".reportLand.");
                 if (!restriction) {
                     restriction = {};
                 }
@@ -30,14 +32,14 @@
                 return ret;
             },
             selectNext: function (complete, error, response, nextUrl) {
-                Log.call(Log.l.trace, "Start.");
+                Log.call(Log.l.trace, namespaceName + ".reportLand.");
                 var ret = DiaCountrys._reportLand.selectNext(complete, error, response, nextUrl);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
             },
             getNextUrl: function (response) {
-                Log.call(Log.l.trace, "Start._reportLand.");
+                Log.call(Log.l.trace, namespaceName + ".reportLand.");
                 var ret = DiaCountrys._reportLand.getNextUrl(response);
                 Log.ret(Log.l.trace);
                 return ret;
@@ -53,7 +55,7 @@
         },
         mitarbeiterView: {
             select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "mitarbeiterView.");
+                Log.call(Log.l.trace, namespaceName + ".mitarbeiterView.");
                 var ret = DiaCountrys._mitarbeiterView.select(complete, error, restriction);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);

@@ -174,13 +174,13 @@
                         EmpfaengerID: getRecordId(),
                         InfoText: that.binding.message
                     }
-                    ret = UserMessages.userMessageTable.insert(function (json) {
+                    ret = UserMessages.userMessageView.insert(function (json) {
                         // called asynchronously if ok
                         // force reload of userData for Present flag
                         /**
                          * inserttrigger in db für timestamp setzen 
                          */
-                        Log.print(Log.l.trace, "userMessageTable: insert success!");
+                        Log.print(Log.l.trace, "userMessageView: insert success!");
                         that.binding.message = "";
                         AppBar.modified = false;
                         if (typeof complete === "function") {
