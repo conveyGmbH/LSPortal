@@ -316,16 +316,13 @@
                     }
                     Log.ret(Log.l.trace);
                 },
-                clickSendMessage: function (event) {
+                clickOk: function (event) {
                     Log.call(Log.l.trace, "Contact.Controller.");
-                    that.saveData(that.binding.dataBenutzer, function (response) {
+                    that.saveData(function (response) {
                         Log.print(Log.l.trace, "contact saved");
-
-                    },
-                        function (errorResponse) {
-                            Log.print(Log.l.error, "error saving employee");
-                        });
-
+                    }, function (errorResponse) {
+                        Log.print(Log.l.error, "error saving employee");
+                    });
                     AppBar.triggerDisableHandlers();
                     Log.ret(Log.l.trace);
                 },
@@ -857,7 +854,7 @@
             }
             this.loadData = loadData;
 
-            var saveData = function (data, complete, error) {
+            var saveData = function (complete, error) {
                 Log.call(Log.l.trace, "Infodesk.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret;
@@ -870,39 +867,38 @@
                 if (recordId) {
                     AppBar.modified = true;
                     var dataBenutzer = that.binding.dataBenutzer;
-                    if (data) { //!dataBenutzer && 
-                        dataBenutzer = data;
-                    } 
-
                     if (dataBenutzer && AppBar.modified && !AppBar.busy) {
                         if (dataBenutzer.BenutzerVIEWID || data.BenutzerVIEWID) {
-                            ret = Infodesk.benutzerView.update(function (response) {
-                                // called asynchronously if ok
-                                // force reload of userData for Present flag
-                                AppBar.modified = false;
-                                Log.print(Log.l.trace, "benutzerView: update success!");
-                                complete(response);
-                            },
-                            function (errorResponse) {
-                                // called asynchronously if an error occurs
-                                // or server returns response with an error status.
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                                error(errorResponse);
-                            },
-                            data.BenutzerVIEWID, dataBenutzer).then(function () {
+                            ret = Infodesk.benutzerView.update(function(response) {
+                                    // called asynchronously if ok
+                                    // force reload of userData for Present flag
+                                    AppBar.modified = false;
+                                    Log.print(Log.l.trace, "benutzerView: update success!");
+                                    complete(response);
+                                },
+                                function(errorResponse) {
+                                    // called asynchronously if an error occurs
+                                    // or server returns response with an error status.
+                                    AppData.setErrorMsg(that.binding, errorResponse);
+                                    error(errorResponse);
+                                },
+                                data.BenutzerVIEWID,
+                                dataBenutzer).then(function() {
                                 if (recordId) {
                                     //load of format relation record data
                                     AppData.setErrorMsg(that.binding);
                                     Log.print(Log.l.trace, "calling select benutzerView...");
-                                    return Infodesk.benutzerView.select(function (json) {
+                                    return Infodesk.benutzerView.select(function(json) {
                                         Log.print(Log.l.trace, "benutzerView: success!");
                                         if (json && json.d) {
                                             that.binding.dataBenutzer = json.d;
                                         }
-                                    }, function (errorResponse) {
+                                    },
+                                    function(errorResponse) {
                                         if (errorResponse.status === 404) {
                                             Log.print(Log.l.trace, "benutzerView: ignore NOT_FOUND error here!");
-                                            that.setDataBenutzer(getEmptyDefaultValue(Infodesk.benutzerView.defaultValue));
+                                            that.setDataBenutzer(
+                                                getEmptyDefaultValue(Infodesk.benutzerView.defaultValue));
                                         } else {
                                             AppData.setErrorMsg(that.binding, errorResponse);
                                         }
@@ -913,30 +909,11 @@
                                     return WinJS.Promise.as();
                                 }
                             });
+                        } else {
+                            ret = new WinJS.Promise.as().then(function () {
+                                complete(dataBenutzer);
+                            });
                         }
-                        ret = WinJS.Promise.as();
-                        /*else {
-                            if (that.binding.employeeId) {
-                            dataBenutzer.BenutzerVIEWID = that.binding.employeeId;
-                            ret = Infodesk.benutzerView.insert(function(json) {
-                                // called asynchronously if ok
-                                // force reload of userData for Present flag
-                                AppBar.modified = false;
-                                Log.print(Log.l.trace, "benutzerView: insert success!");
-                                if (json && json.d) {
-                                    that.setDataBenutzer(json.d);
-                                }
-                                complete(json);
-                            },
-                            function (errorResponse) {
-                                // called asynchronously if an error occurs
-                                // or server returns response with an error status.
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                                error(errorResponse);
-                            },
-                            dataBenutzer);
-                            }
-                        }*/
                     } else {
                         ret = new WinJS.Promise.as().then(function() {
                             complete(dataBenutzer);
@@ -947,7 +924,6 @@
                 }
                 Log.ret(Log.l.trace);
                 return ret;
-
             }
             this.saveData = saveData;
 

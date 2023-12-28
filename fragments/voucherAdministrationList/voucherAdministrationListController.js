@@ -13,9 +13,11 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("VoucherAdministrationList", {
+    var namespaceName = "VoucherAdministrationList";
+
+    WinJS.Namespace.define(namespaceName, {
         Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options) {
-            Log.call(Log.l.trace, "VoucherAdministrationList.Controller.");
+            Log.call(Log.l.trace, namespaceName + ".Controller.");
             Fragments.Controller.apply(this, [fragmentElement, {
                 recordID: 0,
                 btnLabel: getResourceText("voucheradministrationlist.btnlabelO"),
@@ -48,7 +50,7 @@
 
             var scopeFromRecordId = function (recordId) {
                 var i;
-                Log.call(Log.l.trace, "MandatoryList.Controller.", "recordId=" + recordId);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
                 var item = null;
                 var recordidint = parseInt(recordId);
                 for (i = 0; i < that.voucherHeaderItem.length; i++) {
@@ -70,7 +72,7 @@
             this.scopeFromRecordId = scopeFromRecordId;
 
             var selectRecordId = function (recordId) {
-                Log.call(Log.l.trace, "MandatoryList.Controller.", "recordId=" + recordId);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
                 if (recordId && listView && listView.winControl && listView.winControl.selection) {
                     if (fields) {
                         for (var i = 0; i < that.fields.length; i++) {
@@ -89,7 +91,7 @@
             this.selectRecordId = selectRecordId;
 
             var getRecordId = function () {
-                Log.call(Log.l.trace, "VoucherAdministrationList.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 that.binding.recordID = AppData.getRecordId("VeranstaltungAnlage");
                 Log.ret(Log.l.trace, that.binding.recordID);
                 return that.binding.recordID;
@@ -145,7 +147,7 @@
 
             var eventHandlers = {
                 onLoadingStateChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "VoucherAdministrationList.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (listView && listView.winControl) {
                         Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
                         // single list selection
@@ -162,9 +164,7 @@
                                 listView.winControl.layout = { type: layout };
                             }
                         }
-                        if (listView.winControl.loadingState === "itemsLoaded") {
-                            //
-                        } else if (listView.winControl.loadingState === "complete") {
+                        if (listView.winControl.loadingState === "complete") {
                             if (that.loading) {
                                 that.loading = false;
                             }
@@ -173,15 +173,14 @@
                     Log.ret(Log.l.trace);
                 },
                 onGroupHeaderInvoked: function (event) {
-                    Log.call(Log.l.trace, "VoucherAdministrationList.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (listView && listView.winControl) {
                         var listControl = listView.winControl;
                         if (listControl.selection) {
-                            Log.call(Log.l.trace, "VoucherAdministrationList.Controller.");
                             var id = AppData.getRecordId("VeranstaltungTermin");
-                            Log.call(Log.l.trace, "VoucherAdministrationList.Controller.");
                         }
                     }
+                    Log.ret(Log.l.trace);
                 }
             }
             this.eventHandlers = eventHandlers;
@@ -243,13 +242,9 @@
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
+                        Log.print(Log.l.error, "voucherOrderView: error!");
                         AppData.setErrorMsg(that.binding, errorResponse);
-                    }, {
-                            LanguageSpecID: AppData.getLanguageId(), VeranstaltungID: AppData.getRecordId("Veranstaltung")
-                        }).then(function () {
-
-                            Log.print(Log.l.trace, "Data loaded");
-                        });
+                    });
                 });
                 Log.ret(Log.l.trace);
                 return ret;

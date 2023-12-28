@@ -10,11 +10,12 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("VisitorFlowDevices", {
-        Controller: WinJS.Class.derive(Fragments.RecordsetController, function Controller(fragmentElement, options) {
-            Log.call(Log.l.trace, "VisitorFlowDevices.Controller.");
-            var listView = fragmentElement.querySelector("#visitorFlowDevicesList.listview");
+    var namespaceName = "VisitorFlowDevices";
 
+    WinJS.Namespace.define(namespaceName, {
+        Controller: WinJS.Class.derive(Fragments.RecordsetController, function Controller(fragmentElement, options) {
+            Log.call(Log.l.trace, namespaceName + ".Controller.");
+            var listView = fragmentElement.querySelector("#visitorFlowDevicesList.listview");
             Fragments.RecordsetController.apply(this, [fragmentElement, {
                 visitordata: null,
                 devicedata: null,
@@ -28,16 +29,11 @@
 
             var layout = null;
 
-            this.dispose = function () {
-                if (listView && listView.winControl) {
-                    listView.winControl.itemDataSource = null;
-                }
-            }
-
             // now do anything...
             /*var dotdevice = fragmentElement.querySelectorAll(".dotdev");
 
             var setcolordotdevices = function (index, time, element) {
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var dateact = new Date();
                 var dateactdate = dateact.getDate();
                 var dateacthours = dateact.getHours();
@@ -60,9 +56,7 @@
                 } else {
                     element.style.backgroundColor = "red";
                 }
-                
-                Log.call(Log.l.trace, "VisitorFlowDevices.Controller.");
-
+                Log.ret(log.l.trace);
             }
             this.setcolordotdevices = setcolordotdevices;*/
 
@@ -81,7 +75,6 @@
             this.msToTime = msToTime;
 
             var getDateObject = function (dateData, timeData) {
-                Log.call(Log.l.trace, "VisitorFlowDevices.Controller.");
                 var ret;
                 var dateString;
                 var milliseconds;
@@ -153,14 +146,14 @@
             // define handlers
             this.eventHandlers = {
                 onSelectionChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "VisitorFlowDevices.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     that.selectionChanged().then(function () {
                         AppBar.triggerDisableHandlers();
                     });
                     Log.ret(Log.l.trace);
                 },
                 onLoadingStateChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "VisitorFlowDevices.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (listView && listView.winControl) {
                         Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
                         if (listView.winControl.loadingState === "itemsLoading") {
@@ -188,7 +181,7 @@
                     Log.ret(Log.l.trace);
                 },
                 onFooterVisibilityChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "VisitorFlowDevices.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (eventInfo && eventInfo.detail) {
                         var visible = eventInfo.detail.visible;
                         if (visible && that.nextUrl) {
@@ -215,6 +208,6 @@
             Log.ret(Log.l.trace);
         }, {
             deviceItem: null
-            })
+        })
     });
 })();

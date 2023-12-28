@@ -9,7 +9,9 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("VideoMedia", {
+    var namespaceName = "VideoMedia";
+
+    WinJS.Namespace.define(namespaceName, {
         audioExtList: [
             "mpa", "mp3", "m4a", "oga",
             "wav", "wma", "aiff", "aifc", "au", "mid", "midi"
@@ -19,7 +21,7 @@
             "mp4v", "ogg", "ogv", "asf", "avi", "mov", "wmv"
         ],
         Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options, commandList) {
-            Log.call(Log.l.trace, "VideoMedia.Controller.", "noteId=" + (options && options.noteId) + " url=" + (options && options.url));
+            Log.call(Log.l.trace, namespaceName + ".Controller.", "noteId=" + (options && options.noteId) + " url=" + (options && options.url));
 
             Fragments.Controller.apply(this, [fragmentElement, {
                 noteId: null,
@@ -62,38 +64,35 @@
             }
 
             var resultConverter = function (item, index) {
-                Log.call(Log.l.trace, "VideoMedia.Controller.");
-                if (item) {
-                    if (item.DocContentDOCCNT1 && AppData.isVideo(item.DocGroup, item.DocFormat) || AppData.isAudio(item.DocGroup, item.DocFormat)) {
-                        Log.print(Log.l.trace, "DocGroup=" + item.DocGroup + "DocFormat=" + item.DocFormat);
-                        item.type = AppData.getDocType(item.DocFormat);
-                        if (!item.type) {
-                            Log.print(Log.l.trace, "search in DOCContent...");
-                            var typeTag = "Content-Type: ";
-                            var typeStr = item.DocContentDOCCNT1.search(typeTag).substr(typeTag.length);
-                            var endPos = typeStr.indexOf("Accept-Ranges:");
-                            if (endPos > 0) {
-                                typeStr = typeStr.substr(0, endPos);
-                            }
-                            item.type = typeStr.replace("\r\n", "");
+                if (item.DocContentDOCCNT1 && AppData.isVideo(item.DocGroup, item.DocFormat) || AppData.isAudio(item.DocGroup, item.DocFormat)) {
+                    Log.print(Log.l.trace, "DocGroup=" + item.DocGroup + "DocFormat=" + item.DocFormat);
+                    item.type = AppData.getDocType(item.DocFormat);
+                    if (!item.type) {
+                        Log.print(Log.l.trace, "search in DOCContent...");
+                        var typeTag = "Content-Type: ";
+                        var typeStr = item.DocContentDOCCNT1.search(typeTag).substr(typeTag.length);
+                        var endPos = typeStr.indexOf("Accept-Ranges:");
+                        if (endPos > 0) {
+                            typeStr = typeStr.substr(0, endPos);
                         }
-                        Log.print(Log.l.trace, "content type==" + item.type);
-                        if (item.type) {
-                            var sub = item.DocContentDOCCNT1.search("\r\n\r\n");
-                            item.mediaData = "data:" + item.type + ";base64," + item.DocContentDOCCNT1.substr(sub + 4);
-                        } else {
-                            item.mediaData = "";
-                        }
+                        item.type = typeStr.replace("\r\n", "");
+                    }
+                    Log.print(Log.l.trace, "content type==" + item.type);
+                    if (item.type) {
+                        var sub = item.DocContentDOCCNT1.search("\r\n\r\n");
+                        item.mediaData = "data:" + item.type + ";base64," + item.DocContentDOCCNT1.substr(sub + 4);
                     } else {
                         item.mediaData = "";
                     }
-                    item.DocContentDOCCNT1 = "";
+                } else {
+                    item.mediaData = "";
                 }
-                Log.ret(Log.l.trace);
+                item.DocContentDOCCNT1 = "";
             }
             this.resultConverter = resultConverter;
 
             var removeMedia = function () {
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var audio = fragmentElement.querySelector("#noteAudio");
                 if (audio) {
                     if (typeof audio.pause === "function") {
@@ -120,11 +119,12 @@
                     that.binding.showAudio = false;
                     that.binding.showFrame = false;
                 }
+                Log.ret(Log.l.trace);
             }
             this.removeMedia = removeMedia;
 
             var bindMedia = function (url) {
-                Log.call(Log.l.trace, "VideoMedia.Controller.", "url=" + url);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "url=" + url);
                 if (typeof url === "string" || that.binding.dataSketch) {
                     var isVideo = false;
                     var isAudio = false;
@@ -257,7 +257,7 @@
 
             var loadData = function (noteId, url) {
                 var ret;
-                Log.call(Log.l.trace, "VideoMedia.Controller.", "noteId=" + noteId);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "noteId=" + noteId + " url=" + url);
                 if (url) {
                     that.bindMedia(url);
                     ret = WinJS.Promise.as();
@@ -297,7 +297,7 @@
             this.loadData = loadData;
 
             var removeDoc = function () {
-                Log.call(Log.l.trace, "VideoMedia.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 that.removeMedia();
                 Log.ret(Log.l.trace);
             }
@@ -305,10 +305,10 @@
 
             var saveData = function (complete, error) {
                 //wav can't be changed
-                Log.call(Log.l.trace, "VideoMedia.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var ret = new WinJS.Promise.as().then(function () {
                     if (typeof complete === "function") {
-                        complete(that.binding.dataSketch);
+                        complete();
                     }
                 });
                 Log.ret(Log.l.trace, ret);
@@ -316,10 +316,15 @@
             };
             this.saveData = saveData;
 
-            var deleteData = function () {
-                Log.call(Log.l.trace, "VideoMedia.Controller.");
+            var deleteData = function (complete, error) {
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
+                var ret = new WinJS.Promise.as().then(function () {
+                    if (typeof complete === "function") {
+                        complete();
+                    }
+                });
                 Log.ret(Log.l.trace);
-                return WinJS.Promise.as();
+                return ret;
             }
             this.deleteData = deleteData;
 

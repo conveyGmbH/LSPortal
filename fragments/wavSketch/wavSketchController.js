@@ -12,11 +12,11 @@
     "use strict";
 
     var b64 = window.base64js;
+    var namespaceName = "WavSketch";
 
-    WinJS.Namespace.define("WavSketch", {
+    WinJS.Namespace.define(namespaceName, {
         Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options, commandList) {
-            Log.call(Log.l.trace, "WavSketch.Controller.", "noteId=" + (options && options.noteId));
-
+            Log.call(Log.l.trace, namespaceName + ".Controller.", "noteId=" + (options && options.noteId));
             Fragments.Controller.apply(this, [fragmentElement, {
                 noteId: null,
                 isLocal: options.isLocal,
@@ -49,33 +49,31 @@
             }
 
             var resultConverter = function (item, index) {
-                Log.call(Log.l.trace, "WavSketch.Controller.");
-                if (item) {
-                    if (item.DocContentDOCCNT1 && item.DocGroup === AppData.DocGroup.Audio) {
-                        Log.print(Log.l.trace, "DocFormat=" + item.DocFormat);
-                        item.type = AppData.getDocType(item.DocFormat);
-                        if (!item.type) {
-                            Log.print(Log.l.trace, "search in DOCContent...");
-                            var typeTag = "Content-Type: ";
-                            var typeStr = item.DocContentDOCCNT1.search(typeTag).substr(typeTag.length);
-                            var endPos = typeStr.indexOf("Accept-Ranges:");
-                            if (endPos > 0) {
-                                typeStr = typeStr.substr(0, endPos);
-                            }
-                            item.type = typeStr.replace("\r\n", "");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
+                if (item.DocContentDOCCNT1 && item.DocGroup === AppData.DocGroup.Audio) {
+                    Log.print(Log.l.trace, "DocFormat=" + item.DocFormat);
+                    item.type = AppData.getDocType(item.DocFormat);
+                    if (!item.type) {
+                        Log.print(Log.l.trace, "search in DOCContent...");
+                        var typeTag = "Content-Type: ";
+                        var typeStr = item.DocContentDOCCNT1.search(typeTag).substr(typeTag.length);
+                        var endPos = typeStr.indexOf("Accept-Ranges:");
+                        if (endPos > 0) {
+                            typeStr = typeStr.substr(0, endPos);
                         }
-                        Log.print(Log.l.trace, "content type==" + item.type);
-                        if (item.type) {
-                            var sub = item.DocContentDOCCNT1.search("\r\n\r\n");
-                            item.audioData = "data:" + item.type + ";base64," + item.DocContentDOCCNT1.substr(sub + 4);
-                        } else {
-                            item.audioData = "";
-                        }
+                        item.type = typeStr.replace("\r\n", "");
+                    }
+                    Log.print(Log.l.trace, "content type==" + item.type);
+                    if (item.type) {
+                        var sub = item.DocContentDOCCNT1.search("\r\n\r\n");
+                        item.audioData = "data:" + item.type + ";base64," + item.DocContentDOCCNT1.substr(sub + 4);
                     } else {
                         item.audioData = "";
                     }
-                    item.DocContentDOCCNT1 = "";
+                } else {
+                    item.audioData = "";
                 }
+                item.DocContentDOCCNT1 = "";
                 Log.ret(Log.l.trace);
             }
             this.resultConverter = resultConverter;
@@ -104,7 +102,7 @@
             var insertAudiodata = function (audioData, fileExt) {
                 var ovwEdge = 256;
                 var err = null;
-                Log.call(Log.l.trace, "WavSketch.Controller.", "fileExt=" + fileExt);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "fileExt=" + fileExt);
                 AppData.setErrorMsg(that.binding);
                 var dataSketch = that.binding.dataSketch;
 
@@ -181,7 +179,7 @@
             var loadDataFile = function (dataDirectory, fileName, bUseRootDir) {
                 var fileExt;
                 var filePath;
-                Log.call(Log.l.trace, "WavSketch.Controller.", "dataDirectory=" + dataDirectory + " fileName=" + fileName + " bUseRootDir=" + bUseRootDir);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "dataDirectory=" + dataDirectory + " fileName=" + fileName + " bUseRootDir=" + bUseRootDir);
                 var readFileFromDirEntry = function (dirEntry) {
                     if (dirEntry) {
                         Log.print(Log.l.info, "resolveLocalFileSystemURL: dirEntry open!");
@@ -206,22 +204,14 @@
                                 fileEntry.file(function(file) {
                                         var reader = new FileReader();
                                         reader.onerror = function(errorResponse) {
-                                            Log.print(Log.l.error,
-                                                "Failed read file " +
-                                                filePath +
-                                                " error: " +
-                                                JSON.stringify(errorResponse));
+                                            Log.print(Log.l.error, "Failed read file " + filePath + " error: " + JSON.stringify(errorResponse));
                                             AppData.setErrorMsg(that.binding, errorResponse);
                                             deleteFile();
                                             AppBar.busy = false;
                                         };
                                         reader.onloadend = function() {
                                             var data = new Uint8Array(this.result);
-                                            Log.print(Log.l.info,
-                                                "Successful file read! fileExt=" +
-                                                fileExt +
-                                                " data-length=" +
-                                                data.length);
+                                            Log.print(Log.l.info, "Successful file read! fileExt=" + fileExt + " data-length=" + data.length);
                                             switch (fileExt) {
                                             case "amr":
                                                 try {
@@ -230,8 +220,7 @@
                                                     data = buffer;
                                                     fileExt = "wav";
                                                 } catch (exception) {
-                                                    Log.print(Log.l.error,
-                                                        "ARM exception " + (exception && exception.message));
+                                                    Log.print(Log.l.error, "ARM exception " + (exception && exception.message));
                                                 }
                                                 break;
                                             }
@@ -260,10 +249,8 @@
                                 AppData.setErrorMsg(that.binding, err);
                                 AppBar.busy = false;
                             }
-                        },
-                        function(errorResponse) {
-                            Log.print(Log.l.error,
-                                "getFile(" + filePath + ") error: " + JSON.stringify(errorResponse));
+                        }, function(errorResponse) {
+                            Log.print(Log.l.error, "getFile(" + filePath + ") error: " + JSON.stringify(errorResponse));
                             AppData.setErrorMsg(that.binding, errorResponse);
                             AppBar.busy = false;
                         });
@@ -273,6 +260,7 @@
                         AppData.setErrorMsg(that.binding, err);
                         AppBar.busy = false;
                     }
+                    Log.ret(Log.l.trace);
                 }
 
                 var fileExtPos = fileName.lastIndexOf(".");
@@ -311,7 +299,7 @@
             this.loadDataFile = loadDataFile;
 
             var bindAudio = function () {
-                Log.call(Log.l.trace, "WavSketch.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 if (fragmentElement) {
                     var docContainer = fragmentElement.querySelector(".doc-container");
                     if (docContainer) {
@@ -341,7 +329,7 @@
             this.bindAudio = bindAudio;
 
             var onCaptureSuccess = function (mediaFiles) {
-                Log.call(Log.l.trace, "WavSketch.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var audioRecorderContainer = fragmentElement.querySelector(".audio-recorder-container");
                 if (audioRecorderContainer && audioRecorderContainer.style) {
                     audioRecorderContainer.style.display = "";
@@ -394,7 +382,7 @@
             };
 
             var onCaptureFail = function (errorMessage) {
-                Log.call(Log.l.error, "WavSketch.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var audioRecorderContainer = fragmentElement.querySelector(".audio-recorder-container");
                 if (audioRecorderContainer && audioRecorderContainer.style) {
                     audioRecorderContainer.style.display = "";
@@ -415,7 +403,7 @@
             //start native Camera async
             AppData.setErrorMsg(that.binding);
             var captureAudio = function () {
-                Log.call(Log.l.trace, "WavSketch.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 if (navigator.device &&
                     navigator.device.capture &&
                     typeof navigator.device.capture.captureAudio === "function") {
@@ -447,7 +435,7 @@
 
             var loadData = function (noteId) {
                 var ret;
-                Log.call(Log.l.trace, "WavSketch.Controller.", "noteId=" + noteId);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "noteId=" + noteId);
                 if (noteId) {
                     AppData.setErrorMsg(that.binding);
                     ret = WavSketch.sketchDocView.select(function (json) {
@@ -460,10 +448,7 @@
                             that.resultConverter(json.d);
                             that.binding.dataSketch = json.d;
                             if (hasDoc()) {
-                                Log.print(Log.l.trace,
-                                    "WAV Element: " +
-                                    getDocData().substr(0, 100) +
-                                    "...");
+                                Log.print(Log.l.trace, "WAV Element: " + getDocData().substr(0, 100) + "...");
                             }
                         }
                         that.bindAudio();
@@ -490,7 +475,7 @@
             this.loadData = loadData;
 
             var removeDoc = function () {
-                Log.call(Log.l.trace, "WavSketch.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 that.removeAudio();
                 Log.ret(Log.l.trace);
             }
@@ -498,7 +483,7 @@
 
             var saveData = function (complete, error) {
                 //wav can't be changed
-                Log.call(Log.l.trace, "WavSketch.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var ret = new WinJS.Promise.as().then(function () {
                     if (typeof complete === "function") {
                         complete(that.binding.dataSketch);
@@ -510,7 +495,7 @@
             this.saveData = saveData;
 
             var deleteData = function () {
-                Log.call(Log.l.trace, "WavSketch.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var ret = WinJS.Promise.as().then(function () {
                     if (options && options.isLocal) {
                         return WavSketch.sketchView.deleteRecord(function (response) {

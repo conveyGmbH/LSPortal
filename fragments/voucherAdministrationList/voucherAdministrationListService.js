@@ -13,12 +13,21 @@
             }
         },
         voucherOrderView: {
-            select: function (complete, error, restriction) {
+            select: function (complete, error, restriction, options) {
                 Log.call(Log.l.trace, "VoucherAdministrationList.");
-                var ret = VoucherAdministrationList._voucherOrderView.select(complete, error, restriction, {
-                    ordered: true,
-                    desc: true
-                });
+                if (!restriction) {
+                    restriction = {
+                        LanguageSpecID: AppData.getLanguageId(),
+                        VeranstaltungID: AppData.getRecordId("Veranstaltung")
+                    };
+                }
+                if (!options) {
+                    options = {
+                        ordered: true,
+                        desc: true
+                    };
+                }
+                var ret = VoucherAdministrationList._voucherOrderView.select(complete, error, restriction, options);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;

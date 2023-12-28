@@ -10,13 +10,12 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("VisitorFlowLevelIndicator", {
+    var namespaceName = "VisitorFlowLevelIndicator";
+
+    WinJS.Namespace.define(namespaceName, {
         Controller: WinJS.Class.derive(Fragments.RecordsetController, function Controller(fragmentElement, options) {
-            Log.call(Log.l.trace, "VisitorFlowLevelIndicator.Controller.");
+            Log.call(Log.l.trace, namespaceName + ".Controller.");
             var listView = fragmentElement.querySelector("#visitorFlowLevelIndicatorList.listview");
-
-
-
             Fragments.RecordsetController.apply(this, [fragmentElement, {
                 bereichdata: {},
                 timeselectupdate: 60,
@@ -27,30 +26,19 @@
 
             var layout = null;
 
-            this.dispose = function () {
-                if (listView && listView.winControl) {
-                    listView.winControl.itemDataSource = null;
-                }
-            }
-
             var timecategory = fragmentElement.querySelector("#timeCategory");
             
             var creatingTimeCategory = function () {
-                Log.call(Log.l.trace, "VisitorFlowLevelIndicator.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var timedatacategory = [
-                    {
-                        value: 60,
-                        title: getResourceText("visitorFlowLevelIndicator.hour")
-                    },
-                    {
-                        value: 30,
-                        title: getResourceText("visitorFlowLevelIndicator.halfhour")
-                    }
+                    { value: 60, title: getResourceText("visitorFlowLevelIndicator.hour") },
+                    { value: 30, title: getResourceText("visitorFlowLevelIndicator.halfhour") }
                 ];
                 if (timecategory && timecategory.winControl) {
                     timecategory.winControl.data = new WinJS.Binding.List(timedatacategory);
                     timecategory.selectedIndex = 0;
                 }
+                Log.ret(Log.l.trace);
             }
             this.creatingTimeCategory = creatingTimeCategory;
 
@@ -137,7 +125,7 @@
 
             this.eventHandlers = {
                 changeTime: function (event) {
-                    Log.call(Log.l.trace, "VisitorFlowLevelIndicator.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (event.currentTarget && AppBar.notifyModified) {
                         var value = event.currentTarget.value;
                         that.binding.timeselectupdate = value;
@@ -152,7 +140,7 @@
                     Log.ret(Log.l.trace);
                 },
                 onLoadingStateChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "VisitorFlowLevelIndicator.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (listView && listView.winControl) {
                         Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
                         if (listView.winControl.loadingState === "itemsLoading") {
@@ -166,7 +154,7 @@
                     Log.ret(Log.l.trace);
                 },
                 onFooterVisibilityChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "MediaText.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (eventInfo && eventInfo.detail) {
                         var visible = eventInfo.detail.visible;
                         if (visible && that.nextUrl) {

@@ -7,186 +7,59 @@
     "use strict";
 
     WinJS.Namespace.define("UserMessages", {
-        _BenutzerView: {
-            get: function() {
-                return AppData.getFormatView("Benutzer", 0);
-            }
-        },
-        BenutzerView: {
-            select: function(complete, error, recordId) {
-                Log.call(Log.l.trace, "UserMessages.Benutzer.");
-                var ret = UserMessages._BenutzerView.select(complete, error, recordId, {
-                    orderAttribute: "Info1TS",
-                    ordered: true,
-                    desc: true
-
-                });
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            update: function (complete, error, recordId, viewResponse) {
-                Log.call(Log.l.trace, "benutzerView.");
-                var ret = UserMessages._BenutzerView.update(complete, error, recordId, viewResponse);
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            getResults: function () {
-                Log.call(Log.l.trace, "UserMessages.Benutzer.");
-                var ret = UserMessages._BenutzerView.results;
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            getMap: function () {
-                Log.call(Log.l.trace, "UserMessages.Benutzer.");
-                var ret = UserMessages._BenutzerView.map;
-                Log.ret(Log.l.trace);
-                return ret;
-            }
-        },
-        _BenutzerNachrichtView: {
+        _userId: 0,
+        _userMessageView: {
             get: function () {
-                var ret = AppData.getFormatView("BenutzerNachricht", 20595, false);
-                ret.maxPageSize = 20;
-                return ret;
+                return AppData.getFormatView("BenutzerNachricht", 20595, false);
             }
         },
-        BenutzerNachrichtView: {
-            select: function(complete, error, restriction) {
+        userMessageView: {
+            select: function(complete, error, restriction, options) {
                 Log.call(Log.l.trace, "eventView.");
-                var ret = UserMessages._BenutzerNachrichtView.select(complete,
-                    error,
-                    restriction,
-                    {
+                if (!restriction) {
+                    restriction = {
+                        BenutzerID: UserMessages._userId,
+                        InfoText: "NOT NULL"
+                    };
+                }
+                if (!options) {
+                    options = {
                         ordered: true,
                         orderAttribute: "SendTS",
                         desc: true
-                    });
+                    };
+                }
+                var ret = UserMessages._userMessageView.select(complete, error, restriction, options);
                 Log.ret(Log.l.trace);
                 return ret;
             },
             getNextUrl: function(response) {
                 Log.call(Log.l.trace, "ContactList.");
-                var ret = UserMessages._BenutzerNachrichtView.getNextUrl(response);
+                var ret = UserMessages._userMessageView.getNextUrl(response);
                 Log.ret(Log.l.trace);
                 return ret;
             },
             selectNext: function(complete, error, response, nextUrl) {
                 Log.call(Log.l.trace, "ContactList.");
-                var ret = UserMessages._BenutzerNachrichtView.selectNext(complete, error, response, nextUrl);
+                var ret = UserMessages._userMessageView.selectNext(complete, error, response, nextUrl);
                 // this will return a promise to controller
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            update: function(complete, error, recordId, viewResponse) {
-                Log.call(Log.l.trace, "eventView.");
-                var ret = UserMessages._BenutzerNachrichtView.update(complete, error, recordId, viewResponse);
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            insert: function (complete, error, viewResponse) {
-                Log.call(Log.l.trace, "loginView.");
-                var ret = UserMessages._BenutzerNachrichtView.insert(complete, error, viewResponse);
                 Log.ret(Log.l.trace);
                 return ret;
             }
         },
-        _BenutzerNachricht: {
+        _userMessageTable: {
             get: function () {
-                var ret = AppData.getFormatView("BenutzerNachricht", 0, false);
-                ret.maxPageSize = 20;
-                return ret;
+                return AppData.getFormatView("BenutzerNachricht", 0, false);
             }
         },
-        BenutzerNachricht: {
-            select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "eventView.");
-                var ret = UserMessages._BenutzerNachricht.select(complete,
-                    error,
-                    restriction,
-                    {
-                        ordered: true,
-                        orderAttribute: "SendTS",
-                        desc: true
-                    });
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            getNextUrl: function (response) {
-                Log.call(Log.l.trace, "ContactList.");
-                var ret = UserMessages._BenutzerNachricht.getNextUrl(response);
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            selectNext: function (complete, error, response, nextUrl) {
-                Log.call(Log.l.trace, "ContactList.");
-                var ret = UserMessages._BenutzerNachricht.selectNext(complete, error, response, nextUrl);
-                // this will return a promise to controller
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            update: function (complete, error, recordId, viewResponse) {
-                Log.call(Log.l.trace, "eventView.");
-                var ret = UserMessages._BenutzerNachricht.update(complete, error, recordId, viewResponse);
-                Log.ret(Log.l.trace);
-                return ret;
-            },
+        userMessageTable: {
             insert: function (complete, error, viewResponse) {
                 Log.call(Log.l.trace, "loginView.");
-                var ret = UserMessages._BenutzerNachricht.insert(complete, error, viewResponse);
+                var ret = UserMessages._userMessageTable.insert(complete, error, viewResponse);
                 Log.ret(Log.l.trace);
                 return ret;
             }
         }
-        /*_initAPUserRoleView: {
-            get: function () {
-                return AppData.getLgntInit("LGNTINITAPUserRole");
-            }
-        },
-        initAPUserRoleView: {
-            select: function (complete, error, recordId) {
-                Log.call(Log.l.trace, "EmpRoles.LGNTINITAPUserRole.");
-                var ret = UserMessages._initAPUserRoleView.select(complete, error, recordId, {
-                     ordered: true
-                });
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            getResults: function () {
-                Log.call(Log.l.trace, "EmpRoles.LGNTINITAPUserRole.");
-                var ret = UserMessages._initAPUserRoleView.results;
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            getMap: function () {
-                Log.call(Log.l.trace, "EmpRoles.LGNTINITAPUserRole.");
-                var ret = UserMessages._initAPUserRoleView.map;
-                Log.ret(Log.l.trace);
-                return ret;
-            }
-        },
-        _CR_MA_APUSERRoleView: {
-            get: function () {
-                return AppData.getFormatView("CR_MA_APUSERRole", 0, false);
-            }
-        },
-        CR_MA_APUSERRoleView: {
-            select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "employeeView.");
-                var ret = UserMessages._CR_MA_APUSERRoleView.select(complete, error, restriction, {
-                    ordered: true,
-                    orderAttribute: "INITAPUserRoleID"
-                });
-                Log.ret(Log.l.trace);
-                return ret;
-
-            },
-            update: function (complete, error, recordId, viewResponse) {
-                Log.call(Log.l.trace, "employeeView.");
-                var ret = UserMessages._CR_MA_APUSERRoleView.update(complete, error, recordId, viewResponse);
-                Log.ret(Log.l.trace);
-                return ret;
-            }
-        }*/
     });
 })();
 
