@@ -6,7 +6,9 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("Account", {
+    var namespaceName = "Account";
+
+    WinJS.Namespace.define(namespaceName, {
         _initSpracheView: {
             get: function () {
                 return AppData.getLgntInit("LGNTINITSprache", false, true);
@@ -14,19 +16,19 @@
         },
         initSpracheView: {
             select: function (complete, error, recordId) {
-                Log.call(Log.l.trace, "AppData._initSpracheView.");
+                Log.call(Log.l.trace, namespaceName + ".initSpracheView.");
                 var ret = Account._initSpracheView.select(complete, error, recordId, { ordered: true });
                 Log.ret(Log.l.trace);
                 return ret;
             },
             getResults: function () {
-                Log.call(Log.l.trace, "AppData._initSpracheView.");
+                Log.call(Log.l.trace, namespaceName + ".initSpracheView.");
                 var ret = Account._initSpracheView.results;
                 Log.ret(Log.l.trace);
                 return ret;
             },
             getMap: function () {
-                Log.call(Log.l.trace, "AppData._initSpracheView.");
+                Log.call(Log.l.trace, namespaceName + ".initSpracheView.");
                 var ret = Account._initSpracheView.map;
                 Log.ret(Log.l.trace);
                 return ret;
@@ -39,7 +41,7 @@
         },
         loginRequest: {
             insert: function (complete, error, viewResponse) {
-                Log.call(Log.l.trace, "loginView.");
+                Log.call(Log.l.trace, namespaceName + ".loginRequest.");
                 var ret = Account._loginRequest.insert(complete, error, viewResponse);
                 Log.ret(Log.l.trace);
                 return ret;
@@ -52,7 +54,7 @@
         },
         loginView: {
             insert: function (complete, error, viewResponse) {
-                Log.call(Log.l.trace, "loginView.");
+                Log.call(Log.l.trace, namespaceName + ".loginView.");
                 var ret = Account._loginView.insert(complete, error, viewResponse);
                 Log.ret(Log.l.trace);
                 return ret;
@@ -65,9 +67,8 @@
         },
         appListSpecView: {
             select: function (complete, error) {
-                Log.call(Log.l.trace, "appListSpecView.");
+                Log.call(Log.l.trace, namespaceName + ".appListSpecView.");
                 var ret = Account._appListSpecView.select(complete, error);
-
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
@@ -80,14 +81,11 @@
         },
         CR_VERANSTOPTION_ODataView: {
             select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "employeeView.");
-                var ret = Account._CR_VERANSTOPTION_View.select(complete,
-                    error,
-                    restriction,
-                    {
-                        ordered: true,
-                        orderAttribute: "INITOptionTypeID"
-                    });
+                Log.call(Log.l.trace, namespaceName + ".CR_VERANSTOPTION_ODataView.");
+                var ret = Account._CR_VERANSTOPTION_View.select(complete, error, restriction, {
+                    ordered: true,
+                    orderAttribute: "INITOptionTypeID"
+                });
                 Log.ret(Log.l.trace);
                 return ret;
             }
@@ -99,13 +97,10 @@
         },
         GlobalUserServersVIEW: {
             select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "employeeView.");
-                var ret = Account._GlobalUserServersVIEW.select(complete,
-                    error,
-                    restriction,
-                    {
-                        ordered: true
-                    });
+                Log.call(Log.l.trace, namespaceName + ".GlobalUserServersVIEW.");
+                var ret = Account._GlobalUserServersVIEW.select(complete, error, restriction, {
+                    ordered: true
+                });
                 Log.ret(Log.l.trace);
                 return ret;
 

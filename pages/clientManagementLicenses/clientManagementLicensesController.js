@@ -13,10 +13,11 @@
     "use strict";
 
     var nav = WinJS.Navigation;
+    var namespaceName = "ClientManagementLicenses";
 
-    WinJS.Namespace.define("ClientManagementLicenses", {
+    WinJS.Namespace.define(namespaceName, {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
-            Log.call(Log.l.trace, "ClientManagementLicenses.Controller.");
+            Log.call(Log.l.trace, namespaceName + ".Controller.");
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
                 licenseId: 0, //AppData.getRecordId("Mitarbeiter")
@@ -59,17 +60,8 @@
             var maxLeadingPages = 0;
             var maxTrailingPages = 0;
 
-            var background = function (index) {
-                if (index % 2 === 0) {
-                    return 1;
-                } else {
-                    return null;
-                }
-            };
-            this.background = background;
-
             var getRecordId = function () {
-                Log.call(Log.l.trace, "ClientManagementLicenses.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 that.binding.recordID = AppData.getRecordId("FairMandantVIEW_20582");
                 Log.ret(Log.l.trace, that.binding.recordID);
                 return that.binding.recordID;
@@ -91,7 +83,7 @@
             this.getDateObject = getDateObject;
 
             /*var getStartEndDate = function(vid) {
-                Log.call(Log.l.trace, "ClientManagementLicenses.Controller.", "VeranstaltungVIEWID=" + vid);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "VeranstaltungVIEWID=" + vid);
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                     return ClientManagementLicenses.veranstaltungView.select(function (json) {
@@ -116,7 +108,7 @@
             */
             /*
             var getTimeStamp = function() {
-                Log.call(Log.l.trace, "ClientManagemenLicenses.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 Log.print(Log.l.info, "creating timestamp");
                 var date = new Date();
 
@@ -143,7 +135,7 @@
             */
 
             var setSelIndex = function (index) {
-                Log.call(Log.l.trace, "ClientManagemenLicenses.Controller.", "index=" + index);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "index=" + index);
                 if (that.licenses && that.licenses.length > 0) {
                     if (index >= that.licenses.length) {
                         index = that.licenses.length - 1;
@@ -156,7 +148,7 @@
             this.setSelIndex = setSelIndex;
 
             var selectRecordId = function (recordId) {
-                Log.call(Log.l.trace, "ClientManagementLicenses.Controller.", "recordId=" + recordId);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
                 if (recordId && listView && listView.winControl && listView.winControl.selection && that.licenses) {
                     for (var i = 0; i < that.licenses.length; i++) {
                         var licenses = that.licenses.getAt(i);
@@ -177,7 +169,7 @@
 
             var scopeFromRecordId = function (recordId) {
                 var i;
-                Log.call(Log.l.trace, "ClientManagementLicenses.Controller.", "recordId=" + recordId);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
                 var item = null;
                 for (i = 0; i < that.licenses.length; i++) {
                     var license = that.licenses.getAt(i);
@@ -207,14 +199,14 @@
             // define handlers
             this.eventHandlers = {
                 clickBack: function (event) {
-                    Log.call(Log.l.trace, "ClientManagementLicenses.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (!Application.showMaster() && WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done();
                     }
                     Log.ret(Log.l.trace);
                 },
                 clickShowNewLicenses: function (event) {
-                    Log.call(Log.l.trace, "ClientManagementLicenses.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     infotext.value = "Info zur Lizenz hier eintragen";
                     that.binding.editLicensesShowFlag = false;
                     if (that.binding.newLicensesShowFlag === false) {
@@ -225,25 +217,25 @@
                     Log.ret(Log.l.trace);
                 },
                 clickVeranstaltungLicenses: function (event) {
-                    Log.call(Log.l.trace, "ClientManagementLicenses.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     AppData.setErrorMsg(that.binding);
                     AppData.call("PRC_CreateMandantLizenz", {
                         pVeranstaltungID: parseInt(that.binding.newLicensesdata.VeranstaltungVIEWID),
                         pNumLicenses: parseInt(that.binding.newLicensesdata.NumLicenses),
                         pInfoText: that.binding.newLicensesdata.InfoText
                     }, function (json) {
-                        Log.print(Log.l.info, "call success! ");
+                        Log.print(Log.l.info, "call PRC_CreateMandantLizenz success! ");
                         that.binding.newLicensesShowFlag = false;
                         that.binding.newLicensesdata = getEmptyDefaultValue(ClientManagementLicenses.mandantTempLizenzView.defaultRestriction);
                         that.loadData(getRecordId());
-                        }, function (errorResponse) {
-                        Log.print(Log.l.error, "call error");
+                    }, function (errorResponse) {
+                        Log.print(Log.l.error, "call PRC_CreateMandantLizenz error");
                         AppData.setErrorMsg(that.binding, errorResponse);
                     });
                     Log.ret(Log.l.trace);
                 },
                 clickEditVeranstaltungLicenses: function (event) {
-                    Log.call(Log.l.trace, "ClientManagementLicenses.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     AppData.setErrorMsg(that.binding);
                     AppData.call("PRC_CreateMandantLizenz", {
                         pMandantTempLizenzID: parseInt(that.binding.dataLicense.MandantTempLizenzVIEWID),
@@ -251,25 +243,25 @@
                         pNumLicenses: parseInt(that.binding.dataLicense.NumLicenses),
                         pInfoText: that.binding.dataLicense.InfoText
                     }, function (json) {
-                        Log.print(Log.l.info, "call success! ");
+                        Log.print(Log.l.info, "call PRC_CreateMandantLizenz success! ");
                         that.binding.editLicensesShowFlag = false;
                         that.binding.dataLicense = getEmptyDefaultValue(ClientManagementLicenses.mandantTempLizenzView.defaultRestriction);
                         that.loadData(getRecordId());
                     }, function (errorResponse) {
-                        Log.print(Log.l.error, "call error");
+                        Log.print(Log.l.error, "call PRC_CreateMandantLizenz error");
                         AppData.setErrorMsg(that.binding, errorResponse);
                     });
                     Log.ret(Log.l.trace);
                     
                 },
                 onSelectionChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "ClientManagementLicenses.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     that.binding.licenseId = 0;
                     that.binding.newLicensesShowFlag = false;
                     Log.ret(Log.l.trace);
                 },
                 onItemInvoked: function (eventInfo) {
-                    Log.call(Log.l.trace, "ClientManagementLicenses.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     Application.showDetail();
                     if (listView && listView.winControl) {
                         var listControl = listView.winControl;
@@ -304,7 +296,7 @@
                 },
                 onLoadingStateChanged: function (eventInfo) {
                     var i;
-                    Log.call(Log.l.trace, "ClientManagementLicenses.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (listView && listView.winControl) {
                         Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
                         // single list selection
@@ -389,7 +381,7 @@
                     Log.ret(Log.l.trace);
                 },
                 onHeaderVisibilityChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "ClientManagementLicenses.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (eventInfo && eventInfo.detail) {
                         var visible = eventInfo.detail.visible;
                         if (visible) {
@@ -408,7 +400,7 @@
                     Log.ret(Log.l.trace);
                 },
                 onFooterVisibilityChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "ClientManagementLicenses.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (eventInfo && eventInfo.detail) {
                         progress = listView.querySelector(".list-footer .progress");
                         counter = listView.querySelector(".list-footer .counter");
@@ -463,12 +455,12 @@
                     Log.ret(Log.l.trace);
                 },
                 clickGotoPublish: function (event) {
-                    Log.call(Log.l.trace, "ClientManagement.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     Application.navigateById("publish", event);
                     Log.ret(Log.l.trace);
                 },
                 clickTopButton: function (event) {
-                    Log.call(Log.l.trace, "ClientManagement.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var anchor = document.getElementById("menuButton");
                     var menu = document.getElementById("menu1").winControl;
                     var placement = "bottom";
@@ -476,7 +468,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickLogoff: function (event) {
-                    Log.call(Log.l.trace, "ClientManagement.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     AppData._persistentStates.privacyPolicyFlag = false;
                     if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
                         AppHeader.controller.binding.userData = {};
@@ -489,7 +481,7 @@
                 }
             };
 
-            this.disableHandlers = null;
+            this.disableHandlers = {};
 
             // register ListView event handler
             if (listView) {
@@ -500,7 +492,7 @@
             }
 
             var loadData = function (recordId) {
-                Log.call(Log.l.trace, "ClientManagementLicenses.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
                 that.loading = true;
                 AppData.setRecordId("FairMandantVIEW_20582", recordId);
                 that.binding.newLicensesShowFlag = false;
@@ -577,7 +569,7 @@
                 }).then(function () {
                     Log.print(Log.l.trace, "calling select veranstaltungView...");
                     return ClientManagementLicenses.veranstaltungView.select(function (json) {
-                        Log.print(Log.l.trace, "ClientManagementLicenses.veranstaltungView: success!");
+                        Log.print(Log.l.trace, "veranstaltungView: success!");
                         // select returns object already parsed from json file in response
                         if (json && json.d && json.d.results && json.d.results.length > 0) {
                             var results = json.d.results;

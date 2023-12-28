@@ -25,34 +25,35 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("BarcodeAdministration", {
+    var namespaceName = "BarcodeAdministration";
+
+    WinJS.Namespace.define(namespaceName, {
         Controller: WinJS.Class.derive(Application.RecordsetController, function Controller(pageElement, commandList) {
-            Log.call(Log.l.trace, "BarcodeAdministration.Controller.");
+            Log.call(Log.l.trace, namespaceName + ".Controller.");
+
             var listView = pageElement.querySelector("#barcodeAdministration.listview");
 
             Application.RecordsetController.apply(this, [pageElement, {
             }, commandList, false, BarcodeAdministration.fragebogenZeileBCView, null, listView]);
+
             this.questionslistBarcode = null;
+            this.checkingQuestionareBarcodePDFFlag = false;
 
             var that = this;
-            that.checkingQuestionareBarcodePDFFlag = false;
+
 
             this.resultConverter = function (item, index) {
+                item.index = index;
             };
-
-            this.dispose = function () {
-                if (listView && listView.winControl) {
-                    listView.winControl.itemDataSource = null;
-                }
-            }
 
             var layout = null;
 
-            function PrintElem(elem) {
+            var printElementById = function (id) {
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "id=" + id);
                 var mywindow = window.open('', 'PRINT', 'resizable=1,height=800,width=1200');
                 mywindow.document.write('<html><head><title>' + getResourceText("barcodeAdministration.title") + '</title>');
                 mywindow.document.write('</head><body >');
-                mywindow.document.write((document.getElementById(elem)).querySelector(".win-surface").innerHTML);
+                mywindow.document.write((document.getElementById(id)).querySelector(".win-surface").innerHTML);
                 //mywindow.document.write('<style> .barcodeAdministration-content {width: 100%; font-family: "Segoe UI",sans-serif,"Segoe MDL2 Assets",Symbols,"Segoe UI Emoji"; orientation: landscape; transform: scale(66%); transform-origin: left top; page-break-inside: avoid}.frage-container {width: 100%; page-break-inside: avoid}.barcode-item { width: 480px; margin-right: 20px;overflow: hidden;float: left; page-break-inside: avoid}.barcode-items{page-break-inside: avoid} @media print {.frage-container {width: 100%; page-break-inside; avoid}}.barcode-frage-titel {display: inline;width: 100%; font-size: 25px; float: left;word-break: break-word;}.barcode-items{page-break-inside: avoid} .barcode-item { width: 480px; margin-right: 20px;overflow: hidden;float: left; page-break-inside: avoid} .barcode-antwort-text {height: 200px;display: block;margin-left: 8px; font-size: 25px; word-break: break-word;}</style>');
                 //mywindow.document.write('<style> .barcodeAdministration-content {width: 100%; zoom: 0.6; orientation: landscape; page-break-inside: avoid}.frage-container {width: 100%; page-break-inside: avoid}.barcode-items{page-break-inside: avoid} @media print {.frage-container {width: 100%; page-break-inside; avoid}}.barcode-frage-titel {display: inline;width: 100%; font-size: 25px; float: left;}.barcode-items{page-break-inside: avoid} .barcode-item { width: 450px; height: 170px; margin-right: 150px;margin-bottom: 120px;overflow: hidden;float: left; page-break-inside: avoid} .barcode-antwort-text {display: block;margin-left: 8px; font-size: 25px;}</style>');
                 mywindow.document.write('<style> @supports (-ms-ime-align: auto) {body {zoom: 75%;}}' +
@@ -69,6 +70,7 @@
                 mywindow.focus();
                 mywindow.print();
                 mywindow.close();
+                Log.ret(Log.l.trace);
                 return true;
             }
 
@@ -95,28 +97,24 @@
             this.base64ToBlob = base64ToBlob;
 
             var exportQuestionnaireBarcodePdf = function() {
-                Log.call(Log.l.trace, "Contact.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
-                var ret;
                 AppBar.busy = true;
-                    ret = BarcodeAdministration.barcodeExportPdfView.select(function (json) {
-                        Log.print(Log.l.trace, "exportKontaktDataView: success!");
-                        if (json && json.d) {
-                            var results = json.d.results[0];
-                            var pdfDataraw = results.DocContentDOCCNT1;
-                            var sub = pdfDataraw.search("\r\n\r\n");
-                            var pdfDataBase64 = pdfDataraw.substr(sub + 4);
-                            var pdfData = that.base64ToBlob(pdfDataBase64, "pdf");
-                            var pdfName = results.szOriFileNameDOC1;
-                            saveAs(pdfData, pdfName);
-                            AppBar.busy = false;
-                        }
-                    }, function (errorResponse) {
+                var ret = BarcodeAdministration.barcodeExportPdfView.select(function (json) {
+                    Log.print(Log.l.trace, "exportKontaktDataView: success!");
+                    if (json && json.d) {
+                        var results = json.d.results[0];
+                        var pdfDataraw = results.DocContentDOCCNT1;
+                        var sub = pdfDataraw.search("\r\n\r\n");
+                        var pdfDataBase64 = pdfDataraw.substr(sub + 4);
+                        var pdfData = that.base64ToBlob(pdfDataBase64, "pdf");
+                        var pdfName = results.szOriFileNameDOC1;
+                        saveAs(pdfData, pdfName);
                         AppBar.busy = false;
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                        if (typeof error === "function") {
-                            error(errorResponse);
-                        }
+                    }
+                }, function (errorResponse) {
+                    AppBar.busy = false;
+                    AppData.setErrorMsg(that.binding, errorResponse);
                 });
                 Log.ret(Log.l.trace);
                 return ret;
@@ -124,11 +122,10 @@
             this.exportQuestionnaireBarcodePdf = exportQuestionnaireBarcodePdf;
 
             var checkingQuestionnaireBarcodePdf = function() {
-                Log.call(Log.l.trace, "Contact.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
-                var ret;
                 AppBar.busy = true;
-                ret = BarcodeAdministration.barcodeExportPdfView.select(function (json) {
+                var ret = BarcodeAdministration.barcodeExportPdfView.select(function (json) {
                     Log.print(Log.l.trace, "exportKontaktDataView: success!");
                     if (json && json.d && json.d.results) {
                         var results = json.d.results[0];
@@ -142,9 +139,6 @@
                 }, function (errorResponse) {
                     AppBar.busy = false;
                     AppData.setErrorMsg(that.binding, errorResponse);
-                    if (typeof error === "function") {
-                        error(errorResponse);
-                    }
                 });
                 Log.ret(Log.l.trace);
                 return ret;
@@ -152,7 +146,7 @@
             this.checkingQuestionnaireBarcodePdf = checkingQuestionnaireBarcodePdf;
 
             /*this.beforeprint = function (event) {
-                Log.call(Log.l.trace, "BarcodeAdministration.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 /*var listSurface = pageElement.querySelector("#barcodeAdministration .win-surface");
                 var height = listSurface.clientHeight;
                 if (listSurface) {
@@ -163,11 +157,11 @@
                     document.body.insertBefore(printSurface, document.body.firstElementChild);
                 }
                 setTimeout(function () {
-                    PrintElem("barcodeAdministration");
+                    printElementById("barcodeAdministration");
                 }, 100);
             }*/
             /*this.afterprint = function (event) {
-                Log.call(Log.l.trace, "BarcodeAdministration.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var printSurface = document.querySelector(".barcode-print-surface");
                 if (printSurface) {
                     document.body.removeChild(printSurface);
@@ -177,19 +171,19 @@
             // Then, do anything special on this page
             this.eventHandlers = {
                 clickBack: function (event) {
-                    Log.call(Log.l.trace, "BarcodeAdministration.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done();
                     }
                     Log.ret(Log.l.trace);
                 },
                 clickPdf: function (event) {
-                    Log.call(Log.l.trace, "Contact.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     that.exportQuestionnaireBarcodePdf();
                     Log.ret(Log.l.trace);
                 },
                 clickOk: function (event) {
-                    Log.call(Log.l.trace, "BarcodeAdministration.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done( /* Your success and error handlers */);
                     } else {
@@ -207,11 +201,11 @@
                         e.preventDefault();
                     }
                     setTimeout(function () {
-                        PrintElem("barcodeAdministration");
+                        printElementById("barcodeAdministration");
                     }, 100);
                 },
                 clickbeforeprint: function (event) {
-                    PrintElem("barcodeAdministration");
+                    printElementById("barcodeAdministration");
                     Log.ret(Log.l.trace);
                 },
                 /*clickafterprint: function (event) {
@@ -223,17 +217,17 @@
                     }
                 },*/
                 clickChangeUserState: function (event) {
-                    Log.call(Log.l.trace, "BarcodeAdministration.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     Application.navigateById("userinfo", event);
                     Log.ret(Log.l.trace);
                 },
                 clickGotoPublish: function (event) {
-                    Log.call(Log.l.trace, "BarcodeAdministration.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     Application.navigateById("publish", event);
                     Log.ret(Log.l.trace);
                 },
                 onLoadingStateChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "BarcodeAdministration.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (listView && listView.winControl) {
                         Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
                         if (listView.winControl.loadingState === "itemsLoading") {
@@ -269,7 +263,7 @@
                     Log.ret(Log.l.trace);
                 },
                 onFooterVisibilityChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "BarcodeAdministration.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (eventInfo && eventInfo.detail) {
                         var visible = eventInfo.detail.visible;
                         if (visible && that.nextUrl) {
@@ -279,7 +273,7 @@
                     Log.ret(Log.l.trace);
                 },
                 onHeaderVisibilityChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "BarcodeAdministration.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (eventInfo && eventInfo.detail) {
                         var visible = eventInfo.detail.visible;
                         if (visible) {
@@ -298,7 +292,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickTopButton: function (event) {
-                    Log.call(Log.l.trace, "Contact.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var anchor = document.getElementById("menuButton");
                     var menu = document.getElementById("menu1").winControl;
                     var placement = "bottom";
@@ -306,7 +300,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickLogoff: function (event) {
-                    Log.call(Log.l.trace, "Account.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     AppData._persistentStates.privacyPolicyFlag = false;
                     if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
                         AppHeader.controller.binding.userData = {};
@@ -337,10 +331,10 @@
                 },
                 clickafterprint: function () {
                     return false;
-                },
+                }/*,
                 clickbeforeprint: function() {
                     return false;
-                }
+                }*/
             };
 
             // register ListView event handler
@@ -355,11 +349,11 @@
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
             }).then(function () {
+                Log.print(Log.l.trace, "Data loaded");
                 that.checkingQuestionnaireBarcodePdf();
-                Log.print(Log.l.trace, "Binding wireup page complete");
             }).then(function () {
+                Log.print(Log.l.trace, "checkingQuestionnaireBarcodePdf returned");
                 AppBar.notifyModified = true;
-                Log.print(Log.l.trace, "Binding wireup page complete");
             });
             Log.ret(Log.l.trace);
         })

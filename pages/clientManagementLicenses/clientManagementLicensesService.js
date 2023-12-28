@@ -6,7 +6,9 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("ClientManagementLicenses", {
+    var namespaceName = "ClientManagementLicenses";
+
+    WinJS.Namespace.define(namespaceName, {
         _mandantTempLizenzView: {
             get: function () {
                 return AppData.getFormatView("MandantTempLizenz", 20591);
@@ -14,7 +16,7 @@
         },
         mandantTempLizenzView: {
             select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "ClientManagementLicenses.");
+                Log.call(Log.l.trace, namespaceName + ".mandantTempLizenzView.");
                 var ret = ClientManagementLicenses._mandantTempLizenzView.select(complete, error, restriction, {
                     ordered: true,
                     orderAttribute: "MandantTempLizenzVIEWID",
@@ -25,13 +27,13 @@
                 return ret;
             },
             getNextUrl: function (response) {
-                Log.call(Log.l.trace, "ClientManagementLicenses.");
+                Log.call(Log.l.trace, namespaceName + ".mandantTempLizenzView.");
                 var ret = ClientManagementLicenses._mandantTempLizenzView.getNextUrl(response);
                 Log.ret(Log.l.trace);
                 return ret;
             },
             selectNext: function (complete, error, response, nextUrl) {
-                Log.call(Log.l.trace, "ClientManagementLicenses.");
+                Log.call(Log.l.trace, namespaceName + ".mandantTempLizenzView.");
                 var ret = ClientManagementLicenses._mandantTempLizenzView.selectNext(complete, error, response, nextUrl);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
@@ -53,7 +55,7 @@
         },
         veranstaltungView: {
             select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "ClientManagementLicenses.");
+                Log.call(Log.l.trace, namespaceName + ".veranstaltungView.");
                 var ret = ClientManagementLicenses._veranstaltungView.select(complete, error, restriction, {
                     ordered: true,
                     orderAttribute: "VeranstaltungVIEWID",
@@ -64,13 +66,13 @@
                 return ret;
             },
             getResults: function () {
-                Log.call(Log.l.trace, "ClientManagementLicenses.");
+                Log.call(Log.l.trace, namespaceName + ".veranstaltungView.");
                 var ret = ClientManagementLicenses._veranstaltungView.results;
                 Log.ret(Log.l.trace);
                 return ret;
             },
             getMap: function () {
-                Log.call(Log.l.trace, "ClientManagementLicenses.");
+                Log.call(Log.l.trace, namespaceName + ".veranstaltungView.");
                 var ret = ClientManagementLicenses._veranstaltungView.map;
                 Log.ret(Log.l.trace);
                 return ret;

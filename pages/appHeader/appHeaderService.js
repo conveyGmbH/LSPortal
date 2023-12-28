@@ -6,7 +6,9 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("AppHeader", {
+    var namespaceName = "AppHeader";
+
+    WinJS.Namespace.define(namespaceName, {
         _userPhotoView: {
             get: function () {
                 return AppData.getFormatView("DOC1Mitarbeiter", 0);
@@ -14,7 +16,7 @@
         },
         userPhotoView: {
             select: function (complete, error, recordId) {
-                Log.call(Log.l.trace, "userPhotoView.");
+                Log.call(Log.l.trace, namespaceName + ".userPhotoView.");
                 var ret = AppHeader._userPhotoView.selectById(complete, error, recordId);
                 Log.ret(Log.l.trace);
                 return ret;

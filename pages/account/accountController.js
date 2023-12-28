@@ -14,12 +14,14 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("Account", {
+    var namespaceName = "Account";
+
+    WinJS.Namespace.define(namespaceName, {
         getClassNameOffline: function (useOffline) {
             return useOffline ? "field_line field_line_even" : "hide-element";
         },
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
-            Log.call(Log.l.trace, "Account.Controller.");
+            Log.call(Log.l.trace, namespaceName + ".Controller.");
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
                 dataLogin: {
@@ -81,35 +83,35 @@
             // define handlers
             this.eventHandlers = {
                 clickBack: function (event) {
-                    Log.call(Log.l.trace, "Contact.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done();
                     }
                     Log.ret(Log.l.trace);
                 },
                 clickOk: function (event) {
-                    Log.call(Log.l.trace, "Account.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (that.binding.doEdit && that.binding.count > 1) {
                         AppData.call("PRC_ChangeLoginServer", {
                             pNewLocationID: parseInt(that.binding.dataLogin.LocationID)
                         }, function (json) {
-                            Log.print(Log.l.info, "call success! json=" + json);
+                            Log.print(Log.l.info, "call PRC_ChangeLoginServer success! json=" + (json ? JSON.stringify(json) : ""));
                             Application.navigateById(Application.startPageId, event);
                         }, function (error) {
-                            Log.print(Log.l.error, "call error=" + error);
+                            Log.print(Log.l.error, "call PRC_ChangeLoginServer error=" + error);
                             AppData.setErrorMsg(that.binding, error);
                         });
                     } else {
-                    if (!that.binding.doEdit && WinJS.Navigation.canGoBack === true) {
-                        WinJS.Navigation.back(1).done();
-                    } else {
-                        Application.navigateById(Application.startPageId, event);
-                    }
+                        if (!that.binding.doEdit && WinJS.Navigation.canGoBack === true) {
+                            WinJS.Navigation.back(1).done();
+                        } else {
+                            Application.navigateById(Application.startPageId, event);
+                        }
                     }
                     Log.ret(Log.l.trace);
                 },
                 clickLogoff: function (event) {
-                    Log.call(Log.l.trace, "Account.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     AppData._persistentStates.privacyPolicyFlag = false;
                     if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
                         AppHeader.controller.binding.userData = {};
@@ -121,31 +123,30 @@
                     Log.ret(Log.l.trace);
                 },
                 clickChangeServer: function (event) {
-                    Log.call(Log.l.trace, "Account.Controller.");
-                    // call prc PRC_ChangeLoginServer
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     AppData.call("PRC_ChangeLoginServer", {
                         pNewLocationID: parseInt(that.binding.dataLogin.LocationID)
                     }, function (json) {
-                        Log.print(Log.l.info, "call success! ");
+                        Log.print(Log.l.info, "call PRC_ChangeLoginServer success! ");
                         Application.navigateById("home", event);
                     }, function (error) {
-                        Log.print(Log.l.error, "call error");
+                        Log.print(Log.l.error, "callPRC_ChangeLoginServer error");
                         AppData.setErrorMsg(that.binding, error);
                     });
                     Log.ret(Log.l.trace);
                 },
                 clickChangeUserState: function (event) {
-                    Log.call(Log.l.trace, "Account.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     Application.navigateById("userinfo", event);
                     Log.ret(Log.l.trace);
                 },
                 clickGotoPublish: function (event) {
-                    Log.call(Log.l.trace, "Account.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     Application.navigateById("publish", event);
                     Log.ret(Log.l.trace);
                 },
                 clickDoEdit: function (event) {
-                    Log.call(Log.l.trace, "Account.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (event.currentTarget && AppBar.notifyModified) {
                         var toggle = event.currentTarget.winControl;
                         if (toggle) {
@@ -156,7 +157,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickDoReloadDb: function (event) {
-                    Log.call(Log.l.trace, "Account.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (event.currentTarget && AppBar.notifyModified && that.binding.doEdit) {
                         var toggle = event.currentTarget.winControl;
                         if (toggle) {
@@ -166,7 +167,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickHttps: function (event) {
-                    Log.call(Log.l.trace, "Account.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (event.currentTarget && AppBar.notifyModified && that.binding.doEdit) {
                         var toggle = event.currentTarget.winControl;
                         if (toggle) {
@@ -176,7 +177,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickUseOffline: function (event) {
-                    Log.call(Log.l.trace, "Account.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (event.currentTarget && AppBar.notifyModified && that.binding.doEdit) {
                         var toggle = event.currentTarget.winControl;
                         if (toggle) {
@@ -187,13 +188,13 @@
                     Log.ret(Log.l.trace);
                 },
                 clickPrivacyPolicy: function (event) {
-                    Log.call(Log.l.trace, "Login.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     AppData._persistentStates.privacyPolicyFlag = event.currentTarget.checked;
                     AppBar.triggerDisableHandlers();
                     Log.ret(Log.l.trace);
                 },
                 clickTopButton: function (event) {
-                    Log.call(Log.l.trace, "Contact.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var anchor = document.getElementById("menuButton");
                     var menu = document.getElementById("menu1").winControl;
                     var placement = "bottom";
@@ -260,7 +261,7 @@
 
             var openDb = function (complete, error) {
                 var ret;
-                Log.call(Log.l.info, "Account.Controller.");
+                Log.call(Log.l.info, namespaceName + ".Controller.");
                 if (AppRepl.replicator &&
                     AppRepl.replicator.state === "running") {
                     Log.print(Log.l.info, "replicator still running - try later!");
@@ -293,7 +294,7 @@
             that.openDb = openDb;
 
             var setServerList = function (results) {
-                Log.call(Log.l.trace, "Account.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 if (initSprache && results) {
                     for (var i = 0; i < results.length; i++) {
                         var row = results[i];
@@ -307,7 +308,7 @@
                 Log.ret(Log.l.trace);
             }
             var setLanguage = function (results) {
-                Log.call(Log.l.trace, "Account.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 if (initSprache && results) {
                     for (var i = 0; i < results.length; i++) {
                         var row = results[i];
@@ -322,7 +323,7 @@
             }
             var getLanguage = function () {
                 var ret = null;
-                Log.call(Log.l.trace, "Account.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var results = Account.initSpracheView.getResults();
                 var map = Account.initSpracheView.getMap();
                 if (map && results) {
@@ -338,7 +339,7 @@
             }
 
             var loadData = function() {
-                Log.call(Log.l.trace, "Account.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function() {
                     if (!Account.initSpracheView.getResults().length) {
@@ -404,7 +405,7 @@
 
             var saveData = function (complete, error) {
                 var err = null, ret;
-                Log.call(Log.l.trace, "Account.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 if (contentarea) {
                     contentarea.scrollTop = 0;
                 }
@@ -426,7 +427,7 @@
                     ret = Account.loginRequest.insert(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
-                        Log.call(Log.l.trace, "loginRequest: success!");
+                        Log.print(Log.l.trace, "loginRequest: success!");
                         // loginData returns object already parsed from json file in response
                         if (json && json.d && json.d.ODataLocation) {
                             if (json.d.InactiveFlag) {
@@ -449,13 +450,11 @@
                             AppData.setErrorMsg(that.binding, err);
                             error(err);
                         }
-                        return WinJS.Promise.as();
                     }, function(errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         Log.print(Log.l.info, "loginRequest error: " + AppData.getErrorMsgFromResponse(errorResponse) + " ignored for compatibility!");
                         // ignore this error here for compatibility!
-                        return WinJS.Promise.as();
                     }, {
                         LoginName: that.binding.dataLogin.Login
                     }).then(function () {
@@ -469,7 +468,7 @@
                             return Account.loginView.insert(function(json) {
                                 // this callback will be called asynchronously
                                 // when the response is available
-                                Log.print(Log.l.trace, "loginData: success!");
+                                Log.print(Log.l.trace, "loginView: success!");
                                 // loginData returns object already parsed from json file in response
                                 if (json && json.d) {
                                     dataLogin = json.d;
@@ -552,7 +551,7 @@
                             return Account.CR_VERANSTOPTION_ODataView.select(function (json) {
                                 // this callback will be called asynchronously
                                 // when the response is available
-                                Log.print(Log.l.trace, "Account: success!");
+                                Log.print(Log.l.trace, "CR_VERANSTOPTION_ODataView: success!");
                                 // CR_VERANSTOPTION_ODataView returns object already parsed from json file in response
                                 if (json && json.d && json.d.results && json.d.results.length > 1) {
                                     var results = json.d.results;

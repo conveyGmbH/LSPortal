@@ -6,7 +6,9 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("ClientManagement", {
+    var namespaceName = "ClientManagement";
+
+    WinJS.Namespace.define(namespaceName, {
         _fairMandantView: {
             get: function () {
                 return AppData.getFormatView("FairMandant", 20582);
@@ -14,7 +16,7 @@
         },
         fairMandantView: {
             select: function (complete, error, recordId) {
-                Log.call(Log.l.trace, "fairMandantView.");
+                Log.call(Log.l.trace, namespaceName + ".fairMandantView.", "recordId=" + recordId);
                 var ret = ClientManagement._fairMandantView.selectById(complete, error, recordId);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);

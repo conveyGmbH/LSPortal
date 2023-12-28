@@ -6,30 +6,35 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("BarcodeAdministration", {
+    var namespaceName = "BarcodeAdministration";
+
+    WinJS.Namespace.define(namespaceName, {
         _fragebogenZeileBCView: {
             get: function() {
                 return AppData.getFormatView("NCHRFragenAntworten", 20525, false); //Ändern in Fragebogenzeilebcview
             }
         },
         fragebogenZeileBCView: {
-            select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "eventView.");
-                var ret = BarcodeAdministration._fragebogenZeileBCView.select(complete, error, restriction, {
-                    ordered: true,
-                    orderAttribute: "Sortierung"
-                });
+            select: function (complete, error, restriction, options) {
+                Log.call(Log.l.trace, namespaceName + ".fragebogenZeileBCView.");
+                if (!options) {
+                    options = {
+                        ordered: true,
+                        orderAttribute: "Sortierung"
+                    };
+                }
+                var ret = BarcodeAdministration._fragebogenZeileBCView.select(complete, error, restriction, options);
                 Log.ret(Log.l.trace);
                 return ret;
             },
             getNextUrl: function (response) {
-                Log.call(Log.l.trace, "Questiongroup.CR_V_FragengruppeView.");
+                Log.call(Log.l.trace, namespaceName + ".fragebogenZeileBCView.");
                 var ret = BarcodeAdministration._fragebogenZeileBCView.getNextUrl(response);
                 Log.ret(Log.l.trace);
                 return ret;
             },
             selectNext: function (complete, error, response, nextUrl) {
-                Log.call(Log.l.trace, "Questiongroup.CR_V_FragengruppeView.");
+                Log.call(Log.l.trace, namespaceName + ".fragebogenZeileBCView.");
                 var ret = BarcodeAdministration._fragebogenZeileBCView.selectNext(complete, error, response, nextUrl);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
@@ -67,11 +72,9 @@
             }
         },
         barcodeExportPdfView: {
-            select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "eventView.");
-                var ret = BarcodeAdministration._barcodeExportPdfView.select(complete, error, restriction, {
-                    
-                });
+            select: function (complete, error, restriction, options) {
+                Log.call(Log.l.trace, namespaceName + ".barcodeExportPdfView.");
+                var ret = BarcodeAdministration._barcodeExportPdfView.select(complete, error, restriction, options);
                 Log.ret(Log.l.trace);
                 return ret;
             }

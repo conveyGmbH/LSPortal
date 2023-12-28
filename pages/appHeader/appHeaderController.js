@@ -11,12 +11,14 @@
 (function () {
     "use strict";
 
-    WinJS.Namespace.define("AppHeader", {
+    var namespaceName = "AppHeader";
+
+    WinJS.Namespace.define(namespaceName, {
         controller: null
     });
-    WinJS.Namespace.define("AppHeader", {
+    WinJS.Namespace.define(namespaceName, {
         Controller: WinJS.Class.define(function Controller(pageElement) {
-            Log.call(Log.l.trace, "AppHeader.Controller.");
+            Log.call(Log.l.trace, namespaceName + ".Controller.");
             this.element = pageElement.querySelector("#appHeaderController.data-container");
             if (this.element) {
                 this.element.winControl = this;
@@ -37,7 +39,7 @@
             // show business card photo
             var userImageContainer = pageElement.querySelector(".user-image-container");
             var showPhoto = function () {
-                Log.call(Log.l.trace, "AppHeader.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var userImg;
                 if (that.binding.photoData) {
                     if (userImageContainer) {
@@ -84,7 +86,7 @@
             }
 
             var setLogo = function() {
-                Log.call(Log.l.trace, "AppHeader.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var appLogoContainer = pageElement.querySelector(".app-logo-container");
                 if (appLogoContainer) {
                     NavigationBar._logoLoaded = true;
@@ -107,7 +109,7 @@
             this.setLogo = setLogo;
 
             var loadData = function () {
-                Log.call(Log.l.trace, "AppHeader.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var ret = new WinJS.Promise.as().then(function () {
                     var employeeId = AppData.getRecordId("Mitarbeiter");
                     if (employeeId) {
@@ -156,12 +158,9 @@
             // Finally, wire up binding
             WinJS.Resources.processAll(that.element).then(function () {
                 return WinJS.Binding.processAll(that.element, that.binding);
-            })/*.then(function () {
-                Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.loadData();
             }).then(function () {
-                Log.print(Log.l.trace, "Data loaded");
-            })*/;
+                Log.print(Log.l.trace, "Binding wireup page complete, data will be loaded later!");
+            });
             Log.ret(Log.l.trace);
         }, {
             pageData: {
