@@ -10,9 +10,12 @@
 
 (function () {
     "use strict";
+
+    var namespaceName = "ContactResultsCriteria";
+
     WinJS.Namespace.define("ContactResultsCriteria", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
-            Log.call(Log.l.trace, "ContactResultsCriteria.Controller.");
+            Log.call(Log.l.trace, namespaceName + ".Controller.");
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
                 dataContact: null,
@@ -25,7 +28,7 @@
             var initTyp = pageElement.querySelector("#InitTyp");
 
             var getRecordId = function () {
-                Log.call(Log.l.trace, "ContactResultsCriteria.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var recordId = AppData.getRecordId("Kontakt");
                 Log.ret(Log.l.trace, recordId);
                 return recordId;
@@ -47,7 +50,7 @@
             this.resultConverter = resultConverter;
 
             var setDataContact = function (data) {
-                Log.call(Log.l.trace, "ContactResultsCriteria.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 that.resultConverter(data);
                 that.binding.dataContact = data;
             }
@@ -56,14 +59,14 @@
             // define handlers
             this.eventHandlers = {
                 clickBack: function (event) {
-                    Log.call(Log.l.trace, "ContactResultsCriteria.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done();
                     }
                     Log.ret(Log.l.trace);
                 },
                 clickOk: function (event) {
-                    Log.call(Log.l.trace, "Event.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     that.saveData(function (response) {
                         // called asynchronously if ok
                         that.loadData();
@@ -73,17 +76,17 @@
                     Log.ret(Log.l.trace);
                 },
                 clickChangeUserState: function (event) {
-                    Log.call(Log.l.trace, "ContactResultsCriteria.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     Application.navigateById("userinfo", event);
                     Log.ret(Log.l.trace);
                 },
                 clickGotoPublish: function (event) {
-                    Log.call(Log.l.trace, "ContactResultsCriteria.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     Application.navigateById("publish", event);
                     Log.ret(Log.l.trace);
                 },
                 clickTopButton: function (event) {
-                    Log.call(Log.l.trace, "ContactResultsCriteria.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var anchor = document.getElementById("menuButton");
                     var menu = document.getElementById("menu1").winControl;
                     var placement = "bottom";
@@ -91,7 +94,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickLogoff: function (event) {
-                    Log.call(Log.l.trace, "ContactResultsCriteria.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     AppData._persistentStates.privacyPolicyFlag = false;
                     if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
                         AppHeader.controller.binding.userData = {};
@@ -119,7 +122,7 @@
 
             // save data
             var saveData = function (complete, error) {
-                Log.call(Log.l.trace, "ContactResultsCriteria.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret;
                 var dataContactCriteria = that.binding.dataContactCriteria;
@@ -137,13 +140,17 @@
                         // called asynchronously if ok
                         Log.print(Log.l.info, "ContactResultsCriteria update: success!");
                         AppBar.modified = false;
-                        complete(response);
+                        if (typeof complete === "function") {
+                            complete(response);
+                        }
                     }, function (errorResponse) {
                         AppBar.busy = false;
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
-                        error(errorResponse);
+                        if (typeof error === "function") {
+                            error(errorResponse);
+                        }
                     }, recordId, dataContactCriteria);
                 } else if (AppBar.busy) {
                     ret = WinJS.Promise.timeout(100).then(function () {
@@ -162,68 +169,94 @@
             this.saveData = saveData;
 
             var loadData = function () {
-                Log.call(Log.l.trace, "ContactResultsCriteria.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
-                    return ContactResultsCriteria.langINKontaktPrioView.select(function (json) {
-                        Log.print(Log.l.trace, "questionGroupTable: success!");
-                        if (json && json.d && json.d.results) {
-                            var results = json.d.results;
-                            // Now, we call WinJS.Binding.List to get the bindable list
-                            if (initPrio && initPrio.winControl) {
-                                initPrio.winControl.data = new WinJS.Binding.List(results);
+                    if (initPrio &&
+                        initPrio.winControl &&
+                        (!initPrio.winControl.data || !initPrio.winControl.data.length)) {
+                        Log.print(Log.l.trace, "calling select langINKontaktPrioView...");
+                        return ContactResultsCriteria.langINKontaktPrioView.select(function (json) {
+                            Log.print(Log.l.trace, "select langINKontaktPrioView: success!");
+                            if (json && json.d && json.d.results) {
+                                var results = json.d.results;
+                                // Now, we call WinJS.Binding.List to get the bindable list
+                                if (initPrio && initPrio.winControl) {
+                                    initPrio.winControl.data = new WinJS.Binding.List(results);
+                                }
+                                initPrio.selectedIndex = 0;
                             }
-                            initPrio.selectedIndex = 0;
-                        }
-                    }, function (errorResponse) {
-                        // called asynchronously if an error occurs
-                        // or server returns response with an error status.
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                    }, {LanguageSpecID: AppData.getLanguageId() });
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            Log.print(Log.l.error, "select langINKontaktPrioView: error!");
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        }, { LanguageSpecID: AppData.getLanguageId() });
+                    } else {
+                        return WinJS.Promise.as();
+                    }
                 }).then(function () {
-                    return ContactResultsCriteria.langINKontaktTypView.select(function (json) {
-                        Log.print(Log.l.trace, "questionGroupTable: success!");
-                        if (json && json.d && json.d.results) {
-                            var results = json.d.results;
-                            // Now, we call WinJS.Binding.List to get the bindable list
-                            if (initTyp && initTyp.winControl) {
-                                initTyp.winControl.data = new WinJS.Binding.List(results);
+                    if (initTyp &&
+                        initTyp.winControl &&
+                        (!initTyp.winControl.data || !initTyp.winControl.data.length)) {
+                        Log.print(Log.l.trace, "calling select langINKontaktTypView... recordId=" + recordId);
+                        return ContactResultsCriteria.langINKontaktTypView.select(function (json) {
+                            Log.print(Log.l.trace, "select langINKontaktTypView: success!");
+                            if (json && json.d && json.d.results) {
+                                var results = json.d.results;
+                                // Now, we call WinJS.Binding.List to get the bindable list
+                                if (initTyp && initTyp.winControl) {
+                                    initTyp.winControl.data = new WinJS.Binding.List(results);
+                                }
+                                initTyp.selectedIndex = 0;
                             }
-                            initTyp.selectedIndex = 0;
-                        }
-                    }, function (errorResponse) {
-                        // called asynchronously if an error occurs
-                        // or server returns response with an error status.
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                    }, { LanguageSpecID: AppData.getLanguageId() });
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            Log.print(Log.l.error, "select langINKontaktTypView: error!");
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        }, { LanguageSpecID: AppData.getLanguageId() });
+                    } else {
+                        return WinJS.Promise.as();
+                    }
                 }).then(function () {
                     var recordId = getRecordId();
-                    Log.print(Log.l.trace, "calling select contactView...");
-                    return ContactResultsCriteria.contactView.select(function (json) {
-                        AppData.setErrorMsg(that.binding);
-                        Log.print(Log.l.trace, "contactView: success!");
-                        if (json && json.d) {
-                            // now always edit!
-                            var result = json.d;
-                            that.setDataContact(result);
-                        }
-                    }, function (errorResponse) {
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                    }, recordId);
+                    if (recordId) {
+                        Log.print(Log.l.trace, "calling select contactView...");
+                        return ContactResultsCriteria.contactView.select(function(json) {
+                            Log.print(Log.l.trace, "select contactView: success!");
+                            if (json && json.d) {
+                                // now always edit!
+                                var result = json.d;
+                                that.setDataContact(result);
+                            }
+                        },
+                        function(errorResponse) {
+                            Log.print(Log.l.error, "select contactView: error!");
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        },
+                        recordId);
+                    } else {
+                        return WinJS.Promise.as();
+                    }
                 }).then(function () {
-                    Log.print(Log.l.trace, "calling select contactView...");
                     var recordId = getRecordId();
-                    return ContactResultsCriteria.kontaktKriterienView.select(function (json) {
-                        AppData.setErrorMsg(that.binding);
-                        Log.print(Log.l.trace, "contactView: success!");
-                        if (json && json.d) {
-                            // now always edit!
-                            var results = json.d.results[0];
-                            that.binding.dataContactCriteria = results;
-                        }
-                    }, function (errorResponse) {
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                    }, { KontaktKriterienVIEWID: recordId });
+                    if (recordId) {
+                        Log.print(Log.l.trace, "calling select kontaktKriterienView... recordId=" + recordId);
+                        return ContactResultsCriteria.kontaktKriterienView.select(function (json) {
+                            Log.print(Log.l.trace, "kontaktKriterienView: success!");
+                            if (json && json.d) {
+                                // now always edit!
+                                var result = json.d;
+                                that.binding.dataContactCriteria = result;
+                            }
+                        }, function (errorResponse) {
+                            Log.print(Log.l.error, "kontaktKriterienView: error!");
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        }, recordId);
+                    } else {
+                        return WinJS.Promise.as();
+                    }
                 }).then(function () {
                     AppBar.notifyModified = true;
                     return WinJS.Promise.as();
@@ -242,7 +275,6 @@
             });
             Log.ret(Log.l.trace);
         }, {
-
         })
     });
 })();

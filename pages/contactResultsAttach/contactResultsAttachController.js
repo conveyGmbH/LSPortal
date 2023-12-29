@@ -10,13 +10,15 @@
 (function () {
     "use strict";
 
+    var namespaceName = "ContactResultsAttach";
+
     WinJS.Namespace.define("ContactResultsAttach", {
         getClassNameOffline: function (useOffline) {
             return (useOffline ? "field_line field_line_even" : "hide-element");
         },
         
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
-            Log.call(Log.l.trace, "ContactResultsAttach.Controller.");
+            Log.call(Log.l.trace, namespaceName + ".Controller.");
             var that = this;
             
             Application.Controller.apply(this, [pageElement, {
@@ -33,7 +35,7 @@
             this.docViewer = null;
 
             var setNotesCount = function(count) {
-                Log.call(Log.l.trace, "ContactResultsAttach.Controller.", "count=" + count);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "count=" + count);
                 if (count > 1) {
                     that.binding.moreNotes = true;
                 } else {
@@ -55,7 +57,7 @@
 
             var getDocViewer = function (docGroup, docFormat) {
                 var docViewer;
-                Log.call(Log.l.trace, "ContactResultsAttach.Controller.", "docGroup=" + docGroup + " docFormat=" + docFormat);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "docGroup=" + docGroup + " docFormat=" + docFormat);
                 if (AppData.isSvg(docGroup, docFormat)) {
                     that.binding.showSvg = true;
                     that.binding.showPhoto = false;
@@ -83,7 +85,7 @@
             var loadDoc = function (noteId, docGroup, docFormat) {
                 var ret;
                 var parentElement;
-                Log.call(Log.l.trace, "ContactResultsAttach.Controller.", "noteId=" + noteId + " docGroup=" + docGroup + " docFormat=" + docFormat);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "noteId=" + noteId + " docGroup=" + docGroup + " docFormat=" + docFormat);
                 // prevent recursive calls here!
                 if (inLoadDoc) {
                     if (noteId === prevNoteId) {
@@ -175,7 +177,7 @@
             this.loadDoc = loadDoc;
 
             var loadData = function (noteId, docGroup, docFormat) {
-                Log.call(Log.l.trace, "ContactResultsAttach.Controller.", "noteId=" + noteId + " docGroup=" + docGroup + " docFormat=" + docFormat);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "noteId=" + noteId + " docGroup=" + docGroup + " docFormat=" + docFormat);
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                     if (!noteId) {
@@ -192,7 +194,7 @@
             this.loadData = loadData;
 
             var loadList = function (noteId) {
-                Log.call(Log.l.trace, "ContactResultsAttach.", "noteId=" + noteId);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "noteId=" + noteId);
                 var ret;
                 var sketchListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("sketchList"));
                 if (sketchListFragmentControl && sketchListFragmentControl.controller) {
@@ -213,29 +215,29 @@
             // define handlers
             this.eventHandlers = {
                 clickBack: function (event) {
-                    Log.call(Log.l.trace, "ContactResultsAttach.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done( /* Your success and error handlers */);
                     }
                     Log.ret(Log.l.trace);
                 },
                 clickChangeUserState: function (event) {
-                    Log.call(Log.l.trace, "ContactResultsAttach.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     Application.navigateById("userinfo", event);
                     Log.ret(Log.l.trace);
                 },
                 clickGotoPublish: function (event) {
-                    Log.call(Log.l.trace, "ContactResultsAttach.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     Application.navigateById("publish", event);
                     Log.ret(Log.l.trace);
                 },
                 clickForward: function (event) {
-                    Log.call(Log.l.trace, "ContactResultsAttach.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     Application.navigateById("contact", event);
                     Log.ret(Log.l.trace);
                 },
                 clickShowList: function (event) {
-                    Log.call(Log.l.trace, "ContactResultsAttach.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var mySketchList = pageElement.querySelector(".listfragmenthost");
                     var pageControl = pageElement.winControl;
                     var newShowList = !that.binding.showList;
@@ -306,7 +308,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickTopButton: function (event) {
-                    Log.call(Log.l.trace, "ContactResultsAttach.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var anchor = document.getElementById("menuButton");
                     var menu = document.getElementById("menu1").winControl;
                     var placement = "bottom";
@@ -314,7 +316,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickLogoff: function (event) {
-                    Log.call(Log.l.trace, "Account.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     AppData._persistentStates.privacyPolicyFlag = false;
                     if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
                         AppHeader.controller.binding.userData = {};
@@ -353,8 +355,8 @@
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
             }).then(function () {
-                AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Data loaded");
+                AppBar.notifyModified = true;
             });
             Log.ret(Log.l.trace);
         })

@@ -1074,8 +1074,8 @@
                                 // now always edit!
                                 json.d.Flag_NoEdit = AppRepl.replicator && AppRepl.replicator.inFastRepl;
                                 that.setDataContact(json.d);
-                                var importCardscanId = AppData.getRecordId("DOC1IMPORT_CARDSCAN");
-                                if (importCardscanId !== json.d.DOC1Import_CardscanID) {
+                                var prevImportCardscanId = AppData.getRecordId("DOC1IMPORT_CARDSCAN");
+                                if (prevImportCardscanId !== json.d.DOC1Import_CardscanID) {
                                     AppData._photoData = null;
                                     AppData.setRecordId("DOC1IMPORT_CARDSCAN", json.d.DOC1Import_CardscanID);
                                 }
@@ -1102,7 +1102,6 @@
                     } else {
                         var importCardscanId = AppData.getRecordId("DOC1IMPORT_CARDSCAN");
                         if (importCardscanId) {
-                            // todo: load image data and set src of img-element
                             Log.print(Log.l.trace, "calling select cardScanView...");
                             return Contact.cardScanView.select(function (json) {
                                 AppData.setErrorMsg(that.binding);

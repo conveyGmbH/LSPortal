@@ -6,6 +6,8 @@
 (function () {
     "use strict";
 
+    var namespaceName = "ContactResultsCriteria";
+
     WinJS.Namespace.define("ContactResultsCriteria", {
         _contactView: {
             get: function () {
@@ -14,13 +16,13 @@
         },
         contactView: {
             select: function (complete, error, recordId) {
-                Log.call(Log.l.trace, "contactView.");
+                Log.call(Log.l.trace, namespaceName + ".contactView.", "recordId=" + recordId);
                 var ret = ContactResultsCriteria._contactView.selectById(complete, error, recordId);
                 Log.ret(Log.l.trace);
                 return ret;
             },
             update: function (complete, error, recordId, viewResponse) {
-                Log.call(Log.l.trace, "contactView.");
+                Log.call(Log.l.trace, namespaceName + ".contactView.");
                 var ret = ContactResultsCriteria._contactView.update(complete, error, recordId, viewResponse);
                 Log.ret(Log.l.trace);
                 return ret;
@@ -35,18 +37,15 @@
             }
         },
         kontaktKriterienView: {
-            select: function (complete, error, restriction) {
-                // Log.call(Log.l.trace, "visitorFlowLevelView.", "restriction=" + restriction);
-                Log.call(Log.l.trace, "kontaktKriterienView.", "restriction=" + restriction);
-                var ret = ContactResultsCriteria._kontaktKriterienView.select(complete, error, restriction, {
-                   
-                });
+            select: function (complete, error, recordId) {
+                Log.call(Log.l.trace, namespaceName + ".kontaktKriterienView.", "recordId=" + recordId);
+                var ret = ContactResultsCriteria._kontaktKriterienView.selectById(complete, error, recordId);
                 Log.ret(Log.l.trace);
                 return ret;
 
             },
             update: function (complete, error, recordId, viewResponse) {
-                Log.call(Log.l.trace, "kontaktKriterienView.");
+                Log.call(Log.l.trace, namespaceName + ".kontaktKriterienView.");
                 var ret = ContactResultsCriteria._kontaktKriterienView.update(complete, error, recordId, viewResponse);
                 Log.ret(Log.l.trace);
                 return ret;
@@ -59,23 +58,22 @@
         },
         langINKontaktPrioView: {
             select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "ContactResultsCriteria.");
+                Log.call(Log.l.trace, namespaceName + ".langINKontaktPrioView.", "restriction=" + (restriction ? JSON.stringify(restriction) : ""));
                 var ret = ContactResultsCriteria._langINKontaktPrioView.select(complete, error, restriction, {
-                    ordered: true,
-                    orderAttribute: "LangINKontaktPrioVIEWID"
+                    ordered: true
                 });
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
             },
             getNextUrl: function (response) {
-                Log.call(Log.l.trace, "ContactResultsCriteria.");
+                Log.call(Log.l.trace, namespaceName + ".langINKontaktPrioView.");
                 var ret = ContactResultsCriteria._langINKontaktPrioView.getNextUrl(response);
                 Log.ret(Log.l.trace);
                 return ret;
             },
             selectNext: function (complete, error, response, nextUrl) {
-                Log.call(Log.l.trace, "ContactResultsCriteria.");
+                Log.call(Log.l.trace, namespaceName + ".langINKontaktPrioView.");
                 var ret = ContactResultsCriteria._langINKontaktPrioView.selectNext(complete, error, response, nextUrl);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
@@ -92,23 +90,22 @@
         },
         langINKontaktTypView: {
             select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "ContactResultsCriteria.");
+                Log.call(Log.l.trace, namespaceName + ".langINKontaktTypView.", "restriction=" + (restriction ? JSON.stringify(restriction) : ""));
                 var ret = ContactResultsCriteria._langINKontaktTypView.select(complete, error, restriction, {
-                    ordered: true,
-                    orderAttribute: "LangINKontaktTypVIEWID "
+                    ordered: true
                 });
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
             },
             getNextUrl: function (response) {
-                Log.call(Log.l.trace, "ContactResultsCriteria.");
+                Log.call(Log.l.trace, namespaceName + ".langINKontaktTypView.");
                 var ret = ContactResultsCriteria._langINKontaktTypView.getNextUrl(response);
                 Log.ret(Log.l.trace);
                 return ret;
             },
             selectNext: function (complete, error, response, nextUrl) {
-                Log.call(Log.l.trace, "ContactResultsCriteria.");
+                Log.call(Log.l.trace, namespaceName + ".langINKontaktTypView.");
                 var ret = ContactResultsCriteria._langINKontaktTypView.selectNext(complete, error, response, nextUrl);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);

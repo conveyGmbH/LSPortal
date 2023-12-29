@@ -21,20 +21,20 @@
         },
         contactView: {
             select: function (complete, error, recordId) {
-                Log.call(Log.l.trace, namespaceName + ".contactView.");
+                Log.call(Log.l.trace, namespaceName + ".contactView.", "recordId=" + recordId);
                 var ret = Contact._contactViewFormat.selectById(complete, error, recordId);
                 Log.ret(Log.l.trace);
                 return ret;
 
             },
             deleteRecord: function (complete, error, recordId) {
-                Log.call(Log.l.trace, namespaceName + ".contactView.");
+                Log.call(Log.l.trace, namespaceName + ".contactView.", "recordId=" + recordId);
                 var ret = Contact._contactView.deleteRecord(complete, error, recordId);
                 Log.ret(Log.l.trace);
                 return ret;
             },
             update: function (complete, error, recordId, viewResponse) {
-                Log.call(Log.l.trace, namespaceName + ".contactView.");
+                Log.call(Log.l.trace, namespaceName + ".contactView.", "recordId=" + recordId);
                 var ret = Contact._contactView.update(complete, error, recordId, viewResponse);
                 Log.ret(Log.l.trace);
                 return ret;
@@ -79,7 +79,7 @@
         },
         cardScanView: {
             select: function (complete, error, recordId) {
-                Log.call(Log.l.trace, namespaceName + ".cardScanView.");
+                Log.call(Log.l.trace, namespaceName + ".cardScanView.", "recordId=" + recordId);
                 var ret = Contact._cardScanView.selectById(complete, error, recordId);
                 Log.ret(Log.l.trace);
                 return ret;
@@ -92,10 +92,9 @@
         },
         mandatoryView: {
             select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, namespaceName + ".mandatoryView.");
+                Log.call(Log.l.trace, namespaceName + ".mandatoryView.", "restriction=" + (restriction ? JSON.stringify(restriction) : ""));
                 var ret = Contact._mandatoryView.select(complete, error, restriction, {
-                    ordered: true,
-                    orderAttribute: "PflichtFelderVIEWID"
+                    ordered: true
                 });
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
@@ -109,7 +108,7 @@
         },
         exportKontaktDataView: {
             select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, namespaceName + ".exportKontaktDataView.");
+                Log.call(Log.l.trace, namespaceName + ".exportKontaktDataView.", "restriction=" + (restriction ? JSON.stringify(restriction) : ""));
                 var ret = Contact._exportKontaktDataView.select(complete, error, restriction);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
@@ -126,7 +125,7 @@
         },
         exportAudioDataView: {
             select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, namespaceName + ".exportAudioDataView.");
+                Log.call(Log.l.trace, namespaceName + ".exportAudioDataView.", "restriction=" + (restriction ? JSON.stringify(restriction) : ""));
                 var ret = Contact._exportAudioDataView.select(complete, error, restriction);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
