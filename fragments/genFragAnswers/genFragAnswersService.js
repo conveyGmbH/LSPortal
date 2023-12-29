@@ -20,7 +20,7 @@
             }
         }
     });
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("GenFragAnswers", {
         answerView: {
             select: function (complete, error, restriction, options) {
                 Log.call(Log.l.trace, namespaceName + ".answerView.");

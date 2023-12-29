@@ -7,6 +7,8 @@
 (function () {
     "use strict";
 
+    var namespaceName = "ContactList";
+
     WinJS.Namespace.define("ContactList", {
         _contactView: {
             get: function () {
@@ -16,11 +18,11 @@
             }
         },
         contactView: {
-            select: function (complete, error, restriction, recordId) {
-                Log.call(Log.l.trace, "ContactList.");
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, namespaceName + ".contactView.");
                 var ret;
-                if (recordId) {
-                    ret = ContactList._contactView.selectById(complete, error, recordId);
+                if (typeof restriction === "number") {
+                    ret = ContactList._contactView.selectById(complete, error, restriction);
                 } else {
                     ret = ContactList._contactView.select(complete, error, restriction, {
                         ordered: true,
@@ -28,19 +30,18 @@
                         desc: true
                     });
                 }
-
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
             },
             getNextUrl: function (response) {
-                Log.call(Log.l.trace, "ContactList.");
+                Log.call(Log.l.trace, namespaceName + ".contactView.");
                 var ret = ContactList._contactView.getNextUrl(response);
                 Log.ret(Log.l.trace);
                 return ret;
             },
             selectNext: function (complete, error, response, nextUrl) {
-                Log.call(Log.l.trace, "ContactList.");
+                Log.call(Log.l.trace, namespaceName + ".contactView.");
                 var ret = ContactList._contactView.selectNext(complete, error, response, nextUrl);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
@@ -56,7 +57,7 @@
         },
         contactDocView: {
             select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "ContactList.");
+                Log.call(Log.l.trace, namespaceName + ".contactDocView.");
                 var ret = ContactList._contactDocView.select(complete, error, restriction, {
                     ordered: true,
                     orderAttribute: "Erfassungsdatum",
@@ -67,13 +68,13 @@
                 return ret;
             },
             getNextUrl: function (response) {
-                Log.call(Log.l.trace, "ContactList.");
+                Log.call(Log.l.trace, namespaceName + ".contactDocView.");
                 var ret = ContactList._contactDocView.getNextUrl(response);
                 Log.ret(Log.l.trace);
                 return ret;
             },
             selectNext: function (complete, error, response, nextUrl) {
-                Log.call(Log.l.trace, "ContactList.");
+                Log.call(Log.l.trace, namespaceName + ".contactDocView.");
                 var ret = ContactList._contactDocView.selectNext(complete, error, response, nextUrl);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
@@ -87,7 +88,7 @@
         },
         mitarbeiterView: {
             select: function (complete, error, recordId) {
-                Log.call(Log.l.trace, "mitarbeiterView.", "recordId=" + recordId);
+                Log.call(Log.l.trace, namespaceName + ".mitarbeiterView.", "recordId=" + recordId);
                 var ret = ContactList._mitarbeiterView.selectById(complete, error, recordId);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);

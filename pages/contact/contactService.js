@@ -6,6 +6,8 @@
 (function () {
     "use strict";
 
+    var namespaceName = "Contact";
+
     WinJS.Namespace.define("Contact", {
         _contactView: {
             get: function () {
@@ -19,26 +21,26 @@
         },
         contactView: {
             select: function (complete, error, recordId) {
-                Log.call(Log.l.trace, "contactView.");
+                Log.call(Log.l.trace, namespaceName + ".contactView.");
                 var ret = Contact._contactViewFormat.selectById(complete, error, recordId);
                 Log.ret(Log.l.trace);
                 return ret;
 
             },
             deleteRecord: function (complete, error, recordId) {
-                Log.call(Log.l.trace, "contactView.");
+                Log.call(Log.l.trace, namespaceName + ".contactView.");
                 var ret = Contact._contactView.deleteRecord(complete, error, recordId);
                 Log.ret(Log.l.trace);
                 return ret;
             },
             update: function (complete, error, recordId, viewResponse) {
-                Log.call(Log.l.trace, "contactView.");
+                Log.call(Log.l.trace, namespaceName + ".contactView.");
                 var ret = Contact._contactView.update(complete, error, recordId, viewResponse);
                 Log.ret(Log.l.trace);
                 return ret;
             },
             insert: function (complete, error, viewResponse) {
-                Log.call(Log.l.trace, "contactView.");
+                Log.call(Log.l.trace, namespaceName + ".contactView.");
                 var ret = Contact._contactView.insert(complete, error, viewResponse);
                 Log.ret(Log.l.trace);
                 return ret;
@@ -77,7 +79,7 @@
         },
         cardScanView: {
             select: function (complete, error, recordId) {
-                Log.call(Log.l.trace, "cardScanView.");
+                Log.call(Log.l.trace, namespaceName + ".cardScanView.");
                 var ret = Contact._cardScanView.selectById(complete, error, recordId);
                 Log.ret(Log.l.trace);
                 return ret;
@@ -90,7 +92,7 @@
         },
         mandatoryView: {
             select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "MandatoryList.");
+                Log.call(Log.l.trace, namespaceName + ".mandatoryView.");
                 var ret = Contact._mandatoryView.select(complete, error, restriction, {
                     ordered: true,
                     orderAttribute: "PflichtFelderVIEWID"
@@ -107,7 +109,7 @@
         },
         exportKontaktDataView: {
             select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "PDFExport.");
+                Log.call(Log.l.trace, namespaceName + ".exportKontaktDataView.");
                 var ret = Contact._exportKontaktDataView.select(complete, error, restriction);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
@@ -124,7 +126,7 @@
         },
         exportAudioDataView: {
             select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "PDFExport.");
+                Log.call(Log.l.trace, namespaceName + ".exportAudioDataView.");
                 var ret = Contact._exportAudioDataView.select(complete, error, restriction);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);

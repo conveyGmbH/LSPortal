@@ -28,10 +28,13 @@
 
 (function () {
     "use strict";
+
     var b64 = window.base64js;
+    var namespaceName = "Contact";
+
     WinJS.Namespace.define("Contact", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
-            Log.call(Log.l.trace, "Contact.Controller.");
+            Log.call(Log.l.trace, namespaceName + ".Controller.");
             Application.Controller.apply(this, [pageElement, {
                 dataContact: getEmptyDefaultValue(Contact.contactView.defaultValue),
                 dataContactAudio: getEmptyDefaultValue(Contact.exportAudioDataView.defaultValue),
@@ -90,6 +93,7 @@
             this.hasDoc = hasDoc;
 
             var removePhoto = function () {
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 if (photoview) {
                     var photoItemBox = photoview.querySelector("#contactPhoto .win-itembox");
                     if (photoItemBox) {
@@ -100,6 +104,7 @@
                         }
                     }
                 }
+                Log.ret(Log.l.trace);
             }
 
             this.dispose = function () {
@@ -117,6 +122,7 @@
             }
 
             var calcImagePosition = function (options) {
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var newScale, newRotate;
                 if (options) {
                     newScale = options.scale;
@@ -214,8 +220,6 @@
                             marginTop = 0;
                         }
                     }
-
-
                     if (that.img.style) {
                         if (typeof newRotate !== "undefined") {
                             that.img.style.transform = "rotate( " + imgRotation + "deg)";
@@ -226,10 +230,12 @@
                         that.img.style.height = imgHeight + "px";
                     }
                 }
+                Log.ret(Log.l.trace);
             }
             this.calcImagePosition = calcImagePosition;
 
             var showPhoto = function () {
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 if (photoview) {
                     var photoItemBox = photoview.querySelector("#contactPhoto .win-itembox");
                     if (photoItemBox) {
@@ -366,6 +372,7 @@
                     }
                 }
                 AppBar.triggerDisableHandlers();
+                Log.ret(Log.l.trace);
             }
 
             var resultConverter = function (item, index) {
@@ -382,6 +389,7 @@
             this.resultConverter = resultConverter;
 
             var setDataContact = function (newDataContact) {
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var prevNotifyModified = AppBar.notifyModified;
                 AppBar.notifyModified = false;
                 that.resultConverter(newDataContact);
@@ -401,29 +409,34 @@
                 AppBar.modified = false;
                 AppBar.notifyModified = prevNotifyModified;
                 AppBar.triggerDisableHandlers();
+                Log.ret(Log.l.trace);
             }
             this.setDataContact = setDataContact;
 
             var setInitLandItem = function(newInitLandItem) {
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var prevNotifyModified = AppBar.notifyModified;
                 AppBar.notifyModified = false;
                 that.binding.InitLandItem = newInitLandItem;
                 AppBar.modified = false;
                 AppBar.notifyModified = prevNotifyModified;
+                Log.ret(Log.l.trace);
             }
             this.setInitLandItem = setInitLandItem;
 
             var setInitAnredeItem = function (newInitAnredeItem) {
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var prevNotifyModified = AppBar.notifyModified;
                 AppBar.notifyModified = false;
                 that.binding.InitAnredeItem = newInitAnredeItem;
                 AppBar.modified = false;
                 AppBar.notifyModified = prevNotifyModified;
+                Log.ret(Log.l.trace);
             }
             this.setInitAnredeItem = setInitAnredeItem;
 
             var getRecordId = function () {
-                Log.call(Log.l.trace, "Contact.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var recordId = AppData.getRecordId("Kontakt");
                 if (!recordId) {
                     that.setDataContact(getEmptyDefaultValue(Contact.contactView.defaultValue));
@@ -434,7 +447,7 @@
             this.getRecordId = getRecordId;
 
             var setRecordId = function (recordId) {
-                Log.call(Log.l.trace, "Contact.Controller.", recordId);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
                 if (!recordId) {
                     that.setDataContact(getEmptyDefaultValue(Contact.contactView.defaultValue));
                 }
@@ -444,19 +457,18 @@
             this.setRecordId = setRecordId;
             
             var getAudioData = function () {
-                Log.call(Log.l.trace, "Contact.Controller.");
-                AppData.setErrorMsg(that.binding);
                 var ret;
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
+                AppData.setErrorMsg(that.binding);
                 var recordId = getRecordId();
                 if (recordId) {
                     AppBar.busy = true;
-                    ret = Contact.exportAudioDataView.select(function (json) {
+                    ret = Contact.exportAudioDataView.select(function(json) {
                         Log.print(Log.l.trace, "exportAudioDataView: success!");
                         if (json && json.d) {
                             var results = json.d.results;
-                            var resultcount = results.length;
                             that.binding.dataContactAudio = results;
-                            if (resultcount === 0) {
+                            if (results.length === 0) {
                                 Log.print(Log.l.trace, "No Audio-File found!");
                                 audioExists = false;
                             } else {
@@ -465,10 +477,14 @@
                             }
                             AppBar.busy = false;
                         }
-                    }, function (errorResponse) {
+                    }, function(errorResponse) {
                         AppBar.busy = false;
                         AppData.setErrorMsg(that.binding, errorResponse);
-                    }, { KontaktID: recordId });
+                    }, {
+                         KontaktID: recordId
+                    });
+                } else {
+                    ret = WinJS.Promise.as();
                 }
                 Log.ret(Log.l.trace);
                 return ret;
@@ -476,27 +492,29 @@
             this.getAudioData = getAudioData;
 
             var exportContactAudio = function (audioData) {
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppBar.busy = true;
                 for (var i = 0; i < audioData.length; i++) {
                     var audioType = audioData[i].DocExt;
-                    var audioDataraw = audioData[i].DocContentDOCCNT1;
-                    var sub = audioDataraw.search("\r\n\r\n");
+                    var audioDataRaw = audioData[i].DocContentDOCCNT1;
+                    var sub = audioDataRaw.search("\r\n\r\n");
                     var audioDataBase64;
-                    if(sub !== -1)
-                        audioDataBase64 = audioDataraw.substr(sub + 4);
-                    else
-                        audioDataBase64 = audioDataraw;
-
-                    var audioDatac = that.base64ToBlob(audioDataBase64, audioType);
+                    if (sub !== -1) {
+                        audioDataBase64 = audioDataRaw.substr(sub + 4);
+                    } else {
+                        audioDataBase64 = audioDataRaw;
+                    }
+                    var audioDataBlob = that.base64ToBlob(audioDataBase64, audioType);
                     var audioName = audioData[i].DateiName;
-                    saveAs(audioDatac, audioName);
+                    saveAs(audioDataBlob, audioName);
                 }
                 AppBar.busy = false;
+                Log.ret(Log.l.trace);
             }
             this.exportContactAudio = exportContactAudio;
 
             var checkOnPdf = function() {
-                Log.call(Log.l.trace, "Contact.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret;
                 var recordId = getRecordId();
@@ -519,6 +537,8 @@
                         AppBar.busy = false;
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, { KontaktID: recordId });
+                } else {
+                    ret = WinJS.Promise.as();
                 } 
                 Log.ret(Log.l.trace);
                 return ret;
@@ -548,7 +568,7 @@
             this.base64ToBlob = base64ToBlob;
 
             var exportContactPdf = function () {
-                Log.call(Log.l.trace, "Contact.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret;
                 var recordId = getRecordId();
@@ -569,13 +589,8 @@
                     }, function (errorResponse) {
                         AppBar.busy = false;
                         AppData.setErrorMsg(that.binding, errorResponse);
-                        if (typeof error === "function") {
-                            error(errorResponse);
-                        }
-                        }, { KontaktID: recordId});
+                    }, { KontaktID: recordId});
                 } else {
-                    var err = { status: 0, statusText: "no record selected" };
-                    error(err);
                     ret = WinJS.Promise.as();
                 }
                 Log.ret(Log.l.trace);
@@ -584,7 +599,7 @@
             this.exportContactPdf = exportContactPdf;
 
             var deleteData = function (complete, error) {
-                Log.call(Log.l.trace, "Contact.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 var recordId = getRecordId();
                 if (recordId) {
@@ -592,15 +607,21 @@
                         AppData.call("PRC_DeleteKontakt", {
                             pKontaktID: recordId
                         }, function (json) {
-                            Log.print(Log.l.info, "call success! ");
-                            var master = Application.navigator.masterControl;
-                            master.controller.deleteContactLineInList();
-                        }, function (error) {
-                            Log.print(Log.l.error, "call error");
+                            Log.print(Log.l.info, "call PRC_DeleteKontakt success! ");
+                            if (typeof complete === "function") {
+                                complete(json);
+                            }
+                        }, function (errorResponse) {
+                            Log.print(Log.l.error, "call PRC_DeleteKontakt error");
+                            if (typeof error === "function") {
+                                error(errorResponse);
+                            }
                         });
                 } else {
                     var err = { status: 0, statusText: "no record selected" };
-                    error(err);
+                    if (typeof error === "function") {
+                        error(err);
+                    }
                 }
                 Log.ret(Log.l.trace);
             };
@@ -620,16 +641,16 @@
 
             var resultMandatoryConverter = function (item, index) {
                 if (item.FieldFlag) {
-                    var inputfield = null;
+                    var inputField = null;
                     if (item.AttributeName === "AnredeID") {
-                        inputfield = pageElement.querySelector("#InitAnrede");
+                        inputField = pageElement.querySelector("#InitAnrede");
                     } else if (item.AttributeName === "LandID") {
-                        inputfield = pageElement.querySelector("#InitLand");
+                        inputField = pageElement.querySelector("#InitLand");
                     } else {
-                        inputfield = pageElement.querySelector("input[name=" + item.AttributeName + "]");
+                        inputField = pageElement.querySelector("input[name=" + item.AttributeName + "]");
                     }
-                    if (inputfield) {
-                        WinJS.Utilities.addClass(inputfield, "mandatory-bkg");
+                    if (inputField) {
+                        WinJS.Utilities.addClass(inputField, "mandatory-bkg");
                     }
                 }
             };
@@ -638,35 +659,40 @@
             // define handlers
             this.eventHandlers = {
                 clickBack: function (event) {
-                    Log.call(Log.l.trace, "Contact.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (!Application.showMaster() && WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done();
                     }
                     Log.ret(Log.l.trace);
                 },
                 clickExport: function (event) {
-                    Log.call(Log.l.trace, "Contact.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     that.exportContactPdf();
                     Log.ret(Log.l.trace);
                 },
                 clickExportAudio: function() {
-                    Log.call(Log.l.trace, "Contact.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     that.exportContactAudio(that.binding.dataContactAudio);
                     Log.ret(Log.l.trace);
                 },
                 clickNew: function(event){
-                    Log.call(Log.l.trace, "Contact.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     Application.navigateById(Application.navigateNewId, event);
                     Log.ret(Log.l.trace);
                 },
                 clickDelete: function(event){
-                    Log.call(Log.l.trace, "Contact.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var confirmTitle = getResourceText("contact.questionDelete");
                     confirm(confirmTitle, function (result) {
                         if (result) {
                             Log.print(Log.l.trace,"clickDelete: user choice OK");
                             deleteData(function(response) {
-                                // delete OK - goto start
+                                // delete OK - load master list
+                                var master = Application.navigator.masterControl;
+                                if (master && master.controller) {
+                                    master.controller.removeSelectedRow();
+                                    //master.controller.loadData();
+                                }
                             }, function(errorResponse) {
                                 // delete ERROR
                                 var message = null;
@@ -694,7 +720,6 @@
                         if (AppBar.commandList[i].id === "clickForward")
                             AppBar.commandList[i].key = null;
                     }
-
                 },
                 releaseEnterKey: function (event) {
                     for (var i = 0; i < AppBar.commandList.length; i++) {
@@ -703,25 +728,12 @@
                     }
                 },
                 clickForward: function (event) {
-                    Log.call(Log.l.trace, "Contact.Controller.");
-                    that.saveData(function (response) {
-                        Log.print(Log.l.trace, "contact saved");
-                        var master = Application.navigator.masterControl;
-                        if (master && master.controller && master.controller.binding) {
-                            master.controller.binding.contactId = that.binding.dataContact.KontaktVIEWID;
-                            master.controller.loadData(master.controller.binding.contactId).then(function () {
-                                master.controller.selectRecordId(that.binding.dataContact.KontaktVIEWID);
-                            });
-                        }
-                    }, function (errorResponse) {
-                            Log.print(Log.l.error, "error saving employee");
-                        });
-
-                    AppBar.triggerDisableHandlers();
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    that.saveData();
                     Log.ret(Log.l.trace);
                 },
                 clickZoomIn: function(event) {
-                    Log.call(Log.l.trace, "Contact.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (that.hasDoc() && imgScale * scaleIn < 1) {
                         that.calcImagePosition({
                             scale: imgScale * scaleIn
@@ -757,7 +769,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickRotateLeft: function (event) {
-                    Log.call(Log.l.trace, "Contact.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var rotate = imgRotation - 90;
                     if (rotate < 0) {
                         rotate = 270;
@@ -769,7 +781,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickRotateRight: function (event) {
-                    Log.call(Log.l.trace, "Contact.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var rotate = imgRotation + 90;
                     if (rotate >= 360) {
                         rotate = 0;
@@ -781,16 +793,16 @@
                     Log.ret(Log.l.trace);
                 },
                 scrollContainer: function () {
+                    Log.call(Log.l.u1, namespaceName + ".Controller.");
                     if (contentrec.offsetWidth >= 699) {
                         // Get the new scroll position
                         var currentScrollPos = that.getOffset(contentrec).top;
                         if (currentScrollPos < 0) {
                             currentScrollPos = currentScrollPos * -1;
                         }
-
                         // Check if the user is scrolling up or down
                         if (prevScrollpos > currentScrollPos) {
-                            console.log('User is scrolling up');
+                            Log.print(Log.l.u1,'User is scrolling up');
                             // Do something when scrolling up
                             var docContainerRect = imgDoc2.getBoundingClientRect();
                             var isFullyVisible = (
@@ -811,7 +823,7 @@
                                 imgDoc.style.position = "static";
                             }
                         } else {
-                            console.log('User is scrolling down');
+                            Log.print(Log.l.u1,'User is scrolling down');
                             // Do something when scrolling down
                             var docContainerRect = imgDoc2.getBoundingClientRect();
                             var isFullyVisible = (
@@ -829,25 +841,23 @@
                                 imgDoc2.style.position = "static";
                             }
                         }
-
                         // Set the previous scroll position to the current scroll position
                         prevScrollpos = currentScrollPos;
                     }
-                     
                     Log.ret(Log.l.trace);
                 },
                 clickChangeUserState: function (event) {
-                    Log.call(Log.l.trace, "Contact.Controller.");
+                    Log.call(Log.l.u1, namespaceName + ".Controller.");
                     Application.navigateById("userinfo", event);
                     Log.ret(Log.l.trace);
                 },
                 clickGotoPublish: function (event) {
-                    Log.call(Log.l.trace, "Contact.Controller.");
+                    Log.call(Log.l.u1, namespaceName + ".Controller.");
                     Application.navigateById("publish", event);
                     Log.ret(Log.l.trace);
                 },
                 clickTopButton: function (event) {
-                    Log.call(Log.l.trace, "Contact.Controller.");
+                    Log.call(Log.l.u1, namespaceName + ".Controller.");
                     var anchor = document.getElementById("menuButton");
                     var menu = document.getElementById("menu1").winControl;
                     var placement = "bottom";
@@ -855,7 +865,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickLogoff: function (event) {
-                    Log.call(Log.l.trace, "Account.Controller.");
+                    Log.call(Log.l.u1, namespaceName + ".Controller.");
                     AppData._persistentStates.privacyPolicyFlag = false;
                     if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
                         AppHeader.controller.binding.userData = {};
@@ -944,11 +954,11 @@
             }
 
             var loadInitSelection = function () {
-                Log.call(Log.l.trace, "Contact.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 if (typeof that.binding.dataContact.KontaktVIEWID !== "undefined") {
                     var map, results, curIndex;
                     if (typeof that.binding.dataContact.INITAnredeID !== "undefined") {
-                        Log.print(Log.l.trace, "calling select initAnredeData: Id=" + that.binding.dataContact.INITAnredeID + "...");
+                        Log.print(Log.l.trace, "select INITAnredeID=" + that.binding.dataContact.INITAnredeID);
                         map = AppData.initAnredeView.getMap();
                         results = AppData.initAnredeView.getResults();
                         if (map && results) {
@@ -959,7 +969,7 @@
                         }
                     }
                     if (typeof that.binding.dataContact.INITLandID !== "undefined") {
-                        Log.print(Log.l.trace, "calling select initLandData: Id=" + that.binding.dataContact.INITLandID + "...");
+                        Log.print(Log.l.trace, "select INITLandID=" + that.binding.dataContact.INITAnredeID);
                         map = AppData.initLandView.getMap();
                         results = AppData.initLandView.getResults();
                         if (map && results) {
@@ -976,11 +986,11 @@
             this.loadInitSelection = loadInitSelection;
 
             var loadData = function () {
-                Log.call(Log.l.trace, "Contact.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                     if (!AppData.initAnredeView.getResults().length) {
-                        Log.print(Log.l.trace, "calling select initAnredeData...");
+                        Log.print(Log.l.trace, "calling select initAnredeView...");
                         //@nedra:25.09.2015: load the list of INITAnrede for Combobox
                         return AppData.initAnredeView.select(function (json) {
                             Log.print(Log.l.trace, "initAnredeView: success!");
@@ -993,6 +1003,7 @@
                         }, function (errorResponse) {
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
+                            Log.print(Log.l.error, "initAnredeView: error!");
                             AppData.setErrorMsg(that.binding, errorResponse);
                         });
                     } else {
@@ -1004,7 +1015,7 @@
                     }
                 }).then(function () {
                     if (!AppData.initLandView.getResults().length) {
-                        Log.print(Log.l.trace, "calling select initLandData...");
+                        Log.print(Log.l.trace, "calling select initLandView...");
                         //@nedra:25.09.2015: load the list of INITLand for Combobox
                         return AppData.initLandView.select(function (json) {
                             // this callback will be called asynchronously
@@ -1019,6 +1030,7 @@
                         }, function (errorResponse) {
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
+                            Log.print(Log.l.error, "initLandView: error!");
                             AppData.setErrorMsg(that.binding, errorResponse);
                         });
                     } else {
@@ -1029,10 +1041,11 @@
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
+                    Log.print(Log.l.trace, "calling select mandatoryView...");
                     return Contact.mandatoryView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
-                        Log.print(Log.l.trace, "MandatoryList.mandatoryView: success!");
+                        Log.print(Log.l.trace, "mandatoryView: success!");
                         // select returns object already parsed from json file in response
                         if (json && json.d) {
                             //that.nextUrl = MandatoryList.mandatoryView.getNextUrl(json);
@@ -1044,19 +1057,19 @@
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
+                        Log.print(Log.l.error, "mandatoryView: error!");
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, {
                         LanguageSpecID: AppData.getLanguageId()
                     });
-
                 }).then(function () {
                     var recordId = getRecordId();
                     if (recordId) {
                         //load of format relation record data
-                        Log.print(Log.l.trace, "calling select contactView...");
+                        Log.print(Log.l.trace, "calling select contactView...recordId=" + recordId);
                         return Contact.contactView.select(function (json) {
                             AppData.setErrorMsg(that.binding);
-                            Log.print(Log.l.trace, "contactView: success!");
+                            Log.print(Log.l.trace, "select contactView: success!");
                             if (json && json.d) {
                                 // now always edit!
                                 json.d.Flag_NoEdit = AppRepl.replicator && AppRepl.replicator.inFastRepl;
@@ -1071,11 +1084,13 @@
                                 that.getAudioData();
                             }
                         }, function (errorResponse) {
+                            Log.print(Log.l.error, "select contactView: error!");
                             AppData._photoData = null;
                             AppData.setRecordId("DOC1IMPORT_CARDSCAN", null);
                             AppData.setErrorMsg(that.binding, errorResponse);
                         }, recordId);
                     } else {
+                        Log.print(Log.l.trace, "no contactView recordId selected");
                         AppData._photoData = null;
                         AppData.setRecordId("DOC1IMPORT_CARDSCAN", null);
                         return WinJS.Promise.as();
@@ -1088,17 +1103,12 @@
                         var importCardscanId = AppData.getRecordId("DOC1IMPORT_CARDSCAN");
                         if (importCardscanId) {
                             // todo: load image data and set src of img-element
-                            Log.print(Log.l.trace, "calling select contactView...");
+                            Log.print(Log.l.trace, "calling select cardScanView...");
                             return Contact.cardScanView.select(function (json) {
                                 AppData.setErrorMsg(that.binding);
-                                Log.print(Log.l.trace, "cardScanData: success!");
+                                Log.print(Log.l.trace, "select cardScanView: success!");
                                 if (json && json.d) {
-                                    var docContent;
-                                    //if (json.d.wFormat === 1) {
-                                    //    docContent = json.d.PrevContentDOCCNT2;
-                                    //} else {
-                                        docContent = json.d.DocContentDOCCNT1;
-                                    //}
+                                    var docContent = json.d.DocContentDOCCNT1;
                                     if (docContent) {
                                         var sub = docContent.search("\r\n\r\n");
                                         if (sub >= 0) {
@@ -1119,11 +1129,13 @@
                                 }
                                 showPhoto();
                             }, function (errorResponse) {
+                                Log.print(Log.l.error, "select cardScanView: error!");
                                 AppData._photoData = null;
                                 showPhoto();
                                 AppData.setErrorMsg(that.binding, errorResponse);
                             }, importCardscanId);
                         } else {
+                            Log.print(Log.l.trace, "no cardScanView importCardscanId selected");
                             AppData._photoData = null;
                             showPhoto();
                             return WinJS.Promise.as();
@@ -1140,7 +1152,7 @@
 
             // save data
             var saveData = function (complete, error) {
-                Log.call(Log.l.trace, "Contact.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret;
                 var dataContact = that.binding.dataContact;
@@ -1154,60 +1166,82 @@
                     var recordId = getRecordId();
                     if (recordId) {
                         AppBar.busy = true;
+                        Log.print(Log.l.trace, "calling update contactView recordId=" + recordId);
                         ret = Contact.contactView.update(function (response) {
                             AppBar.busy = false;
                             // called asynchronously if ok
-                            Log.print(Log.l.info, "contactData update: success!");
+                            Log.print(Log.l.info, "update contactView: success!");
                             AppBar.modified = false;
-                            AppData.getContactData();
-                            complete(response);
+                            if (typeof complete === "function") {
+                                complete(that.binding.dataContact);
+                                return WinJS.Promise.as();
+                            } else {
+                                return that.loadData().then(function () {
+                                    var master = Application.navigator.masterControl;
+                                    if (master && master.controller && master.controller.binding) {
+                                        master.controller.binding.contactId = that.binding.dataContact.KontaktVIEWID;
+                                        master.controller.loadData(master.controller.binding.contactId).then(function () {
+                                            master.controller.selectRecordId(that.binding.dataContact.KontaktVIEWID);
+                                        });
+                                    }
+                                });
+                            }
                         }, function (errorResponse) {
                             AppBar.busy = false;
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
+                            Log.print(Log.l.info, "update contactView: success!");
                             AppData.setErrorMsg(that.binding, errorResponse);
-                            error(errorResponse);
-                        }, recordId, dataContact).then(function() {
-                            //load of format relation record data
-                            Log.print(Log.l.trace, "calling select contactView...");
-                            return Contact.contactView.select(function (json) {
-                                AppData.setErrorMsg(that.binding);
-                                Log.print(Log.l.trace, "contactView: success!");
-                                if (json && json.d) {
-                                    // now always edit!
-                                    json.d.Flag_NoEdit = AppRepl.replicator && AppRepl.replicator.inFastRepl;
-                                    that.setDataContact(json.d);
-                                    loadInitSelection();
-                                }
-                            }, function (errorResponse) {
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                            }, recordId);
-                        });
+                            if (typeof error === "function") {
+                                error(errorResponse);
+                            }
+                        }, recordId, dataContact);
                     } else {
                         dataContact.HostName = (window.device && window.device.uuid);
                         dataContact.MitarbeiterID = AppData.getRecordId("Mitarbeiter");
                         dataContact.VeranstaltungID = AppData.getRecordId("Veranstaltung");
                         AppBar.busy = true;
+                        Log.print(Log.l.trace, "calling insert contactView");
                         ret = Contact.contactView.insert(function (json) {
                             AppBar.busy = false;
                             // this callback will be called asynchronously
                             // when the response is available
-                            Log.print(Log.l.info, "contactData insert: success!");
+                            Log.print(Log.l.info, "insert contactData: success!");
+                            AppBar.modified = false;
                             // contactData returns object already parsed from json file in response
                             if (json && json.d) {
                                 // now always edit!
                                 json.d.Flag_NoEdit = AppRepl.replicator && AppRepl.replicator.inFastRepl;
                                 that.setDataContact(json.d);
                                 setRecordId(that.binding.dataContact.KontaktVIEWID);
+                                if (typeof AppData.getContactData === "function") {
+                                    AppData.getContactData();
+                                }
                                 AppData.getUserData();
+                                AppBar.busy = false;
+                                if (typeof complete === "function") {
+                                    complete(json);
+                                } else {
+                                    var master = Application.navigator.masterControl;
+                                    if (master && master.controller && master.controller.binding) {
+                                        master.controller.binding.contactId = that.binding.dataContact.KontaktVIEWID;
+                                        master.controller.loadData().then(function () {
+                                            master.controller.selectRecordId(that.binding.dataContact.KontaktVIEWID);
+                                        });
+                                    }
+                                }
+                            } else {
+                                Log.print(Log.l.error, "insert contactData returned no data");
                             }
-                            complete(json);
                         }, function (errorResponse) {
                             AppBar.busy = false;
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
+                            Log.print(Log.l.error, "insert contactData: error!");
                             AppData.setErrorMsg(that.binding, errorResponse);
-                            error(errorResponse);
+                            if (typeof error === "function") {
+                                error(errorResponse);
+                            }
                         }, dataContact);
                     }
                 } else if (AppBar.busy) {
@@ -1217,7 +1251,7 @@
                 } else {
                     ret = new WinJS.Promise.as().then(function () {
                         if (typeof complete === "function") {
-                            complete(dataContact);//dataContact
+                            complete(that.binding.dataContact);
                         }
                     });
                 }
@@ -1230,10 +1264,8 @@
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
             }).then(function () {
-                Log.print(Log.l.trace, "Checking if there is a PDF-File!");
-            }).then(function () {
-                AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Data loaded");
+                AppBar.notifyModified = true;
             });
             Log.ret(Log.l.trace);
         })
