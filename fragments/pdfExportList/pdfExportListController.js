@@ -15,7 +15,7 @@
 
     var namespaceName = "PdfExportList";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("PdfExportList", {
         Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options) {
             Log.call(Log.l.trace, namespaceName + ".Controller.");
             Fragments.Controller.apply(this, [fragmentElement, {

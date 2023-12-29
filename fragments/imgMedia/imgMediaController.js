@@ -13,7 +13,7 @@
 
     var namespaceName = "ImgMedia";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("ImgMedia", {
         Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options, commandList) {
             Log.call(Log.l.trace, namespaceName + ".Controller.", "docId=" + (options && options.docId));
 

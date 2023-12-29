@@ -8,7 +8,7 @@
 
     var namespaceName = "UploadMedia";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("UploadMedia", {
         docExtList: [
             "jpg", "jpeg", "jpe", "gif", "png", "svg", "svgz", "pdf", "txt", "htm",
             "html", "mpg", "mpeg", "m1v", "mp2", "mpa", "mpe", "mpv2", "mp4", "m4v",

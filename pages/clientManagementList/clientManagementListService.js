@@ -6,6 +6,8 @@
 (function () {
     "use strict";
 
+    var namespaceName = "ClientManagementList";
+
     WinJS.Namespace.define("ClientManagementList", {
         _fairMandantView: {
             get: function () {
@@ -14,7 +16,7 @@
         },
         fairMandantView: {
             select: function (complete, error, restriction, recordId) {
-                Log.call(Log.l.trace, "ClientManagementList.");
+                Log.call(Log.l.trace, namespaceName + ".fairMandantView.");
                 var ret;
                 if (recordId) {
                     ret = ClientManagementList._fairMandantView.selectById(complete, error, recordId);
@@ -31,13 +33,13 @@
                 return ret;
             },
             getNextUrl: function (response) {
-                Log.call(Log.l.trace, "ClientManagementList.");
+                Log.call(Log.l.trace, namespaceName + ".fairMandantView.");
                 var ret = ClientManagementList._fairMandantView.getNextUrl(response);
                 Log.ret(Log.l.trace);
                 return ret;
             },
             selectNext: function (complete, error, response, nextUrl) {
-                Log.call(Log.l.trace, "ClientManagementList.");
+                Log.call(Log.l.trace, namespaceName + ".fairMandantView.");
                 var ret = ClientManagementList._fairMandantView.selectNext(complete, error, response, nextUrl);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);

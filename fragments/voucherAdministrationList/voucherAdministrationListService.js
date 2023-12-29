@@ -8,7 +8,7 @@
 
     var namespaceName = "VoucherAdministrationList";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("VoucherAdministrationList", {
         _voucherOrderView: {
             get: function () {
                 return AppData.getFormatView("ESVoucherOrder", 20608);

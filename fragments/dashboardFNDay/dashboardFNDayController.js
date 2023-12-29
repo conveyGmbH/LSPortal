@@ -13,7 +13,7 @@
 
     var namespaceName = "DashboardFNDay";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("DashboardFNDay", {
         Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options) {
             Log.call(Log.l.trace, namespaceName + ".Controller.");
             Fragments.Controller.apply(this,

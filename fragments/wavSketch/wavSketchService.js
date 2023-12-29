@@ -8,7 +8,7 @@
 
     var namespaceName = "WavSketch";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("WavSketch", {
         getSketchDocView: function (isLocal) {
                 return AppData.getFormatView("KontaktNotiz", 20505, isLocal);
         },
@@ -21,7 +21,6 @@
                 return ret;
             }
         },
-
         getSketchView: function (isLocal) {
             return AppData.getFormatView("KontaktNotiz", 0, isLocal);
         },

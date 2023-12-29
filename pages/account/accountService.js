@@ -8,7 +8,7 @@
 
     var namespaceName = "Account";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("Account", {
         _initSpracheView: {
             get: function () {
                 return AppData.getLgntInit("LGNTINITSprache", false, true);

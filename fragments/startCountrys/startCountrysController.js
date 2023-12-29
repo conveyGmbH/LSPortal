@@ -16,7 +16,7 @@
 
     var namespaceName = "StartCountrys";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("StartCountrys", {
         Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options) {
             Log.call(Log.l.trace, namespaceName + ".Controller.");
             var lang = AppData.getLanguageId();

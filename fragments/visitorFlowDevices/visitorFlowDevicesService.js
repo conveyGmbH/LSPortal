@@ -8,14 +8,14 @@
 
     var namespaceName = "VisitorFlowDevices";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("VisitorFlowDevices", {
         _visitorDeviceView: {
             get: function () {
                 return AppData.getFormatView("DeviceLastCall", 20616);
             }
         }
     });
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("VisitorFlowDevices", {
         visitorDeviceView: {
             select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, namespaceName + ".visitorDeviceView.", "recordId=" + restriction);

@@ -8,7 +8,7 @@
 
     var namespaceName = "EventTextUsage";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("EventTextUsage", {
             _eventTextUsageView: {
                 get: function() {
                     return AppData.getLgntInit("LGNTINITDokVerwendung");

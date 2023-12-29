@@ -14,7 +14,7 @@
     var b64 = window.base64js;
     var namespaceName = "WavSketch";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("WavSketch", {
         Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options, commandList) {
             Log.call(Log.l.trace, namespaceName + ".Controller.", "noteId=" + (options && options.noteId));
             Fragments.Controller.apply(this, [fragmentElement, {

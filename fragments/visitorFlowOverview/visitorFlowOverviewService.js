@@ -8,7 +8,7 @@
 
     var namespaceName = "VisitorFlowOverview";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("VisitorFlowOverview", {
         _visitorView: {
             get: function () {
                 return AppData.getFormatView("CR_V_Bereich", 20613);

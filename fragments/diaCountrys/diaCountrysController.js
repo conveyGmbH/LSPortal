@@ -13,7 +13,7 @@
 
     var namespaceName = "DiaCountrys";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("DiaCountrys", {
         Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options) {
             Log.call(Log.l.trace, namespaceName + ".Controller.");
             Fragments.Controller.apply(this, [fragmentElement, {

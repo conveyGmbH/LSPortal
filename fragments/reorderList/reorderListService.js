@@ -8,7 +8,7 @@
 
     var namespaceName = "ReorderList";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("ReorderList", {
         _VeranstaltunganlageView: {
             get: function () {
                 return AppData.getFormatView("Bestellung", 20569);

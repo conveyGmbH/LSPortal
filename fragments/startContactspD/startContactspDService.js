@@ -8,7 +8,7 @@
 
     var namespaceName = "StartContactspD";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("StartContactspD", {
         _kontaktanzahlView: {
             get: function () {
                 var ret = AppData.getFormatView("Kontakt", 20455);

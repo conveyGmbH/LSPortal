@@ -8,7 +8,7 @@
 
     var namespaceName = "PdfExportList";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("PdfExportList", {
         _pdfExportListView: {
             get: function () {
                 return AppData.getFormatView("OLELetter", 20546);

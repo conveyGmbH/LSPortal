@@ -8,7 +8,7 @@
 
     var namespaceName = "AppHeader";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("AppHeader", {
         _userPhotoView: {
             get: function () {
                 return AppData.getFormatView("DOC1Mitarbeiter", 0);

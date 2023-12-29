@@ -16,7 +16,7 @@
 
     var namespaceName = "Account";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("Account", {
         getClassNameOffline: function (useOffline) {
             return useOffline ? "field_line field_line_even" : "hide-element";
         },

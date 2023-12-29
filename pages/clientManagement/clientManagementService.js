@@ -8,7 +8,7 @@
 
     var namespaceName = "ClientManagement";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("ClientManagement", {
         _fairMandantView: {
             get: function () {
                 return AppData.getFormatView("FairMandant", 20582);

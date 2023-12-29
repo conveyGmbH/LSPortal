@@ -8,7 +8,7 @@
 
     var namespaceName = "BarcodeAdministration";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("BarcodeAdministration", {
         _fragebogenZeileBCView: {
             get: function() {
                 return AppData.getFormatView("NCHRFragenAntworten", 20525, false); //Ändern in Fragebogenzeilebcview

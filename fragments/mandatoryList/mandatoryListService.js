@@ -8,7 +8,7 @@
 
     var namespaceName = "MandatoryList";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("MandatoryList", {
         _mandatoryView: {
             get: function () {
                 return AppData.getFormatView("PflichtFelder", 20502, false);

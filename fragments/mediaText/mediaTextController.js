@@ -14,7 +14,7 @@
 
     var namespaceName = "MediaText";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("MediaText", {
         Controller: WinJS.Class.derive(Fragments.RecordsetController, function Controller(fragmentElement, options, commandList) {
             Log.call(Log.l.trace, namespaceName + ".Controller.");
             if (options) {

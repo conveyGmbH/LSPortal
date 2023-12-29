@@ -8,7 +8,7 @@
 
     var namespaceName = "GenFragEvents";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("GenFragEvents", {
         _BenutzerView: {
             get: function () {
                 return AppData.getFormatView("Benutzer", 20677);

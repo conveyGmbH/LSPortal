@@ -13,7 +13,7 @@
 
     var namespaceName = "MediaList";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("MediaList", {
         videoExtList: [
             "mpg", "mpeg", "m1v", "mp2", "mpe", "mpv2", "mp4", "m4v",
             "mp4v", "ogg", "ogv", "asf", "avi", "mov", "wmv"

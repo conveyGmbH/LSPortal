@@ -8,7 +8,7 @@
 
     var namespaceName = "EmpRoles";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("EmpRoles", {
         _initAPUserRoleView: {
             get: function () {
                 return AppData.getLgntInit("LGNTINITAPUserRole");

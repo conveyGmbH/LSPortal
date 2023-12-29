@@ -13,7 +13,7 @@
 
     var namespaceName = "GenFragAnswers";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("GenFragAnswers", {
         Controller: WinJS.Class.derive(Fragments.RecordsetController, function Controller(fragmentElement, options) {
             Log.call(Log.l.trace, namespaceName + ".Controller.");
             var listView = fragmentElement.querySelector("#genFragAnswers.listview");

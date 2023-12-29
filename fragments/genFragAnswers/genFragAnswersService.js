@@ -8,7 +8,7 @@
 
     var namespaceName = "GenFragAnswers";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("GenFragAnswers", {
         _answerView: {
             get: function () {
                 return AppData.getFormatView("Answer", 20649);

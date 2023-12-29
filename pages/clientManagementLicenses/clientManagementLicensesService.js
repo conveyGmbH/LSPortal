@@ -8,7 +8,7 @@
 
     var namespaceName = "ClientManagementLicenses";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("ClientManagementLicenses", {
         _mandantTempLizenzView: {
             get: function () {
                 return AppData.getFormatView("MandantTempLizenz", 20591);

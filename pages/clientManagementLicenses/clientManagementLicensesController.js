@@ -15,7 +15,7 @@
     var nav = WinJS.Navigation;
     var namespaceName = "ClientManagementLicenses";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("ClientManagementLicenses", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, namespaceName + ".Controller.");
             Application.Controller.apply(this, [pageElement, {

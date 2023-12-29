@@ -8,7 +8,7 @@
 
     var namespaceName = "EventSession";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("EventSession", {
         _BBBSessionView: {
             get: function () {
                 return AppData.getFormatView("BBBSession", 20655);

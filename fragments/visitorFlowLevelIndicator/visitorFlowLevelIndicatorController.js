@@ -12,7 +12,7 @@
 
     var namespaceName = "VisitorFlowLevelIndicator";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("VisitorFlowLevelIndicator", {
         Controller: WinJS.Class.derive(Fragments.RecordsetController, function Controller(fragmentElement, options) {
             Log.call(Log.l.trace, namespaceName + ".Controller.");
             var listView = fragmentElement.querySelector("#visitorFlowLevelIndicatorList.listview");

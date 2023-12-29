@@ -27,7 +27,7 @@
 
     var namespaceName = "BarcodeAdministration";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("BarcodeAdministration", {
         Controller: WinJS.Class.derive(Application.RecordsetController, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, namespaceName + ".Controller.");
 

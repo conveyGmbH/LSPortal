@@ -8,7 +8,7 @@
 
     var namespaceName = "VisitorFlowLevelIndicator";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("VisitorFlowLevelIndicator", {
         _bereichhourView: {
             get: function () {
                 return AppData.getFormatView("CR_V_Bereich", 20614);
@@ -37,9 +37,7 @@
             }    
             Log.ret(Log.l.trace);
             return ret;
-        }
-    });
-    WinJS.Namespace.define(namespaceName, {
+        },
         visitorFlowLevelView: {
             select: function (complete, error, restriction) {
                 if (!restriction) {

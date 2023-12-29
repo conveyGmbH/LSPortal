@@ -14,7 +14,7 @@
     var nav = WinJS.Navigation;
     var namespaceName = "UserMessages";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("UserMessages", {
         Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, commandList, options) {
             Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + (options && options.recordId));
             var getRecordId = function () {

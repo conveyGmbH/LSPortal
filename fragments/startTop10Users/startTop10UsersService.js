@@ -8,7 +8,7 @@
 
     var namespaceName = "StartTop10Users";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("StartTop10Users", {
         _reportMitarbeiter: {
             get: function () {
                 return AppData.getFormatView("Kontakt", 20474);

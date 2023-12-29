@@ -8,7 +8,7 @@
 
     var namespaceName = "DashboardFNTop10";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("DashboardFNTop10", {
         _reportLand: {
             get: function () {
                 var ret = AppData.getFormatView("Kontakt", 20473);

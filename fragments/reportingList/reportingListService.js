@@ -8,7 +8,7 @@
 
     var namespaceName = "ReportingList";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("ReportingList", {
         _analysisListView: {
             get: function () {
                 return AppData.getFormatView("ExportType", 20669);

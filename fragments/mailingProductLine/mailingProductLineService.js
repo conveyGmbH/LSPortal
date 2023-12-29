@@ -8,7 +8,7 @@
 
     var namespaceName = "MailingProductLine";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("MailingProductLine", {
         _MaildokumentView: {
             get: function () {
                 return AppData.getFormatView("Maildokument", 20513);

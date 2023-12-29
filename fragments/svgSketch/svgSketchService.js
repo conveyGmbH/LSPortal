@@ -8,7 +8,7 @@
 
     var namespaceName = "SvgSketch";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("SvgSketch", {
         getSketchDocView: function (isLocal) {
                 return AppData.getFormatView("KontaktNotiz", 20505, isLocal);
         },

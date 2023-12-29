@@ -8,7 +8,7 @@
 
     var namespaceName = "ImgMedia";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("ImgMedia", {
         _docView: {
             get: function () {
                 return AppData.getFormatView("MandantDokument", 20635);

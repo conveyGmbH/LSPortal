@@ -8,7 +8,7 @@
 
     var namespaceName = "MediaList";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("MediaList", {
         _eventDocView: {
             get: function() {
                 return AppData.getFormatView("MandantDokument", 20633);
@@ -33,7 +33,7 @@
             }
         }
     });
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("MediaList", {
         eventDocView: {
             select: function (complete, error, restriction, options) {
                 var ret;

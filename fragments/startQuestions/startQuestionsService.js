@@ -8,7 +8,7 @@
 
     var namespaceName = "StartQuestions";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("StartQuestions", {
         _questionView: {
             get: function () {
                 var ret = AppData.getFormatView("Fragebogen", 20597);

@@ -8,7 +8,7 @@
 
     var namespaceName = "DiaYearRange";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("DiaYearRange", {
         _questionView: {
             get: function () {
                 var ret = AppData.getFormatView("Fragebogen", 20597);

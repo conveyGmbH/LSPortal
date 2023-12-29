@@ -8,7 +8,7 @@
 
     var namespaceName = "DiaVisitors";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("DiaVisitors", {
         _kontaktanzahlView: {
             get: function () {
                 var ret = AppData.getFormatView("Kontakt", 20455);

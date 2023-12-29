@@ -12,7 +12,7 @@
      */
     var namespaceName = "MediaText";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("MediaText", {
         _initSpracheView: {
             get: function () {
                 return AppData.getLgntInit("LGNTINITSprache", false, true);

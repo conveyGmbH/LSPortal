@@ -8,7 +8,7 @@
 
     var namespaceName = "PdfMedia";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("PdfMedia", {
         _docView: {
             get: function () {
                 return AppData.getFormatView("MandantDokument", 20635);

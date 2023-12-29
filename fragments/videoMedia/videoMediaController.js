@@ -11,7 +11,7 @@
 
     var namespaceName = "VideoMedia";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("VideoMedia", {
         audioExtList: [
             "mpa", "mp3", "m4a", "oga",
             "wav", "wma", "aiff", "aifc", "au", "mid", "midi"

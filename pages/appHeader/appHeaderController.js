@@ -13,10 +13,10 @@
 
     var namespaceName = "AppHeader";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("AppHeader", {
         controller: null
     });
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("AppHeader", {
         Controller: WinJS.Class.define(function Controller(pageElement) {
             Log.call(Log.l.trace, namespaceName + ".Controller.");
             this.element = pageElement.querySelector("#appHeaderController.data-container");

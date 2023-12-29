@@ -8,7 +8,7 @@
 
     var namespaceName = "UserMessages";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("UserMessages", {
         _userId: 0,
         _userMessageView: {
             get: function () {

@@ -8,7 +8,7 @@
 
     var namespaceName = "StartNoData";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("StartNoData", {
         
     });
 })();

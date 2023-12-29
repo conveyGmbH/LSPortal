@@ -12,7 +12,7 @@
 
     var namespaceName = "VisitorFlowDevices";
 
-    WinJS.Namespace.define(namespaceName, {
+    WinJS.Namespace.define("VisitorFlowDevices", {
         Controller: WinJS.Class.derive(Fragments.RecordsetController, function Controller(fragmentElement, options) {
             Log.call(Log.l.trace, namespaceName + ".Controller.");
             var listView = fragmentElement.querySelector("#visitorFlowDevicesList.listview");

@@ -12,10 +12,11 @@
     "use strict";
 
     var nav = WinJS.Navigation;
+    var namespaceName = "ClientManagementList";
 
     WinJS.Namespace.define("ClientManagementList", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
-            Log.call(Log.l.trace, "ClientManagementList.Controller.");
+            Log.call(Log.l.trace, namespaceName + ".Controller.");
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
                 clientId: 0 //AppData.getRecordId("Mitarbeiter")
@@ -44,17 +45,8 @@
             var maxLeadingPages = 0;
             var maxTrailingPages = 0;
 
-            var background = function (index) {
-                if (index % 2 === 0) {
-                    return 1;
-                } else {
-                    return null;
-                }
-            };
-            this.background = background;
-
             var setSelIndex = function (index) {
-                Log.call(Log.l.trace, "ClientManagementList.Controller.", "index=" + index);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "index=" + index);
                 if (that.clients && that.clients.length > 0) {
                     if (index >= that.clients.length) {
                         index = that.clients.length - 1;
@@ -67,7 +59,7 @@
             this.setSelIndex = setSelIndex;
 
             var loadNextUrl = function (recordId) {
-                Log.call(Log.l.trace, "ClientManagementList.Controller.", "recordId=" + recordId);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
                 if (that.clients && that.nextUrl && listView) {
                     progress = listView.querySelector(".list-footer .progress");
                     counter = listView.querySelector(".list-footer .counter");
@@ -79,13 +71,13 @@
                         counter.style.display = "none";
                     }
                     AppData.setErrorMsg(that.binding);
-                    Log.print(Log.l.trace, "calling select ClientManagementList.fairMandantView...");
+                    Log.print(Log.l.trace, "calling select fairMandantView...");
                     var nextUrl = that.nextUrl;
                     that.nextUrl = null;
                     ClientManagementList.fairMandantView.selectNext(function (json) { //json is undefined
                         // this callback will be called asynchronously
                         // when the response is available
-                        Log.print(Log.l.trace, "ClientManagementList.fairMandantView: success!");
+                        Log.print(Log.l.trace, "select fairMandantView: success!");
                         // startContact returns object already parsed from json file in response
                         if (json && json.d && that.clients) {
                             that.nextUrl = ClientManagementList.fairMandantView.getNextUrl(json);
@@ -101,7 +93,7 @@
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
-                        Log.print(Log.l.error, "ClientManagementList.fairMandantView: error!");
+                        Log.print(Log.l.error, "select fairMandantView: error!");
                         AppData.setErrorMsg(that.binding, errorResponse);
                         if (progress && progress.style) {
                             progress.style.display = "none";
@@ -117,7 +109,7 @@
             this.loadNextUrl = loadNextUrl;
 
             var scrollToRecordId = function (recordId) {
-                Log.call(Log.l.trace, "ClientManagementList.Controller.", "recordId=" + recordId);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
                 if (that.loading) {
                     WinJS.Promise.timeout(50).then(function () {
                         that.scrollToRecordId(recordId);
@@ -140,7 +132,7 @@
 
             var selectRecordId = function (recordId) {
                 var clients;
-                Log.call(Log.l.trace, "ClientManagementList.Controller.", "recordId=" + recordId);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
                 var recordIdNotFound = true;
                 if (recordId && listView && listView.winControl && listView.winControl.selection && that.clients) {
                     for (var i = 0; i < that.clients.length; i++) {
@@ -169,7 +161,7 @@
 
             var scopeFromRecordId = function (recordId) {
                 var i;
-                Log.call(Log.l.trace, "ClientManagementList.Controller.", "recordId=" + recordId);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
                 var item = null;
                 for (i = 0; i < that.clients.length; i++) {
                     var clients = that.clients.getAt(i);
@@ -202,7 +194,7 @@
             // define handlers
             this.eventHandlers = {
                 onSelectionChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "ClientManagementList.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (listView && listView.winControl) {
                         var listControl = listView.winControl;
                         if (listControl.selection) {
@@ -255,13 +247,13 @@
                     Log.ret(Log.l.trace);
                 },
                 onItemInvoked: function (eventInfo) {
-                    Log.call(Log.l.trace, "ClientManagementList.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     Application.showDetail();
                     Log.ret(Log.l.trace);
                 },
                 onLoadingStateChanged: function (eventInfo) {
                     var i;
-                    Log.call(Log.l.trace, "ClientManagementList.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (listView && listView.winControl) {
                         Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
                         // single list selection
@@ -348,27 +340,8 @@
                     }
                     Log.ret(Log.l.trace);
                 },
-                onHeaderVisibilityChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "ClientManagementList.Controller.");
-                    if (eventInfo && eventInfo.detail) {
-                        var visible = eventInfo.detail.visible;
-                        if (visible) {
-                            var contentHeader = listView.querySelector(".content-header");
-                            if (contentHeader) {
-                                var halfCircle = contentHeader.querySelector(".half-circle");
-                                if (halfCircle && halfCircle.style) {
-                                    if (halfCircle.style.visibility === "hidden") {
-                                        halfCircle.style.visibility = "";
-                                        WinJS.UI.Animation.enterPage(halfCircle);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    Log.ret(Log.l.trace);
-                },
                 onFooterVisibilityChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "ClientManagementList.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (eventInfo && eventInfo.detail) {
                         progress = listView.querySelector(".list-footer .progress");
                         counter = listView.querySelector(".list-footer .counter");
@@ -384,11 +357,11 @@
                             AppData.setErrorMsg(that.binding);
                             var nextUrl = that.nextUrl;
                             //that.nextUrl = null;
-                            Log.print(Log.l.trace, "calling select ClientManagementList.employeeView...");
+                            Log.print(Log.l.trace, "calling select fairMandantView...");
                             ClientManagementList.fairMandantView.selectNext(function (json) {
                                 // this callback will be called asynchronously
                                 // when the response is available
-                                Log.print(Log.l.trace, "EmpList.employeeView: success!");
+                                Log.print(Log.l.trace, "select fairMandantView: success!");
                                 // employeeView returns object already parsed from json file in response
                                 if (json && json.d && json.d.results.length > 0) {
                                     that.nextUrl = ClientManagementList.fairMandantView.getNextUrl(json);
@@ -401,6 +374,7 @@
                             }, function (errorResponse) {
                                 // called asynchronously if an error occurs
                                 // or server returns response with an error status.
+                                Log.print(Log.l.error, "select fairMandantView: error!");
                                 AppData.setErrorMsg(that.binding, errorResponse);
                                 if (progress && progress.style) {
                                     progress.style.display = "none";
@@ -435,7 +409,7 @@
             }
 
             var loadData = function (recordId) {
-                Log.call(Log.l.trace, "ClientManagementList.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 that.loading = true;
                 progress = listView.querySelector(".list-footer .progress");
                 counter = listView.querySelector(".list-footer .counter");
@@ -450,7 +424,7 @@
                     return ClientManagementList.fairMandantView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
-                        Log.print(Log.l.trace, "ClientManagementList: success!");
+                        Log.print(Log.l.trace, "select fairMandantView: success!");
                         // employeeView returns object already parsed from json file in response
                         if (!recordId) {
                             if (json && json.d && json.d.results.length > 0) {
@@ -496,6 +470,7 @@
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
+                        Log.print(Log.l.error, "select fairMandantView: error!");
                         AppData.setErrorMsg(that.binding, errorResponse);
                         progress = listView.querySelector(".list-footer .progress");
                         counter = listView.querySelector(".list-footer .counter");
@@ -517,7 +492,7 @@
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
             }).then(function () {
-                Log.print(Log.l.trace, "Record selected");
+                Log.print(Log.l.trace, "Data loaded");
             });
             Log.ret(Log.l.trace);
         })
