@@ -14,10 +14,11 @@
     "use strict";
 
     var nav = WinJS.Navigation;
+    var namespaceName = "EmployeeGenPWList";
 
     WinJS.Namespace.define("EmployeeGenPWList", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
-            Log.call(Log.l.trace, "EmployeeGenPWList.Controller.");
+            Log.call(Log.l.trace, namespaceName + ".Controller.");
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
                 veranstaltungId: 0,
@@ -52,17 +53,8 @@
                 }
             }
 
-            var background = function (index) {
-                if (index % 2 === 0) {
-                    return 1;
-                } else {
-                    return null;
-                }
-            };
-            this.background = background;
-
             var setInitialHeaderTextValue = function () {
-                Log.print(Log.l.trace, "Setting up initial header texts and value shown in header of table");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 //text part
                 that.binding.dataEmployeegenpwlistHeaderText.Name = getResourceText("employeegenpwlist.name");
                 that.binding.dataEmployeegenpwlistHeaderText.Login = getResourceText("employeegenpwlist.login");
@@ -74,7 +66,8 @@
                 that.binding.dataEmployeegenpwlistHeaderValue.Login = 2;
                 that.binding.dataEmployeegenpwlistHeaderValue.GenPassword = 3;// 35
                 that.binding.dataEmployeegenpwlistHeaderValue.Barcode = 4;
-                
+                Log.ret(Log.l.trace);
+                return WinJS.Promise.as();
             }
             this.setInitialHeaderTextValue = setInitialHeaderTextValue;
 
@@ -188,7 +181,7 @@
             this.generateQRCodes = generateQRCodes;
 
             var loadNextUrl = function () {
-                Log.call(Log.l.trace, "LocalEvents.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 if (that.employeePWListdata && that.nextUrl) {
                     that.loading = true;
                     AppData.setErrorMsg(that.binding);
@@ -218,8 +211,8 @@
                         AppData.setErrorMsg(that.binding, errorResponse);
                         that.loading = false;
                     },
-                        null,
-                        nextUrl);
+                    null,
+                    nextUrl);
                 } else {
                     that.loading = false;
                 }
@@ -230,14 +223,14 @@
             // define handlers
             this.eventHandlers = {
                 clickBack: function (event) {
-                    Log.call(Log.l.trace, "LocalEvents.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done();
                     }
                     Log.ret(Log.l.trace);
                 },
                 clickExport: function (event) {
-                    Log.call(Log.l.trace, "Reporting.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var exporter = new ExportXlsx.ExporterClass();
                     var dbView = EmployeeGenPWList.employeePWExportView;
                     var fileName = "Passworte";
@@ -252,12 +245,12 @@
                     Log.ret(Log.l.trace);
                 },
                 clickChangeUserState: function (event) {
-                    Log.call(Log.l.trace, "Employee.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     Application.navigateById("userinfo", event);
                     Log.ret(Log.l.trace);
                 },
                 clickTopButton: function (event) {
-                    Log.call(Log.l.trace, "Contact.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var anchor = document.getElementById("menuButton");
                     var menu = document.getElementById("menu1").winControl;
                     var placement = "bottom";
@@ -265,7 +258,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickLogoff: function (event) {
-                    Log.call(Log.l.trace, "Account.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     AppData._persistentStates.privacyPolicyFlag = false;
                     if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
                         AppHeader.controller.binding.userData = {};
@@ -277,7 +270,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickGotoPublish: function (event) {
-                    Log.call(Log.l.trace, "EventGenSettings.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     Application.navigateById("publish", event);
                     Log.ret(Log.l.trace);
                 }
@@ -299,57 +292,58 @@
             this.resultConverter = resultConverter;
 
             var loadData = function () {
-                Log.call(Log.l.trace, "EmployeeGenPWList.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 that.loading = true;
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function() {
+                    Log.print(Log.l.trace, "calling select employeePWView...");
                     return EmployeeGenPWList.employeePWView.select(function(json) {
-                            // this callback will be called asynchronously
-                            // when the response is available
-                            AppData.setErrorMsg(that.binding);
-                            Log.print(Log.l.trace, "EmployeeGenPWList: success!");
-                            // employeeView returns object already parsed from json file in response
-                            if (json && json.d && json.d.results) {
-                                that.nextUrl = EmployeeGenPWList.employeePWView.getNextUrl(json);
-                                var results = json.d.results;
-                                results.forEach(function(item, index) {
-                                    that.resultConverter(item, index);
-                                });
-                                that.binding.count = results.length;
+                        // this callback will be called asynchronously
+                        // when the response is available
+                        AppData.setErrorMsg(that.binding);
+                        Log.print(Log.l.trace, "select employeePWView: success!");
+                        // employeeView returns object already parsed from json file in response
+                        if (json && json.d && json.d.results) {
+                            that.nextUrl = EmployeeGenPWList.employeePWView.getNextUrl(json);
+                            var results = json.d.results;
+                            results.forEach(function(item, index) {
+                                that.resultConverter(item, index);
+                            });
+                            that.binding.count = results.length;
 
-                                that.employeePWListdata = new WinJS.Binding.List(results);
+                            that.employeePWListdata = new WinJS.Binding.List(results);
 
-                                if (tableBody.winControl) {
-                                    // add ListView dataSource
-                                    tableBody.winControl.data = that.employeePWListdata;
-                                }
-                                Log.print(Log.l.trace, "Data loaded");
-                                //that.addBodyRowHandlers();
-                                //that.addHeaderRowHandlers();
-                                that.generateQRCodes();
-                                that.setCellTitle();
-                            } else {
-                                that.binding.count = 0;
-                                that.nextUrl = null;
-                                that.employeePWListdata = null;
-                                if (tableBody.winControl) {
-                                    // add ListView dataSource
-                                    tableBody.winControl.data = null;
-                                }
-                                that.loading = false;
+                            if (tableBody.winControl) {
+                                // add ListView dataSource
+                                tableBody.winControl.data = that.employeePWListdata;
                             }
-                        },
-                        function(errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
+                            Log.print(Log.l.trace, "Data loaded");
+                            //that.addBodyRowHandlers();
+                            //that.addHeaderRowHandlers();
+                            that.generateQRCodes();
+                            that.setCellTitle();
+                        } else {
+                            that.binding.count = 0;
+                            that.nextUrl = null;
+                            that.employeePWListdata = null;
+                            if (tableBody.winControl) {
+                                // add ListView dataSource
+                                tableBody.winControl.data = null;
+                            }
                             that.loading = false;
-                        },
-                        {
-                            GenPassword: ['NOT NULL'],
-                            VeranstaltungID: AppData.getRecordId("Veranstaltung")
                         }
-                    );
+                    },
+                    function(errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        Log.print(Log.l.error, "select employeePWView: error!");
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                        that.loading = false;
+                    },
+                    {
+                        GenPassword: ['NOT NULL'],
+                        VeranstaltungID: AppData.getRecordId("Veranstaltung")
+                    });
                 });
                 Log.ret(Log.l.trace);
                 return ret;
@@ -360,7 +354,7 @@
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.setInitialHeaderTextValue();
             }).then(function () {
-                Log.print(Log.l.trace, "Binding wireup page complete");
+                Log.print(Log.l.trace, "setInitialHeaderTextValue done");
                 return that.loadData();
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
@@ -368,9 +362,9 @@
             });
             Log.ret(Log.l.trace);
         }, {
-                nextUrl: null,
-                loading: false,
-                employeePWListdata: null
-            })
+            nextUrl: null,
+            loading: false,
+            employeePWListdata: null
+        })
     });
 })();

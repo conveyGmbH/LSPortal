@@ -11,13 +11,13 @@
 
 (function () {
     "use strict";
+    var namespaceName = "EmployeeVisitorFlow";
     WinJS.Namespace.define("EmployeeVisitorFlow", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
-            Log.call(Log.l.trace, "EmployeeVisitorFlow.Controller.");
+            Log.call(Log.l.trace, namespaceName + ".Controller.");
             Application.Controller.apply(this, [pageElement, {
-                dataEmployee: getEmptyDefaultValue(EmployeeVisitorFlow.employeeView.defaultValue),
-                restriction: getEmptyDefaultValue(EmployeeVisitorFlow.employeeView.defaultRestriction),
-                InitLandItem: { InitLandID: 0, TITLE: "" }
+                dataEmployee: getEmptyDefaultValue(EmployeeVisitorFlow.benutzerView.defaultValue)/*,
+                InitLandItem: { InitLandID: 0, TITLE: "" }*/
             }, commandList]);
 
             var that = this;
@@ -31,6 +31,7 @@
             this.resultConverter = resultConverter;
 
             var setDataEmployee = function (newDataEmployee) {
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var prevNotifyModified = AppBar.notifyModified;
                 AppBar.notifyModified = false;
                 that.resultConverter(newDataEmployee);
@@ -38,6 +39,7 @@
                 AppBar.modified = false;
                 AppBar.notifyModified = prevNotifyModified;
                 AppBar.triggerDisableHandlers();
+                Log.ret(Log.l.trace);
             }
             this.setDataEmployee = setDataEmployee;
             
@@ -51,7 +53,7 @@
             this.setInitLandItem = setInitLandItem;
 
             var loadInitSelection = function () {
-                Log.call(Log.l.trace, "Contact.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 if (typeof that.binding.dataEmployee.BenutzerVIEWID !== "undefined") {
                     var map, results, curIndex;
                     if (typeof that.binding.dataEmployee.INITLandID !== "undefined") {
@@ -72,7 +74,7 @@
             this.loadInitSelection = loadInitSelection;*/
 
             var getRecordId = function () {
-                Log.call(Log.l.trace, "Employee.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var recordId = that.binding.dataEmployee && that.binding.dataEmployee.BenutzerVIEWID;
                 if (!recordId) {
                     var master = Application.navigator.masterControl;
@@ -86,39 +88,39 @@
             this.getRecordId = getRecordId;
 
             var popReminder = function(data) {
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "data=" + data);
                 if (data) {
                     var confirmTitle = getResourceText("employeeVisitorFlow.reminder");
-                    confirm(confirmTitle,
-                        function(result) {
-                            if (result) {
-                                Log.print(Log.l.trace, "clickDelete: mail choice OK");
-                                var master = Application.navigator.masterControl;
-                                if (master && master.controller && master.controller.binding) {
-                                    return master.controller.selectRecordId(that.binding.dataEmployee.BenutzerVIEWID);
-                                }
+                    confirm(confirmTitle, function(result) {
+                        if (result) {
+                            Log.print(Log.l.trace, "reminder: choice OK");
+                            var master = Application.navigator.masterControl;
+                            if (master && master.controller && master.controller.binding) {
+                                master.controller.selectRecordId(that.binding.dataEmployee.BenutzerVIEWID);
                             }
-                        });
-                            } else {
-                                Log.print(Log.l.trace, "clickDelete: mail choice CANCEL");
-                                var master = Application.navigator.masterControl;
-                                if (master && master.controller && master.controller.binding) {
-                                    return master.controller.selectRecordId(that.binding.dataEmployee.BenutzerVIEWID);
-                                }
-                            }
+                        }
+                    });
+                } else {
+                    var master = Application.navigator.masterControl;
+                    if (master && master.controller && master.controller.binding) {
+                        master.controller.selectRecordId(that.binding.dataEmployee.BenutzerVIEWID);
+                    }
+                }
+                Log.ret(Log.l.trace);
             }
             this.popReminder = popReminder;
 
             // define handlers
             this.eventHandlers = {
                 clickBack: function (event) {
-                    Log.call(Log.l.trace, "Employee.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (!Application.showMaster() && WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done();
                     }
                     Log.ret(Log.l.trace);
                 },
                 clickOk: function (event) {
-                    Log.call(Log.l.trace, "Employee.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     that.saveData(function (response) {
                         Log.print(Log.l.trace, "employee saved");
                         var master = Application.navigator.masterControl;
@@ -135,17 +137,17 @@
                     Log.ret(Log.l.trace);
                 },
                 clickChangeUserState: function (event) {
-                    Log.call(Log.l.trace, "Employee.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     Application.navigateById("userinfo", event);
                     Log.ret(Log.l.trace);
                 },
                 clickGotoPublish: function (event) {
-                    Log.call(Log.l.trace, "Employee.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     Application.navigateById("publish", event);
                     Log.ret(Log.l.trace);
                 },
                 clickLogoff: function (event) {
-                    Log.call(Log.l.trace, "Account.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     AppData._persistentStates.privacyPolicyFlag = false;
                     if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
                         AppHeader.controller.binding.userData = {};
@@ -157,7 +159,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickTopButton: function (event) {
-                    Log.call(Log.l.trace, "Contact.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var anchor = document.getElementById("menuButton");
                     var menu = document.getElementById("menu1").winControl;
                     var placement = "bottom";
@@ -185,7 +187,7 @@
             this.resultCrVBereichConverter = resultCrVBereichConverter;
 
             var loadData = function (recordId) {
-                Log.call(Log.l.trace, "Employee.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 var id = AppData.getRecordId("MitarbeiterVIEW_20471");
                 if (id) {
@@ -211,7 +213,7 @@
                 }).then(function () {
                     Log.print(Log.l.trace, "calling select CR_V_Bereich_ODataVIEW...");
                     return EmployeeVisitorFlow.CR_V_Bereich_ODataVIEW.select(function (json) {
-                        Log.print(Log.l.trace, "CR_V_Bereich_ODataVIEW: success!");
+                        Log.print(Log.l.trace, "select CR_V_Bereich_ODataVIEW: success!");
                         if (json && json.d && json.d.results) {
                             var results = [
                                 { CR_V_BereichVIEWID: 0, TITLE: "" }
@@ -226,6 +228,7 @@
                         }
                     }, function (errorResponse) {
                         // ignore that
+                        Log.print(Log.l.error, "select CR_V_Bereich_ODataVIEW: error!");
                         AppData.setErrorMsg(that.binding, errorResponse);
                     });
                 })/*.then(function () {
@@ -257,10 +260,10 @@
                 })*/.then(function () {
                     if (recordId) {
                         //load of format relation record data
-                        Log.print(Log.l.trace, "calling select employeeView...");
+                        Log.print(Log.l.trace, "calling select benutzerView...");
                         return EmployeeVisitorFlow.benutzerView.select(function (json) {
                             AppData.setErrorMsg(that.binding);
-                            Log.print(Log.l.trace, "employeeView: success!");
+                            Log.print(Log.l.trace, "select benutzerView: success!");
                             if (json && json.d) {
                                 // now always edit!
                                 that.setDataEmployee(json.d);
@@ -270,6 +273,7 @@
                                 //loadInitSelection();
                             }
                         }, function (errorResponse) {
+                            Log.print(Log.l.error, "select benutzerView: error!");
                             AppData.setErrorMsg(that.binding, errorResponse);
                         }, recordId);
                     } else {
@@ -286,7 +290,7 @@
 
             // save data
             var saveData = function (complete, error) {
-                Log.call(Log.l.trace, "Employee.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret;
                 if (typeof that.binding.dataEmployee.CR_V_BereichID === "string") {
@@ -315,26 +319,35 @@
                     var recordId = getRecordId();
                     if (recordId) {
                         AppBar.busy = true;
+                        Log.print(Log.l.trace, "calling update benutzerView...");
                         ret = EmployeeVisitorFlow.benutzerView.update(function (response) {
                             AppBar.busy = false;
                             // called asynchronously if ok
-                            Log.print(Log.l.info, "employeeData update: success!");
-                            complete(response);
+                            Log.print(Log.l.info, "update benutzerView: success!");
+                            if (typeof complete === "function") {
+                                complete(response);
+                            }
                             AppBar.modified = false;
                         }, function (errorResponse) {
                             AppBar.busy = false;
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
+                            Log.print(Log.l.error, "update benutzerView: error!");
                             AppData.setErrorMsg(that.binding, errorResponse);
-                            //error(errorResponse);
-                            ;
+                            if (typeof error === "function") {
+                                error(response);
+                            }
                         }, recordId, dataEmployee);
                     } else {
                         Log.print(Log.l.info, "not supported");
-                        ret = WinJS.Promise.as();
+                        ret = new WinJS.Promise.as().then(function () {
+                            if (typeof complete === "function") {
+                                complete(dataEmployee);
+                            }
+                        });
                     }
                 } else if (AppBar.busy) {
-                    ret = WinJS.Promise.timeout(100).then(function () {
+                    ret = WinJS.Promise.timeout(250).then(function () {
                         return that.saveData(complete, error);
                     });
                 } else {
@@ -353,8 +366,8 @@
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData(getRecordId());
             }).then(function () {
-                AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Data loaded");
+                AppBar.notifyModified = true;
             });
             Log.ret(Log.l.trace);
         })

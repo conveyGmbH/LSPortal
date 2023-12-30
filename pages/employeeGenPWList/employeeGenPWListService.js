@@ -5,6 +5,7 @@
 
 (function () {
     "use strict";
+    var namespaceName = "EmployeeGenPWList";
 
     WinJS.Namespace.define("EmployeeGenPWList", {
         _employeePWView: {
@@ -16,7 +17,7 @@
         },
         employeePWView: {
             select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "EmployeeGenPWList.");
+                Log.call(Log.l.trace, namespaceName + ".employeePWView.", "restriction=" + (restriction ? JSON.stringify(restriction) : ""));
                 var ret = EmployeeGenPWList._employeePWView.select(complete, error, restriction, {
                     ordered: true
                 });
@@ -25,13 +26,13 @@
                 return ret;
             },
             getNextUrl: function (response) {
-                Log.call(Log.l.trace, "EmployeeGenPWList.");
+                Log.call(Log.l.trace, namespaceName + ".employeePWView.");
                 var ret = EmployeeGenPWList._employeePWView.getNextUrl(response);
                 Log.ret(Log.l.trace);
                 return ret;
             },
             selectNext: function (complete, error, response, nextUrl) {
-                Log.call(Log.l.trace, "EmployeeGenPWList.");
+                Log.call(Log.l.trace, namespaceName + ".employeePWView.");
                 var ret = EmployeeGenPWList._employeePWView.selectNext(complete, error, response, nextUrl);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
@@ -45,23 +46,22 @@
         },
         employeePWExportView: {
             select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "EmployeeGenPWList.");
+                Log.call(Log.l.trace, namespaceName + ".employeePWExportView.", "restriction=" + (restriction ? JSON.stringify(restriction) : ""));
                 var ret = EmployeeGenPWList._employeePWExportView.select(complete, error, restriction, {
-                    ordered: true,
-                    orderAttribute: "MitarbeiterVIEWID"
+                    ordered: true
                 });
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
             },
             getNextUrl: function (response) {
-                Log.call(Log.l.trace, "EmployeeGenPWList.");
+                Log.call(Log.l.trace, namespaceName + ".employeePWExportView.");
                 var ret = EmployeeGenPWList._employeePWExportView.getNextUrl(response);
                 Log.ret(Log.l.trace);
                 return ret;
             },
             selectNext: function (complete, error, response, nextUrl) {
-                Log.call(Log.l.trace, "EmployeeGenPWList.");
+                Log.call(Log.l.trace, namespaceName + ".employeePWExportView.");
                 var ret = EmployeeGenPWList._employeePWExportView.selectNext(complete, error, response, nextUrl);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);

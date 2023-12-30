@@ -13,9 +13,10 @@
 
 (function () {
     "use strict";
+    var namespaceName = "Employee";
     WinJS.Namespace.define("Employee", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
-            Log.call(Log.l.trace, "Employee.Controller.");
+            Log.call(Log.l.trace, namespaceName + ".Controller.");
             Application.Controller.apply(this, [pageElement, {
                 actualEventID: 0,
                 dataEmployee: getEmptyDefaultValue(Employee.employeeView.defaultValue),
@@ -50,7 +51,7 @@
             this.resultConverter = resultConverter;
 
             var setDataEmployee = function (newDataEmployee) {
-                Log.call(Log.l.trace, "Employee.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var prevNotifyModified = AppBar.notifyModified;
                 AppBar.notifyModified = false;
                 prevLogin = newDataEmployee.Login;
@@ -64,45 +65,50 @@
             this.setDataEmployee = setDataEmployee;
 
             var getLangSpecErrorMsg = function (resultmessageid, errorMsg) {
-                Log.call(Log.l.trace, "Employee.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var lang = AppData.getLanguageId();
                 AppData.setErrorMsg(that.binding);
+                Log.print(Log.l.trace, "calling PRC_GetLangText...");
                 AppData.call("PRC_GetLangText", {
                     pTextID: resultmessageid,
                     pLanguageID: lang
                 }, function (json) {
-                    Log.print(Log.l.info, "call success! ");
+                    Log.print(Log.l.info, "call PRC_GetLangText: success! ");
                     errorMsg.data.error.message.value = json.d.results[0].ResultText;
                     AppData.setErrorMsg(that.binding, errorMsg);
                 }, function (error) {
-                    Log.print(Log.l.error, "call error");
-
+                    Log.print(Log.l.error, "call PRC_GetLangText: error");
                 });
                 Log.ret(Log.l.trace);
             }
             this.getLangSpecErrorMsg = getLangSpecErrorMsg;
 
             var getErrorMsgFromErrorStack = function (errorMsg) {
-                Log.call(Log.l.trace, "Employee.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
+                Log.print(Log.l.trace, "calling PRC_GetErrorStack...");
                 AppData.call("PRC_GetErrorStack", {
                 }, function (json) {
-                    Log.print(Log.l.info, "call success! ");
+                    Log.print(Log.l.info, "call PRC_GetErrorStack: success! ");
                     AppBar.modified = false;
-                    if (json.d.results[0].ResultMessageID > 0) {
+                    if (json && json.d && json.d.results && json.d.results.length > 0) {
+                        Log.print(Log.l.info, "ResultCode=" + json.d.results[0].ResultCode);
                         errorMsg.data.error.code = json.d.results[0].ResultCode;
-                        errorMsg.data.error.message.value = that.getLangSpecErrorMsg(json.d.results[0].ResultMessageID, errorMsg);
-                        Log.print(Log.l.info, "call success! ");
-                    } else {
-                        errorMsg.data.error.message.value = json.d.results[0].ResultMessage;
-                        errorMsg.data.error.code = json.d.results[0].ResultCode;
+                        if (json.d.results[0].ResultMessageID > 0) {
+                            Log.print(Log.l.info, "ResultMessageID=" + json.d.results[0].ResultMessageID);
+                            errorMsg.data.error.message.value =
+                                that.getLangSpecErrorMsg(json.d.results[0].ResultMessageID, errorMsg);
+                        } else {
+                            Log.print(Log.l.info, "ResultMessage=" + json.d.results[0].ResultMessage);
+                            errorMsg.data.error.message.value = json.d.results[0].ResultMessage;
+                        }
                         AppData.setErrorMsg(that.binding, errorMsg);
-                        Log.print(Log.l.info, "call success! ");
+                    } else {
+                        Log.print(Log.l.info, "PRC_GetErrorStack returned no data!");
                     }
                 }, function (error) {
-                    Log.print(Log.l.error, "call error");
+                    Log.print(Log.l.error, "call PRC_GetErrorStack: error");
                     AppBar.modified = false;
-
                 });
                 Log.ret(Log.l.trace);
             }
@@ -114,7 +120,7 @@
             this.saveRestriction = saveRestriction;
 
             var getRecordId = function () {
-                Log.call(Log.l.trace, "Employee.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var recordId = that.binding.dataEmployee && that.binding.dataEmployee.MitarbeiterVIEWID;
                 if (!recordId) {
                     var master = Application.navigator.masterControl;
@@ -129,9 +135,9 @@
 
 
             var deleteData = function (complete, error) {
-                Log.call(Log.l.trace, "Employee.Controller.");
-                AppData.setErrorMsg(that.binding);
                 var ret;
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
+                AppData.setErrorMsg(that.binding);
                 var recordId = getRecordId();
                 if (recordId) {
                     AppBar.busy = true;
@@ -151,7 +157,9 @@
                     }, recordId);
                 } else {
                     var err = { status: 0, statusText: "no record selected" };
-                    error(err);
+                    if (typeof error === "function") {
+                        error(err);
+                    }
                     ret = WinJS.Promise.as();
                 }
                 Log.ret(Log.l.trace);
@@ -160,7 +168,7 @@
             this.deleteData = deleteData;
 
             var checkingLicence = function (recordId) {
-                Log.call(Log.l.trace, "Employee.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret = Employee.licenceBView.select(function (json) {
                     // this callback will be called asynchronously
@@ -191,7 +199,6 @@
                         that.binding.disableLoginName = true;
                     }
                     AppBar.triggerDisableHandlers();
-                    return WinJS.Promise.as();
                 }, function (errorResponse) {
                     Log.print(Log.l.error, "error selecting mailerzeilen");
                     AppData.setErrorMsg(that.binding, errorResponse);
@@ -202,7 +209,7 @@
             this.checkingLicence = checkingLicence;
 
             var checkingReadonlyFlag = function () {
-                Log.call(Log.l.trace, "Employee.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 if (AppHeader.controller.binding.userData.SiteAdmin) {
                     that.binding.disableLoginFirstPart = false;
                     that.binding.disableDomain = false;
@@ -219,23 +226,24 @@
             // define handlers
             this.eventHandlers = {
                 clickBack: function (event) {
-                    Log.call(Log.l.trace, "Employee.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (!Application.showMaster() && WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done();
                     }
                     Log.ret(Log.l.trace);
                 },
                 clickNew: function (event) {
-                    Log.call(Log.l.trace, "Employee.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var newEmployeeId = null;
                     that.saveData(function (response) {
                         AppBar.busy = true;
                         Log.print(Log.l.trace, "employee saved");
                         var newEmployee = copyByValue(Employee.employeeView.defaultValue);
+                        Log.print(Log.l.info, "calling insert employeeView...");
                         return Employee.employeeView.insert(function (json) {
                             AppBar.busy = false;
                             // this callback will be called asynchronously when the response is available
-                            Log.print(Log.l.info, "employeeView insert: success!");
+                            Log.print(Log.l.info, "insert employeeView: success!");
                             // employeeView returns object already parsed from json file in response
                             var employee = null;
                             that.binding.noLicence = null;
@@ -253,7 +261,7 @@
                                 newEmployeeId = that.binding.dataEmployee.MitarbeiterVIEWID;
                             }
                         }, function (errorResponse) {
-                            Log.print(Log.l.error, "error inserting employee");
+                            Log.print(Log.l.error, "insert employeeView: error!");
                             AppBar.busy = false;
                             AppData.setErrorMsg(that.binding, errorResponse);
                         }, newEmployee).then(function () {
@@ -271,7 +279,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickDelete: function (event) {
-                    Log.call(Log.l.trace, "Employee.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var confirmTitle = getResourceText("employee.questionDelete");
                     confirm(confirmTitle, function (result) {
                         if (result) {
@@ -304,7 +312,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickOk: function (event) {
-                    Log.call(Log.l.trace, "Employee.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     that.saveData(function (response) {
                         Log.print(Log.l.trace, "employee saved");
                         that.loadData();
@@ -314,7 +322,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickExport: function (event) {
-                    Log.call(Log.l.trace, "Reporting.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var exporter = new ExportXlsx.ExporterClass();
                     var dbView = EmpList.employeePWExportView;
                     var fileName = "Passworte";
@@ -329,17 +337,17 @@
                     Log.ret(Log.l.trace);
                 },
                 clickChangeUserState: function (event) {
-                    Log.call(Log.l.trace, "Employee.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     Application.navigateById("userinfo", event);
                     Log.ret(Log.l.trace);
                 },
                 clickGotoPublish: function (event) {
-                    Log.call(Log.l.trace, "Employee.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     Application.navigateById("publish", event);
                     Log.ret(Log.l.trace);
                 },
                 changeLogin: function (event) {
-                    Log.call(Log.l.trace, "Employee.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (event.currentTarget && AppBar.notifyModified) {
                         that.binding.dataEmployee.Password = "";
                         that.binding.dataEmployee.Password2 = "";
@@ -355,7 +363,7 @@
                     Log.ret(Log.l.trace);
                 },
                 changeLogInNameBeforeAtSymbol: function (event) {
-                    Log.call(Log.l.trace, "Employee.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (event.currentTarget && AppBar.notifyModified) {
                         that.binding.dataEmployee.Password = "";
                         that.binding.dataEmployee.Password2 = "";
@@ -370,7 +378,7 @@
                     Log.ret(Log.l.trace);
                 },
                 changeLogInNameAfterAtSymbol: function (event) {
-                    Log.call(Log.l.trace, "Employee.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (event.currentTarget && AppBar.notifyModified) {
                         that.binding.dataEmployee.Password = "";
                         that.binding.dataEmployee.Password2 = "";
@@ -379,14 +387,14 @@
                     Log.ret(Log.l.trace);
                 },
                 changePassword: function (event) {
-                    Log.call(Log.l.trace, "Employee.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (AppBar.notifyModified) {
                         that.binding.dataEmployee.Password2 = "";
                     }
                     Log.ret(Log.l.trace);
                 },
                 changeSearchField: function (event) {
-                    Log.call(Log.l.trace, "Employee.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     that.binding.restriction.Vorname = [];
                     that.binding.restriction.Nachname = [];
                     that.binding.restriction.Login = [];
@@ -412,7 +420,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickOrderFirstname: function (event) {
-                    Log.call(Log.l.trace, "Employee.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     that.binding.restriction.OrderAttribute = "Vorname";
                     if (event.target.textContent === getResourceText("employee.firstNameAsc")) {
                         that.binding.restriction.OrderDesc = true;
@@ -427,7 +435,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickOrderLastname: function (event) {
-                    Log.call(Log.l.trace, "Employee.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     that.binding.restriction.OrderAttribute = "Nachname";
                     if (event.target.textContent === getResourceText("employee.nameAsc")) {
                         that.binding.restriction.OrderDesc = true;
@@ -442,7 +450,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickOrderLicence: function (event) {
-                    Log.call(Log.l.trace, "Employee.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     that.binding.restriction.OrderAttribute = "NichtLizenzierteApp";
                     if (event.target.textContent === getResourceText("employee.licenceAsc")) {
                         that.binding.restriction.OrderDesc = true;
@@ -457,7 +465,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickTopButton: function (event) {
-                    Log.call(Log.l.trace, "Employee.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var anchor = document.getElementById("menuButton");
                     var menu = document.getElementById("menu1").winControl;
                     var placement = "bottom";
@@ -465,7 +473,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickLogoff: function (event) {
-                    Log.call(Log.l.trace, "Employee.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     AppData._persistentStates.privacyPolicyFlag = false;
                     if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
                         AppHeader.controller.binding.userData = {
@@ -476,7 +484,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickChangeLogin: function (event) {
-                    Log.call(Log.l.trace, "Employee.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var confirmTitle = getResourceText("employee.changeUserLogin");
                     return confirm(confirmTitle, function (result) {
                         // called asynchronously if user-choice
@@ -536,7 +544,7 @@
             };
 
             var loadData = function (recordId) {
-                Log.call(Log.l.trace, "Employee.Controller.", "recordId=" + recordId);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
                 AppData.setErrorMsg(that.binding);
                 if (!recordId) {
                     recordId = getRecordId();
@@ -600,7 +608,7 @@
             // save data
             var saveData = function (complete, error) {
                 var errorMessage;
-                Log.call(Log.l.trace, "Employee.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 var recordId = getRecordId();
                 var dataEmployee = that.binding.dataEmployee;
@@ -639,13 +647,15 @@
                     return WinJS.Promise.wrapError(errorMessage);
                 }
                 AppBar.busy = true;
+                Log.print(Log.l.trace, "calling update employeeView...");
                 var ret = Employee.employeeView.update(function (response) {
                     // called asynchronously if ok
-                    Log.print(Log.l.info, "employeeData update: success!");
+                    Log.print(Log.l.info, "update employeeData: success!");
                 }, function (errorResponse) {
                     AppBar.busy = false;
                     // called asynchronously if an error occurs
                     // or server returns response with an error status.
+                    Log.print(Log.l.error, "update employeeData: error!");
                     AppData.getErrorMsgFromErrorStack(errorResponse);
                     //AppData.setErrorMsg(that.binding, errorResponse);
                     if (typeof error === "function") {
@@ -670,11 +680,12 @@
                     } else {
                         var empRolesFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("empRoles"));
                         if (empRolesFragmentControl && empRolesFragmentControl.controller) {
+                            Log.print(Log.l.trace, "calling empRolesFragmentControl.controller.saveData...");
                             return empRolesFragmentControl.controller.saveData(function () {
-                                Log.print(Log.l.trace, "saveData completed...");
+                                Log.print(Log.l.trace, "empRolesFragmentControl.controller.saveData completed!");
                             }, function (errorResponse) {
                                 AppBar.busy = false;
-                                Log.print(Log.l.error, "saveData error...");
+                                Log.print(Log.l.error, "empRolesFragmentControl.controller.saveData error!");
                                 AppData.setErrorMsg(that.binding, errorResponse);
                             });
                         } else {
@@ -712,8 +723,8 @@
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
             }).then(function () {
-                AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Data loaded");
+                AppBar.notifyModified = true;
             });
             Log.ret(Log.l.trace);
         })
