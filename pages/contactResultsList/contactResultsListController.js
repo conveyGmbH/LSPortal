@@ -12,10 +12,11 @@
     "use strict";
 
     var nav = WinJS.Navigation;
+    var namespaceName = "ContactResultsList";
 
     WinJS.Namespace.define("ContactResultsList", {
         Controller: WinJS.Class.derive(Application.RecordsetController, function Controller(pageElement, commandList, isMaster) {
-            Log.call(Log.l.trace, "ContactResultsList.Controller.");
+            Log.call(Log.l.trace, namespaceName + ".Controller.");
             // ListView control
             var listView = pageElement.querySelector("#contactResultsList.listview");
 
@@ -30,22 +31,21 @@
             var layout = null;
 
             this.dispose = function () {
-                if (listView && listView.winControl) {
-                    listView.winControl.itemDataSource = null;
-                }
                 ContactResultsList._prevJson = null;
                 ContactResultsList._collator = null;
             }
 
             var getEventId = function () {
-                Log.print(Log.l.trace, "ContactResultsList.getEventId returned eventId=" + ContactResultsList._eventId);
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
+                Log.ret(Log.l.trace, ContactResultsList._eventId);
                 return ContactResultsList._eventId;
             }
             this.getEventId = getEventId;
 
             var setEventId = function (value) {
-                Log.print(Log.l.trace, "ContactResultsList.setEventId eventId=" + value);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "eventId=" + value);
                 ContactResultsList._eventId = value;
+                Log.ret(Log.l.trace);
             }
             this.setEventId = setEventId;
 
@@ -103,14 +103,14 @@
             // define handlers
             this.eventHandlers = {
                 clickBack: function (event) {
-                    Log.call(Log.l.trace, "ContactResultsList.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done();
                     }
                     Log.ret(Log.l.trace);
                 },
                 changeSearchField: function (event) {
-                    Log.call(Log.l.trace, "ContactResultsList.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (event && event.currentTarget) {
                         that.binding.searchString = event.currentTarget.value;
                         that.loadData(that.binding.searchString);
@@ -118,7 +118,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickOrderBy: function(event) {
-                    Log.call(Log.l.trace, "ContactResultsList.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (event && event.currentTarget) {
                         if (event.currentTarget.id === ContactResultsList._orderAttribute) {
                             ContactResultsList._orderDesc = !ContactResultsList._orderDesc;
@@ -131,17 +131,17 @@
                     Log.ret(Log.l.trace);
                 },
                 clickChangeUserState: function (event) {
-                    Log.call(Log.l.trace, "ContactResultsList.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     Application.navigateById("userinfo", event);
                     Log.ret(Log.l.trace);
                 },
                 clickGotoPublish: function (event) {
-                    Log.call(Log.l.trace, "ContactResultsList.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     Application.navigateById("publish", event);
                     Log.ret(Log.l.trace);
                 },
                 onSelectionChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "ContactResultsList.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     that.selectionChanged().then(function () {
                         AppBar.triggerDisableHandlers();
                         if (that.getEventId()) {
@@ -154,7 +154,7 @@
                 },
                 onLoadingStateChanged: function (eventInfo) {
                     var i;
-                    Log.call(Log.l.trace, "ContactResultsList.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (listView && listView.winControl) {
                         Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
                         if (listView.winControl.loadingState === "itemsLoading") {
@@ -198,7 +198,7 @@
                     Log.ret(Log.l.trace);
                 },
                 onFooterVisibilityChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "ContactResultsList.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (eventInfo && eventInfo.detail) {
                         var visible = eventInfo.detail.visible;
                         if (visible && that.nextUrl) {
@@ -208,7 +208,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickTopButton: function (event) {
-                    Log.call(Log.l.trace, "ContactResultsList.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var anchor = document.getElementById("menuButton");
                     var menu = document.getElementById("menu1").winControl;
                     var placement = "bottom";
@@ -216,7 +216,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickLogoff: function (event) {
-                    Log.call(Log.l.trace, "ContactResultList.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     AppData._persistentStates.privacyPolicyFlag = false;
                     if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
                         AppHeader.controller.binding.userData = {};

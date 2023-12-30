@@ -5,6 +5,7 @@
 
 (function () {
     "use strict";
+    var namespaceName = "DashboardFN";
 
     WinJS.Namespace.define("DashboardFN", {
         _DOC3ExportPDF: {
@@ -14,13 +15,10 @@
         },
         DOC3ExportPDFView: {
             select: function(complete, error, restriction) {
-                Log.call(Log.l.trace, "StartPremium.");
-                var ret = DashboardFN._DOC3ExportPDF.select(complete,
-                    error,
-                    restriction,
-                    {
-                        ordered: false
-                    });
+                Log.call(Log.l.trace, namespaceName + ".DOC3ExportPDFView.");
+                var ret = DashboardFN._DOC3ExportPDF.select(complete, error, restriction, {
+                    ordered: false
+                });
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;

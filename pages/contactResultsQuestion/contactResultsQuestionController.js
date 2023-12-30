@@ -16,10 +16,11 @@
 
 (function () {
     "use strict";
+    var namespaceName = "ContactResultsQuestion";
 
     WinJS.Namespace.define("ContactResultsQuestion", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
-            Log.call(Log.l.trace, "ContactResultsQuestion.Controller.");
+            Log.call(Log.l.trace, namespaceName + ".Controller.");
             Application.Controller.apply(this, [pageElement, {
                 count: 0
             }, commandList]);
@@ -31,6 +32,7 @@
             this.docIds = null;
             this.selectQuestionIdxs = null;
             this.showHideModified = false;
+            this.mandatoryCalled = false;
 
             var hasIPhoneBug = false;
             if (navigator.appVersion && 
@@ -74,7 +76,7 @@
             this.hasDoc = hasDoc;
 
             var forceFlipViewLayout = function() {
-                Log.call(Log.l.trace, "ContactResultsQuestion.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 if (that.images && listView && listView.winControl) {
                     var pageControl = pageElement.winControl;
                     if (pageControl && !pageControl.inResize) {
@@ -105,7 +107,7 @@
             that.forceFlipViewLayout = forceFlipViewLayout;
             
             var addImage = function(json) {
-                Log.call(Log.l.trace, "ContactResultsQuestion.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 if (json && json.d) {
                     if (!that.images) {
                         // Now, we call WinJS.Binding.List to get the bindable list
@@ -147,7 +149,7 @@
             this.addImage = addImage;
 
             var scrollToRecordId = function (recordId) {
-                Log.call(Log.l.trace, "ContactResultsQuestion.Controller.", "recordId=" + recordId);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
                 if (that.loading) {
                     WinJS.Promise.timeout(50).then(function () {
                         that.scrollToRecordId(recordId);
@@ -169,7 +171,7 @@
             this.scrollToRecordId = scrollToRecordId;
 
             var selectRecordId = function (recordId) {
-                Log.call(Log.l.trace, "ContactResultsQuestion.Controller.", "recordId=" + recordId);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
                 if (recordId && listView && listView.winControl && listView.winControl.selection) {
                     for (var i = 0; i < that.questions.length; i++) {
                         var question = that.questions.getAt(i);
@@ -235,9 +237,6 @@
             var progress = null;
             var counter = null;
             var layout = null;
-
-            var maxLeadingPages = 0;
-            var maxTrailingPages = 0;
 
             var resultConverter = function (item, index) {
                 var keyValue, keyTitle, iStr, i;
@@ -627,7 +626,7 @@
             this.getFieldEntries = getFieldEntries;
 
             var mergeRecord = function (prevRecord, newRecord) {
-                Log.call(Log.l.u1, "ContactResultsQuestion.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var ret = false;
                 for (var prop in newRecord) {
                     if (newRecord.hasOwnProperty(prop)) {
@@ -637,14 +636,14 @@
                         }
                     }
                 }
-                Log.ret(Log.l.u1, ret);
+                Log.ret(Log.l.trace, ret);
                 return ret;
             }
             this.mergeRecord = mergeRecord;
 
             var saveData = function (complete, error) {
                 var ret = null;
-                Log.call(Log.l.trace, "ContactResultsQuestion.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 // standard call via modify
                 var recordId = that.prevRecId;
@@ -667,32 +666,38 @@
                     if (curScope) {
                         var newRecord = that.getFieldEntries(i, curScope.type);
                         if (that.mergeRecord(curScope, newRecord)) {
-                            Log.print(Log.l.trace, "save changes of recordId:" + recordId);
+                            Log.print(Log.l.trace, "save changes of recordId=" + recordId);
                             ret = ContactResultsQuestion.questionnaireView.update(function (response) {
                                 // called asynchronously if ok
-                                complete(response);
+                                if (typeof complete === "function") {
+                                    complete(response);
+                                }
                             }, function (errorResponse) {
                                 AppData.setErrorMsg(that.binding, errorResponse);
-                                error(errorResponse);
+                                if (typeof error === "function") {
+                                    error(errorResponse);
+                                }
                             }, recordId, curScope);
                         } else {
-                            Log.print(Log.l.trace, "no changes in recordId:" + recordId);
+                            Log.print(Log.l.trace, "no changes in recordId=" + recordId);
                         }
                     }
                 }
                 if (!ret) {
                     ret = new WinJS.Promise.as().then(function () {
-                        complete({});
+                        if (typeof complete === "function") {
+                            complete({});
+                        }
                     });
                 }
-                Log.ret(Log.l.u1, ret);
+                Log.ret(Log.l.trace, ret);
                 return ret;
             };
             this.saveData = saveData;
 
             var showConfirmBoxMandatory = function () {
                 var ret = false;
-                Log.call(Log.l.trace, "ContactResultsQuestion.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 for (var i = 0; i < that.questions.length; i++) {
                     var question = that.questions.getAt(i);
                     if (question &&
@@ -736,14 +741,14 @@
                         }
                     }
                 }
-                Log.ret(Log.l.u1);
+                Log.ret(Log.l.trace);
                 return ret;
             };
             this.showConfirmBoxMandatory = showConfirmBoxMandatory;
 
             var getNextDocId = function () {
                 var ret = null;
-                Log.call(Log.l.u1, "ContactResultsQuestion.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 if (that.docIds && that.docIds.length > 0) {
                     for (var i = 0; i < that.docIds.length; i++) {
                         var curId = that.docIds[i];
@@ -753,13 +758,13 @@
                         }
                     }
                 }
-                Log.ret(Log.l.u1, ret);
+                Log.ret(Log.l.trace, ret);
                 return ret;
             }
             this.getNextDocId = getNextDocId;
 
             var setNextDocId = function (docId) {
-                Log.call(Log.l.u1, "ContactResultsQuestion.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 if (that.docIds && that.docIds.length > 0) {
                     for (var i = 0; i < that.docIds.length; i++) {
                         var curId = that.docIds[i];
@@ -770,14 +775,14 @@
                     }
                 }
                 AppBar.triggerDisableHandlers();
-                Log.ret(Log.l.u1);
+                Log.ret(Log.l.trace);
             };
             that.setNextDocId = setNextDocId;
 
             var insertCameradata = function (imageData, width, height) {
                 var ovwEdge = 256;
                 var prvEdge = 512;
-                Log.call(Log.l.trace, "ContactResultsQuestion.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var prvData = null;
                 var ret = new WinJS.Promise.as().then(function () {
                     if (imageData.length < 500000) {
@@ -867,7 +872,7 @@
             this.insertCameradata = insertCameradata;
 
             var onPhotoDataSuccess = function (imageData) {
-                Log.call(Log.l.trace, "ContactResultsQuestion.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 if (imageData) {
                     // Get image handle
                     //
@@ -888,7 +893,7 @@
             };
 
             var onPhotoDataFail = function (message) {
-                Log.call(Log.l.error, "ContactResultsQuestion.Controller.");
+                Log.call(Log.l.error, namespaceName + ".Controller.");
                 //message: The message is provided by the device's native code
                 //AppData.setErrorMsg(that.binding, message);
                 AppBar.busy = false;
@@ -896,7 +901,7 @@
             };
 
             var textFromDateCombobox = function (id, element) {
-                Log.call(Log.l.error, "ContactResultsQuestion.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 if (element && element.parentElement) {
                     var recordId = that.curRecId;
                     var curScope = null;
@@ -954,7 +959,7 @@
             //start native Camera async
             AppData.setErrorMsg(that.binding);
             var takePhoto = function () {
-                Log.call(Log.l.trace, "ContactResultsQuestion.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var isWindows10 = false;
                 if (typeof device === "object" && typeof device.platform === "string" && typeof device.version === "string") {
                     if (device.platform.substr(0, 7) === "windows" && device.version.substr(0, 4) === "10.0") {
@@ -1000,34 +1005,34 @@
             // define handlers
             this.eventHandlers = {
                 clickBack: function(event) {
-                    Log.call(Log.l.trace, "ContactResultsQuestion.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done(/* Your success and error handlers */);
                     }
                     Log.ret(Log.l.trace);
                 },
                 clickNew: function(event) {
-                    Log.call(Log.l.trace, "ContactResultsQuestion.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     Application.navigateById(Application.navigateNewId, event);
                     Log.ret(Log.l.trace);
                 },
                 clickPhoto: function(event) {
-                    Log.call(Log.l.trace, "ContactResultsQuestion.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     that.takePhoto();
                     Log.ret(Log.l.trace);
                 },
                 clickForward: function(event) {
-                    Log.call(Log.l.trace, "ContactResultsQuestion.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     Application.navigateById('sketch', event);
                     Log.ret(Log.l.trace);
                 },
                 clickChangeUserState: function (event) {
-                    Log.call(Log.l.trace, "ContactResultsQuestion.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     Application.navigateById("userinfo", event);
                     Log.ret(Log.l.trace);
                 },
                 clickButton: function(event) {
-                    Log.call(Log.l.trace, "ContactResultsQuestion.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (event.currentTarget) {
                         var id = event.currentTarget.id;
                         var element = event.currentTarget;
@@ -1038,7 +1043,7 @@
                     Log.ret(Log.l.trace);
                 },
                 pressEnterKey: function (event) {
-                    Log.call(Log.l.trace, "ContactResultsQuestion.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (event && event.keyCode === WinJS.Utilities.Key.enter &&
                         event.target && event.target.tagName &&
                         event.target.tagName.toLowerCase() === "textarea") {
@@ -1051,7 +1056,7 @@
                     Log.ret(Log.l.trace);
                 },
                 activateEnterKey: function (event) {
-                    Log.call(Log.l.trace, "ContactResultsQuestion.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     for (var i = 0; i < AppBar.commandList.length; i++) {
                         if (AppBar.commandList[i].id === "clickForward") {
                             AppBar.commandList[i].key = WinJS.Utilities.Key.enter;
@@ -1064,7 +1069,7 @@
                     Log.ret(Log.l.trace);
                 },
                 deactivateEnterKey: function (event) {
-                    Log.call(Log.l.trace, "ContactResultsQuestion.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     for (var i = 0; i < AppBar.commandList.length; i++) {
                         if (AppBar.commandList[i].id === "clickForward") {
                             AppBar.commandList[i].key = null;
@@ -1077,7 +1082,7 @@
                     Log.ret(Log.l.trace);
                 },
                 activateOnlyNumberKey: function (event) {
-                    Log.call(Log.l.trace, "ContactResultsQuestion.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var recordId = that.curRecId;
                     var curScope = null;
                     var i;
@@ -1102,18 +1107,8 @@
                     }
                     Log.ret(Log.l.trace);
                 },
-                onPointerDown: function (e) {
-                    Log.call(Log.l.trace, "ContactResultsQuestion.Controller.");
-                    that.cursorPos = { x: e.pageX, y: e.pageY };
-                    Log.ret(Log.l.trace);
-                },
-                onMouseDown: function (e) {
-                    Log.call(Log.l.trace, "ContactResultsQuestion.Controller.");
-                    that.cursorPos = { x: e.pageX, y: e.pageY };
-                    Log.ret(Log.l.trace);
-                },
                 onSelectionChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "ContactResultsQuestion.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (listView && listView.winControl) {
                         var listControl = listView.winControl;
                         if (listControl.selection) {
@@ -1148,7 +1143,7 @@
                     Log.ret(Log.l.trace);
                 },
                 onLoadingStateChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "ContactResultsQuestion.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (listView && listView.winControl) {
                         Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
                         // single list selection
@@ -1159,17 +1154,6 @@
                         if (listView.winControl.tapBehavior !== WinJS.UI.TapBehavior.directSelect) {
                             listView.winControl.tapBehavior = WinJS.UI.TapBehavior.directSelect;
                         }
-                        // Double the size of the buffers on both sides
-                        /*
-                        if (!maxLeadingPages) {
-                            maxLeadingPages = listView.winControl.maxLeadingPages * 4;
-                            listView.winControl.maxLeadingPages = maxLeadingPages;
-                        }
-                        if (!maxTrailingPages) {
-                            maxTrailingPages = listView.winControl.maxTrailingPages * 4;
-                            listView.winControl.maxTrailingPages = maxTrailingPages;
-                        }
-                        */
                         if (listView.winControl.loadingState === "itemsLoading") {
                             if (!layout) {
                                 layout = Application.QuestionnaireLayout.QuestionsLayout;
@@ -1242,7 +1226,7 @@
                     Log.ret(Log.l.trace);
                 },
                 onHeaderVisibilityChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "ContactResultsQuestion.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (eventInfo && eventInfo.detail) {
                         var visible = eventInfo.detail.visible;
                         if (visible) {
@@ -1261,7 +1245,7 @@
                     Log.ret(Log.l.trace);
                 },
                 onFooterVisibilityChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "ContactResultsQuestion.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (eventInfo && eventInfo.detail) {
                         progress = listView.querySelector(".list-footer .progress");
                         counter = listView.querySelector(".list-footer .counter");
@@ -1323,7 +1307,7 @@
                     Log.ret(Log.l.trace);
                 },
                 onItemInvoked: function (eventInfo) {
-                    Log.call(Log.l.trace, "ContactResultsQuestion.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (eventInfo && eventInfo.target) {
                         var comboInputFocus = eventInfo.target.querySelector(".win-dropdown:focus");
                         if (comboInputFocus) {
@@ -1354,6 +1338,7 @@
                     Log.ret(Log.l.trace);
                 },
                 onModified: function (event) {
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (that.selectQuestionIdxs && event && event.currentTarget &&
                         listView && listView.winControl) {
                         var element = event.currentTarget.parentElement;
@@ -1366,9 +1351,10 @@
                             element = element.parentElement;
                         }
                     }
+                    Log.ret(Log.l.trace);
                 },
                 clickTopButton: function (event) {
-                    Log.call(Log.l.trace, "Contact.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var anchor = document.getElementById("menuButton");
                     var menu = document.getElementById("menu1").winControl;
                     var placement = "bottom";
@@ -1376,7 +1362,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickLogoff: function (event) {
-                    Log.call(Log.l.trace, "Account.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     AppData._persistentStates.privacyPolicyFlag = false;
                     if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
                         AppHeader.controller.binding.userData = {};
@@ -1388,7 +1374,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickGotoPublish: function (event) {
-                    Log.call(Log.l.trace, "EventGenSettings.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     Application.navigateById("publish", event);
                     Log.ret(Log.l.trace);
                 }
@@ -1449,7 +1435,7 @@
             }
 
             var loadPicture = function (pictureId) {
-                Log.call(Log.l.trace, "ContactResultsQuestion.Controller.", "pictureId=" + pictureId);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "pictureId=" + pictureId);
                 var ret = null;
                 if (!pictureId) {
                     Log.ret(Log.l.error, "NULL param!");
@@ -1466,6 +1452,7 @@
                     }
                 }
                 if (!ret) {
+                    Log.print(Log.l.trace, "calling select questionnaireDocView...");
                     ret = ContactResultsQuestion.questionnaireDocView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
@@ -1483,7 +1470,7 @@
             that.loadPicture = loadPicture;
 
             var loadData = function () {
-                Log.call(Log.l.trace, "ContactResultsQuestion.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 if (that.questions) {
                     that.questions.length = 0;
@@ -1499,10 +1486,11 @@
                         AppData.setErrorMsg(that.binding, { status: 404, statusText: "no data found" });
                         return WinJS.Promise.as();
                     } else {
+                        Log.print(Log.l.trace, "calling questionnaireView...");
                         return ContactResultsQuestion.questionnaireView.select(function (json) {
                             // this callback will be called asynchronously
                             // when the response is available
-                            Log.print(Log.l.trace, "ContactResultsQuestion.questionnaireView: success!");
+                            Log.print(Log.l.trace, "select questionnaireView: success!");
                             that.selectQuestionIdxs = null;
                             // startContact returns object already parsed from json file in response
                             if (json && json.d) {
@@ -1537,26 +1525,38 @@
                         }, function (errorResponse) {
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
+                            Log.print(Log.l.error, "select questionnaireView: error!");
                             AppData.setErrorMsg(that.binding, errorResponse);
                         }, {
                             KontaktID: contactId
                         });
                     }
                 }).then(function () {
-                    ret = ContactResultsQuestion.CR_VERANSTOPTION_ODataView.select(function (json) {
-                        // this callback will be called asynchronously
-                        // when the response is available
-                        Log.print(Log.l.trace, "Login: success!");
-                        // CR_VERANSTOPTION_ODataView returns object already parsed from json file in response
-                        if (json && json.d && json.d.results && json.d.results.length > 1) {
-                            var results = json.d.results;
-                            results.forEach(function (item) {
-                                that.resultMandatoryConverter(item);
-                            });
-                        } else {
-                            AppData._persistentStates.showConfirmQuestion = false;
-                        }
-                    });
+                    Log.print(Log.l.trace, "calling CR_VERANSTOPTION_ODataView...");
+                    if (!that.mandatoryCalled) {
+                        that.mandatoryCalled = true;
+                        return ContactResultsQuestion.CR_VERANSTOPTION_ODataView.select(function (json) {
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            Log.print(Log.l.trace, "select CR_VERANSTOPTION_ODataView: success!");
+                            // CR_VERANSTOPTION_ODataView returns object already parsed from json file in response
+                            if (json && json.d && json.d.results && json.d.results.length > 1) {
+                                var results = json.d.results;
+                                results.forEach(function (item) {
+                                    that.resultMandatoryConverter(item);
+                                });
+                            } else {
+                                AppData._persistentStates.showConfirmQuestion = false;
+                            }
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            Log.print(Log.l.error, "select CR_VERANSTOPTION_ODataView: error!");
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        });
+                    } else {
+                        return WinJS.Promise.as();
+                    }
                 }).then(function () {
                     AppBar.triggerDisableHandlers();
                     return WinJS.Promise.as();
@@ -1570,15 +1570,14 @@
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
             }).then(function () {
-                AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Data loaded");
+                AppBar.notifyModified = true;
             });
             Log.ret(Log.l.trace);
         }, {
             _docCount: 0,
             prevRecId: 0,
             curRecId: 0,
-            cursorPos: { x: 0, y: 0 },
             docCount: {
                 get: function () {
                     return this._docCount;

@@ -11,9 +11,11 @@
 
 (function () {
     "use strict";
+    var namespaceName = "ContactResultsEvents";
+
     WinJS.Namespace.define("ContactResultsEvents", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
-            Log.call(Log.l.trace, "ContactResultsEvents.Controller.");
+            Log.call(Log.l.trace, namespaceName + ".Controller.");
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
                 dataContact: null
@@ -34,18 +36,15 @@
             this.getRecordId = getRecordId;
 
             var getDateObject = function (date) {
-                Log.call(Log.l.trace, "ContactResultsEvents.Controller.");
                 var dateString = date.replace("\/Date(", "").replace(")\/", "");
                 var milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
                 var time = new Date(milliseconds);
                 var formdate = ("0" + time.getDate()).slice(-2) + "." + ("0" + (time.getMonth() + 1)).slice(-2) + "." + time.getFullYear() + " " + time.getUTCHours() + ":" + time.getUTCMinutes();
-                Log.ret(Log.l.trace);
                 return time;
             };
             this.getDateObject = getDateObject;
 
             var getDateTime = function(date) {
-                Log.call(Log.l.trace, "ContactResultsEvents.Controller.");
                 var currentDate = getDateObject(date);
                 var curMoment = moment(currentDate);
                     curMoment.locale(Application.language);
@@ -71,7 +70,7 @@
             this.resultConverter = resultConverter;
 
             var setDataContact = function (data) {
-                Log.call(Log.l.trace, "ContactResultsEvents.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 that.resultConverter(data);
                 that.binding.dataContact = data;
                 Log.ret(Log.l.trace);
@@ -79,11 +78,14 @@
             this.setDataContact = setDataContact;
 
             var loadIcons = function () {
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 Colors.loadSVGImageElements(tableBody, "action-image", 40, Colors.textColor, "name");
+                Log.ret(Log.l.trace);
             }
             this.loadIcons = loadIcons;
 
             var resizableGrid = function () {
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var row = tableHeader ? tableHeader.querySelector("tr") : null,
                     cols = row ? row.children : null;
                 if (!cols) return;
@@ -173,40 +175,36 @@
                         setListeners(div);
                     }
                 }
+                Log.ret(Log.l.trace);
             }
             this.resizableGrid = resizableGrid;
 
             // define handlers
             this.eventHandlers = {
                 clickBack: function (event) {
-                    Log.call(Log.l.trace, "ContactResultsEvents.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done();
                     }
                     Log.ret(Log.l.trace);
                 },
                 clickOk: function (event) {
-                    Log.call(Log.l.trace, "ContactResultsEvents.Controller.");
-                    that.saveData(function (response) {
-                        // called asynchronously if ok
-                        that.loadData();
-                    }, function (errorResponse) {
-                        // error already displayed
-                    });
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    that.saveData();
                     Log.ret(Log.l.trace);
                 },
                 clickChangeUserState: function (event) {
-                    Log.call(Log.l.trace, "ContactResultsEvents.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     Application.navigateById("userinfo", event);
                     Log.ret(Log.l.trace);
                 },
                 clickGotoPublish: function (event) {
-                    Log.call(Log.l.trace, "ContactResultsEvents.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     Application.navigateById("publish", event);
                     Log.ret(Log.l.trace);
                 },
                 clickTopButton: function (event) {
-                    Log.call(Log.l.trace, "ContactResultsEvents.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var anchor = document.getElementById("menuButton");
                     var menu = document.getElementById("menu1").winControl;
                     var placement = "bottom";
@@ -214,7 +212,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickLogoff: function (event) {
-                    Log.call(Log.l.trace, "ContactResultsEvents.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     AppData._persistentStates.privacyPolicyFlag = false;
                     if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
                         AppHeader.controller.binding.userData = {};
@@ -257,59 +255,67 @@
             this.addContactTableItem = addContactTableItem;
 
             var loadData = function () {
-                Log.call(Log.l.trace, "ContactResultsCriteria.Controller.");
+                var recordId = getRecordId();
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
-                    var recordId = getRecordId();
-                    Log.print(Log.l.trace, "calling select contactView...");
                     if (recordId) {
+                        Log.print(Log.l.trace, "calling select contactView... recordId=" + recordId);
                         return ContactResultsEvents.contactView.select(function (json) {
                             AppData.setErrorMsg(that.binding);
-                            Log.print(Log.l.trace, "contactView: success!");
+                            Log.print(Log.l.trace, "select contactView: success!");
                             if (json && json.d) {
                                 // now always edit!
                                 var result = json.d;
                                 that.setDataContact(result);
                             }
                         }, function (errorResponse) {
+                            Log.print(Log.l.error, "select contactView: error!");
                             //AppData.setErrorMsg(that.binding, errorResponse);
                         }, recordId); 
+                    } else {
+                        return WinJS.Promise.as();
                     }
                 }).then(function () {
-                    Log.print(Log.l.trace, "calling select contactView...");
-                    var recordId = getRecordId();
                     if (recordId) {
-                        return ContactResultsEvents.incidentView.select(function (json) {
+                        Log.print(Log.l.trace, "calling select incidentView...");
+                        return ContactResultsEvents.incidentView.select(function(json) {
                             AppData.setErrorMsg(that.binding);
-                            Log.print(Log.l.trace, "contactView: success!");
+                            Log.print(Log.l.trace, "select incidentView: success!");
                             if (json && json.d && json.d.results) {
                                 var results = json.d.results;
-                                results.forEach(function (item, index) {
+                                results.forEach(function(item, index) {
                                     that.addContactTableItem(item, index);
                                 });
                             }
-                        }, function (errorResponse) {
+                        },
+                        function(errorResponse) {
+                            Log.print(Log.l.error, "select incidentView: error!");
                             //AppData.setErrorMsg(that.binding, errorResponse);
-                        }, { KontaktID: recordId, LanguageSpecID: AppData.getLanguageId(), VeranstaltungID: AppData.getRecordId("KontaktEventID") });
+                        },
+                        {
+                            KontaktID: recordId,
+                            LanguageSpecID: AppData.getLanguageId(),
+                            VeranstaltungID: AppData.getRecordId("KontaktEventID")
+                        });
+                    } else {
+                        return WinJS.Promise.as();
                     }
-                    }).then(function () {
-                        var curVID = AppData.getRecordId("Veranstaltung");
-                        var selVID = AppData.getRecordId("KontaktEventID");
-                        if (curVID !== selVID) {
-                            NavigationBar.disablePage("contactResultsQuestion");
-                            NavigationBar.disablePage("contactResultsAttach");
-                            NavigationBar.disablePage("contactResultsCriteria");
-                            NavigationBar.disablePage("contactResultsEdit");
-                        } else {
-                            NavigationBar.enablePage("contactResultsQuestion");
-                            NavigationBar.enablePage("contactResultsAttach");
-                            NavigationBar.enablePage("contactResultsCriteria");
-                            NavigationBar.enablePage("contactResultsEdit");
-                        }
-                    return WinJS.Promise.as();
                 }).then(function () {
+                    var curVID = AppData.getRecordId("Veranstaltung");
+                    var selVID = AppData.getRecordId("KontaktEventID");
+                    if (curVID !== selVID) {
+                        NavigationBar.disablePage("contactResultsQuestion");
+                        NavigationBar.disablePage("contactResultsAttach");
+                        NavigationBar.disablePage("contactResultsCriteria");
+                        NavigationBar.disablePage("contactResultsEdit");
+                    } else {
+                        NavigationBar.enablePage("contactResultsQuestion");
+                        NavigationBar.enablePage("contactResultsAttach");
+                        NavigationBar.enablePage("contactResultsCriteria");
+                        NavigationBar.enablePage("contactResultsEdit");
+                    }
                     AppBar.notifyModified = true;
-                    return WinJS.Promise.as();
                 });
                 Log.ret(Log.l.trace);
                 return ret;
@@ -320,18 +326,17 @@
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
             }).then(function () {
-                Log.print(Log.l.trace, "Binding wireup page complete");
+                Log.print(Log.l.trace, "Data loaded");
                 return that.resizableGrid();
             }).then(function () {
-                Log.print(Log.l.trace, "Binding wireup page complete");
+                Log.print(Log.l.trace, "resizableGrid called");
                 return that.loadIcons();
             }).then(function () {
-                Log.print(Log.l.trace, "Data loaded");
+                Log.print(Log.l.trace, "Icons loaded");
                 AppBar.notifyModified = true;
             });
             Log.ret(Log.l.trace);
         }, {
-
         })
     });
 })();

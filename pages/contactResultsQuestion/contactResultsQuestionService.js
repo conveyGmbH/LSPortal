@@ -5,6 +5,7 @@
 
 (function () {
     "use strict";
+    var namespaceName = "ContactResultsQuestion";
 
     WinJS.Namespace.define("ContactResultsQuestion", {
         _contactView: {
@@ -14,7 +15,7 @@
         },
         contactView: {
             insert: function (complete, error, viewResponse) {
-                Log.call(Log.l.trace, "ContactResultsQuestion.contactView.");
+                Log.call(Log.l.trace, namespaceName + ".contactView.");
                 var ret = ContactResultsQuestion._contactView.insert(complete, error, viewResponse);
                 Log.ret(Log.l.trace);
                 return ret;
@@ -34,7 +35,7 @@
         },
         questionnaireView: {
             select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "ContactResultsQuestion.questionnaireView.");
+                Log.call(Log.l.trace, namespaceName + ".questionnaireView.");
                 var ret = ContactResultsQuestion._questionnaireView20433.select(complete, error, restriction, {
                     ordered: true,
                     orderAttribute: "Sortierung"
@@ -44,20 +45,20 @@
                 return ret;
             },
             getNextUrl: function (response) {
-                Log.call(Log.l.trace, "ContactResultsQuestion.questionnaireView.");
+                Log.call(Log.l.trace, namespaceName + ".questionnaireView.");
                 var ret = ContactResultsQuestion._questionnaireView20433.getNextUrl(response);
                 Log.ret(Log.l.trace);
                 return ret;
             },
             selectNext: function (complete, error, response, nextUrl) {
-                Log.call(Log.l.trace, "ContactResultsQuestion.questionnaireView.");
+                Log.call(Log.l.trace, namespaceName + ".questionnaireView.");
                 var ret = ContactResultsQuestion._questionnaireView20433.selectNext(complete, error, response, nextUrl);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
             },
             update: function (complete, error, recordId, viewResponse) {
-                Log.call(Log.l.trace, "ContactResultsQuestion.questionnaireView.");
+                Log.call(Log.l.trace, namespaceName + ".questionnaireView.");
                 var ret = ContactResultsQuestion._questionnaireView.update(complete, error, recordId, viewResponse);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
@@ -72,13 +73,13 @@
         },
         questionnaireDocView: {
             select: function (complete, error, recordId) {
-                Log.call(Log.l.trace, "ContactResultsQuestion.questionnaireDocView.");
+                Log.call(Log.l.trace, namespaceName + ".questionnaireDocView.", "recordId=" + recordId);
                 var ret = ContactResultsQuestion._questionnaireDocView.selectById(complete, error, recordId);
                 Log.ret(Log.l.trace);
                 return ret;
             },
             insert: function (complete, error, viewResponse) {
-                Log.call(Log.l.trace, "ContactResultsQuestion.questionnaireDocView.");
+                Log.call(Log.l.trace, namespaceName + ".questionnaireDocView.");
                 var ret = ContactResultsQuestion._questionnaireDocView.insertWithId(complete, error, viewResponse);
                 Log.ret(Log.l.trace);
                 return ret;
@@ -91,17 +92,13 @@
         },
         CR_VERANSTOPTION_ODataView: {
             select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "CR_VERANSTOPTION_ODataView.");
-                var ret = ContactResultsQuestion._CR_VERANSTOPTION_View.select(complete,
-                    error,
-                    restriction,
-                    {
-                        ordered: true,
-                        orderAttribute: "INITOptionTypeID"
-                    });
+                Log.call(Log.l.trace, namespaceName + ".CR_VERANSTOPTION_ODataView.");
+                var ret = ContactResultsQuestion._CR_VERANSTOPTION_View.select(complete, error, restriction, {
+                    ordered: true,
+                    orderAttribute: "INITOptionTypeID"
+                });
                 Log.ret(Log.l.trace);
                 return ret;
-
             }
         }
     });

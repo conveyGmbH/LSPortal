@@ -5,6 +5,7 @@
 
 (function () {
     "use strict";
+    var namespaceName = "DBInit";
 
     WinJS.Namespace.define("DBInit", {
         _loginRequest: {
@@ -14,7 +15,7 @@
         },
         loginRequest: {
             insert: function (complete, error, viewResponse) {
-                Log.call(Log.l.trace, "loginView.");
+                Log.call(Log.l.trace, namespaceName + ".loginRequest.");
                 var ret = DBInit._loginRequest.insert(complete, error, viewResponse);
                 Log.ret(Log.l.trace);
                 return ret;
@@ -27,7 +28,7 @@
         },
         loginView: {
             insert: function (complete, error, viewResponse) {
-                Log.call(Log.l.trace, "loginView.");
+                Log.call(Log.l.trace, namespaceName + ".loginView.");
                 var ret = DBInit._loginView.insert(complete, error, viewResponse);
                 Log.ret(Log.l.trace);
                 return ret;
@@ -40,10 +41,8 @@
         },
         appListSpecView: {
             select: function (complete, error) {
-                Log.call(Log.l.trace, "appListSpecView.");
+                Log.call(Log.l.trace, namespaceName + ".appListSpecView.");
                 var ret = DBInit._appListSpecView.select(complete, error);
-
-                // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
             }
@@ -55,14 +54,11 @@
         },
         CR_VERANSTOPTION_ODataView: {
             select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "CR_VERANSTOPTION_ODataView.");
-                var ret = DBInit._CR_VERANSTOPTION_View.select(complete,
-                    error,
-                    restriction,
-                    {
-                        ordered: true,
-                        orderAttribute: "INITOptionTypeID"
-                    });
+                Log.call(Log.l.trace, namespaceName + ".CR_VERANSTOPTION_ODataView.");
+                var ret = DBInit._CR_VERANSTOPTION_View.select(complete, error, restriction, {
+                    ordered: true,
+                    orderAttribute: "INITOptionTypeID"
+                });
                 Log.ret(Log.l.trace);
                 return ret;
 

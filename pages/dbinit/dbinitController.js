@@ -13,10 +13,11 @@
 
 (function () {
     "use strict";
+    var namespaceName = "DBInit";
 
     WinJS.Namespace.define("DBInit", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
-            Log.call(Log.l.trace, "DBInit.Controller.");
+            Log.call(Log.l.trace, namespaceName + ".Controller.");
             Application.Controller.apply(this, [pageElement, {
                 progress: {
                     percent: 0,
@@ -56,7 +57,7 @@
             // define handlers
             this.eventHandlers = {
                 clickLogoff: function (event) {
-                    Log.call(Log.l.trace, "DBInit.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     Application.navigateById("login", event);
                     Log.ret(Log.l.trace);
                 }
@@ -66,10 +67,9 @@
             }
 
             var openDb = function () {
-                AppBar.busy = true;
-
                 var ret;
-                Log.call(Log.l.info, "DBInit.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
+                AppBar.busy = true;
                 if (AppRepl.replicator &&
                     AppRepl.replicator.state === "running") {
                     Log.print(Log.l.info, "replicator still running - try later!");
@@ -102,10 +102,11 @@
                         AppData._persistentStates.thankMailOn = true;
                         if (getStartPage() === Application.startPageId) {
                             // load color settings
+                            Log.print(Log.l.trace, "calling select CR_VERANSTOPTION_ODataView...");
                             return DBInit.CR_VERANSTOPTION_ODataView.select(function (json) {
                                 // this callback will be called asynchronously
                                 // when the response is available
-                                Log.print(Log.l.trace, "CR_VERANSTOPTION_ODataView: success!");
+                                Log.print(Log.l.trace, "select CR_VERANSTOPTION_ODataView: success!");
                                 // CR_VERANSTOPTION_ODataView returns object already parsed from json file in response
                                 if (json && json.d && json.d.results && json.d.results.length > 1) {
                                     var results = json.d.results;
@@ -118,7 +119,7 @@
                                 // called asynchronously if an error occurs
                                 // or server returns response with an error status.
                                 //AppData.setErrorMsg(that.binding, errorResponse);
-                                Log.print(Log.l.error, "error in select CR_VERANSTOPTION_ODataView statusText=" + errorResponse.statusText);
+                                Log.print(Log.l.error, "error in select CR_VERANSTOPTION_ODataView statusText=" + (errorResponse && errorResponse.statusText));
                                 if (errorResponse.status === 401 || errorResponse.status === 404) {
                                     WinJS.Promise.timeout(0).then(function () {
                                         Application.navigateById("login");
@@ -136,23 +137,23 @@
                             if (typeof Home === "object" && Home._actionsList) {
                                 Home._actionsList = null;
                             }
+                            Log.print(Log.l.trace, "calling select appListSpecView...");
                             return DBInit.appListSpecView.select(function(json) {
                                 // this callback will be called asynchronously
                                 // when the response is available
-                                Log.print(Log.l.trace, "appListSpecView: success!");
+                                Log.print(Log.l.trace, "select appListSpecView: success!");
                                 // kontaktanzahlView returns object already parsed from json file in response
                                 if (json && json.d && json.d.results) {
                                     NavigationBar.showGroupsMenu(json.d.results, true);
                                 } else {
                                     NavigationBar.showGroupsMenu([]);
                                 }
-                                return WinJS.Promise.as();
                             },
                             function (errorResponse) {
                                 // called asynchronously if an error occurs
                                 // or server returns response with an error status.
+                                Log.print(Log.l.error, "select appListSpecView: error!");
                                 AppData.setErrorMsg(that.binding, errorResponse);
-                                return WinJS.Promise.as();
                             });
                         } else {
                             return WinJS.Promise.as();
@@ -171,36 +172,38 @@
 
             var saveData = function (complete, error) {
                 var err = null;
-                Log.call(Log.l.trace, "DBInit.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 that.binding.messageText = null;
                 AppData.setErrorMsg(that.binding);
                 AppBar.busy = true;
                 var prevOnlinePath = that.binding.appSettings.odata.onlinePath;
                 that.binding.appSettings.odata.onlinePath = AppData._persistentStatesDefaults.odata.onlinePath;
                 that.binding.appSettings.odata.registerPath = AppData._persistentStatesDefaults.odata.registerPath;
-                var ret;
-                WinJS.Promise.as().then(function () {
-                    var languageID = AppData.getLanguageId();
-                    ret = AppData.call("PRC_GetLangText", {
-                        pLanguageID: languageID,
+                var ret = new WinJS.Promise.as().then(function () {
+                    var languageId = AppData.getLanguageId();
+                    Log.print(Log.l.trace, "calling PRC_GetLangText...");
+                    return AppData.call("PRC_GetLangText", {
+                        pLanguageID: languageId,
                         pTextTitle: 'login',
                         pResourceTypeID: 20004
                     }, function (json) {
-                        Log.print(Log.l.info, "call success! ");
+                        Log.print(Log.l.info, "call PRC_GetLangText: success! ");
                         var results = json.d.results;
                         var myResourceStrings = '';
                         for (var i = 0; i < results.length; i++) {
                             myResourceStrings = myResourceStrings + results[i].ResultText + '\n';
                         }
-                        Log.print(Log.l.trace, "call success! myResourceStrings= " + myResourceStrings);
-                    }, function (error) {
-                        Log.print(Log.l.error, "call error");
+                        Log.print(Log.l.trace, "myResourceStrings= " + myResourceStrings);
+                    }, function (errorResponse) {
+                        Log.print(Log.l.error, "call PRC_GetLangText error: " +
+                            AppData.getErrorMsgFromResponse(errorResponse) + " ignored for compatibility!");
                     }, true);
                 }).then(function () {
-                    ret = DBInit.loginRequest.insert(function (json) {
+                    Log.print(Log.l.trace, "calling insert loginRequest...");
+                    return DBInit.loginRequest.insert(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
-                        Log.call(Log.l.trace, "loginRequest: success!");
+                        Log.print(Log.l.trace, "insert loginRequest: success!");
                         // loginData returns object already parsed from json file in response
                         if (json && json.d && json.d.ODataLocation) {
                             if (json.d.InactiveFlag) {
@@ -222,76 +225,82 @@
                             AppBar.busy = false;
                             err = { status: 404, statusText: getResourceText("login.unknown") };
                             AppData.setErrorMsg(that.binding, err);
-                            error(err);
+                            if (typeof error === "function") {
+                                error(err);
+                            }
                         }
-                        return WinJS.Promise.as();
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
-                        Log.print(Log.l.info,
-                            "loginRequest error: " +
-                            AppData.getErrorMsgFromResponse(errorResponse) +
-                            " ignored for compatibility!");
+                        Log.print(Log.l.info, "insert loginRequest error: " +
+                            AppData.getErrorMsgFromResponse(errorResponse) + " ignored for compatibility!");
                         // ignore this error here for compatibility!
-                        return WinJS.Promise.as();
                     }, {
                         LoginName: that.binding.appSettings.odata.login
-                    }).then(function () {
-                        if (!err && prevOnlinePath !== that.binding.appSettings.odata.onlinePath) {
-                            var dataLogin = {
-                                Login: that.binding.dataLogin.Login,
-                                Password: that.binding.dataLogin.Password,
-                                LanguageID: AppData.getLanguageId(),
-                                Aktion: "Portal"
-                            };
-                            return DBInit.loginView.insert(function (json) {
-                                // this callback will be called asynchronously
-                                // when the response is available
-                                Log.call(Log.l.trace, "loginData: success!");
-                                // loginData returns object already parsed from json file in response
-                                if (json && json.d) {
-                                    dataLogin = json.d;
-                                    if (dataLogin.OK_Flag === "X" && dataLogin.MitarbeiterID) {
-                                        AppData._persistentStates.odata.login = that.binding.dataLogin.Login;
-                                        AppData._persistentStates.odata.password = that.binding.dataLogin.Password;
-                                        AppData.setRecordId("Mitarbeiter", dataLogin.MitarbeiterID);
-                                        NavigationBar.enablePage("settings");
-                                        NavigationBar.enablePage("info");
-                                        Application.pageframe.savePersistentStates();
-                                        AppBar.busy = false;
-                                        AppData._curGetUserDataId = 0;
-                                        AppData.getUserData();
-                                        AppData.getMessagesData();
+                    });
+                }).then(function () {
+                    if (!err && prevOnlinePath !== that.binding.appSettings.odata.onlinePath) {
+                        var dataLogin = {
+                            Login: that.binding.dataLogin.Login,
+                            Password: that.binding.dataLogin.Password,
+                            LanguageID: AppData.getLanguageId(),
+                            Aktion: "Portal"
+                        };
+                        Log.print(Log.l.trace, "calling insert loginView...");
+                        return DBInit.loginView.insert(function (json) {
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            Log.print(Log.l.trace, "insert loginView: success!");
+                            // loginData returns object already parsed from json file in response
+                            if (json && json.d) {
+                                dataLogin = json.d;
+                                if (dataLogin.OK_Flag === "X" && dataLogin.MitarbeiterID) {
+                                    AppData._persistentStates.odata.login = that.binding.dataLogin.Login;
+                                    AppData._persistentStates.odata.password = that.binding.dataLogin.Password;
+                                    AppData.setRecordId("Mitarbeiter", dataLogin.MitarbeiterID);
+                                    NavigationBar.enablePage("settings");
+                                    NavigationBar.enablePage("info");
+                                    Application.pageframe.savePersistentStates();
+                                    AppBar.busy = false;
+                                    AppData._curGetUserDataId = 0;
+                                    AppData.getUserData();
+                                    AppData.getMessagesData();
+                                    if (typeof complete === "function") {
                                         complete(json);
-                                        return WinJS.Promise.as();
-                                    } else {
-                                        AppBar.busy = false;
-                                        that.binding.messageText = dataLogin.MessageText;
-                                        err = { status: 401, statusText: dataLogin.MessageText };
-                                        AppData.setErrorMsg(that.binding, err);
-                                        error(err);
-                                        return WinJS.Promise.as();
                                     }
                                 } else {
                                     AppBar.busy = false;
-                                    err = { status: 404, statusText: "no data found" };
+                                    that.binding.messageText = dataLogin.MessageText;
+                                    err = { status: 401, statusText: dataLogin.MessageText };
                                     AppData.setErrorMsg(that.binding, err);
-                                    error(err);
-                                    return WinJS.Promise.as();
+                                    if (typeof error === "function") {
+                                        error(err);
+                                    }
                                 }
-                            }, function (errorResponse) {
+                            } else {
                                 AppBar.busy = false;
-                                err = errorResponse;
-                                // called asynchronously if an error occurs
-                                // or server returns response with an error status.
-                                AppData.setErrorMsg(that.binding, errorResponse);
+                                Log.print(Log.l.error, "insert loginView: error no data found!");
+                                err = { status: 404, statusText: "no data found" };
+                                AppData.setErrorMsg(that.binding, err);
+                                if (typeof error === "function") {
+                                    error(err);
+                                }
+                            }
+                        }, function (errorResponse) {
+                            AppBar.busy = false;
+                            err = errorResponse;
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            Log.print(Log.l.error, "insert loginView error: " +
+                                AppData.getErrorMsgFromResponse(errorResponse));
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                            if (typeof error === "function") {
                                 error(errorResponse);
-                                return WinJS.Promise.as();
-                            }, dataLogin);
-                        } else {
-                            return WinJS.Promise.as();
-                        }
-                    });
+                            }
+                        }, dataLogin);
+                    } else {
+                        return WinJS.Promise.as();
+                    }
                 });
                 Log.ret(Log.l.trace);
                 return ret;
@@ -305,13 +314,8 @@
                 if (AppData._persistentStates.allRecIds && typeof AppData._persistentStates.allRecIds["Veranstaltung"] !== "undefined") {
                     delete AppData._persistentStates.allRecIds["Veranstaltung"];
                 }
-                // now open the DB
-                return that.saveData(function (response) {
-                    // called asynchronously if ok
-                    Log.print(Log.l.trace, "saveData returned success!");
-                }, function (errorResponse) {
-                    Log.print(Log.l.error, "saveData returned error!");
-                });
+                Log.print(Log.l.trace, "Now calling saveData()");
+                return that.saveData();
             }).then(function () {
                 Log.print(Log.l.trace, "Now calling openDb()");
                 return that.openDb();

@@ -6,6 +6,7 @@
 
 (function () {
     "use strict";
+    var namespaceName = "ContactResultsList";
 
     WinJS.Namespace.define("ContactResultsList", {
         _eventId: 0,
@@ -26,7 +27,7 @@
         contactResultsView: {
             select: function (complete, error, restriction, options) {
                 var ret;
-                Log.call(Log.l.trace, "ContactResultsList.");
+                Log.call(Log.l.trace, namespaceName + ".contactResultsView.");
                 if (restriction && typeof restriction === "string") {
                     var mainLanguage = Application.language.split("-")[0];
                     if (!ContactResultsList._collator) {
@@ -49,12 +50,13 @@
                             }
                         });
                     } else {
+                        Log.print(Log.l.info, "calling PRC_SearchKontaktListe...");
                         ret = AppData.call("PRC_SearchKontaktListe", {
                             pAttributeIdx: 0,
                             pVeranstaltungId: ContactResultsList._eventId, // Für Alle suchen 0 eintragen!
                             pSuchText: restriction
                         }, function (json) {
-                            Log.print(Log.l.info, "call PRC_SearchKontaktListe success!");
+                            Log.print(Log.l.info, "call PRC_SearchKontaktListe: success!");
                             // procedure call returns complete results set, but no nextUrl- and no orderBy-support!
                             ContactResultsList._prevRestriction = restriction;
                             ContactResultsList._prevJson = json;
@@ -67,7 +69,7 @@
                                 complete(json);
                             }
                         }, function (errorResponse) {
-                            Log.print(Log.l.error, "call error");
+                            Log.print(Log.l.error, "call PRC_SearchKontaktListe: error");
                             if (typeof error === "function") {
                                 error(errorResponse);
                             }
@@ -88,6 +90,8 @@
                             desc: ContactResultsList._orderDesc
                         }
                     }
+                    Log.print(Log.l.info, "calling select _contactResultsView... restriction=" +
+                        (restriction ? JSON.stringify(restriction) : ""));
                     ret = ContactResultsList._contactResultsView.select(complete, error, restriction, options);
                 }
                 // this will return a promise to controller
@@ -95,14 +99,14 @@
                 return ret;
             },
             selectNext: function(complete, error, response, nextUrl) {
-                Log.call(Log.l.trace, "ContactResultsList.");
+                Log.call(Log.l.trace, namespaceName + ".contactResultsView.");
                 var ret = ContactResultsList._contactResultsView.selectNext(complete, error, response, nextUrl);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
             },
             getNextUrl: function(response) {
-                Log.call(Log.l.trace, "ContactResultsList.");
+                Log.call(Log.l.trace, namespaceName + ".contactResultsView.");
                 var ret = ContactResultsList._contactResultsView.getNextUrl(response);
                 Log.ret(Log.l.trace);
                 return ret;

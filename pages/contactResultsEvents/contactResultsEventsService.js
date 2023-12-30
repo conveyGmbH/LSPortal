@@ -5,6 +5,7 @@
 
 (function () {
     "use strict";
+    var namespaceName = "ContactResultsEvents";
 
     WinJS.Namespace.define("ContactResultsEvents", {
         _contactView: {
@@ -14,13 +15,13 @@
         },
         contactView: {
             select: function (complete, error, recordId) {
-                Log.call(Log.l.trace, "contactView.");
+                Log.call(Log.l.trace, namespaceName + ".contactView.");
                 var ret = ContactResultsEvents._contactView.selectById(complete, error, recordId);
                 Log.ret(Log.l.trace);
                 return ret;
             },
             update: function (complete, error, recordId, viewResponse) {
-                Log.call(Log.l.trace, "contactView.");
+                Log.call(Log.l.trace, namespaceName + ".contactView.");
                 var ret = ContactResultsEvents._contactView.update(complete, error, recordId, viewResponse);
                 Log.ret(Log.l.trace);
                 return ret;
@@ -36,8 +37,7 @@
         },
         incidentView: {
             select: function (complete, error, restriction) {
-                // Log.call(Log.l.trace, "visitorFlowLevelView.", "restriction=" + restriction);
-                Log.call(Log.l.trace, "kontaktKriterienView.", "restriction=" + restriction);
+                Log.call(Log.l.trace, namespaceName + ".incidentView.", "restriction=" + (restriction ? JSON.stringify(restriction) : ""));
                 var ret = ContactResultsEvents._incidentView.select(complete, error, restriction);
                 Log.ret(Log.l.trace);
                 return ret;

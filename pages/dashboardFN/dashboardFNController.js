@@ -15,10 +15,11 @@
 
 (function () {
     "use strict";
+    var namespaceName = "DashboardFN";
 
     WinJS.Namespace.define("DashboardFN", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
-            Log.call(Log.l.trace, "DashboardFN.Controller.");
+            Log.call(Log.l.trace, namespaceName + ".Controller.");
             Application.Controller.apply(this, [pageElement, {
                 progress: {
                     percent: 0,
@@ -35,10 +36,6 @@
             var excelButton = pageElement.querySelector("#btn-excel");
             var overlay = pageElement.querySelector("#overlay");
             var icon = pageElement.querySelector(".dashboard-tip-download-container");
-
-            this.dispose = function () {
-
-            }
 
             var loadIcon = function () {
                 Colors.loadSVGImageElements(icon, "action-image", 40, Colors.textColor, "name");
@@ -68,13 +65,14 @@
             this.base64ToBlob = base64ToBlob;
 
             var exportDbExcel = function (recordId) {
-                Log.call(Log.l.trace, "StartPremium.Controller.");
-                AppData.setErrorMsg(that.binding);
                 var ret;
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
+                AppData.setErrorMsg(that.binding);
                 if (recordId) {
                     AppBar.busy = true;
-                    ret = StartPremium.DOC3ExportPDFView.select(function (json) {
-                        Log.print(Log.l.trace, "exportKontaktDataView: success!");
+                    Log.print(Log.l.trace, "calling select DOC3ExportPDFView...recordId=" + recordId);
+                    ret = DashboardFN.DOC3ExportPDFView.select(function (json) {
+                        Log.print(Log.l.trace, "select DOC3ExportPDFView: success!");
                         if (json && json.d) {
                             var results = json.d.results[0];
                             var excelDataraw = results.DocContentDOCCNT1;
@@ -88,14 +86,13 @@
                         }
                     }, function (errorResponse) {
                         AppBar.busy = false;
+                        Log.print(Log.l.error, "select DOC3ExportPDFView: error!");
                         AppData.setErrorMsg(that.binding, errorResponse);
-                        if (typeof error === "function") {
-                            error(errorResponse);
-                        }
-                        }, { DOC3ExportPDFVIEWID: recordId });
+                    }, {
+                         DOC3ExportPDFVIEWID: recordId
+                    });
                 } else {
-                    var err = { status: 0, statusText: "no record selected" };
-                    error(err);
+                    Log.print(Log.l.error, "no record selected");
                     ret = WinJS.Promise.as();
                 }
                 Log.ret(Log.l.trace);
@@ -104,7 +101,7 @@
             this.exportDbExcel = exportDbExcel;
 
             var loadData = function () {
-                Log.call(Log.l.trace, "Start.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                     /*var diaCountrysFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("dashboardFNCountry"));
@@ -117,8 +114,8 @@
                         } else {
                             return WinJS.Promise.as();
                         }
-                    }*/
-                }).then(function () {
+                    }
+                }).then(function () {*/
                     var diaYearRangeFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("dashboardFNDay"));
                     if (diaYearRangeFragmentControl && diaYearRangeFragmentControl.controller) {
                         return diaYearRangeFragmentControl.controller.loadData();
@@ -175,14 +172,14 @@
             // define handlers
             this.eventHandlers = {
                 clickBack: function (event) {
-                    Log.call(Log.l.trace, "StartPremium.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done(/* Your success and error handlers */);
                     }
                     Log.ret(Log.l.trace);
                 },
                 clickEditEvent: function (event) {
-                    Log.call(Log.l.trace, "StartPremium.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var command = event.currentTarget;
                     if (command) {
                         Log.print(Log.l.trace, "clickButton event command.name=" + command.name);
@@ -191,17 +188,17 @@
                     Log.ret(Log.l.trace);
                 },
                 clickChangeUserState: function (event) {
-                    Log.call(Log.l.trace, "StartPremium.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     Application.navigateById("account", event);
                     Log.ret(Log.l.trace);
                 },
                 clickGotoPublish: function (event) {
-                    Log.call(Log.l.trace, "StartPremium.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     Application.navigateById("publish", event);
                     Log.ret(Log.l.trace);
                 },
                 clickTopButton: function (event) {
-                    Log.call(Log.l.trace, "StartPremium.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var anchor = document.getElementById("menuButton");
                     var menu = document.getElementById("menu1").winControl;
                     var placement = "bottom";
@@ -209,7 +206,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickLogoff: function (event) {
-                    Log.call(Log.l.trace, "StartPremium.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     AppData._persistentStates.privacyPolicyFlag = false;
                     if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
                         AppHeader.controller.binding.userData = {};
@@ -220,29 +217,20 @@
                     Application.navigateById("login", event);
                     Log.ret(Log.l.trace);
                 },
-                onLoadingStateChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "StartPremium.Controller.");
-                    Log.ret(Log.l.trace);
-                },
-                onFooterVisibilityChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "StartPremium.Controller.");
-                    if (eventInfo && eventInfo.detail) {
-                    }
-                    Log.ret(Log.l.trace);
-                },
                 exportDashboardExcel: function(event) {
-                    Log.call(Log.l.trace, "StartPremium.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     excelButton.disabled = "true";
                     overlay.style.display = "block";
                     if (that.isSupreme === 4) {
                         AppData.setErrorMsg(that.binding);
-                        return AppData.call("PRC_DBExcelRequest", {
+                        Log.print(Log.l.info, "calling PRC_DBExcelRequest...");
+                        AppData.call("PRC_DBExcelRequest", {
                             pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
                             pLanguageSpecID: AppData.getLanguageId(),
                             pExportType: "DBSUPREME",
                             psyncRun: 1
                         }, function (json) {
-                            Log.print(Log.l.info, "call success!");
+                            Log.print(Log.l.info, "call PRC_DBExcelRequest: success!");
                             if (json && json.d.results[0]) {
                                 excelButton.removeAttribute("disabled");
                                 that.exportDbExcel(json.d.results[0]);
@@ -250,19 +238,19 @@
                                 Log.print(Log.l.error, "call error DOC3ExportPDFID is null");
                             }
                         }, function (error) {
-                            Log.print(Log.l.error, "call error");
-
+                            Log.print(Log.l.error, "call PRC_DBExcelRequest: error");
                         });
                     } else {
                         AppData.setErrorMsg(that.binding);
                         excelButton.disabled = "true";
-                        return AppData.call("PRC_DBExcelRequest", {
+                        Log.print(Log.l.info, "calling PRC_DBExcelRequest...");
+                        AppData.call("PRC_DBExcelRequest", {
                             pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
                             pLanguageSpecID: AppData.getLanguageId(),
                             pExportType: "DBPREMIUM",
                             psyncRun: 1
                         }, function (json) {
-                            Log.print(Log.l.info, "call success!");
+                            Log.print(Log.l.info, "call PRC_DBExcelRequest: success!");
                             if (json && json.d.results[0]) {
                                 excelButton.removeAttribute("disabled");
                                 that.exportDbExcel(json.d.results[0]);
@@ -270,14 +258,13 @@
                                 Log.print(Log.l.error, "call error DOC3ExportPDFID is null");
                             }
                         }, function (error) {
-                            Log.print(Log.l.error, "call error");
-
+                            Log.print(Log.l.error, "call PRC_DBExcelRequest: error");
                         });
                     }
                     Log.ret(Log.l.trace);
                 },
                 exportAllChartsToPdf: function (event) {
-                    Log.call(Log.l.trace, "StartPremium.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var percent = 0;
                     var statusText = "";
                     /*if (!that.binding.dashBoardZip) {
@@ -296,144 +283,141 @@
                         var height = doc.internal.pageSize.height;*/
                         // diaCountrys chart
                         that.binding.progress.text = getResourceText('diaCountrys.top10');
-                        return html2canvas(document.getElementById("diaCountryshost"),
-                            {
-                                scale: 1,
-                                quality: 4
-                            }).then(canvas => { /*, { dpi: 300 }*/
-                                var widthOfCanvas = canvas.width;
-                                var heightOfCanvas = canvas.height;
-                                //set the orientation
-                                var orientation, mmLeft, mmTop, mmWidth, mmHeight;
-                                var mmLongSide = 297, mmShortSide = 210, mmBorder = 5, scale = 1;
-                                if (widthOfCanvas >= heightOfCanvas) {
-                                    orientation = 'l';
-                                    mmLeft = mmBorder;
-                                    mmWidth = mmLongSide - 2 * mmBorder;
-                                    mmHeight = mmWidth * heightOfCanvas / widthOfCanvas;
-                                    if (mmHeight > (mmShortSide - 2 * mmBorder)) {
-                                        scale = (mmShortSide - 2 * mmBorder) / mmHeight;
-                                        mmHeight *= scale;
-                                        mmWidth *= scale;
-                                        mmLeft = (mmLongSide - mmWidth) / 2;
-                                    }
-                                    mmTop = (mmShortSide - mmHeight) / 2;
-                                } else {
-                                    orientation = 'p';
-                                    mmTop = mmBorder;
-                                    mmHeight = mmLongSide - 2 * mmBorder;
-                                    mmWidth = mmHeight * widthOfCanvas / heightOfCanvas;
-                                    if (mmWidth > (mmShortSide - 2 * mmBorder)) {
-                                        scale = (mmShortSide - 2 * mmBorder) / mmWidth;
-                                        mmHeight *= scale;
-                                        mmWidth *= scale;
-                                        mmTop = (mmLongSide - mmHeight) / 2;
-                                    }
-                                    mmLeft = (mmShortSide - mmWidth) / 2;
+                        return html2canvas(document.getElementById("diaCountryshost"), {
+                            scale: 1,
+                            quality: 4
+                        }).then(canvas => { /*, { dpi: 300 }*/
+                            var widthOfCanvas = canvas.width;
+                            var heightOfCanvas = canvas.height;
+                            //set the orientation
+                            var orientation, mmLeft, mmTop, mmWidth, mmHeight;
+                            var mmLongSide = 297, mmShortSide = 210, mmBorder = 5, scale = 1;
+                            if (widthOfCanvas >= heightOfCanvas) {
+                                orientation = 'l';
+                                mmLeft = mmBorder;
+                                mmWidth = mmLongSide - 2 * mmBorder;
+                                mmHeight = mmWidth * heightOfCanvas / widthOfCanvas;
+                                if (mmHeight > (mmShortSide - 2 * mmBorder)) {
+                                    scale = (mmShortSide - 2 * mmBorder) / mmHeight;
+                                    mmHeight *= scale;
+                                    mmWidth *= scale;
+                                    mmLeft = (mmLongSide - mmWidth) / 2;
                                 }
-                                var doc = new jsPDF(orientation, 'mm', 'a4'); /*[widthOfCanvas, heightOfCanvas]*/
-                                doc.addImage(canvas.toDataURL(), 'png', mmLeft, mmTop, mmWidth, mmHeight);
-                                that.binding.progress.percent = 25;
-                                that.binding.progress.text = getResourceText('diaCountrys.top10');
-                                //doc.save(getResourceText('diaCountrys.top10'));
+                                mmTop = (mmShortSide - mmHeight) / 2;
+                            } else {
+                                orientation = 'p';
+                                mmTop = mmBorder;
+                                mmHeight = mmLongSide - 2 * mmBorder;
+                                mmWidth = mmHeight * widthOfCanvas / heightOfCanvas;
+                                if (mmWidth > (mmShortSide - 2 * mmBorder)) {
+                                    scale = (mmShortSide - 2 * mmBorder) / mmWidth;
+                                    mmHeight *= scale;
+                                    mmWidth *= scale;
+                                    mmTop = (mmLongSide - mmHeight) / 2;
+                                }
+                                mmLeft = (mmShortSide - mmWidth) / 2;
+                            }
+                            var doc = new jsPDF(orientation, 'mm', 'a4'); /*[widthOfCanvas, heightOfCanvas]*/
+                            doc.addImage(canvas.toDataURL(), 'png', mmLeft, mmTop, mmWidth, mmHeight);
+                            that.binding.progress.percent = 25;
+                            that.binding.progress.text = getResourceText('diaCountrys.top10');
+                            //doc.save(getResourceText('diaCountrys.top10'));
                             zipCharts.file(getResourceText('diaCountrys.top10') + '.pdf', doc.output('blob'));
-                            });
+                        });
                     }).then(function () {
                         /*var doc = new jsPDF("landscape", "mm", 'a4');
                         var width = doc.internal.pageSize.width;
                         var height = doc.internal.pageSize.height;*/
                         // diaYearRange chart
                         that.binding.progress.text = getResourceText('diaYearRange.title');
-                        return html2canvas(document.getElementById("diaYearRangehost"),
-                            {
-                                scale: 1,
-                                quality: 4
-                            }).then(canvas => { /*, { dpi: 300 }*/
-                                var widthOfCanvas = canvas.width;
-                                var heightOfCanvas = canvas.height;
-                                //set the orientation
-                                var orientation, mmLeft, mmTop, mmWidth, mmHeight;
-                                var mmLongSide = 297, mmShortSide = 210, mmBorder = 5, scale = 1;
-                                if (widthOfCanvas >= heightOfCanvas) {
-                                    orientation = 'l';
-                                    mmLeft = mmBorder;
-                                    mmWidth = mmLongSide - 2 * mmBorder;
-                                    mmHeight = mmWidth * heightOfCanvas / widthOfCanvas;
-                                    if (mmHeight > (mmShortSide - 2 * mmBorder)) {
-                                        scale = (mmShortSide - 2 * mmBorder) / mmHeight;
-                                        mmHeight *= scale;
-                                        mmWidth *= scale;
-                                        mmLeft = (mmLongSide - mmWidth) / 2;
-                                    }
-                                    mmTop = (mmShortSide - mmHeight) / 2;
-                                } else {
-                                    orientation = 'p';
-                                    mmTop = mmBorder;
-                                    mmHeight = mmLongSide - 2 * mmBorder;
-                                    mmWidth = mmHeight * widthOfCanvas / heightOfCanvas;
-                                    if (mmWidth > (mmShortSide - 2 * mmBorder)) {
-                                        scale = (mmShortSide - 2 * mmBorder) / mmWidth;
-                                        mmHeight *= scale;
-                                        mmWidth *= scale;
-                                        mmTop = (mmLongSide - mmHeight) / 2;
-                                    }
-                                    mmLeft = (mmShortSide - mmWidth) / 2;
+                        return html2canvas(document.getElementById("diaYearRangehost"), {
+                            scale: 1,
+                            quality: 4
+                        }).then(canvas => { /*, { dpi: 300 }*/
+                            var widthOfCanvas = canvas.width;
+                            var heightOfCanvas = canvas.height;
+                            //set the orientation
+                            var orientation, mmLeft, mmTop, mmWidth, mmHeight;
+                            var mmLongSide = 297, mmShortSide = 210, mmBorder = 5, scale = 1;
+                            if (widthOfCanvas >= heightOfCanvas) {
+                                orientation = 'l';
+                                mmLeft = mmBorder;
+                                mmWidth = mmLongSide - 2 * mmBorder;
+                                mmHeight = mmWidth * heightOfCanvas / widthOfCanvas;
+                                if (mmHeight > (mmShortSide - 2 * mmBorder)) {
+                                    scale = (mmShortSide - 2 * mmBorder) / mmHeight;
+                                    mmHeight *= scale;
+                                    mmWidth *= scale;
+                                    mmLeft = (mmLongSide - mmWidth) / 2;
                                 }
-                                var doc = new jsPDF(orientation, 'mm', 'a4'); /*[widthOfCanvas, heightOfCanvas]*/
-                                doc.addImage(canvas.toDataURL(), 'png', mmLeft, mmTop, mmWidth, mmHeight);
-                                that.binding.progress.percent = 50;
-                                that.binding.progress.text = getResourceText('diaYearRange.title');
-                                //doc.save(getResourceText('diaYearRange.title'));
+                                mmTop = (mmShortSide - mmHeight) / 2;
+                            } else {
+                                orientation = 'p';
+                                mmTop = mmBorder;
+                                mmHeight = mmLongSide - 2 * mmBorder;
+                                mmWidth = mmHeight * widthOfCanvas / heightOfCanvas;
+                                if (mmWidth > (mmShortSide - 2 * mmBorder)) {
+                                    scale = (mmShortSide - 2 * mmBorder) / mmWidth;
+                                    mmHeight *= scale;
+                                    mmWidth *= scale;
+                                    mmTop = (mmLongSide - mmHeight) / 2;
+                                }
+                                mmLeft = (mmShortSide - mmWidth) / 2;
+                            }
+                            var doc = new jsPDF(orientation, 'mm', 'a4'); /*[widthOfCanvas, heightOfCanvas]*/
+                            doc.addImage(canvas.toDataURL(), 'png', mmLeft, mmTop, mmWidth, mmHeight);
+                            that.binding.progress.percent = 50;
+                            that.binding.progress.text = getResourceText('diaYearRange.title');
+                            //doc.save(getResourceText('diaYearRange.title'));
                             zipCharts.file(getResourceText('diaYearRange.title') + '.pdf', doc.output('blob'));
-                            });
+                        });
                     }).then(function () {
                         /*var doc = new jsPDF("landscape", "mm", 'a4');
                         var width = doc.internal.pageSize.width;
                         var height = doc.internal.pageSize.height;*/
                         // diaVisitors chart
                         that.binding.progress.text = getResourceText('diaVisitors.title');
-                        return html2canvas(document.getElementById("diaVisitorshost"),
-                            {
-                                scale: 1,
-                                quality: 4
-                            }).then(canvas => { /*, { dpi: 300 }*/
-                                var widthOfCanvas = canvas.width;
-                                var heightOfCanvas = canvas.height;
-                                //set the orientation
-                                var orientation, mmLeft, mmTop, mmWidth, mmHeight;
-                                var mmLongSide = 297, mmShortSide = 210, mmBorder = 5, scale = 1;
-                                if (widthOfCanvas >= heightOfCanvas) {
-                                    orientation = 'l';
-                                    mmLeft = mmBorder;
-                                    mmWidth = mmLongSide - 2 * mmBorder;
-                                    mmHeight = mmWidth * heightOfCanvas / widthOfCanvas;
-                                    if (mmHeight > (mmShortSide - 2 * mmBorder)) {
-                                        scale = (mmShortSide - 2 * mmBorder) / mmHeight;
-                                        mmHeight *= scale;
-                                        mmWidth *= scale;
-                                        mmLeft = (mmLongSide - mmWidth) / 2;
-                                    }
-                                    mmTop = (mmShortSide - mmHeight) / 2;
-                                } else {
-                                    orientation = 'p';
-                                    mmTop = mmBorder;
-                                    mmHeight = mmLongSide - 2 * mmBorder;
-                                    mmWidth = mmHeight * widthOfCanvas / heightOfCanvas;
-                                    if (mmWidth > (mmShortSide - 2 * mmBorder)) {
-                                        scale = (mmShortSide - 2 * mmBorder) / mmWidth;
-                                        mmHeight *= scale;
-                                        mmWidth *= scale;
-                                        mmTop = (mmLongSide - mmHeight) / 2;
-                                    }
-                                    mmLeft = (mmShortSide - mmWidth) / 2;
+                        return html2canvas(document.getElementById("diaVisitorshost"), {
+                            scale: 1,
+                            quality: 4
+                        }).then(canvas => { /*, { dpi: 300 }*/
+                            var widthOfCanvas = canvas.width;
+                            var heightOfCanvas = canvas.height;
+                            //set the orientation
+                            var orientation, mmLeft, mmTop, mmWidth, mmHeight;
+                            var mmLongSide = 297, mmShortSide = 210, mmBorder = 5, scale = 1;
+                            if (widthOfCanvas >= heightOfCanvas) {
+                                orientation = 'l';
+                                mmLeft = mmBorder;
+                                mmWidth = mmLongSide - 2 * mmBorder;
+                                mmHeight = mmWidth * heightOfCanvas / widthOfCanvas;
+                                if (mmHeight > (mmShortSide - 2 * mmBorder)) {
+                                    scale = (mmShortSide - 2 * mmBorder) / mmHeight;
+                                    mmHeight *= scale;
+                                    mmWidth *= scale;
+                                    mmLeft = (mmLongSide - mmWidth) / 2;
                                 }
-                                var doc = new jsPDF(orientation, 'mm', 'a4'); /*[widthOfCanvas, heightOfCanvas]*/
-                                doc.addImage(canvas.toDataURL(), 'png', mmLeft, mmTop, mmWidth, mmHeight);
-                                //doc.save(getResourceText('diaVisitors.title'));
-                                that.binding.progress.percent = 75;
-                                that.binding.progress.text = getResourceText('diaVisitors.title');
+                                mmTop = (mmShortSide - mmHeight) / 2;
+                            } else {
+                                orientation = 'p';
+                                mmTop = mmBorder;
+                                mmHeight = mmLongSide - 2 * mmBorder;
+                                mmWidth = mmHeight * widthOfCanvas / heightOfCanvas;
+                                if (mmWidth > (mmShortSide - 2 * mmBorder)) {
+                                    scale = (mmShortSide - 2 * mmBorder) / mmWidth;
+                                    mmHeight *= scale;
+                                    mmWidth *= scale;
+                                    mmTop = (mmLongSide - mmHeight) / 2;
+                                }
+                                mmLeft = (mmShortSide - mmWidth) / 2;
+                            }
+                            var doc = new jsPDF(orientation, 'mm', 'a4'); /*[widthOfCanvas, heightOfCanvas]*/
+                            doc.addImage(canvas.toDataURL(), 'png', mmLeft, mmTop, mmWidth, mmHeight);
+                            //doc.save(getResourceText('diaVisitors.title'));
+                            that.binding.progress.percent = 75;
+                            that.binding.progress.text = getResourceText('diaVisitors.title');
                             zipCharts.file(getResourceText('diaVisitors.title') + '.pdf', doc.output('blob'));
-                            });
+                        });
                     }).then(function () {
                         var diaCountrysIndustriespDFragmentControl =
                             Application.navigator.getFragmentControlFromLocation(
@@ -468,15 +452,15 @@
                         }
                     }).then(function() {
                         that.binding.exportActive = false;
-                    }).then(function () {
+                        that.binding.progress.show = null;
                         zipCharts.generateAsync({ type: 'blob' }).then(function (content) {
                             saveAs(content, 'Reports.zip');
                         });
-                        that.binding.progress.show = null;
                     });
+                    Log.ret(Log.l.trace);
                 },
                 exportBrowserViewToPdf: function (event) {
-                    Log.call(Log.l.trace, "StartPremium.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var percent = 0;
                     var statusText = "";
                     that.binding.progress = {
@@ -555,13 +539,11 @@
                             text: statusText,
                             show: 1
                         };
+                        return WinJS.Promise.timeout(1000);
                     }).then(function () {
-                        WinJS.Promise.timeout(1000).then(function () {
-                            that.binding.progress.show = null;
-                        });
+                        that.binding.progress.show = null;
                     });
                     Log.ret(Log.l.trace);
-
                 }
             };
 
@@ -611,7 +593,7 @@
                 Log.print(Log.l.trace, "Calling loadData");
                 return that.loadData();
             }).then(function () {
-                Log.print(Log.l.trace, "Calling loadData");
+                Log.print(Log.l.trace, "Calling loadIcon");
                 return that.loadIcon();
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
