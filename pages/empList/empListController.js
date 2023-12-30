@@ -13,10 +13,11 @@
     "use strict";
 
     var nav = WinJS.Navigation;
+    var namespaceName = "EmpList";
 
     WinJS.Namespace.define("EmpList", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
-            Log.call(Log.l.trace, "EmpList.Controller.");
+            Log.call(Log.l.trace, namespaceName + ".Controller.");
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
                 employeeId: 0,
@@ -65,7 +66,7 @@
             this.background = background;
 
             var setSelIndex = function (index) {
-                Log.call(Log.l.trace, "EmpList.Controller.", "index=" + index);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "index=" + index);
                 if (that.employees && that.employees.length > 0) {
                     if (index >= that.employees.length) {
                         index = that.employees.length - 1;
@@ -79,7 +80,7 @@
 
 
             var cutSerialnumer = function (serialnumer) {
-                Log.call(Log.l.trace, "EmpList.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 if (serialnumer === null) {
                     return "";
@@ -95,7 +96,7 @@
             this.cutSerialnumer = cutSerialnumer;
 
             var scrollToRecordId = function (recordId) {
-                Log.call(Log.l.trace, "EmpList.Controller.", "recordId=" + recordId);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
                 if (that.loading) {
                     WinJS.Promise.timeout(50).then(function () {
                         that.scrollToRecordId(recordId);
@@ -117,7 +118,7 @@
             this.scrollToRecordId = scrollToRecordId;
 
             var selectRecordId = function (recordId) {
-                Log.call(Log.l.trace, "EmpList.Controller.", "recordId=" + recordId);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
                 if (recordId && listView && listView.winControl && listView.winControl.selection && that.employees) {
                     for (var i = 0; i < that.employees.length; i++) {
                         var employee = that.employees.getAt(i);
@@ -139,7 +140,7 @@
 
             var scopeFromRecordId = function (recordId) {
                 var i;
-                Log.call(Log.l.trace, "EmpList.Controller.", "recordId=" + recordId);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
                 var item = null;
                 for (i = 0; i < that.employees.length; i++) {
                     var employee = that.employees.getAt(i);
@@ -191,7 +192,7 @@
             // define handlers
             this.eventHandlers = {
                 onSelectionChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "EmpList.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (listView && listView.winControl) {
                         var listControl = listView.winControl;
                         if (listControl.selection) {
@@ -231,13 +232,13 @@
                     Log.ret(Log.l.trace);
                 },
                 onItemInvoked: function (eventInfo) {
-                    Log.call(Log.l.trace, "EmpList.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     Application.showDetail();
                     Log.ret(Log.l.trace);
                 },
                 onLoadingStateChanged: function (eventInfo) {
                     var i;
-                    Log.call(Log.l.trace, "EmpList.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (listView && listView.winControl) {
                         Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
                         // single list selection
@@ -312,27 +313,8 @@
                     }
                     Log.ret(Log.l.trace);
                 },
-                onHeaderVisibilityChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "EmpList.Controller.");
-                    if (eventInfo && eventInfo.detail) {
-                        var visible = eventInfo.detail.visible;
-                        if (visible) {
-                            var contentHeader = listView.querySelector(".content-header");
-                            if (contentHeader) {
-                                var halfCircle = contentHeader.querySelector(".half-circle");
-                                if (halfCircle && halfCircle.style) {
-                                    if (halfCircle.style.visibility === "hidden") {
-                                        halfCircle.style.visibility = "";
-                                        WinJS.UI.Animation.enterPage(halfCircle);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    Log.ret(Log.l.trace);
-                },
                 onFooterVisibilityChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "EmpList.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (eventInfo && eventInfo.detail) {
                         progress = listView.querySelector(".list-footer .progress");
                         counter = listView.querySelector(".list-footer .counter");
@@ -399,7 +381,7 @@
             }
 
             var loadData = function (recordId) {
-                Log.call(Log.l.trace, "EmpList.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
                 that.loading = true;
                 progress = listView.querySelector(".list-footer .progress");
                 counter = listView.querySelector(".list-footer .counter");
@@ -410,7 +392,7 @@
                     counter.style.display = "none";
                 }
                 var restriction = AppData.getRestriction("Employee");
-                Log.call(Log.l.trace, "EmpList.Controller. restriction Employee:" + restriction);
+                Log.print(Log.l.trace, "EmpList.Controller. restriction Employee:" + (restriction ? JSON.stringify(restriction) : ""));
                 var defaultrestriction = copyByValue(EmpList.employeeView.defaultRestriction);
                 if (!restriction) {
                     restriction = defaultrestriction;
@@ -444,10 +426,11 @@
                 var ret = new WinJS.Promise.as().then(function () {
                     if (!licenceWarningSelected) {
                         // only licence user select 
+                        Log.print(Log.l.trace, "calling select employeeView...only licence user select!");
                         return EmpList.employeeView.select(function (json) {
                             // this callback will be called asynchronously
                             // when the response is available
-                            Log.print(Log.l.trace, "licenceView: success!");
+                            Log.print(Log.l.trace, "select employeeView: success!");
                             // licenceUserView returns object already parsed from json file in response
                             if (json && json.d && json.d.results.length > 0) {
                                 var results = json.d.results;
@@ -455,20 +438,22 @@
                             } else {
                                 that.binding.licenceWarning = false;
                             }
-                            return WinJS.Promise.as();
+                            Log.print(Log.l.trace, "licenceWarning=" + that.binding.licenceWarning);
                         }, function (errorResponse) {
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
+                            Log.print(Log.l.error, "select employeeView: error!");
                             AppData.setErrorMsg(that.binding, errorResponse);
                         }, { NichtLizenzierteApp: 1 });
                     } else {
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
+                    Log.print(Log.l.trace, "calling select employeeView again...");
                     return EmpList.employeeView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
-                        Log.print(Log.l.trace, "EmpList: success!");
+                        Log.print(Log.l.trace, "select employeeView: success!");
                         // employeeView returns object already parsed from json file in response
                         if (!recordId) {
                             if (json && json.d && json.d.results.length > 0) {
@@ -521,6 +506,7 @@
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
+                        Log.print(Log.l.error, "select employeeView: error!");
                         AppData.setErrorMsg(that.binding, errorResponse);
                         progress = listView.querySelector(".list-footer .progress");
                         counter = listView.querySelector(".list-footer .counter");
@@ -531,25 +517,21 @@
                             counter.style.display = "inline";
                         }
                         that.loading = false;
-                    }, restriction, recordId);
+                        }, recordId || restriction);
                 });
                 Log.ret(Log.l.trace);
                 return ret;
             };
             this.loadData = loadData;
 
+            if (!AppData._persistentStates.showvisitorFlow) {
+                NavigationBar.disablePage("employeeVisitorFlow");
+            }
             that.processAll().then(function () {
-                if (!AppData._persistentStates.showvisitorFlow) {
-                    NavigationBar.disablePage("employeeVisitorFlow");
-                }
-            }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
-            })/*.then(function () {
+            }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
-                return that.selectRecordId(that.binding.employeeId);
-            })*/.then(function () {
-                Log.print(Log.l.trace, "Record selected");
             });
             Log.ret(Log.l.trace);
         })
