@@ -11,9 +11,7 @@
             get: function () {
                 return AppData.getFormatView("CR_PFFragenAntworten", 0);
             }
-        }
-    });
-    WinJS.Namespace.define("OptMandatoryFieldList", {
+        },
         CR_OptFragenAntwortenVIEW: {
             select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, "OptMandatoryFieldList.CR_V_FragengruppeView.");
@@ -55,7 +53,16 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            relationName: OptMandatoryFieldList._CR_OptFragenAntwortenVIEW.relationName,
+            relationName: {
+                get: function() {
+                    return OptMandatoryFieldList._CR_OptFragenAntwortenVIEW.relationName;
+                }
+            },
+            pkName: {
+                get: function() {
+                    return OptMandatoryFieldList._CR_OptFragenAntwortenVIEW.oDataPkName;
+                }
+            },
             getRecordId: function (record) {
                 var ret = null;
                 if (record) {

@@ -6,6 +6,7 @@
 /// <reference path="~/www/lib/convey/scripts/appbar.js" />
 /// <reference path="~/www/lib/convey/scripts/pageController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
+/// <reference path="~/www/pages/sketch/sketchService.js" />
 
 (function () {
     "use strict";

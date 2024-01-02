@@ -6,8 +6,6 @@
 (function () {
     "use strict";
 
-    var namespaceName = "ContactResultsAttach";
-
     WinJS.Namespace.define("ContactResultsAttach", {
 
     });

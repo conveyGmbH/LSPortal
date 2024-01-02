@@ -62,6 +62,6 @@
             getDbView: function () {
                 return StartTop10Countrys._reportLand;
             }
-        },
+        }
     });
 })();

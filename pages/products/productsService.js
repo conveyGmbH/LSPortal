@@ -106,7 +106,7 @@
             },
             defaultValue: {
                 VeranstaltungID : null
-            },
+            }
         },
         _ProduktnameView: {
             get: function () {

@@ -9,31 +9,29 @@
     var namespaceName = "MediaList";
 
     WinJS.Namespace.define("MediaList", {
-        _eventDocView: {
-            get: function() {
-                return AppData.getFormatView("MandantDokument", 20633);
-            }
-        },
         _eventTextUsageId: -1,
         _eventId: -1,
         _eventSeriesId: -1,
         _showOnlyEventMedia: false,
         eventSeriesId: {
-            get: function() {
+            get: function () {
                 if (AppBar.scope && typeof AppBar.scope.getEventSeriesId === "function") {
                     MediaList._eventSeriesId = AppBar.scope.getEventSeriesId();
                 }
                 return MediaList._eventSeriesId;
             },
-            set: function(value) {
+            set: function (value) {
                 MediaList._eventSeriesId = value;
                 if (AppBar.scope && typeof AppBar.scope.setEventSeriesId === "function") {
                     MediaList._eventSeriesId = AppBar.scope.setEventSeriesId(value);
                 }
             }
-        }
-    });
-    WinJS.Namespace.define("MediaList", {
+        },
+        _eventDocView: {
+            get: function () {
+                return AppData.getFormatView("MandantDokument", 20633);
+            }
+        },
         eventDocView: {
             select: function (complete, error, restriction, options) {
                 var ret;
@@ -94,8 +92,16 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            relationName: MediaList._eventDocView.relationName,
-            pkName: MediaList._eventDocView.oDataPkName,
+            relationName: {
+                get: function() {
+                    return MediaList._eventDocView.relationName;
+                }
+            },
+            pkName: {
+                get: function() {
+                    return MediaList._eventDocView.oDataPkName;
+                }
+            },
             getRecordId: function (record) {
                 var ret = null;
                 if (record) {

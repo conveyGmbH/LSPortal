@@ -46,9 +46,7 @@
             get: function () {
                 return AppData.getFormatView("LangMandantStart", 20679); 
             }
-        }
-    });
-    WinJS.Namespace.define("EventStarts", {
+        },
         startsView: {
             select: function (complete, error, restriction, options) {
                 Log.call(Log.l.trace, "EventStarts.startsView.");
@@ -80,8 +78,16 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            relationName: EventStarts._langStartsView.relationName,
-            pkName: EventStarts._langStartsView.oDataPkName,
+            relationName: {
+                get: function() {
+                    return EventStarts._langStartsView.relationName;
+                }
+            },
+            pkName: {
+                get: function() {
+                    return EventStarts._langStartsView.oDataPkName;
+                }
+            },
             getRecordId: function (record) {
                 var ret = null;
                 if (record) {
@@ -144,17 +150,24 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            relationName: EventStarts._langStartsTable.relationName,
-            pkName: EventStarts._langStartsTable.oDataPkName,
-            _pkName: EventStarts._langStartsTable.pkName,
+            relationName: {
+                get: function() {
+                    return EventStarts._langStartsTable.relationName;
+                }
+            },
+            pkName: {
+                get: function() {
+                    return EventStarts._langStartsTable.oDataPkName;
+                }
+            },
             getRecordId: function (record) {
                 var ret = null;
                 if (record) {
-                    if (EventStarts.startsTable.pkName) {
-                        ret = record[EventStarts.startsTable.pkName];
+                    if (EventStarts._langStartsTable.oDataPkName) {
+                        ret = record[EventStarts._langStartsTable.oDataPkName];
                     }
-                    if (!ret && EventStarts.startsTable._pkName) {
-                        ret = record[EventStarts.startsTable._pkName];
+                    if (!ret && EventStarts._langStartsTable.pkName) {
+                        ret = record[EventStarts._langStartsTable.pkName];
                     }
                 }
                 return ret;

@@ -14,13 +14,6 @@
                 return AppData.getFormatView("Answer", 20649);
             }
         },
-        _answerTable: {
-            get: function () {
-                return AppData.getFormatView("Answer", 0);
-            }
-        }
-    });
-    WinJS.Namespace.define("GenFragAnswers", {
         answerView: {
             select: function (complete, error, restriction, options) {
                 Log.call(Log.l.trace, namespaceName + ".answerView.");
@@ -43,8 +36,16 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            relationName: GenFragAnswers._answerView.relationName,
-            pkName: GenFragAnswers._answerView.oDataPkName,
+            relationName: {
+                get: function() {
+                    return GenFragAnswers._answerView.relationName;
+                }
+            },
+            pkName: {
+                get: function() {
+                    return GenFragAnswers._answerView.oDataPkName;
+                }
+            },
             getRecordId: function (record) {
                 var ret = null;
                 if (record) {
@@ -58,6 +59,11 @@
                 return ret;
             }
         },
+        _answerTable: {
+            get: function () {
+                return AppData.getFormatView("Answer", 0);
+            }
+        },
         answerTable: {
             update: function (complete, error, recordId, viewResponse) {
                 Log.call(Log.l.trace, namespaceName + ".answerTable.");
@@ -65,8 +71,16 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            relationName: GenFragAnswers._answerTable.relationName,
-            pkName: GenFragAnswers._answerTable.oDataPkName,
+            relationName: {
+                get: function() {
+                    return GenFragAnswers._answerTable.relationName;
+                }
+            },
+            pkName: {
+                get: function() {
+                    return GenFragAnswers._answerTable.oDataPkName;
+                }
+            },
             getRecordId: function (record) {
                 var ret = null;
                 if (record) {

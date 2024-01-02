@@ -49,8 +49,16 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            relationName: GenFragEvents._BenutzerView.relationName,
-            pkName: GenFragEvents._BenutzerView.oDataPkName,
+            relationName: {
+                get: function() {
+                    return GenFragEvents._BenutzerView.relationName;
+                }
+            },
+            pkName: {
+                get: function() {
+                    return GenFragEvents._BenutzerView.oDataPkName;
+                }
+            },
             getRecordId: function (record) {
                 var ret = null;
                 if (record) {

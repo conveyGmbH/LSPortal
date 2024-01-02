@@ -6,6 +6,7 @@
 (function () {
     "use strict";
     WinJS.Namespace.define("EventQuestionnaire", {
+        _eventId: 0,
         /**
          * Combobox
          */
@@ -29,9 +30,6 @@
                 return AppData.getFormatView("Cr_VAQuestion", 20652); /*View for Crosstable*/
             }
         },
-        _eventId: 0
-    });
-    WinJS.Namespace.define("EventQuestionnaire", {
         questionTypeView: {
             select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, "Mailing._initSpracheView.");
@@ -93,8 +91,16 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            relationName: EventQuestionnaire._vaQuestionVIEW.relationName,
-            pkName: EventQuestionnaire._vaQuestionVIEW.oDataPkName,
+            relationName: {
+                get: function() {
+                    return EventQuestionnaire._vaQuestionVIEW.relationName;
+                }
+            },
+            pkName: {
+                get: function() {
+                    return EventQuestionnaire._vaQuestionVIEW.oDataPkName;
+                }
+            },
             getRecordId: function (record) {
                 var ret = null;
                 if (record) {
@@ -132,8 +138,16 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            relationName: EventQuestionnaire._vaQuestionTable.relationName,
-            pkName: EventQuestionnaire._vaQuestionTable.pkName,
+            relationName: {
+                get: function() {
+                    return EventQuestionnaire._vaQuestionTable.relationName;
+                }
+            },
+            pkName: {
+                get: function() {
+                    return EventQuestionnaire._vaQuestionTable.pkName;
+                }
+            },
             getRecordId: function (record) {
                 var ret = null;
                 if (record) {

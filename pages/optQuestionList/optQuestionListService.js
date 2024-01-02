@@ -11,9 +11,7 @@
             get: function () {
                 return AppData.getFormatView("CR_OptFragenAntworten", 0);
             }
-        }
-    });
-    WinJS.Namespace.define("OptQuestionList", {
+        },
         CR_OptFragenAntwortenVIEW: {
             select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, "OptQuestionList.CR_V_FragengruppeView.");
@@ -55,7 +53,16 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            relationName: OptQuestionList._CR_OptFragenAntwortenVIEW.relationName,
+            relationName: {
+                get: function() {
+                    return OptQuestionList._CR_OptFragenAntwortenVIEW.relationName;
+                }
+            },
+            pkName: {
+                get: function() {
+                    return OptQuestionList._CR_OptFragenAntwortenVIEW.oDataPkName;
+                }
+            },
             getRecordId: function (record) {
                 var ret = null;
                 if (record) {

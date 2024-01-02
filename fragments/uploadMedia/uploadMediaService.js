@@ -36,9 +36,7 @@
         getDocView: function (docGroup) {
             var tableName = "DOC" + docGroup + "MandantDokument";
             return AppData.getFormatView(tableName, 0);
-        }
-    });
-    WinJS.Namespace.define("UploadMedia", {
+        },
         docView: {
             //only insert needed, will delete previous DOCxMandantDokument records in before trigger
             insert: function (complete, error, viewResponse, docId, docGroup) {

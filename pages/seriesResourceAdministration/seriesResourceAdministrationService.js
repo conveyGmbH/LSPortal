@@ -36,6 +36,9 @@
                 return ret;
             }
         },
+        _eventTextUsageId: 2,
+        _eventSeriesId: 1, /*muss von der Liste gesetzt werden*/
+        _languageId: 1031,
         _eventSeriesView: {
             get: function () {
                 return AppData.getFormatView("CR_VeranstaltungSerie", 20643);
@@ -51,11 +54,6 @@
                 return AppData.getFormatView("LangMandantDokument", 0);
             }
         },
-        _eventTextUsageId: 2,
-        _eventSeriesId: 1, /*muss von der Liste gesetzt werden*/
-        _languageId: 1031
-    });
-    WinJS.Namespace.define("SeriesResourceAdministration", {
         eventSeriesView: {
             select: function(complete, error) {
                 var restriction = {
@@ -124,8 +122,16 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            relationName: SeriesResourceAdministration._eventTextView.relationName,
-            pkName: SeriesResourceAdministration._eventTextView.oDataPkName,
+            relationName: {
+                get: function() {
+                    return SeriesResourceAdministration._eventTextView.relationName;
+                }
+            },
+            pkName: {
+                get: function() {
+                    return SeriesResourceAdministration._eventTextView.oDataPkName;
+                }
+            },
             getRecordId: function (record) {
                 var ret = null;
                 if (record) {
@@ -146,8 +152,16 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            relationName: SeriesResourceAdministration._eventTextTable.relationName,
-            pkName: SeriesResourceAdministration._eventTextTable.oDataPkName,
+            relationName: {
+                get: function() {
+                    return SeriesResourceAdministration._eventTextTable.relationName;
+                }
+            },
+            pkName: {
+                get: function() {
+                    return SeriesResourceAdministration._eventTextTable.oDataPkName;
+                }
+            },
             getRecordId: function (record) {
                 var ret = null;
                 if (record) {

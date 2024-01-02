@@ -11,9 +11,7 @@
             get: function () {
                 return AppData.getFormatView("CR_V_Bereich", 0);
             }
-        }
-    });
-    WinJS.Namespace.define("VisitorFlowEntExt", {
+        },
         CR_V_BereichView: {
             select: function (complete, error, recordId) {
                 Log.call(Log.l.trace, "VisitorFlowEntExt.CR_V_BereichView.");
@@ -53,7 +51,16 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            relationName: VisitorFlowEntExt._CR_V_BereichView.relationName,
+            relationName: {
+                get: function() {
+                    return VisitorFlowEntExt._CR_V_BereichView.relationName;
+                }
+            },
+            pkName: {
+                get: function() {
+                    return VisitorFlowEntExt._CR_V_BereichView.oDataPkName;
+                }
+            },
             getRecordId: function (record) {
                 var ret = null;
                 if (record) {

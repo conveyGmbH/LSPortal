@@ -7,13 +7,13 @@
 (function () {
     "use strict";
     WinJS.Namespace.define("GenDataModEventsHisto", {
+        _personId: -1,
+        _eventId: -1,
         _contactView: {
             get: function () {
                 return AppData.getFormatView("Benutzer", 20642);
             }
         },
-        _personId: -1,
-        _eventId: -1,
         contactView: {
             select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, "contactView.");

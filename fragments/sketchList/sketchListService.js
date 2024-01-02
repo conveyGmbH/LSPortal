@@ -10,7 +10,7 @@
 
     WinJS.Namespace.define("SketchList", {
         getSketchlistView: function (isLocal) {
-                return AppData.getFormatView("KontaktNotiz", 20504, isLocal);
+            return AppData.getFormatView("KontaktNotiz", 20504, isLocal);
         },
         sketchlistView: {
             select: function (complete, error, restriction, isLocal) {

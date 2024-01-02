@@ -50,6 +50,6 @@
                 Ansprechpartner: "",
                 EMail: ""
             }
-        },
+        }
     });
 })();

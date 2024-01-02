@@ -11,9 +11,7 @@
             get: function () {
                 return AppData.getFormatView("PersonAdresse", 20636);
             }
-        }
-    });
-    WinJS.Namespace.define("GenDataModList", {
+        },
         personAdresseView: {
             select: function (complete, error, restriction, options) {
                 if (!restriction) {
@@ -47,8 +45,16 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            relationName: GenDataModList._personAdresseView.relationName,
-            pkName: GenDataModList._personAdresseView.oDataPkName,
+            relationName: {
+                get: function() {
+                    return GenDataModList._personAdresseView.relationName;
+                }
+            },
+            pkName: {
+                get: function() {
+                    return GenDataModList._personAdresseView.oDataPkName;
+                }
+            },
             getRecordId: function (record) {
                 var ret = null;
                 if (record) {

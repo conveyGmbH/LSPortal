@@ -13,9 +13,7 @@
             get: function () {
                 return AppData.getFormatView("DeviceLastCall", 20616);
             }
-        }
-    });
-    WinJS.Namespace.define("VisitorFlowDevices", {
+        },
         visitorDeviceView: {
             select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, namespaceName + ".visitorDeviceView.", "recordId=" + restriction);
@@ -29,8 +27,16 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            relationName: VisitorFlowDevices._visitorDeviceView.relationName,
-            pkName: VisitorFlowDevices._visitorDeviceView.oDataPkName,
+            relationName: {
+                get: function() {
+                    return VisitorFlowDevices._visitorDeviceView.relationName;
+                }
+            },
+            pkName: {
+                get: function() {
+                    return VisitorFlowDevices._visitorDeviceView.oDataPkName;
+                }
+            },
             getRecordId: function (record) {
                 var ret = null;
                 if (record) {

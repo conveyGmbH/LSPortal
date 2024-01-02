@@ -38,25 +38,13 @@
                 return ret;
             }
         },
-        _eventSeriesView: {
-            get: function () {
-                return AppData.getFormatView("CR_VeranstaltungSerie", 20643);
-            }
-        },
+        _docId: 0,
+        _languageId: AppData.getLanguageId(),
         _eventTextView: {
             get: function () {
                 return AppData.getFormatView("LangMandantDokument", 20634);
             }
         },
-        _eventTextTable: {
-            get: function () {
-                return AppData.getFormatView("LangMandantDokument", 0);
-            }
-        },
-        _docId: 0,
-        _languageId: AppData.getLanguageId()
-    });
-    WinJS.Namespace.define("MediaText", {
         eventTextView: {
             select: function (complete, error, restriction, options) {
                 if (!restriction) {
@@ -103,8 +91,16 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            relationName: MediaText._eventTextView.relationName,
-            pkName: MediaText._eventTextView.oDataPkName,
+            relationName: {
+                get: function() {
+                    return MediaText._eventTextView.relationName;
+                }
+            },
+            pkName: {
+                get: function() {
+                    return MediaText._eventTextView.oDataPkName;
+                }
+            },
             getRecordId: function (record) {
                 var ret = null;
                 if (record) {
@@ -118,6 +114,11 @@
                 return ret;
             }
         },
+        _eventTextTable: {
+            get: function () {
+                return AppData.getFormatView("LangMandantDokument", 0);
+            }
+        },
         eventTextTable: {
             update: function (complete, error, recordId, viewResponse) {
                 Log.call(Log.l.trace, namespaceName + ".eventTextTable.");
@@ -125,8 +126,16 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            relationName: MediaText._eventTextTable.relationName,
-            pkName: MediaText._eventTextTable.oDataPkName,
+            relationName: {
+                get: function() {
+                    return MediaText._eventTextTable.relationName;
+                }
+            },
+            pkName: {
+                get: function() {
+                    return MediaText._eventTextTable.oDataPkName;
+                }
+            },
             getRecordId: function (record) {
                 var ret = null;
                 if (record) {

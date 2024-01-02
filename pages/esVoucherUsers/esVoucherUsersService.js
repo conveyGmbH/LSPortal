@@ -91,7 +91,7 @@
                 VeranstaltungID: AppData.getRecordId("Veranstaltung"),
                 LanguageSpecID: AppData.getLanguageId()
             }
-        },
+        }
     });
 })();
 

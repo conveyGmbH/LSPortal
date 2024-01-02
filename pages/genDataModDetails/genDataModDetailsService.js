@@ -31,6 +31,7 @@
                 return GenDataModDetails._docFormatList;
             }
         },
+        _initPersonKategorieId: 0,
         _adresseView: {
             get: function () {
                 return AppData.getFormatView("Adresse", 20637);
@@ -41,9 +42,6 @@
                 return AppData.getFormatView("Adresse", 0);
             }
         },
-        _initPersonKategorieId: 0
-    });
-    WinJS.Namespace.define("GenDataModDetails", {
         adresseView: {
             select: function (complete, error, restriction, options) {
                 if (!restriction) {
@@ -85,8 +83,16 @@
                 EMail: "",
                 PersonCategoryID: 0
             },
-            relationName: GenDataModDetails._adresseView.relationName,
-            pkName: GenDataModDetails._adresseView.oDataPkName,
+            relationName: {
+                get: function() {
+                    return GenDataModDetails._adresseView.relationName;
+                }
+            },
+            pkName: {
+                get: function() {
+                    return GenDataModDetails._adresseView.oDataPkName;
+                }
+            },
             getRecordId: function (record) {
                 var ret = null;
                 if (record) {
@@ -107,8 +113,16 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            relationName: GenDataModDetails._adresseTable.relationName,
-            pkName: GenDataModDetails. _adresseTable.oDataPkName,
+            relationName: {
+                get: function() {
+                    return GenDataModDetails._adresseTable.relationName;
+                }
+            },
+            pkName: {
+                get: function() {
+                    return GenDataModDetails._adresseTable.oDataPkName;
+                }
+            },
             getRecordId: function (record) {
                 var ret = null;
                 if (record) {
@@ -122,15 +136,11 @@
                 return ret;
             }
         },
-    });
-    WinJS.Namespace.define("GenDataModDetails", {
         _initPersonKategorie: {
             get: function () {
                 return AppData.getLgntInit("LGNTINITPersonKategorie");
             }
-        }
-    });
-    WinJS.Namespace.define("GenDataModDetails", {
+        },
         initPersonKategorieView: {
             select: function(complete, error) {
                 Log.call(Log.l.trace, "GenDataModDetails.LGNTINITPersonKategorieV.");
@@ -139,16 +149,12 @@
                 Log.ret(Log.l.trace);
                 return ret;
             }
-        }
-    });
-    WinJS.Namespace.define("GenDataModDetails", {
+        },
         _adressePersonTable: {
             get: function () {
                 return AppData.getFormatView("PersonAdresse", 0);
             }
-        }
-    });
-    WinJS.Namespace.define("GenDataModDetails", {
+        },
         personAdresseTable: {
             select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, "GenDataModDetails.personAdresseTable.");
@@ -175,8 +181,16 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            relationName: GenDataModDetails._adressePersonTable.relationName,
-            pkName: GenDataModDetails._adressePersonTable.oDataPkName,
+            relationName: {
+                get: function() {
+                    return GenDataModDetails._adressePersonTable.relationName;
+                }
+            },
+            pkName: {
+                get: function() {
+                    return GenDataModDetails._adressePersonTable.oDataPkName;
+                }
+            },
             getRecordId: function (record) {
                 var ret = null;
                 if (record) {
@@ -189,16 +203,12 @@
                 }
                 return ret;
             }
-        }
-    });
-    WinJS.Namespace.define("GenDataModDetails", {
+        },
         _adresseDOC: {
             get: function () {
                 return AppData.getFormatView("DOC1Adresse", 0);
             }
-        }
-    });
-    WinJS.Namespace.define("GenDataModDetails", {
+        },
         adresseDOC: {
             select: function (complete, error, restriction) {
                 if (!restriction) {
@@ -226,8 +236,16 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            relationName: GenDataModDetails._adresseDOC.relationName,
-            pkName: GenDataModDetails._adresseDOC.oDataPkName,
+            relationName: {
+                get: function() {
+                    return GenDataModDetails._adresseDOC.relationName;
+                }
+            },
+            pkName: {
+                get: function() {
+                    return GenDataModDetails._adresseDOC.oDataPkName;
+                }
+            },
             getRecordId: function (record) {
                 var ret = null;
                 if (record) {

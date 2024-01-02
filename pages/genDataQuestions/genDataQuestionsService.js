@@ -11,9 +11,7 @@
             get: function () {
                 return AppData.getFormatView("Question", 20648);
             }
-        }
-    });
-    WinJS.Namespace.define("GenDataQuestions", {
+        },
         questionView: {
             select: function (complete, error, restriction, options) {
                 Log.call(Log.l.trace, "GenDataQuestions.questionView.");
@@ -46,8 +44,16 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            relationName: GenDataQuestions._questionView.relationName,
-            pkName: GenDataQuestions._questionView.oDataPkName,
+            relationName: {
+                get: function() {
+                    return GenDataQuestions._questionView.relationName;
+                }
+            },
+            pkName: {
+                get: function() {
+                    return GenDataQuestions._questionView.oDataPkName;
+                }
+            },
             getRecordId: function (record) {
                 var ret = null;
                 if (record) {

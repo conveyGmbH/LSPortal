@@ -6,6 +6,7 @@
 (function () {
     "use strict";
     WinJS.Namespace.define("EventSpeakerAdministration", {
+        _eventId: 0,
         /**
          * Combobox
          */
@@ -24,9 +25,6 @@
                 return AppData.getFormatView("Benutzer", 20642); /*neue andere CR-Tabelle*/
             }
         },
-        _eventId: 0
-    });
-    WinJS.Namespace.define("EventSpeakerAdministration", {
         speakerView: {
             select: function (complete, error, restriction, options) {
                 Log.call(Log.l.trace, "EventSpeakerAdministration.seriesView.");
@@ -80,8 +78,16 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            relationName: EventSpeakerAdministration._eventSpeakerVIEW.relationName,
-            pkName: EventSpeakerAdministration._eventSpeakerVIEW.oDataPkName,
+            relationName: {
+                get: function() {
+                    return EventSpeakerAdministration._eventSpeakerVIEW.relationName;
+                }
+            },
+            pkName: {
+                get: function() {
+                    return EventSpeakerAdministration._eventSpeakerVIEW.oDataPkName;
+                }
+            },
             getRecordId: function (record) {
                 var ret = null;
                 if (record) {
@@ -149,8 +155,16 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            relationName: EventSpeakerAdministration._eventSpeakerTable.relationName,
-            pkName: EventSpeakerAdministration._eventSpeakerTable.pkName,
+            relationName: {
+                get: function() {
+                    return EventSpeakerAdministration._eventSpeakerTable.relationName;
+                }
+            },
+            pkName: {
+                get: function() {
+                    return EventSpeakerAdministration._eventSpeakerTable.pkName;
+                }
+            },
             getRecordId: function (record) {
                 var ret = null;
                 if (record) {

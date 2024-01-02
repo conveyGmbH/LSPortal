@@ -14,8 +14,6 @@
             _eventId: 0,
             _conferenceId: 0
         },
-    });
-    WinJS.Namespace.define("EventGenSettings", {
         conferenceExhibitorView: {
             select: function (complete, error, restriction, options) {
                 if (!restriction) {
@@ -51,8 +49,16 @@
             newEventDefault: {
                 VeranstaltungName: ""
             },
-            relationName: EventGenSettings._conferenceExhibitorView.relationName,
-            pkName: EventGenSettings._conferenceExhibitorView.oDataPkName,
+            relationName: {
+                get: function() {
+                    return EventGenSettings._conferenceExhibitorView.relationName;
+                }
+            },
+            pkName: {
+                get: function() {
+                    return EventGenSettings._conferenceExhibitorView.oDataPkName;
+                }
+            },
             getRecordId: function (record) {
                 var ret = null;
                 if (record) {

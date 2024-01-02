@@ -6,6 +6,7 @@
 (function () {
     "use strict";
     WinJS.Namespace.define("EventSeriesAdministration", {
+        _eventId: 0,
         _seriesView: {
             get: function () {
                 return AppData.getFormatView("MandantSerie", 0);
@@ -16,9 +17,6 @@
                 return AppData.getFormatView("CR_VeranstaltungSerie", 0);
             }
         },
-        _eventId: 0
-    });
-    WinJS.Namespace.define("EventSeriesAdministration", {
         seriesView: {
             select: function (complete, error) {
                 Log.call(Log.l.trace, "EventSeriesAdministration.seriesView.");
@@ -77,8 +75,16 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            relationName: EventSeriesAdministration._eventSeriesTable.relationName,
-            pkName: EventSeriesAdministration._eventSeriesTable.oDataPkName,
+            relationName: {
+                get: function() {
+                    return EventSeriesAdministration._eventSeriesTable.relationName;
+                }
+            },
+            pkName: {
+                get: function() {
+                    return EventSeriesAdministration._eventSeriesTable.oDataPkName;
+                }
+            },
             getRecordId: function (record) {
                 var ret = null;
                 if (record) {

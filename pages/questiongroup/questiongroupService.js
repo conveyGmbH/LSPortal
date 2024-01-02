@@ -16,9 +16,7 @@
             get: function () {
                 return AppData.getFormatView("CR_V_Fragengruppe", 0);
             }
-        }
-    });
-    WinJS.Namespace.define("Questiongroup", {
+        },
         initFragengruppeView: {
             clear: function() {
                 Questiongroup._initFragengruppeView.clear();
@@ -82,7 +80,16 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            relationName: Questiongroup._CR_V_FragengruppeView.relationName,
+            relationName: {
+                get: function() {
+                    return Questiongroup._CR_V_FragengruppeView.relationName;
+                }
+            },
+            pkName: {
+                get: function() {
+                    return Questiongroup._CR_V_FragengruppeView.oDataPkName;
+                }
+            },
             getRecordId: function (record) {
                 var ret = null;
                 if (record) {

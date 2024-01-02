@@ -37,15 +37,23 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            relationName: EventSeriesList._SerienView.relationName,
-            pkName: EventSeriesList._SerienView.oDataPkName,
+            relationName: {
+                get: function() {
+                    return EventSeriesList._SerienView.relationName;
+                }
+            },
+            pkName: {
+                get: function() {
+                    return EventSeriesList._SerienView.oDataPkName;
+                }
+            },
             getRecordId: function (record) {
                 var ret = null;
                 if (record) {
                     if (EventSeriesList._SerienView.oDataPkName) {
                         ret = record[EventSeriesList._SerienView.oDataPkName];
                     }
-                    if (!ret && EventSeries._langSeriesView.pkName) {
+                    if (!ret && EventSeriesList._langSeriesView.pkName) {
                         ret = record[EventSeriesList._SerienView.pkName];
                     }
                 }

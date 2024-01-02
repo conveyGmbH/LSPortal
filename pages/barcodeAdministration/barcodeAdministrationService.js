@@ -40,8 +40,16 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            relationName: BarcodeAdministration._fragebogenZeileBCView.relationName,
-            pkName: BarcodeAdministration._fragebogenZeileBCView.oDataPkName,
+            relationName: {
+                get: function() {
+                    return BarcodeAdministration._fragebogenZeileBCView.relationName;
+                }
+            },
+            pkName: {
+                get: function() {
+                    return BarcodeAdministration._fragebogenZeileBCView.oDataPkName;
+                }
+            },
             getRecordId: function (record) {
                 var ret = null;
                 if (record) {

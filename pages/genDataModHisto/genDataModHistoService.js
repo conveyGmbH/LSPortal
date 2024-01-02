@@ -16,9 +16,7 @@
             get: function () {
                 return AppData.getFormatView("Benutzer", 0);
             }
-        }
-    });
-    WinJS.Namespace.define("GenDataModHisto", {
+        },
         benutzerView: {
             select: function (complete, error, restriction, options) {
                 if (!restriction) {
@@ -55,8 +53,16 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            relationName: GenDataModHisto._benutzerView.relationName,
-            pkName: GenDataModHisto._benutzerView.oDataPkName,
+            relationName: {
+                get: function() {
+                    return GenDataModHisto._benutzerView.relationName;
+                }
+            },
+            pkName: {
+                get: function() {
+                    return GenDataModHisto._benutzerView.oDataPkName;
+                }
+            },
             getRecordId: function (record) {
                 var ret = null;
                 if (record) {
@@ -77,8 +83,16 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            relationName: GenDataModHisto._benutzerTable.relationName,
-            pkName: GenDataModHisto._benutzerTable.oDataPkName,
+            relationName: {
+                get: function() {
+                    return GenDataModHisto._benutzerTable.relationName;
+                }
+            },
+            pkName: {
+                get: function() {
+                    return GenDataModHisto._benutzerTable.oDataPkName;
+                }
+            },
             getRecordId: function (record) {
                 var ret = null;
                 if (record) {
@@ -91,7 +105,7 @@
                 }
                 return ret;
             }
-        },
+        }
     });
 })();
 

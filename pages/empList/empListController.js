@@ -394,9 +394,9 @@
                 }
                 var restriction = AppData.getRestriction("Employee");
                 Log.print(Log.l.trace, "EmpList.Controller. restriction Employee:" + (restriction ? JSON.stringify(restriction) : ""));
-                var defaultrestriction = copyByValue(EmpList.employeeView.defaultRestriction);
+                var defaultRestriction = copyByValue(EmpList.employeeView.defaultRestriction);
                 if (!restriction) {
-                    restriction = defaultrestriction;
+                    restriction = defaultRestriction;
                 }
                 if (restriction.OrderAttribute === "Vorname") {
                     if (restriction.OrderDesc) {
@@ -495,9 +495,9 @@
                             if (json && json.d) {
                                 var employee = json.d;
                                 that.resultConverter(employee);
-                                var objectrec = scopeFromRecordId(recordId);
-                                if (objectrec && objectrec.index >= 0) {
-                                    that.employees.setAt(objectrec.index, employee);
+                                var objectRec = scopeFromRecordId(recordId);
+                                if (objectRec && objectRec.index >= 0) {
+                                    that.employees.setAt(objectRec.index, employee);
                                 } else {
                                     licenceWarningSelected = false;
                                     that.loadData();

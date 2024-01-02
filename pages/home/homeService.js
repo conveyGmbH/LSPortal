@@ -33,7 +33,7 @@
             get: function () {
                 if (!Home._actionsList) {
                     var list = [];
-                    Home._actions.forEach(function (item, index) {
+                    Home._actions.forEach(function (item) {
                         var curGroups = Application.navigationBarGroups.filter(function(group) {
                             return (group.id === item.page);
                         });

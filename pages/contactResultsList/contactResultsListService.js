@@ -21,9 +21,7 @@
                 //ret.maxPageSize = 20;
                 return ret;
             }
-        }
-    });
-    WinJS.Namespace.define("ContactResultsList", {
+        },
         contactResultsView: {
             select: function (complete, error, restriction, options) {
                 var ret;
@@ -111,8 +109,16 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            relationName: ContactResultsList._contactResultsView.relationName,
-            pkName: ContactResultsList._contactResultsView.oDataPkName,
+            relationName: {
+                get: function() {
+                    return ContactResultsList._contactResultsView.relationName;
+                }
+            },
+            pkName: {
+                get: function() {
+                    return ContactResultsList._contactResultsView.oDataPkName;
+                }
+            },
             getRecordId: function (record) {
                 var ret = null;
                 if (record) {

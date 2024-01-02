@@ -14,6 +14,11 @@
                 return ret;
             }
         },
+        _eventView: {
+            get: function () {
+                return AppData.getFormatView("Veranstaltung2", 0);
+            }
+        },
         employeeView: {
             select: function (complete, error, restriction, recordId) {
                 Log.call(Log.l.trace, "GenDataEmpList.employeeView.");
@@ -53,11 +58,6 @@
                 OrderDesc: false
             }
         },
-        _eventView: {
-            get: function () {
-                return AppData.getFormatView("Veranstaltung2", 0);
-            }
-        },
         eventView: {
             fetchNext: function (results, url, complete, error) {
                 Log.call(Log.l.trace, "GenDataEmpList.eventView.", "nextUrl=" + nextUrl);
@@ -66,18 +66,27 @@
                     nextJson = json;
                 }, function (errorResponse) {
                     Log.print(Log.l.error, "error=" + AppData.getErrorMsgFromResponse(errorResponse));
-                    error(errorResponse);
+                    if (typeof error === "function") {
+                        error(errorResponse);
+                    }
                 }, null, url).then(function() {
                     if (nextJson && nextJson.d) {
                         results = results.concat(nextJson.d.results);
                         var nextUrl = GenDataEmpList._eventView.getNextUrl(nextJson);
-                        if (next) {
+                        if (nextUrl) {
                             return GenDataEmpList.eventView.fetchNext(results, nextUrl, complete, error);
                         } else {
                             nextJson.d.results = results;
-                            complete(nextJson);
+                            if (typeof complete === "function") {
+                                complete(nextJson);
+                            }
                             return WinJS.Promise.as();
                         }
+                    } else {
+                        if (typeof complete === "function") {
+                            complete(nextJson || {});
+                        }
+                        return WinJS.Promise.as();
                     }
                 });
                 Log.ret(Log.l.trace);
@@ -85,16 +94,18 @@
             },
             fetchAll: function (json, complete, error) {
                 Log.call(Log.l.trace, "GenDataEmpList.eventView.", "");
-                var retNext;
+                var ret;
                 var nextUrl = GenDataEmpList._eventView.getNextUrl(json);
                 if (nextUrl) {
-                    retNext = GenDataEmpList.eventView.fetchNext(json.d.results, nextUrl, complete, error);
+                    ret = GenDataEmpList.eventView.fetchNext(json.d.results, nextUrl, complete, error);
                 } else {
-                    complete(json);
-                    retNext = WinJS.Promise.as();
+                    if (typeof complete === "function") {
+                        complete(json);
+                    }
+                    ret = WinJS.Promise.as();
                 }
                 Log.ret(Log.l.trace);
-                return retNext;
+                return ret;
             },
             select: function (complete, error) {
                 Log.call(Log.l.trace, "GenDataEmpList.eventView.");
@@ -107,7 +118,12 @@
                 }).then(function () {
                     if (nextJson) {
                         return GenDataEmpList.eventView.fetchAll(nextJson, complete, error);
-                    } 
+                    } else {
+                        if (typeof complete === "function") {
+                            complete({});
+                        }
+                        return WinJS.Promise.as();
+                    }
                 });
                 Log.ret(Log.l.trace);
                 return ret;

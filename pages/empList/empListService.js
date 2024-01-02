@@ -6,7 +6,6 @@
 (function () {
     "use strict";
     var namespaceName = "EmpList";
-
     WinJS.Namespace.define("EmpList", {
         _employeeView: {
             get: function () {
@@ -48,8 +47,16 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            relationName: EmpList._employeeView.relationName,
-            pkName: EmpList._employeeView.oDataPkName,
+            relationName: {
+                get: function() {
+                    return EmpList._employeeView.relationName;
+                }
+            },
+            pkName: {
+                get: function() {
+                    return EmpList._employeeView.oDataPkName;
+                }
+            },
             getRecordId: function (record) {
                 var ret = null;
                 if (record) {

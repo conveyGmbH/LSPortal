@@ -36,6 +36,10 @@
                 return ret;
             }
         },
+        _eventTextUsageId: -1,
+        _eventId: -1,
+        _eventSeriesId: -1,
+        _languageId: 1031,
         _eventSeriesView: {
             get: function () {
                 return AppData.getFormatView("CR_VeranstaltungSerie", 20643);
@@ -51,12 +55,6 @@
                 return AppData.getFormatView("LangMandantDokument", 0);
             }
         },
-        _eventTextUsageId: -1,
-        _eventId: -1,
-        _eventSeriesId: -1,
-        _languageId: 1031
-    });
-    WinJS.Namespace.define("EventResourceAdministration", {
         eventSeriesView: {
             select: function(complete, error) {
                 var restriction = {
@@ -131,8 +129,16 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            relationName: EventResourceAdministration._eventTextView.relationName,
-            pkName: EventResourceAdministration._eventTextView.oDataPkName,
+            relationName: {
+                get: function() {
+                    return EventResourceAdministration._eventTextView.relationName;
+                }
+            },
+            pkName: {
+                get: function() {
+                    return EventResourceAdministration._eventTextView.oDataPkName;
+                }
+            },
             getRecordId: function (record) {
                 var ret = null;
                 if (record) {
@@ -153,8 +159,16 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            relationName: EventResourceAdministration._eventTextTable.relationName,
-            pkName: EventResourceAdministration._eventTextTable.oDataPkName,
+            relationName: {
+                get: function() {
+                    return EventResourceAdministration._eventTextTable.relationName;
+                }
+            },
+            pkName: {
+                get: function() {
+                    return EventResourceAdministration._eventTextTable.oDataPkName;
+                }
+            },
             getRecordId: function (record) {
                 var ret = null;
                 if (record) {

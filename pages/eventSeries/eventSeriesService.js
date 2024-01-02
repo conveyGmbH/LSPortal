@@ -46,9 +46,7 @@
             get: function () {
                 return AppData.getFormatView("LangMandantSerie", 20629);
             }
-        }
-    });
-    WinJS.Namespace.define("EventSeries", {
+        },
         seriesView: {
             select: function (complete, error, restriction, options) {
                 Log.call(Log.l.trace, "EventSeries.seriesView.");
@@ -80,8 +78,16 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            relationName: EventSeries._langSeriesView.relationName,
-            pkName: EventSeries._langSeriesView.oDataPkName,
+            relationName: {
+                get: function() {
+                    return EventSeries._langSeriesView.relationName;
+                }
+            },
+            pkName: {
+                get: function() {
+                    return EventSeries._langSeriesView.oDataPkName;
+                }
+            },
             getRecordId: function (record) {
                 var ret = null;
                 if (record) {
@@ -144,17 +150,24 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            relationName: EventSeries._langSeriesTable.relationName,
-            pkName: EventSeries._langSeriesTable.oDataPkName,
-            _pkName: EventSeries._langSeriesTable.pkName,
+            relationName: {
+                get: function() {
+                    return EventSeries._langSeriesTable.relationName;
+                }
+            },
+            pkName: {
+                get: function() {
+                    return EventSeries._langSeriesTable.oDataPkName;
+                }
+            },
             getRecordId: function (record) {
                 var ret = null;
                 if (record) {
-                    if (EventSeries.seriesTable.pkName) {
-                        ret = record[EventSeries.seriesTable.pkName];
+                    if (EventSeries._langSeriesTable.oDataPkName) {
+                        ret = record[EventSeries._langSeriesTable.oDataPkName];
                     }
-                    if (!ret && EventSeries.seriesTable._pkName) {
-                        ret = record[EventSeries.seriesTable._pkName];
+                    if (!ret && EventSeries._langSeriesTable.pkName) {
+                        ret = record[EventSeries._langSeriesTable.pkName];
                     }
                 }
                 return ret;

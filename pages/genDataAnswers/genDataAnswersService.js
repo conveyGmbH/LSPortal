@@ -8,6 +8,7 @@
     "use strict";
 
     WinJS.Namespace.define("GenDataAnswers", {
+        _questionId: 0,
         _questionView: {
             get: function () {
                 return AppData.getFormatView("Question", 20648);
@@ -18,9 +19,6 @@
                 return AppData.getFormatView("Question", 0);
             }
         },
-        _questionId: 0
-    });
-    WinJS.Namespace.define("GenDataAnswers", {
         questionView: {
             select: function (complete, error, recordId) {
                 Log.call(Log.l.trace, "GenDataAnswers.questionView.");
@@ -46,8 +44,16 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            relationName: GenDataAnswers._questionTable.relationName,
-            pkName: GenDataAnswers._questionTable.pkName,
+            relationName: {
+                get: function() {
+                    return GenDataAnswers._questionTable.relationName;
+                }
+            },
+            pkName: {
+                get: function() {
+                    return GenDataAnswers._questionTable.pkName;
+                }
+            },
             getRecordId: function (record) {
                 var ret = null;
                 if (record) {
@@ -92,16 +98,12 @@
                 Log.ret(Log.l.trace);
                 return ret;
             }
-        }
-    });
-    WinJS.Namespace.define("GenDataAnswers", {
+        },
         _questionGroupTable: {
             get: function () {
                 return AppData.getFormatView("QuestionGroup", 0);
             }
-        }
-    });
-    WinJS.Namespace.define("GenDataAnswers", {
+        },
         questionGroupTable: {
             select: function (complete, error, restriction, options) {
                 if (!restriction) {
@@ -135,8 +137,16 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            relationName: GenDataAnswers._questionGroupTable.relationName,
-            pkName: GenDataAnswers._questionGroupTable.oDataPkName,
+            relationName: {
+                get: function() {
+                    return GenDataAnswers._questionGroupTable.relationName;
+                }
+            },
+            pkName: {
+                get: function() {
+                    return GenDataAnswers._questionGroupTable.oDataPkName;
+                }
+            },
             getRecordId: function (record) {
                 var ret = null;
                 if (record) {
